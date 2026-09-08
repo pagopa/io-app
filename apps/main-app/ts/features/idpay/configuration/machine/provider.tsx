@@ -25,6 +25,7 @@ import {
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { SessionManager } from "../../../../utils/SessionManager";
+import { createInspector } from "../../../../utils/xstate/createInspector";
 import {
   bpdTokenSelector,
   walletTokenSelector
@@ -34,12 +35,15 @@ import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";
 import { idPayConfigurationMachine } from "./machine";
 
+const inspector = createInspector();
+
 type Props = {
   children: ReactNode;
 };
 
 export const IdPayConfigurationMachineContext = createActorContext(
-  idPayConfigurationMachine
+  idPayConfigurationMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
 );
 
 export const IDPayConfigurationMachineProvider = ({ children }: Props) => {

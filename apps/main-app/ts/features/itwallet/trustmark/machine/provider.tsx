@@ -4,6 +4,7 @@ import { PropsWithChildren } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import { createInspector } from "../../../../utils/xstate/createInspector";
 import {
   selectItwEnv,
   selectItwSpecsVersion
@@ -14,12 +15,16 @@ import { createItwTrustmarkActorsImplementation } from "./actors";
 import { createItwTrustmarkGuardsImplementation } from "./guards";
 import { itwTrustmarkMachine } from "./machine";
 
+const inspector = createInspector();
+
 type Props = PropsWithChildren<{
   credentialType: string;
 }>;
 
-export const ItwTrustmarkMachineContext =
-  createActorContext(itwTrustmarkMachine);
+export const ItwTrustmarkMachineContext = createActorContext(
+  itwTrustmarkMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
+);
 
 export const ItwTrustmarkMachineProvider = ({
   credentialType,

@@ -11,18 +11,23 @@ import {
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { createInspector } from "../../../../utils/xstate/createInspector";
 import { bpdTokenSelector } from "../../../authentication/common/store/selectors";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";
 import { idPayPaymentMachine } from "./machine";
 
+const inspector = createInspector();
+
 type Props = {
   children: ReactNode;
 };
 
-export const IdPayPaymentMachineContext =
-  createActorContext(idPayPaymentMachine);
+export const IdPayPaymentMachineContext = createActorContext(
+  idPayPaymentMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
+);
 
 export const IdPayPaymentMachineProvider = (props: Props) => {
   const dispatch = useIODispatch();

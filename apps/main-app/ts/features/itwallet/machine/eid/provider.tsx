@@ -4,6 +4,7 @@ import { PropsWithChildren } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import { createInspector } from "../../../../utils/xstate/createInspector";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 import { createEidIssuanceActionsImplementation } from "./../eid/actions";
@@ -11,8 +12,11 @@ import { createEidIssuanceActorsImplementation } from "./../eid/actors";
 import { createEidIssuanceGuardsImplementation } from "./../eid/guards";
 import { itwEidIssuanceMachine } from "./../eid/machine";
 
+const inspector = createInspector();
+
 export const ItwEidIssuanceMachineContext = createActorContext(
-  itwEidIssuanceMachine
+  itwEidIssuanceMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
 );
 
 export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {

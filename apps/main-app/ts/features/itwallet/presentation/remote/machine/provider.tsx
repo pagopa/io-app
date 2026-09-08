@@ -3,6 +3,7 @@ import { JSX } from "react";
 
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector, useIOStore } from "../../../../../store/hooks.ts";
+import { createInspector } from "../../../../../utils/xstate/createInspector";
 import {
   selectItwEnv,
   selectItwSpecsVersion
@@ -13,11 +14,16 @@ import { createRemoteActorsImplementation } from "./actors.ts";
 import { createRemoteGuardsImplementation } from "./guards.ts";
 import { itwRemoteMachine } from "./machine.ts";
 
+const inspector = createInspector();
+
 type Props = {
   children: JSX.Element;
 };
 
-export const ItwRemoteMachineContext = createActorContext(itwRemoteMachine);
+export const ItwRemoteMachineContext = createActorContext(
+  itwRemoteMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
+);
 
 export const ItwRemoteMachineProvider = (props: Props) => {
   const navigation = useIONavigation();
