@@ -11,7 +11,9 @@ import { MachineNavigation, MachineStore, MachineToast } from "./deps";
 
 const noop = () => undefined;
 
-const testMachineStore = (store: Partial<MachineStore> = {}): MachineStore => ({
+export const testMachineStore = (
+  store: Partial<MachineStore> = {}
+): MachineStore => ({
   dispatch: noop,
   getState: () => appReducer(undefined, applicationChangeState("active")),
   subscribe: () => noop,
