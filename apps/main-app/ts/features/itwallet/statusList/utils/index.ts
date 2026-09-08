@@ -3,8 +3,11 @@ import {
   X509CertificateOptions
 } from "@pagopa/io-react-native-crypto";
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
-import { CredentialIssuance, ItwVersion } from "@pagopa/io-react-native-wallet";
-import { getJwkFromCertificateChain } from "@pagopa/io-react-native-wallet/src/utils/crypto";
+import {
+  CredentialIssuance,
+  getJwkFromCertificateChain,
+  ItwVersion
+} from "@pagopa/io-react-native-wallet";
 
 import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
