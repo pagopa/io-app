@@ -21,7 +21,7 @@ jobs:
 
     - name: Create Lokalise Snapshot
       run: |
-        curl --request POST \
+        curl --fail-with-body --silent --show-error --request POST \
           --url "https://api.lokalise.com/api2/projects/${{ secrets.LOKALISE_PROJECT_ID }}/snapshots" \
           --header "accept: application/json" \
           --header "content-type: application/json" \
