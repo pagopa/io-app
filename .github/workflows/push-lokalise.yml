@@ -18,6 +18,15 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+    - name: Create Lokalise Snapshot
+      run: |
+        curl --request POST \
+          --url "https://api.lokalise.com/api2/projects/${{ secrets.LOKALISE_PROJECT_ID }}/snapshots" \
+          --header "accept: application/json" \
+          --header "content-type: application/json" \
+          --header "X-Api-Token: ${{ secrets.LOKALISE_API_TOKEN }}"
+
     - name: Push to Lokalise
       uses: lokalise/lokalise-push-action@bb67ba45a739acf22e3c00f05dc50a55737fa5c8 #v5.3.1
       with:
@@ -29,3 +38,4 @@ jobs:
         file_ext: json
         additional_params: |
           cleanup_mode: true
+          replace_modified: false
