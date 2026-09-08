@@ -1,0 +1,59 @@
+name: Check pending Lokalise PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  block-if-lokalise-pr-open:
+    name: Check Open Lokalise PRs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for open Lokalise PRs
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const currentPr = context.payload.pull_request;
+
+            const isCurrentPrLokalise =
+              currentPr.title.includes('Update translations from Lokalise') ||
+              currentPr.head.ref.startsWith('lok_master_');
+
+            // Lokalise PRs must never be blocked by this check.
+            if (isCurrentPrLokalise) {
+              console.log(
+                `PR #${currentPr.number} is a Lokalise PR. ` +
+                `The check passed.`
+              );
+              return;
+            }
+
+            const { data: openPRs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100,
+            });
+
+            const pendingLokalisePr = openPRs.find(pr => {
+              const isTitleMatch =
+                pr.title.includes('Update translations from Lokalise');
+
+              const isBranchMatch =
+                pr.head.ref.startsWith('lok_master_');
+
+              return isTitleMatch || isBranchMatch;
+            });
+
+            if (pendingLokalisePr) {
+              core.setFailed(
+                `❌ Merge blocked: open Lokalise PR #${pendingLokalisePr.number} ` +
+                `("${pendingLokalisePr.title}") already exists. ` +
+                `Please merge or handle that PR first to avoid translation regressions or conflicts.`
+              );
+            } else {
+              console.log('No open Lokalise PR found. Check passed!');
+            }
