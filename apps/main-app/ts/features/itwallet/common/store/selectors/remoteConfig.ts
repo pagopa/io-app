@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 
@@ -15,7 +14,7 @@ const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
  * unwrap it here, at the boundary, so the IT-Wallet selectors work on plain values.
  */
 const itwRemoteConfigSelector = (state: GlobalState) =>
-  O.toUndefined(state.remoteConfig)?.itw;
+  state.features.itWallet.remoteConfig;
 
 /**
  * Returns the remote config for docIO
