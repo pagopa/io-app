@@ -1,30 +1,30 @@
 import { type ActionArgs, assign, type DoneActorEvent } from "xstate";
 
-import type { WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils.ts";
+import type { WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils";
 
-import ROUTES from "../../../../../navigation/routes.ts";
-import { checkCurrentSession } from "../../../../authentication/common/store/actions/index.ts";
-import { BATCH_ISSUANCE_CREDENTIALS } from "../../../common/utils/itwCredentialIssuanceUtils.ts";
+import ROUTES from "../../../../../navigation/routes";
+import { checkCurrentSession } from "../../../../authentication/common/store/actions/index";
+import { BATCH_ISSUANCE_CREDENTIALS } from "../../../common/utils/itwCredentialIssuanceUtils";
 import {
   getCredentialKeyTags,
   isBatchCredential
-} from "../../../common/utils/itwCredentialUtils.ts";
-import { itwCredentialsConsumeInstance } from "../../../credentials/store/actions/index.ts";
+} from "../../../common/utils/itwCredentialUtils";
+import { itwCredentialsConsumeInstance } from "../../../credentials/store/actions/index";
 import {
   itwAllStoredCredentialsSelector,
   itwCredentialsAllSelector
-} from "../../../credentials/store/selectors/index.ts";
-import { ITW_ROUTES } from "../../../navigation/routes.ts";
-import { itwWalletInstanceAttestationStore } from "../../../walletInstance/store/actions/index.ts";
-import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors/index.ts";
+} from "../../../credentials/store/selectors/index";
+import { ITW_ROUTES } from "../../../navigation/routes";
+import { itwWalletInstanceAttestationStore } from "../../../walletInstance/store/actions/index";
+import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors/index";
 import { trackItwRemoteDataShare } from "../analytics";
-import { ITW_REMOTE_ROUTES } from "../navigation/routes.ts";
+import { ITW_REMOTE_ROUTES } from "../navigation/routes";
 import {
   getRemoteCredentialCombination,
   groupCredentialsByPurpose
 } from "../utils/itwRemotePresentationUtils";
-import { Context } from "./context.ts";
-import { RemoteEvents } from "./events.ts";
+import { Context } from "./context";
+import { RemoteEvents } from "./events";
 
 /**
  * Initializes the remote presentation machine from the Redux store.
@@ -185,3 +185,12 @@ export const handleSessionExpiredAction = ({
   context.deps.store.dispatch(
     checkCurrentSession.success({ isSessionValid: false })
   );
+
+export const navigateToIdentificationScreenAction = ({
+  context
+}: ActionArgs<Context, RemoteEvents, RemoteEvents>) => {
+  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+    screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+    params: { eidReissuing: true }
+  });
+};
