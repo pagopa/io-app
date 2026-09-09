@@ -1,14 +1,10 @@
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { AnyActorLogic, createActor } from "xstate";
 
-import { Env } from "../../../../common/utils/environment";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { CredentialsVault } from "../../../../credentials/utils/vault";
 import { VerifierRequest } from "../../utils/types";
-import {
-  createProximityActorsImplementation,
-  SendDocumentsActorOutput
-} from "../actors";
+import { sendDocumentsActor, SendDocumentsActorOutput } from "../actors";
 
 const DOCUMENT_TYPE = "org.iso.18013.5.1.mDL";
 const MISSING_DOCUMENT_TYPE = "org.iso.18013.5.1.missing";
@@ -56,11 +52,15 @@ describe("proximity actors", () => {
       .mocked(ISO18013_5.generateResponse)
       .mockResolvedValue("generated-response");
     jest.mocked(ISO18013_5.sendResponse).mockResolvedValue(true);
-    const actors = createProximityActorsImplementation({ type: "prod" } as Env);
 
-    await runActor<SendDocumentsActorOutput>(actors.sendDocuments, {
+    await runActor<SendDocumentsActorOutput>(sendDocumentsActor, {
       credentials: { [DOCUMENT_TYPE]: credential },
-      verifierRequest
+      verifierRequest,
+      deps: {
+        env: { type: "prod" },
+        navigation: {} as never,
+        store: {} as never
+      }
     });
 
     expect(generateResponse).toHaveBeenCalledWith(

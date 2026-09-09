@@ -19,7 +19,7 @@ describe("getIoWallet", () => {
   });
 
   it("should create a new instance when it does not exist in the registry", () => {
-    const version: ItwVersion = "1.3.3";
+    const version: ItwVersion = "1.4.6";
     const instance = getIoWallet(version);
 
     expect(MockIoWallet).toHaveBeenCalledTimes(1);
@@ -28,7 +28,7 @@ describe("getIoWallet", () => {
   });
 
   it("should reuse the same instance for the same version", () => {
-    const version: ItwVersion = "1.3.3";
+    const version: ItwVersion = "1.4.6";
     const instance1 = getIoWallet(version);
     const instance2 = getIoWallet(version);
 
@@ -38,10 +38,10 @@ describe("getIoWallet", () => {
 
   it("should create different instances for different versions", () => {
     const instance1 = getIoWallet("1.0.0");
-    const instance2 = getIoWallet("1.3.3");
+    const instance2 = getIoWallet("1.4.6");
 
     expect(MockIoWallet).toHaveBeenNthCalledWith(1, { version: "1.0.0" });
-    expect(MockIoWallet).toHaveBeenNthCalledWith(2, { version: "1.3.3" });
+    expect(MockIoWallet).toHaveBeenNthCalledWith(2, { version: "1.4.6" });
     expect(instance1).not.toBe(instance2);
   });
 });

@@ -1,5 +1,4 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Linking } from "react-native";
@@ -101,14 +100,14 @@ export const ItwCieCardReadFailureContent = ({
     trackItWalletCiePinForgotten(isL3 ? "L3" : "L2");
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/"
-    ).catch(constNull);
+    ).catch(() => null);
   }, [isL3]);
 
   const handlePukForgot = useCallback(() => {
     trackItWalletCiePukForgotten(isL3 ? "L3" : "L2");
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/recupero-puk/"
-    ).catch(constNull);
+    ).catch(() => null);
   }, [isL3]);
 
   if (isNfcError(failure)) {

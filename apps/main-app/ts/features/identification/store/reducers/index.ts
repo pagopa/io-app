@@ -46,11 +46,6 @@ export type IdentificationGenericData = {
   message: string;
 };
 
-export type IdentificationProgressState =
-  | IdentificationIdentifiedState
-  | IdentificationStartedState
-  | IdentificationUnidentifiedState;
-
 export type IdentificationState = {
   fail?: IdentificationFailData;
   progress: IdentificationProgressState;
@@ -63,6 +58,11 @@ export type PersistedIdentificationState = IdentificationState & PersistPartial;
 type IdentificationIdentifiedState = {
   kind: "identified";
 };
+
+type IdentificationProgressState =
+  | IdentificationIdentifiedState
+  | IdentificationStartedState
+  | IdentificationUnidentifiedState;
 
 type IdentificationStartedState = {
   canResetPin: boolean;

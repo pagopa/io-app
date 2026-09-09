@@ -1,5 +1,4 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
-import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 
 import { ReduxSagaEffect } from "../../../../types/utils";
@@ -36,7 +35,7 @@ export function* checkWalletInstanceInconsistencySaga(): Generator<
   const eid = yield* select(itwCredentialsEidSelector);
   const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
 
-  if (O.isSome(eid) && O.isNone(integrityKeyTag)) {
+  if (eid !== undefined && integrityKeyTag === undefined) {
     yield* call(handleWalletInstanceResetSaga);
     trackItwWalletBadState();
     return false;
@@ -61,8 +60,8 @@ export function* checkWalletInstanceStateSaga(): Generator<
     const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
 
     // Only operational or valid wallet instances can be revoked.
-    if (isItwOperationalOrValid && O.isSome(integrityKeyTag)) {
-      yield* call(getStatusOrResetWalletInstance, integrityKeyTag.value);
+    if (isItwOperationalOrValid && integrityKeyTag !== undefined) {
+      yield* call(getStatusOrResetWalletInstance, integrityKeyTag);
     }
   }
 }
