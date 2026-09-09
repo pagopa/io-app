@@ -1,10 +1,10 @@
 import { CieIdEnvironment } from "@pagopa/io-react-native-cieid";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
 import { GlobalState } from "../../../../../store/reducers/types";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
+import { CURRENT_ITW_SPECS_VERSION } from "../../utils/constants";
 import { itwIsL3EnabledSelector } from "./index";
 
 export const selectItwEnv = (state: GlobalState) =>
@@ -35,17 +35,16 @@ export const selectItwCieIdEnvironment = (
 export const selectItwSpecsVersion = createSelector(
   itwIsL3EnabledSelector,
   itwCredentialsEidSelector,
-  (isWhitelisted, eidOption): ItwVersion => {
+  (isWhitelisted, eid): ItwVersion => {
     // Users that are not whitelisted can only have Documenti su IO 1.0
     if (!isWhitelisted) {
       return "1.0.0";
     }
     // Otherwise the specification version is determined by the current EID
-    const eid = O.toUndefined(eidOption);
     if (eid) {
       return eid.spec_version as ItwVersion;
     }
     // Users that are whitelisted and don't have an EID use the latest version by default
-    return "1.3.3";
+    return CURRENT_ITW_SPECS_VERSION;
   }
 );

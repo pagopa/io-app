@@ -2,12 +2,12 @@ import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { getRedirects } from "@pagopa/io-react-native-login-utils";
 import pako from "pako";
 import URLParse from "url-parse";
-import { parseStringPromise } from "xml2js";
+import { parseStringPromise, processors } from "xml2js";
 
 import { handleRegenerateEphemeralKey } from "..";
 import { AppDispatch } from "../../../App";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
-import { getLoginHeaders } from "../../authentication/common/utils/login";
+import { getLoginHeaders } from "../../authentication/common/utils";
 import { toBase64EncodedThumbprint } from "./crypto";
 
 export const DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT = "SHA-256";
@@ -30,17 +30,21 @@ export const lollipopSamlVerify = (
       }
     );
 
-    // Convert XML to Json (in order not to include a XML Parser library)
-    parseStringPromise(xmlSamlRequest)
+    // Convert XML to JSON (in order not to include an XML Parser library).
+    // We strip XML namespace prefixes (e.g., 'samlp:' or 'saml2p:') from tag names
+    // to reliably access the 'AuthnRequest', regardless of the namespace alias.
+    parseStringPromise(xmlSamlRequest, {
+      tagNameProcessors: [processors.stripPrefix]
+    })
       .then(jsonSamlRequest => {
         // Extract the AuthnRequest from the JSON
-        const authnRequest = jsonSamlRequest["samlp:AuthnRequest"];
+        const authnRequest = jsonSamlRequest.AuthnRequest;
         // Extract the ID parameter (which may not be there, so handle the case).
         // The extracted string is in the format {HashAlgorithmName}-{HashedPublicKey}
         const responseThumbprintWithHashAlgorithm = authnRequest?.$?.ID;
         if (!responseThumbprintWithHashAlgorithm) {
           // If the request did not include the ID, treat it as a failure
-          onFailure("Missing ID parameter in samlp:AuthnRequest");
+          onFailure("Missing ID parameter in AuthnRequest");
           return;
         }
 

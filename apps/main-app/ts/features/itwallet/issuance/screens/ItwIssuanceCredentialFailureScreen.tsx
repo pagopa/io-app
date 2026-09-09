@@ -1,5 +1,3 @@
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
 import {
@@ -22,9 +20,9 @@ import {
 } from "../../machine/credential/failure";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
-  selectCredentialTypeOption,
-  selectFailureOption,
-  selectIssuerConfigurationOption
+  selectCredentialType,
+  selectFailure,
+  selectIssuerConfiguration
 } from "../../machine/credential/selectors";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
 import { useCredentialIssuanceStatusMessage } from "../hooks/useCredentialIssuanceStatusMessage";
@@ -46,16 +44,13 @@ const failureLinkMapper: Partial<
 };
 
 export const ItwIssuanceCredentialFailureScreen = () => {
-  const failureOption =
-    ItwCredentialIssuanceMachineContext.useSelector(selectFailureOption);
+  const failure =
+    ItwCredentialIssuanceMachineContext.useSelector(selectFailure);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return pipe(
-    failureOption,
-    O.fold(constNull, failure => <ContentView failure={failure} />)
-  );
+  return failure ? <ContentView failure={failure} /> : null;
 };
 
 type ContentViewProps = { failure: CredentialIssuanceFailure };
@@ -63,19 +58,17 @@ type ContentViewProps = { failure: CredentialIssuanceFailure };
 /** Renders the content of the screen */
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
+  const credentialType =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
   const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
-    selectIssuerConfigurationOption
+    selectIssuerConfiguration
   );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const credentialTypeValue = O.toUndefined(credentialType);
-  const credentialName = useItwCredentialName(credentialTypeValue);
+  const credentialName = useItwCredentialName(credentialType);
 
   const invalidStatusDetails = useCredentialIssuanceStatusMessage(
     failure,
-    O.toUndefined(issuerConf)
+    issuerConf
   );
 
   const defaultInvalidStatusMessage = {
@@ -101,7 +94,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   });
   const supportModal = useItwFailureSupportModal({
     failure,
-    credentialType: O.toUndefined(credentialType),
+    credentialType,
     supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
     zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
     supportLink: failureLinkMapper[failure.type]
@@ -205,7 +198,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   useCredentialEventsTracking({
     failure,
     isItwL3,
-    credentialType: O.toUndefined(credentialType),
+    credentialType,
     invalidErrorCode: invalidStatusDetails.errorCode
   });
 

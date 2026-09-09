@@ -47,13 +47,13 @@ describe("Test FciDocuments screen", () => {
     jest.clearAllMocks();
   });
 
-  it("it should render the FciDocuments screen", () => {
+  it("should render the FciDocuments screen", () => {
     const store = createTestStore();
     const component = renderComponent(store);
     expect(component).toBeTruthy();
   });
 
-  it("it should render the content and footer", async () => {
+  it("should render the content and footer", async () => {
     const store = createTestStore();
     const testComponent = renderComponent(store);
     await waitFor(() => {

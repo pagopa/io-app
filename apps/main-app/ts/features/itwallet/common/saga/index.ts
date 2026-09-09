@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/Option";
 import { SagaIterator } from "redux-saga";
 import {
   call,
@@ -23,8 +21,8 @@ import { checkCredentialsBatchRefill } from "../../credentials/saga/checkCredent
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleItwCredentialsVaultCoherenceSaga } from "../../credentials/saga/handleItwCredentialsVaultCoherenceSaga";
 import { handleItwCredentialsVaultMigrationSaga } from "../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
+import { handleKeyAttestationsCleanUp } from "../../credentials/saga/handleKeyAttestationsCleanUp";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
-import { handleWalletUnitAttestationsCleanUp } from "../../credentials/saga/handleWalletUnitAttestationsCleanUp";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors/index";
 import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index";
 import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index";
@@ -103,8 +101,8 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(handleItwCredentialsVaultCoherenceSaga);
   // Rehydrate wallet cards from Redux credentials store
   yield* fork(handleWalletCredentialsRehydration);
-  // Clean up stale Wallet Unit Attestations
-  yield* fork(handleWalletUnitAttestationsCleanUp);
+  // Clean up stale Key Attestations
+  yield* fork(handleKeyAttestationsCleanUp);
   // TODO remove this fork when NFC antenna info tracking is not needed anymore
   yield* fork(updateNfcInfoTrackingProperties);
   // Sync ITW analytics properties
@@ -144,11 +142,8 @@ const handleAuthLevelSanitizationSaga = function* (
   }
 
   // Check whether the user has an IT-Wallet PID credential
-  const hasItwPID = pipe(
-    yield* select(itwCredentialsEidSelector),
-    O.map(isItwCredential),
-    O.getOrElse(() => false)
-  );
+  const eid = yield* select(itwCredentialsEidSelector);
+  const hasItwPID = eid !== undefined && isItwCredential(eid);
 
   if (!hasItwPID) {
     // No L3 PID found, no need to sanitize

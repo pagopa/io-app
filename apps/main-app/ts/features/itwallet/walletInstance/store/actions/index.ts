@@ -32,14 +32,14 @@ export const itwSetWalletInstanceRenewalError = createStandardAction(
   "ITW_SET_WALLET_INSTANCE_RENEWAL_ERROR"
 )<boolean>();
 
-/** Store multiple Wallet Unit Attestations under the provided IDs. */
-export const itwWalletUnitAttestationsStore = createStandardAction(
-  "ITW_WALLET_UNIT_ATTESTATIONS_STORE"
+/** Store multiple Key Attestations under the provided IDs. */
+export const itwKeyAttestationsStore = createStandardAction(
+  "ITW_KEY_ATTESTATIONS_STORE"
 )<Record<string, string>>();
 
-/** Removes multiple Wallet Unit Attestations by their IDs. */
-export const itwWalletUnitAttestationsRemoveById = createStandardAction(
-  "ITW_WALLET_UNIT_ATTESTATIONS_REMOVE_BY_ID"
+/** Removes multiple Key Attestations by their IDs. */
+export const itwKeyAttestationsRemoveById = createStandardAction(
+  "ITW_KEY_ATTESTATIONS_REMOVE_BY_ID"
 )<ReadonlyArray<string>>();
 
 /** This action sets whether a wallet instance is remotely active. */
@@ -53,10 +53,10 @@ export const itwStoreWalletInstanceStatusList = createStandardAction(
 )<ItwWalletInstanceState["statusList"]>();
 
 export type ItwWalletInstanceActions =
+  | ActionType<typeof itwKeyAttestationsRemoveById>
+  | ActionType<typeof itwKeyAttestationsStore>
   | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetWalletInstanceRenewalError>
   | ActionType<typeof itwStoreWalletInstanceStatusList>
   | ActionType<typeof itwUpdateWalletInstanceStatus>
-  | ActionType<typeof itwWalletInstanceAttestationStore>
-  | ActionType<typeof itwWalletUnitAttestationsRemoveById>
-  | ActionType<typeof itwWalletUnitAttestationsStore>;
+  | ActionType<typeof itwWalletInstanceAttestationStore>;

@@ -21,7 +21,9 @@ const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
  * own status, every other credential is masked. - Expired eID + expired
  * credential → display as "invalid" (both show "NON VALIDO"). - Expired eID
  * alone → keep credential's actual status (only PID shows "NON VALIDO"). -
- * Offline: - Show "jwtExpired" only if eID is valid. - Otherwise, show "valid".
+ * Offline: - Show "jwtExpired" only if eID is valid. - Otherwise, show
+ * "valid".
+ *
  * - Online + valid eID → show actual credential status.
  *
  * @param credentialStatus The actual credential status

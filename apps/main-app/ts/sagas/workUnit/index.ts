@@ -38,11 +38,6 @@ export type WorkUnit = {
   startScreenNavigation: () => void;
 };
 
-/** @deprecated */
-export type WorkUnitHandler<T = unknown> = (
-  g: (...args: Array<any>) => Generator<ReduxSagaEffect, SagaResult>
-) => Generator<ReduxSagaEffect, SagaResult, T>;
-
 /**
  * Execute the work unit, and wait for an action to complete
  *

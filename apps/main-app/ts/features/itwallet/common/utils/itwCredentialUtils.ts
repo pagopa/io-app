@@ -143,6 +143,7 @@ export const useBorderColorByStatus: () => {
   return {
     valid: IOColors[theme["appBackground-primary"]],
     invalid: IOColors["error-600"],
+    suspended: IOColors["error-600"],
     expired: IOColors["error-600"],
     expiring: IOColors["warning-700"],
     jwtExpired: IOColors["error-600"],
@@ -160,6 +161,7 @@ export const borderVariantByStatus: {
   expired: "error",
   jwtExpired: "error",
   invalid: "error",
+  suspended: "error",
   unknown: "default"
 };
 
@@ -169,6 +171,10 @@ export const useTagPropsByStatus = (): {
   invalid: {
     variant: "error",
     text: I18n.t("features.itWallet.card.status.invalid")
+  },
+  suspended: {
+    variant: "error",
+    text: I18n.t("features.itWallet.card.status.suspended")
   },
   expired: {
     variant: "error",

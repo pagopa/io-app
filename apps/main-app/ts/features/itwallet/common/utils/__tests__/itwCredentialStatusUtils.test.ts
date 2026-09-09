@@ -345,7 +345,7 @@ describe("getCredentialStatus", () => {
 });
 
 describe("getCredentialStatusMessageFromCatalog", () => {
-  const ioWallet = new IoWallet({ version: "1.3.3" });
+  const ioWallet = new IoWallet({ version: "1.4.6" });
 
   const SUSPENDED_STATUS = "0x02";
   const TITLE_L10N_ID = "credential.status.suspended.title";

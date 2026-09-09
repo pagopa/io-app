@@ -118,10 +118,11 @@ export const isSessionExpiringSelector = createSelector(
  * conditions are explicitly mapped for better readability and maintainability
  *
  * This selector controls the display of a full-screen modal that appears when:
- * 1. The user's session is about to expire AND the active session login feature
- * is remotely enabled AND the blocking screen hasn't been shown yet 2. OR when
- * testing locally with the local flag enabled AND the blocking screen hasn't
- * been shown yet
+ *
+ * 1. The user's session is about to expire AND the active session login feature is
+ *    remotely enabled AND the blocking screen hasn't been shown yet 2. OR when
+ *    testing locally with the local flag enabled AND the blocking screen hasn't
+ *    been shown yet
  *
  * The blocking screen is shown BEFORE the banner and serves as the primary
  * notification method. Once dismissed, it sets hasBlockingScreenBeenVisualized

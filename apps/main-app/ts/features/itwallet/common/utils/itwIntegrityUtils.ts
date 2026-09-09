@@ -22,7 +22,7 @@ import { Env } from "./environment";
  * {@link IntegrityContext}. It contains the signature and the authenticator
  * data.
  */
-export type HardwareSignatureWithAuthData = {
+type HardwareSignatureWithAuthData = {
   authenticatorData: string;
   signature: string;
 };

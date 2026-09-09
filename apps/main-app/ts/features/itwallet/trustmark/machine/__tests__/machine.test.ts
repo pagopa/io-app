@@ -8,18 +8,23 @@ import {
 
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { ItwTags } from "../../../machine/tags";
+import { testTrustmarkDeps } from "../../../machine/utils/testDeps";
 import {
   GetCredentialTrustmarkUrlActorInput,
   GetCredentialTrustmarkUrlActorOutput,
+  GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput
 } from "../actors";
 import { type Context } from "../context";
 import { itwTrustmarkMachine } from "../machine";
 
+const T_DEPS = testTrustmarkDeps();
+
 const onInit = jest.fn();
 const storeWalletInstanceAttestation = jest.fn();
 const handleSessionExpired = jest.fn();
 const showRetryFailureToast = jest.fn();
+const trackTrustmarkFailure = jest.fn();
 
 const getWalletAttestationActor = jest.fn();
 const getCredentialTrustmarkActor = jest.fn();
@@ -32,12 +37,14 @@ const mockedMachine = itwTrustmarkMachine.provide({
     onInit: assign(onInit),
     storeWalletInstanceAttestation,
     handleSessionExpired,
-    showRetryFailureToast
+    showRetryFailureToast,
+    trackTrustmarkFailure
   },
   actors: {
-    getWalletAttestationActor: fromPromise<GetWalletAttestationActorOutput>(
-      getWalletAttestationActor
-    ),
+    getWalletAttestationActor: fromPromise<
+      GetWalletAttestationActorOutput,
+      GetWalletAttestationActorInput
+    >(getWalletAttestationActor),
     getCredentialTrustmarkActor: fromPromise<
       GetCredentialTrustmarkUrlActorOutput,
       GetCredentialTrustmarkUrlActorInput
@@ -79,7 +86,7 @@ describe("itwTrustmarkMachine", () => {
     );
 
     const actor = createActor(mockedMachine, {
-      input: { credentialType: "MDL" }
+      input: { credentialType: "MDL", deps: T_DEPS }
     });
 
     /** Initial state */
@@ -89,6 +96,7 @@ describe("itwTrustmarkMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("RefreshingTrustmark");
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
+      deps: T_DEPS,
       walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     });
@@ -113,6 +121,7 @@ describe("itwTrustmarkMachine", () => {
     });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
+      deps: T_DEPS,
       walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl,
       trustmarkUrl: "T_URL",
@@ -130,6 +139,7 @@ describe("itwTrustmarkMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("RefreshingTrustmark");
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
+      deps: T_DEPS,
       walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl,
       trustmarkUrl: undefined,
@@ -156,7 +166,7 @@ describe("itwTrustmarkMachine", () => {
     );
 
     const actor = createActor(mockedMachine, {
-      input: { credentialType: "MDL" }
+      input: { credentialType: "MDL", deps: T_DEPS }
     });
 
     /** Initial state */
@@ -168,6 +178,7 @@ describe("itwTrustmarkMachine", () => {
     );
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
+      deps: T_DEPS,
       walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     });
@@ -193,6 +204,7 @@ describe("itwTrustmarkMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       walletInstanceAttestation: { jwt: "T_WIA_UPDATED" },
       credentialType: "MDL",
+      deps: T_DEPS,
       credential: ItwStoredCredentialsMocks.mdl
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -215,7 +227,7 @@ describe("itwTrustmarkMachine", () => {
     );
 
     const actor = createActor(mockedMachine, {
-      input: { credentialType: "MDL" }
+      input: { credentialType: "MDL", deps: T_DEPS }
     });
 
     /** Initial state */
@@ -227,6 +239,7 @@ describe("itwTrustmarkMachine", () => {
     );
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "MDL",
+      deps: T_DEPS,
       walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     });
@@ -262,7 +275,7 @@ describe("itwTrustmarkMachine", () => {
     );
 
     const actor = createActor(mockedMachine, {
-      input: { credentialType: "mDL" }
+      input: { credentialType: "mDL", deps: T_DEPS }
     });
 
     /** Initial state */
@@ -272,6 +285,7 @@ describe("itwTrustmarkMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("RefreshingTrustmark");
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "mDL",
+      deps: T_DEPS,
       walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     });
@@ -292,6 +306,7 @@ describe("itwTrustmarkMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       credentialType: "mDL",
+      deps: T_DEPS,
       walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl,
       attempts: 1,

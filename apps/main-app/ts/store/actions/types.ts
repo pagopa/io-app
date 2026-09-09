@@ -2,8 +2,7 @@
 import {
   Dispatch as DispatchAPI,
   MiddlewareAPI as ReduxMiddlewareAPI,
-  Store as ReduxStore,
-  StoreEnhancer as ReduxStoreEnhancer
+  Store as ReduxStore
 } from "redux";
 
 import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
@@ -136,5 +135,3 @@ export type ReduxProps = Readonly<{
 }>;
 
 export type Store = ReduxStore<GlobalState, Action>;
-
-export type StoreEnhancer = ReduxStoreEnhancer<GlobalState>;

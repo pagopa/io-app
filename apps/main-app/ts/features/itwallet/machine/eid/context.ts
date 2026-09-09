@@ -14,6 +14,7 @@ import type {
 } from "../../common/utils/itwTypesUtils";
 
 import { IssuanceFailure } from "./failure";
+import { EidIssuanceMachineDeps } from "./input";
 
 /**
  * When authenticating with CIE + PIN the flow is interrupted by the card
@@ -58,6 +59,8 @@ export type Context = {
   credentialsToUpgrade: ReadonlyArray<CredentialMetadata>;
   /** The credential type that triggered the eID issuance flow. */
   credentialType: string | undefined;
+  /** Runtime dependencies injected via machine input */
+  deps: EidIssuanceMachineDeps;
   /** The obtained PID credential */
   eid: CredentialBundle | undefined;
   /** Credentials that failed the upgrade process. */
@@ -81,6 +84,8 @@ export type Context = {
    * versions. This is a local value used only during the issuance flow.
    */
   itwVersion: ItwVersion;
+  /** An optional dictionary of Key Attestations generated for the issuance. */
+  keyAttestations?: Record<string, string>;
   /**
    * The level of eID issuance, which determines the authentication methods
    * allowed and the eID level that will be issued: Documenti su IO (L2) or IT
@@ -97,36 +102,35 @@ export type Context = {
   /** The wallet instance attestation JWT used to verify the wallet instance. */
   walletInstanceAttestation: undefined | WalletInstanceAttestations;
   /**
-   * [1.3.3+] Optional Status Lists referenced by the Wallet Unit Attestations
-   * (WUAs). This is used to check the validity of the WI.
+   * [1.3.3+] Optional Status Lists referenced by the Key Attestations (KAs).
+   * This is used to check the validity of the WI.
    */
   walletInstanceStatusList?: {
     idx: number;
     parsedStatusList: CredentialStatus.StatusList;
     uri: string;
   };
-  /**
-   * An optional dictionary of Wallet Unit Attestations generated for the
-   * issuance.
-   */
-  walletUnitAttestations?: Record<string, string>;
 };
 
 /**
  * The EidIssuanceLevel represents the different levels of eID issuance and
- * determines which authentication methods are allowed: - "l2": Documenti su IO
- * issuance using CIE+PIN, CIEID, or SPID - "l2-fallback": Documenti su IO
- * issuance using CIEID or SPID (fallback mode) - "l3": IT Wallet issuance using
- * CIE+PIN, CIEID, or SPID plus an additional CIE card authentication
+ * determines which authentication methods are allowed:
+ *
+ * - "l2": Documenti su IO issuance using CIE+PIN, CIEID, or SPID
+ * - "l2-fallback": Documenti su IO issuance using CIEID or SPID (fallback mode)
+ * - "l3": IT Wallet issuance using CIE+PIN, CIEID, or SPID plus an additional CIE
+ *   card authentication
  */
 export type EidIssuanceLevel = "l2" | "l2-fallback" | "l3";
 
 /**
- * The EidIssuanceMode represents the different modes of eID issuance. -
- * "issuance": The user is issuing a new PID credential. - "reissuance": The
- * user is reissuing an existing PID credential. - "upgrade": The user is
- * upgrading from Documenti su IO to IT Wallet. This is used to determine the
- * flow and actions available in the eID issuance process.
+ * The EidIssuanceMode represents the different modes of eID issuance.
+ *
+ * - "issuance": The user is issuing a new PID credential.
+ * - "reissuance": The user is reissuing an existing PID credential.
+ * - "upgrade": The user is upgrading from Documenti su IO to IT Wallet. This is
+ *   used to determine the flow and actions available in the eID issuance
+ *   process.
  */
 export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
 
@@ -157,7 +161,7 @@ export type MrtdPoPContext = {
   validationUrl: string;
 };
 
-export const InitialContext: Context = {
+export const InitialContext: Omit<Context, "deps"> = {
   itwVersion: "1.0.0", // Initial value to satisfy type constraints. It is assigned in the `onInit` action.
   mode: undefined,
   level: undefined,

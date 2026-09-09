@@ -51,11 +51,14 @@ const isRequestObjectInvalidError = (
   error instanceof RemotePresentation.Errors.InvalidRequestObjectError ||
   error instanceof RemotePresentation.Errors.DcqlError;
 
+/** Union type of failures with the reason properly typed. */
+export type RemoteFailure = TypedRemoteFailures[keyof TypedRemoteFailures];
+
 /**
  * Type that maps known reasons with the corresponding failure, in order to
  * avoid unknowns as much as possible.
  */
-export type ReasonTypeByFailure = {
+type ReasonTypeByFailure = {
   [RemoteFailureType.EID_EXPIRED]: string;
   [RemoteFailureType.INVALID_CREDENTIALS_STATUS]: {
     invalidCredentials: Array<string>;
@@ -70,9 +73,6 @@ export type ReasonTypeByFailure = {
   [RemoteFailureType.UNTRUSTED_RP]: Trust.Errors.FederationError;
   [RemoteFailureType.WALLET_INACTIVE]: string;
 };
-
-/** Union type of failures with the reason properly typed. */
-export type RemoteFailure = TypedRemoteFailures[keyof TypedRemoteFailures];
 
 type TypedRemoteFailures = {
   [K in RemoteFailureType]: { reason: ReasonTypeByFailure[K]; type: K };

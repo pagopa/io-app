@@ -189,7 +189,7 @@ export const getCurrentWalletInstanceStatus = (
   });
 };
 
-export const getWalletUnitAttestation = async (
+export const getKeyAttestation = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
   itwVersion: ItwVersion,
   keyTags: ReadonlyArray<string>,
@@ -199,8 +199,8 @@ export const getWalletUnitAttestation = async (
   const ioWallet = getIoWallet(itwVersion);
 
   assert(
-    ioWallet.WalletUnitAttestation.isSupported,
-    `Wallet Unit Attestation is not supported by IT-Wallet v${itwVersion}`
+    ioWallet.KeyAttestation.isSupported,
+    `Key Attestation is not supported by IT-Wallet v${itwVersion}`
   );
 
   const integrityContext = getIntegrityContext(hardwareKeyTag);
@@ -210,7 +210,7 @@ export const getWalletUnitAttestation = async (
     WALLET_PROVIDER_BASE_URL
   );
 
-  const { attestation } = await ioWallet.WalletUnitAttestation.getAttestation(
+  const { attestation } = await ioWallet.KeyAttestation.getAttestation(
     {
       walletSolutionId: WALLET_SOLUTION_ID,
       walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,

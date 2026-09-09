@@ -1,5 +1,6 @@
 import { GlobalState } from "../../../../../store/reducers/types";
 import { isConnectedSelector } from "../../../../connectivity/store/selectors";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
   itwCredentialsEidIssuedAtSelector,
@@ -57,7 +58,7 @@ export const itwIsL3EnabledSelector = (state: GlobalState) =>
  * @returns True if the banner should be rendered, false otherwise
  */
 export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
-  !offlineAccessReasonSelector(state) &&
+  offlineAccessReasonSelector(state) === undefined &&
   !itwLifecycleIsValidSelector(state) &&
   isItwEnabledSelector(state) &&
   !itwIsL3EnabledSelector(state);
@@ -88,7 +89,7 @@ export const isItwPersistedDiscoveryBannerRenderableSelector = (
  * @returns True if the banner should be visible, false otherwise
  */
 export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
-  !offlineAccessReasonSelector(state) &&
+  offlineAccessReasonSelector(state) === undefined &&
   itwLifecycleIsValidSelector(state) &&
   !itwIsWalletInstanceStatusFailureSelector(state) &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
@@ -116,7 +117,7 @@ export const itwOfflineAccessAvailableSelector = (state: GlobalState) =>
  * - Isn't ITW Credential
  */
 export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
-  !offlineAccessReasonSelector(state) &&
+  offlineAccessReasonSelector(state) === undefined &&
   isItwEnabledSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state);
@@ -138,21 +139,29 @@ export const itwShouldUpgradeCredentialSelector =
 /**
  * Returns whether the new IT-Wallet variant should be rendered.
  *
- * - The IT Wallet feature flag is enabled
- * - The wallet is not offline
+ * - The wallet is not offline and IT Wallet feature flag is enabled
+ * - The wallet is offline
  * - Is ITW Valid
  */
-export const itwShouldRenderNewItWalletSelector = (state: GlobalState) =>
-  isItwEnabledSelector(state) &&
-  !offlineAccessReasonSelector(state) &&
-  itwLifecycleIsITWalletValidSelector(state);
+export const itwShouldRenderNewItWalletSelector = (state: GlobalState) => {
+  const offlineReason = offlineAccessReasonSelector(state);
+  const isItWalletValid = itwLifecycleIsITWalletValidSelector(state);
+
+  if (offlineReason === OfflineAccessReasonEnum.DEVICE_OFFLINE) {
+    // when the wallet is offline, we can't check whether the remote flag is
+    // enabled or not, so we have to assume that the wallet is enabled
+    return isItWalletValid;
+  }
+
+  return isItwEnabledSelector(state) && isItWalletValid;
+};
 
 /**
  * Returns whether the IT-Wallet upgrade banner in MDL details should be
  * rendered.
  *
- * - The IT Wallet feature flag is enabled
  * - The wallet is not offline
+ * - The IT Wallet feature flag is enabled
  * - The L3 feature flag is enabled
  * - Isn't ITW Credential
  * - The user did not close the banner
@@ -160,8 +169,8 @@ export const itwShouldRenderNewItWalletSelector = (state: GlobalState) =>
 export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
   state: GlobalState
 ): boolean =>
+  offlineAccessReasonSelector(state) === undefined &&
   isItwEnabledSelector(state) &&
-  !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   itwIsWalletUpgradeMDLDetailsBannerVisibleSelector(state);
@@ -208,7 +217,7 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean => {
  */
 export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
-  !offlineAccessReasonSelector(state) &&
+  offlineAccessReasonSelector(state) === undefined &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsValidSelector(state) &&
   !itwIsActivationDisabledSelector(state);
@@ -252,7 +261,7 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
  */
 export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
-  !offlineAccessReasonSelector(state) &&
+  offlineAccessReasonSelector(state) === undefined &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   itwIsWalletDiscoveryBannerVisibleSelector(state) &&
@@ -270,14 +279,14 @@ export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
 export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
   state: GlobalState
 ) =>
-  !offlineAccessReasonSelector(state) &&
+  offlineAccessReasonSelector(state) === undefined &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsValidSelector(state) &&
   itwIsActivationDisabledSelector(state);
 
 export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
-  !offlineAccessReasonSelector(state) &&
+  offlineAccessReasonSelector(state) === undefined &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   itwLifecycleIsValidSelector(state) &&

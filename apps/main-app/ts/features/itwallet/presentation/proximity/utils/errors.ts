@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */
-
 /** Thrown when all requested credentials are missing */
 export class MissingCredentialError extends Error {
   constructor(public credentialsDocType: Array<string>) {

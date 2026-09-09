@@ -13,7 +13,7 @@ const TestContainer = ({
   return null;
 };
 
-describe("the `useReloadIfNeeded` hook ", () => {
+describe("the `useOnFirstRender` hook", () => {
   describe("with default parameters", () => {
     it("should call the callback only on the first render", () => {
       // eslint-disable-next-line functional/no-let

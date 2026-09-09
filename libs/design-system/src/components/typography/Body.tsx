@@ -2,6 +2,7 @@ import { Ref } from "react";
 import { Pressable, View } from "react-native";
 
 import { useIOTheme } from "../../context";
+import { IOTypographicLinkColorToken, IOTypography } from "../../core";
 import { IOFontWeight } from "../../utils/fonts";
 import {
   IOText,
@@ -16,8 +17,9 @@ type BodyStyleProps = Omit<TypographicStyleProps, "ref"> &
     weight?: Extract<IOFontWeight, "Regular" | "Semibold">;
   };
 
-export const bodyFontSize = 16;
-export const bodyLineHeight = 24;
+const {
+  body: { colorToken, ...bodyStyle }
+} = IOTypography;
 
 /** `Body` typographic style */
 export const Body = ({
@@ -34,15 +36,13 @@ export const Body = ({
   const theme = useIOTheme();
 
   const defaultColor = asLink
-    ? theme["interactiveElem-default"]
-    : theme["textBody-tertiary"];
+    ? theme[IOTypographicLinkColorToken]
+    : theme[colorToken];
 
   const BodyProps: IOTextProps = {
     ...props,
-    dynamicTypeRamp: "body", // iOS only
-    weight: customWeight || "Regular",
-    size: bodyFontSize,
-    lineHeight: bodyLineHeight,
+    ...bodyStyle,
+    weight: customWeight || bodyStyle.weight,
     color: customColor ?? defaultColor,
     ...(asLink
       ? {

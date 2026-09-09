@@ -1,0 +1,1 @@
+export { AnimatedNumericText } from "./AnimatedNumericText";

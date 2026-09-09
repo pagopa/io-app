@@ -10,6 +10,7 @@ import {
   RelyingPartyConfiguration
 } from "../utils/itwRemoteTypeUtils";
 import { RemoteFailure } from "./failure";
+import { RemoteMachineDeps } from "./input";
 
 export type Context = {
   /**
@@ -17,6 +18,8 @@ export type Context = {
    * Relying Party.
    */
   credentials: Record<string, CredentialMetadata> | undefined;
+  /** Runtime dependencies injected via machine input */
+  deps: RemoteMachineDeps;
   /** The failure of the remote presentation machine */
   failure?: RemoteFailure;
   /**
@@ -71,7 +74,7 @@ export type Context = {
   walletInstanceAttestation: undefined | WalletInstanceAttestations;
 };
 
-export const InitialContext: Context = {
+export const InitialContext: Omit<Context, "deps"> = {
   walletInstanceAttestation: undefined,
   credentials: undefined,
   payload: undefined,

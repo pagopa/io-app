@@ -9,14 +9,11 @@ import type {
 } from "./types";
 
 import { useIOTheme } from "../../context";
-import {
-  bodyFontSize,
-  bodyLineHeight,
-  bodySmallFontSize,
-  bodySmallLineHeight
-} from "../typography";
+import { IOTypographicLinkColorToken, IOTypography } from "../../core";
 import { parse } from "./parser";
 import { DEFAULT_RULES } from "./rules";
+
+const { body, bodySmall } = IOTypography;
 
 export type IOMarkdownProps = {
   /** The markdown string to render */
@@ -76,10 +73,10 @@ export const IOMarkdown = ({
   const context = useMemo<RenderContext>(
     () => ({
       onLinkPress: handleLinkPress,
-      linkColor: theme["interactiveElem-default"],
+      linkColor: theme[IOTypographicLinkColorToken],
       textAlign: textAlign ?? "auto",
-      fontSize: small ? bodySmallFontSize : bodyFontSize,
-      lineHeight: small ? bodySmallLineHeight : bodyLineHeight
+      fontSize: small ? bodySmall.size : body.size,
+      lineHeight: small ? bodySmall.lineHeight : body.lineHeight
     }),
     [handleLinkPress, textAlign, small, theme]
   );

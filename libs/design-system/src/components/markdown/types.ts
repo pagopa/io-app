@@ -51,10 +51,6 @@ export type MarkdownNodeType =
   | "strong"
   | "text";
 
-export type RenderChildrenFn = (
-  nodes: ReadonlyArray<MarkdownNode>
-) => ReadonlyArray<React.ReactNode>;
-
 export type RenderContext = {
   /** Applied to paragraph segments */
   fontSize: TextStyle["fontSize"];
@@ -74,3 +70,7 @@ export type RenderRule = (
   renderChildren: RenderChildrenFn,
   context: RenderContext
 ) => React.ReactNode;
+
+type RenderChildrenFn = (
+  nodes: ReadonlyArray<MarkdownNode>
+) => ReadonlyArray<React.ReactNode>;

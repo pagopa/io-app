@@ -1,10 +1,10 @@
 import { useIOTheme } from "../../context";
-import { IOFontSize } from "../../utils/fonts";
+import { IOTypography } from "../../core";
 import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
-/* Common typographic styles */
-export const h3FontSize: IOFontSize = 22;
-export const h3LineHeight = 33;
+const {
+  h3: { colorToken, ...h3Style }
+} = IOTypography;
 
 /** `H3` typographic style */
 export const H3 = ({ color: customColor, ...props }: TypographicStyleProps) => {
@@ -12,11 +12,8 @@ export const H3 = ({ color: customColor, ...props }: TypographicStyleProps) => {
 
   const H3Props: IOTextProps = {
     ...props,
-    dynamicTypeRamp: "title2", // iOS only
-    weight: "Semibold",
-    size: h3FontSize,
-    lineHeight: h3LineHeight,
-    color: customColor ?? theme["textHeading-default"]
+    ...h3Style,
+    color: customColor ?? theme[colorToken]
   };
 
   return <IOText {...H3Props}>{props.children}</IOText>;

@@ -7,7 +7,7 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
+import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/testUtils";
 import PN_ROUTES from "../../../navigation/routes";
 import * as analytics from "../../analytics";
 import {

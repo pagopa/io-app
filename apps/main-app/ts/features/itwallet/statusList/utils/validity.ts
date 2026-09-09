@@ -8,10 +8,11 @@ const SECONDS_TO_MS = 1000;
  * refreshed.
  *
  * Since the spec mandates `iat`, staleness always has a baseline. Precedence:
- * 1. If `ttl` is present: stale when `iat + ttl` has passed (ttl is the max
- * cache lifetime in seconds and takes priority over `exp`) 2. Else if `exp` is
- * present: stale when `exp` has passed 3. Otherwise: stale when `iat + 24h` has
- * passed
+ *
+ * 1. If `ttl` is present: stale when `iat + ttl` has passed (ttl is the max cache
+ *    lifetime in seconds and takes priority over `exp`) 2. Else if `exp` is
+ *    present: stale when `exp` has passed 3. Otherwise: stale when `iat + 24h`
+ *    has passed
  *
  * @param payload - The cached Status List Token payload
  * @param now - Current time in milliseconds since epoch (injected for

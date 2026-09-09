@@ -4,7 +4,6 @@ import {
   createCryptoContextFor,
   KeyAttestationCryptoContext
 } from "@pagopa/io-react-native-wallet";
-import { constNull } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 
 // Key tags
@@ -13,7 +12,7 @@ export const DPOP_KEYTAG = "DPOP_KEYTAG";
 
 export const regenerateCryptoKey = (keyTag: string) =>
   deleteKey(keyTag)
-    .catch(constNull)
+    .catch(() => null)
     .finally(() => generate(keyTag));
 
 /**

@@ -143,19 +143,9 @@ export const PatchedWalletV2 = t.intersection(
 
 export type PatchedWalletV2 = t.TypeOf<typeof PatchedWalletV2>;
 
-export type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
-  info: CardInfo;
-  kind: "Bancomat";
-};
-
 export type RawBPayPaymentMethod = WalletV2WithoutInfo & {
   info: BPayInfoPagoPa;
   kind: "BPay";
-};
-
-export type RawCreditCardPaymentMethod = WalletV2WithoutInfo & {
-  info: CardInfo;
-  kind: "CreditCard";
 };
 
 /**
@@ -170,7 +160,17 @@ export type RawPaymentMethod =
   | RawCreditCardPaymentMethod
   | RawPayPalPaymentMethod;
 
-export type RawPayPalPaymentMethod = WalletV2WithoutInfo & {
+type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
+  info: CardInfo;
+  kind: "Bancomat";
+};
+
+type RawCreditCardPaymentMethod = WalletV2WithoutInfo & {
+  info: CardInfo;
+  kind: "CreditCard";
+};
+
+type RawPayPalPaymentMethod = WalletV2WithoutInfo & {
   info: PayPalInfo;
   kind: "PayPal";
 };
@@ -194,15 +194,6 @@ export const isRawBPay = (
   pm: RawPaymentMethod | undefined
 ): pm is RawBPayPaymentMethod => pm?.kind === "BPay";
 
-// In addition to the representation, a bancomat have also the abiInfo
-export type BancomatPaymentMethod = PaymentMethodRepresentation &
-  RawBancomatPaymentMethod &
-  WithAbi;
-
-export type BPayPaymentMethod = PaymentMethodRepresentation &
-  RawBPayPaymentMethod &
-  WithAbi;
-
 export type CreditCardPaymentMethod = PaymentMethodRepresentation &
   RawCreditCardPaymentMethod &
   WithAbi;
@@ -213,15 +204,23 @@ export type PaymentMethod =
   | CreditCardPaymentMethod
   | PayPalPaymentMethod;
 
-export type PaymentMethodRepresentation = {
+// In addition to the representation, a bancomat have also the abiInfo
+type BancomatPaymentMethod = PaymentMethodRepresentation &
+  RawBancomatPaymentMethod &
+  WithAbi;
+
+type BPayPaymentMethod = PaymentMethodRepresentation &
+  RawBPayPaymentMethod &
+  WithAbi;
+
+type PaymentMethodRepresentation = {
   // A textual representation for a payment method
   caption: string;
   // An icon that represent the payment method
   icon: ImageSourcePropType;
 };
 
-export type PayPalPaymentMethod = PaymentMethodRepresentation &
-  RawPayPalPaymentMethod;
+type PayPalPaymentMethod = PaymentMethodRepresentation & RawPayPalPaymentMethod;
 
 type WithAbi = {
   abiInfo?: Abi;

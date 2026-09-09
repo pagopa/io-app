@@ -20,27 +20,53 @@ export const oneIdentityRolloutPercentageSelector = (state: GlobalState) => {
   return oneIdentityConfig?.rolloutPercentage ?? 0;
 };
 
-/** Fallback OneIdentity IDPs list URL for each environment. */
-const FALLBACK_ONE_IDENTITY_IDPS_URLS: Record<OneIdentityEnv, string> = {
-  prod: "https://io.oneid.pagopa.it/idps",
-  uat: "https://uat.io.oneid.pagopa.it/idps"
+type OneIdentityEnvConfig = {
+  idpFriendlyNamesUrl: string;
+  idpsUrl: string;
 };
 
+/** OneIdentity fallback configurations for each environment. */
+const FALLBACK_ONE_IDENTITY_CONFIG: Record<
+  OneIdentityEnv,
+  OneIdentityEnvConfig
+> = {
+  prod: {
+    idpsUrl: "https://io.oneid.pagopa.it/idps",
+    idpFriendlyNamesUrl:
+      "https://assets.io.oneid.pagopa.it/assets/idpFriendlyNameList.json"
+  },
+  uat: {
+    idpsUrl: "https://uat.io.oneid.pagopa.it/idps",
+    idpFriendlyNamesUrl:
+      "https://assets.uat.io.oneid.pagopa.it/assets/idpFriendlyNameList.json"
+  }
+};
+
+/** Creates a selector for a specific OneIdentity environment field. */
+const makeOneIdentityEnvFieldSelector =
+  (field: keyof OneIdentityEnvConfig) => (state: GlobalState) => {
+    const env = oneIdentityEnvSelector(state);
+    const oneIdentityConfig = oneIdentityRemoteConfigSelector(state);
+
+    return (
+      oneIdentityConfig?.environments?.[env]?.[field] ??
+      FALLBACK_ONE_IDENTITY_CONFIG[env][field]
+    );
+  };
+
+/** Retrieves the URL of the OneIdentity IDP list for the current environment. */
+export const oneIdentityIdpsUrlSelector =
+  makeOneIdentityEnvFieldSelector("idpsUrl");
+
 /**
- * Retrieves the OneIdentity IDPs list URL for the current OneIdentity
+ * Retrieves the URL of the OneIdentity IDP friendly names for the current
  * environment.
  */
-export const oneIdentityIdpsUrlSelector = (state: GlobalState) => {
-  const env = oneIdentityEnvSelector(state);
-  const oneIdentityConfig = oneIdentityRemoteConfigSelector(state);
-  return (
-    oneIdentityConfig?.environments?.[env]?.idpsUrl ??
-    FALLBACK_ONE_IDENTITY_IDPS_URLS[env]
-  );
-};
+export const oneIdentityIdpFriendlyNamesUrlSelector =
+  makeOneIdentityEnvFieldSelector("idpFriendlyNamesUrl");
 
 export const testable = isTestEnv
   ? {
-      FALLBACK_ONE_IDENTITY_IDPS_URLS
+      FALLBACK_ONE_IDENTITY_CONFIG
     }
   : undefined;

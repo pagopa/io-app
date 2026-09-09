@@ -1,15 +1,17 @@
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent
+} from "react-native-webview/lib/WebViewTypes";
 
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
-import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
+import { originSchemasWhiteList } from "../../../../authentication/common/utils";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import {
   selectItwCieIdEnvironment,
@@ -17,7 +19,7 @@ import {
 } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { selectAuthUrlOption } from "../../../machine/eid/selectors";
+import { selectAuthUrl } from "../../../machine/eid/selectors";
 import { useCieIdApp } from "../hooks/useCieIdApp";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
@@ -34,17 +36,26 @@ const isAuthenticationUrl = (url: string) => {
 };
 
 /**
+ * Prefixes of the error codes reported when the WebView fails to load a page.
+ * These codes end up in the support modal, in the Zendesk ticket and in the
+ * Mixpanel KO event, so they must stay stable and readable to keep failures
+ * diagnosable.
+ */
+const WEBVIEW_ERROR_CODE_PREFIX = "CIEID_WEBVIEW_ERROR";
+const WEBVIEW_HTTP_ERROR_CODE_PREFIX = "CIEID_WEBVIEW_HTTP_ERROR";
+
+/**
  * This component renders a WebView that loads the URL obtained from the
  * startAuthFlow. It handles the navigation state changes to detect when the
  * authentication is completed and sends the redirectAuthUrl back to the state
  * machine.
  */
 const ItwCieIdLoginScreen = () => {
-  const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
+  const { ISSUANCE_REDIRECT_URI } = getEnv(useIOSelector(selectItwEnv));
   const cieIdEnvironment = useIOSelector(selectItwCieIdEnvironment);
 
   const initialAuthUrl =
-    ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
+    ItwEidIssuanceMachineContext.useSelector(selectAuthUrl);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const [isWebViewLoading, setWebViewLoading] = useState(true);
 
@@ -59,10 +70,7 @@ const ItwCieIdLoginScreen = () => {
     handleAuthenticationFailure
   } = useCieIdApp();
 
-  const webViewSource = pipe(
-    authUrl,
-    O.alt(() => initialAuthUrl)
-  );
+  const webViewSource = authUrl ?? initialAuthUrl;
 
   useHeaderSecondLevel({
     title: I18n.t(
@@ -96,17 +104,39 @@ const ItwCieIdLoginScreen = () => {
     [startCieIdAppAuthentication, cieIdEnvironment]
   );
 
+  /**
+   * Converts the WebView failure events into meaningful errors. Without this
+   * conversion the raw native event object reaches the state machine and is
+   * stringified into an unusable "[object Object]" error code.
+   */
+  const handleWebViewError = useCallback(
+    ({ nativeEvent }: WebViewErrorEvent) => {
+      const { code, description } = nativeEvent;
+      handleAuthenticationFailure(
+        new Error(
+          `${WEBVIEW_ERROR_CODE_PREFIX}_${code}${
+            description ? `: ${description}` : ""
+          }`
+        )
+      );
+    },
+    [handleAuthenticationFailure]
+  );
+
+  const handleWebViewHttpError = useCallback(
+    ({ nativeEvent }: WebViewHttpErrorEvent) => {
+      handleAuthenticationFailure(
+        new Error(`${WEBVIEW_HTTP_ERROR_CODE_PREFIX}_${nativeEvent.statusCode}`)
+      );
+    },
+    [handleAuthenticationFailure]
+  );
+
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
       const authRedirectUrl = event.url;
-      const isIssuanceRedirect = pipe(
-        authRedirectUrl,
-        O.fromNullable,
-        O.fold(
-          () => false,
-          s => s.startsWith(ISSUANCE_REDIRECT_URI)
-        )
-      );
+      const isIssuanceRedirect =
+        authRedirectUrl?.startsWith(ISSUANCE_REDIRECT_URI) ?? false;
 
       if (isIssuanceRedirect) {
         machineRef.send({
@@ -120,34 +150,32 @@ const ItwCieIdLoginScreen = () => {
 
   const content = useMemo(
     () =>
-      pipe(
-        webViewSource,
-        O.fold(constNull, (url: string) => (
-          <WebView
-            allowsInlineMediaPlayback
-            androidCameraAccessDisabled
-            androidMicrophoneAccessDisabled
-            cacheEnabled={false}
-            javaScriptEnabled
-            mediaPlaybackRequiresUserAction
-            onError={handleAuthenticationFailure}
-            onHttpError={handleAuthenticationFailure}
-            onLoadEnd={onLoadEnd}
-            onNavigationStateChange={handleNavigationStateChange}
-            onShouldStartLoadWithRequest={handleShouldStartLoading}
-            originWhitelist={originSchemasWhiteList}
-            source={{ uri: url }}
-            testID="cieid-webview"
-            textZoom={100}
-            userAgent={defaultUserAgent}
-          />
-        ))
-      ),
+      webViewSource ? (
+        <WebView
+          allowsInlineMediaPlayback
+          androidCameraAccessDisabled
+          androidMicrophoneAccessDisabled
+          cacheEnabled={false}
+          javaScriptEnabled
+          mediaPlaybackRequiresUserAction
+          onError={handleWebViewError}
+          onHttpError={handleWebViewHttpError}
+          onLoadEnd={onLoadEnd}
+          onNavigationStateChange={handleNavigationStateChange}
+          onShouldStartLoadWithRequest={handleShouldStartLoading}
+          originWhitelist={originSchemasWhiteList}
+          source={{ uri: webViewSource }}
+          testID="cieid-webview"
+          textZoom={100}
+          userAgent={defaultUserAgent}
+        />
+      ) : null,
     [
       webViewSource,
       handleNavigationStateChange,
       handleShouldStartLoading,
-      handleAuthenticationFailure,
+      handleWebViewError,
+      handleWebViewHttpError,
       onLoadEnd
     ]
   );

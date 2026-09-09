@@ -3,7 +3,7 @@ import { JwkPublicKey, parseJwkOrError } from "@pagopa/ts-commons/lib/jwk";
 import chalk from "chalk";
 import { Response, Router } from "express";
 import * as E from "fp-ts/lib/Either";
-import * as jose from "jose";
+import { calculateJwkThumbprint } from "jose";
 import { parseStringPromise } from "xml2js";
 /** This router serves all public API (those ones don't need session) */
 import * as zlib from "zlib";
@@ -80,7 +80,7 @@ addHandler(
       return;
     }
 
-    const thumbprint = await jose.calculateJwkThumbprint(
+    const thumbprint = await calculateJwkThumbprint(
       jwkPK.right,
       DEFAULT_LOLLIPOP_HASH_ALGORITHM
     );
@@ -190,7 +190,7 @@ addHandler(
         res.sendStatus(400);
         return;
       }
-      const thumbprint = await jose.calculateJwkThumbprint(
+      const thumbprint = await calculateJwkThumbprint(
         jwkPK.right,
         DEFAULT_LOLLIPOP_HASH_ALGORITHM
       );

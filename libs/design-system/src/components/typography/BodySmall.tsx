@@ -2,6 +2,7 @@ import { Ref } from "react";
 import { Pressable, View } from "react-native";
 
 import { useIOTheme } from "../../context";
+import { IOTypographicLinkColorToken, IOTypography } from "../../core";
 import { IOFontWeight } from "../../utils/fonts";
 import {
   IOText,
@@ -16,8 +17,9 @@ type BodySmallProps = Omit<TypographicStyleProps, "ref"> &
     weight?: Extract<IOFontWeight, "Regular" | "Semibold">;
   };
 
-export const bodySmallFontSize = 14;
-export const bodySmallLineHeight = 21;
+const {
+  bodySmall: { colorToken, ...bodySmallStyle }
+} = IOTypography;
 
 /** `BodySmall` typographic style */
 export const BodySmall = ({
@@ -34,15 +36,13 @@ export const BodySmall = ({
   const theme = useIOTheme();
 
   const defaultColor = asLink
-    ? theme["interactiveElem-default"]
-    : theme["textBody-tertiary"];
+    ? theme[IOTypographicLinkColorToken]
+    : theme[colorToken];
 
   const BodySmallProps: IOTextProps = {
     ...props,
-    dynamicTypeRamp: "footnote" /* iOS only */,
-    weight: customWeight ?? "Regular",
-    size: bodySmallFontSize,
-    lineHeight: bodySmallLineHeight,
+    ...bodySmallStyle,
+    weight: customWeight ?? bodySmallStyle.weight,
     color: customColor ?? defaultColor,
     ...(asLink
       ? {

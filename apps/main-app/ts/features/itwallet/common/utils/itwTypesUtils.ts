@@ -61,6 +61,12 @@ export type CredentialMetadata = {
     expiration: string;
     issuedAt?: string;
   };
+  /**
+   * The ID of the Key Attestation that contains the credential attested key.
+   * The corresponding attestation is stored in `walletInstace.keyAttestations`.
+   * Only credentials issued with the newer IT-Wallet specs contain this field.
+   */
+  keyAttestationId?: string;
   keyTag: string;
   /**
    * Key tags of every copy of a batch credential (e.g. one-time-use credentials
@@ -83,13 +89,6 @@ export type CredentialMetadata = {
   spec_version: string;
   validity?: CredentialValidity | LegacyCredentialValidity;
   verification?: StoredVerification;
-  /**
-   * The ID of the Wallet Unit Attestation that contains the credential attested
-   * key. The corresponding attestation is stored in
-   * `walletInstace.walletUnitAttestations`. Only credentials issued with the
-   * newer IT-Wallet specs contain this field.
-   */
-  walletUnitAttestationId?: string;
 };
 
 export type CredentialOfferResolved = {
@@ -111,6 +110,7 @@ export type ItwCredentialStatus =
   | "expired"
   | "expiring"
   | "invalid"
+  | "suspended"
   | "unknown"
   | "valid"
   | ItwJwtCredentialStatus;
@@ -133,9 +133,6 @@ export type ParsedStatusAssertion = CredentialStatus.ParsedStatusAssertion;
 /** Alias for RequestObject */
 export type RequestObject = RemotePresentation.RequestObject;
 
-/** Alias type for the relying party entity configuration. */
-export type RpEntityConfiguration = RemotePresentation.RelyingPartyConfig;
-
 /**
  * Slim version of Verification for storage. Only persists the fields actually
  * used by the app. The `evidence` field is excluded as it's being dropped in
@@ -144,11 +141,6 @@ export type RpEntityConfiguration = RemotePresentation.RelyingPartyConfig;
 export type StoredVerification = Pick<
   Verification,
   "assurance_level" | "trust_framework"
->;
-
-/** Alias for the Verification type */
-export type Verification = NonNullable<
-  ReturnType<typeof SdJwt.getVerification>
 >;
 
 export type WalletInstanceAttestations = {
@@ -163,6 +155,9 @@ export type WalletInstanceRevocationReason =
 
 /** Alias for the WalletInstanceStatus type */
 export type WalletInstanceStatus = WalletInstance.WalletInstanceStatus;
+
+/** Alias for the Verification type */
+type Verification = NonNullable<ReturnType<typeof SdJwt.getVerification>>;
 
 // A predefined list of credential types that are potentially multi-level.
 const MULTI_LEVEL_CREDENTIAL_TYPES = [

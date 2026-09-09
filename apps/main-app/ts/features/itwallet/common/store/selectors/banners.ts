@@ -5,6 +5,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import {
   bannerHideDurations,
   bannerVisibleDurations,
+  defaultBannerHideDuration,
   ItwBannerId
 } from "../reducers/banners";
 
@@ -38,8 +39,8 @@ export const itwIsBannerVisibleSelector = (id: ItwBannerId) =>
     const { dismissedOn, dismissCount, shownOn } = bannerState;
 
     if (dismissedOn && dismissCount && dismissCount > 0) {
-      const durations = bannerHideDurations[id];
-      if (durations && durations.length > 0) {
+      const durations = bannerHideDurations[id] ?? defaultBannerHideDuration;
+      if (durations.length > 0) {
         const durationIndex = Math.min(dismissCount - 1, durations.length - 1);
         const hideDurationInDays = durations[durationIndex];
         const dismissedDate = new Date(dismissedOn);
@@ -124,3 +125,10 @@ export const itwIsActivationSuccessFeedbackBannerVisibleSelector =
  */
 export const itwIsMdlDetailsInfoBannerVisibleSelector =
   itwIsBannerVisibleSelector("mdlDetailsInfo");
+
+/**
+ * Returns whether the informational banner in TS (Tessera Sanitaria) details is
+ * visible. Defaults to true.
+ */
+export const itwIsTsDetailsInfoBannerVisibleSelector =
+  itwIsBannerVisibleSelector("tsDetailsInfo");
