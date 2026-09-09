@@ -189,7 +189,7 @@ export const handleSessionExpiredAction = ({
 export const navigateToIdentificationScreenAction = ({
   context
 }: ActionArgs<Context, RemoteEvents, RemoteEvents>) => {
-  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+  context.deps.navigation.replace(ITW_ROUTES.MAIN, {
     screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
     params: { eidReissuing: true }
   });
