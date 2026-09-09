@@ -1878,7 +1878,7 @@
                 "action": "Conferma identità",
                 "expired": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni.",
                 "expiring": "Conferma la tua indentità entro il {{date}} per continuare a usare i tuoi documenti senza limitazioni.",
-                "valid": "Hai attivato il tuo ID con CIE il {{date}}."
+                "valid": "Hai attivato IT-Wallet con CIE il {{date}}."
               }
             },
             "contentBottom": "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE.",
@@ -2348,7 +2348,7 @@
       "reissuanceLandingScreen": {
         "itWalletActivation": {
           "primaryAction": "Scopri di più",
-          "subtitle": "Porta i tuoi documenti digitali verso funzionalità evolute con il portafoglio IT-Wallet di IO: pubblico, sicuro, tuo. ",
+          "subtitle": "Porta i tuoi documenti digitali verso funzionalità evolute con il portafoglio IT-Wallet di IO: pubblico, sicuro, tuo.",
           "title": "Lo sapevi? Adesso puoi attivare IT-Wallet"
         },
         "notNecessary": {

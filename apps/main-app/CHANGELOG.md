@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.3](https://github.com/pagopa/io-app/compare/3.39.0-rc.2...3.39.0-rc.3) (2026-09-08)
+
+### Features
+
+* [[IOPLT-2042](https://pagopa.atlassian.net/browse/IOPLT-2042)] Add `AnimatedNumericText` component for iOS, thx to `@expo/ui` ([#8528](https://github.com/pagopa/io-app/issues/8528)) ([c9b5026](https://github.com/pagopa/io-app/commit/c9b50261d11e8e19f27878447ae12233961563d8))
+* **IT-Wallet:** [[SIW-4382](https://pagopa.atlassian.net/browse/SIW-4382)] Saved approvals management section update ([#8337](https://github.com/pagopa/io-app/issues/8337)) ([d1def68](https://github.com/pagopa/io-app/commit/d1def68b7d69570732c12f7b308f9d0989371fd5))
+* **IT-Wallet:** [[SIW-4914](https://pagopa.atlassian.net/browse/SIW-4914)] Implement independent dismiss state for new credential validity banners ([#8534](https://github.com/pagopa/io-app/issues/8534)) ([c43d33e](https://github.com/pagopa/io-app/commit/c43d33eee8beeea8e22e3b946a43574bfc0d20a2))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4916](https://pagopa.atlassian.net/browse/SIW-4916)] Align offline wallet UI for IT-Wallet ([#8539](https://github.com/pagopa/io-app/issues/8539)) ([6f0892d](https://github.com/pagopa/io-app/commit/6f0892d595b3d6a72eeeadd6fa60cbad8e71b460))
+* **IT-Wallet:** [[SIW-4935](https://pagopa.atlassian.net/browse/SIW-4935)] Improve WebView error handling with meaningful error codes ([#8554](https://github.com/pagopa/io-app/issues/8554)) ([af6b239](https://github.com/pagopa/io-app/commit/af6b2395f4fac2fc3205b5069037e8c68ccbdf5a))
+* **IT-Wallet:** [[SIW-4983](https://pagopa.atlassian.net/browse/SIW-4983)] Remove contextual help on selected ITW routes ([#8565](https://github.com/pagopa/io-app/issues/8565)) ([d3e4c72](https://github.com/pagopa/io-app/commit/d3e4c7285b2a28d1f725ca4b14923cef726b3a3e))
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] update locale ([#8567](https://github.com/pagopa/io-app/issues/8567)) ([e995af5](https://github.com/pagopa/io-app/commit/e995af5905a04a499a3b822b94f1f34610aaffaa))
+* [[SIW-4365](https://pagopa.atlassian.net/browse/SIW-4365)] Bump `xstate` and `@xstate/react` versions ([#8490](https://github.com/pagopa/io-app/issues/8490)) ([3c80764](https://github.com/pagopa/io-app/commit/3c80764696bf2b5ea2951529850713bde2dc8873))
+* Update translations from Lokalise ([#8564](https://github.com/pagopa/io-app/issues/8564)) ([0061ba0](https://github.com/pagopa/io-app/commit/0061ba0106870011c525fe14981c5aad295d2a1e))
 ## [3.39.0-rc.2](https://github.com/pagopa/io-app/compare/3.39.0-rc.1...3.39.0-rc.2) (2026-09-07)
 
 ### Features
