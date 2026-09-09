@@ -135,17 +135,6 @@ describe("buildThirdPartyCredentialProperty", () => {
 
     expect(buildThirdPartyCredentialProperty(state)).toBe("not_available");
   });
-
-  it("does not consider historical L2 credentials as third-party credentials", () => {
-    const credential = getMockedCredential(CredentialType.DRIVING_LICENSE, {
-      origin: "credentialOffer"
-    });
-    const state = getStateWithCredentials({
-      [credential.credentialId]: credential
-    });
-
-    expect(buildThirdPartyCredentialProperty(state)).toBe("not_available");
-  });
 });
 
 describe("buildWalletListCredentialProperty", () => {
@@ -195,16 +184,12 @@ describe("buildWalletListCredentialProperty", () => {
     expect(buildWalletListCredentialProperty(state)).toBe("not_available");
   });
 
-  it("does not consider PID or historical L2 credentials as wallet list credentials", () => {
+  it("does not consider PID as a wallet list credential", () => {
     const pid = getMockedCredential(CredentialType.PID, {
       origin: "catalogue"
     });
-    const l2Credential = getMockedCredential(CredentialType.DRIVING_LICENSE, {
-      origin: "catalogue"
-    });
     const state = getStateWithCredentials({
-      [pid.credentialId]: pid,
-      [l2Credential.credentialId]: l2Credential
+      [pid.credentialId]: pid
     });
 
     expect(buildWalletListCredentialProperty(state)).toBe("not_available");
@@ -223,6 +208,47 @@ describe("buildWalletListCredentialProperty", () => {
     expect(buildWalletListCredentialProperty(state)).toBe("valid");
   });
 });
+describe("Documenti su IO aggregate credential properties", () => {
+  const scenarios = [
+    CredentialType.DRIVING_LICENSE,
+    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+    CredentialType.EUROPEAN_DISABILITY_CARD
+  ].flatMap(credentialType =>
+    (["catalogue", "credentialOffer"] as const).flatMap(origin =>
+      (["valid", "invalid"] as const).map(status => ({
+        name: `${credentialType} from ${origin} with ${status} status`,
+        credentialType,
+        origin,
+        status
+      }))
+    )
+  );
+
+  it.each(scenarios)(
+    "tracks $name without IT-Wallet activation",
+    ({ credentialType, origin, status }) => {
+      const credential = getMockedCredential(credentialType, {
+        origin,
+        validity:
+          status === "invalid"
+            ? { type: "status_assertion", status }
+            : undefined
+      });
+      const state = getStateWithCredentials({
+        [credential.credentialId]: credential
+      });
+      const expectedStatus = status === "valid" ? "valid" : "not_valid";
+
+      expect(buildItwBaseProperties(state)).toMatchObject({
+        ITW_THIRD_PARTY_CREDENTIAL:
+          origin === "credentialOffer" ? expectedStatus : "not_available",
+        ITW_WALLET_LIST_CREDENTIAL:
+          origin === "catalogue" ? expectedStatus : "not_available"
+      });
+    }
+  );
+});
+
 describe("computeItwStatus", () => {
   it.each`
     scenario                                        | authLevel    | identificationMode | isItwL3  | expected
