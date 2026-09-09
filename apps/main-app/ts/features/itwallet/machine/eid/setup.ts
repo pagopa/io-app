@@ -1,8 +1,8 @@
 import { assertEvent, assign, setup } from "xstate";
 
-import { assert } from "../../../../utils/assert.ts";
+import { assert } from "../../../../utils/assert";
 import { isMrtdPoPChallengeRequired } from "../../common/utils/mrtdUrl";
-import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
+import { itwCredentialUpgradeMachine } from "../upgrade/machine";
 import { waitForSessionRefreshActor } from "../utils/actors";
 import {
   cleanupIntegrityKeyTagAction,
@@ -69,10 +69,6 @@ import {
   isWalletValidGuard
 } from "./guards";
 import { Input } from "./input";
-
-const notImplemented = () => {
-  throw new Error("Not implemented");
-};
 
 /** Keeps provider-injected side effects and eID actors fully typed across modules. */
 export const itwEidIssuanceMachineSetup = setup({
@@ -247,7 +243,6 @@ export const itwEidIssuanceMachineSetup = setup({
   guards: {
     issuedEidMatchesAuthenticatedUser: issuedEidMatchesAuthenticatedUserGuard,
     isSessionExpired: isSessionExpiredGuard,
-    isOperationAborted: notImplemented,
     hasIntegrityKeyTag: ({ context }) => context.integrityKeyTag !== undefined,
     hasValidWalletInstanceAttestation: hasValidWalletInstanceAttestationGuard,
     hasCredentialsToUpgrade: ({ context }) =>
