@@ -86,6 +86,21 @@ jest.mock("expo-document-picker", () => ({
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
 jest.mock("expo-clipboard", () => mockClipboard);
+jest.mock("expo-secure-store", () => {
+  const store = new Map();
+  return {
+    WHEN_UNLOCKED_THIS_DEVICE_ONLY: 1,
+    getItemAsync: jest.fn(key => Promise.resolve(store.get(key) ?? null)),
+    setItemAsync: jest.fn((key, value) => {
+      store.set(key, value);
+      return Promise.resolve();
+    }),
+    deleteItemAsync: jest.fn(key => {
+      store.delete(key);
+      return Promise.resolve();
+    }),
+  };
+});
 jest.mock("expo-calendar", () => ({
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
   getEventsAsync: jest.fn().mockResolvedValue([]),

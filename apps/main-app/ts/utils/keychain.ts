@@ -1,69 +1,58 @@
 /**
- * Helpers for setting a getting the PIN code.
+ * Helpers for setting and getting the PIN code using expo-secure-store.
  *
- * Note: setGenerigPassword and getGenericPassword will use the App bundle ID
- * as the service ID by default.
- * @see https://github.com/oblador/react-native-keychain#options
+ * Data is stored with WHEN_UNLOCKED_THIS_DEVICE_ONLY accessibility,
+ * meaning it is not backed up and only accessible while the device is unlocked.
  */
 
-import * as O from "fp-ts/lib/Option";
-import * as Keychain from "react-native-keychain";
+import * as SecureStore from "expo-secure-store";
+import * as LegacyKeychain from "react-native-keychain";
 
 import { PinString } from "../types/PinString";
 
 const PIN_KEY = "PIN";
 
+// Items with this attribute do not migrate to a new device and are only
+// accessible while the device is unlocked by the user.
+const DEFAULT_OPTIONS: SecureStore.SecureStoreOptions = {
+  keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY
+};
+
 /**
- * Removes the unlock code from the Keychain
+ * Removes the unlock code from the secure store.
  */
 export async function deletePin(): Promise<boolean> {
-  return await Keychain.resetGenericPassword();
+  await SecureStore.deleteItemAsync(PIN_KEY, DEFAULT_OPTIONS);
+  return true;
 }
 
 /**
- * Returns the unlock code from the Keychain.
- *
- * The promise fails when there is no valid unlock code stored.
+ * Returns the unlock code from the secure store.
  */
-export async function getPin(): Promise<O.Option<PinString>> {
-  const credentials = await Keychain.getGenericPassword();
-  if (typeof credentials !== "boolean" && credentials.password.length > 0) {
-    return O.fromEither(PinString.decode(credentials.password));
-  } else {
-    return O.none;
+export async function getPin(): Promise<PinString | undefined> {
+  const value = await SecureStore.getItemAsync(PIN_KEY, DEFAULT_OPTIONS);
+  if (value !== null && PinString.is(value)) {
+    return value;
   }
+  return await migrateLegacyPin();
 }
 
 /**
- * Wrapper that sets default accessible option.
- *
- * More about accessibility options:
- * https://developer.apple.com/documentation/security/ksecattraccessibleafterfirstunlock
- */
-export async function setGenericPasswordWithDefaultAccessibleOption(
-  username: string,
-  password: string,
-  options?: Keychain.SetOptions
-) {
-  return Keychain.setGenericPassword(username, password, {
-    ...options,
-    // Force AES-GCM encryption for Android
-    storage: Keychain.STORAGE_TYPE.AES_GCM_NO_AUTH,
-    // The data in the keychain item can be accessed only while the device is unlocked by the user.
-    // This is recommended for items that need to be accessible only while the application is in the foreground. Items
-    // with this attribute do not migrate to a new device. Thus, after restoring from a backup of a different device,
-    // these items will not be present.
-    accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY
-  });
-}
-
-/**
- * Saves the provided unlock code in the Keychain
+ * Saves the provided unlock code in the secure store.
  */
 export async function setPin(pin: PinString): Promise<boolean> {
-  const result = await setGenericPasswordWithDefaultAccessibleOption(
-    PIN_KEY,
-    pin
-  );
-  return typeof result !== "boolean";
+  await SecureStore.setItemAsync(PIN_KEY, pin, DEFAULT_OPTIONS);
+  return true;
+}
+
+// TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
+async function migrateLegacyPin(): Promise<PinString | undefined> {
+  const credentials = await LegacyKeychain.getGenericPassword();
+  if (typeof credentials === "boolean" || !PinString.is(credentials.password)) {
+    return undefined;
+  }
+  const pin = credentials.password;
+  await setPin(pin);
+  await LegacyKeychain.resetGenericPassword();
+  return pin;
 }
