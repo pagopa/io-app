@@ -10,6 +10,7 @@ import {
   isMrtdTaxIdCodeMismatchFailure,
   isWebViewError
 } from "../../common/utils/itwFailureUtils";
+import { type WebViewError } from "../../identification/cie/utils/error";
 import { type EidIssuanceEvents } from "./events";
 
 const {
@@ -47,7 +48,10 @@ type ReasonTypeByFailure = {
   [IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY]: Errors.IssuerResponseError;
   [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
   [IssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
-  [IssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError | string;
+  [IssuanceFailureType.ISSUER_GENERIC]:
+    | Error
+    | Errors.IssuerResponseError
+    | WebViewError;
   [IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR]: Errors.IssuerResponseError;
   [IssuanceFailureType.NOT_MATCHING_IDENTITY]: string;
   [IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND]: Errors.IssuerResponseError;
@@ -134,7 +138,7 @@ export const mapEventToFailure = (
   if (isWebViewError(error)) {
     return {
       type: IssuanceFailureType.ISSUER_GENERIC,
-      reason: error.message
+      reason: error
     };
   }
 
