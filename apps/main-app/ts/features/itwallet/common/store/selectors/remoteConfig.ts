@@ -155,6 +155,9 @@ export const itwHiddenCredentialsSelector = createSelector(
     itwConfig?.hidden_credentials ?? emptyArray
 );
 
+/**
+ * Reads the showcase URL
+ */
 export const itwShowcaseUrlSelector = createSelector(
   itwRemoteConfigSelector,
   (itwConfig): string | undefined => {
