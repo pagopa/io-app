@@ -8,7 +8,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as Sharing from "expo-sharing";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import RNFS from "react-native-fs";
 import Pdf from "react-native-pdf";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
@@ -43,6 +44,9 @@ type ScreenProps = IOStackNavigationRouteProps<
 // We currently only support PDF files, extend this if needed
 type SupportedAttachmentType = "application/pdf";
 
+const PDF_DATA_URI_PREFIX = "data:application/pdf;base64,";
+const FALLBACK_ATTACHMENT_FILE_NAME = "attachment";
+
 export const ItwPresentationCredentialAttachmentScreen = ({
   route
 }: ScreenProps) => {
@@ -75,13 +79,30 @@ export const ItwPresentationCredentialAttachmentScreen = ({
   const handleOnShare =
     ({ fileName, uri, type }: AttachmentData) =>
     async () => {
+      const fileNameWithExtension = getFileNameWithExtension(fileName, type);
+      const tempPath = `${RNFS.CachesDirectoryPath}/${fileNameWithExtension}`;
+
       try {
-        await Sharing.shareAsync(uri, {
+        await RNFS.writeFile(
+          tempPath,
+          uri.replace(PDF_DATA_URI_PREFIX, ""),
+          "base64"
+        );
+        await Sharing.shareAsync(`file://${tempPath}`, {
           mimeType: type,
-          dialogTitle: getFileNameWithExtension(fileName, type)
+          dialogTitle: fileNameWithExtension
         });
       } catch {
         toast.show(I18n.t("messagePDFPreview.errors.sharing"));
+      } finally {
+        try {
+          const exists = await RNFS.exists(tempPath);
+          if (exists) {
+            await RNFS.unlink(tempPath);
+          }
+        } catch {
+          // Best-effort cleanup of a temporary cache file.
+        }
       }
     };
 
@@ -156,18 +177,16 @@ const getAttachmentData = ({
 
 /**
  * Given the filename and the type of the attachment, returns the filename with the extension.
- * On Android the extension is added automatically by the OS and iOS we need to add it manually
  */
 const getFileNameWithExtension = (
   fileName: string,
   type: SupportedAttachmentType
 ) => {
   const extension = type.split("/")[1];
-  const fileNameWithoutExtension = /^[^.]+/.exec(fileName)?.[0];
+  const fileNameWithoutExtension =
+    /^[^.]+/.exec(fileName)?.[0] ?? FALLBACK_ATTACHMENT_FILE_NAME;
 
-  return Platform.OS === "ios"
-    ? `${fileNameWithoutExtension}.${extension}`
-    : fileNameWithoutExtension;
+  return `${fileNameWithoutExtension}.${extension}`;
 };
 
 const styles = StyleSheet.create({
