@@ -12,6 +12,7 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCardOnboardingL3Screen } from "../ItwCardOnboardingL3Screen";
 
@@ -140,7 +141,10 @@ const renderComponent = (params?: undefined | { page?: number }) => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
+      >
         <ItwCardOnboardingL3Screen
           navigation={{} as any}
           route={{ key: "x", name: ITW_ROUTES.L3_ONBOARDING, params } as any}

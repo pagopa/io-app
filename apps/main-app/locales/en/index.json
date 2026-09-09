@@ -1139,7 +1139,7 @@
               "4": "The new official digital documents are available exclusively on the IO app",
               "5": "Access public administration digital services in just a few taps"
             },
-            "title": "Your digital documents with IT-Wallet: secure, official, and always with you",
+            "title": "Your digital documents with IT-Wallet: secure, official and always with you",
             "tos": "By clicking **Continue**, you acknowledge that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{tos_url}})."
           },
           "legacy": {
@@ -1326,6 +1326,10 @@
             "title": "Enter your CIE PIN"
           },
           "prepare": {
+            "animation": {
+              "pause": "Pause animation",
+              "play": "Play animation"
+            },
             "can": {
               "cta": "Continue",
               "description": "You'll need to use it and enter its 6-digit code (CAN), which is printed on the front in the lower right corner.",
@@ -1489,7 +1493,7 @@
           "description": "To allow IO to read your CIE, enable NFC in your device's Settings.",
           "header": "How to",
           "primaryAction": "Open Settings",
-          "secondaryAction": "Continue",
+          "secondaryAction": "I've already done that",
           "steps": {
             "1": "Open \"Settings\"",
             "2": "Search for the \"NFC\" feature",
@@ -1720,7 +1724,7 @@
             "content": "No connection."
           },
           "modal": {
-            "content": "###### What can I do?\n\nWhen your device is offline, some of the app's features may not work.\n\n\"Documenti su IO\" still works **even offline** for limited use, but the validity of your documents is updated at the last online app access.\n\nConnect to the internet and refresh the app to continue using all of IO’s services.",
+            "content": "###### What can I do?\n\nWhen your device is offline, some app features may not work.\n\n You can still use your digital documents if you’ve added them to your Wallet: their validity is updated to the last time you accessed the app while connected to a network. \n\nConnect to the internet and refresh the app to continue using all IO services.",
             "footerAction": "Restart the IO app",
             "title": "No connection"
           }
@@ -1755,7 +1759,7 @@
             "content": "Some of the app's features are currently limited."
           },
           "modal": {
-            "content": "###### What can I do?\n\nWhen authentication fails or your network connection is unstable, some of the app’s features may be limited.\n\n\"Documenti su IO\" still works **even in these cases** for limited use, but the validity of your documents is updated at the last online app access.\n\nPlease wait a few minutes and refresh the app to continue using all of IO’s services.",
+            "content": "###### What can I do?\n\nWhen authentication fails or the network connection is unstable, some of the app’s features may be limited.\n\n You can continue to use your digital documents if you’ve added them to your Wallet: their validity is updated the last time you accessed the app while connected to a network. \n\nPlease wait a few minutes and refresh the app to continue using all IO services.",
             "footerAction": "restart the IO app",
             "title": "Limited app features"
           }
@@ -1814,9 +1818,6 @@
       },
       "presentation": {
         "alerts": {
-          "ehc": {
-            "content": "You can use your Health Card—European Health Insurance Card—on IO to access the services provided by the National Health Service."
-          },
           "expired": {
             "content": "The document is no longer valid. If you already have a new, valid document, you can update the digital version in your Wallet."
           },
@@ -1844,7 +1845,11 @@
             },
             "title": "Did you know that?"
           },
-          "statusAction": "What can I do?"
+          "statusAction": "What can I do?",
+          "ts": {
+            "content": "You can use your Health Card—European Health Insurance Card—on IO to access the services provided by the National Health Service.",
+            "title": "Did you know?"
+          }
         },
         "bottomSheets": {
           "EuropeanDisabilityCard": {
@@ -1950,7 +1955,8 @@
               "education_diploma": "Your digital diplomas are fully valid and officially recognized.",
               "education_enrollment": "Your digital academic records are fully valid and officially recognized.",
               "residency": "Your digital certificate of residence is fully valid for official purposes."
-            }
+            },
+            "title": "Did you know?"
           },
           "openCardDocument": "Open a copy of the document",
           "partOf": "Part of",
@@ -1965,7 +1971,7 @@
         },
         "ctas": {
           "openPdf": "View document",
-          "present": "Start verification",
+          "present": "Use for verification",
           "shareButton": "Save or share",
           "trustmark": "Show certificate of authenticity"
         },
@@ -1992,7 +1998,9 @@
               "title": "Are you sure you want to disable IT-Wallet?"
             }
           },
-          "listItemHeader": "Your IT-Wallet ID Information"
+          "listItemHeader": "My IT-Wallet ID information",
+          "listItemHeaderHideValues": "Hide your IT-Wallet ID information",
+          "listItemHeaderShowValues": "Show your IT-Wallet ID details"
         },
         "missingCredentials": {
           "one": {
@@ -2018,7 +2026,7 @@
             "activation": {
               "actions": {
                 "primary": "Open Settings",
-                "secondary": "Continue"
+                "secondary": "I've already done that"
               },
               "alert": {
                 "message": "Go to Settings and change your preferences, then try again.",
@@ -2081,29 +2089,66 @@
             "title": "Waiting for a connection to verify..."
           },
           "consentDenied": {
-            "subtitle": "You can start a new verification by clicking 'Start verification' in the Portfolio section.",
+            "subtitle": "You can start a new verification by tapping “Use for verification” in the Wallet section.",
             "title": "You have stopped the verification process"
+          },
+          "consentManagement": {
+            "accessibility": {
+              "openDetail": "View the consent details for {{relyingParty}}",
+              "revoke": "Withdraw consent for {{relyingParty}}"
+            },
+            "alert": {
+              "cancel": "No, keep it",
+              "confirm": "Yes, revoke it",
+              "message": "You will be asked to provide new consent the next time you make a contactless payment for {{relyingParty}}.",
+              "title": "Do you want to withdraw your consent?"
+            },
+            "cta": "Manage Consents",
+            "detail": {
+              "message": "You have saved your consent for contactless verification of this data for **{{relyingParty}}**.",
+              "revokeAction": "Withdraw Consent",
+              "title": "Consent Details"
+            },
+            "fallback": "Service",
+            "header": "Saved Consents",
+            "revocationSuccess": {
+              "subtitle": "You'll be able to save your consent to the transmission of your document data again during your next contactless transaction",
+              "title": "You have revoked all saved consents for {{credentialName}}"
+            },
+            "revokeAll": {
+              "action": "Withdraw all consents",
+              "alert": {
+                "message": "You will be asked to provide new consent the next time you make a contactless payment.",
+                "title": "Do you want to revoke all consents for this document?"
+              }
+            },
+            "savedAt": "Saved on {{date}}",
+            "subtitle": "Here you can view and revoke your saved consents for contactless document verification: {{credentialName}}.",
+            "title": "Manage Consents",
+            "toast": {
+              "done": "Done!"
+            }
           },
           "engagement": {
             "banner": {
               "action": "Learn more",
               "content": "It allows you to have the digital documents you've added to your Wallet verified.",
-              "title": "How does the verification process work?"
+              "title": "How the verification works?"
             },
-            "instruction": "Show the QR code to the person verifying your digital documents",
+            "instruction": "Show the QR code or hold it up to a scanner. Those verifying in person will use an official app.",
             "invalidBanner": {
               "action": "Verify your identity",
               "content": "Verify your identity to continue using your IT-Wallet."
             },
             "nfc": {
-              "action": "Start contactless verification",
+              "action": "Use contactless",
               "or": "or"
             },
             "qrCode": {
               "accessibilityLabel": "Image of the QR code to show to the person verifying the digital documents",
               "error": "We had a problem generating the QR code."
             },
-            "title": "Start verification"
+            "title": "Ready for verification"
           },
           "nfc": {
             "activation": {
@@ -2302,7 +2347,7 @@
       "reissuanceLandingScreen": {
         "itWalletActivation": {
           "primaryAction": "Learn more",
-          "subtitle": "Take your digital documents to the next level with the Government’s only digital wallet: public, secure, and free.",
+          "subtitle": "Take your digital documents to the next level with IT-Wallet on IO: public, secure, and yours.",
           "title": "Did you know? You can now activate IT-Wallet"
         },
         "notNecessary": {
@@ -2353,8 +2398,8 @@
           "title": "Your IT-Wallet ID"
         },
         "qrCode": {
-          "description": "The person verifying your documents in person uses an official app to scan this QR code. ",
-          "title": "Show the QR code to the person checking it"
+          "description": "Use this feature to submit your documents via IT-Wallet in real time.",
+          "title": "Show your documents to the person verifying them"
         }
       },
       "trustmark": {
@@ -3198,7 +3243,7 @@
     },
     "offline": {
       "bottomSheet": {
-        "content": "###### What can I do? \n\nWhen you're offline, some of the app's features may not work. \n\n You can continue to use your digital documents if you’ve added them to your Wallet: their validity is updated to the last time you accessed the app while connected to a network. \n\n Connect to the internet and refresh the app to use all IO services.",
+        "content": "###### What can I do? \n\nWhen you’re offline, some of the app’s services may not work.\n\nYou can continue to use your digital documents if you’ve added them to your Wallet: their validity is updated to the last time you accessed the app whilst connected to a network.\n\nConnect to the internet and refresh the app to start using all IO services again.",
         "footerAction": "Restart the IO app",
         "title": "No connection"
       },

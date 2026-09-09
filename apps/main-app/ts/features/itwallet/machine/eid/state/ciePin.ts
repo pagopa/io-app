@@ -102,7 +102,8 @@ export const ciePinState = itwEidIssuanceMachineSetup.createStateConfig({
           itwVersion: context.itwVersion,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           identification: context.identification,
-          withMRTDPoP: false
+          withMRTDPoP: false,
+          deps: context.deps
         }),
         onDone: {
           actions: assign(({ event }) => ({

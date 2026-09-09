@@ -17,6 +17,7 @@ import * as credentialSelectors from "../../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import {
   itwGrantProximityConsent,
@@ -255,7 +256,10 @@ const renderComponent = (
 
   const component = renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
+      >
         <ItwPresentationDetailsFooter
           credential={{
             ...ItwStoredCredentialsMocks.dc,
