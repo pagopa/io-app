@@ -7,7 +7,7 @@ import { ItwPresentationTags } from "./tags";
 
 export const itwRemoteMachine = itwRemoteMachineSetup.createMachine({
   id: "itwRemoteMachine",
-  context: { ...InitialContext },
+  context: ({ input }) => ({ ...InitialContext, deps: input.deps }),
   initial: "Idle",
   entry: "onInit",
   on: {
@@ -15,6 +15,7 @@ export const itwRemoteMachine = itwRemoteMachineSetup.createMachine({
       target: ".Idle",
       actions: assign(({ context }) => ({
         ...InitialContext,
+        deps: context.deps,
         walletInstanceAttestation: context.walletInstanceAttestation
       }))
     }
@@ -86,6 +87,7 @@ export const itwRemoteMachine = itwRemoteMachineSetup.createMachine({
       tags: [ItwPresentationTags.Loading],
       invoke: {
         src: "getWalletAttestation",
+        input: ({ context }) => ({ deps: context.deps }),
         onDone: {
           target: "EvaluatingClientIdType",
           actions: [
@@ -113,7 +115,10 @@ export const itwRemoteMachine = itwRemoteMachineSetup.createMachine({
       description: "Determine whether the Relying Party is a trusted entity",
       invoke: {
         src: "evaluateRelyingPartyTrust",
-        input: ({ context }) => ({ qrCodePayload: context.payload }),
+        input: ({ context }) => ({
+          qrCodePayload: context.payload,
+          deps: context.deps
+        }),
         onDone: {
           target: "GettingRequestObject",
           actions: assign(({ event }) => event.output)
@@ -130,7 +135,8 @@ export const itwRemoteMachine = itwRemoteMachineSetup.createMachine({
       invoke: {
         src: "getRequestObject",
         input: ({ context }) => ({
-          qrCodePayload: context.payload
+          qrCodePayload: context.payload,
+          deps: context.deps
         }),
         onDone: {
           actions: assign(({ event }) => ({
@@ -155,7 +161,8 @@ export const itwRemoteMachine = itwRemoteMachineSetup.createMachine({
           credentials: context.credentials,
           qrCodePayload: context.payload,
           requestObjectEncodedJwt: context.requestObjectEncodedJwt,
-          rpConf: context.rpConf
+          rpConf: context.rpConf,
+          deps: context.deps
         }),
         onDone: {
           actions: assign(({ event }) => event.output),
@@ -206,7 +213,8 @@ export const itwRemoteMachine = itwRemoteMachineSetup.createMachine({
           rpConf: context.rpConf,
           requestObject: context.requestObject,
           presentationDetails: context.presentationDetails,
-          optionalCredentials: context.selectedOptionalCredentials
+          optionalCredentials: context.selectedOptionalCredentials,
+          deps: context.deps
         }),
         onDone: {
           actions: assign(({ event }) => ({

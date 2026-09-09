@@ -12,6 +12,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
+import { testEidIssuanceDeps } from "../../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import ItwCieIdLoginScreen from "../../../cieId/screens/ItwCieIdLoginScreen";
 
@@ -156,7 +157,9 @@ const renderComponent = () => {
     actions: { onInit: jest.fn(), navigateToFailureScreen: jest.fn() }
   });
 
-  const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+  const initialSnapshot = createActor(logic, {
+    input: { deps: testEidIssuanceDeps() }
+  }).getSnapshot();
 
   let machineRef: ActorRefFrom<typeof itwEidIssuanceMachine> | undefined;
   const CaptureMachineRef = () => {

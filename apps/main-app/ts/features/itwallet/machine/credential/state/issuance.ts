@@ -12,7 +12,8 @@ export const issuanceState = itwCredentialSetup.createStateConfig({
   states: {
     WaitingForSessionRefresh: {
       invoke: {
-        src: "waitForSessionRefresh"
+        src: "waitForSessionRefresh",
+        input: ({ context }) => ({ deps: context.deps })
       },
       on: {
         "session-refresh-complete": { target: "ObtainingCredential" }
@@ -27,7 +28,8 @@ export const issuanceState = itwCredentialSetup.createStateConfig({
           codeVerifier: context.codeVerifier,
           issuerConf: context.issuerConf,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-          responseMode: context.responseMode
+          responseMode: context.responseMode,
+          deps: context.deps
         }),
         onDone: {
           target: "ObtainingCredential",
@@ -51,7 +53,8 @@ export const issuanceState = itwCredentialSetup.createStateConfig({
           codeVerifier: context.codeVerifier,
           requestedCredential: context.requestedCredential,
           issuerConf: context.issuerConf,
-          accessToken: context.accessToken
+          accessToken: context.accessToken,
+          deps: context.deps
         }),
         onDone: {
           target: "ObtainingCredentialStatus",
@@ -75,7 +78,8 @@ export const issuanceState = itwCredentialSetup.createStateConfig({
         src: "obtainCredentialStatus",
         input: ({ context }) => ({
           credentials: context.credentials,
-          issuerConf: context.issuerConf
+          issuerConf: context.issuerConf,
+          deps: context.deps
         }),
         onDone: {
           target: "Completed",

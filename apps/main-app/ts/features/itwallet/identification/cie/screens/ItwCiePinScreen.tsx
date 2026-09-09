@@ -19,7 +19,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import {
+  HeaderSecondLevelHookProps,
+  useHeaderSecondLevel
+} from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
@@ -67,10 +70,19 @@ export const ItwCiePinScreen = () => {
     }, [itw_flow])
   );
 
-  useHeaderSecondLevel({
-    title: withTrailingPoliceCarLightEmojii("", useCieUat),
-    supportRequest: true
-  });
+  // The contextual help (?) icon is only removed for the IT-Wallet (L3) flow;
+  // the L2 "Documenti su IO" flow keeps the support request entry point.
+  const headerProps: HeaderSecondLevelHookProps = isL3Enabled
+    ? {
+        title: withTrailingPoliceCarLightEmojii("", useCieUat),
+        supportRequest: false
+      }
+    : {
+        title: withTrailingPoliceCarLightEmojii("", useCieUat),
+        supportRequest: true
+      };
+
+  useHeaderSecondLevel(headerProps);
 
   const onPinChanged = (value: string) => {
     setPin(value);

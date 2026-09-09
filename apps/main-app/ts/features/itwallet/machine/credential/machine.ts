@@ -5,11 +5,9 @@ import { InitialContext } from "./context";
 import { itwCredentialSetup } from "./setup";
 import { issuanceState } from "./state/issuance";
 
-export { notImplemented } from "./setup";
-
 export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
   id: "itwCredentialIssuanceMachine",
-  context: { ...InitialContext },
+  context: ({ input }) => ({ ...InitialContext, deps: input.deps }),
   initial: "Idle",
   states: {
     Idle: {
@@ -44,7 +42,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
       invoke: {
         src: "processCredentialOffer",
         input: ({ context }) => ({
-          credentialOfferUri: context.credentialOfferUri
+          credentialOfferUri: context.credentialOfferUri,
+          deps: context.deps
         }),
         onDone: {
           target: "CredentialOfferResolved",
@@ -77,7 +76,7 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
       on: {
         "confirm-credential-offer": {
           target: "EvaluateFlow",
-          actions: ["onInit", assign({ mode: "issuance" as const })]
+          actions: ["onInit", assign({ mode: "issuance" })]
         },
         close: {
           target: "Idle",
@@ -143,7 +142,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
       invoke: {
         src: "verifyTrustFederation",
         input: ({ context }) => ({
-          resolvedCredentialOffer: context.resolvedCredentialOffer
+          resolvedCredentialOffer: context.resolvedCredentialOffer,
+          deps: context.deps
         }),
         onDone: {
           target: "CheckingWalletInstanceAttestation"
@@ -181,6 +181,7 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
       tags: [ItwTags.Loading],
       invoke: {
         src: "getWalletAttestation",
+        input: ({ context }) => ({ deps: context.deps }),
         onDone: {
           target: "RequestingCredential",
           actions: [
@@ -211,7 +212,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
           credentialType: context.credentialType,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           resolvedCredentialOffer: context.resolvedCredentialOffer,
-          skipMdocIssuance: !context.isItWalletValid // Do not request mDoc credentials for non IT-Wallet instances
+          skipMdocIssuance: !context.isItWalletValid, // Do not request mDoc credentials for non IT-Wallet instances
+          deps: context.deps
         }),
         onDone: {
           target: "DisplayingTrustIssuer",
