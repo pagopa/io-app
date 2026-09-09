@@ -2,17 +2,14 @@ import { TransactionBarCodeResponse } from "@io-app/api-types/generated/definiti
 import { TransactionErrorDTO } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
 import {
   Body,
-  bodyFontSize,
   ContentWrapper,
   H2,
-  h2FontSize,
-  h3FontSize,
-  h3LineHeight,
   Icon,
   IOButton,
   IOColors,
   IOSkeleton,
   IOText,
+  IOTypography,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -69,21 +66,21 @@ export const useIDPayStaticCodeModal = (
   const StaticCodeSkeleton = () => (
     <View testID="idpay-static-code-skeleton">
       <IOSkeleton
-        height={h2FontSize}
+        height={IOTypography.h2.size}
         radius={4}
         shape="rectangle"
         width="80%"
       />
       <VSpacer size={16} />
       <IOSkeleton
-        height={bodyFontSize}
+        height={IOTypography.body.size}
         radius={4}
         shape="rectangle"
         width="100%"
       />
       <VSpacer size={8} />
       <IOSkeleton
-        height={bodyFontSize}
+        height={IOTypography.body.size}
         radius={4}
         shape="rectangle"
         width="75%"
@@ -95,7 +92,7 @@ export const useIDPayStaticCodeModal = (
         <VSpacer size={12} />
         <View style={{ alignItems: "center" }}>
           <IOSkeleton
-            height={h3FontSize}
+            height={IOTypography.h3.size}
             radius={4}
             shape="rectangle"
             width="50%"
@@ -129,8 +126,8 @@ export const useIDPayStaticCodeModal = (
             <IOText
               color={theme["textBody-default"]}
               font="FiraCode"
-              lineHeight={h3LineHeight}
-              size={h3FontSize}
+              lineHeight={IOTypography.h3.lineHeight}
+              size={IOTypography.h3.size}
               weight="Medium"
             >
               {barcode.trxCode}
