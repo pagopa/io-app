@@ -5,8 +5,6 @@ import { InitialContext } from "./context";
 import { itwCredentialSetup } from "./setup";
 import { issuanceState } from "./state/issuance";
 
-export { notImplemented } from "./setup";
-
 export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
   id: "itwCredentialIssuanceMachine",
   context: ({ input }) => ({ ...InitialContext, deps: input.deps }),
