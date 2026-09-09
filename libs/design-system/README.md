@@ -19,6 +19,7 @@ The IO App Design System library provides the complete set of design tokens, pri
 # Getting started
 
 ## Installing the component library (external consumers)
+
 To add the component library to an external app run:
 
 ```bash
@@ -26,8 +27,9 @@ pnpm add @pagopa/io-app-design-system
 ```
 
 Remember to encapsulate the app container with the `SafeAreaProvider` from [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context?tab=readme-ov-file#safeareaprovider) in your `App.tsx` file. Also, remember to apply this wrapper in other relevant places such as the root components of modals and routes when utilizing [`react-native-screens`](https://github.com/software-mansion/react-native-screens):
+
 ```js
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 function App() {
   return <SafeAreaProvider>...</SafeAreaProvider>;
@@ -35,6 +37,7 @@ function App() {
 ```
 
 ## Playground
+
 There is no standalone example app: current and new components are developed and tested inside the [main IO app](../../apps/main-app/README.md), under the [**Design System**](../../apps/main-app/ts/features/design-system) section (visible in developer mode). To launch it:
 
 ```bash
@@ -59,6 +62,7 @@ pnpm nx run main-app:dev-run-android
 > Always test new components in the actual native environment. Browser-based rendering introduces technical trade-offs that do not reflect real usage conditions.
 
 ## Building the library
+
 The library is built automatically as part of `pnpm install` via the `postinstall` hook (`nx prepack io-app-design-system`). To trigger a manual build:
 
 ```bash
@@ -82,10 +86,11 @@ pnpm prettify
 ```
 
 # Usage
+
 To try a component, just import it:
 
 ```tsx
-import { IOButton } from '@pagopa/io-app-design-system';
+import { IOButton } from "@pagopa/io-app-design-system";
 
 // [...]
 
@@ -102,99 +107,106 @@ const MainScreen = () => (
 ```
 
 # Architecture
+
 The library is made up of several parts:
 
 ## Core
+
 Essential core visual attributes of the design language. It includes:
 
 - **`IOColors`**: Defines the main color palette, themes (light/dark) and other color-related utilities
 - **`IOSpacing`**: Defines the main spacing scale and various component spacing attributes
 - **`IOStyles`**: Defines common styles shared across components
 - **`IOShapes`**: Defines visual shape-related attributes, such as radius
+- **`IOTypography`**: Defines the visual attributes of each typographic style
 - **`IOAnimations`**: Defines common animation attributes used for interactive elements (used by the [`reanimated`](https://docs.swmansion.com/react-native-reanimated/) library)
 - **`IOTransitions`**: Defines reusable custom enter/exit transitions (used by the [`reanimated`](https://docs.swmansion.com/react-native-reanimated/) library)
 
 #### [Explore the `core` folder →](./src/core)
 
 ## Foundation
+
 Essential atomic components:
-* [**Typography**](./src/components/typography/) · [📖 Docs](./src/components/typography/README.md)
-* [**Layout**](./src/components/layout/) · [📖 Docs](./src/components/layout/README.md)
-  * [`ContentWrapper`](./src/components/layout/ContentWrapper.tsx)
-  * [Stack (`VStack`, `HStack`)](./src/components/layout/Stack.tsx)
-  * [Spacer (`VSpacer`,`HSpacing`)](./src/components/layout/Spacer.tsx)
-  * [`Divider`](./src/components/layout/Divider.tsx)
-  * [**[HowTo]** *Should I use `Stack` or `Spacer`?*  and other FAQs →](./src/components/layout/README.md#frequently-asked-questions)
-* [**Icons**](./src/components/icons/) · [📖 Docs](./src/components/icons/README.md)
-  * Assets with an intended size between `12px` and `56px`
-  * [**[HowTo]** Add a new icon →](./src/components/icons/README.md#add-a-new-icon)
-* [**Pictograms**](./src/components/pictograms/) · [📖 Docs](./src/components/pictograms/README.md)
-  * Assets with an intended size greather than `56px`
-  * [**[HowTo]** Add a new pictogram →](./src/components/pictograms/README.md#add-a-new-pictogram)
-* [**Logos**](./src/components/logos/) · [📖 Docs](./src/components/logos/README.md)
-  * [Payment Logos](./src/components/logos/)
-  * [Avatar](./src/components/avatar/)
-* **Loaders**
-  * [`LoadingSpinner`](./src/components/loadingSpinner/)
+
+- [**Typography**](./src/components/typography/) · [📖 Docs](./src/components/typography/README.md)
+  - [`IOTypography`](./src/core/IOTypography.ts): every style as data, for the consumers that have to reproduce one outside `IOText`
+- [**Layout**](./src/components/layout/) · [📖 Docs](./src/components/layout/README.md)
+  - [`ContentWrapper`](./src/components/layout/ContentWrapper.tsx)
+  - [Stack (`VStack`, `HStack`)](./src/components/layout/Stack.tsx)
+  - [Spacer (`VSpacer`,`HSpacing`)](./src/components/layout/Spacer.tsx)
+  - [`Divider`](./src/components/layout/Divider.tsx)
+  - [**[HowTo]** _Should I use `Stack` or `Spacer`?_ and other FAQs →](./src/components/layout/README.md#frequently-asked-questions)
+- [**Icons**](./src/components/icons/) · [📖 Docs](./src/components/icons/README.md)
+  - Assets with an intended size between `12px` and `56px`
+  - [**[HowTo]** Add a new icon →](./src/components/icons/README.md#add-a-new-icon)
+- [**Pictograms**](./src/components/pictograms/) · [📖 Docs](./src/components/pictograms/README.md)
+  - Assets with an intended size greather than `56px`
+  - [**[HowTo]** Add a new pictogram →](./src/components/pictograms/README.md#add-a-new-pictogram)
+- [**Logos**](./src/components/logos/) · [📖 Docs](./src/components/logos/README.md)
+  - [Payment Logos](./src/components/logos/)
+  - [Avatar](./src/components/avatar/)
+- **Loaders**
+  - [`LoadingSpinner`](./src/components/loadingSpinner/)
 
 ## Components
 
-* [**Buttons**](./src/components/buttons/)
-  * [`IOButton`](./src/components/buttons/IOButton)
-  * [`IconButton`](./src/components/buttons/IconButton.tsx)
-  * [`IconButtonSolid`](./src/components/buttons/IconButtonSolid.tsx)
-* [**TextInput**](./src/components/textInput/)
-* [**List Items**](./src/components/listitems/)
-  * [`ListItemAction`](./src/components/listitems/ListItemAction.tsx)
-  * [`ListItemAmount`](./src/components/listitems/ListItemAmount.tsx)
-  * [`ListItemHeader`](./src/components/listitems/ListItemHeader.tsx)
-  * [`ListItemInfo`](./src/components/listitems/ListItemInfo.tsx)
-  * [`ListItemInfoCopy`](./src/components/listitems/ListItemInfoCopy.tsx)
-  * [`ListItemNav`](./src/components/listitems/ListItemNav.tsx)
-  * [`ListItemNavAlert`](./src/components/listitems/ListItemNavAlert.tsx)
-  * [`ListItemTransaction`](./src/components/listitems/ListItemTransaction.tsx)
-* [**Modules**](./src/components/modules/)
-  * [`ModuleAttachment`](./src/components/modules/ModuleAttachment.tsx)
-  * [`ModuleCheckout`](./src/components/modules/ModuleCheckout.tsx)
-  * [`ModuleCredential`](./src/components/modules/ModuleCredential.tsx)
-  * [`ModuleIDP`](./src/components/modules/ModuleIDP.tsx)
-  * [`ModuleNavigation`](./src/components/modules/ModuleNavigation.tsx)
-  * [`ModuleNavigationAlt`](./src/components/modules/ModuleNavigationAlt.tsx)
-  * [`ModulePaymentNotice`](./src/components/modules/ModulePaymentNotice.tsx)
-  * [`ModuleSummary`](./src/components/modules/ModuleSummary.tsx)
-* [**Badges**](./src/components/badge/) & [**Tags**](./src/components/tag/)
-  * [`Badge`](./src/components/badge/Badge.tsx)
-  * [`Tag`](./src/components/tag/Tag.tsx)
-* **Selection**
-  * [Checkbox](./src/components/checkbox/)
-    * [`ListItemCheckbox`](./src/components/listitems/ListItemCheckbox.tsx)
-    * [`CheckBoxLabel`](./src/components/checkbox/CheckboxLabel.tsx)
-  * [Radio](./src/components/radio/)
-    * [`ListItemRadio`](./src/components/listitems/ListItemRadio.tsx)
-    * [`ListItemRadioWithAmount`](./src/components/listitems/ListItemRadioWithAmount.tsx)
-    * [`RadioGroup`](./src/components/radio/RadioGroup.tsx)
-  * [Switch](./src/components/switch/)
-    * [`ListItemSwitch`](./src/components/listitems/ListItemSwitch.tsx)
-    * [`NativeSwitch`](./src/components/switch/NativeSwitch.tsx)
-* [**Accordion**](./src/components/accordion/)
-  * [`AccordionItem`](./src/components/accordion/AccordionItem.tsx)
-* [**Alert**](./src/components/alert/)
-  * [`Alert`](./src/components/alert/Alert.tsx)
-  * [`AlertEdgeToEdge`](./src/components/alert/AlertEdgeToEdge.tsx)
-* **Advice & Banners**
-  * [`FeatureInfo`](./src/components/featureInfo/)
-  * [`Banner`](./src/components/banner/)
-* [**Headers**](./src/components/headers/) · [📖 Docs](./src/components/headers/README.md)
-  * [`HeaderFirstLevel`](./src/components/headers/HeaderFirstLevel.tsx)
-  * [`HeaderSecondLevel`](./src/components/headers/HeaderSecondLevel.tsx)
-  * [`ModalBSHeader`](./src/components/headers/ModalBSHeader.tsx)
-* [**Templates**](./src/components/templates/) · [📖 Docs](./src/components/templates/README.md)
-  * [`Dismissable`](./src/components/templates/Dismissable.tsx)
-  * [`ForceScrollDownView`](./src/components/templates/ForceScrollDownView.tsx)
+- [**Buttons**](./src/components/buttons/)
+  - [`IOButton`](./src/components/buttons/IOButton)
+  - [`IconButton`](./src/components/buttons/IconButton.tsx)
+  - [`IconButtonSolid`](./src/components/buttons/IconButtonSolid.tsx)
+- [**TextInput**](./src/components/textInput/)
+- [**List Items**](./src/components/listitems/)
+  - [`ListItemAction`](./src/components/listitems/ListItemAction.tsx)
+  - [`ListItemAmount`](./src/components/listitems/ListItemAmount.tsx)
+  - [`ListItemHeader`](./src/components/listitems/ListItemHeader.tsx)
+  - [`ListItemInfo`](./src/components/listitems/ListItemInfo.tsx)
+  - [`ListItemInfoCopy`](./src/components/listitems/ListItemInfoCopy.tsx)
+  - [`ListItemNav`](./src/components/listitems/ListItemNav.tsx)
+  - [`ListItemNavAlert`](./src/components/listitems/ListItemNavAlert.tsx)
+  - [`ListItemTransaction`](./src/components/listitems/ListItemTransaction.tsx)
+- [**Modules**](./src/components/modules/)
+  - [`ModuleAttachment`](./src/components/modules/ModuleAttachment.tsx)
+  - [`ModuleCheckout`](./src/components/modules/ModuleCheckout.tsx)
+  - [`ModuleCredential`](./src/components/modules/ModuleCredential.tsx)
+  - [`ModuleIDP`](./src/components/modules/ModuleIDP.tsx)
+  - [`ModuleNavigation`](./src/components/modules/ModuleNavigation.tsx)
+  - [`ModuleNavigationAlt`](./src/components/modules/ModuleNavigationAlt.tsx)
+  - [`ModulePaymentNotice`](./src/components/modules/ModulePaymentNotice.tsx)
+  - [`ModuleSummary`](./src/components/modules/ModuleSummary.tsx)
+- [**Badges**](./src/components/badge/) & [**Tags**](./src/components/tag/)
+  - [`Badge`](./src/components/badge/Badge.tsx)
+  - [`Tag`](./src/components/tag/Tag.tsx)
+- **Selection**
+  - [Checkbox](./src/components/checkbox/)
+    - [`ListItemCheckbox`](./src/components/listitems/ListItemCheckbox.tsx)
+    - [`CheckBoxLabel`](./src/components/checkbox/CheckboxLabel.tsx)
+  - [Radio](./src/components/radio/)
+    - [`ListItemRadio`](./src/components/listitems/ListItemRadio.tsx)
+    - [`ListItemRadioWithAmount`](./src/components/listitems/ListItemRadioWithAmount.tsx)
+    - [`RadioGroup`](./src/components/radio/RadioGroup.tsx)
+  - [Switch](./src/components/switch/)
+    - [`ListItemSwitch`](./src/components/listitems/ListItemSwitch.tsx)
+    - [`NativeSwitch`](./src/components/switch/NativeSwitch.tsx)
+- [**Accordion**](./src/components/accordion/)
+  - [`AccordionItem`](./src/components/accordion/AccordionItem.tsx)
+- [**Alert**](./src/components/alert/)
+  - [`Alert`](./src/components/alert/Alert.tsx)
+  - [`AlertEdgeToEdge`](./src/components/alert/AlertEdgeToEdge.tsx)
+- **Advice & Banners**
+  - [`FeatureInfo`](./src/components/featureInfo/)
+  - [`Banner`](./src/components/banner/)
+- [**Headers**](./src/components/headers/) · [📖 Docs](./src/components/headers/README.md)
+  - [`HeaderFirstLevel`](./src/components/headers/HeaderFirstLevel.tsx)
+  - [`HeaderSecondLevel`](./src/components/headers/HeaderSecondLevel.tsx)
+  - [`ModalBSHeader`](./src/components/headers/ModalBSHeader.tsx)
+- [**Templates**](./src/components/templates/) · [📖 Docs](./src/components/templates/README.md)
+  - [`Dismissable`](./src/components/templates/Dismissable.tsx)
+  - [`ForceScrollDownView`](./src/components/templates/ForceScrollDownView.tsx)
 
 #### [Explore the `components` folder →](./src/components)
 
 ## Functions
+
 Common functions used to wrap up external libraries and utilities
 
 #### [Explore the `functions` folder →](./src/functions)
@@ -206,16 +218,17 @@ The contexts used in and exported from the library.
 #### [Explore the `context` folder →](./src/context)
 
 ## Dependencies
+
 The library requires the following peer dependencies to be installed by the consuming app:
 
-* [`react-native-reanimated`](https://github.com/software-mansion/react-native-reanimated) (`>=4.0.0`): Handles all the component animations
-* [`react-native-worklets`](https://github.com/software-mansion/react-native-worklets): Runs the `reanimated` worklets
-* [`react-native-svg`](https://github.com/software-mansion/react-native-svg): Handles all the vector asset components (icons, pictograms and logos)
-* [`react-native-pulsar`](https://github.com/software-mansion/pulsar): Handles all the haptic feedbacks
-* [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context): Handles all safe area spacing attributes
-* [`expo-linear-gradient`](https://docs.expo.dev/versions/latest/sdk/linear-gradient/)
-* [`react-native-easing-gradient`](https://github.com/phamfoo/react-native-easing-gradient): Generates easing gradients
-* [`react-native-gesture-handler`](https://github.com/software-mansion/react-native-gesture-handler)
+- [`react-native-reanimated`](https://github.com/software-mansion/react-native-reanimated) (`>=4.0.0`): Handles all the component animations
+- [`react-native-worklets`](https://github.com/software-mansion/react-native-worklets): Runs the `reanimated` worklets
+- [`react-native-svg`](https://github.com/software-mansion/react-native-svg): Handles all the vector asset components (icons, pictograms and logos)
+- [`react-native-pulsar`](https://github.com/software-mansion/pulsar): Handles all the haptic feedbacks
+- [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context): Handles all safe area spacing attributes
+- [`expo-linear-gradient`](https://docs.expo.dev/versions/latest/sdk/linear-gradient/)
+- [`react-native-easing-gradient`](https://github.com/phamfoo/react-native-easing-gradient): Generates easing gradients
+- [`react-native-gesture-handler`](https://github.com/software-mansion/react-native-gesture-handler)
 
 ---
 
