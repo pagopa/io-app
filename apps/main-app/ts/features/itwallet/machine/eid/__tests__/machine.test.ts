@@ -3065,6 +3065,78 @@ describe("itwEidIssuanceMachine", () => {
     );
     expect(createWalletInstance).not.toHaveBeenCalled();
   });
+
+  it("Should transition to the Issuer generic failure state if a WebView error is received during CIE PIN identification", () => {
+    const initialSnapshot = createActor(itwEidIssuanceMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: { CiePin: "StartingCieAuthFlow" } },
+      context: {
+        level: "l3",
+        mode: "issuance",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        identification: { level: "L3", mode: "ciePin", pin: "123456" },
+        authenticationContext: {}
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot,
+      input: { deps: T_DEPS }
+    });
+
+    actor.start();
+
+    actor.send({
+      type: "error",
+      scope: "cie-auth",
+      error: { name: "WEBVIEW_ERROR", message: "500 Internal Server Error" }
+    });
+
+    expect(actor.getSnapshot().value).toEqual("Failure");
+    expect(actor.getSnapshot().context.failure?.type).toEqual(
+      IssuanceFailureType.ISSUER_GENERIC
+    );
+  });
+
+  it("Should transition to the Issuer generic failure state if a WebView error is received during CieID identification", () => {
+    const initialSnapshot = createActor(itwEidIssuanceMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: { CiePin: "StartingCieAuthFlow" } },
+      context: {
+        level: "l3",
+        mode: "issuance",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        identification: { level: "L3", mode: "cieId" },
+        authenticationContext: {}
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot,
+      input: { deps: T_DEPS }
+    });
+
+    actor.start();
+
+    actor.send({
+      type: "error",
+      scope: "cieid-login",
+      error: new Error("CIEID_WEBVIEW_HTTP_ERROR_500")
+    });
+
+    expect(actor.getSnapshot().value).toEqual("Failure");
+    expect(actor.getSnapshot().context.failure?.type).toEqual(
+      IssuanceFailureType.ISSUER_GENERIC
+    );
+  });
 });
 
 describe("itwEidIssuanceMachine itwVersion routing", () => {

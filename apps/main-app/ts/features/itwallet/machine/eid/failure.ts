@@ -7,7 +7,8 @@ import {
   isAssertionGenerationError,
   isFederationError,
   isLocalIntegrityError,
-  isMrtdTaxIdCodeMismatchFailure
+  isMrtdTaxIdCodeMismatchFailure,
+  isWebViewError
 } from "../../common/utils/itwFailureUtils";
 import { type EidIssuanceEvents } from "./events";
 
@@ -46,7 +47,7 @@ type ReasonTypeByFailure = {
   [IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY]: Errors.IssuerResponseError;
   [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
   [IssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
-  [IssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
+  [IssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError | string;
   [IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR]: Errors.IssuerResponseError;
   [IssuanceFailureType.NOT_MATCHING_IDENTITY]: string;
   [IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND]: Errors.IssuerResponseError;
@@ -126,6 +127,14 @@ export const mapEventToFailure = (
     return {
       type: IssuanceFailureType.ISSUER_GENERIC,
       reason: error
+    };
+  }
+
+  // A WebView error during the eID issuance can be attributed to the Issuer
+  if (isWebViewError(error)) {
+    return {
+      type: IssuanceFailureType.ISSUER_GENERIC,
+      reason: error.message
     };
   }
 
