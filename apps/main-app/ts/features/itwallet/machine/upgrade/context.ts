@@ -8,7 +8,7 @@ import {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
-import { Input } from "./input";
+import { CredentialUpgradeMachineDeps, Input } from "./input";
 
 export type Context = {
   /**
@@ -26,11 +26,15 @@ export type Context = {
    */
   credentials: ReadonlyArray<CredentialMetadata>;
   /**
+   * Runtime dependencies injected via machine input
+   */
+  deps: CredentialUpgradeMachineDeps;
+  /**
    * Credentials that failed the upgrade process
    */
   failedCredentials: ReadonlyArray<CredentialMetadata>;
   /**
-   * The integrity key tag that will be used when requesting the Wallet Unit Attestation.
+   * The integrity key tag that will be used when requesting the Key Attestation.
    */
   integrityKeyTag: string | undefined;
   /**
@@ -59,6 +63,7 @@ export type Context = {
 };
 
 export const getInitialContext = (input: Input): Context => ({
+  deps: input.deps,
   itwVersion: input.itwVersion,
   walletInstanceAttestation: undefined,
   pid: undefined,

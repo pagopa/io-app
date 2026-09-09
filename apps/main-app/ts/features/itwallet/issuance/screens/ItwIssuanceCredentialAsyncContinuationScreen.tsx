@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -17,14 +15,10 @@ import { ITW_ROUTES } from "../../navigation/routes";
 export const ItwIssuanceCredentialAsyncContinuationScreen = () => {
   const credentialType = CredentialType.DRIVING_LICENSE;
   const navigation = useIONavigation();
-  const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
+  const credential = useIOSelector(itwCredentialSelector(credentialType));
 
-  const isCredentialValid = pipe(
-    credentialOption,
-    O.map(getCredentialStatus),
-    O.map(status => status === "valid"),
-    O.getOrElse(() => false)
-  );
+  const isCredentialValid =
+    credential !== undefined && getCredentialStatus(credential) === "valid";
 
   if (isCredentialValid) {
     return (
