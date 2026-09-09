@@ -221,9 +221,9 @@ const IdpLoginScreen = () => {
       const url = event.url;
       // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
       const idpIntent = getIntentFallbackUrl(url);
-      if (O.isSome(idpIntent)) {
+      if (idpIntent != null) {
         void trackSpidLoginIntent(loggedOutWithIdpAuth?.idp);
-        void Linking.openURL(idpIntent.value);
+        void Linking.openURL(idpIntent);
         return false;
       }
 

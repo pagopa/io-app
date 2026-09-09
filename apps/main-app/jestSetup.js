@@ -99,6 +99,26 @@ jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
 }));
 
+/* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.
+   The `react-native` preset resolves the `.ios` implementations by default, so
+   every platform-branched component would otherwise pull in the native views. */
+jest.mock("@expo/ui/swift-ui", () => ({
+  Host: "Host",
+  Text: "Text"
+}));
+
+jest.mock("@expo/ui/swift-ui/modifiers", () => ({
+  Animation: { spring: jest.fn(() => ({})) },
+  accessibilityLabel: jest.fn(() => ({})),
+  animation: jest.fn(() => ({})),
+  contentTransition: jest.fn(() => ({})),
+  fixedSize: jest.fn(() => ({})),
+  font: jest.fn(() => ({})),
+  foregroundStyle: jest.fn(() => ({})),
+  frame: jest.fn(() => ({})),
+  monospacedDigit: jest.fn(() => ({}))
+}));
+
 jest.mock("expo-local-authentication", () => ({
   AuthenticationType: {
     FINGERPRINT: 1,

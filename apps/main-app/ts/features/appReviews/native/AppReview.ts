@@ -1,6 +1,6 @@
 import { NativeModules } from "react-native";
 
-export interface AppReviewModule {
+interface AppReviewModule {
   requestReview: () => void;
 }
 
