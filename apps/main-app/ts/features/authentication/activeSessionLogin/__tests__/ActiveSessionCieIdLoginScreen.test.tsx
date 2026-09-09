@@ -16,7 +16,7 @@ import {
 } from "../store/actions";
 
 const API_PREFIX_URL = "http://example.com";
-const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
+const MOCK_AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 const IS_UAT = false;
 
 const mockReplace = jest.fn();
@@ -35,7 +35,7 @@ jest.mock("@react-navigation/native", () => {
     }),
     useRoute: () => ({
       params: {
-        spidLevel: AUTH_LEVEL_L2,
+        spidLevel: MOCK_AUTH_LEVEL_L2,
         isUat: IS_UAT
       }
     })
@@ -241,7 +241,7 @@ function renderComponent() {
   return renderScreenWithNavigationStoreContext(
     ActiveSessionCieIdLoginScreen,
     AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN,
-    { spidLevel: AUTH_LEVEL_L2, isUat: IS_UAT },
+    { spidLevel: MOCK_AUTH_LEVEL_L2, isUat: IS_UAT },
     store
   );
 }
