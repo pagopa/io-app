@@ -112,8 +112,8 @@ const buildAuthorizationUrl = (
 
 /**
  * Builds the WebView source for the OneIdentity `/authorize` request: the
- * URL (via `buildAuthorizationUrl`) plus the `assertion-ref` header, required so
- * that OneIdentity can associate the incoming request with the lollipop
+ * URL (via `buildAuthorizationUrl`) plus the `x-pagopa-lollipop-assertion-ref` header,
+ * required so that OneIdentity can associate the incoming request with the lollipop
  * session just reserved via `/reserve`.
  */
 const buildWebviewSource = (
@@ -122,7 +122,7 @@ const buildWebviewSource = (
 ): WebViewSourceUri => ({
   uri,
   headers: {
-    "assertion-ref": `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toBase64EncodedThumbprint(
+    "x-pagopa-lollipop-assertion-ref": `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toBase64EncodedThumbprint(
       publicKey
     )}`
   }
