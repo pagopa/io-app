@@ -46,6 +46,10 @@ type SupportedAttachmentType = "application/pdf";
 
 const PDF_DATA_URI_PREFIX = "data:application/pdf;base64,";
 const FALLBACK_ATTACHMENT_FILE_NAME = "attachment";
+const FILE_NAME_EXTENSION_REGEX = /\.pdf$/i;
+const PATH_SEPARATOR_REGEX = /[/\\]/g;
+const LEADING_FILE_NAME_CHARS_REGEX = /^[\s.]+/;
+const NULL_CHARACTER = "\u0000";
 
 export const ItwPresentationCredentialAttachmentScreen = ({
   route
@@ -183,10 +187,27 @@ const getFileNameWithExtension = (
   type: SupportedAttachmentType
 ) => {
   const extension = type.split("/")[1];
+  const sanitizedFileName = sanitizeFileName(
+    fileName.replace(FILE_NAME_EXTENSION_REGEX, "")
+  );
   const fileNameWithoutExtension =
-    /^[^.]+/.exec(fileName)?.[0] ?? FALLBACK_ATTACHMENT_FILE_NAME;
+    sanitizedFileName.length > 0
+      ? sanitizedFileName
+      : FALLBACK_ATTACHMENT_FILE_NAME;
 
   return `${fileNameWithoutExtension}.${extension}`;
+};
+
+const sanitizeFileName = (fileName: string) => {
+  const withoutLeadingSpacesAndDots = fileName.replace(
+    LEADING_FILE_NAME_CHARS_REGEX,
+    ""
+  );
+  const withoutNullCharacters = withoutLeadingSpacesAndDots
+    .split(NULL_CHARACTER)
+    .join("");
+
+  return withoutNullCharacters.replace(PATH_SEPARATOR_REGEX, "");
 };
 
 const styles = StyleSheet.create({
