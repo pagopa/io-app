@@ -22,11 +22,7 @@ export function* checkConfiguredPinSaga(): Generator<
 
   if (pinCode != null) {
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
-    if (isFastLoginEnabled) {
-      if (isValidPinNumber(pinCode)) {
-        return pinCode;
-      }
-    } else {
+    if (!isFastLoginEnabled || isValidPinNumber(pinCode)) {
       return pinCode;
     }
   }
