@@ -46,6 +46,9 @@ const ASSERTION_FAILED_FAQ_URL =
 const PID_ANPR_MISMATCH_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/40032473652881-Continuare-a-usare-Documenti-su-IO-senza-limitazioni-dopo-12-mesi";
 
+const ITW_REQUIREMENTS_FAQ_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
+
 const failureLinkMapper: Partial<Record<IssuanceFailureType, string>> = {
   [IssuanceFailureType.HARDWARE_KEY_INVALID]: ASSERTION_FAILED_FAQ_URL,
   [IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND]: PID_ANPR_MISMATCH_FAQ_URL
@@ -327,9 +330,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
                     "features.itWallet.unsupportedDevice.errorL3.secondaryAction"
                   ),
                   onPress: () => {
-                    openWebUrl(
-                      FAQ_URL, // TODO: get the correct FAQ link
-                      () => toast.error(I18n.t("global.jserror.title"))
+                    openWebUrl(ITW_REQUIREMENTS_FAQ_URL, () =>
+                      toast.error(I18n.t("global.jserror.title"))
                     );
                   }
                 }
