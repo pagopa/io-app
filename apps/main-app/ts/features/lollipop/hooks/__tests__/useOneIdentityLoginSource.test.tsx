@@ -145,9 +145,9 @@ describe("useOneIdentityLoginSource", () => {
     expect(authorizeUrl.origin).toBe("https://one-identity.example.com");
     expect(authorizeUrl.pathname).toBe("/oidc/authorize");
     expect(authorizeUrl.query.client_id).toBe(reserveResponse.client_id);
-    expect(webviewSource.headers?.["assertion-ref"]).toContain(
-      toBase64EncodedThumbprint(mockPublicKey)
-    );
+    expect(
+      webviewSource.headers?.["x-pagopa-lollipop-assertion-ref"]
+    ).toContain(toBase64EncodedThumbprint(mockPublicKey));
   });
 
   it("should expose a failure loginSourceState on HTTP error", async () => {
