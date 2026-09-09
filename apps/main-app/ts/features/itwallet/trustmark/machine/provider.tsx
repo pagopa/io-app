@@ -9,9 +9,6 @@ import {
   selectItwSpecsVersion
 } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
-import { createItwTrustmarkActionsImplementation } from "./actions";
-import { createItwTrustmarkActorsImplementation } from "./actors";
-import { createItwTrustmarkGuardsImplementation } from "./guards";
 import { itwTrustmarkMachine } from "./machine";
 
 type Props = PropsWithChildren<{
@@ -32,16 +29,15 @@ export const ItwTrustmarkMachineProvider = ({
   const env = getEnv(useIOSelector(selectItwEnv));
   const itwVersion = useIOSelector(selectItwSpecsVersion);
 
-  const trustmarkMachine = itwTrustmarkMachine.provide({
-    actions: createItwTrustmarkActionsImplementation(store, navigation, toast),
-    actors: createItwTrustmarkActorsImplementation(env, itwVersion, store),
-    guards: createItwTrustmarkGuardsImplementation(itwVersion)
-  });
-
   return (
     <ItwTrustmarkMachineContext.Provider
-      logic={trustmarkMachine}
-      options={{ input: { credentialType } }}
+      logic={itwTrustmarkMachine}
+      options={{
+        input: {
+          credentialType,
+          deps: { env, itwVersion, navigation, store, toast }
+        }
+      }}
     >
       {children}
     </ItwTrustmarkMachineContext.Provider>

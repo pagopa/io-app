@@ -3,6 +3,10 @@ import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent
+} from "react-native-webview/lib/WebViewTypes";
 
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -30,6 +34,14 @@ const isAuthenticationUrl = (url: string) => {
   const authUrlRegex = /\/(livello[123]|nextUrl|openApp|app)(\/|\?|$)/;
   return authUrlRegex.test(url);
 };
+
+/**
+ * Prefixes of the error codes reported when the WebView fails to load a page.
+ * These codes end up in the support modal, in the Zendesk ticket and in the Mixpanel
+ * KO event, so they must stay stable and readable to keep failures diagnosable.
+ */
+const WEBVIEW_ERROR_CODE_PREFIX = "CIEID_WEBVIEW_ERROR";
+const WEBVIEW_HTTP_ERROR_CODE_PREFIX = "CIEID_WEBVIEW_HTTP_ERROR";
 
 /**
  * This component renders a WebView that loads the URL obtained from the startAuthFlow.
@@ -90,6 +102,34 @@ const ItwCieIdLoginScreen = () => {
     [startCieIdAppAuthentication, cieIdEnvironment]
   );
 
+  /**
+   * Converts the WebView failure events into meaningful errors. Without this
+   * conversion the raw native event object reaches the state machine and is
+   * stringified into an unusable "[object Object]" error code.
+   */
+  const handleWebViewError = useCallback(
+    ({ nativeEvent }: WebViewErrorEvent) => {
+      const { code, description } = nativeEvent;
+      handleAuthenticationFailure(
+        new Error(
+          `${WEBVIEW_ERROR_CODE_PREFIX}_${code}${
+            description ? `: ${description}` : ""
+          }`
+        )
+      );
+    },
+    [handleAuthenticationFailure]
+  );
+
+  const handleWebViewHttpError = useCallback(
+    ({ nativeEvent }: WebViewHttpErrorEvent) => {
+      handleAuthenticationFailure(
+        new Error(`${WEBVIEW_HTTP_ERROR_CODE_PREFIX}_${nativeEvent.statusCode}`)
+      );
+    },
+    [handleAuthenticationFailure]
+  );
+
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
       const authRedirectUrl = event.url;
@@ -116,8 +156,8 @@ const ItwCieIdLoginScreen = () => {
           cacheEnabled={false}
           javaScriptEnabled
           mediaPlaybackRequiresUserAction
-          onError={handleAuthenticationFailure}
-          onHttpError={handleAuthenticationFailure}
+          onError={handleWebViewError}
+          onHttpError={handleWebViewHttpError}
           onLoadEnd={onLoadEnd}
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
@@ -132,7 +172,8 @@ const ItwCieIdLoginScreen = () => {
       webViewSource,
       handleNavigationStateChange,
       handleShouldStartLoading,
-      handleAuthenticationFailure,
+      handleWebViewError,
+      handleWebViewHttpError,
       onLoadEnd
     ]
   );
