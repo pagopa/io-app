@@ -6,17 +6,9 @@ import { backendStatusLoadSuccess } from "../../../../../store/actions/backendSt
 import { Action } from "../../../../../store/actions/types";
 import createSecureStorage from "../../../../../store/storages/secureStorage";
 
-export type ItwRemoteConfigState = ItwConfig;
+export type ItwRemoteConfigState = Partial<ItwConfig>;
 
-export const itwRemoteConfigInitialState: ItwRemoteConfigState = {
-  enabled: true,
-  min_app_version: {
-    ios: "0.0.0.0",
-    android: "0.0.0.0"
-  },
-  feedback_banner_visible: false,
-  ipatente_cta_visible: false
-};
+export const itwRemoteConfigInitialState: ItwRemoteConfigState = {};
 
 const reducer = (
   state: ItwRemoteConfigState = itwRemoteConfigInitialState,
