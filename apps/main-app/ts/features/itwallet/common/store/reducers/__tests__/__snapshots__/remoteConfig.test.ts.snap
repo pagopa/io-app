@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ITW remote config persist shape should freeze ItwConfig [if this test fails, add a persist migration before updating the snapshot] 1`] = `
+[
+  {
+    "enabled": "boolean",
+    "feedback_banner_visible": "boolean",
+    "ipatente_cta_visible": "boolean",
+    "min_app_version": [
+      {
+        "android": [
+          "string",
+        ],
+        "ios": [
+          "string",
+        ],
+      },
+      {},
+    ],
+  },
+  {
+    "deferred_issuance_screen_content": [
+      {},
+      {
+        "description": [
+          {
+            "en-EN": "string",
+            "it-IT": "string",
+          },
+          {
+            "de-DE": "string",
+          },
+        ],
+        "title": [
+          {
+            "en-EN": "string",
+            "it-IT": "string",
+          },
+          {
+            "de-DE": "string",
+          },
+        ],
+      },
+    ],
+    "disabled_credentials": [
+      "string",
+    ],
+    "disabled_identification_methods": [
+      "string",
+    ],
+    "hidden_credentials": [
+      "string",
+    ],
+    "ipatente_cta_config": [
+      {
+        "service_id": "string",
+        "url": "string",
+        "visibility": "boolean",
+      },
+      {
+        "service_name": "string",
+        "service_organization_fiscal_code": "string",
+        "service_organization_name": "string",
+      },
+    ],
+    "ipzs_privacy_url": "string",
+    "itw_l3": [
+      {},
+      {
+        "min_app_version": [
+          {
+            "android": [
+              "string",
+            ],
+            "ios": [
+              "string",
+            ],
+          },
+          {},
+        ],
+      },
+    ],
+    "new_credentials": [
+      "string",
+    ],
+    "pinned_credentials": [
+      "string",
+    ],
+    "proximity": [
+      {},
+      {
+        "min_app_version": [
+          {
+            "android": [
+              "string",
+            ],
+            "ios": [
+              "string",
+            ],
+          },
+          {},
+        ],
+      },
+    ],
+    "wallet_activation_disabled": "boolean",
+  },
+]
+`;
