@@ -1005,6 +1005,7 @@
           "expired": "Scaduta",
           "expiring": "In scadenza",
           "invalid": "Non valido",
+          "suspended": "Non valido",
           "unknown": "Non disponibile",
           "upgradePending": "Da aggiornare",
           "verificationExpired": "Azione richiesta",
