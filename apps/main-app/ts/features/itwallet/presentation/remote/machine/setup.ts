@@ -9,6 +9,7 @@ import {
   navigateToClaimsDisclosureScreenAction,
   navigateToDiscoveryScreenAction,
   navigateToFailureScreenAction,
+  navigateToIdentificationScreenAction,
   onInitAction,
   storeWalletInstanceAttestationAction,
   trackRemoteDataShareAction
@@ -32,10 +33,6 @@ import {
 } from "./guards";
 import { Input } from "./input";
 
-const notImplemented = () => {
-  throw new Error("Not implemented");
-};
-
 /** Defines typed remote-presentation actors while providers inject runtime side effects. */
 export const itwRemoteMachineSetup = setup({
   types: {
@@ -49,7 +46,7 @@ export const itwRemoteMachineSetup = setup({
     navigateToFailureScreen: navigateToFailureScreenAction,
     navigateToDiscoveryScreen: navigateToDiscoveryScreenAction,
     navigateToClaimsDisclosureScreen: navigateToClaimsDisclosureScreenAction,
-    navigateToIdentificationModeScreen: notImplemented,
+    navigateToIdentificationModeScreen: navigateToIdentificationScreenAction,
     navigateToAuthResponseScreen: navigateToAuthResponseScreenAction,
     navigateToBarcodeScanScreen: navigateToBarcodeScanScreenAction,
     closePresentation: closePresentationAction,

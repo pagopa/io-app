@@ -146,7 +146,6 @@ const waitForSessionRefresh = jest.fn();
  */
 const issuedEidMatchesAuthenticatedUser = jest.fn();
 const isSessionExpired = jest.fn();
-const isOperationAborted = jest.fn();
 const hasValidWalletInstanceAttestation = jest.fn();
 const revokeWalletInstance = jest.fn();
 const isWalletValid = jest.fn();
@@ -244,7 +243,6 @@ describe("itwEidIssuanceMachine", () => {
     guards: {
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
-      isOperationAborted,
       hasValidWalletInstanceAttestation,
       isWalletValid
     }
