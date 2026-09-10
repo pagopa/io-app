@@ -46,9 +46,13 @@ type SupportedAttachmentType = "application/pdf";
 
 const PDF_DATA_URI_PREFIX = "data:application/pdf;base64,";
 const FALLBACK_ATTACHMENT_FILE_NAME = "attachment";
-// Path separators (/,\) and null char, not allowed in file names
-// eslint-disable-next-line no-control-regex
-const INVALID_FILE_NAME_CHARACTERS_REGEX = /[/\\\u0000]/g;
+// NUL truncates the path in the native layer; bidi overrides (U+202E) disguise
+// the extension in the share sheet.
+const UNSAFE_UNICODE_CHARACTERS_REGEX = /[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]/gu;
+
+// Path separators, RFC 3986 delimiters and `%`. expo-modules-core forwards these
+// unencoded, so they would be parsed as URI syntax instead of as the filename.
+const UNSAFE_URI_CHARACTERS_REGEX = /[/\\:?#[\]@!$&'()*+,;=%]/g;
 // Existing extension, if any, to normalize between iOS (not included) and Android (included)
 const EXISTING_EXTENSION_REGEX = /\.pdf$/i;
 // Leading/trailing spaces and dots, not allowed in file names
@@ -191,7 +195,8 @@ const getFileNameWithExtension = (
 ) => {
   const extension = type.split("/")[1];
   const fileNameWithoutExtension = fileName
-    .replace(INVALID_FILE_NAME_CHARACTERS_REGEX, "")
+    .replace(UNSAFE_UNICODE_CHARACTERS_REGEX, "")
+    .replace(UNSAFE_URI_CHARACTERS_REGEX, "")
     .replace(EXISTING_EXTENSION_REGEX, "")
     .replace(INVALID_SPACES_AND_DOTS_REGEX, "");
   const sanitizedFileName =
