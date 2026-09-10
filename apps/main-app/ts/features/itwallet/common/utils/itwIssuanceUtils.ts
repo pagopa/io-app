@@ -299,9 +299,13 @@ export const getSpidProductionIdpHint = (spidIdpId: string) => {
   return SPID_IDP_HINTS[spidIdpId];
 };
 
+/**
+ * List of `scope` values that qualify as PID, used to retrieve the correct
+ * credential configuration ID from the PID Issuer's Entity Configuration.
+ */
 const pidScopes = [
   "PersonIdentificationData", // Legacy 1.0 PID (will be removed in the future)
-  CredentialType.PID // New 1.3+ PID
+  "eid" // New 1.4 NPID
 ];
 
 /**
