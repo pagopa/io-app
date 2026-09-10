@@ -2,7 +2,7 @@ import { StateFrom } from "xstate";
 
 import { EvaluatedDcqlQueryResult } from "../../../common/utils/itwTypesUtils";
 import { ItwCredentialIssuanceMachine } from "../machine";
-import { selectRequiredClaimsOption } from "../selectors";
+import { selectRequiredClaims } from "../selectors";
 
 type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
 
@@ -44,16 +44,11 @@ const getSnapshot = (
 describe("credential machine selectors", () => {
   it("should select required claim names from the evaluated credential request", () => {
     expect(
-      selectRequiredClaimsOption(getSnapshot(T_EVALUATED_DCQL_QUERY))
-    ).toStrictEqual({
-      _tag: "Some",
-      value: ["given_name", "family_name", "resident_address"]
-    });
+      selectRequiredClaims(getSnapshot(T_EVALUATED_DCQL_QUERY))
+    ).toStrictEqual(["given_name", "family_name", "resident_address"]);
   });
 
-  it("should return none when the evaluated credential request is missing", () => {
-    expect(selectRequiredClaimsOption(getSnapshot())).toStrictEqual({
-      _tag: "None"
-    });
+  it("should return undefined when the evaluated credential request is missing", () => {
+    expect(selectRequiredClaims(getSnapshot())).toBeUndefined();
   });
 });

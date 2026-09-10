@@ -24,7 +24,7 @@ import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSucce
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
-import { onLoginUriChanged } from "../../../common/utils/login";
+import { AUTH_LEVELS, onLoginUriChanged } from "../../../common/utils";
 import { IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 import { LoadingOverlay } from "../shared/LoadingSpinnerOverlay";
 import {
@@ -126,7 +126,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
         params: {
           errorCodeOrMessage: code || message,
           authMethod: "CIE_ID",
-          authLevel: "L2",
+          authLevel: AUTH_LEVELS.L2,
           params: { spidLevel, isUat }
         }
       });

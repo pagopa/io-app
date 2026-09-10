@@ -6,7 +6,6 @@ import {
   shouldSerializeReason
 } from "../../../common/utils/itwStoreUtils";
 import {
-  trackItwProximityGenericFailure,
   trackItwProximityMandatoryCredentialMissing,
   trackItwProximityNfcSessionError,
   trackItwProximityNfcSessionTimeout,
@@ -61,9 +60,6 @@ export const useItwProximityEventsTracking = ({
           reason: serializedFailure.reason,
           type: serializedFailure.type,
           proximity_sharing_status: hasGivenConsent ? "post" : "pre"
-        });
-        trackItwProximityGenericFailure({
-          reason: serializedFailure.reason
         });
         if (isNfcRetrieval) {
           return trackItwProximityNfcSessionError(serializedFailure);

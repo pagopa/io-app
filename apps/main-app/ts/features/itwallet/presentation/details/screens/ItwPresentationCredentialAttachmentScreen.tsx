@@ -8,7 +8,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as Sharing from "expo-sharing";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import RNFS from "react-native-fs";
 import Pdf from "react-native-pdf";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
@@ -18,7 +19,7 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { ItwGenericErrorContent } from "../../../common/components/ItwGenericErrorContent.tsx";
 import {
   getClaimsFullLocale,
-  PdfClaim
+  isPdfClaim
 } from "../../../common/utils/itwClaimsUtils.ts";
 import { ParsedCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
@@ -42,6 +43,20 @@ type ScreenProps = IOStackNavigationRouteProps<
 
 // We currently only support PDF files, extend this if needed
 type SupportedAttachmentType = "application/pdf";
+
+const PDF_DATA_URI_PREFIX = "data:application/pdf;base64,";
+const FALLBACK_ATTACHMENT_FILE_NAME = "attachment";
+// NUL truncates the path in the native layer; bidi overrides (U+202E) disguise
+// the extension in the share sheet.
+const UNSAFE_UNICODE_CHARACTERS_REGEX = /[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]/gu;
+
+// Path separators, RFC 3986 delimiters and `%`. expo-modules-core forwards these
+// unencoded, so they would be parsed as URI syntax instead of as the filename.
+const UNSAFE_URI_CHARACTERS_REGEX = /[/\\:?#[\]@!$&'()*+,;=%]/g;
+// Existing extension, if any, to normalize between iOS (not included) and Android (included)
+const EXISTING_EXTENSION_REGEX = /\.pdf$/i;
+// Leading/trailing spaces and dots, not allowed in file names
+const INVALID_SPACES_AND_DOTS_REGEX = /^[\s.]+|[\s.]+$/g;
 
 export const ItwPresentationCredentialAttachmentScreen = ({
   route
@@ -75,13 +90,30 @@ export const ItwPresentationCredentialAttachmentScreen = ({
   const handleOnShare =
     ({ fileName, uri, type }: AttachmentData) =>
     async () => {
+      const fileNameWithExtension = getFileNameWithExtension(fileName, type);
+      const tempPath = `${RNFS.CachesDirectoryPath}/${fileNameWithExtension}`;
+
       try {
-        await Sharing.shareAsync(uri, {
+        await RNFS.writeFile(
+          tempPath,
+          uri.replace(PDF_DATA_URI_PREFIX, ""),
+          "base64"
+        );
+        await Sharing.shareAsync(`file://${tempPath}`, {
           mimeType: type,
-          dialogTitle: getFileNameWithExtension(fileName, type)
+          dialogTitle: fileNameWithExtension
         });
       } catch {
         toast.show(I18n.t("messagePDFPreview.errors.sharing"));
+      } finally {
+        try {
+          const exists = await RNFS.exists(tempPath);
+          if (exists) {
+            await RNFS.unlink(tempPath);
+          }
+        } catch {
+          // Best-effort cleanup of a temporary cache file.
+        }
       }
     };
 
@@ -143,7 +175,7 @@ const getAttachmentData = ({
   const fileName =
     typeof name === "string" ? name : name?.[getClaimsFullLocale()] || "";
 
-  if (PdfClaim.is(value)) {
+  if (typeof value === "string" && isPdfClaim(value)) {
     return {
       fileName,
       uri: value,
@@ -156,18 +188,23 @@ const getAttachmentData = ({
 
 /**
  * Given the filename and the type of the attachment, returns the filename with the extension.
- * On Android the extension is added automatically by the OS and iOS we need to add it manually
  */
 const getFileNameWithExtension = (
   fileName: string,
   type: SupportedAttachmentType
 ) => {
   const extension = type.split("/")[1];
-  const fileNameWithoutExtension = /^[^.]+/.exec(fileName)?.[0];
+  const fileNameWithoutExtension = fileName
+    .replace(UNSAFE_UNICODE_CHARACTERS_REGEX, "")
+    .replace(UNSAFE_URI_CHARACTERS_REGEX, "")
+    .replace(EXISTING_EXTENSION_REGEX, "")
+    .replace(INVALID_SPACES_AND_DOTS_REGEX, "");
+  const sanitizedFileName =
+    fileNameWithoutExtension.length > 0
+      ? fileNameWithoutExtension
+      : FALLBACK_ATTACHMENT_FILE_NAME;
 
-  return Platform.OS === "ios"
-    ? `${fileNameWithoutExtension}.${extension}`
-    : fileNameWithoutExtension;
+  return `${sanitizedFileName}.${extension}`;
 };
 
 const styles = StyleSheet.create({

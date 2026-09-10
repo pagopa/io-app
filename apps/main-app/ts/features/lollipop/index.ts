@@ -1,8 +1,4 @@
 import { deleteKey, generate, PublicKey } from "@pagopa/io-react-native-crypto";
-import * as A from "fp-ts/lib/Array";
-import { pipe } from "fp-ts/lib/function";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
 import URLParse from "url-parse";
 
 import { AppDispatch } from "../../App";
@@ -60,50 +56,30 @@ export function toSignatureComponents(
 }
 
 /**
- * Chains all custom sign promises passed as its input array.
- */
-export const chainSignPromises = (
-  promises: Array<TE.TaskEither<Error, SignPromiseResult>>
-) =>
-  pipe(
-    promises,
-    A.sequence(TE.ApplicativePar),
-    TE.getOrElse(() => T.of([] as Array<SignPromiseResult>))
-  )();
-
-/**
  * Regenerate publicKey, it returns a Promise
  * with publicKey, if it was succesfully generated
  */
-export const handleRegenerateEphemeralKey = (
+export const handleRegenerateEphemeralKey = async (
   keyTag: string,
   isMixpanelEnabled: boolean | null,
   dispatch: AppDispatch
-) =>
-  pipe(
-    keyTag,
-    taskRegenerateKey,
-    TE.fold(
-      error => {
-        trackLollipopIdpLoginFailure(error.message);
-        if (isMixpanelEnabled) {
-          trackLollipopKeyGenerationFailure(error.message);
-        }
-        dispatch(lollipopRemoveEphemeralPublicKey());
-        return T.of(undefined);
-      },
-      key => {
-        dispatch(lollipopSetEphemeralPublicKey({ publicKey: key }));
-        if (isMixpanelEnabled) {
-          trackLollipopKeyGenerationSuccess(key.kty);
-        }
-        return T.of(key);
-      }
-    )
-  )();
+) => {
+  try {
+    await deleteKey(keyTag);
+    const regeneratedKeyTag = await generate(keyTag);
 
-export const taskRegenerateKey = (keyTag: string) =>
-  pipe(
-    TE.tryCatch(() => deleteKey(keyTag), toCryptoError),
-    TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))
-  );
+    dispatch(lollipopSetEphemeralPublicKey({ publicKey: regeneratedKeyTag }));
+    if (isMixpanelEnabled) {
+      trackLollipopKeyGenerationSuccess(regeneratedKeyTag.kty);
+    }
+    return regeneratedKeyTag;
+  } catch (error) {
+    const cryptoError = toCryptoError(error);
+    trackLollipopIdpLoginFailure(cryptoError.message);
+    if (isMixpanelEnabled) {
+      trackLollipopKeyGenerationFailure(cryptoError.message);
+    }
+    dispatch(lollipopRemoveEphemeralPublicKey());
+    return undefined;
+  }
+};

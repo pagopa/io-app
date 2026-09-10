@@ -14,6 +14,7 @@ import type {
 } from "../../common/utils/itwTypesUtils";
 
 import { IssuanceFailure } from "./failure";
+import { EidIssuanceMachineDeps } from "./input";
 
 /**
  * When authenticating with CIE + PIN the flow is interrupted
@@ -64,6 +65,10 @@ export type Context = {
    */
   credentialType: string | undefined;
   /**
+   * Runtime dependencies injected via machine input
+   */
+  deps: EidIssuanceMachineDeps;
+  /**
    * The obtained PID credential
    */
   eid: CredentialBundle | undefined;
@@ -92,6 +97,10 @@ export type Context = {
    */
   itwVersion: ItwVersion;
   /**
+   * An optional dictionary of Key Attestations generated for the issuance.
+   */
+  keyAttestations?: Record<string, string>;
+  /**
    * The level of eID issuance, which determines the authentication methods allowed and
    * the eID level that will be issued: Documenti su IO (L2) or IT Wallet (L2+, L3)
    */
@@ -110,18 +119,14 @@ export type Context = {
    */
   walletInstanceAttestation: undefined | WalletInstanceAttestations;
   /**
-   * [1.3.3+] Optional Status Lists referenced by the Wallet Unit
-   * Attestations (WUAs). This is used to check the validity of the WI.
+   * [1.3.3+] Optional Status Lists referenced by the Key
+   * Attestations (KAs). This is used to check the validity of the WI.
    */
   walletInstanceStatusList?: {
     idx: number;
     parsedStatusList: CredentialStatus.StatusList;
     uri: string;
   };
-  /**
-   * An optional dictionary of Wallet Unit Attestations generated for the issuance.
-   */
-  walletUnitAttestations?: Record<string, string>;
 };
 
 /**
@@ -175,7 +180,7 @@ export type MrtdPoPContext = {
   validationUrl: string;
 };
 
-export const InitialContext: Context = {
+export const InitialContext: Omit<Context, "deps"> = {
   itwVersion: "1.0.0", // Initial value to satisfy type constraints. It is assigned in the `onInit` action.
   mode: undefined,
   level: undefined,
