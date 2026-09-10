@@ -62,7 +62,7 @@ export function* watchItwOfflineSaga() {
    *
    * The offline access counter is reset when the wallet instance status is updated
    * successfully, indicating that the user has returned online and the wallet instance
-   * stattus is refreshed.
+   * status is refreshed.
    */
   yield* takeLatest(
     getType(itwUpdateWalletInstanceStatus.success),
