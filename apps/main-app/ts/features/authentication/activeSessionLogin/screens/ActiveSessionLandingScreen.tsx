@@ -3,11 +3,9 @@
  * It includes a carousel with highlights on the app functionalities
  */
 import {
-  Banner,
   ContentWrapper,
   HeaderSecondLevel,
   IOButton,
-  ModuleNavigation,
   VSpacer
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -23,16 +21,8 @@ import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import {
-  loginCieWizardSelected,
-  trackCieBottomSheetScreenView,
-  trackLoginCieIdSelected,
-  trackLoginCiePinSelected
-} from "../../common/analytics";
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
+import { useCieLoginMethodSelection } from "../../common/hooks/useCieLoginMethodSelection";
 import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
 import useNavigateToLoginMethod from "../../login/hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../../login/landing/components/LandingSessionExpiredComponent";
@@ -46,97 +36,25 @@ import {
 
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
-const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 
 export const ActiveSessionLandingScreen = () => {
   const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
 
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
+  const { navigateToIdpSelection } = useNavigateToLoginMethod();
+
   const {
-    navigateToIdpSelection,
-    navigateToCiePinInsertion,
-    navigateToCieIdLoginScreen,
-    isCieSupported
-  } = useNavigateToLoginMethod();
-
-  const handleNavigateToCiePinScreen = useCallback(() => {
-    void trackLoginCiePinSelected("reauth");
-    navigateToCiePinInsertion();
-  }, [navigateToCiePinInsertion]);
-
-  const handleNavigateToCieIdLoginScreen = useCallback(() => {
-    void trackLoginCieIdSelected(AUTH_LEVEL_L2, "reauth");
-    navigateToCieIdLoginScreen(AUTH_LEVEL_L2);
-  }, [navigateToCieIdLoginScreen]);
+    bottomSheet,
+    dismiss: dismissBottomSheet,
+    handleCieLoginRequested
+  } = useCieLoginMethodSelection({ mode: "reauth" });
 
   useOnFirstRender(() => {
     void trackLoginReauthEngagement();
     dispatch(setActiveSessionLoginBlockingScreenHasBeenVisualized());
   });
-
-  const {
-    present,
-    dismiss: dismissBottomSheet,
-    bottomSheet
-  } = useIOBottomSheetModal({
-    title: I18n.t("authentication.landing.cie_bottom_sheet.title"),
-    component: (
-      <View>
-        <ModuleNavigation
-          icon="fiscalCodeIndividual"
-          onPress={handleNavigateToCiePinScreen}
-          subtitle={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_pin.subtitle"
-          )}
-          testID="bottom-sheet-login-with-cie-pin"
-          title={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_pin.title"
-          )}
-        />
-        <VSpacer size={8} />
-        <ModuleNavigation
-          badge={{
-            variant: "highlight",
-            text: I18n.t(
-              "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
-            )
-          }}
-          icon="device"
-          onPress={handleNavigateToCieIdLoginScreen}
-          subtitle={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_id.subtitle"
-          )}
-          testID="bottom-sheet-login-with-cie-id"
-          title={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_id.title"
-          )}
-        />
-        <VSpacer size={24} />
-        <Banner
-          action={I18n.t(
-            "authentication.landing.cie_bottom_sheet.help_banner.action"
-          )}
-          color="turquoise"
-          onPress={() => {
-            void loginCieWizardSelected("reauth");
-            navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
-            });
-          }}
-          pictogramName="help"
-          testID="bottom-sheet-login-wizards"
-          title={I18n.t(
-            "authentication.landing.cie_bottom_sheet.help_banner.title"
-          )}
-        />
-        <VSpacer />
-      </View>
-    ),
-    snapPoint: [400]
-  });
-
-  const navigation = useIONavigation();
 
   const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
 
@@ -150,13 +68,8 @@ export const ActiveSessionLandingScreen = () => {
 
   const navigateToCiePinScreen = useCallback(() => {
     void trackLoginReauthEngagementCieSelected();
-    if (isCieSupported) {
-      void trackCieBottomSheetScreenView("reauth");
-      present();
-    } else {
-      handleNavigateToCieIdLoginScreen();
-    }
-  }, [isCieSupported, present, handleNavigateToCieIdLoginScreen]);
+    handleCieLoginRequested();
+  }, [handleCieLoginRequested]);
 
   const handleClosePress = useCallback(() => {
     void trackLoginReauthEngagementDismissed();

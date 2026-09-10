@@ -5,7 +5,6 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import { AUTH_LEVELS } from "../../common/utils";
 import { ActiveSessionLandingScreen } from "../screens/ActiveSessionLandingScreen";
 
 const mockNavigateToCieIdLoginScreen = jest.fn();
@@ -58,40 +57,6 @@ describe("ActiveSessionLandingScreen", () => {
     });
 
     expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
-  });
-
-  it("Should call navigateToCieIdLoginScreen from bottom sheet", async () => {
-    const { getByTestId } = renderComponent();
-
-    const loginWithCie = getByTestId("landing-button-login-cie");
-    await act(async () => {
-      fireEvent.press(loginWithCie);
-    });
-
-    const loginWithCieID = getByTestId("bottom-sheet-login-with-cie-id");
-    await act(async () => {
-      fireEvent.press(loginWithCieID);
-    });
-
-    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith(AUTH_LEVELS.L2);
-  });
-
-  it("Should navigate to the wizard screen from banner", async () => {
-    const { getByTestId } = renderComponent();
-
-    const loginWithCie = getByTestId("landing-button-login-cie");
-    await act(async () => {
-      fireEvent.press(loginWithCie);
-    });
-
-    const wizardsBanner = getByTestId("bottom-sheet-login-wizards");
-    await act(async () => {
-      fireEvent.press(wizardsBanner);
-    });
-
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
-    });
   });
 });
 
