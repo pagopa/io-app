@@ -1,5 +1,6 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import Config from "react-native-config";
+import { z } from "zod";
 
 export type Env = {
   BYPASS_IDENTITY_MATCH: boolean;
@@ -15,7 +16,10 @@ export type Env = {
   X509_CERT_ROOT: string;
 };
 
-export type EnvType = "pre" | "prod";
+/** Runtime schema for persisted IT-Wallet environment values. */
+export const EnvTypeSchema = z.enum(["pre", "prod"]);
+
+export type EnvType = z.infer<typeof EnvTypeSchema>;
 
 /**
  * Wrapper for an env variable that has different values for each IT-Wallet specs version.

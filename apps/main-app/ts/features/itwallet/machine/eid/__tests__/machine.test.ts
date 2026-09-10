@@ -1639,6 +1639,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(obtainStatusList).toHaveBeenCalledWith(
       expect.objectContaining({
         input: {
+          deps: T_DEPS,
           itwVersion: "1.4.6",
           keyAttestations: T_KA
         }
