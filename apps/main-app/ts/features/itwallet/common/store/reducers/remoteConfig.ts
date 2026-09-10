@@ -8,7 +8,7 @@ import createSecureStorage from "../../../../../store/storages/secureStorage";
 
 export type ItwRemoteConfigState = Partial<ItwConfig>;
 
-export const itwRemoteConfigInitialState: ItwRemoteConfigState = {};
+const itwRemoteConfigInitialState: ItwRemoteConfigState = {};
 
 const reducer = (
   state: ItwRemoteConfigState = itwRemoteConfigInitialState,
