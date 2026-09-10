@@ -5,10 +5,8 @@ import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 /**
- * This store section is kept for backwards compatibility (some components are
- * outside the Navigation Context and cannot receive the update when the
- * navigation change. Please don't use to add any new logic based on the
- * currentRoute.
+ * This store section is kept for backwards compatibility (some components are outside the Navigation Context and
+ * cannot receive the update when the navigation change. Please don't use to add any new logic based on the currentRoute.
  */
 export type NavigationState = {
   currentRoute: string;
@@ -34,10 +32,8 @@ export function navigationReducer(
 }
 
 /**
- * For debug / backwards compatibility purpose only The use of this selector is
- * highly discouraged, it should be better to handle the current route through
- * react-navigation proper hooks.
- *
+ * For debug / backwards compatibility purpose only
+ * The use of this selector is highly discouraged, it should be better to handle the current route through react-navigation proper hooks.
  * @param state
  */
 export const currentRouteSelector = (state: GlobalState) =>

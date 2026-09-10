@@ -11,7 +11,9 @@ const {
   h2: { colorToken, ...h2Style }
 } = IOTypography;
 
-/** `H2` typographic style */
+/**
+ * `H2` typographic style
+ */
 export const H2 = ({
   weight: customWeight,
   color: customColor,

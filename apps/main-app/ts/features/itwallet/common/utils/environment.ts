@@ -22,13 +22,12 @@ export const EnvTypeSchema = z.enum(["pre", "prod"]);
 export type EnvType = z.infer<typeof EnvTypeSchema>;
 
 /**
- * Wrapper for an env variable that has different values for each IT-Wallet
- * specs version.
+ * Wrapper for an env variable that has different values for each IT-Wallet specs version.
  *
  * Call `.value()` to get the value for the specified version.
  *
  * @example
- *   myVar.value("1.3.3");
+ * myVar.value("1.3.3")
  */
 class ItwSpecsEnvVar {
   constructor(private values: Record<ItwVersion, string>) {}

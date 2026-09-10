@@ -52,10 +52,7 @@ export const trackItwRemotePresentationCompleted = (
 ) => {
   void mixpanelTrack(
     ITW_REMOTE_SCREENVIEW_EVENTS.ITW_REMOTE_UX_SUCCESS,
-    buildEventProperties("UX", "screen_view", {
-      redirect_url,
-      credential_type
-    })
+    buildEventProperties("UX", "screen_view", { redirect_url, credential_type })
   );
 };
 

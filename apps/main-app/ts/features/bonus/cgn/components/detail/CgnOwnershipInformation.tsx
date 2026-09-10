@@ -9,10 +9,8 @@ import { capitalizeTextName } from "../../../../../utils/strings";
 import { profileSelector } from "../../../../settings/common/store/selectors";
 
 /**
- * Renders the CGN ownership block for detail screen, including Owner's Fiscal
- * Code (The current user logged in)
- *
- * @class
+ * Renders the CGN ownership block for detail screen, including Owner's Fiscal Code (The current user logged in)
+ * @constructor
  */
 const CgnOwnershipInformation = (): ReactElement => {
   const currentProfile = useIOSelector(profileSelector);

@@ -82,7 +82,9 @@ const T_WALLET_INSTANCE_STATUS_LIST: ObtainStatusListActorOutput = {
   }
 };
 
-/** Actions */
+/**
+ * Actions
+ */
 const onInit = jest.fn();
 const navigateToTosScreen = jest.fn();
 const navigateToIpzsPrivacyScreen = jest.fn();
@@ -123,7 +125,9 @@ const trackItwIdAuthenticationCompleted = jest.fn();
 const trackItwIdVerifiedDocument = jest.fn();
 const storeWalletActivationFeedbackBannerData = jest.fn();
 
-/** Actors */
+/**
+ * Actors
+ */
 const verifyTrustFederation = jest.fn();
 const createWalletInstance = jest.fn();
 const getCieStatus = jest.fn();
@@ -137,7 +141,9 @@ const obtainStatusList = jest.fn();
 const storeEidCredentialActor = jest.fn();
 const waitForSessionRefresh = jest.fn();
 
-/** Guards */
+/**
+ * Guards
+ */
 const issuedEidMatchesAuthenticatedUser = jest.fn();
 const isSessionExpired = jest.fn();
 const hasValidWalletInstanceAttestation = jest.fn();
@@ -265,7 +271,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    /** Start eID issuance */
+    /**
+     * Start eID issuance
+     */
 
     actor.send({ type: "start", mode: "issuance", level: "l2" });
 
@@ -273,7 +281,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
-    /** Accept TOS and verify trust */
+    /**
+     * Accept TOS and verify trust
+     */
 
     actor.send({ type: "accept-tos" });
 
@@ -320,7 +330,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    /** Start eID issuance */
+    /**
+     * Start eID issuance
+     */
 
     actor.send({ type: "start", mode: "issuance", level: "l3" });
 
@@ -328,7 +340,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
-    /** Accept TOS and verify trust */
+    /**
+     * Accept TOS and verify trust
+     */
 
     actor.send({ type: "accept-tos" });
 
@@ -338,7 +352,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
 
-    /** Wallet Instance creation and attestation obtainment */
+    /**
+     * Wallet Instance creation and attestation obtainment
+     */
 
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation")
@@ -383,7 +399,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
 
-    /** Restart the flow as L2 fallback from the beginning (TOS acceptance) */
+    /**
+     * Restart the flow as L2 fallback from the beginning (TOS acceptance)
+     */
 
     actor.send({ type: "restart", mode: "issuance", level: "l2-fallback" });
 
@@ -399,7 +417,9 @@ describe("itwEidIssuanceMachine", () => {
       })
     );
 
-    /** Choose SPID as identification mode */
+    /**
+     * Choose SPID as identification mode
+     */
 
     actor.send({ type: "select-identification-mode", mode: "spid" });
 
@@ -412,7 +432,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToIdpSelectionScreen).toHaveBeenCalledTimes(1);
     expect(trackIdentificationMethodSelected).toHaveBeenCalledTimes(1);
 
-    /** Choose first IDP in list for SPID identification */
+    /**
+     * Choose first IDP in list for SPID identification
+     */
 
     actor.send({ type: "select-spid-idp", idp: idps[0] });
 
@@ -451,7 +473,9 @@ describe("itwEidIssuanceMachine", () => {
       authRedirectUrl: "http://test.it"
     });
 
-    /** Obtain access token and eID */
+    /**
+     * Obtain access token and eID
+     */
     const intermediateSnapshot = await waitForActor(actor, s =>
       s.matches({ Issuance: "RequestingEid" })
     );
@@ -500,7 +524,9 @@ describe("itwEidIssuanceMachine", () => {
       keyAttestations: T_KA
     });
 
-    /** Go to wallet */
+    /**
+     * Go to wallet
+     */
 
     actor.send({ type: "go-to-wallet" });
 
@@ -508,10 +534,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should obtain an eID (CieID) from L2 Identification", async () => {
-    /**
-     * Initial part is the same as the previous test, we can start from the
-     * identification
-     */
+    /** Initial part is the same as the previous test, we can start from the identification */
 
     startAuthFlow.mockImplementation(() => Promise.resolve({}));
     requestAccessToken.mockImplementation(() =>
@@ -541,7 +564,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     actor.start();
 
-    /** Choose CieID as identification mode */
+    /**
+     * Choose CieID as identification mode
+     */
 
     actor.send({ type: "select-identification-mode", mode: "cieId" });
 
@@ -774,10 +799,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should obtain an eID (Cie+PIN)", async () => {
-    /**
-     * Initial part is the same as the previous test, we can start from the
-     * identification
-     */
+    /** Initial part is the same as the previous test, we can start from the identification */
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine,
@@ -802,7 +824,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     actor.start();
 
-    /** Choose Cie+PIN as identification mode */
+    /**
+     * Choose Cie+PIN as identification mode
+     */
 
     actor.send({ type: "select-identification-mode", mode: "ciePin" });
 
@@ -836,7 +860,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
 
-    /** Enter pin */
+    /**
+     * Enter pin
+     */
 
     startAuthFlow.mockImplementation(() => Promise.resolve({}));
 
@@ -881,7 +907,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    /** Cie reading complete */
+    /**
+     * Cie reading complete
+     */
     requestAccessToken.mockImplementation(() =>
       Promise.resolve(T_ACCESS_TOKEN)
     );
@@ -916,10 +944,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should display NFC instructions (Cie+PIN)", async () => {
-    /**
-     * Initial part is the same as the previous test, we can start from the
-     * identification
-     */
+    /** Initial part is the same as the previous test, we can start from the identification */
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine,
@@ -948,7 +973,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     actor.start();
 
-    /** Enter pin with NFC disabled */
+    /**
+     * Enter pin with NFC disabled
+     */
 
     actor.send({
       type: "next"
@@ -973,7 +1000,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(navigateToNfcInstructionsScreen).toHaveBeenCalledTimes(1);
 
-    /** Enable NFC */
+    /**
+     * Enable NFC
+     */
 
     actor.send({
       type: "nfc-enabled"
@@ -1017,7 +1046,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     actor.start();
 
-    /** Start eID issuance */
+    /**
+     * Start eID issuance
+     */
 
     actor.send({ type: "start", mode: "issuance", level: "l2" });
 
@@ -1025,7 +1056,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
-    /** Accept TOS and request WIA */
+    /**
+     * Accept TOS and request WIA
+     */
 
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
@@ -1077,7 +1110,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     actor.start();
 
-    /** Start eID issuance */
+    /**
+     * Start eID issuance
+     */
 
     actor.send({ type: "start", mode: "issuance", level: "l2" });
 
@@ -1085,7 +1120,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
-    /** Accept TOS and request WIA */
+    /**
+     * Accept TOS and request WIA
+     */
 
     actor.send({ type: "accept-tos" });
 
@@ -1230,7 +1267,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    /** Start eID issuance */
+    /**
+     * Start eID issuance
+     */
 
     actor.send({ type: "start", mode: "issuance", level: "l2" });
 
@@ -1244,7 +1283,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
-    /** Accept TOS and request WIA */
+    /**
+     * Accept TOS and request WIA
+     */
 
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
@@ -1291,7 +1332,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    /** Start eID issuance */
+    /**
+     * Start eID issuance
+     */
 
     actor.send({ type: "start", mode: "issuance", level: "l2" });
 
@@ -1299,7 +1342,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
-    /** Accept TOS and request WIA */
+    /**
+     * Accept TOS and request WIA
+     */
 
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
@@ -1347,7 +1392,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    /** Start eID issuance */
+    /**
+     * Start eID issuance
+     */
 
     actor.send({ type: "start", mode: "issuance", level: "l2" });
 
@@ -1355,7 +1402,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
-    /** Accept TOS and request WIA */
+    /**
+     * Accept TOS and request WIA
+     */
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
     createWalletInstance.mockImplementation(
@@ -1398,7 +1447,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    /** Start eID issuance */
+    /**
+     * Start eID issuance
+     */
 
     actor.send({ type: "start", mode: "issuance", level: "l2" });
 
@@ -1406,7 +1457,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
-    /** Accept TOS and request WIA */
+    /**
+     * Accept TOS and request WIA
+     */
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
     createWalletInstance.mockImplementation(
       () =>
@@ -1694,7 +1747,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    /** Start eID issuance */
+    /**
+     * Start eID issuance
+     */
 
     actor.send({ type: "start", mode: "issuance", level: "l2" });
 
@@ -1702,7 +1757,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
-    /** Accept TOS and request WIA */
+    /**
+     * Accept TOS and request WIA
+     */
 
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
@@ -1824,7 +1881,9 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
 
-    /** Choose SPID as identification mode */
+    /**
+     * Choose SPID as identification mode
+     */
 
     actor.send({ type: "select-identification-mode", mode: "spid" });
 
@@ -1836,7 +1895,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToIdpSelectionScreen).toHaveBeenCalledTimes(1);
 
-    /** Choose first IDP in list for SPID identification */
+    /**
+     * Choose first IDP in list for SPID identification
+     */
 
     startAuthFlow.mockImplementation(() => Promise.resolve({}));
 
@@ -1998,14 +2059,18 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    /** Start eID issuance */
+    /**
+     * Start eID issuance
+     */
     actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
-    /** Accept TOS and request WIA */
+    /**
+     * Accept TOS and request WIA
+     */
 
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
     createWalletInstance.mockImplementation(
@@ -2478,7 +2543,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    /** Start */
+    /**
+     * Start
+     */
 
     actor.send({ type: "start", mode: "issuance", level: "l3" });
 
@@ -2626,7 +2693,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     actor.start();
 
-    /** Choose SPID as identification mode (L3 requires MRTD PoP for SPID/CieID) */
+    /**
+     * Choose SPID as identification mode (L3 requires MRTD PoP for SPID/CieID)
+     */
     actor.send({ type: "select-identification-mode", mode: "spid" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
@@ -2635,7 +2704,9 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    /** Choose first IDP in list for SPID identification */
+    /**
+     * Choose first IDP in list for SPID identification
+     */
     startAuthFlow.mockImplementation(() => Promise.resolve({}));
 
     actor.send({ type: "select-spid-idp", idp: idps[0] });
@@ -2648,7 +2719,9 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    /** Complete user identification - this should trigger MRTD PoP flow */
+    /**
+     * Complete user identification - this should trigger MRTD PoP flow
+     */
     const mockMrtdContext: MrtdPoPContext = {
       challenge: "mock-challenge",
       mrtd_auth_session: "mock-session",
@@ -2671,7 +2744,9 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    /** Should enter MRTD PoP flow instead of going directly to issuance */
+    /**
+     * Should enter MRTD PoP flow instead of going directly to issuance
+     */
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
         MrtdPoP: "InitializingChallenge"
@@ -2681,7 +2756,9 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitFor(() => expect(initMrtdPoPChallenge).toHaveBeenCalledTimes(1));
 
-    /** Challenge initialized, should display CAN preparation instructions */
+    /**
+     * Challenge initialized, should display CAN preparation instructions
+     */
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
         MrtdPoP: "DisplayingCanPreparationInstructions"
@@ -2693,7 +2770,9 @@ describe("itwEidIssuanceMachine", () => {
       mockMrtdContext
     );
 
-    /** User proceeds to CAN input */
+    /**
+     * User proceeds to CAN input
+     */
     actor.send({ type: "next" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
@@ -2701,7 +2780,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(navigateToCieCanScreen).toHaveBeenCalledTimes(1);
 
-    /** User enters CAN */
+    /**
+     * User enters CAN
+     */
     const testCan = "123456";
     actor.send({ type: "cie-can-entered", can: testCan });
 
@@ -2714,7 +2795,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(navigateToCieNfcPreparationScreen).toHaveBeenCalledTimes(1);
 
-    /** User proceeds to sign the challenge */
+    /**
+     * User proceeds to sign the challenge
+     */
     actor.send({ type: "next" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
@@ -2722,7 +2805,9 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(navigateToCieInternalAuthAndMrtdScreen).toHaveBeenCalledTimes(1);
 
-    /** MRTD challenge signed successfully */
+    /**
+     * MRTD challenge signed successfully
+     */
     const mockSignedData = {
       nis_data: {
         nis: "nis-data",
@@ -2765,7 +2850,9 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    /** Challenge validation in progress */
+    /**
+     * Challenge validation in progress
+     */
     await waitFor(() =>
       expect(validateMrtdPoPChallenge).toHaveBeenCalledTimes(1)
     );
@@ -2780,7 +2867,9 @@ describe("itwEidIssuanceMachine", () => {
       "http://callback.test.it"
     );
 
-    /** Complete MRTD PoP verification */
+    /**
+     * Complete MRTD PoP verification
+     */
     actor.send({
       type: "mrtd-pop-verification-completed",
       authRedirectUrl: "http://final-auth.test.it"
@@ -2788,7 +2877,9 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(storeAuthLevel).toHaveBeenCalled();
 
-    /** Should transition to Issuance state */
+    /**
+     * Should transition to Issuance state
+     */
     requestEid.mockImplementation(() =>
       Promise.resolve(ItwStoredCredentialsMocks.eid)
     );

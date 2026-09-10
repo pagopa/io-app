@@ -34,10 +34,9 @@ const validateFormat = (value: string): E.Either<Error, SemVer> =>
   );
 
 /**
- * Return true if appVersion >= minAppVersion
- *
- * @param minAppVersion The min version supported
- * @param appVersion The version to be tested
+ * return true if appVersion >= minAppVersion
+ * @param minAppVersion the min version supported
+ * @param appVersion the version to be tested
  */
 export const isVersionSupported = (
   minAppVersion: string,

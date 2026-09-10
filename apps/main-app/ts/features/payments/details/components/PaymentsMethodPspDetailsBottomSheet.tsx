@@ -8,9 +8,8 @@ type PaymentsMethodPspDetailsBottomSheetProps = {
 };
 
 /**
- * This component shows information about how does it works a psp preselected
- *
- * @class
+ * this component shows information about how does it works a psp preselected
+ * @constructor
  */
 const PaymentsMethodPspDetailsBottomSheet = ({
   pspBusinessName

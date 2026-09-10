@@ -13,14 +13,12 @@ import { ReduxSagaEffect } from "../../types/utils";
 
 /**
  * The result of the WorkUnit
- *
  * @deprecated
  */
 export type SagaResult = "back" | "cancel" | "completed" | "failure";
 
 /**
  * The data model needed to run the workunit
- *
  * @deprecated
  */
 export type WorkUnit = {
@@ -40,9 +38,8 @@ export type WorkUnit = {
 
 /**
  * Execute the work unit, and wait for an action to complete
- *
- * @deprecated
  * @param wu
+ * @deprecated
  */
 export function* executeWorkUnit(
   wu: WorkUnit
@@ -74,11 +71,9 @@ export function* executeWorkUnit(
 }
 
 /**
- * TODO: Generic handling for the failure of a workunit, navigate to
- * GenericFailureScren
- *
- * @deprecated
+ * TODO: Generic handling for the failure of a workunit, navigate to GenericFailureScren
  * @param g
+ * @deprecated
  */
 export function* withFailureHandling<T>(
   g: (...args: Array<any>) => Generator<ReduxSagaEffect, SagaResult, T>
@@ -91,11 +86,10 @@ export function* withFailureHandling<T>(
 }
 
 /**
- * Ensure that after the execution of the saga `g`, the navigation stack return
- * to the screen from which the saga was invoked
- *
- * @deprecated
+ * Ensure that after the execution of the saga `g`,
+ * the navigation stack return to the screen from which the saga was invoked
  * @param g
+ * @deprecated
  */
 export function* withResetNavigationStack<T>(
   g: (...args: Array<any>) => Generator<ReduxSagaEffect, T>
@@ -114,12 +108,10 @@ export function* withResetNavigationStack<T>(
 }
 
 /**
- * Ensure that the `startScreen` is the current screen or navigate to
- * `startScreen` using `navigateTo`
- *
- * @deprecated
+ * Ensure that the `startScreen` is the current screen or navigate to `startScreen` using `navigateTo`
  * @param navigateTo
  * @param startScreen
+ * @deprecated
  */
 function* ensureScreen(navigateTo: () => void, startScreen: string) {
   const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =

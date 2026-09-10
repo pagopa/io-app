@@ -67,7 +67,9 @@ type ProfileNavListItem = Pick<
 
 const ListItem = memo(ListItemNav);
 
-/** A screen to show all the options related to the user profile */
+/**
+ * A screen to show all the options related to the user profile
+ */
 const ProfileMainScreenFC = () => {
   const { hideModal } = useContext(LightModalContext);
   const dispatch = useIODispatch();

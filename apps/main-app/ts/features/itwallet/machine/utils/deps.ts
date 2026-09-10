@@ -4,8 +4,8 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 
 /**
- * Navigation surface used by IT Wallet machines. Providers can pass the full
- * `useIONavigation()` result.
+ * Navigation surface used by IT Wallet machines.
+ * Providers can pass the full `useIONavigation()` result.
  */
 export type MachineNavigation = Pick<
   IONavigation,
@@ -20,8 +20,8 @@ export type MachineNavigation = Pick<
 >;
 
 /**
- * Redux store surface used by IT Wallet machines. Providers can pass the full
- * `useIOStore()` result.
+ * Redux store surface used by IT Wallet machines.
+ * Providers can pass the full `useIOStore()` result.
  */
 export type MachineStore = {
   dispatch(action: unknown): unknown;
@@ -30,8 +30,8 @@ export type MachineStore = {
 };
 
 /**
- * Toast surface used by IT Wallet machines. Providers can pass the full
- * `useIOToast()` result.
+ * Toast surface used by IT Wallet machines.
+ * Providers can pass the full `useIOToast()` result.
  */
 export type MachineToast = Pick<IOToast, "error" | "success">;
 

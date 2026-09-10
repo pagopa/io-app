@@ -46,8 +46,7 @@ export const selectRedirectUri = (snapshot: MachineSnapshot) =>
   snapshot.context.redirectUri;
 
 /**
- * Selector to get the combination of credential types involved in the
- * presentation, used for analytics purposes.
+ * Selector to get the combination of credential types involved in the presentation, used for analytics purposes.
  */
 export const selectRemoteCredentialCombination = (
   snapshot: MachineSnapshot

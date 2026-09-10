@@ -1,10 +1,14 @@
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 
 export type Output = {
-  /** Credentials that encountered failures during the upgrade process */
+  /**
+   * Credentials that encountered failures during the upgrade process
+   */
   failedCredentials: ReadonlyArray<
     CredentialMetadata & {
-      /** Error message in case of failure retriving the credential */
+      /**
+       * Error message in case of failure retriving the credential
+       */
       failure?: {
         reason: unknown;
         type: string;

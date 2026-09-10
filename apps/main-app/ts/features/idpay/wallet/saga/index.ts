@@ -31,7 +31,6 @@ import { handleInitiativeInstrumentEnrollment } from "./handleInitiativeInstrume
 
 /**
  * Handle the IDPay Wallet requests
- *
  * @param bearerToken
  */
 export function* watchIDPayWalletSaga(

@@ -830,8 +830,7 @@ const validateAndHandleAuthorizeRequestParameters = (
 
 /**
  * See https://www.rfc-editor.org/rfc/rfc6749.txt
- *
- * - 4.1.2.1. Error Response
+ * 4.1.2.1.  Error Response
  */
 const replyWithOIDCError = (
   errorCode: OIDCErrorCodes,

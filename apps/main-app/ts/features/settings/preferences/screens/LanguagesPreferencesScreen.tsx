@@ -28,7 +28,9 @@ import {
 import { profileUpsert } from "../../common/store/actions";
 import { profileSelector } from "../../common/store/selectors";
 
-/** Allows the user to select one of the available Languages as preferred */
+/**
+ * Allows the user to select one of the available Languages as preferred
+ */
 
 type AppLocaleId = `app-locale-${Locales}`;
 

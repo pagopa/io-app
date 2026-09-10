@@ -118,9 +118,7 @@ describe("FingerprintScreen", () => {
       "test-flow"
     );
     expect(dispatchMock).toHaveBeenCalledWith(
-      preferenceFingerprintIsEnabledSaveSuccess({
-        isFingerprintEnabled: false
-      })
+      preferenceFingerprintIsEnabledSaveSuccess({ isFingerprintEnabled: false })
     );
   });
 });

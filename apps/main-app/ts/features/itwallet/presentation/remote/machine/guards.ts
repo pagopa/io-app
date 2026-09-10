@@ -39,7 +39,6 @@ export const isSessionExpiredGuard = ({ event }: GuardArgs) =>
 
 /**
  * Valid OpenID Federation clients:
- *
  * - `openid_federation:https://rp.example`
  * - `https://rp.example` (no prefix)
  */

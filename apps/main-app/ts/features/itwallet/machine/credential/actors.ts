@@ -89,9 +89,9 @@ export type VerifyTrustFederationActorInput = Pick<
 };
 
 /**
- * Builds the dictionary of Key Attestations generated during issuance, keyed by
- * their `keyAttestationId`. Works for both single and batch issuance, where a
- * batch shares a single KUA across all its keys.
+ * Builds the dictionary of Key Attestations generated during issuance, keyed by their
+ * `keyAttestationId`. Works for both single and batch issuance, where a batch shares a
+ * single KUA across all its keys.
  */
 const extractKeyAttestations = (
   authorizedCredentials: ReadonlyArray<{

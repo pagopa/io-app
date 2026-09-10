@@ -8,8 +8,7 @@ import { OperationResultScreenContent } from "../screens/OperationResultScreenCo
 
 /**
  * This screen is displayed when an unexpected failure occurs in a work unit
- *
- * @class
+ * @constructor
  * @param props
  */
 export const WorkunitGenericFailure = (): ReactElement => {

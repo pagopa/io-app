@@ -23,10 +23,9 @@ import { isServicePreferenceResponseSuccess } from "../types/ServicePreferenceRe
 import { mapKinds } from "./handleGetServicePreference";
 
 /**
- * Generates the payload for the updating preferences request, if a users
- * disables the inbox flag than the other flags are disabled. If a user
- * activates a disabled inbox flag than webhook is enabled too.
- *
+ * Generates the payload for the updating preferences request, if a users disables the inbox flag than the other flags
+ * are disabled.
+ * If a user activates a disabled inbox flag than webhook is enabled too.
  * @param currentServicePreferenceState
  * @param action
  */
@@ -68,8 +67,7 @@ const calculateUpdatingPreference = (
 };
 
 /**
- * Saga to handle the update of service preferences after a user specific action
- *
+ * saga to handle the update of service preferences after a user specific action
  * @param upsertServicePreferences
  * @param action
  */

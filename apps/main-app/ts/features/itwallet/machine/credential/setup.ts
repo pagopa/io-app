@@ -40,10 +40,7 @@ import {
 } from "./guards";
 import { Input } from "./input";
 
-/**
- * Keeps provider-injected side effects and credential actors fully typed across
- * modules.
- */
+/** Keeps provider-injected side effects and credential actors fully typed across modules. */
 export const itwCredentialSetup = setup({
   types: {
     context: {} as Context,
@@ -54,11 +51,15 @@ export const itwCredentialSetup = setup({
     onInit: onInitAction,
     handleSessionExpired: handleSessionExpiredAction,
 
-    /** Context manipulation actions */
+    /**
+     * Context manipulation actions
+     */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
 
-    /** Navigation actions */
+    /**
+     * Navigation actions
+     */
 
     navigateToCredentialIntroductionScreen:
       navigateToCredentialIntroductionScreenAction,
@@ -71,12 +72,16 @@ export const itwCredentialSetup = setup({
     closeIssuance: closeIssuanceAction,
     navigateToCardOnboardingScreen: navigateToCardOnboardingScreenAction,
 
-    /** Store actions */
+    /**
+     * Store actions
+     */
 
     storeWalletInstanceAttestation: storeWalletInstanceAttestationAction,
     storeCredential: storeCredentialAction,
 
-    /** Analytics actions */
+    /**
+     * Analytics actions
+     */
 
     trackStartAddCredential: trackStartAddCredentialAction,
     trackStartCredentialReissuing: trackStartCredentialReissuingAction,

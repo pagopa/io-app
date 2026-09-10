@@ -9,8 +9,7 @@ type ItwPresentationCredentialCardHideValuesButtonProps = {
 };
 
 /**
- * This component renders the hide values button for the skeumorphic credential
- * card in full screen mode
+ * This component renders the hide values button for the skeumorphic credential card in full screen mode
  */
 const ItwPresentationCredentialCardHideValuesButton = ({
   valuesHidden,

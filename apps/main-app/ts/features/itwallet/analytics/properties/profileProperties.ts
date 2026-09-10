@@ -5,7 +5,9 @@ import { ItwBaseProperties } from "./propertyTypes";
 
 export type ItwProfileProperties = ItwBaseProperties;
 
-/** Updates only ITW Profile properties. */
+/**
+ * Updates only ITW Profile properties.
+ */
 export const updateItwProfileProperties = (state: GlobalState) => {
   if (!isMixpanelInstanceInitialized()) {
     return;

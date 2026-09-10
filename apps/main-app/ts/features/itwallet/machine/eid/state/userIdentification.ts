@@ -3,10 +3,7 @@ import { cieIdState } from "./cieId";
 import { ciePinState } from "./ciePin";
 import { spidState } from "./spid";
 
-/**
- * Coordinates supported identification methods until primary authentication
- * completes.
- */
+/** Coordinates supported identification methods until primary authentication completes. */
 export const userIdentificationState =
   itwEidIssuanceMachineSetup.createStateConfig({
     description:

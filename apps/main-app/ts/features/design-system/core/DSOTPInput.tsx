@@ -138,8 +138,7 @@ const scrollVerticallyToView = (
 
 /**
  * This Screen is used to test components in isolation while developing.
- *
- * @returns A screen with a flexed view where you can test components
+ * @returns a screen with a flexed view where you can test components
  */
 export const DSOTPInput = () => {
   const theme = useIOTheme();

@@ -11,8 +11,7 @@ export type WaitForSessionRefreshInput = {
 
 /**
  * Actor that waits for the session token to be refreshed in the Redux store.
- * When the token is updated, it notifies the parent machine with a
- * `session-refresh-complete` event.
+ * When the token is updated, it notifies the parent machine with a `session-refresh-complete` event.
  */
 export const waitForSessionRefreshActor = fromCallback<
   { type: "session-refresh-complete" },

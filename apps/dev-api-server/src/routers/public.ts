@@ -5,7 +5,9 @@ import { Response, Router } from "express";
 import * as E from "fp-ts/lib/Either";
 import { calculateJwkThumbprint } from "jose";
 import { parseStringPromise } from "xml2js";
-/** This router serves all public API (those ones don't need session) */
+/**
+ * this router serves all public API (those ones don't need session)
+ */
 import * as zlib from "zlib";
 
 import { assetsFolder, ioDevServerConfig } from "../config";

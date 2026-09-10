@@ -18,7 +18,9 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
   const navigation = useIONavigation();
   const { name: routeName } = useRoute();
 
-  /** Fallback navigation action to main wallet home screen. */
+  /**
+   * Fallback navigation action to main wallet home screen.
+   */
   const fallbackNavigationAction = useCallback(() => {
     navigation.popToTop();
   }, [navigation]);

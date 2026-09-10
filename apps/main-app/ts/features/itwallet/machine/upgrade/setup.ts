@@ -14,10 +14,7 @@ import { mapUpgradeEventToFailure } from "./failure";
 import { Input } from "./input";
 import { Output } from "./output";
 
-/**
- * Defines typed credential-upgrade actors while providers inject runtime side
- * effects.
- */
+/** Defines typed credential-upgrade actors while providers inject runtime side effects. */
 export const itwUpgradeSetup = setup({
   types: {
     events: {} as CredentialUpgradeEvents,

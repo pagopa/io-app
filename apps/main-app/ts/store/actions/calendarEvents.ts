@@ -1,4 +1,6 @@
-/** Redux actions related to calendar events. */
+/**
+ * Redux actions related to calendar events.
+ */
 
 import { ActionType, createStandardAction } from "typesafe-actions";
 

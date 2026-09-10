@@ -10,12 +10,11 @@ import { isStale } from "./validity";
 const MAX_CONCURRENT_REFRESHES = 3;
 
 /**
- * Fetches, decodes, validates, and persists a Status List Token for the given
- * URI. The URI serves both as cache identity and fetch endpoint (matches the
- * JWT `sub` claim).
+ * Fetches, decodes, validates, and persists a Status List Token for the given URI.
+ * The URI serves both as cache identity and fetch endpoint (matches the JWT `sub` claim).
  *
- * Best-effort: returns `true` on success, `false` on any failure. A failed
- * refresh never evicts an existing cached entry.
+ * Best-effort: returns `true` on success, `false` on any failure.
+ * A failed refresh never evicts an existing cached entry.
  */
 export const refreshStatusListToken = async (
   { itwVersion, x509CertRoot }: StatusListVerificationContext,
@@ -48,8 +47,8 @@ export const refreshStatusListToken = async (
 };
 
 /**
- * Executes refresh operations in parallel with bounded concurrency. Each
- * refresh is best-effort: individual failures do not affect others.
+ * Executes refresh operations in parallel with bounded concurrency.
+ * Each refresh is best-effort: individual failures do not affect others.
  */
 export const refreshWithBoundedParallelism = async (
   context: StatusListVerificationContext,
@@ -71,14 +70,12 @@ export const refreshWithBoundedParallelism = async (
 };
 
 /**
- * Owner-blind cache refresh, usable both at startup and from the background
- * task.
+ * Owner-blind cache refresh, usable both at startup and from the background task.
  *
  * 1. Lists the cache once
  * 2. Refreshes only stale entries with bounded parallelism
  *
- * Does not prune unreferenced entries; pruning is handled by
- * `startupCoherence`.
+ * Does not prune unreferenced entries; pruning is handled by `startupCoherence`.
  *
  * @param now - Current time in ms since epoch (injected for testability)
  */

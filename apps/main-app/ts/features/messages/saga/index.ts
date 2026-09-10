@@ -48,7 +48,6 @@ import {
 
 /**
  * Handle messages requests
- *
  * @param backendClient
  * @param bearerToken
  */

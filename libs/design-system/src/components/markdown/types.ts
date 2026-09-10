@@ -3,12 +3,16 @@ import type { TextStyle } from "react-native";
 
 import type { IOColors } from "../../core";
 
-/** Partial record of render rules. Only the provided keys override the defaults. */
+/**
+ * Partial record of render rules. Only the provided keys override the defaults.
+ */
 export type IOMarkdownRenderRules = Partial<
   Record<MarkdownNodeType, RenderRule>
 >;
 
-/** A node in the markdown AST. */
+/**
+ * A node in the markdown AST.
+ */
 export type MarkdownNode = {
   attributes?: Record<string, string>;
   children: ReadonlyArray<MarkdownNode>;
@@ -21,7 +25,9 @@ export type MarkdownNode = {
   type: MarkdownNodeType;
 };
 
-/** All supported markdown node types. */
+/**
+ * All supported markdown node types.
+ */
 export type MarkdownNodeType =
   /* Headings */
   | "blockquote"
@@ -62,8 +68,8 @@ export type RenderContext = {
 };
 
 /**
- * A render rule receives a node, a function to recursively render children, and
- * the current render context.
+ * A render rule receives a node, a function to recursively render children,
+ * and the current render context.
  */
 export type RenderRule = (
   node: MarkdownNode,

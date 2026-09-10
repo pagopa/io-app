@@ -25,8 +25,7 @@ export type AppDispatch = typeof store.dispatch;
 // Infer the `RootState` and `AppDispatch` types from the store itself export
 /**
  * Main component of the application
- *
- * @class
+ * @constructor
  */
 const App = (): JSX.Element => (
   <GestureHandlerRootView style={{ flex: 1 }}>

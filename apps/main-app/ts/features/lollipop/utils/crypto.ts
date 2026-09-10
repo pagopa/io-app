@@ -36,8 +36,7 @@ export const toThumbprint = (key: PublicKey | undefined) => {
 
 /**
  * Check if the key is backed by Strongbox and track the result only on Android.
- *
- * @param keyTag - The keyTag of the key to check.
+ * @param keyTag - the keyTag of the key to check.
  */
 export const handleIsKeyStrongboxBacked = async (keyTag?: string) => {
   if (keyTag && isAndroid) {

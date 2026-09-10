@@ -314,9 +314,6 @@ export const trackItWalletErrorCan = (
 ) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_ERRORS_EVENTS.ITW_CIE_CAN_ERROR,
-    buildEventProperties("UX", "error", {
-      cie_reading_progress,
-      ITW_ID_method
-    })
+    buildEventProperties("UX", "error", { cie_reading_progress, ITW_ID_method })
   );
 };

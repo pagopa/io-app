@@ -7,7 +7,9 @@ import { useIOTheme } from "../../context";
 import { IOColors } from "../../core/IOColors";
 import { WithTestID } from "../../utils/types";
 
-/** Size scale */
+/**
+ * Size scale
+ */
 export type IOLoadingSpinnerSizeScale = 24 | 48;
 
 export type LoadingSpinner = WithTestID<{

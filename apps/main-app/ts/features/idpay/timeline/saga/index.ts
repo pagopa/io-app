@@ -8,7 +8,6 @@ import { handleGetTimelineDetails } from "./handleGetTimelineDetails";
 
 /**
  * Handle IDPAY timeline requests
- *
  * @param bearerToken
  */
 export function* watchIDPayTimelineSaga(

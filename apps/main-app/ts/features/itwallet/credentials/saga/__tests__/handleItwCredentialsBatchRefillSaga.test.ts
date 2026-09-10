@@ -104,8 +104,8 @@ const requestCredentialOutput = (issuerConf: IssuerConfiguration) => ({
 });
 
 /**
- * Sets up the happy path: every pre-flight guard passes. Individual tests then
- * override a single spy to exercise one branch at a time.
+ * Sets up the happy path: every pre-flight guard passes. Individual tests then override a single
+ * spy to exercise one branch at a time.
  */
 const mockHappyPath = () => {
   jest
@@ -176,9 +176,8 @@ const issuanceProviders = (issuerConf: IssuerConfiguration = T_ISSUER_CONF) =>
   ] as Parameters<ReturnType<typeof expectSaga>["provide"]>[0];
 
 /**
- * Reproduces how `handleItwCredentialsStoreBundleSaga` reports a persistence
- * failure: it does not throw, it invokes the `onError` callback carried by the
- * action meta.
+ * Reproduces how `handleItwCredentialsStoreBundleSaga` reports a persistence failure: it does not
+ * throw, it invokes the `onError` callback carried by the action meta.
  */
 const failingStoreProvider = (error: Error) => [
   matchers.call.fn(handleItwCredentialsStoreBundleSaga),

@@ -66,8 +66,7 @@ type ContentViewProps = {
 
 /**
  * Renders the content of the screen if the PID is decoded.
- *
- * @param eid - The decoded eID
+ * @param eid - the decoded eID
  */
 const ContentView = ({ eid }: ContentViewProps) => {
   const dispatch = useIODispatch();

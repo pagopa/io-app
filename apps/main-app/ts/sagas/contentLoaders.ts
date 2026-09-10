@@ -1,6 +1,8 @@
 import { ContextualHelp } from "@io-app/api-types/generated/definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "@io-app/api-types/generated/definitions/content/Municipality";
-/** This module implements the sagas to retrive data from the content client: */
+/**
+ * This module implements the sagas to retrive data from the content client:
+ */
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
@@ -53,7 +55,9 @@ export function* watchContentSaga() {
   );
 }
 
-/** Retrieves a municipality metadata from the static content repository */
+/**
+ * Retrieves a municipality metadata from the static content repository
+ */
 function* fetchMunicipalityMetadata(
   getMunicipality: ReturnType<typeof ContentClient>["getMunicipality"],
   codiceCatastale: CodiceCatastale
@@ -80,7 +84,9 @@ function* fetchMunicipalityMetadata(
   }
 }
 
-/** Retrieves idps text data from the static content repository */
+/**
+ * Retrieves idps text data from the static content repository
+ */
 function getContextualHelpData(): Promise<
   t.Validation<BasicResponseType<ContextualHelp>>
 > {
@@ -117,7 +123,9 @@ function* handleLoadAvailableBonus(
   }
 }
 
-/** A saga that watches for and executes requests to load municipality metadata. */
+/**
+ * A saga that watches for and executes requests to load municipality metadata.
+ */
 function* watchContentMunicipalityLoadSaga(
   action: ActionType<(typeof contentMunicipalityLoad)["request"]>
 ): SagaIterator {
@@ -151,8 +159,7 @@ function* watchContentMunicipalityLoadSaga(
 }
 
 /**
- * A saga that watches for and executes requests to load contextual help text
- * data
+ * A saga that watches for and executes requests to load contextual help text data
  */
 function* watchLoadContextualHelp(): SagaIterator {
   try {
@@ -171,7 +178,9 @@ function* watchLoadContextualHelp(): SagaIterator {
   }
 }
 
-/** A saga that watches for and executes requests to load idps data */
+/**
+ * A saga that watches for and executes requests to load idps data
+ */
 function* watchLoadIdps(
   getIdps: ReturnType<typeof ContentClient>["getIdps"]
 ): SagaIterator {

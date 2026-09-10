@@ -1,4 +1,6 @@
-/** This router serves fastLogin API */
+/**
+ * this router serves fastLogin API
+ */
 
 import { FastLoginResponse } from "@io-app/api-types/generated/definitions/session_manager/FastLoginResponse";
 import { Router } from "express";

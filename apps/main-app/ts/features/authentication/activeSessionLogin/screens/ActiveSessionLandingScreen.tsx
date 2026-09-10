@@ -1,7 +1,6 @@
 /**
- * A screen where the user can choose to login with SPID or get more
- * informations. It includes a carousel with highlights on the app
- * functionalities
+ * A screen where the user can choose to login with SPID or get more informations.
+ * It includes a carousel with highlights on the app functionalities
  */
 import {
   Banner,

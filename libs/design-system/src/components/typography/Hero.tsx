@@ -6,7 +6,9 @@ const {
   hero: { colorToken, ...heroStyle }
 } = IOTypography;
 
-/** `Hero` typographic style */
+/**
+ * `Hero` typographic style
+ */
 export const Hero = ({
   color: customColor,
   ...props

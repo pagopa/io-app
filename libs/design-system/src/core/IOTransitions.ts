@@ -6,9 +6,10 @@ import {
 } from "react-native-reanimated";
 
 /**
- * A custom enter transition designed for the average size inner content of a
- * button or module (e.g. text). The scaling effect is slight.
- */
+A custom enter transition designed for the average size
+inner content of a button or module (e.g. text).
+The scaling effect is slight.
+*/
 export const enterTransitionInnerContent = () => {
   "worklet";
   const animations = {
@@ -36,9 +37,10 @@ export const enterTransitionInnerContent = () => {
 };
 
 /**
- * A custom enter transition designed for the small size inner content of a
- * button or module (e.g. loading spinner). The scaling effect is accentuated.
- */
+A custom enter transition designed for the small size
+inner content of a button or module (e.g. loading spinner).
+The scaling effect is accentuated.
+*/
 export const enterTransitionInnerContentSmall = () => {
   "worklet";
   const animations = {
@@ -66,9 +68,10 @@ export const enterTransitionInnerContentSmall = () => {
 };
 
 /**
- * A custom exit transition designed for both small and average size inner
- * content of a button or module. The scaling effect is slight.
- */
+A custom exit transition designed for both small
+and average size inner content of a button or module.
+The scaling effect is slight.
+*/
 export const exitTransitionInnerContent = () => {
   "worklet";
   const animations = {
@@ -95,7 +98,9 @@ export const exitTransitionInnerContent = () => {
   };
 };
 
-/** A custom enter transition designed for the `AlertEdgeToEdge` component. */
+/**
+A custom enter transition designed for the `AlertEdgeToEdge` component.
+*/
 
 const alertEdgeToEdgeEnterTransitionDuration = 500; /* in ms */
 const alertEdgeToEdgeExitTransitionDuration = 400; /* in ms */
@@ -132,7 +137,10 @@ export const enterTransitionAlertEdgeToEdge = (values: {
     animations
   };
 };
-/** A custom enter/exit transition designed for icons in `TextInput`. */
+/**
+A custom enter/exit transition designed for icons
+in `TextInput`.
+*/
 
 const iconTransitionWithTimingConfig = {
   duration: 250,
@@ -162,9 +170,8 @@ export const enterTransitionInputIcon = () => {
 };
 
 /**
- * A custom enter transition designed for the `AlertEdgeToEdge` content (icon
- * and text).
- */
+A custom enter transition designed for the `AlertEdgeToEdge` content (icon and text).
+*/
 export const enterTransitionAlertEdgeToEdgeContent = () => {
   "worklet";
   const animations = {
@@ -197,7 +204,9 @@ export const enterTransitionAlertEdgeToEdgeContent = () => {
   };
 };
 
-/** A custom exit transition designed for the `AlertEdgeToEdge` component. */
+/**
+A custom exit transition designed for the `AlertEdgeToEdge` component.
+*/
 export const exitTransitionAlertEdgeToEdge = (values: {
   currentHeight: number;
 }) => {

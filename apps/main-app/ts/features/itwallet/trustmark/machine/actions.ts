@@ -12,7 +12,9 @@ import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store
 import { Context } from "./context";
 import { TrustmarkEvents } from "./events";
 
-/** Initializes the trustmark machine from the Redux store. */
+/**
+ * Initializes the trustmark machine from the Redux store.
+ */
 export const onInitAction = assign<
   Context,
   TrustmarkEvents,
@@ -42,8 +44,7 @@ export const storeWalletInstanceAttestationAction = ({
 };
 
 /**
- * Handles the session expired event by dispatching the session expired action
- * and navigating back to the credential details screen
+ * Handles the session expired event by dispatching the session expired action and navigating back to the credential details screen
  */
 export const handleSessionExpiredAction = ({
   context
@@ -54,7 +55,9 @@ export const handleSessionExpiredAction = ({
   context.deps.navigation.pop();
 };
 
-/** Shows a failure toast */
+/**
+ * Shows a failure toast
+ */
 export const showRetryFailureToastAction = ({
   context
 }: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {

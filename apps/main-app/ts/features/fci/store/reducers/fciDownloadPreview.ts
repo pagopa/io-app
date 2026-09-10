@@ -15,7 +15,9 @@ type FciDownload = {
 
 const initialState: FciDownloadPreviewState = pot.none;
 
-/** Store download info for FCI document */
+/**
+ * Store download info for FCI document
+ */
 const fciDownloadPreviewReducer = (
   state: FciDownloadPreviewState = initialState,
   action: Action

@@ -18,7 +18,9 @@ import {
 import { ID_CGN_TYPE } from "../../../common/utils";
 import { cgnActivationStart } from "../../store/actions/activation";
 
-/** This is a dummy screen reachable only from a message CTA */
+/**
+ * this is a dummy screen reachable only from a message CTA
+ */
 const CgnCTAStartOnboardingComponent: FC = () => {
   const dispatch = useIODispatch();
   const isFirstRender = useRef<boolean>(true);
@@ -70,7 +72,9 @@ const CgnCTAStartOnboardingComponent: FC = () => {
   return <LoadingScreenContent title={I18n.t("global.remoteStates.loading")} />;
 };
 
-/** This is a dummy screen reachable only from a message CTA */
+/**
+ * this is a dummy screen reachable only from a message CTA
+ */
 const CgnCTAStartOnboardingScreen = () => {
   const navigation = useNavigation();
   const isCgnEnabled = useIOSelector(isCGNEnabledSelector);

@@ -1,12 +1,14 @@
 /**
- * Utility functions to manage font properties to style mapping for both iOS and
- * Android Fonts are managed differently on Android and iOS. Read the Font
- * section of the README file included in this repository.
+ * Utility functions to manage font properties to style mapping for both iOS and Android
+ * Fonts are managed differently on Android and iOS. Read the Font section of the
+ * README file included in this repository.
  */
 
 import { Platform, TextStyle } from "react-native";
 
-/** Choose the font name based on the platform */
+/**
+ * Choose the font name based on the platform
+ */
 const fonts = {
   TitilliumSansPro: Platform.select({
     android: "TitilliumSansPro",
@@ -59,8 +61,8 @@ const weightValues = ["200", "300", "400", "500", "600", "700", "900"] as const;
 export type IOFontWeightNumeric = (typeof weightValues)[number];
 
 /**
- * Mapping between the nominal description of the weight (also the postfix used
- * on Android) and the numeric value used on iOS
+ * Mapping between the nominal description of the weight (also the postfix used on Android) and the numeric value
+ * used on iOS
  */
 export const fontWeights: Record<IOFontWeight, IOFontWeightNumeric> = {
   Thin: "200",
@@ -98,7 +100,6 @@ export const getBolderFontWeight = (weight: IOFontWeight): IOFontWeight => {
 
 /**
  * Get the correct `fontFamily` name on both Android and iOS.
- *
  * @param font
  * @param weight
  * @param isItalic
@@ -144,9 +145,8 @@ const faceName: Record<
 };
 
 /**
- * Get the PostScript name of a single face, for native APIs that resolve a font
- * by face instead of by family and weight, like SwiftUI's `Font.custom`.
- *
+ * Get the PostScript name of a single face, for native APIs that resolve a
+ * font by face instead of by family and weight, like SwiftUI's `Font.custom`.
  * @param font
  * @param weight
  * @param fontStyle
@@ -157,16 +157,16 @@ export const makeFontPostScriptName = (
   fontStyle: TextStyle["fontStyle"] = "normal"
 ): string => `${font}-${faceName[font](weight, fontStyle === "italic")}`;
 
-/** Default `IOText` typography style */
+/**
+ * Default `IOText` typography style
+ */
 const defaultFont: IOFontFamily = "TitilliumSansPro";
 const defaultWeight: IOFontWeight = "Regular";
 const defaultFontSize: IOFontSize = 16;
 export const IOMaxFontSizeMultiplier = 1.5;
 
 /**
- * Return a {@link FontStyleObject} with the fields filled based on the platform
- * (iOS or Android).
- *
+ * Return a {@link FontStyleObject} with the fields filled based on the platform (iOS or Android).
  * @param size
  * @param font
  * @param weight

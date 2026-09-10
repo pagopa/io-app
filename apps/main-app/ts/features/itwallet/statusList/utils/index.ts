@@ -22,8 +22,8 @@ const X509_VALIDATION_OPTIONS: X509CertificateOptions = {
 };
 
 /**
- * Validates a Status List Token certificate chain, then extracts the public key
- * from the validated leaf certificate.
+ * Validates a Status List Token certificate chain, then extracts the public
+ * key from the validated leaf certificate.
  *
  * @param statusListToken Encoded Status List Token
  * @param x509CertRoot Configured X.509 trust anchor
@@ -62,11 +62,9 @@ export const getKeysForStatusListToken = async (
 };
 
 /**
- * Function to get the credential status from its token status list (TSL). The
- * list is fetched from the `uri` extracted from the raw credential, it is
- * verified and parsed, and then the credential status at `idx` is extracted.
- * When the status is not valid, the function throws so its behavior is
- * consistent with `getCredentialStatusAssertion`.
+ * Function to get the credential status from its token status list (TSL). The list is fetched from the `uri` extracted from
+ * the raw credential, it is verified and parsed, and then the credential status at `idx` is extracted.
+ * When the status is not valid, the function throws so its behavior is consistent with `getCredentialStatusAssertion`.
  *
  * @param credentialBundle The bundle with the raw credential
  * @param itwVersion Current IT-Wallet specifications version

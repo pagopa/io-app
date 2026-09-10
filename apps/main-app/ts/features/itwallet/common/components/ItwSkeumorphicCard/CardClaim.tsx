@@ -13,7 +13,9 @@ import { ParsedCredential } from "../../utils/itwTypesUtils";
 import { ClaimImage } from "./ClaimImage";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
 
-/** Fallback used when a claim cannot be parsed: nothing is rendered on the card. */
+/**
+ * Fallback used when a claim cannot be parsed: nothing is rendered on the card.
+ */
 const renderNothing = () => null;
 
 type CardClaimProps = Prettify<
@@ -52,11 +54,8 @@ type VerticalClaimPosition = Either<
 >;
 
 /**
- * Default claim component, it decoded the provided value and renders the
- * corresponding component
- *
- * @returns The corresponding component if a value is correctly decoded,
- *   otherwise null
+ * Default claim component, it decoded the provided value and renders the corresponding component
+ * @returns The corresponding component if a value is correctly decoded, otherwise null
  */
 const CardClaim = ({
   claim,
@@ -139,11 +138,8 @@ type CardClaimRendererProps<K extends ClaimValueKind> = {
 };
 
 /**
- * Allows to render a claim only when its parsed value is one of the accepted
- * `kinds`
- *
- * @returns The component from the props if the value is correctly parsed,
- *   otherwise it returns null
+ * Allows to render a claim only when its parsed value is one of the accepted `kinds`
+ * @returns The component from the props if the value is correctly parsed, otherwise it returns null
  */
 const CardClaimRenderer = <K extends ClaimValueKind>({
   claim,
@@ -165,8 +161,7 @@ type CardClaimContainerProps = WithTestID<{
 }>;
 
 /**
- * Component that allows to position a claim using "left" and "top" absolute
- * values
+ * Component that allows to position a claim using "left" and "top" absolute values
  */
 const CardClaimContainer = ({
   position,

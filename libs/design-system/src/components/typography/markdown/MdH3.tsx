@@ -6,7 +6,9 @@ const {
   mdH3: { colorToken, ...mdH3Style }
 } = IOTypography;
 
-/** `MdH3` typographic style */
+/**
+ * `MdH3` typographic style
+ */
 export const MdH3 = ({
   color: customColor,
   ...props

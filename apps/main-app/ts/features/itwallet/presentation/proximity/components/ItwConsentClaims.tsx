@@ -23,7 +23,9 @@ const itwMdocCredentialsByTypeSelector = makeSelectAllCredentials(
   CredentialFormat.MDOC
 );
 
-/** Resolves only the current mdoc claims covered by a stored consent. */
+/**
+ * Resolves only the current mdoc claims covered by a stored consent.
+ */
 export const getConsentClaimsByCredential = (
   consent: StoredConsentData,
   credentialsByType: Partial<Record<string, CredentialMetadata>>

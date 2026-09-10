@@ -45,11 +45,7 @@ describe("cisSuccessTransaction", () => {
 
   it("should return false when accountingStatus is 2", () => {
     expect(
-      isSuccessTransaction({
-        ...transaction,
-        accountingStatus: 2,
-        idStatus: 8
-      })
+      isSuccessTransaction({ ...transaction, accountingStatus: 2, idStatus: 8 })
     ).toBeFalsy();
   });
 

@@ -109,9 +109,7 @@ export function* handleWalletPaymentAuthorization(
     }
   } catch (e) {
     yield* put(
-      paymentsStartPaymentAuthorizationAction.failure({
-        ...getNetworkError(e)
-      })
+      paymentsStartPaymentAuthorizationAction.failure({ ...getNetworkError(e) })
     );
   }
 }

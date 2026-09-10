@@ -16,7 +16,9 @@ export type PaymentData = {
   };
 };
 
-/** Domain-specific representation of a Message with aggregated data. */
+/**
+ * Domain-specific representation of a Message with aggregated data.
+ */
 export type UIMessage = {
   category: MessageCategory;
   createdAt: Date;
@@ -32,7 +34,9 @@ export type UIMessage = {
   title: string;
 };
 
-/** Domain-specific representation of a Message details */
+/**
+ * Domain-specific representation of a Message details
+ */
 export type UIMessageDetails = {
   dueDate?: Date;
   euCovidCertificate?: EUCovidCertificate;

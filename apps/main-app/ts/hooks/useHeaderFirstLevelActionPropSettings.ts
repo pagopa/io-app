@@ -15,7 +15,9 @@ export const useNavigateToSettingMainScreen = () => {
   }, [navigation]);
 };
 
-/** This hook returns a prop object to be applied to the `HeaderFirstLevel` */
+/**
+ * This hook returns a prop object to be applied to the `HeaderFirstLevel`
+ */
 export const useHeaderFirstLevelActionPropSettings = (): HeaderActionProps => ({
   icon: "coggle",
   accessibilityLabel: I18n.t("global.buttons.settings"),

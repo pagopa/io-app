@@ -8,9 +8,13 @@ import {
 } from "../../machine/utils/deps";
 
 export type Input = {
-  /** The credential type to get the trustmark for */
+  /**
+   * The credential type to get the trustmark for
+   */
   credentialType: string;
-  /** Runtime dependencies injected by the machine provider */
+  /**
+   * Runtime dependencies injected by the machine provider
+   */
   deps: TrustmarkMachineDeps;
 };
 

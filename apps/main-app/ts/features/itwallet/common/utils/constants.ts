@@ -1,18 +1,18 @@
 import { type ItwVersion } from "@pagopa/io-react-native-wallet";
 
 /**
- * The IT-Wallet technical specifications version that is currently used by the
- * app.
+ * The IT-Wallet technical specifications version that is currently used by the app.
  */
 export const CURRENT_ITW_SPECS_VERSION: ItwVersion = "1.4.6";
 
 /**
- * Defines the number of asterisks used to mask the value of claims in the
- * credential details
+ * Defines the number of asterisks used to mask the value of claims in the credential details
  */
 export const HIDDEN_CLAIM_TEXT = "******";
 
-/** Defines the colors used in the gradient of the ITW components */
+/**
+ * Defines the colors used in the gradient of the ITW components
+ */
 export const itwGradientColors = [
   "#0B3EE3",
   "#234FFF",
@@ -27,7 +27,9 @@ export const itwGradientColors = [
   "#0B3EE3"
 ];
 
-/** Qualtrics survey URLs */
+/**
+ * Qualtrics survey URLs
+ */
 export const IT_WALLET_SURVEY_EID_ACTIVATION_SUCCESS =
   "https://pagopa.qualtrics.com/jfe/form/SV_bK0TKnraVONeI18";
 export const IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS =
@@ -40,7 +42,6 @@ export const IT_WALLET_SURVEY_CREDENTIAL_EXIT =
   "https://pagopa.qualtrics.com/jfe/form/SV_736TjZupSi2JQ5E";
 
 /**
- * Fixed Wallet Solution identifier to get the Wallet Instance and Key
- * attestations.
+ * Fixed Wallet Solution identifier to get the Wallet Instance and Key attestations.
  */
 export const WALLET_SOLUTION_ID = "appio";

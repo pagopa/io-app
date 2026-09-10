@@ -1,6 +1,7 @@
 /**
- * A screen to guide the user to proper read the CIE TODO: isolate cie event
- * listener as saga TODO: when 100% is reached, the animation end
+ * A screen to guide the user to proper read the CIE
+ * TODO: isolate cie event listener as saga
+ * TODO: when 100% is reached, the animation end
  */
 import {
   Body,

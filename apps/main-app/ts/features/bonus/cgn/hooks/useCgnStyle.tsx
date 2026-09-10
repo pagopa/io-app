@@ -30,7 +30,9 @@ type CgnStyleProps = {
   };
 };
 
-/** Returns the common style used for CGN modules */
+/**
+ * Returns the common style used for CGN modules
+ */
 export const useCgnStyle = (): CgnStyleProps => {
   const theme = useIOTheme();
   const { themeType } = useIOThemeContext();

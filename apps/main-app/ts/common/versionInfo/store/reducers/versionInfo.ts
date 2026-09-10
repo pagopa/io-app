@@ -37,7 +37,6 @@ export const versionInfoDataSelector = (state: GlobalState) =>
 
 /**
  * Pick the platform related app version, starting from IOVersionPerPlatform
- *
  * @param versionPerPlatform
  */
 const selectVersion = (
@@ -58,10 +57,8 @@ const isSupported = (versionPerPlatform: IOVersionPerPlatform | undefined) =>
   );
 
 /**
- * Return true if the app needs to be updated and the user cannot continue to
- * use the app without an update Since the getAppVersion cannot change during
- * the app execution, we can avoid forwarding it from the outside
- *
+ * Return true if the app needs to be updated and the user cannot continue to use the app without an update
+ * Since the getAppVersion cannot change during the app execution, we can avoid forwarding it from the outside
  * @param state
  */
 export const isAppSupportedSelector = createSelector(
@@ -70,11 +67,9 @@ export const isAppSupportedSelector = createSelector(
 );
 
 /**
- * Return true if the app needs to be updated in order to use the wallet and
- * payments. If true, the user cannot use the wallet and can't make payments
- * Since the getAppVersion cannot change during the app execution, we can avoid
- * forwarding it from the outside
- *
+ * Return true if the app needs to be updated in order to use the wallet and payments.
+ * If true, the user cannot use the wallet and can't make payments
+ * Since the getAppVersion cannot change during the app execution, we can avoid forwarding it from the outside
  * @param state
  */
 export const isPagoPaSupportedSelector = (state: GlobalState) =>

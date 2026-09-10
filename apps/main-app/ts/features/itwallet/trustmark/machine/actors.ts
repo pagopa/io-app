@@ -26,7 +26,9 @@ export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getWalletInstanceAttestation>
 >;
 
-/** Gets the wallet instance attestation in case it's expired. */
+/**
+ * Gets the wallet instance attestation in case it's expired.
+ */
 export const getWalletAttestationActor = fromPromise<
   GetWalletAttestationActorOutput,
   GetWalletAttestationActorInput
@@ -46,7 +48,9 @@ export const getWalletAttestationActor = fromPromise<
   );
 });
 
-/** Generates the trustmark url to be presented. */
+/**
+ * Generates the trustmark url to be presented.
+ */
 export const getCredentialTrustmarkActor = fromPromise<
   GetCredentialTrustmarkUrlActorOutput,
   GetCredentialTrustmarkUrlActorInput

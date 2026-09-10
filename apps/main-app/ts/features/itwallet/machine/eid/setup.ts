@@ -70,10 +70,7 @@ import {
 } from "./guards";
 import { Input } from "./input";
 
-/**
- * Keeps provider-injected side effects and eID actors fully typed across
- * modules.
- */
+/** Keeps provider-injected side effects and eID actors fully typed across modules. */
 export const itwEidIssuanceMachineSetup = setup({
   types: {
     context: {} as Context,
@@ -83,7 +80,9 @@ export const itwEidIssuanceMachineSetup = setup({
   actions: {
     onInit: onInitAction,
 
-    /** Navigation */
+    /**
+     * Navigation
+     */
 
     navigateToTosScreen: navigateToTosScreenAction,
     navigateToIpzsPrivacyScreen: navigateToIpzsPrivacyScreenAction,
@@ -111,7 +110,9 @@ export const itwEidIssuanceMachineSetup = setup({
       navigateToCieInternalAuthAndMrtdScreenAction,
     closeIssuance: closeIssuanceAction,
 
-    /** Store update */
+    /**
+     * Store update
+     */
 
     storeIntegrityKeyTag: storeIntegrityKeyTagAction,
     cleanupIntegrityKeyTag: cleanupIntegrityKeyTagAction,
@@ -124,14 +125,18 @@ export const itwEidIssuanceMachineSetup = setup({
     resetWalletInstance: resetWalletInstanceAction,
     refreshCredentialsCatalogue: refreshCredentialsCatalogueAction,
 
-    /** Analytics */
+    /**
+     * Analytics
+     */
 
     trackWalletInstanceCreation: trackWalletInstanceCreationAction,
     trackWalletInstanceRevocation: trackWalletInstanceRevocationAction,
     trackIdentificationMethodSelected: trackIdentificationMethodSelectedAction,
     trackItwIdAuthenticationCompleted: trackItwIdAuthenticationCompletedAction,
     trackItwIdVerifiedDocument: trackItwIdVerifiedDocumentAction,
-    /** Context manipulation */
+    /**
+     * Context manipulation
+     */
 
     setCieIdIdentificationL2: assign(() => ({
       identification: {
@@ -142,9 +147,8 @@ export const itwEidIssuanceMachineSetup = setup({
 
     /**
      * Updates the CieID identification level to L3 when IPZS confirms native L3
-     * authentication (i.e. challenge_info is absent in the callback URL,
-     * meaning no MRTD PoP is required because the CieID app already
-     * authenticated at L3).
+     * authentication (i.e. challenge_info is absent in the callback URL, meaning
+     * no MRTD PoP is required because the CieID app already authenticated at L3).
      */
     updateCieIdIdentificationLevel: assign(({ context, event }) => {
       assertEvent(event, "user-identification-completed");
@@ -164,8 +168,8 @@ export const itwEidIssuanceMachineSetup = setup({
     }),
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     /**
-     * Save the final redirect url in the machine context for later reuse. This
-     * action is the same for the three identification methods.
+     * Save the final redirect url in the machine context for later reuse.
+     * This action is the same for the three identification methods.
      */
     completeUserIdentification: assign(({ context, event }) => {
       assertEvent(event, "user-identification-completed");
@@ -199,22 +203,30 @@ export const itwEidIssuanceMachineSetup = setup({
     getCieStatus: getCieStatusActor,
     verifyTrustFederation: verifyTrustFederationActor,
 
-    /** WI actors */
+    /**
+     * WI actors
+     */
 
     createWalletInstance: createWalletInstanceActor,
     revokeWalletInstance: revokeWalletInstanceActor,
     getWalletAttestation: getWalletAttestationActor,
 
-    /** Primary authentication actors */
+    /**
+     * Primary authentication actors
+     */
 
     startAuthFlow: startAuthFlowActor,
 
-    /** MRTD PoP Challenge actors */
+    /**
+     * MRTD PoP Challenge actors
+     */
 
     initMrtdPoPChallenge: initMrtdPoPChallengeActor,
     validateMrtdPoPChallenge: validateMrtdPoPChallengeActor,
 
-    /** PID issuance actors */
+    /**
+     * PID issuance actors
+     */
 
     requestAccessToken: requestAccessTokenActor,
     requestEid: requestEidActor,
@@ -222,7 +234,9 @@ export const itwEidIssuanceMachineSetup = setup({
     storeEidCredential: storeEidCredentialActor,
     waitForSessionRefresh: waitForSessionRefreshActor,
 
-    /** Credential upgrade actors */
+    /**
+     * Credential upgrade actors
+     */
 
     credentialUpgradeMachine: itwCredentialUpgradeMachine
   },

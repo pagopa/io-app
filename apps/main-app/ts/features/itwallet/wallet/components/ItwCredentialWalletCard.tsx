@@ -80,8 +80,7 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
 };
 
 /**
- * Wrapper component which adds wallet capabilites to the ItwCredentialCard
- * component
+ * Wrapper component which adds wallet capabilites to the ItwCredentialCard component
  */
 export const ItwCredentialWalletCard = withWalletCardBaseComponent(
   WrappedItwCredentialCard

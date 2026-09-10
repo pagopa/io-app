@@ -1,4 +1,6 @@
-/** Utils for Option items */
+/**
+ * Utils for Option items
+ */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
@@ -44,8 +46,7 @@ export function areStringsEqual(
 }
 
 /**
- * Return some of item[key] if item is defined and item[key] too
- *
+ * return some of item[key] if item is defined and item[key] too
  * @param item
  * @param key
  * @param extractor

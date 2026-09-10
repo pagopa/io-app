@@ -5,7 +5,9 @@ import { ActionType } from "typesafe-actions";
 import { removeCachedAttachment } from "../store/actions";
 import { AttachmentsDirectoryPath } from "../utils/attachments";
 
-/** Clears cached files for all the attachments */
+/**
+ * Clears cached files for all the attachments
+ */
 export function* handleClearAllAttachments() {
   const isPresent = yield* call(RNFS.exists, AttachmentsDirectoryPath);
 
@@ -16,7 +18,6 @@ export function* handleClearAllAttachments() {
 
 /**
  * Clears cached file for the attachment
- *
  * @param action
  */
 export function* handleClearAttachment(

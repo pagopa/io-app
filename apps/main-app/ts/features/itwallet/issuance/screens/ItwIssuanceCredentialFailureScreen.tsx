@@ -55,7 +55,9 @@ export const ItwIssuanceCredentialFailureScreen = () => {
 
 type ContentViewProps = { failure: CredentialIssuanceFailure };
 
-/** Renders the content of the screen */
+/**
+ * Renders the content of the screen
+ */
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const credentialType =

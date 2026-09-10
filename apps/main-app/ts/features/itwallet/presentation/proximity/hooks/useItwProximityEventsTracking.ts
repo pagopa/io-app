@@ -28,7 +28,9 @@ type Params = {
   ) => string | undefined;
 };
 
-/** Track errors occurred during the proximity presentation flow for analytics. */
+/**
+ * Track errors occurred during the proximity presentation flow for analytics.
+ */
 
 export const useItwProximityEventsTracking = ({
   failure,

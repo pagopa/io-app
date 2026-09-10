@@ -146,7 +146,9 @@ export const ItwSkeumorphicCard = ({
   );
 };
 
-/** Maps credential status to the corresponding gradient variant. */
+/**
+ * Maps credential status to the corresponding gradient variant.
+ */
 const gradientVariantByStatus: Record<
   ItwCredentialStatus,
   ItwIridescentBorderVariant

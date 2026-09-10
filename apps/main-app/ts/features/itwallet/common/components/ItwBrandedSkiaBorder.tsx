@@ -24,8 +24,7 @@ type ItwIridescentBorderProps = {
 /**
  * WARNING: this component must be placed inside a {@link Canvas} component.
  *
- * Renders an animated IT-Wallet branded gradient using Skia and device rotation
- * sensor data.
+ * Renders an animated IT-Wallet branded gradient using Skia and device rotation sensor data.
  */
 export const ItwBrandedSkiaBorder = ({
   width,

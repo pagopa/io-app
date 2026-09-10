@@ -1,4 +1,6 @@
-/** This router serves lollipop API */
+/**
+ * this router serves lollipop API
+ */
 
 import { Router } from "express";
 

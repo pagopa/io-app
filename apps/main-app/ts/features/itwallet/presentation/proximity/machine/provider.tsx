@@ -34,8 +34,7 @@ export const ItwProximityMachineProvider = ({
 };
 
 /**
- * Convenience component to display debug info about the machine state in the
- * ladybug component.
+ * Convenience component to display debug info about the machine state in the ladybug component.
  */
 const DebugData = () => {
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);

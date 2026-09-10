@@ -6,17 +6,16 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwCloseBanner, itwShowBanner } from "../actions/banners";
 
 /**
- * Pseudo-infinite duration in days. Used to hide banners "forever" or until app
- * reset/reinstallation.
+ * Pseudo-infinite duration in days.
+ * Used to hide banners "forever" or until app reset/reinstallation.
  */
 const FOREVER = 100 * 365; // approx. 100 years
 
 /**
- * Prefix-based id for banners whose dismiss state must be tracked independently
- * per credential type. Using a template literal (rather than one literal per
- * credential type) means new credential types automatically get their own
- * persisted dismiss state, with no change required here even as the credentials
- * catalogue grows.
+ * Prefix-based id for banners whose dismiss state must be tracked independently per
+ * credential type. Using a template literal (rather than one literal per credential type)
+ * means new credential types automatically get their own persisted dismiss state, with no
+ * change required here even as the credentials catalogue grows.
  */
 export type ItwCredentialValidityBannerId = `newCredentialValidity:${string}`;
 
@@ -25,8 +24,8 @@ export const getNewCredentialValidityBannerId = (
 ): ItwCredentialValidityBannerId => `newCredentialValidity:${credentialType}`;
 
 /**
- * Identifiers for IT Wallet banners To add a new banner add a new id to this
- * type
+ * Identifiers for IT Wallet banners
+ * To add a new banner add a new id to this type
  */
 export type ItwBannerId =
   | "activationSuccessFeedback" // Survey feedback banner shown after a successful IT-Wallet activation
@@ -43,15 +42,14 @@ export type ItwBannerId =
 
 /**
  * Default hide duration applied to any banner id that has no explicit entry in
- * `bannerHideDurations` below (e.g. per-credential-type ids): hidden forever
- * after the first dismissal.
+ * `bannerHideDurations` below (e.g. per-credential-type ids): hidden forever after the
+ * first dismissal.
  */
 export const defaultBannerHideDuration: NonEmptyArray<number> = [FOREVER];
 
 /**
- * Mapping between banner identifiers and the duration (expressed in days) for
- * which they should be hidden after each dismissal. Banners not listed here
- * fall back to `defaultBannerHideDuration`.
+ * Mapping between banner identifiers and the duration (expressed in days) for which they should be hidden
+ * after each dismissal. Banners not listed here fall back to `defaultBannerHideDuration`.
  */
 export const bannerHideDurations: Partial<
   Record<ItwBannerId, NonEmptyArray<number>>
@@ -69,10 +67,9 @@ export const bannerHideDurations: Partial<
 };
 
 /**
- * Mapping between banner identifiers and the duration (expressed in days) for
- * which they should stay visible after being triggered (via `itwShowBanner`).
- * Dismissal rules in `bannerHideDurations` still take precedence. Banners not
- * listed here have no visibility time limit.
+ * Mapping between banner identifiers and the duration (expressed in days) for which they should stay
+ * visible after being triggered (via `itwShowBanner`). Dismissal rules in `bannerHideDurations` still
+ * take precedence. Banners not listed here have no visibility time limit.
  */
 export const bannerVisibleDurations: Partial<Record<ItwBannerId, number>> = {
   activationSuccessFeedback: 7 // ~1 week
@@ -92,7 +89,9 @@ export type ItwBannersState = Partial<
   >
 >;
 
-/** Initial state for IT Wallet banners */
+/**
+ * Initial state for IT Wallet banners
+ */
 export const itwBannersInitialState: ItwBannersState = {};
 
 const reducer = (

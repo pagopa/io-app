@@ -1,4 +1,6 @@
-/** A reducer for the authentication by CIE */
+/**
+ * A reducer for the authentication by CIE
+ */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 

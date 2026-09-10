@@ -13,15 +13,16 @@ const cdcRemoteConfigSelector = (state: GlobalState) => {
   return undefined;
 };
 
-/** Return the remote config about CDC CTA inside the onboarding screen. */
+/**
+ * Return the remote config about CDC CTA inside the onboarding screen.
+ */
 export const cdcCtaConfigSelector = createSelector(
   cdcRemoteConfigSelector,
   cdcConfig => cdcConfig?.cta_onboarding_config
 );
 
 /**
- * Return true if the CdC wallet visibility feature is enabled by remote config
- * and the app version is supported
+ * Return true if the CdC wallet visibility feature is enabled by remote config and the app version is supported
  */
 export const isCdCWalletVisibilityEnabledSelector = (state: GlobalState) =>
   isPropertyWithMinAppVersionEnabled({
@@ -32,7 +33,9 @@ export const isCdCWalletVisibilityEnabledSelector = (state: GlobalState) =>
     optionalConfig: "walletVisibility"
   });
 
-/** Return the remote config about CDC wallet visibility. */
+/**
+ * Return the remote config about CDC wallet visibility.
+ */
 export const cdcWalletVisibilityConfigSelector = createSelector(
   cdcRemoteConfigSelector,
   cdcConfig => cdcConfig?.walletVisibility?.configurations

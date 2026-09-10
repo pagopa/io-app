@@ -33,10 +33,7 @@ import {
 } from "./guards";
 import { Input } from "./input";
 
-/**
- * Defines typed remote-presentation actors while providers inject runtime side
- * effects.
- */
+/** Defines typed remote-presentation actors while providers inject runtime side effects. */
 export const itwRemoteMachineSetup = setup({
   types: {
     context: {} as Context,

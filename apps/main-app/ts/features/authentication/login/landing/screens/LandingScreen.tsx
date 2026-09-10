@@ -75,9 +75,8 @@ const SPACE_AROUND_BUTTON_LINK = 16;
 const SPID_LEVEL: SpidLevel = "SpidL2";
 
 /**
- * A screen where the user can choose to login with SPID or get more
- * informations. It includes a carousel with highlights on the app
- * functionalities
+ * A screen where the user can choose to login with SPID or get more informations.
+ * It includes a carousel with highlights on the app functionalities
  */
 export const LandingScreen = () => {
   const { error } = useIOToast();

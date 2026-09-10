@@ -71,7 +71,9 @@ type PaymentsTransactionReceiptPayload = {
   transactionId: string;
 };
 
-/** Asycn action to download biz-events transaction preview pdf */
+/**
+ * asycn action to download biz-events transaction preview pdf
+ */
 export const getPaymentsReceiptDownloadAction = createAsyncAction(
   "PAYMENTS_RECEIPT_DOWNLOAD_PDF_REQUEST",
   "PAYMENTS_RECEIPT_DOWNLOAD_PDF_SUCCESS",

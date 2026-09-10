@@ -6,8 +6,8 @@ import { itwKeyAttestationsSelector } from "../../walletInstance/store/selectors
 import { itwCredentialsByTypeSelector } from "../store/selectors";
 
 /**
- * Saga that checks for Key Attestations that are not associated with any
- * credential and removes them from the store.
+ * Saga that checks for Key Attestations that are not associated
+ * with any credential and removes them from the store.
  */
 export function* handleKeyAttestationsCleanUp() {
   const allCredentialsByType = yield* select(itwCredentialsByTypeSelector);
