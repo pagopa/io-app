@@ -59,7 +59,7 @@ const PreconditionsContentMarkdown = ({
       const state = store.getState();
       const category = preconditionsCategoryTagSelector(state);
       if (category) {
-        trackDisclaimerLoadError(category);
+        trackDisclaimerLoadError(category, "MARKDOWN_RENDER_ERROR");
       }
       dispatch(
         errorPreconditionStatusAction(

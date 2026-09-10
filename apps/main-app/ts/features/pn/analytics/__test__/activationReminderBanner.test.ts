@@ -1,5 +1,6 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { SendFailureReason } from "../../../messages/utils";
 import PN_ROUTES from "../../navigation/routes";
 import { sendBannerMixpanelEvents } from "../activationReminderBanner";
 
@@ -61,13 +62,26 @@ describe("activationReminderBanner", () => {
     );
   });
 
-  it("should track banner KO event with reason", () => {
-    const testReason = "network_error";
-    sendBannerMixpanelEvents.bannerKO(testReason);
+  it("should track banner KO event with type only", () => {
+    sendBannerMixpanelEvents.bannerKO("MISSING-SID");
 
     expect(mixpanelTrack).toHaveBeenCalledWith(
       "SEND_ACTIVATION_FAILURE",
       testBuildEventProperties("KO", "error", {
+        type: "MISSING-SID",
+        reason: undefined
+      })
+    );
+  });
+
+  it("should track banner KO event with type and a reason", () => {
+    const testReason = SendFailureReason.NETWORK_ERROR;
+    sendBannerMixpanelEvents.bannerKO("FAILURE_ACTIVATION", testReason);
+
+    expect(mixpanelTrack).toHaveBeenCalledWith(
+      "SEND_ACTIVATION_FAILURE",
+      testBuildEventProperties("KO", "error", {
+        type: "FAILURE_ACTIVATION",
         reason: testReason
       })
     );
