@@ -16,7 +16,7 @@ import lollipopReducer, {
   PersistedLollipopData
 } from "./reducers/lollipop";
 
-const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 2;
+export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 2;
 
 // Mirrors the runtime shape of fp-ts' Option, which is how versions of this
 // app built with fp-ts serialized `keyTag` to disk. Kept as a plain type
