@@ -46,10 +46,13 @@ type SupportedAttachmentType = "application/pdf";
 
 const PDF_DATA_URI_PREFIX = "data:application/pdf;base64,";
 const FALLBACK_ATTACHMENT_FILE_NAME = "attachment";
-const FILE_NAME_EXTENSION_REGEX = /\.pdf$/i;
-const PATH_SEPARATOR_REGEX = /[/\\]/g;
-const LEADING_FILE_NAME_CHARS_REGEX = /^[\s.]+/;
-const NULL_CHARACTER = "\u0000";
+// Path separators (/,\) and null char, not allowed in file names
+// eslint-disable-next-line no-control-regex
+const INVALID_FILE_NAME_CHARACTERS_REGEX = /[/\\\u0000]/g;
+// Existing extension, if any, to normalize between iOS (not included) and Android (included)
+const EXISTING_EXTENSION_REGEX = /\.pdf$/i;
+// Leading/trailing spaces and dots, not allowed in file names
+const INVALID_SPACES_AND_DOTS_REGEX = /^[\s.]+|[\s.]+$/g;
 
 export const ItwPresentationCredentialAttachmentScreen = ({
   route
@@ -187,27 +190,16 @@ const getFileNameWithExtension = (
   type: SupportedAttachmentType
 ) => {
   const extension = type.split("/")[1];
-  const sanitizedFileName = sanitizeFileName(
-    fileName.replace(FILE_NAME_EXTENSION_REGEX, "")
-  );
-  const fileNameWithoutExtension =
-    sanitizedFileName.length > 0
-      ? sanitizedFileName
+  const fileNameWithoutExtension = fileName
+    .replace(INVALID_FILE_NAME_CHARACTERS_REGEX, "")
+    .replace(EXISTING_EXTENSION_REGEX, "")
+    .replace(INVALID_SPACES_AND_DOTS_REGEX, "");
+  const sanitizedFileName =
+    fileNameWithoutExtension.length > 0
+      ? fileNameWithoutExtension
       : FALLBACK_ATTACHMENT_FILE_NAME;
 
-  return `${fileNameWithoutExtension}.${extension}`;
-};
-
-const sanitizeFileName = (fileName: string) => {
-  const withoutLeadingSpacesAndDots = fileName.replace(
-    LEADING_FILE_NAME_CHARS_REGEX,
-    ""
-  );
-  const withoutNullCharacters = withoutLeadingSpacesAndDots
-    .split(NULL_CHARACTER)
-    .join("");
-
-  return withoutNullCharacters.replace(PATH_SEPARATOR_REGEX, "");
+  return `${sanitizedFileName}.${extension}`;
 };
 
 const styles = StyleSheet.create({
