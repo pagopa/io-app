@@ -7,9 +7,10 @@ import { logoutRequest } from "../../../authentication/common/store/actions";
 
 /**
  * It handles the logout loading. It doesn't handle any retry logics because
- * even if the logout API fails the app closes the session asymmetrical logout
- * success -> session closed client&server logout failure/success -> app removes
- * all session info from local storage
+ * even if the logout API fails the app closes the session asymmetrical
+ *
+ * - Logout success -> session closed client&server
+ * - Logout failure/success -> app removes all session info from local storage
  */
 const LogoutScreen = () => {
   const dispatch = useIODispatch();

@@ -47,7 +47,7 @@ import {
   GetPansUsingGETT,
   getWalletsV2UsingGETDecoder
 } from "@io-app/api-types/generated/definitions/pagopa/walletv2/requestTypes";
-/** PagoPA backend client, with functions to call the different API available */
+/** The pagoPA backend client, with functions to call the different API available */
 import * as r from "@pagopa/ts-commons/lib/requests";
 import {
   AddResponseType,

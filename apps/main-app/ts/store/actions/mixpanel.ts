@@ -3,8 +3,8 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 /**
  * The action to activate/deactivate mixpanel
  *
- * - True to initialize
- * - False to terminate
+ * - `true` to initialize
+ * - `false` to terminate
  */
 export const setMixpanelEnabled = createStandardAction(
   "MIXPANEL_SET_ENABLED"

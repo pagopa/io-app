@@ -53,9 +53,10 @@ const paymentMethods: WalletMethodConfig = {
 };
 
 /**
- * Default config to setup dev-server warning: you should not edit this file
- * (neither commit). Instead you should add or edit the json config file (see
- * 'config' folder)
+ * Default config to setup dev-server
+ *
+ * Warning: you should not edit this file (neither commit). Instead you should
+ * add or edit the json config file (see 'config' folder)
  */
 const defaultConfig: IoDevServerConfig = {
   global: {

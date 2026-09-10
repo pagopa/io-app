@@ -18,13 +18,15 @@ type UseMaxBrightnessOptions = {
 /**
  * Custom hook that manages screen brightness levels for the application.
  *
- * Provides automatic brightness management with the following features: -
- * Automatically sets screen brightness to maximum when the component mounts and
- * app is active - Restores the original brightness level when component
- * unmounts or app becomes inactive - Handles platform-specific brightness APIs
- * for both iOS and Android - Optionally provides smooth brightness transitions
- * with configurable duration - Preserves Android's auto-brightness mode when
- * restoring original settings
+ * Provides automatic brightness management with the following features:
+ *
+ * - Automatically sets screen brightness to maximum when the component mounts and
+ *   app is active
+ * - Restores the original brightness level when component unmounts or app becomes
+ *   inactive
+ * - Handles platform-specific brightness APIs for both iOS and Android
+ * - Optionally provides smooth brightness transitions with configurable duration
+ * - Preserves Android's auto-brightness mode when restoring original settings
  *
  * @example
  *   // Basic usage
@@ -144,15 +146,20 @@ export function useMaxBrightness({
   /**
    * Manages screen brightness based on app state changes.
    *
-   * When the app becomes active: - Sets screen brightness to maximum level
-   * using setMaxBrightness()
+   * When the app becomes active:
    *
-   * When the app becomes inactive: - Restores the original brightness level
-   * that was saved when the hook initialized - Only restores if
-   * initialBrightness was successfully captured
+   * - Sets screen brightness to maximum level using setMaxBrightness()
    *
-   * The effect also handles cleanup by: - Restoring original brightness on
-   * unmount - Removing the AppState event listener
+   * When the app becomes inactive:
+   *
+   * - Restores the original brightness level that was saved when the hook
+   *   initialized
+   * - Only restores if initialBrightness was successfully captured
+   *
+   * The effect also handles cleanup by:
+   *
+   * - Restoring original brightness on unmount
+   * - Removing the AppState event listener
    */
   useEffect(() => {
     // eslint-disable-next-line functional/no-let

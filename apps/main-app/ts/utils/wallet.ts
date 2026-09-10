@@ -40,10 +40,13 @@ export const fixWalletPspTagsValues = (w: unknown) => {
 };
 
 /**
- * This function handles the set favourite method on wallet section: - if it is
- * already a favourite it displays an alert suggesting to select another
- * favourite method - if it is not a favourite the callback will be executed
- * more information at https://www.pivotaltracker.com/story/show/172762258
+ * This function handles the set favourite method on wallet section:
+ *
+ * - If it is already a favourite it displays an alert suggesting to select
+ *   another favourite method
+ * - If it is not a favourite the callback will be executed
+ *
+ * More information at https://www.pivotaltracker.com/story/show/172762258
  *
  * @param willBeFavorite Defines if the method will be the favourite selected by
  *   the user

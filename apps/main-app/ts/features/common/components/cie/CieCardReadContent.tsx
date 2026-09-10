@@ -110,8 +110,9 @@ const Actions = (
   });
 
 /**
- * Custom progress bar for read progress visualization on iOS TODO: use
- * ProgressLoader from the DS
+ * Custom progress bar for read progress visualization on iOS
+ *
+ * TODO: use ProgressLoader from the DS
  *
  * @param props.progress - Progress value from 0 to 1
  */

@@ -17,10 +17,13 @@ type VaultWrite = { credential: string; vaultId: string };
 
 /**
  * Groups the obtained bundles by credentialId and produces, for each
- * credentialId: - the vault writes (one entry for a single credential, one per
- * copy for a batch credential); - the single metadata to store in Redux. A
- * batch credential collapses into one metadata that lists all its copies'
- * keyTags in `keyTags` (the first copy is the representative).
+ * credentialId:
+ *
+ * - The vault writes (one entry for a single credential, one per copy for a batch
+ *   credential);
+ * - The single metadata to store in Redux. A batch credential collapses into one
+ *   metadata that lists all its copies' keyTags in `keyTags` (the first copy is
+ *   the representative).
  */
 const collapseBundles = (bundles: ReadonlyArray<CredentialBundle>) => {
   const groups = bundles.reduce<Record<string, Array<CredentialBundle>>>(

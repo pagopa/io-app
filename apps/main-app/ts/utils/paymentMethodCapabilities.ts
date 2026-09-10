@@ -43,11 +43,16 @@ const paymentNotSupportedCustomRepresentation = (
 };
 
 /**
- * Check if a payment method is supported or not If the payment method have the
- * enableable function pagoPA, can always pay ("available") "available" -> can
- * pay "arriving" -> will pay "notAvailable" -> can't pay
- * "onboardableNotImplemented" -> can onboard a card that can pay but is not yet
- * implemented
+ * Check if a payment method is supported or not
+ *
+ * If the payment method have the enableable function pagoPA, can always pay
+ * ("available")
+ *
+ * - "available" -> can pay
+ * - "arriving" -> will pay
+ * - "notAvailable" -> can't pay
+ * - "onboardableNotImplemented" -> can onboard a card that can pay but is not yet
+ *   implemented
  */
 export const isPaymentSupported = (
   paymentMethod: PaymentMethod

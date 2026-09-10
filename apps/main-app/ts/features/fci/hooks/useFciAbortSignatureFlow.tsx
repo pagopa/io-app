@@ -17,10 +17,10 @@ import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
 
 /**
- * `showDialogOnBack` — when `true` (default), pressing back shows the abort
- * confirmation dialog. When `false`, back is handled internally: calls
- * `onBackPress` if provided, otherwise `navigation.goBack()`. `onBackPress` —
- * custom back handler used when `showDialogOnBack` is `false`.
+ * - `showDialogOnBack` — when `true` (default), pressing back shows the abort
+ *   confirmation dialog. When `false`, back is handled internally: calls
+ *   `onBackPress` if provided, otherwise `navigation.goBack()`.
+ * - `onBackPress` — custom back handler used when `showDialogOnBack` is `false`.
  */
 type Props = {
   onBackPress?: () => void;
@@ -95,8 +95,10 @@ export const useFciAbortSignatureFlow = (props?: Props) => {
   /**
    * Overrides the present function of the bottom sheet to show an alert instead
    * if the experimental design is enabled. This allows us to use an alert
-   * without changing single components which use the hook. TODO: remove when
-   * the experimental design will be enabled by default (SFEQS-2090)
+   * without changing single components which use the hook.
+   *
+   * TODO: remove when the experimental design will be enabled by default
+   * (SFEQS-2090)
    */
   const present = () => (isExperimental ? showAlert() : presentBs());
 

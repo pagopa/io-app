@@ -63,9 +63,10 @@ export function* deleteUserDataProcessingSaga(
 }
 
 /**
- * The following logic: - checks if there are updates on the processing of a
- * previous request - sumbits a new request if the state is ClOSED or if this is
- * the first request
+ * The following logic:
+ *
+ * - Checks if there are updates on the processing of a previous request
+ * - Sumbits a new request if the state is ClOSED or if this is the first request
  */
 export function* loadUserDataProcessingSaga(
   getUserDataProcessingRequest: IdentityClient["getUserDataProcessing"],

@@ -121,7 +121,7 @@ const SwiftUINumericText = ({
 };
 
 /**
- * IOS implementation.
+ * The iOS implementation.
  *
  * Below iOS 16 SwiftUI cannot animate the transition, so we rely on the
  * `IOText` component instead.

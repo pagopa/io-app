@@ -14,10 +14,12 @@ import { trackOfflineActionNotAllowed } from "../utils/analytics.ts";
  * or a specific session/access reason is present), it shows a toast error
  * message and does not execute the provided function.
  *
- * The toast is shown if: - `isConnected` selector returns `false` (definitely
- * offline). - `isConnected` selector returns `undefined` (connectivity
- * unknown). - `offlineAccessReason` selector returns a defined reason (e.g.,
- * session expired), even if `isConnected` is `true`.
+ * The toast is shown if:
+ *
+ * - `isConnected` selector returns `false` (definitely offline).
+ * - `isConnected` selector returns `undefined` (connectivity unknown).
+ * - `offlineAccessReason` selector returns a defined reason (e.g., session
+ *   expired), even if `isConnected` is `true`.
  *
  * The provided function `fn` is executed only if `isConnected` is `true` AND
  * `offlineAccessReason` is `undefined`.

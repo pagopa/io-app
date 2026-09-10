@@ -21,7 +21,7 @@ export type IOTypographicStyle = IOTypographicAttributes & IOTypographicColor;
  */
 type IOTypographicAttributes = {
   /**
-   * IOS Dynamic Type ramp the style maps to. Absent on the styles that have
+   * The iOS Dynamic Type ramp the style maps to. Absent on the styles that have
    * never declared one.
    */
   dynamicTypeRamp?: TextProps["dynamicTypeRamp"];

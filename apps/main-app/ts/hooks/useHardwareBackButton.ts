@@ -24,9 +24,11 @@ export const useHardwareBackButton = (handler: () => boolean) => {
 };
 
 /**
- * Custom hook to handle the hardware back button on Android devices - when the
- * component is opened, back button closes the component - when the component is
- * closed, back button event is forwarded to the next handler
+ * Custom hook to handle the hardware back button on Android devices
+ *
+ * - When the component is opened, back button closes the component
+ * - When the component is closed, back button event is forwarded to the next
+ *   handler
  *
  * @param onDismiss: Function called when the component is closed
  * @returns A function to call when the component is opened

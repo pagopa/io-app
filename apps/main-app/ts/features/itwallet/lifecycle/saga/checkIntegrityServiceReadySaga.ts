@@ -11,10 +11,11 @@ import { itwIntegrityServiceStatusSelector } from "../../issuance/store/selector
  * Checks if the integrity service is ready by checking its current status and
  * waiting for updates if needed.
  *
- * The integrity service can be in one of three states: - "ready": The service
- * is initialized and ready to use - "unavailable": The device does not support
- * the integrity service - "error": An error occurred while initializing the
- * service
+ * The integrity service can be in one of three states:
+ *
+ * - "ready": The service is initialized and ready to use
+ * - "unavailable": The device does not support the integrity service
+ * - "error": An error occurred while initializing the service
  *
  * If the service is in an error state, this will trigger a warmup retry via
  * warmUpIntegrityServiceSaga. If the status is not conclusive, it will wait up

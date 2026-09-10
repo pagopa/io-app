@@ -5,10 +5,12 @@ import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 
 /**
- * Return the same text with each token has the first char in uppercase. tokens
- * are retrieved by splitting the text with the provided separator ex
- * capitalize("Hello World") -> "Hello Word" ex capitalize("hello,world",",") ->
- * "Hello,Word"
+ * Return the same text with each token has the first char in uppercase. Tokens
+ * are retrieved by splitting the text with the provided separator
+ *
+ * @example
+ *   capitalize("Hello World"); // "Hello Word"
+ *   capitalize("hello,world", ","); // "Hello,Word"
  *
  * @param text
  * @param separator

@@ -54,9 +54,11 @@ type ObjectWithMinAppVersion =
  * into the main one. If the main FF is deactivated, any nested FF will also be
  * considered deactivated.
  *
- * Details: The fuction take an object with this property:
+ * To get the feature flag state of an inner configuration, also specify
+ * `optionalLocalFlag` and `optionalConfig`.
  *
  * @example
+ *   // Returns the fastLogin feature flag state
  *   isPropertyWithMinAppVersionEnabled({
  *     remoteConfig: store,
  *     mainLocalFlag: fastLoginConfig,
@@ -64,6 +66,7 @@ type ObjectWithMinAppVersion =
  *   });
  *
  * @example
+ *   // Returns the opt_in feature flag state
  *   isPropertyWithMinAppVersionEnabled({
  *     remoteConfig: store,
  *     mainLocalFlag: fastLoginConfig,
@@ -80,13 +83,11 @@ type ObjectWithMinAppVersion =
  *   backendStatus)
  * @property {boolean} optionalLocalFlag - The local config that represents the
  *   nested feature
- * @property {ExtractSecondLevelKeyWithMinAppVersion\<Config, KeysWithMinAppVersion\<Config\>\>} optionalLocalFlag -
+ * @property {ExtractSecondLevelKeyWithMinAppVersion\<Config, KeysWithMinAppVersion\<Config\>\>} optionalConfig -
  *   A property nested in Config (from backendStatus) that extends
  *   ObjectWithMinAppVersion
- * @returns {boolean} Returns the fastLogin feature flag state. If you want the
- *   feature flag state of an inner configuration, you can specify two more
- *   properties
- * @returns {boolean} Returns the opt_in feature flag state.
+ * @returns {boolean} The main feature flag state, or the nested one when
+ *   `optionalLocalFlag` and `optionalConfig` are provided.
  */
 export const isPropertyWithMinAppVersionEnabled = <
   T extends KeysWithMinAppVersion<Config>

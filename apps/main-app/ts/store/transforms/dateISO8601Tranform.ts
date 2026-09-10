@@ -6,25 +6,22 @@ import { createTransform, TransformIn, TransformOut } from "redux-persist";
 import { DateFromISOString } from "../../utils/dates";
 
 /**
- * DateFieldsTransformable contains the name of the fields that are instance of
- * Date and those ones we want to persist/rehydrate in redux persist store
+ * `dateFieldsTransformable` contains the name of the fields that are instance
+ * of Date and those ones we want to persist/rehydrate in redux persist store
  *
  * Actually entities state (whitelisted in this transform) contains these
  * following date (Timestamp) fields
  *
+ * ```text
  * EntitiesState
- *
- * - MessageState
- *
- *   - CreatedMessageWithContent
- *
- *       - Created_at *
- *       - Content
- *
- *           - Due_date *
- *   - CreatedMessageWithoutContent
- *
- *       - Created_at *
+ *  - MessageState
+ *    - CreatedMessageWithContent
+ *      - created_at *
+ *      - content
+ *        - due_date *
+ *    - CreatedMessageWithoutContent
+ *      - created_at *
+ * ```
  *
  * https://www.pivotaltracker.com/story/show/167507349
  */

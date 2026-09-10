@@ -21,8 +21,11 @@ export function readablePrivacyReport(
  *
  * E.g.:
  *
- * "is not a non empty string" ".a is not a number" ".c.b is not a non empty
- * string"
+ * ```text
+ * "is not a non empty string"
+ * ".a is not a number"
+ * ".c.b is not a non empty string"
+ * ```
  */
 function getContextPath(context: Context): string {
   const keysPath = context.map(({ key }) => key).join(".");

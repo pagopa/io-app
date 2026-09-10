@@ -6,8 +6,9 @@ export const setDebugModeEnabled = createStandardAction(
 )<boolean>();
 
 /**
- * Used only for debug purpose until to react-navigation v6 the upgrade TODO:
- * Remove after the upgrade to react-navigation v6
+ * Used only for debug purpose until to react-navigation v6 the upgrade
+ *
+ * TODO: Remove after the upgrade to react-navigation v6
  *
  * @deprecated
  */

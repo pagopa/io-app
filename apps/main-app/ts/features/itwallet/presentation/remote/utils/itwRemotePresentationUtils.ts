@@ -159,11 +159,12 @@ export const groupCredentialsByPurpose = (
 /**
  * Determines whether a requested credential cannot be presented REMOTELY.
  *
- * Realigned presentation rules (proximity is never inhibited): - A non-valid
- * PID (expired/jwtExpired/revoked/unknown) cannot be presented remotely. It
- * remains presentable in proximity, where the verifier decides. - For any other
- * credential only revocation (`invalid`) blocks: expiry never does, as the
- * Relying Party is responsible for verifying it.
+ * Realigned presentation rules (proximity is never inhibited):
+ *
+ * - A non-valid PID (expired/jwtExpired/revoked/unknown) cannot be presented
+ *   remotely. It remains presentable in proximity, where the verifier decides.
+ * - For any other credential only revocation (`invalid`) blocks: expiry never
+ *   does, as the Relying Party is responsible for verifying it.
  */
 const isInvalidForRemotePresentation = (
   credential: CredentialMetadata

@@ -145,7 +145,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
 
       if (isValid) {
         /**
-         * PinRef is used to avoid having to pass pin as a dependency of
+         * `pinRef` is used to avoid having to pass pin as a dependency of
          * useCallback around `handlePinConfirmation`.
          */
 

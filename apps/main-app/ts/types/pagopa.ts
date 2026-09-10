@@ -102,10 +102,14 @@ export const Psp = repP(
 export type Psp = t.TypeOf<typeof Psp>;
 
 /**
- * A refined WalletV2 reasons: - createDate and updateDate are generated from
- * spec as UTCISODateFromString but they have an invalid format (2020-11-03
- * 22:20:29) - info is required - info is CardInfo and not PaymentMethodInfo
- * (empty interface)
+ * A refined WalletV2
+ *
+ * Reasons:
+ *
+ * - `createDate` and `updateDate` are generated from spec as UTCISODateFromString
+ *   but they have an invalid format (2020-11-03 22:20:29)
+ * - `info` is required
+ * - `info` is CardInfo and not PaymentMethodInfo (empty interface)
  */
 
 // required attributes
@@ -279,12 +283,13 @@ const successTransactionAccountingStatusCases: ReadonlyArray<number> = [1, 5];
  * To determine if a transaction is successfully completed we have to consider 2
  * cases
  *
- * 1. Payed /w CREDIT CARD: accountingStatus is not undefined AND accountingStatus
- *    === 1 || accountingStatus === 5 means the transaction has been confirmed
- *    and the payment has been successfully completed 2.payed /w other methods:
- *    accountingStatus is undefined AND id_status = 8 (Confermato mod1) or
- *    id_status = 9 (Confermato mod2) ref:
- *    https://www.pivotaltracker.com/story/show/173850410
+ * 1. Payed /w CREDIT CARD: `accountingStatus` is not undefined AND
+ *    `accountingStatus === 1 || accountingStatus === 5` means the transaction
+ *    has been confirmed and the payment has been successfully completed
+ * 2. Payed /w other methods: `accountingStatus` is undefined AND `id_status = 8`
+ *    (Confermato mod1) or `id_status = 9` (Confermato mod2)
+ *
+ * Ref: https://www.pivotaltracker.com/story/show/173850410
  */
 export const isSuccessTransaction = (tx?: Transaction): boolean =>
   pipe(

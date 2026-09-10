@@ -21,8 +21,10 @@ const isCredentialRecord = (
  * included in the input array, maps them to their Mixpanel names, and joins
  * them with " - ".
  *
- * Example: Input: ["mDL", "EuropeanHealthInsuranceCard"] Output: "ITW_PG_V3 -
- * ITW_TS_V3"
+ * Example:
+ *
+ * - Input: `["mDL", "EuropeanHealthInsuranceCard"]`
+ * - Output: `"ITW_PG_V3 - ITW_TS_V3"`
  */
 export const getOrderedCredential = (
   missingCredentials: Array<string>

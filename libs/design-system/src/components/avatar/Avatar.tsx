@@ -59,11 +59,13 @@ const styles = StyleSheet.create({
 
 /**
  * Avatar component is used to display the logo of an organization. It accepts
- * the following props: - `logoUri`: the uri of the image to display. If not
- * provided, a placeholder icon will be displayed. It can be a single uri or an
- * array of uris, in which case the first one that is available will be used. -
- * `shape`: the shape of the avatar, can be "circle" or "square" - `size`: the
- * size of the avatar, can be "small" or "medium"
+ * the following props:
+ *
+ * - `logoUri`: the uri of the image to display. If not provided, a placeholder
+ *   icon will be displayed. It can be a single uri or an array of uris, in
+ *   which case the first one that is available will be used.
+ * - `shape`: the shape of the avatar, can be "circle" or "square"
+ * - `size`: the size of the avatar, can be "small" or "medium"
  *
  * @param AvatarProps
  * @returns

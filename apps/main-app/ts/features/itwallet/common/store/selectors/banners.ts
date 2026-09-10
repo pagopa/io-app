@@ -14,12 +14,15 @@ const itwBannersSelector = (state: GlobalState) =>
 
 /**
  * Returns whether a specific banner should be visible, combining both rules
- * that govern a banner's lifecycle: - Dismiss-cooldown: if the banner was
- * dismissed, it stays hidden until `bannerHideDurations` has elapsed since the
- * last dismissal, regardless of `shownOn`. - Shown-window: banners with a
- * configured `bannerVisibleDurations` entry are visible only within that window
- * since `shownOn` was first set, and are not visible at all until then. Banners
- * without a configured window have no such constraint.
+ * that govern a banner's lifecycle:
+ *
+ * - Dismiss-cooldown: if the banner was dismissed, it stays hidden until
+ *   `bannerHideDurations` has elapsed since the last dismissal, regardless of
+ *   `shownOn`.
+ * - Shown-window: banners with a configured `bannerVisibleDurations` entry are
+ *   visible only within that window since `shownOn` was first set, and are not
+ *   visible at all until then. Banners without a configured window have no such
+ *   constraint.
  */
 export const itwIsBannerVisibleSelector = (id: ItwBannerId) =>
   createSelector(itwBannersSelector, banners => {

@@ -317,7 +317,7 @@ export const DrivingPrivilegesClaim = JsonFromString.pipe(
 export type DrivingPrivilegesClaimType = Array<DrivingPrivilegeClaimType>;
 
 /**
- * MDoc format of the mDL driving privileges: a flat array without display
+ * The mDoc format of the mDL driving privileges: a flat array without display
  * names.
  */
 export const DrivingPrivilegesFlatRaw = z.array(

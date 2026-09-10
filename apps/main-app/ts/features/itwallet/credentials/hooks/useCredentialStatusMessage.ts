@@ -15,9 +15,11 @@ import { itwCredentialSelector } from "../store/selectors";
 
 /**
  * Get the localized message corresponding to the status list/status assertion
- * code, if present. The message is dynamic and extracted either - From the
- * credentials catalog, for newer credentials that support status list, or -
- * From the issuer configuration, for legacy 1.0 credentials.
+ * code, if present. The message is dynamic and extracted either
+ *
+ * - From the credentials catalog, for newer credentials that support status list,
+ *   or
+ * - From the issuer configuration, for legacy 1.0 credentials.
  *
  * Note: this hook exists mainly because of circular dependencies across
  * IT-Wallet selectors, that become a problem when this logic is moved to a

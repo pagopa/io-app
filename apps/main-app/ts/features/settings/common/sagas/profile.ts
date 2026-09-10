@@ -225,10 +225,11 @@ function* createOrUpdateProfileSaga(
 }
 
 /**
- * Collection of predicates to forward chosen information: - first element
- * contains the handler to check if the event should be dispatched - second
- * element contains the callback to execute if the first element condition is
- * verified
+ * Collection of predicates to forward chosen information:
+ *
+ * - First element contains the handler to check if the event should be dispatched
+ * - Second element contains the callback to execute if the first element
+ *   condition is verified
  */
 const profileChangePredicates: ReadonlyArray<
   [

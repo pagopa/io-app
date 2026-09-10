@@ -299,7 +299,7 @@ addHandler(
 /**
  * Update the psp of a specified wallet during the payment checkout the PM knows
  * only about the payment method used the psp is included in the payment method
- * and its shape is about V1 and not V2 ¯_(ツ)_/¯
+ * and its shape is about V1 and not V2 `¯\_(ツ)_/¯`
  */
 addHandler(
   wallet2Router,

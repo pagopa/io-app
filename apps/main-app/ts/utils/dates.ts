@@ -192,8 +192,11 @@ export type ExpireStatus = "EXPIRED" | "EXPIRING" | "VALID";
 
 /**
  * A function to check if the given date is in the past or in the future. It
- * returns: -VALID, if the date is in the future -EXPIRING, if the date is
- * within the next 7 days -EXPIRED, if the date is in the past
+ * returns:
+ *
+ * - VALID, if the date is in the future
+ * - EXPIRING, if the date is within the next 7 days
+ * - EXPIRED, if the date is in the past
  *
  * @param date Date
  */

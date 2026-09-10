@@ -138,9 +138,15 @@ export type TrackItwBannerProperties = {
 
 /**
  * This map is used to map the credentials status to the MixPanel credential
- * status (not for eID) valid: valid invalid: not_valid expired: expired
- * expiring: expiring jwtExpired: verification_expired jwtExpiring:
- * expiring_verification unknown: unknown
+ * status (not for eID)
+ *
+ * - `valid`: `valid`
+ * - `invalid`: `not_valid`
+ * - `expired`: `expired`
+ * - `expiring`: `expiring`
+ * - `jwtExpired`: `verification_expired`
+ * - `jwtExpiring`: `expiring_verification`
+ * - `unknown`: `unknown`
  */
 export const CREDENTIAL_STATUS_MAP: Record<
   ItwCredentialStatus,

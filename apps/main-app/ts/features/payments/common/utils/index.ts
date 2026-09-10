@@ -62,8 +62,10 @@ export const getBadgePropsByTransactionStatus = (
 };
 
 /**
- * Check if the given payment method is expired right(true) if it is expired,
- * right(false) if it is still valid left if expiring date can't be evaluated
+ * Check if the given payment method is expired
+ *
+ * - `right(true)` if it is expired, `right(false)` if it is still valid
+ * - `left` if expiring date can't be evaluated
  *
  * @param paymentMethod
  */
@@ -79,7 +81,7 @@ export const isPaymentMethodExpired = (
   );
 
 /**
- * True if the given paymentMethod supports the given walletFunction
+ * `true` if the given paymentMethod supports the given walletFunction
  *
  * @param paymentMethod
  * @param walletFunction

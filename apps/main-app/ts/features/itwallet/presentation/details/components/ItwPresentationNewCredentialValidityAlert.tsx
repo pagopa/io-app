@@ -14,7 +14,7 @@ type Props = {
 };
 
 /**
- * Proof_of_age is a new credential but shows its own usage banner instead of
+ * `proof_of_age` is a new credential but shows its own usage banner instead of
  * this generic validity alert, so it is excluded here (no validity message
  * exists for it).
  */

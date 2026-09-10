@@ -7,9 +7,10 @@ export const oneIdentityEnvSelector = (state: GlobalState) =>
   state.features.loginFeatures.loginConfig.oneIdentityEnv;
 
 /**
- * Retrieves the local feature flag for the OneIdentity login flow. - `true` /
- * `false`: Forces the feature on or off locally. - `undefined`: Indicates no
- * local setting, deferring to the remote rollout.
+ * Retrieves the local feature flag for the OneIdentity login flow.
+ *
+ * - `true` / `false`: Forces the feature on or off locally.
+ * - `undefined`: Indicates no local setting, deferring to the remote rollout.
  */
 export const oneIdentityLocalFeatureFlagSelector = (state: GlobalState) =>
   state.features.loginFeatures.loginConfig.oneIdentityLocalFeatureFlag;

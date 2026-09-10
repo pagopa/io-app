@@ -8,8 +8,9 @@ export interface IndexedById<T> {
 }
 
 /**
- * Returns an indexed object generated from a list of objects: - V: object with
- * a user-specified index (e.g. Wallet -> idWallet)
+ * Returns an indexed object generated from a list of objects:
+ *
+ * - V: object with a user-specified index (e.g. Wallet -> idWallet)
  *
  * @param lst Input list to be indexed (e.g. [ { id: 1, payload: "X" }, { id:
  *   42, payload: "Y" } ] )

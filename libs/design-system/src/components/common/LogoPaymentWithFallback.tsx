@@ -19,8 +19,10 @@ type LogoPaymentWithFallbackProps = {
 };
 
 /**
- * This component renders either - a LogoPayment/LogoPaymentExt component - a
- * default credit card icon
+ * This component renders either:
+ *
+ * - A LogoPayment/LogoPaymentExt component
+ * - A default credit card icon
  *
  * @param cardIcon: IOLogoPaymentType icon
  * @param size: The size of the icon (standard is 24/48)

@@ -22,8 +22,10 @@ const potReviver = (_: any, value: any) => {
 
 /**
  * A redux-persist transformer that removes the loading and error states from
- * Pot values. `noneLoading` and `noneError` become `none` `someLoading` and
- * `someError` become `some`
+ * Pot values.
+ *
+ * - `noneLoading` and `noneError` become `none`
+ * - `someLoading` and `someError` become `some`
  */
 export const PotTransform = createTransform(
   // We only care about rehydrated so we do not apply any transformation

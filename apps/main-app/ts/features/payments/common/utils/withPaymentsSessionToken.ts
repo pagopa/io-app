@@ -16,8 +16,10 @@ type TokenKey = "Authorization" | "pagoPAPlatformSessionToken";
 /**
  * This handler injects the session token in the request body and calls the API
  * function. It also handles the case of a 401 response, resetting the session
- * token and retrying the request. - Biz events uses "Authorization" as token
- * key - Wallet & E-commerce uses "pagoPAPlatformSessionToken" as token key
+ * token and retrying the request.
+ *
+ * - Biz events uses "Authorization" as token key
+ * - Wallet & E-commerce uses "pagoPAPlatformSessionToken" as token key
  *
  * @param apiFunction The API function to call
  * @param failureAction The action to dispatch in case of failure

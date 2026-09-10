@@ -28,7 +28,7 @@ import {
 } from "./input";
 
 /**
- * True if the given paymentMethod supports the given walletFunction
+ * `true` if the given paymentMethod supports the given walletFunction
  *
  * @param paymentMethod
  * @param walletFunction
