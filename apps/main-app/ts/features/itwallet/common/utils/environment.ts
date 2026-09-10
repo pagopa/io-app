@@ -1,5 +1,6 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import Config from "react-native-config";
+import { z } from "zod";
 
 export type Env = {
   BYPASS_IDENTITY_MATCH: boolean;
@@ -15,7 +16,10 @@ export type Env = {
   X509_CERT_ROOT: string;
 };
 
-export type EnvType = "pre" | "prod";
+/** Runtime schema for persisted IT-Wallet environment values. */
+export const EnvTypeSchema = z.enum(["pre", "prod"]);
+
+export type EnvType = z.infer<typeof EnvTypeSchema>;
 
 /**
  * Wrapper for an env variable that has different values for each IT-Wallet specs version.
@@ -41,11 +45,11 @@ export const getEnv = (env: EnvType): Env => {
         WALLET_PROVIDER_BASE_URL: Config.ITW_PRE_WALLET_PROVIDER_BASE_URL ?? "",
         WALLET_PID_PROVIDER_BASE_URL: new ItwSpecsEnvVar({
           "1.0.0": Config.ITW_PRE_WALLET_PID_PROVIDER_BASE_URL_V1_0 ?? "",
-          "1.3.3": Config.ITW_PRE_WALLET_PID_PROVIDER_BASE_URL_V1_3 ?? ""
+          "1.4.6": Config.ITW_PRE_WALLET_PID_PROVIDER_BASE_URL_V1_4 ?? ""
         }),
         WALLET_EAA_PROVIDER_BASE_URL: new ItwSpecsEnvVar({
           "1.0.0": Config.ITW_PRE_WALLET_EAA_PROVIDER_BASE_URL_V1_0 ?? "",
-          "1.3.3": Config.ITW_PRE_WALLET_EAA_PROVIDER_BASE_URL_V1_3 ?? ""
+          "1.4.6": Config.ITW_PRE_WALLET_EAA_PROVIDER_BASE_URL_V1_4 ?? ""
         }),
         WALLET_TA_BASE_URL: Config.ITW_PRE_WALLET_TA_BASE_URL ?? "",
         REDIRECT_URI: Config.ITW_PRE_REDIRECT_URI ?? "",
@@ -63,11 +67,11 @@ export const getEnv = (env: EnvType): Env => {
           Config.ITW_PROD_WALLET_PROVIDER_BASE_URL ?? "",
         WALLET_PID_PROVIDER_BASE_URL: new ItwSpecsEnvVar({
           "1.0.0": Config.ITW_PROD_WALLET_PID_PROVIDER_BASE_URL_V1_0 ?? "",
-          "1.3.3": Config.ITW_PROD_WALLET_PID_PROVIDER_BASE_URL_V1_3 ?? ""
+          "1.4.6": Config.ITW_PROD_WALLET_PID_PROVIDER_BASE_URL_V1_4 ?? ""
         }),
         WALLET_EAA_PROVIDER_BASE_URL: new ItwSpecsEnvVar({
           "1.0.0": Config.ITW_PROD_WALLET_EAA_PROVIDER_BASE_URL_V1_0 ?? "",
-          "1.3.3": Config.ITW_PROD_WALLET_EAA_PROVIDER_BASE_URL_V1_3 ?? ""
+          "1.4.6": Config.ITW_PROD_WALLET_EAA_PROVIDER_BASE_URL_V1_4 ?? ""
         }),
         WALLET_TA_BASE_URL: Config.ITW_PROD_WALLET_TA_BASE_URL ?? "",
         REDIRECT_URI: Config.ITW_PROD_REDIRECT_URI ?? "",

@@ -114,6 +114,9 @@ PODS:
   - ExpoTaskManager (55.0.16):
     - ExpoModulesCore
     - UMAppLoader
+  - ExpoUI (55.0.17):
+    - ExpoModulesCore
+    - React-RCTFabric
   - fast_float (8.0.0)
   - FBLazyVector (0.83.10)
   - fmt (12.1.0)
@@ -250,7 +253,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - pagopa-io-react-native-crypto (1.2.3):
+  - pagopa-io-react-native-crypto (1.2.5):
     - boost
     - DoubleConversion
     - fast_float
@@ -3912,6 +3915,7 @@ DEPENDENCIES:
   - ExpoScreenCapture (from `../../../node_modules/expo-screen-capture/ios`)
   - ExpoSharing (from `../../../node_modules/expo-sharing/ios`)
   - ExpoTaskManager (from `../../../node_modules/expo-task-manager/ios`)
+  - "ExpoUI (from `../../../node_modules/@expo/ui/ios`)"
   - fast_float (from `../../../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
   - FBLazyVector (from `../../../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../../../node_modules/react-native/third-party-podspecs/fmt.podspec`)
@@ -4117,6 +4121,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-sharing/ios"
   ExpoTaskManager:
     :path: "../../../node_modules/expo-task-manager/ios"
+  ExpoUI:
+    :path: "../../../node_modules/@expo/ui/ios"
   fast_float:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/fast_float.podspec"
   FBLazyVector:
@@ -4392,11 +4398,12 @@ SPEC CHECKSUMS:
   ExpoScreenCapture: aefcd749919380ee0b4d59bb60c1a150aac201c6
   ExpoSharing: 40cd8fd65209bc35adc710ff7e42dd35913d2a0f
   ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
+  ExpoUI: 3d10642147c44f94a4557f1defe2efd3244349af
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 07433c4ab85da44d0b5ceac374ff4e1d57c7aa23
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
-  glog: 0456694f3aaf09460b660ea327cfc11defbeea4c
-  hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
+  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
+  hermes-engine: 037eacbb56098bf69c62cf905ec96fb01eab8248
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 730061a6443f611f163c38ec49b6dc5a4aae3f81
@@ -4409,7 +4416,7 @@ SPEC CHECKSUMS:
   MultiplatformBleAdapter: b1fddd0d499b96b607e00f0faa8e60648343dc1d
   OpenSSL-Universal: ecee7b138fa75a74ecf00d7ffd248fb584739b9e
   pagopa-io-react-native-cieid: 3969ed1784e0b9041baf892b461be3640315acd1
-  pagopa-io-react-native-crypto: eb62bb6767b44ea610ce169d855c89604b9e96d9
+  pagopa-io-react-native-crypto: afc8ee2585a7944dc115687eb2938009608f062a
   pagopa-io-react-native-integrity: 3e84754db0333a531db86f83f786f60a6da22337
   pagopa-io-react-native-jwt: d268a7aa7a0c63e809386209e589224e0c0c04c0
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34

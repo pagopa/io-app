@@ -17,7 +17,7 @@ import {
   WebViewLoginEvent
 } from "../../../common/components/IdpWebViewLogin";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { CALLBACK_PATH } from "../../../common/utils";
+import { AUTH_LEVELS, CALLBACK_PATH } from "../../../common/utils";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
@@ -85,7 +85,7 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
         params: {
           errorCodeOrMessage,
           authMethod: "SPID",
-          authLevel: "L2"
+          authLevel: AUTH_LEVELS.L2
         }
       });
     },

@@ -1,6 +1,5 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
@@ -14,6 +13,15 @@ import {
   trackSessionTokenSource
 } from "../analytics";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
+
+export const AUTH_LEVELS = { L2: "L2", L3: "L3" } as const;
+export type AuthLevel = (typeof AUTH_LEVELS)[keyof typeof AUTH_LEVELS];
+
+export type SpidAuthLevel = `Spid${AuthLevel}`;
+export const SPID_AUTH_LEVEL_MAP: Record<AuthLevel, SpidAuthLevel> = {
+  [AUTH_LEVELS.L2]: "SpidL2",
+  [AUTH_LEVELS.L3]: "SpidL3"
+};
 
 type LoginFailure = {
   errorCode?: string;
@@ -29,22 +37,22 @@ type LoginSuccess = {
 };
 
 /**
- * return some(intentFallbackUrl) if the given input is a valid intent and it has the fallback url
+ * return string if the given input is a valid intent and it has the fallback url
  * more info https://developer.chrome.com/docs/multidevice/android/intents/
  * @param intentUrl
  */
-export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
+export const getIntentFallbackUrl = (intentUrl: string): string | undefined => {
   const intentProtocol = URLParse.extractProtocol(intentUrl);
   if (intentProtocol.protocol !== "intent:" || !intentProtocol.slashes) {
-    return O.none;
+    return undefined;
   }
   const hook = "S.browser_fallback_url=";
   const hookIndex = intentUrl.indexOf(hook);
   const endIndex = intentUrl.indexOf(";end", hookIndex + hook.length);
   if (hookIndex !== -1 && endIndex !== -1) {
-    return O.some(intentUrl.substring(hookIndex + hook.length, endIndex));
+    return intentUrl.substring(hookIndex + hook.length, endIndex);
   }
-  return O.none;
+  return undefined;
 };
 
 /**
@@ -119,10 +127,10 @@ export const extractLoginResult = (
 /** for a given idp id get the relative login uri */
 export const getIdpLoginUri = (
   idpId: string,
-  level: number,
+  authLevel: AuthLevel,
   apiLoginUrlPrefix: string
 ) =>
-  `${apiLoginUrlPrefix}/api/auth/v1/login?authLevel=SpidL${level}&entityID=${idpId}&RelayState=${spidRelayState}`;
+  `${apiLoginUrlPrefix}/api/auth/v1/login?authLevel=${SPID_AUTH_LEVEL_MAP[authLevel]}&entityID=${idpId}&RelayState=${spidRelayState}`;
 
 /**
  * Extract the login result from the given url.

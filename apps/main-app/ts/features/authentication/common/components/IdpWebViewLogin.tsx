@@ -1,5 +1,4 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useRef } from "react";
 import { Linking, StyleSheet, View } from "react-native";
@@ -28,6 +27,7 @@ import {
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
 import { idpLoginUrlChanged } from "../store/actions";
 import {
+  AUTH_LEVELS,
   getIntentFallbackUrl,
   onLoginUriChanged,
   originSchemasWhiteList
@@ -80,7 +80,7 @@ export const IdpWebViewLogin = memo(
       useOneIdentityLoginSource({
         idp,
         onFailure: handleFailure,
-        minAuthLevel: "SpidL2"
+        minAuthLevel: AUTH_LEVELS.L2
       });
 
     const handleError = useCallback(
@@ -137,9 +137,9 @@ export const IdpWebViewLogin = memo(
         const url = event.url;
         // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
         const idpIntent = getIntentFallbackUrl(url);
-        if (O.isSome(idpIntent)) {
+        if (idpIntent != null) {
           void trackSpidLoginIntent(idp, flow);
-          void Linking.openURL(idpIntent.value);
+          void Linking.openURL(idpIntent);
           return false;
         }
 

@@ -29,3 +29,4 @@ jobs:
         file_ext: json
         additional_params: |
           cleanup_mode: true
+          replace_modified: false

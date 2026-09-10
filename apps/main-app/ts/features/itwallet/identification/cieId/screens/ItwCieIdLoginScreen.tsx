@@ -3,6 +3,10 @@ import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent
+} from "react-native-webview/lib/WebViewTypes";
 
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -16,6 +20,10 @@ import {
 import { getEnv } from "../../../common/utils/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { selectAuthUrl } from "../../../machine/eid/selectors";
+import {
+  WEBVIEW_ERROR_CODE_PREFIX,
+  WEBVIEW_HTTP_ERROR_CODE_PREFIX
+} from "../../cie/utils/constants";
 import { useCieIdApp } from "../hooks/useCieIdApp";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
@@ -90,6 +98,34 @@ const ItwCieIdLoginScreen = () => {
     [startCieIdAppAuthentication, cieIdEnvironment]
   );
 
+  /**
+   * Converts the WebView failure events into meaningful errors. Without this
+   * conversion the raw native event object reaches the state machine and is
+   * stringified into an unusable "[object Object]" error code.
+   */
+  const handleWebViewError = useCallback(
+    ({ nativeEvent }: WebViewErrorEvent) => {
+      const { code, description } = nativeEvent;
+      handleAuthenticationFailure(
+        new Error(
+          `${WEBVIEW_ERROR_CODE_PREFIX}_${code}${
+            description ? `: ${description}` : ""
+          }`
+        )
+      );
+    },
+    [handleAuthenticationFailure]
+  );
+
+  const handleWebViewHttpError = useCallback(
+    ({ nativeEvent }: WebViewHttpErrorEvent) => {
+      handleAuthenticationFailure(
+        new Error(`${WEBVIEW_HTTP_ERROR_CODE_PREFIX}_${nativeEvent.statusCode}`)
+      );
+    },
+    [handleAuthenticationFailure]
+  );
+
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
       const authRedirectUrl = event.url;
@@ -116,8 +152,8 @@ const ItwCieIdLoginScreen = () => {
           cacheEnabled={false}
           javaScriptEnabled
           mediaPlaybackRequiresUserAction
-          onError={handleAuthenticationFailure}
-          onHttpError={handleAuthenticationFailure}
+          onError={handleWebViewError}
+          onHttpError={handleWebViewHttpError}
           onLoadEnd={onLoadEnd}
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
@@ -132,7 +168,8 @@ const ItwCieIdLoginScreen = () => {
       webViewSource,
       handleNavigationStateChange,
       handleShouldStartLoading,
-      handleAuthenticationFailure,
+      handleWebViewError,
+      handleWebViewHttpError,
       onLoadEnd
     ]
   );
