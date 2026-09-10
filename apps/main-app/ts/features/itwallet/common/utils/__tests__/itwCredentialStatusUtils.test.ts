@@ -104,6 +104,32 @@ describe("getCredentialStatus", () => {
         "jwtExpired"
       );
     });
+
+    // A physical document is still valid on its expiration day, it only becomes
+    // "expired" starting the day after
+    it("should return the physical document expiring status, not expired, when the expiration date is today", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: CredentialMetadata = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2025-01-20T00:00:00Z" // Still valid
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: { "en-US": "Expiry date", "it-IT": "Scadenza" },
+            value: "2024-01-20" // Expires today
+          }
+        },
+        validity: {
+          type: "status_assertion",
+          status: "valid",
+          statusAssertion: {} as any
+        }
+      };
+
+      expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
+    });
   });
 
   describe("expiring", () => {
