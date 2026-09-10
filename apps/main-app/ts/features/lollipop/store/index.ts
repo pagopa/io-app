@@ -9,22 +9,37 @@ import {
 } from "redux-persist";
 
 import { Action } from "../../../store/actions/types";
-import { isDevEnv } from "../../../utils/environment";
-import {
-  fromNullable,
-  isSome,
-  none,
-  SerializedOption,
-  some,
-  toUndefined
-} from "../types/SerializedOption";
+import { isDevEnv, isTestEnv } from "../../../utils/environment";
 import lollipopReducer, {
   InMemoryLollipopData,
   LollipopState,
   PersistedLollipopData
 } from "./reducers/lollipop";
 
-export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 2;
+const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 2;
+
+// Mirrors the runtime shape of fp-ts' Option, which is how versions of this
+// app built with fp-ts serialized `keyTag` to disk. Kept as a plain type
+// (instead of importing fp-ts) so old persisted data can still be read.
+type SerializedOption<T> = { _tag: "None" } | { _tag: "Some"; value: T };
+
+const none: SerializedOption<never> = { _tag: "None" };
+
+const some = <T>(value: T): SerializedOption<T> => ({
+  _tag: "Some",
+  value
+});
+
+const isSome = <T>(
+  option: SerializedOption<T>
+  // eslint-disable-next-line no-underscore-dangle
+): option is { _tag: "Some"; value: T } => option._tag === "Some";
+
+const toUndefined = <T>(option: SerializedOption<T>): T | undefined =>
+  isSome(option) ? option.value : undefined;
+
+const fromNullable = <T>(value: null | T | undefined): SerializedOption<T> =>
+  value != null ? some(value) : none;
 
 /**
  * This function is used to migrate the redux store from version 0 to version 1.
@@ -115,3 +130,5 @@ export const lollipopPersistor = persistReducer<LollipopState, Action>(
   lollipopPersistConfig,
   lollipopReducer
 );
+
+export const testable = isTestEnv ? { none, some } : undefined;

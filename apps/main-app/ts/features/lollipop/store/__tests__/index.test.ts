@@ -1,9 +1,11 @@
 import {
   migrationKeyTagFunctional,
   migrationKeyTagToStringUndefined,
-  PersistedLollipopStateV0V1
+  PersistedLollipopStateV0V1,
+  testable
 } from "..";
-import { none, some } from "../../types/SerializedOption";
+
+const { none, some } = testable!;
 
 describe("Test migration KeyTag", () => {
   describe("Test migrationKeyTagFunctional", () => {
