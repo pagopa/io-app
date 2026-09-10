@@ -10,12 +10,12 @@ import { appReducer } from "../../../../store/reducers";
 import { SpidIdp } from "../../../../utils/idps";
 import { setOneIdentityEnv } from "../../../authentication/common/store/actions/loginConfig";
 import { ONE_IDENTITY_ENVS } from "../../../authentication/common/store/reducers/loginConfig";
+import { AUTH_LEVELS, AuthLevel } from "../../../authentication/common/utils";
 import {
   createRetriableFetch,
   FetchResponse
 } from "../../../authentication/common/utils/fetch";
 import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
-import { SpidLevel } from "../../../authentication/login/cie/utils";
 import { lollipopSetEphemeralPublicKey } from "../../store/actions/lollipop";
 import { toBase64EncodedThumbprint } from "../../utils/crypto";
 import { lollipopSamlVerify } from "../../utils/login";
@@ -66,7 +66,7 @@ const successResponse = (status: number, body: unknown): FetchResponse => ({
 });
 
 interface SetupOptions {
-  minAuthLevel?: SpidLevel;
+  minAuthLevel?: AuthLevel;
   store?: ReturnType<typeof createTestStore>;
 }
 
@@ -76,7 +76,7 @@ const createTestStore = () => {
 };
 
 const setupTest = ({
-  minAuthLevel = "SpidL2",
+  minAuthLevel = AUTH_LEVELS.L2,
   store = createTestStore()
 }: SetupOptions = {}) => {
   const onFailure = jest.fn();
