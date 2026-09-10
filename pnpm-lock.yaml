@@ -58,7 +58,7 @@ catalogs:
       specifier: 23.2.1
       version: 23.2.1
     oxfmt:
-      specifier: latest
+      specifier: 0.67.0
       version: 0.67.0
     react:
       specifier: 19.2.0
