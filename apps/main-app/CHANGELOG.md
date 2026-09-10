@@ -7,10 +7,6 @@ All notable changes to this project will be documented in this file. See [commit
 ### Bug Fixes
 
 * [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Wallet attachment download ([#8577](https://github.com/pagopa/io-app/issues/8577)) ([ffb36d5](https://github.com/pagopa/io-app/commit/ffb36d54606133fb675c13ef25374e34d268aeaa))
-
-### Chores
-
-* update version code ([00a2de7](https://github.com/pagopa/io-app/commit/00a2de7f854707c64b108f4769bdc3a082cff2ce))
 ## [3.39.0-rc.4](https://github.com/pagopa/io-app/compare/3.39.0-rc.3...3.39.0-rc.4) (2026-09-09)
 
 ### Features
