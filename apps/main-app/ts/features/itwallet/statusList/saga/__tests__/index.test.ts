@@ -4,7 +4,11 @@ import {
   watchItwStatusListAuthenticatedSaga,
   watchItwStatusListSaga
 } from "..";
-import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../../common/store/selectors/environment";
+import { getEnv } from "../../../common/utils/environment";
 import { registerStatusListProperties } from "../../analytics";
 import { refreshStaleEntries } from "../../utils/refresh";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
@@ -37,12 +41,17 @@ describe("watchItwStatusListSaga", () => {
     testSaga(watchItwStatusListSaga)
       .next()
       .select(selectItwSpecsVersion)
-      .next("1.3.3")
+      .next("1.4.6")
+      .select(selectItwEnv)
+      .next("prod")
       .call(checkStatusListCoherenceSaga)
       .next()
-      .call(refreshStaleEntries, { itwVersion: "1.3.3" })
+      .call(refreshStaleEntries, {
+        itwVersion: "1.4.6",
+        x509CertRoot: getEnv("prod").X509_CERT_ROOT
+      })
       .next()
-      .call(updateCredentialsStatusSaga, { itwVersion: "1.3.3" })
+      .call(updateCredentialsStatusSaga, { itwVersion: "1.4.6" })
       .next()
       .call(registerStatusListProperties)
       .next()

@@ -1,4 +1,9 @@
-import { createProximityActionsImplementation } from "../actions";
+import {
+  closeProximityAction,
+  trackProximityStartAction,
+  trackProximitySuccessAction,
+  trackQrCodeLoadingFailureAction
+} from "../actions";
 import { ProximityFailureType } from "../failure";
 
 jest.mock("../../analytics", () => ({
@@ -14,21 +19,23 @@ import {
   trackItwProximityStart
 } from "../../analytics";
 
-describe("createProximityActionsImplementation", () => {
+describe("itwProximityMachine actions", () => {
   const pop = jest.fn();
 
   const navigation = {
     pop
   } as never;
 
-  const actions = createProximityActionsImplementation(navigation, {} as any);
+  const store = {} as never;
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it("pops the proximity navigator when closing the flow", () => {
-    actions.closeProximity();
+    closeProximityAction({
+      context: { deps: { navigation, store } }
+    } as any);
 
     expect(pop).toHaveBeenCalledTimes(1);
   });
@@ -36,7 +43,7 @@ describe("createProximityActionsImplementation", () => {
   it("tracks the QR code loading failure when it occurs on the qrcode engagement mode", () => {
     const error = new Error("start failed");
 
-    actions.trackQrCodeLoadingFailure({
+    trackQrCodeLoadingFailureAction({
       context: { engagementMode: "qrcode" },
       event: { type: "xstate.error.actor.test", error }
     } as any);
@@ -50,7 +57,7 @@ describe("createProximityActionsImplementation", () => {
   it("does not track the QR code loading failure when it occurs on the nfc engagement mode", () => {
     const error = new Error("start failed");
 
-    actions.trackQrCodeLoadingFailure({
+    trackQrCodeLoadingFailureAction({
       context: { engagementMode: "nfc" },
       event: { type: "xstate.error.actor.test", error }
     } as any);
@@ -64,7 +71,7 @@ describe("createProximityActionsImplementation", () => {
   ])(
     "tracks the proximity start with proximity_flow $proximity_flow for engagementMode $engagementMode",
     ({ engagementMode, proximity_flow }) => {
-      actions.trackProximityStart({ context: { engagementMode } } as any);
+      trackProximityStartAction({ context: { engagementMode } } as any);
 
       expect(trackItwProximityStart).toHaveBeenCalledWith({ proximity_flow });
     }
@@ -76,7 +83,7 @@ describe("createProximityActionsImplementation", () => {
   ] as const)(
     "tracks the proximity success with proximity_flow $proximity_flow for engagementMode $engagementMode",
     ({ engagementMode, proximity_flow }) => {
-      actions.trackProximitySuccess({ context: { engagementMode } } as any);
+      trackProximitySuccessAction({ context: { engagementMode } } as any);
 
       expect(trackItwProximityPresentationCompleted).toHaveBeenCalledWith({
         proximity_flow
