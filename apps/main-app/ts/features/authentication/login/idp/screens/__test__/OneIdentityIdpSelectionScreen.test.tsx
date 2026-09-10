@@ -9,7 +9,9 @@ import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import * as activeSessionLoginAnalytics from "../../../../activeSessionLogin/screens/analytics";
 import { setIdpSelectedActiveSessionLogin } from "../../../../activeSessionLogin/store/actions";
+import * as commonAnalytics from "../../../../common/analytics";
 import * as analytics from "../../../../common/analytics/spidAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { idpSelected } from "../../../../common/store/actions";
@@ -20,6 +22,21 @@ const mockUseGetIdps = jest.fn();
 jest.mock("../../hooks/useGetIdps", () => ({
   useGetIdps: () => mockUseGetIdps()
 }));
+
+const mockNavigateToCiePinInsertion = jest.fn();
+const mockNavigateToCieIdLoginScreen = jest.fn();
+jest.mock("../../../hooks/useNavigateToLoginMethod", () => ({
+  __esModule: true,
+  default: () => ({
+    navigateToCiePinInsertion: mockNavigateToCiePinInsertion,
+    navigateToCieIdLoginScreen: mockNavigateToCieIdLoginScreen,
+    isCieSupported: true
+  })
+}));
+
+jest.mock("@gorhom/bottom-sheet", () =>
+  jest.requireActual("../../../../../../__mocks__/@gorhom/bottom-sheet")
+);
 
 const mockNavigate = jest.fn();
 
@@ -59,7 +76,7 @@ describe("OneIdentityIdpSelectionScreen", () => {
     expect(skeletonItems.length).toBe(5);
   });
 
-  it("should render nothing when the fetch fails", () => {
+  it("should render the loading error screen when the fetch fails", () => {
     mockUseGetIdps.mockReturnValue({
       state: { status: "failure", error: new Error("network error") }
     });
@@ -67,6 +84,73 @@ describe("OneIdentityIdpSelectionScreen", () => {
     const { queryByTestId } = renderComponent();
 
     expect(queryByTestId("idps-grid")).toBeNull();
+    expect(queryByTestId("idp-loading-error-primary-action")).toBeTruthy();
+    expect(queryByTestId("idp-loading-error-secondary-action")).toBeTruthy();
+  });
+
+  it("should navigate to the landing screen when pressing the secondary action on the loading error screen", () => {
+    mockUseGetIdps.mockReturnValue({
+      state: { status: "failure", error: new Error("network error") }
+    });
+
+    const { getByTestId } = renderComponent();
+
+    fireEvent.press(getByTestId("idp-loading-error-secondary-action"));
+
+    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LANDING
+    });
+  });
+
+  it("should track trackCieLoginSelected and open the CIE bottom sheet when pressing the primary action on the loading error screen while not in an active session", () => {
+    jest
+      .spyOn(commonAnalytics, "trackCieLoginSelected")
+      .mockImplementation(jest.fn());
+    jest
+      .spyOn(
+        activeSessionLoginAnalytics,
+        "trackLoginReauthEngagementCieSelected"
+      )
+      .mockImplementation(jest.fn());
+
+    mockUseGetIdps.mockReturnValue({
+      state: { status: "failure", error: new Error("network error") }
+    });
+
+    const { getByTestId } = renderComponent();
+
+    fireEvent.press(getByTestId("idp-loading-error-primary-action"));
+
+    expect(commonAnalytics.trackCieLoginSelected).toHaveBeenCalled();
+    expect(
+      activeSessionLoginAnalytics.trackLoginReauthEngagementCieSelected
+    ).not.toHaveBeenCalled();
+    expect(getByTestId("bottom-sheet-login-with-cie-pin")).toBeTruthy();
+  });
+
+  it("should track trackLoginReauthEngagementCieSelected when pressing the primary action on the loading error screen during an active session", () => {
+    jest
+      .spyOn(commonAnalytics, "trackCieLoginSelected")
+      .mockImplementation(jest.fn());
+    jest
+      .spyOn(
+        activeSessionLoginAnalytics,
+        "trackLoginReauthEngagementCieSelected"
+      )
+      .mockImplementation(jest.fn());
+
+    mockUseGetIdps.mockReturnValue({
+      state: { status: "failure", error: new Error("network error") }
+    });
+
+    const { getByTestId } = renderComponent({ isActiveSessionLogin: true });
+
+    fireEvent.press(getByTestId("idp-loading-error-primary-action"));
+
+    expect(
+      activeSessionLoginAnalytics.trackLoginReauthEngagementCieSelected
+    ).toHaveBeenCalled();
+    expect(commonAnalytics.trackCieLoginSelected).not.toHaveBeenCalled();
   });
 
   it("should render the fetched IDPs on success", () => {
