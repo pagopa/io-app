@@ -19,7 +19,8 @@ import Animated, {
 import {
   enterTransitionInnerContent,
   enterTransitionInnerContentSmall,
-  exitTransitionInnerContent
+  exitTransitionInnerContent,
+  IOTypography
 } from "../../../core";
 import { triggerHaptic } from "../../../functions";
 import { useScaleAnimation } from "../../../hooks";
@@ -32,10 +33,6 @@ import {
 } from "../../icons";
 import { LoadingSpinner } from "../../loadingSpinner";
 import { AnimatedIOText } from "../../typography";
-import {
-  buttonTextFontSize,
-  buttonTextLineHeight
-} from "../../typography/ButtonText";
 import { useButtonAnimatedStyles, useButtonColorMap } from "./styles";
 
 export type IOButtonBlockSpecificProps = Omit<
@@ -260,9 +257,11 @@ export const IOButton = ({
             accessible={false}
             ellipsizeMode="tail"
             importantForAccessibility="no-hide-descendants"
-            lineHeight={isLinkButton ? buttonTextLineHeight : undefined}
+            lineHeight={
+              isLinkButton ? IOTypography.buttonText.lineHeight : undefined
+            }
             numberOfLines={numberOfLines}
-            size={buttonTextFontSize}
+            size={IOTypography.buttonText.size}
             style={[
               { textAlign },
               disabled

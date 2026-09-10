@@ -1,5 +1,3 @@
-import { constFalse, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
 
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
@@ -19,7 +17,7 @@ import {
 } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
-  selectCredentialTypeOption,
+  selectCredentialType,
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -48,8 +46,8 @@ export const ItwOnboardingModuleCredentialsList = ({
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const selectedCredentialOption =
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialTypeOption);
+  const selectedCredential =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
 
   const beginCredentialIssuance = useOfflineToastGuard(
     useCallback(
@@ -121,11 +119,7 @@ export const ItwOnboardingModuleCredentialsList = ({
       isCredentialIssuancePending={isCredentialIssuancePending}
       isDisabled={remotelyDisabledCredentials.includes(type)}
       isNew={newCredentials.includes(type)}
-      isSelectedCredential={pipe(
-        selectedCredentialOption,
-        O.map(t => t === type),
-        O.getOrElse(constFalse)
-      )}
+      isSelectedCredential={selectedCredential === type}
       isUpcoming={isUpcomingCredential(type)}
       key={`itw_credential_${type}`}
       onPress={beginCredentialIssuance}

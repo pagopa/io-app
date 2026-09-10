@@ -77,14 +77,14 @@ export const availableTranslations: ReadonlyArray<Locales> = Object.keys(
   resources
 ).map(k => k as Locales);
 
-export interface SmartBackendOptions {
-  localResources: typeof resources;
-}
-
 // TODO: Enable this backend plugin once the internal process to update translations on a remote source will be in place.
 // const DEFAULT_SMART_BACKEND_OPTIONS: SmartBackendOptions = {
 //   localResources: resources
 // };
+
+// export interface SmartBackendOptions {
+//   localResources: typeof resources;
+// }
 
 // Custom backend plugin for i18next that first loads translations from local resources and then tries to fetch updated translations from a remote repository.
 // If the remote fetch fails, it falls back to the local resources without affecting the user experience.

@@ -13,7 +13,6 @@ import {
   IOMarkdownLite,
   useIOTheme,
   useIOThemeContext,
-  useIOToast,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -60,7 +59,6 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const mixPanelCredentialDetails = useIOSelector(
     itwMixPanelCredentialDetailsSelector
   );
-  const toast = useIOToast();
 
   useOnFirstRender(
     useCallback(() => {
@@ -74,15 +72,11 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   );
 
   useHeaderSecondLevel({
-    supportRequest: true,
+    supportRequest: false,
     title: "",
     goBack: () => {
       trackItwIntroBack("L3");
       machineRef.send({ type: "close", surveyStep: "intro" });
-    },
-    onStartSupportRequest: () => {
-      toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
-      return false;
     }
   });
 
@@ -324,7 +318,8 @@ const styles = StyleSheet.create({
   feature: {
     alignItems: "center",
     paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingLeft: 8,
+    paddingRight: 16,
     borderWidth: 1,
     borderRadius: 8,
     borderCurve: "continuous"

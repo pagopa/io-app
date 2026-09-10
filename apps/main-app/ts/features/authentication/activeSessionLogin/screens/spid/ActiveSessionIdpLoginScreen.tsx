@@ -36,9 +36,9 @@ import { idpLoginUrlChanged } from "../../../common/store/actions";
 import {
   getIdpLoginUri,
   getIntentFallbackUrl,
-  onLoginUriChanged
-} from "../../../common/utils/login";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
 import { usePosteIDApp2AppEducational } from "../../../login/idp/hooks/usePosteIDApp2AppEducational";
 import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import { getSpidErrorCodeDescription } from "../../../login/idp/utils/spidErrorCode";
@@ -231,9 +231,9 @@ const ActiveSessionIdpLoginScreen = () => {
       const url = event.url;
       // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
       const idpIntent = getIntentFallbackUrl(url);
-      if (O.isSome(idpIntent)) {
+      if (idpIntent != null) {
         void trackSpidLoginIntent(selectedIdp, "reauth");
-        void Linking.openURL(idpIntent.value);
+        void Linking.openURL(idpIntent);
         return false;
       }
 
