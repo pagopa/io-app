@@ -19,11 +19,17 @@ export type LoginConfigState = {
   oneIdentityLocalFeatureFlag: boolean | undefined;
 };
 
-export type OneIdentityEnv = "prod" | "uat";
+export const ONE_IDENTITY_ENVS = {
+  PROD: "prod",
+  UAT: "uat"
+} as const;
+
+export type OneIdentityEnv =
+  (typeof ONE_IDENTITY_ENVS)[keyof typeof ONE_IDENTITY_ENVS];
 
 export const loginConfigInitialState: LoginConfigState = {
   oneIdentityLocalFeatureFlag: undefined,
-  oneIdentityEnv: "prod"
+  oneIdentityEnv: ONE_IDENTITY_ENVS.PROD
 };
 
 export const loginConfigReducer = (

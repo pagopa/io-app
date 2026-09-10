@@ -6,7 +6,7 @@ import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
 import {
   getCredentialStatusFromStatusList,
-  getKeysForKaStatusList
+  getKeysForStatusListToken
 } from "../../../statusList/utils";
 import { StatusListRepository } from "../../../statusList/utils/repository";
 import {
@@ -27,7 +27,7 @@ jest.mock("../../../common/utils/itwIoWallet", () => ({
 
 jest.mock("../../../statusList/utils", () => ({
   getCredentialStatusFromStatusList: jest.fn(),
-  getKeysForKaStatusList: jest.fn()
+  getKeysForStatusListToken: jest.fn()
 }));
 
 jest.mock("../../../statusList/utils/repository", () => ({
@@ -38,7 +38,7 @@ jest.mock("../../../statusList/utils/repository", () => ({
 
 const mockGetIoWallet = jest.mocked(getIoWallet);
 const mockGetCredentialStatus = jest.mocked(getCredentialStatusFromStatusList);
-const mockGetKeys = jest.mocked(getKeysForKaStatusList);
+const mockGetKeys = jest.mocked(getKeysForStatusListToken);
 const mockUpsert = jest.mocked(StatusListRepository.upsert);
 
 const ITW_VERSION = "1.4.6";
@@ -104,6 +104,7 @@ describe("eID issuance actors", () => {
     dispatch,
     getState: jest.fn()
   });
+  const deps = testEidIssuanceDeps({ store });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -124,6 +125,7 @@ describe("eID issuance actors", () => {
     const result = await runActor<ObtainStatusListActorOutput>(
       obtainStatusListActor,
       {
+        deps,
         itwVersion: ITW_VERSION,
         keyAttestations: {
           "ka-1": "ka-1-jwt",
@@ -132,7 +134,10 @@ describe("eID issuance actors", () => {
       }
     );
 
-    expect(mockGetKeys).toHaveBeenCalledWith("ka-1-jwt");
+    expect(mockGetKeys).toHaveBeenCalledWith(
+      "ka-1-jwt",
+      deps.env.X509_CERT_ROOT
+    );
     expect(mockGetCredentialStatus).toHaveBeenCalledWith(
       ITW_VERSION,
       "ka-1-jwt",
@@ -155,6 +160,7 @@ describe("eID issuance actors", () => {
 
     await expect(
       runActor(obtainStatusListActor, {
+        deps,
         itwVersion: ITW_VERSION,
         keyAttestations: undefined
       })
@@ -166,6 +172,7 @@ describe("eID issuance actors", () => {
 
     await expect(
       runActor(obtainStatusListActor, {
+        deps,
         itwVersion: ITW_VERSION,
         keyAttestations: undefined
       })
@@ -181,6 +188,7 @@ describe("eID issuance actors", () => {
 
     await expect(
       runActor(obtainStatusListActor, {
+        deps,
         itwVersion: ITW_VERSION,
         keyAttestations: { "ka-1": "ka-1-jwt" }
       })

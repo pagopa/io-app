@@ -53,7 +53,9 @@ export const getCredentialStatus = (
     validity?.status === "invalid" &&
     validity.errorCode === "credential_expired";
 
-  if (isIssuerAttestedExpired || documentExpireDays <= 0) {
+  // The physical document is still valid on its expiration day (documentExpireDays === 0),
+  // it only becomes "expired" the day after.
+  if (isIssuerAttestedExpired || documentExpireDays < 0) {
     return "expired";
   }
 
