@@ -7,6 +7,7 @@
   "ignorePatterns": [
     "apps/dev-api-server/assets/**",
     "apps/main-app/assets/animated-pictograms/**",
-    "**/*.xcassets/**"
+    "**/*.xcassets/**",
+    "**/CHANGELOG.md"
   ]
 }
