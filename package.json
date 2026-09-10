@@ -6,7 +6,7 @@
     "prepare": "lefthook install --reset-hooks-path",
     "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci --nx-bail",
     "validate-all": "nx run-many --targets=lint,test,tsc-noemit --configuration=ci",
-    "prettify": "nx format:write",
+    "format": "nx format:write",
     "format:check": "nx format:check",
     "knip": "knip --reporter json --no-exit-code --no-progress",
     "postinstall": "nx prepack io-app-design-system"

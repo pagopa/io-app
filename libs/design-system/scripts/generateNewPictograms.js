@@ -72,7 +72,7 @@ const templateFilePath = join(
 );
 const timestampFilePath = join(__dirname, "pictograms_timestamp.txt");
 
-/* Reuse the repo-wide config so generated components already match `prettify`. */
+/* Reuse the repo-wide config so generated components already match `pnpm format`. */
 const oxfmtOptions = fs.readJsonSync(join(__dirname, "../../../.oxfmtrc.json"));
 delete oxfmtOptions.$schema;
 
