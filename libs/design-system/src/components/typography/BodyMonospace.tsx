@@ -6,9 +6,7 @@ const {
   bodyMonospace: { colorToken, ...bodyMonospaceStyle }
 } = IOTypography;
 
-/**
- * `BodyMonospace` typographic style
- */
+/** `BodyMonospace` typographic style */
 export const BodyMonospace = ({
   color: customColor,
   ...props

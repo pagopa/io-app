@@ -33,14 +33,15 @@ const { h1 } = IOTypography;
 
 /**
  * Check if the current iOS version supports numeric text transition.
- * `Platform.Version` is typed as the union of every platform, a string on iOS */
+ * `Platform.Version` is typed as the union of every platform, a string on iOS
+ */
 const supportsNumericTextTransition = () =>
   parseInt(String(Platform.Version), 10) >= 16;
 
 /**
- * The value is rendered by a SwiftUI `Text` so that each change animates through
- * `contentTransition(.numericText)`, the same effect the system uses for its own
- * timers.
+ * The value is rendered by a SwiftUI `Text` so that each change animates
+ * through `contentTransition(.numericText)`, the same effect the system uses
+ * for its own timers.
  *
  * The text lives inside a `Host` boundary, outside the React Native text tree:
  * it cannot be nested in a sentence, it needs its own accessibility label, the
@@ -120,10 +121,10 @@ const SwiftUINumericText = ({
 };
 
 /**
- * iOS implementation.
+ * IOS implementation.
  *
- * Below iOS 16 SwiftUI cannot animate the transition, so we rely
- * on the `IOText` component instead.
+ * Below iOS 16 SwiftUI cannot animate the transition, so we rely on the
+ * `IOText` component instead.
  */
 export const AnimatedNumericText = (props: AnimatedNumericTextProps) =>
   supportsNumericTextTransition() ? (

@@ -63,9 +63,9 @@ export function* deleteUserDataProcessingSaga(
 }
 
 /**
- * The following logic:
- * - checks if there are updates on the processing of a previous request
- * - sumbits a new request if the state is ClOSED or if this is the first request
+ * The following logic: - checks if there are updates on the processing of a
+ * previous request - sumbits a new request if the state is ClOSED or if this is
+ * the first request
  */
 export function* loadUserDataProcessingSaga(
   getUserDataProcessingRequest: IdentityClient["getUserDataProcessing"],
@@ -147,7 +147,8 @@ export function* upsertUserDataProcessingSaga(
   }
 }
 /**
- * Listen for requests related to the user data processing (profile deletion or profile-related data downloading)
+ * Listen for requests related to the user data processing (profile deletion or
+ * profile-related data downloading)
  */
 export function* watchUserDataProcessingSaga(
   getUserDataProcessingRequest: IdentityClient["getUserDataProcessing"],

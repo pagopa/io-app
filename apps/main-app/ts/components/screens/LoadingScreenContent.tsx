@@ -1,6 +1,4 @@
-/**
- * An ingress screen to choose the real first screen the user must navigate to.
- */
+/** An ingress screen to choose the real first screen the user must navigate to. */
 import {
   Banner,
   ContentWrapper,

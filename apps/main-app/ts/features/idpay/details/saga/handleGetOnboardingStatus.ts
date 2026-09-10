@@ -13,6 +13,7 @@ import { idPayOnboardingStatusGet } from "../store/actions";
 
 /**
  * Handle the remote call to retrieve the IDPay initiative onboarding status
+ *
  * @param onboardingStatus
  * @param action
  * @param initiativeId

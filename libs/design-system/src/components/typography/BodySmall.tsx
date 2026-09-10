@@ -21,9 +21,7 @@ const {
   bodySmall: { colorToken, ...bodySmallStyle }
 } = IOTypography;
 
-/**
- * `BodySmall` typographic style
- */
+/** `BodySmall` typographic style */
 export const BodySmall = ({
   ref,
   weight: customWeight,

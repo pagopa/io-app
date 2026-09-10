@@ -20,9 +20,8 @@ import {
 export type IOTextProps = IOTextBaseProps & IOTextExcludedProps;
 
 /**
- * We exclude all of the following props when we define a new
- * typographic style in which all of these visual attributes
- * are already defined.
+ * We exclude all of the following props when we define a new typographic style
+ * in which all of these visual attributes are already defined.
  */
 export type IOTextStyle = Omit<
   TextStyle,
@@ -30,8 +29,8 @@ export type IOTextStyle = Omit<
 >;
 
 /**
- * Extend `TypographicStyleProps` with extra props for styles that
- * can be used as links
+ * Extend `TypographicStyleProps` with extra props for styles that can be used
+ * as links
  */
 export type TypographicStyleAsLinkProps =
   | {
@@ -51,8 +50,9 @@ export type TypographicStyleProps = Omit<
 } & { style?: IOTextStyle; textStyle?: IOTextStyle };
 
 /**
- * The specific properties needed to calculate the font style using {@link makeFontStyleObject} (these information
- * cannot be included in the default StyleProp<TextStyle>
+ * The specific properties needed to calculate the font style using
+ * {@link makeFontStyleObject} (these information cannot be included in the
+ * default StyleProp<TextStyle>
  */
 type IOTextBaseProps = {
   color?: IOColors;
@@ -68,9 +68,12 @@ type IOTextBaseProps = {
 type IOTextExcludedProps = Omit<ComponentPropsWithRef<typeof Text>, "style">;
 
 /**
- * Decorate the function {@link makeFontStyleObject} with the additional color calculation.
- * @param color A value key from {@link IOColors}, transformed here in {@link ColorValue}
- * @param args the args of the function {@link makeFontStyleObject}
+ * Decorate the function {@link makeFontStyleObject} with the additional color
+ * calculation.
+ *
+ * @param color A value key from {@link IOColors}, transformed here in
+ *   {@link ColorValue}
+ * @param args The args of the function {@link makeFontStyleObject}
  */
 const calculateTextStyle = (
   color?: IOColors,
@@ -81,11 +84,13 @@ const calculateTextStyle = (
 });
 
 /**
- * `IOText` is the core Typography component used to render a text.
- * It accepts all the default text style `StyleProp<TextStyle>` (excluding the ones already applied) in addition with {@link IOTextBaseProps}
- * used to calculate at runtime the platform-dependent styles.
+ * `IOText` is the core Typography component used to render a text. It accepts
+ * all the default text style `StyleProp<TextStyle>` (excluding the ones already
+ * applied) in addition with {@link IOTextBaseProps} used to calculate at
+ * runtime the platform-dependent styles.
+ *
+ * @class
  * @param props
- * @constructor
  */
 export const IOText = ({
   color,

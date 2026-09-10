@@ -23,7 +23,9 @@ type IdPayEnabledSubFeatureGuardProps = {
 };
 
 /**
- * Component wrapper that checks if the sub-feature is enabled and shows the disabled sub-feature alert if not.
+ * Component wrapper that checks if the sub-feature is enabled and shows the
+ * disabled sub-feature alert if not.
+ *
  * @param children - The children to render
  * @param featureKey - The key of the feature to check
  * @returns The children or the disabled sub-feature alert

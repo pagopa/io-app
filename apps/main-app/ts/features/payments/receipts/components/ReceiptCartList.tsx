@@ -16,9 +16,7 @@ type Props = {
   onPress: (cartItem: CartItem) => void;
 };
 
-/**
- * This component renders a list of transaction cart details
- */
+/** This component renders a list of transaction cart details */
 export const ReceiptCartList = ({ carts, loading, onPress }: Props) => {
   if (loading) {
     return <SkeletonTransactionDetailsList />;

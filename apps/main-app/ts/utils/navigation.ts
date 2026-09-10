@@ -9,9 +9,9 @@ export const IO_INTERNAL_LINK_PREFIX = IO_INTERNAL_LINK_PROTOCOL + "//";
 export const IO_UNIVERSAL_LINK_PREFIX = "https://continua.io.pagopa.it";
 
 /**
- * This variable should be used on every `gestureEnabled` setting
- * in the navigator. This prevents the gestures to be enabled on Android
- * creating glitches with the scroll on old Android versions (version 9 and below).
+ * This variable should be used on every `gestureEnabled` setting in the
+ * navigator. This prevents the gestures to be enabled on Android creating
+ * glitches with the scroll on old Android versions (version 9 and below).
  */
 export const isGestureEnabled = Platform.OS !== "android";
 
@@ -23,11 +23,11 @@ type NavigationStateLike =
 /**
  * Checks whether a route is present in the user's active navigation path.
  *
- * Only traverses routes that are part of the current navigation path:
- * - Tab/drawer navigators: only the active tab is considered in-path; inactive
- *   tabs are excluded even if they were visited previously.
- * - Stack navigators: all routes up to and including the active index are
- *   considered in-path because the user can navigate back through them.
+ * Only traverses routes that are part of the current navigation path: -
+ * Tab/drawer navigators: only the active tab is considered in-path; inactive
+ * tabs are excluded even if they were visited previously. - Stack navigators:
+ * all routes up to and including the active index are considered in-path
+ * because the user can navigate back through them.
  */
 export const isRouteInNavigationState = (
   state: NavigationStateLike,

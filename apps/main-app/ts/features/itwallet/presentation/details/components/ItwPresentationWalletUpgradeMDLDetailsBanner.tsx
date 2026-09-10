@@ -15,8 +15,8 @@ import { itwCloseBanner } from "../../../common/store/actions/banners";
 import { ITW_ROUTES } from "../../../navigation/routes";
 
 /**
- * Banner promoting IT Wallet upgrade in MDL details to enable
- * driving license usage as identity document.
+ * Banner promoting IT Wallet upgrade in MDL details to enable driving license
+ * usage as identity document.
  */
 export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
   const dispatch = useIODispatch();

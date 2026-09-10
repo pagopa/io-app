@@ -16,7 +16,8 @@ const hasStatusListValidity = (
   credential.validity?.type === "status_list";
 
 /**
- * Updates the validity of credentials whose status list is available in the cache.
+ * Updates the validity of credentials whose status list is available in the
+ * cache.
  */
 export function* updateCredentialsStatusSaga({
   itwVersion

@@ -10,10 +10,11 @@ import Animated, {
 export type AnimatedImageProps = ComponentProps<typeof Image>;
 
 /**
- * AnimatedImage component renders an image with a fade-in animation
- * effect once the image finishes loading.
+ * AnimatedImage component renders an image with a fade-in animation effect once
+ * the image finishes loading.
  *
- * @param {AnimatedImageProps} props - The properties for the AnimatedImage component.
+ * @param {AnimatedImageProps} props - The properties for the AnimatedImage
+ *   component.
  * @param {object} props.source - The source of the image.
  * @param {object} [props.style] - The style to apply to the image.
  * @returns {JSX.Element} The rendered AnimatedImage component.

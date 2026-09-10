@@ -54,8 +54,8 @@ export const useAutoFetchingServiceByIdPot = (serviceId: ServiceId) => {
 };
 
 /**
- * Use this hook to retrieve a function that starts the FIMS authentication flow.
- * Choose this hook when the service data is already loaded into redux
+ * Use this hook to retrieve a function that starts the FIMS authentication
+ * flow. Choose this hook when the service data is already loaded into redux
  * (e.g., when coming from a message details or service details).
  */
 export const useFIMSFromServiceId = (serviceId: ServiceId) => {
@@ -75,9 +75,9 @@ export const useFIMSFromServiceId = (serviceId: ServiceId) => {
 };
 
 /**
- * Use this hook to retrieve a function that starts the FIMS authentication flow.
- * Choose this hook when the service id is not available upon hook invocation
- * but it will be later, when the returned function is called.
+ * Use this hook to retrieve a function that starts the FIMS authentication
+ * flow. Choose this hook when the service id is not available upon hook
+ * invocation but it will be later, when the returned function is called.
  */
 export const useFIMSAuthenticationFlow = () => {
   const navigation = useIONavigation();
@@ -95,9 +95,9 @@ export const useFIMSAuthenticationFlow = () => {
 };
 
 /**
- * Use this hook to retrieve a function that starts the FIMS authentication flow.
- * Choose this hook when the service data are stored into the remote CDN and you
- * know the configuration id that identifies and retrieves such data.
+ * Use this hook to retrieve a function that starts the FIMS authentication
+ * flow. Choose this hook when the service data are stored into the remote CDN
+ * and you know the configuration id that identifies and retrieves such data.
  */
 export const useFIMSRemoteServiceConfiguration = (configurationId: string) => {
   const store = useIOStore();

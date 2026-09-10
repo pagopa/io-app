@@ -16,9 +16,7 @@ import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 
-/**
- * Initializes the proximity machine from the Redux store.
- */
+/** Initializes the proximity machine from the Redux store. */
 export const onInitAction = assign<
   Context,
   ProximityEvents,

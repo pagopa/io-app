@@ -36,6 +36,7 @@ import { nextMessageIdAndCreationDate } from "../utils";
 
 /**
  * Generate basic message data based on fiscal code, sender ID, and time to live
+ *
  * @param fiscalCode
  * @param senderServiceId
  * @param timeToLive

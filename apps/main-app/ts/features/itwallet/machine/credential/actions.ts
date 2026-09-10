@@ -38,9 +38,7 @@ type CredentialIssuanceActionArgs = ActionArgs<
   CredentialIssuanceEvents
 >;
 
-/**
- * Initializes the credential issuance machine from the Redux store.
- */
+/** Initializes the credential issuance machine from the Redux store. */
 export const onInitAction = assign<
   Context,
   CredentialIssuanceEvents,

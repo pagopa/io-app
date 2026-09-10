@@ -10,9 +10,9 @@ type ImageRendererProps = {
 };
 
 /**
- * Stateful component that renders a remote image with auto-sizing.
- * Uses `Image.getSize()` to determine intrinsic dimensions, then
- * constrains width to the available screen width.
+ * Stateful component that renders a remote image with auto-sizing. Uses
+ * `Image.getSize()` to determine intrinsic dimensions, then constrains width to
+ * the available screen width.
  */
 export const ImageRenderer = ({ node }: ImageRendererProps) => {
   const src = node.attributes?.src ?? "";

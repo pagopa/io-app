@@ -37,9 +37,7 @@ type Props = IOStackNavigationRouteProps<
   "ITW_PRESENTATION_CREDENTIAL_CARD_MODAL"
 >;
 
-/**
- * Dispalys a full screen modal with the credential card.
- */
+/** Dispalys a full screen modal with the credential card. */
 const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const { credential, status } = route.params;
   const safeAreaInsets = useSafeAreaInsets();

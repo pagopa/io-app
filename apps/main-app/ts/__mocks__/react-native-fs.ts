@@ -1,6 +1,4 @@
-/**
- * A mocked version of react-native-fs
- */
+/** A mocked version of react-native-fs */
 
 export default {
   mkdir: jest.fn(),

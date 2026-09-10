@@ -4,8 +4,8 @@ meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-sc
 meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);`;
 
 /**
- * This script listens to load and resize events to get the height
- * and also has a fallback timeout to send the height after 300ms
+ * This script listens to load and resize events to get the height and also has
+ * a fallback timeout to send the height after 300ms
  */
 export const GET_CONTENT_HEIGHT_SCRIPT = `
 function sendHeight() {

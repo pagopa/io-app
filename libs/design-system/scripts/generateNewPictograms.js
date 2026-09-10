@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 
-/**
+/*
 DRAFT for an AUTOMATIC process to generate new pictogram components 
 (`Pictogram....tsx`) from the SVG files exported from Figma.
 
@@ -14,7 +14,7 @@ Prerequisites:
 
 // STEPS:
 
-/**
+/*
  * 1. Only process the newly added files
  *
  * Suggested path:
@@ -25,7 +25,7 @@ Prerequisites:
  * 4. After the process run, update the new file with the current timestamp.
  */
 
-/**
+/*
  * 2. Optimize SVG files with SVGO package (https://github.com/svg/svgo)
  *
  * Suggested path:
@@ -38,7 +38,7 @@ Prerequisites:
  * 3. Overwrite the original files
  */
 
-/**
+/*
  * 3. Create the relative React component (with .tsx)
  *
  * Suggested path:

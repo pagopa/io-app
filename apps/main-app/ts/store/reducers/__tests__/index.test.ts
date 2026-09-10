@@ -79,9 +79,10 @@ describe("index", () => {
       expect(outputState.notifications).toEqual(notificationsState);
     });
 
-    /** === === === === === === === === ===
-     *  LOGIN CONFIG RESET
-     *  === === === === === === === === === * */
+    /**
+     * === === === === === === === === === LOGIN CONFIG RESET === === === ===
+     * === === === === === *
+     */
     const loginConfigState: LoginConfigState = {
       oneIdentityLocalFeatureFlag: true,
       oneIdentityEnv: "uat"
