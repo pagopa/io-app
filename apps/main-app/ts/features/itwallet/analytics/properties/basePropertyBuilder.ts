@@ -46,10 +46,12 @@ export const buildItwBaseProperties = (
 };
 
 /**
- * Builds PID properties for Mixpanel analytics IT-Wallet (L3) -> PID status is
- * mapped to ITW_PID, while ITW_ID_V2 is not sent to preserve historical data.
- * Documenti su IO (L2) -> PID status is mapped to ITW_ID_V2, while ITW_PID
- * shoul be "not_available".
+ * Builds PID properties for Mixpanel analytics
+ *
+ * - IT-Wallet (L3) -> PID status is mapped to ITW_PID, while ITW_ID_V2 is not
+ *   sent to preserve historical data.
+ * - Documenti su IO (L2) -> PID status is mapped to ITW_ID_V2, while ITW_PID
+ *   shoul be "not_available".
  */
 export const buildPidProperties = (state: GlobalState) => {
   const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
