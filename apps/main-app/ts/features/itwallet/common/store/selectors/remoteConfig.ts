@@ -22,7 +22,7 @@ const itwRemoteConfigSelector = (state: GlobalState) =>
 export const isItwEnabledSelector = createSelector(
   itwRemoteConfigSelector,
   ({ enabled, min_app_version }): boolean => {
-    if (!enabled) {
+    if (enabled === undefined || enabled === false) {
       return false;
     }
 
@@ -104,7 +104,7 @@ export const isItwMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
   ({ itw_l3 }): boolean => {
     const version = itw_l3?.min_app_version;
-    if (!version) {
+    if (version === undefined) {
       return false;
     }
     return isVersionSupported(
@@ -121,7 +121,7 @@ export const isItwProximityMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
   ({ proximity }): boolean => {
     const version = proximity?.min_app_version;
-    if (!version) {
+    if (version === undefined) {
       return false;
     }
     return isVersionSupported(
@@ -164,13 +164,5 @@ export const itwHiddenCredentialsSelector = createSelector(
  */
 export const itwShowcaseUrlSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): string | undefined => {
-    if (!itwConfig || !("showcase_url" in itwConfig)) {
-      return undefined;
-    }
-
-    const url = itwConfig.showcase_url;
-
-    return typeof url === "string" ? url.trim() || undefined : undefined;
-  }
+  ({ showcase_url }): string | undefined => showcase_url
 );
