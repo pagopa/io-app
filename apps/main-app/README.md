@@ -201,7 +201,6 @@ Then run the app:
 ```bash
 # Port forwarding
 adb reverse tcp:8081 tcp:8081
-adb reverse tcp:8080 tcp:8080
 adb reverse tcp:3000 tcp:3000
 adb reverse tcp:9090 tcp:9090
 
@@ -227,13 +226,20 @@ Follow the [React Native guide for running on a device](https://reactnative.dev/
 
 ### XState inspector
 
-Start the local inspector bridge before launching a development build:
+Development builds report state-machine events to an inspector served by the Metro dev server, so there is nothing to start besides Metro itself.
 
-```bash
-pnpm nx run main-app:xstate-inspector
-```
+Open <http://localhost:8081/xstate-inspector/> and use the app. Each machine gets its own tab, labelled with its machine id, and every tab shows transitions, incoming events, actor lifecycle, errors and actor outputs.
 
-The command opens Stately Inspector in the default browser. Development builds connect through Metro and send state-machine events; production and test builds stay disconnected.
+The app must be loading its bundle from Metro, otherwise there is no address to send events to:
+
+- **iOS**: the normal Debug build (`pnpm nx run main-app:run-ios`) with Metro running.
+- **Android**: the plain `debug` variant (`pnpm nx run main-app:run-android`) plus `adb reverse tcp:8081 tcp:8081`. The `productionDebug` variant used by `dev-run-android` embeds the JS bundle, because `debuggableVariants` in `android/app/build.gradle` only lists `debug`; in that variant Metro is never contacted, and Expo's own devtools socket throws *"Cannot create devtools websocket connections in embedded environments"* during startup.
+
+Notes:
+
+- Open the page **before** reproducing: the relay keeps no history, so events sent while no page is open are lost.
+- The bridge only exists in development; production and test builds never connect.
+- The implementation lives in `libs/xstate-inspector/` (bridge + browser UI). It is intentionally outside the Nx project graph: no package, no build step, no CI impact. Type-check it on demand with `pnpm exec tsc -p libs/xstate-inspector/tsconfig.json`.
 
 ---
 

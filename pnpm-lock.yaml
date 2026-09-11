@@ -462,9 +462,6 @@ importers:
       date-fns:
         specifier: ^1.29.0
         version: 1.30.1
-      event-target-shim:
-        specifier: 6.0.2
-        version: 6.0.2
       expo:
         specifier: ^55.0.8
         version: 55.0.26(647755e85e266c3eea547ba434358210)
