@@ -1,12 +1,6 @@
 import { verifySignatureHeader } from "@mattrglobal/http-signatures";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Request, Response } from "express-serve-static-core";
-import * as B from "fp-ts/lib/boolean";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
 import * as jose from "jose";
 
 import { ioDevServerConfig } from "../config";
@@ -15,6 +9,7 @@ import {
   getPublicKey,
   isAssertionRefStillValid
 } from "../persistence/lollipop";
+import { unknownToString } from "../utils/error";
 import { signAlgorithmToVerifierMap } from "../utils/httpSignature";
 import { serverUrl } from "../utils/server";
 
@@ -28,90 +23,63 @@ const isLollipopConfigEnabled = () =>
 
 export const lollipopMiddleware =
   (nextMiddleware: (embeddedRequest: Request, _: Response) => void) =>
-  (request: Request, response: Response) => {
-    pipe(
-      isLollipopConfigEnabled(),
-      B.fold(
-        () => nextMiddleware(request, response),
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        () =>
-          pipe(
-            TE.tryCatch(
-              () => verifyLollipopSignatureHeader(request, response),
-              _ => _ as Error
-            ),
-            TE.map(verificationResult =>
-              pipe(
-                verificationResult,
-                E.foldW(
-                  error => response.status(error.code).send(error.problemJson),
-                  _ => nextMiddleware(request, response)
-                )
-              )
-            )
-          )()
-      )
-    );
+  async (request: Request, response: Response) => {
+    const isLollipopEnabled = isLollipopConfigEnabled();
+    if (isLollipopEnabled) {
+      const verificationEither = await verifyLollipopSignatureHeader(
+        request,
+        response
+      );
+      if (E.isLeft(verificationEither)) {
+        response
+          .status(verificationEither.left.code)
+          .send(verificationEither.left.problemJson);
+        return;
+      }
+    }
+    nextMiddleware(request, response);
   };
 
-const verifyLollipopSignatureHeader = (req: Request, _: Response) =>
-  pipe(
-    isAssertionRefStillValid(),
-    B.fold(
-      () => T.of(toFailureEither(403, "AssertionRef Invalid or Expired")),
-      () =>
-        pipe(
-          req.headers["signature-input"],
-          NonEmptyString.decode,
-          E.foldW(
-            _ => T.of(toFailureEither(400, "signature-input header is empty")),
-            () =>
-              pipe(
-                getPublicKey(),
-                O.fromNullable,
-                O.foldW(
-                  () => T.of(toFailureEither(403, "Public key not found")),
-                  publicKey =>
-                    pipe(
-                      TE.tryCatch(
-                        () =>
-                          verifySignatureHeader(
-                            toVerifySignatureHeaderOptions(req, publicKey)
-                          ).unwrapOr({ verified: false }),
-                        e => e as Error
-                      ),
-                      TE.foldW(
-                        e =>
-                          T.of(
-                            toFailureEither(
-                              500,
-                              e.message,
-                              JSON.stringify(e.stack)
-                            )
-                          ),
-                        verificationResult =>
-                          pipe(
-                            verificationResult.verified,
-                            B.fold(
-                              () =>
-                                T.of(
-                                  toFailureEither(
-                                    400,
-                                    "Invalid signature",
-                                    JSON.stringify(verificationResult)
-                                  )
-                                ),
-                              () => T.of(toSuccessEither())
-                            )
-                          )
-                      )
-                    )
-                )
-              )
-          )
-        )
-    )
-  )();
+const verifyLollipopSignatureHeader = async (
+  req: Request,
+  _: Response
+): Promise<E.Either<LollipopHTTPStatusError, true>> => {
+  const isAssertionRefValid = isAssertionRefStillValid();
+  if (!isAssertionRefValid) {
+    return toFailureEither(403, "AssertionRef Invalid or Expired");
+  }
+
+  const signatureInput = req.headers["signature-input"];
+  if (typeof signatureInput !== "string" || signatureInput.length <= 0) {
+    return toFailureEither(400, "signature-input header is empty");
+  }
+
+  const publicKey = getPublicKey();
+  if (!publicKey) {
+    return toFailureEither(403, "Public key not found");
+  }
+
+  try {
+    const verificationResult = await verifySignatureHeader(
+      toVerifySignatureHeaderOptions(req, publicKey)
+    ).unwrapOr({ verified: false });
+    if (!verificationResult.verified) {
+      return toFailureEither(
+        400,
+        "Invalid signature",
+        JSON.stringify(verificationResult)
+      );
+    }
+
+    return toSuccessEither();
+  } catch (e) {
+    const title =
+      e instanceof Error ? e.message : "lollipop signature verification failed";
+    const details =
+      e instanceof Error ? JSON.stringify(e.stack) : unknownToString(e);
+    return toFailureEither(500, title, details);
+  }
+};
 
 const toVerifySignatureHeaderOptions = (req: Request, publicKey: jose.JWK) => {
   const headers = req.headers;

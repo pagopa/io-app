@@ -1,11 +1,19 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
 
+import { EnvType, getEnv } from "../../common/utils/environment";
 import {
   trackItwStatusListFetchRegistered,
   trackItwStatusListFetchRegisterFailure
 } from "../analytics";
 import { refreshStaleEntries } from "../utils/refresh";
+import {
+  getItwEnv,
+  getItwSpecsVersion,
+  storeItwEnv,
+  storeItwSpecsVersion
+} from "../utils/storage";
 
 /**
  * Identifier for the ITW Status List background fetch task.
@@ -24,13 +32,19 @@ const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 12;
  * Register the ITW Status List fetch task handler with expo-task-manager.
  * Important: must be defined at module level.
  *
- * Current behavior: stores the background wake-up timestamp (used later for analytics).
- * Status List refresh/fetch logic will be added separately.
+ * Reads the specs version persisted during foreground registration, then refreshes
+ * stale Status List entries without depending on Redux.
  */
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
-    // TODO SIW-4623: get itw version in the background task
-    await refreshStaleEntries({ itwVersion: "1.3.3" });
+    const [itwVersion, env] = await Promise.all([
+      getItwSpecsVersion(),
+      getItwEnv()
+    ]);
+    await refreshStaleEntries({
+      itwVersion,
+      x509CertRoot: getEnv(env).X509_CERT_ROOT
+    });
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch {
     return BackgroundTask.BackgroundTaskResult.Failed;
@@ -38,11 +52,18 @@ TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
 });
 
 /**
- * Registers the ITW Status List background fetch task with expo-background-task
- * if the background task API is available and the task is not already registered.
+ * Persists current IT-Wallet specs version and environment, then
+ * registers Status List background fetch task when needed.
+ *
+ * Persisting happens on every call so app updates can change background task
+ * verification config without recreating OS task registration.
  */
-export const registerItwStatusListFetchTask = async (): Promise<void> => {
+export const registerItwStatusListFetchTask = async (
+  itwVersion: ItwVersion,
+  env: EnvType
+): Promise<void> => {
   try {
+    await Promise.all([storeItwSpecsVersion(itwVersion), storeItwEnv(env)]);
     const isRegistered = await TaskManager.isTaskRegisteredAsync(
       ITW_STATUS_LIST_FETCH_TASK
     );

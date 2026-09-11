@@ -1,5 +1,4 @@
 import { act, fireEvent } from "@testing-library/react-native";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Alert, AlertButton } from "react-native";
 import { createStore } from "redux";
@@ -42,7 +41,7 @@ describe("ItwIssuanceCredentialIntroductionScreen", () => {
     // No credential type resolved yet in the machine context: renders the
     // generic error fallback, which is irrelevant to what these tests assert
     // (whether "select-credential" was sent on mount).
-    spyUseSelector.mockReturnValue(O.none as any);
+    spyUseSelector.mockReturnValue(undefined as any);
     // By default the eID machine was not started by a credential request
     spyEidUseSelector.mockReturnValue(undefined as any);
   });

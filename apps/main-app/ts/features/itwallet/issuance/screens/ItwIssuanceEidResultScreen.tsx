@@ -2,7 +2,7 @@ import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useRef } from "react";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks.ts";
@@ -22,6 +22,7 @@ import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/pr
 import { selectHasResolvedCredentialOffer } from "../../machine/credential/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
+  hasCredentialsToUpgrade,
   isL3FeaturesEnabledSelector,
   selectCredentialType,
   selectIdentification,
@@ -94,7 +95,7 @@ export const ItwIssuanceEidResultScreen = () => {
     handleBackToWallet();
     trackBackToWallet({
       exit_page: route.name,
-      credential: "ITW_ID_V2"
+      credential: isL3IssuanceFlow ? "ITW_PID" : "ITW_ID_V2"
     });
   };
 
@@ -209,7 +210,6 @@ const ItwEidSuccessResultContent = ({
   onGoToWallet: () => void;
   showBanner?: boolean;
 }) => {
-  const route = useRoute();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const authMethod = toSurveyAuthMethod(identification);
@@ -244,10 +244,7 @@ const ItwEidSuccessResultContent = ({
     <ItwIssuanceEidIssuanceResultContent
       docStatus={docStatus}
       onAddCredential={onAddDocument}
-      onBackToWallet={() => {
-        onGoToWallet();
-        trackBackToWallet({ exit_page: route.name, credential: "ITW_ID_V2" });
-      }}
+      onBackToWallet={onGoToWallet}
       showBanner={showBanner}
     />
   );
@@ -312,7 +309,9 @@ const ItwIssuanceEidUpgradeResultContent = ({
   const route = useRoute();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
+  const hasUpgradedCredentials = ItwEidIssuanceMachineContext.useSelector(
+    hasCredentialsToUpgrade
+  );
   const failedCredentialName = useItwCredentialName(
     failedCredentials[0]?.credentialType
   );
@@ -328,7 +327,7 @@ const ItwIssuanceEidUpgradeResultContent = ({
     handleBackToWallet();
     trackBackToWallet({
       exit_page: route.name,
-      credential: "ITW_ID_V2"
+      credential: "ITW_PID"
     });
   };
 
@@ -366,10 +365,12 @@ const ItwIssuanceEidUpgradeResultContent = ({
 
   // The upgrade flow means the user already had DocIO (L2) active, so docStatus is "active".
   // The survey banner is shown in WalletHome (via Redux) instead of here.
+  // The empty wallet state is determined by whether any credentials were upgraded, not by the Redux store,
+  // which is cleared before the new credentials are added, causing a UI glitch.
   return (
     <ItwEidSuccessResultContent
       docStatus="active"
-      isWalletEmpty={isWalletEmpty}
+      isWalletEmpty={!hasUpgradedCredentials}
       onAddDocument={handleAddCredential}
       onGoToWallet={handleGoToWalletWithTracking}
       showBanner={false}

@@ -74,6 +74,15 @@ export const getVerifierIdentity = (
 };
 
 /**
+ * Returns the best available user-facing name for the relying party without
+ * changing the stable identifier used for consent lookup.
+ */
+export const getVerifierDisplayName = (
+  certificateData: VerifierRequest["request"][string]["certificateData"]
+): string | undefined =>
+  certificateData?.organization || certificateData?.commonName;
+
+/**
  * Get the Presentation details based on the request from the Verifier.
  *
  * @param request The request from the Verifier, specifying which document types and claims are required
@@ -83,7 +92,8 @@ export const getVerifierIdentity = (
  * which can be useful for testing purposes, but should be used with caution in
  * production.
  *
- * @returns The Presentation details
+ * @returns Presentation details for requested credentials available in the wallet
+ * @throws MissingCredentialError when none of the requested credentials are available
  */
 export const getProximityDetails: GetProximityDetails = ({
   request,
@@ -110,6 +120,7 @@ export const getProximityDetails: GetProximityDetails = ({
       }
 
       const rpId = getVerifierIdentity(certificateData, requireAuthenticated);
+      const rpDisplayName = getVerifierDisplayName(certificateData);
 
       // Extract required fields from the verifier request.
       // Each field is formatted as "namespace:field" to match the structure
@@ -128,6 +139,7 @@ export const getProximityDetails: GetProximityDetails = ({
 
       return {
         rpId,
+        rpDisplayName,
         credentialType: credential.credentialType,
         claimsToDisplay: parseClaims(parsedCredential, {
           exclude: [WellKnownClaim.unique_id]
@@ -139,7 +151,7 @@ export const getProximityDetails: GetProximityDetails = ({
   const missingCredentials = Object.keys(rest).filter(
     docType => !credentialsByType[docType]
   );
-  if (missingCredentials.length > 0) {
+  if (missingCredentials.length === Object.keys(rest).length) {
     throw new MissingCredentialError(missingCredentials);
   }
 
@@ -152,21 +164,22 @@ export const getProximityDetails: GetProximityDetails = ({
  * Get the requested documents based on the request from the Verifier.
  *
  * @param request The request from the Verifier, specifying which document types and claims are required
- * @param credentialsByType The credentials object by doc type
- * @param wiaMdoc The WIA in mdoc format
- * @returns The requested documents
+ * @param credentials The credentials object by doc type
+ * @param getCredential Retrieves signed credential content from the secure store
+ * @returns The requested documents available in the wallet
  */
 export const getDocuments = async (
   request: VerifierRequest["request"],
   credentials: Partial<Record<string, CredentialMetadata>>,
   getCredential: (vaultId: string) => Promise<string | undefined>
 ): Promise<Array<RequestedDocument>> => {
-  const documents = await Promise.all(
-    Object.entries(request).map(async ([docType]) => {
-      const credential = credentials[docType];
-      // This should be guaranteed by getProximityDetails having already validated credentials
-      assert(credential, `Credential not found for docType: ${docType}`);
+  const availableDocuments = Object.keys(request).flatMap(docType => {
+    const credential = credentials[docType];
+    return credential ? [{ credential, docType }] : [];
+  });
 
+  const documents = await Promise.all(
+    availableDocuments.map(async ({ credential, docType }) => {
       // Present the representative copy (the only one for a non-batch credential).
       const vaultId = getRepresentativeVaultId(credential);
       const signedContent = await getCredential(vaultId);
@@ -201,13 +214,23 @@ const acceptAllFields = <T extends NestedBooleanMap>(input: T): T =>
     }
   }, {} as T);
 
+/**
+ * Marks every requested field as accepted, optionally limiting the result to
+ * document types included in the generated response.
+ */
 export const generateAcceptedFields = (
-  request: VerifierRequest["request"]
+  request: VerifierRequest["request"],
+  includedDocTypes?: ReadonlySet<string>
 ): AcceptedFields =>
-  Object.entries(request).reduce(
-    (acc, [docType, { isAuthenticated, certificateData, ...namespaces }]) => ({
-      ...acc,
-      [docType]: acceptAllFields(namespaces)
-    }),
-    {}
-  );
+  Object.entries(request)
+    .filter(([docType]) => !includedDocTypes || includedDocTypes.has(docType))
+    .reduce(
+      (
+        acc,
+        [docType, { isAuthenticated, certificateData, ...namespaces }]
+      ) => ({
+        ...acc,
+        [docType]: acceptAllFields(namespaces)
+      }),
+      {}
+    );

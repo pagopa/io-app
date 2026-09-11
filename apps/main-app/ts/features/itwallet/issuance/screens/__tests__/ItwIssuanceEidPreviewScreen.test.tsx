@@ -12,6 +12,10 @@ import {
   itwEidIssuanceMachine
 } from "../../../machine/eid/machine";
 import { ItwTags } from "../../../machine/tags";
+import {
+  testEidIssuanceDeps,
+  testMachineStore
+} from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { trackItwRequestSuccess } from "../../analytics";
 import { ItwIssuanceEidPreviewScreen } from "../ItwIssuanceEidPreviewScreen";
@@ -81,7 +85,13 @@ const renderComponent = ({
   value: { Issuance: "CheckingIdentityMatch" | "DisplayingPreview" };
 }) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+  const initialSnapshot = createActor(itwEidIssuanceMachine, {
+    input: {
+      deps: testEidIssuanceDeps({
+        store: testMachineStore({ getState: () => initialState })
+      })
+    }
+  }).getSnapshot();
   const snapshot: MachineSnapshot = {
     ...initialSnapshot,
     value,

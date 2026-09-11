@@ -1,11 +1,53 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { z } from "zod";
 
-import { STORAGE_KEY_LAST_CHECK_TIME } from "./consts";
+import { EnvType, EnvTypeSchema } from "../../common/utils/environment";
+import {
+  STORAGE_KEY_ITW_ENV,
+  STORAGE_KEY_ITW_SPECS_VERSION,
+  STORAGE_KEY_LAST_CHECK_TIME
+} from "./consts";
 
 const LastStatusListCheckTimestampsSchema = z
   .union([z.array(z.number()), z.number().transform(timestamp => [timestamp])])
   .transform(timestamps => timestamps.slice(-10));
+
+/**
+ * Persists the IT-Wallet specs version selected while Redux is available, so
+ * the Status List background task can use the same version.
+ *
+ * @param itwVersion Current IT-Wallet specs version
+ */
+export const storeItwSpecsVersion = async (
+  itwVersion: ItwVersion
+): Promise<void> =>
+  AsyncStorage.setItem(STORAGE_KEY_ITW_SPECS_VERSION, itwVersion);
+
+/**
+ * Retrieves the IT-Wallet specs version persisted for the Status List
+ * background task.
+ *
+ * Only {@link storeItwSpecsVersion} writes this value, preserving the
+ * {@link ItwVersion} invariant at the storage boundary.
+ *
+ * @throws If no specs version was persisted or AsyncStorage cannot be read
+ */
+export const getItwSpecsVersion = async (): Promise<ItwVersion> => {
+  const itwVersion = await AsyncStorage.getItem(STORAGE_KEY_ITW_SPECS_VERSION);
+  if (itwVersion === null) {
+    throw new Error("IT-Wallet specs version not found");
+  }
+  return itwVersion as ItwVersion;
+};
+
+/** Persists the environment needed by the background Status List task. */
+export const storeItwEnv = async (env: EnvType): Promise<void> =>
+  AsyncStorage.setItem(STORAGE_KEY_ITW_ENV, env);
+
+/** Retrieves the environment needed by the background Status List task. */
+export const getItwEnv = async (): Promise<EnvType> =>
+  EnvTypeSchema.parse(await AsyncStorage.getItem(STORAGE_KEY_ITW_ENV));
 
 /**
  * Stores the timestamps of the latest checks made of the Status List

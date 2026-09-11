@@ -10,6 +10,7 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import * as credentialsSelectors from "../../../credentials/store/selectors/index";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCardOnboardingL2Screen } from "../ItwCardOnboardingL2Screen";
 
@@ -35,17 +36,17 @@ describe("ItwCardOnboardingL2Screen", () => {
       .mockReturnValue((() => mockSelectorResult) as any);
   });
 
-  it("it should render the screen correctly", () => {
+  it("should render the screen correctly", () => {
     const component = renderComponent();
     expect(component).toBeTruthy();
   });
 
-  it("it should render the restricted mode section", () => {
+  it("should render the restricted mode section", () => {
     const { getByTestId } = renderComponent();
     expect(getByTestId("restricted-mode-section-testID")).toBeTruthy();
   });
 
-  it("it should render restricted credentials modules", () => {
+  it("should render restricted credentials modules", () => {
     const { getByTestId } = renderComponent();
 
     expect(
@@ -53,7 +54,7 @@ describe("ItwCardOnboardingL2Screen", () => {
     ).toBeTruthy();
   });
 
-  it("it should navigate to L3 onboarding page=1 when add bonus button is pressed", () => {
+  it("should navigate to L3 onboarding page=1 when add bonus button is pressed", () => {
     const { getByTestId } = renderComponent();
 
     act(() => {
@@ -81,7 +82,10 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
+      >
         <ItwCardOnboardingL2Screen />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),
