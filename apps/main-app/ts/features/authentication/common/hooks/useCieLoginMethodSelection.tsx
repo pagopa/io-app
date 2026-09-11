@@ -105,12 +105,12 @@ export const useCieLoginMethodSelection = ({
   });
 
   const handleCieLoginRequested = useCallback(() => {
-    if (isCieSupported) {
-      void trackCieBottomSheetScreenView(flow);
-      present();
-    } else {
+    if (!isCieSupported) {
       handleNavigateToCieIdLoginScreen();
+      return;
     }
+    void trackCieBottomSheetScreenView(flow);
+    present();
   }, [isCieSupported, flow, present, handleNavigateToCieIdLoginScreen]);
 
   return { bottomSheet, dismiss, handleCieLoginRequested };
