@@ -139,8 +139,8 @@ export const createBatchingAdapter = (
  *
  * `@statelyai/inspect` is required lazily so it stays out of the evaluated
  * module graph outside development. Its WebSocket transport is resolved to a
- * stub by `metro.config.js`, and the inspector is built on the batched HTTP
- * adapter instead.
+ * stub by `withXStateInspector` in `metro.js`, and the inspector is built on
+ * the batched HTTP adapter instead.
  */
 const inspector: undefined | XStateInspector = (() => {
   // Jest defines __DEV__ as true too, so test runs need their own exclusion.

@@ -239,7 +239,7 @@ Notes:
 
 - Open the page **before** reproducing: the relay keeps no history, so events sent while no page is open are lost.
 - The bridge only exists in development; production and test builds never connect.
-- The implementation lives in [`libs/xstate-inspector`](../../libs/xstate-inspector/README.md), consumed as the `@io-app/xstate-inspector` workspace package: `src/` is the React Native bridge, `middleware.js` is the Metro bridge, and the UI it serves is `browser/src` bundled by `browser/build.mjs` into `browser/dist`.
+- The implementation lives in [`libs/xstate-inspector`](../../libs/xstate-inspector/README.md), consumed as the `@io-app/xstate-inspector` workspace package: `src/` is the React Native bridge, `metro.js` is the Metro config plugin, `middleware.js` is the Metro bridge, and the UI it serves is `browser/src` bundled by `browser/build.mjs` into `browser/dist`.
 
 ---
 

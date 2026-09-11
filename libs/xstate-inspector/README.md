@@ -19,6 +19,7 @@ libs/xstate-inspector/
 │   ├── createBrowserInspector.ts   endpoint, batching, build guards
 │   └── __tests__/                  unit tests for the bridge
 ├── middleware.js                   Connect middleware that Metro mounts
+├── metro.js                        Metro config plugin: middleware + RN shims
 ├── browser/                        inspector UI
 │   ├── build.mjs                   bundles src/ into dist/ with esbuild
 │   ├── index.html                  markup and styles, copied into dist/
@@ -37,7 +38,7 @@ libs/xstate-inspector/
 └── babel.config.js
 ```
 
-`@io-app/xstate-inspector` resolves to `src/index.ts` for the app bundle. `@io-app/xstate-inspector/middleware` resolves to `middleware.js` for Node. Neither bundle includes the browser UI, because the middleware reads it from disk.
+`@io-app/xstate-inspector` resolves to `src/index.ts` for the app bundle. `@io-app/xstate-inspector/middleware` resolves to `middleware.js` for Node. `@io-app/xstate-inspector/metro` resolves to `metro.js`, the only Metro config the app has to apply. Neither bundle includes the browser UI, because the middleware reads it from disk.
 
 `browser/src` holds one module per concern: the zustand store keeps the machine tabs and their retention caps, `view.js` renders the tabs and the timeline and repaints when the store changes, `wire.js` normalizes the wire events, and `app.js` wires the toolbar and the stream together. `browser/build.mjs` bundles them into `browser/dist`, the directory the middleware serves, so the page loads a single file while the sources stay separate. `dist` is generated, not committed.
 
@@ -84,7 +85,7 @@ The middleware answers only under `/xstate-inspector` and passes every other pat
 | `/xstate-inspector/ingest` | POST | Accepts a JSON batch from the app and answers `204` |
 | `/xstate-inspector/health` | GET | Reports the `clients`, `received`, and `rejected` counts |
 
-`middleware.js` exports `createXStateInspectorMiddleware` and `PREFIX`.
+`middleware.js` exports `createXStateInspectorMiddleware` and `PREFIX`. `metro.js` exports `withXStateInspector`, which mounts that middleware and remaps the two `@statelyai/inspect` internals React Native cannot evaluate.
 
 ## Browser UI features
 
@@ -99,46 +100,17 @@ The UI is one page, and every control works on the machine of the selected tab:
 
 ## Metro configuration the app must keep
 
-The app mounts the middleware in `apps/main-app/metro.config.js`:
+The app passes `withXStateInspector` to `mergeConfig`. That is the only Metro-side integration:
 
 ```javascript
-enhanceMiddleware: metroMiddleware => {
-  try {
-    const {
-      createXStateInspectorMiddleware
-    } = require("@io-app/xstate-inspector/middleware");
-    const inspectorMiddleware = createXStateInspectorMiddleware();
-    return (req, res, next) =>
-      inspectorMiddleware(req, res, () => metroMiddleware(req, res, next));
-  } catch {
-    return metroMiddleware;
-  }
-}
+const { withXStateInspector } = require("@io-app/xstate-inspector/metro");
+
+module.exports = mergeConfig(defaultConfig, config, withXStateInspector);
 ```
 
-The `catch` keeps a broken inspector from taking down the dev server. A missing package therefore shows up as a 404 on the inspector routes instead of a Metro crash, so check `/xstate-inspector/health` first when the page does not connect.
+`mergeConfig` calls a function argument with the config so far, so the wrapper can compose with whatever `enhanceMiddleware` and `resolveRequest` the app already has. A plain inspector config object cannot: `mergeConfig` shallow-spreads `resolver` / `server`, and the last function wins, which would drop the app's `crypto` remap. Other Metro customisation (SVG, `crypto`, asset roots) stays in the app config. A failure inside the inspector never replaces that config: Metro keeps running and the inspector routes 404 instead of taking the dev server down. Check `/xstate-inspector/health` first when the page does not connect.
 
-Two resolver entries are also required, because the bridge depends on `@statelyai/inspect`, whose entry point imports a WebSocket client at module scope:
-
-```javascript
-if (moduleName === "partysocket") {
-  return { type: "empty" };
-}
-if (moduleName === "#uuid") {
-  const inspectorRoot = path.dirname(
-    require.resolve("@io-app/xstate-inspector/package.json")
-  );
-  const inspectRoot = path.dirname(
-    require.resolve("@statelyai/inspect", { paths: [inspectorRoot] })
-  );
-  return {
-    type: "sourceFile",
-    filePath: path.join(inspectRoot, "uuid-browser.mjs")
-  };
-}
-```
-
-`partysocket` extends `EventTarget` in its module scope, which React Native does not define, so evaluating it crashes the app. The bridge uses the HTTP adapter of the inspector only, so it never constructs the WebSocket client. The `#uuid` import resolves to `node:crypto` by default, which Metro cannot resolve, so the app points it at the browser build that ships with the package. Both are resolved through the inspector package, the only thing that depends on `@statelyai/inspect`: the app imports the inspector, never that library, and so does not declare it.
+Inside the wrapper, two resolver entries exist because the bridge depends on `@statelyai/inspect`, whose entry point imports a WebSocket client at module scope. `partysocket` extends `EventTarget` in its module scope, which React Native does not define, so evaluating it crashes the app; it is resolved to an empty module. The `#uuid` import resolves to `node:crypto` by default, which Metro cannot resolve, so it is pointed at the browser build that ships with `@statelyai/inspect`. The app never imports that library itself and does not declare it.
 
 ## Limits and retention
 
@@ -168,7 +140,7 @@ Run `start` in its own terminal, next to `pnpm nx run main-app:start`. The middl
 
 ## Troubleshooting
 
-**The page reports `reconnecting`.** Nothing answers the SSE route. Confirm Metro is running, then open `http://localhost:8081/xstate-inspector/health`. A 404 means the middleware did not mount, and the `require` in `metro.config.js` threw.
+**The page reports `reconnecting`.** Nothing answers the SSE route. Confirm Metro is running, then open `http://localhost:8081/xstate-inspector/health`. A 404 means the middleware did not mount: `withXStateInspector` is missing from `metro.config.js`, or it caught a failure and left Metro running without the inspector.
 
 **The UI 404s, or shows a change you already made.** `browser/dist` is missing or stale. Run `pnpm nx run xstate-inspector:start` while you work on the UI, or `pnpm nx run xstate-inspector:build` for a one-off build.
 
