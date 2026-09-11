@@ -1,4 +1,7 @@
-import { SpidLevel } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
+import {
+  SpidLevel,
+  SpidLevelEnum
+} from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
 import { Optional } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
@@ -16,7 +19,13 @@ import {
   isSessionExpired
 } from "../utils/guards";
 
-export type SpidLevelShort = "L1" | "L2" | "L3";
+type AuthLevel = "L1" | "L2" | "L3";
+
+const AUTH_LEVEL_MAP: Record<SpidLevelEnum, AuthLevel> = {
+  [SpidLevelEnum["https://www.spid.gov.it/SpidL1"]]: "L1",
+  [SpidLevelEnum["https://www.spid.gov.it/SpidL2"]]: "L2",
+  [SpidLevelEnum["https://www.spid.gov.it/SpidL3"]]: "L3"
+};
 
 export const authenticationStateSelector = (
   state: GlobalState
@@ -85,33 +94,26 @@ export const spidLevelSelector = (state: GlobalState): SpidLevel | undefined =>
     : undefined;
 
 /**
- * This function extracts the SPID level (L1, L2, L3) from the full SPID level string
- * (e.g., "https://www.spid.gov.it/SpidL1") and returns it in a shorter format.
- * If the input is undefined or does not contain a valid SPID level, it returns undefined.
+ * Extracts the short SPID level (L1, L2, L3) from the full SPID level string
+ * retrieved from the current session (e.g., "https://www.spid.gov.it/SpidL2").
+ *
+ * @param spidLevel - The full SPID level string from the session.
+ * @returns The shortened SPID level or `undefined` if the input is invalid or missing.
  */
 export const extractSpidLevel = (
-  spidLevel?: SpidLevel
-): SpidLevelShort | undefined => {
-  if (spidLevel) {
-    if (spidLevel.includes("L1")) {
-      return "L1";
-    } else if (spidLevel.includes("L2")) {
-      return "L2";
-    } else if (spidLevel.includes("L3")) {
-      return "L3";
-    }
-    return undefined;
-  }
-  return undefined;
-};
+  spidLevel?: SpidLevelEnum
+): AuthLevel | undefined => (spidLevel ? AUTH_LEVEL_MAP[spidLevel] : undefined);
 
 /**
- * Returns the SPID level (L1, L2, L3) from the session info
+ * Extracts the short SPID level (L1, L2, L3) from the full SPID level string
+ * retrieved from the current session.
+ *
+ * @param spidLevel - The full SPID level string from the session.
+ * @returns The shortened SPID level or `undefined` if the input is invalid or missing.
  */
-
 export const spidLevelFromSessionInfoSelector = (
   state: GlobalState
-): SpidLevelShort | undefined => {
+): AuthLevel | undefined => {
   const spidLevel = spidLevelSelector(state);
   return extractSpidLevel(spidLevel);
 };
