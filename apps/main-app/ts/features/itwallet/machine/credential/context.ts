@@ -10,6 +10,7 @@ import {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { CredentialIssuanceFailure } from "./failure";
+import { CredentialIssuanceMachineDeps } from "./input";
 
 export type Context = {
   /**
@@ -28,6 +29,10 @@ export type Context = {
    * The type of the credential being issued.
    */
   credentialType: string | undefined;
+  /**
+   * Runtime dependencies injected via machine input
+   */
+  deps: CredentialIssuanceMachineDeps;
   /**
    * Result of evaluating the issuer DCQL query against the PID before the trust issuer screen.
    * It is reused to show the requested claims and complete the authorization without recalculating.
@@ -50,23 +55,21 @@ export type Context = {
    */
   isWalletValid: boolean;
   /**
+   * An optional dictionary of Key Attestations generated for the issuance.
+   */
+  keyAttestations?: Record<string, string>;
+  /**
    * The mode for the credential issuance process. It does not change how the credentials are requested,
    * but it is needed to determine how the machine should behave.
    */
   mode: CredentialIssuanceMode;
   requestedCredential: RequestObject | undefined;
   resolvedCredentialOffer: CredentialOfferResolved | undefined;
-
   responseMode: string | undefined;
   /**
    * The wallet instance attestation of the wallet. If expired, it will be requested a new one.
    */
   walletInstanceAttestation: undefined | WalletInstanceAttestations;
-
-  /**
-   * An optional dictionary of Wallet Unit Attestations generated for the issuance.
-   */
-  walletUnitAttestations?: Record<string, string>;
   /**
    * The WIA crypto context, which contains the necessary cryptographic information for the issuance.
    */
@@ -83,7 +86,7 @@ export type Context = {
  */
 export type CredentialIssuanceMode = "issuance" | "reissuance" | "upgrade";
 
-export const InitialContext: Context = {
+export const InitialContext: Omit<Context, "deps"> = {
   mode: "issuance",
   isItWalletValid: false,
   isWalletValid: false,

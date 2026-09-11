@@ -7,6 +7,7 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as loginHooks from "../../../lollipop/hooks/useLollipopLoginSource";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
 import ActiveSessionCieIdLoginScreen from "../screens/cieId/ActiveSessionCieIdLoginScreen";
 import {
   activeSessionLoginFailure,
@@ -15,7 +16,7 @@ import {
 } from "../store/actions";
 
 const API_PREFIX_URL = "http://example.com";
-const SPID_LEVEL = "SpidL2";
+const MOCK_AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 const IS_UAT = false;
 
 const mockReplace = jest.fn();
@@ -34,7 +35,7 @@ jest.mock("@react-navigation/native", () => {
     }),
     useRoute: () => ({
       params: {
-        spidLevel: SPID_LEVEL,
+        spidLevel: MOCK_AUTH_LEVEL_L2,
         isUat: IS_UAT
       }
     })
@@ -240,7 +241,7 @@ function renderComponent() {
   return renderScreenWithNavigationStoreContext(
     ActiveSessionCieIdLoginScreen,
     AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN,
-    { spidLevel: SPID_LEVEL, isUat: IS_UAT },
+    { spidLevel: MOCK_AUTH_LEVEL_L2, isUat: IS_UAT },
     store
   );
 }

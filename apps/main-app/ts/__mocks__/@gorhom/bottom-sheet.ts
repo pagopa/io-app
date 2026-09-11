@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 /**
  * This configuration was taken from the official library;
  * it is not present in the current version in use

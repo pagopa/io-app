@@ -13,7 +13,7 @@ import {
 import { itwCloseBanner } from "../../../common/store/actions/banners";
 
 const WHAT_IS_ITW_WALLET_ID =
-  "https://assistenza.ioapp.it/hc/it/articles/31106401885841-Quando-e-come-usare-i-documenti-digitali";
+  "https://assistenza.ioapp.it/hc/it/articles/50661930290449-Cos-é-l-IT-Wallet-ID";
 
 const ItwDiscoveryInfoBanner = () => {
   const dispatch = useIODispatch();

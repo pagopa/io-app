@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 
@@ -11,31 +9,32 @@ import {
 
 const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 
+/**
+ * The whole remote configuration still lives in the app store as an fp-ts Option:
+ * unwrap it here, at the boundary, so the IT-Wallet selectors work on plain values.
+ */
 const itwRemoteConfigSelector = (state: GlobalState) =>
-  pipe(
-    state.remoteConfig,
-    O.map(config => config.itw)
-  );
+  state.features.itWallet.remoteConfig;
 
 /**
  * Returns the remote config for docIO
  */
 export const isItwEnabledSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): boolean =>
-    pipe(
-      itwConfig,
-      O.map(
-        itw =>
-          isVersionSupported(
-            Platform.OS === "ios"
-              ? itw.min_app_version.ios
-              : itw.min_app_version.android,
-            getAppVersion()
-          ) && itw.enabled
-      ),
-      O.getOrElse(() => false)
-    )
+  ({ enabled, min_app_version }): boolean => {
+    if (!enabled) {
+      return false;
+    }
+
+    if (min_app_version === undefined) {
+      return false;
+    }
+
+    return isVersionSupported(
+      Platform.OS === "ios" ? min_app_version.ios : min_app_version.android,
+      getAppVersion()
+    );
+  }
 );
 
 /**
@@ -44,12 +43,8 @@ export const isItwEnabledSelector = createSelector(
  */
 export const itwDisabledIdentificationMethodsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> =>
-    pipe(
-      itwConfig,
-      O.chainNullableK(itw => itw.disabled_identification_methods),
-      O.getOrElse(() => emptyArray)
-    )
+  ({ disabled_identification_methods }): ReadonlyArray<string> =>
+    disabled_identification_methods ?? emptyArray
 );
 
 /**
@@ -57,12 +52,7 @@ export const itwDisabledIdentificationMethodsSelector = createSelector(
  */
 export const isItwFeedbackBannerEnabledSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.map(itw => itw.feedback_banner_visible),
-      O.getOrElse(() => false)
-    )
+  ({ feedback_banner_visible }) => feedback_banner_visible ?? false
 );
 
 /**
@@ -72,12 +62,7 @@ export const isItwFeedbackBannerEnabledSelector = createSelector(
  */
 export const itwIsActivationDisabledSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.chainNullableK(itw => itw.wallet_activation_disabled),
-      O.getOrElse(() => false)
-    )
+  ({ wallet_activation_disabled }) => wallet_activation_disabled ?? false
 );
 
 /**
@@ -85,12 +70,7 @@ export const itwIsActivationDisabledSelector = createSelector(
  */
 export const itwDisabledCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.chainNullableK(itw => itw.disabled_credentials),
-      O.getOrElse(() => emptyArray)
-    )
+  ({ disabled_credentials }) => disabled_credentials ?? emptyArray
 );
 
 /**
@@ -98,12 +78,7 @@ export const itwDisabledCredentialsSelector = createSelector(
  */
 export const itwIsIPatenteCtaEnabledSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.map(itw => itw.ipatente_cta_visible),
-      O.getOrElse(() => false)
-    )
+  ({ ipatente_cta_visible }) => ipatente_cta_visible ?? false
 );
 
 /**
@@ -111,12 +86,7 @@ export const itwIsIPatenteCtaEnabledSelector = createSelector(
  */
 export const itwIPatenteCtaConfigSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.map(itw => itw.ipatente_cta_config),
-      O.toUndefined
-    )
+  ({ ipatente_cta_config }) => ipatente_cta_config
 );
 
 /**
@@ -124,12 +94,7 @@ export const itwIPatenteCtaConfigSelector = createSelector(
  */
 export const itwIpzsPrivacyUrlSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.map(itw => itw.ipzs_privacy_url),
-      O.toUndefined
-    )
+  ({ ipzs_privacy_url }) => ipzs_privacy_url
 );
 
 /**
@@ -137,8 +102,8 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
  */
 export const isItwMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): boolean => {
-    const version = O.toUndefined(itwConfig)?.itw_l3?.min_app_version;
+  ({ itw_l3 }): boolean => {
+    const version = itw_l3?.min_app_version;
     if (!version) {
       return false;
     }
@@ -154,8 +119,8 @@ export const isItwMinAppVersionSupportedSelector = createSelector(
  */
 export const isItwProximityMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): boolean => {
-    const version = O.toUndefined(itwConfig)?.proximity?.min_app_version;
+  ({ proximity }): boolean => {
+    const version = proximity?.min_app_version;
     if (!version) {
       return false;
     }
@@ -172,8 +137,8 @@ export const isItwProximityMinAppVersionSupportedSelector = createSelector(
  */
 export const itwPinnedCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> =>
-    O.toUndefined(itwConfig)?.pinned_credentials ?? emptyArray
+  ({ pinned_credentials }): ReadonlyArray<string> =>
+    pinned_credentials ?? emptyArray
 );
 
 /**
@@ -182,8 +147,7 @@ export const itwPinnedCredentialsSelector = createSelector(
  */
 export const itwNewCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> =>
-    O.toUndefined(itwConfig)?.new_credentials ?? emptyArray
+  ({ new_credentials }): ReadonlyArray<string> => new_credentials ?? emptyArray
 );
 
 /**
@@ -191,6 +155,6 @@ export const itwNewCredentialsSelector = createSelector(
  */
 export const itwHiddenCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> =>
-    O.toUndefined(itwConfig)?.hidden_credentials ?? emptyArray
+  ({ hidden_credentials }): ReadonlyArray<string> =>
+    hidden_credentials ?? emptyArray
 );

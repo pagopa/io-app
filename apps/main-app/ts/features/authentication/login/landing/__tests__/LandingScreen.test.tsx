@@ -5,6 +5,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../../common/utils";
 import { LandingScreen } from "../screens/LandingScreen";
 
 const mockNavigateToCiePinInsertion = jest.fn();
@@ -37,31 +38,19 @@ jest.mock("@gorhom/bottom-sheet", () =>
 );
 jest.mock("../../../common/analytics");
 
-const navigateToIdpSelection = () => {
-  const { getByTestId } = renderComponent();
-
-  const loginWithSpid = getByTestId("landing-button-login-spid");
-  fireEvent.press(loginWithSpid);
-
-  expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
-  expect(mockNavigateToIdpSelection).toHaveBeenCalled();
-};
-const toBeDefined = () => {
-  const component = renderComponent();
-
-  expect(component).toBeDefined();
-};
-const toMatchSnapshot = () => {
-  const component = renderComponent();
-
-  expect(component).toMatchSnapshot();
-};
-
 describe(LandingScreen, () => {
   afterEach(jest.clearAllMocks);
 
-  it("Should be defined", toBeDefined);
-  it("Should match the snapshot", toMatchSnapshot);
+  it("Should be defined", () => {
+    const component = renderComponent();
+
+    expect(component).toBeDefined();
+  });
+  it("Should match the snapshot", () => {
+    const component = renderComponent();
+
+    expect(component).toMatchSnapshot();
+  });
   it("Should present the modal", async () => {
     const { getByTestId } = renderComponent();
 
@@ -114,7 +103,7 @@ describe(LandingScreen, () => {
 
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith("SpidL2");
+    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith(AUTH_LEVELS.L2);
   });
   it("Should navigate to the wizards screens", async () => {
     const { getByTestId } = renderComponent();
@@ -139,7 +128,15 @@ describe(LandingScreen, () => {
       screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
     });
   });
-  it("Should navigate to the idp selection", navigateToIdpSelection);
+  it("Should navigate to the idp selection", () => {
+    const { getByTestId } = renderComponent();
+
+    const loginWithSpid = getByTestId("landing-button-login-spid");
+    fireEvent.press(loginWithSpid);
+
+    expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
+    expect(mockNavigateToIdpSelection).toHaveBeenCalled();
+  });
 });
 
 const renderComponent = () => {

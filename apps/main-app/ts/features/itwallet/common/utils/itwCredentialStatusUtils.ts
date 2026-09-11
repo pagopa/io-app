@@ -1,7 +1,5 @@
 import { Errors, IoWallet } from "@pagopa/io-react-native-wallet";
 import { differenceInCalendarDays } from "date-fns";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 import { getClaimsFullLocale, getCredentialExpireDate } from "./itwClaimsUtils";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
@@ -42,25 +40,28 @@ export const getCredentialStatus = (
   const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);
 
   // Not all credentials have an expiration date
-  const documentExpireDays = pipe(
-    getCredentialExpireDate(parsedCredential),
-    O.fromNullable,
-    O.map(expireDate => differenceInCalendarDays(expireDate, now)),
-    O.getOrElse(() => NaN)
-  );
+  const documentExpirationDate = getCredentialExpireDate(parsedCredential);
+  const documentExpireDays = documentExpirationDate
+    ? differenceInCalendarDays(documentExpirationDate, now)
+    : NaN;
 
   const isIssuerAttestedExpired =
     validity?.type === "status_assertion" &&
     validity?.status === "invalid" &&
     validity.errorCode === "credential_expired";
 
-  if (isIssuerAttestedExpired || documentExpireDays <= 0) {
+  // The physical document is still valid on its expiration day (documentExpireDays === 0),
+  // it only becomes "expired" the day after.
+  if (isIssuerAttestedExpired || documentExpireDays < 0) {
     return "expired";
   }
 
   // Invalid must prevail over non-expired statuses
   if (validity?.status === "invalid") {
     return "invalid";
+  }
+  if (validity?.status === "suspended") {
+    return "suspended";
   }
 
   if (jwtExpireDays <= 0) {

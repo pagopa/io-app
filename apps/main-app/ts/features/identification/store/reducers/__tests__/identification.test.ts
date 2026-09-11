@@ -1,7 +1,3 @@
-import * as AR from "fp-ts/lib/Array";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
 import {
   deltaTimespanBetweenAttempts,
   freeAttempts,
@@ -138,25 +134,25 @@ describe("Identification reducer", () => {
       identificationStartMock
     ].forEach(action => expectFailSequenceFromStartingState(action));
   });
+
   it("should execute multiple fail sequence after a reset of the fail state correctly", () => {
     const identificationResetState = identificationReducer(
       undefined,
       identificationReset()
     );
+    const firstFailSequenceState = expectFailSequence(identificationResetState);
 
-    pipe(
-      identificationResetState,
-      expectFailSequence,
-      (state: IdentificationState) =>
-        identificationReducer(
-          state,
-          identificationSuccess({ isBiometric: false })
-        ),
-      expectFailSequence,
-      (state: IdentificationState) =>
-        identificationReducer(state, identificationReset()),
-      expectFailSequence
+    const successState = identificationReducer(
+      firstFailSequenceState,
+      identificationSuccess({ isBiometric: false })
     );
+    const secondFailSequenceState = expectFailSequence(successState);
+
+    const resetState = identificationReducer(
+      secondFailSequenceState,
+      identificationReset()
+    );
+    expectFailSequence(resetState);
   });
 });
 
@@ -168,18 +164,18 @@ describe("Identification reducer", () => {
 const expectFailSequence = (
   initialState: IdentificationState
 ): IdentificationState => {
-  const sequenceOfActions: ReadonlyArray<Action> = AR.range(
-    1,
-    maxAttempts - 1
-  ).map(_ => identificationFailure());
+  const sequenceOfActions: ReadonlyArray<Action> = Array.from(
+    { length: maxAttempts - 1 },
+    () => identificationFailure()
+  );
 
-  const expectedTimespan = AR.range(1, freeAttempts)
-    .map(_ => 0)
-    .concat(
-      AR.range(1, maxAttempts - freeAttempts).map(
-        i => i * deltaTimespanBetweenAttempts
-      )
-    );
+  const expectedTimespan = [
+    ...Array.from({ length: freeAttempts }, () => 0),
+    ...Array.from(
+      { length: maxAttempts - freeAttempts },
+      (_, i) => (i + 1) * deltaTimespanBetweenAttempts
+    )
+  ];
 
   const finalState = sequenceOfActions.reduce((acc, val, i) => {
     const newState = identificationReducer(acc, val);
@@ -208,14 +204,9 @@ const expectFailState = (
   expectedRemainingAttempts: number,
   expectedTimeSpan: number
 ) => {
-  expect(state.fail).toBeDefined();
+  const failState = state.fail;
+  expect(failState).toBeDefined();
 
-  pipe(
-    state.fail,
-    O.fromNullable,
-    O.map(failState => {
-      expect(failState.remainingAttempts).toEqual(expectedRemainingAttempts);
-      expect(failState.timespanBetweenAttempts).toEqual(expectedTimeSpan);
-    })
-  );
+  expect(failState!.remainingAttempts).toEqual(expectedRemainingAttempts);
+  expect(failState!.timespanBetweenAttempts).toEqual(expectedTimeSpan);
 };

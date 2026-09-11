@@ -1,17 +1,15 @@
-import { ComponentType } from "react";
+import { PropsWithChildren } from "react";
 
 import { useIOSelector } from "../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 
-/**
- * This HOC allows to render the wrapped component only if the debug mode is enabled, otherwise returns null (nothing)
- */
-export const withDebugEnabled =
-  <P extends Record<string, unknown>>(WrappedComponent: ComponentType<P>) =>
-  (props: P) => {
-    const isDebug = useIOSelector(isDebugModeEnabledSelector);
-    if (!isDebug) {
-      return null;
-    }
-    return <WrappedComponent {...props} />;
-  };
+/** Renders children only when debug mode is enabled. */
+export const WithDebugEnabled = ({ children }: PropsWithChildren) => {
+  const isDebugEnabled = useIOSelector(isDebugModeEnabledSelector);
+
+  if (!isDebugEnabled) {
+    return null;
+  }
+
+  return <>{children}</>;
+};

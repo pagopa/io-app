@@ -5,6 +5,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../common/utils";
 import { ActiveSessionLandingScreen } from "../screens/ActiveSessionLandingScreen";
 
 const mockNavigateToCieIdLoginScreen = jest.fn();
@@ -35,21 +36,18 @@ jest.mock("@gorhom/bottom-sheet", () =>
 );
 jest.mock("../../common/analytics");
 
-const toBeDefined = () => {
-  const component = renderComponent();
-  expect(component).toBeDefined();
-};
-
-const toMatchSnapshot = () => {
-  const component = renderComponent();
-  expect(component).toMatchSnapshot();
-};
-
 describe("ActiveSessionLandingScreen", () => {
   afterEach(jest.clearAllMocks);
 
-  it("Should be defined", toBeDefined);
-  it("Should match the snapshot", toMatchSnapshot);
+  it("Should be defined", () => {
+    const component = renderComponent();
+    expect(component).toBeDefined();
+  });
+
+  it("Should match the snapshot", () => {
+    const component = renderComponent();
+    expect(component).toMatchSnapshot();
+  });
 
   it("Should open the bottom sheet on CIE button press", async () => {
     const { getByTestId } = renderComponent();
@@ -75,7 +73,7 @@ describe("ActiveSessionLandingScreen", () => {
       fireEvent.press(loginWithCieID);
     });
 
-    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith("SpidL2");
+    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith(AUTH_LEVELS.L2);
   });
 
   it("Should navigate to the wizard screen from banner", async () => {

@@ -25,10 +25,10 @@ import {
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors";
-import { useItwActivationExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwActivationExitSurveyBottomSheet.tsx";
-import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet.tsx";
-import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
-import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
+import { useItwActivationExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwActivationExitSurveyBottomSheet";
+import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet";
+import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet";
+import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences";
 import { itwSetFeedbackBottomSheetVisible } from "../../itwallet/common/store/actions/ui";
 import {
   isItwProximityEnabledSelector,
@@ -41,7 +41,7 @@ import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navi
 import {
   ITW_TOUR_GROUP_ID,
   ITW_TOUR_STEP_QR_BUTTON
-} from "../../itwallet/tour/utils/constants.ts";
+} from "../../itwallet/tour/utils/constants";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";

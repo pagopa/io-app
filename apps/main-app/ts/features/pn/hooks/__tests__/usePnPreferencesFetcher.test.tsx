@@ -112,22 +112,6 @@ describe("usePnPreferencesFetcher", () => {
       });
     }
   });
-
-  // it("should dispatch loadServicePreference, and return a loading state if service data is not already loaded", () => {
-  //   (useState as jest.Mock).mockImplementationOnce(() => [false, jest.fn()]);
-  //   const servicePreferencePot = pot.none;
-
-  //   mockServicePreferencePotSelector.mockReturnValue(servicePreferencePot);
-
-  //   renderHook();
-
-  //   expect(testingHookData.isLoading).toBe(true);
-  //   expect(testingHookData.isError).toBe(false);
-  //   expect(testingHookData.isEnabled).toBe(false);
-  //   expect(mockDispatch).toHaveBeenCalledWith(
-  //     loadServicePreference.request(pnServiceId)
-  //   );
-  // });
 });
 
 const renderHook = () => {
