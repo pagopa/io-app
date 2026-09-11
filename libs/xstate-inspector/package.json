@@ -8,7 +8,7 @@
   "react-native": "src/index.ts",
   "scripts": {
     "build": "node browser/build.mjs",
-    "watch": "node browser/build.mjs --watch",
+    "start": "node browser/build.mjs --watch",
     "test": "jest --config='./jest.config.js'",
     "tsc-noemit": "tsc --noEmit",
     "lint": "eslint \"**/*.ts\""

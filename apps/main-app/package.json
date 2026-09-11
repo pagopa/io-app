@@ -3,7 +3,7 @@
   "version": "3.39.0-rc.2",
   "private": true,
   "scripts": {
-    "start": "nx run xstate-inspector:build && react-native start",
+    "start": "react-native start",
     "sync": "pnpm install && bundle && pnpm dev-pod-install && pnpm generate",
     "run-ios": "react-native run-ios",
     "run-android": "react-native run-android",

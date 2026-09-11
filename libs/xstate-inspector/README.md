@@ -1,6 +1,6 @@
 # @io-app/xstate-inspector
 
-A development-only inspector for the XState machines in the [IO app](../../apps/main-app/README.md). The app reports machine events to Metro, and a browser page shows them as a timeline per machine. Nothing runs in production, and you start nothing extra: Metro serves the UI and relays the events on the port it already uses, and starting Metro builds the UI bundle first.
+A development-only inspector for the XState machines in the [IO app](../../apps/main-app/README.md). The app reports machine events to Metro, and a browser page shows them as a timeline per machine. Nothing runs in production. Metro serves the UI and relays the events on the port it already uses, and `pnpm nx run xstate-inspector:start` keeps the bundle it serves up to date.
 
 ## How machine events reach the browser
 
@@ -152,14 +152,14 @@ The inspector bounds what it keeps, so a long session on a large context cannot 
 ## Development commands
 
 ```bash
-pnpm nx run xstate-inspector:build        # bundles browser/src into browser/dist
-pnpm nx run xstate-inspector:watch        # same, rebuilding on every change
+pnpm nx run xstate-inspector:start        # builds browser/src into browser/dist, rebuilding on change
+pnpm nx run xstate-inspector:build        # the same build, once
 pnpm nx run xstate-inspector:test
 pnpm nx run xstate-inspector:tsc-noemit
 pnpm nx run xstate-inspector:lint
 ```
 
-`pnpm nx run main-app:start` builds the UI before it starts Metro, so a normal dev start needs nothing else. After editing anything under `browser/src`, rebuild it: reloading the page is not enough, because the middleware serves the bundle in `browser/dist`, not the sources. `watch` keeps that up to date while you work on the UI.
+Run `start` in its own terminal, next to `pnpm nx run main-app:start`. The middleware serves the bundle in `browser/dist`, not the sources, so Metro never picks up an edit by itself: reloading the page is not enough. Use `build` when the UI only has to exist once, for example in a checkout that is not being worked on.
 
 `tsc-noemit` also checks `middleware.js`, `browser/build.mjs` and the modules under `browser/src`, because the package tsconfig sets `checkJs`. `pnpm nx affected --targets=lint,tsc-noemit,test` runs the same targets for every project that changed.
 
@@ -167,7 +167,7 @@ pnpm nx run xstate-inspector:lint
 
 **The page reports `reconnecting`.** Nothing answers the SSE route. Confirm Metro is running, then open `http://localhost:8081/xstate-inspector/health`. A 404 means the middleware did not mount, and the `require` in `metro.config.js` threw.
 
-**The UI 404s, or shows a change you already made.** `browser/dist` is missing or stale. Run `pnpm nx run xstate-inspector:build`, or `pnpm nx run xstate-inspector:watch` while you edit the UI.
+**The UI 404s, or shows a change you already made.** `browser/dist` is missing or stale. Run `pnpm nx run xstate-inspector:start` while you work on the UI, or `pnpm nx run xstate-inspector:build` for a one-off build.
 
 **Metro answers `Unauthorized request from http://127.0.0.1:8081`.** Open the page through `localhost` instead. Module scripts send an `Origin` header, and Metro’s dev server rejects every Origin that is not localhost.
 
