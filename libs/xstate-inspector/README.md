@@ -125,17 +125,20 @@ if (moduleName === "partysocket") {
   return { type: "empty" };
 }
 if (moduleName === "#uuid") {
+  const inspectorRoot = path.dirname(
+    require.resolve("@io-app/xstate-inspector/package.json")
+  );
+  const inspectRoot = path.dirname(
+    require.resolve("@statelyai/inspect", { paths: [inspectorRoot] })
+  );
   return {
     type: "sourceFile",
-    filePath: path.join(
-      path.dirname(require.resolve("@statelyai/inspect")),
-      "uuid-browser.mjs"
-    )
+    filePath: path.join(inspectRoot, "uuid-browser.mjs")
   };
 }
 ```
 
-`partysocket` extends `EventTarget` in its module scope, which React Native does not define, so evaluating it crashes the app. The bridge uses the HTTP adapter of the inspector only, so it never constructs the WebSocket client. The `#uuid` import resolves to `node:crypto` by default, which Metro cannot resolve, so the app points it at the browser build that ships with the package.
+`partysocket` extends `EventTarget` in its module scope, which React Native does not define, so evaluating it crashes the app. The bridge uses the HTTP adapter of the inspector only, so it never constructs the WebSocket client. The `#uuid` import resolves to `node:crypto` by default, which Metro cannot resolve, so the app points it at the browser build that ships with the package. Both are resolved through the inspector package, the only thing that depends on `@statelyai/inspect`: the app imports the inspector, never that library, and so does not declare it.
 
 ## Limits and retention
 

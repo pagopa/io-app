@@ -435,9 +435,6 @@ importers:
       '@shopify/react-native-skia':
         specifier: 2.6.4
         version: 2.6.4(903808757a8820d788ffe3533e7c7585)
-      '@statelyai/inspect':
-        specifier: 0.7.2
-        version: 0.7.2(xstate@5.17.4)
       '@swmansion/react-native-bottom-sheet':
         specifier: 0.15.1
         version: 0.15.1(react-native-safe-area-context@5.7.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0))(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
