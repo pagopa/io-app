@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.6](https://github.com/pagopa/io-app/compare/3.39.0-rc.5...3.39.0-rc.6) (2026-09-11)
+
+### Features
+
+* **IT-Wallet:** [[SIW-4913](https://pagopa.atlassian.net/browse/SIW-4913)] Update intro_hero source image ([#8574](https://github.com/pagopa/io-app/issues/8574)) ([97a14bd](https://github.com/pagopa/io-app/commit/97a14bdd8a8bb7f5ea2eaf927bf9fc8286d7ac98))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4982](https://pagopa.atlassian.net/browse/SIW-4982)] Display correct integrity error copy for IT-Wallet ([#8576](https://github.com/pagopa/io-app/issues/8576)) ([9313607](https://github.com/pagopa/io-app/commit/9313607426feb025de4b2c7e8a6fbaffefca1781))
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4918](https://pagopa.atlassian.net/browse/SIW-4918)] Fix third-party and wallet list credential properties handling ([#8578](https://github.com/pagopa/io-app/issues/8578)) ([bd6a848](https://github.com/pagopa/io-app/commit/bd6a8481fb48459517d6f02b1ae44cf0ae11c1d4))
+* **IT-Wallet:** [[SIW-5014](https://pagopa.atlassian.net/browse/SIW-5014)] Bump `io-react-native-wallet` from `3.7.1` to `3.7.2` ([#8591](https://github.com/pagopa/io-app/issues/8591)) ([b4544a5](https://github.com/pagopa/io-app/commit/b4544a5a731812f40f2ddb68d41c79820017a222))
 ## [3.39.0-rc.5](https://github.com/pagopa/io-app/compare/3.39.0-rc.4...3.39.0-rc.5) (2026-09-10)
 
 ### Features
