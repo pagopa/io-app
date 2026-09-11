@@ -83,21 +83,3 @@ catalog:
   react-native-reanimated: "4.3.1"
   react-native-safe-area-context: "^5.6.2"
   react-native-svg: "^15.14.0"
-
-minimumReleaseAgeExclude:
-  - "@nx/devkit@23.2.1"
-  - "@nx/eslint@23.2.1"
-  - "@nx/jest@23.2.1"
-  - "@nx/js@23.2.1"
-  - "@nx/nx-darwin-arm64@23.2.1"
-  - "@nx/nx-darwin-x64@23.2.1"
-  - "@nx/nx-freebsd-x64@23.2.1"
-  - "@nx/nx-linux-arm-gnueabihf@23.2.1"
-  - "@nx/nx-linux-arm64-gnu@23.2.1"
-  - "@nx/nx-linux-arm64-musl@23.2.1"
-  - "@nx/nx-linux-x64-gnu@23.2.1"
-  - "@nx/nx-linux-x64-musl@23.2.1"
-  - "@nx/nx-win32-arm64-msvc@23.2.1"
-  - "@nx/nx-win32-x64-msvc@23.2.1"
-  - "@nx/workspace@23.2.1"
-  - nx@23.2.1
