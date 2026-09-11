@@ -261,8 +261,8 @@ importers:
         specifier: ^2.3.0
         version: 2.4.0
       uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
+        specifier: ^11.0.0
+        version: 11.1.1
       xml2js:
         specifier: ^0.5.0
         version: 0.5.0
