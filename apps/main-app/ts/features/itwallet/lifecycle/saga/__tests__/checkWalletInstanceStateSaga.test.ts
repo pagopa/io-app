@@ -280,9 +280,9 @@ describe("checkWalletInstanceStateOfflineSaga - Status List [1.3.3+]", () => {
   const getStore = (
     statusList: undefined | { idx: number; uri: string }
   ): DeepPartial<GlobalState> => ({
-    remoteConfig: O.none,
     features: {
       itWallet: {
+        remoteConfig: {},
         issuance: { integrityKeyTag },
         credentials: {
           credentials: { [mockPid.credentialId]: mockPid }
