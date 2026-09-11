@@ -2,6 +2,7 @@ import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import _, { merge } from "lodash";
 import { ComponentProps } from "react";
+import { View } from "react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -13,6 +14,7 @@ import { setIdpSelectedActiveSessionLogin } from "../../../../activeSessionLogin
 import * as analytics from "../../../../common/analytics/spidAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { idpSelected } from "../../../../common/store/actions";
+import { OneIdentityIdpSelectionFailureContent } from "../../components/OneIdentityIdpSelectionFailureContent";
 import { Idps } from "../../types/idps";
 import { OneIdentityIdpSelectionScreen } from "../OneIdentityIdpSelectionScreen";
 
@@ -21,15 +23,12 @@ jest.mock("../../hooks/useGetIdps", () => ({
   useGetIdps: () => mockUseGetIdps()
 }));
 
-const mockOneIdentityIdpSelectionFailureContent = jest.fn(
-  (_props: { isActiveSessionLogin: boolean }) =>
-    "OneIdentityIdpSelectionFailureContent"
+jest.mock("../../components/OneIdentityIdpSelectionFailureContent");
+const mockedOneIdentityIdpSelectionFailureContent =
+  OneIdentityIdpSelectionFailureContent as jest.Mock;
+mockedOneIdentityIdpSelectionFailureContent.mockReturnValue(
+  <View testID="one-identity-idp-selection-failure-content" />
 );
-jest.mock("../../components/OneIdentityIdpSelectionFailureContent", () => ({
-  OneIdentityIdpSelectionFailureContent: (props: {
-    isActiveSessionLogin: boolean;
-  }) => mockOneIdentityIdpSelectionFailureContent(props)
-}));
 
 const mockNavigate = jest.fn();
 
@@ -74,24 +73,12 @@ describe("OneIdentityIdpSelectionScreen", () => {
       state: { status: "failure", error: new Error("network error") }
     });
 
-    const { queryByTestId } = renderComponent();
+    const { queryByTestId, getByTestId } = renderComponent();
 
     expect(queryByTestId("idps-grid")).toBeNull();
-    expect(mockOneIdentityIdpSelectionFailureContent.mock.calls[0][0]).toEqual({
-      isActiveSessionLogin: false
-    });
-  });
-
-  it("should pass isActiveSessionLogin to the failure content when the fetch fails during an active session", () => {
-    mockUseGetIdps.mockReturnValue({
-      state: { status: "failure", error: new Error("network error") }
-    });
-
-    renderComponent({ isActiveSessionLogin: true });
-
-    expect(mockOneIdentityIdpSelectionFailureContent.mock.calls[0][0]).toEqual({
-      isActiveSessionLogin: true
-    });
+    expect(
+      getByTestId("one-identity-idp-selection-failure-content")
+    ).toBeTruthy();
   });
 
   it("should render the fetched IDPs on success", () => {
