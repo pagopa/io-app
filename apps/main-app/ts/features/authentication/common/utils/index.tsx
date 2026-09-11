@@ -14,6 +14,15 @@ import {
 } from "../analytics";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
 
+export const AUTH_LEVELS = { L2: "L2", L3: "L3" } as const;
+export type AuthLevel = (typeof AUTH_LEVELS)[keyof typeof AUTH_LEVELS];
+
+export type SpidAuthLevel = `Spid${AuthLevel}`;
+export const SPID_AUTH_LEVEL_MAP: Record<AuthLevel, SpidAuthLevel> = {
+  [AUTH_LEVELS.L2]: "SpidL2",
+  [AUTH_LEVELS.L3]: "SpidL3"
+};
+
 type LoginFailure = {
   errorCode?: string;
   errorMessage?: string;
@@ -118,10 +127,10 @@ export const extractLoginResult = (
 /** for a given idp id get the relative login uri */
 export const getIdpLoginUri = (
   idpId: string,
-  level: number,
+  authLevel: AuthLevel,
   apiLoginUrlPrefix: string
 ) =>
-  `${apiLoginUrlPrefix}/api/auth/v1/login?authLevel=SpidL${level}&entityID=${idpId}&RelayState=${spidRelayState}`;
+  `${apiLoginUrlPrefix}/api/auth/v1/login?authLevel=${SPID_AUTH_LEVEL_MAP[authLevel]}&entityID=${idpId}&RelayState=${spidRelayState}`;
 
 /**
  * Extract the login result from the given url.
