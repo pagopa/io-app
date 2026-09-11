@@ -136,10 +136,11 @@ const ListItemInfoContent = ({
           accessibilityLabel={
             hasInteractiveElements ? listItemAccessibilityLabel : undefined
           }
-          accessible={hasInteractiveElements}
+          accessible={false}
           importantForAccessibility={
             hasInteractiveElements ? "yes" : "no-hide-descendants"
           }
+          screenReaderFocusable={hasInteractiveElements ? true : undefined}
           style={{ flexDirection: reversed ? "column-reverse" : "column" }}
         >
           {topElement?.type === "badge" && (
@@ -320,7 +321,9 @@ export const ListItemInfo = ({
         hasInteractiveElements ? undefined : listItemAccessibilityLabel
       }
       accessibilityRole={hasInteractiveElements ? undefined : accessibilityRole}
-      accessible={!hasInteractiveElements}
+      accessible={false}
+      importantForAccessibility={hasInteractiveElements ? undefined : "yes"}
+      screenReaderFocusable={hasInteractiveElements ? undefined : true}
       style={IOListItemStyles.listItem}
       testID={testID}
     >
