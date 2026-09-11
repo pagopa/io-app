@@ -1,8 +1,9 @@
 /**
  * Structural description of the events the inspector receives.
  *
- * Deliberately independent from `@statelyai/inspect` so the browser bundle has
- * no build step and no dependency resolution.
+ * Deliberately independent from `@statelyai/inspect`: the UI only needs the
+ * shape of what arrives on the wire, so it does not pull the inspect library
+ * and its transports into its bundle.
  */
 
 export interface ActorInspectionEvent extends BaseEvent {

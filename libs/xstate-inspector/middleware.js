@@ -21,7 +21,8 @@ const fs = require("fs");
 const path = require("path");
 
 const PREFIX = "/xstate-inspector";
-const BROWSER_DIR = path.join(__dirname, "browser");
+/** Built by `browser/build.mjs`: the middleware serves the bundle, not the sources. */
+const BROWSER_DIR = path.join(__dirname, "browser", "dist");
 const INDEX_FILE = "index.html";
 
 /** Upper bound for a single ingest request, to keep a runaway app from exhausting memory. */
@@ -44,6 +45,7 @@ const CONTENT_TYPES = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
   ".css": "text/css; charset=utf-8",
+  ".map": "application/json; charset=utf-8",
   ".svg": "image/svg+xml",
   ".json": "application/json; charset=utf-8"
 };
