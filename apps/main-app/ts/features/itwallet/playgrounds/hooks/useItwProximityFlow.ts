@@ -127,6 +127,7 @@ const parseAndPrintError = (
 
 /**
  * Proximity status enum to track the current state of the flow.
+ *
  * - IDLE: No flow active.
  * - READY: Permissions granted, waiting for engagement selection.
  * - ENGAGEMENT: Engagement active.

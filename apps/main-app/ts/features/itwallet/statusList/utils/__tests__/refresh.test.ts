@@ -58,8 +58,8 @@ const makeValidPayload = (
 });
 
 /**
- * Encodes a payload as a fake JWT (header.payload.signature).
- * Uses base64url encoding for the payload portion.
+ * Encodes a payload as a fake JWT (header.payload.signature). Uses base64url
+ * encoding for the payload portion.
  */
 const fakeJwt = (payload: Record<string, unknown>): string => {
   const header = Buffer.from(JSON.stringify({ alg: "none" })).toString(

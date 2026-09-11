@@ -17,7 +17,8 @@ export type ClaimLabelProps = {
 };
 
 /**
- * Custom component to display text claim components on skeumorphic credential cards
+ * Custom component to display text claim components on skeumorphic credential
+ * cards
  */
 export const ClaimLabel: FunctionComponent<
   PropsWithChildren<ClaimLabelProps>

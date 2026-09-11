@@ -1,6 +1,4 @@
-/**
- * Notification message reducer
- */
+/** Notification message reducer */
 import { getType } from "typesafe-actions";
 
 import { Action } from "../../../../store/actions/types";

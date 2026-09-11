@@ -4,23 +4,17 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { ConsentData, StoredConsentData } from "../types";
 import { generateConsentKey } from "../utils";
 
-/**
- * Returns all proximity presentation consents as a record keyed by consent key.
- */
+/** Returns all proximity presentation consents as a record keyed by consent key. */
 export const itwProximityConsentsRecordSelector = (state: GlobalState) =>
   state.features.itWallet.proximity.consents;
 
-/**
- * Returns all proximity presentation consents as a flat array.
- */
+/** Returns all proximity presentation consents as a flat array. */
 export const itwProximityConsentsSelector = createSelector(
   itwProximityConsentsRecordSelector,
   (consents): ReadonlyArray<StoredConsentData> => Object.values(consents)
 );
 
-/**
- * Returns all proximity presentation consents with their generated keys.
- */
+/** Returns all proximity presentation consents with their generated keys. */
 export const itwProximityConsentsEntriesSelector = createSelector(
   itwProximityConsentsRecordSelector,
   consents => Object.entries(consents)
@@ -59,9 +53,7 @@ export const itwProximityConsentByKeySelector = (consentKey: string) =>
     (consents): StoredConsentData | undefined => consents[consentKey]
   );
 
-/**
- * Returns all consents that involve the specified credential type.
- */
+/** Returns all consents that involve the specified credential type. */
 export const itwProximityConsentsByCredentialTypeSelector = (
   credentialType: string
 ) =>
@@ -74,8 +66,8 @@ export const itwProximityConsentsByCredentialTypeSelector = (
   );
 
 /**
- * Returns whether a consent with the exact same RP, credential types,
- * and claim names combination already exists.
+ * Returns whether a consent with the exact same RP, credential types, and claim
+ * names combination already exists.
  */
 export const itwProximityConsentExistsSelector = (consentData: ConsentData) =>
   createSelector(itwProximityConsentsRecordSelector, (consents): boolean => {
@@ -83,9 +75,7 @@ export const itwProximityConsentExistsSelector = (consentData: ConsentData) =>
     return key in consents;
   });
 
-/**
- * Returns all consents given to the specified Relying Party.
- */
+/** Returns all consents given to the specified Relying Party. */
 export const itwProximityConsentsByRpIdSelector = (rpId: string) =>
   createSelector(
     itwProximityConsentsSelector,

@@ -1,8 +1,6 @@
 import { z } from "zod";
 
-/**
- * Schema of a single IDP returned by the OneIdentity IDPs list endpoint
- */
+/** Schema of a single IDP returned by the OneIdentity IDPs list endpoint */
 export const IdpSchema = z.object({
   entityID: z.string(),
   status: z.string(),
@@ -16,9 +14,7 @@ export const IdpsSchema = z.array(IdpSchema);
 
 export type Idps = z.infer<typeof IdpsSchema>;
 
-/**
- * Schema of the OneIdentity IDP friendly names map, keyed by `entityID`
- */
+/** Schema of the OneIdentity IDP friendly names map, keyed by `entityID` */
 export const IdpFriendlyNamesSchema = z.record(z.string(), z.string());
 
 export type IdpFriendlyNames = z.infer<typeof IdpFriendlyNamesSchema>;

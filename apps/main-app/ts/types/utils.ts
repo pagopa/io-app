@@ -1,11 +1,10 @@
 import { Effect } from "redux-saga/effects";
 
 /**
- * This is a wrapper type for `Effect` used in the
- * code for backward compatibility. In the codebase
- * it should not be possible to import directly
- * from `redux-saga/effects` due to the strict typing
- * provided by `typed-redux-saga`.
+ * This is a wrapper type for `Effect` used in the code for backward
+ * compatibility. In the codebase it should not be possible to import directly
+ * from `redux-saga/effects` due to the strict typing provided by
+ * `typed-redux-saga`.
  */
 export type ReduxSagaEffect = Effect;
 
@@ -23,22 +22,21 @@ export type SagaCallReturnType<
           ? B2
           : never;
 
-/**
- * Ensure that the types T and U are mutually exclusive
- */
+/** Ensure that the types T and U are mutually exclusive */
 export type XOR<T, U> = T | U extends object
   ? (T & Without<U, T>) | (U & Without<T, U>)
   : T | U;
 
 /**
- * Return a type that prohibits the use of keys that are present only in T but not in U
+ * Return a type that prohibits the use of keys that are present only in T but
+ * not in U
  */
 type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 
 /**
- * Create an object with the passed key and value, enforcing type safety.
- * This method should _always_ be used when dealing with union type / enum
- * dynamic object's keys.
+ * Create an object with the passed key and value, enforcing type safety. This
+ * method should _always_ be used when dealing with union type / enum dynamic
+ * object's keys.
  *
  * ```typescript
  * type CustomObject = {
@@ -50,15 +48,17 @@ type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
  *
  * function editedCustomObject(k: keyof CustomObject) {
  *   // This is valid for the compiler.
- *   const nonTypeSafe: CustomObject = { ...initCustomObject, [k]: 'foo' };
+ *   const nonTypeSafe: CustomObject = { ...initCustomObject, [k]: "foo" };
  *
  *   // This is _NOT_ valid for the compiler.
- *   const typeSafe: CustomObject = { ...initCustomObject, ...computedProp(k, 'foo') };
+ *   const typeSafe: CustomObject = {
+ *     ...initCustomObject,
+ *     ...computedProp(k, "foo")
+ *   };
  * }
  * ```
  *
  * Thanks to: https://stackoverflow.com/a/65182957
- *
  */
 export function computedProp<K extends PropertyKey, V>(
   key: K,

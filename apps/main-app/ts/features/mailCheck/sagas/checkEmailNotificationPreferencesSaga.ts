@@ -27,8 +27,9 @@ export function* emailNotificationPreferencesSaga(): SagaIterator {
 }
 
 /**
- * A saga to match at the first startup if the user has customized settings related to the
- * forwarding of notifications on the verified email within previous installations
+ * A saga to match at the first startup if the user has customized settings
+ * related to the forwarding of notifications on the verified email within
+ * previous installations
  */
 export function* watchEmailNotificationPreferencesSaga(): Generator<
   ReduxSagaEffect,

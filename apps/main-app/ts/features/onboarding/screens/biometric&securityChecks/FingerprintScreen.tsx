@@ -23,8 +23,8 @@ import { trackBiometricActivationEducationalScreen } from "./analytics";
 type IOScrollViewActions = ComponentProps<typeof IOScrollView>["actions"];
 
 /**
- * A screen to show, if the fingerprint is supported by the device,
- * the instruction to enable the fingerprint/faceID usage
+ * A screen to show, if the fingerprint is supported by the device, the
+ * instruction to enable the fingerprint/faceID usage
  */
 const FingerprintScreen = () => {
   const dispatch = useIODispatch();

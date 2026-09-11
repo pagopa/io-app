@@ -53,7 +53,9 @@ export function* handleWalletPaymentGetTransactionInfo(
     }
   } catch (e) {
     yield* put(
-      paymentsGetPaymentTransactionInfoAction.failure({ ...getNetworkError(e) })
+      paymentsGetPaymentTransactionInfoAction.failure({
+        ...getNetworkError(e)
+      })
     );
   }
 }

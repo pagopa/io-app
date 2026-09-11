@@ -12,8 +12,8 @@ const oneIdentityRemoteConfigSelector = (state: GlobalState) =>
 /**
  * Retrieves the remote rollout percentage (0-100) for the OneIdentity login.
  *
- * Defaults to `0` (disabled) if the remote configuration is not yet loaded
- * or if the field is missing.
+ * Defaults to `0` (disabled) if the remote configuration is not yet loaded or
+ * if the field is missing.
  */
 export const oneIdentityRolloutPercentageSelector = (state: GlobalState) => {
   const oneIdentityConfig = oneIdentityRemoteConfigSelector(state);
@@ -25,9 +25,7 @@ type OneIdentityEnvConfig = {
   idpsUrl: string;
 };
 
-/**
- * OneIdentity fallback configurations for each environment.
- */
+/** OneIdentity fallback configurations for each environment. */
 const FALLBACK_ONE_IDENTITY_CONFIG: Record<
   OneIdentityEnv,
   OneIdentityEnvConfig
@@ -44,9 +42,7 @@ const FALLBACK_ONE_IDENTITY_CONFIG: Record<
   }
 };
 
-/**
- * Creates a selector for a specific OneIdentity environment field.
- */
+/** Creates a selector for a specific OneIdentity environment field. */
 const makeOneIdentityEnvFieldSelector =
   (field: keyof OneIdentityEnvConfig) => (state: GlobalState) => {
     const env = oneIdentityEnvSelector(state);
@@ -58,14 +54,13 @@ const makeOneIdentityEnvFieldSelector =
     );
   };
 
-/**
- * Retrieves the URL of the OneIdentity IDP list for the current environment.
- */
+/** Retrieves the URL of the OneIdentity IDP list for the current environment. */
 export const oneIdentityIdpsUrlSelector =
   makeOneIdentityEnvFieldSelector("idpsUrl");
 
 /**
- * Retrieves the URL of the OneIdentity IDP friendly names for the current environment.
+ * Retrieves the URL of the OneIdentity IDP friendly names for the current
+ * environment.
  */
 export const oneIdentityIdpFriendlyNamesUrlSelector =
   makeOneIdentityEnvFieldSelector("idpFriendlyNamesUrl");

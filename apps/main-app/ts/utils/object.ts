@@ -12,31 +12,34 @@ export const findFirstCaseInsensitive =
     );
 
 /**
- * This function aims to handle cases where it is uncertain whether a key exists in an object and provides a fallback value.
+ * This function aims to handle cases where it is uncertain whether a key exists
+ * in an object and provides a fallback value.
+ *
+ * @example
+ *   // Example 1
+ *   const obj = {
+ *     it_IT: "it",
+ *     en_EN: "en"
+ *   };
+ *   const key: "it_IT" | "en_EN" | "de_DE" = "de_DE";
+ *   const result = getOrFallback(obj, key, "it_IT");
+ *
+ *   console.log(result); // the result will fallback to "it"
+ *
+ *   // Example 2
+ *   const obj = {
+ *     it_IT: "it",
+ *     en_EN: "en",
+ *     de_DE: "de"
+ *   };
+ *   const key: "it_IT" | "en_EN" | "de_DE" = "de_DE";
+ *   const result = getOrFallback(obj, key, "it_IT");
+ *
+ *   console.log(result); // the result will be "de"
+ *
  * @param obj The object from which to extract the value
  * @param key The desired key
  * @param fallback The fallback key
- * @example
- * // Example 1
- * const obj = {
- *  it_IT: "it",
- *  en_EN: "en"
- * };
- * const key: "it_IT"|"en_EN"|"de_DE" = "de_DE";
- * const result = getOrFallback(obj, key, "it_IT");
- *
- * console.log(result); // the result will fallback to "it"
- *
- * // Example 2
- * const obj = {
- *  it_IT: "it",
- *  en_EN: "en",
- *   de_DE: "de"
- * };
- * const key: "it_IT"|"en_EN"|"de_DE" = "de_DE";
- * const result = getOrFallback(obj, key, "it_IT");
- *
- * console.log(result); // the result will be "de"
  */
 export function getOrFallback<
   O extends object,

@@ -101,9 +101,8 @@ addHandler(cgnRouter, "post", addPrefix("/activation"), (_, res) => {
 });
 
 /**
- * Get the CGN activation status
- * Used by the app as polling during the activation workflow
- * status code 200 returns the current status of the job
+ * Get the CGN activation status Used by the app as polling during the
+ * activation workflow status code 200 returns the current status of the job
  * status 404 means no activation job has been found
  */
 addHandler(cgnRouter, "get", addPrefix("/activation"), (_, res) =>
@@ -195,9 +194,8 @@ addHandler(cgnRouter, "post", addPrefix("/eyca/activation"), (_, res) => {
 });
 
 /**
- * Get the EYCA activation status
- * Used by the app as polling during the activation workflow
- * status code 200 returns the current status of the job
+ * Get the EYCA activation status Used by the app as polling during the
+ * activation workflow status code 200 returns the current status of the job
  * status 404 means no activation job has been found
  */
 addHandler(cgnRouter, "get", addPrefix("/eyca/activation"), (_, res) =>

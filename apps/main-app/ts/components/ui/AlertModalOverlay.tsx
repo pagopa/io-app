@@ -36,9 +36,7 @@ type Props = Readonly<{
   opacity?: number;
 }>;
 
-/**
- * Creates a full screen overlay on top of another screen for `AlertModal`
- */
+/** Creates a full screen overlay on top of another screen for `AlertModal` */
 export const AlertModalOverlay = ({
   backgroundColor = IOColors.white,
   opacity = 1,

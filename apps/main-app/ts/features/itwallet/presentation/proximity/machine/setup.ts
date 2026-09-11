@@ -32,7 +32,10 @@ import { mapEventToFailure } from "./failure";
 import { hasGrantedConsentGuard } from "./guards";
 import { Input } from "./input";
 
-/** Keeps transport actors and provider-injected side effects typed across presentation states. */
+/**
+ * Keeps transport actors and provider-injected side effects typed across
+ * presentation states.
+ */
 export const itwProximityMachineSetup = setup({
   types: {
     context: {} as Context,
@@ -41,17 +44,13 @@ export const itwProximityMachineSetup = setup({
   },
   actions: {
     onInit: onInitAction,
-    /**
-     * Context manipulation
-     */
+    /** Context manipulation */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     markSessionTerminated: assign(() => ({ sessionTerminated: true })),
     resetSessionTerminated: assign(() => ({ sessionTerminated: false })),
 
-    /**
-     * Navigation
-     */
+    /** Navigation */
 
     navigateToBluetoothPermissionsScreen:
       navigateToBluetoothPermissionsScreenAction,
@@ -66,16 +65,12 @@ export const itwProximityMachineSetup = setup({
     navigateToSuccessScreen: navigateToSuccessScreenAction,
     closeProximity: closeProximityAction,
 
-    /**
-     * Consents
-     */
+    /** Consents */
 
     grantConsent: grantConsentAction,
     storeConsent: storeConsentAction,
 
-    /**
-     * Analytics
-     */
+    /** Analytics */
 
     trackProximityStart: trackProximityStartAction,
     trackQrCodeLoadingFailure: trackQrCodeLoadingFailureAction

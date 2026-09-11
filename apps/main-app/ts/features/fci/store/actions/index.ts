@@ -20,52 +20,40 @@ import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
 import { FciNetworkError } from "../../utils/errors.ts";
 import { Document } from "../reducers/fciSignatureFieldDrawing";
 
-/**
- * get and handle the signatureRequest from id
- */
+/** Get and handle the signatureRequest from id */
 export const fciSignatureRequestFromId = createAsyncAction(
   "FCI_SIGNATURE_DETAIL_REQUEST",
   "FCI_SIGNATURE_DETAIL_SUCCESS",
   "FCI_SIGNATURE_DETAIL_FAILURE"
 )<string, SignatureRequestDetailView, NetworkError>();
 
-/**
- * retry flow for signatureRequest by id
- */
+/** Retry flow for signatureRequest by id */
 export const fciSignatureRequestRetryFromId = createStandardAction(
   "FCI_SIGNATURE_DETAIL_RETRY_REQUEST"
 )<string>();
 
-/**
- * get and handle the QTSP clauses
- */
+/** Get and handle the QTSP clauses */
 export const fciLoadQtspClauses = createAsyncAction(
   "FCI_QTSP_CLAUSES_REQUEST",
   "FCI_QTSP_CLAUSES_SUCCESS",
   "FCI_QTSP_CLAUSES_FAILURE"
 )<void, QtspClausesMetadataDetailView, NetworkError>();
 
-/**
- * get and handle the QTSP filled document
- */
+/** Get and handle the QTSP filled document */
 export const fciLoadQtspFilledDocument = createAsyncAction(
   "FCI_QTSP_FILLED_DOC_REQUEST",
   "FCI_QTSP_FILLED_DOC_SUCCESS",
   "FCI_QTSP_FILLED_DOC_FAILURE"
 )<CreateFilledDocument, FilledDocumentDetailView, NetworkError>();
 
-/**
- * post the signature passing a signatureBody
- */
+/** Post the signature passing a signatureBody */
 export const fciSigningRequest = createAsyncAction(
   "FCI_SIGNING_REQUEST",
   "FCI_SIGNING_SUCCESS",
   "FCI_SIGNING_FAILURE"
 )<CreateSignatureBody, SignatureDetailView, NetworkError>();
 
-/**
- * asycn action to download file
- */
+/** Asycn action to download file */
 export const fciDownloadPreview = createAsyncAction(
   "FCI_DOWNLOAD_PREVIEW_REQUEST",
   "FCI_DOWNLOAD_PREVIEW_SUCCESS",
@@ -77,43 +65,29 @@ export const fciDownloadPreviewClear = createStandardAction(
   "FCI_DOWNLOAD_PREVIEW_CLEAR"
 )<{ path: string }>();
 
-/**
- * update documentSignatures
- */
+/** Update documentSignatures */
 export const fciUpdateDocumentSignaturesRequest = createStandardAction(
   "FCI_UPDATE_DOCUMENT_SIGNATURE"
 )<DocumentToSign>();
 
-/**
- * clear the FCI store
- */
+/** Clear the FCI store */
 export const fciClearStateRequest = createStandardAction(
   "FCI_CLEAR_STATE_REQUEST"
 )<void>();
 
-/**
- * start the FCI action
- */
+/** Start the FCI action */
 export const fciStartRequest =
   createStandardAction("FCI_START_REQUEST")<void>();
 
-/**
- * start the FCI signing action
- */
+/** Start the FCI signing action */
 export const fciStartSigningRequest = createStandardAction(
   "FCI_START_SIGNING_REQUEST"
 )<void>();
 
-/**
- * clear the FCI store
- */
+/** Clear the FCI store */
 export const fciEndRequest = createStandardAction("FCI_END_REQUEST")<void>();
 
-/**
- * poll the filled document
- * to check if it is ready
- * to be downloaded
- */
+/** Poll the filled document to check if it is ready to be downloaded */
 export const fciPollFilledDocument = createAsyncAction(
   "FCI_POLL_FILLED_DOCUMENT_REQUEST",
   "FCI_POLL_FILLED_DOCUMENT_SUCCESS",
@@ -143,9 +117,7 @@ export const fciDocumentSignatureFields = createAsyncAction(
   "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE"
 )<{ attrs: SignatureFieldAttrType; uri: string }, Document, Error>();
 
-/**
- * Action to interact with the environment reducer.
- */
+/** Action to interact with the environment reducer. */
 export const fciEnvironmentSet = createStandardAction("FCI_ENVIRONMENT_SET")<
   O.Option<EnvironmentEnum>
 >();

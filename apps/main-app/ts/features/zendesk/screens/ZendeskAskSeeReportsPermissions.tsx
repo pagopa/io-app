@@ -43,8 +43,10 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 /**
- * this screen shows the kinds of data the app could collect when a user is looking at the previous ticket only for the authenticated users
- * @constructor
+ * This screen shows the kinds of data the app could collect when a user is
+ * looking at the previous ticket only for the authenticated users
+ *
+ * @class
  */
 const ZendeskAskSeeReportsPermissions = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();

@@ -74,8 +74,9 @@ const migrations: MigrationManifest = {
     isCieIDTourGuideEnabled: true
   }),
   /**
-   * @param state The slice state
    * Removes `isCieIDFeatureEnabled` from the persist rehydration actions
+   *
+   * @param state The slice state
    */
   "1": (state: PersistedState) => omit(state, "isCieIDFeatureEnabled")
 };

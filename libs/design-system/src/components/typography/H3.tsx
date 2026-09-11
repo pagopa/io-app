@@ -6,9 +6,7 @@ const {
   h3: { colorToken, ...h3Style }
 } = IOTypography;
 
-/**
- * `H3` typographic style
- */
+/** `H3` typographic style */
 export const H3 = ({ color: customColor, ...props }: TypographicStyleProps) => {
   const theme = useIOTheme();
 

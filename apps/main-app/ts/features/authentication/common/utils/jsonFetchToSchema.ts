@@ -5,11 +5,13 @@ import { unknownToString } from "../../../../utils/errors";
 import { FetchResponse, isFailureResponse } from "./fetch";
 
 /**
- * Parses an unknown value against a Zod schema and lifts the outcome into a `neverthrow` Result.
+ * Parses an unknown value against a Zod schema and lifts the outcome into a
+ * `neverthrow` Result.
  *
  * @param schema - The Zod schema describing the expected shape of the data.
  * @param value - The unknown value to validate.
- * @returns An `Ok` containing the safely parsed data, or an `Err` containing a prettified validation error string.
+ * @returns An `Ok` containing the safely parsed data, or an `Err` containing a
+ *   prettified validation error string.
  */
 const parseWithSchema = <S extends z.ZodType>(
   schema: S,
@@ -20,14 +22,17 @@ const parseWithSchema = <S extends z.ZodType>(
 };
 
 /**
- * Resolves a fetch request, extracts the JSON body, and validates it against a Zod schema.
+ * Resolves a fetch request, extracts the JSON body, and validates it against a
+ * Zod schema.
  *
- * This pipeline safely handles transport-level failures, non-2xx HTTP status codes,
- * JSON parsing exceptions, and schema validation errors, wrapping any failure into a predictable `Result`.
+ * This pipeline safely handles transport-level failures, non-2xx HTTP status
+ * codes, JSON parsing exceptions, and schema validation errors, wrapping any
+ * failure into a predictable `Result`.
  *
  * @param requestPromise - A promise resolving to a custom `FetchResponse`.
  * @param schema - The Zod schema used to validate the extracted JSON body.
- * @returns A Promise resolving to an `Ok` with the strictly typed data, or an `Err` with a descriptive error message.
+ * @returns A Promise resolving to an `Ok` with the strictly typed data, or an
+ *   `Err` with a descriptive error message.
  */
 export const jsonFetchToSchema = async <TSchema extends z.ZodType>(
   requestPromise: Promise<FetchResponse>,

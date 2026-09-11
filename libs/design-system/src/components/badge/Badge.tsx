@@ -56,9 +56,7 @@ const styles = StyleSheet.create({
   }
 });
 
-/**
- * Official badge component
- */
+/** Official badge component */
 export const Badge = ({
   text,
   outline = false,

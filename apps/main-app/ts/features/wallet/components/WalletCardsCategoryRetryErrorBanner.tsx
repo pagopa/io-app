@@ -17,9 +17,7 @@ import { paymentsWalletUserMethodsSelector } from "../../payments/wallet/store/s
 const WALLET_OTHER_CARDS_CATEGORY_BACKOFF =
   "WALLET_OTHER_CARDS_CATEGORY_BACKOFF";
 
-/**
- * This component shows a retry error banner if any of the B&P request fails
- */
+/** This component shows a retry error banner if any of the B&P request fails */
 export const WalletCardsCategoryRetryErrorBanner = () => {
   const dispatch = useIODispatch();
 

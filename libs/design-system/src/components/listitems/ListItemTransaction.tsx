@@ -31,13 +31,15 @@ export type ListItemTransaction = WithTestID<
     loadingAccessibilityLabel?: string;
     /**
      * The maximum number of lines to display for the title.
+     *
      * @default 2
      */
     numberOfLines?: number;
     /**
      * A logo that will be displayed on the left of the list item.
      *
-     * Must be a {@link IOLogoPaymentType} or an {@link ImageURISource} or an {@link Icon}.
+     * Must be a {@link IOLogoPaymentType} or an {@link ImageURISource} or an
+     * {@link Icon}.
      */
     paymentLogoIcon?: ListItemTransactionLogo;
     showChevron?: boolean;

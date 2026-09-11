@@ -18,9 +18,8 @@ interface AnimatedTickProps extends PathProps {
 const TickSVGPath = "m7 12 4 4 7-7";
 
 /**
- * Animated tick used as a small brick for the selection components (e.g: Checkbox, Radio, etc…)
- * It comes without any state logic.
- *
+ * Animated tick used as a small brick for the selection components (e.g:
+ * Checkbox, Radio, etc…) It comes without any state logic.
  */
 export const AnimatedTick = ({
   size,

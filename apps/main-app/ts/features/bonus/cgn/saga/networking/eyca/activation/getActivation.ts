@@ -21,9 +21,11 @@ export type GetActivationResult = Result<GetEycaStatus, NetworkError>;
 type GetEycaStatus = "COMPLETED" | "ERROR" | "NOT_FOUND" | "PROCESSING";
 
 /**
- * ask for the current status of EYCA activation
- * it returns the status {@link GetEycaStatus} - ok case
- * if an error occured it returns a {@link NetworkError} - err case
+ * Ask for the current status of EYCA activation
+ *
+ * - It returns the status {@link GetEycaStatus} - ok case
+ * - If an error occured it returns a {@link NetworkError} - err case
+ *
  * @param getEycaActivation
  */
 export function* getActivation(

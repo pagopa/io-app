@@ -182,8 +182,8 @@ addHandler(
   }
 );
 /**
- * just for test purposes an html page that works as
- * the landing Page of a discount for merchant reading the referrer header
+ * Just for test purposes an html page that works as the landing Page of a
+ * discount for merchant reading the referrer header
  */
 addHandler(publicRouter, "get", "/merchant_landing", (req, res) => {
   // eslint-disable-next-line no-console
