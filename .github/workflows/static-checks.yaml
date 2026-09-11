@@ -5,16 +5,16 @@ on:
   - workflow_call
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
 jobs:
-  static-checks:
-    name: Typescript lint and prettier
+  lint-and-typecheck:
+    name: Lint, typecheck and prettier
     runs-on: ubuntu-latest
     environment: dev
     permissions:
       contents: read
-    concurrency:
-      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
-      cancel-in-progress: true
     steps:
       - id: checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -28,10 +28,10 @@ jobs:
         run: pnpm nx run @io-app/api-types:generate
       - id: run-affected-checks
         if: github.event_name == 'pull_request'
-        run: pnpm validate
+        run: pnpm nx affected --targets=lint,tsc-noemit --configuration=ci --nx-bail
       - id: run-all-checks
         if: github.event_name != 'pull_request'
-        run: pnpm validate-all
+        run: pnpm nx run-many --targets=lint,tsc-noemit --configuration=ci
       - id: knip
         name: Check unused files and/or references
         # Advisory only: reports code this PR left unused, and can never block a
@@ -73,8 +73,64 @@ jobs:
           path: knip-pr
           retention-days: 1
           if-no-files-found: ignore
+
+  test-main-app:
+    name: Test main-app (shard ${{ matrix.shard }}/4)
+    runs-on: ubuntu-latest
+    environment: dev
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - id: checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - name: Sets the base and head SHAs required for `nx affected` command
+        uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
+      - id: generate-api-models
+        run: pnpm nx run @io-app/api-types:generate
+      - id: run-affected-tests
+        # `--exclude` (not `-p`, unsupported by `nx affected`) narrows the
+        # affected graph down to main-app so this job only ever runs the one
+        # sharded jest invocation it's meant for.
+        if: github.event_name == 'pull_request'
+        run: pnpm nx affected --targets=test --configuration=ci --exclude=@pagopa/io-app-design-system,@io-app/api-types,@io-app/dev-api-server -- --shard=${{ matrix.shard }}/4
+      - id: run-all-tests
+        if: github.event_name != 'pull_request'
+        run: pnpm nx run @io-app/main-app:test --configuration=ci -- --shard=${{ matrix.shard }}/4
       - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: apps/main-app/coverage/
+          flags: shard-${{ matrix.shard }}
+
+  test-other-projects:
+    name: Test other projects
+    runs-on: ubuntu-latest
+    environment: dev
+    permissions:
+      contents: read
+    steps:
+      - id: checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - name: Sets the base and head SHAs required for `nx affected` command
+        uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
+      - id: generate-api-models
+        run: pnpm nx run @io-app/api-types:generate
+      - id: run-affected-tests
+        if: github.event_name == 'pull_request'
+        run: pnpm nx affected --targets=test --configuration=ci --exclude=@io-app/main-app
+      - id: run-all-tests
+        if: github.event_name != 'pull_request'
+        run: pnpm nx run-many --targets=test --configuration=ci --exclude=@io-app/main-app
