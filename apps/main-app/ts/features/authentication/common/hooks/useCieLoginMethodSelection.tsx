@@ -18,10 +18,10 @@ import {
 import { AUTHENTICATION_ROUTES } from "../navigation/routes";
 import { AUTH_LEVELS, AuthLevel } from "../utils";
 
-type CieLoginMethodSelectionMode = "auth" | "reauth";
+type LoginFlow = "auth" | "reauth";
 
 type UseCieLoginMethodSelectionParams = {
-  flow: CieLoginMethodSelectionMode;
+  flow: LoginFlow;
 };
 const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 
