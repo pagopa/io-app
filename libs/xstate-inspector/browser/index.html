@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XState inspector</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #12151a;
+        --surface: #191d24;
+        --surface-2: #20252e;
+        --line: #2c323c;
+        --text: #e6e9ee;
+        --muted: #98a1ae;
+        --accent: #6ea8fe;
+        --event: #ffd479;
+        --state: #8ce99a;
+        --actor: #d0a2ff;
+        --error: #ff8f8f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          13px/1.5 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          Consolas,
+          monospace;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: var(--surface);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 12px;
+      }
+
+      h1 {
+        font-size: 13px;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .spacer {
+        flex: 1;
+      }
+
+      .status {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .status::before {
+        content: "";
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        margin-right: 6px;
+        background: var(--error);
+        vertical-align: middle;
+      }
+
+      .status[data-online="true"]::before {
+        background: var(--state);
+      }
+
+      .tabs {
+        display: flex;
+        gap: 4px;
+        overflow-x: auto;
+        padding: 0 12px 8px;
+      }
+
+      .tab {
+        border: 1px solid var(--line);
+        background: var(--surface-2);
+        color: var(--muted);
+        border-radius: 6px 6px 0 0;
+        padding: 4px 10px;
+        font: inherit;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+
+      .tab[aria-selected="true"] {
+        color: var(--text);
+        border-color: var(--accent);
+        background: var(--bg);
+      }
+
+      .tab .count {
+        color: var(--muted);
+        margin-left: 6px;
+        font-size: 11px;
+      }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--line);
+        background: var(--surface);
+      }
+
+      input[type="search"] {
+        flex: 1;
+        min-width: 0;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        color: var(--text);
+        border-radius: 6px;
+        padding: 4px 8px;
+        font: inherit;
+      }
+
+      button {
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+        color: var(--text);
+        border-radius: 6px;
+        padding: 4px 10px;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      button:hover {
+        border-color: var(--accent);
+      }
+
+      main {
+        padding: 8px 12px 40px;
+      }
+
+      .empty {
+        color: var(--muted);
+        padding: 24px 0;
+      }
+
+      .note {
+        color: var(--muted);
+        font-size: 12px;
+        padding: 6px 0;
+      }
+
+      details.row {
+        border-bottom: 1px solid var(--line);
+        padding: 2px 0;
+      }
+
+      details.row > summary {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        cursor: pointer;
+        list-style: none;
+      }
+
+      details.row > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .kind {
+        flex: none;
+        width: 78px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .kind.event {
+        color: var(--event);
+      }
+      .kind.snapshot {
+        color: var(--state);
+      }
+      .kind.actor {
+        color: var(--actor);
+      }
+      .kind.failure {
+        color: var(--error);
+      }
+
+      .headline {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .meta {
+        color: var(--muted);
+        font-size: 11px;
+        flex: none;
+      }
+
+      pre {
+        margin: 6px 0 10px;
+        padding: 8px;
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        overflow: auto;
+        max-height: 480px;
+      }
+
+      .failure .headline {
+        color: var(--error);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="bar">
+        <h1>XState inspector</h1>
+        <span class="spacer"></span>
+        <span class="status" id="status" data-online="false">connecting</span>
+      </div>
+      <div class="tabs" id="tabs"></div>
+    </header>
+    <div class="toolbar">
+      <input
+        type="search"
+        id="filter"
+        placeholder="filter by type, state or payload text"
+        aria-label="Filter events"
+        autocomplete="off"
+      />
+      <button type="button" id="export">Export JSON</button>
+      <button type="button" id="clear">Clear</button>
+    </div>
+    <main id="timeline"></main>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

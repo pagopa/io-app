@@ -39,7 +39,20 @@ const config = {
   projectRoot,
   server: {
     unstable_serverRoot: projectRoot,
-    rewriteRequestUrl: getRewriteRequestUrl(projectRoot)
+    rewriteRequestUrl: getRewriteRequestUrl(projectRoot),
+    // Serves the XState inspector UI and relays the inspection events posted by
+    // the app. Dev-server only: never part of a bundle, and the guard keeps a
+    // failure here from breaking Metro for everyone else.
+    enhanceMiddleware: metroMiddleware => {
+      try {
+        const { createXStateInspectorMiddleware } = require('../../libs/xstate-inspector/middleware');
+        const inspectorMiddleware = createXStateInspectorMiddleware();
+        return (req, res, next) =>
+          inspectorMiddleware(req, res, () => metroMiddleware(req, res, next));
+      } catch {
+        return metroMiddleware;
+      }
+    }
   },
   transformer: {
     babelTransformerPath:
@@ -50,6 +63,15 @@ const config = {
     assetExts: assetExts.filter(ext => ext !== "svg"),
 
     resolveRequest: (context, moduleName, platform) => {
+      // @statelyai/inspect's entry point also imports partysocket, whose module
+      // scope needs a global `Event` that React Native does not provide, so
+      // evaluating it crashes the dev app. Only `createInspector` is used here —
+      // the bridge drives it over HTTP and Server-Sent Events — so its WebSocket
+      // transport is resolved to an empty module. Using that transport would
+      // fail with a missing `PartySocket` rather than silently misbehaving.
+      if (moduleName === 'partysocket') {
+        return { type: 'empty' };
+      }
       // @statelyai/inspect defaults its private UUID import to node:crypto.
       if (moduleName === '#uuid') {
         return {

@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["node"],
+    "lib": ["es2022", "dom", "dom.iterable"]
+  },
+  "include": ["middleware.js", "browser/app.js", "browser/types.d.ts"]
+}
