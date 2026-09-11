@@ -2,8 +2,10 @@
  * XState inspector UI.
  *
  * Loaded as a plain ES module: no bundler, no dependencies. Events are grouped
- * by `rootId` into one tab per machine; label and structure come from the
- * `@xstate.actor` registration events the pipeline emits for every root actor.
+ * into one tab per machine: the tab is keyed by the machine id carried by the
+ * `@xstate.actor` registration event, falling back to `rootId` before a
+ * registration is seen. Setting the same machine up again in the app therefore
+ * overrides its tab rather than opening a second one.
  *
  * The stream carries no history, so a reload starts from an empty timeline.
  *
@@ -40,6 +42,20 @@ const filterInput = /** @type {HTMLInputElement} */ (
 
 /** @type {Map<string, Machine>} */
 const machines = new Map();
+/**
+ * Root actor session id (wire `rootId`) to owning tab key, so every event of an
+ * actor lands in the tab its registration adopted.
+ *
+ * @type {Map<string, string>}
+ */
+const roots = new Map();
+/**
+ * Machine id to owning tab key, so a machine disposed and set up again
+ * overrides its previous tab instead of opening a second one.
+ *
+ * @type {Map<string, string>}
+ */
+const labels = new Map();
 /** @type {Set<string>} */
 const expanded = new Set();
 /** @type {Map<string, number>} */
@@ -115,7 +131,8 @@ const keyOf = rootId => rootId ?? "unknown";
 
 /** @param {string | undefined} rootId @returns {Machine} */
 const machineFor = rootId => {
-  const key = keyOf(rootId);
+  const root = keyOf(rootId);
+  const key = roots.get(root) ?? root;
   const existing = machines.get(key);
   if (existing) {
     return existing;
@@ -123,11 +140,12 @@ const machineFor = rootId => {
   const created = {
     key,
     label: key,
-    rootId: key,
+    rootId: root,
     events: [],
     bytes: 0
   };
   machines.set(key, created);
+  roots.set(root, key);
   return created;
 };
 
@@ -232,15 +250,39 @@ const record = (raw, size, previousValue) => {
 const ingest = (raw, size) => {
   const event = asRecord(raw) ?? {};
   const type = asString(event.type);
-  const rootId = keyOf(asString(event.rootId));
-  const machine = machineFor(rootId);
+  const root = keyOf(asString(event.rootId));
+  const registration =
+    type === "@xstate.actor" && asString(event.parentId) === undefined
+      ? asString(event.name)
+      : undefined;
 
-  if (type === "@xstate.actor" && asString(event.parentId) === undefined) {
-    const name = asString(event.name);
-    if (name) {
-      machine.label = name;
+  // A machine that was disposed and set up again registers with the same
+  // machine id but a new session id. Take over its previous tab: the new
+  // instance replaces the timeline rather than opening a second tab.
+  const adoptedKey = registration && labels.get(registration);
+  const adopted =
+    adoptedKey === undefined ? undefined : machines.get(adoptedKey);
+  const machine = adopted ?? machineFor(root);
+  if (adopted) {
+    // A child actor can register before its root does, which opens a tab keyed
+    // by the new session id. Adoption supersedes it.
+    const orphan = roots.get(root);
+    if (orphan !== undefined && orphan !== adopted.key) {
+      machines.delete(orphan);
+      dropped.delete(orphan);
     }
+    if (adopted.rootId !== root) {
+      adopted.rootId = root;
+      adopted.events = [];
+      adopted.bytes = 0;
+      adopted.lastValue = undefined;
+      dropped.delete(adopted.key);
+    }
+  } else if (registration !== undefined) {
+    machine.label = registration;
+    labels.set(registration, machine.key);
   }
+  roots.set(root, machine.key);
 
   const snapshot = asRecord(event.snapshot);
   const entry = record(raw, size, machine.lastValue);
@@ -399,6 +441,8 @@ const download = () => {
 
 const clear = () => {
   machines.clear();
+  roots.clear();
+  labels.clear();
   expanded.clear();
   dropped.clear();
   render();

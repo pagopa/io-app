@@ -228,7 +228,7 @@ Follow the [React Native guide for running on a device](https://reactnative.dev/
 
 Development builds report state-machine events to an inspector served by the Metro dev server, so there is nothing to start besides Metro itself.
 
-Open <http://localhost:8081/xstate-inspector/> and use the app. Each machine gets its own tab, labelled with its machine id, and every tab shows transitions, incoming events, actor lifecycle, errors and actor outputs.
+Open <http://localhost:8081/xstate-inspector/> and use the app. Each machine gets its own tab, labelled with its machine id, and every tab shows transitions, incoming events, actor lifecycle, errors and actor outputs. A machine that is disposed and set up again in the app reuses its tab: the new instance replaces that timeline instead of adding a second tab.
 
 The app must be loading its bundle from Metro, otherwise there is no address to send events to:
 
