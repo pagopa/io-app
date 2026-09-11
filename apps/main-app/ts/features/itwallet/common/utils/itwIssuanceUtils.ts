@@ -6,6 +6,7 @@ import {
 } from "@pagopa/io-react-native-wallet";
 
 import { type IdentificationContext } from "../../machine/eid/context";
+import { pidScopes } from "./constants";
 import { Env } from "./environment";
 import { AuthorizedCredentialMetadata } from "./itwCredentialIssuanceUtils";
 import { extractVerification } from "./itwCredentialUtils";
@@ -298,15 +299,6 @@ export const getSpidProductionIdpHint = (spidIdpId: string) => {
   }
   return SPID_IDP_HINTS[spidIdpId];
 };
-
-/**
- * List of `scope` values that qualify as PID, used to retrieve the correct
- * credential configuration ID from the PID Issuer's Entity Configuration.
- */
-const pidScopes = [
-  "PersonIdentificationData", // Legacy 1.0 PID (will be removed in the future)
-  "eid" // New 1.4 NPID
-];
 
 /**
  * Get the credential configuration ID for the SD-JWT PID from its scope.
