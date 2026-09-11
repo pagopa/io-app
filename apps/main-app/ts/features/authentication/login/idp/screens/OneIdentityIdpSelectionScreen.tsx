@@ -1,10 +1,7 @@
 import { Banner, useIOToast, VSpacer } from "@io-app/design-system";
-import { useFocusEffect } from "@react-navigation/core";
 import I18n from "i18next";
-import { useCallback, useMemo, useRef } from "react";
-import { View } from "react-native";
+import { useCallback, useMemo } from "react";
 
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
@@ -14,7 +11,6 @@ import {
   useIOStore
 } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { SpidIdp } from "../../../../../utils/idps";
@@ -23,19 +19,15 @@ import {
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
 import { openWebUrl } from "../../../../../utils/url";
-import { trackLoginReauthEngagementCieSelected } from "../../../activeSessionLogin/screens/analytics";
 import { setIdpSelectedActiveSessionLogin } from "../../../activeSessionLogin/store/actions";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
-import {
-  trackCieLoginSelected,
-  trackSpidLoginIdpSelection
-} from "../../../common/analytics";
+import { trackSpidLoginIdpSelection } from "../../../common/analytics";
 import { trackLoginSpidIdpSelected } from "../../../common/analytics/spidAnalytics";
-import { useCieLoginMethodSelection } from "../../../common/hooks/useCieLoginMethodSelection";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpSelected } from "../../../common/store/actions";
 import IdpsGrid, { IdpsGridSkeleton } from "../components/IdpsGrid";
+import { OneIdentityIdpSelectionFailureContent } from "../components/OneIdentityIdpSelectionFailureContent";
 import { useGetIdps } from "../hooks/useGetIdps";
 import { fromIdpToLocalSpidIdp, randomOrderIdps } from "../utils/idps";
 
@@ -48,8 +40,6 @@ export const OneIdentityIdpSelectionScreen = ({
   navigation,
   route
 }: OneIdentityIdpSelectionScreenProps) => {
-  const accessibilityFirstFocuseViewRef = useRef<View>(null);
-
   const dispatch = useIODispatch();
   const store = useIOStore();
   const toast = useIOToast();
@@ -59,11 +49,6 @@ export const OneIdentityIdpSelectionScreen = ({
   const { state } = useGetIdps();
 
   const loginFlow = isActiveSessionLogin ? "reauth" : "auth";
-  const {
-    bottomSheet,
-    dismiss: dismissBottomSheet,
-    handleCieLoginRequested
-  } = useCieLoginMethodSelection({ mode: loginFlow });
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
 
   const shuffledIdps = useMemo(() => {
@@ -129,56 +114,12 @@ export const OneIdentityIdpSelectionScreen = ({
   );
 
   const ListEmptyComponent = useCallback(() => <IdpsGridSkeleton />, []);
-  useFocusEffect(
-    useCallback(() => {
-      setAccessibilityFocus(accessibilityFirstFocuseViewRef);
-
-      return dismissBottomSheet;
-    }, [dismissBottomSheet])
-  );
-
-  const navigateToCiePinScreen = useCallback(() => {
-    if (isActiveSessionLogin) {
-      void trackLoginReauthEngagementCieSelected();
-    } else {
-      void trackCieLoginSelected();
-    }
-    handleCieLoginRequested();
-  }, [isActiveSessionLogin, handleCieLoginRequested]);
-
-  const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
-  }, [navigation]);
 
   if (state.status === "failure") {
     return (
-      <>
-        <OperationResultScreenContent
-          action={{
-            label: I18n.t(
-              "authentication.idp_selection.loadingError.primaryAction"
-            ),
-            onPress: navigateToCiePinScreen,
-            testID: "idp-loading-error-primary-action"
-          }}
-          pictogram="umbrella"
-          ref={accessibilityFirstFocuseViewRef}
-          secondaryAction={{
-            label: I18n.t(
-              "authentication.idp_selection.loadingError.secondaryAction"
-            ),
-            onPress: navigateToLandingScreen,
-            testID: "idp-loading-error-secondary-action"
-          }}
-          subtitle={I18n.t(
-            "authentication.idp_selection.loadingError.description"
-          )}
-          title={I18n.t("authentication.idp_selection.loadingError.title")}
-        />
-        {bottomSheet}
-      </>
+      <OneIdentityIdpSelectionFailureContent
+        isActiveSessionLogin={isActiveSessionLogin}
+      />
     );
   }
 
