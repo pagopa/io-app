@@ -7,4 +7,4 @@ export default {
   addListener: jest.fn(),
   removeListeners: jest.fn(),
   emit: jest.fn()
-}; 
+};

@@ -3,7 +3,7 @@ env:
   IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
 on:
   schedule:
-    - cron:  '0 03 * * *'
+    - cron: "0 03 * * *"
 jobs:
   pagopa_specs_diff:
     name: Check PagoPA API specs alignment
@@ -15,7 +15,7 @@ jobs:
       - name: setup python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
-          python-version: '3.8'
+          python-version: "3.8"
       - name: check api specs alignment
         run: ./apps/main-app/scripts/pagopa_api_check.sh
         shell: bash

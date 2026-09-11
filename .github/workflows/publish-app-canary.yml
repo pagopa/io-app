@@ -85,9 +85,9 @@ jobs:
     runs-on: ubuntu-24.04
     environment: dev
     needs:
-        - prepare-canary-release
-        - release-android
-        - release-ios
+      - prepare-canary-release
+      - release-android
+      - release-ios
     steps:
       - id: send-slack-notification
         uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
@@ -100,4 +100,3 @@ jobs:
             unfurl_links: false
             unfurl_media: false
             text: "È disponibile la nuova versione `${{ needs.prepare-canary-release.outputs.canaryVersion }}` della canary dell'app."
-

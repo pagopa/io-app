@@ -1,8 +1,9 @@
 # Internationalization
+
 For multi-language support the application uses:
 
-* [i18next](https://www.i18next.com/) for the integration of translations with user preferences
-* JSON files in the directory `locales/{{lng}}` where `lng` is the language key code related to the source file in each directory 
+- [i18next](https://www.i18next.com/) for the integration of translations with user preferences
+- JSON files in the directory `locales/{{lng}}` where `lng` is the language key code related to the source file in each directory
 
 To add a new language you must:
 
@@ -21,9 +22,9 @@ If you want to see the result in the app you must edit the file [ts/i18n.ts](../
     import it from "../locales/it/index.json";
     import en from "../locales/en/index.json";
     import de from "../locales/de/index.json";
-    
+
     // ...other imports
-    
+
     const resources = {
       it: {
         index: it
@@ -42,9 +43,9 @@ If you want to see the result in the app you must edit the file [ts/i18n.ts](../
     import en from "../locales/en/index.json";
     import de from "../locales/de/index.json";
     import es from "../locales/es/index.json";
-    
+
     // ...other imports
-    
+
     const resources = {
       it: {
         index: it

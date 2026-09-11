@@ -5,7 +5,7 @@
 
 const versionModule = require("./version_utility.js");
 
-module.exports.readVersion = function(contents) {
+module.exports.readVersion = function (contents) {
   return "-";
 };
 
@@ -26,7 +26,7 @@ function replacer(match, version, p1, p2, p3) {
   return [p1, currentProjectVersionValue, p3].join("");
 }
 
-module.exports.writeVersion = function(contents, version) {
+module.exports.writeVersion = function (contents, version) {
   const regex = /(CURRENT_PROJECT_VERSION\s?=\s?)(\d+)(;)/gm;
 
   contents = contents.replace(regex, (substr, ...args) =>

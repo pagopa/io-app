@@ -3,7 +3,7 @@
 name: Publish nightly app build
 on:
   schedule:
-    - cron: '59 21 * * *'
+    - cron: "59 21 * * *"
 permissions:
   contents: write
   actions: read

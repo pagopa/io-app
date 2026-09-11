@@ -9,7 +9,7 @@ This is the function that needs to be invoked in order to send haptic feedback t
 #### Usage
 
 ```jsx
-import { triggerHaptic } from '@pagopa/io-app-design-system'
+import { triggerHaptic } from "@pagopa/io-app-design-system";
 
-triggerHaptic('impactLight');
+triggerHaptic("impactLight");
 ```

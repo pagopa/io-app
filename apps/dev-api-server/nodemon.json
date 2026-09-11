@@ -1,13 +1,6 @@
 {
-  "ignore": [
-    "**/*.test.ts",
-    "node_modules"
-  ],
-  "watch": [
-    "src",
-    "config",
-    "assets"
-  ],
+  "ignore": ["**/*.test.ts", "node_modules"],
+  "watch": ["src", "config", "assets"],
   "exec": "pnpm start",
   "ext": "ts,json"
 }
