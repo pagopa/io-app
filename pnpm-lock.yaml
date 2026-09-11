@@ -268,8 +268,8 @@ importers:
         version: 0.5.0
     devDependencies:
       '@faker-js/faker':
-        specifier: ^9.9.0
-        version: 9.9.0
+        specifier: ^10.0.0
+        version: 10.6.0
       '@types/body-parser':
         specifier: ^1.19.2
         version: 1.19.6
@@ -2250,9 +2250,9 @@ packages:
     resolution: {integrity: sha512-KZNxZvnGCtiM2aYYZ6Wz0Ix5r47dAvpNLApFtZWnSoERzAdOMzVBOPysBoM0JlF6FKWZ8GPqgn6qt3dV/8Zlpg==}
     hasBin: true
 
-  '@faker-js/faker@9.9.0':
-    resolution: {integrity: sha512-OEl393iCOoo/z8bMezRlJu+GlRGlsKbUAN7jKB6LhnKoqKve5DXRpalbItIIcwnCjs1k/FOPjFzcA6Qn+H+YbA==}
-    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
+  '@faker-js/faker@10.6.0':
+    resolution: {integrity: sha512-3RQHgEtvL1Frl/d1cSreo7qhJ3Gk1OdNUai/CtZ8G+wYeRQnJih3s9xJ9/kgYekPQRdwgh0HXRPqMlzWGwivIQ==}
+    engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
   '@gorhom/bottom-sheet@5.2.8':
     resolution: {integrity: sha512-+N27SMpbBxXZQ/IA2nlEV6RGxL/qSFHKfdFKcygvW+HqPG5jVNb1OqehLQsGfBP+Up42i0gW5ppI+DhpB7UCzA==}
@@ -14155,7 +14155,7 @@ snapshots:
       chalk: 4.1.2
       js-yaml: 4.1.1
 
-  '@faker-js/faker@9.9.0': {}
+  '@faker-js/faker@10.6.0': {}
 
   '@gorhom/bottom-sheet@5.2.8(patch_hash=9995dc509367cbc5391cc76916a68192588c5aec4321e7f54ff69a8a3662ee98)(e4f535be96224e2606622f4a05aa7e5a)':
     dependencies:
