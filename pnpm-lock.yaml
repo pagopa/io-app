@@ -354,6 +354,9 @@ importers:
       '@io-app/design-system':
         specifier: workspace:@pagopa/io-app-design-system@*
         version: link:../../libs/design-system
+      '@io-app/xstate-inspector':
+        specifier: workspace:*
+        version: link:../../libs/xstate-inspector
       '@pagopa/io-pagopa-commons':
         specifier: ^3.1.0
         version: 3.1.0(supports-color@8.1.1)
@@ -1035,6 +1038,37 @@ importers:
       svgo:
         specifier: ^3.0.2
         version: 3.3.2
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  libs/xstate-inspector:
+    dependencies:
+      '@statelyai/inspect':
+        specifier: 0.7.2
+        version: 0.7.2(xstate@5.17.4)
+      react-native:
+        specifier: 'catalog:'
+        version: 0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
+      react-native-url-polyfill:
+        specifier: ^2.0.0
+        version: 2.0.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))
+      xstate:
+        specifier: 'catalog:'
+        version: 5.17.4
+    devDependencies:
+      '@react-native/typescript-config':
+        specifier: 'catalog:'
+        version: 0.83.10
+      '@types/jest':
+        specifier: 'catalog:'
+        version: 30.0.0
+      '@types/node':
+        specifier: ^22.20.1
+        version: 22.20.1
+      jest:
+        specifier: 'catalog:'
+        version: 30.3.0(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(supports-color@8.1.1)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@22.20.1)(typescript@6.0.3))
       typescript:
         specifier: 'catalog:'
         version: 6.0.3

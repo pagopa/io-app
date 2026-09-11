@@ -239,7 +239,7 @@ Notes:
 
 - Open the page **before** reproducing: the relay keeps no history, so events sent while no page is open are lost.
 - The bridge only exists in development; production and test builds never connect.
-- The implementation lives in `libs/xstate-inspector/` (bridge + browser UI). It is intentionally outside the Nx project graph: no package, no build step, no CI impact. Type-check it on demand with `pnpm exec tsc -p libs/xstate-inspector/tsconfig.json`.
+- The implementation lives in `libs/xstate-inspector/` and is consumed as the `@io-app/xstate-inspector` workspace package: `src/` is the React Native bridge, `middleware.js` is the Metro bridge and `browser/` is the UI it serves. Type-check it with `pnpm nx run xstate-inspector:tsc-noemit`.
 
 ---
 

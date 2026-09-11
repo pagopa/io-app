@@ -1,9 +1,9 @@
+import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { JSX } from "react";
 
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector, useIOStore } from "../../../../../store/hooks.ts";
-import { createInspector } from "../../../../../utils/xstate/createInspector";
 import {
   selectItwEnv,
   selectItwSpecsVersion
@@ -14,7 +14,7 @@ import { createRemoteActorsImplementation } from "./actors.ts";
 import { createRemoteGuardsImplementation } from "./guards.ts";
 import { itwRemoteMachine } from "./machine.ts";
 
-const inspector = createInspector();
+const inspector = createBrowserInspector();
 
 type Props = {
   children: JSX.Element;

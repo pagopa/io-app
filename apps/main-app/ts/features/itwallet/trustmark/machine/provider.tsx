@@ -1,10 +1,10 @@
 import { useIOToast } from "@io-app/design-system";
+import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { PropsWithChildren } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
-import { createInspector } from "../../../../utils/xstate/createInspector";
 import {
   selectItwEnv,
   selectItwSpecsVersion
@@ -15,7 +15,7 @@ import { createItwTrustmarkActorsImplementation } from "./actors";
 import { createItwTrustmarkGuardsImplementation } from "./guards";
 import { itwTrustmarkMachine } from "./machine";
 
-const inspector = createInspector();
+const inspector = createBrowserInspector();
 
 type Props = PropsWithChildren<{
   credentialType: string;

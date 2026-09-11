@@ -2,7 +2,7 @@
  * Provides one optional XState inspector for development machines.
  *
  * Events are batched and posted to the inspector bridge mounted on Metro's dev
- * server (see `libs/xstate-inspector/middleware.js`), which relays them to the
+ * server (see `middleware.js` in this package), which relays them to the
  * browser UI over Server-Sent Events. Sharing Metro's port means there is no
  * extra process to launch and no extra port to forward.
  */
@@ -11,8 +11,6 @@ import type { InspectionEvent } from "xstate";
 
 import { NativeModules } from "react-native";
 import { URL } from "react-native-url-polyfill";
-
-import { isDevEnv, isTestEnv } from "../environment";
 
 /** Path owned by the inspector bridge on Metro's dev server. */
 const INSPECTOR_PATH = "/xstate-inspector";
@@ -145,7 +143,8 @@ export const createBatchingAdapter = (
  * adapter instead.
  */
 const inspector: undefined | XStateInspector = (() => {
-  if (!isDevEnv || isTestEnv) {
+  // Jest defines __DEV__ as true too, so test runs need their own exclusion.
+  if (!__DEV__ || process.env.NODE_ENV === "test") {
     return undefined;
   }
 
@@ -184,4 +183,5 @@ const inspector: undefined | XStateInspector = (() => {
  *
  * A single instance keeps every machine provider on one batched connection.
  */
-export const createInspector = (): undefined | XStateInspector => inspector;
+export const createBrowserInspector = (): undefined | XStateInspector =>
+  inspector;

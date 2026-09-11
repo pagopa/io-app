@@ -1,4 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -18,14 +19,13 @@ import {
   preferredLanguageSelector
 } from "../../../../store/reducers/persistedPreferences";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
-import { createInspector } from "../../../../utils/xstate/createInspector";
 import { bpdTokenSelector } from "../../../authentication/common/store/selectors";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";
 import { idPayOnboardingMachine } from "./machine";
 
-const inspector = createInspector();
+const inspector = createBrowserInspector();
 
 type Props = {
   children: ReactNode;

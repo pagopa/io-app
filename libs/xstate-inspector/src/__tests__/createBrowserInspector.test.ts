@@ -4,10 +4,10 @@ import { NativeModules } from "react-native";
 
 import {
   createBatchingAdapter,
-  createInspector,
+  createBrowserInspector,
   inspectorEndpointFromSourceUrl,
   metroSourceUrlFromNativeModules
-} from "../createInspector";
+} from "../createBrowserInspector";
 
 /** Minimal event stand-in: the adapter only serializes what it is given. */
 const inspectedEvent = (id: string): StatelyInspectionEvent =>
@@ -90,9 +90,9 @@ describe("metroSourceUrlFromNativeModules", () => {
   });
 });
 
-describe("createInspector", () => {
+describe("createBrowserInspector", () => {
   it("does not create an inspector in test environments", () => {
-    expect(createInspector()).toBeUndefined();
+    expect(createBrowserInspector()).toBeUndefined();
   });
 });
 
