@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.5](https://github.com/pagopa/io-app/compare/3.39.0-rc.4...3.39.0-rc.5) (2026-09-10)
+
+### Features
+
+* [[IOPLT-2066](https://pagopa.atlassian.net/browse/IOPLT-2066)] Add haptic feedback on `ListItemMessage`'s press ([#8581](https://github.com/pagopa/io-app/issues/8581)) ([c8116c2](https://github.com/pagopa/io-app/commit/c8116c2453c9d7fde4cf83f75c3489858c67ca94))
+* **IT-Wallet:** [[SIW-4889](https://pagopa.atlassian.net/browse/SIW-4889)] Update Discovery screen svg images ([#8570](https://github.com/pagopa/io-app/issues/8570)) ([8d07b63](https://github.com/pagopa/io-app/commit/8d07b63d7499ea0f11f641e22253c27676fdcf34))
+* **IT-Wallet:** [[SIW-4997](https://pagopa.atlassian.net/browse/SIW-4997)] Persist IT Wallet remote config ([#8573](https://github.com/pagopa/io-app/issues/8573)) ([0a8b21e](https://github.com/pagopa/io-app/commit/0a8b21e1bde06dc4c1c60bd2abb076d854671dff))
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Wallet attachment download ([#8577](https://github.com/pagopa/io-app/issues/8577)) ([139a549](https://github.com/pagopa/io-app/commit/139a54921890218aceb4e7f7317ae4ef08ae6556))
+* **IT-Wallet:** [[SIW-4936](https://pagopa.atlassian.net/browse/SIW-4936)] Update credential status logic to handle expiration date ([#8566](https://github.com/pagopa/io-app/issues/8566)) ([f549330](https://github.com/pagopa/io-app/commit/f549330af5da3782e21e51dfd82d7ba276809383))
+* **IT-Wallet:** [[SIW-4994](https://pagopa.atlassian.net/browse/SIW-4994)] Handle WebView errors in CIE PIN identification, display Issuer generic failure screen  ([#8572](https://github.com/pagopa/io-app/issues/8572)) ([5b8381e](https://github.com/pagopa/io-app/commit/5b8381e062604162a8df8e11f012616bab66247d))
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4542](https://pagopa.atlassian.net/browse/SIW-4542)] Verify Status List JWTs ([#8484](https://github.com/pagopa/io-app/issues/8484)) ([06ad924](https://github.com/pagopa/io-app/commit/06ad92446f23ebf2a1d163ff570e6e3d82e64170))
+* **release:** 3.38.0-rc.30 ([#8584](https://github.com/pagopa/io-app/issues/8584)) ([24bdce3](https://github.com/pagopa/io-app/commit/24bdce3997ae0013251939dfdf1a4fa225676fef))
+## [3.38.0-rc.30](https://github.com/pagopa/io-app/compare/3.38.0-rc.29...3.38.0-rc.30) (2026-09-10)
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Wallet attachment download ([#8577](https://github.com/pagopa/io-app/issues/8577)) ([ffb36d5](https://github.com/pagopa/io-app/commit/ffb36d54606133fb675c13ef25374e34d268aeaa))
+## [3.39.0-rc.4](https://github.com/pagopa/io-app/compare/3.39.0-rc.3...3.39.0-rc.4) (2026-09-09)
+
+### Features
+
+* [[IOPID-4151](https://pagopa.atlassian.net/browse/IOPID-4151)] Map idps to friendly names with error fallback ([#8563](https://github.com/pagopa/io-app/issues/8563)) ([cd21d94](https://github.com/pagopa/io-app/commit/cd21d9419747fb243902ad6509d6bed9cdc812e2))
+* **IT-Wallet:** [[SIW-4906](https://pagopa.atlassian.net/browse/SIW-4906)] Update link on "What's IT-Wallet" banner ([#8575](https://github.com/pagopa/io-app/issues/8575)) ([0015d39](https://github.com/pagopa/io-app/commit/0015d394a440dcf41822689481a5897169c1ef8e))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Restore navigation to reissuance within remote presentation ([#8571](https://github.com/pagopa/io-app/issues/8571)) ([25fe610](https://github.com/pagopa/io-app/commit/25fe6104892fafdc2c48d926cb78b1d8f3f49e4d))
+
+### Chores
+
+* [[IOPID-4189](https://pagopa.atlassian.net/browse/IOPID-4189)] Support OneIdentity namespace in `SAMLRequest` parsing ([#8561](https://github.com/pagopa/io-app/issues/8561)) ([fb1cdb6](https://github.com/pagopa/io-app/commit/fb1cdb6fe012e30d7ea0008583a5a92f3d262ee7))
+* **IT-Wallet:** [[SIW-4952](https://pagopa.atlassian.net/browse/SIW-4952)] Handle suspended status from TSL, update status playground to support TSL ([#8550](https://github.com/pagopa/io-app/issues/8550)) ([471943e](https://github.com/pagopa/io-app/commit/471943e96de5f8d918967dba86d2ceab042bc099))
+* Update translations from Lokalise ([#8569](https://github.com/pagopa/io-app/issues/8569)) ([7b499b6](https://github.com/pagopa/io-app/commit/7b499b6de7eff5e25025b54aa3d66430bd0d6f95))
 ## [3.39.0-rc.3](https://github.com/pagopa/io-app/compare/3.39.0-rc.2...3.39.0-rc.3) (2026-09-08)
 
 ### Features

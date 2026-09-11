@@ -4,11 +4,11 @@ import {
   trackToSWebViewError,
   trackToSWebViewErrorRetry
 } from "../../../../settings/privacy/shared/analytics";
-import { SpidLevel } from "../../../login/cie/utils";
 import {
   IdpCIE,
   IdpCIE_ID
 } from "../../../login/hooks/useNavigateToLoginMethod";
+import { AUTH_LEVELS } from "../../utils";
 import {
   loginCieWizardSelected,
   trackCieBottomSheetScreenView,
@@ -85,7 +85,7 @@ describe("analytics/index.ts", () => {
       .mockImplementation(_state => new Promise(resolve => resolve()));
 
     const state = { mock: "state" } as any;
-    await trackCieIDLoginSelected(state, "SpidL2" as SpidLevel);
+    await trackCieIDLoginSelected(state, AUTH_LEVELS.L2);
 
     expect(mixpanelTrackSpyOn).toHaveBeenCalledTimes(1);
     expect(mixpanelTrackSpyOn).toHaveBeenCalledWith("LOGIN_CIEID_SELECTED", {

@@ -116,6 +116,7 @@ export type ItwCredentialStatus =
   | "expired"
   | "expiring"
   | "invalid"
+  | "suspended"
   | "unknown"
   | "valid"
   | ItwJwtCredentialStatus;
