@@ -79,7 +79,7 @@ export const LandingScreen = () => {
     bottomSheet,
     dismiss: dismissBottomSheet,
     handleCieLoginRequested
-  } = useCieLoginMethodSelection({ mode: "auth" });
+  } = useCieLoginMethodSelection({ flow: "auth" });
 
   const { presentInfoBottomsheet, infoBottomsheetComponent } =
     useInfoBottomsheetComponent();

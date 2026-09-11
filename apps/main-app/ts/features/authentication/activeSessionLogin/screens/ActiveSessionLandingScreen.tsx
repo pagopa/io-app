@@ -49,7 +49,7 @@ export const ActiveSessionLandingScreen = () => {
     bottomSheet,
     dismiss: dismissBottomSheet,
     handleCieLoginRequested
-  } = useCieLoginMethodSelection({ mode: "reauth" });
+  } = useCieLoginMethodSelection({ flow: "reauth" });
 
   useOnFirstRender(() => {
     void trackLoginReauthEngagement();

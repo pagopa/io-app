@@ -21,12 +21,12 @@ import { AUTH_LEVELS, AuthLevel } from "../utils";
 type CieLoginMethodSelectionMode = "auth" | "reauth";
 
 type UseCieLoginMethodSelectionParams = {
-  mode: CieLoginMethodSelectionMode;
+  flow: CieLoginMethodSelectionMode;
 };
 const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 
 export const useCieLoginMethodSelection = ({
-  mode
+  flow
 }: UseCieLoginMethodSelectionParams) => {
   const store = useIOStore();
   const navigation = useIONavigation();
@@ -37,7 +37,7 @@ export const useCieLoginMethodSelection = ({
     isCieSupported
   } = useNavigateToLoginMethod();
 
-  const isReauth = mode === "reauth";
+  const isReauth = flow === "reauth";
 
   const handleNavigateToCiePinScreen = useCallback(() => {
     if (isReauth) {

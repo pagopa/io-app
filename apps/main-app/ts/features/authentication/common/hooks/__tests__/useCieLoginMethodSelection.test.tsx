@@ -48,11 +48,11 @@ describe("useCieLoginMethodSelection", () => {
     mockIsCieSupported.mockReturnValue(true);
   });
 
-  const renderComponent = (mode: "auth" | "reauth") => {
+  const renderComponent = (flow: "auth" | "reauth") => {
     // eslint-disable-next-line functional/no-let
     let hookReturnValue: ReturnType<typeof useCieLoginMethodSelection>;
     const WrapperComponent = () => {
-      hookReturnValue = useCieLoginMethodSelection({ mode });
+      hookReturnValue = useCieLoginMethodSelection({ flow });
       const { bottomSheet, handleCieLoginRequested } = hookReturnValue;
       return (
         <>
