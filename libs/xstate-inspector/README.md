@@ -1,0 +1,160 @@
+# @io-app/xstate-inspector
+
+A development-only inspector for the XState machines in the [IO app](../../apps/main-app/README.md). The app reports machine events to Metro, and a browser page shows them as a timeline per machine. Nothing runs in production, and you start nothing extra because Metro serves the UI and relays the events on the port it already uses.
+
+## How machine events reach the browser
+
+The React Native bridge receives every inspection event XState emits and batches them. It posts a batch to `<metro-host>/xstate-inspector/ingest` every 150 ms, or sooner when the batch reaches 50 events. Metro’s dev server mounts `middleware.js` on that path, and the middleware fans every event out to the connected pages over Server-Sent Events (SSE).
+
+The UI keys a tab by the machine id in the actor registration event. A machine that the app disposes and sets up again replaces its own timeline instead of opening a second tab. The UI renders the three XState event types, `@xstate.actor`, `@xstate.event`, and `@xstate.snapshot`, and shows any other event as-is. `browser/types.d.ts` declares the wire format.
+
+## What this package contains
+
+The package has two entry points and one static UI:
+
+```text
+libs/xstate-inspector/
+├── src/
+│   ├── index.ts                    exports createBrowserInspector
+│   ├── createBrowserInspector.ts   endpoint, batching, build guards
+│   └── __tests__/                  unit tests for the bridge
+├── middleware.js                   Connect middleware that Metro mounts
+├── browser/                        UI served by the middleware, no build step
+│   ├── index.html
+│   ├── app.js
+│   └── types.d.ts
+├── package.json
+├── tsconfig.json
+├── jest.config.js
+└── babel.config.js
+```
+
+`@io-app/xstate-inspector` resolves to `src/index.ts` for the app bundle. `@io-app/xstate-inspector/middleware` resolves to `middleware.js` for Node. Neither bundle includes the browser UI, because the middleware reads it from disk.
+
+## Report a machine to the inspector
+
+Import the bridge and pass the inspector to the machine context. The pattern matches the machine providers in the app, for example `apps/main-app/ts/features/itwallet/machine/eid/provider.tsx`:
+
+```typescript
+import { createActorContext } from "@xstate/react";
+import { createBrowserInspector } from "@io-app/xstate-inspector";
+
+const inspector = createBrowserInspector();
+
+export const MachineContext = createActorContext(
+  myMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
+);
+```
+
+`createBrowserInspector` returns one shared inspector for the whole app, or `undefined` when inspection must not run. `myMachine` is the machine the provider wraps.
+
+The bridge returns `undefined` in three cases, and the provider stays valid in all of them:
+
+- The build is not a development build, which is what `__DEV__` reports.
+- `NODE_ENV` is `test`, which is what a Jest run sets.
+- The bundle did not load over HTTP or HTTPS, which happens in a release build with an embedded bundle.
+
+Inspector failures never reach the app. The bridge drops a failed POST, a serialization error, or a circular context, and the observed machines keep running.
+
+## Open the inspector while the app runs
+
+Run Metro, start a development build that loads its bundle from Metro, then open <http://localhost:8081/xstate-inspector/>. The [main app README](../../apps/main-app/README.md#xstate-inspector) lists the device commands. Both sides go through Metro, so the inspector keeps working when Metro moves to another host or port.
+
+Open the page before you reproduce a flow. The relay buffers nothing, so it drops events sent while no page is connected, and a reload starts from an empty timeline.
+
+## Bridge routes
+
+The middleware answers only under `/xstate-inspector` and passes every other path to Metro:
+
+| Route | Method | Purpose |
+| --- | --- | --- |
+| `/xstate-inspector/` | GET | Serves the UI and its assets from `browser/` |
+| `/xstate-inspector/stream` | GET | Opens the SSE stream, one per open page |
+| `/xstate-inspector/ingest` | POST | Accepts a JSON batch from the app and answers `204` |
+| `/xstate-inspector/health` | GET | Reports the `clients`, `received`, and `rejected` counts |
+
+`middleware.js` exports `createXStateInspectorMiddleware` and `PREFIX`.
+
+## Browser UI features
+
+The UI is one page, and every control works on the machine of the selected tab:
+
+- **Machine tabs**: one per machine id, in the order the app registered them.
+- **Status**: `connected` while the stream is open, `reconnecting` while a retry is pending.
+- **Filter**: matches the event type, the state value, or the payload text.
+- **Timeline**: actor registration, transitions, incoming events, errors, and actor output, with each payload expandable.
+- **Export JSON**: downloads the retained events of the selected machine.
+- **Clear**: empties the timeline without touching the app.
+
+## Metro configuration the app must keep
+
+The app mounts the middleware in `apps/main-app/metro.config.js`:
+
+```javascript
+enhanceMiddleware: metroMiddleware => {
+  try {
+    const {
+      createXStateInspectorMiddleware
+    } = require("@io-app/xstate-inspector/middleware");
+    const inspectorMiddleware = createXStateInspectorMiddleware();
+    return (req, res, next) =>
+      inspectorMiddleware(req, res, () => metroMiddleware(req, res, next));
+  } catch {
+    return metroMiddleware;
+  }
+}
+```
+
+The `catch` keeps a broken inspector from taking down the dev server. A missing package therefore shows up as a 404 on the inspector routes instead of a Metro crash, so check `/xstate-inspector/health` first when the page does not connect.
+
+Two resolver entries are also required, because the bridge depends on `@statelyai/inspect`, whose entry point imports a WebSocket client at module scope:
+
+```javascript
+if (moduleName === "partysocket") {
+  return { type: "empty" };
+}
+if (moduleName === "#uuid") {
+  return {
+    type: "sourceFile",
+    filePath: path.join(
+      path.dirname(require.resolve("@statelyai/inspect")),
+      "uuid-browser.mjs"
+    )
+  };
+}
+```
+
+`partysocket` extends `EventTarget` in its module scope, which React Native does not define, so evaluating it crashes the app. The bridge uses the HTTP adapter of the inspector only, so it never constructs the WebSocket client. The `#uuid` import resolves to `node:crypto` by default, which Metro cannot resolve, so the app points it at the browser build that ships with the package.
+
+## Limits and retention
+
+The inspector bounds what it keeps, so a long session on a large context cannot exhaust the app, the dev server, or the browser tab:
+
+- Batch: 50 events or 150 ms, whichever comes first.
+- Request body: 16 MB. The middleware rejects a larger batch with `413`.
+- Serialization depth: 10 levels of machine context, so a large context never reaches the wire in full.
+- Per machine: 20000 events or 32 MB, whichever comes first. The UI evicts the oldest events and counts them above the timeline.
+- Rendered rows: the last 400 after filtering, with the rest counted.
+- Slow page: the middleware disconnects a client that has 4 MB queued instead of buffering for it.
+- Idle stream: a comment frame every 15s keeps the connection open through proxies and device tunnels.
+
+## Development commands
+
+```bash
+pnpm nx run xstate-inspector:test
+pnpm nx run xstate-inspector:tsc-noemit
+pnpm nx run xstate-inspector:lint
+```
+
+`tsc-noemit` also checks `middleware.js` and `browser/app.js`, because the package tsconfig sets `checkJs`. `pnpm nx affected --targets=lint,tsc-noemit,test` runs the same targets for every project that changed.
+
+## Troubleshooting
+
+**The page reports `reconnecting`.** Nothing answers the SSE route. Confirm Metro is running, then open `http://localhost:8081/xstate-inspector/health`. A 404 means the middleware did not mount, and the `require` in `metro.config.js` threw.
+
+**Metro answers `Unauthorized request from http://127.0.0.1:8081`.** Open the page through `localhost` instead. Module scripts send an `Origin` header, and Metro’s dev server rejects every Origin that is not localhost.
+
+**The page reports `connected` but no tab appears.** The app is not reporting. Check that the build loads its bundle from Metro, and that the machine provider calls `createBrowserInspector` before it creates the actor context.
+
+**A tab exists and its timeline starts mid-flow.** The page was opened after those events were sent. The relay keeps no history, so open the page first and reload it to start over.
