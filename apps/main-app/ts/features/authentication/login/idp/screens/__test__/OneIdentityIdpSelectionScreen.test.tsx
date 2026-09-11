@@ -2,6 +2,7 @@ import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import _, { merge } from "lodash";
 import { ComponentProps } from "react";
+import { View } from "react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -13,6 +14,7 @@ import { setIdpSelectedActiveSessionLogin } from "../../../../activeSessionLogin
 import * as analytics from "../../../../common/analytics/spidAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { idpSelected } from "../../../../common/store/actions";
+import { OneIdentityIdpSelectionFailureContent } from "../../components/OneIdentityIdpSelectionFailureContent";
 import { Idps } from "../../types/idps";
 import { OneIdentityIdpSelectionScreen } from "../OneIdentityIdpSelectionScreen";
 
@@ -20,6 +22,13 @@ const mockUseGetIdps = jest.fn();
 jest.mock("../../hooks/useGetIdps", () => ({
   useGetIdps: () => mockUseGetIdps()
 }));
+
+jest.mock("../../components/OneIdentityIdpSelectionFailureContent");
+const mockedOneIdentityIdpSelectionFailureContent =
+  OneIdentityIdpSelectionFailureContent as jest.Mock;
+mockedOneIdentityIdpSelectionFailureContent.mockReturnValue(
+  <View testID="one-identity-idp-selection-failure-content" />
+);
 
 const mockNavigate = jest.fn();
 
@@ -59,14 +68,17 @@ describe("OneIdentityIdpSelectionScreen", () => {
     expect(skeletonItems.length).toBe(5);
   });
 
-  it("should render nothing when the fetch fails", () => {
+  it("should render the loading error content when the fetch fails", () => {
     mockUseGetIdps.mockReturnValue({
       state: { status: "failure", error: new Error("network error") }
     });
 
-    const { queryByTestId } = renderComponent();
+    const { queryByTestId, getByTestId } = renderComponent();
 
     expect(queryByTestId("idps-grid")).toBeNull();
+    expect(
+      getByTestId("one-identity-idp-selection-failure-content")
+    ).toBeTruthy();
   });
 
   it("should render the fetched IDPs on success", () => {
