@@ -77,6 +77,25 @@ describe("ITW Wallet Instance reducer migrations", () => {
       }
     },
     {
+      from: 6,
+      to: 7,
+      state: {
+        attestation: { jwt: "wallet-attestation" },
+        isRemotelyActive: undefined,
+        keyAttestations: {},
+        renewalError: true,
+        status: migratedStatus
+      },
+      expectedState: {
+        attestation: { jwt: "wallet-attestation" },
+        isRemotelyActive: undefined,
+        keyAttestations: {},
+        renewalError: true,
+        status: migratedStatus,
+        statusList: undefined
+      }
+    },
+    {
       from: 3,
       to: 4,
       state: {
