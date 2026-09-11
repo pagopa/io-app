@@ -40,7 +40,7 @@ import {
   isActiveSessionLoginSelector,
   remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
-import { getIdpLoginUri } from "../../../common/utils";
+import { AUTH_LEVELS, getIdpLoginUri } from "../../../common/utils";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
@@ -153,7 +153,11 @@ const CieWebView = (props: Props) => {
   const remoteApiLoginUrlPrefix = useIOSelector(
     remoteApiLoginUrlPrefixSelector
   );
-  const loginUri = getIdpLoginUri(CIE_IDP_ID, 3, remoteApiLoginUrlPrefix);
+  const loginUri = getIdpLoginUri(
+    CIE_IDP_ID,
+    AUTH_LEVELS.L3,
+    remoteApiLoginUrlPrefix
+  );
 
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const dispatch = useIODispatch();

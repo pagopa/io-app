@@ -1,5 +1,4 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
-import * as O from "fp-ts/lib/Option";
 import { type DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
@@ -51,6 +50,7 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: { integrityKeyTag: undefined },
           preferences: {},
           walletInstance: { statusList: undefined },
@@ -68,9 +68,9 @@ describe("checkWalletInstanceStateSaga", () => {
 
   it("Checks the wallet state when the wallet is OPERATIONAL", () => {
     const store: DeepPartial<GlobalState> = {
-      remoteConfig: O.none,
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: {
             integrityServiceStatus: "ready",
             integrityKeyTag: "aac6e82a-e27e-4293-9b55-94a9fab22763"
@@ -101,9 +101,9 @@ describe("checkWalletInstanceStateSaga", () => {
 
   it("Checks and resets the wallet state when the wallet is OPERATIONAL and the instance was revoked", () => {
     const store: DeepPartial<GlobalState> = {
-      remoteConfig: O.none,
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: {
             integrityKeyTag: "aac6e82a-e27e-4293-9b55-94a9fab22763"
           },
@@ -132,9 +132,9 @@ describe("checkWalletInstanceStateSaga", () => {
 
   it("Checks the wallet state when the wallet is VALID", () => {
     const store: DeepPartial<GlobalState> = {
-      remoteConfig: O.none,
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: {
             integrityKeyTag: "3396d31e-ac6a-4357-8083-cb5d3cda4d74"
           },
@@ -165,9 +165,9 @@ describe("checkWalletInstanceStateSaga", () => {
 
   it("Checks and resets the wallet state when the wallet is VALID and the instance was revoked", () => {
     const store: DeepPartial<GlobalState> = {
-      remoteConfig: O.none,
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: {
             integrityKeyTag: "3396d31e-ac6a-4357-8083-cb5d3cda4d74"
           },
@@ -200,6 +200,7 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: { integrityKeyTag: undefined },
           credentials: {
             credentials: { [mockPid.credentialId]: mockPid }
@@ -220,9 +221,9 @@ describe("checkWalletInstanceStateSaga", () => {
 
   it("Resets the wallet instance when the status endpoint returns 404 with a valid key tag", () => {
     const store: DeepPartial<GlobalState> = {
-      remoteConfig: O.none,
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: {
             integrityKeyTag: "aac6e82a-e27e-4293-9b55-94a9fab22763"
           },

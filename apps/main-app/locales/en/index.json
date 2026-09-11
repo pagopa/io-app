@@ -1877,7 +1877,7 @@
                 "action": "Verify Identity",
                 "expired": "Verify your identity to continue using your documents without restrictions.",
                 "expiring": "Please verify your identity by {{date}} to continue using your documents without restrictions.",
-                "valid": "You activated your ID using your CIE on {{date}}."
+                "valid": "You activated IT-Wallet with your CIE on {{date}}."
               }
             },
             "contentBottom": "###### How does it work?\n\nYour **identity is verified** during the activation process using SPID or CIE.",
@@ -2347,7 +2347,7 @@
       "reissuanceLandingScreen": {
         "itWalletActivation": {
           "primaryAction": "Learn more",
-          "subtitle": "Take your digital documents to the next level with IT-Wallet on IO: public, secure, and yours.",
+          "subtitle": "Take your digital documents to the next level with IO's IT-Wallet: public, secure, and yours.",
           "title": "Did you know? You can now activate IT-Wallet"
         },
         "notNecessary": {
