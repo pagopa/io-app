@@ -75,13 +75,18 @@ const config = {
         return { type: 'empty' };
       }
       // @statelyai/inspect defaults its private UUID import to node:crypto.
+      // Only the inspector package depends on it, so it is resolved from there
+      // rather than from the app, which never imports it itself.
       if (moduleName === '#uuid') {
+        const inspectorRoot = path.dirname(
+          require.resolve('@io-app/xstate-inspector/package.json')
+        );
+        const inspectRoot = path.dirname(
+          require.resolve('@statelyai/inspect', { paths: [inspectorRoot] })
+        );
         return {
           type: 'sourceFile',
-          filePath: path.join(
-            path.dirname(require.resolve('@statelyai/inspect')),
-            'uuid-browser.mjs'
-          )
+          filePath: path.join(inspectRoot, 'uuid-browser.mjs')
         };
       }
       if (moduleName === "crypto") {
