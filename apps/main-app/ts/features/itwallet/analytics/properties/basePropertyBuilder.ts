@@ -4,10 +4,7 @@ import {
   itwIdentificationModeSelector
 } from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import {
-  isL2Credential,
-  validCredentialStatuses
-} from "../../common/utils/itwCredentialUtils.ts";
+import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
@@ -161,8 +158,8 @@ export const computeItwStatus = (
 
 /**
  * Builds the aggregate Mixpanel status for third-party credentials, i.e. credentials
- * obtained through a third-party credential offer (deeplink/QR code). Ignores PID and
- * historical L2 credentials, which are tracked by their own dedicated properties.
+ * obtained through a third-party credential offer (deeplink/QR code), including
+ * Documenti su IO credential types. PID is excluded.
  */
 export const buildThirdPartyCredentialProperty = (
   state: GlobalState
@@ -184,8 +181,7 @@ export const buildThirdPartyCredentialProperty = (
 
 /**
  * Builds the aggregate Mixpanel status for credentials obtained through the credentials
- * catalogue/list. Ignores PID and historical L2 credentials, which are tracked by their
- * own dedicated properties.
+ * catalogue/list, including Documenti su IO credentials. PID is excluded.
  */
 export const buildWalletListCredentialProperty = (
   state: GlobalState
@@ -209,14 +205,10 @@ const isThirdPartyCredential = ({
   credentialType,
   origin
 }: CredentialMetadata) =>
-  credentialType !== CredentialType.PID &&
-  !isL2Credential(credentialType) &&
-  origin === "credentialOffer";
+  credentialType !== CredentialType.PID && origin === "credentialOffer";
 
 const isWalletListCredential = ({
   credentialType,
   origin
 }: CredentialMetadata) =>
-  credentialType !== CredentialType.PID &&
-  !isL2Credential(credentialType) &&
-  origin === "catalogue";
+  credentialType !== CredentialType.PID && origin === "catalogue";
