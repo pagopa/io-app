@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   lint-and-typecheck:
-    name: Lint, typecheck and prettier
+    name: Typescript lint and prettier
     runs-on: ubuntu-latest
     environment: dev
     permissions:
