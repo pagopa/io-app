@@ -226,7 +226,7 @@ Follow the [React Native guide for running on a device](https://reactnative.dev/
 
 ### XState inspector
 
-Development builds report state-machine events to an inspector served by the Metro dev server, so there is nothing to start besides Metro itself: `pnpm nx run main-app:start` builds the inspector UI before it starts Metro, and `pnpm nx run main-app:run-ios` / `run-android` connect to that server as usual.
+Development builds report state-machine events to an inspector served by the Metro dev server. The UI it serves is built on its own: run `pnpm nx run xstate-inspector:start` in a second terminal to build it and rebuild it as you edit, then start Metro and the app as usual with `pnpm nx run main-app:start` and `run-ios` / `run-android`.
 
 Open <http://localhost:8081/xstate-inspector/> and use the app. Each machine gets its own tab, labelled with its machine id, and every tab shows transitions, incoming events, actor lifecycle, errors and actor outputs. A machine that is disposed and set up again in the app reuses its tab: the new instance replaces that timeline instead of adding a second tab.
 

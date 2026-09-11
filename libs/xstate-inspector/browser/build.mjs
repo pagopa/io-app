@@ -3,8 +3,9 @@
  * serves. `index.html` is authored, so it is copied verbatim rather than
  * generated; only the ES modules under `browser/src` are bundled.
  *
- * Run it through `pnpm nx run xstate-inspector:build`, or with `--watch` while
- * working on the UI.
+ * Run it through `pnpm nx run xstate-inspector:build` for a one-off build, or
+ * `pnpm nx run xstate-inspector:start` to keep rebuilding while you work on the
+ * UI. The middleware serves the result, so Metro needs no restart.
  */
 import { copyFileSync, mkdirSync, watch } from "node:fs";
 import { dirname, join } from "node:path";
