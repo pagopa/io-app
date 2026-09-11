@@ -18,8 +18,7 @@ import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
+import { ITW_PRIVACY_URL, ITW_TOS_URL } from "../../../../urls";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackOpenItwTos } from "../../analytics";
@@ -131,9 +130,6 @@ const ContentView = ({
 }: ContentViewProps) => {
   const route = useRoute();
   const hasScrolledToBottom = useRef(false);
-  const privacyUrl = useIOSelector(state =>
-    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
-  );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
@@ -245,7 +241,8 @@ const ContentView = ({
         <VSpacer size={32} />
         <IOMarkdown
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
-            privacyUrl
+            privacyUrl: ITW_PRIVACY_URL,
+            tosUrl: ITW_TOS_URL
           })}
           rules={generateItwIOMarkdownRules({
             linkCallback: trackOpenItwTos

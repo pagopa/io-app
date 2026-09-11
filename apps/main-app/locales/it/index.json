@@ -1532,7 +1532,7 @@
           "requiredClaims": "Dati richiesti",
           "subtitle": "Saranno condivisi con **{{organization}}** solo per il tempo necessario al rilascio della versione digitale del documento.",
           "title": "Dati necessari per {{credentialName}}",
-          "tos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}})."
+          "tos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}})."
         },
         "credentialNotFound": {
           "subtitle": "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce.",
@@ -2217,7 +2217,7 @@
             },
             "subtitle": "Saranno condivisi con **{{relyingParty}}** solo per il tempo necessario all’accesso ai servizi richiesti.",
             "title": "Consenti la verifica di questi dati per procedere",
-            "tos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyUrl}})."
+            "tos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d’uso]({{tosUrl}})."
           },
           "sendDocumentsLoading": {
             "0": {

@@ -11,9 +11,8 @@ import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
 
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
-import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
-import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../../urls.ts";
+import { useIODispatch } from "../../../../../store/hooks.ts";
+import { ITW_PRIVACY_URL, ITW_TOS_URL } from "../../../../../urls.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { identificationRequest } from "../../../../identification/store/actions";
@@ -81,10 +80,6 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
       () => trackItwProximityDataShare({ proximity_flow: proximityFlow }),
       [proximityFlow]
     )
-  );
-
-  const privacyUrl = useIOSelector(state =>
-    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
 
   const handleDismiss = useCallback(() => {
@@ -181,7 +176,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
           <IOMarkdownLite
             content={I18n.t(
               "features.itWallet.presentation.proximity.selectiveDisclosure.tos",
-              { privacyUrl }
+              { privacyUrl: ITW_PRIVACY_URL, tosUrl: ITW_TOS_URL }
             )}
           />
         </VStack>

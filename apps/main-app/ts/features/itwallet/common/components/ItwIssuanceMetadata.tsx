@@ -3,8 +3,7 @@ import I18n from "i18next";
 import { useMemo } from "react";
 
 import { useIOSelector } from "../../../../store/hooks";
-import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
+import { ITW_PRIVACY_URL } from "../../../../urls";
 import {
   trackWalletCredentialShowAuthSource,
   trackWalletCredentialShowIssuer
@@ -94,9 +93,6 @@ export const ItwIssuanceMetadata = ({
   const releaserName =
     credential.issuerConf.federation_entity.organization_name;
   const itwCredential = isItwCredential(credential);
-  const privacyUrl = useIOSelector(state =>
-    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
-  );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const mixPanelCredential = getMixPanelCredential(
     credential.credentialType,
@@ -120,7 +116,7 @@ export const ItwIssuanceMetadata = ({
         contentBody: I18n.t(
           "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle",
           {
-            privacyUrl
+            privacyUrl: ITW_PRIVACY_URL
           }
         ),
         onPress: () =>
@@ -129,7 +125,7 @@ export const ItwIssuanceMetadata = ({
             credential_screen_type: isPreview ? "preview" : "detail"
           })
       }),
-      [isPreview, mixPanelCredential, privacyUrl]
+      [isPreview, mixPanelCredential]
     );
 
   const authSourceBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
