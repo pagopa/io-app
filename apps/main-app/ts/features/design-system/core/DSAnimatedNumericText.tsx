@@ -5,6 +5,7 @@ import {
   IOButton,
   IOColors,
   IOText,
+  IOTypography,
   LabelMini,
   useIOTheme,
   VStack
@@ -12,13 +13,13 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { View, ViewStyle } from "react-native";
 
-import {
-  AnimatedNumericText,
-  DEFAULT_FONT_SIZE,
-  DEFAULT_FONT_WEIGHT
-} from "../../../components/animatedNumericText";
+import { AnimatedNumericText } from "../../../components/animatedNumericText";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+
+/* Typographic style `AnimatedNumericText` renders its value with, so the
+   static text it's compared against matches it */
+const { h1 } = IOTypography;
 
 const TOTAL_SECONDS = 60;
 const TICK_INTERVAL_MS = 1000;
@@ -101,9 +102,9 @@ export const DSAnimatedNumericText = () => {
                   </LabelMini>
                   <IOText
                     color={theme["textBody-default"]}
-                    size={DEFAULT_FONT_SIZE}
+                    size={h1.size}
                     style={{ opacity: 0.5 }}
-                    weight={DEFAULT_FONT_WEIGHT}
+                    weight={h1.weight}
                   >
                     {formatAsTimer(secondsLeft)}
                   </IOText>
@@ -164,9 +165,9 @@ export const DSAnimatedNumericText = () => {
                   </LabelMini>
                   <IOText
                     color={theme["textBody-default"]}
-                    size={DEFAULT_FONT_SIZE}
+                    size={h1.size}
                     style={{ opacity: 0.5 }}
-                    weight={DEFAULT_FONT_WEIGHT}
+                    weight={h1.weight}
                   >
                     {formatAsAmount(amountInCents)}
                   </IOText>

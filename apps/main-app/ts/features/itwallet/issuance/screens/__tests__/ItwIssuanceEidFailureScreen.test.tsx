@@ -1,3 +1,4 @@
+import { IntegrityError } from "@pagopa/io-react-native-integrity";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
@@ -126,6 +127,23 @@ describe("ItwIssuanceEidFailureScreen", () => {
     ).toBeTruthy();
     expect(getByText(I18n.t("features.itWallet.support.button"))).toBeTruthy();
   });
+
+  test.each(["l2", "l3"] as const)(
+    "renders the dedicated integrity error copy for %s",
+    level => {
+      const component = renderComponent(
+        {
+          type: IssuanceFailureType.UNSUPPORTED_DEVICE,
+          reason: {
+            message: "UNSUPPORTED_SERVICE",
+            userInfo: {}
+          } as IntegrityError
+        },
+        level
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    }
+  );
 });
 
 const renderComponent = (

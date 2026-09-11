@@ -7,10 +7,11 @@ import * as loginHooks from "../../../../../lollipop/hooks/useLollipopLoginSourc
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../../common/store/actions";
 import * as authSelectors from "../../../../common/store/selectors";
+import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
 import CieIdLoginWebView from "../CieIdLoginWebView";
 
 const API_PREFIX_URL = "http://example.com";
-const SPID_LEVEL = "SpidL2";
+const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 const IS_UAT = false;
 const authLoggedIn = {
   kind: "LoggedInWithSessionInfo",
@@ -209,7 +210,7 @@ describe(CieIdLoginWebView, () => {
         errorCodeOrMessage: "generic",
         authMethod: "CIE_ID",
         authLevel: "L2",
-        params: { spidLevel: SPID_LEVEL, isUat: IS_UAT }
+        params: { spidLevel: AUTH_LEVEL_L2, isUat: IS_UAT }
       }
     });
   });
@@ -262,7 +263,7 @@ describe(CieIdLoginWebView, () => {
         errorCode: undefined,
         authMethod: "CIE_ID",
         authLevel: "L2",
-        params: { spidLevel: SPID_LEVEL, isUat: IS_UAT }
+        params: { spidLevel: AUTH_LEVEL_L2, isUat: IS_UAT }
       }
     });
   });
@@ -300,7 +301,7 @@ describe(CieIdLoginWebView, () => {
         errorCodeOrMessage: undefined,
         authMethod: "CIE_ID",
         authLevel: "L2",
-        params: { spidLevel: SPID_LEVEL, isUat: IS_UAT }
+        params: { spidLevel: AUTH_LEVEL_L2, isUat: IS_UAT }
       }
     });
   });
@@ -328,6 +329,6 @@ describe(CieIdLoginWebView, () => {
 
 function renderComponent() {
   return render(
-    withStore(CieIdLoginWebView)({ spidLevel: SPID_LEVEL, isUat: IS_UAT })
+    withStore(CieIdLoginWebView)({ spidLevel: AUTH_LEVEL_L2, isUat: IS_UAT })
   );
 }

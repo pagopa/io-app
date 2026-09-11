@@ -6,6 +6,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
+import { ONE_IDENTITY_ENVS } from "../../store/reducers/loginConfig";
 import {
   oneIdentityEnvSelector,
   oneIdentityLocalFeatureFlagSelector
@@ -51,7 +52,9 @@ describe("LoginConfigScreenContent", () => {
     const { store, getByLabelText } = renderComponent();
 
     fireEvent.press(getByLabelText(/Abilita ambiente di UAT OneIdentity/i));
-    expect(oneIdentityEnvSelector(store.getState())).toBe("uat");
+    expect(oneIdentityEnvSelector(store.getState())).toBe(
+      ONE_IDENTITY_ENVS.UAT
+    );
   });
 
   it("should dispatch the OneIdentity local feature flag action when a radio option is selected", () => {

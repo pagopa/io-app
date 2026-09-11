@@ -2,6 +2,7 @@ import { fireEvent, render } from "@testing-library/react-native";
 
 import * as urlUtils from "../../../../../../utils/url";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../../../common/utils";
 import CieIdWizard, { CIE_ID_LINK } from "../wizards/CieIdWizard";
 import CiePinWizard, { CIE_PIN_LINK } from "../wizards/CiePinWizard";
 import IDActivationWizard, {
@@ -16,7 +17,6 @@ const mockNavigateToCieIdLoginScreen = jest.fn();
 const mockNavigateToCiePinInsertion = jest.fn();
 const mockNavigateToIdpSelection = jest.fn();
 const mockNavigate = jest.fn();
-const SPID_LEVEL = "SpidL2";
 
 jest.mock("@react-navigation/native", () => ({
   useNavigation: () => ({
@@ -72,7 +72,7 @@ describe(CieIdWizard, () => {
     fireEvent.press(navigateToLoginWithCieId);
 
     expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledTimes(1);
-    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith(SPID_LEVEL);
+    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith(AUTH_LEVELS.L2);
   });
   it("Should navigate to Cie + Pin wizard screen", () => {
     const { getByTestId } = render(<CieIdWizard />);
