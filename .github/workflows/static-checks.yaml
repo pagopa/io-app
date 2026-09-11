@@ -12,7 +12,6 @@ jobs:
   lint-and-typecheck:
     name: Typescript lint and prettier
     runs-on: ubuntu-latest
-    environment: dev
     permissions:
       contents: read
     steps:
@@ -110,7 +109,6 @@ jobs:
   test-other-projects:
     name: Test other projects
     runs-on: ubuntu-latest
-    environment: dev
     permissions:
       contents: read
     steps:
