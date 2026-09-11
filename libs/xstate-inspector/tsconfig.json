@@ -5,5 +5,5 @@
     "types": ["jest", "node"],
     "lib": ["es2022", "dom", "dom.iterable"]
   },
-  "include": ["src", "middleware.js", "browser/src", "browser/build.mjs"]
+  "include": ["src", "middleware.js", "metro.js", "browser/src", "browser/build.mjs"]
 }

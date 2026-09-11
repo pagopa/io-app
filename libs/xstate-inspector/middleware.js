@@ -6,8 +6,8 @@
  * Events. Nothing is buffered, so a page that connects late only sees events
  * sent after it connected.
  *
- * Mounted by `apps/main-app/metro.config.js` through `enhanceMiddleware`, which
- * is the only reason it can share Metro's port and avoid a second process.
+ * Mounted by `withXStateInspector` in `metro.js` through `enhanceMiddleware`,
+ * which is the only reason it can share Metro's port and avoid a second process.
  *
  * All routes live under `/xstate-inspector` to stay clear of the paths owned by
  * Metro and Expo: `/hot`, `/message`, `/events`, `/status`, `/open-stack-frame`

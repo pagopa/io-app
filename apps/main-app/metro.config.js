@@ -4,6 +4,7 @@ const path = require('path');
 const { getDefaultConfig } = require('expo/metro-config');
 const { mergeConfig } = require('@react-native/metro-config');
 const { getRewriteRequestUrl } = require('@expo/metro-config/build/rewriteRequestUrl');
+const { withXStateInspector } = require('@io-app/xstate-inspector/metro');
 
 const projectRoot = path.resolve(__dirname);
 
@@ -39,22 +40,7 @@ const config = {
   projectRoot,
   server: {
     unstable_serverRoot: projectRoot,
-    rewriteRequestUrl: getRewriteRequestUrl(projectRoot),
-    // Serves the XState inspector UI and relays the inspection events posted by
-    // the app. Dev-server only: never part of a bundle, and the guard keeps a
-    // failure here from breaking Metro for everyone else.
-    enhanceMiddleware: metroMiddleware => {
-      try {
-        const {
-          createXStateInspectorMiddleware
-        } = require("@io-app/xstate-inspector/middleware");
-        const inspectorMiddleware = createXStateInspectorMiddleware();
-        return (req, res, next) =>
-          inspectorMiddleware(req, res, () => metroMiddleware(req, res, next));
-      } catch {
-        return metroMiddleware;
-      }
-    }
+    rewriteRequestUrl: getRewriteRequestUrl(projectRoot)
   },
   transformer: {
     babelTransformerPath:
@@ -65,30 +51,6 @@ const config = {
     assetExts: assetExts.filter(ext => ext !== "svg"),
 
     resolveRequest: (context, moduleName, platform) => {
-      // @statelyai/inspect's entry point also imports partysocket, whose module
-      // scope needs a global `Event` that React Native does not provide, so
-      // evaluating it crashes the dev app. Only `createInspector` is used here —
-      // the bridge drives it over HTTP and Server-Sent Events — so its WebSocket
-      // transport is resolved to an empty module. Using that transport would
-      // fail with a missing `PartySocket` rather than silently misbehaving.
-      if (moduleName === 'partysocket') {
-        return { type: 'empty' };
-      }
-      // @statelyai/inspect defaults its private UUID import to node:crypto.
-      // Only the inspector package depends on it, so it is resolved from there
-      // rather than from the app, which never imports it itself.
-      if (moduleName === '#uuid') {
-        const inspectorRoot = path.dirname(
-          require.resolve('@io-app/xstate-inspector/package.json')
-        );
-        const inspectRoot = path.dirname(
-          require.resolve('@statelyai/inspect', { paths: [inspectorRoot] })
-        );
-        return {
-          type: 'sourceFile',
-          filePath: path.join(inspectRoot, 'uuid-browser.mjs')
-        };
-      }
       if (moduleName === "crypto") {
         return context.resolveRequest(
           context,
@@ -101,4 +63,4 @@ const config = {
   }
 };
 
-module.exports = mergeConfig(defaultConfig, config);
+module.exports = mergeConfig(defaultConfig, config, withXStateInspector);
