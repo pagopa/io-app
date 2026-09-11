@@ -26,7 +26,6 @@ jest.mock(
 jest.mock("../MessagePayments");
 jest.mock("../F24Section");
 jest.mock("../MessageBottomMenu");
-jest.mock("../MessageFooter");
 jest.mock("../MessagePaymentBottomSheet");
 
 const mockMessageId = "messageId1";
@@ -114,6 +113,29 @@ describe("MessageDetails component", () => {
         });
       })
     );
+  });
+
+  it("places the sticky footer placeholder before the message bottom menu", () => {
+    const sendMessage = toSENDMessage(thirdPartyMessage)!;
+    const props = generateComponentProperties(
+      mockMessageId,
+      sendMessage,
+      mockServiceId,
+      "message",
+      "recipient"
+    );
+    const { component } = renderComponent(props);
+    const scrollView = component.getByTestId("MessageDetailsScrollView");
+    const expectedTestIDs = [
+      "ScrollViewWithStickyFooterActionsPlaceholder",
+      "MessageBottomMenu"
+    ];
+    const renderedTestIDs = scrollView
+      .findAll(node => expectedTestIDs.includes(node.props.testID))
+      .map(node => node.props.testID)
+      .filter((testID, index, testIDs) => testIDs.indexOf(testID) === index);
+
+    expect(renderedTestIDs).toEqual(expectedTestIDs);
   });
 });
 

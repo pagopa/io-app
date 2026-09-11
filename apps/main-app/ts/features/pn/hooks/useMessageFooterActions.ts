@@ -1,12 +1,7 @@
 import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
-import {
-  FooterActions,
-  FooterActionsMeasurements,
-  IOSpacing,
-  useIOToast
-} from "@io-app/design-system";
+import { FooterActions, useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
-import { RefObject, useCallback, useEffect } from "react";
+import { ComponentProps, RefObject, useCallback } from "react";
 import { useDispatch } from "react-redux";
 
 import { useIOSelector } from "../../../store/hooks";
@@ -21,27 +16,31 @@ import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { shouldUseBottomSheetForPayments } from "../utils";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 
-export type MessageFooterProps = {
+export type UseMessageFooterActionsProps = {
   isCancelled: boolean;
   maxVisiblePaymentCount: number;
   messageId: string;
-  onMeasure: (measurements: FooterActionsMeasurements) => void;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   presentPaymentsBottomSheetRef: RefObject<(() => void) | undefined>;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
 };
 
-export const MessageFooter = ({
+/**
+ * Builds the payment action displayed in a PN message footer while preserving
+ * its navigation, analytics and loading behavior.
+ */
+export const useMessageFooterActions = ({
   messageId,
   payments,
   maxVisiblePaymentCount,
   isCancelled,
   presentPaymentsBottomSheetRef,
-  onMeasure,
   sendOpeningSource,
   sendUserType
-}: MessageFooterProps) => {
+}: UseMessageFooterActionsProps): ComponentProps<
+  typeof FooterActions
+>["actions"] => {
   const dispatch = useDispatch();
   const toast = useIOToast();
   const buttonState = useIOSelector(state =>
@@ -56,21 +55,27 @@ export const MessageFooter = ({
     canNavigateToPaymentFromMessageSelector(state)
   );
   const onFooterPressCallback = useCallback(() => {
-    if (shouldUseBottomSheetForPayments(false, payments)) {
+    const shouldPresentPayments: boolean = shouldUseBottomSheetForPayments(
+      false,
+      payments
+    );
+    if (shouldPresentPayments) {
       trackPNShowAllPayments();
       presentPaymentsBottomSheetRef.current?.();
-    } else if (payments) {
-      const firstPayment = payments[0];
-      const paymentId = getRptIdStringFromPayment(firstPayment);
-      initializeAndNavigateToWalletForPayment(
-        paymentId,
-        true,
-        canNavigateToPayment,
-        dispatch,
-        () => trackPNPaymentStart(sendOpeningSource, sendUserType),
-        () => toast.error(I18n.t("genericError"))
-      );
+      return;
     }
+    if (payments == null || payments.length === 0) {
+      return;
+    }
+    const paymentId = getRptIdStringFromPayment(payments[0]);
+    initializeAndNavigateToWalletForPayment(
+      paymentId,
+      true,
+      canNavigateToPayment,
+      dispatch,
+      () => trackPNPaymentStart(sendOpeningSource, sendUserType),
+      () => toast.error(I18n.t("genericError"))
+    );
   }, [
     canNavigateToPayment,
     dispatch,
@@ -82,33 +87,18 @@ export const MessageFooter = ({
   ]);
 
   const isHidden = isCancelled || buttonState === "hidden";
-
-  useEffect(() => {
-    if (isHidden) {
-      onMeasure({
-        actionBlockHeight: 0,
-        safeBottomAreaHeight: IOSpacing.screenEndMargin
-      });
-    }
-  }, [isHidden, onMeasure]);
-
   if (isHidden) {
-    return null;
+    return undefined;
   }
   const isLoading = buttonState === "visibleLoading";
 
-  return (
-    <FooterActions
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: I18n.t("wallet.continue"),
-          onPress: onFooterPressCallback,
-          disabled: isLoading,
-          loading: isLoading
-        }
-      }}
-      onMeasure={onMeasure}
-    />
-  );
+  return {
+    type: "SingleButton",
+    primary: {
+      label: I18n.t("wallet.continue"),
+      onPress: onFooterPressCallback,
+      disabled: isLoading,
+      loading: isLoading
+    }
+  };
 };
