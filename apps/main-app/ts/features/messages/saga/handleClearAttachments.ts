@@ -1,4 +1,4 @@
-import RNFS from "react-native-fs";
+import { File } from "expo-file-system";
 import { call } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -9,10 +9,9 @@ import { AttachmentsDirectoryPath } from "../utils/attachments";
  * Clears cached files for all the attachments
  */
 export function* handleClearAllAttachments() {
-  const isPresent = yield* call(RNFS.exists, AttachmentsDirectoryPath);
-
-  if (isPresent) {
-    yield* call(RNFS.unlink, AttachmentsDirectoryPath);
+  const dir = new File(AttachmentsDirectoryPath);
+  if (dir.exists) {
+    yield* call([dir, dir.delete]);
   }
 }
 
@@ -25,10 +24,9 @@ export function* handleClearAttachment(
 ) {
   const path = action.payload.path;
   if (path) {
-    const isPresent = yield* call(RNFS.exists, path);
-
-    if (isPresent) {
-      yield* call(RNFS.unlink, path);
+    const file = new File(path);
+    if (file.exists) {
+      yield* call([file, file.delete]);
     }
   }
 }

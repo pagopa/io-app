@@ -184,6 +184,19 @@ describe("buildWalletListCredentialProperty", () => {
     expect(buildWalletListCredentialProperty(state)).toBe("not_available");
   });
 
+  it("differs from third-party tracking for the same credential type obtained via different flows", () => {
+    const catalogueCredential = getMockedCredential(
+      CredentialType.EDUCATION_DEGREE,
+      { origin: "catalogue" }
+    );
+    const state = getStateWithCredentials({
+      [catalogueCredential.credentialId]: catalogueCredential
+    });
+
+    expect(buildThirdPartyCredentialProperty(state)).toBe("not_available");
+    expect(buildWalletListCredentialProperty(state)).toBe("valid");
+  });
+
   it("does not consider PID as a wallet list credential", () => {
     const pid = getMockedCredential(CredentialType.PID, {
       origin: "catalogue"
