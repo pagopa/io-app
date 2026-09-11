@@ -1,6 +1,6 @@
 // "rnpm" is deprecated and support for it will be removed in next major version of the CLI.
 // Migration guide https://github.com/react-native-community/cli/blob/master/docs/configuration.md
-const shouldExcludeInternalModule = process.env.NO_INTERNAL_MODULE === '1';
+const shouldExcludeInternalModule = process.env.NO_INTERNAL_MODULE === "1";
 
 // eslint-disable-next-line functional/immutable-data
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
       platforms: {
         android: null,
         ios: null
-      },
+      }
     }
   },
   assets: [

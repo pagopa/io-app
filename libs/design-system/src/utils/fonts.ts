@@ -76,7 +76,7 @@ export const fontWeights: Record<IOFontWeight, IOFontWeightNumeric> = {
 
 type FontStyleObject = {
   boldEnabled?: boolean;
-  /* We also accept `string` because Android needs a composed 
+  /* We also accept `string` because Android needs a composed
   fontFamily name, like `TitilliumSansPro-Regular` */
   fontFamily: IOFontFamily | string;
   fontSize: IOFontSize | number;

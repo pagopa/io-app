@@ -68,11 +68,11 @@ export const loadBonusBeforeRemoveAccount = createStandardAction(
 )<void>();
 
 export enum RemoveAccountMotivationEnum {
-  "NEVER_USED" = "neverUsed",
-  "NOT_SAFE" = "notSafe",
-  "NOT_UTILS" = "notUtils",
-  "OTHERS" = "others",
-  "UNDEFINED" = "undefined"
+  NEVER_USED = "neverUsed",
+  NOT_SAFE = "notSafe",
+  NOT_UTILS = "notUtils",
+  OTHERS = "others",
+  UNDEFINED = "undefined"
 }
 
 export type RemoveAccountMotivationPayload = {

@@ -3,7 +3,7 @@
 Analyses a locale file (default: `locales/it/index.json`) for **word/phrase
 frequency** and **spelling inconsistencies**.
 
-Only the string *values* are analysed — JSON keys are ignored.
+Only the string _values_ are analysed — JSON keys are ignored.
 Interpolation placeholders (`{{...}}`), HTML-ish tags and URLs are stripped,
 Italian stopwords and lorem-ipsum filler are excluded, and selected multi-word
 concepts are counted as single units (so `carta di identità` is distinct from a
@@ -23,11 +23,11 @@ A formatted report is printed to stdout, and four CSVs are written **into this
 script's folder** (`;`-separated, UTF-8 BOM, ready for Excel). They are
 gitignored, so they are never committed:
 
-| File | Contents |
-| --- | --- |
-| `word_frequency.csv` | single-word / glued-concept frequency ranking |
-| `phrase_frequency.csv` | meaningful 2-3 word compound phrases (count ≥ 5) |
-| `inconsistencies.csv` | auto-discovered spelling inconsistencies |
+| File                      | Contents                                            |
+| ------------------------- | --------------------------------------------------- |
+| `word_frequency.csv`      | single-word / glued-concept frequency ranking       |
+| `phrase_frequency.csv`    | meaningful 2-3 word compound phrases (count ≥ 5)    |
+| `inconsistencies.csv`     | auto-discovered spelling inconsistencies            |
 | `compound_candidates.csv` | frequent phrases not yet grouped in `COMPOUND_DEFS` |
 
 ## Inconsistency detection (discovery-driven)
@@ -55,14 +55,14 @@ Homographs whose unaccented form is a distinct valid word (`e`/`è`, `la`/`là`,
 
 ## Spotting new compound concepts
 
-`COMPOUND_DEFS` is a hand-curated list, so on its own it can't notice a *new*
+`COMPOUND_DEFS` is a hand-curated list, so on its own it can't notice a _new_
 multi-word concept appearing in the locale. `compound_candidates.csv` closes
 that gap: it lists frequent phrases (count ≥ 10) whose content words are **not**
 yet covered by `COMPOUND_DEFS`. The workflow is:
 
 1. Run the script → review `compound_candidates.csv`.
 2. When a candidate is a real concept (e.g. `documenti digitali`, `valore
-   legale`), add it to `COMPOUND_DEFS`.
+legale`), add it to `COMPOUND_DEFS`.
 3. It becomes a counted group and drops off the candidate list.
 
 Verb/filler phrases (e.g. `attendi qualche secondo`) will also appear — these

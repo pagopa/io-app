@@ -11,17 +11,17 @@ As part of a codebase refactoring initiative, these files were grouped together 
 1.  **Improve Cohesion:** Keep tightly related authentication logic (UI, state, services, types) in one place.
 2.  **Enhance Discoverability:** Make it easier and faster for developers to find authentication-specific code.
 3.  **Simplify Maintenance:** Streamline bug fixing and future enhancements related to authentication flows.
-   
+
 ## Contents
 
 This module typically includes:
 
-*   Authentication-related UI screens.
-*   State management logic for user session, tokens, and auth status.
-*   Custom hooks specific to authentication.
-*   Analytics event tracking specific to authentication flows
-*   Type definitions relevant to authentication data structures.
-*   Utility functions for tasks like token handling or validation.
+- Authentication-related UI screens.
+- State management logic for user session, tokens, and auth status.
+- Custom hooks specific to authentication.
+- Analytics event tracking specific to authentication flows
+- Type definitions relevant to authentication data structures.
+- Utility functions for tasks like token handling or validation.
 
 ## Guideline
 

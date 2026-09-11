@@ -26,7 +26,7 @@ Usage:
     pnpm nx run main-app:unused-locales
 
 Afterwards, format and type-check to confirm nothing broke:
-    pnpm prettify && pnpm nx tsc-noemit main-app
+    pnpm format && pnpm nx tsc-noemit main-app
 
 No third-party dependencies — standard library only (Python 3.8+).
 """
@@ -239,7 +239,7 @@ def main() -> None:
         print(f"  {locale_dir.name}: removed {removed} keys")
 
     print()
-    print("Done. Now run: pnpm prettify && pnpm nx tsc-noemit main-app")
+    print("Done. Now run: pnpm format && pnpm nx tsc-noemit main-app")
 
 
 if __name__ == "__main__":

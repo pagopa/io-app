@@ -80,7 +80,9 @@ buck-out/
 *.jsbundle
 
 # Visual Studio Code settings
-.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 
 # Bundler
 vendor

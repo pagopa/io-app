@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "trailingComma": "none",
+  "arrowParens": "avoid",
+  "printWidth": 80,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "apps/dev-api-server/assets/**",
+    "apps/main-app/assets/animated-pictograms/**",
+    "**/*.xcassets/**",
+    "**/CHANGELOG.md"
+  ]
+}

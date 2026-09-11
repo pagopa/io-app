@@ -405,24 +405,22 @@ export const DrivingPrivilegesValueRaw = z.array(
  * Restriction codes, when present, are joined into a single string.
  */
 export const DrivingPrivilegesCustomClaim = z.union([
-  DrivingPrivilegesValueRaw.transform(
-    (items): DrivingPrivilegesClaimType =>
-      items.map(item => ({
-        driving_privilege: item.vehicle_category_code.value,
-        issue_date: item.issue_date.value,
-        expiry_date: item.expiry_date.value,
-        restrictions_conditions:
-          item.codes?.value.map(({ code }) => code.value).join(", ") ?? null
-      }))
+  DrivingPrivilegesValueRaw.transform((items): DrivingPrivilegesClaimType =>
+    items.map(item => ({
+      driving_privilege: item.vehicle_category_code.value,
+      issue_date: item.issue_date.value,
+      expiry_date: item.expiry_date.value,
+      restrictions_conditions:
+        item.codes?.value.map(({ code }) => code.value).join(", ") ?? null
+    }))
   ),
-  DrivingPrivilegesFlatRaw.transform(
-    (items): DrivingPrivilegesClaimType =>
-      items.map(item => ({
-        driving_privilege: item.vehicle_category_code,
-        issue_date: item.issue_date,
-        expiry_date: item.expiry_date,
-        restrictions_conditions: null
-      }))
+  DrivingPrivilegesFlatRaw.transform((items): DrivingPrivilegesClaimType =>
+    items.map(item => ({
+      driving_privilege: item.vehicle_category_code,
+      issue_date: item.issue_date,
+      expiry_date: item.expiry_date,
+      restrictions_conditions: null
+    }))
   )
 ]);
 
