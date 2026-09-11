@@ -81,7 +81,7 @@ describe("useCieLoginMethodSelection", () => {
   };
 
   const modeScenarios = [
-    { name: "auth", mode: "auth" as const, flow: undefined },
+    { name: "auth", mode: "auth" as const, flow: "auth" as const },
     { name: "reauth", mode: "reauth" as const, flow: "reauth" as const }
   ];
 
@@ -96,13 +96,10 @@ describe("useCieLoginMethodSelection", () => {
         expect(mockNavigateToCiePinInsertion).toHaveBeenCalled();
         expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
         expect(mockNavigate).not.toHaveBeenCalled();
-        if (mode === "reauth") {
-          expect(analytics.trackLoginCiePinSelected).toHaveBeenCalledWith(flow);
-          expect(analytics.trackCiePinLoginSelected).not.toHaveBeenCalled();
-        } else {
-          expect(analytics.trackCiePinLoginSelected).toHaveBeenCalled();
-          expect(analytics.trackLoginCiePinSelected).not.toHaveBeenCalled();
-        }
+        expect(analytics.trackCiePinLoginSelected).toHaveBeenCalledWith(
+          expect.anything(),
+          flow
+        );
       }
     );
   });
@@ -120,16 +117,11 @@ describe("useCieLoginMethodSelection", () => {
         );
         expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
         expect(mockNavigate).not.toHaveBeenCalled();
-        if (mode === "reauth") {
-          expect(analytics.trackLoginCieIdSelected).toHaveBeenCalledWith(
-            AUTH_LEVELS.L2,
-            flow
-          );
-          expect(analytics.trackCieIDLoginSelected).not.toHaveBeenCalled();
-        } else {
-          expect(analytics.trackCieIDLoginSelected).toHaveBeenCalled();
-          expect(analytics.trackLoginCieIdSelected).not.toHaveBeenCalled();
-        }
+        expect(analytics.trackCieIDLoginSelected).toHaveBeenCalledWith(
+          expect.anything(),
+          AUTH_LEVELS.L2,
+          flow
+        );
       }
     );
   });
@@ -182,14 +174,11 @@ describe("useCieLoginMethodSelection", () => {
         expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith(
           AUTH_LEVELS.L2
         );
-        if (mode === "reauth") {
-          expect(analytics.trackLoginCieIdSelected).toHaveBeenCalledWith(
-            AUTH_LEVELS.L2,
-            flow
-          );
-        } else {
-          expect(analytics.trackCieIDLoginSelected).toHaveBeenCalled();
-        }
+        expect(analytics.trackCieIDLoginSelected).toHaveBeenCalledWith(
+          expect.anything(),
+          AUTH_LEVELS.L2,
+          flow
+        );
       }
     );
   });

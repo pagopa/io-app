@@ -11,9 +11,7 @@ import {
   loginCieWizardSelected,
   trackCieBottomSheetScreenView,
   trackCieIDLoginSelected,
-  trackCiePinLoginSelected,
-  trackLoginCieIdSelected,
-  trackLoginCiePinSelected
+  trackCiePinLoginSelected
 } from "../analytics";
 import { AUTHENTICATION_ROUTES } from "../navigation/routes";
 import { AUTH_LEVELS, AuthLevel } from "../utils";
@@ -37,32 +35,22 @@ export const useCieLoginMethodSelection = ({
     isCieSupported
   } = useNavigateToLoginMethod();
 
-  const isReauth = flow === "reauth";
-
   const handleNavigateToCiePinScreen = useCallback(() => {
-    if (isReauth) {
-      void trackLoginCiePinSelected("reauth");
-    } else {
-      void trackCiePinLoginSelected(store.getState());
-    }
+    void trackCiePinLoginSelected(store.getState(), flow);
     navigateToCiePinInsertion();
-  }, [isReauth, navigateToCiePinInsertion, store]);
+  }, [flow, navigateToCiePinInsertion, store]);
 
   const handleNavigateToCieIdLoginScreen = useCallback(() => {
-    if (isReauth) {
-      void trackLoginCieIdSelected(AUTH_LEVEL_L2, "reauth");
-    } else {
-      void trackCieIDLoginSelected(store.getState(), AUTH_LEVEL_L2);
-    }
+    void trackCieIDLoginSelected(store.getState(), AUTH_LEVEL_L2, flow);
     navigateToCieIdLoginScreen(AUTH_LEVEL_L2);
-  }, [isReauth, navigateToCieIdLoginScreen, store]);
+  }, [flow, navigateToCieIdLoginScreen, store]);
 
   const handleNavigateToCieIdWizard = useCallback(() => {
-    void loginCieWizardSelected(isReauth ? "reauth" : undefined);
+    void loginCieWizardSelected(flow);
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
     });
-  }, [isReauth, navigation]);
+  }, [flow, navigation]);
 
   const { present, dismiss, bottomSheet } = useIOBottomSheetModal({
     title: I18n.t("authentication.landing.cie_bottom_sheet.title"),
@@ -118,12 +106,12 @@ export const useCieLoginMethodSelection = ({
 
   const handleCieLoginRequested = useCallback(() => {
     if (isCieSupported) {
-      void trackCieBottomSheetScreenView(isReauth ? "reauth" : undefined);
+      void trackCieBottomSheetScreenView(flow);
       present();
     } else {
       handleNavigateToCieIdLoginScreen();
     }
-  }, [isCieSupported, isReauth, present, handleNavigateToCieIdLoginScreen]);
+  }, [isCieSupported, flow, present, handleNavigateToCieIdLoginScreen]);
 
   return { bottomSheet, dismiss, handleCieLoginRequested };
 };
