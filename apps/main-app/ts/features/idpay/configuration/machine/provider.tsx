@@ -1,4 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -25,7 +26,6 @@ import {
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { SessionManager } from "../../../../utils/SessionManager";
-import { createInspector } from "../../../../utils/xstate/createInspector";
 import {
   bpdTokenSelector,
   walletTokenSelector
@@ -35,7 +35,7 @@ import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";
 import { idPayConfigurationMachine } from "./machine";
 
-const inspector = createInspector();
+const inspector = createBrowserInspector();
 
 type Props = {
   children: ReactNode;

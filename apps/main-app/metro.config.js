@@ -45,7 +45,9 @@ const config = {
     // failure here from breaking Metro for everyone else.
     enhanceMiddleware: metroMiddleware => {
       try {
-        const { createXStateInspectorMiddleware } = require('../../libs/xstate-inspector/middleware');
+        const {
+          createXStateInspectorMiddleware
+        } = require("@io-app/xstate-inspector/middleware");
         const inspectorMiddleware = createXStateInspectorMiddleware();
         return (req, res, next) =>
           inspectorMiddleware(req, res, () => metroMiddleware(req, res, next));

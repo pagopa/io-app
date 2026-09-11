@@ -1,10 +1,10 @@
 import { useIOToast } from "@io-app/design-system";
+import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { PropsWithChildren } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
-import { createInspector } from "../../../../utils/xstate/createInspector";
 import {
   selectItwEnv,
   selectItwSpecsVersion
@@ -12,7 +12,7 @@ import {
 import { getEnv } from "../../common/utils/environment";
 import { itwCredentialIssuanceMachine } from "./machine.ts";
 
-const inspector = createInspector();
+const inspector = createBrowserInspector();
 
 export const ItwCredentialIssuanceMachineContext = createActorContext(
   itwCredentialIssuanceMachine,

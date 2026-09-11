@@ -1,13 +1,9 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": ["../../tsconfig.base.json", "@react-native/typescript-config"],
   "compilerOptions": {
-    "allowJs": true,
     "checkJs": true,
-    "noEmit": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "types": ["node"],
+    "types": ["jest", "node"],
     "lib": ["es2022", "dom", "dom.iterable"]
   },
-  "include": ["middleware.js", "browser/app.js", "browser/types.d.ts"]
+  "include": ["src", "middleware.js", "browser/app.js", "browser/types.d.ts"]
 }
