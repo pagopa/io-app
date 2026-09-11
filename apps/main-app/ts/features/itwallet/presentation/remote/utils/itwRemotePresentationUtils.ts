@@ -30,7 +30,7 @@ const isPresentationDetailSdJwt = <T extends PresentationDetails[number]>(
  */
 const credentialTypesByVct: { [vct: string]: CredentialType } = {
   personidentificationdata: CredentialType.PID,
-  pid: CredentialType.PID,
+  eid: CredentialType.PID,
   mdl: CredentialType.DRIVING_LICENSE,
   europeandisabilitycard: CredentialType.EUROPEAN_DISABILITY_CARD,
   europeanhealthinsurancecard: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,

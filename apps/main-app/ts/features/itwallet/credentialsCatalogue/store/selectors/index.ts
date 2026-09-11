@@ -10,6 +10,7 @@ import {
   itwNewCredentialsSelector,
   itwPinnedCredentialsSelector
 } from "../../../common/store/selectors/remoteConfig";
+import { pidScopes } from "../../../common/utils/constants";
 import {
   DigitalCredentialMetadata,
   DigitalCredentialsCatalogue
@@ -46,7 +47,7 @@ const hardcodedCredentialsList: ReadonlyArray<CredentialsListEntry> = [
 /**
  * Select the last fetched credentials catalogue. **Note:** the catalogue may be stale.
  *
- * The catalogue credentials are mapped to replace the legacy "PersonIdentificationData" credential type with the new "pid".
+ * The catalogue credentials are mapped to replace the possible PID types (legacy, NPID and so on) with the value `pid`.
  * This ensures the PID can always be identified with the same type, avoiding the need to keep separate values for the same credential.
  *
  * The original credential_type can still be found in the raw persisted catalogue, before any transformation.
@@ -59,10 +60,9 @@ export const itwCredentialsCatalogueSelector = createSelector(
       ...catalogue,
       credentials: catalogue.credentials.map(credential => ({
         ...credential,
-        credential_type:
-          credential.credential_type === "PersonIdentificationData"
-            ? CredentialType.PID
-            : credential.credential_type
+        credential_type: pidScopes.includes(credential.credential_type)
+          ? CredentialType.PID
+          : credential.credential_type
       }))
     }));
     return pot.toUndefined(mappedCatalogue);

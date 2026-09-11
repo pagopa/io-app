@@ -9,6 +9,7 @@ import {
   itwCredentialTypeFromDocTypeSelector
 } from "..";
 import { type GlobalState } from "../../../../../../store/reducers/types";
+import { pidScopes } from "../../../../common/utils/constants";
 import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
 
 const mockCatalogue = {
@@ -70,27 +71,24 @@ const buildState = (
   }) as unknown as GlobalState;
 
 describe("itwCredentialsCatalogueSelector", () => {
-  it("should map the legacy 'PersonIdentificationData' credential type to 'pid'", () => {
-    const state = buildState({
-      catalogue: pot.some({
-        credentials: [
-          {
-            credential_type: "PersonIdentificationData",
-            name: "Legacy PID"
-          },
-          {
-            credential_type: "other",
-            name: "Other Credential"
-          }
-        ]
-      } as DigitalCredentialsCatalogue)
-    });
+  it.each(pidScopes)(
+    "should map the PID scope '%s' to credential type 'pid'",
+    scope => {
+      const state = buildState({
+        catalogue: pot.some({
+          credentials: [
+            { credential_type: scope, name: "PID" },
+            { credential_type: "other", name: "Other Credential" }
+          ]
+        } as DigitalCredentialsCatalogue)
+      });
 
-    expect(itwCredentialsCatalogueSelector(state)?.credentials).toEqual([
-      { credential_type: "pid", name: "Legacy PID" },
-      { credential_type: "other", name: "Other Credential" }
-    ]);
-  });
+      expect(itwCredentialsCatalogueSelector(state)?.credentials).toEqual([
+        { credential_type: "pid", name: "PID" },
+        { credential_type: "other", name: "Other Credential" }
+      ]);
+    }
+  );
 });
 
 describe("itwCredentialsCatalogueByTypesSelector", () => {
