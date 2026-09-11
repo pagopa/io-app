@@ -18,7 +18,7 @@ import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/
 import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { CieIdLoginProps } from "../../cie/shared/utils";
+import { CieIdLoginProps } from "../../../common/utils/cie";
 import {
   resetSpidLoginState,
   setSpidLoginInLoadingState

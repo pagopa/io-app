@@ -84,7 +84,7 @@ const setupTest = ({
   const utils = renderHook(
     () =>
       useOneIdentityLoginSource({
-        idp: mockIdp,
+        idpId: mockIdp.id,
         onFailure,
         minAuthLevel
       }),

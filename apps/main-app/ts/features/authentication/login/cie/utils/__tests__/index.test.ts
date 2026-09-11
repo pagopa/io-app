@@ -10,7 +10,7 @@ describe("isAuthenticationUrl", () => {
     "http://localhost/livello1?id=1",
     "http://localhost/livello2",
     "http://localhost/nextUrl?id=1",
-    "http://localhost/openApp/test"
+    "http://localhost/OpenApp/test"
   ];
 
   it.each(NOT_AUTH_URLS)("should be false -> %s", url => {
