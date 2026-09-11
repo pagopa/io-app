@@ -1,3 +1,4 @@
+import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { ReactNode } from "react";
 
@@ -17,12 +18,16 @@ import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";
 import { idPayPaymentMachine } from "./machine";
 
+const inspector = createBrowserInspector();
+
 type Props = {
   children: ReactNode;
 };
 
-export const IdPayPaymentMachineContext =
-  createActorContext(idPayPaymentMachine);
+export const IdPayPaymentMachineContext = createActorContext(
+  idPayPaymentMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
+);
 
 export const IdPayPaymentMachineProvider = (props: Props) => {
   const dispatch = useIODispatch();

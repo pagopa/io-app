@@ -172,6 +172,7 @@
     "@eslint/compat": "^2.0.3",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
+    "@io-app/xstate-inspector": "workspace:*",
     "@pagopa/eslint-config": "6.2.2",
     "@pagopa/openapi-codegen-ts": "^14.2.0",
     "@react-native-community/cli": "20.0.0",

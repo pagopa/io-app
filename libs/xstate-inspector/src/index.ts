@@ -1,0 +1,1 @@
+export { createBrowserInspector } from "./createBrowserInspector";

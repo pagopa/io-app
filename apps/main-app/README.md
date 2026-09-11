@@ -224,6 +224,23 @@ Follow the [React Native guide for running on a device](https://reactnative.dev/
 - If you are not part of the PagoPA organisation, change the `Bundle Identifier` in Xcode → Signing (Debug) to something unique.
 - To test the CIE authentication flow on a physical device, run `pnpm nx run main-app:cie-ios prod` before building. Revert with `pnpm nx run main-app:cie-ios dev`.
 
+### XState inspector
+
+Development builds report state-machine events to an inspector served by the Metro dev server. The UI it serves is built on its own: run `pnpm nx run xstate-inspector:start` in a second terminal to build it and rebuild it as you edit, then start Metro and the app as usual with `pnpm nx run main-app:start` and `run-ios` / `run-android`.
+
+Open <http://localhost:8081/xstate-inspector/> and use the app. Each machine gets its own tab, labelled with its machine id, and every tab shows transitions, incoming events, actor lifecycle, errors and actor outputs. A machine that is disposed and set up again in the app reuses its tab: the new instance replaces that timeline instead of adding a second tab.
+
+The app must be loading its bundle from Metro, otherwise there is no address to send events to:
+
+- **iOS**: the normal Debug build (`pnpm nx run main-app:run-ios`) with Metro running.
+- **Android**: the plain `debug` variant (`pnpm nx run main-app:run-android`) plus `adb reverse tcp:8081 tcp:8081`. The `productionDebug` variant used by `dev-run-android` embeds the JS bundle, because `debuggableVariants` in `android/app/build.gradle` only lists `debug`; in that variant Metro is never contacted, and Expo's own devtools socket throws *"Cannot create devtools websocket connections in embedded environments"* during startup.
+
+Notes:
+
+- Open the page **before** reproducing: the relay keeps no history, so events sent while no page is open are lost.
+- The bridge only exists in development; production and test builds never connect.
+- The implementation lives in [`libs/xstate-inspector`](../../libs/xstate-inspector/README.md), consumed as the `@io-app/xstate-inspector` workspace package: `src/` is the React Native bridge, `metro.js` is the Metro config plugin, `middleware.js` is the Metro bridge, and the UI it serves is `browser/src` bundled by `browser/build.mjs` into `browser/dist`.
+
 ---
 
 ## Troubleshooting
