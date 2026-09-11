@@ -24,8 +24,6 @@ jobs:
         uses: ./.github/actions/setup-composite
       - name: Sets the base and head SHAs required for `nx affected` command
         uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
-      - id: generate-api-models
-        run: pnpm nx run @io-app/api-types:generate
       - id: run-affected-checks
         if: github.event_name == 'pull_request'
         run: pnpm nx affected --targets=lint,tsc-noemit --configuration=ci --nx-bail
@@ -93,8 +91,6 @@ jobs:
         uses: ./.github/actions/setup-composite
       - name: Sets the base and head SHAs required for `nx affected` command
         uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
-      - id: generate-api-models
-        run: pnpm nx run @io-app/api-types:generate
       - id: run-affected-tests
         # `--exclude` (not `-p`, unsupported by `nx affected`) narrows the
         # affected graph down to main-app so this job only ever runs the one
@@ -126,8 +122,6 @@ jobs:
         uses: ./.github/actions/setup-composite
       - name: Sets the base and head SHAs required for `nx affected` command
         uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
-      - id: generate-api-models
-        run: pnpm nx run @io-app/api-types:generate
       - id: run-affected-tests
         if: github.event_name == 'pull_request'
         run: pnpm nx affected --targets=test --configuration=ci --exclude=@io-app/main-app
