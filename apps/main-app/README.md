@@ -226,7 +226,7 @@ Follow the [React Native guide for running on a device](https://reactnative.dev/
 
 ### XState inspector
 
-Development builds report state-machine events to an inspector served by the Metro dev server, so there is nothing to start besides Metro itself.
+Development builds report state-machine events to an inspector served by the Metro dev server, so there is nothing to start besides Metro itself: `pnpm nx run main-app:start` builds the inspector UI before it starts Metro, and `pnpm nx run main-app:run-ios` / `run-android` connect to that server as usual.
 
 Open <http://localhost:8081/xstate-inspector/> and use the app. Each machine gets its own tab, labelled with its machine id, and every tab shows transitions, incoming events, actor lifecycle, errors and actor outputs. A machine that is disposed and set up again in the app reuses its tab: the new instance replaces that timeline instead of adding a second tab.
 
@@ -239,7 +239,7 @@ Notes:
 
 - Open the page **before** reproducing: the relay keeps no history, so events sent while no page is open are lost.
 - The bridge only exists in development; production and test builds never connect.
-- The implementation lives in [`libs/xstate-inspector`](../../libs/xstate-inspector/README.md), consumed as the `@io-app/xstate-inspector` workspace package: `src/` is the React Native bridge, `middleware.js` is the Metro bridge and `browser/` is the UI it serves.
+- The implementation lives in [`libs/xstate-inspector`](../../libs/xstate-inspector/README.md), consumed as the `@io-app/xstate-inspector` workspace package: `src/` is the React Native bridge, `middleware.js` is the Metro bridge, and the UI it serves is `browser/src` bundled by `browser/build.mjs` into `browser/dist`.
 
 ---
 

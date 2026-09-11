@@ -1,12 +1,12 @@
 # @io-app/xstate-inspector
 
-A development-only inspector for the XState machines in the [IO app](../../apps/main-app/README.md). The app reports machine events to Metro, and a browser page shows them as a timeline per machine. Nothing runs in production, and you start nothing extra because Metro serves the UI and relays the events on the port it already uses.
+A development-only inspector for the XState machines in the [IO app](../../apps/main-app/README.md). The app reports machine events to Metro, and a browser page shows them as a timeline per machine. Nothing runs in production, and you start nothing extra: Metro serves the UI and relays the events on the port it already uses, and starting Metro builds the UI bundle first.
 
 ## How machine events reach the browser
 
 The React Native bridge receives every inspection event XState emits and batches them. It posts a batch to `<metro-host>/xstate-inspector/ingest` every 150 ms, or sooner when the batch reaches 50 events. Metro’s dev server mounts `middleware.js` on that path, and the middleware fans every event out to the connected pages over Server-Sent Events (SSE).
 
-The UI keys a tab by the machine id in the actor registration event. A machine that the app disposes and sets up again replaces its own timeline instead of opening a second tab. The UI renders the three XState event types, `@xstate.actor`, `@xstate.event`, and `@xstate.snapshot`, and shows any other event as-is. `browser/types.d.ts` declares the wire format.
+The UI keys a tab by the machine id in the actor registration event. A machine that the app disposes and sets up again replaces its own timeline instead of opening a second tab. The UI renders the three XState event types, `@xstate.actor`, `@xstate.event`, and `@xstate.snapshot`, and shows any other event as-is. `browser/src/types.d.ts` declares the wire format.
 
 ## What this package contains
 
@@ -19,10 +19,18 @@ libs/xstate-inspector/
 │   ├── createBrowserInspector.ts   endpoint, batching, build guards
 │   └── __tests__/                  unit tests for the bridge
 ├── middleware.js                   Connect middleware that Metro mounts
-├── browser/                        UI served by the middleware, no build step
-│   ├── index.html
-│   ├── app.js
-│   └── types.d.ts
+├── browser/                        inspector UI
+│   ├── build.mjs                   bundles src/ into dist/ with esbuild
+│   ├── index.html                  markup and styles, copied into dist/
+│   ├── src/                        UI sources, one module per concern
+│   │   ├── app.js                  entry point: toolbar, export, SSE stream
+│   │   ├── store.js                zustand store: machine tabs and their caps
+│   │   ├── view.js                 tab strip and timeline rendering
+│   │   ├── wire.js                 wire event to timeline entry
+│   │   ├── format.js               payload to text helpers
+│   │   ├── constants.js            retention and rendering tunables
+│   │   └── types.d.ts              wire format declarations
+│   └── dist/                       built bundle the middleware serves, not committed
 ├── package.json
 ├── tsconfig.json
 ├── jest.config.js
@@ -30,6 +38,8 @@ libs/xstate-inspector/
 ```
 
 `@io-app/xstate-inspector` resolves to `src/index.ts` for the app bundle. `@io-app/xstate-inspector/middleware` resolves to `middleware.js` for Node. Neither bundle includes the browser UI, because the middleware reads it from disk.
+
+`browser/src` holds one module per concern: the zustand store keeps the machine tabs and their retention caps, `view.js` renders the tabs and the timeline and repaints when the store changes, `wire.js` normalizes the wire events, and `app.js` wires the toolbar and the stream together. `browser/build.mjs` bundles them into `browser/dist`, the directory the middleware serves, so the page loads a single file while the sources stay separate. `dist` is generated, not committed.
 
 ## Report a machine to the inspector
 
@@ -142,16 +152,22 @@ The inspector bounds what it keeps, so a long session on a large context cannot 
 ## Development commands
 
 ```bash
+pnpm nx run xstate-inspector:build        # bundles browser/src into browser/dist
+pnpm nx run xstate-inspector:watch        # same, rebuilding on every change
 pnpm nx run xstate-inspector:test
 pnpm nx run xstate-inspector:tsc-noemit
 pnpm nx run xstate-inspector:lint
 ```
 
-`tsc-noemit` also checks `middleware.js` and `browser/app.js`, because the package tsconfig sets `checkJs`. `pnpm nx affected --targets=lint,tsc-noemit,test` runs the same targets for every project that changed.
+`pnpm nx run main-app:start` builds the UI before it starts Metro, so a normal dev start needs nothing else. After editing anything under `browser/src`, rebuild it: reloading the page is not enough, because the middleware serves the bundle in `browser/dist`, not the sources. `watch` keeps that up to date while you work on the UI.
+
+`tsc-noemit` also checks `middleware.js`, `browser/build.mjs` and the modules under `browser/src`, because the package tsconfig sets `checkJs`. `pnpm nx affected --targets=lint,tsc-noemit,test` runs the same targets for every project that changed.
 
 ## Troubleshooting
 
 **The page reports `reconnecting`.** Nothing answers the SSE route. Confirm Metro is running, then open `http://localhost:8081/xstate-inspector/health`. A 404 means the middleware did not mount, and the `require` in `metro.config.js` threw.
+
+**The UI 404s, or shows a change you already made.** `browser/dist` is missing or stale. Run `pnpm nx run xstate-inspector:build`, or `pnpm nx run xstate-inspector:watch` while you edit the UI.
 
 **Metro answers `Unauthorized request from http://127.0.0.1:8081`.** Open the page through `localhost` instead. Module scripts send an `Origin` header, and Metro’s dev server rejects every Origin that is not localhost.
 
