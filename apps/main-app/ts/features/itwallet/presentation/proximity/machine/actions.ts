@@ -2,6 +2,7 @@ import { ActionArgs, assign } from "xstate";
 
 import { assert } from "../../../../../utils/assert";
 import {
+  trackItwProximityPresentationCompleted,
   trackItwProximityQrCodeLoadingFailure,
   trackItwProximityStart
 } from "../analytics";
@@ -149,6 +150,14 @@ export const trackProximityStartAction = ({
   context
 }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
   trackItwProximityStart({
+    proximity_flow: context.engagementMode === "nfc" ? "nfc" : "qr_code"
+  });
+};
+
+export const trackProximitySuccessAction = ({
+  context
+}: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+  trackItwProximityPresentationCompleted({
     proximity_flow: context.engagementMode === "nfc" ? "nfc" : "qr_code"
   });
 };
