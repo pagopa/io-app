@@ -24,12 +24,12 @@ import {
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../../../common/utils";
-import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
 import {
   CieIdLoginProps,
   defaultUserAgent,
   WHITELISTED_DOMAINS
-} from "../../../login/cie/shared/utils";
+} from "../../../common/utils/cie";
+import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
 import {
   getCieIdEnvironment,
   getCieIDLoginUri,

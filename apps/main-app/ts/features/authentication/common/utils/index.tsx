@@ -3,7 +3,7 @@ import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
-import { spidRelayState } from "../../../../config";
+import { apiUrlPrefix, spidRelayState } from "../../../../config";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
@@ -209,3 +209,16 @@ export const originSchemasWhiteList = [
 ];
 
 export const CALLBACK_PATH = "/api/auth/v2/callback";
+
+/**
+ * Checks whether `url` is an exact match of one of the OIDC callback endpoints
+ * (`v1` or `v2`) exposed by the backend at `apiUrlPrefix`. Both versions are accepted.
+ */
+export const isValidCallbackUrl = (url: string) => {
+  const validUrls = [
+    `${apiUrlPrefix}/api/auth/v1/callback`,
+    `${apiUrlPrefix}/api/auth/v2/callback`
+  ];
+
+  return validUrls.includes(url);
+};
