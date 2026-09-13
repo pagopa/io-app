@@ -3152,7 +3152,7 @@
         "hint": "Attendi il caricamento del contenuto",
         "label": "Caricamento in corso"
       },
-      "alert": "Avviso",
+      "alert": "Dummy",
       "cieReadingProgress": "Lettura {{percentage}}% completata",
       "collapsed": "Compresso",
       "contextualHelp": {
