@@ -81,17 +81,17 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     machine.send({ type: "next" });
   };
 
+  const linkTo = useLinkTo();
+
   const onboardingPrivacyAdvice = initiative ? (
     <IOMarkdown
       content={I18n.t("idpay.onboarding.beforeContinue.text", {
-        privacyUrl: privacyLink,
-        tosUrl: tcLink
+        privacyUrl: initiative.privacyLink,
+        tosUrl: initiative.tcLink
       })}
       rules={generateSmallTosMarkdownRules(linkTo)}
     />
   ) : null;
-
-  const linkTo = useLinkTo();
 
   const descriptionComponent = initiative ? (
     <IOMarkdown
