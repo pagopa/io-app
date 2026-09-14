@@ -48,7 +48,7 @@ catalog:
 
   # --- TypeScript ---
   typescript: "6.0.3"
-  prettier: "^3.8.1"
+  oxfmt: "0.67.0"
   eslint: "^10.9.0"
   jest: "~30.3.0"
   "@types/jest": "^30.0.0"
@@ -85,9 +85,9 @@ catalog:
   react-native-svg: "^15.14.0"
 
 minimumReleaseAgeExclude:
-  - '@pagopa/io-react-native-wallet@3.7.2'
-  - '@pagopa/io-wallet-oauth2@1.5.6'
-  - '@pagopa/io-wallet-oid-federation@1.5.6'
-  - '@pagopa/io-wallet-oid4vci@1.5.6'
-  - '@pagopa/io-wallet-oid4vp@1.5.6'
-  - '@pagopa/io-wallet-utils@1.5.6'
+  - "@pagopa/io-react-native-wallet@3.7.2"
+  - "@pagopa/io-wallet-oauth2@1.5.6"
+  - "@pagopa/io-wallet-oid-federation@1.5.6"
+  - "@pagopa/io-wallet-oid4vci@1.5.6"
+  - "@pagopa/io-wallet-oid4vp@1.5.6"
+  - "@pagopa/io-wallet-utils@1.5.6"
