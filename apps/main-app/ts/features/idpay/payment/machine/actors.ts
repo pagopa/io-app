@@ -1,8 +1,6 @@
 import { AuthPaymentResponseDTO } from "@io-app/api-types/generated/definitions/idpay/AuthPaymentResponseDTO";
 import { CodeEnum as TransactionErrorCodeEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
-import * as E from "fp-ts/lib/Either";
-import { flow, pipe } from "fp-ts/lib/function";
-import * as TE from "fp-ts/lib/TaskEither";
+import { ResultAsync } from "neverthrow";
 import { fromPromise } from "xstate";
 
 import { useIODispatch } from "../../../../store/hooks";
@@ -27,116 +25,68 @@ export const createActorsImplementation = (
 
   const preAuthorizePayment = fromPromise<AuthPaymentResponseDTO, string>(
     async ({ input }) => {
-      const putPreAuthPaymentTask = (trxCode: string) =>
-        TE.tryCatch(
-          async () =>
-            await client.putPreAuthPayment({
-              bearerAuth: token,
-              trxCode
-            }),
-          mapFetchError
-        );
-
-      const dataResponse = await putPreAuthPaymentTask(input)();
-
-      return pipe(
-        dataResponse,
-        E.fold(
-          failure => Promise.reject(failure),
-          flow(
-            E.map(({ status, value }) => {
-              switch (status) {
-                case 200:
-                  return Promise.resolve(value);
-                case 401:
-                  handleSessionExpired();
-                  return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
-                default:
-                  return Promise.reject(mapErrorCodeToFailure(value.code));
-              }
-            }),
-            E.getOrElse(() =>
-              Promise.reject(PaymentFailureEnum.PAYMENT_GENERIC_ERROR)
-            )
-          )
-        )
+      const dataResponse = await ResultAsync.fromPromise(
+        client.putPreAuthPayment({ bearerAuth: token, trxCode: input }),
+        mapFetchError
+      );
+      return dataResponse.match(
+        ({ status, value }) => {
+          switch (status) {
+            case 200:
+              return Promise.resolve(value);
+            case 401:
+              handleSessionExpired();
+              return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
+            default:
+              return Promise.reject(mapErrorCodeToFailure(value.code));
+          }
+        },
+        failure => Promise.reject(failure)
       );
     }
   );
 
   const authorizePayment = fromPromise<AuthPaymentResponseDTO, string>(
     async ({ input }) => {
-      const authPaymentTask = (trxCode: string) =>
-        TE.tryCatch(
-          async () =>
-            await client.putAuthPayment({
-              bearerAuth: token,
-              trxCode
-            }),
-          mapFetchError
-        );
-
-      const dataResponse = await authPaymentTask(input)();
-
-      return pipe(
-        dataResponse,
-        E.fold(
-          failure => Promise.reject(failure),
-          flow(
-            E.map(({ status, value }) => {
-              switch (status) {
-                case 200:
-                  return Promise.resolve(value);
-                case 401:
-                  handleSessionExpired();
-                  return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
-                default:
-                  return Promise.reject(mapErrorCodeToFailure(value.code));
-              }
-            }),
-            E.getOrElse(() =>
-              Promise.reject(PaymentFailureEnum.PAYMENT_GENERIC_ERROR)
-            )
-          )
-        )
+      const dataResponse = await ResultAsync.fromPromise(
+        client.putAuthPayment({ bearerAuth: token, trxCode: input }),
+        mapFetchError
+      );
+      return dataResponse.match(
+        ({ status, value }) => {
+          switch (status) {
+            case 200:
+              return Promise.resolve(value);
+            case 401:
+              handleSessionExpired();
+              return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
+            default:
+              return Promise.reject(mapErrorCodeToFailure(value.code));
+          }
+        },
+        failure => Promise.reject(failure)
       );
     }
   );
 
   const deletePayment = fromPromise<undefined, string>(async ({ input }) => {
-    const deletePaymentTask = (trxCode: string) =>
-      TE.tryCatch(
-        async () =>
-          await client.deletePayment({
-            bearerAuth: token,
-            trxCode
-          }),
-        mapFetchError
-      );
-
-    const dataResponse = await deletePaymentTask(input)();
-
-    return pipe(
-      dataResponse,
-      E.fold(
-        failure => Promise.reject(failure),
-        flow(
-          E.map(({ status, value }) => {
-            switch (status) {
-              case 200:
-                return Promise.resolve(value);
-              case 401:
-                handleSessionExpired();
-                return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
-              default:
-                return Promise.reject(mapErrorCodeToFailure(value.code));
-            }
-          }),
-          E.getOrElse(() =>
-            Promise.reject(PaymentFailureEnum.PAYMENT_GENERIC_ERROR)
-          )
-        )
-      )
+    const dataResponse = await ResultAsync.fromPromise(
+      client.deletePayment({ bearerAuth: token, trxCode: input }),
+      mapFetchError
+    );
+    return dataResponse.match(
+      ({ status, value }) => {
+        switch (status) {
+          case 200:
+            return Promise.resolve(value);
+          case 401:
+            handleSessionExpired();
+            return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
+          default:
+            return Promise.reject(mapErrorCodeToFailure(value.code));
+        }
+      },
+      failure => Promise.reject(failure)
     );
   });
 

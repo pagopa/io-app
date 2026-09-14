@@ -1,8 +1,6 @@
 import { StatusEnum } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import { InstrumentListDTO } from "@io-app/api-types/generated/definitions/idpay/InstrumentListDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
@@ -64,22 +62,20 @@ const reducer = (
     case getType(idpayInitiativeInstrumentDelete.success): {
       const { instrumentId } = action.payload;
       return {
-        instruments: pipe(
-          pot.getOrElse(state.instruments, null),
-          O.fromNullable,
-          O.map(el => el.instrumentList),
-          O.map(instruments =>
-            instruments.map(instrument => ({
-              ...instrument,
-              status:
-                instrument.instrumentId === instrumentId
-                  ? StatusEnum.PENDING_DEACTIVATION_REQUEST
-                  : instrument.status
-            }))
-          ),
-          O.map(instruments => pot.some({ instrumentList: instruments })),
-          O.getOrElseW(() => pot.none)
-        ),
+        instruments: (() => {
+          const instruments = pot.getOrElse(state.instruments, undefined);
+          return instruments === undefined
+            ? pot.none
+            : pot.some({
+                instrumentList: instruments.instrumentList.map(instrument => ({
+                  ...instrument,
+                  status:
+                    instrument.instrumentId === instrumentId
+                      ? StatusEnum.PENDING_DEACTIVATION_REQUEST
+                      : instrument.status
+                }))
+              });
+        })(),
         instrumentStatus: {
           ...state.instrumentStatus,
           [instrumentId]: pot.some(StatusEnum.PENDING_DEACTIVATION_REQUEST)
@@ -129,11 +125,9 @@ const idPayInitiativeInstrumentsStatusSelector = createSelector(
 export const idpayDiscountInitiativeInstrumentsSelector = createSelector(
   idpayInitiativePaymentMethodsSelector,
   instruments =>
-    pipe(
-      pot.getOrElse(
-        pot.map(instruments, instruments => instruments.instrumentList),
-        []
-      )
+    pot.getOrElse(
+      pot.map(instruments, instruments => instruments.instrumentList),
+      []
     )
 );
 

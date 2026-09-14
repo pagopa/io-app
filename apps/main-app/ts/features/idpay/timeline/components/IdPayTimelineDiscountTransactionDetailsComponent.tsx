@@ -10,8 +10,6 @@ import {
   ListItemInfoCopy,
   VSpacer
 } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { View } from "react-native";
 
@@ -26,42 +24,24 @@ type Props = {
 const IdPayTimelineDiscountTransactionDetailsComponent = (props: Props) => {
   const { transaction } = props;
 
-  const statusAlertComponent = pipe(
-    transaction.status,
-    O.of,
-    O.map(status => {
-      switch (status) {
-        case TransactionStatusEnum.CANCELLED:
-          return (
-            <>
-              <Alert
-                content={I18n.t(
-                  "idpay.initiative.operationDetails.discount.details.alerts.CANCELLED"
-                )}
-                variant="info"
-              />
-              <VSpacer size={16} />
-            </>
-          );
-        default:
-          return null;
-      }
-    }),
-    O.toNullable
-  );
+  const statusAlertComponent =
+    transaction.status === TransactionStatusEnum.CANCELLED ? (
+      <>
+        <Alert
+          content={I18n.t(
+            "idpay.initiative.operationDetails.discount.details.alerts.CANCELLED"
+          )}
+          variant="info"
+        />
+        <VSpacer size={16} />
+      </>
+    ) : null;
 
-  const formattedAmount = pipe(
-    transaction.amountCents,
-    O.fromNullable,
-    O.map(amount => formatNumberCentsToAmount(amount, true)),
-    O.getOrElse(() => "-")
-  );
+  const formattedAmount = transaction.amountCents
+    ? formatNumberCentsToAmount(transaction.amountCents, true)
+    : "-";
 
-  const businessName = pipe(
-    transaction.businessName,
-    O.fromNullable,
-    O.getOrElse(() => "-")
-  );
+  const businessName = transaction.businessName ?? "-";
 
   return (
     <View style={{ flex: 1 }}>

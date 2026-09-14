@@ -7,42 +7,31 @@ import {
   VSpacer,
   VStack
 } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
 type Props = {
-  initiative: O.Option<InitiativeDataDTO>;
+  initiative: InitiativeDataDTO | undefined;
 };
 
 const IdPayOnboardingServiceHeader = (props: Props) => {
   const { initiative } = props;
 
-  return pipe(
-    initiative,
-    O.map(initiativeDetails => ({
-      organizationName: initiativeDetails.organizationName,
-      initiativeName: initiativeDetails.initiativeName,
-      thumbnailUrl: initiativeDetails.thumbnailUrl
-    })),
-    O.fold(
-      () => <Skeleton />,
-      ({ initiativeName, thumbnailUrl }) => (
-        <VStack>
-          <IOImage
-            alt={I18n.t("idpay.onboarding.initiativeImageAltText")}
-            aspectRatio="4:3"
-            imageProps={{
-              source: { uri: thumbnailUrl }
-            }}
-          />
-          <ContentWrapper>
-            <VSpacer size={24} />
-            <H1>{initiativeName}</H1>
-          </ContentWrapper>
-        </VStack>
-      )
-    )
+  return initiative ? (
+    <VStack>
+      <IOImage
+        alt={I18n.t("idpay.onboarding.initiativeImageAltText")}
+        aspectRatio="4:3"
+        imageProps={{
+          source: { uri: initiative.thumbnailUrl }
+        }}
+      />
+      <ContentWrapper>
+        <VSpacer size={24} />
+        <H1>{initiative.initiativeName}</H1>
+      </ContentWrapper>
+    </VStack>
+  ) : (
+    <Skeleton />
   );
 };
 

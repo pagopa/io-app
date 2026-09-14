@@ -1,6 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { err, ok } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -30,26 +29,29 @@ export function* handleIdPayEnrollCode(
       action
     )) as unknown as SagaCallReturnType<typeof enrollInstrumentCode>;
 
-    yield pipe(
-      idPayEnrollCodeResult,
-      E.fold(
-        error =>
-          put(
-            idPayEnrollCode.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            })
-          ),
-        response =>
-          put(
-            response.status === 200
-              ? idPayEnrollCode.success()
-              : idPayEnrollCode.failure({
-                  ...getGenericError(
-                    new Error(`response status code ${response.status}`)
-                  )
-                })
-          )
-      )
+    yield (
+      "isOk" in idPayEnrollCodeResult
+        ? idPayEnrollCodeResult
+        : "right" in idPayEnrollCodeResult
+          ? ok(idPayEnrollCodeResult.right)
+          : err(idPayEnrollCodeResult.left)
+    ).match(
+      response =>
+        put(
+          response.status === 200
+            ? idPayEnrollCode.success()
+            : idPayEnrollCode.failure({
+                ...getGenericError(
+                  new Error(`response status code ${response.status}`)
+                )
+              })
+        ),
+      error =>
+        put(
+          idPayEnrollCode.failure({
+            ...getGenericError(new Error(readablePrivacyReport(error)))
+          })
+        )
     );
   } catch (e) {
     yield* put(idPayEnrollCode.failure({ ...getNetworkError(e) }));

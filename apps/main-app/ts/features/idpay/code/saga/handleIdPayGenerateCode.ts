@@ -1,5 +1,4 @@
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { err, ok } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -30,26 +29,29 @@ export function* handleIdPayGenerateCode(
       { action } as RefreshThirdPartyApiCallOptions
     )) as unknown as SagaCallReturnType<typeof generateCode>;
 
-    yield pipe(
-      idPayGenerateCodeResult,
-      E.fold(
-        error =>
-          put(
-            idPayGenerateCode.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            })
-          ),
-        response =>
-          put(
-            response.status === 200
-              ? idPayGenerateCode.success(response.value)
-              : idPayGenerateCode.failure({
-                  ...getGenericError(
-                    new Error(`response status code ${response.status}`)
-                  )
-                })
-          )
-      )
+    yield (
+      "isOk" in idPayGenerateCodeResult
+        ? idPayGenerateCodeResult
+        : "right" in idPayGenerateCodeResult
+          ? ok(idPayGenerateCodeResult.right)
+          : err(idPayGenerateCodeResult.left)
+    ).match(
+      response =>
+        put(
+          response.status === 200
+            ? idPayGenerateCode.success(response.value)
+            : idPayGenerateCode.failure({
+                ...getGenericError(
+                  new Error(`response status code ${response.status}`)
+                )
+              })
+        ),
+      error =>
+        put(
+          idPayGenerateCode.failure({
+            ...getGenericError(new Error(readablePrivacyReport(error)))
+          })
+        )
     );
   } catch (e) {
     yield* put(idPayGenerateCode.failure({ ...getNetworkError(e) }));
