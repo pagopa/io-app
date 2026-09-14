@@ -13,18 +13,18 @@ import { useCieLoginMethodSelection } from "../../../common/hooks/useCieLoginMet
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 type OneIdentityIdpSelectionFailureContentProps = {
-  errorCode?: string;
+  failure?: string;
   isActiveSessionLogin: boolean;
 };
 
 export const OneIdentityIdpSelectionFailureContent = ({
-  errorCode,
+  failure,
   isActiveSessionLogin
 }: OneIdentityIdpSelectionFailureContentProps) => {
   const navigation = useIONavigation();
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
 
-  const debugInfo = useMemo(() => ({ failure: errorCode }), [errorCode]);
+  const debugInfo = useMemo(() => ({ failure }), [failure]);
   useDebugInfo(debugInfo);
 
   const {

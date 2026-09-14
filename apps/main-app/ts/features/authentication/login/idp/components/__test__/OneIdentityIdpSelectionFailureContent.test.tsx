@@ -44,17 +44,14 @@ describe("OneIdentityIdpSelectionFailureContent", () => {
       .mockImplementation(jest.fn());
   });
 
-  const renderComponent = (
-    isActiveSessionLogin = false,
-    errorCode?: string
-  ) => {
+  const renderComponent = (isActiveSessionLogin = false, failure?: string) => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
     return renderScreenWithNavigationStoreContext(
       () => (
         <OneIdentityIdpSelectionFailureContent
-          errorCode={errorCode}
+          failure={failure}
           isActiveSessionLogin={isActiveSessionLogin}
         />
       ),
