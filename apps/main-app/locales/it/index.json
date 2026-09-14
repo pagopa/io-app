@@ -2417,10 +2417,16 @@
         }
       },
       "unsupportedDevice": {
-        "error": {
+        "errorL2": {
           "secondaryAction": "Chiudi",
           "subtitle": "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi **[Scopri di più]({{faqUrl}})**",
           "title": "Il tuo dispositivo non supporta Documenti su IO"
+        },
+        "errorL3": {
+          "title": "Il tuo dispositivo non supporta IT Wallet",
+          "subtitle": "Questo dispositivo non ha i requisiti di sicurezza necessari per il suo funzionamento.",
+          "primaryAction": "Chiudi",
+          "secondaryAction": "Scopri di più"
         }
       },
       "verifiableCredentials": {

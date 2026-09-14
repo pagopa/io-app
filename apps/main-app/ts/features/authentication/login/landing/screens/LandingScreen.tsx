@@ -64,15 +64,15 @@ import {
   isSessionCorruptedSelector,
   isSessionExpiredSelector
 } from "../../../common/store/selectors";
+import { AUTH_LEVELS, AuthLevel } from "../../../common/utils";
 import { isCieLoginUatEnabledSelector } from "../../cie/store/selectors";
-import { SpidLevel } from "../../cie/utils";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
 
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
-const SPID_LEVEL: SpidLevel = "SpidL2";
+const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 
 /**
  * A screen where the user can choose to login with SPID or get more informations.
@@ -99,8 +99,8 @@ export const LandingScreen = () => {
   }, [store, navigateToCiePinInsertion]);
 
   const handleNavigateToCieIdLoginScreen = useCallback(() => {
-    void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
-    navigateToCieIdLoginScreen(SPID_LEVEL);
+    void trackCieIDLoginSelected(store.getState(), AUTH_LEVEL_L2);
+    navigateToCieIdLoginScreen(AUTH_LEVEL_L2);
   }, [store, navigateToCieIdLoginScreen]);
 
   const { presentInfoBottomsheet, infoBottomsheetComponent } =

@@ -32,8 +32,8 @@ import {
   trackLoginCiePinSelected
 } from "../../common/analytics";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
 import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
-import { SpidLevel } from "../../login/cie/utils";
 import useNavigateToLoginMethod from "../../login/hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../../login/landing/components/LandingSessionExpiredComponent";
 import { setActiveSessionLoginBlockingScreenHasBeenVisualized } from "../store/actions";
@@ -46,7 +46,7 @@ import {
 
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
-const SPID_LEVEL: SpidLevel = "SpidL2";
+const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 
 export const ActiveSessionLandingScreen = () => {
   const insets = useSafeAreaInsets();
@@ -66,8 +66,8 @@ export const ActiveSessionLandingScreen = () => {
   }, [navigateToCiePinInsertion]);
 
   const handleNavigateToCieIdLoginScreen = useCallback(() => {
-    void trackLoginCieIdSelected(SPID_LEVEL, "reauth");
-    navigateToCieIdLoginScreen(SPID_LEVEL);
+    void trackLoginCieIdSelected(AUTH_LEVEL_L2, "reauth");
+    navigateToCieIdLoginScreen(AUTH_LEVEL_L2);
   }, [navigateToCieIdLoginScreen]);
 
   useOnFirstRender(() => {

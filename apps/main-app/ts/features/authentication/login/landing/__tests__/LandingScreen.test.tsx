@@ -5,6 +5,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../../common/utils";
 import { LandingScreen } from "../screens/LandingScreen";
 
 const mockNavigateToCiePinInsertion = jest.fn();
@@ -102,7 +103,7 @@ describe(LandingScreen, () => {
 
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith("SpidL2");
+    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith(AUTH_LEVELS.L2);
   });
   it("Should navigate to the wizards screens", async () => {
     const { getByTestId } = renderComponent();

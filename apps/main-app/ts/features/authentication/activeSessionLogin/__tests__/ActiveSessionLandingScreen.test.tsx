@@ -5,6 +5,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../common/utils";
 import { ActiveSessionLandingScreen } from "../screens/ActiveSessionLandingScreen";
 
 const mockNavigateToCieIdLoginScreen = jest.fn();
@@ -72,7 +73,7 @@ describe("ActiveSessionLandingScreen", () => {
       fireEvent.press(loginWithCieID);
     });
 
-    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith("SpidL2");
+    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith(AUTH_LEVELS.L2);
   });
 
   it("Should navigate to the wizard screen from banner", async () => {

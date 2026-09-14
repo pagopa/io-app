@@ -4,15 +4,10 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties, FlowType } from "../../../../utils/analytics";
-import { SpidLevel } from "../../../authentication/login/cie/utils";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import { LoginSessionDuration } from "../../fastLogin/analytics/optinAnalytics";
 import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
-
-const SECURITY_LEVEL_MAP: Record<SpidLevel, "L2" | "L3"> = {
-  SpidL2: "L2",
-  SpidL3: "L3"
-};
+import { AuthLevel } from "../utils";
 
 export async function loginCieWizardSelected(flow: LoginType = "auth") {
   mixpanelTrack(
@@ -32,10 +27,10 @@ export async function trackCieBottomSheetScreenView(flow: LoginType = "auth") {
 }
 export async function trackCieIDLoginSelected(
   state: GlobalState,
-  spidLevel: SpidLevel,
+  authLevel: AuthLevel,
   flow: LoginType = "auth"
 ) {
-  trackLoginCieIdSelected(spidLevel, flow);
+  trackLoginCieIdSelected(authLevel, flow);
   await updateMixpanelProfileProperties(state, {
     property: "LOGIN_METHOD",
     value: IdpCIE_ID.id
@@ -84,13 +79,13 @@ export async function trackCiePinLoginSelected(
   });
 }
 export function trackLoginCieIdSelected(
-  spidLevel: SpidLevel,
+  authLevel: AuthLevel,
   flow: LoginType = "auth"
 ) {
   void mixpanelTrack(
     "LOGIN_CIEID_SELECTED",
     buildEventProperties("UX", "action", {
-      security_level: SECURITY_LEVEL_MAP[spidLevel],
+      security_level: authLevel,
       flow
     })
   );

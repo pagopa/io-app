@@ -24,6 +24,7 @@ import {
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import {
+  AUTH_LEVELS,
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../../../common/utils";
@@ -143,7 +144,7 @@ const CieConsentDataUsageScreen = () => {
         params: {
           errorCodeOrMessage,
           authMethod: "CIE",
-          authLevel: "L2"
+          authLevel: AUTH_LEVELS.L2
         }
       });
     }
