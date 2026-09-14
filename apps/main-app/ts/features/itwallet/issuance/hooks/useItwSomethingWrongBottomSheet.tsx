@@ -6,31 +6,17 @@ import {
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { useMemo } from "react";
 
 import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useItwAuthSourceName } from "../../common/hooks/useItwAuthSourceName";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { itwAuthenticSourceContactsSelector } from "../../credentialsCatalogue/store/selectors";
-
-type AuthSourceContact = { type: string; value: string };
+import { getAuthSourceContactsMarkdown } from "../utils/authSourceContacts";
 
 type Props = {
   credential: CredentialMetadata;
 };
-
-// Contacts that link to websites must be displayed on top.
-const sortContactsByUrl = (contacts: Array<AuthSourceContact>) =>
-  [...contacts].sort((a, b) => {
-    if (a.type === "url" && b.type !== "url") {
-      return -1;
-    }
-    if (a.type !== "url" && b.type === "url") {
-      return 1;
-    }
-    return 0;
-  });
 
 /**
  * Bottom sheet informing the user how to report wrong or inconsistent data
@@ -46,34 +32,18 @@ export const useItwSomethingWrongBottomSheet = ({ credential }: Props) => {
     itwAuthenticSourceContactsSelector(credential.credentialType)
   );
 
-  const contactsText = useMemo(() => {
-    if (!authSourceContacts || authSourceContacts.length === 0) {
-      return I18n.t(
-        "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyAuthSource",
-        { contacts: `- ${authSource}` }
-      );
+  const contactsText = I18n.t(
+    "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyAuthSource",
+    {
+      contacts: getAuthSourceContactsMarkdown({
+        authSource,
+        contacts: authSourceContacts,
+        websiteLabel: I18n.t(
+          "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.contactUrl"
+        )
+      })
     }
-    const sorted = sortContactsByUrl(authSourceContacts);
-    const urlPrefixLabel = I18n.t(
-      "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.contactUrl"
-    );
-
-    const mapContactTypeToListItem = (contact: AuthSourceContact) => {
-      switch (contact.type) {
-        case "email":
-          return `- [${contact.value}](mailto:${contact.value})`;
-        case "url":
-          return `- [${urlPrefixLabel} ${authSource}](${contact.value})`;
-        default:
-          return `- [${contact.value}](${contact.value})`;
-      }
-    };
-
-    return I18n.t(
-      "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyAuthSource",
-      { contacts: sorted.map(mapContactTypeToListItem).join("\n") }
-    );
-  }, [authSource, authSourceContacts]);
+  );
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t(
