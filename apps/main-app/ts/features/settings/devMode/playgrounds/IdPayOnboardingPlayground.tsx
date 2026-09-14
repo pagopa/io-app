@@ -178,6 +178,11 @@ const testServices: ReadonlyArray<TestService> = [
     serviceId: "TESTSRV20",
     label: "KO - Troppe richieste",
     willFail: true
+  },
+  {
+    serviceId: "TESTSRV21",
+    label: "KO - Bonus già utilizzato",
+    willFail: true
   }
 ];
 

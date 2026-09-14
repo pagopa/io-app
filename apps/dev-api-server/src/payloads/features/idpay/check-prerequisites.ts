@@ -259,6 +259,10 @@ const prerequisitesErrors: {
   [IDPayInitiativeID.KO_TOO_MANY_REQUESTS]: {
     code: OnboardingErrorCodeEnum.ONBOARDING_TOO_MANY_REQUESTS,
     message: ""
+  },
+  [IDPayInitiativeID.KO_USER_BONUS_ALREADY_USED]: {
+    code: OnboardingErrorCodeEnum.ONBOARDING_USER_BONUS_ALREADY_USED,
+    message: ""
   }
 };
 
