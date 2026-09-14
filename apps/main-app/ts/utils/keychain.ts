@@ -41,8 +41,12 @@ export async function getPin(): Promise<PinString | undefined> {
  * Saves the provided unlock code in the secure store.
  */
 export async function setPin(pin: PinString): Promise<boolean> {
-  await SecureStore.setItemAsync(PIN_KEY, pin, DEFAULT_OPTIONS);
-  return true;
+  try {
+    await SecureStore.setItemAsync(PIN_KEY, pin, DEFAULT_OPTIONS);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 // TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
