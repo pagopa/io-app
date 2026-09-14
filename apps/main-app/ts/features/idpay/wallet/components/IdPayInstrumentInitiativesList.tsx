@@ -81,12 +81,13 @@ const IdPayInitiativeListItemSwitch = ({
   const isLoading = pot.isLoading(isInitiativeActive);
 
   const badge =
-    (status === StatusEnum.PENDING_ENROLLMENT_REQUEST ||
-      status === StatusEnum.PENDING_DEACTIVATION_REQUEST) &&
-    ({
-      text: I18n.t(`idpay.wallet.initiativePairing.pendingStatus`),
-      variant: "default"
-    } as Badge);
+    status === StatusEnum.PENDING_ENROLLMENT_REQUEST ||
+    status === StatusEnum.PENDING_DEACTIVATION_REQUEST
+      ? ({
+          text: I18n.t(`idpay.wallet.initiativePairing.pendingStatus`),
+          variant: "default"
+        } as Badge)
+      : undefined;
 
   return (
     <ListItemSwitch

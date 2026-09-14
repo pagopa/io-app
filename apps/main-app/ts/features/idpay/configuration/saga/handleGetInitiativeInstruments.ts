@@ -54,7 +54,13 @@ export function* handleGetInitiativeInstruments(
       error =>
         put(
           idpayInitiativeInstrumentsGet.failure({
-            ...getGenericError(new Error(readablePrivacyReport(error)))
+            ...getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
           })
         )
     );

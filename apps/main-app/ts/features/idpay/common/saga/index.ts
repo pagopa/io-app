@@ -1,4 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
 
@@ -36,8 +37,8 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
 
   const language = yield* select(preferredLanguageSelector);
 
-  const preferredLanguage = language
-    ? fromLocaleToPreferredLanguage(language)
+  const preferredLanguage = O.isSome(language)
+    ? fromLocaleToPreferredLanguage(language.value)
     : PreferredLanguageEnum.it_IT;
 
   const idPayClient = createIDPayClient(baseUrl, apiVersion);

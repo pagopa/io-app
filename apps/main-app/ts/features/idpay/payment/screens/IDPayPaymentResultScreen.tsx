@@ -37,9 +37,9 @@ const IDPayPaymentResultScreen = () => {
   const initiativeDetails = pot.toUndefined(initiativeDataPot);
   const initiative = initiativeDetails
     ? {
-        initiativeId: details.initiativeId,
-        serviceId: details.serviceId,
-        initiativeName: details.initiativeName
+        initiativeId: initiativeDetails.initiativeId,
+        serviceId: initiativeDetails.serviceId,
+        initiativeName: initiativeDetails.initiativeName
       }
     : undefined;
 

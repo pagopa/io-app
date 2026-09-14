@@ -6,6 +6,7 @@ import { SelfCriteriaTextDTO } from "@io-app/api-types/generated/definitions/idp
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 
+import * as Context from "./context";
 import { IdPayOnboardingMachine } from "./machine";
 
 type MachineSnapshot = StateFrom<IdPayOnboardingMachine>;

@@ -1,5 +1,6 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { createActorContext } from "@xstate/react";
+import * as O from "fp-ts/lib/Option";
 import { ReactNode } from "react";
 
 import { PaymentManagerClient } from "../../../../api/pagopa";
@@ -48,8 +49,8 @@ export const IDPayConfigurationMachineProvider = ({ children }: Props) => {
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
 
   const preferredLanguage = useIOSelector(preferredLanguageSelector);
-  const language = preferredLanguage
-    ? fromLocaleToPreferredLanguage(preferredLanguage)
+  const language = O.isSome(preferredLanguage)
+    ? fromLocaleToPreferredLanguage(preferredLanguage.value)
     : PreferredLanguageEnum.it_IT;
 
   if (!bpdToken) {
@@ -76,11 +77,11 @@ export const IDPayConfigurationMachineProvider = ({ children }: Props) => {
     try {
       const response = await paymentManagerClient.getSession(walletToken);
       if ("right" in response && response.right.status === 200) {
-        return response.right.value.data.sessionToken;
+        return O.some(response.right.value.data.sessionToken);
       }
-      return undefined;
+      return O.none;
     } catch {
-      return undefined;
+      return O.none;
     }
   };
 

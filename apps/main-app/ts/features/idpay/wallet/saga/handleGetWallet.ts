@@ -1,5 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -35,12 +35,19 @@ export function* handleGetIDPayWallet(
       action
     )) as unknown as SagaCallReturnType<typeof getWallet>;
 
-    const walletResult =
+    const walletResult = (
       "isOk" in getWalletResult
         ? getWalletResult
         : "right" in getWalletResult
           ? ok(getWalletResult.right)
-          : err(getWalletResult.left);
+          : err(getWalletResult.left)
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof getWallet>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
     if (walletResult.isOk()) {
       if (walletResult.value.status === 200) {
         // handled success
@@ -86,7 +93,13 @@ export function* handleGetIDPayWallet(
       yield* put(
         idPayWalletGet.failure({
           ...getGenericError(
-            new Error(readablePrivacyReport(walletResult.error))
+            new Error(
+              readablePrivacyReport(
+                walletResult.error as Parameters<
+                  typeof readablePrivacyReport
+                >[0]
+              )
+            )
           )
         })
       );

@@ -1,5 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, delay, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -29,13 +29,22 @@ export function* handleGetIDPayInitiativesFromInstrument(
       action
     )) as unknown as SagaCallReturnType<typeof getInitiativesWithInstrument>;
 
-    yield* put(
-      ("isOk" in getInitiativesWithInstrumentResult
+    const result = (
+      "isOk" in getInitiativesWithInstrumentResult
         ? getInitiativesWithInstrumentResult
         : "right" in getInitiativesWithInstrumentResult
           ? ok(getInitiativesWithInstrumentResult.right)
           : err(getInitiativesWithInstrumentResult.left)
-      ).match(
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof getInitiativesWithInstrument>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield* put(
+      result.match(
         res => {
           if (res.status === 200) {
             return idPayInitiativesFromInstrumentGet.success(res.value);
@@ -46,7 +55,13 @@ export function* handleGetIDPayInitiativesFromInstrument(
         },
         error =>
           idPayInitiativesFromInstrumentGet.failure({
-            ...getGenericError(new Error(readablePrivacyReport(error)))
+            ...getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
           })
       )
     );

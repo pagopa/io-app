@@ -1,5 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -36,13 +36,21 @@ export function* handleGetInitiativeDetails(
       action
     )) as unknown as SagaCallReturnType<typeof getInitiativeDetails>;
 
-    yield (
+    const result = (
       "isOk" in getInitiativeDetailsResult
         ? getInitiativeDetailsResult
         : "right" in getInitiativeDetailsResult
           ? ok(getInitiativeDetailsResult.right)
           : err(getInitiativeDetailsResult.left)
-    ).match(
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof getInitiativeDetails>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield result.match(
       response =>
         put(
           response.status === 200
@@ -56,7 +64,13 @@ export function* handleGetInitiativeDetails(
       error =>
         put(
           idpayInitiativeGet.failure({
-            ...getGenericError(new Error(readablePrivacyReport(error)))
+            ...getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
           })
         )
     );

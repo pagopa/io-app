@@ -1,5 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -31,13 +31,22 @@ export function* handleGetInitiativeWaitingList(
       typeof getOnboardingInitiativeWaitingList
     >;
 
-    yield* put(
-      ("isOk" in getOnboardingInitiativeWaitingListResult
+    const result = (
+      "isOk" in getOnboardingInitiativeWaitingListResult
         ? getOnboardingInitiativeWaitingListResult
         : "right" in getOnboardingInitiativeWaitingListResult
           ? ok(getOnboardingInitiativeWaitingListResult.right)
           : err(getOnboardingInitiativeWaitingListResult.left)
-      ).match(
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof getOnboardingInitiativeWaitingList>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield* put(
+      result.match(
         res => {
           if (res.status === 200) {
             return idPayInitiativeWaitingListGet.success(res.value);
@@ -48,7 +57,13 @@ export function* handleGetInitiativeWaitingList(
         },
         error =>
           idPayInitiativeWaitingListGet.failure({
-            ...getGenericError(new Error(readablePrivacyReport(error)))
+            ...getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
           })
       )
     );

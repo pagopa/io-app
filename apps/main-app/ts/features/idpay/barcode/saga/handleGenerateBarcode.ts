@@ -2,7 +2,7 @@ import {
   CodeEnum,
   TransactionErrorDTO
 } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -36,13 +36,21 @@ export function* handleGenerateBarcode(
       action
     )) as unknown as SagaCallReturnType<typeof createBarCodeTransaction>;
 
-    yield (
-      "isOk" in createBarCodeTransactionResult
-        ? createBarCodeTransactionResult
-        : "right" in createBarCodeTransactionResult
-          ? ok(createBarCodeTransactionResult.right)
-          : err(createBarCodeTransactionResult.left)
-    ).match(
+    const result = (
+      "right" in createBarCodeTransactionResult
+        ? ok(createBarCodeTransactionResult.right)
+        : "left" in createBarCodeTransactionResult
+          ? err(createBarCodeTransactionResult.left)
+          : createBarCodeTransactionResult
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof createBarCodeTransaction>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield result.match(
       response =>
         put(
           response.status === 201

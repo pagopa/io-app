@@ -1,6 +1,6 @@
 import { AuthPaymentResponseDTO } from "@io-app/api-types/generated/definitions/idpay/AuthPaymentResponseDTO";
 import { CodeEnum as TransactionErrorCodeEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
-import { ResultAsync } from "neverthrow";
+import { err, ok, ResultAsync } from "neverthrow";
 import { fromPromise } from "xstate";
 
 import { useIODispatch } from "../../../../store/hooks";
@@ -28,6 +28,8 @@ export const createActorsImplementation = (
       const dataResponse = await ResultAsync.fromPromise(
         client.putPreAuthPayment({ bearerAuth: token, trxCode: input }),
         mapFetchError
+      ).andThen(result =>
+        "right" in result ? ok(result.right) : err(result.left)
       );
       return dataResponse.match(
         ({ status, value }) => {
@@ -51,6 +53,8 @@ export const createActorsImplementation = (
       const dataResponse = await ResultAsync.fromPromise(
         client.putAuthPayment({ bearerAuth: token, trxCode: input }),
         mapFetchError
+      ).andThen(result =>
+        "right" in result ? ok(result.right) : err(result.left)
       );
       return dataResponse.match(
         ({ status, value }) => {
@@ -73,6 +77,8 @@ export const createActorsImplementation = (
     const dataResponse = await ResultAsync.fromPromise(
       client.deletePayment({ bearerAuth: token, trxCode: input }),
       mapFetchError
+    ).andThen(result =>
+      "right" in result ? ok(result.right) : err(result.left)
     );
     return dataResponse.match(
       ({ status, value }) => {
