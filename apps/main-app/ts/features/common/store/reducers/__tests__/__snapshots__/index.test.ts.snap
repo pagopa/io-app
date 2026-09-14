@@ -165,14 +165,13 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "issuance": {
-      "integrityKeyTag": {
-        "_tag": "None",
-      },
+      "integrityKeyTag": undefined,
     },
     "preferences": {},
     "proximity": {
       "consents": {},
     },
+    "remoteConfig": {},
     "securePreferences": {
       "offlineAccessCounter": 0,
       "unverifiedCredentialsAccessCounter": 0,
@@ -185,12 +184,12 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "walletInstance": {
       "attestation": undefined,
       "isRemotelyActive": undefined,
+      "keyAttestations": {},
       "renewalError": false,
       "status": {
         "kind": "PotNone",
       },
       "statusList": undefined,
-      "walletUnitAttestations": {},
     },
   },
   "landingBanners": {

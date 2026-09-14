@@ -6,6 +6,14 @@ import {
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import { z } from "zod";
 
+import {
+  WEBVIEW_ERROR_CODE_PREFIX,
+  WEBVIEW_HTTP_ERROR_CODE_PREFIX
+} from "../../identification/cie/utils/constants";
+import {
+  type WebViewError,
+  webViewError
+} from "../../identification/cie/utils/error";
 import { WithCredentialMetadata } from "./ItwFailureTypes";
 
 /**
@@ -111,3 +119,17 @@ export const statusAssertionFailure = z.object({
   error: z.string(),
   error_description: z.string().optional()
 });
+
+/**
+ * Type guard for errors originated from WebViews. CieID and CIE PIN WebView errors
+ * are handled slighly different, so two checks are needed here.
+ */
+export const isWebViewError = (e: unknown): e is Error | WebViewError => {
+  if (e instanceof Error) {
+    return (
+      e.message.includes(WEBVIEW_ERROR_CODE_PREFIX) ||
+      e.message.includes(WEBVIEW_HTTP_ERROR_CODE_PREFIX)
+    );
+  }
+  return webViewError.safeParse(e).success;
+};

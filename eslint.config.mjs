@@ -13,6 +13,7 @@ import js from "@eslint/js";
 import delegateEffectsRule from "./scripts/eslint/delegate-effects.js";
 import noDynamicI18nKeysRule from "./scripts/eslint/no-dynamic-i18n-keys.js";
 import noUnusedI18nKeysRule from "./scripts/eslint/no-unused-i18n-keys.js";
+import noFpTsRule from "./scripts/eslint/no-fp-ts.js";
 import jsonParser from "./scripts/eslint/json-parser.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -96,7 +97,12 @@ export default defineConfig([
       functional,
       sonarjs,
       i18next: fixupPluginRules(i18Next),
-      "@io-app": { rules: { "i18n-no-dynamic-keys": noDynamicI18nKeysRule } },
+      "@io-app": {
+        rules: {
+          "i18n-no-dynamic-keys": noDynamicI18nKeysRule,
+          "no-fp-ts": noFpTsRule
+        }
+      },
       "typed-redux-saga": { rules: { "delegate-effects": delegateEffectsRule } }
     },
 
@@ -342,7 +348,10 @@ export default defineConfig([
       ],
 
       // Disallow dynamically-built i18n keys so unused-key detection stays reliable
-      "@io-app/i18n-no-dynamic-keys": "warn"
+      "@io-app/i18n-no-dynamic-keys": "warn",
+
+      // Remove this after the migration of fp-ts is being completed and replaced by neverthrow;
+      "@io-app/no-fp-ts": "warn"
     },
 
     settings: {

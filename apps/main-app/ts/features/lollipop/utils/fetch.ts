@@ -1,13 +1,8 @@
 import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as A from "fp-ts/lib/Array";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as TE from "fp-ts/lib/TaskEither";
 import URLParse from "url-parse";
 
 import {
-  chainSignPromises,
   getSignAlgorithm,
   LollipopConfig,
   SignPromiseResult,
@@ -110,8 +105,8 @@ export const lollipopRequestInit = async (
   };
 
   const mainSignValue = await sign(mainSignatureBase, requestAndKeyInfo.keyTag);
-  const customSignResult = await chainSignPromises(
-    customContentToSignPromises(customContentToSignInput)
+  const customSignResult = await customContentToSignPromises(
+    customContentToSignInput
   );
   // Add custom headers
   customSignResult.forEach(
@@ -136,73 +131,71 @@ export const lollipopRequestInit = async (
 
 export const customContentSignatureBases = (
   customContent: CutsomContentToSignInput
-): Array<CustomContentBaseSignature> =>
-  pipe(
-    customContent.customContentToSign,
-    O.fromNullable,
-    O.fold(
-      () => [],
-      contentToSign =>
-        pipe(
-          Object.keys(contentToSign),
-          A.mapWithIndex((index, headerPrefix) => {
-            const headerIndex = index + 2;
-            const headerName = `x-pagopa-lollipop-custom-${headerPrefix}`;
-            const headerValue = contentToSign[headerPrefix];
-            const customHeader = {
-              [headerName]: headerValue
-            };
+): Array<CustomContentBaseSignature> => {
+  const { customContentToSign } = customContent;
+  if (!customContentToSign) {
+    return [];
+  }
+  const customContentToSignKeys = Object.keys(customContentToSign);
+  return customContentToSignKeys.map((headerPrefix, index) => {
+    const headerIndex = index + 2;
+    const headerName = `x-pagopa-lollipop-custom-${headerPrefix}`;
+    const headerValue = customContentToSign[headerPrefix];
+    const customHeader = {
+      [headerName]: headerValue
+    };
 
-            const customHeaderSignatureConfig = forgeSignatureConfig(
-              customContent.signatureConfigForgeInput,
-              customContent.keyInfo,
-              [headerName]
-            );
+    const customHeaderSignatureConfig = forgeSignatureConfig(
+      customContent.signatureConfigForgeInput,
+      customContent.keyInfo,
+      [headerName]
+    );
 
-            const { signatureBase, signatureInput } = generateSignatureBase(
-              customHeader,
-              customHeaderSignatureConfig,
-              headerIndex
-            );
+    const { signatureBase, signatureInput } = generateSignatureBase(
+      customHeader,
+      customHeaderSignatureConfig,
+      headerIndex
+    );
 
-            return {
-              signatureBase,
-              signatureInput,
-              headerIndex,
-              headerPrefix,
-              headerName,
-              headerValue
-            };
-          })
-        )
-    )
-  );
+    return {
+      signatureBase,
+      signatureInput,
+      headerIndex,
+      headerPrefix,
+      headerName,
+      headerValue
+    };
+  });
+};
 
-export const customContentToSignPromises = (
+export const customContentToSignPromises = async (
   customContent: CutsomContentToSignInput
-): Array<TE.TaskEither<Error, SignPromiseResult>> =>
-  pipe(
-    customContentSignatureBases(customContent),
-    A.map(customContentBase =>
-      pipe(
-        TE.tryCatch(
-          () => sign(customContentBase.signatureBase, customContent.keyTag),
-          error => new Error(`Failed to sign: ${error}`)
-        ),
-        TE.map(value => ({
+): Promise<Array<SignPromiseResult>> => {
+  const customContentSignature = customContentSignatureBases(customContent);
+  try {
+    return await Promise.all(
+      customContentSignature.map(async customContentBase => {
+        const signedValue = await sign(
+          customContentBase.signatureBase,
+          customContent.keyTag
+        );
+        return {
           headerIndex: customContentBase.headerIndex,
           headerPrefix: customContentBase.headerPrefix,
           headerName: customContentBase.headerName,
           headerValue: customContentBase.headerValue,
           signature: toSignatureHeaderValue(
-            value,
+            signedValue,
             customContentBase.headerIndex
           ),
           signatureInput: customContentBase.signatureInput
-        }))
-      )
-    )
-  );
+        };
+      })
+    );
+  } catch {
+    return [];
+  }
+};
 
 export type CustomContentBaseSignature = SignatureBaseResult & {
   headerIndex: number;
