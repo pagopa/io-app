@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { call, delay, put, take, takeLatest } from "typed-redux-saga/macro";
 
 import { fastLoginMaxRetries } from "../../../../../config";
@@ -85,7 +84,7 @@ describe("tokenRefreshSaga", () => {
       const gen = handleRefreshSessionToken(action);
       expect(gen.next().value).toEqual(call(dismissSupport));
       expect(gen.next(null).value).toEqual(call(getPin));
-      expect(gen.next(O.none).value).toEqual(put(refreshTokenNoPinError()));
+      expect(gen.next(undefined).value).toEqual(put(refreshTokenNoPinError()));
       expect(gen.next().done).toBe(true);
     });
 
@@ -100,7 +99,7 @@ describe("tokenRefreshSaga", () => {
 
       expect(gen.next().value).toEqual(call(dismissSupport));
       expect(gen.next(null).value).toEqual(call(getPin));
-      expect(gen.next(O.none).value).toEqual(
+      expect(gen.next(undefined).value).toEqual(
         put(logoutRequest({ withApiCall: false }))
       );
       expect(gen.next().done).toBe(true);
@@ -117,7 +116,7 @@ describe("tokenRefreshSaga", () => {
 
       expect(gen.next().value).toEqual(call(dismissSupport));
       expect(gen.next(null).value).toEqual(call(getPin));
-      expect(gen.next(O.some("147493")).value).toEqual(
+      expect(gen.next("147493").value).toEqual(
         put(askUserToRefreshSessionToken.request())
       );
 
@@ -135,7 +134,7 @@ describe("tokenRefreshSaga", () => {
     });
 
     it('should navigate and dispatch identificationRequest if user says "no"', () => {
-      (getPin as jest.Mock).mockReturnValue(O.some("mocked-pin"));
+      (getPin as jest.Mock).mockReturnValue("mocked-pin");
 
       const action = createAction({
         withUserInteraction: true,
@@ -147,7 +146,7 @@ describe("tokenRefreshSaga", () => {
 
       expect(gen.next().value).toEqual(call(dismissSupport));
       expect(gen.next(null).value).toEqual(call(getPin));
-      expect(gen.next(O.some("mocked-pin")).value).toEqual(
+      expect(gen.next("mocked-pin").value).toEqual(
         put(askUserToRefreshSessionToken.request())
       );
       expect(gen.next().value).toEqual(
@@ -165,7 +164,7 @@ describe("tokenRefreshSaga", () => {
     });
 
     it("should call doRefreshTokenSaga directly if withUserInteraction is false and pin is present", () => {
-      (getPin as jest.Mock).mockReturnValue(O.some("mocked-pin"));
+      (getPin as jest.Mock).mockReturnValue("mocked-pin");
 
       const action = createAction({
         withUserInteraction: false,
@@ -177,13 +176,13 @@ describe("tokenRefreshSaga", () => {
 
       expect(gen.next().value).toEqual(call(dismissSupport));
       expect(gen.next(null).value).toEqual(call(getPin));
-      expect(gen.next(O.some("mocked-pin")).value).toEqual(
+      expect(gen.next("mocked-pin").value).toEqual(
         call(doRefreshTokenSaga, action)
       );
     });
 
     it("should NOT call doRefreshTokenSaga if identification fails", () => {
-      (getPin as jest.Mock).mockReturnValue(O.some("mocked-pin"));
+      (getPin as jest.Mock).mockReturnValue("mocked-pin");
 
       const action = createAction({
         withUserInteraction: true,
@@ -195,7 +194,7 @@ describe("tokenRefreshSaga", () => {
 
       expect(gen.next().value).toEqual(call(dismissSupport));
       expect(gen.next(null).value).toEqual(call(getPin));
-      expect(gen.next(O.some("mocked-pin")).value).toEqual(
+      expect(gen.next("mocked-pin").value).toEqual(
         put(askUserToRefreshSessionToken.request())
       );
       expect(gen.next().value).toEqual(
@@ -214,7 +213,7 @@ describe("tokenRefreshSaga", () => {
     });
 
     it("should call doRefreshTokenSaga if identification succeeds", () => {
-      (getPin as jest.Mock).mockReturnValue(O.some("mocked-pin"));
+      (getPin as jest.Mock).mockReturnValue("mocked-pin");
 
       const action = createAction({
         withUserInteraction: true,
@@ -226,7 +225,7 @@ describe("tokenRefreshSaga", () => {
 
       expect(gen.next().value).toEqual(call(dismissSupport));
       expect(gen.next(null).value).toEqual(call(getPin));
-      expect(gen.next(O.some("mocked-pin")).value).toEqual(
+      expect(gen.next("mocked-pin").value).toEqual(
         put(askUserToRefreshSessionToken.request())
       );
       expect(gen.next().value).toEqual(

@@ -20,6 +20,7 @@ import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
+  AUTH_LEVELS,
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../../../common/utils";
@@ -135,7 +136,7 @@ const ActiveSessionCieIdLoginWebView = ({
         params: {
           errorCodeOrMessage: code || message,
           authMethod: "CIE_ID",
-          authLevel: "L2",
+          authLevel: AUTH_LEVELS.L2,
           params: { spidLevel, isUat }
         }
       });

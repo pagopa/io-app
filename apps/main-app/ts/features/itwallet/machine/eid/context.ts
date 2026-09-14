@@ -14,6 +14,7 @@ import type {
 } from "../../common/utils/itwTypesUtils";
 
 import { IssuanceFailure } from "./failure";
+import { EidIssuanceMachineDeps } from "./input";
 
 /**
  * When authenticating with CIE + PIN the flow is interrupted
@@ -63,6 +64,10 @@ export type Context = {
    * The credential type that triggered the eID issuance flow.
    */
   credentialType: string | undefined;
+  /**
+   * Runtime dependencies injected via machine input
+   */
+  deps: EidIssuanceMachineDeps;
   /**
    * The obtained PID credential
    */
@@ -175,7 +180,7 @@ export type MrtdPoPContext = {
   validationUrl: string;
 };
 
-export const InitialContext: Context = {
+export const InitialContext: Omit<Context, "deps"> = {
   itwVersion: "1.0.0", // Initial value to satisfy type constraints. It is assigned in the `onInit` action.
   mode: undefined,
   level: undefined,

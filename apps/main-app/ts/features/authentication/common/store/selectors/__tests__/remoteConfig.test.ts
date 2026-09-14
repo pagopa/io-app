@@ -2,7 +2,7 @@ import { OneIdentityConfig } from "@io-app/api-types/generated/definitions/conte
 import * as O from "fp-ts/lib/Option";
 
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { OneIdentityEnv } from "../../reducers/loginConfig";
+import { ONE_IDENTITY_ENVS, OneIdentityEnv } from "../../reducers/loginConfig";
 import {
   oneIdentityIdpFriendlyNamesUrlSelector,
   oneIdentityIdpsUrlSelector,
@@ -14,7 +14,7 @@ const { FALLBACK_ONE_IDENTITY_CONFIG } = testable!;
 
 const makeState = (
   oneIdentity?: OneIdentityConfig,
-  oneIdentityEnv: OneIdentityEnv = "prod"
+  oneIdentityEnv: OneIdentityEnv = ONE_IDENTITY_ENVS.PROD
 ): GlobalState =>
   ({
     remoteConfig: oneIdentity === undefined ? O.none : O.some({ oneIdentity }),
@@ -51,49 +51,49 @@ describe("oneIdentityIdpsUrlSelector", () => {
     {
       name: "remoteConfig is none",
       statePayload: undefined,
-      env: "prod",
+      env: ONE_IDENTITY_ENVS.PROD,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.prod.idpsUrl
     },
     {
       name: "remoteConfig is none",
       statePayload: undefined,
-      env: "uat",
+      env: ONE_IDENTITY_ENVS.UAT,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.uat.idpsUrl
     },
     {
       name: "environments is absent",
       statePayload: {},
-      env: "prod",
+      env: ONE_IDENTITY_ENVS.PROD,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.prod.idpsUrl
     },
     {
       name: "environments is absent",
       statePayload: {},
-      env: "uat",
+      env: ONE_IDENTITY_ENVS.UAT,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.uat.idpsUrl
     },
     {
       name: "the environment is empty",
       statePayload: { environments: { prod: {} } },
-      env: "prod",
+      env: ONE_IDENTITY_ENVS.PROD,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.prod.idpsUrl
     },
     {
       name: "the environment is empty",
       statePayload: { environments: { uat: {} } },
-      env: "uat",
+      env: ONE_IDENTITY_ENVS.UAT,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.uat.idpsUrl
     },
     {
       name: "the remote idpsUrl is present",
       statePayload: { environments: { prod: { idpsUrl: remoteProdUrl } } },
-      env: "prod",
+      env: ONE_IDENTITY_ENVS.PROD,
       expected: remoteProdUrl
     },
     {
       name: "the remote idpsUrl is present",
       statePayload: { environments: { uat: { idpsUrl: remoteUatUrl } } },
-      env: "uat",
+      env: ONE_IDENTITY_ENVS.UAT,
       expected: remoteUatUrl
     }
   ];
@@ -118,37 +118,37 @@ describe("oneIdentityIdpFriendlyNamesUrlSelector", () => {
     {
       name: "remoteConfig is none",
       statePayload: undefined,
-      env: "prod",
+      env: ONE_IDENTITY_ENVS.PROD,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.prod.idpFriendlyNamesUrl
     },
     {
       name: "remoteConfig is none",
       statePayload: undefined,
-      env: "uat",
+      env: ONE_IDENTITY_ENVS.UAT,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.uat.idpFriendlyNamesUrl
     },
     {
       name: "environments is absent",
       statePayload: {},
-      env: "prod",
+      env: ONE_IDENTITY_ENVS.PROD,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.prod.idpFriendlyNamesUrl
     },
     {
       name: "environments is absent",
       statePayload: {},
-      env: "uat",
+      env: ONE_IDENTITY_ENVS.UAT,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.uat.idpFriendlyNamesUrl
     },
     {
       name: "the environment is empty",
       statePayload: { environments: { prod: {} } },
-      env: "prod",
+      env: ONE_IDENTITY_ENVS.PROD,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.prod.idpFriendlyNamesUrl
     },
     {
       name: "the environment is empty",
       statePayload: { environments: { uat: {} } },
-      env: "uat",
+      env: ONE_IDENTITY_ENVS.UAT,
       expected: FALLBACK_ONE_IDENTITY_CONFIG.uat.idpFriendlyNamesUrl
     },
     {
@@ -156,7 +156,7 @@ describe("oneIdentityIdpFriendlyNamesUrlSelector", () => {
       statePayload: {
         environments: { prod: { idpFriendlyNamesUrl: remoteProdUrl } }
       },
-      env: "prod",
+      env: ONE_IDENTITY_ENVS.PROD,
       expected: remoteProdUrl
     },
     {
@@ -164,7 +164,7 @@ describe("oneIdentityIdpFriendlyNamesUrlSelector", () => {
       statePayload: {
         environments: { uat: { idpFriendlyNamesUrl: remoteUatUrl } }
       },
-      env: "uat",
+      env: ONE_IDENTITY_ENVS.UAT,
       expected: remoteUatUrl
     }
   ];

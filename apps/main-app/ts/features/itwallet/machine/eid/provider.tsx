@@ -6,9 +6,6 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
-import { createEidIssuanceActionsImplementation } from "./../eid/actions";
-import { createEidIssuanceActorsImplementation } from "./../eid/actors";
-import { createEidIssuanceGuardsImplementation } from "./../eid/guards";
 import { itwEidIssuanceMachine } from "./../eid/machine";
 
 export const ItwEidIssuanceMachineContext = createActorContext(
@@ -22,16 +19,15 @@ export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {
 
   const env = getEnv(useIOSelector(selectItwEnv));
 
-  const eidIssuanceMachine = itwEidIssuanceMachine.provide({
-    guards: createEidIssuanceGuardsImplementation(store, {
-      bypassIdentityMatch: env.BYPASS_IDENTITY_MATCH
-    }),
-    actions: createEidIssuanceActionsImplementation(navigation, store, toast),
-    actors: createEidIssuanceActorsImplementation(env, store)
-  });
-
   return (
-    <ItwEidIssuanceMachineContext.Provider logic={eidIssuanceMachine}>
+    <ItwEidIssuanceMachineContext.Provider
+      logic={itwEidIssuanceMachine}
+      options={{
+        input: {
+          deps: { env, navigation, store, toast }
+        }
+      }}
+    >
       {props.children}
     </ItwEidIssuanceMachineContext.Provider>
   );

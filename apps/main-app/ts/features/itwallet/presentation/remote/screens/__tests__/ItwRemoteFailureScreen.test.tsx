@@ -11,6 +11,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as itwCommonSelectors from "../../../../common/store/selectors";
+import { testRemoteDeps } from "../../../../machine/utils/testDeps";
 import { RemoteFailure, RemoteFailureType } from "../../machine/failure";
 import { itwRemoteMachine } from "../../machine/machine";
 import { ItwRemoteMachineContext } from "../../machine/provider";
@@ -63,7 +64,10 @@ describe("ItwRemoteFailureScreen", () => {
 
 const renderComponent = (failure: RemoteFailure) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwRemoteMachine).getSnapshot();
+  const store = createStore(appReducer, initialState as any);
+  const initialSnapshot = createActor(itwRemoteMachine, {
+    input: { deps: testRemoteDeps({ store }) }
+  }).getSnapshot();
 
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
@@ -79,6 +83,6 @@ const renderComponent = (failure: RemoteFailure) => {
     ),
     ITW_REMOTE_ROUTES.FAILURE,
     {},
-    createStore(appReducer, initialState as any)
+    store
   );
 };

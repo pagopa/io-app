@@ -9,12 +9,13 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { SpidIdp } from "../../../../utils/idps";
 import { setOneIdentityEnv } from "../../../authentication/common/store/actions/loginConfig";
+import { ONE_IDENTITY_ENVS } from "../../../authentication/common/store/reducers/loginConfig";
+import { AUTH_LEVELS, AuthLevel } from "../../../authentication/common/utils";
 import {
   createRetriableFetch,
   FetchResponse
 } from "../../../authentication/common/utils/fetch";
 import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
-import { SpidLevel } from "../../../authentication/login/cie/utils";
 import { lollipopSetEphemeralPublicKey } from "../../store/actions/lollipop";
 import { toBase64EncodedThumbprint } from "../../utils/crypto";
 import { lollipopSamlVerify } from "../../utils/login";
@@ -65,7 +66,7 @@ const successResponse = (status: number, body: unknown): FetchResponse => ({
 });
 
 interface SetupOptions {
-  minAuthLevel?: SpidLevel;
+  minAuthLevel?: AuthLevel;
   store?: ReturnType<typeof createTestStore>;
 }
 
@@ -75,7 +76,7 @@ const createTestStore = () => {
 };
 
 const setupTest = ({
-  minAuthLevel = "SpidL2",
+  minAuthLevel = AUTH_LEVELS.L2,
   store = createTestStore()
 }: SetupOptions = {}) => {
   const onFailure = jest.fn();
@@ -144,9 +145,9 @@ describe("useOneIdentityLoginSource", () => {
     expect(authorizeUrl.origin).toBe("https://one-identity.example.com");
     expect(authorizeUrl.pathname).toBe("/oidc/authorize");
     expect(authorizeUrl.query.client_id).toBe(reserveResponse.client_id);
-    expect(webviewSource.headers?.["assertion-ref"]).toContain(
-      toBase64EncodedThumbprint(mockPublicKey)
-    );
+    expect(
+      webviewSource.headers?.["x-pagopa-lollipop-assertion-ref"]
+    ).toContain(toBase64EncodedThumbprint(mockPublicKey));
   });
 
   it("should expose a failure loginSourceState on HTTP error", async () => {
@@ -204,7 +205,7 @@ describe("useOneIdentityLoginSource", () => {
     mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
 
     const store = createTestStore();
-    store.dispatch(setOneIdentityEnv("uat"));
+    store.dispatch(setOneIdentityEnv(ONE_IDENTITY_ENVS.UAT));
 
     setupTest({ store });
 

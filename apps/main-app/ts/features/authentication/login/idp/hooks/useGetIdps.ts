@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 
 import { useIOSelector } from "../../../../../store/hooks";
-import { oneIdentityIdpsUrlSelector } from "../../../common/store/selectors/remoteConfig";
+import {
+  oneIdentityIdpFriendlyNamesUrlSelector,
+  oneIdentityIdpsUrlSelector
+} from "../../../common/store/selectors/remoteConfig";
 import { createRetriableFetch } from "../../../common/utils/fetch";
 import { jsonFetchToSchema } from "../../../common/utils/jsonFetchToSchema";
-import { Idps, IdpsSchema } from "../types/idps";
+import { IdpFriendlyNamesSchema, Idps, IdpsSchema } from "../types/idps";
 
-const fetchIdps = createRetriableFetch();
+const fetch = createRetriableFetch();
 
 export type IdpsState =
   | { data: Idps; status: "success" }
@@ -19,6 +22,9 @@ export type UseGetIdps = () => {
 
 export const useGetIdps: UseGetIdps = () => {
   const idpsUrl = useIOSelector(oneIdentityIdpsUrlSelector);
+  const idpFriendlyNamesUrl = useIOSelector(
+    oneIdentityIdpFriendlyNamesUrlSelector
+  );
 
   const [state, setState] = useState<IdpsState>({ status: "loading" });
 
@@ -26,21 +32,40 @@ export const useGetIdps: UseGetIdps = () => {
     const controller = new AbortController();
 
     const fetchIdpList = async () => {
-      setState({ status: "loading" });
+      const idpsPromise = jsonFetchToSchema(
+        fetch(idpsUrl, { signal: controller.signal }),
+        IdpsSchema
+      );
+      const idpFriendlyNamesPromise = jsonFetchToSchema(
+        fetch(idpFriendlyNamesUrl, { signal: controller.signal }),
+        IdpFriendlyNamesSchema
+      );
 
-      const requestPromise = fetchIdps(idpsUrl, { signal: controller.signal });
-      const result = await jsonFetchToSchema(requestPromise, IdpsSchema);
+      const [idpsResult, idpFriendlyNamesResult] = await Promise.all([
+        idpsPromise,
+        idpFriendlyNamesPromise
+      ]);
 
-      if (result.isErr()) {
-        setState({ status: "failure", error: result.error });
-        return;
+      if (idpsResult.isErr()) {
+        return setState({ status: "failure", error: idpsResult.error });
       }
-      setState({ status: "success", data: result.value });
+
+      const idpFriendlyNamesMap = idpFriendlyNamesResult.isOk()
+        ? idpFriendlyNamesResult.value
+        : {};
+
+      setState({
+        status: "success",
+        data: idpsResult.value.map(idp => ({
+          ...idp,
+          friendlyName: idpFriendlyNamesMap[idp.entityID] ?? idp.friendlyName
+        }))
+      });
     };
     void fetchIdpList();
 
     return () => controller.abort();
-  }, [idpsUrl]);
+  }, [idpFriendlyNamesUrl, idpsUrl]);
 
   return {
     state

@@ -12,6 +12,7 @@ import {
 import { isActiveSessionLoginSelector } from "../../activeSessionLogin/store/selectors";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { idpSelected } from "../../common/store/actions";
+import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
 import { fastLoginOptInFFEnabled } from "../../fastLogin/store/selectors";
 import {
   isCieLoginUatEnabledSelector,
@@ -19,8 +20,7 @@ import {
 } from "../../login/cie/store/selectors";
 import {
   cieFlowForDevServerEnabled,
-  getCieIdEnvironment,
-  SpidLevel
+  getCieIdEnvironment
 } from "../../login/cie/utils";
 import {
   ChosenIdentifier,
@@ -104,7 +104,7 @@ const useNavigateToLoginMethod = () => {
   }, [dispatch, isActiveSessionLogin, withIsFastLoginOptInCheck, navigate]);
 
   const navigateToCieIdLoginScreen = useCallback(
-    (spidLevel: SpidLevel = "SpidL2") => {
+    (spidLevel: AuthLevel = AUTH_LEVELS.L2) => {
       if (isActiveSessionLogin) {
         // Set the security level for Active Session Login to enable mismatch tracking
         dispatch(setCieIDSelectedSecurityLevelActiveSessionLogin(spidLevel));

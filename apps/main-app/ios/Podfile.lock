@@ -253,7 +253,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - pagopa-io-react-native-crypto (1.2.3):
+  - pagopa-io-react-native-crypto (1.2.5):
     - boost
     - DoubleConversion
     - fast_float
@@ -428,14 +428,14 @@ PODS:
     - ZendeskChatSDK
     - ZendeskMessagingAPISDK
     - ZendeskSupportSDK
-  - Pulsar (1.6.1):
+  - Pulsar (1.7.0):
     - boost
     - DoubleConversion
     - fast_float
     - fmt
     - glog
     - hermes-engine
-    - Pulsar-haptics (= 1.1.4)
+    - PulsarHaptics (= 1.4.0)
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -457,7 +457,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - Pulsar-haptics (1.1.4)
+  - PulsarHaptics (1.4.0)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -4051,7 +4051,7 @@ SPEC REPOS:
     - Mixpanel-swift
     - MultiplatformBleAdapter
     - OpenSSL-Universal
-    - Pulsar-haptics
+    - PulsarHaptics
     - React-Codegen
     - SocketRocket
     - SwiftCBOR
@@ -4416,14 +4416,14 @@ SPEC CHECKSUMS:
   MultiplatformBleAdapter: b1fddd0d499b96b607e00f0faa8e60648343dc1d
   OpenSSL-Universal: ecee7b138fa75a74ecf00d7ffd248fb584739b9e
   pagopa-io-react-native-cieid: 3969ed1784e0b9041baf892b461be3640315acd1
-  pagopa-io-react-native-crypto: eb62bb6767b44ea610ce169d855c89604b9e96d9
+  pagopa-io-react-native-crypto: afc8ee2585a7944dc115687eb2938009608f062a
   pagopa-io-react-native-integrity: 3e84754db0333a531db86f83f786f60a6da22337
   pagopa-io-react-native-jwt: d268a7aa7a0c63e809386209e589224e0c0c04c0
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
-  Pulsar: c743a993d501c276827f8fc83c9a26a916f111ef
-  Pulsar-haptics: f795eaf55d8d0290148fd97c747dcc6689c3d079
+  Pulsar: b74a2333a1f655d04a8bc144a7273cb7ffdf7122
+  PulsarHaptics: 62d13e9ef63535263f110a925e587d5d027dc683
   RCT-Folly: b29feb752b08042c62badaef7d453f3bb5e6ae23
   RCTDeprecation: f05668eea7b0e209e77e8ab1dc6a5e3b342f6f65
   RCTRequired: c1ddbcb9ab4d51c36bda2a96556d064cb8825357
