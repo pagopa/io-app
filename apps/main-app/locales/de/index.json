@@ -36,7 +36,6 @@
       "minusSymbol": "minus",
       "reload": "Neu laden",
       "search": "Suchen",
-      "alert": "Hinweis",
       "activityIndicator": {
         "label": "Wird geladen",
         "hint": "Warte, bis der Inhalt geladen ist"

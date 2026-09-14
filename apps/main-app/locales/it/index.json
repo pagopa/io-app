@@ -3129,7 +3129,6 @@
         "hint": "Attendi il caricamento del contenuto",
         "label": "Caricamento in corso"
       },
-      "alert": "Avviso",
       "cieReadingProgress": "Lettura {{percentage}}% completata",
       "collapsed": "Compresso",
       "contextualHelp": {

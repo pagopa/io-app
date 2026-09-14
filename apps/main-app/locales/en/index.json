@@ -3116,7 +3116,6 @@
         "hint": "Please wait while the content loads",
         "label": "Loading..."
       },
-      "alert": "Notice",
       "cieReadingProgress": "Reading {{percentage}}% completed",
       "collapsed": "Compressed",
       "contextualHelp": {
