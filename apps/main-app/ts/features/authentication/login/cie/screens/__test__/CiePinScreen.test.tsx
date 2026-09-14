@@ -88,10 +88,12 @@ describe("CiePinScreen", () => {
     ).toBeTruthy();
   });
 
-  it("should open bottom sheet when subtitleCTA is pressed", () => {
+  it("should track the info event when subtitleCTA is pressed", () => {
+    const spy = jest.spyOn(cieAnalytics, "trackLoginCiePinInfo");
     const { getByText } = renderComponent();
     const subtitle = getByText(I18n.t("authentication.cie.pin.subtitleCTA"));
     fireEvent.press(subtitle);
+    expect(spy).toHaveBeenCalled();
   });
 
   it("should track the screen on first render", () => {

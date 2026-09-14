@@ -4,7 +4,10 @@ import { memo } from "react";
 
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { itwCloseBanner } from "../../../common/store/actions/banners";
-import { itwIsMdlDetailsInfoBannerVisibleSelector } from "../../../common/store/selectors/banners";
+import {
+  itwIsMdlDetailsInfoBannerVisibleSelector,
+  itwIsTsDetailsInfoBannerVisibleSelector
+} from "../../../common/store/selectors/banners";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
   CredentialMetadata,
@@ -35,6 +38,9 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isMdlBannerVisible = useIOSelector(
     itwIsMdlDetailsInfoBannerVisibleSelector
+  );
+  const isTsBannerVisible = useIOSelector(
+    itwIsTsDetailsInfoBannerVisibleSelector
   );
 
   if (!validStates.includes(status)) {
@@ -68,11 +74,18 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
   }
 
   if (credentialType === CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD) {
+    if (!isTsBannerVisible) {
+      return null;
+    }
     return (
-      <Alert
-        content={I18n.t("features.itWallet.presentation.alerts.ehc.content")}
-        testID="itwEhcBannerTestID"
-        variant="info"
+      <Banner
+        color="neutral"
+        content={I18n.t("features.itWallet.presentation.alerts.ts.content")}
+        labelClose={I18n.t("global.buttons.close")}
+        onClose={() => dispatch(itwCloseBanner("tsDetailsInfo"))}
+        pictogramName="premiumCredentials"
+        testID="itwTsBannerTestID"
+        title={I18n.t("features.itWallet.presentation.alerts.ts.title")}
       />
     );
   }

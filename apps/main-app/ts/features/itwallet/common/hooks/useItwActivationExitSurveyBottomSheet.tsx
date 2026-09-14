@@ -83,8 +83,8 @@ export const useItwActivationExitSurveyBottomSheet = () => {
               onPress={() => {
                 skipDeclinedEvent.current = true;
                 trackItwSurveyRequestAccepted(trackingProps);
-                openWebUrl(surveyUrl);
                 dismiss();
+                openWebUrl(surveyUrl);
               }}
               variant="solid"
             />
@@ -103,6 +103,7 @@ export const useItwActivationExitSurveyBottomSheet = () => {
       </VStack>
     ),
     onDismiss: () => {
+      dispatch(itwSetActivationExitSurvey(undefined));
       if (!skipDeclinedEvent.current) {
         trackItwSurveyRequestDeclined(trackingProps);
       }
@@ -124,9 +125,8 @@ export const useItwActivationExitSurveyBottomSheet = () => {
     useCallback(() => {
       if (activationExitSurveyState) {
         presentSurvey();
-        dispatch(itwSetActivationExitSurvey(undefined));
       }
-    }, [activationExitSurveyState, dispatch, presentSurvey])
+    }, [activationExitSurveyState, presentSurvey])
   );
 
   return { bottomSheet };

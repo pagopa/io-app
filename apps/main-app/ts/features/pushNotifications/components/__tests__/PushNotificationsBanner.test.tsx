@@ -121,7 +121,7 @@ describe("PushNotificationsBanner", () => {
       );
     }
   );
-  it('should reset the dismiss state if "shouldResetNotificationBannerDismissStateSelector" evaluates to "true" ', () => {
+  it('should reset the dismiss state if "shouldResetNotificationBannerDismissStateSelector" evaluates to "true"', () => {
     const ioDispatchMock = jest.fn();
     jest
       .spyOn(

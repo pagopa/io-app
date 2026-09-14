@@ -18,12 +18,12 @@ import {
 } from "../actions";
 
 export type FimsExportSuccessStates = "ALREADY_EXPORTING" | "SUCCESS";
-export type FimsHistoryExportState = RemoteValue<FimsExportSuccessStates, null>;
-
 export type FimsHistoryState = {
   consentsList: pot.Pot<AccessHistoryPage, string>;
   historyExportState: FimsHistoryExportState;
 };
+
+type FimsHistoryExportState = RemoteValue<FimsExportSuccessStates, null>;
 
 export const INITIAL_STATE: FimsHistoryState = {
   historyExportState: remoteUndefined,

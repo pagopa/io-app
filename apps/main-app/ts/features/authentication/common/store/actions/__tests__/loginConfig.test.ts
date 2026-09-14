@@ -1,4 +1,4 @@
-import { OneIdentityEnv } from "../../reducers/loginConfig";
+import { ONE_IDENTITY_ENVS } from "../../reducers/loginConfig";
 import {
   setOneIdentityEnv,
   setOneIdentityLocalFeatureFlag
@@ -16,7 +16,7 @@ describe("setOneIdentityLocalFeatureFlag", () => {
 });
 
 describe("setOneIdentityEnv", () => {
-  it.each(["prod", "uat"] as ReadonlyArray<OneIdentityEnv>)(
+  it.each([ONE_IDENTITY_ENVS.PROD, ONE_IDENTITY_ENVS.UAT])(
     "should match expected values with %s",
     value => {
       const action = setOneIdentityEnv(value);
