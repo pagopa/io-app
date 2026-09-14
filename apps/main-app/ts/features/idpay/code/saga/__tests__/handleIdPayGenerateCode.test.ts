@@ -1,4 +1,4 @@
-import * as E from "fp-ts/lib/Either";
+import { err, ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
@@ -31,7 +31,7 @@ describe("handleIdPayGenerateCode", () => {
           }),
           { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
         )
-        .next(E.right({ status: 200, value: { idpayCode: tIdPayCode } }))
+        .next(ok({ status: 200, value: { idpayCode: tIdPayCode } }))
         .put(idPayGenerateCode.success({ idpayCode: tIdPayCode }))
         .next()
         .isDone();
@@ -57,7 +57,7 @@ describe("handleIdPayGenerateCode", () => {
           }),
           { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
         )
-        .next(E.right({ status: 500 }))
+        .next(ok({ status: 500 }))
         .put(
           idPayGenerateCode.failure({
             ...getGenericError(new Error(`response status code 500`))
@@ -87,7 +87,7 @@ describe("handleIdPayGenerateCode", () => {
           }),
           { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
         )
-        .next(E.left([]))
+        .next(err([]))
         .put(
           idPayGenerateCode.failure({
             ...getGenericError(new Error(readablePrivacyReport([])))
