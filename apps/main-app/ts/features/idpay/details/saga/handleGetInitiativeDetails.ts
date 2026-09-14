@@ -1,6 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { err, ok } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -37,26 +36,29 @@ export function* handleGetInitiativeDetails(
       action
     )) as unknown as SagaCallReturnType<typeof getInitiativeDetails>;
 
-    yield pipe(
-      getInitiativeDetailsResult,
-      E.fold(
-        error =>
-          put(
-            idpayInitiativeGet.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            })
-          ),
-        response =>
-          put(
-            response.status === 200
-              ? idpayInitiativeGet.success(response.value)
-              : idpayInitiativeGet.failure({
-                  ...getGenericError(
-                    new Error(`response status code ${response.status}`)
-                  )
-                })
-          )
-      )
+    yield (
+      "isOk" in getInitiativeDetailsResult
+        ? getInitiativeDetailsResult
+        : "right" in getInitiativeDetailsResult
+          ? ok(getInitiativeDetailsResult.right)
+          : err(getInitiativeDetailsResult.left)
+    ).match(
+      response =>
+        put(
+          response.status === 200
+            ? idpayInitiativeGet.success(response.value)
+            : idpayInitiativeGet.failure({
+                ...getGenericError(
+                  new Error(`response status code ${response.status}`)
+                )
+              })
+        ),
+      error =>
+        put(
+          idpayInitiativeGet.failure({
+            ...getGenericError(new Error(readablePrivacyReport(error)))
+          })
+        )
     );
   } catch (e) {
     yield* put(idpayInitiativeGet.failure({ ...getNetworkError(e) }));

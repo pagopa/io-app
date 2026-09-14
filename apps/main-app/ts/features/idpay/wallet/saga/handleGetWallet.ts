@@ -1,5 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
+import { err, ok } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -35,10 +35,16 @@ export function* handleGetIDPayWallet(
       action
     )) as unknown as SagaCallReturnType<typeof getWallet>;
 
-    if (E.isRight(getWalletResult)) {
-      if (getWalletResult.right.status === 200) {
+    const walletResult =
+      "isOk" in getWalletResult
+        ? getWalletResult
+        : "right" in getWalletResult
+          ? ok(getWalletResult.right)
+          : err(getWalletResult.left);
+    if (walletResult.isOk()) {
+      if (walletResult.value.status === 200) {
         // handled success
-        const initiatives = getWalletResult.right.value;
+        const initiatives = walletResult.value.value;
         yield* put(
           walletAddCards(
             initiatives.initiativeList.map(initiative => ({
@@ -71,7 +77,7 @@ export function* handleGetIDPayWallet(
       yield* put(
         idPayWalletGet.failure({
           ...getGenericError(
-            new Error(`response status code ${getWalletResult.right.status}`)
+            new Error(`response status code ${walletResult.value.status}`)
           )
         })
       );
@@ -80,7 +86,7 @@ export function* handleGetIDPayWallet(
       yield* put(
         idPayWalletGet.failure({
           ...getGenericError(
-            new Error(readablePrivacyReport(getWalletResult.left))
+            new Error(readablePrivacyReport(walletResult.error))
           )
         })
       );

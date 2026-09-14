@@ -6,9 +6,7 @@ import { OnboardingInitiativeDTO } from "@io-app/api-types/generated/definitions
 import { StatusEnum as OnboardingStatusEnum } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
 import { SelfConsentDTO } from "@io-app/api-types/generated/definitions/idpay/SelfConsentDTO";
 import { TransientError } from "@pagopa/ts-commons/lib/tasks";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
+import { err, ok } from "neverthrow";
 import { fromPromise } from "xstate";
 
 import { IDPayClient } from "../../common/api/client";
@@ -59,66 +57,16 @@ export const createActorsImplementation = (
           serviceId: params.input
         });
 
-        const data: Promise<InitiativeDataDTO> = pipe(
-          dataResponse,
-          E.fold(handleApiError, ({ status, value }) => {
-            switch (status) {
-              case 200:
-                return Promise.resolve(value);
-              case 401:
-                return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
-              case 429:
-                return Promise.reject(
-                  OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
-                );
-              default:
-                return Promise.reject(
-                  OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
-                );
-            }
-          })
-        );
-
-        return data;
-      } catch (error) {
-        return handleApiError(error);
-      }
-    }
-  );
-
-  const getOnboardingStatus = fromPromise<
-    O.Option<OnboardingStatusEnum>,
-    O.Option<string>
-  >(async params => {
-    if (O.isNone(params.input)) {
-      throw new Error("Initiative ID was not provided");
-    }
-
-    try {
-      const statusResponse = await client.onboardingStatus({
-        ...clientOptions,
-        initiativeId: params.input.value
-      });
-
-      const data: Promise<O.Option<OnboardingStatusEnum>> = pipe(
-        statusResponse,
-        E.fold(handleApiError, ({ status, value }) => {
+        const data: Promise<InitiativeDataDTO> = (
+          "right" in dataResponse
+            ? ok(dataResponse.right)
+            : err(dataResponse.left)
+        ).match(({ status, value }) => {
           switch (status) {
             case 200:
-              return pipe(
-                value.status,
-                mapOnboardingStatusToFailure,
-                O.fromNullable,
-                O.fold(
-                  () => Promise.resolve(O.some(value.status)), // No failure, return onboarding status
-                  failure => Promise.reject(failure)
-                )
-              );
+              return Promise.resolve(value);
             case 401:
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
-            case 404:
-              // Initiative not yet started by the citizen
-              return Promise.resolve(O.none);
             case 429:
               return Promise.reject(
                 OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
@@ -128,8 +76,55 @@ export const createActorsImplementation = (
                 OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
               );
           }
-        })
-      );
+        }, handleApiError);
+
+        return data;
+      } catch (error) {
+        return handleApiError(error);
+      }
+    }
+  );
+
+  const getOnboardingStatus = fromPromise<
+    OnboardingStatusEnum | undefined,
+    string | undefined
+  >(async params => {
+    if (!params.input) {
+      throw new Error("Initiative ID was not provided");
+    }
+
+    try {
+      const statusResponse = await client.onboardingStatus({
+        ...clientOptions,
+        initiativeId: params.input
+      });
+
+      const data: Promise<OnboardingStatusEnum | undefined> = (
+        "right" in statusResponse
+          ? ok(statusResponse.right)
+          : err(statusResponse.left)
+      ).match(({ status, value }) => {
+        switch (status) {
+          case 200:
+            const failure = mapOnboardingStatusToFailure(value.status);
+            return failure
+              ? Promise.reject(failure)
+              : Promise.resolve(value.status);
+          case 401:
+            return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+          case 404:
+            // Initiative not yet started by the citizen
+            return Promise.resolve(undefined);
+          case 429:
+            return Promise.reject(
+              OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+            );
+          default:
+            return Promise.reject(
+              OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
+            );
+        }
+      }, handleApiError);
 
       return data;
     } catch (error) {
@@ -138,36 +133,35 @@ export const createActorsImplementation = (
   });
 
   const getRequiredCriteria = fromPromise<
-    O.Option<OnboardingInitiativeDTO>,
-    O.Option<string>
+    OnboardingInitiativeDTO | undefined,
+    string | undefined
   >(async params => {
-    if (O.isNone(params.input)) {
+    if (!params.input) {
       throw new Error("Initiative ID was not provided");
     }
 
     try {
       const response = await client.initiativeDetail({
         ...clientOptions,
-        initiativeId: params.input.value
+        initiativeId: params.input
       });
 
-      const dataPromise: Promise<O.Option<OnboardingInitiativeDTO>> = pipe(
-        response,
-        E.fold(handleApiError, ({ status, value }) => {
-          switch (status) {
-            case 200:
-              return Promise.resolve(O.some(value));
-            case 401:
-              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
-            case 429:
-              return Promise.reject(
-                OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
-              );
-            default:
-              return Promise.reject(mapErrorCodeToFailure(value.code));
-          }
-        })
-      );
+      const dataPromise: Promise<OnboardingInitiativeDTO | undefined> = (
+        "right" in response ? ok(response.right) : err(response.left)
+      ).match(({ status, value }) => {
+        switch (status) {
+          case 200:
+            return Promise.resolve(value);
+          case 401:
+            return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+          case 429:
+            return Promise.reject(
+              OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+            );
+          default:
+            return Promise.reject(mapErrorCodeToFailure(value.code));
+        }
+      }, handleApiError);
 
       return dataPromise;
     } catch (error) {
@@ -184,7 +178,7 @@ export const createActorsImplementation = (
         selfDeclarationsTextAnswers
       } = params.input;
 
-      if (O.isNone(initiative) || O.isNone(requiredCriteria)) {
+      if (!initiative || !requiredCriteria) {
         return Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR);
       }
 
@@ -206,30 +200,29 @@ export const createActorsImplementation = (
         const response = await client.saveOnboarding({
           ...clientOptions,
           body: {
-            initiativeId: initiative.value.initiativeId,
+            initiativeId: initiative.initiativeId,
             pdndAccept: true,
             confirmedTos: true,
             selfDeclarationList: consentsArray
           }
         });
 
-        const dataPromise: Promise<undefined> = pipe(
-          response,
-          E.fold(handleApiError, ({ status, value }) => {
-            switch (status) {
-              case 202:
-                return Promise.resolve(undefined);
-              case 401:
-                return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
-              case 429:
-                return Promise.reject(
-                  OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
-                );
-              default:
-                return Promise.reject(mapErrorCodeToFailure(value.code));
-            }
-          })
-        );
+        const dataPromise: Promise<undefined> = (
+          "right" in response ? ok(response.right) : err(response.left)
+        ).match(({ status, value }) => {
+          switch (status) {
+            case 202:
+              return Promise.resolve(undefined);
+            case 401:
+              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+            case 429:
+              return Promise.reject(
+                OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+              );
+            default:
+              return Promise.reject(mapErrorCodeToFailure(value.code));
+          }
+        }, handleApiError);
 
         return dataPromise;
       } catch (error) {

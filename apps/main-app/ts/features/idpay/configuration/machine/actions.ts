@@ -1,6 +1,4 @@
 import { IOToast } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -79,13 +77,12 @@ const createActionsImplementation = (
   };
 
   const showFailureToast = (args: { context: Context.Context }) => {
-    pipe(
-      args.context.failure,
-      InitiativeFailure.decode,
-      O.fromEither,
-      O.map(failure => I18n.t(`idpay.configuration.failureStates.${failure}`)),
-      O.map(IOToast.error)
-    );
+    const failure = InitiativeFailure.decode(args.context.failure);
+    if ("right" in failure) {
+      IOToast.error(
+        I18n.t(`idpay.configuration.failureStates.${failure.right}`)
+      );
+    }
   };
 
   const exitConfiguration = () => {

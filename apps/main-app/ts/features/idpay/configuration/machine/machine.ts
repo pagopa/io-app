@@ -10,8 +10,6 @@ import {
   StatusEnum as InstrumentStatusEnum
 } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { flow, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import {
   assertEvent,
   assign,
@@ -138,11 +136,7 @@ export const idPayConfigurationMachine = setup({
       context.mode === ConfigurationMode.INSTRUMENTS,
     isIbanOnlyMode: ({ context }) => context.mode === ConfigurationMode.IBAN,
     isConfigurationRequired: ({ context }) =>
-      pipe(
-        context.initiative,
-        O.map(i => i.status === StatusEnum.NOT_REFUNDABLE),
-        O.getOrElse(() => false)
-      ),
+      context.initiative?.status === StatusEnum.NOT_REFUNDABLE,
     hasIbanList: ({ context }) => context.ibanList.length > 0,
     hasInstruments: ({ context }) => context.walletInstruments?.length > 0,
     isSessionExpired: ({ event }: { event: IdPayConfigurationEvents }) =>
@@ -183,7 +177,7 @@ export const idPayConfigurationMachine = setup({
         input: ({ context }) => context.initiativeId,
         onDone: {
           actions: assign(({ event }) => ({
-            initiative: O.some(event.output)
+            initiative: event.output
           })),
           target: "EvaluatingInitiativeConfiguration"
         },
@@ -194,7 +188,10 @@ export const idPayConfigurationMachine = setup({
           },
           {
             actions: assign(({ event }) => ({
-              failure: pipe(InitiativeFailure.decode(event.error), O.fromEither)
+              failure:
+                "right" in InitiativeFailure.decode(event.error)
+                  ? InitiativeFailure.decode(event.error).right
+                  : undefined
             })),
             target: "ConfigurationFailure"
           }
@@ -681,6 +678,9 @@ export const idPayConfigurationMachine = setup({
   }
 });
 
-const decodeFailure = flow(InitiativeFailure.decode, O.fromEither);
+const decodeFailure = (error: unknown) => {
+  const decoded = InitiativeFailure.decode(error);
+  return "right" in decoded ? decoded.right : undefined;
+};
 
 export type IdPayConfigurationMachine = typeof idPayConfigurationMachine;

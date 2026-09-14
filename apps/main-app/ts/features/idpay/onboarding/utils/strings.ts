@@ -3,8 +3,6 @@ import {
   CodeEnum
 } from "@io-app/api-types/generated/definitions/idpay/AutomatedCriteriaDTO";
 import { NumberFromString } from "@pagopa/ts-commons/lib/numbers";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
@@ -15,37 +13,26 @@ const getPDNDCriteriaValueString = (
 ): string => {
   switch (code) {
     case CodeEnum.ISEE:
-      return pipe(
-        NumberFromString.decode(value),
-        O.fromEither,
-        O.map(formatNumberCentsToAmount),
-        O.map(valueString => `${valueString} €`),
-        O.getOrElse(() => "-")
-      );
+      const decoded = NumberFromString.decode(value);
+      return "right" in decoded
+        ? `${formatNumberCentsToAmount(decoded.right)} €`
+        : "-";
     default:
-      return pipe(
-        O.fromNullable(value),
-        O.getOrElse(() => "-")
-      );
+      return value ?? "-";
   }
 };
 
-const getPDNDCriteriaDescription = (criteria: AutomatedCriteriaDTO) =>
-  pipe(
-    criteria.operator,
-    O.fromNullable,
-    O.map(operator => ({
-      operator,
+const getPDNDCriteriaDescription = (criteria: AutomatedCriteriaDTO) => {
+  if (!criteria.operator) {
+    return "-";
+  }
+  return I18n.t(
+    `idpay.onboarding.PDNDPrerequisites.operator.${criteria.operator}`,
+    {
       value: getPDNDCriteriaValueString(criteria.code, criteria.value),
       value2: getPDNDCriteriaValueString(criteria.code, criteria.value2)
-    })),
-    O.map(({ operator, value, value2 }) =>
-      I18n.t(`idpay.onboarding.PDNDPrerequisites.operator.${operator}`, {
-        value,
-        value2
-      })
-    ),
-    O.getOrElse(() => "-")
+    }
   );
+};
 
 export { getPDNDCriteriaDescription, getPDNDCriteriaValueString };

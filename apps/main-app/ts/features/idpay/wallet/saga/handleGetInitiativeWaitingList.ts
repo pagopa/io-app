@@ -1,6 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { err, ok } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -33,23 +32,24 @@ export function* handleGetInitiativeWaitingList(
     >;
 
     yield* put(
-      pipe(
-        getOnboardingInitiativeWaitingListResult,
-        E.fold(
-          error =>
-            idPayInitiativeWaitingListGet.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-
-          res => {
-            if (res.status === 200) {
-              return idPayInitiativeWaitingListGet.success(res.value);
-            }
-            return idPayInitiativeWaitingListGet.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
+      ("isOk" in getOnboardingInitiativeWaitingListResult
+        ? getOnboardingInitiativeWaitingListResult
+        : "right" in getOnboardingInitiativeWaitingListResult
+          ? ok(getOnboardingInitiativeWaitingListResult.right)
+          : err(getOnboardingInitiativeWaitingListResult.left)
+      ).match(
+        res => {
+          if (res.status === 200) {
+            return idPayInitiativeWaitingListGet.success(res.value);
           }
-        )
+          return idPayInitiativeWaitingListGet.failure({
+            ...getGenericError(new Error(`Error: ${res.status}`))
+          });
+        },
+        error =>
+          idPayInitiativeWaitingListGet.failure({
+            ...getGenericError(new Error(readablePrivacyReport(error)))
+          })
       )
     );
   } catch (e) {

@@ -1,6 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { err, ok } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -36,26 +35,29 @@ export function* handleGetOnboardingStatus(
       action
     )) as unknown as SagaCallReturnType<typeof onboardingStatus>;
 
-    yield pipe(
-      onboardingStatusResult,
-      E.fold(
-        error =>
-          put(
-            idPayOnboardingStatusGet.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            })
-          ),
-        response =>
-          put(
-            response.status === 200
-              ? idPayOnboardingStatusGet.success(response.value)
-              : idPayOnboardingStatusGet.failure({
-                  ...getGenericError(
-                    new Error(`response status code ${response.status}`)
-                  )
-                })
-          )
-      )
+    yield (
+      "isOk" in onboardingStatusResult
+        ? onboardingStatusResult
+        : "right" in onboardingStatusResult
+          ? ok(onboardingStatusResult.right)
+          : err(onboardingStatusResult.left)
+    ).match(
+      response =>
+        put(
+          response.status === 200
+            ? idPayOnboardingStatusGet.success(response.value)
+            : idPayOnboardingStatusGet.failure({
+                ...getGenericError(
+                  new Error(`response status code ${response.status}`)
+                )
+              })
+        ),
+      error =>
+        put(
+          idPayOnboardingStatusGet.failure({
+            ...getGenericError(new Error(readablePrivacyReport(error)))
+          })
+        )
     );
   } catch (e) {
     yield* put(idPayOnboardingStatusGet.failure({ ...getNetworkError(e) }));

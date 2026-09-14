@@ -1,8 +1,6 @@
 /* eslint-disable functional/immutable-data */
 import { IOToast } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
@@ -42,11 +40,7 @@ export const IdPayFailToRetryScreen = () => {
 
   const initiative = useSelector(state => state.context.initiative);
 
-  const initiativeId = pipe(
-    initiative,
-    O.map(i => i.initiativeId),
-    O.toUndefined
-  );
+  const initiativeId = initiative?.initiativeId;
 
   const state = useSelector(state => state);
 
@@ -128,11 +122,7 @@ const IngressScreenBlockingError = memo(() => {
   const machine = useActorRef();
   const initiative = useSelector(state => state.context.initiative);
 
-  const initiativeId = pipe(
-    initiative,
-    O.map(i => i.initiativeId),
-    O.toUndefined
-  );
+  const initiativeId = initiative?.initiativeId;
 
   useEffect(() => {
     setAccessibilityFocus(operationRef);

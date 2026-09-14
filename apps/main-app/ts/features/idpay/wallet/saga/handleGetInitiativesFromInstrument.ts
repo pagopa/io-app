@@ -1,6 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { err, ok } from "neverthrow";
 import { call, delay, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -31,23 +30,24 @@ export function* handleGetIDPayInitiativesFromInstrument(
     )) as unknown as SagaCallReturnType<typeof getInitiativesWithInstrument>;
 
     yield* put(
-      pipe(
-        getInitiativesWithInstrumentResult,
-        E.fold(
-          error =>
-            idPayInitiativesFromInstrumentGet.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-
-          res => {
-            if (res.status === 200) {
-              return idPayInitiativesFromInstrumentGet.success(res.value);
-            }
-            return idPayInitiativesFromInstrumentGet.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
+      ("isOk" in getInitiativesWithInstrumentResult
+        ? getInitiativesWithInstrumentResult
+        : "right" in getInitiativesWithInstrumentResult
+          ? ok(getInitiativesWithInstrumentResult.right)
+          : err(getInitiativesWithInstrumentResult.left)
+      ).match(
+        res => {
+          if (res.status === 200) {
+            return idPayInitiativesFromInstrumentGet.success(res.value);
           }
-        )
+          return idPayInitiativesFromInstrumentGet.failure({
+            ...getGenericError(new Error(`Error: ${res.status}`))
+          });
+        },
+        error =>
+          idPayInitiativesFromInstrumentGet.failure({
+            ...getGenericError(new Error(readablePrivacyReport(error)))
+          })
       )
     );
   } catch (e) {

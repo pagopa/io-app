@@ -1,7 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { createActorContext } from "@xstate/react";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { ReactNode } from "react";
 
 import {
@@ -41,11 +39,9 @@ export const IdPayOnboardingMachineProvider = ({ children }: Props) => {
   const preferredLanguageOption = useIOSelector(preferredLanguageSelector);
   const apiVersion = isPagoPATestEnabled ? idPayApiUatVersion : idPayApiVersion;
 
-  const language = pipe(
-    preferredLanguageOption,
-    O.map(fromLocaleToPreferredLanguage),
-    O.getOrElse(() => PreferredLanguageEnum.it_IT)
-  );
+  const language = preferredLanguageOption
+    ? fromLocaleToPreferredLanguage(preferredLanguageOption)
+    : PreferredLanguageEnum.it_IT;
 
   if (!bpdToken) {
     throw new Error("BDP token is undefined");

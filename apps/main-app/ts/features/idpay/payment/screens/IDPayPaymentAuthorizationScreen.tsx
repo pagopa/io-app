@@ -9,8 +9,6 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect } from "react";
 import { View } from "react-native";
@@ -56,17 +54,13 @@ const IDPayPaymentAuthorizationScreen = () => {
   const dispatch = useIODispatch();
 
   useEffect(() => {
-    pipe(
-      params.trxCode,
-      O.fromNullable,
-      O.map(code =>
-        machine.send({
-          type: "authorize-payment",
-          trxCode: code,
-          data_entry: params.data_entry
-        })
-      )
-    );
+    if (params.trxCode !== undefined) {
+      machine.send({
+        type: "authorize-payment",
+        trxCode: params.trxCode,
+        data_entry: params.data_entry
+      });
+    }
   }, [params, machine]);
 
   const transactionData = useSelector(transactionDataSelector);
@@ -80,10 +74,10 @@ const IDPayPaymentAuthorizationScreen = () => {
     if (areButtonsDisabled) {
       return;
     }
-    if (O.isSome(transactionData)) {
+    if (transactionData !== undefined) {
       trackIDPayDetailAuthorizationCancel({
-        initiativeId: transactionData?.value.initiativeId,
-        initiativeName: transactionData?.value.initiativeName,
+        initiativeId: transactionData.initiativeId,
+        initiativeName: transactionData.initiativeName,
         data_entry
       });
     }
@@ -105,10 +99,10 @@ const IDPayPaymentAuthorizationScreen = () => {
         },
         {
           onSuccess: () => {
-            if (O.isSome(transactionData)) {
+            if (transactionData !== undefined) {
               trackIDPayDetailAuthorizationConversion({
-                initiativeId: transactionData.value.initiativeId,
-                initiativeName: transactionData.value.initiativeName,
+                initiativeId: transactionData.initiativeId,
+                initiativeName: transactionData.initiativeName,
                 data_entry
               });
             }
@@ -121,18 +115,18 @@ const IDPayPaymentAuthorizationScreen = () => {
 
   // get the name of the previous screen to track the entry point
   useOnFirstRender(() => {
-    if (O.isSome(transactionData) && !showSkeletons) {
+    if (transactionData !== undefined && !showSkeletons) {
       trackIDPayDetailAuthorizationSummary({
-        initiativeId: transactionData.value.initiativeId,
-        initiativeName: transactionData.value.initiativeName,
+        initiativeId: transactionData.initiativeId,
+        initiativeName: transactionData.initiativeName,
         data_entry
       });
     }
   });
 
   const renderContent = () => {
-    if (O.isSome(transactionData) && !showSkeletons) {
-      return <AuthorizationScreenContent data={transactionData.value} />;
+    if (transactionData !== undefined && !showSkeletons) {
+      return <AuthorizationScreenContent data={transactionData} />;
     }
     return <AuthorizationScreenSkeleton />;
   };

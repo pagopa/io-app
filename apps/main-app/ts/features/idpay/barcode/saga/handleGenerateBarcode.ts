@@ -2,8 +2,7 @@ import {
   CodeEnum,
   TransactionErrorDTO
 } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { err, ok } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -37,26 +36,29 @@ export function* handleGenerateBarcode(
       action
     )) as unknown as SagaCallReturnType<typeof createBarCodeTransaction>;
 
-    yield pipe(
-      createBarCodeTransactionResult,
-      E.fold(
-        () =>
-          put(
-            idPayGenerateBarcode.failure({
-              initiativeId: action.payload.initiativeId,
-              error: genericError
-            })
-          ),
-        response =>
-          put(
-            response.status === 201
-              ? idPayGenerateBarcode.success(response.value)
-              : idPayGenerateBarcode.failure({
-                  initiativeId: action.payload.initiativeId,
-                  error: response.value || genericError
-                })
-          )
-      )
+    yield (
+      "isOk" in createBarCodeTransactionResult
+        ? createBarCodeTransactionResult
+        : "right" in createBarCodeTransactionResult
+          ? ok(createBarCodeTransactionResult.right)
+          : err(createBarCodeTransactionResult.left)
+    ).match(
+      response =>
+        put(
+          response.status === 201
+            ? idPayGenerateBarcode.success(response.value)
+            : idPayGenerateBarcode.failure({
+                initiativeId: action.payload.initiativeId,
+                error: response.value || genericError
+              })
+        ),
+      () =>
+        put(
+          idPayGenerateBarcode.failure({
+            initiativeId: action.payload.initiativeId,
+            error: genericError
+          })
+        )
     );
   } catch (error) {
     yield* put(

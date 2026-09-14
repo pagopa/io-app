@@ -6,8 +6,6 @@ import {
 } from "@io-app/design-system";
 import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
 import { RouteProp, useLinkTo, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect } from "react";
 
@@ -83,42 +81,28 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     machine.send({ type: "next" });
   };
 
-  const onboardingPrivacyAdvice = pipe(
-    initiative,
-    O.fold(
-      () => null,
-      ({ privacyLink, tcLink }) => (
-        <IOMarkdown
-          content={I18n.t("idpay.onboarding.beforeContinue.text", {
-            privacyUrl: privacyLink,
-            tosUrl: tcLink
-          })}
-          rules={generateSmallTosMarkdownRules(linkTo)}
-        />
-      )
-    )
-  );
+  const onboardingPrivacyAdvice = initiative ? (
+    <IOMarkdown
+      content={I18n.t("idpay.onboarding.beforeContinue.text", {
+        privacyUrl: privacyLink,
+        tosUrl: tcLink
+      })}
+      rules={generateSmallTosMarkdownRules(linkTo)}
+    />
+  ) : null;
 
   const linkTo = useLinkTo();
 
-  const descriptionComponent = pipe(
-    initiative,
-    O.fold(
-      () => <IdPayOnboardingDescriptionSkeleton />,
-      ({ description }) => (
-        <IOMarkdown
-          content={description}
-          rules={generateMessagesAndServicesRules(linkTo)}
-        />
-      )
-    )
+  const descriptionComponent = initiative ? (
+    <IOMarkdown
+      content={initiative.description}
+      rules={generateMessagesAndServicesRules(linkTo)}
+    />
+  ) : (
+    <IdPayOnboardingDescriptionSkeleton />
   );
 
-  const initiativeId = pipe(
-    initiative,
-    O.map(i => i.initiativeId),
-    O.toUndefined
-  );
+  const initiativeId = initiative?.initiativeId;
 
   useHeaderSecondLevel({
     title: "",
@@ -158,17 +142,13 @@ export const IdPayInitiativeDetailsScreen = () => {
   const { useSelector } = IdPayOnboardingMachineContext;
   const initiative = useSelector(selectInitiative);
 
-  const initiativeId = pipe(
-    initiative,
-    O.map(i => i.initiativeId),
-    O.toUndefined
-  );
+  const initiativeId = initiative?.initiativeId;
 
   const requiresUpdate = useAppRequiredUpdate("idpay.onboarding");
 
   useOnFirstRender(
     () => trackIDPayOnboardingIntro({ initiativeId }),
-    () => O.isSome(initiative)
+    () => initiative !== undefined
   );
 
   if (requiresUpdate) {

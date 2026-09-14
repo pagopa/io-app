@@ -1,6 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
 import { format } from "../../../../utils/dates";
 import {
   formatNumberAmount,
@@ -16,24 +13,12 @@ export const formatNumberCurrencyCents = (cents: number) =>
 export const formatNumberCurrencyOrDefault = (
   input: number | undefined,
   defaultValue = "-"
-) =>
-  pipe(
-    input,
-    O.fromNullable,
-    O.map(formatNumberCurrency),
-    O.getOrElse(() => defaultValue)
-  );
+) => (input === undefined ? defaultValue : formatNumberCurrency(input));
 
 export const formatNumberCurrencyCentsOrDefault = (
   input: number | undefined,
   defaultValue = "-"
-) =>
-  pipe(
-    input,
-    O.fromNullable,
-    O.map(formatNumberCurrencyCents),
-    O.getOrElse(() => defaultValue)
-  );
+) => (input === undefined ? defaultValue : formatNumberCurrencyCents(input));
 
 /**
  * Formats an absolute number amount or returns a default value if the input is undefined.
@@ -50,13 +35,9 @@ export const formatAbsNumberAmountCentsOrDefault = (
   amount: number | undefined,
   defaultValue = "-"
 ) =>
-  pipe(
-    amount,
-    O.fromNullable,
-    O.map(Math.abs),
-    O.map(formatNumberCentsToAmount),
-    O.getOrElse(() => defaultValue)
-  );
+  amount === undefined
+    ? defaultValue
+    : formatNumberCentsToAmount(Math.abs(amount));
 
 /**
  *   Takes a nullable date and formats it to a string.
@@ -68,10 +49,4 @@ export const formatDateOrDefault = (
   input?: Date,
   defaultValue = "-",
   dateFormat = "D MMMM YYYY, HH:mm"
-) =>
-  pipe(
-    input,
-    O.fromNullable,
-    O.map(date => format(date, dateFormat)),
-    O.getOrElse(() => defaultValue)
-  );
+) => (input === undefined ? defaultValue : format(input, dateFormat));

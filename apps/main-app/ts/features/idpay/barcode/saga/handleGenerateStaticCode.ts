@@ -3,9 +3,8 @@ import {
   TransactionErrorDTO
 } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
 import { IOToast } from "@io-app/design-system";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { err, ok } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -37,41 +36,44 @@ export function* handleGenerateStaticCode(
       action
     )) as unknown as SagaCallReturnType<typeof retrieveBarCodeTransaction>;
 
-    yield pipe(
-      retrieveBarCodeTransactionResult,
-      E.fold(
-        () => {
-          IOToast.error(
-            I18n.t(
-              "idpay.initiative.beneficiaryDetails.staticCodeModal.staticCodeErrorAlert"
-            )
-          );
-          return put(
-            idPayGenerateStaticCode.failure({
-              initiativeId: action.payload.initiativeId,
-              error: genericError
-            })
-          );
-        },
-        response => {
-          if (response.status === 200) {
-            return put(idPayGenerateStaticCode.success(response.value));
-          }
-          IOToast.error(
-            I18n.t(
-              "idpay.initiative.beneficiaryDetails.staticCodeModal.staticCodeErrorAlert"
-            )
-          );
-          return put(
-            idPayGenerateStaticCode.failure({
-              initiativeId: action.payload.initiativeId,
-              error: getGenericError(
-                new Error(`response status code ${response.status}`)
-              )
-            })
-          );
+    yield (
+      "isOk" in retrieveBarCodeTransactionResult
+        ? retrieveBarCodeTransactionResult
+        : "right" in retrieveBarCodeTransactionResult
+          ? ok(retrieveBarCodeTransactionResult.right)
+          : err(retrieveBarCodeTransactionResult.left)
+    ).match(
+      response => {
+        if (response.status === 200) {
+          return put(idPayGenerateStaticCode.success(response.value));
         }
-      )
+        IOToast.error(
+          I18n.t(
+            "idpay.initiative.beneficiaryDetails.staticCodeModal.staticCodeErrorAlert"
+          )
+        );
+        return put(
+          idPayGenerateStaticCode.failure({
+            initiativeId: action.payload.initiativeId,
+            error: getGenericError(
+              new Error(`response status code ${response.status}`)
+            )
+          })
+        );
+      },
+      () => {
+        IOToast.error(
+          I18n.t(
+            "idpay.initiative.beneficiaryDetails.staticCodeModal.staticCodeErrorAlert"
+          )
+        );
+        return put(
+          idPayGenerateStaticCode.failure({
+            initiativeId: action.payload.initiativeId,
+            error: genericError
+          })
+        );
+      }
     );
   } catch (error) {
     IOToast.error(
