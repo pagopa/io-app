@@ -25,8 +25,11 @@ import {
 } from "../../../common/analytics/cieAnalytics";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { onLoginUriChanged } from "../../../common/utils/login";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
+import {
+  AUTH_LEVELS,
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
 import { LoaderComponent } from "../../shared/components/LoaderComponent";
 import { ACS_PATH } from "../../shared/utils";
 import {
@@ -70,7 +73,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
         params: {
           errorCodeOrMessage: errorCodeOrMessageProp,
           authMethod: "CIE",
-          authLevel: "L2"
+          authLevel: AUTH_LEVELS.L2
         }
       });
     },

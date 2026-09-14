@@ -7,7 +7,7 @@ import * as STORE_HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
+import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/testUtils";
 import * as MIXPANEL from "../../../analytics/activationReminderBanner";
 import PN_ROUTES from "../../../navigation/routes";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";

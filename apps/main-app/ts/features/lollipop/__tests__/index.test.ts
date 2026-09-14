@@ -1,10 +1,8 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as global from "@pagopa/io-react-native-crypto";
-import * as TE from "fp-ts/lib/TaskEither";
 import URLParse from "url-parse";
 
 import {
-  chainSignPromises,
   getSignAlgorithm,
   handleRegenerateEphemeralKey,
   toSignatureComponents
@@ -55,49 +53,6 @@ describe("getSignAlgorithm", () => {
       n: "some-modulus-value"
     };
     expect(getSignAlgorithm(publicKey)).toBe("rsa-pss-sha256");
-  });
-});
-
-describe("chainSignPromises", () => {
-  it("should resolve all promises and return results", async () => {
-    const promises = [
-      TE.right({
-        headerIndex: 0,
-        headerPrefix: "prefix",
-        headerName: "name",
-        headerValue: "value",
-        signature: "sig",
-        signatureInput: "input"
-      }),
-      TE.right({
-        headerIndex: 1,
-        headerPrefix: "prefix2",
-        headerName: "name2",
-        headerValue: "value2",
-        signature: "sig2",
-        signatureInput: "input2"
-      })
-    ];
-
-    const result = await chainSignPromises(promises);
-    expect(result).toHaveLength(2);
-  });
-
-  it("should return an empty array if any promise fails", async () => {
-    const promises = [
-      TE.right({
-        headerIndex: 0,
-        headerPrefix: "prefix",
-        headerName: "name",
-        headerValue: "value",
-        signature: "sig",
-        signatureInput: "input"
-      }),
-      TE.left(new Error("Failure"))
-    ];
-
-    const result = await chainSignPromises(promises);
-    expect(result).toEqual([]);
   });
 });
 

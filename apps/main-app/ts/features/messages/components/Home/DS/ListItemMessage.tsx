@@ -9,15 +9,17 @@ import {
   IOListItemStyles,
   IOVisualCostants,
   Tag,
+  triggerHaptic,
   useIOTheme,
   useIOThemeContext,
   useListItemAnimation,
   WithTestID
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { ComponentProps } from "react";
+import { ComponentProps, useCallback } from "react";
 import {
   ColorValue,
+  GestureResponderEvent,
   ImageSourcePropType,
   Pressable,
   StyleSheet,
@@ -112,6 +114,16 @@ export const ListItemMessage = ({
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 
+  const handleOnPress = useCallback(
+    (event: GestureResponderEvent) => {
+      if (onPress) {
+        triggerHaptic("impactLight");
+        onPress(event);
+      }
+    },
+    [onPress]
+  );
+
   // Component colors
   const unreadBadgeColor = IOColors[theme["interactiveElem-default"]];
   const selectedBgColor =
@@ -125,7 +137,7 @@ export const ListItemMessage = ({
       accessibilityRole={accessibilityRole || "button"}
       accessible={true}
       onLongPress={onLongPress}
-      onPress={onPress}
+      onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}

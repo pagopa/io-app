@@ -26,17 +26,17 @@ export type AnyTxtNodeWithSpacer =
 export type IOMarkdownRenderRules = RendererMap;
 export type Renderer = (txtNode: AnyTxtNodeWithSpacer) => ReactNode;
 
-export type RuleRenderer<P, F extends Renderer | void = void> = (
-  param: P,
-  renderer: F,
-  screenReaderEnabled: boolean
-) => ReactNode;
 type RendererMap = {
   [ASTNodeTypes.Comment]: RuleRenderer<null>;
   Spacer: RuleRenderer<ComponentProps<typeof VSpacer> & { key: string }>;
 } & {
   [K in keyof TxtNodeMap]: RuleRenderer<TxtNodeMap[K], Renderer>;
 };
+type RuleRenderer<P, F extends Renderer | void = void> = (
+  param: P,
+  renderer: F,
+  screenReaderEnabled: boolean
+) => ReactNode;
 
 type TxtNodeMap = {
   [ASTNodeTypes.BlockQuote]: TxtBlockQuoteNode;

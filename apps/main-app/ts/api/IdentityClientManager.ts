@@ -11,7 +11,7 @@ import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
 
 export type IdentityClient = Client<"Bearer">;
 
-export type IdentityClientOptions = BaseClientOptions & {
+type IdentityClientOptions = BaseClientOptions & {
   keyInfo: KeyInfo;
   signBody?: boolean;
 };

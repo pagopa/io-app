@@ -10,7 +10,7 @@ export type BarcodeFailure =
       reason: Exclude<BarcodeFailureType, "UNKNOWN_CONTENT">;
     };
 
-export type BarcodeFailureType =
+type BarcodeFailureType =
   | "BARCODE_NOT_FOUND"
   | "INVALID_FILE"
   | "UNEXPECTED"

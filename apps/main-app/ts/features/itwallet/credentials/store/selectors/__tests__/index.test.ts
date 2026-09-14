@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -124,19 +123,19 @@ describe("itwCredentialsByTypeSelector", () => {
 });
 
 describe("itwCredentialsEidSelector", () => {
-  it("returns O.some with the eid", () => {
+  it("returns the eid", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense
     });
-    expect(itwCredentialsEidSelector(state)).toEqual(O.some(mockedEid));
+    expect(itwCredentialsEidSelector(state)).toEqual(mockedEid);
   });
 
-  it("returns O.none if the eid is not present", () => {
+  it("returns undefined if the eid is not present", () => {
     const state = getStateWithCredentials({
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense
     });
-    expect(itwCredentialsEidSelector(state)).toEqual(O.none);
+    expect(itwCredentialsEidSelector(state)).toBeUndefined();
   });
 });
 
@@ -155,7 +154,7 @@ describe("itwCredentialsSelector", () => {
 });
 
 describe("itwCredentialSelector", () => {
-  it("returns the O.some with the credential if it exists", () => {
+  it("returns the credential if it exists", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
@@ -163,9 +162,9 @@ describe("itwCredentialSelector", () => {
     });
     expect(
       itwCredentialSelector(CredentialType.DRIVING_LICENSE)(state)
-    ).toEqual(O.some(mockedDrivingLicense));
+    ).toEqual(mockedDrivingLicense);
   });
-  it("returns the O.none if the credential does not exist", () => {
+  it("returns undefined if the credential does not exist", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
@@ -175,7 +174,7 @@ describe("itwCredentialSelector", () => {
       itwCredentialSelector(CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD)(
         state
       )
-    ).toEqual(O.none);
+    ).toBeUndefined();
   });
 });
 
@@ -319,12 +318,12 @@ describe("itwHasWalletAtLeastTwoCredentialsSelector", () => {
 });
 
 describe("test legacy credentials", () => {
-  it("itwCredentialsEidSelector returns O.some with the eid", () => {
+  it("itwCredentialsEidSelector returns the eid", () => {
     const legacyEid = { ...mockedEid, format: "vc+sd-jwt" };
     const state = getStateWithCredentials({
       [legacyEid.credentialId]: legacyEid
     });
-    expect(itwCredentialsEidSelector(state)).toEqual(O.some(legacyEid));
+    expect(itwCredentialsEidSelector(state)).toEqual(legacyEid);
   });
 
   it("itwCredentialsSelector returns the legacy credentials", () => {
