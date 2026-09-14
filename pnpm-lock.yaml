@@ -1036,8 +1036,8 @@ importers:
         specifier: ^21.0.2
         version: 21.0.2(@types/node@20.5.1)(supports-color@8.1.1)
       svgo:
-        specifier: ^3.0.2
-        version: 3.3.4
+        specifier: ^3.3.5
+        version: 3.3.5
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -5687,10 +5687,6 @@ packages:
   css-tree@2.3.1:
     resolution: {integrity: sha512-6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
-
-  css-what@6.1.0:
-    resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
-    engines: {node: '>= 6'}
 
   css-what@6.2.2:
     resolution: {integrity: sha512-u/O3vwbptzhMs3L1fQE82ZSLHQQfto5gyZzwteVIEyeaY5Fc7R4dapF/BvRoSYFeqfBk4m0V1Vafq5Pjv25wvA==}
@@ -10512,8 +10508,8 @@ packages:
   svg-parser@2.0.4:
     resolution: {integrity: sha512-e4hG1hRwoOdRb37cIMSgzNsxyzKfayW6VOflrwvR+/bzrkyxY/31WkbgnQpgtrNp1SdpJvpUAGTa/ZoiPNDuRQ==}
 
-  svgo@3.3.4:
-    resolution: {integrity: sha512-GsNRis4e8jxn2Y9ENz/8lbJ93CstG8svtMnuRaHbiF2LTJ5tK0/q3t/URPq9Zc7zVWBJnNnJMIp6bevK7bSmNg==}
+  svgo@3.3.5:
+    resolution: {integrity: sha512-8SQMzdrvWaD8deUmrnYB+ASyxBVgWUOilg+A75nE/76WdLpj6LopCwiAVvkzkcqy/9b7t2Mg7faFLjg0ZRcZ3w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -17066,7 +17062,7 @@ snapshots:
       '@svgr/core': 8.1.0(supports-color@8.1.1)(typescript@6.0.3)
       cosmiconfig: 8.3.6(typescript@6.0.3)
       deepmerge: 4.3.1
-      svgo: 3.3.4
+      svgo: 3.3.5
     transitivePeerDependencies:
       - typescript
 
@@ -19239,7 +19235,7 @@ snapshots:
   css-select@5.1.0:
     dependencies:
       boolbase: 1.0.0
-      css-what: 6.1.0
+      css-what: 6.2.2
       domhandler: 5.0.3
       domutils: 3.1.0
       nth-check: 2.0.1
@@ -19266,8 +19262,6 @@ snapshots:
     dependencies:
       mdn-data: 2.0.30
       source-map-js: 1.2.1
-
-  css-what@6.1.0: {}
 
   css-what@6.2.2: {}
 
@@ -26191,7 +26185,7 @@ snapshots:
 
   svg-parser@2.0.4: {}
 
-  svgo@3.3.4:
+  svgo@3.3.5:
     dependencies:
       commander: 7.2.0
       css-select: 5.2.2
