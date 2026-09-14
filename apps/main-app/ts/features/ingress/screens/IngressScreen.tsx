@@ -199,7 +199,7 @@ export const IngressScreen = () => {
   // offline -> online transition, clear the flag and restart the bootstrap
   // flow so the saga can retry with a clean state.
   useEffect(() => {
-    if (!isConnected) {
+    if (isConnected === false) {
       wasOfflineRef.current = true;
       return;
     }
