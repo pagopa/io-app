@@ -1,6 +1,6 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import I18n from "i18next";
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -31,13 +31,22 @@ export function* handleInitiativeInstrumentDelete(
       action
     )) as unknown as SagaCallReturnType<typeof deleteInstrument>;
 
-    yield* put(
-      ("isOk" in updateInstrumentStatusResult
+    const result = (
+      "isOk" in updateInstrumentStatusResult
         ? updateInstrumentStatusResult
         : "right" in updateInstrumentStatusResult
           ? ok(updateInstrumentStatusResult.right)
           : err(updateInstrumentStatusResult.left)
-      ).match(
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof deleteInstrument>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield* put(
+      result.match(
         response => {
           if (response.status === 200) {
             return idpayInitiativesInstrumentDelete.success({
@@ -57,7 +66,13 @@ export function* handleInitiativeInstrumentDelete(
           return idpayInitiativesInstrumentDelete.failure({
             initiativeId: action.payload.initiativeId,
             error: {
-              ...getGenericError(new Error(readablePrivacyReport(error)))
+              ...getGenericError(
+                new Error(
+                  readablePrivacyReport(
+                    error as Parameters<typeof readablePrivacyReport>[0]
+                  )
+                )
+              )
             }
           });
         }

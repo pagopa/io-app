@@ -188,10 +188,10 @@ export const idPayConfigurationMachine = setup({
           },
           {
             actions: assign(({ event }) => ({
-              failure:
-                "right" in InitiativeFailure.decode(event.error)
-                  ? InitiativeFailure.decode(event.error).right
-                  : undefined
+              failure: (() => {
+                const decoded = InitiativeFailure.decode(event.error);
+                return "right" in decoded ? decoded.right : undefined;
+              })()
             })),
             target: "ConfigurationFailure"
           }

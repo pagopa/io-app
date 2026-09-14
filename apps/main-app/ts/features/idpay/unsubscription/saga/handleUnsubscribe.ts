@@ -1,5 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -30,13 +30,21 @@ export function* handleUnsubscribe(
       action
     )) as unknown as SagaCallReturnType<typeof unsubscribe>;
 
-    yield* (
+    const result = (
       "isOk" in getTimelineResult
         ? getTimelineResult
         : "right" in getTimelineResult
           ? ok(getTimelineResult.right)
           : err(getTimelineResult.left)
-    ).match(
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof unsubscribe>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield* result.match(
       response => {
         if (response.status === 204) {
           return [
@@ -55,7 +63,13 @@ export function* handleUnsubscribe(
       error =>
         put(
           idPayUnsubscribeAction.failure({
-            ...getGenericError(new Error(readablePrivacyReport(error)))
+            ...getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
           })
         )
     );

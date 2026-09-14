@@ -1,5 +1,6 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { createActorContext } from "@xstate/react";
+import * as O from "fp-ts/lib/Option";
 import { ReactNode } from "react";
 
 import {
@@ -39,8 +40,8 @@ export const IdPayOnboardingMachineProvider = ({ children }: Props) => {
   const preferredLanguageOption = useIOSelector(preferredLanguageSelector);
   const apiVersion = isPagoPATestEnabled ? idPayApiUatVersion : idPayApiVersion;
 
-  const language = preferredLanguageOption
-    ? fromLocaleToPreferredLanguage(preferredLanguageOption)
+  const language = O.isSome(preferredLanguageOption)
+    ? fromLocaleToPreferredLanguage(preferredLanguageOption.value)
     : PreferredLanguageEnum.it_IT;
 
   if (!bpdToken) {

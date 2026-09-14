@@ -70,9 +70,13 @@ const IdPayInstrumentEnrollmentSwitch = (
   const decodedBrand = CreditCardType.decode(
     wallet.creditCard?.brand?.toUpperCase()
   );
+  const brand =
+    "right" in decodedBrand
+      ? (decodedBrand as { right: keyof typeof cardLogoByBrand }).right
+      : undefined;
   const iconProps: ListItemSwitchIconProps =
-    "right" in decodedBrand && cardLogoByBrand[decodedBrand.right]
-      ? { paymentLogo: cardLogoByBrand[decodedBrand.right] }
+    brand !== undefined && cardLogoByBrand[brand]
+      ? { paymentLogo: cardLogoByBrand[brand] }
       : { icon: "creditCard" };
 
   return (

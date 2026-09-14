@@ -4,7 +4,7 @@ import {
 } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
 import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -36,13 +36,21 @@ export function* handleGenerateStaticCode(
       action
     )) as unknown as SagaCallReturnType<typeof retrieveBarCodeTransaction>;
 
-    yield (
+    const result = (
       "isOk" in retrieveBarCodeTransactionResult
         ? retrieveBarCodeTransactionResult
         : "right" in retrieveBarCodeTransactionResult
           ? ok(retrieveBarCodeTransactionResult.right)
           : err(retrieveBarCodeTransactionResult.left)
-    ).match(
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof retrieveBarCodeTransaction>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield result.match(
       response => {
         if (response.status === 200) {
           return put(idPayGenerateStaticCode.success(response.value));

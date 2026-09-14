@@ -1,5 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -35,13 +35,21 @@ export function* handleGetOnboardingStatus(
       action
     )) as unknown as SagaCallReturnType<typeof onboardingStatus>;
 
-    yield (
+    const result = (
       "isOk" in onboardingStatusResult
         ? onboardingStatusResult
         : "right" in onboardingStatusResult
           ? ok(onboardingStatusResult.right)
           : err(onboardingStatusResult.left)
-    ).match(
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof onboardingStatus>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield result.match(
       response =>
         put(
           response.status === 200
@@ -55,7 +63,13 @@ export function* handleGetOnboardingStatus(
       error =>
         put(
           idPayOnboardingStatusGet.failure({
-            ...getGenericError(new Error(readablePrivacyReport(error)))
+            ...getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
           })
         )
     );

@@ -1,4 +1,4 @@
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -25,13 +25,21 @@ export function* handleIdPayGetCodeStatus(
       action
     )) as unknown as SagaCallReturnType<typeof getIdpayCodeStatus>;
 
-    yield (
+    const result = (
       "isOk" in getIdpayCodeStatusResult
         ? getIdpayCodeStatusResult
         : "right" in getIdpayCodeStatusResult
           ? ok(getIdpayCodeStatusResult.right)
           : err(getIdpayCodeStatusResult.left)
-    ).match(
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof getIdpayCodeStatus>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield result.match(
       response =>
         put(
           response.status === 200
@@ -45,7 +53,13 @@ export function* handleIdPayGetCodeStatus(
       error =>
         put(
           idPayGetCodeStatus.failure({
-            ...getGenericError(new Error(readablePrivacyReport(error)))
+            ...getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
           })
         )
     );

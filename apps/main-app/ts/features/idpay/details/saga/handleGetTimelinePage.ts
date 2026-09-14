@@ -1,5 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -38,13 +38,21 @@ export function* handleGetTimelinePage(
       action
     )) as unknown as SagaCallReturnType<typeof getTimeline>;
 
-    yield (
+    const result = (
       "isOk" in getTimelineResult
         ? getTimelineResult
         : "right" in getTimelineResult
           ? ok(getTimelineResult.right)
           : err(getTimelineResult.left)
-    ).match(
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof getTimeline>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield result.match(
       response => {
         if (response.status === 200) {
           return put(
@@ -65,7 +73,13 @@ export function* handleGetTimelinePage(
       error =>
         put(
           idpayTimelinePageGet.failure({
-            ...getGenericError(new Error(readablePrivacyReport(error)))
+            ...getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
           })
         )
     );

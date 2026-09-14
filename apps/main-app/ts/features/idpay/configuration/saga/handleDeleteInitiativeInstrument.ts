@@ -63,7 +63,13 @@ export function* handleDeleteInitiativeInstruments(
         put(
           idpayInitiativeInstrumentDelete.failure({
             instrumentId: action.payload.instrumentId,
-            error: getGenericError(new Error(readablePrivacyReport(error)))
+            error: getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
           })
         )
     );

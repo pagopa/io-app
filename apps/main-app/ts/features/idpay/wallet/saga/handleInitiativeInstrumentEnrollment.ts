@@ -1,7 +1,7 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
-import { err, ok } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -32,13 +32,22 @@ export function* handleInitiativeInstrumentEnrollment(
       action
     )) as unknown as SagaCallReturnType<typeof enrollInstrument>;
 
-    yield* put(
-      ("isOk" in updateInstrumentStatusResult
+    const result = (
+      "isOk" in updateInstrumentStatusResult
         ? updateInstrumentStatusResult
         : "right" in updateInstrumentStatusResult
           ? ok(updateInstrumentStatusResult.right)
           : err(updateInstrumentStatusResult.left)
-      ).match(
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof enrollInstrument>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield* put(
+      result.match(
         response => {
           if (response.status === 200) {
             return idpayInitiativesInstrumentEnroll.success({
@@ -62,7 +71,13 @@ export function* handleInitiativeInstrumentEnrollment(
           return idpayInitiativesInstrumentEnroll.failure({
             initiativeId: action.payload.initiativeId,
             error: {
-              ...getGenericError(new Error(readablePrivacyReport(error)))
+              ...getGenericError(
+                new Error(
+                  readablePrivacyReport(
+                    error as Parameters<typeof readablePrivacyReport>[0]
+                  )
+                )
+              )
             }
           });
         }
