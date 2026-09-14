@@ -1,19 +1,20 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
+
+import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
+import { shufflePinPadOnPayment } from "../../../../config";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { identificationRequest } from "../../../identification/store/actions";
+import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
 import { IdPayCodeParamsList } from "../navigation/params";
 import { IdPayCodeRoutes } from "../navigation/routes";
 import { idPayEnrollCode, idPayGenerateCode } from "../store/actions";
 import { isIdPayCodeOnboardedSelector } from "../store/selectors";
-import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
-import { identificationRequest } from "../../../identification/store/actions";
-import { shufflePinPadOnPayment } from "../../../../config";
-import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 type IdPayCodeOnboardingRouteParams = {
   initiativeId?: string;
@@ -92,9 +93,6 @@ const IdPayCodeOnboardingScreen = () => {
   return (
     <>
       <IOScrollViewCentredContent
-        pictogram="cie"
-        title={I18n.t("idpay.code.onboarding.title")}
-        description={I18n.t("idpay.code.onboarding.description")}
         actions={{
           type: "TwoButtons",
           primary: {
@@ -112,6 +110,9 @@ const IdPayCodeOnboardingScreen = () => {
             testID: "wizardActionButtonTestID"
           }
         }}
+        description={I18n.t("idpay.code.onboarding.description")}
+        pictogram="cie"
+        title={I18n.t("idpay.code.onboarding.title")}
       />
       {bottomSheet}
     </>

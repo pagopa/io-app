@@ -1,6 +1,7 @@
-import { createClient } from "../../../../definitions/fci/client";
-import { LollipopConfig } from "../../lollipop";
+import { createClient } from "@io-app/api-types/generated/definitions/fci/client";
+
 import { defaultRetryingFetch } from "../../../utils/fetch";
+import { LollipopConfig } from "../../lollipop";
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import { lollipopFetch } from "../../lollipop/utils/fetch";
 
@@ -21,6 +22,4 @@ const createFciClientWithLollipop = (
   });
 
 export type FciClient = ReturnType<typeof createFciClient>;
-export type FciLollipopClient = ReturnType<typeof createFciClientWithLollipop>;
-
 export { createFciClient, createFciClientWithLollipop };

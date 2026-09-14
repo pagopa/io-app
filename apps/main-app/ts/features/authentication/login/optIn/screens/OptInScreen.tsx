@@ -4,7 +4,7 @@ import {
   H3,
   Pictogram,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   NavigatorScreenParams,
   Route,
@@ -14,6 +14,7 @@ import {
 import I18n from "i18next";
 import { useRef } from "react";
 import { View } from "react-native";
+
 import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -25,7 +26,6 @@ import {
   useIOStore
 } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { setFastLoginOptSessionLogin } from "../../../activeSessionLogin/store/actions";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
@@ -41,30 +41,25 @@ import { setFastLoginOptIn } from "../../../fastLogin/store/actions/optInActions
 import { CieIdLoginProps } from "../../cie/shared/utils";
 
 export enum Identifier {
-  SPID = "SPID",
   CIE = "CIE",
   CIE_ID = "CIE_ID",
+  SPID = "SPID",
   TEST = "TEST"
 }
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "authentication.opt_in.contextualHelpTitle",
-  body: "authentication.opt_in.contextualHelpContent"
-};
 
 export type ChosenIdentifier =
   | {
-      identifier: Identifier.SPID | Identifier.CIE | Identifier.TEST;
-    }
-  | {
       identifier: Identifier.CIE_ID;
       params: CieIdLoginProps;
+    }
+  | {
+      identifier: Identifier.CIE | Identifier.SPID | Identifier.TEST;
     };
 
 const OptInScreen = () => {
   useHeaderSecondLevel({
     title: "",
-    supportRequest: true,
-    contextualHelpMarkdown
+    supportRequest: true
   });
 
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
@@ -125,7 +120,6 @@ const OptInScreen = () => {
 
   return (
     <IOScrollView
-      testID="container-test"
       actions={{
         type: "TwoButtons",
         primary: {
@@ -141,6 +135,7 @@ const OptInScreen = () => {
           testID: "decline-button-test"
         }
       }}
+      testID="container-test"
     >
       <ContentWrapper>
         {/*
@@ -164,24 +159,20 @@ const OptInScreen = () => {
         </View>
         <VSpacer size={24} />
         <FeatureInfo
+          body={I18n.t("authentication.opt_in.identity_check")}
           pictogramProps={{
             name: "identityCheck"
           }}
-          body={I18n.t("authentication.opt_in.identity_check")}
         />
         <VSpacer size={24} />
         <FeatureInfo
+          body={I18n.t("authentication.opt_in.passcode")}
           pictogramProps={{
             name: "passcode"
           }}
-          body={I18n.t("authentication.opt_in.passcode")}
         />
         <VSpacer size={24} />
         <FeatureInfo
-          pictogramProps={{
-            name: "notification"
-          }}
-          body={I18n.t("authentication.opt_in.notification")}
           action={{
             accessibilityRole: "button",
             label: I18n.t("authentication.opt_in.security_suggests"),
@@ -189,6 +180,10 @@ const OptInScreen = () => {
               trackLoginSessionOptInInfo(flow);
               return presentSecuritySuggestionBottomSheet();
             }
+          }}
+          body={I18n.t("authentication.opt_in.notification")}
+          pictogramProps={{
+            name: "notification"
           }}
         />
       </ContentWrapper>

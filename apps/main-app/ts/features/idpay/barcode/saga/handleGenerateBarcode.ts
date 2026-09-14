@@ -1,16 +1,17 @@
+import {
+  CodeEnum,
+  TransactionErrorDTO
+} from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getNetworkError } from "../../../../utils/errors";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idPayGenerateBarcode } from "../store/actions";
-import {
-  TransactionErrorDTO,
-  CodeEnum
-} from "../../../../../definitions/idpay/TransactionErrorDTO";
 
 const genericError: TransactionErrorDTO = {
   code: CodeEnum.PAYMENT_GENERIC_ERROR,

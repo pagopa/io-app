@@ -1,6 +1,7 @@
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwEidReissuingTrigger } from "../../analytics/types";

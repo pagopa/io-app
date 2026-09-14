@@ -1,6 +1,7 @@
+import { AccessHistoryPage } from "@io-app/api-types/generated/definitions/fims_history/AccessHistoryPage";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { AccessHistoryPage } from "../../../../../../definitions/fims_history/AccessHistoryPage";
+
 import {
   remoteError,
   remoteLoading,
@@ -16,13 +17,13 @@ import {
   resetFimsHistoryState
 } from "../actions";
 
-export type FimsExportSuccessStates = "SUCCESS" | "ALREADY_EXPORTING";
-export type FimsHistoryExportState = RemoteValue<FimsExportSuccessStates, null>;
-
+export type FimsExportSuccessStates = "ALREADY_EXPORTING" | "SUCCESS";
 export type FimsHistoryState = {
-  historyExportState: FimsHistoryExportState;
   consentsList: pot.Pot<AccessHistoryPage, string>;
+  historyExportState: FimsHistoryExportState;
 };
+
+type FimsHistoryExportState = RemoteValue<FimsExportSuccessStates, null>;
 
 export const INITIAL_STATE: FimsHistoryState = {
   historyExportState: remoteUndefined,
@@ -34,6 +35,26 @@ const reducer = (
   action: Action
 ): FimsHistoryState => {
   switch (action.type) {
+    case getType(fimsHistoryExport.failure):
+      return {
+        ...state,
+        historyExportState: remoteError(null)
+      };
+    case getType(fimsHistoryExport.request):
+      return {
+        ...state,
+        historyExportState: remoteLoading
+      };
+    case getType(fimsHistoryExport.success):
+      return {
+        ...state,
+        historyExportState: remoteReady(action.payload)
+      };
+    case getType(fimsHistoryGet.failure):
+      return {
+        ...state,
+        consentsList: pot.toError(state.consentsList, action.payload)
+      };
     case getType(fimsHistoryGet.request):
       return action.payload.shouldReloadFromScratch
         ? {
@@ -53,26 +74,6 @@ const reducer = (
           next: action.payload.next,
           data: [...currentHistoryItems, ...action.payload.data]
         })
-      };
-    case getType(fimsHistoryGet.failure):
-      return {
-        ...state,
-        consentsList: pot.toError(state.consentsList, action.payload)
-      };
-    case getType(fimsHistoryExport.request):
-      return {
-        ...state,
-        historyExportState: remoteLoading
-      };
-    case getType(fimsHistoryExport.success):
-      return {
-        ...state,
-        historyExportState: remoteReady(action.payload)
-      };
-    case getType(fimsHistoryExport.failure):
-      return {
-        ...state,
-        historyExportState: remoteError(null)
       };
     case getType(resetFimsHistoryExportState):
       return {

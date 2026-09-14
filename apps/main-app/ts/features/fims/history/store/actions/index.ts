@@ -1,14 +1,15 @@
+import { AccessHistoryPage } from "@io-app/api-types/generated/definitions/fims_history/AccessHistoryPage";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { AccessHistoryPage } from "../../../../../../definitions/fims_history/AccessHistoryPage";
+
 import { FimsExportSuccessStates } from "../reducer";
 
 export type FimsHistoryGetPayloadType = {
-  shouldReloadFromScratch?: boolean;
   continuationToken?: string;
+  shouldReloadFromScratch?: boolean;
 };
 
 export const fimsHistoryGet = createAsyncAction(
@@ -31,7 +32,7 @@ export const resetFimsHistoryExportState =
   createStandardAction("RESET_FIMS_HISTORY")<void>();
 
 export type FimsHistoryActions =
-  | ActionType<typeof fimsHistoryGet>
   | ActionType<typeof fimsHistoryExport>
+  | ActionType<typeof fimsHistoryGet>
   | ActionType<typeof resetFimsHistoryExportState>
   | ActionType<typeof resetFimsHistoryState>;

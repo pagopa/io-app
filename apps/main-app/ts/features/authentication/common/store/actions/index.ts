@@ -2,6 +2,9 @@
  * Action types and action creator related to the Authentication.
  */
 
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
+import { PasswordLogin } from "@io-app/api-types/generated/definitions/session_manager/PasswordLogin";
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import {
   ActionType,
   createAction,
@@ -9,17 +12,15 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { IdpData } from "../../../../../../definitions/content/IdpData";
-import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
-import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
 import { SpidIdp } from "../../../../../utils/idps";
-
-export type LogoutError = {
-  error: Error;
-};
+import { LoginConfigActions } from "./loginConfig";
 
 export type CheckSessionResult = {
   isSessionValid: boolean;
+};
+
+export type LogoutError = {
+  error: Error;
 };
 
 export const idpSelected = createStandardAction("IDP_SELECTED")<SpidIdp>();
@@ -38,8 +39,8 @@ export const idpLoginUrlChanged = createStandardAction(
 )<{ url: string }>();
 
 export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<{
-  token: string;
   idp: keyof IdpData;
+  token: string;
 }>();
 
 export const loginFailure = createStandardAction("LOGIN_FAILURE")<{
@@ -71,10 +72,6 @@ export const resetAuthenticationState = createStandardAction(
   "RESET_AUTHENTICATION_STATE"
 )();
 
-export const disableNativeAuthentication = createStandardAction(
-  "DISABLE_NATIVE_AUTHENTICATION"
-)();
-
 export const checkCurrentSession = createAsyncAction(
   "CHECK_CURRENT_SESSION_REQUEST",
   "CHECK_CURRENT_SESSION_SUCCESS",
@@ -93,21 +90,21 @@ export const clearCurrentSession = createStandardAction(
 )();
 
 export type AuthenticationActions =
-  | ActionType<typeof idpSelected>
+  | ActionType<typeof checkCurrentSession>
+  | ActionType<typeof clearCurrentSession>
   | ActionType<typeof idpLoginUrlChanged>
-  | ActionType<typeof testLoginRequest>
-  | ActionType<typeof testLoginCleanUp>
-  | ActionType<typeof loginSuccess>
+  | ActionType<typeof idpSelected>
   | ActionType<typeof loginFailure>
+  | ActionType<typeof loginSuccess>
+  | ActionType<typeof logoutFailure>
   | ActionType<typeof logoutRequest>
   | ActionType<typeof logoutSuccess>
-  | ActionType<typeof logoutFailure>
-  | ActionType<typeof sessionInformationLoadSuccess>
-  | ActionType<typeof sessionInformationLoadFailure>
-  | ActionType<typeof checkCurrentSession>
-  | ActionType<typeof sessionExpired>
-  | ActionType<typeof sessionCorrupted>
-  | ActionType<typeof sessionInvalid>
-  | ActionType<typeof clearCurrentSession>
   | ActionType<typeof resetAuthenticationState>
-  | ActionType<typeof disableNativeAuthentication>;
+  | ActionType<typeof sessionCorrupted>
+  | ActionType<typeof sessionExpired>
+  | ActionType<typeof sessionInformationLoadFailure>
+  | ActionType<typeof sessionInformationLoadSuccess>
+  | ActionType<typeof sessionInvalid>
+  | ActionType<typeof testLoginCleanUp>
+  | ActionType<typeof testLoginRequest>
+  | LoginConfigActions;

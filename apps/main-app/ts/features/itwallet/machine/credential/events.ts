@@ -1,47 +1,64 @@
 import { ErrorActorEvent } from "xstate";
+
+import { MixPanelCredential } from "../../analytics/utils/types";
+import { CredentialExitStep } from "../../common/hooks/useItwCredentialExitSurveyBottomSheet";
 import { CredentialIssuanceMode } from "./context";
 
-export type SelectCredential = {
-  type: "select-credential";
-  credentialType: string;
-  mode: CredentialIssuanceMode;
-};
+export type CredentialIssuanceEvents =
+  | AddToWallet
+  | Back
+  | Close
+  | ConfirmCredentialOffer
+  | ConfirmTrustData
+  | Continue
+  | ErrorActorEvent
+  | Retry
+  | SelectCredential
+  | SessionRefreshComplete
+  | StartCredentialOffer;
 
-export type ConfirmTrustData = {
-  type: "confirm-trust-data";
-};
-
-export type AddToWallet = {
+type AddToWallet = {
   type: "add-to-wallet";
 };
 
-export type Retry = {
-  type: "retry";
-};
-
-export type Back = {
+type Back = {
   type: "back";
 };
 
-export type Close = {
+type Close = {
+  surveyCredential?: MixPanelCredential;
+  /** Step and credential at which the user exited, used to show the Qualtrics survey in WALLET_HOME. */
+  surveyStep?: CredentialExitStep;
   type: "close";
 };
 
-export type Continue = {
+type ConfirmCredentialOffer = {
+  type: "confirm-credential-offer";
+};
+
+type ConfirmTrustData = {
+  type: "confirm-trust-data";
+};
+
+type Continue = {
   type: "continue";
+};
+
+type Retry = {
+  type: "retry";
+};
+
+type SelectCredential = {
+  credentialType: string;
+  mode: CredentialIssuanceMode;
+  type: "select-credential";
 };
 
 type SessionRefreshComplete = {
   type: "session-refresh-complete";
 };
 
-export type CredentialIssuanceEvents =
-  | SelectCredential
-  | ConfirmTrustData
-  | AddToWallet
-  | Retry
-  | Back
-  | Close
-  | Continue
-  | SessionRefreshComplete
-  | ErrorActorEvent;
+type StartCredentialOffer = {
+  itwCredentialOfferUri: string;
+  type: "start-credential-offer";
+};

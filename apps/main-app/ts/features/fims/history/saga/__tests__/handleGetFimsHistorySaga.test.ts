@@ -5,6 +5,7 @@ import { ValidationError } from "io-ts";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga-test-plan/matchers";
 import { select } from "typed-redux-saga/macro";
+
 import * as PERSISTED_SELECTORS from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import * as TRACK_FAILURE from "../../../common/analytics";
@@ -98,7 +99,7 @@ describe("handleGetFimsHistorySaga", () => {
 
     expect(mockTrackFailure).toHaveBeenCalledWith("GENERIC_NON_200: 404");
   });
-  it("Should dispatch fimsHistoryGet.failure if the response's decode has failed ( its status is [left] ) ", () => {
+  it("Should dispatch fimsHistoryGet.failure if the response's decode has failed ( its status is [left] )", () => {
     const mockTrackFailure = jest.fn();
     jest
       .spyOn(TRACK_FAILURE, "trackHistoryFailure")

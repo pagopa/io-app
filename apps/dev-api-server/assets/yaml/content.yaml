@@ -1,0 +1,218 @@
+swagger: "2.0"
+info:
+  version: "0.1"
+paths:
+definitions:
+  Service:
+    type: object
+    required:
+      - scope
+    properties:
+      description:
+        type: string
+      web_url:
+        type: string
+      app_ios:
+        type: string
+      app_android:
+        type: string
+      tos_url:
+        type: string
+      privacy_url:
+        type: string
+      address:
+        type: string
+      phone:
+        type: string
+      email:
+        type: string
+      pec:
+        type: string
+      scope:
+        type: string
+        x-extensible-enum:
+          - NATIONAL
+          - LOCAL
+  Municipality:
+    type: object
+    required:
+      - codiceRegione
+      - codiceProvincia
+      - denominazione
+      - denominazioneInItaliano
+      - denominazioneRegione
+      - siglaProvincia
+    properties:
+      codiceRegione:
+        type: string
+      codiceProvincia:
+        type: string
+      denominazione:
+        type: string
+      denominazioneInItaliano:
+        type: string
+      denominazioneRegione:
+        type: string
+      siglaProvincia:
+        type: string
+  ServicesByScope:
+    type: object
+    required:
+      - LOCAL
+      - NATIONAL
+    properties:
+      LOCAL:
+        type: array
+        items:
+          type: string
+      NATIONAL:
+        type: array
+        items:
+          type: string
+  ContextualHelp:
+    type: object
+    required:
+      - version
+      - it
+      - en
+    properties:
+      version:
+        type: number
+      it:
+        $ref: "#/definitions/ContextualHelpData"
+      en:
+        $ref: "#/definitions/ContextualHelpData"
+  ContextualHelpData:
+    type: object
+    required:
+      - idps
+      - screens
+    properties:
+      idps:
+        $ref: "#/definitions/IdpData"
+      screens:
+        $ref: "#/definitions/ScreensCHData"
+  ScreensCHData:
+    type: array
+    items:
+      $ref: "#/definitions/ScreenCHData"
+  ScreenCHData:
+    type: object
+    required:
+      - route_name
+      - title
+      - content
+    properties:
+      route_name:
+        type: string
+      title:
+        type: string
+      content:
+        type: string
+  IdpData:
+    type: object
+    properties:
+      arubaid:
+        $ref: "#/definitions/Idp"
+      infocertid:
+        $ref: "#/definitions/Idp"
+      intesiid:
+        $ref: "#/definitions/Idp"
+      lepidaid:
+        $ref: "#/definitions/Idp"
+      namirialid:
+        $ref: "#/definitions/Idp"
+      posteid:
+        $ref: "#/definitions/Idp"
+      sielteid:
+        $ref: "#/definitions/Idp"
+      spiditalia:
+        $ref: "#/definitions/Idp"
+      timid:
+        $ref: "#/definitions/Idp"
+      cie:
+        $ref: "#/definitions/Idp"
+      cieid:
+        $ref: "#/definitions/Idp"
+      test:
+        $ref: "#/definitions/Idp"
+  Idp:
+    type: object
+    required:
+      - description
+      - recover_password
+      - phone
+      - web_site
+    properties:
+      description:
+        type: string
+      email:
+        type: string
+      helpdesk_form:
+        type: string
+      phone:
+        type: string
+      phone_international:
+        type: string
+      web_site:
+        type: string
+      recover_username:
+        type: string
+      recover_password:
+        type: string
+      recover_emergency_code:
+        type: string
+  BonusesAvailable:
+    type: array
+    items:
+      $ref: "#/definitions/BonusAvailable"
+  BonusAvailable:
+    type: object
+    required:
+      - id_type
+      - is_active
+      - valid_from
+      - valid_to
+      - it
+      - en
+    properties:
+      id_type:
+        type: number
+      service_id:
+        type: string
+      is_active:
+        type: boolean
+      cover:
+        type: string
+      sponsorship_cover:
+        type: string
+      sponsorship_description:
+        type: string
+      it:
+        $ref: "#/definitions/BonusAvailableContent"
+      en:
+        $ref: "#/definitions/BonusAvailableContent"
+      valid_from:
+        $ref: "#/definitions/Timestamp"
+      valid_to:
+        $ref: "#/definitions/Timestamp"
+  BonusAvailableContent:
+    type: object
+    required:
+      - name
+      - title
+      - subtitle
+      - content
+    properties:
+      name:
+        type: string
+      title:
+        type: string
+      subtitle:
+        type: string
+      content:
+        type: string
+      tos_url:
+        type: string
+  Timestamp:
+    $ref: "https://raw.githubusercontent.com/pagopa/io-functions-commons/v10.2.3/openapi/definitions.yaml#/Timestamp"

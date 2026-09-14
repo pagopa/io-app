@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script type="text/javascript">
+        const outcomeList = [
+            ["0", "SUCCESS - PAA_PAGAMENTO_DUPLICATO"],
+            ["1", "GENERIC_ERROR"],
+            ["2", "AUTH_ERROR - PPT_AUTENTICAZIONE"],
+            ["3", "INVALID_DATA - PPT_ERRORE_EMESSO_DA_PAA"],
+            ["4", "TIMEOUT"],
+            ["5", "CIRCUIT_ERROR"],
+            ["6", "MISSING_FIELDS"],
+            ["7", "INVALID_CARD"],
+            ["8", "CANCELED_BY_USER - PAA_PAGAMENTO_ANNULLATO"],
+            ["9", "DUPLICATE_ORDER"],
+            ["10", "EXCESSIVE_AMOUNT"],
+            ["11", "ORDER_NOT_PRESENT - PAA_PAGAMENTO_SCONOSCIUTO"],
+            ["12", "INVALID_METHOD"],
+            ["13", "KO_RETRIABLE - PAA_PAGAMENTO_IN_CORSO"],
+            ["14", "INVALID_SESSION"],
+            ["15", "METHOD_NOT_ENABLED"],
+            ["17", "WAITING_CONFIRMATION_EMAIL"],
+            ["18", "PAYMENT_REVERSED - PAA_PAGAMENTO_SCADUTO"],
+            ["19", "PAYPAL_REMOVED_ERROR"],
+            ["25", "PSP_ERROR"],
+            ["99", "BE_NODE_KO"],
+            ["116", "INSUFFICIENT_AVAILABILITY_ERROR"],
+            ["117", "CVV_ERROR"],
+            ["121", "PLAFOND_LIMIT_ERROR"]
+        ];
+
+        const updatePaymentFromMessageIfNeeded = (outcome) => {
+            // Async promise to support payment outcome when starting
+            // from messages. This is just a workaround that does not
+            // resemble in any way what happens in production.
+            fetch(`/ecommerce/io/v2/private/finalizePayment?outcome=${outcome}`, {
+                method: 'POST',
+                headers: new Headers({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+                })
+            }).catch(() => undefined);
+        }
+
+        const simulateOutcome = () => {
+            const queryString = location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const transactionId = urlParams.get("transactionId");
+            const container = document.getElementById("outcomeSelect");
+            if (container.value === "0") {
+              fetch('/ecommerce/io/v2/mock-transaction', {
+                method: 'POST',
+                body: JSON.stringify({
+                  transactionId,
+                }),
+                headers: new Headers({
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                })
+              })
+              .then(response => response.json())
+              .then(response => {
+                updatePaymentFromMessageIfNeeded(container.value);
+                window.location = `iowallet://127.0.0.1:3000/ecommerce/io/v1/transactions/${transactionId}/outcomes?outcome=${container.value}`;
+              })
+              .catch(err => alert(err))
+            } else {
+                updatePaymentFromMessageIfNeeded(container.value);
+                window.location.href = `iowallet://127.0.0.1:3000/ecommerce/io/v1/transactions/${transactionId}/outcomes?outcome=${container.value}`;
+            }
+        }
+
+        function onLoad() {
+            const options = outcomeList.map(v => `<option value="${v[0]}">${v[0]} - ${v[1]}</option>`).join();
+            const select = `<select id="outcomeSelect" style="width: 400px;height: 60px;font-size: 32px">${options}</select>`;
+            const container = document.getElementById("select_container");
+            container.innerHTML = `<div>${select}</div>`;
+        }
+
+    </script>
+    <meta charset="UTF-8">
+    <title>Wallet - Payment</title>
+</head>
+
+<body onload="onLoad()">
+
+    <div align="center" style="width: 100%; height:100%;margin: auto; margin-top: 20%;">
+        <h1 style="font-size: 62px;">WALLET PAYMENT</h1>
+        <div style="width: 100%; margin-top: 20px">
+            <div style="margin-top: 40px; font-size: 42px; margin-bottom: 20px;">
+                Select outcome
+            </div>
+            <div id="select_container">
+            </div>
+            <div style="margin-top: 60px; ">
+                <div onclick="simulateOutcome()"
+                    style="padding: 16px; width: 350px; font-size: 30px; color: white; background-color: #e67f00; text-decoration: none;">
+                    SIMULATE OUTCOME
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

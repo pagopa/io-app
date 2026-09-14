@@ -1,17 +1,19 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   ContentWrapper,
   ForceScrollDownView,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
 import { RouteProp, useLinkTo, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect } from "react";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+
+import { useAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
+import { UpdateAppAlert } from "../../../../components/UpdateAppAlert";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -52,7 +54,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   const servicePreferenceResponseSuccess = useIOSelector(state =>
     servicePreferenceResponseSuccessByIdSelector(
       state,
-      params.serviceId as string & INonEmptyStringTag
+      params.serviceId as INonEmptyStringTag & string
     )
   );
 
@@ -126,6 +128,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       contentContainerStyle={{ flexGrow: 1 }}
       footerActions={{
         actions: {
@@ -161,30 +164,33 @@ export const IdPayInitiativeDetailsScreen = () => {
     O.toUndefined
   );
 
-  const IdPayInitiativeDetails = () => (
-    <IdPayEnabledSubFeatureGuard featureKey="idpay.onboarding">
-      <IdPayInitiativeDetailsScreenComponent />
-    </IdPayEnabledSubFeatureGuard>
-  );
+  const requiresUpdate = useAppRequiredUpdate("idpay.onboarding");
 
   useOnFirstRender(
     () => trackIDPayOnboardingIntro({ initiativeId }),
     () => O.isSome(initiative)
   );
 
-  const WrappedComponent = withAppRequiredUpdate(
-    IdPayInitiativeDetails,
-    "idpay.onboarding",
-    {
-      onConfirm: () =>
-        trackIDPayOnboardingAppUpdateConfirm({
-          initiativeId
-        }),
-      onLanding: () =>
-        trackIDPayOnboardingAppUpdateRequired({
-          initiativeId
-        })
-    }
+  if (requiresUpdate) {
+    return (
+      <UpdateAppAlert
+        mixPanelTracking={{
+          onConfirm: () =>
+            trackIDPayOnboardingAppUpdateConfirm({
+              initiativeId
+            }),
+          onLanding: () =>
+            trackIDPayOnboardingAppUpdateRequired({
+              initiativeId
+            })
+        }}
+      />
+    );
+  }
+
+  return (
+    <IdPayEnabledSubFeatureGuard featureKey="idpay.onboarding">
+      <IdPayInitiativeDetailsScreenComponent />
+    </IdPayEnabledSubFeatureGuard>
   );
-  return <WrappedComponent />;
 };

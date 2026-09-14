@@ -1,11 +1,13 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import {
   trackCTAFrontMatterDecodingError,
+  trackMessageNotFoundScreen,
   trackMessageNotificationParsingFailure,
   trackMessageNotificationTap,
   trackMessagePaymentFailure,
   trackOpenMessage
 } from "..";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as MIXPANEL from "../../../../mixpanel";
 
 describe("index", () => {
@@ -102,6 +104,24 @@ describe("index", () => {
         flow: undefined,
         reason,
         serviceId
+      });
+    });
+  });
+
+  describe("trackMessageNotFoundScreen", () => {
+    it("should call 'mixpanelTrack' with proper parameters", () => {
+      const spyOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation((_event, _properties) => undefined);
+
+      expect(spyOnMixpanelTrack).not.toHaveBeenCalled();
+
+      trackMessageNotFoundScreen();
+
+      expect(spyOnMixpanelTrack).toHaveBeenCalledWith("MESSAGE_NOT_AVAILABLE", {
+        event_category: "KO",
+        event_type: "screen_view",
+        flow: undefined
       });
     });
   });

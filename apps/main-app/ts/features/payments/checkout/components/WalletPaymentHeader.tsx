@@ -3,28 +3,27 @@ import {
   HeaderSecondLevel,
   Stepper,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
-import { useCallback } from "react";
 import I18n from "i18next";
+import { useCallback } from "react";
+
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
+import { isPaymentsWebViewFlowEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import * as analytics from "../analytics";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { WALLET_PAYMENT_STEP_MAX } from "../store/reducers";
-import { walletPaymentPspListSelector } from "../store/selectors/psps";
-import { WalletPaymentStepEnum } from "../types";
-import { WalletPaymentStepScreenNames } from "../utils";
-import * as analytics from "../analytics";
 import {
   walletContextualOnboardingWebViewPayloadSelector,
   walletPaymentWebViewPayloadSelector
 } from "../store/selectors";
-import { isPaymentsWebViewFlowEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { walletPaymentPspListSelector } from "../store/selectors/psps";
+import { WalletPaymentStepEnum } from "../types";
+import { WalletPaymentStepScreenNames } from "../utils";
 
 type WalletPaymentHeaderProps = {
   currentStep: number;
@@ -45,10 +44,7 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const pspList = pot.getOrElse(pspListPot, []);
 
-  const startSupportRequest = useStartSupportRequest({
-    faqCategories: ["payment"],
-    contextualHelp: emptyContextualHelp
-  });
+  const startSupportRequest = useStartSupportRequest();
 
   const handleGoBack = useCallback(() => {
     if (currentStep === WalletPaymentStepEnum.PICK_PAYMENT_METHOD) {
@@ -95,9 +91,6 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
   return (
     <>
       <HeaderSecondLevel
-        title=""
-        type="singleAction"
-        goBack={handleGoBack}
         backAccessibilityLabel={I18n.t("global.buttons.back")}
         firstAction={{
           icon: "help" as HeaderActionProps["icon"],
@@ -106,8 +99,11 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
             "global.accessibility.contextualHelp.open.label"
           )
         }}
+        goBack={handleGoBack}
+        title=""
+        type="singleAction"
       />
-      <Stepper steps={WALLET_PAYMENT_STEP_MAX} currentStep={currentStep} />
+      <Stepper currentStep={currentStep} steps={WALLET_PAYMENT_STEP_MAX} />
       <VSpacer size={16} />
     </>
   );

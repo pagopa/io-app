@@ -1,44 +1,45 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Fragment, memo, useCallback, useEffect, useState } from "react";
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import {
   ListItemHeader,
   RadioGroup,
-  VSpacer,
-  useIOToast
-} from "@pagopa/io-app-design-system";
-import _ from "lodash";
+  useIOToast,
+  VSpacer
+} from "@io-app/design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as Calendar from "expo-calendar";
 import I18n from "i18next";
+import _ from "lodash";
+import { Fragment, memo, useCallback, useEffect, useState } from "react";
+
 import { useIOSelector } from "../store/hooks";
 import { preferredCalendarSelector } from "../store/reducers/persistedPreferences";
 
 type CalendarByAccount = Readonly<{
+  data: ReadonlyArray<Calendar.Calendar>;
   title: string;
-  data: ReadonlyArray<Calendar>;
 }>;
 
 type CalendarsByAccount = ReadonlyArray<CalendarByAccount>;
-
-type Props = {
-  onCalendarSelected: (calendar: Calendar) => void;
-  onCalendarsLoaded: () => void;
-  onCalendarRemove?: () => void;
-};
 
 type FetchError = {
   kind: "FETCH_ERROR";
 };
 
+type Props = {
+  onCalendarRemove?: () => void;
+  onCalendarSelected: (calendar: Calendar.Calendar) => void;
+  onCalendarsLoaded: () => void;
+};
+
 type ResourceError = FetchError;
 
-const getCalendarsByAccount = (calendars: ReadonlyArray<Calendar>) => {
+const getCalendarsByAccount = (calendars: ReadonlyArray<Calendar.Calendar>) => {
   const accounts: ReadonlyArray<string> = [
-    ...new Set(calendars.map(cal => cal.source))
+    ...new Set(calendars.map(cal => cal.source.name))
   ];
 
   return accounts.map(acc => ({
     title: acc,
-    data: calendars.filter(cal => cal.source === acc)
+    data: calendars.filter(cal => cal.source.name === acc)
   }));
 };
 
@@ -56,13 +57,13 @@ const CalendarsListContainer = ({
   const toast = useIOToast();
   const defaultCalendar = useIOSelector(preferredCalendarSelector, _.isEqual);
   const [selectedCalendar, setSelectedCalendar] = useState<
-    Calendar | undefined
+    Calendar.Calendar | undefined
   >(defaultCalendar);
 
-  const fetchCalendars = useCallback(() => {
+  const fetchCalendars = useCallback(async () => {
     setCalendarsByAccount(pot.noneLoading);
     // Fetch user calendars.
-    RNCalendarEvents.findCalendars()
+    Calendar.getCalendarsAsync("event")
       .then(calendars => {
         // Filter out only calendars that allow modifications
         const organizedCalendars = pot.some(
@@ -73,22 +74,22 @@ const CalendarsListContainer = ({
         setCalendarsByAccount(organizedCalendars);
         onCalendarsLoaded();
       })
-      .catch(_ => {
+      .catch(__ => {
         const fetchError: FetchError = {
           kind: "FETCH_ERROR"
         };
-        const calendarsByAccount: pot.Pot<
+        const calendars: pot.Pot<
           ReadonlyArray<CalendarByAccount>,
           ResourceError
         > = pot.toError(pot.none, fetchError);
-        setCalendarsByAccount(calendarsByAccount);
+        setCalendarsByAccount(calendars);
         onCalendarsLoaded();
       });
   }, [onCalendarsLoaded]);
 
   const mapData = useCallback(
-    (data: ReadonlyArray<Calendar>) =>
-      data.map((item: Calendar) => ({
+    (data: ReadonlyArray<Calendar.Calendar>) =>
+      data.map((item: Calendar.Calendar) => ({
         id: item.id,
         value: item.title,
         disabled: !item.allowsModifications
@@ -103,7 +104,7 @@ const CalendarsListContainer = ({
         calendarsByAccount.value
           .flatMap(section => section.data)
           .find(cal => cal.id === value);
-      if (calendar) {
+      if (calendar !== undefined && calendar !== false) {
         const isDefaultCalendar =
           defaultCalendar && calendar.id === defaultCalendar.id;
         if (isDefaultCalendar && onCalendarRemove) {
@@ -127,7 +128,7 @@ const CalendarsListContainer = ({
   );
 
   useEffect(() => {
-    fetchCalendars();
+    void fetchCalendars();
   }, [fetchCalendars]);
 
   return (
@@ -136,11 +137,11 @@ const CalendarsListContainer = ({
       <Fragment key={index}>
         <ListItemHeader label={section.title} />
         <RadioGroup<string>
-          type="radioListItem"
-          key={`radio_group_${index}`}
           items={mapData(section.data)}
-          selectedItem={selectedCalendar?.id}
+          key={`radio_group_${index}`}
           onPress={onPressRadio}
+          selectedItem={selectedCalendar?.id}
+          type="radioListItem"
         />
         {/* not show the end spacer if the element is the last */}
         {index < calendarsByAccount.value.length - 1 && <VSpacer size={24} />}

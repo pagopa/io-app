@@ -1,0 +1,45 @@
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+  useState
+} from "react";
+
+type IONewTypefaceContextType = {
+  newTypefaceEnabled: boolean;
+  setNewTypefaceEnabled: (newTypefaceEnabled: boolean) => void;
+};
+/**
+ * Experimental Context for new UI Representations
+ */
+export const IONewTypefaceContext = createContext<IONewTypefaceContextType>({
+  newTypefaceEnabled: true,
+  setNewTypefaceEnabled: () => void 0
+});
+
+export const useIONewTypeface = () => useContext(IONewTypefaceContext);
+
+type IOExperimentalContextProviderProps = {
+  isNewTypefaceEnabled?: boolean;
+};
+
+export const IONewTypefaceContextProvider = ({
+  children,
+  isNewTypefaceEnabled
+}: PropsWithChildren<IOExperimentalContextProviderProps>) => {
+  const [newTypefaceEnabled, setNewTypefaceEnabled] = useState(
+    isNewTypefaceEnabled ?? true
+  );
+
+  const value = useMemo(
+    () => ({ newTypefaceEnabled, setNewTypefaceEnabled }),
+    [newTypefaceEnabled]
+  );
+
+  return (
+    <IONewTypefaceContext.Provider value={value}>
+      {children}
+    </IONewTypefaceContext.Provider>
+  );
+};

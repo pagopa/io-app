@@ -1,14 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import _ from "lodash";
 import { act, fireEvent } from "@testing-library/react-native";
-import { createStore } from "redux";
 import I18n from "i18next";
+import _ from "lodash";
+import { createStore } from "redux";
+
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { OnboardingNotificationsPreferencesScreen } from "../OnboardingNotificationsPreferencesScreen";
-import { GlobalState } from "../../../../store/reducers/types";
 
 describe("OnboardingNotificationsPreferencesScreen", () => {
   it("given an user that is doing the onboarding for the first time then the title should match the 'profile.preferences.notifications.title' key and the subtitle should match 'profile.preferences.notifications.subtitle'", () => {
@@ -88,7 +89,7 @@ describe("OnboardingNotificationsPreferencesScreen", () => {
 
 const renderScreen = (
   isFirstOnboarding: boolean,
-  isUpdatingProfile: boolean = false
+  isUpdatingProfile = false
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const finalState = {

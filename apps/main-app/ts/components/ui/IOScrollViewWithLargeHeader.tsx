@@ -7,57 +7,54 @@ import {
   useIOTheme,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import { ComponentProps, ReactNode, Ref, useMemo, useState } from "react";
-
 import { LayoutChangeEvent, View } from "react-native";
 import Animated, { AnimatedRef } from "react-native-reanimated";
-import I18n from "i18next";
+
 import {
   BackProps,
   HeaderActionsProps,
   useHeaderProps
 } from "../../hooks/useHeaderProps";
-import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
 import { IOScrollView } from "./IOScrollView";
 
-export type LargeHeaderTitleProps = {
-  label: string;
+type LargeHeaderTitleProps = {
   accessibilityLabel?: string;
-  testID?: string;
+  label: string;
   section?: string;
+  testID?: string;
 };
 
-type Props = WithTestID<
-  {
-    ref?: Ref<View>;
-    children?: ReactNode;
-    actions?: ComponentProps<typeof IOScrollView>["actions"];
-    title: LargeHeaderTitleProps;
-    description?: string;
-    onDescriptionLinkPress?: (url: string) => void;
-    goBack?: BackProps["goBack"];
-    ignoreSafeAreaMargin?: ComponentProps<
-      typeof HeaderSecondLevel
-    >["ignoreSafeAreaMargin"];
-    includeContentMargins?: boolean;
-    headerActionsProp?: HeaderActionsProps;
-    canGoback?: boolean;
-    excludeEndContentMargin?: boolean;
-    ignoreAccessibilityCheck?: ComponentProps<
-      typeof HeaderSecondLevel
-    >["ignoreAccessibilityCheck"];
-    animatedRef?: AnimatedRef<Animated.ScrollView>;
-    topElement?: ReactNode;
-    alwaysBounceVertical?: boolean;
-    contentContainerStyle?: ComponentProps<
-      typeof IOScrollView
-    >["contentContainerStyle"];
-  } & SupportRequestParams
->;
+type Props = WithTestID<{
+  actions?: ComponentProps<typeof IOScrollView>["actions"];
+  alwaysBounceVertical?: boolean;
+  animatedRef?: AnimatedRef<Animated.ScrollView>;
+  canGoback?: boolean;
+  children?: ReactNode;
+  contentContainerStyle?: ComponentProps<
+    typeof IOScrollView
+  >["contentContainerStyle"];
+  description?: string;
+  excludeEndContentMargin?: boolean;
+  goBack?: BackProps["goBack"];
+  headerActionsProp?: HeaderActionsProps;
+  ignoreAccessibilityCheck?: ComponentProps<
+    typeof HeaderSecondLevel
+  >["ignoreAccessibilityCheck"];
+  ignoreSafeAreaMargin?: ComponentProps<
+    typeof HeaderSecondLevel
+  >["ignoreSafeAreaMargin"];
+  includeContentMargins?: boolean;
+  onDescriptionLinkPress?: (url: string) => void;
+  ref?: Ref<View>;
+  title: LargeHeaderTitleProps;
+  topElement?: ReactNode;
+}>;
 
 /**
  * Special `IOScrollView` screen with a large title that is hidden by a transition when
@@ -73,9 +70,6 @@ export const IOScrollViewWithLargeHeader = ({
   actions,
   goBack,
   canGoback = true,
-  contextualHelp,
-  contextualHelpMarkdown,
-  faqCategories,
   ignoreSafeAreaMargin = false,
   includeContentMargins = false,
   headerActionsProp = {},
@@ -101,9 +95,6 @@ export const IOScrollViewWithLargeHeader = ({
 
   const headerPropsWithoutGoBack = {
     title: title.label,
-    contextualHelp,
-    contextualHelpMarkdown,
-    faqCategories,
     ...headerActionsProp
   };
 
@@ -131,29 +122,29 @@ export const IOScrollViewWithLargeHeader = ({
   return (
     <IOScrollView
       actions={actions}
+      alwaysBounceVertical={alwaysBounceVertical}
       animatedRef={animatedRef}
-      headerConfig={headerProps}
-      snapOffset={titleHeight}
-      includeContentMargins={false}
+      contentContainerStyle={contentContainerStyle}
       excludeEndContentMargin={excludeEndContentMargin}
+      headerConfig={headerProps}
+      includeContentMargins={false}
+      snapOffset={titleHeight}
       testID={testID}
       topElement={topElement}
-      alwaysBounceVertical={alwaysBounceVertical}
-      contentContainerStyle={contentContainerStyle}
     >
       <ContentWrapper onLayout={getTitleHeight}>
         <VStack space={8}>
           {title.section && (
-            <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
+            <BodySmall color={theme["textBody-tertiary"]} weight="Semibold">
               {title.section}
             </BodySmall>
           )}
           <H2
-            color={theme["textHeading-default"]}
-            testID={title?.testID}
-            ref={ref}
             accessibilityLabel={title.accessibilityLabel ?? title.label}
             accessibilityRole="header"
+            color={theme["textHeading-default"]}
+            ref={ref}
+            testID={title?.testID}
           >
             {title.label}
           </H2>

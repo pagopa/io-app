@@ -1,7 +1,8 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
+import I18n from "i18next";
 import { useEffect, useRef } from "react";
 import { Alert } from "react-native";
-import I18n from "i18next";
+
 import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -42,7 +43,6 @@ export function useCgnUnsubscribe() {
       IOToast.error(I18n.t("wallet.delete.failed"));
     }
 
-    // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
   }, [unsubscriptionStatus, navigation, dispatch]);
 

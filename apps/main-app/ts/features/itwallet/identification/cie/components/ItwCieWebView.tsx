@@ -1,4 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { ComponentProps, createRef } from "react";
 import { Platform, StyleSheet, View } from "react-native";
@@ -12,7 +11,8 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent";
 import { useIOSelector } from "../../../../../store/hooks";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
@@ -68,33 +68,33 @@ type ItwCieWebViewProps = ComponentProps<typeof WebView> & {
 const ItwCieWebView = ({ onWebViewError, ...props }: ItwCieWebViewProps) => {
   const webView = createRef<WebView>();
 
-  const handleOnError = (
-    err: WebViewErrorEvent | WebViewHttpErrorEvent | Error
-  ): void =>
-    pipe(
-      err,
-      e => {
-        const error = e as Error;
-        const webViewError = e as WebViewErrorEvent;
-        const webViewHttpError = e as WebViewHttpErrorEvent;
-        if (webViewHttpError.nativeEvent?.statusCode) {
-          const { description, statusCode } = webViewHttpError.nativeEvent;
-          return `WebView http error: ${description} with status code: ${statusCode}`;
-        } else if (webViewError.nativeEvent) {
-          const { code, description } = webViewError.nativeEvent;
-          return `WebView error: ${description} with code: ${code}`;
-        } else {
-          return error.message || "An error occurred in the WebView";
-        }
-      },
-      message =>
-        onWebViewError({
-          name: "WEBVIEW_ERROR",
-          message
-        })
-    );
+  const getWebViewErrorMessage = (
+    err: Error | WebViewErrorEvent | WebViewHttpErrorEvent
+  ): string => {
+    const error = err as Error;
+    const webViewError = err as WebViewErrorEvent;
+    const webViewHttpError = err as WebViewHttpErrorEvent;
 
-  const handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
+    if (webViewHttpError.nativeEvent?.statusCode) {
+      const { description, statusCode } = webViewHttpError.nativeEvent;
+      return `WebView http error: ${description} with status code: ${statusCode}`;
+    }
+    if (webViewError.nativeEvent) {
+      const { code, description } = webViewError.nativeEvent;
+      return `WebView error: ${description} with code: ${code}`;
+    }
+    return error.message || "An error occurred in the WebView";
+  };
+
+  const handleOnError = (
+    err: Error | WebViewErrorEvent | WebViewHttpErrorEvent
+  ): void =>
+    onWebViewError({
+      name: "WEBVIEW_ERROR",
+      message: getWebViewErrorMessage(err)
+    });
+
+  const handleOnLoadEnd = (e: WebViewErrorEvent | WebViewNavigationEvent) => {
     const eventTitle = e.nativeEvent.title.toLowerCase();
     if (
       eventTitle === "pagina web non disponibile" ||
@@ -109,13 +109,13 @@ const ItwCieWebView = ({ onWebViewError, ...props }: ItwCieWebViewProps) => {
   return (
     <WebView
       {...props}
-      ref={webView}
-      userAgent={defaultUserAgent}
-      javaScriptEnabled={true}
       injectedJavaScript={injectedJavaScript}
-      onLoadEnd={handleOnLoadEnd}
+      javaScriptEnabled={true}
       onError={handleOnError}
       onHttpError={handleOnError}
+      onLoadEnd={handleOnLoadEnd}
+      ref={webView}
+      userAgent={defaultUserAgent}
     />
   );
 };
@@ -159,13 +159,13 @@ export const ItwCieAuthenticationWebview = ({
     <>
       {authenticationUrl && (
         <ItwCieWebView
-          source={{ uri: authenticationUrl }}
-          onMessage={handleMessage}
+          onMessage={event => void handleMessage(event)}
           onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
           onWebViewError={onWebViewError}
+          source={{ uri: authenticationUrl }}
         />
       )}
-      <View style={StyleSheet.absoluteFillObject}>
+      <View style={StyleSheet.absoluteFill}>
         <LoadingScreenContent title={I18n.t("global.genericWaiting")} />
       </View>
     </>
@@ -186,7 +186,7 @@ export const ItwCieAuthorizationWebview = ({
   onAuthorizationComplete,
   onWebViewError
 }: ItwCieAuthorizationWebviewProps) => {
-  const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
+  const { ISSUANCE_REDIRECT_URI } = getEnv(useIOSelector(selectItwEnv));
 
   const handleShouldStartLoadWithRequest = (
     event: WebViewNavigation
@@ -202,7 +202,6 @@ export const ItwCieAuthorizationWebview = ({
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ItwCieWebView
-        source={{ uri: authorizationUrl }}
         onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
         onWebViewError={onWebViewError}
         originWhitelist={[
@@ -211,6 +210,7 @@ export const ItwCieAuthorizationWebview = ({
           "http://*",
           ISSUANCE_REDIRECT_URI
         ]}
+        source={{ uri: authorizationUrl }}
       />
     </SafeAreaView>
   );

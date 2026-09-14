@@ -1,25 +1,22 @@
 import {
-  HeaderSecondLevel,
-  IOCategoryIcons
-} from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
-import { StatusBarProps } from "react-native";
-import I18n from "i18next";
-import {
   ProductCategory,
   ProductCategoryEnum
-} from "../../../../../definitions/cgn/merchants/ProductCategory";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+} from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
+import { ProductCategoryWithNewDiscountsCount } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+import { HeaderSecondLevel, IOCategoryIcons } from "@io-app/design-system";
+import I18n from "i18next";
+import { StatusBarProps } from "react-native";
+
 import { TranslationKeys } from "../../../../i18n";
 
 type Category = {
-  type: ProductCategory;
+  colors: string;
+  headerVariant: HeaderSecondLevel["variant"];
   icon: IOCategoryIcons;
   nameKey: TranslationKeys;
-  colors: string;
-  textColor: "white" | "black";
   statusBarStyle: StatusBarProps["barStyle"];
-  headerVariant: HeaderSecondLevel["variant"];
+  textColor: "black" | "white";
+  type: ProductCategory;
 };
 
 export const categories: Record<ProductCategory, Category> = {
@@ -117,7 +114,7 @@ export const categories: Record<ProductCategory, Category> = {
 
 export const getCategorySpecs = (
   category: ProductCategory
-): O.Option<Category> => O.fromNullable(categories[category]);
+): Category | undefined => categories[category];
 
 export const orderCategoriesByNameKey = (
   categoriesList: ReadonlyArray<ProductCategoryWithNewDiscountsCount>

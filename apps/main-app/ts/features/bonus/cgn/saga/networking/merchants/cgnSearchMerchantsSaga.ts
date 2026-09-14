@@ -1,14 +1,14 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
+
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import {
   getGenericError,
   getNetworkError
 } from "../../../../../../utils/errors";
+import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import { cgnSearchMerchants } from "../../../store/actions/merchants";
-import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 
 export function* cgnSearchMerchantsSaga(
   searchMerchants: ReturnType<typeof BackendCgnMerchants>["searchMerchants"],
@@ -24,7 +24,7 @@ export function* cgnSearchMerchantsSaga(
       cgnSearchMerchantRequest
     )) as unknown as SagaCallReturnType<typeof searchMerchants>;
 
-    if (E.isLeft(searchMerchantsResult)) {
+    if ("left" in searchMerchantsResult) {
       yield* put(
         cgnSearchMerchants.failure(
           getGenericError(new Error(readableReport(searchMerchantsResult.left)))

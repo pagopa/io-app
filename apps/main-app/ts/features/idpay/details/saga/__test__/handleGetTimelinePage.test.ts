@@ -1,16 +1,17 @@
-import * as E from "fp-ts/lib/Either";
-import { testSaga } from "redux-saga-test-plan";
-import { getType } from "typesafe-actions";
-import { PreferredLanguageEnum } from "../../../../../../definitions/identity/PreferredLanguage";
-import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { OperationDTO } from "@io-app/api-types/generated/definitions/idpay/OperationDTO";
+import { TimelineDTO } from "@io-app/api-types/generated/definitions/idpay/TimelineDTO";
 import {
   OperationTypeEnum,
   StatusEnum
-} from "../../../../../../definitions/idpay/TransactionOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
+import * as E from "fp-ts/lib/Either";
+import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
+
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { idpayTimelinePageGet } from "../../store/actions";
 import { handleGetTimelinePage } from "../handleGetTimelinePage";
-import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 
 const mockResponseSuccess = {
   // mock TimelineDTO

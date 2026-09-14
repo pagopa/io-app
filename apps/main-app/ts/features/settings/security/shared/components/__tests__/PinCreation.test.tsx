@@ -1,13 +1,14 @@
-import { render, fireEvent } from "@testing-library/react-native";
-import { Provider } from "react-redux";
-import { PreloadedState, createStore } from "redux";
-import { Alert } from "react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { PinCreation } from "../../../shared/components/PinCreation";
-import { PIN_LENGTH_SIX } from "../../../../../../utils/constants";
+import { Alert } from "react-native";
+import { Provider } from "react-redux";
+import { createStore, PreloadedState } from "redux";
+
 import { defaultPin } from "../../../../../../config";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { PIN_LENGTH_SIX } from "../../../../../../utils/constants";
+import { PinCreation } from "../../../shared/components/PinCreation";
 
 const VALID_PIN = defaultPin.split("");
 const REPEATED_NUMBERS = Array.from({ length: PIN_LENGTH_SIX }, () => "1");

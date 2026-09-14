@@ -1,40 +1,41 @@
-import { fireEvent, render } from "@testing-library/react-native";
-import I18n from "i18next";
 import {
   IbanOperationDTO,
   OperationTypeEnum as IbanOperationTypeEnum
-} from "../../../../../../definitions/idpay/IbanOperationDTO";
-import {
-  OnboardingOperationDTO,
-  OperationTypeEnum as OnboardingOperationTypeEnum
-} from "../../../../../../definitions/idpay/OnboardingOperationDTO";
-import {
-  RefundOperationDTO,
-  OperationTypeEnum as RefundOperationTypeEnum
-} from "../../../../../../definitions/idpay/RefundOperationDTO";
-import { setLocale } from "../../../../../i18n";
-import {
-  IdPayTimelineOperationListItem,
-  getOperationSubtitle,
-  getOperationSubtitleWithAmount
-} from "../IdPayTimelineOperationListItem";
+} from "@io-app/api-types/generated/definitions/idpay/IbanOperationDTO";
 import {
   InstrumentOperationDTO,
   OperationTypeEnum as InstrumentOperationTypeEnum,
   InstrumentTypeEnum
-} from "../../../../../../definitions/idpay/InstrumentOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InstrumentOperationDTO";
+import {
+  OnboardingOperationDTO,
+  OperationTypeEnum as OnboardingOperationTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/OnboardingOperationDTO";
+import {
+  RefundOperationDTO,
+  OperationTypeEnum as RefundOperationTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/RefundOperationDTO";
 import {
   RejectedInstrumentOperationDTO,
   OperationTypeEnum as RejectedInstrumentOperationTypeEnum
-} from "../../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
-import {
-  ChannelEnum,
-  TransactionOperationDTO
-} from "../../../../../../definitions/idpay/TransactionOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/RejectedInstrumentOperationDTO";
 import {
   StatusEnum,
   OperationTypeEnum as TransactionOperationTypeEnum
-} from "../../../../../../definitions/idpay/TransactionDetailDTO";
+} from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
+import {
+  ChannelEnum,
+  TransactionOperationDTO
+} from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
+import { fireEvent, render } from "@testing-library/react-native";
+import I18n from "i18next";
+
+import { setLocale } from "../../../../../i18n";
+import {
+  getOperationSubtitle,
+  getOperationSubtitleWithAmount,
+  IdPayTimelineOperationListItem
+} from "../IdPayTimelineOperationListItem";
 
 setLocale("it");
 
@@ -111,8 +112,8 @@ describe("Test IdPayTimelineOperationListItem", () => {
 
         const component = render(
           <IdPayTimelineOperationListItem
-            operation={T_OPERATION}
             onPress={mockOnPress}
+            operation={T_OPERATION}
             pressable
             testID="itemTestID"
           />
@@ -156,8 +157,8 @@ describe("Test IdPayTimelineOperationListItem", () => {
 
         const component = render(
           <IdPayTimelineOperationListItem
-            operation={T_OPERATION}
             onPress={mockOnPress}
+            operation={T_OPERATION}
             pressable
             testID="itemTestID"
           />

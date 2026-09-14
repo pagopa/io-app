@@ -1,11 +1,12 @@
-import { getType } from "typesafe-actions";
+import { FilledDocumentDetailView } from "@io-app/api-types/generated/definitions/fci/FilledDocumentDetailView";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
-import { fciLoadQtspFilledDocument, fciClearStateRequest } from "../actions";
+import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../store/actions/types";
-import { NetworkError } from "../../../../utils/errors";
-import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 import { GlobalState } from "../../../../store/reducers/types";
+import { NetworkError } from "../../../../utils/errors";
+import { fciClearStateRequest, fciLoadQtspFilledDocument } from "../actions";
 
 export type FciQtspFilledDocumentState = pot.Pot<
   FilledDocumentDetailView,
@@ -19,14 +20,14 @@ const reducer = (
   action: Action
 ): FciQtspFilledDocumentState => {
   switch (action.type) {
+    case getType(fciClearStateRequest):
+      return emptyState;
+    case getType(fciLoadQtspFilledDocument.failure):
+      return pot.toError(state, action.payload);
     case getType(fciLoadQtspFilledDocument.request):
       return pot.toLoading(state);
     case getType(fciLoadQtspFilledDocument.success):
       return pot.some(action.payload);
-    case getType(fciLoadQtspFilledDocument.failure):
-      return pot.toError(state, action.payload);
-    case getType(fciClearStateRequest):
-      return emptyState;
   }
 
   return state;

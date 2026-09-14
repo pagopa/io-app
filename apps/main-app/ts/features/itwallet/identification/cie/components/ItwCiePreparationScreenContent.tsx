@@ -1,5 +1,5 @@
-import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
-import { PropsWithChildren } from "react";
+import { ContentWrapper, VStack } from "@io-app/design-system";
+import { PropsWithChildren, ReactElement } from "react";
 import {
   Dimensions,
   Image,
@@ -7,47 +7,56 @@ import {
   StyleSheet,
   View
 } from "react-native";
+
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 
 type Props = {
-  title: string;
-  description: string;
-  imageSrc: ImageSourcePropType;
   actions?: IOScrollViewActions;
+  description: string;
   goBack?: () => void;
-};
+  title: string;
+} & (
+  | { imageComponent: ReactElement; imageSrc?: never }
+  | { imageComponent?: never; imageSrc: ImageSourcePropType }
+);
 
 export const ItwCiePreparationScreenContent = ({
   title,
   description,
   imageSrc,
+  imageComponent,
   actions,
   children,
   goBack
-}: PropsWithChildren<Props>) => (
-  <IOScrollViewWithLargeHeader
-    title={{ label: title }}
-    description={description}
-    headerActionsProp={{ showHelp: true }}
-    actions={actions}
-    goBack={goBack}
-  >
-    <ContentWrapper>
-      <VStack space={16}>
-        {children}
-        <View style={styles.imageContainer}>
-          <Image
-            accessibilityIgnoresInvertColors
-            source={imageSrc}
-            resizeMode="contain"
-            style={styles.image}
-          />
-        </View>
-      </VStack>
-    </ContentWrapper>
-  </IOScrollViewWithLargeHeader>
-);
+}: PropsWithChildren<Props>) => {
+  const image = imageSrc ? (
+    <Image
+      accessibilityIgnoresInvertColors
+      resizeMode="contain"
+      source={imageSrc}
+      style={styles.image}
+    />
+  ) : (
+    imageComponent
+  );
+
+  return (
+    <IOScrollViewWithLargeHeader
+      actions={actions}
+      description={description}
+      goBack={goBack}
+      title={{ label: title }}
+    >
+      <ContentWrapper>
+        <VStack space={16}>
+          {children}
+          <View style={styles.imageContainer}>{image}</View>
+        </VStack>
+      </ContentWrapper>
+    </IOScrollViewWithLargeHeader>
+  );
+};
 
 const screenHeight = Dimensions.get("window").height;
 

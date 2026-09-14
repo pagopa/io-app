@@ -1,19 +1,19 @@
+import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
+import { CardPending } from "@io-app/api-types/generated/definitions/cgn/CardPending";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
-import { constUndefined } from "fp-ts/lib/function";
+import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
-import { cgnDetails } from "../actions/details";
-import { Card } from "../../../../../../definitions/cgn/Card";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { CardPending } from "../../../../../../definitions/cgn/CardPending";
 import { isStrictSome } from "../../../../../utils/pot";
+import { cgnDetails } from "../actions/details";
 import { cgnUnsubscribe } from "../actions/unsubscribe";
 
 export type CgnDetailsState = {
-  information: pot.Pot<Card, NetworkError>;
   fetched: boolean;
+  information: pot.Pot<Card, NetworkError>;
 };
 
 const INITIAL_STATE: CgnDetailsState = {
@@ -26,6 +26,19 @@ const reducer = (
   action: Action
 ): CgnDetailsState => {
   switch (action.type) {
+    // This action is fired when the user is not elegible to have a CGN or it doesn't have it onboarded
+    case getType(cgnDetails.cancel):
+      return {
+        ...state,
+        information: pot.none,
+        fetched: true
+      };
+    case getType(cgnDetails.failure):
+      return {
+        ...state,
+        information: pot.toError(state.information, action.payload),
+        fetched: true
+      };
     // bonus activation
     case getType(cgnDetails.request):
       return {
@@ -36,19 +49,6 @@ const reducer = (
       return {
         ...state,
         information: pot.some(action.payload),
-        fetched: true
-      };
-    case getType(cgnDetails.failure):
-      return {
-        ...state,
-        information: pot.toError(state.information, action.payload),
-        fetched: true
-      };
-    // This action is fired when the user is not elegible to have a CGN or it doesn't have it onboarded
-    case getType(cgnDetails.cancel):
-      return {
-        ...state,
-        information: pot.none,
         fetched: true
       };
     case getType(cgnUnsubscribe.success):
@@ -77,14 +77,14 @@ export const isCgnEnrolledSelector = createSelector(
   (information: pot.Pot<Card, NetworkError>): boolean | undefined =>
     pot.fold(
       information,
-      constUndefined,
-      constUndefined,
-      constUndefined,
+      () => undefined,
+      () => undefined,
+      () => undefined,
       // we have a network error or a 404 the user is not enrolled
       () => false,
       isNotPending,
-      constUndefined,
-      constUndefined,
+      () => undefined,
+      () => undefined,
       () => false
     )
 );

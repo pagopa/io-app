@@ -1,6 +1,7 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors } from "@io-app/design-system";
 import { memo } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
+
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
 import { CredentialMetadata } from "../../utils/itwTypesUtils";
 import { CardSide } from "./types";

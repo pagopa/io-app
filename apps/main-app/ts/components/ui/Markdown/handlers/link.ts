@@ -1,5 +1,4 @@
 import { IO_INTERNAL_LINK_PREFIX } from "../../../../utils/navigation";
-import { openWebUrl } from "../../../../utils/url";
 
 export const isIoInternalLink = (href: string): boolean =>
   href.toLowerCase().startsWith(IO_INTERNAL_LINK_PREFIX);
@@ -55,16 +54,3 @@ export const deriveCustomHandledLink = (href: string): string | undefined => {
   }
   return cleanedLink;
 };
-
-/**
- * Handles links clicked in the Markdown (webview) component.
- */
-export function handleLinkMessage(href: string) {
-  if (isIoInternalLink(href)) {
-    return;
-  } else {
-    // External urls must be opened with the OS browser.
-    // FIXME: Whitelist allowed domains: https://www.pivotaltracker.com/story/show/158470128
-    openWebUrl(href);
-  }
-}

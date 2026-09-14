@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
 import { toSENDMessage } from "../../../store/types/transformers";
@@ -26,10 +27,10 @@ export const aarAdresseeDenominationSelector = (state: GlobalState) => {
   const currentState = currentAarFlowData(state);
 
   switch (currentState.type) {
-    case sendAarFlowStates.none:
-    case sendAarFlowStates.ko:
     case sendAarFlowStates.displayingAarToS:
     case sendAarFlowStates.fetchingQRData:
+    case sendAarFlowStates.ko:
+    case sendAarFlowStates.none:
       return undefined;
     default:
       return currentState.recipientInfo.denomination;

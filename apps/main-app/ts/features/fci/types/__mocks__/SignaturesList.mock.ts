@@ -1,7 +1,8 @@
-import { DossierTitle } from "../../../../../definitions/fci/DossierTitle";
-import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
-import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
+import { DossierTitle } from "@io-app/api-types/generated/definitions/fci/DossierTitle";
+import { SignatureRequestList } from "@io-app/api-types/generated/definitions/fci/SignatureRequestList";
+import { SignatureRequestListView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestListView";
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
+
 import { getRandomEnumValue } from "./utils";
 
 const now = new Date();

@@ -1,9 +1,10 @@
 import { select } from "typed-redux-saga/macro";
+
 import { mixpanelTrack } from "../../../../mixpanel";
-import { buildEventProperties } from "../../../../utils/analytics";
-import { GlobalState } from "../../../../store/reducers/types.ts";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties.ts";
 import { cdcStatusHandler } from "../../../../mixpanelConfig/mixpanelPropertyUtils.ts";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties.ts";
+import { GlobalState } from "../../../../store/reducers/types.ts";
+import { buildEventProperties } from "../../../../utils/analytics";
 
 export const trackCdcRequestIntro = () =>
   mixpanelTrack("CDC_REQUEST_INTRO", buildEventProperties("UX", "screen_view"));

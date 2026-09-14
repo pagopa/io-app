@@ -1,17 +1,17 @@
 /**
  * A screens to express the preferences related to email forwarding.
  */
-import { ListItemSwitch, useIOToast } from "@pagopa/io-app-design-system";
+import { ListItemSwitch, useIOToast } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { customEmailChannelSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import { profileUpsert } from "../../common/store/actions";
 import {
@@ -19,11 +19,6 @@ import {
   profileEmailSelector,
   profileSelector
 } from "../../common/store/selectors";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.email.forward.contextualHelpTitle",
-  body: "profile.preferences.email.forward.contextualHelpContent"
-};
 
 const EmailForwardingScreen = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -78,7 +73,6 @@ const EmailForwardingScreen = () => {
   const handleSwitchValueChange = useCallback(
     (canSendEmail: boolean) => {
       setIsLoading(true);
-      // eslint-disable-next-line functional/immutable-data
       isCustomChannelEnabledChoice.current = false;
       if (canSendEmail) {
         disableOrEnableAllEmailNotifications();
@@ -115,19 +109,18 @@ const EmailForwardingScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      includeContentMargins
-      title={{ label: I18n.t("send_email_messages.title") }}
+      canGoback={true}
       description={description}
       headerActionsProp={{ showHelp: true }}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      canGoback={true}
+      includeContentMargins
+      title={{ label: I18n.t("send_email_messages.title") }}
     >
       <ListItemSwitch
-        label={I18n.t("send_email_messages.switch.title")}
         description={I18n.t("send_email_messages.switch.subtitle")}
+        isLoading={isLoading}
+        label={I18n.t("send_email_messages.switch.title")}
         onSwitchValueChange={handleSwitchValueChange}
         value={isEmailEnabled}
-        isLoading={isLoading}
       />
     </IOScrollViewWithLargeHeader>
   );

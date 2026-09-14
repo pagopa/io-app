@@ -23,7 +23,6 @@ export const useAppStateActive = (onActive: () => void): void => {
         ) {
           onActive();
         }
-        // eslint-disable-next-line functional/immutable-data
         appState.current = nextAppState;
       }
     );

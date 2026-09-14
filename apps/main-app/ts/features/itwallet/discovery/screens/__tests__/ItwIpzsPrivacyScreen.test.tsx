@@ -1,5 +1,6 @@
 import { createStore } from "redux";
 import { createActor } from "xstate";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -8,6 +9,7 @@ import { trackItwPrivacyScreen } from "../../../analytics";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { testEidIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import ItwIpzsPrivacyScreen from "../ItwIpzsPrivacyScreen";
 
@@ -54,7 +56,9 @@ const renderComponent = (level: EidIssuanceLevel) => {
     }
   });
 
-  const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+  const initialSnapshot = createActor(logic, {
+    input: { deps: testEidIssuanceDeps() }
+  }).getSnapshot();
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
     value: "IpzsPrivacyAcceptance",

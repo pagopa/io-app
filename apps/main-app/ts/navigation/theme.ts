@@ -1,8 +1,4 @@
-import {
-  IOColors,
-  IOThemeDark,
-  IOThemeLight
-} from "@pagopa/io-app-design-system";
+import { IOColors, IOThemeDark, IOThemeLight } from "@io-app/design-system";
 import { DarkTheme, DefaultTheme } from "@react-navigation/native";
 
 // React Navigation Themes

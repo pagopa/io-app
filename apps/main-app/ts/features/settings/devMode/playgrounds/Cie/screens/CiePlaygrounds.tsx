@@ -5,10 +5,11 @@ import {
   ListItemNav,
   useIOToast,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { CieLogger, CieUtils } from "@pagopa/io-react-native-cie";
 import { Fragment, useCallback, useState } from "react";
 import { Platform } from "react-native";
+
 import { IOScrollView } from "../../../../../../components/ui/IOScrollView";
 import { useAppStateActive } from "../../../../../../hooks/useAppStateActive";
 import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
@@ -28,12 +29,14 @@ export const CiePlaygrounds = () => {
   });
 
   useAppStateActive(
-    useCallback(async () => {
-      setHasNFC(await CieUtils.hasNfcFeature());
-      setIsNFCEnabled(await CieUtils.isNfcEnabled());
-      setIsCieAuthenticationSupported(
-        await CieUtils.isCieAuthenticationSupported()
-      );
+    useCallback(() => {
+      void (async () => {
+        setHasNFC(await CieUtils.hasNfcFeature());
+        setIsNFCEnabled(await CieUtils.isNfcEnabled());
+        setIsCieAuthenticationSupported(
+          await CieUtils.isCieAuthenticationSupported()
+        );
+      })();
     }, [])
   );
 
@@ -45,7 +48,7 @@ export const CiePlaygrounds = () => {
           title: "Logs",
           data: logs
         });
-      } catch (e) {
+      } catch {
         toast.error("Perform a test first to generate some logs");
       }
     }
@@ -102,7 +105,6 @@ export const CiePlaygrounds = () => {
         <Fragment key={`home-screen-info-fragment-${info.label}-${index}`}>
           {index !== 0 && <Divider />}
           <ListItemInfo
-            value={info.label}
             endElement={{
               type: "badge",
               componentProps: {
@@ -110,6 +112,7 @@ export const CiePlaygrounds = () => {
                 variant: info.value ? "success" : "error"
               }
             }}
+            value={info.label}
           />
         </Fragment>
       ))}
@@ -125,9 +128,9 @@ export const CiePlaygrounds = () => {
           <>
             <Divider />
             <ListItemNav
-              value="Open NFC Settings"
               icon="coggle"
-              onPress={() => CieUtils.openNfcSettings()}
+              onPress={() => void CieUtils.openNfcSettings()}
+              value="Open NFC Settings"
             />
           </>
         )}
@@ -135,9 +138,9 @@ export const CiePlaygrounds = () => {
           <>
             <Divider />
             <ListItemNav
-              value="View logs"
               icon="docAttach"
-              onPress={obtainLogs}
+              onPress={() => void obtainLogs()}
+              value="View logs"
             />
           </>
         )}

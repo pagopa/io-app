@@ -1,16 +1,17 @@
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/communication/OrganizationFiscalCode";
+import { PaymentAmount } from "@io-app/api-types/generated/definitions/communication/PaymentAmount";
+import { PaymentNoticeNumber } from "@io-app/api-types/generated/definitions/communication/PaymentNoticeNumber";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { createStore } from "redux";
-import { appReducer } from "../../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { MessageDetailsStickyFooter } from "../MessageDetailsStickyFooter";
-import { PaymentData } from "../../../types";
+import { appReducer } from "../../../../../store/reducers";
 import { CTA, CTAS } from "../../../../../types/LocalizedCTAs";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as detailsById from "../../../store/reducers/detailsById";
 import * as payments from "../../../store/reducers/payments";
-import { PaymentAmount } from "../../../../../../definitions/communication/PaymentAmount";
-import { PaymentNoticeNumber } from "../../../../../../definitions/communication/PaymentNoticeNumber";
-import { OrganizationFiscalCode } from "../../../../../../definitions/communication/OrganizationFiscalCode";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { PaymentData } from "../../../types";
+import { MessageDetailsStickyFooter } from "../MessageDetailsStickyFooter";
 
 const cta1: CTA = {
   text: "CTA 1",
@@ -124,9 +125,9 @@ const renderComponent = (ctas?: CTAS) => {
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageDetailsStickyFooter
-        messageId={"01HRW6GJBD594Z0K9B4D6KAERC"}
         ctas={ctas}
         firstCTAIsPNOptInMessage={false}
+        messageId={"01HRW6GJBD594Z0K9B4D6KAERC"}
         secondCTAIsPNOptInMessage={false}
         serviceId={"01J5XCQMBNF0484AJV2TST03FE" as ServiceId}
       />

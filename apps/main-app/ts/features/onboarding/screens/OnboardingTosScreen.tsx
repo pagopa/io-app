@@ -10,16 +10,16 @@ import {
   H2,
   IOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
+
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { getFlowType } from "../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { trackTosUserExit } from "../../authentication/common/analytics";
 import {
@@ -34,11 +34,6 @@ import {
 import TosWebviewComponent from "../../settings/privacy/shared/components/TosWebviewComponent";
 import { tosConfigSelector } from "../../tos/store/selectors";
 import { abortOnboarding, tosAccepted } from "../store/actions";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",
-  body: "profile.main.privacy.privacyPolicy.contextualHelpContentPolicy"
-};
 
 /**
  * A screen to show the ToS to the user.
@@ -121,17 +116,15 @@ const OnboardingTosScreen = () => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    goBack: handleGoBack,
-    contextualHelpMarkdown,
-    faqCategories: ["privacy"]
+    goBack: handleGoBack
   });
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
       <ContentWrapper>
         <H2
-          accessible={true}
           accessibilityRole="header"
+          accessible={true}
           testID="screen-content-header-title"
         >
           {I18n.t("profile.main.privacy.privacyPolicy.title")}
@@ -141,13 +134,13 @@ const OnboardingTosScreen = () => {
       {!hasAcceptedCurrentTos && (
         <ContentWrapper testID={"currentToSNotAcceptedView"}>
           <AlertDS
-            testID="currentToSNotAcceptedText"
-            variant="info"
             content={
               hasAcceptedOldTosVersion
                 ? I18n.t("profile.main.privacy.privacyPolicy.updated")
                 : I18n.t("profile.main.privacy.privacyPolicy.infobox")
             }
+            testID="currentToSNotAcceptedText"
+            variant="info"
           />
         </ContentWrapper>
       )}
@@ -155,9 +148,9 @@ const OnboardingTosScreen = () => {
         flow={flow}
         handleLoadEnd={handleLoadEnd}
         handleReload={handleReload}
-        webViewSource={{ uri: privacyUrl }}
-        shouldRenderFooter={!isLoading}
         onAcceptTos={onAcceptTos}
+        shouldRenderFooter={!isLoading}
+        webViewSource={{ uri: privacyUrl }}
       />
     </LoadingSpinnerOverlay>
   );

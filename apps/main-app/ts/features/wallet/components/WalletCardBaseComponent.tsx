@@ -1,6 +1,5 @@
-import { WithTestID } from "@pagopa/io-app-design-system";
+import { WithTestID } from "@io-app/design-system";
 import { ComponentType } from "react";
-
 import { StyleSheet } from "react-native";
 import Animated, {
   FadeIn,
@@ -10,8 +9,8 @@ import Animated, {
 
 // Wallet card base component props, which declares common props that wallet cards must have
 export type WalletCardComponentBaseProps<P> = WithTestID<{
-  isStacked?: boolean;
   cardProps: P;
+  isStacked?: boolean;
 }>;
 
 export const withWalletCardBaseComponent =
@@ -23,11 +22,11 @@ export const withWalletCardBaseComponent =
   ) =>
   ({ cardProps, isStacked = true, testID }: ContentProps) => (
     <Animated.View
-      testID={testID}
-      style={[styles.container, isStacked && styles.containerStacked]}
-      layout={LinearTransition.duration(200)}
       entering={FadeIn.duration(200)}
       exiting={FadeOut.duration(200)}
+      layout={LinearTransition.duration(200)}
+      style={[styles.container, isStacked && styles.containerStacked]}
+      testID={testID}
     >
       <CardContent {...cardProps} />
     </Animated.View>

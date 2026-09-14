@@ -1,4 +1,5 @@
-import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+
 import MockZendesk from "../../__mocks__/io-react-native-zendesk";
 import {
   anonymousAssistanceAddressWithSubject,

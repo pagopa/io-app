@@ -1,3 +1,10 @@
+import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
+import {
+  CardActivated,
+  StatusEnum
+} from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import { CardExpired } from "@io-app/api-types/generated/definitions/cgn/CardExpired";
+import { CardRevoked } from "@io-app/api-types/generated/definitions/cgn/CardRevoked";
 import {
   Alert,
   ContentWrapper,
@@ -8,19 +15,12 @@ import {
   useIOTheme,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-
 import I18n from "i18next";
 import { ReactElement, useCallback } from "react";
-import { Card } from "../../../../../definitions/cgn/Card";
-import {
-  CardActivated,
-  StatusEnum
-} from "../../../../../definitions/cgn/CardActivated";
-import { CardExpired } from "../../../../../definitions/cgn/CardExpired";
-import { CardRevoked } from "../../../../../definitions/cgn/CardRevoked";
+
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import { isLoading } from "../../../../common/model/RemoteValue";
@@ -143,24 +143,24 @@ const CgnDetailScreen = (): ReactElement => {
     // subText is a blank space to avoid default value when it is undefined
     return (
       <OperationResultScreenContent
-        pictogram="umbrella"
-        title={I18n.t("wallet.methodDetails.error.title")}
-        isHeaderVisible
-        subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
         action={{
           label: I18n.t("global.buttons.close"),
           onPress: navigation.goBack
         }}
+        isHeaderVisible
+        pictogram="umbrella"
         secondaryAction={{
           label: I18n.t("global.buttons.retry"),
           onPress: loadCGN
         }}
+        subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
+        title={I18n.t("wallet.methodDetails.error.title")}
       />
     );
   }
 
   if (isCgnInfoLoading || isLoading(unsubscriptionStatus)) {
-    return <BonusCardScreenComponent isLoading cardColors={cgnCardColors} />;
+    return <BonusCardScreenComponent cardColors={cgnCardColors} isLoading />;
   }
 
   const showDiscoverCta =
@@ -212,31 +212,26 @@ const CgnDetailScreen = (): ReactElement => {
   if (!cgnDetails) {
     return (
       <OperationResultScreenContent
-        pictogram="cardFavourite"
-        isHeaderVisible
-        title={I18n.t("bonus.cgn.detail.empty.title")}
-        subtitle={I18n.t("bonus.cgn.detail.empty.subtitle")}
         action={{
           label: I18n.t("bonus.cgn.detail.empty.activateCta"),
           onPress: startCgnActivation
         }}
+        isHeaderVisible
+        pictogram="cardFavourite"
         secondaryAction={{
           label: I18n.t("global.buttons.close"),
           onPress: navigation.goBack
         }}
+        subtitle={I18n.t("bonus.cgn.detail.empty.subtitle")}
+        title={I18n.t("bonus.cgn.detail.empty.title")}
       />
     );
   }
 
   return (
     <BonusCardScreenComponent
-      logoUris={logoUris}
-      name={I18n.t("bonus.cgn.name")}
-      title={I18n.t("bonus.cgn.name")}
-      organizationName={I18n.t("bonus.cgn.departmentName")}
-      cardBackground={<CgnAnimatedBackground />}
       actions={footerActions}
-      status={cgnDetails ? <CgnCardStatus card={cgnDetails} /> : undefined}
+      cardBackground={<CgnAnimatedBackground />}
       cardColors={cgnCardColors}
       cardFooter={
         <H4
@@ -254,24 +249,29 @@ const CgnDetailScreen = (): ReactElement => {
             : ""}
         </H4>
       }
+      logoUris={logoUris}
+      name={I18n.t("bonus.cgn.name")}
+      organizationName={I18n.t("bonus.cgn.departmentName")}
+      status={cgnDetails ? <CgnCardStatus card={cgnDetails} /> : undefined}
+      title={I18n.t("bonus.cgn.name")}
     >
       <VSpacer size={16} />
       <ContentWrapper style={{ flex: 1 }}>
         <VStack space={16}>
           {CardRevoked.is(cgnDetails) && (
             <Alert
-              variant="error"
               content={I18n.t("bonus.cgn.detail.information.revoked", {
                 reason: cgnDetails.revocation_reason
               })}
+              variant="error"
             />
           )}
           {CardExpired.is(cgnDetails) && (
             <Alert
-              variant="error"
               content={I18n.t("bonus.cgn.detail.information.expired", {
                 date: formatDateAsShortFormat(cgnDetails.expiration_date)
               })}
+              variant="error"
             />
           )}
           {/* Ownership block rendering owner's fiscal code */}

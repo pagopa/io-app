@@ -1,18 +1,20 @@
 /* eslint-disable functional/no-let */
-import { createStore } from "redux";
+import { isCieIdAvailable, openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { fireEvent, waitFor } from "@testing-library/react-native";
-import { createActor } from "xstate";
 import _ from "lodash";
 import { Linking } from "react-native";
-import { isCieIdAvailable, openCieIdApp } from "@pagopa/io-react-native-cieid";
+import { createStore } from "redux";
+import { ActorRefFrom, createActor } from "xstate";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
+import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
+import { testEidIssuanceDeps } from "../../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import ItwCieIdLoginScreen from "../../../cieId/screens/ItwCieIdLoginScreen";
-import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 
 jest.mock("@pagopa/io-react-native-cieid", () => ({
   isCieIdAvailable: jest.fn(),
@@ -92,17 +94,80 @@ describe("ItwCieIdLoginScreen", () => {
     expect(openCieIdApp).not.toHaveBeenCalled();
     expect(Linking.openURL).toHaveBeenCalledTimes(1);
   });
+
+  // Regression tests: the raw WebView native event used to be forwarded to the state
+  // machine, where it was stringified into an unusable "[object Object]" error code.
+  describe("when the webview fails to load", () => {
+    const webViewErrorScenarios = [
+      {
+        name: "network error with a description",
+        event: "onError",
+        nativeEvent: {
+          code: -2,
+          description: "net::ERR_NAME_NOT_RESOLVED",
+          url: "https://idserver.servizicie.interno.gov.it"
+        },
+        expectedMessage: "CIEID_WEBVIEW_ERROR_-2: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        name: "network error without a description",
+        event: "onError",
+        nativeEvent: {
+          code: -1,
+          description: "",
+          url: "https://idserver.servizicie.interno.gov.it"
+        },
+        expectedMessage: "CIEID_WEBVIEW_ERROR_-1"
+      },
+      {
+        name: "http error",
+        event: "onHttpError",
+        nativeEvent: {
+          statusCode: 502,
+          description: "Bad Gateway",
+          url: "https://idserver.servizicie.interno.gov.it"
+        },
+        expectedMessage: "CIEID_WEBVIEW_HTTP_ERROR_502"
+      }
+    ];
+
+    it.each(webViewErrorScenarios)(
+      "should report a meaningful error code for a $name",
+      ({ event, nativeEvent, expectedMessage }) => {
+        (isCieIdAvailable as jest.Mock).mockImplementation(() => true);
+        mockIsAndroid = true;
+        mockIsIOS = false;
+
+        const { getByTestId, getFailure } = renderComponent();
+
+        fireEvent(getByTestId("cieid-webview"), event, { nativeEvent });
+
+        const failure = getFailure();
+        expect(failure?.reason).toBeInstanceOf(Error);
+        expect((failure?.reason as Error).message).toBe(expectedMessage);
+      }
+    );
+  });
 });
 
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const logic = itwEidIssuanceMachine.provide({
-    actions: { onInit: jest.fn() }
+    actions: { onInit: jest.fn(), navigateToFailureScreen: jest.fn() }
   });
 
-  const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
-  return renderScreenWithNavigationStoreContext<GlobalState>(
+  const initialSnapshot = createActor(logic, {
+    input: { deps: testEidIssuanceDeps() }
+  }).getSnapshot();
+
+  let machineRef: ActorRefFrom<typeof itwEidIssuanceMachine> | undefined;
+  const CaptureMachineRef = () => {
+    machineRef = ItwEidIssuanceMachineContext.useActorRef();
+    return null;
+  };
+
+  const rendered = renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwEidIssuanceMachineContext.Provider
         logic={logic}
@@ -115,6 +180,7 @@ const renderComponent = () => {
           })
         }}
       >
+        <CaptureMachineRef />
         <ItwCieIdLoginScreen />
       </ItwEidIssuanceMachineContext.Provider>
     ),
@@ -122,4 +188,9 @@ const renderComponent = () => {
     {},
     createStore(appReducer, globalState as any)
   );
+
+  return {
+    ...rendered,
+    getFailure: () => machineRef?.getSnapshot().context.failure
+  };
 };

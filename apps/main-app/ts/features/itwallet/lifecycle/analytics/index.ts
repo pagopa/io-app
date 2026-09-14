@@ -4,7 +4,8 @@ import { updatePropertiesWalletRevoked } from "../../analytics/properties/proper
 import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
 import {
   ITW_LIFECYCLE_ACTIONS_EVENTS,
-  ITW_LIFECYCLE_ERRORS_EVENTS
+  ITW_LIFECYCLE_ERRORS_EVENTS,
+  ITW_LIFECYCLE_TECH_EVENTS
 } from "./enum";
 
 // Actions events
@@ -46,5 +47,15 @@ export const trackItwWalletBadState = () => {
   void mixpanelTrack(
     ITW_LIFECYCLE_ERRORS_EVENTS.ITW_BAD_STATE_WALLET_DEACTIVATED,
     buildEventProperties("KO", "error")
+  );
+};
+
+/** Tracks failures that prevent the local wallet instance from being reset. */
+export const trackItwWalletInstanceResetFailure = (reason: unknown) => {
+  void mixpanelTrack(
+    ITW_LIFECYCLE_TECH_EVENTS.ITW_WALLET_INSTANCE_RESET_FAILURE,
+    buildEventProperties("TECH", undefined, {
+      reason: reason instanceof Error ? reason.message : String(reason)
+    })
   );
 };

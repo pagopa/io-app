@@ -1,5 +1,6 @@
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as USEIO_HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
@@ -55,8 +56,8 @@ jest.mock("@react-navigation/native", () => {
 });
 const mockBottomSheet = (_props: {
   citizenName: string;
-  onIdentificationSuccess?: () => void;
   onIdentificationCancel?: () => void;
+  onIdentificationSuccess?: () => void;
 }) => ({
   bottomSheet: <></>,
   present: mockPresent,
@@ -65,8 +66,8 @@ const mockBottomSheet = (_props: {
 const mockToastInfo = jest.fn();
 const mockToastHideAll = jest.fn();
 
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual("@io-app/design-system"),
   LoadingSpinner: jest.fn(),
   useIOToast: () => ({
     show: (_message: string, _options?: unknown) => jest.fn(),

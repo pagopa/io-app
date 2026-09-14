@@ -1,6 +1,7 @@
+import { Zendesk } from "@io-app/api-types/generated/definitions/content/Zendesk";
 import { act, fireEvent } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
-import { Zendesk } from "../../../../../definitions/content/Zendesk";
+
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -8,11 +9,11 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ZENDESK_ROUTES from "../../navigation/routes";
+import ZendeskSupportHelpCenter from "../../screens/ZendeskSupportHelpCenter";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber
 } from "../../store/actions";
-import ZendeskSupportHelpCenter from "../../screens/ZendeskSupportHelpCenter";
 
 const mockZendeskConfig: Zendesk = {
   panicMode: false

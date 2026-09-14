@@ -5,7 +5,7 @@
  */
 
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
-import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
+import * as mockClipboard from "expo-clipboard/mocks/ExpoClipboard.ts";
 import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo, AppState } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
@@ -25,6 +25,9 @@ import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
 jest.mock("expo-screen-capture", () => ({}));
+jest.mock("expo-image-picker", () => ({
+  launchImageLibraryAsync: jest.fn().mockResolvedValue({ canceled: true, assets: null })
+}));
 jest.mock("expo-background-task", () => ({
   BackgroundTaskStatus: { Available: 2, Restricted: 1 },
   BackgroundTaskResult: { Success: 1, Failed: 2 },
@@ -38,16 +41,9 @@ jest.mock("expo-task-manager", () => ({
   defineTask: jest.fn(),
   isTaskRegisteredAsync: jest.fn().mockResolvedValue(false)
 }));
-jest.mock("react-native-haptic-feedback", () => ({
-  ...jest.requireActual("react-native-haptic-feedback"),
-  trigger: jest.fn()
-}));
-
-jest.mock("react-native-pulsar", () => ({
-  Presets: {
-    System: new Proxy({}, { get: () => jest.fn() })
-  }
-}));
+jest.mock("react-native-pulsar", () =>
+  require("react-native-pulsar/jest-mock")
+);
 
 // eslint-disable-next-line functional/immutable-data
 global.CanvasKit = {
@@ -81,10 +77,55 @@ jest.mock("react-native-quick-crypto", () => ({}));
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("expo-notifications", () => ({}));
+jest.mock("expo-document-picker", () => ({
+  getDocumentAsync: jest.fn()
+}));
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
-jest.mock("react-native-share", () => jest.fn());
-jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
+jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
+jest.mock("expo-clipboard", () => mockClipboard);
+jest.mock("expo-calendar", () => ({
+  getCalendarsAsync: jest.fn().mockResolvedValue([]),
+  getEventsAsync: jest.fn().mockResolvedValue([]),
+}));
+jest.mock("expo-brightness", () => ({
+  getBrightnessAsync: jest.fn().mockResolvedValue(0),
+  setBrightnessAsync: jest.fn().mockResolvedValue(undefined),
+}));
 
+jest.mock("expo-linear-gradient", () => ({
+  LinearGradient: "LinearGradient"
+}));
+
+/* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.
+   The `react-native` preset resolves the `.ios` implementations by default, so
+   every platform-branched component would otherwise pull in the native views. */
+jest.mock("@expo/ui/swift-ui", () => ({
+  Host: "Host",
+  Text: "Text"
+}));
+
+jest.mock("@expo/ui/swift-ui/modifiers", () => ({
+  Animation: { spring: jest.fn(() => ({})) },
+  accessibilityLabel: jest.fn(() => ({})),
+  animation: jest.fn(() => ({})),
+  contentTransition: jest.fn(() => ({})),
+  fixedSize: jest.fn(() => ({})),
+  font: jest.fn(() => ({})),
+  foregroundStyle: jest.fn(() => ({})),
+  frame: jest.fn(() => ({})),
+  monospacedDigit: jest.fn(() => ({}))
+}));
+
+jest.mock("expo-local-authentication", () => ({
+  AuthenticationType: {
+    FINGERPRINT: 1,
+    FACIAL_RECOGNITION: 2,
+    IRIS: 3
+  },
+  supportedAuthenticationTypesAsync: jest.fn().mockResolvedValue(Promise.resolve([])),
+  authenticateAsync: jest.fn().mockResolvedValue(Promise.resolve({ success: true })),
+  cancelAuthenticate: jest.fn().mockResolvedValue(Promise.resolve()),
+}));
 // Mock react-native-worklets before reanimated setup
 // See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/
 jest.mock("react-native-worklets", () =>
@@ -112,13 +153,6 @@ NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
 // eslint-disable-next-line functional/immutable-data
 global.fetch = nodeFetch;
 
-jest.mock("remark-directive", () => jest.fn());
-jest.mock("remark-rehype", () => jest.fn());
-jest.mock("rehype-stringify", () => jest.fn());
-jest.mock("rehype-format", () => jest.fn());
-jest.mock("unist-util-visit", () => jest.fn());
-jest.mock("hastscript", () => jest.fn());
-
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 
 // eslint-disable-next-line no-underscore-dangle, functional/immutable-data
@@ -142,8 +176,8 @@ jest.mock("@gorhom/bottom-sheet", () => {
   };
 });
 
-jest.mock("@pagopa/io-app-design-system", () => {
-  const actual = jest.requireActual("@pagopa/io-app-design-system");
+jest.mock("@io-app/design-system", () => {
+  const actual = jest.requireActual("@io-app/design-system");
   const React = require("react");
   const { Text } = require("react-native");
   return {
@@ -188,7 +222,6 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
       const modulesToMock = [
         "IoReactNativeHttpClient",
         "RNDocumentPicker",
-        "RNHapticFeedback",
         "RNCWebViewModule",
         "AppState"
       ];
@@ -274,8 +307,18 @@ jest.mock("uuid", () => ({
   }
 }));
 
-jest.mock("react-native-bluetooth-state-manager", () => ({
-  getState: jest.fn().mockResolvedValue(true)
+jest.mock("react-native-ble-plx", () => ({
+  BleManager: jest.fn().mockImplementation(() => ({
+    state: jest.fn().mockResolvedValue("PoweredOn")
+  })),
+  State: {
+    Unknown: "Unknown",
+    Resetting: "Resetting",
+    Unsupported: "Unsupported",
+    Unauthorized: "Unauthorized",
+    PoweredOff: "PoweredOff",
+    PoweredOn: "PoweredOn"
+  }
 }));
 
 jest.mock("@pagopa/io-react-native-iso18013", () => ({

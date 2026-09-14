@@ -1,10 +1,10 @@
-import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   isSendLollipopLambdaLoading,
   sendLollipopLambdaErrorReason,
   sendLollipopLambdaResponseBodyString,
   sendLollipopLambdaResponseStatusCode
 } from "..";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import { SENDLollipopLambdaState } from "../../reducers";
 
 const createMockGlobalState = (

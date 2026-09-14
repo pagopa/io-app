@@ -2,6 +2,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { testSaga } from "redux-saga-test-plan";
 import { delay } from "typed-redux-saga";
 import { getType } from "typesafe-actions";
+
 import {
   walletResetPlaceholders,
   walletToggleLoadingState

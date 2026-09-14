@@ -3,9 +3,9 @@ import {
   isHttpsLink
 } from "../../../components/ui/Markdown/handlers/link";
 import {
-  mixpanelTrack,
   enqueueMixpanelEvent,
-  isMixpanelInstanceInitialized
+  isMixpanelInstanceInitialized,
+  mixpanelTrack
 } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 import { getUrlBasepath } from "../../../utils/url";

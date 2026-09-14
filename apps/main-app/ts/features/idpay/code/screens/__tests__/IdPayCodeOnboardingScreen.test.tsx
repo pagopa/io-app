@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -39,7 +40,7 @@ describe("IdPayCodeOnboardingScreen", () => {
 
   describe("if the code was already onboarded", () => {
     describe("when continue is pressed", () => {
-      it("should enroll the code to the initiative and navigate to the result screen ", () => {
+      it("should enroll the code to the initiative and navigate to the result screen", () => {
         const { component } = renderComponent(
           {
             isOnboarded: pot.some(true)

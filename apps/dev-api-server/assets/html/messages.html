@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        function createNewMessage(){
+            const element = document.getElementById("newMessageResult");
+            $.ajax({
+                type: 'POST',
+                url: "/api/v1/message",
+                contentType: "application/json"
+            }).done(function(data, textStatus, jqXHR) {                                
+                element.innerHTML = `${jqXHR.status} ${jqXHR.statusText}<br/>${JSON.stringify(data)}`
+            }).fail(function(jqXHR, textStatus, errorThrown) {                                
+                element.innerHTML = `${jqXHR.status} ${jqXHR.statusText}<br/>${jqXHR.responseText}<br/>${JSON.stringify(errorThrown)}`
+            });           
+        }
+
+    </script>
+</head>
+
+<body>
+    <table style="padding:16px;border: 1px solid black;margin-top:16px">
+        <tr>
+            <td>
+                <b>Messages</b>
+            </td>
+        </tr>
+        <tr class="form_item">
+            <td>
+                <button onclick="createNewMessage()">Create new message</button>
+            </td>
+        </tr>
+        <tr class="form_item">
+            <td>
+                <div id="newMessageResult"></div>
+            </td>
+        </tr>        
+    </table>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { LoadingIndicator } from "./LoadingIndicator";
 
 const styles = StyleSheet.create({

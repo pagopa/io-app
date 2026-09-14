@@ -1167,7 +1167,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1191,7 +1190,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -6846,7 +6844,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -6870,7 +6867,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",

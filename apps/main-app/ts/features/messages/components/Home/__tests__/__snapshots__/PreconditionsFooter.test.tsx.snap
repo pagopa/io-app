@@ -398,15 +398,16 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -418,15 +419,16 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -508,7 +510,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -532,7 +533,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -747,7 +747,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -771,7 +770,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -1665,15 +1663,16 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -1685,15 +1684,16 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -1775,7 +1775,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1799,7 +1798,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2014,7 +2012,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -2038,7 +2035,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",

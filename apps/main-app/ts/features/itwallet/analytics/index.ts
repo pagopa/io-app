@@ -1,3 +1,5 @@
+import type { IdentificationContext } from "../machine/eid/context";
+
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 import {
@@ -8,23 +10,23 @@ import {
   ITW_TECH_EVENTS
 } from "./enum";
 import {
-  TrackItwBannerProperties,
+  CredentialStatusAssertionFailure,
+  ItwCopyListItem,
+  ItwCredentialDetails,
+  ItwCredentialInfoDetails,
+  ItwDismissalAction,
   ItwFlow,
-  ItwWalletDataShare,
+  ItwIdMethod,
   ItwScreenFlowContext,
-  TrackQualtricsSurvey,
-  NewCredential,
+  ItwWalletDataShare,
   KoState,
   MixPanelCredential,
+  NewCredential,
   TrackITWalletIDMethodSelected,
-  ItwCredentialInfoDetails,
-  ItwCopyListItem,
-  ItwDismissalAction,
-  ItwIdMethod,
-  CredentialStatusAssertionFailure,
-  ItwCredentialDetails,
-  TrackSaveCredentialSuccess,
+  TrackItwBannerProperties,
   TrackItwDeactivation,
+  TrackQualtricsSurvey,
+  TrackSaveCredentialSuccess,
   TrackStartCredentialUpgradeProperties
 } from "./utils/types";
 
@@ -349,12 +351,16 @@ export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
   }
 };
 
+/** Tracks the primary authentication method and its assurance level. */
 export const trackItwIdAuthenticationCompleted = (
-  ITW_ID_method: ItwIdMethod
+  identification: Exclude<IdentificationContext, { mode: "ciePin" }>
 ) => {
   void mixpanelTrack(
     ITW_TECH_EVENTS.ITW_ID_AUTHENTICATION_COMPLETED,
-    buildEventProperties("TECH", undefined, { ITW_ID_method })
+    buildEventProperties("TECH", undefined, {
+      ITW_ID_method: identification.mode,
+      itw_auth_level: identification.level
+    })
   );
 };
 

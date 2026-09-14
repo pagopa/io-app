@@ -1,4 +1,4 @@
-import { useIOExperimentalDesign } from "@pagopa/io-app-design-system";
+import { useIOExperimentalDesign } from "@io-app/design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLayoutEffect } from "react";
 

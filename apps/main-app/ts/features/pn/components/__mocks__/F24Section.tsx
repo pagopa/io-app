@@ -1,4 +1,5 @@
 import { View } from "react-native";
+
 import { F24SectionProps } from "../F24Section";
 
 export const F24Section = ({

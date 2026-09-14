@@ -1,27 +1,21 @@
 import {
   Divider,
-  H6,
   Icon,
   IOAccordionRadius,
-  IOColors,
-  IOSpacingScale,
+  useAccordionAnimation,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
-import { useAccordionAnimation } from "@pagopa/io-app-design-system/src/hooks/useAccordionAnimation";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment } from "react";
 import { AccessibilityInfo, StyleSheet, View } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import LinearGradient from "react-native-linear-gradient";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
+
 import { getCredentialCardConfig } from "../../../../common/components/ItwCredentialCard/config";
+import { ItwCredentialClaimsCard } from "../../../../common/components/ItwCredentialClaimsCard";
 import { ClaimDisplayFormat } from "../../../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../../../common/utils/itwCredentialUtils";
-import { useItWalletTheme } from "../../../../common/utils/theme";
 import { useClaimsDetailsBottomSheet } from "../../hooks/useClaimsDetailsBottomSheet";
 import { ClaimItem } from "./ClaimItem";
-
-const accordionBodySpacing: IOSpacingScale = 16;
 
 // Threshold to determine when the accordion is considered fully collapsed
 const COLLAPSED_RADIUS_THRESHOLD = 0.001;
@@ -31,27 +25,22 @@ const COLLAPSIBLE_BORDER = 1;
 
 type Props = {
   /**
+   * Accessibilty
+   */
+  accessibilityLabel?: string;
+  /**
    * Credential type to display as title of the accordion
    */
   credentialType: string;
-  /**
-   * The list of items to display within the accordion.
-   */
-  items: Array<ClaimDisplayFormat>;
-  /**
-   * Enable the selection of items with a checkbox.
-   * @default false
-   */
-  selectionEnabled?: boolean;
-  /**
-   * The IDs of the selected items, when the component is controlled.
-   */
-  selectedItemIds?: Array<string>;
   /**
    * Whether the accordion starts expanded.
    * @default false
    */
   defaultExpanded?: boolean;
+  /**
+   * The list of items to display within the accordion.
+   */
+  items: Array<ClaimDisplayFormat>;
   /**
    * Function called when a item is selected.
    */
@@ -61,9 +50,14 @@ type Props = {
    */
   onToggle?: (expanded: boolean) => void;
   /**
-   * Accessibilty
+   * The IDs of the selected items, when the component is controlled.
    */
-  accessibilityLabel?: string;
+  selectedItemIds?: Array<string>;
+  /**
+   * Enable the selection of items with a checkbox.
+   * @default false
+   */
+  selectionEnabled?: boolean;
 };
 
 export const ItwClaimsSelector = ({
@@ -76,8 +70,7 @@ export const ItwClaimsSelector = ({
   selectedItemIds,
   selectionEnabled = false
 }: Props) => {
-  const { theme, themeType } = useIOThemeContext();
-  const itwTheme = useItWalletTheme();
+  const { themeType } = useIOThemeContext();
   const { present, bottomSheet } = useClaimsDetailsBottomSheet();
   const {
     expanded,
@@ -93,8 +86,6 @@ export const ItwClaimsSelector = ({
 
   const title = getCredentialNameFromType(credentialType);
   const { background } = getCredentialCardConfig(credentialType, themeType);
-  const accordionBackground: IOColors = theme["appBackground-primary"];
-  const accordionBorder: IOColors = theme["cardBorder-default"];
 
   const onItemPress = () => {
     toggleAccordion();
@@ -126,75 +117,44 @@ export const ItwClaimsSelector = ({
   });
 
   return (
-    <View
-      style={[
-        styles.accordionWrapper,
-        {
-          backgroundColor: IOColors[accordionBackground],
-          borderColor: IOColors[accordionBorder]
-        }
-      ]}
-    >
-      <TouchableWithoutFeedback
-        accessible={true}
-        accessibilityRole="button"
-        accessibilityState={{ expanded }}
-        accessibilityLabel={accessibilityLabel ?? title}
-        onPress={onItemPress}
-      >
-        <Animated.View
-          style={[styles.textContainer, headerRadiusAnimatedStyle]}
-        >
-          <LinearGradient
-            colors={[itwTheme["card-background"], background.colors[0]]}
-            style={StyleSheet.absoluteFill}
-          />
-          <H6 style={styles.title}>{title}</H6>
-          <Animated.View style={[styles.iconContainer, iconAnimatedStyle]}>
-            <Icon name="chevronBottom" />
-          </Animated.View>
+    <ItwCredentialClaimsCard
+      gradientEndColor={background.colors[0]}
+      headerAccessibilityLabel={accessibilityLabel}
+      headerAccessibilityState={{ expanded }}
+      headerAccessory={
+        <Animated.View style={[styles.iconContainer, iconAnimatedStyle]}>
+          <Icon name="chevronBottom" />
         </Animated.View>
-      </TouchableWithoutFeedback>
-
+      }
+      headerStyle={headerRadiusAnimatedStyle}
+      onHeaderPress={onItemPress}
+      title={title}
+    >
       <Animated.View style={bodyAnimatedStyle}>
         <View
-          style={[bodyInnerStyle, styles.bodyInnerContainer]}
           onLayout={onBodyLayout}
+          style={[bodyInnerStyle, styles.bodyInnerContainer]}
         >
           {items.map((item, index) => (
             <Fragment key={item.id}>
               {index !== 0 && <Divider />}
               <ClaimItem
-                item={item}
-                selectionEnabled={selectionEnabled}
                 isSelected={selectedItemIds?.includes(item.id)}
+                item={item}
                 onItemSelected={onItemSelected}
                 present={present}
+                selectionEnabled={selectionEnabled}
               />
             </Fragment>
           ))}
         </View>
       </Animated.View>
       {bottomSheet}
-    </View>
+    </ItwCredentialClaimsCard>
   );
 };
 
 const styles = StyleSheet.create({
-  accordionWrapper: {
-    borderWidth: 1,
-    borderRadius: IOAccordionRadius,
-    borderCurve: "continuous"
-  },
-  textContainer: {
-    padding: accordionBodySpacing,
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  title: {
-    flexGrow: 1,
-    flexShrink: 1
-  },
   iconContainer: {
     marginLeft: 16
   },

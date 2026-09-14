@@ -29,3 +29,9 @@ jobs:
         git_user_email: "github-actions[bot]@users.noreply.github.com"
         additional_params: |
           indentation: 2sp
+          placeholder_format: i18n
+          filter_langs:
+            - it
+            - en
+          replace_breaks: false
+          add_newline_eof: true

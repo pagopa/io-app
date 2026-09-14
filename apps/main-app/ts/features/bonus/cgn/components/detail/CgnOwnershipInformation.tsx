@@ -1,13 +1,9 @@
-import {
-  Divider,
-  ListItemHeader,
-  ListItemInfo
-} from "@pagopa/io-app-design-system";
+import { Divider, ListItemHeader, ListItemInfo } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import I18n from "i18next";
 import { ReactElement } from "react";
 import { View } from "react-native";
+
 import { useIOSelector } from "../../../../../store/hooks";
 import { capitalizeTextName } from "../../../../../utils/strings";
 import { profileSelector } from "../../../../settings/common/store/selectors";

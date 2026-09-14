@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { render } from "@testing-library/react-native";
 import { Linking } from "react-native";
-import CieIdLoginScreen from "../CieIdLoginScreen";
+
 import { withStore } from "../../../../../../utils/jest/withStore";
+import CieIdLoginScreen from "../CieIdLoginScreen";
 
 const TestComponent = withStore(CieIdLoginScreen);
 const mockUseRoute = jest.fn();

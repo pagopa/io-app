@@ -1,10 +1,11 @@
 import { act, renderHook } from "@testing-library/react-native";
-import useActiveSessionLoginNavigation from "../utils/useActiveSessionLoginNavigation";
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import { setFinishedActiveSessionLoginFlow } from "../store/actions";
+
 import ROUTES from "../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { setFinishedActiveSessionLoginFlow } from "../store/actions";
 import { cieLoginFlowSelector } from "../store/selectors";
+import useActiveSessionLoginNavigation from "../utils/useActiveSessionLoginNavigation";
 
 // Mock dependencies
 const mockPopToTop = jest.fn();

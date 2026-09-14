@@ -1,28 +1,28 @@
 import {
-  HStack,
   HeaderActionProps,
+  HStack,
+  IconButton,
   IOColors,
   IOVisualCostants,
-  IconButton,
   LoadingSpinner,
   TabItem,
   TabNavigation
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import {
   useFocusEffect,
   useIsFocused,
   useNavigation
 } from "@react-navigation/native";
-
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { LinearGradient } from "expo-linear-gradient";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AppState, StyleSheet, View } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
+
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
 import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
@@ -33,12 +33,7 @@ import {
 import { useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import {
-  ContextualHelpProps,
-  ContextualHelpPropsMarkdown
-} from "../../../utils/contextualHelp";
 import { isTestEnv } from "../../../utils/environment";
-import { FAQsCategoriesType } from "../../../utils/faq";
 import {
   BarcodeAnalyticsFlow,
   trackBarcodeCameraAuthorizationDenied,
@@ -50,23 +45,24 @@ import {
 } from "../analytics";
 import { useCameraPermissionStatus } from "../hooks/useCameraPermissionStatus";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
+import { BarcodeFailure } from "../types/failure";
 import {
   IOBarcode,
   IOBarcodeFormat,
   IOBarcodeOrigin,
   IOBarcodeType
 } from "../types/IOBarcode";
-import { BarcodeFailure } from "../types/failure";
 import { CameraPermissionView } from "./CameraPermissionView";
 
 type HelpProps = {
-  contextualHelp?: ContextualHelpProps;
-  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   hideHelpButton?: boolean;
 };
 
-type Props = {
+type Props = HelpProps & {
+  /**
+   * Mixpanel analytics parameters
+   */
+  barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
   /**
    * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
    * If the format is not supported it will return an UNSUPPORTED_FORMAT error
@@ -78,16 +74,24 @@ type Props = {
    */
   barcodeTypes?: Array<IOBarcodeType>;
   /**
+   * Disables barcode scan capabilities, putting the component in an idle state
+   */
+  isDisabled?: boolean;
+  /**
+   * If true, the screen goes into a loading state which disables all interaction and displays a loading indicator
+   */
+  isLoading?: boolean;
+  /**
+   * Callback called when a barcode is not successfully decoded
+   */
+  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
+  /**
    * Callback called when a barcode is successfully decoded
    */
   onBarcodeSuccess: (
     barcodes: Array<IOBarcode>,
     origin: IOBarcodeOrigin
   ) => void;
-  /**
-   * Callback called when a barcode is not successfully decoded
-   */
-  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
   /**
    * Callback called when the upload file input is pressed, necessary to show the file input modal
    */
@@ -97,19 +101,7 @@ type Props = {
    * necessary to navigate to the manual input screen or show the manual input modal
    */
   onManualInputPressed: () => void;
-  /**
-   * Mixpanel analytics parameters
-   */
-  barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
-  /**
-   * If true, the screen goes into a loading state which disables all interaction and displays a loading indicator
-   */
-  isLoading?: boolean;
-  /**
-   * Disables barcode scan capabilities, putting the component in an idle state
-   */
-  isDisabled?: boolean;
-} & HelpProps;
+};
 
 const BarcodeScanBaseScreenComponent = ({
   barcodeFormats,
@@ -120,9 +112,6 @@ const BarcodeScanBaseScreenComponent = ({
   onManualInputPressed,
   isLoading = false,
   isDisabled = false,
-  faqCategories,
-  contextualHelp,
-  contextualHelpMarkdown,
   hideHelpButton,
   barcodeAnalyticsFlow
 }: Props) => {
@@ -138,13 +127,7 @@ const BarcodeScanBaseScreenComponent = ({
   const canShowHelp = useIOSelector(canShowHelpSelector);
 
   /* Taken from `useHeaderSecondLevel` */
-  const startSupportRequest = useOfflineToastGuard(
-    useStartSupportRequest({
-      faqCategories,
-      contextualHelpMarkdown,
-      contextualHelp
-    })
-  );
+  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest());
 
   /**
    * Updates the app state when it changes.
@@ -201,19 +184,19 @@ const BarcodeScanBaseScreenComponent = ({
 
       return (
         <CameraPermissionView
-          pictogram="cameraRequest"
-          title={I18n.t("barcodeScan.permissions.undefined.title")}
-          body={I18n.t("barcodeScan.permissions.undefined.label")}
           action={{
             label: I18n.t("barcodeScan.permissions.undefined.action"),
             accessibilityLabel: I18n.t(
               "barcodeScan.permissions.undefined.action"
             ),
-            onPress: async () => {
+            onPress: () => {
               trackBarcodeCameraAuthorized();
-              await requestCameraPermission();
+              void requestCameraPermission();
             }
           }}
+          body={I18n.t("barcodeScan.permissions.undefined.label")}
+          pictogram="cameraRequest"
+          title={I18n.t("barcodeScan.permissions.undefined.title")}
         />
       );
     }
@@ -223,9 +206,6 @@ const BarcodeScanBaseScreenComponent = ({
 
       return (
         <CameraPermissionView
-          pictogram="cameraDenied"
-          title={I18n.t("barcodeScan.permissions.denied.title")}
-          body={I18n.t("barcodeScan.permissions.denied.label")}
           action={{
             label: I18n.t("barcodeScan.permissions.denied.action"),
             accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
@@ -234,11 +214,14 @@ const BarcodeScanBaseScreenComponent = ({
               openCameraSettings();
             }
           }}
+          body={I18n.t("barcodeScan.permissions.denied.label")}
+          pictogram="cameraDenied"
+          title={I18n.t("barcodeScan.permissions.denied.title")}
         />
       );
     }
 
-    return <LoadingSpinner size={48} color="white" />;
+    return <LoadingSpinner color="white" size={48} />;
   }, [
     cameraPermissionStatus,
     openCameraSettings,
@@ -302,24 +285,24 @@ const BarcodeScanBaseScreenComponent = ({
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
       <View style={styles.cameraContainer}>{cameraView}</View>
       <View style={styles.navigationContainer}>
-        <TabNavigation tabAlignment="stretch" selectedIndex={0} color="dark">
+        <TabNavigation color="dark" selectedIndex={0} tabAlignment="stretch">
           <TabItem
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.scan")}
+            label={I18n.t("barcodeScan.tabs.scan")}
             ref={scanItemRef}
             testID="barcodeScanBaseScreenTabScan"
-            label={I18n.t("barcodeScan.tabs.scan")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.scan")}
           />
           <TabItem
-            testID="barcodeScanBaseScreenTabUpload"
-            label={I18n.t("barcodeScan.tabs.upload")}
             accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.upload")}
+            label={I18n.t("barcodeScan.tabs.upload")}
             onPress={onFileInputPressed}
+            testID="barcodeScanBaseScreenTabUpload"
           />
           <TabItem
-            testID="barcodeScanBaseScreenTabInput"
-            label={I18n.t("barcodeScan.tabs.input")}
             accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.input")}
+            label={I18n.t("barcodeScan.tabs.input")}
             onPress={onManualInputPressed}
+            testID="barcodeScanBaseScreenTabInput"
           />
         </TabNavigation>
       </View>

@@ -1,11 +1,9 @@
 import {
-  Banner,
   ContentWrapper,
   IOButton,
-  ModuleNavigation,
   useIOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -20,6 +18,7 @@ import {
 } from "react";
 import { Alert, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
@@ -27,58 +26,41 @@ import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config"
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../../store/hooks";
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { continueWithRootOrJailbreakSelector } from "../../../../../store/reducers/persistedPreferences";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 import { isTablet } from "../../../../../utils/device";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../../utils/url";
-import {
-  loginCieWizardSelected,
-  trackCieBottomSheetScreenView,
-  trackCieIDLoginSelected,
-  trackCieLoginSelected,
-  trackCiePinLoginSelected,
-  trackSpidLoginSelected
-} from "../../../common/analytics";
-import { Carousel } from "../../../common/components/Carousel";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import {
-  sessionCorrupted,
-  sessionExpired
-} from "../../../common/store/actions";
-
-import { startupLoadSuccess } from "../../../../../store/actions/startup";
-import { StartupStatusEnum } from "../../../../../store/reducers/startup";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { identificationRequest } from "../../../../identification/store/actions";
 import { setOfflineAccessReason } from "../../../../ingress/store/actions";
 import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 import {
+  trackCieLoginSelected,
+  trackSpidLoginSelected
+} from "../../../common/analytics";
+import { Carousel } from "../../../common/components/Carousel";
+import { useCieLoginMethodSelection } from "../../../common/hooks/useCieLoginMethodSelection";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import {
+  sessionCorrupted,
+  sessionExpired
+} from "../../../common/store/actions";
+import {
   isSessionCorruptedSelector,
   isSessionExpiredSelector
 } from "../../../common/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../cie/store/selectors";
-import { SpidLevel } from "../../cie/utils";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
 
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "authentication.landing.contextualHelpTitle",
-  body: "authentication.landing.contextualHelpContent"
-};
-
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
-const SPID_LEVEL: SpidLevel = "SpidL2";
 
 /**
  * A screen where the user can choose to login with SPID or get more informations.
@@ -86,93 +68,21 @@ const SPID_LEVEL: SpidLevel = "SpidL2";
  */
 export const LandingScreen = () => {
   const { error } = useIOToast();
-  const store = useIOStore();
 
   const itwOfflineAccessAvailable = useIOSelector(
     itwOfflineAccessAvailableSelector
   );
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
+  const { navigateToIdpSelection } = useNavigateToLoginMethod();
+
   const {
-    navigateToIdpSelection,
-    navigateToCiePinInsertion,
-    navigateToCieIdLoginScreen,
-    isCieSupported
-  } = useNavigateToLoginMethod();
-
-  const handleNavigateToCiePinScreen = useCallback(() => {
-    void trackCiePinLoginSelected(store.getState());
-    navigateToCiePinInsertion();
-  }, [store, navigateToCiePinInsertion]);
-
-  const handleNavigateToCieIdLoginScreen = useCallback(() => {
-    void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
-    navigateToCieIdLoginScreen(SPID_LEVEL);
-  }, [store, navigateToCieIdLoginScreen]);
+    bottomSheet,
+    dismiss: dismissBottomSheet,
+    handleCieLoginRequested
+  } = useCieLoginMethodSelection({ flow: "auth" });
 
   const { presentInfoBottomsheet, infoBottomsheetComponent } =
     useInfoBottomsheetComponent();
-
-  const {
-    present,
-    dismiss: dismissBottomSheet,
-    bottomSheet
-  } = useIOBottomSheetModal({
-    title: I18n.t("authentication.landing.cie_bottom_sheet.title"),
-    component: (
-      <View>
-        <ModuleNavigation
-          title={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_pin.title"
-          )}
-          subtitle={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_pin.subtitle"
-          )}
-          icon="fiscalCodeIndividual"
-          testID="bottom-sheet-login-with-cie-pin"
-          onPress={handleNavigateToCiePinScreen}
-        />
-        <VSpacer size={8} />
-        <ModuleNavigation
-          title={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_id.title"
-          )}
-          subtitle={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_id.subtitle"
-          )}
-          icon="device"
-          testID="bottom-sheet-login-with-cie-id"
-          badge={{
-            variant: "highlight",
-            text: I18n.t(
-              "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
-            )
-          }}
-          onPress={handleNavigateToCieIdLoginScreen}
-        />
-        <VSpacer size={24} />
-        <Banner
-          onPress={() => {
-            void loginCieWizardSelected();
-
-            navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
-            });
-          }}
-          testID="bottom-sheet-login-wizards"
-          pictogramName="help"
-          color="turquoise"
-          title={I18n.t(
-            "authentication.landing.cie_bottom_sheet.help_banner.title"
-          )}
-          action={I18n.t(
-            "authentication.landing.cie_bottom_sheet.help_banner.action"
-          )}
-        />
-        <VSpacer />
-      </View>
-    ),
-    snapPoint: [400]
-  });
 
   const [isRootedOrJailbroken, setIsRootedOrJailbroken] = useState<
     O.Option<boolean>
@@ -226,28 +136,20 @@ export const LandingScreen = () => {
 
   const navigateToCiePinScreen = useCallback(() => {
     void trackCieLoginSelected();
-    if (isCieSupported) {
-      void trackCieBottomSheetScreenView();
-      present();
-    } else {
-      handleNavigateToCieIdLoginScreen();
-    }
-  }, [present, isCieSupported, handleNavigateToCieIdLoginScreen]);
+    handleCieLoginRequested();
+  }, [handleCieLoginRequested]);
 
-  const navigateToCieUatSelectionScreen = useCallback(() => {
-    if (isCieSupported) {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_LOGIN_CONFIG_SCREEN
-      });
-    }
-  }, [isCieSupported, navigation]);
+  const navigateToLoginConfigScreen = useCallback(() => {
+    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LOGIN_CONFIG_SCREEN
+    });
+  }, [navigation]);
 
   const LandingScreenComponent = () => {
     useHeaderSecondLevel({
       title: "",
       supportRequest: true,
       canGoBack: false,
-      contextualHelpMarkdown,
       variant: "primary",
       secondAction: {
         icon: "info",
@@ -340,14 +242,6 @@ export const LandingScreen = () => {
       <SafeAreaView style={{ flex: 1 }} testID="LandingScreen">
         {isSessionExpired || isSessionCorrupted ? (
           <LandingSessionExpiredComponent
-            ref={accessibilityFirstFocuseViewRef}
-            pictogramName={"identityCheck"}
-            title={I18n.t(
-              `authentication.landing.${sessionIssueLocalizationKey}.title`
-            )}
-            content={I18n.t(
-              `authentication.landing.${sessionIssueLocalizationKey}.body`
-            )}
             buttonLink={{
               label: I18n.t(
                 `authentication.landing.${sessionIssueLocalizationKey}.linkButtonLabel`
@@ -367,51 +261,59 @@ export const LandingScreen = () => {
                 });
               }
             }}
+            content={I18n.t(
+              `authentication.landing.${sessionIssueLocalizationKey}.body`
+            )}
+            pictogramName={"identityCheck"}
+            ref={accessibilityFirstFocuseViewRef}
+            title={I18n.t(
+              `authentication.landing.${sessionIssueLocalizationKey}.title`
+            )}
           />
         ) : (
           <Carousel
-            ref={accessibilityFirstFocuseViewRef}
             carouselCards={carouselCards}
-            dotEasterEggCallback={navigateToCieUatSelectionScreen}
+            dotEasterEggCallback={navigateToLoginConfigScreen}
+            ref={accessibilityFirstFocuseViewRef}
           />
         )}
 
         <SectionStatusComponent sectionKey={"login"} />
         <ContentWrapper>
           <IOButton
-            fullWidth
-            variant="solid"
             color={isCieUatEnabled ? "danger" : "primary"}
-            label={I18n.t("authentication.landing.loginCie")}
+            fullWidth
             icon="cieLetter"
+            label={I18n.t("authentication.landing.loginCie")}
             onPress={navigateToCiePinScreen}
             testID="landing-button-login-cie"
+            variant="solid"
           />
           <VSpacer size={SPACE_BETWEEN_BUTTONS} />
           <IOButton
-            fullWidth
-            variant="solid"
             color="primary"
+            fullWidth
+            icon="spid"
             // if CIE is not supported, since the new DS has not a
             // "semi-enabled" state, we leave the button enabled
             // but we navigate to the CIE unsupported info screen.
             label={I18n.t("authentication.landing.loginSpid")}
-            icon="spid"
             onPress={() => {
               void trackSpidLoginSelected();
               navigateToIdpSelection();
             }}
             testID="landing-button-login-spid"
+            variant="solid"
           />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
           {itwOfflineAccessAvailable && isSessionExpired && (
             <View style={{ alignSelf: "center" }}>
               <IOButton
-                variant="link"
                 accessibilityRole="link"
                 color="primary"
                 label={I18n.t("authentication.landing.show_wallet")}
                 onPress={navigateToWallet}
+                variant="link"
               />
               <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
             </View>

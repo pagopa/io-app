@@ -1,15 +1,17 @@
+import { IOButton } from "@io-app/design-system";
+import * as rnCieId from "@pagopa/io-react-native-cieid";
 import { fireEvent, render } from "@testing-library/react-native";
 import { View } from "react-native";
-import { IOButton } from "@pagopa/io-app-design-system";
-import * as rnCieId from "@pagopa/io-react-native-cieid";
-import useNavigateToLoginMethod from "../useNavigateToLoginMethod";
-import * as fastLoginSelector from "../../../fastLogin/store/selectors";
-import { Identifier } from "../../optIn/screens/OptInScreen";
+
 import { withStore } from "../../../../../utils/jest/withStore";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTH_LEVELS, AuthLevel } from "../../../common/utils";
+import * as fastLoginSelector from "../../../fastLogin/store/selectors";
+import { Identifier } from "../../optIn/screens/OptInScreen";
+import useNavigateToLoginMethod from "../useNavigateToLoginMethod";
 
 const IS_UAT = false;
-const SPID_L2 = "SpidL2";
+const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 
 const mockNavigate = jest.fn();
 
@@ -59,7 +61,7 @@ describe(useNavigateToLoginMethod, () => {
       expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
         screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
         params: {
-          spidLevel: SPID_L2,
+          spidLevel: AUTH_LEVEL_L2,
           isUat: IS_UAT
         }
       });
@@ -115,7 +117,7 @@ describe(useNavigateToLoginMethod, () => {
         params: {
           identifier: Identifier.CIE_ID,
           params: {
-            spidLevel: SPID_L2,
+            spidLevel: AUTH_LEVEL_L2,
             isUat: IS_UAT
           }
         }
@@ -137,22 +139,22 @@ const TestComponent = withStore(() => {
   return (
     <View>
       <IOButton
-        variant="solid"
-        testID="navigate-to-cie-pin"
-        onPress={navigateToCiePinInsertion}
         label=" Navigate to Cie + Pin"
+        onPress={navigateToCiePinInsertion}
+        testID="navigate-to-cie-pin"
+        variant="solid"
       />
       <IOButton
-        variant="solid"
-        testID="navigate-to-cie-id"
-        onPress={() => navigateToCieIdLoginScreen(SPID_L2)}
         label=" Navigate to CieID"
+        onPress={() => navigateToCieIdLoginScreen(AUTH_LEVEL_L2)}
+        testID="navigate-to-cie-id"
+        variant="solid"
       />
       <IOButton
-        variant="solid"
-        testID="navigate-to-idp-selection"
-        onPress={navigateToIdpSelection}
         label=" Navigate to IDP selection"
+        onPress={navigateToIdpSelection}
+        testID="navigate-to-idp-selection"
+        variant="solid"
       />
     </View>
   );

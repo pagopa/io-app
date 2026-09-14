@@ -1,10 +1,10 @@
-import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../components/screens/LoadingScreenContent";
 
 const DSLoadingScreen = () => (
   <LoadingScreenContent
     headerVisible
-    title={"Loading…"}
     subtitle={"This is a subtitle"}
+    title={"Loading…"}
   />
 );
 

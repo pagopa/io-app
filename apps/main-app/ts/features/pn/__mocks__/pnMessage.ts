@@ -1,10 +1,11 @@
-import { ThirdPartyMessageWithContent } from "../../../../definitions/communication/ThirdPartyMessageWithContent";
-import { Denomination } from "../../../../definitions/pn/Denomination";
-import { noticeCode } from "../../../../definitions/pn/noticeCode";
-import { paTaxId } from "../../../../definitions/pn/paTaxId";
-import { TaxId } from "../../../../definitions/pn/TaxId";
-import { ThirdPartyAttachment } from "../../../../definitions/pn/ThirdPartyAttachment";
-import { ThirdPartyMessage } from "../../../../definitions/pn/ThirdPartyMessage";
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
+import { Denomination } from "@io-app/api-types/generated/definitions/pn/Denomination";
+import { noticeCode } from "@io-app/api-types/generated/definitions/pn/noticeCode";
+import { paTaxId } from "@io-app/api-types/generated/definitions/pn/paTaxId";
+import { TaxId } from "@io-app/api-types/generated/definitions/pn/TaxId";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/pn/ThirdPartyAttachment";
+import { ThirdPartyMessage } from "@io-app/api-types/generated/definitions/pn/ThirdPartyMessage";
+
 import { message_1 } from "../../messages/__mocks__/message";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 

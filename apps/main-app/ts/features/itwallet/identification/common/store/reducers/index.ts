@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../../store/actions/types";
 import { itwHasNfcFeature } from "../actions";
 
@@ -16,6 +17,11 @@ const reducer = (
   action: Action
 ): ItwIdentificationState => {
   switch (action.type) {
+    case getType(itwHasNfcFeature.failure):
+      return {
+        ...state,
+        hasNfcFeature: pot.toError(state.hasNfcFeature, action.payload)
+      };
     case getType(itwHasNfcFeature.request):
       return {
         ...state,
@@ -25,11 +31,6 @@ const reducer = (
       return {
         ...state,
         hasNfcFeature: pot.some(action.payload)
-      };
-    case getType(itwHasNfcFeature.failure):
-      return {
-        ...state,
-        hasNfcFeature: pot.toError(state.hasNfcFeature, action.payload)
       };
   }
   return state;

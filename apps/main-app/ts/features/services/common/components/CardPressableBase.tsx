@@ -1,20 +1,25 @@
 import {
-  PressableBaseProps,
+  HapticType,
+  triggerHaptic,
   useScaleAnimation,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { PropsWithChildren, useCallback } from "react";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-
-import { GestureResponderEvent, Pressable } from "react-native";
+import { GestureResponderEvent, Pressable, PressableProps } from "react-native";
 import Animated from "react-native-reanimated";
 
-type CardPressableBaseProps = WithTestID<PressableBaseProps>;
+type CardPressableBaseProps = WithTestID<
+  Pick<PressableProps, "accessibilityLabel" | "onPress"> & {
+    /* Haptic feedback played on press, meant to be tuned to the card size */
+    hapticType?: HapticType;
+  }
+>;
 
 export const CardPressableBase = ({
   onPress,
   testID,
   accessibilityLabel,
+  hapticType = "impactLight",
   children
 }: PropsWithChildren<CardPressableBaseProps>) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
@@ -22,11 +27,11 @@ export const CardPressableBase = ({
   const handleOnPress = useCallback(
     (event: GestureResponderEvent) => {
       if (onPress) {
-        ReactNativeHapticFeedback.trigger("impactLight");
+        triggerHaptic(hapticType);
         onPress(event);
       }
     },
-    [onPress]
+    [hapticType, onPress]
   );
 
   if (onPress === undefined) {
@@ -35,14 +40,15 @@ export const CardPressableBase = ({
 
   return (
     <Pressable
-      onPress={handleOnPress}
-      testID={testID}
-      accessible={true}
       accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      accessible={true}
+      onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
       style={{ flexGrow: 1 }}
+      testID={testID}
     >
       <Animated.View style={[scaleAnimatedStyle, { flexGrow: 1 }]}>
         {children}

@@ -1,55 +1,58 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { URL } from "react-native-url-polyfill";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Linking, Platform, StyleSheet } from "react-native";
-import WebView, { type WebViewNavigation } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
-import _isEqual from "lodash/isEqual";
+import { URL } from "react-native-url-polyfill";
+import WebView, { type WebViewNavigation } from "react-native-webview";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { onLoginUriChanged } from "../../../common/utils/login";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
+import { trackLoginFailure } from "../../../common/analytics";
+import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
+import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
+  AUTH_LEVELS,
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
+import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
+import {
+  CieIdLoginProps,
+  defaultUserAgent,
+  WHITELISTED_DOMAINS
+} from "../../../login/cie/shared/utils";
+import {
+  getCieIdEnvironment,
   getCieIDLoginUri,
   isAuthenticationUrl
 } from "../../../login/cie/utils";
 import {
-  IO_LOGIN_CIE_URL_SCHEME,
   CIE_ID_ERROR,
   CIE_ID_ERROR_MESSAGE,
-  IO_LOGIN_CIE_SOURCE_APP
+  IO_LOGIN_CIE_SOURCE_APP,
+  IO_LOGIN_CIE_URL_SCHEME
 } from "../../../login/cie/utils/cie";
-import {
-  // activeSessionUserLoggedSelector,
-  remoteApiLoginUrlPrefixSelector
-} from "../../store/selectors";
+import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
+import { ACS_PATH } from "../../shared/utils";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
   setFinishedActiveSessionLoginFlow
 } from "../../store/actions";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
-import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
 import {
-  CieIdLoginProps,
-  WHITELISTED_DOMAINS,
-  defaultUserAgent
-} from "../../../login/cie/shared/utils";
+  // activeSessionUserLoggedSelector,
+  remoteApiLoginUrlPrefixSelector
+} from "../../store/selectors";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
-import { ACS_PATH } from "../../shared/utils";
-import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
-import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
-import { trackLoginFailure } from "../../../common/analytics";
 
 const ActiveSessionCieIdLoginWebView = ({
   spidLevel,
@@ -58,7 +61,7 @@ const ActiveSessionCieIdLoginWebView = ({
   const navigation = useIONavigation();
   const webView = useRef<WebView>(null);
   const dispatch = useIODispatch();
-  const [authenticatedUrl, setAuthenticatedUrl] = useState<string | null>(null);
+  const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(null);
   const isLoginUrlWithTokenRef = useRef<boolean>(false);
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
   const acsUrl = `${apiLoginUrlPrefix}${ACS_PATH}`;
@@ -99,7 +102,7 @@ const ActiveSessionCieIdLoginWebView = ({
           // Redirects the user to the error screen
           navigateToCieIdAuthUrlError(url);
         }
-      } catch (error) {
+      } catch {
         // Redirects the user to the error screen
         navigateToCieIdAuthUrlError(url);
       }
@@ -133,7 +136,7 @@ const ActiveSessionCieIdLoginWebView = ({
         params: {
           errorCodeOrMessage: code || message,
           authMethod: "CIE_ID",
-          authLevel: "L2",
+          authLevel: AUTH_LEVELS.L2,
           params: { spidLevel, isUat }
         }
       });
@@ -198,7 +201,7 @@ const ActiveSessionCieIdLoginWebView = ({
               checkIfUrlIsWhitelisted(result.url);
             }
           },
-          isUat
+          getCieIdEnvironment(isUat)
         );
       }
     },
@@ -220,7 +223,6 @@ const ActiveSessionCieIdLoginWebView = ({
       return false;
     }
 
-    // eslint-disable-next-line functional/immutable-data
     isLoginUrlWithTokenRef.current = onLoginUriChanged(
       handleLoginFailure,
       handleLoginSuccess,
@@ -269,26 +271,26 @@ const ActiveSessionCieIdLoginWebView = ({
   // }
 
   return (
-    <SafeAreaView style={styles.container} edges={["bottom"]}>
+    <SafeAreaView edges={["bottom"]} style={styles.container}>
       {(webviewSource || authenticatedUrl) &&
         !isLoginUrlWithTokenRef.current && (
           <WebView
-            testID="cie-id-webview"
-            ref={webView}
-            startInLoadingState={true}
-            userAgent={defaultUserAgent}
             javaScriptEnabled={true}
+            onError={handleLoadingError}
+            onHttpError={handleLoadingError}
+            onLoadEnd={() => setIsLoadingWebView(false)}
+            onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+            originWhitelist={originSchemasWhiteList}
+            ref={webView}
             renderLoading={() => (
               <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
             )}
-            onLoadEnd={() => setIsLoadingWebView(false)}
-            originWhitelist={originSchemasWhiteList}
-            onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-            onHttpError={handleLoadingError}
-            onError={handleLoadingError}
             source={
               authenticatedUrl ? { uri: authenticatedUrl } : webviewSource
             }
+            startInLoadingState={true}
+            testID="cie-id-webview"
+            userAgent={defaultUserAgent}
           />
         )}
       {!webviewSource && (

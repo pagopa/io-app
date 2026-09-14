@@ -1,9 +1,4 @@
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
-import { v4 as uuid } from "uuid";
-import { put, select, call, delay } from "typed-redux-saga/macro";
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import {
   deleteKey,
   generate,
@@ -11,62 +6,61 @@ import {
   PublicKey
 } from "@pagopa/io-react-native-crypto";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import {
-  lollipopKeyTagSelector,
-  lollipopPublicKeySelector
-} from "../store/reducers/lollipop";
-import {
-  lollipopKeyTagSave,
-  lollipopRemovePublicKey,
-  lollipopSetPublicKey
-} from "../store/actions/lollipop";
-import {
-  KeyInfo,
-  toBase64EncodedThumbprint,
-  toCryptoError
-} from "../utils/crypto";
-import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
-import { sessionInvalid } from "../../authentication/common/store/actions";
-import { restartCleanApplication } from "../../../sagas/commons";
+import { call, delay, put, select } from "typed-redux-saga/macro";
+import { v4 as uuid } from "uuid";
 
+import { mixpanelTrack } from "../../../mixpanel";
+import { restartCleanApplication } from "../../../sagas/commons";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import {
   buildEventProperties,
   trackLollipopKeyGenerationFailure,
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
-import { mixpanelTrack } from "../../../mixpanel";
+import { isTestEnv } from "../../../utils/environment";
+import { sessionInvalid } from "../../authentication/common/store/actions";
+import {
+  lollipopKeyTagSave,
+  lollipopRemovePublicKey,
+  lollipopSetPublicKey
+} from "../store/actions/lollipop";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../store/reducers/lollipop";
+import {
+  KeyInfo,
+  toBase64EncodedThumbprint,
+  toCryptoError
+} from "../utils/crypto";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 
 const WAIT_A_BIT_AFTER_SESSION_EXPIRED = 1000 as Millisecond;
 
-export function* generateLollipopKeySaga() {
-  const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
-  // Weather the user is logged in or not
-  // we generate a key (if no one is present)
-  // to have a key also for those users that update the app
-  // and are already logged in.
-  if (O.isNone(maybeOldKeyTag)) {
-    const newKeyTag = uuid();
-    yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
-    yield* call(cryptoKeyGenerationSaga, newKeyTag, maybeOldKeyTag);
-  } else {
-    try {
-      // If we already have a keyTag, we check if there is
-      // a public key tied with it.
-      const publicKey = yield* call(getPublicKey, maybeOldKeyTag.value);
-      yield* put(lollipopSetPublicKey({ publicKey }));
-    } catch {
-      // If there is no key it could be for two reasons:
-      // - The user have a recent app and they logged out (the key is deleted).
-      // - The user is logged in and is updating from an app version
-      //    that didn't manage the key generation.
-      // Having a key or an error in those cases is useful to show
-      // the user an informative banner saying that their device
-      // is not suitable for future version of IO.
-      yield* call(cryptoKeyGenerationSaga, maybeOldKeyTag.value, O.none);
+export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
+  publicKey: PublicKey | undefined,
+  maybeSessionInformation: PublicSession | undefined
+) {
+  if (maybeSessionInformation != null && publicKey) {
+    const publicKeyThumbprint = toBase64EncodedThumbprint(publicKey);
+    const localAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`;
+    const doesLocalAssertionRefMatchSession =
+      localAssertionRef === maybeSessionInformation.lollipopAssertionRef;
+    if (doesLocalAssertionRefMatchSession) {
+      return true;
     }
   }
+
+  void mixpanelTrack(
+    "LOGIN_UNEXPECTED_REQUEST_ID",
+    buildEventProperties("KO", undefined)
+  );
+  yield* put(sessionInvalid());
+  // We want to take a little time before restarting the application
+  // to let the action sessionInvalid be dispatched and handled.
+  yield* delay(WAIT_A_BIT_AFTER_SESSION_EXPIRED);
+  yield* call(restartCleanApplication);
+  return false;
 }
 
 export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
@@ -76,46 +70,48 @@ export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
   yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
 }
 
-export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
-  maybePublicKey: O.Option<PublicKey>,
-  maybeSessionInformation: O.Option<PublicSession>
-) {
-  const lollipopCheckResult = pipe(
-    maybeSessionInformation,
-    O.chainNullableK(
-      sessionInformation => sessionInformation.lollipopAssertionRef
-    ),
-    O.chain(sessionLollipopAssertionRef =>
-      pipe(
-        maybePublicKey,
-        O.map(publicKey =>
-          pipe(
-            toBase64EncodedThumbprint(publicKey),
-            publicKeyThumbprint =>
-              `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`,
-            localLollipopAssertionRef =>
-              localLollipopAssertionRef === sessionLollipopAssertionRef
-          )
-        )
-      )
-    ),
-    O.getOrElse(() => false)
-  );
+export function* generateLollipopKeySaga() {
+  const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
+  // Weather the user is logged in or not
+  // we generate a key (if no one is present)
+  // to have a key also for those users that update the app
+  // and are already logged in.
+  if (!maybeOldKeyTag) {
+    const newKeyTag = uuid();
+    yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
+    yield* call(cryptoKeyGenerationSaga, newKeyTag, maybeOldKeyTag);
+  } else {
+    try {
+      // If we already have a keyTag, we check if there is
+      // a public key tied with it.
+      const publicKey = yield* call(getPublicKey, maybeOldKeyTag);
+      yield* put(lollipopSetPublicKey({ publicKey }));
+    } catch {
+      // If there is no key it could be for two reasons:
+      // - The user have a recent app and they logged out (the key is deleted).
+      // - The user is logged in and is updating from an app version
+      //    that didn't manage the key generation.
+      // Having a key or an error in those cases is useful to show
+      // the user an informative banner saying that their device
+      // is not suitable for future version of IO.
+      yield* call(cryptoKeyGenerationSaga, maybeOldKeyTag, undefined);
+    }
+  }
+}
 
-  if (!lollipopCheckResult) {
-    void mixpanelTrack(
-      "LOGIN_UNEXPECTED_REQUEST_ID",
-      buildEventProperties("KO", undefined)
-    );
-    yield* put(sessionInvalid());
-    // We want to take a little time before restarting the application
-    // to let the action sessionInvalid be dispatched and handled.
-    yield* delay(WAIT_A_BIT_AFTER_SESSION_EXPIRED);
-    yield* call(restartCleanApplication);
+export function* getKeyInfo() {
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const publicKey = yield* select(lollipopPublicKeySelector);
+  return yield* call(generateKeyInfo, keyTag, publicKey);
+}
+
+function* checkPublicKeyExists(keyTag: string) {
+  try {
+    const publicKey = yield* call(getPublicKey, keyTag);
+    return publicKey != null;
+  } catch {
     return false;
   }
-
-  return true;
 }
 
 /**
@@ -123,20 +119,11 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
  */
 function* cryptoKeyGenerationSaga(
   keyTag: string,
-  previousKeyTag: O.Option<string>
+  previousKeyTag: string | undefined
 ) {
   // Every new login we need to regenerate a brand new key pair.
   yield* call(deletePreviousCryptoKeyPair, previousKeyTag);
   yield* call(generateCryptoKeyPair, keyTag);
-}
-
-/**
- * Deletes a previous saved crypto key pair.
- */
-function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
-  if (O.isSome(keyTag)) {
-    yield* call(deleteCryptoKeyPair, keyTag.value);
-  }
 }
 
 /**
@@ -160,15 +147,15 @@ function* deleteCryptoKeyPair(keyTag: string) {
   }
 }
 
-const checkPublicKeyExists = (keyTag: string) =>
-  pipe(
-    TE.tryCatch(
-      () => getPublicKey(keyTag),
-      () => false
-    ),
-    TE.map(_ => true),
-    TE.getOrElse(() => T.of(false))
-  )();
+/**
+ * Deletes a previous saved crypto key pair.
+ */
+function* deletePreviousCryptoKeyPair(keyTag: string | undefined) {
+  if (!keyTag) {
+    return;
+  }
+  yield* call(deleteCryptoKeyPair, keyTag);
+}
 
 /**
  * Generates a new crypto key pair.
@@ -193,26 +180,15 @@ function* generateCryptoKeyPair(keyTag: string) {
   }
 }
 
-export function* getKeyInfo() {
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const publicKey = yield* select(lollipopPublicKeySelector);
-  return yield* call(generateKeyInfo, keyTag, publicKey);
-}
-
 export const generateKeyInfo = (
-  maybeKeyTag: O.Option<string>,
-  maybePublicKey: O.Option<PublicKey>
-) =>
-  pipe(
-    maybeKeyTag,
-    O.chain(keyTag =>
-      pipe(
-        maybePublicKey,
-        O.map(publicKey => keyInfoFromKeyTagAndPublicKey(keyTag, publicKey))
-      )
-    ),
-    O.getOrElse(defaultKeyInfo)
-  );
+  keyTag: string | undefined,
+  maybePublicKey: PublicKey | undefined
+) => {
+  if (!keyTag || maybePublicKey == null) {
+    return defaultKeyInfo();
+  }
+  return keyInfoFromKeyTagAndPublicKey(keyTag, maybePublicKey);
+};
 
 const keyInfoFromKeyTagAndPublicKey = (
   keyTag: string,
@@ -228,3 +204,13 @@ const defaultKeyInfo = (): KeyInfo => ({
   publicKey: undefined,
   publicKeyThumbprint: undefined
 });
+
+export const testable = isTestEnv
+  ? {
+      cryptoKeyGenerationSaga,
+      deleteCryptoKeyPair,
+      deletePreviousCryptoKeyPair,
+      checkPublicKeyExists,
+      generateCryptoKeyPair
+    }
+  : undefined;

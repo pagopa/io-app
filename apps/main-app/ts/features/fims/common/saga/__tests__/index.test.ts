@@ -1,7 +1,8 @@
 import { testSaga } from "redux-saga-test-plan";
+
 import { watchFimsSaga } from "..";
-import { watchFimsSSOSaga } from "../../../singleSignOn/saga";
 import { watchFimsHistorySaga } from "../../../history/saga";
+import { watchFimsSSOSaga } from "../../../singleSignOn/saga";
 
 describe("watchFimsSaga", () => {
   it("should create the FIMS client, obtain the session token and fork both authentication and history sagas", () => {

@@ -1451,7 +1451,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1475,7 +1474,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1747,7 +1745,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1771,7 +1768,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2119,7 +2115,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           <Text
                                             allowFontScaling={true}
                                             dynamicTypeRamp="footnote"
-                                            lineBreakMode="middle"
                                             maxFontSizeMultiplier={1.5}
                                             numberOfLines={2}
                                             style={
@@ -2361,7 +2356,6 @@ exports[`LandingScreen Should match the snapshot 1`] = `
                                           <Text
                                             allowFontScaling={true}
                                             dynamicTypeRamp="footnote"
-                                            lineBreakMode="middle"
                                             maxFontSizeMultiplier={1.5}
                                             numberOfLines={2}
                                             style={

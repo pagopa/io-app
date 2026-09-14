@@ -2,6 +2,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Alert, Platform } from "react-native";
+
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { openAppSettings } from "../../../../../utils/appSettings";
@@ -12,6 +13,7 @@ import {
   trackItwProximityBluetoothAccessGoToSettings
 } from "../analytics";
 import { ItwProximityMachineContext } from "../machine/provider";
+import { checkBluetoothPermissions } from "../utils/ble";
 
 export const ItwBluetoothPermissionsScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
@@ -31,7 +33,8 @@ export const ItwBluetoothPermissionsScreen = () => {
   );
 
   const handleContinue = async () => {
-    if (false) {
+    const isPermissionGranted = await checkBluetoothPermissions();
+    if (isPermissionGranted) {
       machineRef.send({ type: "continue" });
       return;
     }
@@ -59,12 +62,24 @@ export const ItwBluetoothPermissionsScreen = () => {
 
   return (
     <IOScrollViewWithListItems
-      title={I18n.t(
-        "features.itWallet.presentation.proximity.bluetooth.permissions.title"
-      )}
-      subtitle={I18n.t(
-        "features.itWallet.presentation.proximity.bluetooth.permissions.subtitle"
-      )}
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t(
+            "features.itWallet.presentation.proximity.bluetooth.permissions.actions.primary"
+          ),
+          onPress: () => {
+            trackItwProximityBluetoothAccessGoToSettings();
+            openAppSettings();
+          }
+        },
+        secondary: {
+          label: I18n.t(
+            "features.itWallet.presentation.proximity.bluetooth.permissions.actions.secondary"
+          ),
+          onPress: () => void handleContinue()
+        }
+      }}
       listItemHeaderLabel={I18n.t(
         "features.itWallet.presentation.proximity.bluetooth.permissions.listItems.title"
       )}
@@ -109,24 +124,12 @@ export const ItwBluetoothPermissionsScreen = () => {
           icon: "systemToggleInstructions"
         }
       ]}
-      actions={{
-        type: "TwoButtons",
-        primary: {
-          label: I18n.t(
-            "features.itWallet.presentation.proximity.bluetooth.permissions.actions.primary"
-          ),
-          onPress: () => {
-            trackItwProximityBluetoothAccessGoToSettings();
-            openAppSettings();
-          }
-        },
-        secondary: {
-          label: I18n.t(
-            "features.itWallet.presentation.proximity.bluetooth.permissions.actions.secondary"
-          ),
-          onPress: handleContinue
-        }
-      }}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.proximity.bluetooth.permissions.subtitle"
+      )}
+      title={I18n.t(
+        "features.itWallet.presentation.proximity.bluetooth.permissions.title"
+      )}
     />
   );
 };

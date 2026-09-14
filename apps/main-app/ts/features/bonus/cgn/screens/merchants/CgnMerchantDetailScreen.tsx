@@ -1,3 +1,5 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
 import {
   ContentWrapper,
   Divider,
@@ -9,9 +11,8 @@ import {
   ListItemHeader,
   ListItemInfo,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Route, useRoute } from "@react-navigation/native";
-
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Image, LayoutChangeEvent, StyleSheet, View } from "react-native";
@@ -23,8 +24,7 @@ import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -41,7 +41,7 @@ export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
 }>;
 
-const scrollTriggerOffsetValue: number = 88;
+const scrollTriggerOffsetValue = 88;
 
 const CgnMerchantDetailScreen = () => {
   // -------    hooks
@@ -93,7 +93,6 @@ const CgnMerchantDetailScreen = () => {
   };
 
   const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
-    // eslint-disable-next-line functional/immutable-data
     scrollTranslationY.value = contentOffset.y;
   });
 
@@ -136,16 +135,16 @@ const CgnMerchantDetailScreen = () => {
   if (isReady(merchantDetail)) {
     return (
       <Animated.ScrollView
-        style={{ flexGrow: 1 }}
-        onScroll={scrollHandler}
-        scrollEventThrottle={8}
-        scrollIndicatorInsets={{ right: 1 }}
-        snapToOffsets={[0]}
-        snapToEnd={false}
         contentContainerStyle={{
           flexGrow: 1,
           paddingBottom
         }}
+        onScroll={scrollHandler}
+        scrollEventThrottle={8}
+        scrollIndicatorInsets={{ right: 1 }}
+        snapToEnd={false}
+        snapToOffsets={[0]}
+        style={{ flexGrow: 1 }}
       >
         <ContentWrapper>
           {merchantDetail.value.imageUrl !== undefined && (
@@ -168,8 +167,8 @@ const CgnMerchantDetailScreen = () => {
           {renderDiscountsList(merchantDetail.value.discounts)}
           <VSpacer size={24} />
           <ListItemInfo
-            numberOfLines={0}
             label={I18n.t("bonus.cgn.merchantDetail.title.description")}
+            numberOfLines={0}
             value={merchantDetail.value.description}
           />
           <VSpacer size={24} />
@@ -180,20 +179,20 @@ const CgnMerchantDetailScreen = () => {
           )}
           {showGotToWebsite && (
             <ListItemAction
-              variant="primary"
               icon="website"
               label={I18n.t("bonus.cgn.merchantDetail.cta.website")}
               onPress={() =>
                 handlePressMerchantWebsite(merchantDetail.value.websiteUrl)
               }
+              variant="primary"
             />
           )}
           {showGotToWebsite && showAddresses && <Divider />}
           {merchantDetail.value.addresses?.map((address, index) => (
             <CgnAddressListItem
+              isAllNationalAddress={merchantDetail.value.allNationalAddresses}
               item={address}
               key={index}
-              isAllNationalAddress={merchantDetail.value.allNationalAddresses}
             />
           ))}
           <VSpacer size={24} />
@@ -214,21 +213,21 @@ const CgnMerchantDetailScreen = () => {
 const CgnMerchantDetailScreenSkeleton = () => (
   <IOScrollView>
     <IOSkeleton
-      shape="rectangle"
-      width="100%"
       height={210}
       radius={styles.merchantImage.borderRadius}
+      shape="rectangle"
+      width="100%"
     />
     <VSpacer size={24} />
-    <IOSkeleton shape="rectangle" width="100%" height={24} radius={4} />
+    <IOSkeleton height={24} radius={4} shape="rectangle" width="100%" />
     <VSpacer size={16} />
-    <IOSkeleton shape="rectangle" width="50%" height={24} radius={4} />
+    <IOSkeleton height={24} radius={4} shape="rectangle" width="50%" />
     <VSpacer size={48} />
-    <IOSkeleton shape="rectangle" width="100%" height={16} radius={4} />
+    <IOSkeleton height={16} radius={4} shape="rectangle" width="100%" />
     <VSpacer size={24} />
-    <IOSkeleton shape="rectangle" width="100%" height={170} radius={8} />
+    <IOSkeleton height={170} radius={8} shape="rectangle" width="100%" />
     <VSpacer size={8} />
-    <IOSkeleton shape="rectangle" width="100%" height={170} radius={8} />
+    <IOSkeleton height={170} radius={8} shape="rectangle" width="100%" />
     <VSpacer size={24} />
     <ListItemHeader label="" />
   </IOScrollView>

@@ -104,9 +104,6 @@ export const premiumMessagesOptInEnabled =
 export const scanAdditionalBarcodesEnabled =
   Config.SCAN_ADDITIONAL_BARCODES_ENABLED === "YES";
 
-// FCI (Firma con IO) Feature Flag
-export const fciEnabled = Config.FCI_ENABLED === "YES";
-
 // SPID Relay State
 export const spidRelayState = Config.SPID_RELAY_STATE;
 
@@ -119,9 +116,6 @@ export const fastLoginOptIn = Config.FAST_LOGIN_OPTIN === "YES";
 // CIE Login Flow with dev server Feature Flag
 export const cieLoginFlowWithDevServerEnabled =
   Config.CIE_LOGIN_WITH_DEV_SERVER_ENABLED === "YES";
-
-// Native Login Feature Flag
-export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
 // #region Help Center URLs
 
@@ -219,7 +213,7 @@ export const fastLoginMaxRetries = pipe(
 export const pageSize: number = DEFAULT_PAGE_SIZE;
 
 // This is the maximum number supported by API via pagination regardless of the content.
-export const maximumItemsFromAPI: number = 100;
+export const maximumItemsFromAPI = 100;
 
 export const testOverlayCaption: string | undefined =
   Config.TEST_OVERLAY_CAPTION;

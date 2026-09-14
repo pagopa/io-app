@@ -6,12 +6,34 @@
  * @see https://github.com/oblador/react-native-keychain#options
  */
 
-import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import * as Keychain from "react-native-keychain";
 
 import { PinString } from "../types/PinString";
 
 const PIN_KEY = "PIN";
+
+/**
+ * Removes the unlock code from the Keychain
+ */
+export async function deletePin(): Promise<boolean> {
+  return await Keychain.resetGenericPassword();
+}
+
+/**
+ * Returns the unlock code from the Keychain.
+ *
+ * The promise fails when there is no valid unlock code stored.
+ */
+export async function getPin(): Promise<PinString | undefined> {
+  const credentials = await Keychain.getGenericPassword();
+  if (typeof credentials !== "boolean" && credentials.password.length > 0) {
+    const decoded = PinString.decode(credentials.password);
+    return E.isRight(decoded) ? decoded.right : undefined;
+  } else {
+    return undefined;
+  }
+}
 
 /**
  * Wrapper that sets default accessible option.
@@ -45,25 +67,4 @@ export async function setPin(pin: PinString): Promise<boolean> {
     pin
   );
   return typeof result !== "boolean";
-}
-
-/**
- * Removes the unlock code from the Keychain
- */
-export async function deletePin(): Promise<boolean> {
-  return await Keychain.resetGenericPassword();
-}
-
-/**
- * Returns the unlock code from the Keychain.
- *
- * The promise fails when there is no valid unlock code stored.
- */
-export async function getPin(): Promise<O.Option<PinString>> {
-  const credentials = await Keychain.getGenericPassword();
-  if (typeof credentials !== "boolean" && credentials.password.length > 0) {
-    return O.fromEither(PinString.decode(credentials.password));
-  } else {
-    return O.none;
-  }
 }

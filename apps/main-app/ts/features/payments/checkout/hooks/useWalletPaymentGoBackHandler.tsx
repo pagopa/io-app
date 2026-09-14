@@ -1,18 +1,19 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { Alert } from "react-native";
 import I18n from "i18next";
+import { Alert } from "react-native";
+
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import * as analytics from "../analytics";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { paymentsDeleteTransactionAction } from "../store/actions/networking";
 import { walletPaymentTransactionSelector } from "../store/selectors/transaction";
-import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import * as analytics from "../analytics";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 const useWalletPaymentGoBackHandler = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();

@@ -1,13 +1,14 @@
-import { merge } from "lodash";
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { StandardServiceCategoryEnum } from "@io-app/api-types/generated/definitions/services/StandardServiceCategory";
 import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
+import { merge } from "lodash";
+
 import { ServiceType } from "../types";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
-import { StandardServiceCategoryEnum } from "../../../../../definitions/services/StandardServiceCategory";
-import { ScopeTypeEnum } from "../../../../../definitions/services/ScopeType";
 
 const SERVICE_ID = "serviceId" as ServiceId;
 const FISCAL_CODE = "12345678901" as OrganizationFiscalCode;

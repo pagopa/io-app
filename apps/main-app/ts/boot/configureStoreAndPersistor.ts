@@ -1,7 +1,8 @@
+import { SpidIdps } from "@io-app/api-types/generated/definitions/content/SpidIdps";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as O from "fp-ts/lib/Option";
-import _, { merge, omit } from "lodash";
+import { get, merge, omit, set } from "lodash";
 import {
   applyMiddleware,
   compose,
@@ -10,6 +11,7 @@ import {
   Reducer,
   StoreEnhancer
 } from "redux";
+import { createLogger } from "redux-logger";
 import {
   createMigrate,
   MigrationManifest,
@@ -19,8 +21,8 @@ import {
   persistReducer,
   persistStore
 } from "redux-persist";
-import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
+
 import {
   isReady,
   remoteReady,
@@ -32,6 +34,11 @@ import {
   initialLollipopState,
   LollipopState
 } from "../features/lollipop/store/reducers/lollipop";
+import {
+  NOTIFICATIONS_STORE_VERSION,
+  NotificationsState
+} from "../features/pushNotifications/store/reducers";
+import { generateInitialState } from "../features/pushNotifications/store/reducers/installation";
 import rootSaga from "../sagas";
 import { Action, Store } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -45,19 +52,14 @@ import {
   INSTALLATION_INITIAL_STATE,
   InstallationState
 } from "../store/reducers/installation";
-import {
-  NOTIFICATIONS_STORE_VERSION,
-  NotificationsState
-} from "../features/pushNotifications/store/reducers";
-import { generateInitialState } from "../features/pushNotifications/store/reducers/installation";
+import { PersistedPreferencesState } from "../store/reducers/persistedPreferences";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { isDevEnv, isTestEnv } from "../utils/environment";
-import { PersistedPreferencesState } from "../store/reducers/persistedPreferences";
-import { SpidIdps } from "../../definitions/content/SpidIdps";
 import { fromGeneratedToLocalSpidIdp } from "../utils/idps";
 import { configureReactotron } from "./configureReactotron";
+import { createReduxStartupGate } from "./reduxStartupGate";
 
 /**
  * Redux persist will migrate the store to the current version
@@ -150,16 +152,14 @@ const migrations: MigrationManifest = {
   // we removed selectedFiscalCodes from organizations
   "6": (state: PersistedState) => {
     const entitiesState = (state as PersistedGlobalState).entities;
-    const organizations = entitiesState.organizations;
+    const organizations = get(entitiesState, "organizations", {});
     return {
       ...state,
       entities: {
-        ...(entitiesState ? entitiesState : {}),
+        ...entitiesState,
         organizations: {
-          nameByFiscalCode: organizations.nameByFiscalCode
-            ? organizations.nameByFiscalCode
-            : {},
-          all: organizations.all ? organizations.all : {}
+          nameByFiscalCode: organizations.nameByFiscalCode || {},
+          all: organizations.all || {}
         }
       }
     };
@@ -167,7 +167,7 @@ const migrations: MigrationManifest = {
 
   // Version 7
   // we empty the services list to get both services list and services metadata being reloaded and persisted
-  "7": (state: PersistedState) => _.set(state, "entities.services.byId", {}),
+  "7": (state: PersistedState) => set(state, "entities.services.byId", {}),
 
   // Version 8
   // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
@@ -283,9 +283,7 @@ const migrations: MigrationManifest = {
     const content: ContentState = (state as PersistedGlobalState).content;
     return {
       ...state,
-      content: {
-        ..._.omit(content, "servicesMetadata")
-      }
+      content: omit(content, "servicesMetadata")
     };
   },
   // Version 19
@@ -352,9 +350,10 @@ const migrations: MigrationManifest = {
       .persistedPreferences;
     return {
       ...state,
-      persistedPreferences: {
-        ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled")
-      }
+      persistedPreferences: omit(
+        persistedPreferences,
+        "isExperimentalFeaturesEnabled"
+      )
     };
   },
   // Version 24
@@ -676,14 +675,16 @@ export const RTron = isDevEnv ? configureReactotron() : undefined;
 const sagaMiddleware = createSagaMiddleware();
 
 function configureStoreAndPersistor(): {
-  store: Store;
   persistor: Persistor;
+  store: Store;
 } {
+  const reduxStartupGate = createReduxStartupGate();
   const composeEnhancers =
     // eslint-disable-next-line no-underscore-dangle
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   const baseMiddlewares: ReadonlyArray<Middleware> = [
+    reduxStartupGate.middleware,
     sagaMiddleware,
     logger,
     analytics.actionTracking // generic tracker for selected redux actions
@@ -705,13 +706,15 @@ function configureStoreAndPersistor(): {
   >(persistedReducer, enhancer);
   const persistor = persistStore(store);
 
-  // Run the main saga
-  sagaMiddleware.run(rootSaga);
+  reduxStartupGate.startWhenAppIsActive(() => {
+    persistor.persist();
+    sagaMiddleware.run(rootSaga);
+  });
 
   return { store, persistor };
 }
 
 export const { store, persistor } = configureStoreAndPersistor();
 export const testable = isTestEnv
-  ? { CURRENT_REDUX_STORE_VERSION, migrations }
+  ? { CURRENT_REDUX_STORE_VERSION, configureStoreAndPersistor, migrations }
   : undefined;

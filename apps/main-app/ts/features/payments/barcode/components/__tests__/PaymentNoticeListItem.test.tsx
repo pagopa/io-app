@@ -1,6 +1,7 @@
 import { AmountInEuroCents } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { render } from "@testing-library/react-native";
 import { voidType } from "io-ts";
+
 import { PaymentNoticeListItem } from "../PaymentNoticeListItem";
 
 describe("PaymentNoticeListItem", () => {

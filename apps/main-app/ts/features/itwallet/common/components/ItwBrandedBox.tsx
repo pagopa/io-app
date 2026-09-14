@@ -1,5 +1,4 @@
-/* eslint-disable functional/immutable-data */
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { useIOThemeContext } from "@io-app/design-system";
 import {
   Canvas,
   Circle as SkiaCircle,
@@ -7,9 +6,9 @@ import {
   RadialGradient as SkiaRadialGradient,
   vec
 } from "@shopify/react-native-skia";
+import { LinearGradient } from "expo-linear-gradient";
 import { PropsWithChildren } from "react";
 import { LayoutRectangle, StyleSheet, View } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import {
   Extrapolation,
   interpolate,
@@ -19,19 +18,26 @@ import {
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
+
 import { useLayoutSize } from "../hooks/useLayoutSize";
 import { useItWalletTheme } from "../utils/theme";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
 
 type ItwIridescentBorderProps = {
-  variant?: ItwSkiaBrandedGradientVariant;
-  borderThickness?: number;
+  backgroundVariant?: "gradient" | "solid";
   borderRadius?: number;
-  backgroundVariant?: "solid" | "gradient";
+  borderThickness?: number;
+  style?: React.ComponentProps<typeof View>["style"];
+  variant?: ItwSkiaBrandedGradientVariant;
 };
 
-const brandedBoxGradientColors = ["#FFFFFF", "#FBFDFF", "#F6FBFF", "#F2F9FF"];
+const brandedBoxGradientColors: [string, string, ...Array<string>] = [
+  "#FFFFFF",
+  "#FBFDFF",
+  "#F6FBFF",
+  "#F2F9FF"
+];
 
 /* Light */
 const lightScaleMultiplier = 1;
@@ -46,7 +52,8 @@ export const ItwBrandedBox = ({
   borderRadius = 16,
   backgroundVariant = "solid",
   variant = "default",
-  children
+  children,
+  style: customStyle
 }: PropsWithChildren<ItwIridescentBorderProps>) => {
   const theme = useItWalletTheme();
   const { themeType } = useIOThemeContext();
@@ -88,7 +95,7 @@ export const ItwBrandedBox = ({
 
   /* We don't need to look at the whole quaternion range,
       just a very small part of it. */
-  const quaternionRange: number = 0.5;
+  const quaternionRange = 0.5;
 
   const skiaLightTranslateX = useDerivedValue(() => {
     const translateX = interpolate(
@@ -114,12 +121,6 @@ export const ItwBrandedBox = ({
       >
         <SkiaRadialGradient
           c={vec((size.width ?? 0) / 2, (size.height ?? 0) / 2)}
-          r={lightSize / 2}
-          /* There are many stops because it's an easing gradient. */
-          positions={[
-            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
-            0.647, 0.71, 0.775, 0.845, 0.919, 1
-          ]}
           colors={[
             "rgba(255,255,255,1)",
             "rgba(255,255,255,0.987)",
@@ -138,6 +139,12 @@ export const ItwBrandedBox = ({
             "rgba(255,255,255,0.01)",
             "rgba(255,255,255,0)"
           ]}
+          /* There are many stops because it's an easing gradient. */
+          positions={[
+            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
+            0.647, 0.71, 0.775, 0.845, 0.919, 1
+          ]}
+          r={lightSize / 2}
         />
       </SkiaCircle>
     </SkiaGroup>
@@ -148,6 +155,7 @@ export const ItwBrandedBox = ({
       onLayout={onLayout}
       style={[
         styles.container,
+        customStyle,
         {
           borderRadius,
           backgroundColor: theme["banner-background"]
@@ -156,10 +164,10 @@ export const ItwBrandedBox = ({
     >
       {shouldUseGradientBackground && (
         <LinearGradient
-          pointerEvents="none"
           colors={brandedBoxGradientColors}
-          start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 1 }}
+          pointerEvents="none"
+          start={{ x: 0.5, y: 0 }}
           style={StyleSheet.absoluteFill}
         />
       )}
@@ -177,12 +185,12 @@ export const ItwBrandedBox = ({
 
         {/* Animated gradient border */}
         <ItwBrandedSkiaBorder
-          width={size.width}
-          height={size.height}
-          variant={variant}
-          thickness={borderThickness}
           borderRadius={borderRadius}
+          height={size.height}
           themeType={themeType}
+          thickness={borderThickness}
+          variant={variant}
+          width={size.width}
         />
       </Canvas>
 

@@ -1,11 +1,12 @@
-import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
-import { useManualConfigBottomSheet } from "../hooks/useManualConfigBottomSheet";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import { appReducer } from "../../../../../store/reducers";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { useManualConfigBottomSheet } from "../hooks/useManualConfigBottomSheet";
 
 jest.mock("../../../../../utils/hooks/bottomSheet");
 jest.mock("../../../../../i18n");

@@ -1,12 +1,160 @@
 import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { DoneActorEvent, ErrorActorEvent } from "xstate";
+
+import type { IssuanceFailure } from "./failure";
+
 import { SpidIdp } from "../../../../utils/idps";
+import { EidActivationExitStep } from "../../common/hooks/useItwActivationExitSurveyBottomSheet";
 import { CieWarningType } from "../../identification/cie/utils/types";
 import { Output } from "../upgrade/output";
-import type { IssuanceFailure } from "./failure";
 import { EidIssuanceLevel, EidIssuanceMode } from "./context";
 
-export type IdentificationMode = "spid" | "ciePin" | "cieId";
+export type EidIssuanceEvents =
+  | Abort
+  | AcceptIpzsPrivacy
+  | AcceptTos
+  | AddNewCredential
+  | AddToWallet
+  | Back
+  | CieCanEntered
+  | CiePinEntered
+  | Close
+  | DoneActorEvent<Output, "credentialUpgradeMachine">
+  | ErrorActorEvent
+  | ExternalErrorEvent
+  | GoToCieWarning
+  | GoToIpzsPrivacy
+  | GoToWallet
+  | MrtdChallengedSigned
+  | MrtdPoPVerificationCompleted
+  | Next
+  | NfcEnabled
+  | Reset
+  | Retry
+  | RevokeWalletInstance
+  | SelectIdentificationMode
+  | SelectSpidIdp
+  | SessionRefreshComplete
+  | SimulateFailure
+  | Start
+  | UserIdentificationCompleted;
+
+type Abort = {
+  type: "abort";
+};
+
+type AcceptIpzsPrivacy = {
+  type: "accept-ipzs-privacy";
+};
+
+type AcceptTos = {
+  type: "accept-tos";
+};
+
+type AddNewCredential = {
+  type: "add-new-credential";
+};
+
+type AddToWallet = {
+  type: "add-to-wallet";
+};
+
+type Back = {
+  type: "back";
+};
+
+type CieCanEntered = {
+  can: string;
+  type: "cie-can-entered";
+};
+
+type CiePinEntered = {
+  pin: string;
+  type: "cie-pin-entered";
+};
+
+type Close = {
+  /** Step at which the user exited, used to show the Qualtrics survey in WALLET_HOME. */
+  surveyStep?: EidActivationExitStep;
+  type: "close";
+};
+
+type ExternalErrorEvent = {
+  error?: Error;
+  // Add a custom error code to the error event to distinguish between different errors. Add a new error code for each different error if needed.
+  scope:
+    | "cie-auth"
+    | "cie-mrtd-pop"
+    | "cieid-login"
+    | "ipzs-privacy"
+    | "spid-login";
+  type: "error";
+};
+
+type GoToCieWarning = {
+  routeName: string;
+  type: "go-to-cie-warning";
+  warning: CieWarningType;
+};
+
+type GoToIpzsPrivacy = {
+  type: "go-to-ipzs-privacy";
+};
+
+type GoToWallet = {
+  type: "go-to-wallet";
+};
+
+type IdentificationMode = "cieId" | "ciePin" | "spid";
+
+type MrtdChallengedSigned = {
+  data: InternalAuthAndMrtdResponse;
+  type: "mrtd-challenged-signed";
+};
+
+type MrtdPoPVerificationCompleted = {
+  authRedirectUrl: string;
+  type: "mrtd-pop-verification-completed";
+};
+
+type Next = {
+  type: "next";
+};
+
+type NfcEnabled = {
+  type: "nfc-enabled";
+};
+
+type Reset = {
+  type: "reset";
+};
+
+type Retry = {
+  type: "retry";
+};
+
+type RevokeWalletInstance = {
+  type: "revoke-wallet-instance";
+};
+
+type SelectIdentificationMode = {
+  mode: IdentificationMode;
+  type: "select-identification-mode";
+};
+
+type SelectSpidIdp = {
+  idp: SpidIdp;
+  type: "select-spid-idp";
+};
+
+type SessionRefreshComplete = {
+  type: "session-refresh-complete";
+};
+
+type SimulateFailure = {
+  failure: IssuanceFailure;
+  type: "simulate-failure";
+};
 
 /**
  * This event is used to either start the issuance process or restart it.
@@ -14,157 +162,14 @@ export type IdentificationMode = "spid" | "ciePin" | "cieId";
  * - "restart" is used to restart the issuance process, **going back** to the initial state (Idle) from any other state
  *    and starting the issuance process from the beginning.
  */
-export type Start = {
-  type: "start" | "restart";
-  mode: EidIssuanceMode;
-  level: EidIssuanceLevel;
+type Start = {
   credentialType?: string;
+  level: EidIssuanceLevel;
+  mode: EidIssuanceMode;
+  type: "restart" | "start";
 };
 
-export type AcceptTos = {
-  type: "accept-tos";
-};
-
-export type AcceptIpzsPrivacy = {
-  type: "accept-ipzs-privacy";
-};
-
-export type AddToWallet = {
-  type: "add-to-wallet";
-};
-
-export type GoToWallet = {
-  type: "go-to-wallet";
-};
-
-export type AddNewCredential = {
-  type: "add-new-credential";
-};
-
-export type SelectIdentificationMode = {
-  type: "select-identification-mode";
-  mode: IdentificationMode;
-};
-
-export type GoToCieWarning = {
-  type: "go-to-cie-warning";
-  warning: CieWarningType;
-  routeName: string;
-};
-
-export type SelectSpidIdp = {
-  type: "select-spid-idp";
-  idp: SpidIdp;
-};
-
-export type CiePinEntered = {
-  type: "cie-pin-entered";
-  pin: string;
-};
-
-export type UserIdentificationCompleted = {
+type UserIdentificationCompleted = {
+  authRedirectUrl: string;
   type: "user-identification-completed";
-  authRedirectUrl: string;
 };
-
-export type CieCanEntered = {
-  type: "cie-can-entered";
-  can: string;
-};
-
-export type MrtdChallengedSigned = {
-  type: "mrtd-challenged-signed";
-  data: InternalAuthAndMrtdResponse;
-};
-
-export type MrtdPoPVerificationCompleted = {
-  type: "mrtd-pop-verification-completed";
-  authRedirectUrl: string;
-};
-
-export type Retry = {
-  type: "retry";
-};
-
-export type Back = {
-  type: "back";
-};
-
-export type Close = {
-  type: "close";
-};
-
-export type NfcEnabled = {
-  type: "nfc-enabled";
-};
-
-export type Abort = {
-  type: "abort";
-};
-
-export type RevokeWalletInstance = {
-  type: "revoke-wallet-instance";
-};
-
-export type ExternalErrorEvent = {
-  type: "error";
-  // Add a custom error code to the error event to distinguish between different errors. Add a new error code for each different error if needed.
-  scope:
-    | "ipzs-privacy"
-    | "spid-login"
-    | "cieid-login"
-    | "cie-auth"
-    | "cie-mrtd-pop";
-  error?: Error;
-};
-
-export type Next = {
-  type: "next";
-};
-
-export type Reset = {
-  type: "reset";
-};
-
-export type GoToL2IdentificationMode = {
-  type: "go-to-l2-identification";
-};
-
-export type SimulateFailure = {
-  type: "simulate-failure";
-  failure: IssuanceFailure;
-};
-
-type SessionRefreshComplete = {
-  type: "session-refresh-complete";
-};
-
-export type EidIssuanceEvents =
-  | Start
-  | AcceptTos
-  | AcceptIpzsPrivacy
-  | SelectIdentificationMode
-  | SelectSpidIdp
-  | CiePinEntered
-  | UserIdentificationCompleted
-  | CieCanEntered
-  | MrtdChallengedSigned
-  | MrtdPoPVerificationCompleted
-  | AddToWallet
-  | GoToWallet
-  | AddNewCredential
-  | Retry
-  | Back
-  | Close
-  | NfcEnabled
-  | Abort
-  | RevokeWalletInstance
-  | ErrorActorEvent
-  | ExternalErrorEvent
-  | DoneActorEvent<Output, "credentialUpgradeMachine">
-  | GoToCieWarning
-  | Next
-  | GoToL2IdentificationMode
-  | Reset
-  | SimulateFailure
-  | SessionRefreshComplete;

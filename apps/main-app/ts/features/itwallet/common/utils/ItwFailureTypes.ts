@@ -9,17 +9,6 @@ export enum ItwFailureType {
   ITW_REMOTE_PAYLOAD_INVALID = "ITW_REMOTE_PAYLOAD_INVALID"
 }
 
-/**
- * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
- */
-export type ReasonTypeByFailure = {
-  [ItwFailureType.ITW_REMOTE_PAYLOAD_INVALID]: Error;
-};
-
-type TypedRemoteFailures = {
-  [K in ItwFailureType]: { type: K; reason: ReasonTypeByFailure[K] };
-};
-
 /*
  * Union type of failures with the reason properly typed.
  */
@@ -30,5 +19,16 @@ export type ItwFailure = TypedRemoteFailures[keyof TypedRemoteFailures];
  * thrown by `io-react-native-wallet` with the credential configuration ID.
  */
 export type WithCredentialMetadata<E = Error> = E & {
-  metadata?: { credentialId: string };
+  metadata?: { credentialId: string; credentialType: string };
+};
+
+/**
+ * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
+ */
+type ReasonTypeByFailure = {
+  [ItwFailureType.ITW_REMOTE_PAYLOAD_INVALID]: Error;
+};
+
+type TypedRemoteFailures = {
+  [K in ItwFailureType]: { reason: ReasonTypeByFailure[K]; type: K };
 };

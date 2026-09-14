@@ -1,22 +1,22 @@
+import { PublishedProductCategories } from "@io-app/api-types/generated/definitions/cgn/merchants/PublishedProductCategories";
+import { PublishedProductCategoriesWithNewDiscountsCount } from "@io-app/api-types/generated/definitions/cgn/merchants/PublishedProductCategoriesWithNewDiscountsCount";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
-import { ActionType } from "typesafe-actions";
 import { call, put } from "typed-redux-saga/macro";
-import { PublishedProductCategories } from "../../../../../../../definitions/cgn/merchants/PublishedProductCategories";
-import { PublishedProductCategoriesWithNewDiscountsCount } from "../../../../../../../definitions/cgn/merchants/PublishedProductCategoriesWithNewDiscountsCount";
+import { ActionType } from "typesafe-actions";
+
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import {
   getGenericError,
   getNetworkError
 } from "../../../../../../utils/errors";
+import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import { cgnCategories } from "../../../store/actions/categories";
-import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 
 const checkIsCategoriesWithCount = (
   cl:
-    | PublishedProductCategoriesWithNewDiscountsCount
     | PublishedProductCategories
+    | PublishedProductCategoriesWithNewDiscountsCount
 ): cl is PublishedProductCategoriesWithNewDiscountsCount =>
   PublishedProductCategoriesWithNewDiscountsCount.is(cl);
 
@@ -36,7 +36,7 @@ export function* cgnCategoriesSaga(
       publishedCategoriesRequest,
       action
     )) as unknown as SagaCallReturnType<typeof getPublishedCategories>;
-    if (E.isLeft(publishedCategoriesResult)) {
+    if ("left" in publishedCategoriesResult) {
       yield* put(
         cgnCategories.failure(
           getGenericError(

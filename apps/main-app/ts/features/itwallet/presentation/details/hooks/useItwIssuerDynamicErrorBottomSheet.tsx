@@ -1,6 +1,7 @@
-import { IOButton, VStack } from "@pagopa/io-app-design-system";
+import { IOButton, VStack } from "@io-app/design-system";
 import I18n from "i18next";
 import { View } from "react-native";
+
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
@@ -30,7 +31,7 @@ type IssuerDynamicErrorBottomSheetContentConfig = {
 
 type UseItwIssuerDynamicErrorBottomSheetParams = {
   credential: CredentialMetadata;
-  localizedMessage: { title: string; description: string };
+  localizedMessage: { description: string; title: string };
   status?: ItwCredentialStatus;
 };
 
@@ -128,22 +129,22 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
         {contentConfig.actionMode === "updateAndRemove" && (
           <VStack space={16}>
             <IOButton
-              variant="solid"
               fullWidth
               label={I18n.t(
                 "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential"
               )}
               onPress={handleUpdateCredential}
+              variant="solid"
             />
             <View style={{ alignSelf: "center" }}>
               <IOButton
-                variant="link"
                 color="danger"
-                textAlign="center"
                 label={I18n.t(
                   "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
                 )}
                 onPress={confirmAndRemoveCredential}
+                textAlign="center"
+                variant="link"
               />
             </View>
           </VStack>
@@ -151,12 +152,12 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
         {contentConfig.actionMode === "removeOnly" && (
           <View style={{ marginBottom: 16 }}>
             <IOButton
-              variant="solid"
               fullWidth
               label={I18n.t(
                 "features.itWallet.presentation.alerts.mdl.invalid.cta"
               )}
               onPress={confirmAndRemoveCredential}
+              variant="solid"
             />
           </View>
         )}

@@ -1,5 +1,6 @@
 import { ComponentProps } from "react";
 import { createStore } from "redux";
+
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";

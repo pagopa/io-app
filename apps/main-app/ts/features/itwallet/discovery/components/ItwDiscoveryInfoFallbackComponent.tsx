@@ -5,16 +5,16 @@ import {
   H3,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet } from "react-native";
+
 import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../store/hooks.ts";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { trackOpenItwTos } from "../../analytics";
@@ -75,7 +75,6 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
   });
 
   useHeaderSecondLevel({
-    contextualHelp: emptyContextualHelp,
     supportRequest: true,
     title: "",
     goBack: () => {
@@ -91,8 +90,6 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
 
   return (
     <IOScrollView
-      testID="itwDiscoveryInfoFallbackComponentTestID"
-      includeContentMargins={false}
       actions={{
         type: "SingleButton",
         primary: {
@@ -107,6 +104,8 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
           onPress: handleContinuePress
         }
       }}
+      includeContentMargins={false}
+      testID="itwDiscoveryInfoFallbackComponentTestID"
     >
       <AnimatedImage
         source={require("../../../../../img/features/itWallet/discovery/diw_hero.png")}
@@ -125,22 +124,22 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
         <VSpacer size={24} />
         <VStack space={24}>
           <FeatureInfo
-            pictogramProps={{ name: "timing" }}
             body={I18n.t(
               "features.itWallet.discovery.screen.diw.featureHighlights.1"
             )}
+            pictogramProps={{ name: "timing" }}
           />
           <FeatureInfo
-            pictogramProps={{ name: "itWallet" }}
             body={I18n.t(
               "features.itWallet.discovery.screen.diw.featureHighlights.2"
             )}
+            pictogramProps={{ name: "itWallet" }}
           />
           <FeatureInfo
-            pictogramProps={{ name: "cie" }}
             body={I18n.t(
               "features.itWallet.discovery.screen.diw.featureHighlights.3"
             )}
+            pictogramProps={{ name: "cie" }}
           />
         </VStack>
         <VSpacer size={24} />

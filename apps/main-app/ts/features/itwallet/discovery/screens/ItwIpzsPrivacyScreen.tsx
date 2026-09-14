@@ -1,11 +1,8 @@
-import {
-  ContentWrapper,
-  IOMarkdownLite,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOMarkdownLite, VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
+
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIOSelector } from "../../../../store/hooks";
@@ -57,15 +54,6 @@ const ItwIpzsPrivacyScreen = () => {
       loadingOpacity={1}
     >
       <IOScrollViewWithLargeHeader
-        title={{
-          label: I18n.t(
-            isL3
-              ? "features.itWallet.discovery.ipzsPrivacy.titleL3"
-              : "features.itWallet.discovery.ipzsPrivacy.title"
-          )
-        }}
-        headerActionsProp={{ showHelp: true }}
-        contentContainerStyle={{ flexGrow: 1 }}
         actions={{
           type: "SingleButton",
           primary: {
@@ -78,6 +66,15 @@ const ItwIpzsPrivacyScreen = () => {
             onPress: handleContinuePress
           }
         }}
+        contentContainerStyle={{ flexGrow: 1 }}
+        headerActionsProp={{ showHelp: true }}
+        title={{
+          label: I18n.t(
+            isL3
+              ? "features.itWallet.discovery.ipzsPrivacy.titleL3"
+              : "features.itWallet.discovery.ipzsPrivacy.title"
+          )
+        }}
       >
         <ContentWrapper>
           <IOMarkdownLite
@@ -86,11 +83,11 @@ const ItwIpzsPrivacyScreen = () => {
           <VSpacer size={16} />
         </ContentWrapper>
         <ItwPrivacyWebViewComponent
+          onError={onError}
+          onLoadEnd={onLoadEnd}
           source={{
             uri: privacyUrl ?? ""
           }}
-          onLoadEnd={onLoadEnd}
-          onError={onError}
         />
       </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>

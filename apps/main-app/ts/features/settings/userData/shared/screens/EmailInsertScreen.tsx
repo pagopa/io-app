@@ -11,12 +11,12 @@ import {
   IOVisualCostants,
   TextInputValidation,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import {
   ComponentRef,
@@ -38,6 +38,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import validator from "validator";
+
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -46,7 +47,6 @@ import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { getFlowType } from "../../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { isDisplayZoomed } from "../../../../../utils/device";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
@@ -76,10 +76,10 @@ const ContinueButton = (props: { onContinue: () => void }) => (
     <ContentWrapper>
       <IOButton
         fullWidth
-        variant="solid"
         label={I18n.t("global.buttons.continue")}
         onPress={props.onContinue}
         testID="continue-button"
+        variant="solid"
       />
     </ContentWrapper>
     <VSpacer size={16} />
@@ -87,9 +87,9 @@ const ContinueButton = (props: { onContinue: () => void }) => (
 );
 
 export type EmailInsertScreenNavigationParams = Readonly<{
-  isOnboarding: boolean;
-  isFciEditEmailFlow?: boolean;
   isEditingPreviouslyInsertedEmailMode?: boolean;
+  isFciEditEmailFlow?: boolean;
+  isOnboarding: boolean;
 }>;
 
 const EMPTY_EMAIL = "";
@@ -99,11 +99,6 @@ const EMPTY_EMAIL = "";
  * this screen, we use this information to disable autofocus on the input field.
  */
 const isScreenZoomed = isDisplayZoomed();
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "email.insert.help.title",
-  body: "email.insert.help.content"
-};
 
 /**
  * A screen to allow user to insert an email address.
@@ -116,7 +111,7 @@ const EmailInsertScreen = () => {
   } =
     useRoute<
       Route<
-        "ONBOARDING_INSERT_EMAIL_SCREEN" | "INSERT_EMAIL_SCREEN",
+        "INSERT_EMAIL_SCREEN" | "ONBOARDING_INSERT_EMAIL_SCREEN",
         EmailInsertScreenNavigationParams
       >
     >().params;
@@ -207,7 +202,7 @@ const EmailInsertScreen = () => {
 
   const [areSameEmails, setAreSameEmails] = useState(false);
   const [email, setEmail] = useState(getEmail(optionEmail));
-  const timeout = useRef<number | null>(null);
+  const timeout = useRef<null | number>(null);
 
   useEffect(() => {
     if (areSameEmails) {
@@ -296,7 +291,6 @@ const EmailInsertScreen = () => {
 
   const continueOnPress = () => {
     Keyboard.dismiss();
-    // eslint-disable-next-line functional/immutable-data
     canShowLoadingSpinner.current = true;
     const isValid = isValidEmail();
     if ((typeof isValid === "boolean" && isValid) || isValid.isValid) {
@@ -312,7 +306,6 @@ const EmailInsertScreen = () => {
     } else {
       const message = getAccessibilityErrorLabel();
       if (message) {
-        // eslint-disable-next-line functional/immutable-data
         timeout.current = setTimeout(() => {
           AccessibilityInfo.announceForAccessibilityWithOptions(message, {
             queue: true
@@ -399,7 +392,6 @@ const EmailInsertScreen = () => {
   // let the user navigate the email validation screen
   useEffect(() => {
     if (userNavigateToEmailValidationScreen) {
-      // eslint-disable-next-line functional/immutable-data
       canShowLoadingSpinner.current = false;
       navigation.navigate(ROUTES.ONBOARDING, {
         screen: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
@@ -460,7 +452,6 @@ const EmailInsertScreen = () => {
             sendEmailAtFirstRender =
               profile.value.email === prevUserProfile.value.email;
           }
-          // eslint-disable-next-line functional/immutable-data
           canShowLoadingSpinner.current = false;
           if (isOnboarding || isFirstOnboarding) {
             navigation.navigate(ROUTES.ONBOARDING, {
@@ -497,7 +488,6 @@ const EmailInsertScreen = () => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    contextualHelpMarkdown,
     goBack: handleGoBack,
     canGoBack: isEmailValidated || isFirstOnboarding
   });
@@ -505,20 +495,20 @@ const EmailInsertScreen = () => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <SafeAreaView
-        testID="container-test"
         edges={["bottom"]}
         style={styles.safeArea}
+        testID="container-test"
       >
         <ScrollView contentContainerStyle={styles.scrollViewContentContainer}>
           <ContentWrapper>
             <View
-              accessible={true}
               accessibilityRole="header"
+              accessible={true}
               ref={accessibilityFirstFocuseViewRef}
             >
               <H1
-                testID="title-test"
                 maxFontSizeMultiplier={MAX_FONT_SIZE_MULTIPLIER}
+                testID="title-test"
               >
                 {isFirstOnboarding
                   ? I18n.t("email.newinsert.title")
@@ -533,8 +523,8 @@ const EmailInsertScreen = () => {
                 <>
                   {I18n.t("email.edit.subtitle")}
                   <Body
-                    weight="Semibold"
                     maxFontSizeMultiplier={MAX_FONT_SIZE_MULTIPLIER}
+                    weight="Semibold"
                   >
                     {` ${pipe(
                       optionEmail,
@@ -546,6 +536,12 @@ const EmailInsertScreen = () => {
             </Body>
             <VSpacer size={16} />
             <TextInputValidation
+              accessibilityErrorLabel={getAccessibilityErrorLabel()}
+              accessibilityLabel={I18n.t("email.newinsert.label")}
+              errorMessage={invalidEmailLabel}
+              onChangeText={handleOnChangeEmailText}
+              onValidate={isValidEmail}
+              placeholder={I18n.t("email.newinsert.label")}
               ref={textInputRef}
               testID="email-input"
               textInputProps={{
@@ -554,16 +550,10 @@ const EmailInsertScreen = () => {
                 inputMode: "email",
                 returnKeyType: "done"
               }}
-              accessibilityLabel={I18n.t("email.newinsert.label")}
-              placeholder={I18n.t("email.newinsert.label")}
-              accessibilityErrorLabel={getAccessibilityErrorLabel()}
-              onValidate={isValidEmail}
-              errorMessage={invalidEmailLabel}
               value={pipe(
                 email,
                 O.getOrElse(() => EMPTY_EMAIL)
               )}
-              onChangeText={handleOnChangeEmailText}
             />
           </ContentWrapper>
         </ScrollView>

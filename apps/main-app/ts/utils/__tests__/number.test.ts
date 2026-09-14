@@ -1,31 +1,28 @@
 import { roundToThirdDecimal } from "../number";
 
 describe("roundToThirdDecimal", () => {
-  it("should return a number rounded to third decimal", () => {
-    expect(roundToThirdDecimal(411.12345)).toEqual(411.123);
+  it.each([
+    [411.12345, 411.123],
+    [1.123, 1.123],
+    [0.432, 0.432]
+  ])("should return %p rounded to third decimal (%p)", (input, expected) => {
+    expect(roundToThirdDecimal(input)).toEqual(expected);
   });
 
-  it("should return a number rounded to third decimal", () => {
-    expect(roundToThirdDecimal(1.123)).toEqual(1.123);
+  it.each([
+    [411, 411],
+    [1.2, 1.2]
+  ])("should return the same number for %p", (input, expected) => {
+    expect(roundToThirdDecimal(input)).toEqual(expected);
   });
 
-  it("should return a number rounded to third decimal", () => {
-    expect(roundToThirdDecimal(0.432)).toEqual(0.432);
-  });
-
-  it("should return the same number", () => {
-    expect(roundToThirdDecimal(411)).toEqual(411);
-  });
-
-  it("should return the same number", () => {
-    expect(roundToThirdDecimal(1.2)).toEqual(1.2);
-  });
-
-  it("should return 0 if not a number is computed", () => {
-    expect(roundToThirdDecimal(NaN)).toEqual(0);
-  });
-
-  it("should return 0 if not a number is computed", () => {
-    expect(roundToThirdDecimal(parseInt("hello", 10))).toEqual(0);
-  });
+  it.each([
+    [NaN, 0],
+    [parseInt("hello", 10), 0]
+  ])(
+    "should return 0 when %p is not a computable number",
+    (input, expected) => {
+      expect(roundToThirdDecimal(input)).toEqual(expected);
+    }
+  );
 });

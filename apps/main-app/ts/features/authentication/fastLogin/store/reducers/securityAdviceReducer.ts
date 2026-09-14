@@ -1,13 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
+
+import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import { Action } from "../../../../../store/actions/types";
+import { isDevEnv } from "../../../../../utils/environment";
 import {
   setSecurityAdviceAcknowledged,
   setSecurityAdviceReadyToShow
 } from "../actions/securityAdviceActions";
-import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
-import { isDevEnv } from "../../../../../utils/environment";
 
 export type SecurityAdviceAcknowledgedState = {
   acknowledged: boolean | undefined;

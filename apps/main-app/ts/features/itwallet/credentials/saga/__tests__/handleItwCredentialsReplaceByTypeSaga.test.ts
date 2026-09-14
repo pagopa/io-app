@@ -1,6 +1,7 @@
 import * as ioCrypto from "@pagopa/io-react-native-crypto";
 import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 import { walletRemoveCards } from "../../../../wallet/store/actions/cards";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
@@ -47,7 +48,11 @@ const makeState = (
 ): DeepPartial<GlobalState> => ({
   features: {
     itWallet: {
-      credentials: { credentials }
+      credentials: {
+        credentials: Object.values(credentials).reduce<
+          Record<string, CredentialMetadata>
+        >((acc, c) => ({ ...acc, [c.credentialId]: c }), {})
+      }
     }
   }
 });
@@ -77,7 +82,7 @@ describe("handleItwCredentialsReplaceByTypeSaga", () => {
         ]);
         expect(mockDeleteKey).toHaveBeenCalledWith(baseCredential.keyTag);
         expect(mockStoreAll).toHaveBeenCalledWith([
-          { credentialId: newMetadata.credentialId, credential: "raw-jwt" }
+          { vaultId: newMetadata.credentialId, credential: "raw-jwt" }
         ]);
       });
   });

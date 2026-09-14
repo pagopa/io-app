@@ -1,21 +1,18 @@
 import {
   ContentWrapper,
   H2,
+  IconButton,
   IOButton,
   IOColors,
   IOPictograms,
-  IconButton,
   Pictogram,
   ToastNotification,
-  VSpacer,
   useIOFontDynamicScale,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+  useIOTheme,
+  VSpacer
+} from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import _ from "lodash";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import {
   Alert,
@@ -28,6 +25,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
+
 import { useDetectSmallScreen } from "../../../hooks/useDetectSmallScreen";
 import { useIOSelector } from "../../../store/hooks";
 import { appCurrentStateSelector } from "../../../store/reducers/appState";
@@ -56,16 +54,15 @@ import {
 } from "../store/selectors";
 import {
   FAIL_ATTEMPTS_TO_SHOW_ALERT,
-  IdentificationInstructionsComponent,
   getBiometryIconName,
-  handleAndroidBackNavigation
+  handleAndroidBackNavigation,
+  IdentificationInstructionsComponent
 } from "../utils";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 const VERTICAL_PADDING = 16;
 const A11Y_FOCUS_DELAY = 1000 as Millisecond;
 
-// eslint-disable-next-line complexity
 export const IdentificationModal = () => {
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
   const showRetryText = useRef(false);
@@ -88,14 +85,7 @@ export const IdentificationModal = () => {
   const previousIdentificationProgressState = usePrevious(
     identificationProgressState
   );
-  const identificationFailState = useIOSelector(
-    identificationFailSelector,
-    // Since the identificationFailState is an Option,
-    // we need to performs a deep comparison between
-    // two values to determine if they are equivalent
-    // to avoid unnecessary re-renders.
-    (l, r) => _.isEqual(l, r)
-  );
+  const identificationFailState = useIOSelector(identificationFailSelector);
   const name = useIOSelector(profileNameSelector);
   const { biometricType, isFingerprintEnabled } = useBiometricType();
 
@@ -149,13 +139,9 @@ export const IdentificationModal = () => {
   }, [dispatch]);
 
   const onIdentificationFailureHandler = useCallback(() => {
-    const forceLogout = pipe(
-      identificationFailState,
-      O.map(failState => failState.remainingAttempts === 1),
-      O.getOrElse(() => false)
-    );
+    const forceLogout = identificationFailState?.remainingAttempts === 1;
+
     if (forceLogout) {
-      // eslint-disable-next-line functional/immutable-data
       showRetryText.current = false;
       onPinResetHandler();
     } else {
@@ -212,7 +198,7 @@ export const IdentificationModal = () => {
           onIdentificationSuccessHandler(true);
         },
         e => {
-          if (e.name === "DeviceLocked" || e.name === "DeviceLockedPermanent") {
+          if (e === "lockout") {
             setIsBiometricLocked(true);
           }
         }
@@ -266,11 +252,9 @@ export const IdentificationModal = () => {
   const onPinValidated = useCallback(
     (isValidated: boolean) => {
       if (isValidated) {
-        // eslint-disable-next-line functional/immutable-data
         showRetryText.current = false;
         onIdentificationSuccessHandler(false);
       } else {
-        // eslint-disable-next-line functional/immutable-data
         showRetryText.current = true;
         onIdentificationFailureHandler();
       }
@@ -280,10 +264,10 @@ export const IdentificationModal = () => {
 
   const NumberPad = memo(() => (
     <IdentificationNumberPad
+      biometricsConfig={biometricsConfig}
+      numberPadVariant={"primary"}
       pin={pin}
       pinValidation={onPinValidated}
-      numberPadVariant={"primary"}
-      biometricsConfig={biometricsConfig}
     />
   ));
 
@@ -306,14 +290,14 @@ export const IdentificationModal = () => {
   let showLockModal = false;
   // eslint-disable-next-line functional/no-let
   let remainingAttempts = maxAttempts;
-  if (O.isSome(identificationFailState)) {
-    showLockModal = identificationFailState.value.showLockModal ?? false;
-    remainingAttempts = identificationFailState.value.remainingAttempts;
+  if (identificationFailState != null) {
+    showLockModal = identificationFailState.showLockModal ?? false;
+    remainingAttempts = identificationFailState.remainingAttempts;
     timeSpanBetweenAttemptsInSeconds =
-      identificationFailState.value.timespanBetweenAttempts;
+      identificationFailState.timespanBetweenAttempts;
     const nowInMs = new Date().getTime();
     const nextLegalAttemptInMs =
-      identificationFailState.value.nextLegalAttempt.getTime();
+      identificationFailState.nextLegalAttempt.getTime();
     const elapsedTimeInMs = nextLegalAttemptInMs - nowInMs;
     // This screen is refreshing at every app state change.
     // So we can rely on the elapsed time to show the lock modal.
@@ -374,19 +358,19 @@ export const IdentificationModal = () => {
     />
   ) : (
     <Modal
-      testID="identification-modal"
-      statusBarTranslucent
-      transparent
       onRequestClose={() =>
         handleAndroidBackNavigation(
           identificationContext,
           onIdentificationCancelHandler
         )
       }
+      statusBarTranslucent
+      testID="identification-modal"
+      transparent
     >
       <StatusBar
-        barStyle={"light-content"}
         backgroundColor={"transparent"}
+        barStyle={"light-content"}
         translucent
       />
       <View
@@ -403,12 +387,12 @@ export const IdentificationModal = () => {
             <ContentWrapper>
               <VSpacer size={VERTICAL_PADDING} />
               <IconButton
-                icon={"closeLarge"}
+                accessibilityLabel={closeButtonLabel}
                 color="contrast"
+                icon={"closeLarge"}
                 onPress={() => {
                   onIdentificationCancelHandler();
                 }}
-                accessibilityLabel={closeButtonLabel}
               />
             </ContentWrapper>
           </View>
@@ -433,12 +417,12 @@ export const IdentificationModal = () => {
                   style={styles.alertContainer}
                 >
                   <ToastNotification
+                    icon="warningFilled"
                     message={
                       remainingAttemptsToShowAlert
                         ? remainingAttemptsText
                         : textTryAgain
                     }
-                    icon="warningFilled"
                     variant="warning"
                   />
                 </View>
@@ -446,8 +430,8 @@ export const IdentificationModal = () => {
                 isValidatingTask ? null : (
                 <View style={{ alignItems: "center" }}>
                   <Pictogram
-                    pictogramStyle="light-content"
                     name={pictogramKey}
+                    pictogramStyle="light-content"
                     size={64}
                   />
                 </View>
@@ -470,15 +454,15 @@ export const IdentificationModal = () => {
               <VSpacer size={isDeviceScreenSmall ? 16 : 32} />
               <View style={{ alignSelf: "center" }}>
                 <IOButton
-                  variant="link"
-                  textAlign="center"
+                  accessibilityLabel={forgotCodeLabel}
                   color="contrast"
+                  label={forgotCodeLabel}
                   /* Don't limit number of lines
                     when larger text is enabled */
                   numberOfLines={0}
-                  accessibilityLabel={forgotCodeLabel}
-                  label={forgotCodeLabel}
                   onPress={confirmResetAlert}
+                  textAlign="center"
+                  variant="link"
                 />
                 <VSpacer size={VERTICAL_PADDING} />
               </View>

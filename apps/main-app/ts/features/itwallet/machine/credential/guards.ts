@@ -1,44 +1,42 @@
-import { constFalse, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
-import { useIOStore } from "../../../../store/hooks";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
+import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
-import { CredentialIssuanceFailureType } from "./failure";
 
-export const createCredentialIssuanceGuardsImplementation = (
-  store: ReturnType<typeof useIOStore>,
-  itwVersion: ItwVersion
-) => ({
-  isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
-    "error" in event && event.error instanceof ItwSessionExpiredError,
+type GuardArgs = {
+  context: Context;
+  event: CredentialIssuanceEvents;
+};
 
-  hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
-    pipe(
-      O.fromNullable(context.walletInstanceAttestation?.jwt),
-      O.map(attestation =>
-        isWalletInstanceAttestationValid(itwVersion, attestation)
-      ),
-      O.getOrElse(() => false)
-    ),
+export const isSessionExpiredGuard = ({ event }: GuardArgs) =>
+  "error" in event && event.error instanceof ItwSessionExpiredError;
 
-  isStatusError: ({ context }: { context: Context }) =>
-    context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS,
+export const hasValidWalletInstanceAttestationGuard = ({
+  context
+}: GuardArgs) => {
+  const attestation = context.walletInstanceAttestation?.jwt;
+  if (!attestation) {
+    return false;
+  }
+  return isWalletInstanceAttestationValid(context.deps.itwVersion, attestation);
+};
 
-  isEidExpired: () => {
-    const eidStatus = itwCredentialsEidStatusSelector(store.getState());
+export const isEidExpiredGuard = ({ context }: GuardArgs) => {
+  const eidStatus = itwCredentialsEidStatusSelector(
+    context.deps.store.getState()
+  );
 
-    return eidStatus === "jwtExpired";
-  },
+  return eidStatus === "jwtExpired";
+};
 
-  hasCredentialIntroContent: ({ context }: { context: Context }) =>
-    pipe(
-      O.fromNullable(context.credentialType),
-      O.chainNullableK(type => context.credentialsCatalogue?.[type]),
-      O.map(metadata => !!metadata.authentic_sources[0]?.user_information),
-      O.getOrElse(constFalse)
-    )
-});
+export const hasCredentialIntroContentGuard = ({ context }: GuardArgs) => {
+  if (!context.credentialType) {
+    return false;
+  }
+  const credentialIntroContent = itwCredentialIntroContentSelector(
+    context.credentialType
+  )(context.deps.store.getState());
+  return Boolean(credentialIntroContent);
+};

@@ -1,26 +1,26 @@
-import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import {
-  itwCredentialSelector,
-  itwCredentialsSelector,
-  itwCredentialsEidSelector,
-  itwCredentialsTypesSelector,
-  itwHasWalletAtLeastTwoCredentialsSelector,
-  itwIsWalletEmptySelector,
-  selectFiscalCodeFromEid,
-  selectNameSurnameFromEid,
-  itwCredentialsByTypeSelector,
-  itwCredentialsListByTypeSelector,
-  itwHasExpiringCredentialsSelector,
-  itwIsMdlPresentSelector
-} from "../index";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
-  ParsedCredential,
-  CredentialMetadata
+  CredentialMetadata,
+  ParsedCredential
 } from "../../../../common/utils/itwTypesUtils";
+import {
+  itwCredentialsByTypeSelector,
+  itwCredentialsEidSelector,
+  itwCredentialSelector,
+  itwCredentialsListByTypeSelector,
+  itwCredentialsSelector,
+  itwCredentialsToRefillSelector,
+  itwCredentialsTypesSelector,
+  itwHasWalletAtLeastTwoCredentialsSelector,
+  itwIsMdlPresentSelector,
+  itwIsWalletEmptySelector,
+  selectFiscalCodeFromEid,
+  selectNameSurnameFromEid
+} from "../index";
 
 const getStateWithCredentials = (credentials: {
   [key: string]: Partial<CredentialMetadata>;
@@ -123,19 +123,19 @@ describe("itwCredentialsByTypeSelector", () => {
 });
 
 describe("itwCredentialsEidSelector", () => {
-  it("returns O.some with the eid ", () => {
+  it("returns the eid", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense
     });
-    expect(itwCredentialsEidSelector(state)).toEqual(O.some(mockedEid));
+    expect(itwCredentialsEidSelector(state)).toEqual(mockedEid);
   });
 
-  it("returns O.none if the eid is not present", () => {
+  it("returns undefined if the eid is not present", () => {
     const state = getStateWithCredentials({
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense
     });
-    expect(itwCredentialsEidSelector(state)).toEqual(O.none);
+    expect(itwCredentialsEidSelector(state)).toBeUndefined();
   });
 });
 
@@ -154,7 +154,7 @@ describe("itwCredentialsSelector", () => {
 });
 
 describe("itwCredentialSelector", () => {
-  it("returns the O.some with the credential if it exists", () => {
+  it("returns the credential if it exists", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
@@ -162,9 +162,9 @@ describe("itwCredentialSelector", () => {
     });
     expect(
       itwCredentialSelector(CredentialType.DRIVING_LICENSE)(state)
-    ).toEqual(O.some(mockedDrivingLicense));
+    ).toEqual(mockedDrivingLicense);
   });
-  it("returns the O.none if the credential does not exist", () => {
+  it("returns undefined if the credential does not exist", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
@@ -174,7 +174,7 @@ describe("itwCredentialSelector", () => {
       itwCredentialSelector(CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD)(
         state
       )
-    ).toEqual(O.none);
+    ).toBeUndefined();
   });
 });
 
@@ -318,12 +318,12 @@ describe("itwHasWalletAtLeastTwoCredentialsSelector", () => {
 });
 
 describe("test legacy credentials", () => {
-  it("itwCredentialsEidSelector returns O.some with the eid ", () => {
+  it("itwCredentialsEidSelector returns the eid", () => {
     const legacyEid = { ...mockedEid, format: "vc+sd-jwt" };
     const state = getStateWithCredentials({
       [legacyEid.credentialId]: legacyEid
     });
-    expect(itwCredentialsEidSelector(state)).toEqual(O.some(legacyEid));
+    expect(itwCredentialsEidSelector(state)).toEqual(legacyEid);
   });
 
   it("itwCredentialsSelector returns the legacy credentials", () => {
@@ -364,50 +364,6 @@ describe("itwCredentialsListByTypeSelector", () => {
   });
 });
 
-describe("itwHasExpiringCredentialsSelector", () => {
-  it("should return true when there is at least one expiring credential", () => {
-    const state = getStateWithCredentials({
-      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
-      [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-      [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense
-    });
-    expect(itwHasExpiringCredentialsSelector(state)).toEqual(true);
-  });
-
-  it("should return false when all credentials are valid", () => {
-    const state = getStateWithCredentials({
-      [mockedDisabilityCard.credentialId]: {
-        ...mockedDisabilityCard,
-        jwt: {
-          issuedAt: "2024-09-30T07:32:49.000Z",
-          expiration: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 1)
-          ).toISOString()
-        }
-      },
-      [mockedDrivingLicense.credentialId]: {
-        ...mockedDrivingLicense,
-        jwt: {
-          issuedAt: "2024-09-30T07:32:49.000Z",
-          expiration: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 1)
-          ).toISOString()
-        }
-      },
-      [mockedMdocDrivingLicense.credentialId]: {
-        ...mockedMdocDrivingLicense,
-        jwt: {
-          issuedAt: "2024-09-30T07:32:49.000Z",
-          expiration: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 1)
-          ).toISOString()
-        }
-      }
-    });
-    expect(itwHasExpiringCredentialsSelector(state)).toEqual(false);
-  });
-});
-
 describe("itwIsMdlPresentSelector", () => {
   it("should return true if there is mDL stored", () => {
     const state = getStateWithCredentials({
@@ -423,5 +379,52 @@ describe("itwIsMdlPresentSelector", () => {
       [mockedDisabilityCard.credentialId]: mockedDisabilityCard
     });
     expect(itwIsMdlPresentSelector(state)).toEqual(false);
+  });
+});
+
+describe("itwCredentialsToRefillSelector", () => {
+  const makeProofOfAge = (keyTags: Array<string>): CredentialMetadata => ({
+    ...mockedDrivingLicense,
+    credentialType: CredentialType.PROOF_OF_AGE,
+    credentialId: "dc_sd_jwt_proof_of_age",
+    keyTag: keyTags[0],
+    keyTags
+  });
+
+  it("should return the type of a batch credential at the refill threshold", () => {
+    const proofOfAge = makeProofOfAge(["kt-1", "kt-2"]);
+    const state = getStateWithCredentials({
+      [proofOfAge.credentialId]: proofOfAge
+    });
+    expect(itwCredentialsToRefillSelector(state)).toEqual([
+      CredentialType.PROOF_OF_AGE
+    ]);
+  });
+
+  it("should not return a batch credential above the refill threshold", () => {
+    const proofOfAge = makeProofOfAge(["kt-1", "kt-2", "kt-3"]);
+    const state = getStateWithCredentials({
+      [proofOfAge.credentialId]: proofOfAge
+    });
+    expect(itwCredentialsToRefillSelector(state)).toEqual([]);
+  });
+
+  it("should not return credentials that are not obtained in batch", () => {
+    const state = getStateWithCredentials({
+      [mockedDrivingLicense.credentialId]: mockedDrivingLicense
+    });
+    expect(itwCredentialsToRefillSelector(state)).toEqual([]);
+  });
+
+  it("should deduplicate the same credential type stored in multiple formats", () => {
+    const sdJwt = makeProofOfAge(["kt-1"]);
+    const mdoc = { ...sdJwt, credentialId: "mso_mdoc_proof_of_age" };
+    const state = getStateWithCredentials({
+      [sdJwt.credentialId]: sdJwt,
+      [mdoc.credentialId]: mdoc
+    });
+    expect(itwCredentialsToRefillSelector(state)).toEqual([
+      CredentialType.PROOF_OF_AGE
+    ]);
   });
 });

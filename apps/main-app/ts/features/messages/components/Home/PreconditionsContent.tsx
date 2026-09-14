@@ -1,32 +1,27 @@
-import { IOSkeleton, VStack } from "@pagopa/io-app-design-system";
+import { IOSkeleton, VStack } from "@io-app/design-system";
 import { useLinkTo } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+
 import IOMarkdown from "../../../../components/IOMarkdown";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import {
-  isIOMarkdownEnabledForMessagesAndServicesSelector,
-  pnMinAppVersionSelector
-} from "../../../../store/reducers/backendStatus/remoteConfig";
+import { pnMinAppVersionSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { trackDisclaimerLoadError } from "../../analytics";
 import {
   errorPreconditionStatusAction,
-  shownPreconditionStatusAction,
-  toErrorPayload,
-  toShownPayload
+  toErrorPayload
 } from "../../store/actions/preconditions";
 import {
   preconditionsCategoryTagSelector,
   preconditionsContentMarkdownSelector,
   preconditionsContentSelector
 } from "../../store/reducers/messagePrecondition";
-import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
 import { PreconditionsFeedback } from "./PreconditionsFeedback";
 
 type PreconditionsContentProps = {
@@ -57,14 +52,8 @@ const PreconditionsContentMarkdown = ({
   const store = useIOStore();
   const linkTo = useLinkTo();
 
-  const useIOMarkdown = useIOSelector(
-    isIOMarkdownEnabledForMessagesAndServicesSelector
-  );
   const markdown = useIOSelector(preconditionsContentMarkdownSelector);
 
-  const onLoadEndCallback = useCallback(() => {
-    dispatch(shownPreconditionStatusAction(toShownPayload()));
-  }, [dispatch]);
   const onErrorCallback = useCallback(
     (anyError: any) => {
       const state = store.getState();
@@ -85,22 +74,11 @@ const PreconditionsContentMarkdown = ({
   }
   return (
     <View>
-      {useIOMarkdown ? (
-        <IOMarkdown
-          content={markdown}
-          onError={onErrorCallback}
-          rules={generateMessagesAndServicesRules(linkTo)}
-        />
-      ) : (
-        <MessageMarkdown
-          loadingLines={7}
-          onLoadEnd={onLoadEndCallback}
-          onError={onErrorCallback}
-          testID="preconditions_content_message_markdown"
-        >
-          {markdown}
-        </MessageMarkdown>
-      )}
+      <IOMarkdown
+        content={markdown}
+        onError={onErrorCallback}
+        rules={generateMessagesAndServicesRules(linkTo)}
+      />
       {/* This view is needed since the bottom sheet has a FooterActions component
           that is partially visible above the content. Without the extra space, the
           Markdown will go underneath it */}
@@ -119,10 +97,10 @@ const PreconditionsContentError = () => (
 const PreconditionsContentSkeleton = () => (
   <View accessible={false}>
     {Array.from({ length: 3 }).map((_, i) => (
-      <VStack space={8} key={`pre_content_ske_${i}`}>
-        <IOSkeleton shape="rectangle" width={"100%"} height={20} radius={4} />
-        <IOSkeleton shape="rectangle" width={"100%"} height={20} radius={4} />
-        <IOSkeleton shape="rectangle" width={"90%"} height={20} radius={4} />
+      <VStack key={`pre_content_ske_${i}`} space={8}>
+        <IOSkeleton height={20} radius={4} shape="rectangle" width={"100%"} />
+        <IOSkeleton height={20} radius={4} shape="rectangle" width={"100%"} />
+        <IOSkeleton height={20} radius={4} shape="rectangle" width={"90%"} />
       </VStack>
     ))}
   </View>
@@ -133,10 +111,10 @@ const PreconditionsContentUpdate = () => {
   return (
     <PreconditionsFeedback
       pictogram="umbrella"
-      title={I18n.t("features.messages.updateBottomSheet.title")}
       subtitle={I18n.t("features.messages.updateBottomSheet.subtitle", {
         value: pnMinAppVersion
       })}
+      title={I18n.t("features.messages.updateBottomSheet.title")}
     />
   );
 };

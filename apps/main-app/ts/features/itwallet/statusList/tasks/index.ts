@@ -1,10 +1,19 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
+
+import { EnvType, getEnv } from "../../common/utils/environment";
 import {
   trackItwStatusListFetchRegistered,
   trackItwStatusListFetchRegisterFailure
 } from "../analytics";
-import { storeLastStatusListCheckTimestamp } from "../utils/storage";
+import { refreshStaleEntries } from "../utils/refresh";
+import {
+  getItwEnv,
+  getItwSpecsVersion,
+  storeItwEnv,
+  storeItwSpecsVersion
+} from "../utils/storage";
 
 /**
  * Identifier for the ITW Status List background fetch task.
@@ -17,14 +26,44 @@ export const ITW_STATUS_LIST_FETCH_TASK = "io-itw-status-list-fetch";
  * The task will be scheduled to run approximately every this amount of minutes.
  * Note that the actual execution timing is determined by the OS and may vary.
  */
-export const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 4;
+const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 12;
 
 /**
- * Registers the ITW Status List background fetch task with expo-background-task
- * if the background task API is available and the task is not already registered.
+ * Register the ITW Status List fetch task handler with expo-task-manager.
+ * Important: must be defined at module level.
+ *
+ * Reads the specs version persisted during foreground registration, then refreshes
+ * stale Status List entries without depending on Redux.
  */
-export const registerItwStatusListFetchTask = async (): Promise<void> => {
+TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
+    const [itwVersion, env] = await Promise.all([
+      getItwSpecsVersion(),
+      getItwEnv()
+    ]);
+    await refreshStaleEntries({
+      itwVersion,
+      x509CertRoot: getEnv(env).X509_CERT_ROOT
+    });
+    return BackgroundTask.BackgroundTaskResult.Success;
+  } catch {
+    return BackgroundTask.BackgroundTaskResult.Failed;
+  }
+});
+
+/**
+ * Persists current IT-Wallet specs version and environment, then
+ * registers Status List background fetch task when needed.
+ *
+ * Persisting happens on every call so app updates can change background task
+ * verification config without recreating OS task registration.
+ */
+export const registerItwStatusListFetchTask = async (
+  itwVersion: ItwVersion,
+  env: EnvType
+): Promise<void> => {
+  try {
+    await Promise.all([storeItwSpecsVersion(itwVersion), storeItwEnv(env)]);
     const isRegistered = await TaskManager.isTaskRegisteredAsync(
       ITW_STATUS_LIST_FETCH_TASK
     );
@@ -46,7 +85,7 @@ export const registerItwStatusListFetchTask = async (): Promise<void> => {
 /**
  * Unregister the ITW Status List background fetch task with expo-background-task.
  *
- * @throws Will throw an error if the unregistration fails
+ * No-op if the task is not registered; errors during unregistration are ignored.
  */
 export const unregisterItwStatusListFetchTask = async (): Promise<void> => {
   try {
@@ -62,24 +101,3 @@ export const unregisterItwStatusListFetchTask = async (): Promise<void> => {
     // Ignore errors during unregistration
   }
 };
-
-/**
- * Register the ITW Status List fetch task handler with expo-task-manager.
- * Important: must be defined at module level.
- *
- * Checks whether the Status List needs to be refreshed (i.e. last
- * check was more than 24 hours ago) and, if so, fetches it and updates the
- * last check timestamp.
- */
-TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
-  try {
-    const now = Date.now();
-    await storeLastStatusListCheckTimestamp(now);
-
-    // TODO Add Status List fetch logic here
-
-    return BackgroundTask.BackgroundTaskResult.Success;
-  } catch {
-    return BackgroundTask.BackgroundTaskResult.Failed;
-  }
-});

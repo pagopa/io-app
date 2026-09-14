@@ -1,5 +1,7 @@
+import { Consent } from "@io-app/api-types/generated/definitions/fims_sso/Consent";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+
 import {
   abortUrlFromConsentsPot,
   fimsAuthenticationErrorTagSelector,
@@ -15,7 +17,6 @@ import {
   fimsRelyingPartyUrlSelector,
   relyingPartyServiceIdSelector
 } from "../";
-import { Consent } from "../../../../../../../definitions/fims_sso/Consent";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import * as potUtils from "../../../../../../utils/pot";
 import { FIMS_SSO_ERROR_TAGS, FimsFlowStateTags } from "../../reducers";
@@ -37,7 +38,7 @@ const flowStateTags: ReadonlyArray<FimsFlowStateTags> = [
 const ssoDataPots = (
   consent: Consent,
   errorTag: FIMS_SSO_ERROR_TAGS = "GENERIC",
-  debugMessage: string = "Failed"
+  debugMessage = "Failed"
 ) => [
   pot.none,
   pot.noneLoading,
@@ -239,7 +240,7 @@ describe("singleSignOn selectors", () => {
     );
   });
 
-  describe("fimsAuthenticationFailedSelector", () =>
+  describe("fimsAuthenticationFailedSelector", () => {
     ssoDataPots({} as Consent).forEach(ssoDataPot => {
       const expectedOutput =
         ssoDataPot.kind === "PotNoneError" ||
@@ -258,7 +259,8 @@ describe("singleSignOn selectors", () => {
           fimsAuthenticationFailedSelector(globalState);
         expect(authenticationFailed).toBe(expectedOutput);
       });
-    }));
+    });
+  });
 
   describe("fimsAuthenticationErrorTagSelector", () => {
     errorTags.forEach(errorTag =>

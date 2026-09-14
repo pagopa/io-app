@@ -3,20 +3,25 @@ import {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { TrustmarkFailure } from "./failure";
+import { TrustmarkMachineDeps } from "./input";
 
 export type Context = {
+  /**
+   * The number of attempts made by the user to get the trustmark
+   */
+  attempts?: number;
+  /**
+   * The credential to get the trustmark for
+   */
+  credential?: CredentialMetadata;
   /**
    * The credential type to get the trustmark for
    */
   credentialType: string;
   /**
-   * The wallet instance attestation to be used to get the trustmark
+   * Runtime dependencies injected via machine input
    */
-  walletInstanceAttestation?: WalletInstanceAttestations;
-  /**
-   * The credential to get the trustmark for
-   */
-  credential?: CredentialMetadata;
+  deps: TrustmarkMachineDeps;
   /**
    * The expiration date of the trustmark
    */
@@ -26,19 +31,19 @@ export type Context = {
    */
   expirationSeconds?: number;
   /**
-   * The trustmark url
-   */
-  trustmarkUrl?: string;
-  /**
    * The failure of the trustmark machine
    */
   failure?: TrustmarkFailure;
   /**
-   * The number of attempts made by the user to get the trustmark
-   */
-  attempts?: number;
-  /**
    * Time after which the user can attempt again to get the trustmark
    */
   nextAttemptAt?: Date;
+  /**
+   * The trustmark url
+   */
+  trustmarkUrl?: string;
+  /**
+   * The wallet instance attestation to be used to get the trustmark
+   */
+  walletInstanceAttestation?: WalletInstanceAttestations;
 };

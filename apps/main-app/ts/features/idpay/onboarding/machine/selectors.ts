@@ -1,12 +1,13 @@
-import * as O from "fp-ts/lib/Option";
+import { OnboardingInitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingInitiativeDTO";
+import { SelfCriteriaBoolDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaBoolDTO";
+import { SelfCriteriaMultiDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiDTO";
+import { SelfCriteriaMultiTypeDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiTypeDTO";
+import { SelfCriteriaTextDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaTextDTO";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
-import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
-import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
-import { SelfCriteriaMultiDTO } from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
-import { SelfCriteriaMultiTypeDTO } from "../../../../../definitions/idpay/SelfCriteriaMultiTypeDTO";
-import { SelfCriteriaTextDTO } from "../../../../../definitions/idpay/SelfCriteriaTextDTO";
+
 import * as Context from "./context";
 import { IdPayOnboardingMachine } from "./machine";
 
@@ -51,7 +52,7 @@ const filterMultiCriteria = <T>(criteria: O.Option<OnboardingInitiativeDTO>) =>
 export const multiRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
-    filterMultiCriteria<SelfCriteriaMultiTypeDTO | SelfCriteriaMultiDTO>(
+    filterMultiCriteria<SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO>(
       requiredCriteria
     )
 );
@@ -121,7 +122,7 @@ export const stepperCountSelector = createSelector(
 export const getMultiSelfDeclarationListFromContext = (
   context: Context.Context
 ) =>
-  filterMultiCriteria<SelfCriteriaMultiTypeDTO | SelfCriteriaMultiDTO>(
+  filterMultiCriteria<SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO>(
     context.requiredCriteria
   );
 

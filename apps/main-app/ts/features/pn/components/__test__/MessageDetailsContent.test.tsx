@@ -1,9 +1,11 @@
 import _ from "lodash";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as USEIO_HOOKS from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { SendUserType } from "../../../pushNotifications/analytics";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import { aarAdresseeDenominationSelector } from "../../aar/store/selectors";
 import PN_ROUTES from "../../navigation/routes";
@@ -13,7 +15,6 @@ import {
   MessageDetailsContentProps,
   testable
 } from "../MessageDetailsContent";
-import { SendUserType } from "../../../pushNotifications/analytics";
 
 jest.mock("../../aar/store/selectors", () => ({
   ...jest.requireActual("../../aar/store/selectors"),
@@ -62,10 +63,10 @@ describe("MessageDetailsContent component", () => {
     hasSenderDenomination,
     isAbstractEnabled
   }: {
-    sendUserType: SendUserType;
     hasAarAdresseeDenomination: boolean;
     hasSenderDenomination: boolean;
     isAbstractEnabled: boolean;
+    sendUserType: SendUserType;
   }) => {
     it(`should match snapshot when user type is ${sendUserType}, ${
       hasAarAdresseeDenomination ? "has" : "does not have"

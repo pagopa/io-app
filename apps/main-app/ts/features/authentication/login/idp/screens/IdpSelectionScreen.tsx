@@ -1,9 +1,10 @@
-import { Banner, useIOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, useIOToast, VSpacer } from "@io-app/design-system";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import _ from "lodash";
 import { createRef, ReactElement, useCallback, useEffect, useRef } from "react";
-import { Platform, View } from "react-native";
+import { View } from "react-native";
+
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -17,7 +18,6 @@ import {
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { idpsRemoteValueSelector } from "../../../../../store/reducers/content";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { idps as idpsFallback, SpidIdp } from "../../../../../utils/idps";
 import {
@@ -32,14 +32,7 @@ import { trackLoginSpidIdpSelected } from "../../../common/analytics/spidAnalyti
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpSelected } from "../../../common/store/actions";
-import { nativeLoginSelector } from "../../../nativeLogin/store/reducers";
-import { isNativeLoginEnabledSelector } from "../../../nativeLogin/store/selectors";
 import IdpsGrid from "../components/IdpsGrid";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "authentication.idp_selection.contextualHelpTitle",
-  body: "authentication.idp_selection.contextualHelpContent"
-};
 
 export const randomOrderIdps = <T extends object>(
   array: Array<T> | ReadonlyArray<T>
@@ -64,10 +57,6 @@ const IdpSelectionScreen = (): ReactElement => {
     >();
   const idps = useIOSelector(idpsRemoteValueSelector);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
-  const nativeLoginFeature = useIOSelector(nativeLoginSelector);
-  const isNativeLoginFeatureFlagEnabled = useIOSelector(
-    isNativeLoginEnabledSelector
-  );
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const flow = isActiveSessionLogin ? "reauth" : "auth";
   const { error } = useIOToast();
@@ -103,44 +92,24 @@ const IdpSelectionScreen = (): ReactElement => {
   // collected after the data is updated (so when it isReady again).
   if (isReady(idps)) {
     if (!_.isEqual(firstIdpsRef.current, idps.value)) {
-      // eslint-disable-next-line functional/immutable-data
       randomIdps.current = randomOrderIdps(idps.value);
     }
-    // eslint-disable-next-line functional/immutable-data
     firstIdpsRef.current = idps.value;
   }
-
-  const isNativeLoginEnabled = () =>
-    (Platform.OS !== "ios" ||
-      (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 13)) &&
-    nativeLoginFeature.enabled &&
-    isNativeLoginFeatureFlagEnabled;
 
   const onIdpSelected = (idp: SpidIdp) => {
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
     void trackLoginSpidIdpSelected(idp.id, store.getState(), flow);
     if (isActiveSessionLogin) {
       dispatch(setIdpSelectedActiveSessionLogin(idp));
-      if (isNativeLoginEnabled()) {
-        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-          screen: AUTHENTICATION_ROUTES.AUTH_SESSION
-        });
-      } else {
-        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-          screen: AUTHENTICATION_ROUTES.IDP_LOGIN_ACTIVE_SESSION_LOGIN
-        });
-      }
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.IDP_LOGIN_ACTIVE_SESSION_LOGIN
+      });
     } else {
       setSelectedIdp(idp);
-      if (isNativeLoginEnabled()) {
-        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-          screen: AUTHENTICATION_ROUTES.AUTH_SESSION
-        });
-      } else {
-        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-          screen: AUTHENTICATION_ROUTES.IDP_LOGIN
-        });
-      }
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.IDP_LOGIN
+      });
     }
   };
 
@@ -158,12 +127,10 @@ const IdpSelectionScreen = (): ReactElement => {
     return (
       <>
         <Banner
-          ref={viewRef}
-          color="neutral"
-          title={I18n.t("login.help_banner_title")}
-          content={I18n.t("login.help_banner_content")}
           accessibilityRole="link"
           action={I18n.t("login.help_banner_action")}
+          color="neutral"
+          content={I18n.t("login.help_banner_content")}
           onPress={() => {
             trackHelpCenterCtaTapped(
               "LOGIN_SPID_IDP_SELECTION",
@@ -175,6 +142,8 @@ const IdpSelectionScreen = (): ReactElement => {
             });
           }}
           pictogramName="help"
+          ref={viewRef}
+          title={I18n.t("login.help_banner_title")}
         />
         <VSpacer size={8} />
       </>
@@ -182,18 +151,16 @@ const IdpSelectionScreen = (): ReactElement => {
   };
   useHeaderSecondLevel({
     title: "",
-    contextualHelpMarkdown,
-    supportRequest: true,
-    faqCategories: ["authentication_IPD_selection"]
+    supportRequest: true
   });
 
   return (
     <IdpsGrid
-      testID="idps-grid"
+      footerComponent={<VSpacer size={40} />}
+      headerComponent={headerComponent}
       idps={randomIdps.current}
       onIdpSelected={onIdpSelected}
-      headerComponent={headerComponent}
-      footerComponent={<VSpacer size={40} />}
+      testID="idps-grid"
     />
   );
 };

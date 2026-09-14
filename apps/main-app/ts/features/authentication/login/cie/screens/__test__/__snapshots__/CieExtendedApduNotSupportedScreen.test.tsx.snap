@@ -611,7 +611,6 @@ exports[`CieExtendedApduNotSupportedScreen should match the snapshot 1`] = `
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -635,7 +634,6 @@ exports[`CieExtendedApduNotSupportedScreen should match the snapshot 1`] = `
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",

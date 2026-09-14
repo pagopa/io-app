@@ -1,6 +1,8 @@
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
+import { consolidateActiveSessionLoginData } from "../../../authentication/activeSessionLogin/store/actions";
 import {
   logoutRequest,
   sessionCorrupted,
@@ -16,39 +18,38 @@ import {
   newPushNotificationsToken,
   pushNotificationsTokenUploaded
 } from "../actions/installation";
-import { consolidateActiveSessionLoginData } from "../../../authentication/activeSessionLogin/store/actions";
 
 export const TokenRegistrationResendDelay = 1000 * 60 * 60 * 24;
-
-type TokenStatusUnsent = {
-  status: "unsent";
-};
-type TokenStatusSentUnconfirmed = {
-  status: "sentUnconfirmed";
-  date: number;
-};
-type TokenStatusSentConfirmed = {
-  status: "sentConfirmed";
-};
-export type TokenStatus =
-  | TokenStatusUnsent
-  | TokenStatusSentUnconfirmed
-  | TokenStatusSentConfirmed;
 
 export type InstallationState = Readonly<{
   // This ID is a legacy feature that is not used anymore but is required as a mandatory parameter
   // when submitting the push notification token to the backend (latter does nothing with it,
   // apart from checking its presence in the url)
   id: string;
-  // the current push notification token release from push notification service (APNS, Firebase)
-  token?: string;
   // the token registered in the backend
   registeredToken?: string;
+  // the current push notification token release from push notification service (APNS, Firebase)
+  token?: string;
   // This is a temporary measure to overcome a backend anomaly where the token may have been deleted
   // after registration. After the token registration, the app waits for a day and then registers
   // the token again.
   tokenStatus: TokenStatus;
 }>;
+export type TokenStatus =
+  | TokenStatusSentConfirmed
+  | TokenStatusSentUnconfirmed
+  | TokenStatusUnsent;
+type TokenStatusSentConfirmed = {
+  status: "sentConfirmed";
+};
+type TokenStatusSentUnconfirmed = {
+  date: number;
+  status: "sentUnconfirmed";
+};
+
+type TokenStatusUnsent = {
+  status: "unsent";
+};
 
 export const generateInitialState = (): InstallationState => ({
   id: generateInstallationId(),
@@ -62,6 +63,19 @@ export const installationReducer = (
   action: Action
 ): InstallationState => {
   switch (action.type) {
+    // Clear registeredToken when the authentication is not longer valid
+    // IO backend will automatically delete it on the next user login
+    case getType(clearCache):
+    case getType(consolidateActiveSessionLoginData):
+    case getType(logoutRequest): // even if the logout fails
+    case getType(sessionCorrupted):
+    case getType(sessionExpired):
+    case getType(sessionInvalid):
+      return {
+        ...state,
+        registeredToken: undefined,
+        tokenStatus: { status: "unsent" }
+      };
     case getType(newPushNotificationsToken):
       const actionNewToken = action.payload;
       // If registeredToken is defined and matches the action's token,
@@ -109,19 +123,6 @@ export const installationReducer = (
         ...state,
         registeredToken: actionRegisteredToken,
         tokenStatus: newTokenStatus
-      };
-    // Clear registeredToken when the authentication is not longer valid
-    // IO backend will automatically delete it on the next user login
-    case getType(sessionExpired):
-    case getType(sessionCorrupted):
-    case getType(sessionInvalid):
-    case getType(logoutRequest): // even if the logout fails
-    case getType(clearCache):
-    case getType(consolidateActiveSessionLoginData):
-      return {
-        ...state,
-        registeredToken: undefined,
-        tokenStatus: { status: "unsent" }
       };
     default:
       return state;

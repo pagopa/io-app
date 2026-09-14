@@ -7,13 +7,14 @@ import {
   ListItemHeader,
   ListItemInfo,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { ComponentProps } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
-import I18n from "i18next";
+
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { zendeskPrivacyUrl } from "../../../config";
 import {
@@ -22,12 +23,12 @@ import {
   IOStackNavigationRouteProps
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
+import { openWebUrl } from "../../../utils/url";
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSurnameSelector
 } from "../../settings/common/store/selectors";
-import { openWebUrl } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
 import { type ZendeskAssistanceType } from "../store/actions";
 import { ItemPermissionProps } from "./ZendeskAskPermissions";
@@ -85,16 +86,16 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
   ];
 
   /* Remove items that have no value associated with them */
-  const items = permissionItems.filter(it => it.value);
+  const items = permissionItems.filter(it => it.value != null);
 
   const renderPermissionItem = ({
     item
   }: ListRenderItemInfo<ItemPermissionProps>) => (
     <ListItemInfo
-      testID={item?.testID}
-      label={item?.label}
-      value={item?.value}
       icon={item.icon}
+      label={item?.label}
+      testID={item?.testID}
+      value={item?.value}
     />
   );
 
@@ -116,41 +117,41 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
 
   return (
     <IOScrollViewWithLargeHeader
+      actions={buttonConf}
+      description={I18n.t("support.askPermissions.listBody")}
+      ignoreSafeAreaMargin={Platform.OS === "ios"}
+      testID={"ZendeskAskPermissions"}
       title={{
         label: I18n.t("support.askPermissions.title"),
         section: I18n.t("support.askPermissions.listTitle")
       }}
-      testID={"ZendeskAskPermissions"}
-      description={I18n.t("support.askPermissions.listBody")}
-      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
-      actions={buttonConf}
     >
       <ContentWrapper>
         <IOButton
-          variant="link"
           label={I18n.t("support.askPermissions.privacyLink")}
           onPress={() => {
             openWebUrl(zendeskPrivacyUrl, () =>
               IOToast.error(I18n.t("global.jserror.title"))
             );
           }}
+          variant="link"
         />
       </ContentWrapper>
 
       <VSpacer size={16} />
 
       <FlatList
-        scrollEnabled={false}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
+        data={items}
+        ItemSeparatorComponent={() => <Divider />}
+        keyExtractor={(item, idx) => `permission_item_${item}_${idx}`}
         ListHeaderComponent={
           <ListItemHeader label={I18n.t("support.askPermissions.listHeader")} />
         }
-        data={items}
-        keyExtractor={(item, idx) => `permission_item_${item}_${idx}`}
         renderItem={renderPermissionItem}
-        ItemSeparatorComponent={() => <Divider />}
+        scrollEnabled={false}
       />
     </IOScrollViewWithLargeHeader>
   );

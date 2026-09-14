@@ -4,11 +4,12 @@ import {
   IOText,
   Tag,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import Color from "color";
 import I18n from "i18next";
 import { memo, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
@@ -30,15 +31,15 @@ import { CardColorScheme } from "./types";
 
 export type ItwCredentialCard = {
   /**
-   * Type of the credential, which is used to determine the
-   * visual representation and styling of the card.
-   */
-  credentialType: string;
-  /**
    * Current status of the credential, used to determine the
    * visual representation and the status tag to display.
    */
   credentialStatus?: ItwCredentialStatus;
+  /**
+   * Type of the credential, which is used to determine the
+   * visual representation and styling of the card.
+   */
+  credentialType: string;
   /**
    * Issue date of the credential.
    * Used to determine whether the card should display
@@ -64,7 +65,10 @@ export const ItwCredentialCard = memo(
       itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
     );
     const { themeType, theme } = useIOThemeContext();
-    const status = useItwDisplayCredentialStatus(credentialStatus);
+    const status = useItwDisplayCredentialStatus(
+      credentialStatus,
+      credentialType
+    );
     const borderColorMap = useBorderColorByStatus();
     const cardConfig = useCredentialCardConfig(credentialType);
     const credentialName = useItwCredentialName(credentialType);
@@ -97,25 +101,25 @@ export const ItwCredentialCard = memo(
             <HStack space={16}>
               {credentialType === CredentialType.PID ? (
                 <View style={{ flex: 1 }}>
-                  <ItWalletIdLogo width={117} height={27} />
+                  <ItWalletIdLogo height={27} width={117} />
                 </View>
               ) : (
                 <IOText
-                  size={16}
-                  lineHeight={24}
                   font={
                     typefacePreference === "comfortable"
                       ? "Titillio"
                       : "TitilliumSansPro"
                   }
-                  weight="Semibold"
+                  lineHeight={24}
                   maxFontSizeMultiplier={1.25}
+                  size={16}
                   style={{
                     letterSpacing: 0.25,
                     color: cardConfig.titleColor,
                     flex: 1,
                     flexShrink: 1
                   }}
+                  weight="Semibold"
                 >
                   {credentialName.toUpperCase()}
                 </IOText>
@@ -131,7 +135,7 @@ export const ItwCredentialCard = memo(
           {!isValid && (
             <View
               style={[
-                StyleSheet.absoluteFillObject,
+                StyleSheet.absoluteFill,
                 styles.statusOverlay,
                 {
                   backgroundColor:
@@ -166,7 +170,10 @@ export const ItwCredentialCardLegacy = ({
   const needsItwUpgrade = useIOSelector(
     itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
   );
-  const status = useItwDisplayCredentialStatus(credentialStatus);
+  const status = useItwDisplayCredentialStatus(
+    credentialStatus,
+    credentialType
+  );
   const theme = useThemeColorByCredentialType(credentialType);
   const credentialName = useItwCredentialName(credentialType);
   const tagPropsByStatus = useTagPropsByStatus();
@@ -188,7 +195,7 @@ export const ItwCredentialCardLegacy = ({
   >(() => {
     // Include "jwtExpired" as a valid status because credentials with this state
     // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
-    const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
+    const isValid = ["jwtExpired", ...validCredentialStatuses].includes(status);
     const baseColor = theme.textColor;
 
     if (needsItwUpgrade) {
@@ -226,21 +233,20 @@ export const ItwCredentialCardLegacy = ({
     <View style={styles.cardWrapper}>
       <View style={styles.cardContainer}>
         <LegacyCardBackground
-          credentialType={credentialType}
           colorScheme={colorScheme}
+          credentialType={credentialType}
         />
         <View style={styles.header}>
           <HStack space={16}>
             <IOText
-              size={16}
-              lineHeight={20}
               font={
                 typefacePreference === "comfortable"
                   ? "Titillio"
                   : "TitilliumSansPro"
               }
-              weight="Semibold"
+              lineHeight={20}
               maxFontSizeMultiplier={1.25}
+              size={16}
               style={{
                 letterSpacing: 0.25,
                 color: titleColor,
@@ -248,6 +254,7 @@ export const ItwCredentialCardLegacy = ({
                 flex: 1,
                 flexShrink: 1
               }}
+              weight="Semibold"
             >
               {credentialName.toUpperCase()}
             </IOText>
@@ -255,8 +262,8 @@ export const ItwCredentialCardLegacy = ({
           </HStack>
         </View>
         <DigitalVersionBadge
-          credentialType={credentialType}
           colorScheme={colorScheme}
+          credentialType={credentialType}
         />
         <View
           style={[

@@ -3,12 +3,18 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useMemo } from "react";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
+import {
+  trackIDPayDetailAuthorizationError,
+  trackIDPayDetailAuthorizationUXSuccess
+} from "../../details/analytics";
 import { idpayInitiativeDetailsSelector } from "../../details/store";
 import { IdPayPaymentMachineContext } from "../machine/provider";
 import {
@@ -17,11 +23,6 @@ import {
   isCancelledSelector
 } from "../machine/selectors";
 import { PaymentFailureEnum } from "../types/PaymentFailure";
-import {
-  trackIDPayDetailAuthorizationError,
-  trackIDPayDetailAuthorizationUXSuccess
-} from "../../details/analytics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const IDPayPaymentResultScreen = () => {
   const { useActorRef, useSelector } = IdPayPaymentMachineContext;
@@ -107,21 +108,21 @@ const IDPayPaymentResultScreen = () => {
   if (isCancelled) {
     return (
       <OperationResultScreenContent
-        pictogram="trash"
-        title={I18n.t("idpay.payment.result.cancelled.title")}
-        subtitle={I18n.t("idpay.payment.result.cancelled.subtitle")}
         action={defaultCloseAction}
+        pictogram="trash"
+        subtitle={I18n.t("idpay.payment.result.cancelled.subtitle")}
         testID="paymentCancelledScreenTestID"
+        title={I18n.t("idpay.payment.result.cancelled.title")}
       />
     );
   }
 
   return (
     <OperationResultScreenContent
-      pictogram="success"
-      title={I18n.t("idpay.payment.result.success.title")}
       action={defaultCloseAction}
+      pictogram="success"
       testID="paymentSuccessScreenTestID"
+      title={I18n.t("idpay.payment.result.success.title")}
     />
   );
 };
@@ -136,34 +137,12 @@ const mapFailureToContentProps = (
   failure: PaymentFailureEnum
 ): OperationResultScreenContentProps => {
   switch (failure) {
-    case PaymentFailureEnum.PAYMENT_TRANSACTION_EXPIRED:
+    case PaymentFailureEnum.PAYMENT_ALREADY_ASSIGNED:
       return {
-        pictogram: "timing",
-        title: I18n.t("idpay.payment.result.failure.TRANSACTION_EXPIRED.title"),
+        pictogram: "fatalError",
+        title: I18n.t("idpay.payment.result.failure.ALREADY_ASSIGNED.title"),
         subtitle: I18n.t(
-          "idpay.payment.result.failure.TRANSACTION_EXPIRED.subtitle"
-        )
-      };
-    case PaymentFailureEnum.PAYMENT_USER_SUSPENDED:
-      return {
-        pictogram: "attention",
-        title: I18n.t("idpay.payment.result.failure.USER_SUSPENDED.title"),
-        subtitle: I18n.t("idpay.payment.result.failure.USER_SUSPENDED.subtitle")
-      };
-    case PaymentFailureEnum.PAYMENT_USER_NOT_ONBOARDED:
-      return {
-        pictogram: "accessDenied",
-        title: I18n.t("idpay.payment.result.failure.USER_NOT_ONBOARDED.title"),
-        subtitle: I18n.t(
-          "idpay.payment.result.failure.USER_NOT_ONBOARDED.subtitle"
-        )
-      };
-    case PaymentFailureEnum.PAYMENT_USER_UNSUBSCRIBED:
-      return {
-        pictogram: "accessDenied",
-        title: I18n.t("idpay.payment.result.failure.USER_UNSUBSCRIBED.title"),
-        subtitle: I18n.t(
-          "idpay.payment.result.failure.USER_UNSUBSCRIBED.subtitle"
+          "idpay.payment.result.failure.ALREADY_ASSIGNED.subtitle"
         )
       };
     case PaymentFailureEnum.PAYMENT_ALREADY_AUTHORIZED:
@@ -179,20 +158,6 @@ const mapFailureToContentProps = (
           "idpay.payment.result.failure.BUDGET_EXHAUSTED.subtitle"
         )
       };
-    case PaymentFailureEnum.PAYMENT_ALREADY_ASSIGNED:
-      return {
-        pictogram: "fatalError",
-        title: I18n.t("idpay.payment.result.failure.ALREADY_ASSIGNED.title"),
-        subtitle: I18n.t(
-          "idpay.payment.result.failure.ALREADY_ASSIGNED.subtitle"
-        )
-      };
-    case PaymentFailureEnum.PAYMENT_INITIATIVE_INVALID_DATE:
-      return {
-        pictogram: "time",
-        title: I18n.t("idpay.payment.result.failure.INVALID_DATE.title"),
-        subtitle: I18n.t("idpay.payment.result.failure.INVALID_DATE.subtitle")
-      };
     case PaymentFailureEnum.PAYMENT_GENERIC_ERROR:
       return {
         pictogram: "umbrella",
@@ -201,6 +166,42 @@ const mapFailureToContentProps = (
         ),
         subtitle: I18n.t(
           "idpay.onboarding.failure.message.PAYMENT_GENERIC_ERROR.subtitle"
+        )
+      };
+    case PaymentFailureEnum.PAYMENT_INITIATIVE_INVALID_DATE:
+      return {
+        pictogram: "time",
+        title: I18n.t("idpay.payment.result.failure.INVALID_DATE.title"),
+        subtitle: I18n.t("idpay.payment.result.failure.INVALID_DATE.subtitle")
+      };
+    case PaymentFailureEnum.PAYMENT_TRANSACTION_EXPIRED:
+      return {
+        pictogram: "timing",
+        title: I18n.t("idpay.payment.result.failure.TRANSACTION_EXPIRED.title"),
+        subtitle: I18n.t(
+          "idpay.payment.result.failure.TRANSACTION_EXPIRED.subtitle"
+        )
+      };
+    case PaymentFailureEnum.PAYMENT_USER_NOT_ONBOARDED:
+      return {
+        pictogram: "accessDenied",
+        title: I18n.t("idpay.payment.result.failure.USER_NOT_ONBOARDED.title"),
+        subtitle: I18n.t(
+          "idpay.payment.result.failure.USER_NOT_ONBOARDED.subtitle"
+        )
+      };
+    case PaymentFailureEnum.PAYMENT_USER_SUSPENDED:
+      return {
+        pictogram: "attention",
+        title: I18n.t("idpay.payment.result.failure.USER_SUSPENDED.title"),
+        subtitle: I18n.t("idpay.payment.result.failure.USER_SUSPENDED.subtitle")
+      };
+    case PaymentFailureEnum.PAYMENT_USER_UNSUBSCRIBED:
+      return {
+        pictogram: "accessDenied",
+        title: I18n.t("idpay.payment.result.failure.USER_UNSUBSCRIBED.title"),
+        subtitle: I18n.t(
+          "idpay.payment.result.failure.USER_UNSUBSCRIBED.subtitle"
         )
       };
     default:

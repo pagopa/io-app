@@ -136,7 +136,6 @@ exports[`CiePinMethodModule When isL3 is false and isReissuance mode is false re
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -381,7 +380,6 @@ exports[`CiePinMethodModule When isL3 is false and isReissuance mode is true ren
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -622,61 +620,10 @@ exports[`CiePinMethodModule When isL3 is true and isReissuance mode is false ren
             }
           }
         >
-          <View
-            accessible={true}
-            style={
-              [
-                {
-                  "alignItems": "center",
-                  "borderCurve": "continuous",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "overflow": "hidden",
-                },
-                {
-                  "borderRadius": 36,
-                  "paddingHorizontal": 12,
-                  "paddingVertical": 6,
-                },
-                {
-                  "backgroundColor": "rgba(97,220,223,0.2)",
-                },
-              ]
-            }
-            testID="CiePinRecommendedBadgeTestID"
-          >
-            <Text
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              maxFontSizeMultiplier={1.5}
-              numberOfLines={1}
-              style={
-                [
-                  {},
-                  {
-                    "color": "#61DCDF",
-                    "fontFamily": "Titillio",
-                    "fontSize": 12,
-                    "fontStyle": "normal",
-                    "fontWeight": "600",
-                    "lineHeight": 16,
-                  },
-                  {
-                    "alignSelf": "center",
-                    "letterSpacing": 0.5,
-                    "textTransform": "uppercase",
-                  },
-                ]
-              }
-            >
-              consigliato
-            </Text>
-          </View>
           <View>
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -921,7 +868,6 @@ exports[`CiePinMethodModule When isL3 is true and isReissuance mode is true rend
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={

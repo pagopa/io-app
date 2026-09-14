@@ -9,20 +9,21 @@ import {
   prepareIntegrityToken,
   requestIntegrityToken
 } from "@pagopa/io-react-native-integrity";
+import { addPadding, removePadding } from "@pagopa/io-react-native-jwt";
 import { IntegrityContext } from "@pagopa/io-react-native-wallet";
 import { Platform } from "react-native";
 import sha from "sha.js";
-import { addPadding, removePadding } from "@pagopa/io-react-native-jwt";
 import { v4 as uuidv4 } from "uuid";
+
 import { Env } from "./environment";
 
 /**
  * Type returned by the getHardwareSignatureWithAuthData function of {@link IntegrityContext}.
  * It contains the signature and the authenticator data.
  */
-export type HardwareSignatureWithAuthData = {
-  signature: string;
+type HardwareSignatureWithAuthData = {
   authenticatorData: string;
+  signature: string;
 };
 
 /**

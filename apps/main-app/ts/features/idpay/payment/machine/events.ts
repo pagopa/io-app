@@ -1,11 +1,9 @@
-type AuthorizePayment = {
-  readonly type: "authorize-payment";
-  readonly trxCode: string;
-  readonly data_entry?: "qr_code" | "manual";
-};
+export type Events = AuthorizePayment | Back | Close | Next;
 
-type Next = {
-  readonly type: "next";
+type AuthorizePayment = {
+  readonly data_entry?: "manual" | "qr_code";
+  readonly trxCode: string;
+  readonly type: "authorize-payment";
 };
 
 type Back = {
@@ -16,4 +14,6 @@ type Close = {
   readonly type: "close";
 };
 
-export type Events = Next | Back | Close | AuthorizePayment;
+type Next = {
+  readonly type: "next";
+};

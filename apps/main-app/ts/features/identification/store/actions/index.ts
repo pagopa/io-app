@@ -6,8 +6,8 @@ import {
 
 import { PinString } from "../../../../types/PinString";
 import {
-  IdentificationCancelData,
   IdentificationBackActionType,
+  IdentificationCancelData,
   IdentificationGenericData,
   IdentificationSuccessData
 } from "../reducers";
@@ -20,12 +20,12 @@ export const identificationRequest = createAction(
   "IDENTIFICATION_REQUEST",
   resolve =>
     (
-      canResetPin: boolean = true,
-      isValidatingTask: boolean = false,
+      canResetPin = true,
+      isValidatingTask = false,
       identificationGenericData?: IdentificationGenericData,
       identificationCancelData?: IdentificationCancelData,
       identificationSuccessData?: IdentificationSuccessData,
-      shufflePad: boolean = false,
+      shufflePad = false,
       identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
     ) =>
       resolve({
@@ -47,12 +47,12 @@ export const identificationStart = createAction(
   resolve =>
     (
       pin: PinString,
-      canResetPin: boolean = true,
-      isValidatingTask: boolean = false,
+      canResetPin = true,
+      isValidatingTask = false,
       identificationGenericData?: IdentificationGenericData,
       identificationCancelData?: IdentificationCancelData,
       identificationSuccessData?: IdentificationSuccessData,
-      shufflePad: boolean = false,
+      shufflePad = false,
       identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
     ) =>
       resolve({
@@ -82,12 +82,12 @@ export const identificationHideLockModal = createAction(
 );
 
 export type IdentificationActions =
-  | ActionType<typeof identificationStart>
-  | ActionType<typeof identificationRequest>
   | ActionType<typeof identificationCancel>
-  | ActionType<typeof identificationSuccess>
   | ActionType<typeof identificationFailure>
-  | ActionType<typeof identificationPinReset>
   | ActionType<typeof identificationForceLogout>
+  | ActionType<typeof identificationHideLockModal>
+  | ActionType<typeof identificationPinReset>
+  | ActionType<typeof identificationRequest>
   | ActionType<typeof identificationReset>
-  | ActionType<typeof identificationHideLockModal>;
+  | ActionType<typeof identificationStart>
+  | ActionType<typeof identificationSuccess>;

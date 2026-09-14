@@ -1,6 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";

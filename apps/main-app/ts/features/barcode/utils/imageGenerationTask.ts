@@ -1,5 +1,6 @@
-import { NativeModules } from "react-native";
 import * as TE from "fp-ts/lib/TaskEither";
+import { NativeModules } from "react-native";
+
 import { BarcodeFailure } from "../types/failure";
 
 interface PdfHighResGeneratorType {

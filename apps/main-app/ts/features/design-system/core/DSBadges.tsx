@@ -5,12 +5,13 @@ import {
   IOColors,
   IOTagRadius,
   Tag,
-  VStack,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+  useIOTheme,
+  VStack
+} from "@io-app/design-system";
 import { View } from "react-native";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 const sectionTitleMargin = 16;
 const sectionMargin = 40;
@@ -76,19 +77,19 @@ const renderTag = () => (
       </VStack>
     </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · With icon, no text"}>
-      <Tag variant="attachment" iconAccessibilityLabel="Allegati" />
+      <Tag iconAccessibilityLabel="Allegati" variant="attachment" />
     </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · Without icon"}>
       <Tag text={"No icon"} variant="noIcon" />
     </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · Custom icon (with custom color)"}>
       <Tag
-        text={"Custom icon"}
-        variant="custom"
         icon={{
           name: "categTravel",
           color: "grey-450"
         }}
+        text={"Custom icon"}
+        variant="custom"
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · Stress test"}>

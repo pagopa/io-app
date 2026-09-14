@@ -1,9 +1,15 @@
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { PreconditionsFeedback } from "../PreconditionsFeedback";
+
+jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
+  AnimatedPictogram: () => null,
+  IOAnimatedPictogramsAssets: {}
+}));
 
 describe("PreconditionsFeedback", () => {
   it("should match snapshot with title and no subtitle", () => {
@@ -24,8 +30,8 @@ const renderComponent = (subtitle: string | undefined = undefined) => {
     () => (
       <PreconditionsFeedback
         pictogram="umbrella"
-        title="The title"
         subtitle={subtitle}
+        title="The title"
       />
     ),
     MESSAGES_ROUTES.MESSAGES_HOME,

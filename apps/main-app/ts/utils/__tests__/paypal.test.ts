@@ -1,6 +1,7 @@
+import { PayPalInfo } from "@io-app/api-types/generated/definitions/pagopa/PayPalInfo";
 import I18n from "i18next";
+
 import { pspAccountList } from "../__mocks__/paypalAccountPsp";
-import { PayPalInfo } from "../../../definitions/pagopa/PayPalInfo";
 import { getPaypalAccountEmail } from "../paypal";
 
 const payPalInfo: PayPalInfo = { pspInfo: pspAccountList };

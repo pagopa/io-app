@@ -1,7 +1,6 @@
-import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
-import { Action } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import { getType } from "typesafe-actions";
+
 import {
   getValueOrElse,
   isLoading,
@@ -11,6 +10,8 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../../common/model/RemoteValue";
+import { Action } from "../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
 import {
   cgnEycaActivation,
@@ -18,14 +19,14 @@ import {
 } from "../../actions/eyca/activation";
 
 export type CgnEycaActivationStatus =
+  | "ALREADY_ACTIVE"
+  | "COMPLETED"
+  | "ERROR"
+  | "INELIGIBLE"
+  | "NOT_FOUND"
   | "POLLING"
   | "POLLING_TIMEOUT"
-  | "PROCESSING"
-  | "NOT_FOUND"
-  | "COMPLETED"
-  | "INELIGIBLE"
-  | "ALREADY_ACTIVE"
-  | "ERROR";
+  | "PROCESSING";
 
 export type EycaActivationState = RemoteValue<
   CgnEycaActivationStatus,
@@ -39,14 +40,14 @@ const reducer = (
   action: Action
 ): EycaActivationState => {
   switch (action.type) {
+    case getType(cgnEycaActivation.failure):
+      return remoteError(action.payload);
     // bonus activation
     case getType(cgnEycaActivation.request):
     case getType(cgnEycaActivationStatusRequest):
       return remoteLoading;
     case getType(cgnEycaActivation.success):
       return remoteReady(action.payload);
-    case getType(cgnEycaActivation.failure):
-      return remoteError(action.payload);
   }
   return state;
 };

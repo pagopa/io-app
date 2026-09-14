@@ -1,7 +1,9 @@
 import { act, fireEvent } from "@testing-library/react-native";
 import { ComponentType } from "react";
-import { createStore } from "redux";
 import { Text, View } from "react-native";
+import { createStore } from "redux";
+
+import * as USE_DEBUGINFO from "../../../../../../hooks/useDebugInfo";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import * as REMOTE_CONFIG from "../../../../../../store/reducers/backendStatus/remoteConfig";
@@ -10,26 +12,25 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import * as URL_UTILS from "../../../../../../utils/url";
 import PN_ROUTES from "../../../../navigation/routes";
 import {
+  trackSendAarMandateCieErrorCac,
+  trackSendAarMandateCieErrorClosure,
+  trackSendAarMandateCieErrorDetail,
+  trackSendAarMandateCieErrorDetailCode,
+  trackSendAarMandateCieErrorDetailHelp,
+  trackSendAarMandateCieErrorRetry
+} from "../../../analytics";
+import { setAarFlowState } from "../../../store/actions";
+import * as AAR_SELECTORS from "../../../store/selectors";
+import { AarStatesByName, sendAarFlowStates } from "../../../utils/stateUtils";
+import { sendAarMockStateFactory } from "../../../utils/testUtils";
+import { useAarGenericErrorBottomSheet } from "../hooks/useAarGenericErrorBottomSheet";
+import { SendAarZendeskSecondLevelTag } from "../hooks/useAarStartSendZendeskSupport";
+import {
   CieExpiredComponent,
   CieValidationExpiredTtlComponent,
   GenericCieValidationErrorComponent,
   UnrelatedCieComponent
 } from "../SendAarCieValidationErrorComponent";
-import { sendAarMockStateFactory } from "../../../utils/testUtils";
-import { setAarFlowState } from "../../../store/actions";
-import { AarStatesByName, sendAarFlowStates } from "../../../utils/stateUtils";
-import * as USE_DEBUGINFO from "../../../../../../hooks/useDebugInfo";
-import * as AAR_SELECTORS from "../../../store/selectors";
-import {
-  trackSendAarMandateCieErrorRetry,
-  trackSendAarMandateCieErrorCac,
-  trackSendAarMandateCieErrorClosure,
-  trackSendAarMandateCieErrorDetail,
-  trackSendAarMandateCieErrorDetailCode,
-  trackSendAarMandateCieErrorDetailHelp
-} from "../../../analytics";
-import { useAarGenericErrorBottomSheet } from "../hooks/useAarGenericErrorBottomSheet";
-import { SendAarZendeskSecondLevelTag } from "../hooks/useAarStartSendZendeskSupport";
 
 const mockTerminateFlow = jest.fn();
 const mockSendAarFlowManager = jest.fn();

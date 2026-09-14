@@ -1,16 +1,17 @@
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { PaymentInfoResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoResponse";
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { createStore } from "redux";
-import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import PN_ROUTES from "../../navigation/routes";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { MessagePaymentBottomSheet } from "../MessagePaymentBottomSheet";
-import { GlobalState } from "../../../../store/reducers/types";
+
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
-import { PaymentFaultV2Enum } from "../../../../../definitions/communication/PaymentFaultV2";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { toSpecificMessagePaymentError } from "../../../messages/types/paymentErrors";
-import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
+import PN_ROUTES from "../../navigation/routes";
+import { MessagePaymentBottomSheet } from "../MessagePaymentBottomSheet";
 
 describe("MessagePaymentBottomSheet", () => {
   it("should match snapshot, no payments", () => {
@@ -114,9 +115,9 @@ const renderComponent = (
         messageId={messageId}
         payments={payments}
         presentPaymentsBottomSheetRef={mockPresentPaymentsBottomSheetRef}
-        serviceId={"01J5X3CYV736B41KSZS8DYR75Q" as ServiceId}
         sendOpeningSource={"message"}
         sendUserType={"recipient"}
+        serviceId={"01J5X3CYV736B41KSZS8DYR75Q" as ServiceId}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

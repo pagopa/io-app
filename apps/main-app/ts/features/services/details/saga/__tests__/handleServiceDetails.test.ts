@@ -1,23 +1,24 @@
-import * as E from "fp-ts/lib/Either";
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { StandardServiceCategoryEnum } from "@io-app/api-types/generated/definitions/services/StandardServiceCategory";
 import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
+import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { StandardServiceCategoryEnum } from "../../../../../../definitions/services/StandardServiceCategory";
-import { ScopeTypeEnum } from "../../../../../../definitions/services/ScopeType";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+
+import { servicesClientManager } from "../../../../../api/ServicesClientManager";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { loadServiceDetail } from "../../store/actions/details";
 import { handleServiceDetails } from "../handleServiceDetails";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { servicesClientManager } from "../../../../../api/ServicesClientManager";
 
 jest.mock("../../../../../api/ServicesClientManager");
 
 const mockedServiceId = "A01" as ServiceId;
 
-export const mockedService: ServiceDetails = {
+const mockedService: ServiceDetails = {
   id: mockedServiceId,
   description: "description",
   metadata: {

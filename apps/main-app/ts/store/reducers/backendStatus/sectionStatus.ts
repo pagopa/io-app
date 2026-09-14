@@ -1,14 +1,15 @@
-import * as O from "fp-ts/lib/Option";
-import { getType } from "typesafe-actions";
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { Sections } from "@io-app/api-types/generated/definitions/content/Sections";
+import { SectionStatus } from "@io-app/api-types/generated/definitions/content/SectionStatus";
 import { constFalse, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { Action } from "../../actions/types";
-import { backendStatusLoadSuccess } from "../../actions/backendStatus";
-import { GlobalState } from "../types";
-import { SectionStatus } from "../../../../definitions/content/SectionStatus";
+import { getType } from "typesafe-actions";
+
 import { LocalizedMessageKeys } from "../../../i18n";
-import { Sections } from "../../../../definitions/content/Sections";
+import { backendStatusLoadSuccess } from "../../actions/backendStatus";
+import { Action } from "../../actions/types";
+import { GlobalState } from "../types";
 
 export type SectionStatusKey = keyof Sections;
 

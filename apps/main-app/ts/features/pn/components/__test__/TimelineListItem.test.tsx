@@ -1,22 +1,23 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { NotificationStatusHistory } from "@io-app/api-types/generated/definitions/pn/NotificationStatusHistory";
+import { fireEvent, render } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
-import { fireEvent, render } from "@testing-library/react-native";
-import { appReducer } from "../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { TimelineListItem } from "../TimelineListItem";
-import PN_ROUTES from "../../navigation/routes";
-import { NotificationStatusHistory } from "../../../../../definitions/pn/NotificationStatusHistory";
+import { appReducer } from "../../../../store/reducers";
+import * as SELECTORS from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
-import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
+import * as BOTTOM_SHEET from "../../../../utils/hooks/bottomSheet";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import * as URL_UTILS from "../../../../utils/url";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
 import * as ANALYTICS from "../../analytics";
-import * as BOTTOM_SHEET from "../../../../utils/hooks/bottomSheet";
-import * as URL_UTILS from "../../../../utils/url";
-import * as SELECTORS from "../../../../store/reducers/backendStatus/remoteConfig";
+import PN_ROUTES from "../../navigation/routes";
+import { TimelineListItem } from "../TimelineListItem";
 
 jest.mock("../Timeline");
 

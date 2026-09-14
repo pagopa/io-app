@@ -1,9 +1,10 @@
 import { createStore } from "redux";
+
+import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { NotificationsPreferencesPreview } from "../NotificationsPreferencesPreview";
-import ROUTES from "../../../../navigation/routes";
 
 describe("NotificationsPreferencesPreview", () => {
   it("should match snapshot, preview on, reminder on", () => {

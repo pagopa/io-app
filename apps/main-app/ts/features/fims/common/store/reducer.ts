@@ -1,15 +1,15 @@
 import { combineReducers } from "redux";
 
-import fimsSSOReducer, {
-  FimsSSOState
-} from "../../singleSignOn/store/reducers/index";
 import fimsHistoryReducer, {
   FimsHistoryState
 } from "../../history/store/reducer";
+import fimsSSOReducer, {
+  FimsSSOState
+} from "../../singleSignOn/store/reducers/index";
 
 export type FimsState = {
-  sso: FimsSSOState;
   history: FimsHistoryState;
+  sso: FimsSSOState;
 };
 
 const fimsReducer = combineReducers({

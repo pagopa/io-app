@@ -1,12 +1,13 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
+
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { successReloadMessagesPayload } from "../../__mocks__/messages";
 import {
   upsertMessageStatusAttributes as action,
   UpsertMessageStatusAttributesPayload
 } from "../../store/actions";
-import { successReloadMessagesPayload } from "../../__mocks__/messages";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleUpsertMessageStatusAttributes } from "../handleUpsertMessageStatusAttributes";
 
 const mockUpsertMessageStatusAttributes = jest.fn();

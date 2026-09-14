@@ -1,3 +1,4 @@
+import { CitizenStatus } from "@io-app/api-types/generated/definitions/cdc/CitizenStatus";
 import {
   Avatar,
   Body,
@@ -6,13 +7,13 @@ import {
   Icon,
   useIOThemeContext,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { format } from "date-fns";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
+
 import WalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card.svg";
 import DarkModeWalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card_dark.svg";
-import { CitizenStatus } from "../../../../../../definitions/cdc/CitizenStatus.ts";
 import { contentRepoUrl } from "../../../../../config.ts";
 
 export type CdcCardProps = CitizenStatus;
@@ -46,21 +47,21 @@ export const CdcCard = (props: CdcCardProps) => {
               <H6 color={textColor} ellipsizeMode="tail" numberOfLines={1}>
                 {I18n.t("bonus.cdc.wallet.card.title")}
               </H6>
-              <Icon name="multiCard" color={textColor} />
+              <Icon color={textColor} name="multiCard" />
             </HStack>
             <Avatar
-              size="small"
               logoUri={{
                 uri: CDC_ORGANIZATION_LOGO
               }}
+              size="small"
             />
           </View>
           <VSpacer size={32} />
-          <Body weight="Regular" color={textColor}>
+          <Body color={textColor} weight="Regular">
             {I18n.t("bonus.cdc.wallet.card.organization")}
           </Body>
         </View>
-        <Body weight="Regular" color={textColor}>
+        <Body color={textColor} weight="Regular">
           {I18n.t("bonus.cdc.wallet.card.validThrough", {
             endDate: format(props.expiration_date, "DD/MM/YY")
           })}

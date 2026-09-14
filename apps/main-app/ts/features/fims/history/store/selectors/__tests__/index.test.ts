@@ -1,5 +1,6 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+
 import {
   fimsHistoryErrorSelector,
   fimsHistoryExportStateSelector,
@@ -9,15 +10,15 @@ import {
   isFimsHistoryExportingSelector,
   isFimsHistoryLoadingSelector
 } from "..";
-import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   remoteError,
   remoteLoading,
   remoteReady,
   remoteUndefined
 } from "../../../../../../common/model/RemoteValue";
+import { GlobalState } from "../../../../../../store/reducers/types";
 
-describe("fimsHistoryPotSelector", () =>
+describe("fimsHistoryPotSelector", () => {
   it("should return the 'features.fims.history.consentsList' instance", () => {
     const consentsData = pot.someError({}, "An error");
     const globalState = {
@@ -31,9 +32,10 @@ describe("fimsHistoryPotSelector", () =>
     } as GlobalState;
     const historyPot = fimsHistoryPotSelector(globalState);
     expect(historyPot).toBe(consentsData);
-  }));
+  });
+});
 
-describe("isFimsHistoryLoadingSelector", () =>
+describe("isFimsHistoryLoadingSelector", () => {
   [
     pot.none,
     pot.noneLoading,
@@ -60,7 +62,8 @@ describe("isFimsHistoryLoadingSelector", () =>
       const historyPot = isFimsHistoryLoadingSelector(globalState);
       expect(historyPot).toBe(expectedOutput);
     });
-  }));
+  });
+});
 
 describe("fimsHistoryToUndefinedSelector", () => {
   const consentsData = {
@@ -163,7 +166,7 @@ describe("fimsIsHistoryEnabledSelector", () => {
   });
 });
 
-describe("fimsHistoryExportStateSelector", () =>
+describe("fimsHistoryExportStateSelector", () => {
   it("should return the 'features.fims.history.historyExportState' instance", () => {
     const exportState = remoteReady("SUCCESS");
     const globalState = {
@@ -177,9 +180,10 @@ describe("fimsHistoryExportStateSelector", () =>
     } as GlobalState;
     const exportStateRemoteValue = fimsHistoryExportStateSelector(globalState);
     expect(exportStateRemoteValue).toBe(exportState);
-  }));
+  });
+});
 
-describe("isFimsHistoryExportingSelector", () =>
+describe("isFimsHistoryExportingSelector", () => {
   [
     remoteUndefined,
     remoteLoading,
@@ -201,4 +205,5 @@ describe("isFimsHistoryExportingSelector", () =>
       const isExportingHistory = isFimsHistoryExportingSelector(globalState);
       expect(isExportingHistory).toBe(expectedOutput);
     });
-  }));
+  });
+});

@@ -1,7 +1,8 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -115,6 +116,57 @@ const IdPayFailureScreen = () => {
     failure: OnboardingFailureEnum
   ): OperationResultScreenContentProps => {
     switch (failure) {
+      case OnboardingFailureEnum.NOT_ELIGIBLE:
+        return {
+          pictogram: "ended",
+          title: I18n.t("idpay.onboarding.failure.message.NOT_ELIGIBLE.title"),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.NOT_ELIGIBLE.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED:
+        return {
+          pictogram: "success",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.USER_ONBOARDED.title"
+          ),
+          action: goToInitiativeAction
+        };
+      case OnboardingFailureEnum.ONBOARDING_BUDGET_EXHAUSTED:
+        return {
+          pictogram: "fatalError",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.subtitle"
+          ),
+          action: defaultBackAction,
+          secondaryAction: accessDeniedAction
+        };
+      case OnboardingFailureEnum.ONBOARDING_INITIATIVE_ENDED:
+        return {
+          pictogram: "time",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_ENDED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_ENDED.subtitle"
+          ),
+          action: defaultCloseAction
+        };
       case OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_FOUND:
         return {
           pictogram: "attention",
@@ -123,6 +175,26 @@ const IdPayFailureScreen = () => {
           ),
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.INITIATIVE_NOT_FOUND.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
+        return {
+          pictogram: "ended",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_NOT_STARTED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_NOT_STARTED.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.ONBOARDING_ON_EVALUATION:
+        return {
+          pictogram: "pending",
+          title: I18n.t("idpay.onboarding.failure.message.ON_EVALUATION.title"),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.ON_EVALUATION.subtitle"
           ),
           action: defaultCloseAction
         };
@@ -148,39 +220,7 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
-      case OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
-        return {
-          pictogram: "ended",
-          title: I18n.t(
-            "idpay.onboarding.failure.message.INITIATIVE_NOT_STARTED.title"
-          ),
-          subtitle: I18n.t(
-            "idpay.onboarding.failure.message.INITIATIVE_NOT_STARTED.subtitle"
-          ),
-          action: defaultCloseAction
-        };
-      case OnboardingFailureEnum.ONBOARDING_INITIATIVE_ENDED:
-        return {
-          pictogram: "time",
-          title: I18n.t(
-            "idpay.onboarding.failure.message.INITIATIVE_ENDED.title"
-          ),
-          subtitle: I18n.t(
-            "idpay.onboarding.failure.message.INITIATIVE_ENDED.subtitle"
-          ),
-          action: defaultCloseAction
-        };
-      case OnboardingFailureEnum.ONBOARDING_BUDGET_EXHAUSTED:
-        return {
-          pictogram: "fatalError",
-          title: I18n.t(
-            "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.title"
-          ),
-          subtitle: I18n.t(
-            "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.subtitle"
-          ),
-          action: defaultCloseAction
-        };
+
       case OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED:
         return {
           pictogram: "accessDenied",
@@ -192,45 +232,6 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction,
           secondaryAction: goToInitiativeAction
-        };
-      case OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED:
-        return {
-          pictogram: "success",
-          title: I18n.t(
-            "idpay.onboarding.failure.message.USER_ONBOARDED.title"
-          ),
-          action: goToInitiativeAction
-        };
-      case OnboardingFailureEnum.NOT_ELIGIBLE:
-        return {
-          pictogram: "ended",
-          title: I18n.t("idpay.onboarding.failure.message.NOT_ELIGIBLE.title"),
-          subtitle: I18n.t(
-            "idpay.onboarding.failure.message.NOT_ELIGIBLE.subtitle"
-          ),
-          action: defaultCloseAction
-        };
-      case OnboardingFailureEnum.ONBOARDING_ON_EVALUATION:
-        return {
-          pictogram: "pending",
-          title: I18n.t("idpay.onboarding.failure.message.ON_EVALUATION.title"),
-          subtitle: I18n.t(
-            "idpay.onboarding.failure.message.ON_EVALUATION.subtitle"
-          ),
-          action: defaultCloseAction
-        };
-
-      case OnboardingFailureEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED:
-        return {
-          pictogram: "accessDenied",
-          title: I18n.t(
-            "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.title"
-          ),
-          subtitle: I18n.t(
-            "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.subtitle"
-          ),
-          action: defaultBackAction,
-          secondaryAction: accessDeniedAction
         };
       case OnboardingFailureEnum.ONBOARDING_WAITING_LIST:
         return {

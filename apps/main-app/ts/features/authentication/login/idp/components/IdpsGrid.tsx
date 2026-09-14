@@ -4,6 +4,15 @@
  */
 
 import {
+  IOSpacingScale,
+  IOVisualCostants,
+  ModuleIDP,
+  VSpacer,
+  VStack
+} from "@io-app/design-system";
+import I18n from "i18next";
+import { ComponentProps, ReactElement } from "react";
+import {
   FlatList,
   ListRenderItemInfo,
   StyleProp,
@@ -11,28 +20,20 @@ import {
   ViewStyle
 } from "react-native";
 
-import {
-  IOSpacingScale,
-  IOVisualCostants,
-  ModuleIDP,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { ComponentProps, FunctionComponent, ReactElement } from "react";
 import { SpidIdp } from "../../../../../utils/idps";
 
-type OwnProps = {
+type IdpsGridProps = {
   contentContainerStyle?: StyleProp<ViewStyle>;
+  emptyComponent?: ComponentProps<typeof FlatList>["ListEmptyComponent"];
   footerComponent?: ComponentProps<typeof FlatList>["ListFooterComponent"];
-  headerComponentStyle?: StyleProp<ViewStyle>;
   headerComponent?: ComponentProps<typeof FlatList>["ListHeaderComponent"];
+  headerComponentStyle?: StyleProp<ViewStyle>;
   // Array of Identity Provider to show in the grid.
   idps: ReadonlyArray<SpidIdp>;
   // A callback function called when an Identity Provider is selected
   onIdpSelected: (_: SpidIdp) => void;
   testID?: string;
 };
-
-type Props = OwnProps;
 
 const GRID_GUTTER: IOSpacingScale = 8;
 
@@ -42,10 +43,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const keyExtractor = (idp: SpidIdp): string => idp.id;
-
 const renderItem =
-  (props: Props) =>
+  (props: IdpsGridProps) =>
   (info: ListRenderItemInfo<SpidIdp>): ReactElement => {
     const { onIdpSelected } = props;
     const { item } = info;
@@ -57,30 +56,45 @@ const renderItem =
     return (
       <ModuleIDP
         key={id}
-        name={name}
         logo={{
           light,
           dark
         }}
+        name={name}
         onPress={onPress}
         testID={`idp-${item.id}-button`}
       />
     );
   };
 
-const IdpsGrid: FunctionComponent<Props> = (props: Props) => (
+const IdpsGrid = (props: IdpsGridProps) => (
   <FlatList
-    testID={props.testID}
-    data={props.idps}
-    numColumns={1}
-    horizontal={false}
-    keyExtractor={keyExtractor}
-    renderItem={renderItem(props)}
-    ItemSeparatorComponent={() => <VSpacer size={GRID_GUTTER} />}
     contentContainerStyle={styles.contentContainer}
-    ListHeaderComponent={props.headerComponent}
+    data={props.idps}
+    horizontal={false}
+    ItemSeparatorComponent={() => <VSpacer size={GRID_GUTTER} />}
+    ListEmptyComponent={props.emptyComponent}
     ListFooterComponent={props.footerComponent}
+    ListHeaderComponent={props.headerComponent}
+    ListHeaderComponentStyle={props.headerComponentStyle}
+    numColumns={1}
+    renderItem={renderItem(props)}
+    testID={props.testID}
   />
+);
+
+export const IdpsGridSkeleton = () => (
+  <VStack space={GRID_GUTTER}>
+    {Array.from({ length: 5 }).map((_, i) => (
+      <ModuleIDP
+        isLoading
+        key={`module-idp-item-${i}`}
+        loadingAccessibilityLabel={I18n.t(
+          "authentication.idp_selection.idps.loadingAccessibilityLabel"
+        )}
+      />
+    ))}
+  </VStack>
 );
 
 export default IdpsGrid;

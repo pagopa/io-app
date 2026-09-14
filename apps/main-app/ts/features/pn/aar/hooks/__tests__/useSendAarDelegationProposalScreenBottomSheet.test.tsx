@@ -2,6 +2,7 @@ import { act, fireEvent, renderHook } from "@testing-library/react-native";
 import { ComponentType } from "react";
 import { createStore } from "redux";
 import { getType } from "typesafe-actions";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as USEIO from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
@@ -9,11 +10,11 @@ import * as BS_HOOK from "../../../../../utils/hooks/bottomSheet";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { identificationRequest } from "../../../../identification/store/actions";
 import PN_ROUTES from "../../../navigation/routes";
-import { useSendAarDelegationProposalScreenBottomSheet } from "../useSendAarDelegationProposalScreenBottomSheet";
 import {
   trackSendAarNotificationOpeningMandateBottomSheetAccepted,
   trackSendAarNotificationOpeningMandateBottomSheetClosure
 } from "../../analytics";
+import { useSendAarDelegationProposalScreenBottomSheet } from "../useSendAarDelegationProposalScreenBottomSheet";
 
 const mockDispatch = jest.fn();
 const bottomSheet = jest.spyOn(BS_HOOK, "useIOBottomSheetModal");

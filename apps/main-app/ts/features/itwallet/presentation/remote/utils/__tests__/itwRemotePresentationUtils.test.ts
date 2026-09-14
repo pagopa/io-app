@@ -11,8 +11,8 @@ import {
   groupCredentialsByPurpose
 } from "../itwRemotePresentationUtils";
 import {
-  PresentationDetails,
-  type EnrichedPresentationDetails
+  type EnrichedPresentationDetails,
+  PresentationDetails
 } from "../itwRemoteTypeUtils";
 
 jest.mock("../../../../common/utils/itwCredentialStatusUtils");
@@ -369,10 +369,10 @@ describe("getInvalidCredentials", () => {
   });
 
   type Scenario = {
-    name: string;
-    details: PresentationDetails;
     credentialsByType: Record<string, CredentialMetadata | undefined>;
+    details: PresentationDetails;
     expected: Array<string>;
+    name: string;
   };
 
   const scenarios: Array<Scenario> = [

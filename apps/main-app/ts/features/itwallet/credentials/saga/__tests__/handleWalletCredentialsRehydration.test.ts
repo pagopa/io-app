@@ -1,11 +1,11 @@
 import { DeepPartial } from "redux";
-import * as O from "fp-ts/lib/Option";
 import { expectSaga } from "redux-saga-test-plan";
+
 import { GlobalState } from "../../../../../store/reducers/types";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
 import { walletAddCards } from "../../../../wallet/store/actions/cards";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
   const expirationClaim = { value: "2100-09-04", name: "exp" };
@@ -78,7 +78,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          issuance: { integrityKeyTag: O.some("key-tag") },
+          issuance: { integrityKeyTag: "key-tag" },
           credentials: {
             credentials: {}
           }
@@ -106,7 +106,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          issuance: { integrityKeyTag: O.some("key-tag") },
+          issuance: { integrityKeyTag: "key-tag" },
           credentials: {
             credentials: {
               [mockedEid.credentialId]: mockedEid,
@@ -156,7 +156,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          issuance: { integrityKeyTag: O.none },
+          issuance: { integrityKeyTag: undefined },
           credentials: {
             credentials: {
               [mockedMdl.credentialId]: mockedMdl

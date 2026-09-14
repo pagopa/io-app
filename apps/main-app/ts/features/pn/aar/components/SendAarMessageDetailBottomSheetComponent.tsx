@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { RefObject } from "react";
+
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -70,7 +71,6 @@ export const SendAarMessageDetailBottomSheetComponent = ({
     )
   });
 
-  // eslint-disable-next-line functional/immutable-data
   aarBottomSheetRef.current = present;
   return bottomSheet;
 };

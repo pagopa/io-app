@@ -1,4 +1,8 @@
 import {
+  TransactionDetailDTO,
+  OperationTypeEnum as TransactionTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
+import {
   Alert,
   Divider,
   IOLogoPaymentType,
@@ -6,15 +10,12 @@ import {
   ListItemInfo,
   ListItemInfoCopy,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
+} from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
-import { View } from "react-native";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import {
-  TransactionDetailDTO,
-  OperationTypeEnum as TransactionTypeEnum
-} from "../../../../../definitions/idpay/TransactionDetailDTO";
+import { View } from "react-native";
+
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
@@ -34,10 +35,10 @@ const IdPayTimelineTransactionDetailsComponent = (props: Props) => {
     O.map(() => (
       <>
         <Alert
-          variant="info"
           content={I18n.t(
             "idpay.initiative.operationDetails.transaction.reversalAdvice"
           )}
+          variant="info"
         />
         <VSpacer size={16} />
       </>
@@ -65,15 +66,15 @@ const IdPayTimelineTransactionDetailsComponent = (props: Props) => {
       {reversalAlertComponent}
       <ListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}
+        paymentLogoIcon={
+          getLabelForCircuitType(transaction.circuitType) as IOLogoPaymentType
+        }
         value={I18n.t(
           "idpay.initiative.operationDetails.transaction.maskedPan",
           {
             lastDigits: transaction.maskedPan
           }
         )}
-        paymentLogoIcon={
-          getLabelForCircuitType(transaction.circuitType) as IOLogoPaymentType
-        }
       />
       <Divider />
       <ListItemInfo
@@ -108,18 +109,18 @@ const IdPayTimelineTransactionDetailsComponent = (props: Props) => {
         label={I18n.t(
           "idpay.initiative.operationDetails.transaction.acquirerId"
         )}
-        value={idTrxAcquirer}
         onPress={() => {
           clipboardSetStringWithFeedback(idTrxAcquirer);
         }}
+        value={idTrxAcquirer}
       />
       <Divider />
       <ListItemInfoCopy
         label={I18n.t("idpay.initiative.operationDetails.transaction.issuerId")}
-        value={idTrxIssuer}
         onPress={() => {
           clipboardSetStringWithFeedback(idTrxIssuer);
         }}
+        value={idTrxIssuer}
       />
     </View>
   );

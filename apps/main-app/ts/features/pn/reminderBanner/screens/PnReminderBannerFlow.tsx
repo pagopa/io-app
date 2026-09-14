@@ -1,7 +1,8 @@
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
-import { useState } from "react";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { HeaderSecondLevel } from "@io-app/design-system";
 import I18n from "i18next";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { useState } from "react";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -46,13 +47,13 @@ const PNFlowScreenPicker = ({ serviceId }: { serviceId: ServiceId }) => {
   }
 
   switch (flowState) {
-    case pnBannerFlowStateEnum.FAILURE_ACTIVATION:
-    case pnBannerFlowStateEnum.FAILURE_DETAILS_FETCH:
-      return <ErrorScreen flowState={flowState} />;
-
     case pnBannerFlowStateEnum.ALREADY_ACTIVE:
     case pnBannerFlowStateEnum.SUCCESS_ACTIVATION:
       return <SuccessScreen flowState={flowState} />;
+
+    case pnBannerFlowStateEnum.FAILURE_ACTIVATION:
+    case pnBannerFlowStateEnum.FAILURE_DETAILS_FETCH:
+      return <ErrorScreen flowState={flowState} />;
     case pnBannerFlowStateEnum.WAITING_USER_INPUT:
       if (isEnabled) {
         setFlowState(pnBannerFlowStateEnum.ALREADY_ACTIVE);
@@ -90,12 +91,12 @@ const PnActivationInputScreen = ({ setFlowState }: FlowScreenProps) => {
   return (
     <>
       <HeaderSecondLevel
-        title=""
-        type="base"
+        backAccessibilityLabel={I18n.t("accessibility.buttons.navigateBack")}
         goBack={() =>
           navigation.navigate(ROUTES.MAIN, { screen: "MESSAGES_HOME" })
         }
-        backAccessibilityLabel={I18n.t("accessibility.buttons.navigateBack")}
+        title=""
+        type="base"
       />
       <CtaScreen
         scrollViewAction={{

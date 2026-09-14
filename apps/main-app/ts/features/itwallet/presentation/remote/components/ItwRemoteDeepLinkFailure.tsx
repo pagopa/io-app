@@ -1,5 +1,6 @@
 import I18n from "i18next";
 import { useEffect } from "react";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
@@ -72,15 +73,8 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   return (
     <>
       <OperationResultScreenContent
-        title={I18n.t(
-          "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.title"
-        )}
-        subtitle={I18n.t(
-          "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.subtitle"
-        )}
-        testID={"failure"}
-        pictogram={"umbrella"}
         action={supportModalAction}
+        pictogram={"umbrella"}
         secondaryAction={{
           label: I18n.t(
             "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.secondaryAction"
@@ -96,6 +90,13 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
             navigation.popToTop();
           }
         }}
+        subtitle={I18n.t(
+          "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.subtitle"
+        )}
+        testID={"failure"}
+        title={I18n.t(
+          "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.title"
+        )}
       />
       {supportModal.bottomSheet}
     </>

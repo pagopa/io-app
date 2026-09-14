@@ -1,15 +1,16 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "typed-redux-saga/macro";
+
 import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { ServicesClient } from "../../../../api/ServicesClientManager";
+import { loadServiceDetail } from "../store/actions/details";
 import {
   loadServicePreference,
   upsertServicePreference
 } from "../store/actions/preference";
-import { loadServiceDetail } from "../store/actions/details";
 import { handleGetServicePreference } from "./handleGetServicePreference";
-import { handleUpsertServicePreference } from "./handleUpsertServicePreference";
 import { handleServiceDetails } from "./handleServiceDetails";
+import { handleUpsertServicePreference } from "./handleUpsertServicePreference";
 
 export function* watchServicesDetailsSaga(
   identityClient: IdentityClient,

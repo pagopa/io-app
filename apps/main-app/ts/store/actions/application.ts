@@ -1,16 +1,15 @@
 import { AppStateStatus } from "react-native";
-// eslint-disable-next-line no-restricted-imports
 import { ActionPattern } from "redux-saga/effects";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 /**
  * Action types and action creator related to the Application.
  */
-type ApplicationInitializationPayload = {
+type ApplicationInitializationPayload = void | {
   handleSessionExpiration?: boolean;
-  showIdentificationModalAtStartup?: boolean;
   isActiveLoginSuccess?: boolean;
-} | void;
+  showIdentificationModalAtStartup?: boolean;
+};
 export const startApplicationInitialization = createStandardAction(
   "START_APPLICATION_INITIALIZATION"
 )<ApplicationInitializationPayload>();
@@ -27,6 +26,6 @@ export const applicationChangeState = createStandardAction(
 )<AppStateStatus>();
 
 export type ApplicationActions =
-  | ActionType<typeof startApplicationInitialization>
+  | ActionType<typeof applicationChangeState>
   | ActionType<typeof applicationInitialized>
-  | ActionType<typeof applicationChangeState>;
+  | ActionType<typeof startApplicationInitialization>;

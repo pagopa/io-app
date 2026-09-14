@@ -1,9 +1,11 @@
 import { createStore } from "redux";
 import { createActor } from "xstate";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { testProximityDeps } from "../../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ProximityFailure, ProximityFailureType } from "../../machine/failure";
 import { itwProximityMachine } from "../../machine/machine";
@@ -32,11 +34,14 @@ describe("ItwProximityFailureScreen", () => {
 
 const renderComponent = (failure: ProximityFailure) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+  const store = createStore(appReducer, initialState as any);
+  const initialSnapshot = createActor(itwProximityMachine, {
+    input: { deps: testProximityDeps({ store }) }
+  }).getSnapshot();
 
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
-    value: "Failure",
+    value: { Failure: "Idle" },
     context: { ...initialSnapshot.context, failure }
   };
 
@@ -48,6 +53,6 @@ const renderComponent = (failure: ProximityFailure) => {
     ),
     ITW_ROUTES.PROXIMITY.FAILURE,
     {},
-    createStore(appReducer, initialState as any)
+    store
   );
 };

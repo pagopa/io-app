@@ -1,19 +1,20 @@
-import { createStore } from "redux";
 import { AccessibilityInfo } from "react-native";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { Toasts } from "../Toasts";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import * as archivingReducer from "../../../store/reducers/archiving";
 import * as preferencesReducer from "../../../../../store/reducers/preferences";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as allPaginatedReducer from "../../../store/reducers/allPaginated";
+import * as archivingReducer from "../../../store/reducers/archiving";
+import { Toasts } from "../Toasts";
 
 const mockToastSuccess = jest.fn();
 const mockToastError = jest.fn();
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual("@io-app/design-system"),
   useIOToast: () => ({
     show: (_message: string, _options?: unknown) => jest.fn(),
     error: mockToastError,
@@ -200,9 +201,9 @@ describe("Toast", () => {
 });
 
 const mockSelectorOutput = (
-  processingResultType: "success" | "error" | undefined = undefined,
+  processingResultType: "error" | "success" | undefined = undefined,
   processingResultReason: string | undefined = undefined,
-  isScreenReaderEnabled: boolean = false,
+  isScreenReaderEnabled = false,
   inboxErrorReason: string | undefined = undefined,
   archiveErrorReason: string | undefined = undefined
 ) => {

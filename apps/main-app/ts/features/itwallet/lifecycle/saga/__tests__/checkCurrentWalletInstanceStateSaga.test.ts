@@ -1,11 +1,12 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
+
+import { itwSetWalletInstanceRemotelyActive } from "../../../walletInstance/store/actions";
+import { itwLifecycleIsOperationalOrValid } from "../../store/selectors";
 import {
   checkCurrentWalletInstanceStateSaga,
   getCurrentStatusWalletInstance
 } from "../checkCurrentWalletInstanceStateSaga.ts";
-import { itwSetWalletInstanceRemotelyActive } from "../../../walletInstance/store/actions";
-import { itwLifecycleIsOperationalOrValid } from "../../store/selectors";
 
 describe("checkCurrentWalletInstanceStateSaga", () => {
   it("Sets the wallet instance as remotely active when remote is active, not revoked, and local is inactive", () => {

@@ -14,7 +14,7 @@ export const SECONDS_TO_MILLISECONDS = 1000;
  * This function returns the time remaining between the current date and the target date.
  * @returns A string with the time remaining in seconds or minutes.
  */
-export const getTimeRemainingText = (targetDate: number | Date): string => {
+export const getTimeRemainingText = (targetDate: Date | number): string => {
   const now = new Date().getTime();
 
   const targetTime =

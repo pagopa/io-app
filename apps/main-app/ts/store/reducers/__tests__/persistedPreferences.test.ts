@@ -1,21 +1,21 @@
-import { GlobalState } from "../types";
-import { appReducer } from "../index";
-import preferencesReducer, {
-  initialPreferencesState,
-  isExperimentalDesignEnabledSelector,
-  isMixpanelEnabled
-} from "../persistedPreferences";
-import { applicationChangeState } from "../../actions/application";
-import { setMixpanelEnabled } from "../../actions/mixpanel";
 import {
   logoutRequest,
   logoutSuccess,
   sessionExpired,
   sessionInvalid
 } from "../../../features/authentication/common/store/actions";
-import { differentProfileLoggedIn } from "../../actions/crossSessions";
 import { clearCache } from "../../../features/settings/common/store/actions";
+import { applicationChangeState } from "../../actions/application";
+import { differentProfileLoggedIn } from "../../actions/crossSessions";
+import { setMixpanelEnabled } from "../../actions/mixpanel";
 import { preferencesExperimentalDesignEnabled } from "../../actions/persistedPreferences";
+import { appReducer } from "../index";
+import preferencesReducer, {
+  initialPreferencesState,
+  isExperimentalDesignEnabledSelector,
+  isMixpanelEnabled
+} from "../persistedPreferences";
+import { GlobalState } from "../types";
 
 describe("persistedPreferences", () => {
   describe("isExperimentalDesignEnabledSelector", () => {
@@ -33,7 +33,7 @@ describe("persistedPreferences", () => {
     );
   });
   describe("isMixpanelEnabled", () => {
-    it("should be reset mixpanel preference only on differentProfileLoggedIn action ", () => {
+    it("should be reset mixpanel preference only on differentProfileLoggedIn action", () => {
       const initialState: GlobalState = appReducer(
         undefined,
         applicationChangeState("active")

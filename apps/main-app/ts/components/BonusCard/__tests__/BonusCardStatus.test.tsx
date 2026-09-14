@@ -1,16 +1,17 @@
+import {
+  InitiativeDTO,
+  VoucherStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { render } from "@testing-library/react-native";
-import { Provider } from "react-redux";
-import { Store, createStore } from "redux";
 import I18n from "i18next";
+import { Provider } from "react-redux";
+import { createStore, Store } from "redux";
+
+import { IdPayCardStatus } from "../../../features/idpay/details/utils";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { format } from "../../../utils/dates";
-import {
-  InitiativeDTO,
-  VoucherStatusEnum
-} from "../../../../definitions/idpay/InitiativeDTO";
-import { IdPayCardStatus } from "../../../features/idpay/details/utils";
 
 jest.mock("react-native-safe-area-context", () => {
   const useSafeAreaInsets = () => ({ top: 0 });

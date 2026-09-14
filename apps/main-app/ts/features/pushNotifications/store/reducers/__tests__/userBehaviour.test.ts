@@ -14,14 +14,14 @@ describe("userBehaviourReducer", () => {
     );
     expect(userBehaviourState).toMatchSnapshot();
   });
-  it(' "pushNotificationsBanner.timesDismissed" should be "1" after receiving "setUserDismissedNotificationsBanner"', () => {
+  it('"pushNotificationsBanner.timesDismissed" should be "1" after receiving "setUserDismissedNotificationsBanner"', () => {
     const userBehaviourState = userBehaviourReducer(
       undefined,
       setUserDismissedNotificationsBanner()
     );
     expect(userBehaviourState.pushNotificationBannerDismissalCount).toBe(1);
   });
-  it(' "pushNotificationsBanner.forceDismissionDate" should be "Date" after receiving "setPushNotificationBannerForceDismissed"', () => {
+  it('"pushNotificationsBanner.forceDismissionDate" should be "Date" after receiving "setPushNotificationBannerForceDismissed"', () => {
     const userBehaviourState = userBehaviourReducer(
       undefined,
       setPushNotificationBannerForceDismissed()

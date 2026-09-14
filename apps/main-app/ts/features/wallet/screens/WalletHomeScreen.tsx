@@ -1,13 +1,15 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+
 import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
+import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import {
   IOStackNavigationRouteProps,
@@ -23,29 +25,35 @@ import {
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors";
-import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
-import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
-import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../itwallet/lifecycle/store/selectors";
+import { useItwActivationExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwActivationExitSurveyBottomSheet";
+import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet";
+import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet";
+import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences";
+import { itwSetFeedbackBottomSheetVisible } from "../../itwallet/common/store/actions/ui";
+import {
+  isItwProximityEnabledSelector,
+  itwIsL3EnabledSelector
+} from "../../itwallet/common/store/selectors";
+import { itwFeedbackBottomSheetVisibleSelector } from "../../itwallet/common/store/selectors/ui";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
-import { hasPresentableCredentialsSelector } from "../../itwallet/presentation/proximity/store/selectors/credentials";
 import {
   ITW_TOUR_GROUP_ID,
   ITW_TOUR_STEP_QR_BUTTON
-} from "../../itwallet/tour/utils/constants.ts";
+} from "../../itwallet/tour/utils/constants";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
-import { isWalletScreenRefreshingSelector } from "../store/selectors";
+import {
+  isWalletScreenRefreshingSelector,
+  shouldRenderWalletEmptyStateSelector
+} from "../store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
   newMethodAdded?: boolean;
-  // Triggers the "Required EID feedback" bottom sheet display once the user returns to this screen
-  requiredEidFeedback?: boolean;
 }>;
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -61,14 +69,15 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     itwMixPanelCredentialDetailsSelector
   );
   const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
-  const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const hasPresentableCredentials = useIOSelector(
-    hasPresentableCredentialsSelector
+  const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
+
+  const shouldRenderEmptyState = useIOSelector(
+    shouldRenderWalletEmptyStateSelector
   );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
-  const isRequiredEidFeedback = useRef(
-    route.params?.requiredEidFeedback || false
+  const isRequiredEidFeedback = useIOSelector(
+    itwFeedbackBottomSheetVisibleSelector
   );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
   const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
@@ -76,6 +85,8 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       dispatch(itwSetPidReissuingSurveyHidden(true));
     }
   });
+  const activationExitSurvey = useItwActivationExitSurveyBottomSheet();
+  const credentialExitSurvey = useItwCredentialExitSurveyBottomSheet();
 
   // We need to use a local state to separate the UI state from the redux state
   // This prevents to display the refresh indicator when the refresh is triggered by other components
@@ -98,6 +109,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         : ITW_ROUTES.ONBOARDING
     });
   }, [navigation, isItWalletEnabled]);
+  const guardedHandleAddToWalletButtonPress = useOfflineToastGuard(
+    handleAddToWalletButtonPress
+  );
 
   useHeaderFirstLevel({
     currentRoute: ROUTES.WALLET_HOME,
@@ -109,7 +123,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         {
           accessibilityLabel: I18n.t("features.wallet.home.screen.legacy.cta"),
           icon: "add",
-          onPress: handleAddToWalletButtonPress
+          onPress: guardedHandleAddToWalletButtonPress
         }
       ],
       variant: "primary"
@@ -148,24 +162,25 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     useCallback(() => {
       if (isNewElementAdded.current) {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
-        // eslint-disable-next-line functional/immutable-data
         isNewElementAdded.current = false;
       }
-      if (isRequiredEidFeedback.current) {
+    }, [isNewElementAdded])
+  );
+
+  /**
+   * Handles the EID feedback bottom sheet display
+   */
+  useFocusEffect(
+    useCallback(() => {
+      if (isRequiredEidFeedback) {
         trackItwSurveyRequest({
           survey_id: "confirm_eid_flow_exit",
           survey_page: route.name
         });
         itwFeedbackBottomSheet.present();
-        // eslint-disable-next-line functional/immutable-data
-        isRequiredEidFeedback.current = false;
+        dispatch(itwSetFeedbackBottomSheetVisible(false));
       }
-    }, [
-      isNewElementAdded,
-      isRequiredEidFeedback,
-      itwFeedbackBottomSheet,
-      route.name
-    ])
+    }, [dispatch, isRequiredEidFeedback, itwFeedbackBottomSheet, route.name])
   );
 
   const handleRefreshWallet = useCallback(() => {
@@ -174,7 +189,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   }, [dispatch]);
 
   const proximityActionProps: IOScrollViewActions["primary"] | undefined =
-    itwFeaturesEnabled && hasPresentableCredentials
+    isProximityEnabled
       ? {
           label: I18n.t("features.itWallet.presentation.ctas.present"),
           icon: "productITWallet",
@@ -203,24 +218,26 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   return (
     <>
       <IOScrollView
+        actions={
+          proximityActionProps
+            ? { type: "SingleButton", primary: proximityActionProps }
+            : undefined
+        }
         animatedRef={scrollViewContentRef}
-        centerContent={true}
+        centerContent={shouldRenderEmptyState}
         excludeSafeAreaMargins={true}
         refreshControlProps={{
           tintColor: undefined,
           refreshing: isRefreshing,
           onRefresh: handleRefreshWallet
         }}
-        actions={
-          proximityActionProps
-            ? { type: "SingleButton", primary: proximityActionProps }
-            : undefined
-        }
       >
         <WalletCategoryFilterTabs />
         <WalletCardsContainer />
       </IOScrollView>
       {itwFeedbackBottomSheet.bottomSheet}
+      {activationExitSurvey.bottomSheet}
+      {credentialExitSurvey.bottomSheet}
     </>
   );
 };

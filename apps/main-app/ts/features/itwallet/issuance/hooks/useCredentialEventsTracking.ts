@@ -1,4 +1,10 @@
 import { useEffect } from "react";
+
+import { getMixPanelCredential } from "../../analytics/utils";
+import {
+  serializeFailureReason,
+  shouldSerializeReason
+} from "../../common/utils/itwStoreUtils";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
@@ -10,17 +16,12 @@ import {
   trackCredentialNotEntitledFailure,
   trackItwAddCredentialNotTrustedIssuer
 } from "../analytics";
-import { getMixPanelCredential } from "../../analytics/utils";
-import {
-  serializeFailureReason,
-  shouldSerializeReason
-} from "../../common/utils/itwStoreUtils";
 
 type Params = {
-  failure: CredentialIssuanceFailure;
-  isItwL3: boolean;
   credentialType?: string;
+  failure: CredentialIssuanceFailure;
   invalidErrorCode?: string;
+  isItwL3: boolean;
 };
 
 /**
@@ -41,7 +42,8 @@ export const useCredentialEventsTracking = ({
     const credential = getMixPanelCredential(credentialType, isItwL3);
 
     if (
-      failure.type === CredentialIssuanceFailureType.INVALID_STATUS &&
+      failure.type ===
+        CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION &&
       invalidErrorCode === "credential_not_found"
     ) {
       return trackCredentialNotEntitledFailure({
@@ -52,7 +54,10 @@ export const useCredentialEventsTracking = ({
       });
     }
 
-    if (failure.type === CredentialIssuanceFailureType.INVALID_STATUS) {
+    if (
+      failure.type === CredentialIssuanceFailureType.INVALID_STATUS_BY_TSL ||
+      failure.type === CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION
+    ) {
       return trackCredentialInvalidStatusFailure({
         caused_by: "CredentialIssuer",
         reason: invalidErrorCode,

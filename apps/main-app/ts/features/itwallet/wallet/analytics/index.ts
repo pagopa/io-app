@@ -1,11 +1,11 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { ItwOfflineRicaricaAppIOSource } from "./types";
 import {
   ITW_OFFLINE_ACTIONS_EVENTS,
   ITW_OFFLINE_ERRORS_EVENTS,
   ITW_OFFLINE_SCREENVIEW_EVENTS
 } from "./enum";
+import { ItwOfflineRicaricaAppIOSource } from "./types";
 
 // Screen view events
 

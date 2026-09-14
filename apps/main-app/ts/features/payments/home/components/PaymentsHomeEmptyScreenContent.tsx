@@ -5,9 +5,10 @@ import {
   IOVisualCostants,
   Pictogram,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import { StyleSheet, View } from "react-native";
+} from "@io-app/design-system";
 import I18n from "i18next";
+import { StyleSheet, View } from "react-native";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
 
@@ -26,8 +27,8 @@ const PaymentsHomeEmptyScreenContent = ({ withPictogram = false }: Props) => {
 
   return (
     <View
-      testID="PaymentsHomeEmptyScreenContentTestID"
       style={styles.container}
+      testID="PaymentsHomeEmptyScreenContentTestID"
     >
       {withPictogram && (
         <View testID="PaymentsHomeEmptyScreenContentTestID-pictogram">
@@ -46,11 +47,11 @@ const PaymentsHomeEmptyScreenContent = ({ withPictogram = false }: Props) => {
       <View style={{ alignItems: "center" }}>
         <IOButton
           fullWidth
-          variant="solid"
-          label={I18n.t("features.payments.cta")}
-          onPress={handleOnAddMethodPress}
           icon="qrCode"
           iconPosition="end"
+          label={I18n.t("features.payments.cta")}
+          onPress={handleOnAddMethodPress}
+          variant="solid"
         />
       </View>
     </View>

@@ -1,15 +1,16 @@
 import {
+  Body,
   ContentWrapper,
   ForceScrollDownView,
   H2,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+  VSpacer,
+  VStack
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -26,7 +27,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import { selectCredentialOption } from "../../machine/credential/selectors";
+import { selectCredential } from "../../machine/credential/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
   trackCredentialPreview,
@@ -34,30 +35,26 @@ import {
   trackItwExit,
   trackSaveCredentialToWallet
 } from "../analytics";
-import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
+import { ItwCredentialPreviewClaimsCard } from "../components/ItwCredentialPreviewClaimsCard";
+import { useItwSomethingWrongBottomSheet } from "../hooks/useItwSomethingWrongBottomSheet";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
-  const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialOption
-  );
+  const credential =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
 
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return pipe(
-    credentialOption,
-    O.fold(
-      // If there is no credential in the context (None), we can safely assume the issuing phase is still ongoing.
-      // A None credential cannot be stored in the context, as any issuance failure causes the machine to transition
-      // to the Failure state.
-      () => (
-        <LoadingScreenContent
-          title={I18n.t("features.itWallet.issuance.credentialPreview.loading")}
-        />
-      ),
-      credential => <ContentView credential={credential.metadata} />
-    )
+  // If there is no credential in the context, we can safely assume the issuing phase is still
+  // ongoing: a missing credential cannot be stored in the context, as any issuance failure causes
+  // the machine to transition to the Failure state.
+  return credential ? (
+    <ContentView credential={credential.metadata} />
+  ) : (
+    <LoadingScreenContent
+      title={I18n.t("features.itWallet.issuance.credentialPreview.loading")}
+    />
   );
 };
 
@@ -91,9 +88,17 @@ const ContentView = ({ credential }: ContentViewProps) => {
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+      machineRef.send({
+        type: "close",
+        surveyStep: isItwL3 ? "doc_preview" : undefined,
+        surveyCredential: isItwL3 ? mixPanelCredential : undefined
+      });
     }
+  });
+
+  const somethingWrongBottomSheet = useItwSomethingWrongBottomSheet({
+    credential
   });
 
   const handleSaveToWallet = () => {
@@ -135,13 +140,13 @@ const ContentView = ({ credential }: ContentViewProps) => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       contentContainerStyle={{ flexGrow: 1 }}
-      onThresholdCrossed={trackScrollToBottom}
       footerActions={{
         actions: {
           type: "TwoButtons",
           primary: {
-            icon: "add",
+            icon: "addSmall",
             iconPosition: "end",
             label: I18n.t(
               "features.itWallet.issuance.credentialPreview.actions.primary"
@@ -150,22 +155,32 @@ const ContentView = ({ credential }: ContentViewProps) => {
           },
           secondary: {
             label: I18n.t(
-              "features.itWallet.issuance.credentialPreview.actions.secondary"
+              "features.itWallet.issuance.credentialPreview.actions.somethingWrong"
             ),
-            onPress: dismissDialog.show
+            onPress: somethingWrongBottomSheet.present
           }
         }
       }}
+      onThresholdCrossed={trackScrollToBottom}
     >
       <ContentWrapper style={{ flexGrow: 1 }}>
-        <H2>
-          {I18n.t("features.itWallet.issuance.credentialPreview.title", {
-            credential: credentialName
-          })}
-        </H2>
+        <VStack space={8}>
+          <H2>
+            {I18n.t(
+              "features.itWallet.issuance.credentialPreview.detailsTitle"
+            )}
+          </H2>
+          <Body>
+            {I18n.t("features.itWallet.issuance.credentialPreview.subtitle")}
+          </Body>
+        </VStack>
         <VSpacer size={24} />
-        <ItwCredentialPreviewClaimsList data={credential} />
+        <ItwCredentialPreviewClaimsCard
+          data={credential}
+          title={credentialName}
+        />
       </ContentWrapper>
+      {somethingWrongBottomSheet.bottomSheet}
     </ForceScrollDownView>
   );
 };

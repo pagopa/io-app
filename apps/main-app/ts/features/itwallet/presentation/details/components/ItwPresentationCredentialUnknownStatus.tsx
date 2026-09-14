@@ -1,7 +1,7 @@
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
+
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
@@ -11,7 +11,7 @@ import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsRefreshStatusByType } from "../../../credentials/store/actions";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider.tsx";
 import {
-  selectCredentialTypeOption,
+  selectCredentialType,
   selectIsLoading
 } from "../../../machine/credential/selectors.ts";
 
@@ -35,13 +35,12 @@ export const ItwPresentationCredentialUnknownStatus = ({
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isMachineLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const credentialType = O.toUndefined(
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialTypeOption)
-  );
+  const credentialType =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
 
   const navigation = useIONavigation();
   const credentialName = useItwCredentialName(credential.credentialType);
-  const previousAssertionRef = useRef(credential.storedStatusAssertion);
+  const previousAssertionRef = useRef(credential.validity);
 
   useHeaderSecondLevel({
     title: "",
@@ -53,16 +52,12 @@ export const ItwPresentationCredentialUnknownStatus = ({
   // This approach avoids storing additional data in the global store and ensures this logic
   // can be removed in the future with minimal impact.
   useEffect(() => {
-    if (
-      isRetrying &&
-      previousAssertionRef.current !== credential.storedStatusAssertion
-    ) {
+    if (isRetrying && previousAssertionRef.current !== credential.validity) {
       setIsRetryComplete(true);
       setIsRetrying(false);
-      // eslint-disable-next-line functional/immutable-data
-      previousAssertionRef.current = credential.storedStatusAssertion;
+      previousAssertionRef.current = credential.validity;
     }
-  }, [credential.storedStatusAssertion, isRetrying]);
+  }, [credential.validity, isRetrying]);
 
   const isLoaderVisible =
     isRetrying ||
@@ -77,14 +72,6 @@ export const ItwPresentationCredentialUnknownStatus = ({
   if (isRetryComplete) {
     return (
       <OperationResultScreenContent
-        pictogram="umbrella"
-        title={I18n.t(
-          "features.itWallet.presentation.statusAssertionUnknown.retryFailure.title"
-        )}
-        subtitle={I18n.t(
-          "features.itWallet.presentation.statusAssertionUnknown.retryFailure.content",
-          { credentialName }
-        )}
         action={{
           label: I18n.t(
             "features.itWallet.presentation.statusAssertionUnknown.retryFailure.primaryAction"
@@ -97,10 +84,18 @@ export const ItwPresentationCredentialUnknownStatus = ({
             });
           }
         }}
+        pictogram="umbrella"
         secondaryAction={{
           label: I18n.t("global.buttons.close"),
           onPress: () => navigation.goBack()
         }}
+        subtitle={I18n.t(
+          "features.itWallet.presentation.statusAssertionUnknown.retryFailure.content",
+          { credentialName }
+        )}
+        title={I18n.t(
+          "features.itWallet.presentation.statusAssertionUnknown.retryFailure.title"
+        )}
       />
     );
   }
@@ -108,14 +103,6 @@ export const ItwPresentationCredentialUnknownStatus = ({
   // Try to get a new status assertion.
   return (
     <OperationResultScreenContent
-      pictogram="cardIssue"
-      title={I18n.t(
-        "features.itWallet.presentation.statusAssertionUnknown.title",
-        { credentialName }
-      )}
-      subtitle={I18n.t(
-        "features.itWallet.presentation.statusAssertionUnknown.content"
-      )}
       action={{
         testID: "RetryButtonTestID",
         label: I18n.t("global.genericRetry"),
@@ -126,10 +113,18 @@ export const ItwPresentationCredentialUnknownStatus = ({
           );
         }
       }}
+      pictogram="cardIssue"
       secondaryAction={{
         label: I18n.t("global.buttons.close"),
         onPress: () => navigation.goBack()
       }}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.statusAssertionUnknown.content"
+      )}
+      title={I18n.t(
+        "features.itWallet.presentation.statusAssertionUnknown.title",
+        { credentialName }
+      )}
     />
   );
 };

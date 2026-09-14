@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+
 import { ItwCredentialCard, ItwCredentialCardLegacy } from "..";
 import ROUTES from "../../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -19,7 +20,7 @@ describe("ItwCredentialCard", () => {
     CredentialType.DRIVING_LICENSE,
     CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
     CredentialType.EUROPEAN_DISABILITY_CARD,
-    CredentialType.AGE_VERIFICATION,
+    CredentialType.PROOF_OF_AGE,
     CredentialType.EDUCATION_ATTENDANCE,
     CredentialType.EDUCATION_DEGREE,
     CredentialType.EDUCATION_DIPLOMA,
@@ -85,8 +86,8 @@ describe("ItwCredentialCard", () => {
 
           const component = renderComponent(
             <ItwCredentialCard
-              credentialType={CredentialType.DRIVING_LICENSE}
               credentialStatus={credentialStatus}
+              credentialType={CredentialType.DRIVING_LICENSE}
             />
           );
 
@@ -162,8 +163,8 @@ describe("ItwCredentialCardLegacy", () => {
 
           const component = renderComponent(
             <ItwCredentialCardLegacy
-              credentialType={CredentialType.DRIVING_LICENSE}
               credentialStatus={credentialStatus}
+              credentialType={CredentialType.DRIVING_LICENSE}
             />
           );
 

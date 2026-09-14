@@ -765,6 +765,7 @@ Inizia"
                                 "overflow": "hidden",
                                 "padding": 16,
                               },
+                              undefined,
                               {
                                 "backgroundColor": "#F2F9FF",
                                 "borderRadius": 8,
@@ -1356,7 +1357,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -1433,7 +1434,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1457,7 +1457,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1945,7 +1944,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for activation banne
                       <View
                         accessibilityLabel="Porta su IO i tuoi documenti digitali
 Con piena validità ufficiale, digitali e sempre a portata di mano!
-Aggiungi un documento"
+Inizia"
                         accessibilityRole="button"
                         accessible={true}
                         onAccessibilityTap={[Function]}
@@ -1960,6 +1959,7 @@ Aggiungi un documento"
                                 "overflow": "hidden",
                                 "padding": 16,
                               },
+                              undefined,
                               {
                                 "backgroundColor": "#F2F9FF",
                                 "borderRadius": 8,
@@ -2551,7 +2551,7 @@ Aggiungi un documento"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -2565,7 +2565,7 @@ Aggiungi un documento"
                             }
                           />
                           <View
-                            accessibilityLabel="Aggiungi un documento"
+                            accessibilityLabel="Inizia"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -2628,7 +2628,6 @@ Aggiungi un documento"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2652,7 +2651,6 @@ Aggiungi un documento"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2777,7 +2775,7 @@ Aggiungi un documento"
                                     ]
                                   }
                                 >
-                                  Aggiungi un documento
+                                  Inizia
                                 </Text>
                               </View>
                             </View>
@@ -3155,6 +3153,7 @@ Inizia"
                                 "overflow": "hidden",
                                 "padding": 16,
                               },
+                              undefined,
                               {
                                 "backgroundColor": "#F2F9FF",
                                 "borderRadius": 8,
@@ -3746,7 +3745,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -3823,7 +3822,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -3847,7 +3845,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -4335,7 +4332,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for empty wallet ban
                       <View
                         accessibilityLabel="Il tuo Portafoglio è ora parte di IT-Wallet
 Scopri le funzionalità evolute dei documenti digitali su IO.
-Aggiungi documento"
+Inizia"
                         accessibilityRole="button"
                         accessible={true}
                         onAccessibilityTap={[Function]}
@@ -4350,6 +4347,7 @@ Aggiungi documento"
                                 "overflow": "hidden",
                                 "padding": 16,
                               },
+                              undefined,
                               {
                                 "backgroundColor": "#F2F9FF",
                                 "borderRadius": 8,
@@ -4783,7 +4781,7 @@ Aggiungi documento"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -4797,7 +4795,7 @@ Aggiungi documento"
                             }
                           />
                           <View
-                            accessibilityLabel="Aggiungi documento"
+                            accessibilityLabel="Inizia"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -4860,7 +4858,6 @@ Aggiungi documento"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -4884,7 +4881,6 @@ Aggiungi documento"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -5009,7 +5005,7 @@ Aggiungi documento"
                                     ]
                                   }
                                 >
-                                  Aggiungi documento
+                                  Inizia
                                 </Text>
                               </View>
                             </View>

@@ -1,11 +1,12 @@
-import { H3, H6, IOSkeleton, useIOTheme } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
+import { H3, H6, IOSkeleton, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";
+import { View } from "react-native";
+
 import { formatAmountText } from "../utils";
 
 type Props = {
-  totalAmount?: string;
   loading?: boolean;
+  totalAmount?: string;
 };
 
 export const ReceiptTotalAmount = ({ totalAmount, loading }: Props) => {
@@ -25,7 +26,7 @@ export const ReceiptTotalAmount = ({ totalAmount, loading }: Props) => {
       </H6>
       {loading && (
         <View testID="loader">
-          <IOSkeleton shape="rectangle" width={72} height={34} radius={8} />
+          <IOSkeleton height={34} radius={8} shape="rectangle" width={72} />
         </View>
       )}
       {!loading && totalAmount && (

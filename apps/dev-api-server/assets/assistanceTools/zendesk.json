@@ -1,0 +1,472 @@
+{
+  "panicMode": false,
+  "zendeskCategories": {
+    "id": "1900004702053",
+    "categories": [
+      {
+        "value": "accesso_a_io",
+        "description": {
+          "it-IT": "Accesso a IO",
+          "en-EN": "Login",
+          "de-DE": "Anmelden in IO"
+        },
+        "zendeskSubCategories": {
+          "id": "8086272355217",
+          "subCategories": [
+            {
+              "value": "accesso_spid",
+              "description": {
+                "it-IT": "Non riesco ad accedere con SPID",
+                "en-EN": "Login with SPID",
+                "de-DE": "SPID-Anmeldung"
+              }
+            },
+            {
+              "value": "accesso_cie",
+              "description": {
+                "it-IT": "Non riesco ad accedere con CIE",
+                "en-EN": "Login with CIE",
+                "de-DE": "CIE-Anmeldung"
+              }
+            },
+            {
+              "value": "ho_dimenticato_il_codice_di_sblocco",
+              "description": {
+                "it-IT": "Ho dimenticato il codice di sblocco",
+                "en-EN": "I forgot the unlock code",
+                "de-DE": "Entsperrcode vergessen"
+              }
+            }
+          ],
+          "bannerEducational": {
+            "title": {
+              "it-IT": "Non riesci ad accedere?",
+              "en-EN": "Can't log in?",
+              "de-DE": "Kein Zugriff möglich?"
+            },
+            "content": {
+              "it-IT": "Abbiamo preparato una guida per aiutarti passo passo con il tuo accesso tramite SPID o CIE.",
+              "en-EN": "To help you access with SPID or CIE, we have prepared a step-by-step guide.",
+              "de-DE": "Wir haben eine Schritt-für-Schritt-Anleitung vorbereitet, um Ihnen den Zugang über SPID oder CIE zu erleichtern."
+            },
+            "action": {
+              "label": {
+                "it-IT": "Leggi come fare",
+                "en-EN": "Read more",
+                "de-DE": "Mehr lesen"
+              },
+              "href": {
+                "it-IT":"https://assistenza.ioapp.it/hc/it",
+                "en-EN":"https://assistenza.ioapp.it/hc/it",
+                "de-DE":"https://assistenza.ioapp.it/hc/it"
+              }
+            }
+          }
+        }
+      },
+      {
+        "value": "it_wallet",
+        "description": {
+          "it-IT": "Documenti su IO",
+          "en-EN": "Documenti su IO",
+          "de-DE": "Dokumente in IO"
+        },
+        "zendeskSubCategories": {
+          "id": "29326690756369",
+          "subCategories": [
+            {
+              "value": "it_wallet_info",
+              "description": {
+                "it-IT": "Vorrei più informazioni",
+                "en-EN": "I need more details",
+                "de-DE": "Weitere Informationen erhalten"
+              }
+            },
+            {
+              "value": "it_wallet_aggiunta_documenti",
+              "description": {
+                "it-IT": "Non riesco ad aggiungere i documenti",
+                "en-EN": "Non riesco ad aggiungere i documenti",
+                "de-DE": "Ich kann keine Dokumente hinzufügen"
+              }
+            },
+            {
+              "value": "it_wallet_patente_guida_non_ho_ricevuto",
+              "description": {
+                "it-IT": "Non ho ancora ricevuto la versione digitale della Patente",
+                "en-EN": "I haven't received the digital Driving Licence",
+                "de-DE": "Führerschein nicht erhalten"
+              }
+            },
+            {
+              "value": "it_wallet_patente_guida",
+              "description": {
+                "it-IT": "Ho un problema con la Patente di guida",
+                "en-EN": "I have an issue with the Driving Licence",
+                "de-DE": "Ich habe ein Problem mit dem Führerschein"
+              }
+            },
+            {
+              "value": "it_wallet_tessera_sanitaria",
+              "description": {
+                "it-IT": "Ho un problema con la Tessera Sanitaria",
+                "en-EN": "I have an issue with the Health Insurance Card",
+                "de-DE": "Ich habe ein Problem mit der Gesundheitskarte"
+              }
+            },
+            {
+              "value": "it_wallet_carta_disabilita",
+              "description": {
+                "it-IT": "Ho un problema con la Carta Europea della Disabilità",
+                "en-EN": "I have an issue with the European Disability Card",
+                "de-DE": "Ich habe ein Problem mit dem Europäischen Behindertenausweis"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "value": "io_pagamenti_pagopa",
+        "description": {
+          "it-IT": "Pagamento pagoPA",
+          "en-EN": "pagoPA payment",
+          "de-DE": "pagoPA-Zahlung"
+        },
+        "zendeskSubCategories": {
+          "id": "29473336574609",
+          "subCategories": [
+            {
+              "value": "pagamenti_pagopa_in_corso",
+              "description": {
+                "it-IT": "Il mio pagamento è in corso da troppo tempo",
+                "en-EN": "Il mio pagamento è in corso da troppo tempo",
+                "de-DE": "Meine Zahlung ist schon zu lange in Bearbeitung"
+              }
+            },
+            {
+              "value": "pagamenti_pagopa_errore",
+              "description": {
+                "it-IT": "Mi è comparso un errore durante un pagamento",
+                "en-EN": "Mi è comparso un errore durante un pagamento",
+                "de-DE": "Bei einer Zahlung ist ein Fehler aufgetreten"
+              }
+            },
+            {
+              "value": "pagamenti_pagopa_blocco",
+              "description": {
+                "it-IT": "L'app si è bloccata o riavviata durante un pagamento",
+                "en-EN": "L'app si è bloccata o riavviata durante un pagamento",
+                "de-DE": "Die App ist während einer Zahlung eingefroren oder neu gestartet worden"
+              }
+            },
+            {
+              "value": "pagamenti_pagopa_aggiunta_metodo",
+              "description": {
+                "it-IT": "Non riesco ad aggiungere un metodo di pagamento al Portafoglio",
+                "en-EN": "Non riesco ad aggiungere un metodo di pagamento al Portafoglio",
+                "de-DE": "Ich kann keine Zahlungsmethode zum Konto hinzufügen"
+              }
+            },
+            {
+              "value": "pagamenti_pagopa_info_stato",
+              "description": {
+                "it-IT": "Vorrei informazioni sullo stato di un pagamento",
+                "en-EN": "Vorrei informazioni sullo stato di un pagamento",
+                "de-DE": "Ich möchte Informationen über den Status einer Zahlung"
+              }
+            },
+            {
+              "value": "pagamenti_pagopa_altro_problema",
+              "description": {
+                "it-IT": "Ho un altro problema",
+                "en-EN": "Ho un altro problema",
+                "de-DE": "Ich habe ein anderes Problem"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "value": "io_ricevute_pagopa",
+        "description": {
+          "it-IT": "Ricevute pagoPA",
+          "en-EN": "pagoPA receipts",
+          "de-DE": "pagoPA-Quittungen"
+        },
+        "zendeskSubCategories": {
+          "id": "30635967748497",
+          "subCategories": [
+            {
+              "value": "ricevute_pagopa_info",
+              "description": {
+                "it-IT": "Vorrei più informazioni su come ottenere una ricevuta di pagamento",
+                "en-EN": "Vorrei più informazioni su come ottenere una ricevuta di pagamento",
+                "de-DE": "Ich möchte mehr Informationen darüber, wie ich einen Quittung erhalten kann"
+              }
+            },
+            {
+              "value": "ricevute_pagopa_non_arrivata",
+              "description": {
+                "it-IT": "Non mi è arrivata la ricevuta dopo un pagamento",
+                "en-EN": "Non mi è arrivata la ricevuta dopo un pagamento",
+                "de-DE": "Ich habe nach einer Zahlung keine Quittung erhalten"
+              }
+            },
+            {
+              "value": "ricevute_pagopa_arrivata_sconosciuta",
+              "description": {
+                "it-IT": "Mi è arrivata una ricevuta di un pagamento che non conosco",
+                "en-EN": "Mi è arrivata una ricevuta di un pagamento che non conosco",
+                "de-DE": "Ich habe eine Quittung für eine Zahlung erhalten, von der ich nichts weiß."
+              }
+            },
+            {
+              "value": "ricevute_pagopa_errore_nei_dati",
+              "description": {
+                "it-IT": "C'è un errore nei dati della ricevuta",
+                "en-EN": "C'è un errore nei dati della ricevuta",
+                "de-DE": "Es liegt ein Fehler in der Quittung vor"
+              }
+            },
+            {
+              "value": "ricevute_pagopa_non_riesco_a_scaricare",
+              "description": {
+                "it-IT": "Non riesco a scaricare la ricevuta",
+                "en-EN": "Non riesco a scaricare la ricevuta",
+                "de-DE": "Ich kann die Quittung nicht herunterladen"
+              }
+            },
+            {
+              "value": "ricevute_pagopa_non_riesco_a_trovare",
+              "description": {
+                "it-IT": "Non riesco a trovare la ricevuta",
+                "en-EN": "Non riesco a trovare la ricevuta",
+                "de-DE": "Ich kann die Quittung nicht finden"
+              }
+            },
+            {
+              "value": "ricevute_pagopa_altro_problema",
+              "description": {
+                "it-IT": "Ho un altro problema",
+                "en-EN": "Ho un altro problema",
+                "de-DE": "Ich habe ein anderes Problem"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "value": "messaggi",
+        "description": {
+          "it-IT": "Messaggi",
+          "en-EN": "Messages",
+          "de-DE": "Mitteilungen"
+        },
+        "zendeskSubCategories": {
+          "id": "8086421779473",
+          "subCategories": [
+            {
+              "value": "non_riesco_a_pagare_un_avviso",
+              "description": {
+                "it-IT": "Non riesco a pagare un avviso",
+                "en-EN": "I have trouble paying a notice",
+                "de-DE": "Ich kann eine Aufforderung nicht bezahlen"
+              }
+            },
+            {
+              "value": "il_contenuto_di_un_messaggio_è_errato",
+              "description": {
+                "it-IT": "Il contenuto di un messaggio è errato",
+                "en-EN": "The content of a message is wrong",
+                "de-DE": "Fehlerhafter Mitteilungsinhalt"
+              }
+            },
+            {
+              "value": "il_contenuto_di_un_messaggio_è_offensivo",
+              "description": {
+                "it-IT": "Il contenuto di un messaggio è offensivo",
+                "en-EN": "The content of a message is offensive",
+                "de-DE": "Anstößiger Mitteilungsinhalt"
+              }
+            },
+            {
+              "value": "ho_un_problema_con_un_messaggio_di_send",
+              "description": {
+                "it-IT": "Ho un problema con un messaggio di SEND",
+                "en-EN": "I have an issue with a message from SEND",
+                "de-DE": "Problem mit einer SEND-Mitteilung"
+              }
+            },
+            {
+              "value": "non_mi_è_arrivato_un_messaggio",
+              "description": {
+                "it-IT": "Non mi è arrivato un messaggio",
+                "en-EN": "I haven't received a message",
+                "de-DE": "Mitteilung nicht erhalten"
+              }
+            },
+            {
+              "value": "messaggi_ho_un_altro_problema",
+              "description": {
+                "it-IT": "Ho un altro problema",
+                "en-EN": "I have a different issue",
+                "de-DE": "Ich habe ein anderes Problem"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "value": "carta_giovani_nazionale",
+        "description": {
+          "it-IT": "Carta Giovani Nazionale",
+          "en-EN": "Carta Giovani Nazionale",
+          "de-DE": "Nationale Jugendkarte"
+        },
+        "zendeskSubCategories": {
+          "id": "7840326533265",
+          "subCategories": [
+            {
+              "value": "carta_giovani_nazionale_info",
+              "description": {
+                "it-IT": "Vorrei più informazioni su come richiedere e utilizzare la Carta",
+                "en-EN": "I need more info on how to request or use the Card",
+                "de-DE": "Weitere Informationen über die Beantragung und Nutzung der Karte"
+              }
+            },
+            {
+              "value": "carta_giovani_nazionale_agevolazionespecifica",
+              "description": {
+                "it-IT": "Ho un problema con un'agevolazione specifica",
+                "en-EN": "I have an issue with a specific discount",
+                "de-DE": "Problem mit einer spezifischen Ermäßigung"
+              }
+            },
+            {
+              "value": "carta_giovani_nazionale_problema",
+              "description": {
+                "it-IT": "Ho un altro problema",
+                "en-EN": "I have a different issue",
+                "de-DE": "Ich habe ein anderes Problem"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "value": "bonus_e_iniziative",
+        "description": {
+          "it-IT": "Bonus e iniziative",
+          "en-EN": "Bonuses and initiatives",
+          "de-DE": "Boni und Initiativen"
+        },
+        "zendeskSubCategories": {
+          "id": "8086481365265",
+          "subCategories": [
+            {
+              "value": "bonus_elettrodomestici",
+              "description": {
+                "it-IT": "Bonus elettrodomestici",
+                "en-EN": "Bonus elettrodomestici",
+                "de-DE": "Bonus elettrodomestici"
+              }
+            },
+            {
+              "value": "bonus_pc",
+              "description": {
+                "it-IT": "Bonus PC",
+                "en-EN": "Bonus PC",
+                "de-DE": "PC Bonus"
+              }
+            },
+            {
+              "value": "bonus_vacanze",
+              "description": {
+                "it-IT": "Bonus Vacanze",
+                "en-EN": "Bonus Vacanze",
+                "de-DE": "Ferienbonus"
+              }
+            },
+            {
+              "value": "carta_della_cultura",
+              "description": {
+                "it-IT": "Carta della Cultura",
+                "en-EN": "Carta della Cultura",
+                "de-DE": "Carta della Cultura"
+              }
+            },
+            {
+              "value": "cashback",
+              "description": {
+                "it-IT": "Cashback",
+                "en-EN": "Cashback",
+                "de-DE": "Cashback"
+              }
+            },
+            {
+              "value": "firma_con_io",
+              "description": {
+                "it-IT": "Firma con IO",
+                "en-EN": "Firma con IO",
+                "de-DE": "Mit IO unterschreiben"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "value": "nessuno_dei_precedenti",
+        "description": {
+          "it-IT": "Nessuno dei precedenti",
+          "en-EN": "None of the above",
+          "de-DE": "Keine der vorgenannten"
+        },
+        "zendeskSubCategories": {
+          "id": "8086537475601",
+          "subCategories": [
+            {
+              "value": "privacy",
+              "description": {
+                "it-IT": "Privacy",
+                "en-EN": "Privacy",
+                "de-DE": "Privacy"
+              }
+            },
+            {
+              "value": "accessibilità_/_usabilità",
+              "description": {
+                "it-IT": "Accessibilità e Usabilità",
+                "en-EN": "Accessibility and Usability",
+                "de-DE": "Barrierefreiheit und Benutzerfreundlichkeit"
+              }
+            },
+            {
+              "value": "certificazione_verde_covid-19",
+              "description": {
+                "it-IT": "Certificazione Verde COVID-19",
+                "en-EN": "EU Digital COVID Certificate",
+                "de-DE": "Grünes EU COVID Zertifikat"
+              }
+            },
+            {
+              "value": "suggerimento",
+              "description": {
+                "it-IT": "Vorrei dare un suggerimento",
+                "en-EN": "I'd like to make a suggestion",
+                "de-DE": "Vorschlag einreichen"
+              }
+            },
+            {
+              "value": "nessuno_dei_precedenti_altro_problema",
+              "description": {
+                "it-IT": "Ho un altro problema",
+                "en-EN": "I have a different issue",
+                "de-DE": "Ich habe ein anderes Problem"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

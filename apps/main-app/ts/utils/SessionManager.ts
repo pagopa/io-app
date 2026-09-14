@@ -1,12 +1,13 @@
 /* eslint-disable functional/no-let */
 /* eslint-disable functional/immutable-data */
-import { Mutex } from "async-mutex";
-import { FunctionN, Lazy, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
-import * as t from "io-ts";
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { Mutex } from "async-mutex";
+import * as E from "fp-ts/lib/Either";
+import { FunctionN, Lazy, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as t from "io-ts";
+
 import { delayAsync } from "./timer";
 
 const waitRetry = 8000 as Millisecond;
@@ -16,10 +17,90 @@ const waitRetry = 8000 as Millisecond;
  * concurrent functions that need the token and may detect expired tokens.
  */
 export class SessionManager<T> {
-  private token?: T;
-  private isSessionEnabled: boolean = true;
+  private isRefreshing = false;
+  private isSessionEnabled = true;
   private mutex = new Mutex();
-  private isRefreshing: boolean = false;
+  private token?: T;
+
+  constructor(
+    private refreshSession: () => Promise<O.Option<T>>,
+    private maxRetries = 0
+  ) {}
+
+  /**
+   * Returns the current token, if there's one
+   */
+  public get = () => O.fromNullable(this.token);
+
+  /**
+   * Returns a new token
+   */
+  public getNewToken = async (): Promise<O.Option<T>> => {
+    let count = 0;
+    while (count <= this.maxRetries) {
+      count += 1;
+      await this.exclusiveTokenUpdate(true);
+      if (this.token === undefined) {
+        await delayAsync(waitRetry);
+        continue;
+      }
+      return O.fromNullable(this.token);
+    }
+    return O.none;
+  };
+
+  /**
+   * enable/disable to perform action that need token and token refreshing too
+   */
+  public setSessionEnabled = async (enabled: boolean) =>
+    await this.setEnabledSession(enabled);
+
+  /**
+   * Returns a new function, with the same params of the provided function but
+   * the first one, the token, that gets provided by the internal logic.
+   */
+  public withRefresh<R>(
+    f: FunctionN<[T], Promise<t.Validation<IResponseType<401, any> | R>>>
+  ): Lazy<ReturnType<typeof f>> {
+    return async () => {
+      let count = 0;
+      while (count <= this.maxRetries) {
+        if (!this.isSessionEnabled) {
+          throw new Error(
+            "cant perform any requests cause the session is not enabled"
+          );
+        }
+        count += 1;
+        // FIXME remove this condition after cashback emergency https://www.pivotaltracker.com/story/show/176051000
+        // this ensures that only a request at time could be done (if token is undefined)
+        // ex: if a request is running (waiting for acquiring session token) no other requests will be processed
+        // all other requests will fail
+        if (this.isRefreshing) {
+          throw new Error("max-retries");
+        }
+        await this.exclusiveTokenUpdate();
+        if (this.token === undefined) {
+          // if the token is still undefined, the refresh failed, try again
+          // with a random delay to prevent the dogpile effect
+          await delayAsync(waitRetry);
+          // TODO: add customizable retry/backoff policy (https://www.pivotaltracker.com/story/show/170819459)
+          continue;
+        }
+        const response = await f(this.token);
+        // BEWARE: we can cast to any only because we know for sure that f will
+        // always return a Promise<IResponseType<A, B>>
+        if (E.isRight(response) && (response.right as any).status === 401) {
+          // our token is expired, reset it
+
+          this.token = undefined;
+          continue;
+        }
+        return response;
+      }
+      // max retries reached, reject the promise
+      throw new Error("max-retries");
+    };
+  }
 
   /**
    * Critical section:
@@ -70,84 +151,4 @@ export class SessionManager<T> {
       }
     });
   };
-
-  /**
-   * enable/disable to perform action that need token and token refreshing too
-   */
-  public setSessionEnabled = async (enabled: boolean) =>
-    await this.setEnabledSession(enabled);
-
-  constructor(
-    private refreshSession: () => Promise<O.Option<T>>,
-    private maxRetries: number = 0
-  ) {}
-
-  /**
-   * Returns the current token, if there's one
-   */
-  public get = () => O.fromNullable(this.token);
-
-  /**
-   * Returns a new token
-   */
-  public getNewToken = async (): Promise<O.Option<T>> => {
-    let count = 0;
-    while (count <= this.maxRetries) {
-      count += 1;
-      await this.exclusiveTokenUpdate(true);
-      if (this.token === undefined) {
-        await delayAsync(waitRetry);
-        continue;
-      }
-      return O.fromNullable(this.token);
-    }
-    return O.none;
-  };
-
-  /**
-   * Returns a new function, with the same params of the provided function but
-   * the first one, the token, that gets provided by the internal logic.
-   */
-  public withRefresh<R>(
-    f: FunctionN<[T], Promise<t.Validation<IResponseType<401, any> | R>>>
-  ): Lazy<ReturnType<typeof f>> {
-    return async () => {
-      let count = 0;
-      while (count <= this.maxRetries) {
-        if (!this.isSessionEnabled) {
-          throw new Error(
-            "cant perform any requests cause the session is not enabled"
-          );
-        }
-        count += 1;
-        // FIXME remove this condition after cashback emergency https://www.pivotaltracker.com/story/show/176051000
-        // this ensures that only a request at time could be done (if token is undefined)
-        // ex: if a request is running (waiting for acquiring session token) no other requests will be processed
-        // all other requests will fail
-        if (this.isRefreshing) {
-          throw new Error("max-retries");
-        }
-        await this.exclusiveTokenUpdate();
-        if (this.token === undefined) {
-          // if the token is still undefined, the refresh failed, try again
-          // with a random delay to prevent the dogpile effect
-          await delayAsync(waitRetry);
-          // TODO: add customizable retry/backoff policy (https://www.pivotaltracker.com/story/show/170819459)
-          continue;
-        }
-        const response = await f(this.token);
-        // BEWARE: we can cast to any only because we know for sure that f will
-        // always return a Promise<IResponseType<A, B>>
-        if (E.isRight(response) && (response.right as any).status === 401) {
-          // our token is expired, reset it
-
-          this.token = undefined;
-          continue;
-        }
-        return response;
-      }
-      // max retries reached, reject the promise
-      throw new Error("max-retries");
-    };
-  }
 }

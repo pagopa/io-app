@@ -1,11 +1,12 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { parsePdfAsBase64, drawSignatureField } from "../utils/signatureFields";
-import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
-import { fciDocumentSignatureFields } from "../store/actions";
+
 import { getError } from "../../../utils/errors";
+import { fciDocumentSignatureFields } from "../store/actions";
+import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
+import { drawSignatureField, parsePdfAsBase64 } from "../utils/signatureFields";
 
 /**
  * Handle the FCI signature box drawing.

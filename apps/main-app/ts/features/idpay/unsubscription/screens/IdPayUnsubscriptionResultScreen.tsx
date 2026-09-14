@@ -1,5 +1,6 @@
-import { IOPictograms } from "@pagopa/io-app-design-system";
+import { IOPictograms } from "@io-app/design-system";
 import I18n from "i18next";
+
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -8,10 +9,10 @@ import { idPayUnsubscribeAction } from "../store/actions";
 import { isFailureSelector } from "../store/selectors";
 
 type ScreenContentType = {
-  pictogram: IOPictograms;
-  title: string;
-  subtitle: string;
   buttonLabel: string;
+  pictogram: IOPictograms;
+  subtitle: string;
+  title: string;
 };
 
 const IdPayUnsubscriptionResultScreen = () => {
@@ -49,13 +50,13 @@ const IdPayUnsubscriptionResultScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram={pictogram}
-      title={title}
-      subtitle={subtitle}
       action={{
         label: buttonLabel,
         onPress: handleButtonPress
       }}
+      pictogram={pictogram}
+      subtitle={subtitle}
+      title={title}
     />
   );
 };

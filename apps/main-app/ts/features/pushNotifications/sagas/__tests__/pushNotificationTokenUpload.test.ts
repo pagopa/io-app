@@ -1,10 +1,11 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+
 import {
-  awaitForPushNotificationRegistration,
-  notificationsPlatform,
-  pushNotificationTokenUpload
-} from "../pushNotificationTokenUpload";
+  trackNotificationInstallationTokenNotChanged,
+  trackPushNotificationTokenUploadFailure,
+  trackPushNotificationTokenUploadSucceeded
+} from "../../analytics";
 import {
   newPushNotificationsToken,
   pushNotificationsTokenUploaded
@@ -16,10 +17,10 @@ import {
   TokenRegistrationResendDelay
 } from "../../store/reducers/installation";
 import {
-  trackNotificationInstallationTokenNotChanged,
-  trackPushNotificationTokenUploadFailure,
-  trackPushNotificationTokenUploadSucceeded
-} from "../../analytics";
+  awaitForPushNotificationRegistration,
+  notificationsPlatform,
+  pushNotificationTokenUpload
+} from "../pushNotificationTokenUpload";
 
 describe("pushNotificationTokenUpload", () => {
   it("when the push token is available and not yet registered, it should invoke the backend API and, upon success, dispatch 'pushNotificationsTokenUploaded(token)' and call 'trackPushNotificationTokenUploadSucceeded'", () => {

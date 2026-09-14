@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
+
 import { ClaimDisplayFormat } from "../../../../../common/utils/itwClaimsUtils";
 import { ItwClaimsSelector } from "../index";
 
@@ -22,12 +23,12 @@ jest.mock("react-native-gesture-handler", () => {
       accessibilityState,
       accessible
     }: {
-      children: React.ReactNode;
-      onPress: () => void;
       accessibilityLabel?: string;
       accessibilityRole?: string;
       accessibilityState?: object;
       accessible?: boolean;
+      children: React.ReactNode;
+      onPress: () => void;
     }) =>
       React.createElement(
         Pressable,
@@ -43,20 +44,17 @@ jest.mock("react-native-gesture-handler", () => {
   };
 });
 
-jest.mock(
-  "@pagopa/io-app-design-system/src/hooks/useAccordionAnimation",
-  () => ({
-    useAccordionAnimation: () => ({
-      expanded: false,
-      toggleAccordion: jest.fn(),
-      onBodyLayout: jest.fn(),
-      iconAnimatedStyle: {},
-      bodyAnimatedStyle: {},
-      bodyInnerStyle: {},
-      progress: { value: 0 }
-    })
+jest.mock("@io-app/design-system/src/hooks/useAccordionAnimation", () => ({
+  useAccordionAnimation: () => ({
+    expanded: false,
+    toggleAccordion: jest.fn(),
+    onBodyLayout: jest.fn(),
+    iconAnimatedStyle: {},
+    bodyAnimatedStyle: {},
+    bodyInnerStyle: {},
+    progress: { value: 0 }
   })
-);
+}));
 
 describe("ItwClaimsSelector", () => {
   const items: Array<ClaimDisplayFormat> = [
@@ -67,9 +65,9 @@ describe("ItwClaimsSelector", () => {
   it("renders credential claims", () => {
     const component = render(
       <ItwClaimsSelector
+        accessibilityLabel="claims-selector"
         credentialType="PersonIdentificationData"
         items={items}
-        accessibilityLabel="claims-selector"
       />
     );
 
@@ -82,9 +80,9 @@ describe("ItwClaimsSelector", () => {
     const onToggle = jest.fn();
     const component = render(
       <ItwClaimsSelector
+        accessibilityLabel="claims-selector"
         credentialType="PersonIdentificationData"
         items={items}
-        accessibilityLabel="claims-selector"
         onToggle={onToggle}
       />
     );

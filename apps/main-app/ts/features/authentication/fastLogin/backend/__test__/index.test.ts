@@ -1,19 +1,23 @@
-import { createClient } from "../../../../../../definitions/session_manager/client";
-import { LollipopMethodEnum } from "../../../../../../definitions/identity/LollipopMethod";
+import { LollipopMethodEnum } from "@io-app/api-types/generated/definitions/identity/LollipopMethod";
+import { createClient } from "@io-app/api-types/generated/definitions/session_manager/client";
+
 import { defaultRetryingFetch } from "../../../../../utils/fetch";
 import { LollipopConfig } from "../../../../lollipop";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import { lollipopFetch } from "../../../../lollipop/utils/fetch";
 import {
   createFastLoginClient,
-  performFastLogin,
   createNonceClient,
+  performFastLogin,
   performGetNonce
 } from "../index";
 
-jest.mock("../../../../../../definitions/session_manager/client", () => ({
-  createClient: jest.fn()
-}));
+jest.mock(
+  "@io-app/api-types/generated/definitions/session_manager/client",
+  () => ({
+    createClient: jest.fn()
+  })
+);
 
 jest.mock("../../../../lollipop/utils/fetch", () => ({
   lollipopFetch: jest.fn()

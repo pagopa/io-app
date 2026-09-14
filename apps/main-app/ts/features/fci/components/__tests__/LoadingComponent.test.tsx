@@ -1,9 +1,10 @@
 import { render } from "@testing-library/react-native";
+
 import LoadingComponent from "../LoadingComponent";
 
 type Props = {
-  captionTitle?: string;
   captionSubtitle?: string;
+  captionTitle?: string;
 };
 
 describe("Test LoadingComponent component", () => {

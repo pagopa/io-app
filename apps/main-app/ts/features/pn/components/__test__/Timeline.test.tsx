@@ -1,10 +1,11 @@
 import { createStore } from "redux";
-import { Timeline, TimelineItemProps, TimelineProps } from "../Timeline";
-import { appReducer } from "../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
 import { getNotificationStatusAccessibilityLabel } from "../../utils";
+import { Timeline, TimelineItemProps, TimelineProps } from "../Timeline";
 
 const defaultProps: TimelineProps = {
   data: [

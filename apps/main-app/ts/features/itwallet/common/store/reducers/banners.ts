@@ -1,8 +1,9 @@
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
+import { NonEmptyArray } from "../../../../../types/helpers";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwCloseBanner, itwShowBanner } from "../actions/banners";
-import { NonEmptyArray } from "../../../../../types/helpers";
 
 /**
  * Pseudo-infinite duration in days.
@@ -11,40 +12,79 @@ import { NonEmptyArray } from "../../../../../types/helpers";
 const FOREVER = 100 * 365; // approx. 100 years
 
 /**
+ * Prefix-based id for banners whose dismiss state must be tracked independently per
+ * credential type. Using a template literal (rather than one literal per credential type)
+ * means new credential types automatically get their own persisted dismiss state, with no
+ * change required here even as the credentials catalogue grows.
+ */
+export type ItwCredentialValidityBannerId = `newCredentialValidity:${string}`;
+
+export const getNewCredentialValidityBannerId = (
+  credentialType: string
+): ItwCredentialValidityBannerId => `newCredentialValidity:${credentialType}`;
+
+/**
  * Identifiers for IT Wallet banners
  * To add a new banner add a new id to this type
  */
 export type ItwBannerId =
-  | "discovery" // (Legacy) Discovery banner for Documenti su IO
-  | "discovery_wallet" // Discovery banner for IT Wallet placed in the wallet screen
-  | "discovery_messages_inbox" // Discovery banner for IT Wallet placed in the messages inbox screen
-  | "upgradeMDLDetails" // Upgrade to IT Wallet banner placed in MDL details screen
+  | "activationSuccessFeedback" // Survey feedback banner shown after a successful IT-Wallet activation
   | "ageVerificationUsageDetails" // Age Verification usage banner placed in credential details screen
+  | "discovery" // (Legacy) Discovery banner for Documenti su IO
+  | "discovery_messages_inbox" // Discovery banner for IT Wallet placed in the messages inbox screen
+  | "discovery_wallet" // Discovery banner for IT Wallet placed in the wallet screen
   | "itw_pid_info" // IT-Wallet informational banner within PID details screen
-  | "proximity_qr_code_info"; // Info banner shown on the proximity QR code screen
+  | "mdlDetailsInfo" // Informational banner within MDL details screen
+  | "proximity_qr_code_info" // Info banner shown on the proximity QR code screen
+  | "tsDetailsInfo" // Informational banner within TS (Tessera Sanitaria) details screen
+  | "upgradeMDLDetails" // Upgrade to IT Wallet banner placed in MDL details screen
+  | ItwCredentialValidityBannerId;
+
+/**
+ * Default hide duration applied to any banner id that has no explicit entry in
+ * `bannerHideDurations` below (e.g. per-credential-type ids): hidden forever after the
+ * first dismissal.
+ */
+export const defaultBannerHideDuration: NonEmptyArray<number> = [FOREVER];
 
 /**
  * Mapping between banner identifiers and the duration (expressed in days) for which they should be hidden
- * after each dismissal.
+ * after each dismissal. Banners not listed here fall back to `defaultBannerHideDuration`.
  */
-export const bannerHideDurations: Record<ItwBannerId, NonEmptyArray<number>> = {
+export const bannerHideDurations: Partial<
+  Record<ItwBannerId, NonEmptyArray<number>>
+> = {
   discovery: [6 * 30], // ~6 months
   discovery_wallet: [30, 60, 120], // ~1 month, ~2 months, ~4 months
   discovery_messages_inbox: [30, 60, 120], // ~1 month, ~2 months, ~4 months
   upgradeMDLDetails: [FOREVER],
   ageVerificationUsageDetails: [FOREVER],
   itw_pid_info: [FOREVER],
-  proximity_qr_code_info: [FOREVER]
+  proximity_qr_code_info: [FOREVER],
+  activationSuccessFeedback: [FOREVER], // dismissing the banner hides it permanently
+  mdlDetailsInfo: [FOREVER],
+  tsDetailsInfo: [FOREVER]
+};
+
+/**
+ * Mapping between banner identifiers and the duration (expressed in days) for which they should stay
+ * visible after being triggered (via `itwShowBanner`). Dismissal rules in `bannerHideDurations` still
+ * take precedence. Banners not listed here have no visibility time limit.
+ */
+export const bannerVisibleDurations: Partial<Record<ItwBannerId, number>> = {
+  activationSuccessFeedback: 7 // ~1 week
 };
 
 export type ItwBannersState = Partial<
   Record<
     ItwBannerId,
     {
-      /** The last time the banner was dismissed */
-      dismissedOn?: string;
       /** How many times the banner was dismissed */
       dismissCount?: number;
+      /** The last time the banner was dismissed */
+      dismissedOn?: string;
+      /** When the banner was first triggered to be shown */
+      shownOn?: string;
     }
   >
 >;
@@ -63,28 +103,31 @@ const reducer = (
       const bannerId = action.payload;
       const current = state[bannerId];
 
-      const dismissedOn = new Date().toISOString();
-      const dismissCount = (current?.dismissCount ?? 0) + 1;
-
       return {
         ...state,
         [bannerId]: {
-          dismissedOn,
-          dismissCount
+          ...current,
+          dismissedOn: new Date().toISOString(),
+          dismissCount: (current?.dismissCount ?? 0) + 1
         }
-      };
-    }
-
-    case getType(itwShowBanner): {
-      const bannerId = action.payload;
-      return {
-        ...state,
-        [bannerId]: {}
       };
     }
 
     case getType(itwLifecycleStoresReset):
       return itwBannersInitialState;
+
+    case getType(itwShowBanner): {
+      const bannerId = action.payload;
+      const current = state[bannerId];
+
+      return {
+        ...state,
+        [bannerId]: {
+          ...current,
+          shownOn: current?.shownOn ?? new Date().toISOString()
+        }
+      };
+    }
 
     default:
       return state;

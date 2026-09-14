@@ -1,12 +1,13 @@
-import I18n from "i18next";
 import { act, fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { omit } from "lodash";
 import * as RN from "react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
+import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/testUtils";
 import PN_ROUTES from "../../../navigation/routes";
 import * as analytics from "../../analytics";
 import {
@@ -18,15 +19,15 @@ import { useTrackCieReadingEvents } from "../../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../../store/actions";
 import { sendAarFlowStates } from "../../utils/stateUtils";
 import { useAarGenericErrorBottomSheet } from "../errors/hooks/useAarGenericErrorBottomSheet";
+import { SendAarZendeskSecondLevelTag } from "../errors/hooks/useAarStartSendZendeskSupport";
 import {
   SendAarCieCardReadingComponent,
   SendAarCieCardReadingComponentProps
 } from "../SendAarCieCardReadingComponent";
-import { SendAarZendeskSecondLevelTag } from "../errors/hooks/useAarStartSendZendeskSupport";
+type ErrorState = Extract<ReadState, { status: ReadStatus.ERROR }>;
 type ReadState = ReturnType<
   typeof useCieInternalAuthAndMrtdReading
 >["readState"];
-type ErrorState = Extract<ReadState, { status: ReadStatus.ERROR }>;
 
 const mockStartReading = jest.fn();
 const mockStopReading = jest.fn();

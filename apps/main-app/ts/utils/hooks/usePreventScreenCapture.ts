@@ -1,13 +1,14 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useMemo, useRef } from "react";
 import {
-  preventScreenCaptureAsync,
-  allowScreenCaptureAsync
+  allowScreenCaptureAsync,
+  preventScreenCaptureAsync
 } from "expo-screen-capture";
+import { useCallback, useMemo, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+
 import { isDevEnv } from "../environment";
 
-const activeTags: Set<string> = new Set();
+const activeTags = new Set<string>();
 
 const preventScreenCapture = (tag: string) => {
   if (!activeTags.has(tag)) {
@@ -51,7 +52,6 @@ export function usePreventScreenCapture(key?: string) {
 
       return () => {
         // Here we wait a little after the blur event for navigation transition animations.
-        // eslint-disable-next-line functional/immutable-data
         timeoutRef.current = setTimeout(() => allowScreenCapture(tag), 500);
       };
     }, [tag])

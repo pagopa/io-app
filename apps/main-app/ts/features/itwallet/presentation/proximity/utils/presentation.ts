@@ -1,16 +1,22 @@
-import { assert } from "../../../../../utils/assert";
-import {
-  parseClaims,
-  WellKnownClaim
-} from "../../../common/utils/itwClaimsUtils";
-import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import { TimeoutError, UntrustedRpError } from "./errors";
 import type {
   AcceptedFields,
   ProximityDetails,
   RequestedDocument,
   VerifierRequest
 } from "./types";
+
+import { assert } from "../../../../../utils/assert";
+import {
+  parseClaims,
+  WellKnownClaim
+} from "../../../common/utils/itwClaimsUtils";
+import { getRepresentativeVaultId } from "../../../common/utils/itwCredentialUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import {
+  MissingCredentialError,
+  TimeoutError,
+  UntrustedRpError
+} from "./errors";
 
 const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
 
@@ -28,8 +34,8 @@ export const promiseWithTimeout = <T>(
 };
 
 type GetProximityDetails = (params: {
+  credentials: Partial<Record<string, CredentialMetadata>>;
   request: VerifierRequest["request"];
-  credentials: Record<string, CredentialMetadata>;
   requireAuthenticated?: boolean;
 }) => ProximityDetails;
 
@@ -68,6 +74,15 @@ export const getVerifierIdentity = (
 };
 
 /**
+ * Returns the best available user-facing name for the relying party without
+ * changing the stable identifier used for consent lookup.
+ */
+export const getVerifierDisplayName = (
+  certificateData: VerifierRequest["request"][string]["certificateData"]
+): string | undefined =>
+  certificateData?.organization || certificateData?.commonName;
+
+/**
  * Get the Presentation details based on the request from the Verifier.
  *
  * @param request The request from the Verifier, specifying which document types and claims are required
@@ -77,7 +92,8 @@ export const getVerifierIdentity = (
  * which can be useful for testing purposes, but should be used with caution in
  * production.
  *
- * @returns The Presentation details
+ * @returns Presentation details for requested credentials available in the wallet
+ * @throws MissingCredentialError when none of the requested credentials are available
  */
 export const getProximityDetails: GetProximityDetails = ({
   request,
@@ -86,23 +102,26 @@ export const getProximityDetails: GetProximityDetails = ({
 }) => {
   // Exclude the WIA document type from the request
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
-
   assert(
     Object.keys(rest).length > 0,
     "No requested documents found in the Verifier request"
   );
 
-  return Object.entries(rest).map(
+  const proximityDetails = Object.entries(rest).map(
     ([docType, { isAuthenticated, certificateData, ...namespaces }]) => {
       // Stop the flow if the verifier (RP) is not trusted
       if (!isAuthenticated && requireAuthenticated) {
         throw new UntrustedRpError("Untrusted RP");
       }
 
-      const rpId = getVerifierIdentity(certificateData, requireAuthenticated);
-
       const credential = credentialsByType[docType];
-      assert(credential, `Credential not found for docType: ${docType}`);
+      if (!credential) {
+        return undefined;
+      }
+
+      const rpId = getVerifierIdentity(certificateData, requireAuthenticated);
+      const rpDisplayName = getVerifierDisplayName(certificateData);
+
       // Extract required fields from the verifier request.
       // Each field is formatted as "namespace:field" to match the structure
       // of parsedCredential, which uses colon-separated keys.
@@ -120,12 +139,24 @@ export const getProximityDetails: GetProximityDetails = ({
 
       return {
         rpId,
+        rpDisplayName,
         credentialType: credential.credentialType,
         claimsToDisplay: parseClaims(parsedCredential, {
           exclude: [WellKnownClaim.unique_id]
         })
       };
     }
+  );
+
+  const missingCredentials = Object.keys(rest).filter(
+    docType => !credentialsByType[docType]
+  );
+  if (missingCredentials.length === Object.keys(rest).length) {
+    throw new MissingCredentialError(missingCredentials);
+  }
+
+  return proximityDetails.filter(
+    details => details !== undefined
   ) as ProximityDetails;
 };
 
@@ -133,25 +164,28 @@ export const getProximityDetails: GetProximityDetails = ({
  * Get the requested documents based on the request from the Verifier.
  *
  * @param request The request from the Verifier, specifying which document types and claims are required
- * @param credentialsByType The credentials object by doc type
- * @param wiaMdoc The WIA in mdoc format
- * @returns The requested documents
+ * @param credentials The credentials object by doc type
+ * @param getCredential Retrieves signed credential content from the secure store
+ * @returns The requested documents available in the wallet
  */
 export const getDocuments = async (
   request: VerifierRequest["request"],
-  credentials: Record<string, CredentialMetadata>,
-  getCredential: (credentialId: string) => Promise<string | undefined>
+  credentials: Partial<Record<string, CredentialMetadata>>,
+  getCredential: (vaultId: string) => Promise<string | undefined>
 ): Promise<Array<RequestedDocument>> => {
-  const documents = await Promise.all(
-    Object.entries(request).map(async ([docType]) => {
-      const credential = credentials[docType];
-      // This should be guaranteed by getProximityDetails having already validated credentials
-      assert(credential, `Credential not found for docType: ${docType}`);
+  const availableDocuments = Object.keys(request).flatMap(docType => {
+    const credential = credentials[docType];
+    return credential ? [{ credential, docType }] : [];
+  });
 
-      const signedContent = await getCredential(credential.credentialId);
+  const documents = await Promise.all(
+    availableDocuments.map(async ({ credential, docType }) => {
+      // Present the representative copy (the only one for a non-batch credential).
+      const vaultId = getRepresentativeVaultId(credential);
+      const signedContent = await getCredential(vaultId);
       assert(
         signedContent,
-        `Credential not found in secure store for id: ${credential.credentialId}`
+        `Credential not found in secure store for vaultId: ${vaultId}`
       );
 
       return {
@@ -180,13 +214,23 @@ const acceptAllFields = <T extends NestedBooleanMap>(input: T): T =>
     }
   }, {} as T);
 
+/**
+ * Marks every requested field as accepted, optionally limiting the result to
+ * document types included in the generated response.
+ */
 export const generateAcceptedFields = (
-  request: VerifierRequest["request"]
+  request: VerifierRequest["request"],
+  includedDocTypes?: ReadonlySet<string>
 ): AcceptedFields =>
-  Object.entries(request).reduce(
-    (acc, [docType, { isAuthenticated, certificateData, ...namespaces }]) => ({
-      ...acc,
-      [docType]: acceptAllFields(namespaces)
-    }),
-    {}
-  );
+  Object.entries(request)
+    .filter(([docType]) => !includedDocTypes || includedDocTypes.has(docType))
+    .reduce(
+      (
+        acc,
+        [docType, { isAuthenticated, certificateData, ...namespaces }]
+      ) => ({
+        ...acc,
+        [docType]: acceptAllFields(namespaces)
+      }),
+      {}
+    );

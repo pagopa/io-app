@@ -1,6 +1,7 @@
-import * as O from "fp-ts/lib/Option";
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+
+import { maybeHandlePendingBackgroundActions } from "../../../sagas/backgroundActions";
 import { startApplicationInitialization } from "../../../store/actions/application";
 import { PinString } from "../../../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
@@ -11,7 +12,6 @@ import {
   sessionInvalid
 } from "../../authentication/common/store/actions";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors/index";
-import { maybeHandlePendingBackgroundActions } from "../../../sagas/backgroundActions";
 import {
   identificationCancel,
   identificationForceLogout,
@@ -22,8 +22,8 @@ import {
   identificationSuccess
 } from "../store/actions";
 import {
-  IdentificationCancelData,
   IdentificationBackActionType,
+  IdentificationCancelData,
   IdentificationGenericData,
   IdentificationResult,
   IdentificationSuccessData
@@ -31,13 +31,85 @@ import {
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
-  | ActionType<typeof identificationPinReset>
   | ActionType<typeof identificationForceLogout>
+  | ActionType<typeof identificationPinReset>
   | ActionType<typeof identificationSuccess>;
+/**
+ * If you need to start the identification process and wait the result in a "sync" way,
+ * like we do in the startup saga, use this generator
+ */
+export function* startAndReturnIdentificationResult(
+  pin: PinString,
+  canResetPin = true,
+  isValidatingTask = false,
+  identificationGenericData?: IdentificationGenericData,
+  identificationCancelData?: IdentificationCancelData,
+  identificationSuccessData?: IdentificationSuccessData,
+  shufflePad = false,
+  identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
+): Generator<
+  ReduxSagaEffect,
+  SagaCallReturnType<typeof waitIdentificationResult>,
+  never
+> {
+  yield* put(
+    identificationStart(
+      pin,
+      canResetPin,
+      isValidatingTask,
+      identificationGenericData,
+      identificationCancelData,
+      identificationSuccessData,
+      shufflePad,
+      identificationContext
+    )
+  );
+
+  return yield* call(waitIdentificationResult);
+}
+
+export function* watchIdentification(): IterableIterator<ReduxSagaEffect> {
+  // Watch for identification request
+  yield* takeLatest(
+    getType(identificationRequest),
+    startAndHandleIdentificationResult
+  );
+}
+
+// Started by redux action
+function* startAndHandleIdentificationResult(
+  identificationRequestAction: ActionType<typeof identificationRequest>
+) {
+  const pin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
+  if (pin == null) {
+    return;
+  }
+  yield* put(
+    identificationStart(
+      pin,
+      identificationRequestAction.payload.canResetPin,
+      identificationRequestAction.payload.isValidatingTask,
+      identificationRequestAction.payload.identificationGenericData,
+      identificationRequestAction.payload.identificationCancelData,
+      identificationRequestAction.payload.identificationSuccessData,
+      identificationRequestAction.payload.shufflePad,
+      identificationRequestAction.payload.identificationContext
+    )
+  );
+  const identificationResult = yield* call(waitIdentificationResult);
+
+  if (identificationResult === IdentificationResult.pinreset) {
+    yield* put(startApplicationInitialization());
+  } else if (identificationResult === IdentificationResult.success) {
+    // Check if we have any pending background actions to handle
+    yield* call(maybeHandlePendingBackgroundActions);
+  }
+}
+
 // Wait the identification and return the result
 function* waitIdentificationResult(): Generator<
   ReduxSagaEffect,
-  void | IdentificationResult,
+  IdentificationResult | void,
   any
 > {
   const resultAction = yield* take<ResultAction>([
@@ -50,6 +122,12 @@ function* waitIdentificationResult(): Generator<
   switch (resultAction.type) {
     case getType(identificationCancel):
       return IdentificationResult.cancel;
+
+    case getType(identificationForceLogout): {
+      yield* put(sessionInvalid());
+      yield* put(identificationReset());
+      return IdentificationResult.pinreset;
+    }
 
     case getType(identificationPinReset): {
       // Invalidate the session
@@ -74,88 +152,10 @@ function* waitIdentificationResult(): Generator<
       return IdentificationResult.success;
     }
 
-    case getType(identificationForceLogout): {
-      yield* put(sessionInvalid());
-      yield* put(identificationReset());
-      return IdentificationResult.pinreset;
-    }
-
     default: {
       ((): never => resultAction)();
     }
   }
-}
-
-/**
- * If you need to start the identification process and wait the result in a "sync" way,
- * like we do in the startup saga, use this generator
- */
-export function* startAndReturnIdentificationResult(
-  pin: PinString,
-  canResetPin: boolean = true,
-  isValidatingTask: boolean = false,
-  identificationGenericData?: IdentificationGenericData,
-  identificationCancelData?: IdentificationCancelData,
-  identificationSuccessData?: IdentificationSuccessData,
-  shufflePad: boolean = false,
-  identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
-): Generator<
-  ReduxSagaEffect,
-  SagaCallReturnType<typeof waitIdentificationResult>,
-  never
-> {
-  yield* put(
-    identificationStart(
-      pin,
-      canResetPin,
-      isValidatingTask,
-      identificationGenericData,
-      identificationCancelData,
-      identificationSuccessData,
-      shufflePad,
-      identificationContext
-    )
-  );
-
-  return yield* call(waitIdentificationResult);
-}
-
-// Started by redux action
-function* startAndHandleIdentificationResult(
-  identificationRequestAction: ActionType<typeof identificationRequest>
-) {
-  const pin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
-  if (O.isNone(pin)) {
-    return;
-  }
-  yield* put(
-    identificationStart(
-      pin.value,
-      identificationRequestAction.payload.canResetPin,
-      identificationRequestAction.payload.isValidatingTask,
-      identificationRequestAction.payload.identificationGenericData,
-      identificationRequestAction.payload.identificationCancelData,
-      identificationRequestAction.payload.identificationSuccessData,
-      identificationRequestAction.payload.shufflePad,
-      identificationRequestAction.payload.identificationContext
-    )
-  );
-  const identificationResult = yield* call(waitIdentificationResult);
-
-  if (identificationResult === IdentificationResult.pinreset) {
-    yield* put(startApplicationInitialization());
-  } else if (identificationResult === IdentificationResult.success) {
-    // Check if we have any pending background actions to handle
-    yield* call(maybeHandlePendingBackgroundActions);
-  }
-}
-
-export function* watchIdentification(): IterableIterator<ReduxSagaEffect> {
-  // Watch for identification request
-  yield* takeLatest(
-    getType(identificationRequest),
-    startAndHandleIdentificationResult
-  );
 }
 
 export const testable = isDevEnv

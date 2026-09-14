@@ -6,9 +6,10 @@ import dfns_sl from "date-fns/locale/sl";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import * as t from "io-ts";
 import { Errors } from "io-ts";
-import I18n from "i18next";
+
 import { Locales } from "../i18n";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 import { getLocalePrimary } from "./locale";
@@ -58,42 +59,8 @@ export const formatDateAsShortFormat = (date: Date): string =>
     ? I18n.t("global.date.invalid")
     : new Intl.DateTimeFormat("it", { dateStyle: "short" }).format(date);
 
-export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
-  return format(date, "MMM");
-}
-
-export function formatDateAsDay(date: Date): ReturnType<typeof format> {
-  return format(date, "DD");
-}
-
-export function formatDateAsReminder(
-  date: Date
-): ReturnType<typeof dateFnsFormat> {
-  return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-}
-
-/**
- *
- * It provides the format of the date depending on the system locale (DD/MM or MM/DD as default)
- * @param date
- * @param includeYear: true if the year should be included (DD/MM/YY or MM/DD/YY)
- * @param extendedYear
- */
-export function formatDateAsLocal(
-  date: Date,
-  includeYear: boolean = false,
-  extendedYear: boolean = false
-): ReturnType<typeof dateFnsFormat> {
-  const dateFormat = I18n.t("global.dateFormats.dayMonth");
-  return extendedYear
-    ? format(date, dateFormat) + "/" + format(date, "YYYY")
-    : includeYear
-      ? format(date, dateFormat) + "/" + format(date, "YY")
-      : format(date, dateFormat);
-}
-
 export function format(
-  date: string | number | Date,
+  date: Date | number | string,
   dateFormat?: string
 ): ReturnType<typeof dateFnsFormat> {
   const localePrimary = getLocalePrimary(I18n.language);
@@ -109,12 +76,40 @@ export function format(
   );
 }
 
+export function formatDateAsDay(date: Date): ReturnType<typeof format> {
+  return format(date, "DD");
+}
+
+/**
+ *
+ * It provides the format of the date depending on the system locale (DD/MM or MM/DD as default)
+ * @param date
+ * @param includeYear: true if the year should be included (DD/MM/YY or MM/DD/YY)
+ * @param extendedYear
+ */
+export function formatDateAsLocal(
+  date: Date,
+  includeYear = false,
+  extendedYear = false
+): ReturnType<typeof dateFnsFormat> {
+  const dateFormat = I18n.t("global.dateFormats.dayMonth");
+  return extendedYear
+    ? format(date, dateFormat) + "/" + format(date, "YYYY")
+    : includeYear
+      ? format(date, dateFormat) + "/" + format(date, "YY")
+      : format(date, dateFormat);
+}
+
+export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
+  return format(date, "MMM");
+}
+
 /**
  * Try to parse month and validate as month
  * @param month
  */
 export const decodeCreditCardMonth = (
-  month: string | number | undefined
+  month: number | string | undefined
 ): E.Either<Error | Errors, number> => {
   // convert month to string (if it is a number) and
   // ensure it is left padded: 2 -> 02
@@ -133,7 +128,7 @@ export const decodeCreditCardMonth = (
  * @param year
  */
 export const decodeCreditCardYear = (
-  year: string | number | undefined
+  year: number | string | undefined
 ): E.Either<Error | Errors, number> => {
   const yearStr = (year ?? "").toString().trim();
   // if the year is 2 digits, convert it to 4 digits: 21 -> 2021
@@ -153,28 +148,6 @@ export const decodeCreditCardYear = (
 };
 
 /**
- * ⚠️ Beware, the Date that this method returns is partially correct since is created only from year and month.
- * Eg: month: "03" year: "2022" will return -> 2022-02-28T23:00:00.000Z
- * The date thus returned is therefore ambiguous since it may not correspond to the intended semantics
- * (for example the date returned is not applicable to credit cards that includes the last day of the month)
- * Using the date thus generated to make comparisons could lead to unexpected behaviour
- * @param month
- * @param year
- * @deprecated
- */
-export const dateFromMonthAndYear = (
-  month: string | number | undefined,
-  year: string | number | undefined
-): O.Option<Date> => {
-  const maybeMonth = decodeCreditCardMonth(month);
-  const maybeYear = decodeCreditCardYear(year);
-  if (E.isLeft(maybeMonth) || E.isLeft(maybeYear)) {
-    return O.none;
-  }
-  return O.some(new Date(maybeYear.right, maybeMonth.right - 1));
-};
-
-/**
  * if expireMonth and expireYear are defined, and they represent a valid date then
  * return some, with 'true' if the given date is expired compared with now.
  * return none if the input is not valid
@@ -183,8 +156,8 @@ export const dateFromMonthAndYear = (
  * @param expireYear
  */
 export const isExpired = (
-  expireMonth: string | number | undefined,
-  expireYear: string | number | undefined
+  expireMonth: number | string | undefined,
+  expireYear: number | string | undefined
 ): E.Either<Error, boolean> => {
   const maybeMonth = decodeCreditCardMonth(expireMonth);
   const maybeYear = decodeCreditCardYear(expireYear);
@@ -215,7 +188,7 @@ export const isExpiredDate = (expiryDate: Date): boolean => {
   return nowYearMonth > expiryDate;
 };
 
-export type ExpireStatus = "VALID" | "EXPIRING" | "EXPIRED";
+export type ExpireStatus = "EXPIRED" | "EXPIRING" | "VALID";
 
 /**
  * A function to check if the given date is in the past or in the future.

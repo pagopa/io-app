@@ -1,4 +1,11 @@
 import {
+  Clause,
+  TypeEnum as ClausesTypeEnum
+} from "@io-app/api-types/generated/definitions/fci/Clause";
+import { DocumentDetailView } from "@io-app/api-types/generated/definitions/fci/DocumentDetailView";
+import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
+import { SignatureField } from "@io-app/api-types/generated/definitions/fci/SignatureField";
+import {
   Divider,
   FooterActions,
   H2,
@@ -6,33 +13,29 @@ import {
   ListItemHeader,
   useFooterActionsMeasurements,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import { isEqual } from "lodash";
+} from "@io-app/design-system";
 import { Route, StackActions, useRoute } from "@react-navigation/native";
+import { constFalse, increment, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { constFalse, increment, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { isEqual } from "lodash";
 import {
   ComponentProps,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState
 } from "react";
 import { SectionList, View } from "react-native";
-import {
-  Clause,
-  TypeEnum as ClausesTypeEnum
-} from "../../../../../definitions/fci/Clause";
-import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
-import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
-import { SignatureField } from "../../../../../definitions/fci/SignatureField";
+
 import { LightModalContext } from "../../../../components/ui/LightModal";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton.ts";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackFciShowSignatureFields,
   trackFciSignatureFieldsView,
@@ -60,12 +63,10 @@ import {
   getSectionListData,
   orderSignatureFields
 } from "../../utils/signatureFields";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton.ts";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
-  documentId: DocumentDetailView["id"];
   currentDoc: number;
+  documentId: DocumentDetailView["id"];
 }>;
 
 const FciSignatureFieldsScreen = () => {
@@ -103,10 +104,18 @@ const FciSignatureFieldsScreen = () => {
     return true;
   });
 
-  const dismissModal = () => {
+  const dismissModal = useCallback(() => {
     setIsPreviewModalVisible(false);
     hideModal();
-  };
+  }, [hideModal]);
+
+  // Dismiss the modal on unmount. (needed for StackActions.replace on errors)
+  useEffect(
+    () => () => {
+      hideModal();
+    },
+    [hideModal]
+  );
 
   // get signatureFields for the current document
   const docSignatures = useMemo(
@@ -210,7 +219,6 @@ const FciSignatureFieldsScreen = () => {
       <>
         <VSpacer size={12} />
         <ListItemHeader
-          label={clauseLabel}
           endElement={
             isUnfairClause
               ? {
@@ -223,6 +231,7 @@ const FciSignatureFieldsScreen = () => {
                 }
               : undefined
           }
+          label={clauseLabel}
         />
         {isUnfairClause && fciSignaturefieldInfo}
       </>
@@ -231,26 +240,23 @@ const FciSignatureFieldsScreen = () => {
 
   const renderSignatureFields = () => (
     <SectionList
-      stickySectionHeadersEnabled={false}
       contentContainerStyle={{
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
+      ItemSeparatorComponent={() => <Divider />}
+      keyExtractor={(item, index) => `${item.clause.title}${index}`}
       ListHeaderComponent={() => (
         <>
           <H2>{I18n.t("features.fci.signatureFields.title")}</H2>
           <VSpacer size={32} />
         </>
       )}
-      sections={getSectionListData(
-        orderSignatureFields(signatureFieldsSelector)
-      )}
-      keyExtractor={(item, index) => `${item.clause.title}${index}`}
-      testID={"FciSignatureFieldsSectionListTestID"}
-      ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item }) => (
         <SignatureFieldItem
-          title={item.clause.title}
           disabled={item.clause.type === ClausesTypeEnum.REQUIRED}
+          onChange={v => onChange(v, item)}
+          onPressDetail={() => onPressDetail(item)}
+          title={item.clause.title}
           value={pipe(
             documentsSignaturesSelector,
             RA.findFirst(doc => doc.document_id === docId),
@@ -259,11 +265,14 @@ const FciSignatureFieldsScreen = () => {
             O.map(RA.filter(f => isEqual(f, item))),
             O.fold(constFalse, RA.isNonEmpty)
           )}
-          onChange={v => onChange(v, item)}
-          onPressDetail={() => onPressDetail(item)}
         />
       )}
       renderSectionHeader={renderSectionHeader}
+      sections={getSectionListData(
+        orderSignatureFields(signatureFieldsSelector)
+      )}
+      stickySectionHeadersEnabled={false}
+      testID={"FciSignatureFieldsSectionListTestID"}
     />
   );
 
@@ -299,18 +308,17 @@ const FciSignatureFieldsScreen = () => {
 
   useHeaderSecondLevel({
     title: I18n.t("features.fci.title"),
-    supportRequest: true,
-    contextualHelp: emptyContextualHelp
+    supportRequest: true
   });
 
   if (isError) {
     return (
       <SignatureStatusComponent
-        title={I18n.t("features.fci.errors.generic.default.title")}
-        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
-        pictogram={"umbrella"}
         onPress={() => dispatch(fciEndRequest())}
+        pictogram={"umbrella"}
+        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
         testID={"FciGenericErrorTestID"}
+        title={I18n.t("features.fci.errors.generic.default.title")}
       />
     );
   }
@@ -325,8 +333,8 @@ const FciSignatureFieldsScreen = () => {
     >
       {renderSignatureFields()}
       <FooterActions
-        onMeasure={handleFooterActionsMeasurements}
         actions={actions}
+        onMeasure={handleFooterActionsMeasurements}
       />
       {fciAbortSignature}
     </View>

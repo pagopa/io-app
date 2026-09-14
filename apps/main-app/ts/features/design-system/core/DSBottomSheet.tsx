@@ -5,12 +5,13 @@ import {
   H4,
   IOButton,
   ListItemNav,
+  useIOTheme,
   VSpacer,
-  VStack,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+  VStack
+} from "@io-app/design-system";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
@@ -31,11 +32,11 @@ export const DSBottomSheet = () => {
     <ContentWrapper>
       <VSpacer size={16} />
       <IOButton
-        fullWidth
-        variant="solid"
         accessibilityLabel="Tap to dismiss the bottom sheet"
+        fullWidth
         label={"Dismiss bottom sheet"}
         onPress={handlePressDismiss}
+        variant="solid"
       />
     </ContentWrapper>
   );
@@ -164,47 +165,47 @@ export const DSBottomSheet = () => {
           <H4 color={theme["textHeading-default"]}>Available bottom sheets</H4>
           <View>
             <ListItemNav
-              value="Static bottom sheet"
+              accessibilityLabel="Static bottom sheet"
               description="This bottom sheet has a static snap point of 300 hard coded in the hook declaration"
-              accessibilityLabel="Static bottom sheet"
               onPress={presentStaticBottomSheet}
+              value="Static bottom sheet"
             />
             <Divider />
             <ListItemNav
-              value="Static bottom sheet with footer"
+              accessibilityLabel="Static bottom sheet"
               description="This bottom sheet has a static snap point of 300 hard coded in the hook declaration with a footer"
-              accessibilityLabel="Static bottom sheet"
               onPress={presentStaticBottomSheetWithFooter}
+              value="Static bottom sheet with footer"
             />
             <Divider />
             <ListItemNav
-              value="Autoresizable bottom sheet"
-              description="This bottom sheet has a snap point that is calculated based on the content height"
               accessibilityLabel="Autoresizable bottom sheet"
+              description="This bottom sheet has a snap point that is calculated based on the content height"
               onPress={presentAutoresizableBottomSheet}
+              value="Autoresizable bottom sheet"
             />
             <Divider />
             <ListItemNav
-              value="Autoresizable bottom sheet with footer"
-              description="This bottom sheet has a snap point that is calculated based on the content height with a footer"
               accessibilityLabel="Autoresizable bottom sheet with footer"
+              description="This bottom sheet has a snap point that is calculated based on the content height with a footer"
               onPress={presentAutoresizableBottomSheetWithFooter}
+              value="Autoresizable bottom sheet with footer"
             />
             <Divider />
             <ListItemNav
-              value="Autoresizable bottom sheet with very long content and a footer"
+              accessibilityLabel="Static bottom sheet"
               description="This bottom sheet has a snap point that is calculated based on the content height with a footer, its content is very long  and the modal should snap below the upper safe area limit"
-              accessibilityLabel="Static bottom sheet"
               onPress={presentVeryLongAutoresizableBottomSheetWithFooter}
+              value="Autoresizable bottom sheet with very long content and a footer"
             />
             <Divider />
             <ListItemNav
-              value="Autoresizable bottom sheet with very long content and a footer, full screen"
-              description="This bottom sheet has a snap point that is calculated based on the content height with a footer, its content is very long and the modal takes the full screen"
               accessibilityLabel="Static bottom sheet"
+              description="This bottom sheet has a snap point that is calculated based on the content height with a footer, its content is very long and the modal takes the full screen"
               onPress={
                 presentVeryLongAutoresizableBottomSheetWithFooterFullScreen
               }
+              value="Autoresizable bottom sheet with very long content and a footer, full screen"
             />
           </View>
         </VStack>

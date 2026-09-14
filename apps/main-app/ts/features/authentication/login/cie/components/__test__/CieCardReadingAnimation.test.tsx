@@ -1,9 +1,10 @@
 import React from "react";
 import { createStore } from "redux";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import CieCardReadingAnimation, {
   ReadingState,
   testableCieCardReadingAnimation
@@ -20,10 +21,11 @@ if (!testableCieCardReadingAnimation) {
     "handleApplicationInitialized is not available in test environment"
   );
 }
-const CieCardReadingAnimationProps =
-  testableCieCardReadingAnimation.types.CieCardReadingAnimationProps;
+type CieCardReadingAnimationProps = NonNullable<
+  typeof testableCieCardReadingAnimation
+>["types"]["CieCardReadingAnimationProps"];
 
-const defaultProps: typeof CieCardReadingAnimationProps = {
+const defaultProps: CieCardReadingAnimationProps = {
   readingState: ReadingState.waiting_card,
   pictogramName: "accessDenied",
   circleColor: "#000000"

@@ -1,24 +1,29 @@
-import { useCallback, useEffect, useState } from "react";
-import * as O from "fp-ts/lib/Option";
-import { Linking } from "react-native";
-import * as t from "io-ts";
 import { CieIdErrorResult, openCieIdApp } from "@pagopa/io-react-native-cieid";
-import { pipe } from "fp-ts/lib/function";
+import { useCallback, useEffect, useState } from "react";
+import { Linking } from "react-native";
+import { z } from "zod";
+
+import { useIOSelector } from "../../../../../store/hooks";
+import { convertUnknownToError } from "../../../../../utils/errors";
+import { isAndroid, isIos } from "../../../../../utils/platform";
 import {
   CIE_ID_ERROR,
   CIE_ID_ERROR_MESSAGE,
   IO_LOGIN_CIE_SOURCE_APP,
   IO_LOGIN_CIE_URL_SCHEME
 } from "../../../../authentication/login/cie/utils/cie";
-import { isAndroid, isIos } from "../../../../../utils/platform";
-import { convertUnknownToError } from "../../../../../utils/errors";
+import { selectItwCieIdEnvironment } from "../../../common/store/selectors/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 
 type CieIdHookResult = {
   /**
    * The authentication url obtained after a successful identification through CieID.
    */
-  authUrl: O.Option<string>;
+  authUrl: string | undefined;
+  /**
+   * Function that handles CieID related errors.
+   */
+  handleAuthenticationFailure: (error: unknown) => void;
   /**
    * Whether the CieID app has been opened separately from IO (iOS only).
    */
@@ -27,29 +32,20 @@ type CieIdHookResult = {
    * Function that starts the authentication with CieID.
    */
   startCieIdAppAuthentication: (url: string) => void;
-  /**
-   * Function that handles CieID related errors.
-   */
-  handleAuthenticationFailure: (error: unknown) => void;
 };
 
-const cieIdAppError = t.type({
-  id: t.literal("ERROR"),
-  code: t.string
+const cieIdAppError = z.object({
+  id: z.literal("ERROR"),
+  code: z.string()
 });
 
 const isCieIdAppError = (e: unknown): e is CieIdErrorResult =>
-  cieIdAppError.is(e);
+  cieIdAppError.safeParse(e).success;
 
 const extractCieIdErrorFromUrl = (url: string) =>
-  pipe(
-    url,
-    O.fromPredicate(x => x.includes(CIE_ID_ERROR)),
-    O.map(
-      x => x.split(CIE_ID_ERROR_MESSAGE)[1] ?? "Unexpected error from CieID"
-    ),
-    O.toUndefined
-  );
+  url.includes(CIE_ID_ERROR)
+    ? (url.split(CIE_ID_ERROR_MESSAGE)[1] ?? "Unexpected error from CieID")
+    : undefined;
 
 /**
  * Hook that contains CieID related logic and handlers.
@@ -57,7 +53,8 @@ const extractCieIdErrorFromUrl = (url: string) =>
  */
 export const useCieIdApp = (): CieIdHookResult => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const [authUrl, setAuthUrl] = useState<O.Option<string>>(O.none);
+  const cieIdEnvironment = useIOSelector(selectItwCieIdEnvironment);
+  const [authUrl, setAuthUrl] = useState<string | undefined>(undefined);
   const [isAppLaunched, setIsAppLaunched] = useState(false);
 
   const sendErrorToMachine = useCallback(
@@ -89,13 +86,17 @@ export const useCieIdApp = (): CieIdHookResult => {
     (url: string) => {
       // Use the new CieID app-to-app flow on Android
       if (isAndroid) {
-        openCieIdApp(url, result => {
-          if (result.id === "URL") {
-            setAuthUrl(O.some(result.url));
-          } else {
-            handleAuthenticationFailure(result);
-          }
-        });
+        openCieIdApp(
+          url,
+          result => {
+            if (result.id === "URL") {
+              setAuthUrl(result.url);
+            } else {
+              handleAuthenticationFailure(result);
+            }
+          },
+          cieIdEnvironment
+        );
       }
 
       // Try to directly open the CieID app on iOS
@@ -105,7 +106,7 @@ export const useCieIdApp = (): CieIdHookResult => {
           .catch(handleAuthenticationFailure);
       }
     },
-    [handleAuthenticationFailure]
+    [handleAuthenticationFailure, cieIdEnvironment]
   );
 
   useEffect(() => {
@@ -125,7 +126,7 @@ export const useCieIdApp = (): CieIdHookResult => {
           return sendErrorToMachine(new Error(cieIdError));
         }
 
-        setAuthUrl(O.some(continueUrl));
+        setAuthUrl(continueUrl);
         setIsAppLaunched(false);
       }
     );

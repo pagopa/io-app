@@ -1,21 +1,20 @@
-/* eslint-disable functional/immutable-data */
 import {
   ContentWrapper,
   IconButton,
   IOColors,
   IOSpringValues,
   IOVisualCostants,
+  triggerHaptic,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { ReactNode, RefObject, memo, useCallback, useMemo } from "react";
+import { memo, ReactNode, RefObject, useCallback, useMemo } from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
 import {
   Gesture,
   GestureDetector,
   GestureHandlerRootView
 } from "react-native-gesture-handler";
-import HapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   SharedValue,
   useAnimatedStyle,
@@ -51,11 +50,11 @@ const styles = StyleSheet.create({
 });
 
 // Props for the right action icon
-type RightActionsProps = {
-  onRightActionPressed: () => void;
+type RightActionsProps = Pick<IconButton, "color" | "icon"> & {
   accessibilityLabel: string;
+  onRightActionPressed: () => void;
   translateX: SharedValue<number>;
-} & Pick<IconButton, "color" | "icon">;
+};
 
 const RightActions = memo(
   ({
@@ -80,8 +79,8 @@ const RightActions = memo(
         <Animated.View style={animatedIconStyle}>
           <IconButton
             accessibilityLabel={accessibilityLabel}
-            icon={icon}
             color={color}
+            icon={icon}
             onPress={onRightActionPressed}
           />
         </Animated.View>
@@ -97,10 +96,10 @@ export type SwipeControls = {
 
 // Props for the swipeable list item
 type ListItemSwipeActionProps = {
-  children: ReactNode;
-  icon: IconButton["icon"];
-  color: IconButton["color"];
   accessibilityLabel?: string;
+  children: ReactNode;
+  color: IconButton["color"];
+  icon: IconButton["icon"];
   onRightActionPressed: (controls: SwipeControls) => void;
   openedItemRef?: RefObject<(() => void) | null>;
 };
@@ -149,10 +148,6 @@ const ListItemSwipeAction = ({
     transform: [{ translateX: translateX.value }]
   }));
 
-  const triggerHaptic = () => {
-    HapticFeedback.trigger("impactLight");
-  };
-
   const handleSwipeStart = () => {
     if (openedItemRef?.current) {
       scheduleOnUI(openedItemRef.current);
@@ -195,7 +190,7 @@ const ListItemSwipeAction = ({
         }
 
         if (translationX < HAPTIC_THRESHOLD && !hapticTriggered.value) {
-          scheduleOnRN(triggerHaptic);
+          scheduleOnRN(triggerHaptic, "impactLight");
           hapticTriggered.value = true;
         } else if (translationX >= HAPTIC_THRESHOLD) {
           hapticTriggered.value = false;
@@ -242,15 +237,13 @@ const ListItemSwipeAction = ({
   return (
     <GestureHandlerRootView style={styles.gestureHandlerRoot}>
       <ContentWrapper style={styles.contentWrapper}>
-        <Animated.View
-          style={[StyleSheet.absoluteFillObject, backgroundStyle]}
-        />
+        <Animated.View style={[StyleSheet.absoluteFill, backgroundStyle]} />
         <RightActions
-          icon={icon}
-          color={color}
-          translateX={translateX}
-          onRightActionPressed={handleRightActionPressed}
           accessibilityLabel={accessibilityLabel}
+          color={color}
+          icon={icon}
+          onRightActionPressed={handleRightActionPressed}
+          translateX={translateX}
         />
         <GestureDetector gesture={panGesture}>
           <Animated.View style={[swipeableContentStyle, animatedStyle]}>

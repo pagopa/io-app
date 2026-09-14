@@ -1,8 +1,7 @@
+import { PersistPartial } from "redux-persist";
 import { getType } from "typesafe-actions";
 
-import * as O from "fp-ts/lib/Option";
-import { PersistPartial } from "redux-persist";
-import { pipe } from "fp-ts/lib/function";
+import { Action } from "../../../../store/actions/types";
 import { PinString } from "../../../../types/PinString";
 import {
   identificationCancel,
@@ -12,7 +11,6 @@ import {
   identificationStart,
   identificationSuccess
 } from "../actions";
-import { Action } from "../../../../store/actions/types";
 
 export const freeAttempts = 4;
 // in seconds
@@ -23,64 +21,64 @@ export const maxAttempts = 8;
 const maxDeltaTimespan =
   (maxAttempts - freeAttempts - 1) * deltaTimespanBetweenAttempts;
 
+export enum IdentificationBackActionType {
+  CLOSE_APP = "CLOSE_APP",
+  DEFAULT = "DEFAULT"
+}
+
 export enum IdentificationResult {
   "cancel" = "cancel",
-  "pinreset" = "pinreset",
   "failure" = "failure",
+  "pinreset" = "pinreset",
   "success" = "success"
 }
 
-export enum IdentificationBackActionType {
-  DEFAULT = "DEFAULT",
-  CLOSE_APP = "CLOSE_APP"
-}
+export type IdentificationCancelData = { label: string; onCancel: () => void };
+
+export type IdentificationFailData = {
+  nextLegalAttempt: Date;
+  remainingAttempts: number;
+  showLockModal?: boolean;
+  timespanBetweenAttempts: number;
+};
 
 export type IdentificationGenericData = {
   message: string;
 };
 
-export type IdentificationCancelData = { label: string; onCancel: () => void };
+export type IdentificationState = {
+  fail?: IdentificationFailData;
+  progress: IdentificationProgressState;
+};
 
 export type IdentificationSuccessData = { onSuccess: () => void };
 
-type IdentificationUnidentifiedState = {
-  kind: "unidentified";
-};
-
-type IdentificationStartedState = {
-  kind: "started";
-  pin: PinString;
-  canResetPin: boolean;
-  isValidatingTask: boolean; // it is true if the identification process is occurring to confirm a task (eg. a payment)
-  identificationGenericData?: IdentificationGenericData;
-  identificationCancelData?: IdentificationCancelData;
-  identificationSuccessData?: IdentificationSuccessData;
-  shufflePad?: boolean;
-  identificationContext?: IdentificationBackActionType;
-};
+export type PersistedIdentificationState = IdentificationState & PersistPartial;
 
 type IdentificationIdentifiedState = {
   kind: "identified";
 };
 
-export type IdentificationProgressState =
-  | IdentificationUnidentifiedState
+type IdentificationProgressState =
+  | IdentificationIdentifiedState
   | IdentificationStartedState
-  | IdentificationIdentifiedState;
+  | IdentificationUnidentifiedState;
 
-export type IdentificationFailData = {
-  remainingAttempts: number;
-  nextLegalAttempt: Date;
-  timespanBetweenAttempts: number;
-  showLockModal?: boolean;
+type IdentificationStartedState = {
+  canResetPin: boolean;
+  identificationCancelData?: IdentificationCancelData;
+  identificationContext?: IdentificationBackActionType;
+  identificationGenericData?: IdentificationGenericData;
+  identificationSuccessData?: IdentificationSuccessData;
+  isValidatingTask: boolean; // it is true if the identification process is occurring to confirm a task (eg. a payment)
+  kind: "started";
+  pin: PinString;
+  shufflePad?: boolean;
 };
 
-export type IdentificationState = {
-  progress: IdentificationProgressState;
-  fail?: IdentificationFailData;
+type IdentificationUnidentifiedState = {
+  kind: "unidentified";
 };
-
-export type PersistedIdentificationState = IdentificationState & PersistPartial;
 
 const INITIAL_PROGRESS_STATE: IdentificationUnidentifiedState = {
   kind: "unidentified"
@@ -131,15 +129,6 @@ export const identificationReducer = (
   action: Action
 ): IdentificationState => {
   switch (action.type) {
-    case getType(identificationStart):
-      return {
-        ...state,
-        progress: {
-          kind: "started",
-          ...action.payload
-        }
-      };
-
     case getType(identificationCancel):
       return {
         progress: {
@@ -148,15 +137,20 @@ export const identificationReducer = (
         fail: state.fail
       };
 
-    case getType(identificationSuccess):
-      return {
-        progress: {
-          kind: "identified"
-        }
-      };
+    case getType(identificationFailure):
+      const newErrorData = state.fail
+        ? nextErrorData(state.fail)
+        : {
+            nextLegalAttempt: new Date(),
+            remainingAttempts: maxAttempts - 1,
+            timespanBetweenAttempts: 0,
+            showLockModal: false
+          };
 
-    case getType(identificationReset):
-      return INITIAL_STATE;
+      return {
+        ...state,
+        fail: newErrorData
+      };
 
     case getType(identificationHideLockModal):
       const failData = state.fail
@@ -170,23 +164,23 @@ export const identificationReducer = (
         fail: failData
       };
 
-    case getType(identificationFailure):
-      const newErrorData = pipe(
-        state.fail,
-        O.fromNullable,
-        O.fold(
-          () => ({
-            nextLegalAttempt: new Date(),
-            remainingAttempts: maxAttempts - 1,
-            timespanBetweenAttempts: 0,
-            showLockModal: false
-          }),
-          errorData => nextErrorData(errorData)
-        )
-      );
+    case getType(identificationReset):
+      return INITIAL_STATE;
+
+    case getType(identificationStart):
       return {
         ...state,
-        fail: newErrorData
+        progress: {
+          kind: "started",
+          ...action.payload
+        }
+      };
+
+    case getType(identificationSuccess):
+      return {
+        progress: {
+          kind: "identified"
+        }
       };
 
     default:

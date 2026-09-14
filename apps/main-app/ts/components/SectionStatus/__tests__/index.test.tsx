@@ -1,14 +1,15 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+import { Config } from "@io-app/api-types/generated/definitions/content/Config";
+import {
+  LevelEnum,
+  SectionStatus
+} from "@io-app/api-types/generated/definitions/content/SectionStatus";
+import { IOColors } from "@io-app/design-system";
 import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { Config } from "../../../../definitions/content/Config";
-import {
-  LevelEnum,
-  SectionStatus
-} from "../../../../definitions/content/SectionStatus";
+
 import { PersistedFeaturesState } from "../../../features/common/store/reducers";
 import { ItWalletState } from "../../../features/itwallet/common/store/reducers";
 import { CredentialType } from "../../../features/itwallet/common/utils/itwMocksUtils";
@@ -67,7 +68,7 @@ const mockSectionStatusState = (
           credentials: { [CredentialType.PID]: {} as CredentialMetadata },
           legacyCredentials: {}
         } as ItwCredentialsState,
-        issuance: { integrityKeyTag: O.some("key-tag") }
+        issuance: { integrityKeyTag: "key-tag" }
       } as ItWalletState
     } as PersistedFeaturesState
   }) as unknown as GlobalState;
@@ -190,7 +191,7 @@ describe("Section Status Component should return null", () => {
               credentials: { [CredentialType.PID]: {} as CredentialMetadata },
               legacyCredentials: {}
             } as ItwCredentialsState,
-            issuance: { integrityKeyTag: O.some("key-tag") }
+            issuance: { integrityKeyTag: "key-tag" }
           } as ItWalletState
         } as PersistedFeaturesState
       })

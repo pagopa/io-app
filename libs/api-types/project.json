@@ -1,0 +1,16 @@
+{
+  "name": "@io-app/api-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api-types/generated",
+  "projectType": "library",
+  "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm run generate",
+        "cwd": "libs/api-types"
+      },
+      "cache": false
+    }
+  }
+}

@@ -602,7 +602,6 @@ exports[`MessageGreenPassScreen Should match snapshost 1`] = `
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -626,7 +625,6 @@ exports[`MessageGreenPassScreen Should match snapshost 1`] = `
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",

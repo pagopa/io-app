@@ -1,31 +1,35 @@
+import { CommonActions, StackActions } from "@react-navigation/native";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import { CommonActions, StackActions } from "@react-navigation/native";
-import {
-  identifyMixpanelSaga,
-  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel,
-  resetMixpanelSaga,
-  initMixpanel,
-  handleSetMixpanelEnabled,
-  askMixpanelOptIn,
-  testable
-} from "../mixpanel";
+
 import {
   sessionExpired,
   sessionInvalid
 } from "../../features/authentication/common/store/actions";
+import { setIsMixpanelInitialized } from "../../features/mixpanel/store/actions";
 import {
   identifyMixpanel,
   initializeMixPanel,
   resetMixpanel,
   terminateMixpanel
 } from "../../mixpanel";
-import { setMixpanelEnabled } from "../../store/actions/mixpanel";
-import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
+import { updateMixpanelProfileProperties } from "../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../mixpanelConfig/superProperties";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
-import { updateMixpanelProfileProperties } from "../../mixpanelConfig/profileProperties";
-import { setIsMixpanelInitialized } from "../../features/mixpanel/store/actions";
+import { setMixpanelEnabled } from "../../store/actions/mixpanel";
+import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
+import { GlobalState } from "../../store/reducers/types";
+import {
+  askMixpanelOptIn,
+  handleSetMixpanelEnabled,
+  identifyMixpanelSaga,
+  initMixpanel,
+  resetMixpanelSaga,
+  testable,
+  updateMixpanelProfileAndSuperProperties,
+  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
+} from "../mixpanel";
 
 describe("mixpanel", () => {
   describe("watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel", () => {
@@ -54,6 +58,21 @@ describe("mixpanel", () => {
   describe("resetMixpanelSaga", () => {
     it("should call resetMixpanel", () => {
       testSaga(resetMixpanelSaga).next().call(resetMixpanel).next().isDone();
+    });
+  });
+
+  describe("updateMixpanelProfileAndSuperProperties", () => {
+    it("should select the state and update both profile and super properties", () => {
+      const aState = {} as GlobalState;
+      testSaga(updateMixpanelProfileAndSuperProperties)
+        .next()
+        .select()
+        .next(aState)
+        .call(updateMixpanelProfileProperties, aState)
+        .next()
+        .call(updateMixpanelSuperProperties, aState)
+        .next()
+        .isDone();
     });
   });
 
@@ -114,12 +133,14 @@ describe("mixpanel", () => {
   });
 
   describe("askMixpanelOptIn", () => {
-    it("should do nothing when user already opted in", () => {
+    it("should identify and update profile and super properties when user already opted in", () => {
       testSaga(askMixpanelOptIn)
         .next()
         .select(isMixpanelEnabled)
         .next(true)
         .call(identifyMixpanelSaga)
+        .next()
+        .call(updateMixpanelProfileAndSuperProperties)
         .next()
         .isDone();
     });
@@ -133,8 +154,6 @@ describe("mixpanel", () => {
     });
 
     it("should navigate to opt-in screen when no preference is set", () => {
-      const mockState = { someState: "mockValue" };
-
       testSaga(askMixpanelOptIn)
         .next()
         .select(isMixpanelEnabled)
@@ -156,9 +175,7 @@ describe("mixpanel", () => {
           StackActions.popToTop()
         )
         .next()
-        .select()
-        .next(mockState)
-        .call(updateMixpanelProfileProperties, mockState)
+        .call(updateMixpanelProfileAndSuperProperties)
         .next()
         .isDone();
     });

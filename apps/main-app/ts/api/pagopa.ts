@@ -1,27 +1,3 @@
-/**
- * pagoPA backend client, with functions
- * to call the different API available
- */
-import * as r from "@pagopa/ts-commons/lib/requests";
-import {
-  AddResponseType,
-  ApiHeaderJson,
-  composeHeaderProducers,
-  composeResponseDecoders,
-  constantResponseDecoder,
-  createFetchRequestForApi,
-  ioResponseDecoder,
-  MapResponseType,
-  ReplaceRequestParams,
-  RequestHeaderProducer,
-  RequestHeaders,
-  TypeofApiParams
-} from "@pagopa/ts-commons/lib/requests";
-import { Omit } from "@pagopa/ts-commons/lib/types";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as t from "io-ts";
-import _ from "lodash";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -50,11 +26,11 @@ import {
   StartSessionUsingGETT,
   updateWalletUsingPUTV2Decoder,
   UpdateWalletUsingPUTV2T
-} from "../../definitions/pagopa/requestTypes";
-import { WalletPaymentStatusRequest } from "../../definitions/pagopa/WalletPaymentStatusRequest";
-import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
-import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
-import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
+} from "@io-app/api-types/generated/definitions/pagopa/requestTypes";
+import { WalletPaymentStatusRequest } from "@io-app/api-types/generated/definitions/pagopa/WalletPaymentStatusRequest";
+import { BancomatCardsRequest } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BancomatCardsRequest";
+import { BPayRequest } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BPayRequest";
+import { CobadegPaymentInstrumentsRequest } from "@io-app/api-types/generated/definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
 import {
   addWalletsBancomatCardUsingPOSTDecoder,
   addWalletsBPayUsingPOSTDecoder,
@@ -70,7 +46,32 @@ import {
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT,
   getWalletsV2UsingGETDecoder
-} from "../../definitions/pagopa/walletv2/requestTypes";
+} from "@io-app/api-types/generated/definitions/pagopa/walletv2/requestTypes";
+/**
+ * pagoPA backend client, with functions
+ * to call the different API available
+ */
+import * as r from "@pagopa/ts-commons/lib/requests";
+import {
+  AddResponseType,
+  ApiHeaderJson,
+  composeHeaderProducers,
+  composeResponseDecoders,
+  constantResponseDecoder,
+  createFetchRequestForApi,
+  ioResponseDecoder,
+  MapResponseType,
+  ReplaceRequestParams,
+  RequestHeaderProducer,
+  RequestHeaders,
+  TypeofApiParams
+} from "@pagopa/ts-commons/lib/requests";
+import { Omit } from "@pagopa/ts-commons/lib/types";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as t from "io-ts";
+import _ from "lodash";
+
 import {
   NullableWallet,
   PagoPAErrorResponse,
@@ -120,7 +121,7 @@ const getSession: MapResponseType<StartSessionUsingGETT, 200, SessionResponse> =
 
 // to support 'start' param in query string we re-define the type GetTransactionsUsingGETT
 // because the generated one doesn't support 'start' due to weak specs in api definition
-export type GetTransactionsUsingGETT = r.IGetApiRequestType<
+type GetTransactionsUsingGETT = r.IGetApiRequestType<
   { readonly Bearer: string; readonly start: number },
   "Authorization",
   never,
@@ -240,7 +241,7 @@ const getWallets: GetWalletsUsingGETExtraT = {
 const getWalletsV2UsingGETDecoderCustom = getWalletsV2UsingGETDecoder({
   200: PatchedWalletV2ListResponse
 });
-export type GetWalletsV2UsingGETTExtra = r.IGetApiRequestType<
+type GetWalletsV2UsingGETTExtra = r.IGetApiRequestType<
   { readonly Bearer: string },
   "Authorization",
   never,
@@ -305,8 +306,8 @@ const getPspList: GetPspListUsingGETTExtra = {
 
 type PspParams = {
   readonly Bearer: string;
-  readonly idWallet: string;
   readonly idPayment: string;
+  readonly idWallet: string;
   readonly language: string;
 };
 
@@ -439,12 +440,12 @@ const getPans: GetPansUsingGETT = {
   response_decoder: getPansUsingGETDefaultDecoder()
 };
 
-export type AddWalletsBancomatCardUsingPOSTTExtra = r.IPostApiRequestType<
+type AddWalletsBancomatCardUsingPOSTTExtra = r.IPostApiRequestType<
   {
-    readonly Bearer: string;
     readonly bancomatCardsRequest: BancomatCardsRequest;
+    readonly Bearer: string;
   },
-  "Content-Type" | "Authorization",
+  "Authorization" | "Content-Type",
   never,
   | r.IResponseType<200, PatchedWalletV2ListResponse>
   | r.IResponseType<201, undefined>
@@ -507,12 +508,12 @@ const searchCobadgePans: GetCobadgeByRequestIdUsingGETT = {
   response_decoder: getCobadgeByRequestIdUsingGETDefaultDecoder()
 };
 
-export type AddWalletsCobadge = r.IPostApiRequestType<
+type AddWalletsCobadge = r.IPostApiRequestType<
   {
     readonly Bearer: string;
     readonly cobadegPaymentInstrumentsRequest: CobadegPaymentInstrumentsRequest;
   },
-  "Content-Type" | "Authorization",
+  "Authorization" | "Content-Type",
   never,
   | r.IResponseType<200, PatchedWalletV2ListResponse>
   | r.IResponseType<201, undefined>
@@ -521,7 +522,7 @@ export type AddWalletsCobadge = r.IPostApiRequestType<
   | r.IResponseType<404, undefined>
 >;
 
-const cobadgeInstrumentReplacer = (key: string | number, value: any) => {
+const cobadgeInstrumentReplacer = (key: number | string, value: any) => {
   if (key !== "expiringDate") {
     return value;
   }
@@ -548,9 +549,9 @@ const addCobadgeToWallet: AddWalletsCobadge = {
     addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoderCustom
 };
 
-export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
+type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
   { readonly Bearer: string; readonly bPayRequest: BPayRequest },
-  "Content-Type" | "Authorization",
+  "Authorization" | "Content-Type",
   never,
   | r.IResponseType<200, PatchedWalletV2ListResponse>
   | r.IResponseType<201, undefined>
@@ -572,13 +573,13 @@ const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
 };
 
 // Request type definition
-export type ChangePayOptionT = r.IPutApiRequestType<
+type ChangePayOptionT = r.IPutApiRequestType<
   {
     readonly Bearer: string;
     readonly idWallet: number;
     readonly walletPaymentStatusRequest: WalletPaymentStatusRequest;
   },
-  "Content-Type" | "Authorization",
+  "Authorization" | "Content-Type",
   never,
   | r.IResponseType<200, PatchedWalletV2Response>
   | r.IResponseType<400, undefined>
@@ -599,7 +600,7 @@ const updatePaymentStatus: ChangePayOptionT = {
   response_decoder: changePayOptionDecoderCustom
 };
 
-export type DeleteWalletsByServiceUsingDELETETExtra = r.IDeleteApiRequestType<
+type DeleteWalletsByServiceUsingDELETETExtra = r.IDeleteApiRequestType<
   { readonly Bearer: string; readonly service: string },
   "Authorization",
   never,
@@ -649,6 +650,8 @@ const withPaymentManagerToken =
     ) as P;
     return f(params);
   };
+
+export type PaymentManagerClient = ReturnType<typeof PaymentManagerClient>;
 
 export function PaymentManagerClient(
   baseUrl: string,
@@ -878,7 +881,7 @@ export function PaymentManagerClient(
           language: getLocalePrimaryWithFallback()
         })
     ),
-    getPspV2: (payload: { idWallet: number; idPayment: string }) =>
+    getPspV2: (payload: { idPayment: string; idWallet: number }) =>
       pipe(
         createFetchRequestForApi(getPspListV2, options),
         withPaymentManagerToken,
@@ -891,5 +894,3 @@ export function PaymentManagerClient(
       )
   };
 }
-
-export type PaymentManagerClient = ReturnType<typeof PaymentManagerClient>;

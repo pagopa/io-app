@@ -1,7 +1,13 @@
-import { TimeoutError, UntrustedRpError } from "../utils/errors";
+import {
+  MissingCredentialError,
+  TimeoutError,
+  UntrustedRpError
+} from "../utils/errors";
 import { ProximityEvents } from "./events";
 
 export enum ProximityFailureType {
+  CONSENT_DENIED = "CONSENT_DENIED",
+  MISSING_CREDENTIALS = "MISSING_CREDENTIALS",
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
   TIMEOUT = "TIMEOUT",
   UNEXPECTED = "UNEXPECTED",
@@ -9,9 +15,17 @@ export enum ProximityFailureType {
 }
 
 /**
+ * Union type of failures with the reason properly typed.
+ */
+export type ProximityFailure =
+  TypedProximityFailures[keyof TypedProximityFailures];
+
+/**
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
-export type ReasonTypeByFailure = {
+type ReasonTypeByFailure = {
+  [ProximityFailureType.CONSENT_DENIED]: undefined;
+  [ProximityFailureType.MISSING_CREDENTIALS]: MissingCredentialError;
   [ProximityFailureType.RELYING_PARTY_GENERIC]: Error;
   [ProximityFailureType.TIMEOUT]: TimeoutError;
   [ProximityFailureType.UNEXPECTED]: unknown;
@@ -19,14 +33,8 @@ export type ReasonTypeByFailure = {
 };
 
 type TypedProximityFailures = {
-  [K in ProximityFailureType]: { type: K; reason: ReasonTypeByFailure[K] };
+  [K in ProximityFailureType]: { reason: ReasonTypeByFailure[K]; type: K };
 };
-
-/**
- * Union type of failures with the reason properly typed.
- */
-export type ProximityFailure =
-  TypedProximityFailures[keyof TypedProximityFailures];
 
 /**
  * Maps an event dispatched by the proximity presentation machine to a failure object.
@@ -54,6 +62,13 @@ export const mapEventToFailure = (event: ProximityEvents): ProximityFailure => {
   if (error instanceof UntrustedRpError) {
     return {
       type: ProximityFailureType.UNTRUSTED_RP,
+      reason: error
+    };
+  }
+
+  if (error instanceof MissingCredentialError) {
+    return {
+      type: ProximityFailureType.MISSING_CREDENTIALS,
       reason: error
     };
   }

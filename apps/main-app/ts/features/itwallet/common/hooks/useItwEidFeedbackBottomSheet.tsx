@@ -1,16 +1,17 @@
-import { Body, IOButton, VStack } from "@pagopa/io-app-design-system";
+import { Body, IOButton, VStack } from "@io-app/design-system";
+import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useMemo, useRef } from "react";
 import { View } from "react-native";
-import { useRoute } from "@react-navigation/native";
+
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { openWebUrl } from "../../../../utils/url.ts";
-import { IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE } from "../utils/constants.ts";
 import {
   trackItwSurveyRequestAccepted,
   trackItwSurveyRequestDeclined
 } from "../../analytics";
 import { TrackQualtricsSurvey } from "../../analytics/utils/types.ts";
+import { IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE } from "../utils/constants.ts";
 
 type ItwEidFeedbackBottomSheetProps = {
   onPrimaryAction?: () => void;
@@ -19,6 +20,11 @@ type ItwEidFeedbackBottomSheetProps = {
 
 /**
  * Hook to open the feedback bottom sheet for the EID reissuance feature.
+ *
+ * Unlike the other exit survey hooks, presentation is NOT auto-triggered
+ * internally: it's used both from a redux-driven trigger (WalletHomeScreen)
+ * and from a direct user action (ItwPresentationEidVerificationExpiredScreen),
+ * so `present` stays exposed for the caller to invoke explicitly.
  * @param onPrimaryAction - Optional primary action to be executed when the primary button is pressed.
  * @param onSecondaryAction - Optional secondary action to be executed when the secondary button is pressed.
  */
@@ -51,24 +57,21 @@ export const useItwEidFeedbackBottomSheet = ({
           <View style={{ marginBottom: 16 }}>
             <VStack space={16}>
               <IOButton
-                variant="solid"
                 fullWidth
                 label={I18n.t(
                   "features.itWallet.feedback.reissuance.bottomSheet.primaryAction"
                 )}
                 onPress={() => {
-                  // eslint-disable-next-line functional/immutable-data
                   skipDeclinedEvent.current = true;
                   trackItwSurveyRequestAccepted(trackingProps);
                   openWebUrl(IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE);
                   onPrimaryAction?.();
                   dismiss();
                 }}
+                variant="solid"
               />
               <View style={{ flexDirection: "row", justifyContent: "center" }}>
                 <IOButton
-                  variant="link"
-                  textAlign={"center"}
                   label={I18n.t(
                     "features.itWallet.feedback.reissuance.bottomSheet.secondaryAction"
                   )}
@@ -76,6 +79,8 @@ export const useItwEidFeedbackBottomSheet = ({
                     onSecondaryAction?.();
                     dismiss();
                   }}
+                  textAlign={"center"}
+                  variant="link"
                 />
               </View>
             </VStack>
@@ -87,7 +92,6 @@ export const useItwEidFeedbackBottomSheet = ({
       if (!skipDeclinedEvent.current) {
         trackItwSurveyRequestDeclined(trackingProps);
       }
-      // eslint-disable-next-line functional/immutable-data
       skipDeclinedEvent.current = false;
     }
   });

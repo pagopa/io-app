@@ -1,20 +1,20 @@
 import { useFocusEffect } from "@react-navigation/native";
-import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { trackItWalletCieCardReading } from "../../analytics";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
-  selectAuthUrlOption,
+  selectAuthUrl,
   selectCiePin,
   selectIdentification
 } from "../../../machine/eid/selectors";
+import { trackItWalletCieCardReading } from "../../analytics";
 import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
 import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
 import {
@@ -26,8 +26,7 @@ import { WebViewError } from "../utils/error";
 
 export const ItwCieAuthenticationScreen = () => {
   const issuanceActor = ItwEidIssuanceMachineContext.useActorRef();
-  const authUrlOption =
-    ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
+  const authUrl = ItwEidIssuanceMachineContext.useSelector(selectAuthUrl);
   const pin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
@@ -74,7 +73,7 @@ export const ItwCieAuthenticationScreen = () => {
     [issuanceActor]
   );
 
-  if (pin === undefined || O.isNone(authUrlOption)) {
+  if (pin === undefined || authUrl === undefined) {
     return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
@@ -85,7 +84,7 @@ export const ItwCieAuthenticationScreen = () => {
   if (serviceProviderUrl === undefined) {
     return (
       <ItwCieAuthenticationWebview
-        authenticationUrl={authUrlOption.value}
+        authenticationUrl={authUrl}
         onServiceProviderUrlReceived={setServiceProviderUrl}
         onWebViewError={handleWebViewError}
       />
@@ -100,9 +99,9 @@ export const ItwCieAuthenticationScreen = () => {
   if (authorizationUrl === undefined) {
     return (
       <CieManagerComponent
+        onAuthorizationUrlReceived={setAuthorizationUrl}
         pin={pin}
         serviceProviderUrl={serviceProviderUrl}
-        onAuthorizationUrlReceived={setAuthorizationUrl}
       />
     );
   }
@@ -121,9 +120,9 @@ export const ItwCieAuthenticationScreen = () => {
 };
 
 type CieManagerComponentProps = {
+  onAuthorizationUrlReceived: (url: string) => void;
   pin: string;
   serviceProviderUrl: string;
-  onAuthorizationUrlReceived: (url: string) => void;
 };
 
 const CieManagerComponent = ({

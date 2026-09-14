@@ -1,31 +1,34 @@
 import { Appearance, ColorSchemeName } from "react-native";
-import {
-  isMixpanelInstanceInitialized,
-  registerSuperProperties
-} from "../mixpanel.ts";
-import { isScreenReaderEnabled } from "../utils/accessibility";
-import { getAppVersion } from "../utils/appVersion";
-import {
-  getFontScale,
-  isScreenLockSet as isScreenLockSetFunc
-} from "../utils/device";
-import { BiometricsType, getBiometricsType } from "../utils/biometrics";
+
+import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
+import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
+import { isConnectedSelector } from "../features/connectivity/store/selectors";
+import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   getNotificationPermissionType,
   NotificationPermissionType,
   NotificationPreferenceConfiguration,
   ServiceConfigurationTrackingType
 } from "../features/settings/common/analytics";
+import {
+  isMixpanelInstanceInitialized,
+  registerSuperProperties
+} from "../mixpanel.ts";
 import { GlobalState } from "../store/reducers/types";
-import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
-import { checkNotificationPermissions } from "../features/pushNotifications/utils";
-import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
-import { isConnectedSelector } from "../features/connectivity/store/selectors";
+import { isScreenReaderEnabled } from "../utils/accessibility";
 import { trackAppCaughtError } from "../utils/analytics.ts";
+import { getAppVersion } from "../utils/appVersion";
+import { BiometricsType, getBiometricsType } from "../utils/biometrics";
+import {
+  getFontScale,
+  isScreenLockSet as isScreenLockSetFunc
+} from "../utils/device";
 import { unknownToString } from "../utils/errors.ts";
 import {
+  authSecurityLevelHandler,
   cdcStatusHandler,
   cgnStatusHandler,
+  loginMethodHandler,
   loginSessionConfigHandler,
   notificationConfigurationHandler,
   paymentMethodsHandler,
@@ -35,24 +38,26 @@ import {
   welfareStatusHandler
 } from "./mixpanelPropertyUtils";
 
-type ConnectivityStatus = "online" | "offline";
+type ConnectivityStatus = "offline" | "online";
 
 type SuperProperties = {
-  isScreenReaderEnabled: boolean;
-  fontScale: number;
   appReadableVersion: string;
-  colorScheme: ColorSchemeName | null | undefined;
+  AUTH_SECURITY_LEVEL: string;
   biometricTechnology: BiometricsType;
+  CDC_STATUS: number;
+  CGN_STATUS: TrackCgnStatus;
+  colorScheme: ColorSchemeName | null | undefined;
+  CONNECTION_STATUS: ConnectivityStatus;
+  fontScale: number;
   isScreenLockSet: boolean;
+  isScreenReaderEnabled: boolean;
+  LOGIN_METHOD: string;
   LOGIN_SESSION: LoginSessionDuration;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
   NOTIFICATION_PERMISSION: NotificationPermissionType;
-  SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   SAVED_PAYMENT_METHOD?: number;
-  CGN_STATUS: TrackCgnStatus;
-  CDC_STATUS: number;
+  SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   WELFARE_STATUS: ReadonlyArray<string>;
-  CONNECTION_STATUS: ConnectivityStatus;
 };
 
 export const updateMixpanelSuperProperties = async (
@@ -67,6 +72,8 @@ export const updateMixpanelSuperProperties = async (
     const fontScale = await getFontScale();
     const biometricTechnology = await getBiometricsType(false);
     const isScreenLockSet = await isScreenLockSetFunc();
+    const AUTH_SECURITY_LEVEL = authSecurityLevelHandler(state);
+    const LOGIN_METHOD = loginMethodHandler(state);
     const LOGIN_SESSION = loginSessionConfigHandler(state);
     const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
     const notificationsEnabled = await checkNotificationPermissions();
@@ -84,6 +91,8 @@ export const updateMixpanelSuperProperties = async (
       colorScheme: Appearance.getColorScheme(),
       biometricTechnology,
       isScreenLockSet,
+      AUTH_SECURITY_LEVEL,
+      LOGIN_METHOD,
       LOGIN_SESSION,
       NOTIFICATION_CONFIGURATION,
       NOTIFICATION_PERMISSION:

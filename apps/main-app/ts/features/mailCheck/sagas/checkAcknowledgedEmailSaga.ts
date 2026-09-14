@@ -1,15 +1,16 @@
-import { call, take } from "typed-redux-saga/macro";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { CommonActions } from "@react-navigation/native";
-import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
+import { call, take } from "typed-redux-saga/macro";
+
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
+import { ReduxSagaEffect } from "../../../types/utils";
 import { emailAcknowledged } from "../../onboarding/store/actions";
 import {
+  hasProfileEmail,
   isProfileEmailValidated,
-  isProfileFirstOnBoarding,
-  hasProfileEmail
+  isProfileFirstOnBoarding
 } from "../../settings/common/store/utils/guards";
-import { ReduxSagaEffect } from "../../../types/utils";
 
 /**
  * Launch email saga that consists of:

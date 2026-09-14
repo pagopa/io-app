@@ -1,5 +1,4 @@
 import { ReactNode, useEffect } from "react";
-
 import { ColorValue, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedProps,
@@ -10,13 +9,13 @@ import Svg, { Circle, G } from "react-native-svg";
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 type CircularProgressProps = {
-  progress: number;
-  size: number;
-  radius: number;
-  strokeColor: ColorValue;
-  strokeBgColor: ColorValue;
-  strokeWidth: number;
   children?: ReactNode;
+  progress: number;
+  radius: number;
+  size: number;
+  strokeBgColor: ColorValue;
+  strokeColor: ColorValue;
+  strokeWidth: number;
 };
 
 export const CircularProgress = ({
@@ -35,7 +34,6 @@ export const CircularProgress = ({
   useEffect(() => {
     // Transforms progress 0-100 into 0-1
     const progressValue = Math.max(Math.min(progress / 100, 1), 0);
-    // eslint-disable-next-line functional/immutable-data
     progressLength.value = Math.round(CIRCLE_LENGTH * (1 - progressValue));
   }, [progressLength, CIRCLE_LENGTH, progress]);
 
@@ -49,12 +47,12 @@ export const CircularProgress = ({
       testID={`circular-progress-${Math.round(progress)}`}
     >
       <Svg
-        width={size}
+        fill="none"
         height={size}
         viewBox={`0 0 ${size} ${size}`}
-        fill="none"
+        width={size}
       >
-        <G rotation="-90" origin={`${size / 2}, ${size / 2}`}>
+        <G origin={`${size / 2}, ${size / 2}`} rotation="-90">
           {/* Circle Background */}
           <Circle
             cx={size / 2}
@@ -65,14 +63,14 @@ export const CircularProgress = ({
           />
           {/* Active circle (animated) */}
           <AnimatedCircle
+            animatedProps={animatedProps}
             cx={size / 2}
             cy={size / 2}
             r={radius - strokeWidth / 2}
             stroke={strokeColor}
-            strokeWidth={strokeWidth}
             strokeDasharray={CIRCLE_LENGTH}
-            animatedProps={animatedProps}
             strokeLinecap={"round"}
+            strokeWidth={strokeWidth}
           />
         </G>
       </Svg>

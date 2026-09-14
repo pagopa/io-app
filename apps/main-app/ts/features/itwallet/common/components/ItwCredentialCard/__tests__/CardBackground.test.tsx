@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react-native";
+
 import { CredentialType } from "../../../utils/itwMocksUtils.ts";
 import { CardBackground, LegacyCardBackground } from "../CardBackground.tsx";
 import { CredentialCardBackground, CredentialCardOverlay } from "../config.ts";
@@ -35,9 +36,9 @@ const patternOverlayWithCorner: CredentialCardOverlay = {
 // --- CardBackground ---
 
 const backgroundScenarios: Array<{
-  name: string;
   background: CredentialCardBackground;
   color: string;
+  name: string;
 }> = [
   {
     name: "two-color gradient",
@@ -136,8 +137,8 @@ describe("LegacyCardBackground", () => {
           colorScheme => {
             const component = render(
               <LegacyCardBackground
-                credentialType={credentialType}
                 colorScheme={colorScheme}
+                credentialType={credentialType}
               />
             ).toJSON();
             expect(component).toMatchSnapshot();
@@ -156,8 +157,8 @@ describe("LegacyCardBackground", () => {
           colorScheme => {
             const component = render(
               <LegacyCardBackground
-                credentialType={credentialType}
                 colorScheme={colorScheme}
+                credentialType={credentialType}
               />
             ).toJSON();
             expect(component).toMatchSnapshot();

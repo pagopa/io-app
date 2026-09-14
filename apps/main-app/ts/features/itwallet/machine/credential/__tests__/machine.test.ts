@@ -8,27 +8,30 @@ import {
   StateFrom,
   waitFor as waitForActor
 } from "xstate";
-import {
-  ItwStatusAssertionMocks,
-  ItwStoredCredentialsMocks
-} from "../../../common/utils/itwMocksUtils";
+
+import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
-  EvaluatedDcqlQueryResult,
   CredentialMetadata,
+  EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
+import { testCredentialIssuanceDeps } from "../../utils/testDeps";
 import {
+  GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput,
   ObtainAccessTokenActorInput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
-  ObtainStatusAssertionActorInput,
+  ObtainCredentialStatusActorInput,
+  ProcessCredentialOfferActorInput,
+  ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "../actors";
 import { Context, InitialContext } from "../context";
 import { CredentialIssuanceFailureType } from "../failure";
@@ -39,8 +42,10 @@ import {
 
 type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
 
-const T_WIA: string = "abcdefg";
-const T_WUA = { wua1: "wua-jwt" };
+const T_DEPS = testCredentialIssuanceDeps();
+
+const T_WIA = "abcdefg";
+const T_KA = { ka1: "ka-jwt" };
 const T_CLIENT_ID = "clientId";
 const T_CODE_VERIFIER = "codeVerifier";
 const T_ISSUER_CONFIG: IssuerConfiguration = {
@@ -77,10 +82,37 @@ const T_EVALUATED_DCQL_QUERY: EvaluatedDcqlQueryResult = [
     vct: "pid"
   }
 ];
-const T_STORED_STATUS_ASSERTION: CredentialMetadata["storedStatusAssertion"] = {
-  credentialStatus: "valid",
-  statusAssertion: "abcdefghijklmnopqrstuvwxyz",
-  parsedStatusAssertion: ItwStatusAssertionMocks.mdl
+const T_VALIDITY: CredentialMetadata["validity"] = {
+  type: "status_list",
+  status: "valid",
+  rawStatus: "0x00",
+  statusList: { idx: 0, uri: "status-list-uri" }
+};
+
+const T_OFFER_URI =
+  "openid-credential-offer://?credential_offer_uri=https://eaa.wallet.ipzs.it/offers/123";
+const T_CREDENTIAL_TYPE = "education_degree";
+const T_TRUST_ISSUER_BASE_URL = "https://eaa.wallet.ipzs.it";
+const T_RESOLVED_CREDENTIAL_OFFER = {
+  offer: {
+    credential_issuer: T_TRUST_ISSUER_BASE_URL,
+    credential_configuration_ids: ["EducationDegreeCredential"],
+    grants: {
+      authorization_code: {
+        scope: T_CREDENTIAL_TYPE,
+        authorization_server: T_TRUST_ISSUER_BASE_URL,
+        issuer_state: "issuer-state"
+      }
+    }
+  },
+  grantDetails: {
+    grantType: "authorization_code",
+    authorizationCodeGrant: {
+      scope: T_CREDENTIAL_TYPE,
+      authorizationServer: T_TRUST_ISSUER_BASE_URL,
+      issuerState: "issuer-state"
+    }
+  }
 };
 
 describe("itwCredentialIssuanceMachine", () => {
@@ -90,6 +122,8 @@ describe("itwCredentialIssuanceMachine", () => {
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const navigateToCredentialIntroductionScreen = jest.fn();
+  const navigateToEidVerificationExpiredScreen = jest.fn();
+  const navigateToCardOnboardingScreen = jest.fn();
   const closeIssuance = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
@@ -104,12 +138,12 @@ describe("itwCredentialIssuanceMachine", () => {
   const requestCredential = jest.fn();
   const obtainAccessToken = jest.fn();
   const obtainCredential = jest.fn();
-  const obtainStatusAssertion = jest.fn();
+  const obtainCredentialStatus = jest.fn();
+  const processCredentialOffer = jest.fn();
   const waitForSessionRefresh = jest.fn();
 
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
-  const isStatusError = jest.fn();
   const isSkipNavigation = jest.fn();
   const isEidExpired = jest.fn();
   const hasCredentialIntroContent = jest.fn();
@@ -122,6 +156,8 @@ describe("itwCredentialIssuanceMachine", () => {
       navigateToCredentialIntroductionScreen,
       navigateToFailureScreen,
       navigateToWallet,
+      navigateToEidVerificationExpiredScreen,
+      navigateToCardOnboardingScreen,
       closeIssuance,
       storeWalletInstanceAttestation,
       storeCredential,
@@ -132,9 +168,13 @@ describe("itwCredentialIssuanceMachine", () => {
       trackCredentialIssuingDataShareAccepted
     },
     actors: {
-      verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
-      getWalletAttestation:
-        fromPromise<GetWalletAttestationActorOutput>(getWalletAttestation),
+      verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+        verifyTrustFederation
+      ),
+      getWalletAttestation: fromPromise<
+        GetWalletAttestationActorOutput,
+        GetWalletAttestationActorInput
+      >(getWalletAttestation),
       requestCredential: fromPromise<
         RequestCredentialActorOutput,
         RequestCredentialActorInput
@@ -147,16 +187,19 @@ describe("itwCredentialIssuanceMachine", () => {
         ObtainCredentialActorOutput,
         ObtainCredentialActorInput
       >(obtainCredential),
-      obtainStatusAssertion: fromPromise<
+      obtainCredentialStatus: fromPromise<
         ReadonlyArray<CredentialBundle>,
-        ObtainStatusAssertionActorInput
-      >(obtainStatusAssertion),
-      waitForSessionRefresh: fromCallback(waitForSessionRefresh)
+        ObtainCredentialStatusActorInput
+      >(obtainCredentialStatus),
+      waitForSessionRefresh: fromCallback(waitForSessionRefresh),
+      processCredentialOffer: fromPromise<
+        ProcessCredentialOfferActorOutput,
+        ProcessCredentialOfferActorInput
+      >(processCredentialOffer)
     },
     guards: {
       isSessionExpired,
       hasValidWalletInstanceAttestation,
-      isStatusError,
       isEidExpired,
       hasCredentialIntroContent
     }
@@ -193,11 +236,14 @@ describe("itwCredentialIssuanceMachine", () => {
      * Start
      */
 
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
+    expect(actor.getSnapshot().context).toStrictEqual({
+      ...InitialContext,
+      deps: T_DEPS
+    });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
     actor.send({
@@ -253,17 +299,17 @@ describe("itwCredentialIssuanceMachine", () => {
         credentials: [
           { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
         ],
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
 
-    obtainStatusAssertion.mockImplementation(() =>
+    obtainCredentialStatus.mockImplementation(() =>
       Promise.resolve([
         {
           credential: "",
           metadata: {
             ...ItwStoredCredentialsMocks.mdl,
-            storedStatusAssertion: T_STORED_STATUS_ASSERTION
+            validity: T_VALIDITY
           }
         }
       ])
@@ -295,25 +341,25 @@ describe("itwCredentialIssuanceMachine", () => {
 
     // Step 3: get the status assertion
     const intermediateState3 = await waitForActor(actor, snapshot =>
-      snapshot.matches({ Issuance: "ObtainingStatusAssertion" })
+      snapshot.matches({ Issuance: "ObtainingCredentialStatus" })
     );
     expect(intermediateState3.value).toStrictEqual({
-      Issuance: "ObtainingStatusAssertion"
+      Issuance: "ObtainingCredentialStatus"
     });
-    expect(obtainStatusAssertion).toHaveBeenCalledTimes(1);
+    expect(obtainCredentialStatus).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().value).toStrictEqual(
       "DisplayingCredentialPreview"
     );
     expect(actor.getSnapshot().context).toEqual(
       expect.objectContaining<Partial<Context>>({
-        walletUnitAttestations: T_WUA,
+        keyAttestations: T_KA,
         credentials: [
           {
             credential: "",
             metadata: {
               ...ItwStoredCredentialsMocks.mdl,
-              storedStatusAssertion: T_STORED_STATUS_ASSERTION
+              validity: T_VALIDITY
             }
           }
         ]
@@ -357,12 +403,13 @@ describe("itwCredentialIssuanceMachine", () => {
      * Start
      */
 
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      ...InitialContext
+      ...InitialContext,
+      deps: T_DEPS
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
@@ -399,9 +446,9 @@ describe("itwCredentialIssuanceMachine", () => {
   it("Should not store the credential if the user closes the issuance", () => {
     /** Initial part is the same as the previous test, we can start from the preview */
 
-    const initialSnapshot: MachineSnapshot = createActor(
-      itwCredentialIssuanceMachine
-    ).getSnapshot();
+    const initialSnapshot: MachineSnapshot = createActor(mockedMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
 
     const snapshot = _.merge(undefined, initialSnapshot, {
       value: "DisplayingCredentialPreview",
@@ -413,7 +460,8 @@ describe("itwCredentialIssuanceMachine", () => {
     });
 
     const actor = createActor(mockedMachine, {
-      snapshot
+      snapshot,
+      input: { deps: T_DEPS }
     });
     actor.start();
 
@@ -437,7 +485,7 @@ describe("itwCredentialIssuanceMachine", () => {
   // TODO: SIW-2947 Fix this test
 
   /*  it("Should go to failure if wallet instance attestation obtainment fails", async () => {
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
@@ -511,7 +559,7 @@ describe("itwCredentialIssuanceMachine", () => {
     }));
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
 
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
@@ -574,16 +622,17 @@ describe("itwCredentialIssuanceMachine", () => {
   it("Should close the issuance if the user does not confirm trust issuer data", () => {
     /** Initial part is the same as the previous test, we can start from the preview */
 
-    const initialSnapshot: MachineSnapshot = createActor(
-      itwCredentialIssuanceMachine
-    ).getSnapshot();
+    const initialSnapshot: MachineSnapshot = createActor(mockedMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
       value: "DisplayingTrustIssuer"
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot
+      snapshot,
+      input: { deps: T_DEPS }
     });
     actor.start();
 
@@ -601,16 +650,17 @@ describe("itwCredentialIssuanceMachine", () => {
   it("Should go to failure if credential issaunce fails", async () => {
     /** Initial part is the same as the previous test, we can start from the preview */
 
-    const initialSnapshot: MachineSnapshot = createActor(
-      itwCredentialIssuanceMachine
-    ).getSnapshot();
+    const initialSnapshot: MachineSnapshot = createActor(mockedMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
       value: "DisplayingTrustIssuer"
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
-      snapshot
+      snapshot,
+      input: { deps: T_DEPS }
     });
     actor.start();
 
@@ -631,7 +681,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(intermediateSnapshot.tags).toStrictEqual(new Set([ItwTags.Issuing]));
     expect(obtainAccessToken).toHaveBeenCalledTimes(1);
     expect(obtainCredential).toHaveBeenCalledTimes(1);
-    expect(obtainStatusAssertion).not.toHaveBeenCalled();
+    expect(obtainCredentialStatus).not.toHaveBeenCalled();
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
@@ -650,7 +700,7 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("Should navigate to the next screen if mode is 'reissaunce'", async () => {
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     isSkipNavigation.mockImplementation(() => false);
@@ -692,7 +742,7 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("should not call navigateToExtendedLoadingScreen before 5000ms in TrustFederationVerification state", async () => {
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     requestCredential.mockImplementation(
       () =>
         new Promise(resolve =>
@@ -728,7 +778,7 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("should call navigateToExtendedLoadingScreen once after 5000ms in TrustFederationVerification state", async () => {
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     requestCredential.mockImplementation(
       () =>
         new Promise(resolve =>
@@ -774,7 +824,7 @@ describe("itwCredentialIssuanceMachine", () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
     hasCredentialIntroContent.mockImplementation(() => true);
 
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     actor.send({
@@ -789,6 +839,224 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
   });
 
+  it("should clear the selected credential when leaving the introduction screen", async () => {
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    hasCredentialIntroContent.mockImplementation(() => true);
+
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+    actor.start();
+    actor.send({
+      type: "select-credential",
+      credentialType: "education_degree",
+      mode: "issuance"
+    });
+
+    await waitForActor(actor, snapshot =>
+      snapshot.matches("CredentialIntroduction")
+    );
+
+    actor.send({ type: "back" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context.credentialType).toBeUndefined();
+    expect(navigateToCardOnboardingScreen).not.toHaveBeenCalled();
+  });
+
+  describe("Credential Offer flow", () => {
+    it("Should process a credential offer and populate the resolved offer in context", async () => {
+      processCredentialOffer.mockImplementation(() =>
+        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
+      );
+      hasValidWalletInstanceAttestation.mockImplementation(() => true);
+      hasCredentialIntroContent.mockImplementation(() => false);
+
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
+
+      expect(actor.getSnapshot().value).toStrictEqual("Idle");
+
+      actor.send({
+        type: "start-credential-offer",
+        itwCredentialOfferUri: T_OFFER_URI
+      });
+
+      expect(onInit).toHaveBeenCalledTimes(1);
+      expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+        credentialOfferUri: T_OFFER_URI,
+        mode: "issuance"
+      });
+
+      await waitFor(() =>
+        expect(processCredentialOffer).toHaveBeenCalledTimes(1)
+      );
+
+      await waitForActor(actor, snapshot =>
+        snapshot.matches("CredentialOfferResolved")
+      );
+
+      expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+        credentialType: T_CREDENTIAL_TYPE,
+        credentialOfferUri: T_OFFER_URI
+      });
+      expect(actor.getSnapshot().context.resolvedCredentialOffer).toBeDefined();
+    });
+
+    it("Should resolve a credential offer without navigating away when the wallet is not valid", async () => {
+      onInit.mockImplementation(() => ({
+        isWalletValid: false,
+        isItWalletValid: false,
+        walletInstanceAttestation: undefined
+      }));
+      processCredentialOffer.mockImplementation(() =>
+        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
+      );
+
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
+
+      actor.send({
+        type: "start-credential-offer",
+        itwCredentialOfferUri: T_OFFER_URI
+      });
+
+      await waitForActor(actor, snapshot =>
+        snapshot.matches("CredentialOfferResolved")
+      );
+
+      // The wallet activation prompt is rendered by the intro screen, so the
+      // machine must not drive any navigation here.
+      expect(actor.getSnapshot().context.resolvedCredentialOffer).toBeDefined();
+      expect(navigateToCredentialIntroductionScreen).not.toHaveBeenCalled();
+      expect(navigateToTrustIssuerScreen).not.toHaveBeenCalled();
+    });
+
+    it("Should pass the resolved credential offer to the credential request", async () => {
+      processCredentialOffer.mockImplementation(() =>
+        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
+      );
+      hasValidWalletInstanceAttestation.mockImplementation(() => true);
+      hasCredentialIntroContent.mockImplementation(() => true);
+      verifyTrustFederation.mockImplementation(() => Promise.resolve());
+      requestCredential.mockImplementation(() =>
+        Promise.resolve({
+          clientId: T_CLIENT_ID,
+          codeVerifier: T_CODE_VERIFIER,
+          requestedCredential: T_REQUESTED_CREDENTIAL,
+          issuerConf: T_ISSUER_CONFIG
+        })
+      );
+
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
+
+      actor.send({
+        type: "start-credential-offer",
+        itwCredentialOfferUri: T_OFFER_URI
+      });
+
+      await waitForActor(actor, snapshot =>
+        snapshot.matches("CredentialOfferResolved")
+      );
+
+      actor.send({ type: "confirm-credential-offer" });
+
+      await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
+      expect(requestCredential).toHaveBeenCalledWith(
+        expect.objectContaining({
+          input: expect.objectContaining({
+            credentialType: T_CREDENTIAL_TYPE,
+            resolvedCredentialOffer: T_RESOLVED_CREDENTIAL_OFFER
+          })
+        })
+      );
+      expect(navigateToCredentialIntroductionScreen).not.toHaveBeenCalled();
+    });
+
+    it("Should resume the resolved credential offer after eID activation", async () => {
+      onInit
+        .mockImplementationOnce(() => ({
+          isWalletValid: false,
+          isItWalletValid: false,
+          walletInstanceAttestation: undefined
+        }))
+        .mockImplementationOnce(() => ({
+          isWalletValid: true,
+          isItWalletValid: true,
+          walletInstanceAttestation: { jwt: T_WIA }
+        }));
+      processCredentialOffer.mockImplementation(() =>
+        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
+      );
+      hasValidWalletInstanceAttestation.mockImplementation(() => true);
+      hasCredentialIntroContent.mockImplementation(() => true);
+      verifyTrustFederation.mockImplementation(() => Promise.resolve());
+      requestCredential.mockImplementation(() =>
+        Promise.resolve({
+          clientId: T_CLIENT_ID,
+          codeVerifier: T_CODE_VERIFIER,
+          requestedCredential: T_REQUESTED_CREDENTIAL,
+          issuerConf: T_ISSUER_CONFIG
+        })
+      );
+
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
+
+      actor.send({
+        type: "start-credential-offer",
+        itwCredentialOfferUri: T_OFFER_URI
+      });
+
+      await waitForActor(actor, snapshot =>
+        snapshot.matches("CredentialOfferResolved")
+      );
+
+      actor.send({ type: "confirm-credential-offer" });
+
+      await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
+      expect(onInit).toHaveBeenCalledTimes(2);
+      expect(requestCredential).toHaveBeenCalledWith(
+        expect.objectContaining({
+          input: expect.objectContaining({
+            credentialType: T_CREDENTIAL_TYPE,
+            walletInstanceAttestation: T_WIA,
+            resolvedCredentialOffer: T_RESOLVED_CREDENTIAL_OFFER,
+            skipMdocIssuance: false
+          })
+        })
+      );
+      expect(navigateToCredentialIntroductionScreen).not.toHaveBeenCalled();
+    });
+
+    it("Should keep the resolved credential offer when eID renewal is needed", async () => {
+      processCredentialOffer.mockImplementation(() =>
+        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
+      );
+      isEidExpired.mockImplementation(() => true);
+
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
+
+      actor.send({
+        type: "start-credential-offer",
+        itwCredentialOfferUri: T_OFFER_URI
+      });
+
+      await waitForActor(actor, snapshot =>
+        snapshot.matches("CredentialOfferResolved")
+      );
+
+      actor.send({ type: "confirm-credential-offer" });
+
+      await waitFor(() =>
+        expect(navigateToEidVerificationExpiredScreen).toHaveBeenCalledTimes(1)
+      );
+      expect(actor.getSnapshot().context.resolvedCredentialOffer).toStrictEqual(
+        T_RESOLVED_CREDENTIAL_OFFER
+      );
+    });
+  });
+
   it("Should wait for session refresh then retry the credential request", async () => {
     isSessionExpired.mockImplementationOnce(() => true);
     obtainCredential.mockImplementationOnce(() => Promise.reject({}));
@@ -797,19 +1065,22 @@ describe("itwCredentialIssuanceMachine", () => {
         credentials: [
           { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
         ],
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
 
-    const initialSnapshot = createActor(
-      itwCredentialIssuanceMachine
-    ).getSnapshot();
+    const initialSnapshot = createActor(mockedMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
       value: "DisplayingTrustIssuer"
     } as MachineSnapshot);
 
-    const actor = createActor(mockedMachine, { snapshot });
+    const actor = createActor(mockedMachine, {
+      snapshot,
+      input: { deps: T_DEPS }
+    });
     actor.start();
 
     actor.send({ type: "confirm-trust-data" });
@@ -829,17 +1100,17 @@ describe("itwCredentialIssuanceMachine", () => {
 
     const intermediateSnapshot2 = await waitForActor(actor, s =>
       s.matches({
-        Issuance: "ObtainingStatusAssertion"
+        Issuance: "ObtainingCredentialStatus"
       })
     );
     expect(intermediateSnapshot2.value).toEqual({
-      Issuance: "ObtainingStatusAssertion"
+      Issuance: "ObtainingCredentialStatus"
     });
     expect(intermediateSnapshot2.context).toMatchObject<Partial<Context>>({
       credentials: [
         { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
       ],
-      walletUnitAttestations: T_WUA
+      keyAttestations: T_KA
     });
   });
 });

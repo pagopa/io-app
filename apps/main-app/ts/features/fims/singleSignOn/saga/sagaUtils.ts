@@ -7,19 +7,20 @@ import {
   nativeRequest,
   removeAllCookiesForDomain
 } from "@pagopa/io-react-native-http-client";
+import { StackActions } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import { URL as PolyfillURL } from "react-native-url-polyfill";
 import { call, put, select } from "typed-redux-saga/macro";
-import { StackActions } from "@react-navigation/native";
+
+import NavigationService from "../../../../navigation/NavigationService";
+import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { trackAuthenticationError } from "../../common/analytics";
 import {
   fimsRelyingPartyDomainSelector,
   relyingPartyServiceIdSelector
 } from "../store/selectors";
-import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
-import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
-import NavigationService from "../../../../navigation/NavigationService";
-import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 export const absoluteRedirectUrlFromHttpClientResponse = (
   data: HttpClientResponse,
@@ -39,7 +40,7 @@ export const absoluteRedirectUrl = (
   try {
     const redirectUrl = new PolyfillURL(redirect);
     return redirectUrl.href;
-  } catch (error) {
+  } catch {
     try {
       const originalUrl = new PolyfillURL(originalRequestUrl);
       const origin = originalUrl.origin;
@@ -192,6 +193,10 @@ export function* deallocateFimsAndRenewFastLoginSession() {
   );
 }
 
+export function* handleFimsBackNavigation() {
+  yield* call(NavigationService.dispatchNavigationAction, StackActions.pop());
+}
+
 export function* handleFimsResourcesDeallocation() {
   const oidcProviderDomain = yield* select(oidcProviderDomainSelector);
   const relyingPartyDomain = yield* select(fimsRelyingPartyDomainSelector);
@@ -202,8 +207,4 @@ export function* handleFimsResourcesDeallocation() {
     yield* call(removeAllCookiesForDomain, relyingPartyDomain);
   }
   yield* call(deallocate);
-}
-
-export function* handleFimsBackNavigation() {
-  yield* call(NavigationService.dispatchNavigationAction, StackActions.pop());
 }

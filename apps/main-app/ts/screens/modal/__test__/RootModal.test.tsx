@@ -1,8 +1,8 @@
-import DeviceInfo from "react-native-device-info";
-
-import { createStore } from "redux";
 import { act } from "@testing-library/react-native";
 import I18n from "i18next";
+import DeviceInfo from "react-native-device-info";
+import { createStore } from "redux";
+
 import {
   versionInfoLoadFailure,
   versionInfoLoadSuccess
@@ -149,13 +149,10 @@ const testRootModal = (
   );
   expect(testComponent).not.toBeNull();
 
-  // eslint-disable-next-line jest/valid-expect
-  const searchUpdateText = expect(
-    testComponent.queryByText(I18n.t("titleUpdateApp"))
-  );
+  const updateText = testComponent.queryByText(I18n.t("titleUpdateApp"));
   if (isSupported) {
-    searchUpdateText.toBeNull();
+    expect(updateText).toBeNull();
   } else {
-    searchUpdateText.not.toBeNull();
+    expect(updateText).not.toBeNull();
   }
 };

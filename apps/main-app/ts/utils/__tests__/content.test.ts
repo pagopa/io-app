@@ -1,10 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { setLocale, Locales } from "../../i18n";
+
+import { Locales, setLocale } from "../../i18n";
 import {
-  idpContextualHelpDataFromIdSelector,
-  screenContextualHelpDataSelector,
-  getContextualHelpDataFromRouteSelector
+  getContextualHelpDataFromRouteSelector,
+  screenContextualHelpDataSelector
 } from "../../store/reducers/content";
 
 const chData = {
@@ -86,77 +86,6 @@ const chData = {
 // test "it" as default language
 beforeAll(() => setLocale("it" as Locales));
 
-describe("idpContextualHelpDataFromIdSelector", () => {
-  it("should return data for existing idp", async () => {
-    const idpData = idpContextualHelpDataFromIdSelector("arubaid").resultFunc(
-      pot.some(chData)
-    );
-    expect(O.isSome(idpData)).toBeTruthy();
-  });
-
-  it("should not return data for not-existing idp", async () => {
-    const idpData = idpContextualHelpDataFromIdSelector("timid").resultFunc(
-      pot.some(chData)
-    );
-    expect(O.isNone(idpData)).toBeTruthy();
-  });
-
-  it("should not return data is store is empty", async () => {
-    const idpData = idpContextualHelpDataFromIdSelector("timid").resultFunc(
-      pot.none
-    );
-    expect(O.isNone(idpData)).toBeTruthy();
-  });
-
-  it("should not return data is store is in error & empty", async () => {
-    const idpData = idpContextualHelpDataFromIdSelector("timid").resultFunc(
-      pot.noneError(new Error())
-    );
-    expect(O.isNone(idpData)).toBeTruthy();
-  });
-
-  it("should return data is store is in error with value", async () => {
-    const idpData = idpContextualHelpDataFromIdSelector("arubaid").resultFunc(
-      pot.someError(chData, new Error())
-    );
-    expect(O.isSome(idpData)).toBeTruthy();
-  });
-
-  it("should not return data if it's not available for the set language", async () => {
-    setLocale("en" as Locales);
-    const idpData = idpContextualHelpDataFromIdSelector("arubaid").resultFunc(
-      pot.some(chData)
-    );
-    setLocale("it" as Locales); // restore default
-    expect(O.isNone(idpData)).toBeTruthy();
-  });
-
-  it("should return data for the set language (it)", async () => {
-    assertIdpValues("DESCRIPTION IT", "PHONE IT");
-  });
-
-  it("should return data for the set language (en)", async () => {
-    setLocale("en" as Locales);
-    assertIdpValues("DESCRIPTION EN", "PHONE EN");
-  });
-
-  it("should return fallback data if the set language is not rupported", async () => {
-    setLocale("de" as Locales);
-    assertIdpValues("DESCRIPTION IT", "PHONE IT");
-  });
-
-  const assertIdpValues = (description: string, phone: string) => {
-    const idpData = idpContextualHelpDataFromIdSelector("cie").resultFunc(
-      pot.some(chData)
-    );
-    expect(O.isSome(idpData)).toBeTruthy();
-    if (O.isSome(idpData)) {
-      expect(idpData.value.description).toEqual(description);
-      expect(idpData.value.phone).toEqual(phone);
-    }
-  };
-});
-
 describe("screenContextualHelpDataSelector", () => {
   it("should return no data if navigation state is empty", async () => {
     const screenData = screenContextualHelpDataSelector.resultFunc(
@@ -206,7 +135,7 @@ describe("getContextualHelpDataFromRouteSelector", () => {
     const screenData = getContextualHelpDataFromRouteSelector("").resultFunc(
       pot.some(chData)
     );
-    expect(pot.isSome(screenData) && O.isNone(screenData.value)).toBeTruthy();
+    expect(pot.isSome(screenData) && !screenData.value).toBeTruthy();
   });
 
   it("should return data (italian) if the route is present as key", async () => {
@@ -228,9 +157,9 @@ describe("getContextualHelpDataFromRouteSelector", () => {
     const screenData = getContextualHelpDataFromRouteSelector(
       "AUTHENTICATION_IDP_LOGIN"
     ).resultFunc(pot.some(chData));
-    if (pot.isSome(screenData) && O.isSome(screenData.value)) {
-      expect(screenData.value.value.title).toEqual(title);
-      expect(screenData.value.value.content).toEqual(content);
+    if (pot.isSome(screenData) && screenData.value) {
+      expect(screenData.value.title).toEqual(title);
+      expect(screenData.value.content).toEqual(content);
     }
   };
 
@@ -238,6 +167,6 @@ describe("getContextualHelpDataFromRouteSelector", () => {
     const screenData = getContextualHelpDataFromRouteSelector(
       "NO_KEY"
     ).resultFunc(pot.some(chData));
-    expect(pot.isSome(screenData) && O.isNone(screenData.value)).toBeTruthy();
+    expect(pot.isSome(screenData) && !screenData.value).toBeTruthy();
   });
 });

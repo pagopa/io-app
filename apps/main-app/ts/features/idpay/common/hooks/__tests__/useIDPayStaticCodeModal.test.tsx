@@ -1,19 +1,20 @@
+import {
+  StatusEnum,
+  TransactionBarCodeResponse
+} from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeResponse";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 import { JSX } from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import {
-  StatusEnum,
-  TransactionBarCodeResponse
-} from "../../../../../../definitions/idpay/TransactionBarCodeResponse";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useIDPayStaticCodeModal } from "../useIDPayStaticCodeModal";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { getNetworkError } from "../../../../../utils/errors";
+import { useIDPayStaticCodeModal } from "../useIDPayStaticCodeModal";
 
 jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
   // To immediately render the component, mock the bottom sheet

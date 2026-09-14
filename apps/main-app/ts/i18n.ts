@@ -1,3 +1,5 @@
+import { BackendStatusMessage } from "@io-app/api-types/generated/definitions/content/BackendStatusMessage";
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/session_manager/PreferredLanguage";
 import i18next from "i18next";
 // import i18next, {
 //   BackendModule,
@@ -7,16 +9,13 @@ import i18next from "i18next";
 // } from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import { BackendStatusMessage } from "../definitions/content/BackendStatusMessage";
-
-import it from "../locales/it/index.json";
-import en from "../locales/en/index.json";
 import de from "../locales/de/index.json";
+import en from "../locales/en/index.json";
+import it from "../locales/it/index.json";
 import sl from "../locales/sl/index.json";
-import { PreferredLanguageEnum } from "../definitions/session_manager/PreferredLanguage";
 // import { contentRepoUrl } from "./config";
 
-const resources = {
+export const resources = {
   it: {
     index: it
   },
@@ -31,10 +30,16 @@ const resources = {
   }
 };
 
+export type Locales = keyof typeof resources;
+
+export type LocalizedMessageKeys = keyof BackendStatusMessage;
+
+export type TranslationKeys = ExtractKeys<typeof it>;
+
 // Utility type to extract all possible keys from resources as dot-separated paths
 // This provides the same TranslationKeys that i18next uses internally
 type ExtractKeys<Obj, Prefix extends string = ""> = {
-  [K in keyof Obj]: K extends string | number
+  [K in keyof Obj]: K extends number | string
     ? Obj[K] extends Record<string, any>
       ? ExtractKeys<Obj[K], Prefix extends "" ? `${K}` : `${Prefix}.${K}`>
       : Prefix extends ""
@@ -42,22 +47,16 @@ type ExtractKeys<Obj, Prefix extends string = ""> = {
         : `${Prefix}.${K}`
     : never;
 }[keyof Obj];
-
-export type TranslationKeys = ExtractKeys<typeof it>;
-
-export type Locales = keyof typeof resources;
-
-export type LocalizedMessageKeys = keyof BackendStatusMessage;
 type FallBackLocale = {
-  localizedMessageKey: LocalizedMessageKeys;
   locale: "it";
   localeEnum: PreferredLanguageEnum;
+  localizedMessageKey: LocalizedMessageKeys;
 };
 
 const backendSupportedLocales = {
-  it: PreferredLanguageEnum.it_IT,
+  de: PreferredLanguageEnum.de_DE,
   en: PreferredLanguageEnum.en_GB,
-  de: PreferredLanguageEnum.de_DE
+  it: PreferredLanguageEnum.it_IT
 } as const satisfies Partial<Record<Locales, PreferredLanguageEnum>>;
 
 export type BackendSupportedLocale = keyof typeof backendSupportedLocales;
@@ -66,9 +65,9 @@ export const localeToLocalizedMessageKey: ReadonlyMap<
   Locales,
   LocalizedMessageKeys
 > = new Map<BackendSupportedLocale, LocalizedMessageKeys>([
-  ["it", "it-IT"],
+  ["de", "de-DE"],
   ["en", "en-EN"],
-  ["de", "de-DE"]
+  ["it", "it-IT"]
 ]);
 
 export const localeToPreferredLanguageMapping: ReadonlyMap<
@@ -90,14 +89,14 @@ export const availableTranslations: ReadonlyArray<Locales> = Object.keys(
   resources
 ).map(k => k as Locales);
 
-export interface SmartBackendOptions {
-  localResources: typeof resources;
-}
-
 // TODO: Enable this backend plugin once the internal process to update translations on a remote source will be in place.
 // const DEFAULT_SMART_BACKEND_OPTIONS: SmartBackendOptions = {
 //   localResources: resources
 // };
+
+// export interface SmartBackendOptions {
+//   localResources: typeof resources;
+// }
 
 // Custom backend plugin for i18next that first loads translations from local resources and then tries to fetch updated translations from a remote repository.
 // If the remote fetch fails, it falls back to the local resources without affecting the user experience.
@@ -154,6 +153,9 @@ void i18next
   .init({
     lng: "it",
     fallbackLng: "it",
+    // An empty value is a missing translation, not a blank string: fall back to
+    // `it` rather than silently rendering nothing.
+    returnEmptyString: false,
     supportedLngs: availableTranslations,
     initAsync: false,
     ns: ["index"],

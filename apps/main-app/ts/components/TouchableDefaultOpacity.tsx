@@ -2,8 +2,8 @@ import { ComponentPropsWithRef, FunctionComponent } from "react";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 
 const defaultActiveOpacity = 1.0;
-export type TouchableDefaultOpacityProps = ComponentPropsWithRef<
-  typeof TouchableOpacity & TouchableOpacityProps
+type TouchableDefaultOpacityProps = ComponentPropsWithRef<
+  TouchableOpacityProps & typeof TouchableOpacity
 >;
 /**
  * return TouchableOpacity component where the activeOpacity is 1.0 by default

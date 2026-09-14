@@ -1,20 +1,15 @@
-import { useCallback, useState } from "react";
-import { Calendar } from "react-native-calendar-events";
+import * as Calendar from "expo-calendar";
 import I18n from "i18next";
+import { useCallback, useState } from "react";
+
 import CalendarsListContainer from "../../../../components/CalendarsListContainer";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   preferredCalendarRemoveSuccess,
   preferredCalendarSaveSuccess
 } from "../../../../store/actions/persistedPreferences";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch } from "../../../../store/hooks";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.calendar.contextualHelpTitle",
-  body: "profile.preferences.calendar.contextualHelpContent"
-};
 
 /**
  * Allows the user to select one of the device available Calendars
@@ -24,7 +19,7 @@ const CalendarsPreferencesScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const preferredCalendarSaveSuccessDispatch = useCallback(
-    (calendar: Calendar) =>
+    (calendar: Calendar.Calendar) =>
       dispatch(
         preferredCalendarSaveSuccess({
           preferredCalendar: calendar
@@ -44,18 +39,17 @@ const CalendarsPreferencesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      description={I18n.t("messages.cta.reminderCalendarSelect")}
+      headerActionsProp={{ showHelp: true }}
       includeContentMargins
       title={{
         label: I18n.t("profile.preferences.list.preferred_calendar.title")
       }}
-      description={I18n.t("messages.cta.reminderCalendarSelect")}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      headerActionsProp={{ showHelp: true }}
     >
       <LoadingSpinnerOverlay isLoading={isLoading}>
         <CalendarsListContainer
-          onCalendarSelected={preferredCalendarSaveSuccessDispatch}
           onCalendarRemove={preferredCalendarRemoveSuccessDispatch}
+          onCalendarSelected={preferredCalendarSaveSuccessDispatch}
           onCalendarsLoaded={onCalendarsLoaded}
         />
       </LoadingSpinnerOverlay>

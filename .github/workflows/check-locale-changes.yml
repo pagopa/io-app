@@ -1,0 +1,26 @@
+name: Check locale changes
+on:
+  pull_request:
+    paths:
+      - 'apps/main-app/locales/**'
+permissions:
+  contents: read
+jobs:
+  check-locale-values:
+    name: Guard locale value changes
+    runs-on: ubuntu-latest
+    # Lokalise pull PRs are opened from a `lok_*` branch and are the only ones
+    # allowed to change existing translation values. Skip the guard for them.
+    if: ${{ !startsWith(github.head_ref, 'lok_') }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - name: Check for manual value changes
+        env:
+          BASE_REF: origin/${{ github.base_ref }}
+        run: node apps/main-app/scripts/locale/check-locale-value-changes.mjs

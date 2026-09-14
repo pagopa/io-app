@@ -1,41 +1,39 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
 import { useCallback, useState } from "react";
-import URLParse from "url-parse";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
+import URLParse from "url-parse";
+
+import { handleRegenerateEphemeralKey } from "..";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
+import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import {
-  ephemeralKeyTagSelector,
-  ephemeralPublicKeySelector
-} from "../store/reducers/lollipop";
-import {
-  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-  lollipopSamlVerify
-} from "../utils/login";
-import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
-import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
-import { handleRegenerateEphemeralKey } from "..";
-import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
-import { cieFlowForDevServerEnabled } from "../../authentication/login/cie/utils";
-import { selectedIdentityProviderSelector } from "../../authentication/common/store/selectors";
 import {
   isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
 } from "../../authentication/activeSessionLogin/store/selectors";
-import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
-import { getLoginHeaders } from "../../authentication/common/utils/login";
+import { selectedIdentityProviderSelector } from "../../authentication/common/store/selectors";
+import { getLoginHeaders } from "../../authentication/common/utils";
+import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../authentication/login/cie/utils";
+import {
+  ephemeralKeyTagSelector,
+  ephemeralPublicKeySelector
+} from "../store/reducers/lollipop";
+import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
+import {
+  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
+  lollipopSamlVerify
+} from "../utils/login";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
   loginUri?: string
 ) => {
   const [lollipopCheckStatus, setLollipopCheckStatus] =
-    useState<LollipopCheckStatus>({ status: "none", url: O.none });
-  const [webviewSource, setWebviewSource] = useState<WebViewSource | undefined>(
+    useState<LollipopCheckStatus>({ status: "none" });
+  const [webviewSource, setWebviewSource] = useState<undefined | WebViewSource>(
     undefined
   );
 
@@ -60,7 +58,7 @@ export const useLollipopLoginSource = (
         () => {
           setLollipopCheckStatus({
             status: "trusted",
-            url: O.some(eventUrl)
+            url: eventUrl
           });
           setWebviewSource({ uri: eventUrl });
         },
@@ -68,7 +66,7 @@ export const useLollipopLoginSource = (
           trackLollipopIdpLoginFailure(reason);
           setLollipopCheckStatus({
             status: "untrusted",
-            url: O.some(eventUrl)
+            url: eventUrl
           });
           onLollipopCheckFailure();
         }
@@ -77,7 +75,7 @@ export const useLollipopLoginSource = (
     [onLollipopCheckFailure]
   );
 
-  const regenerateLoginSource = useCallback(() => {
+  const regenerateLoginSource = useCallback(async () => {
     if (!loginUri) {
       // When the redux state is LoggedOutWithIdp the loginUri is always defined.
       // After the user has logged in, the status changes to LoggedIn and the loginUri is not
@@ -91,38 +89,27 @@ export const useLollipopLoginSource = (
      * need to garantee the public key uniqueness on every login request.
      * https://pagopa.atlassian.net/browse/LLK-37
      */
-
-    void pipe(
-      () =>
-        handleRegenerateEphemeralKey(
-          ephemeralKeyTag,
-          mixpanelEnabled,
-          dispatch
-        ),
-      T.map(nullableKey =>
-        pipe(
-          nullableKey,
-          O.fromNullable,
-          O.fold(
-            () =>
-              setWebviewSource({
-                uri: loginUri
-              }),
-            key =>
-              setWebviewSource({
-                uri: loginUri,
-                headers: getLoginHeaders(
-                  key,
-                  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-                  isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-                  cieFlowForDevServerEnabled ? idp?.id : undefined,
-                  isActiveSessionLogin ? hashedFiscalCode : undefined
-                )
-              })
-          )
-        )
+    const regeneratedPublickKey = await handleRegenerateEphemeralKey(
+      ephemeralKeyTag,
+      mixpanelEnabled,
+      dispatch
+    );
+    if (!regeneratedPublickKey) {
+      setWebviewSource({
+        uri: loginUri
+      });
+      return;
+    }
+    setWebviewSource({
+      uri: loginUri,
+      headers: getLoginHeaders(
+        regeneratedPublickKey,
+        DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
+        isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+        cieFlowForDevServerEnabled ? idp?.id : undefined,
+        isActiveSessionLogin ? hashedFiscalCode : undefined
       )
-    )();
+    });
   }, [
     dispatch,
     ephemeralKeyTag,
@@ -136,7 +123,7 @@ export const useLollipopLoginSource = (
   ]);
 
   const retryLollipopLogin = useCallback(() => {
-    setLollipopCheckStatus({ status: "none", url: O.none });
+    setLollipopCheckStatus({ status: "none" });
     // We must set webviewSource to undefined before requesting
     // any changes to loginSource otherwise on the next component
     // refresh (triggered by a different value of loginSource),
@@ -144,7 +131,7 @@ export const useLollipopLoginSource = (
     // (i.e., the loaded webViewSource uri will be different from
     // the loginSource.uri)
     setWebviewSource(undefined);
-    regenerateLoginSource();
+    void regenerateLoginSource();
   }, [regenerateLoginSource]);
 
   const shouldBlockUrlNavigationWhileCheckingLollipop = useCallback(
@@ -161,7 +148,7 @@ export const useLollipopLoginSource = (
             // Start Lollipop verification process
             setLollipopCheckStatus({
               status: "checking",
-              url: O.some(url)
+              url
             });
             verifyLollipop(url, urlEncodedSamlRequest, maybeEphemeralPublicKey);
             // Prevent the WebView from loading the current URL (its
@@ -192,7 +179,7 @@ export const useLollipopLoginSource = (
   );
 
   useOnFirstRender(() => {
-    regenerateLoginSource();
+    void regenerateLoginSource();
   });
 
   return {

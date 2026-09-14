@@ -1,19 +1,19 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { Action } from "../../../../../../store/actions/types";
 import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../../utils/tests";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
-  ParsedStatusAssertion,
-  CredentialMetadata
+  CredentialMetadata,
+  ParsedStatusAssertion
 } from "../../../../common/utils/itwTypesUtils";
+import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 import {
   itwCredentialsRemove,
   itwCredentialsStore,
   itwCredentialsVaultMigrationComplete
 } from "../../actions";
-import { Action } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
-import { reproduceSequence } from "../../../../../../utils/tests";
 
 const mockedEid: CredentialMetadata = {
   credentialType: CredentialType.PID,
@@ -125,16 +125,15 @@ describe("ITW credentials reducer", () => {
         sequenceOfActions
       );
 
-      const remainingCredentials = {
-        [mockedEid.credentialId]: mockedEid,
-        [mockedCredential.credentialId]: mockedCredential,
-        [mockedCredential2.credentialId]: mockedCredential2
-      };
-
-      for (const { credentialId } of credentialsToRemove) {
-        // eslint-disable-next-line functional/immutable-data
-        delete remainingCredentials[credentialId];
-      }
+      const removedIds = new Set(
+        credentialsToRemove.map(({ credentialId }) => credentialId)
+      );
+      const remainingCredentials: Record<string, CredentialMetadata> =
+        Object.fromEntries(
+          [mockedEid, mockedCredential, mockedCredential2]
+            .filter(({ credentialId }) => !removedIds.has(credentialId))
+            .map(credential => [credential.credentialId, credential])
+        );
 
       expect(targetSate.features.itWallet.credentials.credentials).toEqual(
         remainingCredentials
@@ -206,13 +205,13 @@ describe("ITW credentials reducer", () => {
     });
   });
 
-  it("should update existing credentials overwriting the previous instances", () => {
+  it("should update existing credentials overwriting the previous instance", () => {
     const updatedCredential: CredentialMetadata = {
       ...mockedCredential,
-      storedStatusAssertion: {
-        credentialStatus: "valid" as const,
-        statusAssertion: "abc",
-        parsedStatusAssertion: { exp: 1000 } as ParsedStatusAssertion
+      validity: {
+        type: "status_assertion",
+        status: "valid",
+        statusAssertion: { exp: 1000 } as ParsedStatusAssertion
       }
     };
 
@@ -232,6 +231,27 @@ describe("ITW credentials reducer", () => {
       [mockedEid.credentialId]: mockedEid,
       [mockedCredential.credentialId]: updatedCredential,
       [mockedCredential2.credentialId]: mockedCredential2
+    });
+  });
+
+  it("stores a batch credential as a single entry listing all its keyTags", () => {
+    const batchCredential: CredentialMetadata = {
+      ...mockedCredential,
+      keyTags: ["d191ad52-2674-46f3-9610-6eb7bd9146a3", "key-2", "key-3"]
+    };
+
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      itwCredentialsStore([batchCredential])
+    ];
+    const targetSate = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual({
+      [batchCredential.credentialId]: batchCredential
     });
   });
 });

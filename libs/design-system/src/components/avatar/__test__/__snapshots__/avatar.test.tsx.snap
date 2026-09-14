@@ -1,0 +1,219 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Test Avatar Components - Experimental Enabled Avatar Snapshot 1`] = `
+<View
+  accessibilityIgnoresInvertColors={true}
+  style={
+    [
+      {
+        "borderColor": "rgba(14,15,19,0.1)",
+        "borderCurve": "continuous",
+        "borderWidth": 1,
+        "overflow": "hidden",
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderRadius": 8,
+        "height": 44,
+        "padding": 6,
+        "width": 44,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+          "borderCurve": "continuous",
+          "overflow": "hidden",
+        },
+        {
+          "borderRadius": 2,
+        },
+      ]
+    }
+  >
+    <Image
+      accessibilityIgnoresInvertColors={true}
+      onError={[Function]}
+      source={
+        {
+          "uri": "",
+        }
+      }
+      style={
+        {
+          "height": "100%",
+          "resizeMode": "contain",
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`Test Avatar Components - Experimental Enabled AvatarSearch Snapshot 1`] = `
+<View
+  accessibilityIgnoresInvertColors={true}
+  style={
+    [
+      {
+        "borderColor": "rgba(14,15,19,0.1)",
+        "borderCurve": "continuous",
+        "borderWidth": 1,
+        "overflow": "hidden",
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderRadius": 8,
+        "height": 44,
+        "padding": 6,
+        "width": 44,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+          "borderCurve": "continuous",
+          "overflow": "hidden",
+        },
+        {
+          "borderRadius": 2,
+        },
+      ]
+    }
+  >
+    <Image
+      accessibilityIgnoresInvertColors={true}
+      source={
+        {
+          "uri": "",
+        }
+      }
+      style={
+        {
+          "height": "100%",
+          "resizeMode": "contain",
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`Test Avatar Components Avatar Snapshot 1`] = `
+<View
+  accessibilityIgnoresInvertColors={true}
+  style={
+    [
+      {
+        "borderColor": "rgba(14,15,19,0.1)",
+        "borderCurve": "continuous",
+        "borderWidth": 1,
+        "overflow": "hidden",
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderRadius": 8,
+        "height": 44,
+        "padding": 6,
+        "width": 44,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+          "borderCurve": "continuous",
+          "overflow": "hidden",
+        },
+        {
+          "borderRadius": 2,
+        },
+      ]
+    }
+  >
+    <Image
+      accessibilityIgnoresInvertColors={true}
+      onError={[Function]}
+      source={
+        {
+          "uri": "",
+        }
+      }
+      style={
+        {
+          "height": "100%",
+          "resizeMode": "contain",
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`Test Avatar Components AvatarSearch Snapshot 1`] = `
+<View
+  accessibilityIgnoresInvertColors={true}
+  style={
+    [
+      {
+        "borderColor": "rgba(14,15,19,0.1)",
+        "borderCurve": "continuous",
+        "borderWidth": 1,
+        "overflow": "hidden",
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderRadius": 8,
+        "height": 44,
+        "padding": 6,
+        "width": 44,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+          "borderCurve": "continuous",
+          "overflow": "hidden",
+        },
+        {
+          "borderRadius": 2,
+        },
+      ]
+    }
+  >
+    <Image
+      accessibilityIgnoresInvertColors={true}
+      source={
+        {
+          "uri": "",
+        }
+      }
+      style={
+        {
+          "height": "100%",
+          "resizeMode": "contain",
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+</View>
+`;

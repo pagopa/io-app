@@ -8,7 +8,26 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
+
+import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
+import {
+  analyticsAuthenticationCompleted,
+  analyticsAuthenticationStarted
+} from "../../../../store/actions/analytics";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import { GlobalState } from "../../../../store/reducers/types";
 import { ReduxSagaEffect } from "../../../../types/utils";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import {
+  trackCieIDLoginSuccess,
+  trackCieLoginSuccess,
+  trackSpidLoginSuccess
+} from "../../common/analytics";
+import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
+import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
+import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
+import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
@@ -17,54 +36,13 @@ import {
   setStartActiveSessionLogin
 } from "../store/actions";
 import {
-  isActiveSessionFastLoginEnabledSelector,
-  idpSelectedActiveSessionLoginSelector,
-  newTokenActiveSessionLoginSelector,
-  cieIDSelectedSecurityLevelActiveSessionLoginSelector,
   activeSessionLoginFlowSelector,
-  cieLoginFlowSelector
+  cieIDSelectedSecurityLevelActiveSessionLoginSelector,
+  cieLoginFlowSelector,
+  idpSelectedActiveSessionLoginSelector,
+  isActiveSessionFastLoginEnabledSelector,
+  newTokenActiveSessionLoginSelector
 } from "../store/selectors";
-import { startApplicationInitialization } from "../../../../store/actions/application";
-import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
-import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
-import {
-  trackCieLoginSuccess,
-  trackCieIDLoginSuccess,
-  trackSpidLoginSuccess
-} from "../../common/analytics";
-import { GlobalState } from "../../../../store/reducers/types";
-import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
-import { updateLoginMethodProfileProperty } from "../../common/analytics/spidAnalytics";
-import {
-  analyticsAuthenticationCompleted,
-  analyticsAuthenticationStarted
-} from "../../../../store/actions/analytics";
-import NavigationService from "../../../../navigation/NavigationService";
-import ROUTES from "../../../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-
-export function* watchActiveSessionLoginSaga() {
-  yield* takeLatest(
-    [getType(setStartActiveSessionLogin), getType(setRetryActiveSessionLogin)],
-    handleActiveSessionLoginSaga
-  );
-}
-
-export function* handleNavigateAfterFinishedStandardActiveSessionLoginFlow(
-  isActiveLoginSuccessProp?: boolean
-) {
-  const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
-
-  if (isActiveLoginSuccessProp && activeSessionLoginFlow !== "FCI") {
-    // If the user is logging in from the active session login flow, we can be sure that the session is valid
-    // and we can directly navigate him to the home screen, skipping all the checks about pending background
-    // actions and session expiration blocking screen.
-    yield* call(NavigationService.navigate, ROUTES.MAIN, {
-      screen: MESSAGES_ROUTES.MESSAGES_HOME
-    });
-  }
-  return;
-}
 
 export function* handleActiveSessionLoginSaga(): Generator<
   ReduxSagaEffect,
@@ -118,40 +96,66 @@ export function* handleActiveSessionLoginSaga(): Generator<
       }
     }
 
-    // Even though we are sure that all three values are present at this point,
+    // Even though we are sure that both values are present at this point,
     // we still need to perform this runtime check due to the lack of strict typing in the reducer state.
-    // This is mostly a workaround to satisfy TypeScript.
     // Also note: the `token` is only available *after* success is received,
     // so this check cannot be moved earlier in the flow.
-    const isDataComplete = token && idp;
-
-    if (isDataComplete) {
-      const state = (yield* select()) as GlobalState;
-      yield* call(
-        updateLoginSessionProfileAndSuperProperties,
-        state,
-        fastLoginOptIn ? "365" : "30"
-      );
-      yield* call(updateLoginMethodProfileProperty, state, idp.id);
-
-      yield* put(
-        consolidateActiveSessionLoginData({
-          idp,
-          token,
-          fastLoginOptIn: !!fastLoginOptIn,
-          cieIDSelectedSecurityLevel
-        })
-      );
-
-      yield* put(analyticsAuthenticationCompleted(loginFlow));
-
-      yield* put(
-        startApplicationInitialization({
-          handleSessionExpiration: false,
-          showIdentificationModalAtStartup: false,
-          isActiveLoginSuccess: true
-        })
-      );
+    if (!token || !idp) {
+      return;
     }
+
+    const state: GlobalState = yield* select();
+    yield* call(
+      updateLoginSessionProfileAndSuperProperties,
+      state,
+      fastLoginOptIn ? "365" : "30"
+    );
+    yield* call(updateLoginMethodProfileAndSuperProperties, state, idp.id);
+
+    yield* put(
+      consolidateActiveSessionLoginData({
+        idp,
+        token,
+        fastLoginOptIn: !!fastLoginOptIn,
+        cieIDSelectedSecurityLevel
+      })
+    );
+    // This event is tracked with the correct LOGIN_SESSION and LOGIN_METHOD
+    // because they were just forced in the profile/super properties above.
+    // AUTH_SECURITY_LEVEL, however, may be stale: we don't know the actual
+    // security level until the session is fetched from the backend
+    // (which happens later in initializeApplicationSaga).
+    yield* put(analyticsAuthenticationCompleted(loginFlow));
+
+    yield* put(
+      startApplicationInitialization({
+        handleSessionExpiration: false,
+        showIdentificationModalAtStartup: false,
+        isActiveLoginSuccess: true
+      })
+    );
   }
+}
+
+export function* handleNavigateAfterFinishedStandardActiveSessionLoginFlow(
+  isActiveLoginSuccessProp?: boolean
+) {
+  const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
+
+  if (isActiveLoginSuccessProp && activeSessionLoginFlow !== "FCI") {
+    // If the user is logging in from the active session login flow, we can be sure that the session is valid
+    // and we can directly navigate him to the home screen, skipping all the checks about pending background
+    // actions and session expiration blocking screen.
+    yield* call(NavigationService.navigate, ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
+  }
+  return;
+}
+
+export function* watchActiveSessionLoginSaga() {
+  yield* takeLatest(
+    [getType(setStartActiveSessionLogin), getType(setRetryActiveSessionLogin)],
+    handleActiveSessionLoginSaga
+  );
 }

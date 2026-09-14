@@ -23,7 +23,6 @@ const NfcAntennaInfoSchema = z.object({
 });
 
 export type NfcAntennaInfo = z.infer<typeof NfcAntennaInfoSchema>;
-export type AvailableNfcAntenna = z.infer<typeof AvailableNfcAntennaSchema>;
 
 function getUnsupportedPlatformNfcInfo(): Promise<NfcAntennaInfo> {
   return Promise.reject(

@@ -1,8 +1,9 @@
-import { IOToast, ListItemAction } from "@pagopa/io-app-design-system";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
+import { IOToast, ListItemAction } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Alert, Platform } from "react-native";
 import I18n from "i18next";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { Alert, Platform } from "react-native";
+
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
@@ -94,10 +95,10 @@ const PaymentsMethodDetailsDeleteButton = ({
 
   return (
     <ListItemAction
-      label={I18n.t("cardComponent.removeCta")}
-      onPress={onDeleteMethod}
       accessibilityLabel={I18n.t("cardComponent.removeCta")}
       icon="trashcan"
+      label={I18n.t("cardComponent.removeCta")}
+      onPress={onDeleteMethod}
       variant="danger"
     />
   );

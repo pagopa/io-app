@@ -1,30 +1,31 @@
-import { useRef } from "react";
 import {
   ContentWrapper,
   IOButton,
   IOMarkdown,
   useIOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { View } from "react-native";
 import I18n from "i18next";
+import { useRef } from "react";
+import { View } from "react-native";
+
+import { IOScrollViewActions } from "../../../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
-import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
-import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
-import { IOScrollViewActions } from "../../../../../../components/ui/IOScrollView";
-import { openWebUrl } from "../../../../../../utils/url";
+import { useIOSelector, useIOStore } from "../../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
+import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
+import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
+import { openWebUrl } from "../../../../../../utils/url";
+import { isActiveSessionLoginSelector } from "../../../../activeSessionLogin/store/selectors";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import {
   trackCiePinWizardScreen,
   trackWizardCiePinInfoSelected,
   trackWizardCiePinSelected
 } from "../../analytics";
-import { useIOSelector, useIOStore } from "../../../../../../store/hooks";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
-import { isActiveSessionLoginSelector } from "../../../../activeSessionLogin/store/selectors";
 
 export const CIE_PIN_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/";
@@ -50,8 +51,6 @@ const CiePinWizard = () => {
         />
         <VSpacer size={24} />
         <IOButton
-          variant="link"
-          testID="cie-pin-wizard-open-cie-pin-link"
           label={I18n.t(
             "authentication.wizards.cie_pin_wizard.bottom_sheet.link"
           )}
@@ -60,6 +59,8 @@ const CiePinWizard = () => {
               error(I18n.t("global.jserror.title"));
             });
           }}
+          testID="cie-pin-wizard-open-cie-pin-link"
+          variant="link"
         />
       </>
     ),
@@ -112,20 +113,20 @@ const CiePinWizard = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{ label, accessibilityLabel: label }}
-      description={I18n.t("authentication.wizards.cie_pin_wizard.description")}
       actions={screenActions()}
+      description={I18n.t("authentication.wizards.cie_pin_wizard.description")}
+      title={{ label, accessibilityLabel: label }}
     >
       <ContentWrapper>
         <VSpacer size={12} />
         <IOButton
-          variant="link"
-          testID="cie-pin-wizard-open-bottom-sheet"
           label={I18n.t(
             "authentication.wizards.cie_pin_wizard.bottom_sheet.cta.label"
           )}
-          ref={buttonRef}
           onPress={handlePresent}
+          ref={buttonRef}
+          testID="cie-pin-wizard-open-bottom-sheet"
+          variant="link"
         />
       </ContentWrapper>
       {bottomSheet}

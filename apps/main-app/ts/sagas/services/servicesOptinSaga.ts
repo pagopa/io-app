@@ -1,10 +1,11 @@
-import { call, select, take } from "typed-redux-saga/macro";
 import { StackActions } from "@react-navigation/native";
-import { navigateToServicesPreferenceModeSelectionScreen } from "../../store/actions/navigation";
+import { call, select, take } from "typed-redux-saga/macro";
+
 import { servicesOptinCompleted } from "../../features/onboarding/store/actions";
 import { profileServicePreferencesModeSelector } from "../../features/settings/common/store/selectors";
 import { isServicesPreferenceModeSet } from "../../features/settings/common/store/utils/guards";
 import NavigationService from "../../navigation/NavigationService";
+import { navigateToServicesPreferenceModeSelectionScreen } from "../../store/actions/navigation";
 
 /**
  * if the current profile has not services preference mode set

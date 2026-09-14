@@ -1,11 +1,12 @@
 import { Alert } from "react-native";
 import { createStore } from "redux";
-import { useOnboardingAbortAlert } from "../useOnboardingAbortAlert";
-import { appReducer } from "../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import * as dispatch from "../../../../store/hooks";
+import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { abortOnboarding } from "../../store/actions";
-import * as dispatch from "../../../../store/hooks";
+import { useOnboardingAbortAlert } from "../useOnboardingAbortAlert";
 
 describe("useOnboardingAbortAlert", () => {
   beforeEach(() => {

@@ -592,7 +592,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -616,7 +615,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -1215,7 +1213,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                           La tua Patente di guida, la tua Tessera Sanitaria e altri documenti digitali appariranno qui!
                         </Text>
                         <View
-                          accessibilityLabel="Aggiungi un documento"
+                          accessibilityLabel="Inizia"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1277,7 +1275,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -1301,7 +1298,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -1426,7 +1422,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                   ]
                                 }
                               >
-                                Aggiungi un documento
+                                Inizia
                               </Text>
                             </View>
                           </View>
@@ -1462,7 +1458,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                             Parte di
                           </Text>
                           <SvgMock
-                            accessibilityLabel="IT Wallet"
+                            accessibilityLabel="IT-Wallet"
                             height={16}
                             width={80}
                           />

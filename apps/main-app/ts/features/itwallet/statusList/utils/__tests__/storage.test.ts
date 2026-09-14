@@ -1,0 +1,162 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ZodError } from "zod";
+
+import {
+  STORAGE_KEY_ITW_ENV,
+  STORAGE_KEY_ITW_SPECS_VERSION,
+  STORAGE_KEY_LAST_CHECK_TIME
+} from "../consts";
+import {
+  getItwEnv,
+  getItwSpecsVersion,
+  getLastStatusListCheckTimestamps,
+  storeItwEnv,
+  storeItwSpecsVersion,
+  storeLastStatusListCheckTimestamp
+} from "../storage";
+
+jest.mock("@react-native-async-storage/async-storage", () =>
+  require("@react-native-async-storage/async-storage/jest/async-storage-mock")
+);
+
+beforeEach(() => AsyncStorage.clear());
+
+describe("IT-Wallet specs version storage", () => {
+  it("stores and retrieves the specs version", async () => {
+    await storeItwSpecsVersion("1.4.6");
+
+    await expect(
+      AsyncStorage.getItem(STORAGE_KEY_ITW_SPECS_VERSION)
+    ).resolves.toBe("1.4.6");
+    await expect(getItwSpecsVersion()).resolves.toBe("1.4.6");
+  });
+
+  it("throws when no specs version is stored", async () => {
+    await expect(getItwSpecsVersion()).rejects.toThrow(
+      "IT-Wallet specs version not found"
+    );
+  });
+
+  it("propagates AsyncStorage errors", async () => {
+    jest
+      .spyOn(AsyncStorage, "getItem")
+      .mockRejectedValueOnce(new Error("boom"));
+
+    await expect(getItwSpecsVersion()).rejects.toThrow("boom");
+  });
+});
+
+describe("IT-Wallet environment storage", () => {
+  it("stores and retrieves the environment", async () => {
+    await storeItwEnv("pre");
+
+    await expect(AsyncStorage.getItem(STORAGE_KEY_ITW_ENV)).resolves.toBe(
+      "pre"
+    );
+    await expect(getItwEnv()).resolves.toBe("pre");
+  });
+
+  it.each([null, "invalid"])("rejects invalid environment %s", async value => {
+    if (value) {
+      await AsyncStorage.setItem(STORAGE_KEY_ITW_ENV, value);
+    }
+
+    await expect(getItwEnv()).rejects.toBeInstanceOf(ZodError);
+  });
+});
+
+describe("storeLastStatusListCheckTimestamp", () => {
+  it("stores the timestamp list under the expected key", async () => {
+    await storeLastStatusListCheckTimestamp(1700000000000);
+
+    await expect(
+      AsyncStorage.getItem(STORAGE_KEY_LAST_CHECK_TIME)
+    ).resolves.toBe("[1700000000000]");
+  });
+
+  it("stores at most the latest 10 timestamps", async () => {
+    const timestamps = Array.from(
+      { length: 11 },
+      (_, index) => 1700000000000 + index
+    );
+
+    for (const timestamp of timestamps) {
+      await storeLastStatusListCheckTimestamp(timestamp);
+    }
+
+    await expect(
+      AsyncStorage.getItem(STORAGE_KEY_LAST_CHECK_TIME).then(raw =>
+        JSON.parse(raw ?? "[]")
+      )
+    ).resolves.toEqual(timestamps.slice(1));
+  });
+
+  it("swallows AsyncStorage errors", async () => {
+    jest
+      .spyOn(AsyncStorage, "setItem")
+      .mockRejectedValueOnce(new Error("boom"));
+
+    await expect(
+      storeLastStatusListCheckTimestamp(1700000000000)
+    ).resolves.toBeUndefined();
+  });
+});
+
+describe("getLastStatusListCheckTimestamps", () => {
+  it("returns the stored timestamps", async () => {
+    await AsyncStorage.setItem(
+      STORAGE_KEY_LAST_CHECK_TIME,
+      "[1700000000000,1700000000001]"
+    );
+
+    await expect(getLastStatusListCheckTimestamps()).resolves.toEqual([
+      1700000000000, 1700000000001
+    ]);
+  });
+
+  it("returns at most 10 timestamps", async () => {
+    const timestamps = Array.from(
+      { length: 11 },
+      (_, index) => 1700000000000 + index
+    );
+
+    await AsyncStorage.setItem(
+      STORAGE_KEY_LAST_CHECK_TIME,
+      JSON.stringify(timestamps)
+    );
+
+    await expect(getLastStatusListCheckTimestamps()).resolves.toEqual(
+      timestamps.slice(1)
+    );
+  });
+
+  it("returns legacy stored timestamp as a single-item list", async () => {
+    await AsyncStorage.setItem(STORAGE_KEY_LAST_CHECK_TIME, "1700000000000");
+
+    await expect(getLastStatusListCheckTimestamps()).resolves.toEqual([
+      1700000000000
+    ]);
+  });
+
+  it("returns an empty list when no timestamp is stored", async () => {
+    await expect(getLastStatusListCheckTimestamps()).resolves.toEqual([]);
+  });
+
+  it.each`
+    name                | raw
+    ${"invalid json"}   | ${"invalid"}
+    ${"invalid schema"} | ${'["1700000000000"]'}
+  `("returns an empty list for $name", async ({ raw }) => {
+    await AsyncStorage.setItem(STORAGE_KEY_LAST_CHECK_TIME, raw);
+
+    await expect(getLastStatusListCheckTimestamps()).resolves.toEqual([]);
+  });
+
+  it("returns an empty list on AsyncStorage errors", async () => {
+    jest
+      .spyOn(AsyncStorage, "getItem")
+      .mockRejectedValueOnce(new Error("boom"));
+
+    await expect(getLastStatusListCheckTimestamps()).resolves.toEqual([]);
+  });
+});

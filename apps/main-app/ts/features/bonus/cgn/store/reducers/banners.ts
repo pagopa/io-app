@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
+
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";

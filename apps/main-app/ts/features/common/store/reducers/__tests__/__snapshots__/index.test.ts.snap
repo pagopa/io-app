@@ -45,9 +45,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "qtspClauses": {
       "kind": "PotNone",
     },
-    "securityLevel": {
-      "localFeatureFlag": false,
-    },
     "signature": {
       "kind": "PotNone",
     },
@@ -159,13 +156,8 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
     },
-    "debug": {
-      "credentialStatusOverrides": {},
-      "savedCredentials": undefined,
-    },
     "environment": {
       "env": "prod",
-      "itWalletSpecsVersion": "1.0.0",
     },
     "identification": {
       "hasNfcFeature": {
@@ -173,30 +165,36 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "issuance": {
-      "integrityKeyTag": {
-        "_tag": "None",
-      },
+      "integrityKeyTag": undefined,
     },
     "preferences": {},
     "proximity": {
       "consents": {},
     },
+    "remoteConfig": {},
     "securePreferences": {
       "offlineAccessCounter": 0,
       "unverifiedCredentialsAccessCounter": 0,
     },
+    "ui": {
+      "activationExitSurvey": undefined,
+      "credentialExitSurvey": undefined,
+      "itwFeedbackBottomSheet": false,
+    },
     "walletInstance": {
       "attestation": undefined,
       "isRemotelyActive": undefined,
+      "keyAttestations": {},
       "renewalError": false,
       "status": {
         "kind": "PotNone",
       },
-      "walletUnitAttestations": {},
+      "statusList": undefined,
     },
   },
   "landingBanners": {
     "CGN_ENGAGEMENT_BANNER": true,
+    "FSE_ENGAGEMENT_BANNER": true,
     "ITW_DISCOVERY": true,
     "IT_WALLET_DISCOVERY": true,
     "LV_EXPIRATION_REMINDER": true,
@@ -237,24 +235,17 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "userInteractionForSessionExpiredNeeded": false,
       },
     },
+    "loginConfig": {
+      "oneIdentityEnv": "prod",
+      "oneIdentityLocalFeatureFlag": undefined,
+    },
     "loginInfo": {
       "userFromSuccessLogin": false,
     },
-    "nativeLogin": {
-      "enabled": true,
-    },
     "spidLogin": {
-      "nativeLogin": {
-        "requestInfo": {
-          "nativeAttempts": 0,
-          "requestState": "LOADING",
-        },
-      },
-      "standardLogin": {
-        "requestInfo": {
-          "requestState": {
-            "kind": "PotNoneLoading",
-          },
+      "requestInfo": {
+        "requestState": {
+          "kind": "PotNoneLoading",
         },
       },
     },
@@ -399,6 +390,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "favouriteServices": {
       "dataById": {},
       "sortType": "addedAt_desc",
+    },
+    "fseDiscoveryBanner": {
+      "isDismissed": false,
     },
     "home": {
       "featuredInstitutions": {

@@ -18,7 +18,7 @@ const FNV1A_PRIME_32 = 16777619;
  * @param seed - Optional seed to vary the hash output. Same input + same seed always returns the same value. Defaults to 0.
  * @returns An unsigned 32-bit integer in the range [0, 4294967295].
  */
-export const fnv1a = (input: string, seed: number = 0): number => {
+export const fnv1a = (input: string, seed = 0): number => {
   // XOR the offset basis with the seed to produce a unique starting state per seed.
   // eslint-disable-next-line no-bitwise
   const offsetBasis = (FNV1A_OFFSET_BASIS_32 ^ seed) >>> 0;

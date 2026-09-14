@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react-native";
+
 import { ItwStoredCredentialsMocks } from "../../../utils/itwMocksUtils";
 import { CardData } from "../CardData";
 
@@ -64,6 +65,7 @@ describe("CardData", () => {
     );
 
     expect(component.queryByTestId("dcBackDataTestID")).toBeTruthy();
+    expect(component.getByLabelText("QR Code")).toBeTruthy();
     expect(component).toMatchSnapshot();
   });
 });

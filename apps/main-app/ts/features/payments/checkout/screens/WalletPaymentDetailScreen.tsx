@@ -1,3 +1,6 @@
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/communication/OrganizationFiscalCode";
+import { PaymentRequestsGetResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
 import {
   Divider,
   H3,
@@ -6,7 +9,7 @@ import {
   ListItemInfo,
   ListItemInfoCopy,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   PaymentNoticeNumberFromString,
   RptIdFromString
@@ -18,15 +21,13 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentProps, useCallback, useLayoutEffect, useState } from "react";
 import { AccessibilityInfo, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { OrganizationFiscalCode } from "../../../../../definitions/communication/OrganizationFiscalCode";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -36,7 +37,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { cleanTransactionDescription } from "../../../../utils/payment";
@@ -63,14 +63,14 @@ import { FaultCodeCategoryEnum as FaultCodeSlowdownCategoryEnum } from "../types
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { formatAndValidateDueDate } from "../utils";
 
-type WalletPaymentDetailScreenNavigationParams = {
-  rptId: RptId;
-};
-
 type WalletPaymentDetailRouteProps = RouteProp<
   PaymentsCheckoutParamsList,
   "PAYMENT_NOTICE_SUMMARY"
 >;
+
+type WalletPaymentDetailScreenNavigationParams = {
+  rptId: RptId;
+};
 
 const WalletPaymentDetailScreen = () => {
   const { params } = useRoute<WalletPaymentDetailRouteProps>();
@@ -114,8 +114,8 @@ const WalletPaymentDetailScreen = () => {
   if (pot.isSome(paymentDetailsPot)) {
     return (
       <WalletPaymentDetailContent
-        rptId={rptId}
         payment={paymentDetailsPot.value}
+        rptId={rptId}
       />
     );
   }
@@ -125,8 +125,8 @@ const WalletPaymentDetailScreen = () => {
     duplicates of the loading screen throughout the app */
     <SafeAreaView style={styles.loadingContainer}>
       <LoadingIndicator
-        testID="wallet-payment-detail-loading-indicator"
         size={48}
+        testID="wallet-payment-detail-loading-indicator"
       />
       <VSpacer size={24} />
       <H3 style={{ textAlign: "center" }}>
@@ -137,8 +137,8 @@ const WalletPaymentDetailScreen = () => {
 };
 
 type WalletPaymentDetailContentProps = {
-  rptId: RptId;
   payment: PaymentRequestsGetResponse;
+  rptId: RptId;
 };
 
 const WalletPaymentDetailContent = ({
@@ -178,7 +178,6 @@ const WalletPaymentDetailContent = ({
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    contextualHelp: emptyContextualHelp,
     ignoreAccessibilityCheck: isAmountInfoVisible
   });
 
@@ -296,10 +295,10 @@ const WalletPaymentDetailContent = ({
 
   return (
     <View
-      style={{ flex: 1 }}
       importantForAccessibility={
         isAmountInfoVisible ? "no-hide-descendants" : "auto"
       }
+      style={{ flex: 1 }}
     >
       <IOScrollView
         actions={{
@@ -314,26 +313,26 @@ const WalletPaymentDetailContent = ({
         }}
       >
         <ListItemInfo
-          testID="wallet-payment-detail-recipient"
           icon={"institution"}
           label={I18n.t("wallet.firstTransactionSummary.recipient")}
+          testID="wallet-payment-detail-recipient"
           value={payment.paName}
         />
         <Divider />
         <ListItemInfo
-          testID="wallet-payment-detail-object"
           icon={"notes"}
           label={I18n.t("wallet.firstTransactionSummary.object")}
-          value={description}
           numberOfLines={0}
+          testID="wallet-payment-detail-object"
+          value={description}
         />
         <Divider />
         <ListItemInfo
-          testID="wallet-payment-detail-amount"
+          endElement={amountEndElement}
           icon={"psp"}
           label={I18n.t("wallet.firstTransactionSummary.amount")}
+          testID="wallet-payment-detail-amount"
           value={amount}
-          endElement={amountEndElement}
         />
         <Divider />
         {dueDate && (
@@ -347,18 +346,18 @@ const WalletPaymentDetailContent = ({
           </>
         )}
         <ListItemInfoCopy
-          testID="payment-notice-copy-button"
           icon="docPaymentCode"
           label={I18n.t("payment.noticeCode")}
-          value={formattedPaymentNoticeNumber}
           onPress={() => handleOnCopy(formattedPaymentNoticeNumber)}
+          testID="payment-notice-copy-button"
+          value={formattedPaymentNoticeNumber}
         />
         <Divider />
         <ListItemInfoCopy
           icon="entityCode"
           label={I18n.t("wallet.firstTransactionSummary.entityCode")}
-          value={orgFiscalCode}
           onPress={() => handleOnCopy(orgFiscalCode)}
+          value={orgFiscalCode}
         />
       </IOScrollView>
       {amountInfoBottomSheet.bottomSheet}

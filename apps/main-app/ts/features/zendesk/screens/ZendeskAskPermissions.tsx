@@ -7,14 +7,15 @@ import {
   ListItemHeader,
   ListItemInfo,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import _ from "lodash";
 import { ComponentProps, useCallback, useEffect } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
-import I18n from "i18next";
+
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { zendeskPrivacyUrl } from "../../../config";
@@ -22,16 +23,7 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../mixpanel";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import {
-  idpSelector,
-  zendeskTokenSelector
-} from "../../authentication/common/store/selectors";
 import { appVersionHistorySelector } from "../../../store/reducers/installation";
-import {
-  profileEmailSelector,
-  profileFiscalCodeSelector,
-  profileNameSurnameSelector
-} from "../../settings/common/store/selectors";
 import { getAppVersion } from "../../../utils/appVersion";
 import {
   getFreeDiskStorage,
@@ -57,6 +49,16 @@ import {
   zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
 import { handleItemOnPress, openWebUrl } from "../../../utils/url";
+import {
+  idpSelector,
+  zendeskTokenSelector
+} from "../../authentication/common/store/selectors";
+import { isLoggedIn } from "../../authentication/common/store/utils/guards";
+import {
+  profileEmailSelector,
+  profileFiscalCodeSelector,
+  profileNameSurnameSelector
+} from "../../settings/common/store/selectors";
 import { ZendeskParamsList } from "../navigation/params";
 import ZENDESK_ROUTES from "../navigation/routes";
 import {
@@ -71,7 +73,6 @@ import {
   zendeskSelectedSubcategorySelector,
   ZendeskTokenStatusEnum
 } from "../store/reducers";
-import { isLoggedIn } from "../../authentication/common/store/utils/guards";
 
 /**
  * Transform an array of string into a Zendesk
@@ -81,7 +82,7 @@ const arrayToZendeskValue = (arr: Array<string>) => arr.join(", ");
 
 export type ItemPermissionProps = Pick<
   ComponentProps<typeof ListItemInfo>,
-  "testID" | "label" | "value" | "icon"
+  "icon" | "label" | "testID" | "value"
 > & {
   id?: string;
   zendeskID?: string;
@@ -359,10 +360,10 @@ const ZendeskAskPermissions = () => {
     item
   }: ListRenderItemInfo<ItemPermissionProps>) => (
     <ListItemInfo
-      testID={item?.testID}
-      label={item?.label}
-      value={item?.value}
       icon={item?.icon}
+      label={item?.label}
+      testID={item?.testID}
+      value={item?.value}
     />
   );
 
@@ -385,19 +386,18 @@ const ZendeskAskPermissions = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      actions={buttonConf}
+      description={I18n.t("support.askPermissions.body")}
+      /* Avoid status bar overlapping on Android */
+      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
+      testID={"ZendeskAskPermissions"}
       title={{
         label: I18n.t("support.askPermissions.title"),
         section: I18n.t("support.askPermissions.header")
       }}
-      testID={"ZendeskAskPermissions"}
-      description={I18n.t("support.askPermissions.body")}
-      /* Avoid status bar overlapping on Android */
-      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
-      actions={buttonConf}
     >
       <ContentWrapper>
         <IOButton
-          variant="link"
           accessibilityRole="link"
           label={I18n.t("support.askPermissions.privacyLink")}
           onPress={() => {
@@ -405,23 +405,24 @@ const ZendeskAskPermissions = () => {
               IOToast.error(I18n.t("global.jserror.title"))
             );
           }}
+          variant="link"
         />
       </ContentWrapper>
 
       <VSpacer size={16} />
 
       <FlatList
-        scrollEnabled={false}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
+        data={items}
+        ItemSeparatorComponent={() => <Divider />}
+        keyExtractor={(item, idx) => `permission_item_${item}_${idx}`}
         ListHeaderComponent={
           <ListItemHeader label={I18n.t("support.askPermissions.listHeader")} />
         }
-        data={items}
-        keyExtractor={(item, idx) => `permission_item_${item}_${idx}`}
         renderItem={renderPermissionItem}
-        ItemSeparatorComponent={() => <Divider />}
+        scrollEnabled={false}
       />
     </IOScrollViewWithLargeHeader>
   );

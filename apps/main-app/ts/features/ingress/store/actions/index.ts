@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { OfflineAccessReasonEnum } from "../reducer";
 
 export const setIsBlockingScreen = createStandardAction(
@@ -14,7 +15,7 @@ export const resetOfflineAccessReason = createStandardAction(
 )();
 
 export type IngressScreenActions = ActionType<
+  | typeof resetOfflineAccessReason
   | typeof setIsBlockingScreen
   | typeof setOfflineAccessReason
-  | typeof resetOfflineAccessReason
 >;

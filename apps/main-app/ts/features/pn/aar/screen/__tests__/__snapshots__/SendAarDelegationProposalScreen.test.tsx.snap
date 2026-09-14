@@ -6544,7 +6544,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -6568,7 +6567,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -6785,7 +6783,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -6809,7 +6806,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",

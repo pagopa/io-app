@@ -6,13 +6,14 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
 export type RemoteValue<V, E> =
-  | RemoteUndefined
+  | RemoteError<E>
   | RemoteLoading
   | RemoteReady<V>
-  | RemoteError<E>;
+  | RemoteUndefined;
 
-type RemoteUndefined = {
-  readonly kind: "undefined";
+type RemoteError<E> = {
+  error: E;
+  readonly kind: "error";
 };
 
 type RemoteLoading = {
@@ -24,9 +25,8 @@ type RemoteReady<V> = {
   value: V;
 };
 
-type RemoteError<E> = {
-  readonly kind: "error";
-  error: E;
+type RemoteUndefined = {
+  readonly kind: "undefined";
 };
 
 export const isUndefined = <V>(
@@ -75,8 +75,8 @@ export const foldW = <T, E, B, C>(
   onError: (error: E) => C
 ): B | C => {
   switch (rm.kind) {
-    case "undefined": {
-      return onUndefined();
+    case "error": {
+      return onError(rm.error);
     }
     case "loading": {
       return onLoading();
@@ -84,8 +84,8 @@ export const foldW = <T, E, B, C>(
     case "ready": {
       return onReady(rm.value);
     }
-    case "error": {
-      return onError(rm.error);
+    case "undefined": {
+      return onUndefined();
     }
   }
 };

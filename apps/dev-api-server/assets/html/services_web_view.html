@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Services Web view</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="application/javascript">
+    function sendMessagesToRN(serviceId) {
+        if (window.ReactNativeWebView) {
+          window.ReactNativeWebView.postMessage(serviceId);
+        }
+    }
+
+
+    function loadServices(){
+      const container = $("#container");
+      $.getJSON("/services_web_view/local_services", function(services) {
+        const groupByOrganizationName = {};
+        services.forEach(s => {
+          if(!groupByOrganizationName[s.organization_name]){
+            groupByOrganizationName[s.organization_name] = [];
+          }
+          groupByOrganizationName[s.organization_name] = [...groupByOrganizationName[s.organization_name],s];
+        });
+        let html = "";
+        Object.keys(groupByOrganizationName).forEach(orgKey => {
+          html += `<div><h1 style="font-size: 22px;color: black;">${orgKey}</h1></div>`;
+          groupByOrganizationName[orgKey].forEach(s => {
+            html += `<div><h2 style="font-size: 18px;color: blue; cursor: pointer;" onclick="sendMessagesToRN('${s.service_id}')">${s.service_name}</h2></div>`;
+          });
+        });
+        container.append(html)
+        }
+      );
+    }
+
+    $(document).ready(function() {
+      loadServices();
+    });
+
+
+
+  </script>
+</head>
+<body style="padding:10px;">
+<div style="font-size: 30px;">DEV-SERVER local services</div>
+<div id="container"></div>
+
+</body>
+</html>

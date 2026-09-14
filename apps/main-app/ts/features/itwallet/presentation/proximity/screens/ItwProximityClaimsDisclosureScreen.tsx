@@ -5,9 +5,11 @@ import {
   HeaderSecondLevel,
   IOMarkdownLite,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useLayoutEffect } from "react";
+import { useCallback, useLayoutEffect } from "react";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
@@ -19,7 +21,10 @@ import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchange
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 import { ISSUER_MOCK_NAME } from "../../../common/utils/itwMocksUtils.ts";
-import { trackItwProximityContinuePresentation } from "../analytics";
+import {
+  trackItwProximityContinuePresentation,
+  trackItwProximityDataShare
+} from "../analytics";
 import { ITW_PROXIMITY_SCREENVIEW_EVENTS } from "../analytics/enum";
 import { ItwProximityConnectionLoadingComponent } from "../components/ItwProximityConnectionLoadingComponent.tsx";
 import { ItwProximityPresentationDetails } from "../components/ItwProximityPresentationDetails.tsx";
@@ -29,7 +34,8 @@ import {
   selectIsLoading,
   selectIsNfcRetrieval,
   selectIsSending,
-  selectProximityDetails
+  selectProximityDetails,
+  selectProximityFlow
 } from "../machine/selectors.ts";
 import { ProximityDetails } from "../utils/types.ts";
 
@@ -67,13 +73,26 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
   const machineRef = ItwProximityMachineContext.useActorRef();
   const isNfcRetrieval =
     ItwProximityMachineContext.useSelector(selectIsNfcRetrieval);
+  const proximityFlow =
+    ItwProximityMachineContext.useSelector(selectProximityFlow);
+
+  useFocusEffect(
+    useCallback(
+      () => trackItwProximityDataShare({ proximity_flow: proximityFlow }),
+      [proximityFlow]
+    )
+  );
 
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
 
+  const handleDismiss = useCallback(() => {
+    machineRef.send({ type: "close" });
+  }, [machineRef]);
+
   const dismissalDialog = useItwDismissalDialog({
-    handleDismiss: () => machineRef.send({ type: "close" }),
+    handleDismiss,
     customLabels: {
       body: I18n.t(
         "features.itWallet.presentation.proximity.selectiveDisclosure.alert.message"
@@ -90,20 +109,20 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
       headerShown: true,
       header: () => (
         <HeaderSecondLevel
-          title={""}
-          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: dismissalDialog.show
           }}
+          title={""}
+          type="singleAction"
         />
       )
     });
-  }, [navigation, machineRef, dismissalDialog]);
+  }, [navigation, dismissalDialog]);
 
   const handleConfirm = () => {
-    trackItwProximityContinuePresentation();
+    trackItwProximityContinuePresentation({ proximity_flow: proximityFlow });
 
     if (isNfcRetrieval) {
       // For NFC retrieval, identification request is dispatched in the next screen
@@ -129,6 +148,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       footerActions={{
         actions: {
           type: "SingleButton",
@@ -145,7 +165,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
             requesterLogoUri={require("../../../../../../img/features/itWallet/issuer/IPZS.png")}
           />
           <VStack space={16}>
-            <H2>
+            <H2 accessibilityRole="header">
               {I18n.t(
                 "features.itWallet.presentation.proximity.selectiveDisclosure.title"
               )}

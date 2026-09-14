@@ -1,19 +1,26 @@
+import { CieIdEnvironment } from "@pagopa/io-react-native-cieid";
+
 import { cieLoginFlowWithDevServerEnabled } from "../../../../../config";
 import { isDevEnv } from "../../../../../utils/environment";
-
-export type SpidLevel = "SpidL2" | "SpidL3";
+import { AuthLevel, SPID_AUTH_LEVEL_MAP } from "../../../common/utils";
 
 export const cieFlowForDevServerEnabled =
   isDevEnv && cieLoginFlowWithDevServerEnabled;
 
+/**
+ * Maps the CIE login UAT flag to the CieID app environment to open.
+ */
+export const getCieIdEnvironment = (isUat: boolean): CieIdEnvironment =>
+  isUat ? "preprod" : "production";
+
 export const getCieIDLoginUri = (
-  spidLevel: SpidLevel,
+  authLevel: AuthLevel,
   isUat: boolean,
   apiLoginUrlPrefix: string
 ) =>
   `${apiLoginUrlPrefix}/api/auth/v1/login?entityID=${
     isUat ? "xx_servizicie_coll" : "xx_servizicie"
-  }&authLevel=${spidLevel}`;
+  }&authLevel=${SPID_AUTH_LEVEL_MAP[authLevel]}`;
 
 /**
  * @description this function checks if the given `url` is an authentication url

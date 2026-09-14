@@ -1,6 +1,12 @@
+import {
+  Consent,
+  TypeEnum
+} from "@io-app/api-types/generated/definitions/fims_sso/Consent";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+
 import reducer, {
   FIMS_SSO_ERROR_TAGS,
   FimsErrorStateType,
@@ -8,11 +14,6 @@ import reducer, {
   FimsSSOState,
   INITIAL_STATE
 } from "../";
-import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
-import {
-  Consent,
-  TypeEnum
-} from "../../../../../../../definitions/fims_sso/Consent";
 import {
   applicationChangeState,
   startApplicationInitialization
@@ -45,7 +46,7 @@ const currentFlowStateTags: ReadonlyArray<FimsFlowStateTags> = [
 const ssoDataPots = (
   consent: Consent,
   errorTag: FIMS_SSO_ERROR_TAGS = "GENERIC",
-  debugMessage: string = "Failed"
+  debugMessage = "Failed"
 ) => [
   pot.none,
   pot.noneLoading,
@@ -289,7 +290,7 @@ describe("singleSignOn reducer", () => {
     );
   });
 
-  describe(` receiving 'fimsGetConsentsListAction.failure' or 'fimsAcceptConsentsFailureAction' or 'fimsSignAndRetrieveInAppBrowserUrlAction.failure'`, () => {
+  describe(`receiving 'fimsGetConsentsListAction.failure' or 'fimsAcceptConsentsFailureAction' or 'fimsSignAndRetrieveInAppBrowserUrlAction.failure'`, () => {
     const failureActions: ReadonlyArray<
       [string, (payload: FimsErrorStateType) => Action]
     > = [

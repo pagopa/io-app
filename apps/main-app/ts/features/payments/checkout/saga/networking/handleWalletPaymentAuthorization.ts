@@ -1,19 +1,20 @@
+import { ApmDetailTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/ApmDetailType";
+import { AuthorizationDetails } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/AuthorizationDetails";
+import { CardsDetailTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/CardsDetailType";
+import { PaymentMethodManagementTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodManagementType";
+import { RedirectDetailTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RedirectDetailType";
+import { RequestAuthorizationRequest } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RequestAuthorizationRequest";
+import { WalletDetailTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletDetailType";
 import * as E from "fp-ts/lib/Either";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { ApmDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/ApmDetailType";
-import { AuthorizationDetails } from "../../../../../../definitions/pagopa/ecommerce/AuthorizationDetails";
-import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
-import { RedirectDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/RedirectDetailType";
-import { RequestAuthorizationRequest } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
-import { WalletDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletDetailType";
+
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { getLanguageEnumFromPreferredLocale } from "../../../../../utils/locale";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
 import { paymentsStartPaymentAuthorizationAction } from "../../store/actions/networking";
-import { CardsDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/CardsDetailType";
 
 type WalletAuthorizationAction = ActionType<
   (typeof paymentsStartPaymentAuthorizationAction)["request"]

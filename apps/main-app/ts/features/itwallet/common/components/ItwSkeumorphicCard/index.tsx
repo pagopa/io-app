@@ -1,8 +1,12 @@
-import { IOColors, Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
-import { ReactNode, useMemo } from "react";
-
+import {
+  hexToRgba,
+  IOColors,
+  Tag,
+  useScaleAnimation
+} from "@io-app/design-system";
 import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
+import { ReactNode, useMemo } from "react";
 import {
   AccessibilityProps,
   Pressable,
@@ -12,6 +16,7 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { useLayoutSize } from "../../hooks/useLayoutSize";
 import {
@@ -35,10 +40,10 @@ import { FlippableCard } from "./FlippableCard";
 
 export type ItwSkeumorphicCardProps = {
   credential: CredentialMetadata;
-  status: ItwCredentialStatus;
-  valuesHidden: boolean;
   isFlipped?: boolean;
   onPress?: () => void;
+  status: ItwCredentialStatus;
+  valuesHidden: boolean;
 };
 
 export const ItwSkeumorphicCard = ({
@@ -54,7 +59,7 @@ export const ItwSkeumorphicCard = ({
 
   const FrontSide = useMemo(
     () => (
-      <CardSideBase status={status} isItw={isItw}>
+      <CardSideBase isItw={isItw} status={status}>
         <CardBackground
           credentialType={credential.credentialType}
           side="front"
@@ -71,7 +76,7 @@ export const ItwSkeumorphicCard = ({
 
   const BackSide = useMemo(
     () => (
-      <CardSideBase status={status} isItw={isItw}>
+      <CardSideBase isItw={isItw} status={status}>
         <CardBackground
           credentialType={credential.credentialType}
           side="back"
@@ -91,6 +96,7 @@ export const ItwSkeumorphicCard = ({
       [key in ItwCredentialStatus]?: string;
     } = {
       invalid: I18n.t("features.itWallet.card.status.invalid"),
+      suspended: I18n.t("features.itWallet.card.status.suspended"),
       expired: I18n.t("features.itWallet.card.status.expired"),
       jwtExpired: I18n.t("features.itWallet.card.status.verificationExpired"),
       expiring: I18n.t("features.itWallet.card.status.expiring"),
@@ -110,9 +116,9 @@ export const ItwSkeumorphicCard = ({
 
   const card = (
     <FlippableCard
+      BackComponent={BackSide}
       containerStyle={[styles.card]}
       FrontComponent={FrontSide}
-      BackComponent={BackSide}
       isFlipped={isFlipped}
     />
   );
@@ -153,13 +159,14 @@ const gradientVariantByStatus: Record<
   jwtExpiring: "warning",
   jwtExpired: "error",
   invalid: "error",
+  suspended: "error",
   unknown: "error"
 };
 
 type CardSideBaseProps = {
-  status: ItwCredentialStatus;
   children: ReactNode;
   isItw: boolean;
+  status: ItwCredentialStatus;
 };
 
 const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
@@ -207,11 +214,11 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
           >
             {/* Animated gradient border */}
             <ItwBrandedSkiaBorder
-              width={size.width}
-              height={size.height}
-              variant={gradientVariantByStatus[status]}
-              thickness={4}
               borderRadius={8}
+              height={size.height}
+              thickness={4}
+              variant={gradientVariantByStatus[status]}
+              width={size.width}
             />
           </Canvas>
         )}
@@ -228,19 +235,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 8,
-    overflow: "hidden"
+    overflow: "hidden",
+    boxShadow: `0px 4px 24px ${hexToRgba(IOColors.black, 0.1)}`
   },
   card: {
-    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO,
-    shadowColor: IOColors.black,
-    shadowOffset: {
-      width: 0,
-      height: 4 // To avoid the shadow to be clipped by the header
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    // Android
-    elevation: 8
+    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO
   },
   tag: {
     position: "absolute",
@@ -249,7 +248,7 @@ const styles = StyleSheet.create({
     zIndex: 20
   },
   faded: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     borderWidth: 4,
     borderRadius: 8
   }

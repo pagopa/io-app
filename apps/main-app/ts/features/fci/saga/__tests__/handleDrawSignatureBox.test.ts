@@ -1,15 +1,16 @@
-import { expectSaga } from "redux-saga-test-plan";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
-import { handleDrawSignatureBox } from "../handleDrawSignatureBox";
-import { fciDocumentSignatureFields } from "../../store/actions";
+
 import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
+import { fciDocumentSignatureFields } from "../../store/actions";
+import { fciSignatureFieldDrawingSelector } from "../../store/reducers/fciSignatureFieldDrawing";
 import {
   drawSignatureField,
   parsePdfAsBase64
 } from "../../utils/signatureFields";
-import { fciSignatureFieldDrawingSelector } from "../../store/reducers/fciSignatureFieldDrawing";
+import { handleDrawSignatureBox } from "../handleDrawSignatureBox";
 
 jest.mock("react-native-blob-util", () => ({
   fs: {

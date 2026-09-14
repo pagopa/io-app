@@ -1,5 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
+
 import { ItWalletClient } from "../../api/client.ts";
 import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences.ts";
 
@@ -23,7 +24,7 @@ export function* handleGetWhitelistedStatus(
       yield* put(itwSetFiscalCodeWhitelisted(whitelisted));
     }
     // Non-200 responses (e.g. BE downtime): preserve the last known persisted value.
-  } catch (e) {
+  } catch {
     // Network/unexpected errors: preserve the last known persisted value.
   }
 }

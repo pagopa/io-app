@@ -1,13 +1,13 @@
+import { DiscountCodeTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountCodeType";
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { SupportTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/SupportType";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+
 import { getGenericError } from "../../../../../../../utils/errors";
 import { cgnSelectedMerchant } from "../../../../store/actions/merchants";
 import { cgnMerchantDetail } from "../cgnMerchantDetail";
-import { Merchant } from "../../../../../../../../definitions/cgn/merchants/Merchant";
-import { SupportTypeEnum } from "../../../../../../../../definitions/cgn/merchants/SupportType";
-import { DiscountCodeTypeEnum } from "../../../../../../../../definitions/cgn/merchants/DiscountCodeType";
 
 const merchant: Merchant = {
   id: "12345" as NonEmptyString,
@@ -29,14 +29,14 @@ describe("cgnMerchantDetail", () => {
   it("should dispatch success action on successful API call", () => {
     testSaga(cgnMerchantDetail, getMerchantsDetail, requestAction)
       .next()
-      .next(E.right({ status: 200, value: merchant }))
+      .next({ _tag: "Right", right: { status: 200, value: merchant } })
       .put(cgnSelectedMerchant.success(merchant))
       .next()
       .isDone();
   });
 
   it("should dispatch failure action on API error", () => {
-    const leftResponse = E.left([]);
+    const leftResponse = { _tag: "Left", left: [] };
     const expectedError = new Error(readableReport([]));
 
     testSaga(cgnMerchantDetail, getMerchantsDetail, requestAction)
@@ -50,7 +50,7 @@ describe("cgnMerchantDetail", () => {
   it("should not dispatch success or failure on 401 response", () => {
     testSaga(cgnMerchantDetail, getMerchantsDetail, requestAction)
       .next()
-      .next(E.right({ status: 401 }))
+      .next({ _tag: "Right", right: { status: 401 } })
       .next()
       .isDone();
   });
@@ -70,7 +70,7 @@ describe("cgnMerchantDetail", () => {
     const unexpectedStatus = 500;
     testSaga(cgnMerchantDetail, getMerchantsDetail, requestAction)
       .next()
-      .next(E.right({ status: unexpectedStatus }))
+      .next({ _tag: "Right", right: { status: unexpectedStatus } })
       .put(
         cgnSelectedMerchant.failure(
           getGenericError(new Error(`Response in status ${unexpectedStatus}`))

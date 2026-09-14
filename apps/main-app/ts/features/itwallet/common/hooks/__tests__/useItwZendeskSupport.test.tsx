@@ -2,13 +2,14 @@ import { renderHook } from "@testing-library/react-native";
 import React from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { appReducer } from "../../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as supportAssistance from "../../../../../utils/supportAssistance";
 import {
-  ZendeskSubcategoryValue,
-  useItwZendeskSupport
+  useItwZendeskSupport,
+  ZendeskSubcategoryValue
 } from "../useItwZendeskSupport";
 
 jest.mock("@react-navigation/native", () => ({

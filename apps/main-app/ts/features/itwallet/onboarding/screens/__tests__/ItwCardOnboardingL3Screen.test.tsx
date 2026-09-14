@@ -1,20 +1,19 @@
-import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
+import configureMockStore from "redux-mock-store";
+
+import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
-
 import * as envSelectors from "../../../common/store/selectors/environment";
 import { EnvType } from "../../../common/utils/environment";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
+import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
-
-import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { ItwCardOnboardingL3Screen } from "../ItwCardOnboardingL3Screen";
 
 describe("ItwCardOnboardingL3Screen", () => {
@@ -35,7 +34,7 @@ describe("ItwCardOnboardingL3Screen", () => {
     } as any);
   });
 
-  it("it should render the screen correctly (default page = 0 when params are undefined)", () => {
+  it("should render the screen correctly (default page = 0 when params are undefined)", () => {
     const { queryByTestId } = renderComponent(undefined);
 
     // page=0 => ITW modules should be visible
@@ -44,7 +43,7 @@ describe("ItwCardOnboardingL3Screen", () => {
     ).toBeTruthy();
   });
 
-  it("it should render tab 1 (Other cards) when page param is 1", () => {
+  it("should render tab 1 (Other cards) when page param is 1", () => {
     const { queryByTestId } = renderComponent({ page: 1 });
 
     // page=1 => other section
@@ -55,7 +54,7 @@ describe("ItwCardOnboardingL3Screen", () => {
     ).toBeNull();
   });
 
-  it("it should fallback to page 0 when page param is not a number", () => {
+  it("should fallback to page 0 when page param is not a number", () => {
     const { queryByTestId } = renderComponent({ page: "abc" } as any);
 
     expect(
@@ -64,7 +63,7 @@ describe("ItwCardOnboardingL3Screen", () => {
     expect(queryByTestId("paymentsModuleTestID")).toBeNull();
   });
 
-  it("it should render the action button when wallet is enabled", () => {
+  it("should render the action button when wallet is enabled", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(true);
@@ -74,7 +73,7 @@ describe("ItwCardOnboardingL3Screen", () => {
     expect(queryByTestId("restricted-action-testID")).toBeTruthy();
   });
 
-  it("it should NOT render the action button when wallet is NOT enabled", () => {
+  it("should NOT render the action button when wallet is NOT enabled", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(false);
@@ -86,7 +85,7 @@ describe("ItwCardOnboardingL3Screen", () => {
     ).toBeNull();
   });
 
-  it("it should navigate to restricted mode onboarding when action button is pressed", () => {
+  it("should navigate to restricted mode onboarding when action button is pressed", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(true);
@@ -128,7 +127,7 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 });
 
-const renderComponent = (params?: { page?: number } | undefined) => {
+const renderComponent = (params?: undefined | { page?: number }) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -142,10 +141,13 @@ const renderComponent = (params?: { page?: number } | undefined) => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
+      >
         <ItwCardOnboardingL3Screen
-          route={{ key: "x", name: ITW_ROUTES.L3_ONBOARDING, params } as any}
           navigation={{} as any}
+          route={{ key: "x", name: ITW_ROUTES.L3_ONBOARDING, params } as any}
         />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),

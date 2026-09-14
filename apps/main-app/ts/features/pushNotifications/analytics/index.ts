@@ -1,5 +1,6 @@
-import { PushNotificationsContentTypeEnum } from "../../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../definitions/identity/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+
 import {
   enqueueMixpanelEvent,
   isMixpanelInstanceInitialized,
@@ -8,11 +9,11 @@ import {
 import { buildEventProperties } from "../../../utils/analytics";
 
 export type NotificationModalFlow =
+  | "access"
   | "authentication"
-  | "send_notification_opening"
-  | "access";
+  | "send_notification_opening";
 export type SendOpeningSource = "aar" | "message" | "not_set";
-export type SendUserType = "recipient" | "mandatory" | "not_set";
+export type SendUserType = "mandatory" | "not_set" | "recipient";
 
 export const trackNotificationInstallationTokenNotChanged = () =>
   void mixpanelTrack(

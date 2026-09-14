@@ -7,11 +7,12 @@ import {
   useIOTheme,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
+
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
@@ -19,7 +20,6 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
 import { IdPayCodeParamsList } from "../navigation/params";
 import { IdPayCodeRoutes } from "../navigation/routes";
@@ -74,11 +74,6 @@ const IdPayCodeDisplayScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("idpay.code.onboarding.header")
-      }}
-      contextualHelp={emptyContextualHelp}
-      headerActionsProp={{ showHelp: true }}
       actions={{
         type: "SingleButton",
         primary: {
@@ -87,11 +82,15 @@ const IdPayCodeDisplayScreen = () => {
           testID: "actionButtonTestID"
         }
       }}
+      headerActionsProp={{ showHelp: true }}
       includeContentMargins
+      title={{
+        label: I18n.t("idpay.code.onboarding.header")
+      }}
     >
       <VStack space={8}>
         <IOMarkdownLite content={I18n.t("idpay.code.onboarding.body")} />
-        <Body asLink weight="Semibold" onPress={presentCieBottomSheet}>
+        <Body asLink onPress={presentCieBottomSheet} weight="Semibold">
           {I18n.t("idpay.code.onboarding.buttons.howItWorks")}
         </Body>
       </VStack>
@@ -101,9 +100,9 @@ const IdPayCodeDisplayScreen = () => {
         <VSpacer size={24} />
         <Banner
           color="neutral"
+          content={I18n.t("idpay.code.onboarding.banner.body")}
           pictogramName="security"
           title={I18n.t("idpay.code.onboarding.banner.header")}
-          content={I18n.t("idpay.code.onboarding.banner.body")}
         />
       </LoadingSpinnerOverlay>
       {bottomSheet}

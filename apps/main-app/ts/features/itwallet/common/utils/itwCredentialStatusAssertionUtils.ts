@@ -1,19 +1,19 @@
 import {
-  ItwVersion,
-  createCryptoContextFor
+  createCryptoContextFor,
+  ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { isAfter } from "date-fns";
-import * as t from "io-ts";
+
 import { assert } from "../../../../utils/assert";
+import { Env } from "./environment";
+import { WIA_KEYTAG } from "./itwCryptoContextUtils";
+import { getIoWallet } from "./itwIoWallet";
 import {
   CredentialBundle,
   CredentialFormat,
   CredentialMetadata,
   IssuerConfiguration
 } from "./itwTypesUtils";
-import { WIA_KEYTAG } from "./itwCryptoContextUtils";
-import { getIoWallet } from "./itwIoWallet";
-import { Env } from "./environment";
 
 const fetchIssuerConfShared = createIssuerConfSharedFetch();
 
@@ -62,42 +62,43 @@ export const getCredentialStatusAssertion = async (
 };
 
 export const shouldRequestStatusAssertion = ({
-  storedStatusAssertion,
-  jwt
+  validity,
+  jwt,
+  spec_version
 }: CredentialMetadata) => {
   // Skip status assertion check for expired JWTs to avoid credential_not_found errors with 0.7 credentials
   if (isAfter(new Date(), new Date(jwt.expiration))) {
     return false;
   }
 
+  // Extra security check to ensure that a 1.3+ credential without `validity` does not request an assertion.
+  // Under normal circumstances this should not happen because this function is not called when the current
+  // IoWallet instance does not support status assertion.
+  if (spec_version !== "1.0.0") {
+    return false;
+  }
+
   // When no status assertion is present, request a new one
-  if (!storedStatusAssertion) {
+  if (!validity) {
     return true;
   }
 
-  switch (storedStatusAssertion.credentialStatus) {
+  if (validity.type !== "status_assertion") {
+    return false;
+  }
+
+  switch (validity.status) {
     // We could not determine the status or the credential is invalid, try to request another assertion
-    case "unknown":
     case "invalid":
+    case "unknown":
       return true;
     // When the status assertion is expired request a new one
     case "valid":
-      return isAfter(
-        new Date(),
-        new Date(storedStatusAssertion.parsedStatusAssertion.exp * 1000)
-      );
+      return isAfter(new Date(), new Date(validity.statusAssertion.exp * 1000));
     default:
       throw new Error("Unexpected credential status");
   }
 };
-
-/**
- * Shape of a credential status assertion response error.
- */
-export const StatusAssertionError = t.intersection([
-  t.type({ error: t.string }),
-  t.partial({ error_description: t.string })
-]);
 
 /**
  * Create a shared promise to fetch the new Issuer Entity Configuration.
@@ -109,9 +110,9 @@ export const StatusAssertionError = t.intersection([
  */
 function createIssuerConfSharedFetch(maxAge = 86400) {
   // eslint-disable-next-line functional/no-let
-  let sharedPromise: Promise<IssuerConfiguration> | null = null;
+  let sharedPromise: null | Promise<IssuerConfiguration> = null;
   // eslint-disable-next-line functional/no-let
-  let timestamp: number = -1;
+  let timestamp = -1;
 
   return function getIssuerConf(env: Env, itwVersion: ItwVersion) {
     if (timestamp + maxAge * 1000 < Date.now() || !sharedPromise) {

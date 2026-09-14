@@ -1,28 +1,22 @@
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { ProductCategoryEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
 import {
   ContentWrapper,
   Divider,
   H3,
+  hexToRgba,
   HSpacer,
-  IOColors,
-  IOVisualCostants,
   Icon,
-  hexToRgba
-} from "@pagopa/io-app-design-system";
+  IOColors,
+  IOVisualCostants
+} from "@io-app/design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, RefreshControl, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import I18n from "i18next";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
-import {
-  getValueOrElse,
-  isError,
-  isLoading
-} from "../../../../../common/model/RemoteValue";
+
+import { isError, isLoading } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -41,7 +35,7 @@ import {
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
 import { getCategorySpecs } from "../../utils/filters";
-import { mixAndSortMerchants } from "../../utils/merchants";
+import { useMixedSortedMerchants } from "../../utils/merchants";
 
 export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
   category: ProductCategoryEnum;
@@ -62,8 +56,8 @@ const CgnMerchantsListByCategory = () => {
   const offlineMerchants = useIOSelector(cgnOfflineMerchantsSelector);
 
   const categorySpecs = useMemo(
-    () => pipe(route.params.category, getCategorySpecs, O.toUndefined),
-    [route]
+    () => getCategorySpecs(route.params.category),
+    [route.params.category]
   );
 
   const { navigate } =
@@ -91,15 +85,9 @@ const CgnMerchantsListByCategory = () => {
 
   useEffect(initLoadingLists, [route, categoryFilter, dispatch]);
 
-  // Mixes online and offline merchants to render on the same list
-  // merchants are sorted by name
-  const merchantsAll = useMemo(
-    () =>
-      mixAndSortMerchants(
-        getValueOrElse(onlineMerchants, []),
-        getValueOrElse(offlineMerchants, [])
-      ),
-    [onlineMerchants, offlineMerchants]
+  const merchantsAll = useMixedSortedMerchants(
+    onlineMerchants,
+    offlineMerchants
   );
 
   const onItemPress = useCallback(
@@ -113,14 +101,7 @@ const CgnMerchantsListByCategory = () => {
 
   useHeaderSecondLevel({
     title: I18n.t(
-      pipe(
-        categorySpecs,
-        O.fromNullable,
-        O.fold(
-          () => "bonus.cgn.merchantsList.navigationTitle",
-          cs => cs.nameKey as any
-        )
-      )
+      categorySpecs?.nameKey ?? "bonus.cgn.merchantsList.navigationTitle"
     ),
     enableDiscreteTransition: true,
     animatedRef: animatedFlatListRef,
@@ -185,21 +166,21 @@ const CgnMerchantsListByCategory = () => {
               }}
             >
               <Icon
+                color={categorySpecs.textColor}
                 name={categorySpecs.icon}
                 size={32}
-                color={categorySpecs.textColor}
               />
             </View>
             <HSpacer size={16} />
             <View style={{ flex: 1 }}>
               <H3
-                color={categorySpecs.textColor}
                 accessibilityLabel={I18n.t(
                   "bonus.cgn.merchantsList.a11yTitle",
                   {
                     categoryName: I18n.t(categorySpecs.nameKey)
                   }
                 )}
+                color={categorySpecs.textColor}
               >
                 {I18n.t(categorySpecs.nameKey)}
               </H3>
@@ -211,13 +192,13 @@ const CgnMerchantsListByCategory = () => {
   );
   const refreshControl = (
     <RefreshControl
-      style={{ zIndex: 1 }}
-      tintColor={IOColors[categorySpecs?.textColor ?? "black"]}
-      refreshing={isListRefreshing}
       onRefresh={() => {
         initLoadingLists();
         setIsPullRefresh(true);
       }}
+      refreshing={isListRefreshing}
+      style={{ zIndex: 1 }}
+      tintColor={IOColors[categorySpecs?.textColor ?? "black"]}
     />
   );
 
@@ -230,32 +211,32 @@ const CgnMerchantsListByCategory = () => {
       />
       {isError(onlineMerchants) && isError(offlineMerchants) ? (
         <OperationResultScreenContent
-          pictogram="umbrella"
-          title={I18n.t("wallet.errors.GENERIC_ERROR")}
-          subtitle={I18n.t("wallet.errorTransaction.submitBugText")}
           action={{
             label: I18n.t("global.buttons.retry"),
             accessibilityLabel: I18n.t("global.buttons.retry"),
             onPress: initLoadingLists
           }}
+          pictogram="umbrella"
+          subtitle={I18n.t("wallet.errorTransaction.submitBugText")}
+          title={I18n.t("wallet.errors.GENERIC_ERROR")}
         />
       ) : (
         <Animated.FlatList
-          ref={animatedFlatListRef}
-          style={{ flexGrow: 1 }}
-          scrollEventThrottle={8}
-          snapToEnd={false}
           contentContainerStyle={{
             flexGrow: 1,
             paddingBottom: IOVisualCostants.appMarginDefault
           }}
-          refreshControl={refreshControl}
           data={merchantsAll}
+          ItemSeparatorComponent={() => <Divider />}
           keyExtractor={item => item.id}
           ListEmptyComponent={CgnMerchantListSkeleton}
-          renderItem={renderItem}
-          ItemSeparatorComponent={() => <Divider />}
           ListHeaderComponent={header}
+          ref={animatedFlatListRef}
+          refreshControl={refreshControl}
+          renderItem={renderItem}
+          scrollEventThrottle={8}
+          snapToEnd={false}
+          style={{ flexGrow: 1 }}
         />
       )}
     </>

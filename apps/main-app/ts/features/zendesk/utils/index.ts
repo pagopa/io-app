@@ -1,13 +1,14 @@
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
+
+import { isReady } from "../../../common/model/RemoteValue";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { isPanicModeActive } from "../../../utils/supportAssistance";
-import { isReady } from "../../../common/model/RemoteValue";
 import ZENDESK_ROUTES from "../navigation/routes";
-import { ZendeskConfig } from "../store/reducers";
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { type ZendeskAssistanceType } from "../store/actions";
+import { ZendeskConfig } from "../store/reducers";
 
 export const handleContactSupport = (
   navigation: IOStackNavigationProp<AppParamsList>,
@@ -40,9 +41,9 @@ export const handleContactSupport = (
   }
 };
 
-type TokenType = keyof PublicSession;
-
 type DefaultTokenType = Exclude<TokenType, "zendeskToken">;
+
+type TokenType = keyof PublicSession;
 
 /**
  *
@@ -57,7 +58,7 @@ type DefaultTokenType = Exclude<TokenType, "zendeskToken">;
  * object, then it will be inserted.
  */
 export const formatRequestedTokenString = (
-  needToRefreshZendeskToken: boolean = false,
+  needToRefreshZendeskToken = false,
   tokenType?: Array<TokenType>
 ): string => {
   // If tokenType is provided and contains values, return the joined tokens

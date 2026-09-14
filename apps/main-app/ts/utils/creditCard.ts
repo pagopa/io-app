@@ -1,23 +1,23 @@
+import { IOIcons } from "@io-app/design-system";
+import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as AR from "fp-ts/lib/Array";
 import { ImageURISource } from "react-native";
-import { IOIcons } from "@pagopa/io-app-design-system";
-
-export type IconSource = ImageURISource | IOIcons | undefined;
 
 export type SupportedBrand = {
+  cvvLength: number;
+  iconForm: IconSource;
+  luhnVal: boolean;
   name: string;
   re: RegExp;
-  cvvLength: number;
-  luhnVal: boolean;
-  iconForm: IconSource;
 };
 
 type CreditCardDetector = {
   supportedBrands: Record<string, SupportedBrand>;
   validate: (pan: O.Option<string>) => SupportedBrand;
 };
+
+type IconSource = ImageURISource | IOIcons | undefined;
 
 export const CreditCardDetector: CreditCardDetector = {
   supportedBrands: {

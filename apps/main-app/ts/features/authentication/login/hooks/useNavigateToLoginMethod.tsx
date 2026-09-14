@@ -1,27 +1,32 @@
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback } from "react";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { SpidIdp } from "../../../../utils/idps";
+import {
+  setCieIDSelectedSecurityLevelActiveSessionLogin,
+  setIdpSelectedActiveSessionLogin
+} from "../../activeSessionLogin/store/actions";
+import { isActiveSessionLoginSelector } from "../../activeSessionLogin/store/selectors";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { idpSelected } from "../../common/store/actions";
+import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
 import { fastLoginOptInFFEnabled } from "../../fastLogin/store/selectors";
 import {
   isCieLoginUatEnabledSelector,
   isCieSupportedSelector
 } from "../../login/cie/store/selectors";
-import { cieFlowForDevServerEnabled, SpidLevel } from "../../login/cie/utils";
+import {
+  cieFlowForDevServerEnabled,
+  getCieIdEnvironment
+} from "../../login/cie/utils";
 import {
   ChosenIdentifier,
   Identifier
 } from "../../login/optIn/screens/OptInScreen";
 import { cieIDSetSelectedSecurityLevel } from "../cie/store/actions";
-import { isActiveSessionLoginSelector } from "../../activeSessionLogin/store/selectors";
-import {
-  setIdpSelectedActiveSessionLogin,
-  setCieIDSelectedSecurityLevelActiveSessionLogin
-} from "../../activeSessionLogin/store/actions";
 
 export const IdpCIE: SpidIdp = {
   id: "cie",
@@ -99,7 +104,7 @@ const useNavigateToLoginMethod = () => {
   }, [dispatch, isActiveSessionLogin, withIsFastLoginOptInCheck, navigate]);
 
   const navigateToCieIdLoginScreen = useCallback(
-    (spidLevel: SpidLevel = "SpidL2") => {
+    (spidLevel: AuthLevel = AUTH_LEVELS.L2) => {
       if (isActiveSessionLogin) {
         // Set the security level for Active Session Login to enable mismatch tracking
         dispatch(setCieIDSelectedSecurityLevelActiveSessionLogin(spidLevel));
@@ -109,7 +114,10 @@ const useNavigateToLoginMethod = () => {
         dispatch(cieIDSetSelectedSecurityLevel(spidLevel));
       }
 
-      if (isCieIdAvailable(isCieUatEnabled) || cieFlowForDevServerEnabled) {
+      if (
+        isCieIdAvailable(getCieIdEnvironment(isCieUatEnabled)) ||
+        cieFlowForDevServerEnabled
+      ) {
         const params = {
           spidLevel,
           isUat: isCieUatEnabled

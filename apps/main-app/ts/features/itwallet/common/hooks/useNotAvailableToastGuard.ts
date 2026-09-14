@@ -1,6 +1,7 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
-import { useCallback } from "react";
+import { useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
+import { useCallback } from "react";
+
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
@@ -12,7 +13,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
  * @param fn The function to be wrapped
  */
 export const useNotAvailableToastGuard = (
-  fn: (...args: Array<any>) => void | Promise<void>
+  fn: (...args: Array<any>) => Promise<void> | void
 ) => {
   const toast = useIOToast();
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -21,5 +22,7 @@ export const useNotAvailableToastGuard = (
     toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
   }, [toast]);
 
-  return (...args: Array<any>) => (isItwPid ? guardFn() : fn(...args));
+  return (...args: Array<any>) => {
+    void (isItwPid ? guardFn() : fn(...args));
+  };
 };

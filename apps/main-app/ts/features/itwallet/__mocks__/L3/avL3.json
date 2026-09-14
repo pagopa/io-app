@@ -1,8 +1,8 @@
 {
-  "credentialType": "age_verification",
-  "credentialId": "age_verification",
-  "format": "dc+sd-jwt",
-  "keyTag": "age-verification-playground",
+  "credentialType": "proof_of_age",
+  "credentialId": "mso_mdoc_proof_of_age",
+  "format": "mso_mdoc",
+  "keyTag": "proof-of-age-playground",
   "jwt": {
     "issuedAt": "2026-04-01T10:00:00.000Z",
     "expiration": "2026-06-30T10:00:00.000Z"
@@ -31,7 +31,7 @@
       "tos_uri": "https://pre.eaa.wallet.ipzs.it/1-0/public/info_policy.html"
     },
     "credential_configurations_supported": {
-      "age_verification": {
+      "mso_mdoc_proof_of_age": {
         "authentic_source": "IT-Wallet ID"
       }
     }

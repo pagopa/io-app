@@ -1,5 +1,6 @@
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
+
 import * as PROFILEPROPERTIES from "../../../../mixpanelConfig/profileProperties";
 import { Store } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -67,7 +68,7 @@ const getFunctionMock = <T extends jest.Mock>(func: T) =>
 const makeGlobalState = (isMixpanelEnabled: boolean | null): GlobalState =>
   ({ persistedPreferences: { isMixpanelEnabled } }) as unknown as GlobalState;
 
-const makeNotificationResponse = (identifier: string | null) =>
+const makeNotificationResponse = (identifier: null | string) =>
   ({
     notification: {
       request: { identifier }

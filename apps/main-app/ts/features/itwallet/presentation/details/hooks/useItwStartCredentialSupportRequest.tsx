@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import {
@@ -8,6 +9,22 @@ import {
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { trackWalletCredentialSupport } from "../analytics";
+
+const getErrorCodeFromCredential = (
+  credential: CredentialMetadata
+): string | undefined => {
+  if (!credential.validity) {
+    return undefined;
+  }
+
+  if (credential.validity.status !== "valid") {
+    return "errorCode" in credential.validity
+      ? credential.validity.errorCode
+      : credential.validity.status;
+  }
+
+  return undefined;
+};
 
 /**
  *
@@ -21,26 +38,17 @@ export const useItwStartCredentialSupportRequest = (
   const { startItwZendeskSupport } = useItwZendeskSupport();
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
+  const errorCode = getErrorCodeFromCredential(credential);
+
   return useCallback(() => {
     trackWalletCredentialSupport(
       getMixPanelCredential(credential.credentialType, isItwL3)
     );
-
-    const statusAssertion = credential.storedStatusAssertion;
-    const errorCode =
-      statusAssertion?.credentialStatus !== "valid"
-        ? statusAssertion?.errorCode
-        : undefined;
 
     startItwZendeskSupport({
       subcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
       errorCode,
       logData: errorCode
     });
-  }, [
-    credential.credentialType,
-    credential.storedStatusAssertion,
-    isItwL3,
-    startItwZendeskSupport
-  ]);
+  }, [credential.credentialType, errorCode, isItwL3, startItwZendeskSupport]);
 };

@@ -22,7 +22,6 @@ export const AnimatedImage = ({ style, ...props }: AnimatedImageProps) => {
   const opacity = useSharedValue(0);
 
   const handleOnLoad = () => {
-    // eslint-disable-next-line functional/immutable-data
     opacity.value = 1;
   };
 
@@ -36,9 +35,9 @@ export const AnimatedImage = ({ style, ...props }: AnimatedImageProps) => {
   return (
     <Animated.Image
       {...props}
-      style={[opacityTransition, style]}
-      onLoad={handleOnLoad}
       accessibilityIgnoresInvertColors={false}
+      onLoad={handleOnLoad}
+      style={[opacityTransition, style]}
     />
   );
 };

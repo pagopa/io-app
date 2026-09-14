@@ -1,19 +1,28 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/Option";
 import { SagaIterator } from "redux-saga";
-import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import {
+  call,
+  fork,
+  put,
+  select,
+  take,
+  takeLatest
+} from "typed-redux-saga/macro";
+import { Action, ActionType, isActionOf } from "typesafe-actions";
+
+import { setConnectionStatus } from "../../../connectivity/store/actions";
+import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import {
   syncItwAnalyticsProperties,
   updateNfcInfoTrackingProperties,
   watchItwAnalyticsSaga
 } from "../../analytics/saga";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
+import { checkCredentialsBatchRefill } from "../../credentials/saga/checkCredentialsBatchRefill";
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleItwCredentialsVaultCoherenceSaga } from "../../credentials/saga/handleItwCredentialsVaultCoherenceSaga";
 import { handleItwCredentialsVaultMigrationSaga } from "../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
+import { handleKeyAttestationsCleanUp } from "../../credentials/saga/handleKeyAttestationsCleanUp";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
-import { handleWalletUnitAttestationsCleanUp } from "../../credentials/saga/handleWalletUnitAttestationsCleanUp";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors/index";
 import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index";
 import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index";
@@ -24,10 +33,12 @@ import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
-import { watchItwTasksSaga } from "../../statusList/saga";
+import {
+  watchItwStatusListAuthenticatedSaga,
+  watchItwStatusListSaga
+} from "../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
 import {
-  itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetFiscalCodeWhitelisted
 } from "../store/actions/preferences";
@@ -35,22 +46,24 @@ import { isItwCredential } from "../utils/itwCredentialUtils";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess";
 
-export function* watchItwSaga(): SagaIterator {
+/**
+ * Watcher for ITW sagas that require internet connection and a valid session
+ */
+export function* watchItwAuthenticatedSaga(): SagaIterator {
   yield* takeLatest(
     itwSetFiscalCodeWhitelisted,
     handleAuthLevelSanitizationSaga
   );
-
-  yield* fork(warmUpIntegrityServiceSaga);
+  // Watch for changes in the ITW lifecycle to keep the wallet in sync
   yield* fork(watchItwLifecycleSaga);
-  // Check if the fiscal code is enabled, to enable the L3
-  yield* fork(checkFiscalCodeEnabledSaga);
   // Fetch and process the Digital Credentials Catalogue
   yield* fork(watchItwCredentialsCatalogueSaga);
-  // Registers and watches background tasks
-  yield* fork(watchItwTasksSaga);
+  // Check if the fiscal code is enabled, to enable the L3
+  yield* fork(checkFiscalCodeEnabledSaga);
   // Watch ITW analytics lifecycle (initial sync and reactive updates)
   yield* fork(watchItwAnalyticsSaga);
+  // Registers and watches backgroundtasks
+  yield* fork(watchItwStatusListAuthenticatedSaga);
 
   const isWalletInstanceConsistent = yield* call(
     checkWalletInstanceInconsistencySaga
@@ -66,43 +79,50 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAssertion);
+  // Silently renew the batches of one-time-use credentials that dropped under threshold.
+  // It requires a valid session and network access, hence it belongs to the authenticated watcher.
+  yield* call(checkCredentialsBatchRefill);
 }
 
 /**
  * Watcher for ITW sagas that do not require internet connection or a valid session
  */
-export function* watchItwOfflineSaga(): SagaIterator {
-  // Watch for changes in the credentials store to keep the wallet in sync
-  yield* fork(watchItwCredentialsSaga);
-
-  // Migrate legacy credentials to vault
-  yield* call(handleItwCredentialsVaultMigrationSaga);
-
-  // Ensure Redux and CredentialsVault are coherent
-  yield* call(handleItwCredentialsVaultCoherenceSaga);
-
-  yield* fork(handleWalletCredentialsRehydration);
-  // Check if the device has the NFC Feature
-  yield* fork(checkHasNfcFeatureSaga);
-  // Handle environment changes
-  yield* fork(watchItwEnvironment);
+export function* watchItwSaga(): SagaIterator {
   // Handle offline access counter increment and reset
   yield* fork(watchItwOfflineAccess);
-  // Sync ITW analytics properties
-  yield* fork(syncItwAnalyticsProperties);
-  // Clean up stale Wallet Unit Attestations
-  yield* fork(handleWalletUnitAttestationsCleanUp);
-
+  // Handle environment changes
+  yield* fork(watchItwEnvironment);
+  // Watch for changes in the credentials store to keep the wallet in sync
+  yield* fork(watchItwCredentialsSaga);
+  // Check if the device has the NFC Feature
+  yield* fork(checkHasNfcFeatureSaga);
+  // Migrate legacy credentials to vault
+  yield* call(handleItwCredentialsVaultMigrationSaga);
+  // Ensure Redux and CredentialsVault are coherent
+  yield* call(handleItwCredentialsVaultCoherenceSaga);
+  // Rehydrate wallet cards from Redux credentials store
+  yield* fork(handleWalletCredentialsRehydration);
+  // Clean up stale Key Attestations
+  yield* fork(handleKeyAttestationsCleanUp);
   // TODO remove this fork when NFC antenna info tracking is not needed anymore
   yield* fork(updateNfcInfoTrackingProperties);
+  // Sync ITW analytics properties
+  yield* fork(syncItwAnalyticsProperties);
+
+  // Checks for internet connection before running sagas that require it
+  yield* waitForConnection();
+
+  // Warmup the integrity service to ensure it's ready for subsequent operations
+  yield* fork(warmUpIntegrityServiceSaga);
+  // Run Status List check and refresh sagas
+  yield* call(watchItwStatusListSaga);
 }
 
 /**
  * Sanitizes the authentication level to fix an inconsistency introduced by a regression in app version 3.21.
  *
  * This saga ensures that users with an L3 PID credential (assurance_level = high) have their
- * `auth_level` correctly set to 'L3'. It also freezes the simplified activation requirements
- * to maintain consistency.
+ * `auth_level` correctly set to 'L3'.
  *
  * The sanitization is skipped for whitelisted users (when `action.payload` is `true`).
  *
@@ -119,11 +139,8 @@ const handleAuthLevelSanitizationSaga = function* (
   }
 
   // Check whether the user has an IT-Wallet PID credential
-  const hasItwPID = pipe(
-    yield* select(itwCredentialsEidSelector),
-    O.map(isItwCredential),
-    O.getOrElse(() => false)
-  );
+  const eid = yield* select(itwCredentialsEidSelector);
+  const hasItwPID = eid !== undefined && isItwCredential(eid);
 
   if (!hasItwPID) {
     // No L3 PID found, no need to sanitize
@@ -131,5 +148,24 @@ const handleAuthLevelSanitizationSaga = function* (
   }
 
   yield* put(itwSetAuthLevel("L3"));
-  yield* put(itwFreezeSimplifiedActivationRequirements());
 };
+
+/**
+ * Waits for an internet connection to be established before proceeding.
+ * If the app is already connected, it returns immediately.
+ * Otherwise, it waits for a `setConnectionStatus` action with a payload of `true`.
+ *
+ * @returns A generator that yields until an internet connection is available.
+ */
+export function* waitForConnection() {
+  const isConnected = yield* select(isConnectedSelector);
+
+  if (isConnected) {
+    return;
+  }
+
+  yield* take(
+    (action: Action): action is ReturnType<typeof setConnectionStatus> =>
+      isActionOf(setConnectionStatus, action) && action.payload === true
+  );
+}

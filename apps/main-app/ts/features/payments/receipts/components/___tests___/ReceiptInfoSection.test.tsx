@@ -1,11 +1,12 @@
-import Clipboard from "@react-native-clipboard/clipboard";
-import { fireEvent, render } from "@testing-library/react-native";
-import I18n from "i18next";
 import {
   OriginEnum,
   PaymentMethodEnum
-} from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
-import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+} from "@io-app/api-types/generated/definitions/pagopa/biz-events/InfoNotice";
+import { NoticeDetailResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeDetailResponse";
+import { fireEvent, render } from "@testing-library/react-native";
+import * as Clipboard from "expo-clipboard";
+import I18n from "i18next";
+
 import ReceiptInfoSection from "../ReceiptInfoSection";
 
 const mockTransaction: NoticeDetailResponse = {
@@ -31,6 +32,10 @@ const mockTransaction: NoticeDetailResponse = {
   }
 };
 
+jest.mock("expo-clipboard", () => ({
+  setStringAsync: jest.fn()
+}));
+
 describe("ReceiptInfoSection", () => {
   it("renders loading skeletons when loading is true", () => {
     const { getAllByTestId } = render(<ReceiptInfoSection loading={true} />);
@@ -40,9 +45,9 @@ describe("ReceiptInfoSection", () => {
   it("renders transaction information correctly when transaction data is provided", () => {
     const { getByText } = render(
       <ReceiptInfoSection
-        transaction={mockTransaction}
         loading={false}
         showUnavailableReceiptBanner
+        transaction={mockTransaction}
       />
     );
 
@@ -79,7 +84,7 @@ describe("ReceiptInfoSection", () => {
     const eventIdElement = getByText("event123");
     fireEvent.press(eventIdElement);
 
-    expect(Clipboard.setString).toHaveBeenCalledWith(
+    expect(Clipboard.setStringAsync).toHaveBeenCalledWith(
       mockTransaction.infoNotice?.rrn
     );
 
@@ -113,7 +118,7 @@ describe("ReceiptInfoSection", () => {
       }
     };
     const { getByText } = render(
-      <ReceiptInfoSection transaction={paypalTransaction} loading={false} />
+      <ReceiptInfoSection loading={false} transaction={paypalTransaction} />
     );
 
     expect(

@@ -1,22 +1,23 @@
-import { VoucherStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
+import { VoucherStatusEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 
 type DefaultOnboardingEventProperties = {
-  initiativeName?: string;
   initiativeId?: string;
+  initiativeName?: string;
 };
 
 const mapIDPayDetailStatusToMixpanel = (
   status?: VoucherStatusEnum
-): "valid" | "about_to_expire" | "expired" | "spent" | undefined => {
+): "about_to_expire" | "expired" | "spent" | "valid" | undefined => {
   switch (status) {
     case VoucherStatusEnum.ACTIVE:
       return "valid";
-    case VoucherStatusEnum.EXPIRING:
-      return "about_to_expire";
     case VoucherStatusEnum.EXPIRED:
       return "expired";
+    case VoucherStatusEnum.EXPIRING:
+      return "about_to_expire";
     case VoucherStatusEnum.USED:
       return "spent";
     default:
@@ -112,7 +113,7 @@ export const trackIDPayDetailManualEntryConfirm = (
 
 export const trackIDPayDetailAuthorizationSummary = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "qr_code" | "manual";
+    data_entry: "manual" | "qr_code";
   }
 ) => {
   mixpanelTrack(
@@ -123,7 +124,7 @@ export const trackIDPayDetailAuthorizationSummary = (
 
 export const trackIDPayDetailAuthorizationConversion = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "qr_code" | "manual";
+    data_entry: "manual" | "qr_code";
   }
 ) => {
   mixpanelTrack(
@@ -134,7 +135,7 @@ export const trackIDPayDetailAuthorizationConversion = (
 
 export const trackIDPayDetailAuthorizationCancel = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "qr_code" | "manual";
+    data_entry: "manual" | "qr_code";
   }
 ) => {
   mixpanelTrack(
@@ -145,7 +146,7 @@ export const trackIDPayDetailAuthorizationCancel = (
 
 export const trackIDPayDetailAuthorizationUXSuccess = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "qr_code" | "manual";
+    data_entry: "manual" | "qr_code";
   }
 ) => {
   mixpanelTrack(
@@ -156,7 +157,7 @@ export const trackIDPayDetailAuthorizationUXSuccess = (
 
 export const trackIDPayDetailAuthorizationError = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "qr_code" | "manual";
+    data_entry: "manual" | "qr_code";
     reason?: string;
   }
 ) => {

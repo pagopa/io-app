@@ -1,4 +1,5 @@
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -7,11 +8,24 @@ import * as identificationSelectors from "../../../identification/common/store/s
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { testEidIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
   ItwDiscoveryInfoScreen,
   ItwDiscoveryInfoScreenProps
 } from "../ItwDiscoveryInfoScreen";
+
+jest.mock("@io-app/design-system", () => {
+  const actual = jest.requireActual("@io-app/design-system");
+  const { View } = jest.requireActual("react-native");
+
+  return {
+    ...actual,
+    ForceScrollDownView: ({ children }: import("react").PropsWithChildren) => (
+      <View>{children}</View>
+    )
+  };
+});
 
 describe("ItwDiscoveryInfoScreen", () => {
   beforeEach(() => {
@@ -24,6 +38,18 @@ describe("ItwDiscoveryInfoScreen", () => {
       .mockReturnValue(true);
     const { getByTestId } = renderComponent("l3");
     expect(getByTestId("itwDiscoveryInfoComponentTestID")).toBeTruthy();
+  });
+
+  it("should render privacy and terms as a link for level l3", () => {
+    jest
+      .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(true);
+    const { getByText } = renderComponent("l3");
+
+    expect(
+      getByText("Informativa Privacy e i Termini e Condizioni d'uso.").props
+        .accessibilityRole
+    ).toBe("link");
   });
 
   it("should render ItwNfcNotSupportedComponent for level l3 when NFC is not supported", () => {
@@ -50,7 +76,6 @@ describe("ItwDiscoveryInfoScreen", () => {
 
 const renderComponent = (level: EidIssuanceLevel | undefined) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
@@ -58,12 +83,16 @@ const renderComponent = (level: EidIssuanceLevel | undefined) => {
     const logic = itwEidIssuanceMachine.provide({
       actions: {
         onInit: jest.fn(),
-        navigateToTosScreen: () => undefined
+        navigateToTosScreen: () => undefined,
+        trackIntroScreen: jest.fn()
       }
     });
 
     return (
-      <ItwEidIssuanceMachineContext.Provider logic={logic}>
+      <ItwEidIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testEidIssuanceDeps() } }}
+      >
         <ItwDiscoveryInfoScreen {...props} />
       </ItwEidIssuanceMachineContext.Provider>
     );

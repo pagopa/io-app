@@ -1,13 +1,14 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
+import { ProductCategoryEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import I18n from "i18next";
-import { Discount } from "../../../../../../../../definitions/cgn/merchants/Discount";
-import { ProductCategoryEnum } from "../../../../../../../../definitions/cgn/merchants/ProductCategory";
+
+import { categories } from "../../../../utils/filters";
 import {
   isValidDiscount,
   moduleCGNaccessibilityLabel,
   normalizedDiscountPercentage
 } from "../index";
-import { categories } from "../../../../utils/filters";
 
 describe("normalizedDiscountPercentage", () => {
   it("should return the discount as a string if within range", () => {

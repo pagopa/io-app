@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
-import * as appVersion from "../../../../../../utils/appVersion";
+
 import { GlobalState } from "../../../../../../store/reducers/types";
+import * as appVersion from "../../../../../../utils/appVersion";
 import { isFavouriteServicesEnabledSelector } from "../remoteConfig";
 
 describe("isFavouriteServicesEnabledSelector", () => {

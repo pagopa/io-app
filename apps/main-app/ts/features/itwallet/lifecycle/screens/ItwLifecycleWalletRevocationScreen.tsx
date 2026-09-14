@@ -1,32 +1,42 @@
 import I18n from "i18next";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { useMemo } from "react";
+
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
-import { useIOSelector } from "../../../../store/hooks.ts";
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIOStore } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { selectIsLoading } from "../../machine/eid/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../store/selectors/index.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../store/selectors/index";
 
 const RevocationLoadingScreen = () => {
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
+  const store = useIOStore();
+
+  // During revocation, `isItwL3` turns false so we capture the initial value to prevent the title from flickering.
+  const isItwL3 = useMemo(
+    () => itwLifecycleIsITWalletValidSelector(store.getState()),
+    [store]
+  );
 
   return (
     <LoadingScreenContent
-      title={I18n.t("features.itWallet.walletRevocation.loadingScreen.title", {
-        name: isItwL3 ? "IT-Wallet" : "Documenti su IO"
-      })}
       subtitle={I18n.t(
         "features.itWallet.walletRevocation.loadingScreen.subtitle"
       )}
+      title={I18n.t("features.itWallet.walletRevocation.loadingScreen.title", {
+        name: isItwL3 ? "IT-Wallet" : "Documenti su IO"
+      })}
     />
   );
 };
 
 export const ItwLifecycleWalletRevocationScreen = () => {
+  const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
@@ -40,11 +50,6 @@ export const ItwLifecycleWalletRevocationScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="attention"
-      title={I18n.t("features.itWallet.walletRevocation.confirmScreen.title")}
-      subtitle={I18n.t(
-        "features.itWallet.walletRevocation.confirmScreen.subtitle"
-      )}
       action={{
         label: I18n.t(
           "features.itWallet.walletRevocation.confirmScreen.action"
@@ -54,11 +59,16 @@ export const ItwLifecycleWalletRevocationScreen = () => {
         ),
         onPress: handleRevokeWalletInstance
       }}
+      pictogram="attention"
       secondaryAction={{
         label: I18n.t("global.buttons.cancel"),
         accessibilityLabel: I18n.t("global.buttons.cancel"),
-        onPress: () => machineRef.send({ type: "close" })
+        onPress: () => navigation.pop()
       }}
+      subtitle={I18n.t(
+        "features.itWallet.walletRevocation.confirmScreen.subtitle"
+      )}
+      title={I18n.t("features.itWallet.walletRevocation.confirmScreen.title")}
     />
   );
 };

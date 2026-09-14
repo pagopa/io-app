@@ -1,6 +1,7 @@
-import { memo } from "react";
 import type { ImageURISource } from "react-native";
-import { Avatar, HStack, Icon, useIOTheme } from "@pagopa/io-app-design-system";
+
+import { Avatar, HStack, Icon, useIOTheme } from "@io-app/design-system";
+import { memo } from "react";
 
 type Props = {
   requesterLogoUri: ImageURISource | undefined;
@@ -15,11 +16,11 @@ export const ItwDataExchangeIcons = memo(({ requesterLogoUri }: Props) => {
 
   return (
     <HStack space={8} style={{ alignItems: "center" }}>
-      <Avatar size="small" logoUri={requesterLogoUri} />
-      <Icon name="transactions" color={theme["icon-default"]} size={24} />
+      <Avatar logoUri={requesterLogoUri} size="small" />
+      <Icon color={theme["icon-default"]} name="transactions" size={24} />
       <Avatar
-        size="small"
         logoUri={require("../../../../../img/app/app-logo-inverted.png")}
+        size="small"
       />
     </HStack>
   );

@@ -1,7 +1,8 @@
-import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
-import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
-import I18n from "i18next";
+import { IOColors, Tag, useIOTheme } from "@io-app/design-system";
+import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
 import { isBefore } from "date-fns";
+import I18n from "i18next";
+
 import { ItwIridescentBorderVariant } from "../components/ItwBrandedSkiaBorder";
 import { CredentialType } from "./itwMocksUtils";
 import {
@@ -12,6 +13,45 @@ import {
   StoredVerification
 } from "./itwTypesUtils";
 
+/**
+ * A credential is a batch when it tracks its copies through the `keyTags` array (e.g. one-time-use
+ * credentials obtained in batch). A batch credential stays a batch even when down to a single
+ * remaining copy, so any non-empty `keyTags` array marks it as such.
+ */
+export const isBatchCredential = (
+  credential: Pick<CredentialMetadata, "keyTags">
+): boolean => Boolean(credential.keyTags?.length);
+
+/**
+ * Returns every cryptographic key tag owned by a credential: the whole batch for a batch
+ * credential, or the single `keyTag` for a non-batch one. Used to delete the device crypto keys.
+ */
+export const getCredentialKeyTags = (
+  credential: Pick<CredentialMetadata, "keyTag" | "keyTags">
+): ReadonlyArray<string> => credential.keyTags ?? [credential.keyTag];
+
+/**
+ * Returns the vault ids of every copy of a credential. A non-batch credential maps to a single
+ * vault id (its `credentialId`); a batch credential maps to one vault id per copy (each copy's
+ * `keyTag`). See {@link CredentialsVault} for the vault id namespacing.
+ */
+export const getCredentialVaultIds = (
+  credential: Pick<CredentialMetadata, "credentialId" | "keyTags">
+): ReadonlyArray<string> =>
+  isBatchCredential(credential)
+    ? (credential.keyTags ?? [])
+    : [credential.credentialId];
+
+/**
+ * Returns the vault id of the representative copy of a credential, i.e. the one exposed for
+ * display and presentation. For a batch credential it is the first copy (`keyTags[0]`), for a
+ * non-batch credential it is the `credentialId`. Falls back to `credentialId` if the batch array
+ * is unexpectedly empty (e.g. corrupted state) to avoid returning an invalid vault id.
+ */
+export const getRepresentativeVaultId = (
+  credential: Pick<CredentialMetadata, "credentialId" | "keyTags">
+): string => credential.keyTags?.[0] ?? credential.credentialId;
+
 // Credentials that can be obtained with valid a Documenti su IO instance
 export const l2Credentials = [
   CredentialType.DRIVING_LICENSE,
@@ -21,6 +61,7 @@ export const l2Credentials = [
 
 // New credentials that can be actively requested and obtained by the user
 export const newCredentials = [
+  CredentialType.PROOF_OF_AGE,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
   CredentialType.RESIDENCY,
@@ -28,9 +69,9 @@ export const newCredentials = [
   CredentialType.EDUCATION_ATTENDANCE
 ] as const;
 
-export type NewCredential = (typeof newCredentials)[number];
-
 export type L2Credential = (typeof l2Credentials)[number];
+
+export type NewCredential = (typeof newCredentials)[number];
 
 // Credentials that will be available in the future
 export const upcomingCredentials = [] as ReadonlyArray<string>;
@@ -62,9 +103,7 @@ const getCredentialNameByType = (
       ? "features.itWallet.credentialName.pid"
       : "features.itWallet.credentialName.eid"
   ),
-  [CredentialType.AGE_VERIFICATION]: I18n.t(
-    "features.itWallet.credentialName.av"
-  ),
+  [CredentialType.PROOF_OF_AGE]: I18n.t("features.itWallet.credentialName.av"),
   [CredentialType.EDUCATION_DEGREE]: I18n.t(
     "features.itWallet.credentialName.ed"
   ),
@@ -82,8 +121,8 @@ const getCredentialNameByType = (
 
 export const getCredentialNameFromType = (
   type: string | undefined,
-  isItwCredential: boolean = false,
-  withDefault: string = ""
+  isItwCredential = false,
+  withDefault = ""
 ): string => {
   if (!type) {
     return withDefault;
@@ -100,6 +139,7 @@ export const useBorderColorByStatus: () => {
   return {
     valid: IOColors[theme["appBackground-primary"]],
     invalid: IOColors["error-600"],
+    suspended: IOColors["error-600"],
     expired: IOColors["error-600"],
     expiring: IOColors["warning-700"],
     jwtExpired: IOColors["error-600"],
@@ -117,6 +157,7 @@ export const borderVariantByStatus: {
   expired: "error",
   jwtExpired: "error",
   invalid: "error",
+  suspended: "error",
   unknown: "default"
 };
 
@@ -126,6 +167,10 @@ export const useTagPropsByStatus = (): {
   invalid: {
     variant: "error",
     text: I18n.t("features.itWallet.card.status.invalid")
+  },
+  suspended: {
+    variant: "error",
+    text: I18n.t("features.itWallet.card.status.suspended")
   },
   expired: {
     variant: "error",
@@ -160,9 +205,9 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
 ];
 
 type ExtractVerification = (args: {
+  credential: CredentialBundle["credential"];
   format: CredentialMetadata["format"];
   parsedCredential: CredentialMetadata["parsedCredential"];
-  credential: CredentialBundle["credential"];
 }) => StoredVerification | undefined;
 
 /**
@@ -178,10 +223,10 @@ export const extractVerification: ExtractVerification = ({
   try {
     const verification = (() => {
       switch (format) {
-        case CredentialFormat.SD_JWT:
-          return SdJwt.getVerification(credential);
         case CredentialFormat.MDOC:
           return Mdoc.getVerificationFromParsedCredential(parsedCredential);
+        case CredentialFormat.SD_JWT:
+          return SdJwt.getVerification(credential);
         default:
           return undefined;
       }
@@ -201,7 +246,7 @@ export const extractVerification: ExtractVerification = ({
  * `trust_framework` field is equal to `"it_l2+document_proof"`,
  * and returns `true` only if one of these conditions is met.
  *
- * Currently the assurance level can either be `"high"` or `"https://ta.wallet.ipzs.it/loa/high"`.
+ * v1.0 credentials DO NOT belong to IT-Wallet, even when their assurance level is high/L2+.
  *
  * `"it_l2+document_proof"` indicates that the credential has been issued with
  * a substantial authentication (SPID, CieID) plus an MRTD PoP verification.
@@ -209,8 +254,13 @@ export const extractVerification: ExtractVerification = ({
  * @param metadata - The metadata of the credential to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
-export const isItwCredential = (metadata: CredentialMetadata): boolean => {
-  const verification = metadata.verification;
+export const isItwCredential = ({
+  verification,
+  spec_version
+}: CredentialMetadata): boolean => {
+  if (spec_version === "1.0.0") {
+    return false;
+  }
   return (
     verification?.assurance_level.includes("high") ||
     verification?.trust_framework === "it_l2+document_proof"

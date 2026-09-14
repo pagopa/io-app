@@ -1,14 +1,15 @@
+import { Otp } from "@io-app/api-types/generated/definitions/cgn/Otp";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { NetworkError } from "../../../../../utils/errors";
-import { Otp } from "../../../../../../definitions/cgn/Otp";
 
 type CgnRequestOtpPayload = {
-  onSuccess: () => void;
   onError: () => void;
+  onSuccess: () => void;
 };
 
 /**

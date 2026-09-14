@@ -2,14 +2,15 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
+import { handleRemoveMissingCards } from "../../../wallet/saga/handleRemoveMissingCards";
 import { walletAddCards } from "../../../wallet/store/actions/cards";
 import { WalletClient } from "../../common/api/client";
 import { mapWalletsToCards } from "../../common/utils";
-import { getPaymentsWalletUserMethods } from "../store/actions";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
-import { handleRemoveMissingCards } from "../../../wallet/saga/handleRemoveMissingCards";
+import { getPaymentsWalletUserMethods } from "../store/actions";
 
 export function* handleGetPaymentsWalletUserMethods(
   getWalletsByIdUser: WalletClient["getIOPaymentWalletsByIdUser"],

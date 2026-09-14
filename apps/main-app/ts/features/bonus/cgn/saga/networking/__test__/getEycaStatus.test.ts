@@ -1,23 +1,22 @@
+import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import { StatusEnum as ExpiredStatus } from "@io-app/api-types/generated/definitions/cgn/CardExpired";
+import { StatusEnum as PendingStatus } from "@io-app/api-types/generated/definitions/cgn/CardPending";
+import { StatusEnum as RevokedStatus } from "@io-app/api-types/generated/definitions/cgn/CardRevoked";
+import { CcdbNumber } from "@io-app/api-types/generated/definitions/cgn/CcdbNumber";
+import { EycaCard } from "@io-app/api-types/generated/definitions/cgn/EycaCard";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-
 import { ValidationError } from "io-ts";
 import { expectSaga } from "redux-saga-test-plan";
-import { StatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
-import { StatusEnum as ExpiredStatus } from "../../../../../../../definitions/cgn/CardExpired";
-import { StatusEnum as PendingStatus } from "../../../../../../../definitions/cgn/CardPending";
-import { StatusEnum as RevokedStatus } from "../../../../../../../definitions/cgn/CardRevoked";
-import { CcdbNumber } from "../../../../../../../definitions/cgn/CcdbNumber";
-import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
-import { appReducer } from "../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { getGenericError } from "../../../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../../../utils/reporters";
+
 import {
   remoteError,
   remoteReady
 } from "../../../../../../common/model/RemoteValue";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { getGenericError } from "../../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { cgnEycaStatus } from "../../../store/actions/eyca/details";
 import { handleGetEycaStatus } from "../eyca/details/getEycaStatus";
 
@@ -53,9 +52,10 @@ const eycaCards: ReadonlyArray<EycaCard> = [
 describe("handleGetEycaStatus", () => {
   eycaCards.forEach(eycaCard => {
     const getEycaStatus = jest.fn();
-    getEycaStatus.mockImplementation(() =>
-      E.right({ status: 200, value: eycaCard })
-    );
+    getEycaStatus.mockImplementation(() => ({
+      _tag: "Right",
+      right: { status: 200, value: eycaCard }
+    }));
     it("With 200 should be FOUND and have an eyca card", () =>
       expectSaga(handleGetEycaStatus, getEycaStatus, cgnEycaStatus.request())
         .withReducer(appReducer)
@@ -72,7 +72,10 @@ describe("handleGetEycaStatus", () => {
 
   it("With 404 should be NOT_FOUND", () => {
     const getEycaStatus = jest.fn();
-    getEycaStatus.mockImplementation(() => E.right({ status: 404 }));
+    getEycaStatus.mockImplementation(() => ({
+      _tag: "Right",
+      right: { status: 404 }
+    }));
     return expectSaga(
       handleGetEycaStatus,
       getEycaStatus,
@@ -92,7 +95,10 @@ describe("handleGetEycaStatus", () => {
 
   it("With 403 should be INELIGIBLE", () => {
     const getEycaStatus = jest.fn();
-    getEycaStatus.mockImplementation(() => E.right({ status: 403 }));
+    getEycaStatus.mockImplementation(() => ({
+      _tag: "Right",
+      right: { status: 403 }
+    }));
     return expectSaga(
       handleGetEycaStatus,
       getEycaStatus,
@@ -112,7 +118,10 @@ describe("handleGetEycaStatus", () => {
 
   it(`With 409 status should be ERROR`, () => {
     const getEycaStatus = jest.fn();
-    getEycaStatus.mockImplementation(() => E.right({ status: 409 }));
+    getEycaStatus.mockImplementation(() => ({
+      _tag: "Right",
+      right: { status: 409 }
+    }));
     return expectSaga(
       handleGetEycaStatus,
       getEycaStatus,
@@ -134,7 +143,10 @@ describe("handleGetEycaStatus", () => {
     it(`With ${status} status should dispatch a failure`, () => {
       const error = getGenericError(new Error(`response status ${status}`));
       const getEycaStatus = jest.fn();
-      getEycaStatus.mockImplementation(() => E.right({ status }));
+      getEycaStatus.mockImplementation(() => ({
+        _tag: "Right",
+        right: { status }
+      }));
       return expectSaga(
         handleGetEycaStatus,
         getEycaStatus,
@@ -156,7 +168,8 @@ describe("handleGetEycaStatus", () => {
   it(`With response error should dispatch a failure`, () => {
     const getEycaStatus = jest.fn();
     const error = t.number.decode("abc");
-    if (E.isLeft(error)) {
+    // eslint-disable-next-line no-underscore-dangle
+    if (error._tag === "Left") {
       const genericError = getGenericError(
         new Error(
           readablePrivacyReport(error.left as ReadonlyArray<ValidationError>)

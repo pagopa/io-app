@@ -1,15 +1,11 @@
-import { HeaderFirstLevel } from "@pagopa/io-app-design-system";
+import { HeaderFirstLevel } from "@io-app/design-system";
 import { useLayoutEffect, useMemo } from "react";
+
+import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../navigation/params/MainTabParamsList";
-import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { useHeaderFirstLevelActionPropHelp } from "./useHeaderFirstLevelActionPropHelp";
 import { useHeaderFirstLevelActionPropSettings } from "./useHeaderFirstLevelActionPropSettings";
-
-type useHeaderFirstLevelProps = {
-  currentRoute: keyof MainTabParamsList;
-  headerProps: HeaderFirstLevelHookProps;
-};
 
 /* `firstAction` and `ignoreSafeAreaMargin` are
 already managed by the hook, while `secondAction`
@@ -17,22 +13,26 @@ has a default behaviour but can be overridden
 (as in `ServicesHomeScreen') */
 type HeaderFirstLevelHookProps = Omit<
   HeaderFirstLevel,
-  "ignoreSafeAreaMargin" | "actions"
+  "actions" | "ignoreSafeAreaMargin"
 > & {
   actions?: HeaderFirstLevel["actions"];
+};
+
+type useHeaderFirstLevelProps = {
+  currentRoute: keyof MainTabParamsList;
+  headerProps: HeaderFirstLevelHookProps;
 };
 
 /**
  * This hook sets the `HeaderFirstLevel` in a screen using the `useLayoutEffect` hook.
  */
 export const useHeaderFirstLevel = ({
-  currentRoute,
   headerProps
 }: useHeaderFirstLevelProps) => {
   const navigation = useIONavigation();
   const { actions: incomingActions, ...rest } = headerProps;
 
-  const actionHelp = useHeaderFirstLevelActionPropHelp(currentRoute);
+  const actionHelp = useHeaderFirstLevelActionPropHelp();
   const actionSettings = useHeaderFirstLevelActionPropSettings();
   const { isAlertVisible } = useIOAlertVisible();
   const actions: HeaderFirstLevel["actions"] = useMemo(() => {

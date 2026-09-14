@@ -1,6 +1,7 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import { IndexedById } from "../helpers/indexer";
 
 /**
@@ -13,7 +14,7 @@ import { IndexedById } from "../helpers/indexer";
  * @param data
  */
 export const readPot = <T, E>(
-  id: string | number,
+  id: number | string,
   data: IndexedById<pot.Pot<T, E>>
 ): pot.Pot<T, E> =>
   pipe(
@@ -28,7 +29,7 @@ export const readPot = <T, E>(
  * @param data
  */
 export const toLoading = <T, E>(
-  id: string | number,
+  id: number | string,
   data: IndexedById<pot.Pot<T, E>>
 ): IndexedById<pot.Pot<T, E>> => ({
   ...data,
@@ -42,7 +43,7 @@ export const toLoading = <T, E>(
  * @param value
  */
 export const toSome = <T, E>(
-  id: string | number,
+  id: number | string,
   data: IndexedById<pot.Pot<T, E>>,
   value: T
 ): IndexedById<pot.Pot<T, E>> => ({
@@ -57,7 +58,7 @@ export const toSome = <T, E>(
  * @param value
  */
 export const toError = <T, E>(
-  id: string | number,
+  id: number | string,
   data: IndexedById<pot.Pot<T, E>>,
   value: E
 ): IndexedById<pot.Pot<T, E>> => ({
@@ -72,7 +73,7 @@ export const toError = <T, E>(
  * @param value
  */
 export const toUpdating = <T, E>(
-  id: string | number,
+  id: number | string,
   data: IndexedById<pot.Pot<T, E>>,
   value: T
 ): IndexedById<pot.Pot<T, E>> => ({
@@ -86,7 +87,7 @@ export const toUpdating = <T, E>(
  * @param data
  */
 export const toNone = <T, E>(
-  id: string | number,
+  id: number | string,
   data: IndexedById<pot.Pot<T, E>>
 ): IndexedById<pot.Pot<T, E>> => ({
   ...data,

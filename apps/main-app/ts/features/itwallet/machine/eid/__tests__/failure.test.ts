@@ -1,4 +1,5 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
+
 import { IssuanceFailureType, mapEventToFailure } from "../failure";
 
 describe("mapEventToFailure", () => {

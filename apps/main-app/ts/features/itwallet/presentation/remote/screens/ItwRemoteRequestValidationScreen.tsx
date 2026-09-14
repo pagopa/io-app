@@ -1,15 +1,16 @@
 import { useFocusEffect } from "@react-navigation/native";
-import * as E from "fp-ts/lib/Either";
 import I18n from "i18next";
 import { useCallback, useLayoutEffect, useState } from "react";
+
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import {
-  StartupStatusEnum,
-  isStartupLoaded
+  isStartupLoaded,
+  StartupStatusEnum
 } from "../../../../../store/reducers/startup.ts";
-import { trackItwRemoteStart } from "../analytics";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
+import { selectItwSpecsVersion } from "../../../common/store/selectors/environment.ts";
+import { trackItwRemoteStart } from "../analytics";
 import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
@@ -19,7 +20,6 @@ import {
   ItwRemoteFlowType,
   ItwRemoteRequestPayload
 } from "../utils/itwRemoteTypeUtils.ts";
-import { selectItwSpecsVersion } from "../../../common/store/selectors/environment.ts";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload> & {
@@ -63,20 +63,23 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
 
   const payload = validateItwPresentationQrCodeParams(itwVersion, route.params);
 
-  if (E.isLeft(payload)) {
+  if (payload.isErr()) {
     return (
-      <ItwRemoteDeepLinkFailure failure={payload.left} payload={route.params} />
+      <ItwRemoteDeepLinkFailure
+        failure={payload.error}
+        payload={route.params}
+      />
     );
   }
 
   const flowType = route.params?.flowType ?? "same-device";
 
-  return <ContentView payload={payload.right} flowType={flowType} />;
+  return <ContentView flowType={flowType} payload={payload.value} />;
 };
 
 type ContentViewProps = {
-  payload: ItwRemoteRequestPayload;
   flowType: ItwRemoteFlowType;
+  payload: ItwRemoteRequestPayload;
 };
 
 const ContentView = ({ payload, flowType }: ContentViewProps) => {

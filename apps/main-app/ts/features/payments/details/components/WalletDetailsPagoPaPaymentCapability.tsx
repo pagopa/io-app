@@ -1,8 +1,8 @@
-import { IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
-
-import { FC, useState } from "react";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
+import { IOToast, ListItemSwitch } from "@io-app/design-system";
 import I18n from "i18next";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { FC, useState } from "react";
+
 import { useIODispatch } from "../../../../store/hooks";
 import { hasPaymentFeature } from "../../common/utils";
 import { paymentsTogglePagoPaCapabilityAction } from "../../details/store/actions";
@@ -44,11 +44,11 @@ const WalletDetailsPagoPaPaymentCapability: FC<Props> = props => {
 
   return (
     <ListItemSwitch
-      label={I18n.t("wallet.methods.card.pagoPaCapability.title")}
       description={I18n.t("wallet.methods.card.pagoPaCapability.description")}
-      value={hasPaymentFeature(props.paymentMethod)}
-      onSwitchValueChange={handleSwitchPagoPaCapability}
       isLoading={loading}
+      label={I18n.t("wallet.methods.card.pagoPaCapability.title")}
+      onSwitchValueChange={handleSwitchPagoPaCapability}
+      value={hasPaymentFeature(props.paymentMethod)}
     />
   );
 };

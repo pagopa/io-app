@@ -1,6 +1,7 @@
 import { act } from "@testing-library/react-native";
 import { Action, createStore } from "redux";
 import { fromPromise } from "xstate";
+
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList.ts";
 import { applicationChangeState } from "../../../../../../store/actions/application.ts";
 import { startupLoadSuccess } from "../../../../../../store/actions/startup.ts";
@@ -10,6 +11,7 @@ import { GlobalState } from "../../../../../../store/reducers/types.ts";
 import { reproduceSequence } from "../../../../../../utils/tests.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
 import { identificationSuccess } from "../../../../../identification/store/actions/index.ts";
+import { testRemoteDeps } from "../../../../machine/utils/testDeps";
 import { itwRemoteMachine } from "../../machine/machine.ts";
 import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../../navigation/ItwRemoteParamsList.ts";
@@ -25,7 +27,7 @@ type ActorRef = ReturnType<typeof ItwRemoteMachineContext.useActorRef>;
 jest.useFakeTimers();
 
 describe("ItwRemoteRequestValidationScreen", () => {
-  it("it should render the screen correctly", () => {
+  it("should render the screen correctly", () => {
     const component = renderComponent({}, true, "same-device");
     expect(component).toBeTruthy();
   });
@@ -190,7 +192,10 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwRemoteMachineContext.Provider logic={logic}>
+      <ItwRemoteMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testRemoteDeps() } }}
+      >
         <ItwRemoteRequestValidationScreen
           navigation={mockNavigation}
           route={route}

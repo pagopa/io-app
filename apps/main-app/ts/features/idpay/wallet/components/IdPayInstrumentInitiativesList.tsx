@@ -1,13 +1,14 @@
-import { Badge, Divider, ListItemSwitch } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import { useCallback, Fragment } from "react";
-import I18n from "i18next";
 import {
   InitiativesStatusDTO,
   StatusEnum
-} from "../../../../../definitions/idpay/InitiativesStatusDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InitiativesStatusDTO";
+import { Badge, Divider, ListItemSwitch } from "@io-app/design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
+import { Fragment, useCallback } from "react";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   idpayInitiativesInstrumentDelete,
@@ -16,8 +17,8 @@ import {
 import { idPayInitiativeFromInstrumentPotSelector } from "../store/reducers";
 
 type Props = {
-  initiatives: ReadonlyArray<InitiativesStatusDTO>;
   idWallet: string;
+  initiatives: ReadonlyArray<InitiativesStatusDTO>;
 };
 
 /*
@@ -31,7 +32,7 @@ export const IdPayInstrumentInitiativesList = ({
   <>
     {initiatives.map((item, index) => (
       <Fragment key={item.initiativeId}>
-        <IdPayInitiativeListItemSwitch item={item} idWallet={idWallet} />
+        <IdPayInitiativeListItemSwitch idWallet={idWallet} item={item} />
         {index < initiatives.length - 1 && <Divider />}
       </Fragment>
     ))}
@@ -39,8 +40,8 @@ export const IdPayInstrumentInitiativesList = ({
 );
 
 type IdPayInitiativeListItemSwitchProps = {
-  item: InitiativesStatusDTO;
   idWallet: string;
+  item: InitiativesStatusDTO;
 };
 
 const IdPayInitiativeListItemSwitch = ({
@@ -101,11 +102,11 @@ const IdPayInitiativeListItemSwitch = ({
 
   return (
     <ListItemSwitch
-      label={initiativeName}
-      value={isActive}
-      onSwitchValueChange={() => handleSwitchValueChange(item)}
       badge={badge}
       isLoading={isLoading}
+      label={initiativeName}
+      onSwitchValueChange={() => handleSwitchValueChange(item)}
+      value={isActive}
     />
   );
 };

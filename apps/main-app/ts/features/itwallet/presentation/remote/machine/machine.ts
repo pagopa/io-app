@@ -1,73 +1,13 @@
-import { assign, fromPromise, not, setup } from "xstate";
-import { type WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils";
-import {
-  EvaluateRelyingPartyTrustInput,
-  EvaluateRelyingPartyTrustOutput,
-  GetPresentationDetailsInput,
-  GetPresentationDetailsOutput,
-  GetRequestObjectInput,
-  GetRequestObjectOutput,
-  SendAuthorizationResponseInput,
-  SendAuthorizationResponseOutput
-} from "./actors";
-import { Context, InitialContext } from "./context";
-import { RemoteEvents } from "./events";
-import { mapEventToFailure, RemoteFailureType } from "./failure";
+import { assign, not } from "xstate";
+
+import { InitialContext } from "./context";
+import { RemoteFailureType } from "./failure";
+import { itwRemoteMachineSetup } from "./setup";
 import { ItwPresentationTags } from "./tags";
 
-const notImplemented = () => {
-  throw new Error("Not implemented");
-};
-
-export const itwRemoteMachine = setup({
-  types: {
-    context: {} as Context,
-    events: {} as RemoteEvents
-  },
-  actions: {
-    onInit: notImplemented,
-    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    navigateToFailureScreen: notImplemented,
-    navigateToDiscoveryScreen: notImplemented,
-    navigateToClaimsDisclosureScreen: notImplemented,
-    navigateToIdentificationModeScreen: notImplemented,
-    navigateToAuthResponseScreen: notImplemented,
-    navigateToBarcodeScanScreen: notImplemented,
-    closePresentation: notImplemented,
-    trackRemoteDataShare: notImplemented,
-    storeWalletInstanceAttestation: notImplemented,
-    handleSessionExpired: notImplemented
-  },
-  actors: {
-    evaluateRelyingPartyTrust: fromPromise<
-      EvaluateRelyingPartyTrustOutput,
-      EvaluateRelyingPartyTrustInput
-    >(notImplemented),
-    getRequestObject: fromPromise<
-      GetRequestObjectOutput,
-      GetRequestObjectInput
-    >(notImplemented),
-    getPresentationDetails: fromPromise<
-      GetPresentationDetailsOutput,
-      GetPresentationDetailsInput
-    >(notImplemented),
-    sendAuthorizationResponse: fromPromise<
-      SendAuthorizationResponseOutput,
-      SendAuthorizationResponseInput
-    >(notImplemented),
-    getWalletAttestation:
-      fromPromise<WalletInstanceAttestations>(notImplemented)
-  },
-  guards: {
-    isItWalletL3Active: notImplemented,
-    isSessionExpired: notImplemented,
-    hasValidWalletInstanceAttestation: notImplemented,
-    isOpenIdFederationClient: notImplemented,
-    isX509HashClient: notImplemented
-  }
-}).createMachine({
+export const itwRemoteMachine = itwRemoteMachineSetup.createMachine({
   id: "itwRemoteMachine",
-  context: { ...InitialContext },
+  context: ({ input }) => ({ ...InitialContext, deps: input.deps }),
   initial: "Idle",
   entry: "onInit",
   on: {
@@ -75,6 +15,7 @@ export const itwRemoteMachine = setup({
       target: ".Idle",
       actions: assign(({ context }) => ({
         ...InitialContext,
+        deps: context.deps,
         walletInstanceAttestation: context.walletInstanceAttestation
       }))
     }
@@ -146,6 +87,7 @@ export const itwRemoteMachine = setup({
       tags: [ItwPresentationTags.Loading],
       invoke: {
         src: "getWalletAttestation",
+        input: ({ context }) => ({ deps: context.deps }),
         onDone: {
           target: "EvaluatingClientIdType",
           actions: [
@@ -173,7 +115,10 @@ export const itwRemoteMachine = setup({
       description: "Determine whether the Relying Party is a trusted entity",
       invoke: {
         src: "evaluateRelyingPartyTrust",
-        input: ({ context }) => ({ qrCodePayload: context.payload }),
+        input: ({ context }) => ({
+          qrCodePayload: context.payload,
+          deps: context.deps
+        }),
         onDone: {
           target: "GettingRequestObject",
           actions: assign(({ event }) => event.output)
@@ -190,7 +135,8 @@ export const itwRemoteMachine = setup({
       invoke: {
         src: "getRequestObject",
         input: ({ context }) => ({
-          qrCodePayload: context.payload
+          qrCodePayload: context.payload,
+          deps: context.deps
         }),
         onDone: {
           actions: assign(({ event }) => ({
@@ -215,7 +161,8 @@ export const itwRemoteMachine = setup({
           credentials: context.credentials,
           qrCodePayload: context.payload,
           requestObjectEncodedJwt: context.requestObjectEncodedJwt,
-          rpConf: context.rpConf
+          rpConf: context.rpConf,
+          deps: context.deps
         }),
         onDone: {
           actions: assign(({ event }) => event.output),
@@ -266,11 +213,13 @@ export const itwRemoteMachine = setup({
           rpConf: context.rpConf,
           requestObject: context.requestObject,
           presentationDetails: context.presentationDetails,
-          optionalCredentials: context.selectedOptionalCredentials
+          optionalCredentials: context.selectedOptionalCredentials,
+          deps: context.deps
         }),
         onDone: {
           actions: assign(({ event }) => ({
-            redirectUri: event.output.redirectUri
+            redirectUri: event.output.redirectUri,
+            presentedKeyTags: event.output.presentedKeyTags
           })),
           target: "Success"
         },
@@ -283,6 +232,7 @@ export const itwRemoteMachine = setup({
     Success: {
       description:
         "The Verifiable Presentation has been successfully sent to the Relying Party",
+      entry: "consumePresentedBatchCredentials",
       on: {
         close: {
           actions: "closePresentation"

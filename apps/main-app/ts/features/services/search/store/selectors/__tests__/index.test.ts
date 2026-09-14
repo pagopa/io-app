@@ -1,4 +1,7 @@
+import { InstitutionsResource } from "@io-app/api-types/generated/definitions/services/InstitutionsResource";
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/services/OrganizationFiscalCode";
 import { Action, createStore } from "redux";
+
 import {
   isErrorPaginatedInstitutionsSelector,
   isLoadingPaginatedInstitutionsSelector,
@@ -7,8 +10,6 @@ import {
   paginatedInstitutionsLastPageSelector,
   paginatedInstitutionsSelector
 } from "..";
-import { InstitutionsResource } from "../../../../../../../definitions/services/InstitutionsResource";
-import { OrganizationFiscalCode } from "../../../../../../../definitions/services/OrganizationFiscalCode";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";

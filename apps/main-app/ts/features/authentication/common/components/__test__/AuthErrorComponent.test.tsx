@@ -1,12 +1,13 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import { createStore } from "redux";
 import I18n from "i18next";
+import { createStore } from "redux";
+
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import AuthErrorComponent, {
   AuthErrorComponentProps
 } from "../AuthErrorComponent";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
 
 describe("AuthErrorComponent", () => {
   const testCases = [
@@ -95,8 +96,8 @@ describe("AuthErrorComponent", () => {
           <AuthErrorComponent
             authLevel="L2"
             errorCodeOrMessage={errorCodeOrMessage}
-            onRetry={onRetryMock}
             onCancel={onCancelMock}
+            onRetry={onRetryMock}
           />
         );
 

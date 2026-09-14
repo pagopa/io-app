@@ -5,6 +5,15 @@ import {
 } from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import { z } from "zod";
+
+import {
+  WEBVIEW_ERROR_CODE_PREFIX,
+  WEBVIEW_HTTP_ERROR_CODE_PREFIX
+} from "../../identification/cie/utils/constants";
+import {
+  type WebViewError,
+  webViewError
+} from "../../identification/cie/utils/error";
 import { WithCredentialMetadata } from "./ItwFailureTypes";
 
 /**
@@ -23,7 +32,7 @@ export const isFederationError = (
  * Integrity errors thrown by the device.
  * These errors might occur locally before calling the Wallet Provider.
  */
-const localIntegrityErrors: Array<IntegrityErrorCodes | CryptoErrorCodes> = [
+const localIntegrityErrors: Array<CryptoErrorCodes | IntegrityErrorCodes> = [
   "REQUEST_ATTESTATION_FAILED",
   "UNSUPPORTED_DEVICE",
   "UNSUPPORTED_IOS_VERSION",
@@ -80,11 +89,12 @@ export const isAnprPid404Failure = (
  * This function **modifies the original error**.
  *
  * @param metadata.credentialId The credential configuration ID
+ * @param metadata.credentialType The credential type
  * @return A function that enriches the error and rethrows it
  * @throws The original error, with the new `metadata` property
  */
 export const enrichErrorWithMetadata =
-  (metadata: { credentialId: string }) => (err: unknown) => {
+  (metadata: WithCredentialMetadata["metadata"]) => (err: unknown) => {
     if (err instanceof Error) {
       // eslint-disable-next-line functional/immutable-data
       (err as WithCredentialMetadata).metadata = metadata;
@@ -101,3 +111,25 @@ export const isMrtdTaxIdCodeMismatchFailure = (
 ): e is Errors.IssuerResponseError =>
   Errors.isIssuerResponseError(e) &&
   mrtdTaxIdCodeMismatchFailure.safeParse(e).success;
+
+/**
+ * Shape of a credential status assertion response error.
+ */
+export const statusAssertionFailure = z.object({
+  error: z.string(),
+  error_description: z.string().optional()
+});
+
+/**
+ * Type guard for errors originated from WebViews. CieID and CIE PIN WebView errors
+ * are handled slighly different, so two checks are needed here.
+ */
+export const isWebViewError = (e: unknown): e is Error | WebViewError => {
+  if (e instanceof Error) {
+    return (
+      e.message.includes(WEBVIEW_ERROR_CODE_PREFIX) ||
+      e.message.includes(WEBVIEW_HTTP_ERROR_CODE_PREFIX)
+    );
+  }
+  return webViewError.safeParse(e).success;
+};

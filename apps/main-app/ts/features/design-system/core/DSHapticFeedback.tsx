@@ -1,20 +1,25 @@
-import { IOButton, H4, VStack, useIOTheme } from "@pagopa/io-app-design-system";
-import ReactNativeHapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
+import {
+  H4,
+  HapticType,
+  IOButton,
+  triggerHaptic,
+  useIOTheme,
+  VStack
+} from "@io-app/design-system";
 
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-const hapticFeedbacks = [
+const hapticFeedbacks: Array<HapticType> = [
   "impactLight",
   "impactMedium",
   "impactHeavy",
-  "rigid",
-  "soft",
+  "impactRigid",
+  "impactSoft",
   "notificationSuccess",
   "notificationWarning",
-  "notificationError"
-] as Array<Partial<HapticFeedbackTypes>>;
+  "notificationError",
+  "selection"
+];
 
 export const DSHapticFeedback = () => {
   const theme = useIOTheme();
@@ -26,10 +31,10 @@ export const DSHapticFeedback = () => {
           {hapticFeedbacks.map(feedback => (
             <IOButton
               fullWidth
-              variant="solid"
               key={feedback}
               label={feedback}
-              onPress={() => ReactNativeHapticFeedback.trigger(feedback)}
+              onPress={() => triggerHaptic(feedback)}
+              variant="solid"
             />
           ))}
         </VStack>

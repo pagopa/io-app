@@ -1,8 +1,9 @@
 import { JSXElementConstructor } from "react";
-import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { appReducer } from "../../store/reducers";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../store/actions/application";
+import { appReducer } from "../../store/reducers";
 
 /**
  * A HOC to provide the redux `Context`

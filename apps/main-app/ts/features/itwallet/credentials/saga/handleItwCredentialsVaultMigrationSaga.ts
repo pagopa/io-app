@@ -1,4 +1,5 @@
 import { call, put, select } from "typed-redux-saga/macro";
+
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
@@ -6,18 +7,18 @@ import {
   trackItwVaultMigrationRequest,
   trackItwVaultMigrationSuccess
 } from "../analytics";
-import { CredentialsVault } from "../utils/vault";
 import { itwCredentialsVaultMigrationComplete } from "../store/actions";
+import { CredentialsVault } from "../utils/vault";
 
 type VaultMigrationResult =
   | {
       credentialId: string;
-      success: true;
+      reason: string;
+      success: false;
     }
   | {
       credentialId: string;
-      success: false;
-      reason: string;
+      success: true;
     };
 
 /**

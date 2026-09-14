@@ -6,10 +6,10 @@ import { ServiceKind } from "../components/ServiceDetailsScreenComponent";
  * Base type definition for all ServiceDetailsScreen components
  */
 export type ServiceDetailsScreenBase = {
+  children: React.ReactNode;
   ctas?: CTAS;
   onPressCta?: (cta: CTA, ctaCategoryType: CtaCategoryType) => void;
   title?: string;
-  children: React.ReactNode;
 };
 
 /**
@@ -19,10 +19,10 @@ export type ServiceDetailsScreenBase = {
  */
 export type ServiceMetadataInfo =
   | {
-      isSpecialService: true;
-      serviceKind: NonNullable<ServiceKind>;
-    }
-  | {
       isSpecialService: false;
       serviceKind?: never;
+    }
+  | {
+      isSpecialService: true;
+      serviceKind: NonNullable<ServiceKind>;
     };

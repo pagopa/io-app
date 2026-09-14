@@ -11,10 +11,6 @@ const DESIGN_SYSTEM_ROUTES = {
     HAPTIC_FEEDBACK: {
       route: "DESIGN_SYSTEM_HAPTIC",
       title: "Haptic Feedback"
-    },
-    HAPTIC_FEEDBACK_PULSAR: {
-      route: "DESIGN_SYSTEM_HAPTIC_PULSAR",
-      title: "Haptic Feedback (Pulsar)"
     }
   },
   COMPONENTS: {
@@ -174,9 +170,17 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_ANIMATED_PICTOGRAMS",
       title: "Animated pictograms"
     },
+    ANIMATED_NUMERIC_TEXT: {
+      route: "DS_ANIMATED_NUMERIC_TEXT",
+      title: "Animated numeric text (iOS)"
+    },
     ITW_BRAND_EXPLORATION: {
       route: "DS_ITW_BRAND_EXPLORATION",
       title: "ITWallet brand exploration"
+    },
+    SERVICE_PREFERENCES: {
+      route: "DS_SERVICE_PREFERENCES",
+      title: "Service Preferences (animated)"
     }
   }
 } as const;

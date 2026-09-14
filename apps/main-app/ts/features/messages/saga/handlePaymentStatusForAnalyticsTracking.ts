@@ -1,19 +1,20 @@
 import { call, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import {
-  cancelPaymentStatusTracking,
-  startPaymentStatusTracking,
-  updatePaymentForMessage
-} from "../store/actions";
-import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
+
+import { isTestEnv } from "../../../utils/environment";
 import {
   isExpiredPaymentFromDetailV2Enum,
   isOngoingPaymentFromDetailV2Enum,
   isPaidPaymentFromDetailV2Enum,
   isRevokedPaymentFromDetailV2Enum
 } from "../../../utils/payment";
+import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import { trackPaymentStatus } from "../analytics";
-import { isTestEnv } from "../../../utils/environment";
+import {
+  cancelPaymentStatusTracking,
+  startPaymentStatusTracking,
+  updatePaymentForMessage
+} from "../store/actions";
 import { isMessagePaymentSpecificError } from "../types/paymentErrors";
 
 export function* handlePaymentStatusForAnalyticsTracking(
@@ -54,8 +55,8 @@ function* trackPaymentUpdates() {
 
 export const paymentStatusFromPaymentUpdateResult = (
   action: ActionType<
-    | typeof updatePaymentForMessage.success
     | typeof updatePaymentForMessage.failure
+    | typeof updatePaymentForMessage.success
   >
 ) => {
   if (isActionOf(updatePaymentForMessage.failure, action)) {

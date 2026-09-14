@@ -1,9 +1,9 @@
-import { IOToast } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { IOToast } from "@io-app/design-system";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Alert } from "react-native";
-import I18n from "i18next";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+
 import {
   fold,
   isLoading as isRemoteLoading
@@ -35,8 +35,8 @@ const useCgnActivation = (serviceId: ServiceId) => {
     if (!isFirstRender.current) {
       fold(
         unsubscriptionStatus,
-        constNull,
-        constNull,
+        () => null,
+        () => null,
         () => {
           IOToast.success(I18n.t("bonus.cgn.activation.deactivate.toast"));
           dispatch(loadServicePreference.request(serviceId));
@@ -44,7 +44,6 @@ const useCgnActivation = (serviceId: ServiceId) => {
         () => IOToast.error(I18n.t("wallet.delete.failed"))
       );
     }
-    // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
   }, [unsubscriptionStatus, dispatch, serviceId]);
 

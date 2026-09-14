@@ -735,38 +735,32 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -793,12 +787,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -892,7 +880,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -916,7 +903,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1537,38 +1523,32 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -1595,12 +1575,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -1694,7 +1668,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1718,7 +1691,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2598,38 +2570,32 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -2656,12 +2622,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -2755,7 +2715,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2779,7 +2738,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",

@@ -9,18 +9,18 @@ import {
   IOPictograms,
   Pictogram,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Ref } from "react";
 import { ScrollView, useWindowDimensions, View } from "react-native";
 
 type Props = {
-  ref?: Ref<View>;
+  accessibilityHint?: string;
+  accessibilityLabel?: string;
+  content: string;
   id: number;
   pictogramName: IOPictograms;
+  ref?: Ref<View>;
   title: string;
-  content: string;
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
 };
 
 const VERTICAL_SPACING = 16;
@@ -41,14 +41,14 @@ export const LandingCardComponent = ({
       contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
     >
       <ContentWrapper
+        accessibilityHint={accessibilityHint}
+        accessibilityLabel={accessibilityLabel}
+        accessible={true}
         ref={ref}
         style={{ width: screenWidth }}
-        accessible={true}
-        accessibilityLabel={accessibilityLabel}
-        accessibilityHint={accessibilityHint}
       >
         <VStack space={VERTICAL_SPACING} style={{ alignItems: "center" }}>
-          <Pictogram size={180} name={pictogramName} />
+          <Pictogram name={pictogramName} size={180} />
           <H3 importantForAccessibility="no" style={{ textAlign: "center" }}>
             {title}
           </H3>

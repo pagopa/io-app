@@ -7,27 +7,30 @@ import {
   IOVisualCostants,
   useIOThemeContext,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
+import { useEffect, useRef } from "react";
 import { ActivityIndicator, Platform, StyleSheet, View } from "react-native";
 import Animated, {
   SharedValue,
   useAnimatedStyle,
   useSharedValue
 } from "react-native-reanimated";
+
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { CgnAnimatedBackground } from "./CgnAnimatedBackground";
 
 type CgnAnimatedHeaderProps = {
   children?: React.ReactNode;
-  ref?: React.Ref<View>;
-  /** 0–1 value tracking how far the user has pulled (from scroll offset) */
-  pullProgress?: SharedValue<number>;
   /** 0 = idle, 1 = refreshing */
   isRefreshingValue?: SharedValue<number>;
+  /** 0–1 value tracking how far the user has pulled (from scroll offset) */
+  pullProgress?: SharedValue<number>;
+  ref?: React.Ref<View>;
 };
 
-const HEIGHT = Platform.select({ ios: 210, android: 185 });
+const HEIGHT = Platform.select({ ios: 210, android: 185, default: 185 });
 const CARD_BORDER_RADIUS = 24;
 
 const CgnAnimatedHeader = ({
@@ -41,6 +44,12 @@ const CgnAnimatedHeader = ({
   const indicatorColor = isDark
     ? IOColors["blueIO-50"]
     : IOColors["blueItalia-850"];
+
+  const titleRef = useRef<View>(null);
+
+  useEffect(() => {
+    setAccessibilityFocus(titleRef);
+  }, []);
 
   // Fallback SharedValues so hooks are always called unconditionally
   const defaultPullProgress = useSharedValue(0);
@@ -58,11 +67,12 @@ const CgnAnimatedHeader = ({
 
   return (
     <View
-      style={{ minHeight: HEIGHT, justifyContent: "flex-end", zIndex: 0 }}
       pointerEvents="box-none"
       ref={ref}
+      style={{ minHeight: HEIGHT, justifyContent: "flex-end", zIndex: 0 }}
     >
       <View
+        pointerEvents="box-none"
         style={[
           {
             height: HEIGHT,
@@ -74,11 +84,10 @@ const CgnAnimatedHeader = ({
             borderTopRightRadius: CARD_BORDER_RADIUS
           }
         ]}
-        pointerEvents="box-none"
       >
         <View
-          style={{ ...StyleSheet.absoluteFill, zIndex: 0 }}
           pointerEvents="none"
+          style={{ ...StyleSheet.absoluteFill, zIndex: 0 }}
         >
           <CgnAnimatedBackground />
         </View>
@@ -89,7 +98,7 @@ const CgnAnimatedHeader = ({
               indicatorAnimStyle,
               {
                 position: "absolute",
-                bottom: HEIGHT! * 0.6,
+                bottom: HEIGHT * 0.6,
                 alignSelf: "center",
                 zIndex: 2
               }
@@ -104,8 +113,13 @@ const CgnAnimatedHeader = ({
           }}
         >
           <HStack space={16} style={{ alignItems: "center" }}>
-            <Avatar size="medium" logoUri={cgnLogo} />
-            <View style={{ flex: 1 }}>
+            <Avatar logoUri={cgnLogo} size="medium" />
+            <View
+              accessibilityRole="header"
+              accessible
+              ref={titleRef}
+              style={{ flex: 1 }}
+            >
               <H3>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H3>
             </View>
           </HStack>

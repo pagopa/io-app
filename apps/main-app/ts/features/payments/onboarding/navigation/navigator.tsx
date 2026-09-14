@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { PaymentsOnboardingFeedbackScreen } from "../screens/PaymentsOnboardingFeedbackScreen";
 import { PaymentsOnboardingSelectMethodScreen } from "../screens/PaymentsOnboardingSelectMethodScreen";
@@ -15,13 +16,13 @@ export const PaymentsOnboardingNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
-      name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD}
       component={PaymentsOnboardingSelectMethodScreen}
+      name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD}
       options={{ gestureEnabled: false, headerShown: true }}
     />
     <Stack.Screen
-      name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK}
       component={PaymentsOnboardingFeedbackScreen}
+      name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK}
       options={{ gestureEnabled: false }}
     />
   </Stack.Navigator>

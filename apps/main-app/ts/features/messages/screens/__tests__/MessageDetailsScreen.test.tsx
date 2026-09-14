@@ -1,15 +1,16 @@
-import { Action, Store, createStore } from "redux";
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/communication/ThirdPartyMessageWithContent";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
+import { Action, createStore, Store } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { reproduceSequence } from "../../../../utils/tests";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import {
+  message_1,
   messageWithExpiredPayment,
-  messageWithValidPayment,
-  message_1
+  messageWithValidPayment
 } from "../../../messages/__mocks__/message";
 import { service_1 } from "../../../messages/__mocks__/messages";
 import {
@@ -28,7 +29,7 @@ import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
 jest.mock("../../components/MessageDetail/MessageDetailsAttachments");
 
-export const thirdPartyMessage: ThirdPartyMessageWithContent = {
+const thirdPartyMessage: ThirdPartyMessageWithContent = {
   ...message_1,
   created_at: new Date("2020-01-01T00:00:00.000Z"),
   third_party_message: {

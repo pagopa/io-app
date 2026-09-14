@@ -1,12 +1,12 @@
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector
 } from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
+import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialsSelector
@@ -16,7 +16,9 @@ import { mapPIDStatusToMixpanel } from "../utils";
 import {
   CREDENTIAL_STATUS_MAP,
   ItwCredentialMixpanelStatus,
-  ItwStatus
+  ItwStatus,
+  ItwThirdPartyCredentials,
+  ItwWalletListCredential
 } from "../utils/types";
 import { ItwBaseProperties } from "./propertyTypes";
 
@@ -35,6 +37,8 @@ export const buildItwBaseProperties = (
       itwIdentificationModeSelector(state),
       itwLifecycleIsITWalletValidSelector(state)
     ),
+    ITW_THIRD_PARTY_CREDENTIAL: buildThirdPartyCredentialProperty(state),
+    ITW_WALLET_LIST_CREDENTIAL: buildWalletListCredentialProperty(state),
     ...pidProps,
     ...credentialProps
   };
@@ -122,11 +126,9 @@ const getMixpanelCredentialStatus = (
   }
   const credential = itwCredentialsSelector(state)[type];
 
-  return pipe(
-    O.fromNullable(credential),
-    O.map(cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]),
-    O.getOrElse(() => "not_available" as ItwCredentialMixpanelStatus)
-  );
+  return credential
+    ? CREDENTIAL_STATUS_MAP[getCredentialStatus(credential)]
+    : ("not_available" as ItwCredentialMixpanelStatus);
 };
 
 export const computeItwStatus = (
@@ -143,13 +145,70 @@ export const computeItwStatus = (
   }
 
   switch (identificationMode) {
-    case "spid":
-      return "L2+ (spid_can)";
     case "cieId":
       return authLevel === "L2" ? "L3 (cieid_can)" : "L3 (cieid_pin)";
     case "ciePin":
       return "L3 (cie_pin)";
+    case "spid":
+      return "L2+ (spid_can)";
     default:
       return authLevel;
   }
 };
+
+/**
+ * Builds the aggregate Mixpanel status for third-party credentials, i.e. credentials
+ * obtained through a third-party credential offer (deeplink/QR code), including
+ * Documenti su IO credential types. PID is excluded.
+ */
+export const buildThirdPartyCredentialProperty = (
+  state: GlobalState
+): ItwThirdPartyCredentials => {
+  const thirdPartyCredentials = Object.values(
+    itwCredentialsSelector(state)
+  ).filter(isThirdPartyCredential);
+
+  if (thirdPartyCredentials.length === 0) {
+    return "not_available";
+  }
+
+  return thirdPartyCredentials.some(credential =>
+    validCredentialStatuses.includes(getCredentialStatus(credential))
+  )
+    ? "valid"
+    : "not_valid";
+};
+
+/**
+ * Builds the aggregate Mixpanel status for credentials obtained through the credentials
+ * catalogue/list, including Documenti su IO credentials. PID is excluded.
+ */
+export const buildWalletListCredentialProperty = (
+  state: GlobalState
+): ItwWalletListCredential => {
+  const walletListCredentials = Object.values(
+    itwCredentialsSelector(state)
+  ).filter(isWalletListCredential);
+
+  if (walletListCredentials.length === 0) {
+    return "not_available";
+  }
+
+  return walletListCredentials.some(credential =>
+    validCredentialStatuses.includes(getCredentialStatus(credential))
+  )
+    ? "valid"
+    : "not_valid";
+};
+
+const isThirdPartyCredential = ({
+  credentialType,
+  origin
+}: CredentialMetadata) =>
+  credentialType !== CredentialType.PID && origin === "credentialOffer";
+
+const isWalletListCredential = ({
+  credentialType,
+  origin
+}: CredentialMetadata) =>
+  credentialType !== CredentialType.PID && origin === "catalogue";

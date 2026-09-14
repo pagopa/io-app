@@ -1,7 +1,8 @@
-import { createClient } from "../../../../../definitions/pagopa/walletv3/client";
-import { createClient as createECommerceClient } from "../../../../../definitions/pagopa/ecommerce/client";
-import { createClient as createBizEventsClient } from "../../../../../definitions/pagopa/biz-events/client";
-import { createClient as createPagoPaPlatformClient } from "../../../../../definitions/pagopa/platform/client";
+import { createClient as createBizEventsClient } from "@io-app/api-types/generated/definitions/pagopa/biz-events/client";
+import { createClient as createECommerceClient } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/client";
+import { createClient as createPagoPaPlatformClient } from "@io-app/api-types/generated/definitions/pagopa/platform/client";
+import { createClient } from "@io-app/api-types/generated/definitions/pagopa/walletv3/client";
+
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
 export const createWalletClient = (baseUrl: string) =>
@@ -40,7 +41,7 @@ export const createPagoPaClient = (baseUrl: string, walletToken: string) =>
     }
   });
 
-export type PaymentClient = ReturnType<typeof createPaymentClient>;
-export type WalletClient = ReturnType<typeof createWalletClient>;
-export type TransactionClient = ReturnType<typeof createTransactionClient>;
 export type PagoPaClient = ReturnType<typeof createPagoPaClient>;
+export type PaymentClient = ReturnType<typeof createPaymentClient>;
+export type TransactionClient = ReturnType<typeof createTransactionClient>;
+export type WalletClient = ReturnType<typeof createWalletClient>;

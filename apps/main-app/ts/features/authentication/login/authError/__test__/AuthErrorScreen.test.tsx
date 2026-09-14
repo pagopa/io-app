@@ -1,19 +1,17 @@
-import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
+import { createStore } from "redux";
+
+import { applicationChangeState } from "../../../../../store/actions/application";
+import * as hooks from "../../../../../store/hooks";
+import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-
-import AuthErrorScreen from "../screens/AuthErrorScreen";
 import {
-  incrementNativeLoginNativeAttempts,
   resetSpidLoginState,
-  setStandardLoginInLoadingState
+  setSpidLoginInLoadingState
 } from "../../idp/store/actions";
-
-import * as hooks from "../../../../../store/hooks";
+import AuthErrorScreen from "../screens/AuthErrorScreen";
 
 const mockNavigation = jest.fn();
 const mockDispatch = jest.fn();
@@ -48,8 +46,7 @@ describe("AuthErrorScreen", () => {
       params: {
         errorCodeOrMessage: 25,
         authMethod: "SPID",
-        authLevel: "L2",
-        isNativeLogin: false
+        authLevel: "L2"
       }
     });
     const component = renderComponent();
@@ -58,13 +55,12 @@ describe("AuthErrorScreen", () => {
     ).toBeTruthy();
   });
 
-  it("should dispatch setStandardLoginInLoadingState and navigate onRetry when not native", () => {
+  it("should dispatch setSpidLoginInLoadingState and navigate onRetry", () => {
     mockUseRoute.mockReturnValue({
       params: {
         errorCodeOrMessage: 25,
         authMethod: "SPID",
-        authLevel: "L2",
-        isNativeLogin: false
+        authLevel: "L2"
       }
     });
 
@@ -72,7 +68,7 @@ describe("AuthErrorScreen", () => {
 
     fireEvent.press(getByTestId("retry-button-test-id"));
 
-    expect(mockDispatch).toHaveBeenCalledWith(setStandardLoginInLoadingState());
+    expect(mockDispatch).toHaveBeenCalledWith(setSpidLoginInLoadingState());
     expect(mockNavigation).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.IDP_SELECTION
     });
@@ -83,8 +79,7 @@ describe("AuthErrorScreen", () => {
       params: {
         errorCodeOrMessage: 25,
         authMethod: "SPID",
-        authLevel: "L2",
-        isNativeLogin: true
+        authLevel: "L2"
       }
     });
 
@@ -123,13 +118,13 @@ describe("AuthErrorScreen", () => {
       }
     });
   });
-  it("should dispatch incrementNativeLoginNativeAttempts if authMethod is SPID and isNativeLogin is true", () => {
+
+  it("should dispatch setSpidLoginInLoadingState", () => {
     mockUseRoute.mockReturnValue({
       params: {
         errorCodeOrMessage: "Errore",
         authMethod: "SPID",
-        authLevel: "L2",
-        isNativeLogin: true
+        authLevel: "L2"
       }
     });
 
@@ -137,29 +132,7 @@ describe("AuthErrorScreen", () => {
 
     fireEvent.press(getByTestId("retry-button-test-id"));
 
-    expect(mockDispatch).toHaveBeenCalledWith(
-      incrementNativeLoginNativeAttempts()
-    );
-    expect(mockNavigation).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.IDP_SELECTION
-    });
-  });
-
-  it("should dispatch setStandardLoginInLoadingState if authMethod is SPID and isNativeLogin is false", () => {
-    mockUseRoute.mockReturnValue({
-      params: {
-        errorCodeOrMessage: "Errore",
-        authMethod: "SPID",
-        authLevel: "L2",
-        isNativeLogin: false
-      }
-    });
-
-    const { getByTestId } = renderComponent();
-
-    fireEvent.press(getByTestId("retry-button-test-id"));
-
-    expect(mockDispatch).toHaveBeenCalledWith(setStandardLoginInLoadingState());
+    expect(mockDispatch).toHaveBeenCalledWith(setSpidLoginInLoadingState());
     expect(mockNavigation).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.IDP_SELECTION
     });

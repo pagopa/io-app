@@ -1,21 +1,22 @@
 import { act, fireEvent } from "@testing-library/react-native";
 import { EmitterSubscription, Linking } from "react-native";
 import { createStore } from "redux";
-import * as O from "fp-ts/lib/Option";
-import { appReducer } from "../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as loginHooks from "../../../lollipop/hooks/useLollipopLoginSource";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
+import ActiveSessionCieIdLoginScreen from "../screens/cieId/ActiveSessionCieIdLoginScreen";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
   setFinishedActiveSessionLoginFlow
 } from "../store/actions";
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import ActiveSessionCieIdLoginScreen from "../screens/cieId/ActiveSessionCieIdLoginScreen";
 
 const API_PREFIX_URL = "http://example.com";
-const SPID_LEVEL = "SpidL2";
+const MOCK_AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 const IS_UAT = false;
 
 const mockReplace = jest.fn();
@@ -34,7 +35,7 @@ jest.mock("@react-navigation/native", () => {
     }),
     useRoute: () => ({
       params: {
-        spidLevel: SPID_LEVEL,
+        spidLevel: MOCK_AUTH_LEVEL_L2,
         isUat: IS_UAT
       }
     })
@@ -86,7 +87,7 @@ describe("ActiveSessionCieIdLoginScreen", () => {
 
   it("should dispatch activeSessionLoginSuccess when token is present in URL", () => {
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
-      lollipopCheckStatus: { status: "none", url: O.none },
+      lollipopCheckStatus: { status: "none" },
       retryLollipopLogin: jest.fn(),
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: { uri: "https://example.com/login" }
@@ -108,7 +109,7 @@ describe("ActiveSessionCieIdLoginScreen", () => {
 
   it("should dispatch activeSessionLoginFailure and navigate to AUTH_ERROR_SCREEN when error code is in URL", () => {
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
-      lollipopCheckStatus: { status: "none", url: O.none },
+      lollipopCheckStatus: { status: "none" },
       retryLollipopLogin: jest.fn(),
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: { uri: "https://example.com/login" }
@@ -152,7 +153,7 @@ describe("ActiveSessionCieIdLoginScreen", () => {
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       webviewSource: { uri: API_PREFIX_URL },
       shouldBlockUrlNavigationWhileCheckingLollipop: () => false,
-      lollipopCheckStatus: { status: "none", url: O.none },
+      lollipopCheckStatus: { status: "none" },
       retryLollipopLogin: jest.fn()
     });
 
@@ -218,7 +219,7 @@ describe("ActiveSessionCieIdLoginScreen", () => {
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       webviewSource: { uri: API_PREFIX_URL },
       shouldBlockUrlNavigationWhileCheckingLollipop: blocker,
-      lollipopCheckStatus: { status: "none", url: O.none },
+      lollipopCheckStatus: { status: "none" },
       retryLollipopLogin: jest.fn()
     });
 
@@ -240,7 +241,7 @@ function renderComponent() {
   return renderScreenWithNavigationStoreContext(
     ActiveSessionCieIdLoginScreen,
     AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN,
-    { spidLevel: SPID_LEVEL, isUat: IS_UAT },
+    { spidLevel: MOCK_AUTH_LEVEL_L2, isUat: IS_UAT },
     store
   );
 }

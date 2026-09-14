@@ -1,14 +1,14 @@
 import * as O from "fp-ts/lib/Option";
 import MockDate from "mockdate";
-import { GlobalState } from "../../../../store/reducers/types";
 
+import { GlobalState } from "../../../../store/reducers/types";
 // Import selectors after setting up the mock
 import {
-  isActiveSessionLoginRemotelyEnabledSelector,
+  cieLoginFlowSelector,
   isActiveSessionLoginEnabledSelector,
   isActiveSessionLoginLocallyEnabledSelector,
-  showSessionExpirationBannerSelector,
-  cieLoginFlowSelector
+  isActiveSessionLoginRemotelyEnabledSelector,
+  showSessionExpirationBannerSelector
 } from "../store/selectors";
 
 // Mock DeviceInfo for version checks

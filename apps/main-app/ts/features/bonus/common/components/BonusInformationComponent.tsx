@@ -1,61 +1,55 @@
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
+import { BonusAvailableContent } from "@io-app/api-types/generated/definitions/content/BonusAvailableContent";
 import {
   Body,
   ContentWrapper,
   H2,
   IOButtonBlockSpecificProps,
+  IOMarkdown,
   useIOThemeContext,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ComponentProps, useContext, useImperativeHandle, Ref } from "react";
+import I18n from "i18next";
+import { Ref, useContext, useImperativeHandle } from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
 import Animated, {
   useAnimatedRef,
   useSharedValue
 } from "react-native-reanimated";
-import I18n from "i18next";
-import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import IOMarkdown from "../../../../components/IOMarkdown";
+
 import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../../components/ui/IOScrollView";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { getRemoteLocale } from "../../../messages/utils/ctas";
 import TosBonusComponent from "./TosBonusComponent";
 
-type OwnProps = {
-  ref?: Ref<BonusInformationComponentRef>;
-  onBack?: () => void;
-  bonus: BonusAvailable;
-  onConfirm?: () => void;
-  onCancel?: () => void;
-  primaryCtaText: string;
-  secondaryAction?: SecondaryAction;
-  imageStyle?: StyleProp<ImageStyle>;
-};
-
-type SecondaryAction = { type: "back"; text: string };
-
-type Props = OwnProps &
-  Pick<
-    ComponentProps<typeof IOScrollViewWithLargeHeader>,
-    "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
-  >;
-
 export type BonusInformationComponentRef = {
   scrollTo: (y: number) => void;
 };
 
+type Props = {
+  bonus: BonusAvailable;
+  imageStyle?: StyleProp<ImageStyle>;
+  onBack?: () => void;
+  onCancel?: () => void;
+  onConfirm?: () => void;
+  primaryCtaText: string;
+  ref?: Ref<BonusInformationComponentRef>;
+  secondaryAction?: SecondaryAction;
+};
+
+type SecondaryAction = { text: string; type: "back" };
+
 const getTosFooter = (
   maybeBonusTos: O.Option<string>,
-  maybeRegulationUrl: O.Option<{ url: string; name: string }>,
+  maybeRegulationUrl: O.Option<{ name: string; url: string }>,
   handleModalPress: (tos: string) => void,
   ctaText: string
 ) =>
@@ -76,9 +70,9 @@ const getTosFooter = (
                 </Body>
                 <Body
                   asLink
-                  weight={"Semibold"}
                   numberOfLines={1}
                   onPress={() => handleModalPress(bT)}
+                  weight={"Semibold"}
                 >
                   {I18n.t("bonus.tos.title")}
                 </Body>
@@ -101,7 +95,7 @@ const getTosFooter = (
   );
 
 // value is defined the height of the image
-const imageHeight: number = 270;
+const imageHeight = 270;
 
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
@@ -149,7 +143,7 @@ const BonusInformationComponent = ({ ref, ...props }: Props) => {
   };
 
   const handleModalPress = (tos: string) =>
-    showModal(<TosBonusComponent tos_url={tos} onClose={hideModal} />);
+    showModal(<TosBonusComponent onClose={hideModal} tos_url={tos} />);
 
   // bonus rules url should be the first one in the urls list
   const maybeRegulationUrl = pipe(
@@ -186,14 +180,14 @@ const BonusInformationComponent = ({ ref, ...props }: Props) => {
 
   return (
     <IOScrollView
+      actions={actions}
       animatedRef={animatedScrollViewRef}
-      includeContentMargins={false}
-      snapOffset={imageHeight}
       headerConfig={{
         type: "base",
         title: bonusTypeLocalizedContent.title
       }}
-      actions={actions}
+      includeContentMargins={false}
+      snapOffset={imageHeight}
     >
       {O.isSome(maybeHeroImage) && (
         <>

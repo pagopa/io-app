@@ -1,12 +1,56 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { z } from "zod";
 
-// Storage keys for the ITW Status List feature.
-const STORAGE_PREFIX = "@io.itwallet.statusList";
-const STORAGE_KEY_LAST_CHECK_TIME = `${STORAGE_PREFIX}:lastCheckTime`;
-const STORAGE_KEY_LAST_FETCH_TIME = `${STORAGE_PREFIX}:lastFetchTime`;
+import { EnvType, EnvTypeSchema } from "../../common/utils/environment";
+import {
+  STORAGE_KEY_ITW_ENV,
+  STORAGE_KEY_ITW_SPECS_VERSION,
+  STORAGE_KEY_LAST_CHECK_TIME
+} from "./consts";
+
+const LastStatusListCheckTimestampsSchema = z
+  .union([z.array(z.number()), z.number().transform(timestamp => [timestamp])])
+  .transform(timestamps => timestamps.slice(-10));
 
 /**
- * Stores the timestamp of the last check made of the Status List
+ * Persists the IT-Wallet specs version selected while Redux is available, so
+ * the Status List background task can use the same version.
+ *
+ * @param itwVersion Current IT-Wallet specs version
+ */
+export const storeItwSpecsVersion = async (
+  itwVersion: ItwVersion
+): Promise<void> =>
+  AsyncStorage.setItem(STORAGE_KEY_ITW_SPECS_VERSION, itwVersion);
+
+/**
+ * Retrieves the IT-Wallet specs version persisted for the Status List
+ * background task.
+ *
+ * Only {@link storeItwSpecsVersion} writes this value, preserving the
+ * {@link ItwVersion} invariant at the storage boundary.
+ *
+ * @throws If no specs version was persisted or AsyncStorage cannot be read
+ */
+export const getItwSpecsVersion = async (): Promise<ItwVersion> => {
+  const itwVersion = await AsyncStorage.getItem(STORAGE_KEY_ITW_SPECS_VERSION);
+  if (itwVersion === null) {
+    throw new Error("IT-Wallet specs version not found");
+  }
+  return itwVersion as ItwVersion;
+};
+
+/** Persists the environment needed by the background Status List task. */
+export const storeItwEnv = async (env: EnvType): Promise<void> =>
+  AsyncStorage.setItem(STORAGE_KEY_ITW_ENV, env);
+
+/** Retrieves the environment needed by the background Status List task. */
+export const getItwEnv = async (): Promise<EnvType> =>
+  EnvTypeSchema.parse(await AsyncStorage.getItem(STORAGE_KEY_ITW_ENV));
+
+/**
+ * Stores the timestamps of the latest checks made of the Status List
  *
  * @param timestamp The timestamp to store, in milliseconds since the Unix epoch
  */
@@ -14,67 +58,39 @@ export const storeLastStatusListCheckTimestamp = async (
   timestamp: number
 ): Promise<void> => {
   try {
+    const timestamps = await getLastStatusListCheckTimestamps();
+    const nextTimestamps = LastStatusListCheckTimestampsSchema.parse([
+      ...timestamps,
+      timestamp
+    ]);
+
     await AsyncStorage.setItem(
       STORAGE_KEY_LAST_CHECK_TIME,
-      timestamp.toString()
+      JSON.stringify(nextTimestamps)
     );
-  } catch (error) {
+  } catch {
     // Since the store happens outside the app context, there's no way to log or
     // track this error
   }
 };
 
 /**
- * Retrieves the timestamp of the last check for the ITW Status List.
- * @returns A promise that resolves to the timestamp of the last check in
+ * Retrieves the timestamps of the latest checks for the ITW Status List.
+ * @returns A promise that resolves to the timestamps of the latest checks in
  * milliseconds since the Unix epoch
  */
-export const getLastStatusListCheckTimestamp = async (): Promise<
-  number | undefined
+export const getLastStatusListCheckTimestamps = async (): Promise<
+  Array<number>
 > => {
   try {
     const raw = await AsyncStorage.getItem(STORAGE_KEY_LAST_CHECK_TIME);
-    return raw ? parseInt(raw, 10) : undefined;
-  } catch (error) {
-    return undefined;
-  }
-};
 
-/**
- * Stores the timestamp of the last successfull fetch of the Status List, used
- * to compute the age of the Status List and decide whether a refresh is needed.
- *
- * @param timestamp The timestamp to store, in milliseconds since the Unix epoch
- */
-export const storeLastStatusListFetchTimestamp = async (
-  timestamp: number
-): Promise<void> => {
-  try {
-    await AsyncStorage.setItem(
-      STORAGE_KEY_LAST_FETCH_TIME,
-      timestamp.toString()
-    );
-  } catch (error) {
-    // Since the store happens outside the app context, there's no way to log or
-    // track this error
-  }
-};
+    if (raw === null || raw.trim() === "") {
+      return [];
+    }
 
-/**
- * Retrieves the timestamp of the last successfull fetch of the ITW Status List,
- * used to compute the age of the Status List and decide whether a refresh is
- * needed.
- *
- * @returns A promise that resolves to the timestamp of the last check in
- * milliseconds since the Unix epoch
- */
-export const getLastStatusListFetchTimestamp = async (): Promise<
-  number | undefined
-> => {
-  try {
-    const raw = await AsyncStorage.getItem(STORAGE_KEY_LAST_FETCH_TIME);
-    return raw ? parseInt(raw, 10) : undefined;
-  } catch (error) {
-    return undefined;
+    return LastStatusListCheckTimestampsSchema.parse(JSON.parse(raw));
+  } catch {
+    return [];
   }
 };

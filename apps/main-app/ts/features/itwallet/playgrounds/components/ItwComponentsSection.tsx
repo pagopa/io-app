@@ -4,11 +4,12 @@ import {
   ListItemSwitch,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import { useState } from "react";
 import { Alert, useWindowDimensions, View } from "react-native";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
@@ -16,7 +17,7 @@ import { ItwBrandedSkiaGradient } from "../../common/components/ItwBrandedSkiaGr
 import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
-import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
@@ -50,9 +51,9 @@ const ItwWalletBrandSection = () => {
               style={{ width: width - marginHorizontal * 2, height: 50 }}
             >
               <ItwBrandedSkiaGradient
-                width={width - marginHorizontal * 2}
                 height={50}
                 variant={variant as any}
+                width={width - marginHorizontal * 2}
               />
             </Canvas>
           </DSComponentViewerBox>
@@ -87,26 +88,26 @@ const ItwEngagementBannerSection = () => (
     <VStack space={8}>
       <DSComponentViewerBox name={"default"}>
         <ItwEngagementBanner
-          title={"Porta su IO i tuoi documenti digitali"}
+          action={"Aggiungi un documento"}
           description={
             "Con piena validità ufficiale, digitali e sempre a portata di mano!"
           }
-          action={"Aggiungi un documento"}
-          onPress={() => Alert.alert("✅ Engagement Banner pressed")}
-          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
           dismissable={true}
+          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
+          onPress={() => Alert.alert("✅ Engagement Banner pressed")}
+          title={"Porta su IO i tuoi documenti digitali"}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name={"link"}>
         <ItwEngagementBanner
-          title={"Dimostra chi sei col tuo dispositivo"}
+          action={"Inizia"}
           description={
             "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!"
           }
-          action={"Inizia"}
-          onPress={() => Alert.alert("✅ Engagement Banner pressed")}
-          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
           dismissable={true}
+          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
+          onPress={() => Alert.alert("✅ Engagement Banner pressed")}
+          title={"Dimostra chi sei col tuo dispositivo"}
         />
       </DSComponentViewerBox>
     </VStack>
@@ -132,16 +133,16 @@ const ItwSkeumorphicCredentialSection = () => {
       <ListItemHeader label="Skeumorphic credential card" />
       <ListItemSwitch
         label="Hide claim values"
-        value={valuesHidden}
         onSwitchValueChange={() => {
           setValuesHidden(!valuesHidden);
         }}
+        value={valuesHidden}
       />
       <VStack space={16}>
         {L2Credentials.map(l2Credential => (
           <ItwSkeumorphicCredentialItem
-            key={l2Credential.credentialType}
             credential={l2Credential}
+            key={l2Credential.credentialType}
             valuesHidden={valuesHidden}
           />
         ))}
@@ -159,7 +160,7 @@ const ItwSkeumorphicCredentialItem = ({
 }) => {
   const navigation = useIONavigation();
   const [isFlipped, setFlipped] = useState(false);
-  const { status = "valid" } = getCredentialStatusObject(credential);
+  const status = getCredentialStatus(credential);
 
   const handleOnPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -176,15 +177,15 @@ const ItwSkeumorphicCredentialItem = ({
       <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setFlipped}>
         <ItwSkeumorphicCard
           credential={credential}
-          status={status}
           isFlipped={isFlipped}
           onPress={handleOnPress}
+          status={status}
           valuesHidden={valuesHidden}
         />
       </FlipGestureDetector>
       <ItwPresentationCredentialCardFlipButton
-        isFlipped={isFlipped}
         handleOnPress={() => setFlipped(_ => !_)}
+        isFlipped={isFlipped}
       />
     </VStack>
   );
@@ -221,11 +222,11 @@ export const ItwClaimsListSection = () => {
       }}
     >
       <ListItemHeader
+        iconColor={theme["icon-default"]}
+        iconName="security"
         label={I18n.t(
           "features.itWallet.issuance.credentialAuth.requiredClaims"
         )}
-        iconName="security"
-        iconColor={theme["icon-default"]}
       />
       <ItwRequestedClaimsList items={mock} />
     </View>
@@ -293,7 +294,7 @@ const claimsSelectorCredentialTypes: Array<string> = [
   CredentialType.DRIVING_LICENSE,
   CredentialType.EUROPEAN_DISABILITY_CARD,
   CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-  CredentialType.AGE_VERIFICATION,
+  CredentialType.PROOF_OF_AGE,
   CredentialType.EDUCATION_ATTENDANCE,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_DIPLOMA,
@@ -309,9 +310,9 @@ const ItwClaimsSelectorSection = () => (
     {claimsSelectorCredentialTypes.map(credentialType => (
       <ItwClaimsSelector
         credentialType={credentialType}
-        key={credentialType}
-        items={claimsSelectorItems}
         defaultExpanded={false}
+        items={claimsSelectorItems}
+        key={credentialType}
         selectionEnabled={false}
       />
     ))}

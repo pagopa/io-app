@@ -1,48 +1,45 @@
 import { SagaIterator } from "redux-saga";
-import { call, fork, select, take, takeLatest } from "typed-redux-saga/macro";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
-import { itwCredentialsStore } from "../../credentials/store/actions";
-import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { call, fork, select } from "typed-redux-saga/macro";
+
 import {
-  registerItwStatusListFetchTask,
-  unregisterItwStatusListFetchTask
-} from "../tasks";
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../common/store/selectors/environment";
+import { getEnv } from "../../common/utils/environment";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
+import { registerStatusListProperties } from "../analytics";
+import { refreshStaleEntries } from "../utils/refresh";
+import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
+import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
+import { watchItwSpecsVersionStorageSaga } from "./storeItwSpecsVersionSaga";
+import { updateCredentialsStatusSaga } from "./updateCredentialsStatusSaga";
 
-/**
- * Registers the ITW Status List fetch task with expo-background-task.
- */
-export function* registerStatusListFetchTaskSaga(): SagaIterator {
-  const isWalletValid = yield* select(itwLifecycleIsValidSelector);
-  if (!isWalletValid) {
-    // If wallet not valid, wait for a credential store, which is a strong
-    // signal of wallet activation.
-    yield* take(itwCredentialsStore);
-  }
-
-  // Register the background task for Status List fetch only for active wallet
-  // instances
-  yield* call(registerItwStatusListFetchTask);
-
-  // Unregister background tasks on wallet reset
-  yield* takeLatest(itwLifecycleStoresReset, function* () {
-    yield* call(unregisterItwStatusListFetchTask);
-  });
+export function* watchItwStatusListAuthenticatedSaga(): SagaIterator {
+  // Keep the background-task specs version synchronized with eID changes
+  yield* fork(watchItwSpecsVersionStorageSaga);
+  // Register the background task for Status List fetch only for active wallet instances
+  yield* fork(registerStatusListFetchTaskSaga);
 }
 
-export function* watchItwTasksSaga(): SagaIterator {
-  const isWhitelisted = yield* select(itwIsL3EnabledSelector);
-  if (!isWhitelisted) {
-    // If the user is not whitelisted for L3 features, we can skip background
-    // task sagas as they won't have access to IT Wallet features that require
-    // status list checks.
+export function* watchItwStatusListSaga(): SagaIterator {
+  const itwVersion = yield* select(selectItwSpecsVersion);
+  const ioWallet = getIoWallet(itwVersion);
+
+  if (!ioWallet.CredentialStatus.statusList.isSupported) {
     return;
   }
 
-  // Register the background task for Status List fetch only for active wallet instances
-  yield* fork(registerStatusListFetchTaskSaga);
+  const env = getEnv(yield* select(selectItwEnv));
 
+  // Run startup coherence for the Status List Token cache
+  yield* call(checkStatusListCoherenceSaga);
+  // Check for stale Status List Tokens and refresh them in the background
+  yield* call(refreshStaleEntries, {
+    itwVersion,
+    x509CertRoot: env.X509_CERT_ROOT
+  });
+  // Update the validity of credentials whose status list is available in the cache
+  yield* call(updateCredentialsStatusSaga, { itwVersion });
   // Register Status List super properties
-  // TODO [SIW-4474] Add super property registration
-  // yield* call(registerStatusListProperties);
+  yield* call(registerStatusListProperties);
 }

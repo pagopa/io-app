@@ -1,25 +1,20 @@
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
+import { Divider, ListItemNav, VSpacer } from "@io-app/design-system";
+import {
+  DocumentPickerAsset,
+  DocumentPickerOptions,
+  getDocumentAsync
+} from "expo-document-picker";
+import * as ImagePicker from "expo-image-picker";
 import * as A from "fp-ts/lib/Array";
-import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
-import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { JSX, useState } from "react";
 import { Alert, Linking, View } from "react-native";
-import {
-  launchImageLibrary,
-  ImagePickerResponse,
-  ImageLibraryOptions
-} from "react-native-image-picker";
-import {
-  DocumentPickerOptions,
-  DocumentPickerResponse,
-  NonEmptyArray,
-  pick,
-  types
-} from "@react-native-documents/picker";
-import I18n from "i18next";
+
+import { useIOStore } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import {
   BarcodeAnalyticsFlow,
@@ -27,23 +22,30 @@ import {
   trackBarcodeImageUpload,
   trackBarcodeUploadPath
 } from "../analytics";
+import { BarcodeFailure } from "../types/failure";
 import {
   IOBarcode,
   IOBarcodeFormat,
   IOBarcodeOrigin,
   IOBarcodeType
 } from "../types/IOBarcode";
-import { BarcodeFailure } from "../types/failure";
 import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
 import { imageDecodingTask } from "../utils/imageDecodingTask";
 import { imageGenerationTask } from "../utils/imageGenerationTask";
-import { useIOStore } from "../../../store/hooks";
 
 type IOBarcodeFileReader = {
   /**
-   * Shows the image picker that lets the user select an image from the library
+   * Component which displays the bottom sheet to chosse which type of file tu upload (image or document)
    */
-  showImagePicker: () => void;
+  filePickerBottomSheet: JSX.Element;
+  /**
+   * Indicates whether file picker bottom sheet is currently being showed or not
+   */
+  isFilePickerVisible: boolean;
+  /**
+   * Indicates that the decoder is currently reading/decoding barcodes
+   */
+  isLoading: boolean;
   /**
    * Shows the document picker that lets the user select a PDF document from the library
    */
@@ -53,20 +55,16 @@ type IOBarcodeFileReader = {
    */
   showFilePicker: () => void;
   /**
-   * Component which displays the bottom sheet to chosse which type of file tu upload (image or document)
+   * Shows the image picker that lets the user select an image from the library
    */
-  filePickerBottomSheet: JSX.Element;
-  /**
-   * Indicates that the decoder is currently reading/decoding barcodes
-   */
-  isLoading: boolean;
-  /**
-   * Indicates whether file picker bottom sheet is currently being showed or not
-   */
-  isFilePickerVisible: boolean;
+  showImagePicker: () => void;
 };
 
 type IOBarcodeFileReaderConfiguration = {
+  /**
+   * Mixpanel analytics parameters
+   */
+  barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
   /**
    * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
    * If the format is not supported it will return an UNSUPPORTED_FORMAT error
@@ -78,31 +76,26 @@ type IOBarcodeFileReaderConfiguration = {
    */
   barcodeTypes?: Array<IOBarcodeType>;
   /**
+   * Callback called when a barcode is not successfully decoded
+   */
+  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
+  /**
    * Callback called when there is at least one barcode being successfully decoded
    */
   onBarcodeSuccess: (
     barcodes: Array<IOBarcode>,
     origin: IOBarcodeOrigin
   ) => void;
-  /**
-   * Callback called when a barcode is not successfully decoded
-   */
-  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
-  /**
-   * Mixpanel analytics parameters
-   */
-  barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
 };
 
-const imageLibraryOptions: ImageLibraryOptions = {
-  mediaType: "photo",
-  includeBase64: true
+const imageLibraryOptions: ImagePicker.ImagePickerOptions = {
+  mediaTypes: "images",
+  base64: true
 };
 
 const documentPickerOptions: DocumentPickerOptions = {
-  presentationStyle: "fullScreen",
-  mode: "open",
-  type: [types.pdf]
+  type: "application/pdf",
+  copyToCacheDirectory: true
 };
 
 const useIOBarcodeFileReader = ({
@@ -129,35 +122,16 @@ const useIOBarcodeFileReader = ({
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
    */
-  const onImageSelected = async (response: ImagePickerResponse) => {
-    if (response.didCancel) {
+  const onImageSelected = async (result: ImagePicker.ImagePickerResult) => {
+    if (result.canceled) {
       setIsLoading(false);
-      return;
-    }
-
-    if (response.errorCode) {
-      Alert.alert(
-        I18n.t("wallet.QRtoPay.settingsAlert.title"),
-        I18n.t("wallet.QRtoPay.settingsAlert.message"),
-        [
-          {
-            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
-            onPress: Linking.openSettings
-          }
-        ],
-        { cancelable: false }
-      );
       return;
     }
 
     setIsLoading(true);
 
     await pipe(
-      response.assets,
+      result.assets,
       O.fromNullable,
       O.chain(A.head),
       O.map(({ base64 }) => base64),
@@ -179,18 +153,37 @@ const useIOBarcodeFileReader = ({
   const showImagePicker = async () => {
     setIsLoading(true);
 
-    void launchImageLibrary(imageLibraryOptions, onImageSelected);
+    try {
+      const result =
+        await ImagePicker.launchImageLibraryAsync(imageLibraryOptions);
+      await onImageSelected(result);
+    } catch {
+      setIsLoading(false);
+      Alert.alert(
+        I18n.t("wallet.QRtoPay.settingsAlert.title"),
+        I18n.t("wallet.QRtoPay.settingsAlert.message"),
+        [
+          {
+            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
+            onPress: () => void Linking.openSettings()
+          }
+        ],
+        { cancelable: false }
+      );
+    }
   };
 
   /**
    * Handles the Barcode decoding from a PDF document
    */
-  const onDocumentSelected = async (
-    documentPickerResponse: NonEmptyArray<DocumentPickerResponse>
-  ) => {
-    const { uri, type } = documentPickerResponse[0];
+  const onDocumentSelected = async (asset: DocumentPickerAsset) => {
+    const { uri, mimeType } = asset;
 
-    if (type !== "application/pdf") {
+    if (mimeType !== "application/pdf") {
       // If the file is not a PDF document, show an error
       return onBarcodeError({ reason: "INVALID_FILE" }, "file");
     }
@@ -236,11 +229,16 @@ const useIOBarcodeFileReader = ({
    */
   const showDocumentPicker = async () => {
     setIsLoading(true);
-    await pipe(
-      TE.tryCatch(() => pick(documentPickerOptions), E.toError),
-      TE.map(onDocumentSelected),
-      TE.mapLeft(() => setIsLoading(false))
-    )();
+    try {
+      const result = await getDocumentAsync(documentPickerOptions);
+      if (result.canceled || result.assets.length === 0) {
+        setIsLoading(false);
+        return;
+      }
+      void onDocumentSelected(result.assets[0]);
+    } catch {
+      setIsLoading(false);
+    }
   };
 
   const handleImageUploadPressed = async () => {
@@ -261,17 +259,17 @@ const useIOBarcodeFileReader = ({
   const filePickerModalComponent = (
     <View>
       <ListItemNav
-        value={I18n.t("barcodeScan.upload.image")}
         accessibilityLabel={I18n.t("barcodeScan.upload.image")}
-        onPress={handleImageUploadPressed}
         icon="gallery"
+        onPress={() => void handleImageUploadPressed()}
+        value={I18n.t("barcodeScan.upload.image")}
       />
       <Divider />
       <ListItemNav
-        value={I18n.t("barcodeScan.upload.file")}
         accessibilityLabel={I18n.t("barcodeScan.upload.file")}
-        onPress={handleFileUploadPressed}
         icon="docAttach"
+        onPress={() => void handleFileUploadPressed()}
+        value={I18n.t("barcodeScan.upload.file")}
       />
       <VSpacer size={16} />
     </View>
@@ -290,8 +288,8 @@ const useIOBarcodeFileReader = ({
   };
 
   return {
-    showImagePicker,
-    showDocumentPicker,
+    showImagePicker: () => void showImagePicker(),
+    showDocumentPicker: () => void showDocumentPicker(),
     filePickerBottomSheet: filePickerModal.bottomSheet,
     showFilePicker: handleShowFilePickerPressed,
     isLoading,

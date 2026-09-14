@@ -1,9 +1,10 @@
+import { FeaturedServices } from "@io-app/api-types/generated/definitions/services/FeaturedServices";
+import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
+import { Institutions } from "@io-app/api-types/generated/definitions/services/Institutions";
+import { InstitutionsResource } from "@io-app/api-types/generated/definitions/services/InstitutionsResource";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { FeaturedServices } from "../../../../../../definitions/services/FeaturedServices";
-import { Institution } from "../../../../../../definitions/services/Institution";
-import { Institutions } from "../../../../../../definitions/services/Institutions";
-import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
+
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
@@ -12,11 +13,6 @@ import {
   paginatedInstitutionsGet
 } from "../actions";
 
-export type PaginatedInstitutionsError = {
-  reason: NetworkError;
-  time: Date;
-};
-
 export type ServicesHomeState = {
   featuredInstitutions: pot.Pot<Institutions, NetworkError>;
   featuredServices: pot.Pot<FeaturedServices, NetworkError>;
@@ -24,6 +20,11 @@ export type ServicesHomeState = {
     InstitutionsResource,
     PaginatedInstitutionsError
   >;
+};
+
+type PaginatedInstitutionsError = {
+  reason: NetworkError;
+  time: Date;
 };
 
 const INITIAL_STATE: ServicesHomeState = {
@@ -37,6 +38,48 @@ const reducer = (
   action: Action
 ): ServicesHomeState => {
   switch (action.type) {
+    case getType(featuredInstitutionsGet.failure):
+      return {
+        ...state,
+        featuredInstitutions: pot.toError(pot.none, action.payload)
+      };
+    // Featured Institutions actions
+    case getType(featuredInstitutionsGet.request):
+      return {
+        ...state,
+        featuredInstitutions: pot.toLoading(state.featuredInstitutions)
+      };
+    case getType(featuredInstitutionsGet.success):
+      return {
+        ...state,
+        featuredInstitutions: pot.some(action.payload)
+      };
+
+    case getType(featuredServicesGet.failure):
+      return {
+        ...state,
+        featuredServices: pot.toError(pot.none, action.payload)
+      };
+    // Featured Services actions
+    case getType(featuredServicesGet.request):
+      return {
+        ...state,
+        featuredServices: pot.toLoading(state.featuredServices)
+      };
+    case getType(featuredServicesGet.success):
+      return {
+        ...state,
+        featuredServices: pot.some(action.payload)
+      };
+
+    case getType(paginatedInstitutionsGet.failure):
+      return {
+        ...state,
+        paginatedInstitutions: pot.toError(state.paginatedInstitutions, {
+          reason: action.payload,
+          time: new Date()
+        })
+      };
     // Institutions actions
     case getType(paginatedInstitutionsGet.request):
       if (pot.isNone(state.paginatedInstitutions)) {
@@ -76,48 +119,6 @@ const reducer = (
           ...action.payload,
           institutions: [...currentInstitutions, ...action.payload.institutions]
         })
-      };
-    case getType(paginatedInstitutionsGet.failure):
-      return {
-        ...state,
-        paginatedInstitutions: pot.toError(state.paginatedInstitutions, {
-          reason: action.payload,
-          time: new Date()
-        })
-      };
-
-    // Featured Institutions actions
-    case getType(featuredInstitutionsGet.request):
-      return {
-        ...state,
-        featuredInstitutions: pot.toLoading(state.featuredInstitutions)
-      };
-    case getType(featuredInstitutionsGet.success):
-      return {
-        ...state,
-        featuredInstitutions: pot.some(action.payload)
-      };
-    case getType(featuredInstitutionsGet.failure):
-      return {
-        ...state,
-        featuredInstitutions: pot.toError(pot.none, action.payload)
-      };
-
-    // Featured Services actions
-    case getType(featuredServicesGet.request):
-      return {
-        ...state,
-        featuredServices: pot.toLoading(state.featuredServices)
-      };
-    case getType(featuredServicesGet.success):
-      return {
-        ...state,
-        featuredServices: pot.some(action.payload)
-      };
-    case getType(featuredServicesGet.failure):
-      return {
-        ...state,
-        featuredServices: pot.toError(pot.none, action.payload)
       };
   }
   return state;

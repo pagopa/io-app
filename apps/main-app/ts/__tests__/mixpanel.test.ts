@@ -1,8 +1,9 @@
 import { Mixpanel } from "mixpanel-react-native";
-import * as MixpanelModule from "../mixpanel";
+
 import { mixpanelToken, mixpanelUrl } from "../config";
-import { updateMixpanelSuperProperties } from "../mixpanelConfig/superProperties";
+import * as MixpanelModule from "../mixpanel";
 import { updateMixpanelProfileProperties } from "../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../mixpanelConfig/superProperties";
 
 // Mock the Mixpanel class
 jest.mock("mixpanel-react-native", () => {

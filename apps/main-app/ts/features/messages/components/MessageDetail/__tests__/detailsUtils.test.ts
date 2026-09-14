@@ -1,7 +1,8 @@
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { PaymentInfoResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoResponse";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
-import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+
 import {
   isError,
   remoteError,
@@ -13,10 +14,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { CTA } from "../../../../../types/LocalizedCTAs";
 import * as analytics from "../../../analytics";
 import {
+  MessagePaymentError,
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
-  toTimeoutMessagePaymentError,
-  MessagePaymentError
+  toTimeoutMessagePaymentError
 } from "../../../types/paymentErrors";
 import {
   computeAndTrackCTAPressAnalytics,

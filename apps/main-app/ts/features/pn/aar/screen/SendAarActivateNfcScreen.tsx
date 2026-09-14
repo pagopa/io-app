@@ -1,8 +1,9 @@
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel } from "@io-app/design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import i18n from "i18next";
 import { useCallback, useEffect, useLayoutEffect } from "react";
 import { Alert } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -33,7 +34,6 @@ export const SendAarActivateNfcScreen = ({
   useEffect(() => {
     if (currentAarData.type === sendAarFlowStates.cieScanning) {
       const { type: _, ...params } = currentAarData;
-
       navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING, params);
     }
   }, [currentAarData, navigation]);
@@ -76,15 +76,15 @@ export const SendAarActivateNfcScreen = ({
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          title=""
-          ignoreSafeAreaMargin={false}
-          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             onPress: handleClose,
             accessibilityLabel: i18n.t("global.buttons.close"),
             testID: "closeActionID"
           }}
+          ignoreSafeAreaMargin={false}
+          title=""
+          type="singleAction"
         />
       )
     });

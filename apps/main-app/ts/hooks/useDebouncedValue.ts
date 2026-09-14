@@ -16,9 +16,9 @@ export function useDebouncedValue<Value>({
   initial,
   value
 }: {
+  delay: number;
   initial: Value;
   value: Value;
-  delay: number;
 }) {
   const [debouncedValue, setDebouncedValue] = useState<Value>(initial);
 

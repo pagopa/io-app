@@ -4,12 +4,6 @@ export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
 
 /**
- * Returns whether the app review modal should be shown.
- */
-export const itwIsPendingReviewSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isPendingReview;
-
-/**
  * Returns the authentication level used to obtain the eID.
  */
 export const itwAuthLevelSelector = (state: GlobalState) =>
@@ -25,15 +19,8 @@ export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
  * Returns whether the fiscal code is whitelisted for L3 features.
  * @param state the application global state
  */
-export const itwIsL3EnabledSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isFiscalCodeWhitelisted ?? false;
-
-/**
- * Returns whether the user has the requirements for IT-Wallet simplified activation.
- */
-export const itwIsSimplifiedActivationRequired = (state: GlobalState) =>
-  state.features.itWallet.preferences.isItwSimplifiedActivationRequired ??
-  false;
+export const itwIsFiscalCodeWhitelisted = (state: GlobalState) =>
+  !!state.features.itWallet.preferences.isFiscalCodeWhitelisted;
 
 /**
  * Selects the state that indicates whether the bottom sheet of survey is visible.
@@ -60,3 +47,12 @@ export const itwIdentificationModeSelector = (state: GlobalState) =>
  */
 export const itwIsActivationDisabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isItwActivationDisabled ?? false;
+
+/**
+ * Returns the stored data (authMethod/docStatus) for the eID activation feedback survey banner,
+ * regardless of whether the banner is currently visible. Pair with
+ * `itwIsActivationSuccessFeedbackBannerVisibleSelector` (in `./banners`) to decide if it should be shown.
+ */
+export const itwWalletActivationFeedbackBannerDataSelector = (
+  state: GlobalState
+) => state.features.itWallet.preferences.walletActivationFeedbackBannerData;

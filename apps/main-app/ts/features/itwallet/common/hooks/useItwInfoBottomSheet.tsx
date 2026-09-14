@@ -1,23 +1,22 @@
-import { H6, VSpacer, VStack } from "@pagopa/io-app-design-system";
+import { H6, IOMarkdownLite, VSpacer, VStack } from "@io-app/design-system";
 import { View } from "react-native";
-import IOMarkdown from "../../../../components/IOMarkdown";
+
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { generateAccessibleLinkRule } from "../../../common/components/IOMarkdown/customRules";
 
 /**
  * The type of the content of the bottom sheet.
  */
 type ItwInfoFlowContentType = {
-  title?: string;
   body: string;
+  title?: string;
 };
 
 /**
  * Type of the props of the hook.
  */
 type ItwInfoFlowProps = {
-  title: string;
   content: Array<ItwInfoFlowContentType>;
+  title: string;
 };
 
 /**
@@ -31,10 +30,7 @@ export const useItwInfoBottomSheet = ({ title, content }: ItwInfoFlowProps) => {
       {content.map((item, index) => (
         <VStack key={`${index}_${item.title}`} space={8}>
           {item.title && <H6>{item.title}</H6>}
-          <IOMarkdown
-            content={item.body}
-            rules={generateAccessibleLinkRule()}
-          />
+          <IOMarkdownLite content={item.body} />
         </VStack>
       ))}
       <VSpacer size={24} />

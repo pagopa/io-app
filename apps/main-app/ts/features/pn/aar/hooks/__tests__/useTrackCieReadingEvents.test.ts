@@ -1,13 +1,14 @@
 import { renderHook } from "@testing-library/react-native";
-import { CieReadState, ReadStatus } from "../useCieInternalAuthAndMrtdReading";
-import { useTrackCieReadingEvents } from "../useTrackCieReadingEvents";
+
 import {
+  trackSendAarMandateCieCanCodeError,
   trackSendAarMandateCieCardReading,
   trackSendAarMandateCieCardReadingError,
-  trackSendAarMandateCieCardReadingSuccess,
-  trackSendAarMandateCieCanCodeError,
-  trackSendAarMandateCieCardReadingFailure
+  trackSendAarMandateCieCardReadingFailure,
+  trackSendAarMandateCieCardReadingSuccess
 } from "../../analytics";
+import { CieReadState, ReadStatus } from "../useCieInternalAuthAndMrtdReading";
+import { useTrackCieReadingEvents } from "../useTrackCieReadingEvents";
 
 jest.mock("../../analytics", () => ({
   trackSendAarMandateCieCardReading: jest.fn(),
@@ -109,7 +110,7 @@ const readStatesForGenericAnalytics: ReadonlyArray<CieReadState> = [
   }
 ];
 
-type HookProps = { readState: CieReadState; nfcDetected: boolean | undefined };
+type HookProps = { nfcDetected: boolean | undefined; readState: CieReadState };
 
 describe("useTrackCieReadingEvents", () => {
   it('should call "trackSendAarMandateCieCardReading" once when readState is in IDLE state', () => {

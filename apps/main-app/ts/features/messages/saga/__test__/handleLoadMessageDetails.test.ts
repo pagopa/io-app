@@ -2,16 +2,16 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { loadMessageDetails as action } from "../../store/actions";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import {
   apiPayload,
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
 } from "../../__mocks__/message";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { loadMessageDetails as action } from "../../store/actions";
 import { getCommunicationClient } from "../commons";
+import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
 
 const id = paymentValidInvalidAfterDueDate.id;
 

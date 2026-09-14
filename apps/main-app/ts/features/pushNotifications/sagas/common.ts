@@ -1,4 +1,5 @@
 import { call, put, select } from "typed-redux-saga/macro";
+
 import NavigationService from "../../../navigation/NavigationService";
 import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
 import { resetMessageArchivingAction } from "../../messages/store/actions/archiving";
@@ -12,7 +13,7 @@ import { checkNotificationPermissions } from "../utils";
 import { navigateToMessageRouterAction } from "../utils/navigation";
 
 export function* checkAndUpdateNotificationPermissionsIfNeeded(
-  skipAnalyticsTracking: boolean = false
+  skipAnalyticsTracking = false
 ) {
   // Retrieve system notification receival permission
   const systemNotificationPermissions = yield* call(
@@ -27,31 +28,8 @@ export function* checkAndUpdateNotificationPermissionsIfNeeded(
   return systemNotificationPermissions;
 }
 
-export function* updateNotificationPermissionsIfNeeded(
-  systemNotificationPermissions: boolean,
-  skipAnalyticsTracking: boolean = false
-) {
-  // Retrieve the in-memory redux value of the
-  // notification receival permission
-  const storedNotificationPermissions = yield* select(
-    areNotificationPermissionsEnabledSelector
-  );
-  // If it is different, compared to the input one
-  if (systemNotificationPermissions !== storedNotificationPermissions) {
-    // Track the new status if allowed
-    if (!skipAnalyticsTracking) {
-      yield* call(
-        trackNotificationPermissionsStatus,
-        systemNotificationPermissions
-      );
-    }
-    // Update the in-memory redux value
-    yield* put(updateSystemNotificationsEnabled(systemNotificationPermissions));
-  }
-}
-
 export function* handlePushNotificationIfNeeded(
-  shouldResetToMainNavigator: boolean = false
+  shouldResetToMainNavigator = false
 ) {
   const pendingMessageState = yield* select(pendingMessageStateSelector);
   if (pendingMessageState) {
@@ -87,4 +65,27 @@ export function* handlePushNotificationIfNeeded(
     return true;
   }
   return false;
+}
+
+export function* updateNotificationPermissionsIfNeeded(
+  systemNotificationPermissions: boolean,
+  skipAnalyticsTracking = false
+) {
+  // Retrieve the in-memory redux value of the
+  // notification receival permission
+  const storedNotificationPermissions = yield* select(
+    areNotificationPermissionsEnabledSelector
+  );
+  // If it is different, compared to the input one
+  if (systemNotificationPermissions !== storedNotificationPermissions) {
+    // Track the new status if allowed
+    if (!skipAnalyticsTracking) {
+      yield* call(
+        trackNotificationPermissionsStatus,
+        systemNotificationPermissions
+      );
+    }
+    // Update the in-memory redux value
+    yield* put(updateSystemNotificationsEnabled(systemNotificationPermissions));
+  }
 }

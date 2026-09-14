@@ -2,6 +2,7 @@ import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";

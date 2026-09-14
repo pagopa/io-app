@@ -2,11 +2,13 @@ import { act, fireEvent, render } from "@testing-library/react-native";
 import { PropsWithChildren, ReactElement } from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../../machine/utils/testDeps";
 import { ItwPresentationCredentialUnknownStatus } from "../ItwPresentationCredentialUnknownStatus";
 
 jest.mock("@react-navigation/native", () => ({
@@ -21,8 +23,9 @@ jest.mock("@react-navigation/native", () => ({
 describe("ItwPresentationCredentialUnknownStatus", () => {
   const initialCredential = {
     credentialType: "mDL",
-    storedStatusAssertion: {
-      credentialStatus: "unknown"
+    validity: {
+      type: "status_assertion",
+      status: "unknown"
     }
   } as CredentialMetadata;
 
@@ -50,7 +53,7 @@ describe("ItwPresentationCredentialUnknownStatus", () => {
           credential={
             {
               credentialType: "mDL",
-              storedStatusAssertion: { credentialStatus: "unknown" }
+              validity: { type: "status_assertion", status: "unknown" }
             } as CredentialMetadata
           }
         />
@@ -73,7 +76,10 @@ const renderComponent = (component: ReactElement) => {
 
   const Wrapper = ({ children }: PropsWithChildren) => (
     <Provider store={store}>
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
+      >
         {children}
       </ItwCredentialIssuanceMachineContext.Provider>
     </Provider>

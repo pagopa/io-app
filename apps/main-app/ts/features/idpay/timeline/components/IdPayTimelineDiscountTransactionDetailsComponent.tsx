@@ -1,19 +1,20 @@
 import {
+  TransactionDetailDTO,
+  StatusEnum as TransactionStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
+import {
   Alert,
   Divider,
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
+} from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
-import { View } from "react-native";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import {
-  TransactionDetailDTO,
-  StatusEnum as TransactionStatusEnum
-} from "../../../../../definitions/idpay/TransactionDetailDTO";
+import { View } from "react-native";
+
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
@@ -34,10 +35,10 @@ const IdPayTimelineDiscountTransactionDetailsComponent = (props: Props) => {
           return (
             <>
               <Alert
-                variant="info"
                 content={I18n.t(
                   "idpay.initiative.operationDetails.discount.details.alerts.CANCELLED"
                 )}
+                variant="info"
               />
               <VSpacer size={16} />
             </>
@@ -88,8 +89,8 @@ const IdPayTimelineDiscountTransactionDetailsComponent = (props: Props) => {
         label={I18n.t(
           "idpay.initiative.operationDetails.discount.details.labels.business"
         )}
-        value={businessName}
         numberOfLines={2}
+        value={businessName}
       />
       <Divider />
       <ListItemInfo
@@ -110,10 +111,10 @@ const IdPayTimelineDiscountTransactionDetailsComponent = (props: Props) => {
         label={I18n.t(
           "idpay.initiative.operationDetails.discount.details.labels.transactionID"
         )}
-        value={transaction.operationId}
         onPress={() => {
           clipboardSetStringWithFeedback(transaction.operationId);
         }}
+        value={transaction.operationId}
       />
     </View>
   );

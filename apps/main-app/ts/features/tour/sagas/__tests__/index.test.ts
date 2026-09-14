@@ -1,12 +1,13 @@
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga/effects";
+
+import * as analytics from "../../analytics";
 import { completeTourAction, startTourAction } from "../../store/actions";
 import {
   activeGroupIdSelector,
   activeStepIndexSelector,
   tourItemsForActiveGroupSelector
 } from "../../store/selectors";
-import * as analytics from "../../analytics";
 import { testable } from "../index";
 
 const { handleStartTour, handleNextStep } = testable!;

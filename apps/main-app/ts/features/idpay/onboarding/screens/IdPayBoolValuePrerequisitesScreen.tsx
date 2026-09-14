@@ -1,19 +1,19 @@
+import { _typeEnum as SelfConsentBoolTypeEnum } from "@io-app/api-types/generated/definitions/idpay/SelfConsentBoolDTO";
+import { SelfCriteriaBoolDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaBoolDTO";
 import {
   Divider,
   IOToast,
   ListItemSwitch,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
+} from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { View } from "react-native";
-import { _typeEnum as SelfConsentBoolTypeEnum } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
-import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
+
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import {
@@ -94,14 +94,6 @@ const IdPayBoolValuePrerequisitesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      topElement={<IdPayOnboardingStepper />}
-      title={{
-        label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
-        section: I18n.t("idpay.onboarding.navigation.header")
-      }}
-      goBack={goBackOnPress}
-      contextualHelp={emptyContextualHelp}
-      headerActionsProp={{ showHelp: true }}
       actions={{
         type: "SingleButton",
         primary: {
@@ -109,7 +101,14 @@ const IdPayBoolValuePrerequisitesScreen = () => {
           onPress: continueOnPress
         }
       }}
+      goBack={goBackOnPress}
+      headerActionsProp={{ showHelp: true }}
       includeContentMargins
+      title={{
+        label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
+        section: I18n.t("idpay.onboarding.navigation.header")
+      }}
+      topElement={<IdPayOnboardingStepper />}
     >
       <LoadingSpinnerOverlay isLoading={isLoading}>
         {selfCriteriaBoolSubtitle && (

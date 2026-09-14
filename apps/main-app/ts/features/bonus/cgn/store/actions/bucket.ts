@@ -1,16 +1,17 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { NetworkError } from "../../../../../utils/errors";
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { DiscountBucketCodeResponse } from "../../types/DiscountBucketCodeResponse";
 
 type CgnCodeBucketPayload = {
   discountId: Discount["id"];
-  onSuccess: () => void;
   onError: () => void;
+  onSuccess: () => void;
 };
 
 /**

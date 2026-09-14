@@ -1,9 +1,10 @@
 import { createMigrate, PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
 import { isDevEnv } from "../../../../../utils/environment";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import createSecureStorage from "../../../../../store/storages/secureStorage";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwCredentialsRemove,
@@ -15,8 +16,6 @@ import {
   itwCredentialsStateMigrations
 } from "./migrations";
 
-type CredentialsRecord = { [credentialKey: string]: CredentialMetadata };
-
 export type ItwCredentialsState = {
   credentials: CredentialsRecord;
   // Credentials object before migration 8. Needed to handle migration outside of Redux Persist.
@@ -24,6 +23,10 @@ export type ItwCredentialsState = {
   legacyCredentials: {
     [credentialKey: string]: CredentialMetadata & { credential: string };
   };
+};
+
+type CredentialsRecord = {
+  [credentialId: string]: CredentialMetadata;
 };
 
 export const itwCredentialsInitialState: ItwCredentialsState = {
@@ -36,34 +39,34 @@ const reducer = (
   action: Action
 ): ItwCredentialsState => {
   switch (action.type) {
-    case getType(itwCredentialsStore): {
-      const addedCredentials = action.payload.reduce(
-        (acc, c) => ({ ...acc, [c.credentialId]: c }),
-        {} as CredentialsRecord
+    case getType(itwCredentialsRemove): {
+      const credentialIdsToRemove = new Set(
+        action.payload.map(c => c.credentialId)
+      );
+
+      const credentials = Object.fromEntries(
+        Object.entries(state.credentials).filter(
+          ([credentialId]) => !credentialIdsToRemove.has(credentialId)
+        )
       );
 
       return {
         ...state,
-        credentials: {
-          ...state.credentials,
-          ...addedCredentials
-        }
+        credentials
       };
     }
 
-    case getType(itwCredentialsRemove): {
-      const idsToRemove = new Set(action.payload.map(c => c.credentialId));
-
-      const otherCredentials = Object.values(state.credentials)
-        .filter(c => !idsToRemove.has(c.credentialId))
-        .reduce(
-          (acc, c) => ({ ...acc, [c.credentialId]: c }),
-          {} as CredentialsRecord
-        );
+    case getType(itwCredentialsStore): {
+      // Store each credential under its credentialId, overwriting any previous one. A batch
+      // credential is a single entry that lists all its copies' keyTags (see CredentialMetadata).
+      const credentials = action.payload.reduce<CredentialsRecord>(
+        (acc, c) => ({ ...acc, [c.credentialId]: c }),
+        state.credentials
+      );
 
       return {
         ...state,
-        credentials: otherCredentials
+        credentials
       };
     }
 

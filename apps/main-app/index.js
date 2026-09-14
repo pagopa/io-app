@@ -5,10 +5,7 @@
 import "./shim";
 import "react-native-get-random-values";
 import "react-native-quick-base64";
-import {
-  AlertStatic as Alert,
-  AppRegistry
-} from "react-native";
+import { AlertStatic as Alert, AppRegistry } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   setJSExceptionHandler,
@@ -21,7 +18,10 @@ import { isMixpanelInstanceInitialized, mixpanelTrack } from "./ts/mixpanel";
 import { name as appName } from "./app.json";
 import { initializePushNotifications } from "./ts/features/pushNotifications/utils/configurePushNotification";
 
-void initializePushNotifications()
+// Registers the TaskManager.defineTask handler required by Expo headless runs.
+import "./ts/features/itwallet/statusList/tasks";
+
+void initializePushNotifications();
 
 const errorHandler = (e, isFatal) => {
   if (isFatal) {

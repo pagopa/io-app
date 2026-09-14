@@ -1,7 +1,8 @@
+import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
+import { InstitutionsResource } from "@io-app/api-types/generated/definitions/services/InstitutionsResource";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { Institution } from "../../../../../../definitions/services/Institution";
-import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
+
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { searchPaginatedInstitutionsGet } from "../actions";
@@ -19,6 +20,19 @@ const reducer = (
   action: Action
 ): SearchState => {
   switch (action.type) {
+    case getType(searchPaginatedInstitutionsGet.cancel):
+      return {
+        ...state,
+        paginatedInstitutions: pot.none
+      };
+    case getType(searchPaginatedInstitutionsGet.failure):
+      return {
+        ...state,
+        paginatedInstitutions: pot.toError(
+          state.paginatedInstitutions,
+          action.payload
+        )
+      };
     case getType(searchPaginatedInstitutionsGet.request):
       // when the first page is requested,
       // the state is updated with a noneLoading pot
@@ -59,19 +73,6 @@ const reducer = (
           ...action.payload,
           institutions: [...currentInstitutions, ...action.payload.institutions]
         })
-      };
-    case getType(searchPaginatedInstitutionsGet.failure):
-      return {
-        ...state,
-        paginatedInstitutions: pot.toError(
-          state.paginatedInstitutions,
-          action.payload
-        )
-      };
-    case getType(searchPaginatedInstitutionsGet.cancel):
-      return {
-        ...state,
-        paginatedInstitutions: pot.none
       };
   }
   return state;

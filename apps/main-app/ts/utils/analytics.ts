@@ -1,14 +1,15 @@
-import { pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
 import {
   isLoginUtilsError,
   LoginUtilsError
 } from "@pagopa/io-react-native-login-utils";
+import * as B from "fp-ts/lib/boolean";
+import { pipe } from "fp-ts/lib/function";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
+
 import { mixpanelTrack } from "../mixpanel";
 import {
   clearKeychainError,
@@ -17,11 +18,21 @@ import {
   setKeychainError
 } from "../store/storages/keychain";
 
+const isWebViewErrorEvent = (
+  e: Parameters<typeof trackSpidLoginError>[1]
+): e is WebViewErrorEvent => "nativeEvent" in e && e.nativeEvent != null;
+const isWebViewHttpErrorEvent = (
+  e: Parameters<typeof trackSpidLoginError>[1]
+): e is WebViewHttpErrorEvent =>
+  isWebViewErrorEvent(e) &&
+  "statusCode" in e.nativeEvent &&
+  e.nativeEvent.statusCode !== undefined;
+
 export type FlowType =
+  | "browsing"
   | "firstOnboarding"
   | "onBoarding"
-  | "preferenze"
-  | "browsing";
+  | "preferenze";
 
 /**
  *
@@ -47,7 +58,7 @@ export const getFlowType = (
   return "preferenze";
 };
 
-export const booleanToYesNo = (value: boolean): "yes" | "no" =>
+export const booleanToYesNo = (value: boolean): "no" | "yes" =>
   pipe(
     value,
     B.fold(
@@ -56,10 +67,7 @@ export const booleanToYesNo = (value: boolean): "yes" | "no" =>
     )
   );
 
-export const numberToYesNoOnThreshold = (
-  value: number,
-  threshold: number = 0
-) =>
+export const numberToYesNoOnThreshold = (value: number, threshold = 0) =>
   pipe(
     value > threshold,
     B.fold(
@@ -74,12 +82,12 @@ export const buildEventProperties = (
   eventCategory: "KO" | "TECH" | "UX",
   eventType:
     | "action"
+    | "confirm"
     | "control"
+    | "error"
     | "exit"
     | "micro_action"
     | "screen_view"
-    | "confirm"
-    | "error"
     | undefined,
   customProperties: Record<string, unknown> = {},
   flow?: FlowType
@@ -104,91 +112,23 @@ export const trackAppCaughtError = (
   void mixpanelTrack(eventName, properties);
 };
 
-// Lollipop events
-export function trackLollipopKeyGenerationSuccess(keyType?: string) {
-  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
-    kty: keyType
-  });
-}
-
-export function trackLollipopKeyGenerationFailure(reason: string) {
-  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
-    reason
-  });
-}
-
-export function trackLollipopIdpLoginFailure(reason: string) {
-  void mixpanelTrack("LOLLIPOP_IDP_LOGIN_FAILURE", {
-    reason
-  });
-}
-
-export function trackLollipopIsKeyStrongboxBackedSuccess(
-  isStrongboxBacked: boolean
+/**
+ * Track the event when the user taps on the [Help Center CTA](https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33561#1130270800)
+ *
+ * @param hc_id - The contextual ID of the CTA (ex: SESSION_EXPIRED)
+ * @param hc_landing_url - The URL where we navigate the user
+ * @param hc_source - The route name where the CTA is (ex: AUTHENTICATION_LANDING)
+ */
+export function trackHelpCenterCtaTapped(
+  hc_id?: string,
+  hc_landing_url?: string,
+  hc_source?: string
 ) {
   void mixpanelTrack(
-    "LOLLIPOP_IS_KEY_STRONGBOX_BACKED_SUCCESS",
-    buildEventProperties("TECH", undefined, {
-      isStrongboxBacked
-    })
+    "HC_CTA_TAPPED",
+    buildEventProperties("UX", "action", { hc_id, hc_landing_url, hc_source })
   );
 }
-
-export function trackLollipopIsKeyStrongboxBackedFailure(reason: string) {
-  void mixpanelTrack(
-    "LOLLIPOP_IS_KEY_STRONGBOX_BACKED_FAILURE",
-    buildEventProperties("KO", undefined, {
-      reason
-    })
-  );
-}
-
-// End of lollipop events
-
-// SPID Login
-export function trackSpidLoginError(
-  idpName: string | undefined,
-  e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
-) {
-  const eventName = "SPID_ERROR";
-  if (isLoginUtilsError(e)) {
-    void mixpanelTrack(eventName, {
-      idp: idpName,
-      code: e.userInfo?.statusCode,
-      description: e.userInfo?.error,
-      domain: e.userInfo?.url
-    });
-  } else {
-    const error = e as Error;
-    const webViewError = e as WebViewErrorEvent;
-    const webViewHttpError = e as WebViewHttpErrorEvent;
-    if (webViewHttpError.nativeEvent.statusCode) {
-      const { description, statusCode, url } = webViewHttpError.nativeEvent;
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code: statusCode,
-        description,
-        domain: toUrlWithoutQueryParams(url)
-      });
-    } else if (webViewError.nativeEvent) {
-      const { code, description, domain } = webViewError.nativeEvent;
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code,
-        description,
-        domain
-      });
-    } else if (error.message !== undefined) {
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code: error.message,
-        description: error.message,
-        domain: error.message
-      });
-    }
-  }
-}
-// End of SPID Login
 
 // Keychain
 // workaround to send keychainError for Pixel devices
@@ -215,29 +155,94 @@ export function trackKeychainFailures() {
   clearKeychainError();
 }
 
-function toUrlWithoutQueryParams(url: string) {
-  const urlAsURL = URLParse(url);
-  return urlAsURL.origin + urlAsURL.pathname;
+export function trackLollipopIdpLoginFailure(reason: string) {
+  void mixpanelTrack("LOLLIPOP_IDP_LOGIN_FAILURE", {
+    reason
+  });
+}
+
+export function trackLollipopIsKeyStrongboxBackedFailure(reason: string) {
+  void mixpanelTrack(
+    "LOLLIPOP_IS_KEY_STRONGBOX_BACKED_FAILURE",
+    buildEventProperties("KO", undefined, {
+      reason
+    })
+  );
+}
+
+export function trackLollipopIsKeyStrongboxBackedSuccess(
+  isStrongboxBacked: boolean
+) {
+  void mixpanelTrack(
+    "LOLLIPOP_IS_KEY_STRONGBOX_BACKED_SUCCESS",
+    buildEventProperties("TECH", undefined, {
+      isStrongboxBacked
+    })
+  );
+}
+
+// End of lollipop events
+
+export function trackLollipopKeyGenerationFailure(reason: string) {
+  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
+    reason
+  });
+}
+// End of SPID Login
+
+// Lollipop events
+export function trackLollipopKeyGenerationSuccess(keyType?: string) {
+  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
+    kty: keyType
+  });
+}
+
+// SPID Login
+export function trackSpidLoginError(
+  idpName: string | undefined,
+  error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
+) {
+  const eventName = "SPID_ERROR";
+  if (isLoginUtilsError(error)) {
+    void mixpanelTrack(eventName, {
+      idp: idpName,
+      code: error.userInfo?.statusCode,
+      description: error.userInfo?.error,
+      domain: error.userInfo?.url
+    });
+  } else {
+    if (isWebViewHttpErrorEvent(error)) {
+      const { description, statusCode, url } = error.nativeEvent;
+      void mixpanelTrack(eventName, {
+        idp: idpName,
+        code: statusCode,
+        description,
+        domain: toUrlWithoutQueryParams(url)
+      });
+    } else if (isWebViewErrorEvent(error)) {
+      const { code, description, domain } = error.nativeEvent;
+      void mixpanelTrack(eventName, {
+        idp: idpName,
+        code,
+        description,
+        domain
+      });
+    } else if (error.message !== undefined) {
+      void mixpanelTrack(eventName, {
+        idp: idpName,
+        code: error.message,
+        description: error.message,
+        domain: error.message
+      });
+    }
+  }
 }
 
 // #region Help Center
 
-/**
- * Track the event when the user taps on the [Help Center CTA](https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33561#1130270800)
- *
- * @param hc_id - The contextual ID of the CTA (ex: SESSION_EXPIRED)
- * @param hc_landing_url - The URL where we navigate the user
- * @param hc_source - The route name where the CTA is (ex: AUTHENTICATION_LANDING)
- */
-export function trackHelpCenterCtaTapped(
-  hc_id?: string,
-  hc_landing_url?: string,
-  hc_source?: string
-) {
-  void mixpanelTrack(
-    "HC_CTA_TAPPED",
-    buildEventProperties("UX", "action", { hc_id, hc_landing_url, hc_source })
-  );
+function toUrlWithoutQueryParams(url: string) {
+  const urlAsURL = URLParse(url);
+  return urlAsURL.origin + urlAsURL.pathname;
 }
 
 // #endregion

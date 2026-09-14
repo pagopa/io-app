@@ -1,13 +1,13 @@
 import { SpidIdp } from "../../../../utils/idps";
 import {
-  setStartActiveSessionLogin,
-  setIdpSelectedActiveSessionLogin,
-  setFastLoginOptSessionLogin,
-  activeSessionLoginSuccess,
   activeSessionLoginFailure,
+  activeSessionLoginSuccess,
+  closeSessionExpirationBanner,
   consolidateActiveSessionLoginData,
+  setFastLoginOptSessionLogin,
   setFinishedActiveSessionLoginFlow,
-  closeSessionExpirationBanner
+  setIdpSelectedActiveSessionLogin,
+  setStartActiveSessionLogin
 } from "../store/actions";
 import {
   ActiveSessionLoginState,

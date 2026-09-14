@@ -1,21 +1,22 @@
-import { ModuleAttachment, VSpacer } from "@pagopa/io-app-design-system";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { ModuleAttachment, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
-import { useAttachmentDownload } from "../../hooks/useAttachmentDownload";
+
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { useAttachmentDownload } from "../../hooks/useAttachmentDownload";
 
 export type MessageDetailsAttachmentItemProps = {
   attachment: ThirdPartyAttachment;
   bottomSpacer?: boolean;
   disabled?: boolean;
-  sendOpeningSource: SendOpeningSource;
-  sendUserType: SendUserType;
   messageId: string;
   onPreNavigate?: () => void;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
   serviceId: ServiceId;
 };
 

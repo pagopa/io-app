@@ -15,7 +15,6 @@ export const useOnFirstRender = (
 
   useEffect(() => {
     if (firstUpdate.current && shouldRun()) {
-      // eslint-disable-next-line functional/immutable-data
       firstUpdate.current = false;
       callback();
     }

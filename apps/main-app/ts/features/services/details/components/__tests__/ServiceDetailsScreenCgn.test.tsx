@@ -1,24 +1,24 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { Config } from "@io-app/api-types/generated/definitions/content/Config";
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/services/OrganizationFiscalCode";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { Body } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createStore } from "redux";
-import { Body } from "@pagopa/io-app-design-system";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { ServiceDetailsScreenCgn } from "../ServiceDetailsScreenCgn";
-import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
-import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { Config } from "../../../../../../definitions/content/Config";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
+import { appReducer } from "../../../../../store/reducers";
+import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { getNetworkError, NetworkError } from "../../../../../utils/errors";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import {
   ServicePreferenceResponse,
   WithServiceID
 } from "../../types/ServicePreferenceResponse";
-import { getNetworkError, NetworkError } from "../../../../../utils/errors";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
+import { ServiceDetailsScreenCgn } from "../ServiceDetailsScreenCgn";
 
 const backendStatus: BackendStatus = {
   ...baseRawBackendStatus
@@ -69,13 +69,16 @@ describe("ServiceDetailsScreenCgn", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
     const state = _.merge(undefined, globalState, {
-      remoteConfig: O.some({
-        ...backendStatus.config,
-        cgn: {
-          ...backendStatus.config.cgn,
-          enabled: false
-        }
-      } as Config)
+      remoteConfig: {
+        _tag: "Some",
+        value: {
+          ...backendStatus.config,
+          cgn: {
+            ...backendStatus.config.cgn,
+            enabled: false
+          }
+        } as Config
+      }
     } as GlobalState);
 
     const component = renderComponent(state);
@@ -98,13 +101,16 @@ describe("ServiceDetailsScreenCgn", () => {
           }
         }
       },
-      remoteConfig: O.some({
-        ...backendStatus.config,
-        cgn: {
-          ...backendStatus.config.cgn,
-          enabled: true
-        }
-      } as Config)
+      remoteConfig: {
+        _tag: "Some",
+        value: {
+          ...backendStatus.config,
+          cgn: {
+            ...backendStatus.config.cgn,
+            enabled: true
+          }
+        } as Config
+      }
     } as GlobalState);
 
     const component = renderComponent(state);
@@ -127,13 +133,16 @@ describe("ServiceDetailsScreenCgn", () => {
           }
         }
       },
-      remoteConfig: O.some({
-        ...backendStatus.config,
-        cgn: {
-          ...backendStatus.config.cgn,
-          enabled: true
-        }
-      } as Config)
+      remoteConfig: {
+        _tag: "Some",
+        value: {
+          ...backendStatus.config,
+          cgn: {
+            ...backendStatus.config.cgn,
+            enabled: true
+          }
+        } as Config
+      }
     } as GlobalState);
 
     const component = renderComponent(state);
@@ -156,13 +165,16 @@ describe("ServiceDetailsScreenCgn", () => {
           }
         }
       },
-      remoteConfig: O.some({
-        ...backendStatus.config,
-        cgn: {
-          ...backendStatus.config.cgn,
-          enabled: true
-        }
-      } as Config)
+      remoteConfig: {
+        _tag: "Some",
+        value: {
+          ...backendStatus.config,
+          cgn: {
+            ...backendStatus.config.cgn,
+            enabled: true
+          }
+        } as Config
+      }
     } as GlobalState);
 
     const component = renderComponent(state);

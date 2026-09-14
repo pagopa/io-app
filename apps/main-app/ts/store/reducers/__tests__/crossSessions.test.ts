@@ -1,5 +1,6 @@
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import sha from "sha.js";
+
 import { setProfileHashedFiscalCode } from "../../actions/crossSessions";
 import {
   hashedProfileFiscalCodeSelector,
@@ -12,8 +13,8 @@ jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorage: jest.fn()
 }));
 
-jest.mock("react-native-share", () => ({
-  open: jest.fn()
+jest.mock("expo-sharing", () => ({
+  shareAsync: jest.fn()
 }));
 
 const hash = (value: string): string =>

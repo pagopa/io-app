@@ -1,11 +1,12 @@
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import { fireEvent } from "@testing-library/react-native";
-import { createStore } from "redux";
 import I18n from "i18next";
-import ServicesContactComponent from "../components/ServicesContactComponent";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
-import { appReducer } from "../../../../../store/reducers";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import ServicesContactComponent from "../components/ServicesContactComponent";
 
 describe("ServicesContactComponent", () => {
   it("should NOT call onSelectMode if the same mode is selected", () => {

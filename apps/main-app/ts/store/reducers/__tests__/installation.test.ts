@@ -1,4 +1,5 @@
 import * as AR from "fp-ts/lib/Array";
+
 import { applicationChangeState } from "../../actions/application";
 import {
   appVersionHistory,

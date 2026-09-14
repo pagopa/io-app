@@ -1,67 +1,68 @@
+import { VersionInfo } from "@io-app/api-types/generated/definitions/content/VersionInfo";
 import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
+
+import {
+  isAppSupportedSelector,
+  versionInfoDataSelector
+} from "../../common/versionInfo/store/reducers/versionInfo";
+import { checkSession } from "../../features/authentication/common/saga/watchCheckSessionSaga";
+import { watchForceLogoutSaga } from "../../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../../features/authentication/common/store/selectors";
-import { previousInstallationDataDeleteSaga } from "../installation";
+import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
+import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
+import { shouldTrackLevelSecurityMismatchSaga } from "../../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
+import { userFromSuccessLoginSelector } from "../../features/authentication/loginInfo/store/selectors";
+import { navigateAfterFinishedFciActiveSessionLoginFlowSaga } from "../../features/fci/saga";
 import {
-  initMixpanel,
-  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
-} from "../mixpanel";
-import {
-  loadProfile,
-  watchProfile,
-  watchProfileUpsertRequestsSaga
-} from "../../features/settings/common/sagas/profile";
-import {
-  initializeApplicationSaga,
-  testWaitForNavigatorServiceInitialization
-} from "../startup";
-import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
+  shouldExitForOfflineAccess,
+  watchSessionRefreshInOfflineSaga
+} from "../../features/ingress/saga";
+import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
+import { watchItwSaga } from "../../features/itwallet/common/saga";
+import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
   generateLollipopKeySaga,
   getKeyInfo
 } from "../../features/lollipop/saga";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
-import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
-import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
-import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
-import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
-import { startupTransientErrorInitialState } from "../../store/reducers/startup";
-import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
 import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
-import { trackKeychainFailures } from "../../utils/analytics";
-import { checkSession } from "../../features/authentication/common/saga/watchCheckSessionSaga";
+import {
+  loadProfile,
+  watchProfile,
+  watchProfileUpsertRequestsSaga
+} from "../../features/settings/common/sagas/profile";
+import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { formatRequestedTokenString } from "../../features/zendesk/utils";
-import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
-import { userFromSuccessLoginSelector } from "../../features/authentication/loginInfo/store/selectors";
-import { watchItwOfflineSaga } from "../../features/itwallet/common/saga";
-import {
-  shouldExitForOfflineAccess,
-  watchSessionRefreshInOfflineSaga
-} from "../../features/ingress/saga";
-import { watchForceLogoutSaga } from "../../features/authentication/common/saga/watchForceLogoutSaga";
-import {
-  isAppSupportedSelector,
-  versionInfoDataSelector
-} from "../../common/versionInfo/store/reducers/versionInfo";
-import { VersionInfo } from "../../../definitions/content/VersionInfo";
-import { navigateAfterFinishedFciActiveSessionLoginFlowSaga } from "../../features/fci/saga";
 import { startApplicationInitialization } from "../../store/actions/application";
-import { shouldTrackLevelSecurityMismatchSaga } from "../../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
+import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
+import { startupTransientErrorInitialState } from "../../store/reducers/startup";
+import { trackKeychainFailures } from "../../utils/analytics";
+import { previousInstallationDataDeleteSaga } from "../installation";
+import {
+  initMixpanel,
+  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
+} from "../mixpanel";
+import {
+  initializeApplicationSaga,
+  testWaitForNavigatorServiceInitialization
+} from "../startup";
+import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 
 const aSessionToken = "mock-session-token";
-const aSessionInfo = O.some({
+const aSessionInfo = {
   spidLevel: "https://www.spid.gov.it/SpidL2",
   walletToken: "wallet_token",
   bpdToken: "bpd_token"
-});
-const anEmptySessionInfo = O.some({
+};
+const anEmptySessionInfo = {
   spidLevel: "https://www.spid.gov.it/SpidL2"
-});
+};
 const aPublicKey = O.some({
   crv: "P_256",
   kty: "EC",
@@ -87,8 +88,8 @@ jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
 }));
 
-jest.mock("react-native-share", () => ({
-  open: jest.fn()
+jest.mock("expo-sharing", () => ({
+  shareAsync: jest.fn()
 }));
 
 jest.mock("../../api/SessionManagerClientManager");
@@ -123,7 +124,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -156,8 +157,8 @@ describe("initializeApplicationSaga", () => {
       .call(navigateAfterFinishedFciActiveSessionLoginFlowSaga, false)
       .next()
       .select(sessionInfoSelector)
-      .next(O.none)
-      .next(O.none) // loadSessionInformationSaga
+      .next(undefined)
+      .next(undefined) // loadSessionInformationSaga
       .next(handleApplicationStartupTransientError)
       .next(startupTransientErrorInitialState);
   });
@@ -180,7 +181,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -233,7 +234,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -291,7 +292,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -360,7 +361,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -393,8 +394,8 @@ describe("initializeApplicationSaga", () => {
       .call(navigateAfterFinishedFciActiveSessionLoginFlowSaga, false)
       .next()
       .select(sessionInfoSelector)
-      .next(O.none)
-      .next(O.none)
+      .next(undefined)
+      .next(undefined)
       .call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
   });
 
@@ -416,7 +417,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -478,7 +479,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded)
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()

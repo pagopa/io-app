@@ -1,6 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
+
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationProp,
@@ -8,13 +10,18 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import {
+  isStartupLoaded,
+  StartupStatusEnum
+} from "../../../../store/reducers/startup";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialStatusSelector
 } from "../../credentials/store/selectors";
+import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
@@ -52,6 +59,10 @@ export const ItwIssuanceCredentialLandingScreen = ({
     itwCredentialStatusSelector(state, credentialType)
   );
   const pidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const introContent = useIOSelector(
+    itwCredentialIntroContentSelector(credentialType)
+  );
+  const startupStatus = useIOSelector(isStartupLoaded);
   const credentialName = useItwCredentialName(credentialType);
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credentialType, isItwL3),
@@ -80,16 +91,19 @@ export const ItwIssuanceCredentialLandingScreen = ({
   );
 
   useEffect(() => {
-    if (isCredentialValid) {
-      if (!isEidExpiredOrExpiring) {
-        trackItwAlreadyHasCredential(mixPanelCredential);
-      }
-      // Credential already present and valid, no need to issue it again
+    if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
+      // Skip navigation until the startup process is completed and the user is authenticated
       return;
     }
 
     if (isEidExpiredOrExpiring) {
       // PID not valid, show PID renewal screen before proceeding with credential issuance
+      return;
+    }
+
+    if (isCredentialValid) {
+      trackItwAlreadyHasCredential(mixPanelCredential);
+      // Credential already present and valid, no need to issue it again
       return;
     }
 
@@ -105,7 +119,11 @@ export const ItwIssuanceCredentialLandingScreen = ({
 
     if (isItwValid) {
       // ITW active, proceed to credential issuance
-      navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
+      const targetScreen = introContent
+        ? ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION
+        : ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER;
+
+      navigation.replace(targetScreen, {
         animationEnabled: false,
         credentialType
       });
@@ -117,28 +135,24 @@ export const ItwIssuanceCredentialLandingScreen = ({
       getMixPanelCredential(credentialType, isWhitelisted)
     );
   }, [
+    startupStatus,
     navigation,
     isItwValid,
     isWhitelisted,
     credentialType,
+    introContent,
     isCredentialValid,
     isEidExpiredOrExpiring,
     mixPanelCredential
   ]);
 
+  if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  }
+
   if (isEidExpiredOrExpiring) {
     return (
       <OperationResultScreenContent
-        pictogram="identity"
-        title={I18n.t(`features.itWallet.issuance.confirmIdentity.title`, {
-          credential: credentialName
-        })}
-        subtitle={I18n.t(
-          `features.itWallet.issuance.confirmIdentity.subtitle`,
-          {
-            wallet: isWhitelisted ? "IT Wallet" : "Documenti su IO"
-          }
-        )}
         action={{
           label: I18n.t(
             `features.itWallet.issuance.confirmIdentity.primaryAction`
@@ -153,12 +167,22 @@ export const ItwIssuanceCredentialLandingScreen = ({
               }
             })
         }}
+        pictogram="identity"
         secondaryAction={{
           label: I18n.t(
             `features.itWallet.issuance.confirmIdentity.secondaryAction`
           ),
           onPress: () => navigation.popToTop()
         }}
+        subtitle={I18n.t(
+          `features.itWallet.issuance.confirmIdentity.subtitle`,
+          {
+            wallet: isWhitelisted ? "IT Wallet" : "Documenti su IO"
+          }
+        )}
+        title={I18n.t(`features.itWallet.issuance.confirmIdentity.title`, {
+          credential: credentialName
+        })}
       />
     );
   }
@@ -166,16 +190,6 @@ export const ItwIssuanceCredentialLandingScreen = ({
   if (isCredentialValid) {
     return (
       <OperationResultScreenContent
-        pictogram="success"
-        title={I18n.t(
-          `features.itWallet.issuance.credentialAlreadyUpdated.title`
-        )}
-        subtitle={I18n.t(
-          `features.itWallet.issuance.credentialAlreadyUpdated.subtitle`,
-          {
-            credential: credentialName
-          }
-        )}
         action={{
           label: I18n.t(
             `features.itWallet.issuance.credentialAlreadyUpdated.action`
@@ -193,23 +207,33 @@ export const ItwIssuanceCredentialLandingScreen = ({
               ]
             })
         }}
+        pictogram="success"
         secondaryAction={{
           label: I18n.t("global.buttons.close"),
           onPress: () => navigation.popToTop()
         }}
+        subtitle={I18n.t(
+          `features.itWallet.issuance.credentialAlreadyUpdated.subtitle`,
+          {
+            credential: credentialName
+          }
+        )}
+        title={I18n.t(
+          `features.itWallet.issuance.credentialAlreadyUpdated.title`
+        )}
       />
     );
   }
 
   return (
     <OperationResultScreenContent
-      pictogram="umbrella"
-      title={I18n.t(`features.itWallet.issuance.landingError.title`)}
-      subtitle={I18n.t(`features.itWallet.issuance.landingError.body`)}
       action={{
         label: I18n.t(`features.itWallet.issuance.landingError.action`),
         onPress: () => navigation.popToTop()
       }}
+      pictogram="umbrella"
+      subtitle={I18n.t(`features.itWallet.issuance.landingError.body`)}
+      title={I18n.t(`features.itWallet.issuance.landingError.title`)}
     />
   );
 };

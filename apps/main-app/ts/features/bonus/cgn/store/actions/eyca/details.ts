@@ -1,4 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
+
 import { NetworkError } from "../../../../../../utils/errors";
 import { EycaDetail } from "../../reducers/eyca/details";
 

@@ -1,6 +1,8 @@
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import { channel } from "redux-saga";
@@ -15,13 +17,22 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { UserDataProcessingChoiceEnum } from "../../definitions/identity/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../definitions/identity/UserDataProcessingStatus";
+
+import { communicationClientManager } from "../api/CommunicationClientManager";
+import { identityClientManager } from "../api/IdentityClientManager";
+import { sessionManagerClientManager } from "../api/SessionManagerClientManager";
+import { versionInfoLoadSuccess } from "../common/versionInfo/store/actions/versionInfo";
+import {
+  isAppSupportedSelector,
+  versionInfoDataSelector
+} from "../common/versionInfo/store/reducers/versionInfo";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
 import {
   handleNavigateAfterFinishedStandardActiveSessionLoginFlow,
   watchActiveSessionLoginSaga
 } from "../features/authentication/activeSessionLogin/saga";
+import { navigateToActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/navigateToActiveSessionLogin";
+import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
 import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
 import {
@@ -41,6 +52,7 @@ import {
 } from "../features/authentication/fastLogin/store/selectors";
 import { shouldTrackLevelSecurityMismatchSaga } from "../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
 import { userFromSuccessLoginSelector } from "../features/authentication/loginInfo/store/selectors";
+import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 import { isCgnDiscoveryBannerClosedSelector } from "../features/bonus/cgn/store/reducers/banners";
@@ -62,7 +74,7 @@ import {
 } from "../features/ingress/saga";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import {
-  watchItwOfflineSaga,
+  watchItwAuthenticatedSaga,
   watchItwSaga
 } from "../features/itwallet/common/saga";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
@@ -77,12 +89,15 @@ import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAck
 import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
+import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAarFlowSaga";
+import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
+import { watchSendLollipopLambda } from "../features/pn/lollipopLambda/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
 import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
@@ -99,11 +114,16 @@ import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/u
 import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
+import { watchWalletSaga } from "../features/wallet/saga";
 import {
   watchGetZendeskTokenSaga,
   watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
+import {
+  waitForMainNavigator,
+  waitForNavigatorServiceInitialization
+} from "../navigation/saga/navigation";
 import {
   applicationInitialized,
   startApplicationInitialization
@@ -130,25 +150,6 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
-import { communicationClientManager } from "../api/CommunicationClientManager";
-import { identityClientManager } from "../api/IdentityClientManager";
-import { sessionManagerClientManager } from "../api/SessionManagerClientManager";
-import {
-  waitForMainNavigator,
-  waitForNavigatorServiceInitialization
-} from "../navigation/saga/navigation";
-import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
-import { navigateToActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/navigateToActiveSessionLogin";
-import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
-import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
-import { watchMessagesSaga } from "../features/messages/saga";
-import { watchWalletSaga } from "../features/wallet/saga";
-import { watchSendLollipopLambda } from "../features/pn/lollipopLambda/saga";
-import {
-  isAppSupportedSelector,
-  versionInfoDataSelector
-} from "../common/versionInfo/store/reducers/versionInfo";
-import { versionInfoLoadSuccess } from "../common/versionInfo/store/actions/versionInfo";
 import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -176,7 +177,7 @@ export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
  * - On FL session refresh
  * - When accessing the Wallet mini app in offline mode
  */
-// eslint-disable-next-line complexity
+
 export function* initializeApplicationSaga(
   startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
@@ -238,7 +239,7 @@ export function* initializeApplicationSaga(
   // OFFLINE WALLET MINI-APP CHECKS
 
   // Start watching for ITW sagas that do not require internet connection or a valid session
-  yield* fork(watchItwOfflineSaga);
+  yield* fork(watchItwSaga);
 
   // Before continuing with the startup flow, we check if the app started offline.
   // In that case (offline wallet or timeout), we skip the saga to prevent triggering
@@ -431,10 +432,10 @@ export function* initializeApplicationSaga(
   // **However**, this refactor depends on the saga startup integer refactor,
   // so it momentarily does not have a jira ticket assigned
   if (
-    O.isNone(maybeSessionInformation) ||
-    (O.isSome(maybeSessionInformation) &&
-      (maybeSessionInformation.value.bpdToken === undefined ||
-        maybeSessionInformation.value.walletToken === undefined))
+    maybeSessionInformation == null ||
+    (maybeSessionInformation != null &&
+      (maybeSessionInformation.bpdToken === undefined ||
+        maybeSessionInformation.walletToken === undefined))
   ) {
     // let's try to load the session information from the backend.
 
@@ -444,10 +445,10 @@ export function* initializeApplicationSaga(
     );
 
     if (
-      O.isNone(maybeSessionInformation) ||
-      (O.isSome(maybeSessionInformation) &&
-        (maybeSessionInformation.value.bpdToken === undefined ||
-          maybeSessionInformation.value.walletToken === undefined))
+      maybeSessionInformation == null ||
+      (maybeSessionInformation != null &&
+        (maybeSessionInformation.bpdToken === undefined ||
+          maybeSessionInformation.walletToken === undefined))
     ) {
       yield* call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
       return;
@@ -533,7 +534,7 @@ export function* initializeApplicationSaga(
 
   // yield* delay(0 as Millisecond);
   const hasPreviousSessionAndPin =
-    previousSessionToken && O.isSome(maybeStoredPin);
+    previousSessionToken && maybeStoredPin != null;
   if (hasPreviousSessionAndPin && showIdentificationModal) {
     // we ask the user to identify using the unlock code.
     // FIXME: This is an unsafe cast caused by a wrongly described type.
@@ -541,7 +542,7 @@ export function* initializeApplicationSaga(
       typeof startAndReturnIdentificationResult
     > = yield* call(
       startAndReturnIdentificationResult,
-      maybeStoredPin.value,
+      maybeStoredPin,
       undefined,
       undefined,
       undefined,
@@ -645,7 +646,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchWalletSaga);
 
   // Here we can be sure that the session information is loaded and valid
-  const bpdToken = maybeSessionInformation.value.bpdToken as string;
+  const bpdToken = maybeSessionInformation.bpdToken as string;
 
   // Start watching for cgn actions
   yield* fork(watchBonusCgnSaga, sessionToken);
@@ -686,10 +687,10 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for itw saga
-  yield* fork(watchItwSaga);
+  yield* fork(watchItwAuthenticatedSaga);
 
   // Here we can be sure that the session information is loaded and valid
-  const walletToken = maybeSessionInformation.value.walletToken as string;
+  const walletToken = maybeSessionInformation.walletToken as string;
   // Start watching for Wallet V3 actions
   yield* fork(watchPaymentsSaga, walletToken);
 

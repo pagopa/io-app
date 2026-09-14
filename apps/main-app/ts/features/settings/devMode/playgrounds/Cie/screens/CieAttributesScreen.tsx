@@ -1,8 +1,9 @@
-import { IOButton, VSpacer } from "@pagopa/io-app-design-system";
+import { IOButton, VSpacer } from "@io-app/design-system";
 import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
 import { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
 import { ReadStatusComponent } from "../components/ReadStatusComponent";
 import { useCieNavigation } from "../navigation/CiePlaygroundsNavigator";
@@ -70,7 +71,7 @@ export const CieAttributesScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={["bottom"]}>
+    <SafeAreaView edges={["bottom"]} style={styles.container}>
       <View style={styles.progressContainer}>
         <ReadStatusComponent
           progress={event?.progress}
@@ -81,7 +82,9 @@ export const CieAttributesScreen = () => {
       <IOButton
         label={status === "reading" ? "Stop reading" : "Start reading"}
         onPress={() =>
-          status === "reading" ? handleStopReading() : handleStartReading()
+          void (status === "reading"
+            ? handleStopReading()
+            : handleStartReading())
         }
       />
       <VSpacer size={16} />

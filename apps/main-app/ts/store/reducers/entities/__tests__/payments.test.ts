@@ -1,5 +1,6 @@
-import { PaymentFaultV2Enum } from "../../../../../definitions/communication/PaymentFaultV2";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import {
   updatePaymentForMessage,
   UpdatePaymentForMessageFailure

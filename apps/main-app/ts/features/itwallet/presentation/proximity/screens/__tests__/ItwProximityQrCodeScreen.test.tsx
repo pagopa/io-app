@@ -1,10 +1,12 @@
 import { createStore } from "redux";
 import { createActor, StateFrom } from "xstate";
+
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { testProximityDeps } from "../../../../machine/utils/testDeps";
 import { trackItwProximityQrCode } from "../../analytics";
 import { ProximityFailureType } from "../../machine/failure";
 import { itwProximityMachine } from "../../machine/machine";
@@ -34,7 +36,8 @@ const mockShouldShowExpiredProximityCredentialsBannerSelector = jest.fn(
 );
 jest.mock("../../store/selectors/credentials", () => ({
   shouldShowExpiredProximityCredentialsBannerSelector: () =>
-    mockShouldShowExpiredProximityCredentialsBannerSelector()
+    mockShouldShowExpiredProximityCredentialsBannerSelector(),
+  itwPresentableCredentialsByDocTypeSelector: () => ({})
 }));
 
 describe("ItwProximityPresentmentScreen", () => {
@@ -49,15 +52,20 @@ describe("ItwProximityPresentmentScreen", () => {
   });
 
   it("should render QR code when ready", () => {
+    const component = renderComponent(
+      {
+        machineState: "displayQrCode",
+        qrCodeString: "mock-qr-code-string"
+      },
+      { source: "WALLET_HOME" }
+    );
+
     expect(
-      renderComponent(
-        {
-          machineState: "displayQrCode",
-          qrCodeString: "mock-qr-code-string"
-        },
-        { source: "WALLET_HOME" }
+      component.getByLabelText(
+        "Immagine del codice QR da mostrare a chi verifica i documenti digitali"
       )
-    ).toMatchSnapshot();
+    ).toBeTruthy();
+    expect(component).toMatchSnapshot();
   });
 
   it("should render error state when QR code generation fails", () => {
@@ -133,16 +141,19 @@ describe("ItwProximityPresentmentScreen", () => {
 });
 
 type RenderOptions =
-  | { machineState: "loading" }
   | { machineState: "displayQrCode"; qrCodeString: string }
-  | { machineState: "error" };
+  | { machineState: "error" }
+  | { machineState: "loading" };
 
 const renderComponent = (
   options: RenderOptions,
   routeParams: ItwProximityPresentmentScreenNavigationParams
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+  const store = createStore(appReducer, initialState as any);
+  const initialSnapshot = createActor(itwProximityMachine, {
+    input: { deps: testProximityDeps({ store }) }
+  }).getSnapshot();
 
   const snapshot = buildSnapshot(initialSnapshot, options);
 
@@ -173,7 +184,7 @@ const renderComponent = (
     ),
     ITW_PROXIMITY_ROUTES.PRESENTMENT,
     {},
-    createStore(appReducer, initialState as any)
+    store
   );
 };
 
@@ -182,14 +193,6 @@ const buildSnapshot = (
   options: RenderOptions
 ): StateFrom<typeof itwProximityMachine> => {
   switch (options.machineState) {
-    case "loading":
-      return {
-        ...initialSnapshot,
-        value: { Presentment: "Starting" },
-        tags: new Set([ItwPresentationTags.Loading]),
-        context: { ...initialSnapshot.context }
-      };
-
     case "displayQrCode":
       return {
         ...initialSnapshot,
@@ -213,6 +216,14 @@ const buildSnapshot = (
             reason: new Error("test error")
           }
         }
+      };
+
+    case "loading":
+      return {
+        ...initialSnapshot,
+        value: { Presentment: "Starting" },
+        tags: new Set([ItwPresentationTags.Loading]),
+        context: { ...initialSnapshot.context }
       };
   }
 };

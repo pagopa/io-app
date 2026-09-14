@@ -1,6 +1,7 @@
 import { createStore } from "redux";
+
 import { setSendEngagementScreenHasBeenDismissed } from "../actions";
-import { testable, SEND_LOGIN_ENGAGEMENT_INITIAL_STATE } from "../reducers";
+import { SEND_LOGIN_ENGAGEMENT_INITIAL_STATE, testable } from "../reducers";
 
 const pnLoginEngagementReducer = testable!.sendLoginEngagementReducer;
 

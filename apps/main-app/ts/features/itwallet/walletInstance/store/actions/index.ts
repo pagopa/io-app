@@ -1,13 +1,15 @@
 import {
   ActionType,
-  createStandardAction,
-  createAsyncAction
+  createAsyncAction,
+  createStandardAction
 } from "typesafe-actions";
+
+import { NetworkError } from "../../../../../utils/errors";
 import {
   WalletInstanceAttestations,
   WalletInstanceStatus
 } from "../../../common/utils/itwTypesUtils";
-import { NetworkError } from "../../../../../utils/errors";
+import { ItwWalletInstanceState } from "../reducers";
 
 /**
  * This action stores the Wallet Instance Attestation
@@ -35,17 +37,17 @@ export const itwSetWalletInstanceRenewalError = createStandardAction(
 )<boolean>();
 
 /**
- * Store multiple Wallet Unit Attestations under the provided IDs.
+ * Store multiple Key Attestations under the provided IDs.
  */
-export const itwWalletUnitAttestationsStore = createStandardAction(
-  "ITW_WALLET_UNIT_ATTESTATIONS_STORE"
+export const itwKeyAttestationsStore = createStandardAction(
+  "ITW_KEY_ATTESTATIONS_STORE"
 )<Record<string, string>>();
 
 /**
- * Removes multiple Wallet Unit Attestations by their IDs.
+ * Removes multiple Key Attestations by their IDs.
  */
-export const itwWalletUnitAttestationsRemoveById = createStandardAction(
-  "ITW_WALLET_UNIT_ATTESTATIONS_REMOVE_BY_ID"
+export const itwKeyAttestationsRemoveById = createStandardAction(
+  "ITW_KEY_ATTESTATIONS_REMOVE_BY_ID"
 )<ReadonlyArray<string>>();
 
 /**
@@ -55,10 +57,18 @@ export const itwSetWalletInstanceRemotelyActive = createStandardAction(
   "ITW_SET_WALLET_INSTANCE_REMOTELY_ACTIVE"
 )<boolean | undefined>();
 
+/**
+ * This action sets whether a wallet instance is remotely active.
+ */
+export const itwStoreWalletInstanceStatusList = createStandardAction(
+  "ITW_STORE_WALLET_INSTANCE_STATUS_LIST"
+)<ItwWalletInstanceState["statusList"]>();
+
 export type ItwWalletInstanceActions =
-  | ActionType<typeof itwWalletInstanceAttestationStore>
-  | ActionType<typeof itwUpdateWalletInstanceStatus>
+  | ActionType<typeof itwKeyAttestationsRemoveById>
+  | ActionType<typeof itwKeyAttestationsStore>
+  | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetWalletInstanceRenewalError>
-  | ActionType<typeof itwWalletUnitAttestationsStore>
-  | ActionType<typeof itwWalletUnitAttestationsRemoveById>
-  | ActionType<typeof itwSetWalletInstanceRemotelyActive>;
+  | ActionType<typeof itwStoreWalletInstanceStatusList>
+  | ActionType<typeof itwUpdateWalletInstanceStatus>
+  | ActionType<typeof itwWalletInstanceAttestationStore>;

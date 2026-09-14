@@ -1,7 +1,8 @@
-import { IOToast } from "@pagopa/io-app-design-system";
-import { useCallback, useMemo } from "react";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { useCallback, useMemo } from "react";
+
 import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
@@ -67,7 +68,7 @@ const usePnActivation = (serviceId: ServiceId) => {
  */
 export const useSpecialCtaPn = (
   serviceId: ServiceId,
-  activate: boolean = false
+  activate = false
 ): IOScrollViewActions["primary"] | undefined => {
   const isPnEnabled = useIOSelector(isPnRemoteEnabledSelector);
   const isPnSupported = useIOSelector(isPnAppVersionSupportedSelector);

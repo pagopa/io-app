@@ -1,17 +1,15 @@
-import * as O from "fp-ts/lib/Option";
-import { call, take, select } from "typed-redux-saga/macro";
 import { CommonActions } from "@react-navigation/native";
-import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
-import { createPinSuccess } from "../../features/settings/security/store/actions/pinset";
+import { call, select, take } from "typed-redux-saga/macro";
 
-import { PinString } from "../../types/PinString";
-import { ReduxSagaEffect } from "../../types/utils";
-
-import { getPin } from "../../utils/keychain";
-import NavigationService from "../../navigation/NavigationService";
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 import { isValidPinNumber } from "../../features/authentication/fastLogin/utils/pinPolicy";
+import { createPinSuccess } from "../../features/settings/security/store/actions/pinset";
+import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
+import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
+import { PinString } from "../../types/PinString";
+import { ReduxSagaEffect } from "../../types/utils";
+import { getPin } from "../../utils/keychain";
 
 export function* checkConfiguredPinSaga(): Generator<
   ReduxSagaEffect,
@@ -22,14 +20,10 @@ export function* checkConfiguredPinSaga(): Generator<
   // it from the Keychain
   const pinCode = yield* call(getPin);
 
-  if (O.isSome(pinCode)) {
+  if (pinCode != null) {
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
-    if (isFastLoginEnabled) {
-      if (isValidPinNumber(pinCode.value)) {
-        return pinCode.value;
-      }
-    } else {
-      return pinCode.value;
+    if (!isFastLoginEnabled || isValidPinNumber(pinCode)) {
+      return pinCode;
     }
   }
 

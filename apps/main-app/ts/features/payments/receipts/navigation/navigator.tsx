@@ -3,6 +3,7 @@ import {
   createStackNavigator,
   StackNavigationProp
 } from "@react-navigation/stack";
+
 import { isGestureEnabled } from "../../../../utils/navigation";
 import WalletTransactionCartItemDetailsScreen from "../screens/ReceiptCartItemDetailsScreen";
 import { ReceiptDetailsScreen } from "../screens/ReceiptDetailsScreen";
@@ -20,39 +21,39 @@ export const PaymentsReceiptNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: true }}
   >
     <Stack.Screen
-      name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_DETAILS}
       component={ReceiptDetailsScreen}
+      name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_DETAILS}
       options={{ gestureEnabled: isGestureEnabled }}
     />
     <Stack.Screen
-      name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_CART_ITEM_DETAILS}
       component={WalletTransactionCartItemDetailsScreen}
+      name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_CART_ITEM_DETAILS}
       options={{ gestureEnabled: isGestureEnabled }}
     />
     <Stack.Screen
-      name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_LIST_SCREEN}
       component={ReceiptListScreen}
+      name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_LIST_SCREEN}
       options={{ gestureEnabled: isGestureEnabled }}
     />
     <Stack.Screen
-      name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_PREVIEW_SCREEN}
       component={ReceiptPreviewScreen}
+      name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_PREVIEW_SCREEN}
       options={{ gestureEnabled: isGestureEnabled }}
     />
     <Stack.Screen
-      name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_ERROR_SCREEN}
       component={ReceiptDownloadErrorScreen}
+      name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_ERROR_SCREEN}
       options={{ gestureEnabled: isGestureEnabled, headerShown: false }}
     />
   </Stack.Navigator>
 );
 
-type ReceiptStackNavigationProp<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = StackNavigationProp<PaymentsReceiptParamsList & ParamList, RouteName>;
-
 export type ReceiptStackNavigation = ReceiptStackNavigationProp<
   PaymentsReceiptParamsList,
   keyof PaymentsReceiptParamsList
 >;
+
+type ReceiptStackNavigationProp<
+  ParamList extends ParamListBase,
+  RouteName extends keyof ParamList = string
+> = StackNavigationProp<ParamList & PaymentsReceiptParamsList, RouteName>;

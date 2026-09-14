@@ -1067,17 +1067,17 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           [
                             {
                               "backgroundColor": "#FFFFFF",
-                              "elevation": 20,
+                              "boxShadow": [
+                                {
+                                  "blurRadius": 32,
+                                  "color": "rgba(14,15,19,0.1)",
+                                  "offsetX": 0,
+                                  "offsetY": 0,
+                                },
+                              ],
                               "paddingBottom": 16,
                               "paddingHorizontal": 24,
                               "paddingTop": 16,
-                              "shadowColor": "#0E0F13",
-                              "shadowOffset": {
-                                "height": 50,
-                                "width": 0,
-                              },
-                              "shadowOpacity": 0.5,
-                              "shadowRadius": 37,
                             },
                             {
                               "paddingBottom": 16,
@@ -1148,7 +1148,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -1172,7 +1171,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -2732,17 +2730,17 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           [
                             {
                               "backgroundColor": "#FFFFFF",
-                              "elevation": 20,
+                              "boxShadow": [
+                                {
+                                  "blurRadius": 32,
+                                  "color": "rgba(14,15,19,0.1)",
+                                  "offsetX": 0,
+                                  "offsetY": 0,
+                                },
+                              ],
                               "paddingBottom": 16,
                               "paddingHorizontal": 24,
                               "paddingTop": 16,
-                              "shadowColor": "#0E0F13",
-                              "shadowOffset": {
-                                "height": 50,
-                                "width": 0,
-                              },
-                              "shadowOpacity": 0.5,
-                              "shadowRadius": 37,
                             },
                             {
                               "paddingBottom": 16,
@@ -2813,7 +2811,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -2837,7 +2834,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -4398,17 +4394,17 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           [
                             {
                               "backgroundColor": "#FFFFFF",
-                              "elevation": 20,
+                              "boxShadow": [
+                                {
+                                  "blurRadius": 32,
+                                  "color": "rgba(14,15,19,0.1)",
+                                  "offsetX": 0,
+                                  "offsetY": 0,
+                                },
+                              ],
                               "paddingBottom": 16,
                               "paddingHorizontal": 24,
                               "paddingTop": 16,
-                              "shadowColor": "#0E0F13",
-                              "shadowOffset": {
-                                "height": 50,
-                                "width": 0,
-                              },
-                              "shadowOpacity": 0.5,
-                              "shadowRadius": 37,
                             },
                             {
                               "paddingBottom": 16,
@@ -4479,7 +4475,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -4503,7 +4498,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -6064,17 +6058,17 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           [
                             {
                               "backgroundColor": "#FFFFFF",
-                              "elevation": 20,
+                              "boxShadow": [
+                                {
+                                  "blurRadius": 32,
+                                  "color": "rgba(14,15,19,0.1)",
+                                  "offsetX": 0,
+                                  "offsetY": 0,
+                                },
+                              ],
                               "paddingBottom": 16,
                               "paddingHorizontal": 24,
                               "paddingTop": 16,
-                              "shadowColor": "#0E0F13",
-                              "shadowOffset": {
-                                "height": 50,
-                                "width": 0,
-                              },
-                              "shadowOpacity": 0.5,
-                              "shadowRadius": 37,
                             },
                             {
                               "paddingBottom": 16,
@@ -6145,7 +6139,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -6169,7 +6162,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -8086,17 +8078,17 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                           [
                             {
                               "backgroundColor": "#FFFFFF",
-                              "elevation": 20,
+                              "boxShadow": [
+                                {
+                                  "blurRadius": 32,
+                                  "color": "rgba(14,15,19,0.1)",
+                                  "offsetX": 0,
+                                  "offsetY": 0,
+                                },
+                              ],
                               "paddingBottom": 16,
                               "paddingHorizontal": 24,
                               "paddingTop": 16,
-                              "shadowColor": "#0E0F13",
-                              "shadowOffset": {
-                                "height": 50,
-                                "width": 0,
-                              },
-                              "shadowOpacity": 0.5,
-                              "shadowRadius": 37,
                             },
                             {
                               "paddingBottom": 16,
@@ -8167,7 +8159,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -8191,7 +8182,6 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",

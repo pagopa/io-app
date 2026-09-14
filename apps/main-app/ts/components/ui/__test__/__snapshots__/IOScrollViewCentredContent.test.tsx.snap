@@ -341,6 +341,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -354,6 +355,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -391,10 +393,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -406,14 +408,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -631,7 +633,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -655,7 +656,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -870,38 +870,32 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -928,12 +922,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -1026,7 +1014,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1050,7 +1037,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1536,6 +1522,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -1549,6 +1536,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -1586,10 +1574,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -1601,14 +1589,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -1826,7 +1814,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -1850,7 +1837,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -2065,38 +2051,32 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -2123,12 +2103,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -2221,7 +2195,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2245,7 +2218,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2446,7 +2418,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2470,7 +2441,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2685,7 +2655,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -2709,7 +2678,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -3194,6 +3162,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -3207,6 +3176,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -3244,10 +3214,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -3259,14 +3229,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -3484,7 +3454,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -3508,7 +3477,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -3723,38 +3691,32 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -3781,12 +3743,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -3879,7 +3835,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -3903,7 +3858,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -4117,7 +4071,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -4141,7 +4094,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -4626,6 +4578,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -4639,6 +4592,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -4676,10 +4630,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -4691,14 +4645,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -4926,38 +4880,32 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -4984,12 +4932,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -5082,7 +5024,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -5106,7 +5047,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -5592,6 +5532,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -5605,6 +5546,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -5642,10 +5584,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -5657,14 +5599,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -5892,38 +5834,32 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -5950,12 +5886,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -6048,7 +5978,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -6072,7 +6001,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -6273,7 +6201,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -6297,7 +6224,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -6512,7 +6438,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -6536,7 +6461,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -7021,6 +6945,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -7034,6 +6959,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -7071,10 +6997,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -7086,14 +7012,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -7321,38 +7247,32 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -7379,12 +7299,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -7477,7 +7391,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -7501,7 +7414,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -7715,7 +7627,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -7739,7 +7650,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -8224,6 +8134,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -8237,6 +8148,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -8274,10 +8186,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -8289,14 +8201,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -8511,7 +8423,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -8535,7 +8446,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -8750,38 +8660,32 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -8808,12 +8712,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -8906,7 +8804,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -8930,7 +8827,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -9416,6 +9312,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -9429,6 +9326,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -9466,10 +9364,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -9481,14 +9379,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -9703,7 +9601,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -9727,7 +9624,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -9942,38 +9838,32 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -10000,12 +9890,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -10098,7 +9982,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -10122,7 +10005,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -10323,7 +10205,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -10347,7 +10228,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -10562,7 +10442,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -10586,7 +10465,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -11071,6 +10949,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -11084,6 +10963,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -11121,10 +11001,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -11136,14 +11016,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -11358,7 +11238,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -11382,7 +11261,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -11597,38 +11475,32 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -11655,12 +11527,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -11753,7 +11619,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -11777,7 +11642,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -11991,7 +11855,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -12015,7 +11878,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -12500,6 +12362,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -12513,6 +12376,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -12550,10 +12414,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -12565,14 +12429,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -12797,38 +12661,32 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -12855,12 +12713,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -12953,7 +12805,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -12977,7 +12828,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -13463,6 +13313,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -13476,6 +13327,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -13513,10 +13365,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -13528,14 +13380,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -13760,38 +13612,32 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -13818,12 +13664,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -13916,7 +13756,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -13940,7 +13779,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -14141,7 +13979,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -14165,7 +14002,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -14380,7 +14216,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -14404,7 +14239,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -14889,6 +14723,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -14902,6 +14737,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -14939,10 +14775,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -14954,14 +14790,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -15186,38 +15022,32 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
+                                  "rgba(255, 255, 255, 0)",
+                                  "rgba(255, 255, 255, 0.004)",
+                                  "rgba(255, 255, 255, 0.016)",
+                                  "rgba(255, 255, 255, 0.033)",
+                                  "rgba(255, 255, 255, 0.057)",
+                                  "rgba(255, 255, 255, 0.086)",
+                                  "rgba(255, 255, 255, 0.119)",
+                                  "rgba(255, 255, 255, 0.156)",
+                                  "rgba(255, 255, 255, 0.197)",
+                                  "rgba(255, 255, 255, 0.242)",
+                                  "rgba(255, 255, 255, 0.29)",
+                                  "rgba(255, 255, 255, 0.341)",
+                                  "rgba(255, 255, 255, 0.395)",
+                                  "rgba(255, 255, 255, 0.452)",
+                                  "rgba(255, 255, 255, 0.512)",
+                                  "rgba(255, 255, 255, 0.574)",
+                                  "rgba(255, 255, 255, 0.638)",
+                                  "rgba(255, 255, 255, 0.705)",
+                                  "rgba(255, 255, 255, 0.775)",
+                                  "rgba(255, 255, 255, 0.847)",
+                                  "rgba(255, 255, 255, 0.922)",
+                                  "rgba(255, 255, 255, 1)",
                                 ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
                               }
                               locations={
                                 [
@@ -15244,12 +15074,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   0.9523809523809523,
                                   1,
                                 ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
                               }
                               style={
                                 {
@@ -15342,7 +15166,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -15366,7 +15189,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -15580,7 +15402,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -15604,7 +15425,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",

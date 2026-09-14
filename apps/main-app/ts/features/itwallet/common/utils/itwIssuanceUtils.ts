@@ -4,35 +4,36 @@ import {
   CredentialIssuance,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
+
 import { type IdentificationContext } from "../../machine/eid/context";
-import {
-  CredentialAccessToken,
-  CredentialBundle,
-  IssuerConfiguration
-} from "./itwTypesUtils";
+import { Env } from "./environment";
+import { AuthorizedCredentialMetadata } from "./itwCredentialIssuanceUtils";
+import { extractVerification } from "./itwCredentialUtils";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
-import { extractVerification } from "./itwCredentialUtils";
-import { Env } from "./environment";
 import { getIoWallet } from "./itwIoWallet";
-import { AuthorizedCredentialMetadata } from "./itwCredentialIssuanceUtils";
 import { CredentialType } from "./itwMocksUtils";
+import {
+  CredentialAccessToken,
+  CredentialBundle,
+  IssuerConfiguration
+} from "./itwTypesUtils";
 
 type StartAuthFlow = (params: {
   env: Env;
+  identification: IdentificationContext;
   itwVersion: ItwVersion;
   walletAttestation: string;
-  identification: IdentificationContext;
   withMRTDPoP: boolean;
 }) => Promise<{
   authUrl: string;
-  issuerConf: IssuerConfiguration;
   clientId: string;
   codeVerifier: string;
   credentialDefinition: AuthorizationDetail;
+  issuerConf: IssuerConfiguration;
   redirectUri: string;
 }>;
 
@@ -97,13 +98,13 @@ const startAuthFlow: StartAuthFlow = async ({
   };
 };
 
-export type CompleteAuthFlow = (args: {
+type CompleteAuthFlow = (args: {
   callbackUrl: string;
-  itwVersion: ItwVersion;
-  issuerConf: IssuerConfiguration;
   codeVerifier: string;
-  walletAttestation: string;
+  issuerConf: IssuerConfiguration;
+  itwVersion: ItwVersion;
   redirectUri: string;
+  walletAttestation: string;
 }) => Promise<{
   accessToken: CredentialAccessToken;
 }>;
@@ -149,13 +150,13 @@ const completeAuthFlow: CompleteAuthFlow = async ({
   return { accessToken };
 };
 
-export type GetPid = (args: {
-  itwVersion: ItwVersion;
+type GetPid = (args: {
+  accessToken: CredentialAccessToken;
+  authorizedCredential: AuthorizedCredentialMetadata;
+  clientId: string;
   env: Env;
   issuerConf: IssuerConfiguration;
-  accessToken: CredentialAccessToken;
-  clientId: string;
-  authorizedCredential: AuthorizedCredentialMetadata;
+  itwVersion: ItwVersion;
 }) => Promise<CredentialBundle>;
 
 /**
@@ -176,8 +177,8 @@ const getPid: GetPid = async ({
   const {
     keyTag,
     authDetails: { credential_configuration_id, credential_identifiers },
-    walletUnitAttestationId,
-    walletUnitAttestation
+    keyAttestation,
+    keyAttestationId
   } = authorizedCredential;
 
   const credentialCryptoContext = createCryptoContextFor(keyTag);
@@ -194,7 +195,7 @@ const getPid: GetPid = async ({
       },
       {
         credentialCryptoContext,
-        walletUnitAttestation,
+        keyAttestation,
         dPopCryptoContext
       }
     );
@@ -230,12 +231,12 @@ const getPid: GetPid = async ({
         credential,
         parsedCredential
       }),
-      walletUnitAttestationId
+      keyAttestationId
     }
   };
 };
 
-export { startAuthFlow, completeAuthFlow, getPid };
+export { completeAuthFlow, getPid, startAuthFlow };
 
 /**
  * Consts for the IDP hints in test for SPID and CIE and in production for CIE.

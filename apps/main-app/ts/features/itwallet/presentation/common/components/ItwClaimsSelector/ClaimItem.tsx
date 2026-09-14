@@ -1,11 +1,8 @@
-import {
-  Divider,
-  ListItemCheckbox,
-  ListItemInfo
-} from "@pagopa/io-app-design-system";
+import { Divider, ListItemCheckbox, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment } from "react";
 import { Image, StyleSheet } from "react-native";
+
 import { getNestedItemSummary } from "../../../../common/components/ItwCredentialMultiClaim";
 import {
   ClaimDisplayFormat,
@@ -15,11 +12,11 @@ import {
 } from "../../../../common/utils/itwClaimsUtils";
 
 type Props = {
-  item: ClaimDisplayFormat;
-  selectionEnabled: boolean;
   isSelected?: boolean;
+  item: ClaimDisplayFormat;
   onItemSelected?: (item: ClaimDisplayFormat, selected: boolean) => void;
   present?: (claims: Array<ClaimDisplayFormat>, title?: string) => void;
+  selectionEnabled: boolean;
 };
 
 /**
@@ -62,23 +59,6 @@ export const ClaimItem = ({
   const { label: description, id } = item;
 
   switch (renderAs) {
-    case "image":
-      return (
-        <ListItemInfo
-          value={
-            <Image
-              source={{ uri: value }}
-              style={styles.imageClaim}
-              resizeMode="contain"
-              accessibilityIgnoresInvertColors
-            />
-          }
-          label={description}
-          accessibilityRole="image"
-          reversed
-        />
-      );
-
     case "drivingPrivileges":
       return (
         <>
@@ -93,31 +73,68 @@ export const ClaimItem = ({
                 {idx > 0 && <Divider />}
                 {selectionEnabled ? (
                   <ListItemCheckbox
-                    value={privilege.driving_privilege}
                     description={description}
-                    selected={isSelected}
                     onValueChange={
                       onItemSelected
                         ? selected => onItemSelected(item, selected)
                         : undefined
                     }
+                    selected={isSelected}
+                    value={privilege.driving_privilege}
                   />
                 ) : (
                   <ListItemInfo
-                    value={privilege.driving_privilege}
-                    label={description}
-                    reversed
                     endElement={buildInfoEndElement(
                       present,
                       drivingPrivilegeToClaims(privilege),
                       title
                     )}
+                    label={description}
+                    reversed
+                    value={privilege.driving_privilege}
                   />
                 )}
               </Fragment>
             );
           })}
         </>
+      );
+
+    case "image":
+      return (
+        <ListItemInfo
+          accessibilityRole="image"
+          label={description}
+          reversed
+          value={
+            <Image
+              accessibilityIgnoresInvertColors
+              resizeMode="contain"
+              source={{ uri: value }}
+              style={styles.imageClaim}
+            />
+          }
+        />
+      );
+
+    case "list":
+      return selectionEnabled ? (
+        <ListItemCheckbox
+          description={description}
+          onValueChange={
+            onItemSelected
+              ? selected => onItemSelected(item, selected)
+              : undefined
+          }
+          selected={isSelected}
+          value={value.map(getSafeText).join(", ")}
+        />
+      ) : (
+        <ListItemInfo
+          label={description}
+          reversed
+          value={value.map(getSafeText).join(", ")}
+        />
       );
 
     case "nestedObject":
@@ -128,11 +145,11 @@ export const ClaimItem = ({
             <Fragment key={`${nestedClaim.id}_${idx}`}>
               {idx > 0 && <Divider />}
               <ClaimItem
-                item={nestedClaim}
-                selectionEnabled={selectionEnabled}
                 isSelected={isSelected}
+                item={nestedClaim}
                 onItemSelected={onItemSelected}
                 present={present}
+                selectionEnabled={selectionEnabled}
               />
             </Fragment>
           ))}
@@ -150,11 +167,11 @@ export const ClaimItem = ({
               <Fragment key={`${nestedClaim.id}_${idx}`}>
                 {idx > 0 && <Divider />}
                 <ClaimItem
-                  item={nestedClaim}
-                  selectionEnabled={selectionEnabled}
                   isSelected={isSelected}
+                  item={nestedClaim}
                   onItemSelected={onItemSelected}
                   present={present}
+                  selectionEnabled={selectionEnabled}
                 />
               </Fragment>
             ))}
@@ -179,21 +196,21 @@ export const ClaimItem = ({
                 {index > 0 && <Divider />}
                 {selectionEnabled ? (
                   <ListItemCheckbox
-                    value={summaryVal}
                     description={summaryDesc}
-                    selected={isSelected}
                     onValueChange={
                       onItemSelected
                         ? selected => onItemSelected(item, selected)
                         : undefined
                     }
+                    selected={isSelected}
+                    value={summaryVal}
                   />
                 ) : (
                   <ListItemInfo
-                    value={summaryVal}
+                    endElement={buildInfoEndElement(present, singleItemClaims)}
                     label={summaryDesc}
                     reversed
-                    endElement={buildInfoEndElement(present, singleItemClaims)}
+                    value={summaryVal}
                   />
                 )}
               </Fragment>
@@ -203,41 +220,21 @@ export const ClaimItem = ({
       );
     }
 
-    case "list":
-      return selectionEnabled ? (
-        <ListItemCheckbox
-          value={value.map(getSafeText).join(", ")}
-          description={description}
-          selected={isSelected}
-          onValueChange={
-            onItemSelected
-              ? selected => onItemSelected(item, selected)
-              : undefined
-          }
-        />
-      ) : (
-        <ListItemInfo
-          value={value.map(getSafeText).join(", ")}
-          label={description}
-          reversed
-        />
-      );
-
     case "text":
     default:
       return selectionEnabled ? (
         <ListItemCheckbox
-          value={getSafeText(value)}
           description={description}
-          selected={isSelected}
           onValueChange={
             onItemSelected
               ? selected => onItemSelected(item, selected)
               : undefined
           }
+          selected={isSelected}
+          value={getSafeText(value)}
         />
       ) : (
-        <ListItemInfo value={getSafeText(value)} label={description} reversed />
+        <ListItemInfo label={description} reversed value={getSafeText(value)} />
       );
   }
 };

@@ -1,17 +1,20 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
+import { ItwStoredCredentialsMocks } from "../../../utils/itwMocksUtils";
 import {
+  itwClearCredentialUpgradeFailed,
+  itwClearWalletActivationFeedbackBannerData,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
   itwSetCredentialUpgradeFailed,
-  itwClearCredentialUpgradeFailed,
-  itwSetIdentificationMode
+  itwSetIdentificationMode,
+  itwSetWalletActivationFeedbackBannerData,
+  ItwWalletActivationFeedbackBannerData
 } from "../../actions/preferences";
 import reducer, {
   itwPreferencesInitialState,
   ItwPreferencesState
 } from "../preferences";
-import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
-import { ItwStoredCredentialsMocks } from "../../../utils/itwMocksUtils";
 
 describe("IT Wallet preferences reducer", () => {
   const INITIAL_STATE: ItwPreferencesState = {};
@@ -24,7 +27,6 @@ describe("IT Wallet preferences reducer", () => {
 
   it("should handle itwLifecycleStoresReset action and ensure some values are not reset", () => {
     const initialState: ItwPreferencesState = {
-      isPendingReview: true,
       authLevel: "L2",
       claimValuesHidden: true,
       isFiscalCodeWhitelisted: true,
@@ -110,7 +112,6 @@ describe("IT Wallet preferences reducer", () => {
     const action = itwLifecycleStoresReset();
     const newState = reducer(
       {
-        isPendingReview: true,
         authLevel: "L2",
         claimValuesHidden: true,
         isItwActivationDisabled: true
@@ -122,6 +123,79 @@ describe("IT Wallet preferences reducer", () => {
       ...itwPreferencesInitialState,
       claimValuesHidden: true,
       isItwActivationDisabled: true
+    });
+  });
+
+  describe("itwSetWalletActivationFeedbackBannerData / itwClearWalletActivationFeedbackBannerData", () => {
+    const SAMPLE_DATA: ItwWalletActivationFeedbackBannerData = {
+      docStatus: "not_active",
+      authMethod: "ciepin"
+    };
+
+    it("should store banner data", () => {
+      const newState = reducer(
+        INITIAL_STATE,
+        itwSetWalletActivationFeedbackBannerData(SAMPLE_DATA)
+      );
+      expect(newState.walletActivationFeedbackBannerData).toEqual(SAMPLE_DATA);
+    });
+
+    it("should overwrite previously stored banner data", () => {
+      const updated: ItwWalletActivationFeedbackBannerData = {
+        ...SAMPLE_DATA,
+        authMethod: "spid"
+      };
+      const stateWithData = reducer(
+        INITIAL_STATE,
+        itwSetWalletActivationFeedbackBannerData(SAMPLE_DATA)
+      );
+      const stateAfterUpdate = reducer(
+        stateWithData,
+        itwSetWalletActivationFeedbackBannerData(updated)
+      );
+      expect(stateAfterUpdate.walletActivationFeedbackBannerData).toEqual(
+        updated
+      );
+    });
+
+    it("should remove banner data", () => {
+      const stateWithData = reducer(
+        INITIAL_STATE,
+        itwSetWalletActivationFeedbackBannerData(SAMPLE_DATA)
+      );
+      const stateAfterClear = reducer(
+        stateWithData,
+        itwClearWalletActivationFeedbackBannerData()
+      );
+      expect(
+        stateAfterClear.walletActivationFeedbackBannerData
+      ).toBeUndefined();
+    });
+
+    it("should preserve other fields when clearing banner data", () => {
+      const stateWithData = reducer(
+        { ...INITIAL_STATE, authLevel: "L2" },
+        itwSetWalletActivationFeedbackBannerData(SAMPLE_DATA)
+      );
+      const stateAfterClear = reducer(
+        stateWithData,
+        itwClearWalletActivationFeedbackBannerData()
+      );
+      expect(stateAfterClear.authLevel).toBe("L2");
+      expect(
+        stateAfterClear.walletActivationFeedbackBannerData
+      ).toBeUndefined();
+    });
+
+    it("should clear banner data on itwLifecycleStoresReset", () => {
+      const stateWithData = reducer(
+        INITIAL_STATE,
+        itwSetWalletActivationFeedbackBannerData(SAMPLE_DATA)
+      );
+      const stateAfterReset = reducer(stateWithData, itwLifecycleStoresReset());
+      expect(
+        stateAfterReset.walletActivationFeedbackBannerData
+      ).toBeUndefined();
     });
   });
 });

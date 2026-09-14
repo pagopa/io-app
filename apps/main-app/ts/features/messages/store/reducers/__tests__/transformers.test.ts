@@ -1,4 +1,5 @@
-import { CreatedMessageWithContentAndAttachments } from "../../../../../../definitions/communication/CreatedMessageWithContentAndAttachments";
+import { CreatedMessageWithContentAndAttachments } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndAttachments";
+
 import { message_1 } from "../../../__mocks__/message";
 import { toUIMessageDetails } from "../transformers";
 

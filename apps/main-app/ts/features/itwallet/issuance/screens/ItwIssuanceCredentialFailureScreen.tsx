@@ -1,8 +1,5 @@
-import { Errors } from "@pagopa/io-react-native-wallet";
-import { sequenceS } from "fp-ts/lib/Apply";
-import * as O from "fp-ts/lib/Option";
-import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -11,26 +8,24 @@ import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackItwKoStateAction } from "../../analytics";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
 import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
-import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
-import { StatusAssertionError } from "../../common/utils/itwCredentialStatusAssertionUtils.ts";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
-import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
 } from "../../machine/credential/failure";
-import {
-  selectCredentialTypeOption,
-  selectFailureOption,
-  selectIssuerConfigurationOption
-} from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import {
+  selectCredentialType,
+  selectFailure,
+  selectIssuerConfiguration
+} from "../../machine/credential/selectors";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
+import { useCredentialIssuanceStatusMessage } from "../hooks/useCredentialIssuanceStatusMessage";
 
 const ASSERTION_FAILED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/43824826487953-Provo-ad-aggiungere-un-documento-al-Portafoglio-ma-ricevo-un-errore-dal-mio-dispositivo-Apple";
@@ -49,16 +44,13 @@ const failureLinkMapper: Partial<
 };
 
 export const ItwIssuanceCredentialFailureScreen = () => {
-  const failureOption =
-    ItwCredentialIssuanceMachineContext.useSelector(selectFailureOption);
+  const failure =
+    ItwCredentialIssuanceMachineContext.useSelector(selectFailure);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return pipe(
-    failureOption,
-    O.fold(constNull, failure => <ContentView failure={failure} />)
-  );
+  return failure ? <ContentView failure={failure} /> : null;
 };
 
 type ContentViewProps = { failure: CredentialIssuanceFailure };
@@ -68,20 +60,19 @@ type ContentViewProps = { failure: CredentialIssuanceFailure };
  */
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
+  const credentialType =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
   const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
-    selectIssuerConfigurationOption
+    selectIssuerConfiguration
   );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const credentialTypeValue = O.toUndefined(credentialType);
-  const credentialName = useItwCredentialName(credentialTypeValue);
+  const credentialName = useItwCredentialName(credentialType);
 
-  const invalidStatusDetails = getCredentialInvalidStatusDetails(failure, {
-    credentialType,
+  const invalidStatusDetails = useCredentialIssuanceStatusMessage(
+    failure,
     issuerConf
-  });
+  );
+
   const defaultInvalidStatusMessage = {
     title: I18n.t(
       "features.itWallet.issuance.notEntitledCredentialError.title"
@@ -105,7 +96,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   });
   const supportModal = useItwFailureSupportModal({
     failure,
-    credentialType: O.toUndefined(credentialType),
+    credentialType,
     supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
     zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
     supportLink: failureLinkMapper[failure.type]
@@ -119,26 +110,25 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
-        case CredentialIssuanceFailureType.UNEXPECTED:
-        case CredentialIssuanceFailureType.ISSUER_GENERIC:
-        case CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC: {
-          const closeAction = {
-            label: I18n.t(
-              "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
-            ),
-            onPress: closeIssuance
-          };
+        case CredentialIssuanceFailureType.HARDWARE_KEY_INVALID:
           return {
-            title: I18n.t("features.itWallet.issuance.genericError.title"),
-            subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
-            pictogram: "umbrella",
-            ...(supportModal.hasContactMethods
-              ? { action: supportModalAction, secondaryAction: closeAction }
-              : { action: closeAction, secondaryAction: supportModalAction })
+            title: I18n.t("features.itWallet.hardwareKeyInvalid.error.title"),
+            subtitle: I18n.t("features.itWallet.hardwareKeyInvalid.error.body"),
+            pictogram: "fatalError",
+            action: {
+              label: I18n.t(
+                "features.itWallet.hardwareKeyInvalid.error.primaryAction"
+              ),
+              onPress: supportModal.present
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              onPress: closeIssuance
+            }
           };
-        }
         // Dynamic errors extracted from the entity configuration, with fallback
-        case CredentialIssuanceFailureType.INVALID_STATUS: {
+        case CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION:
+        case CredentialIssuanceFailureType.INVALID_STATUS_BY_TSL: {
           const closeAction = {
             label: I18n.t(
               "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
@@ -153,6 +143,24 @@ const ContentView = ({ failure }: ContentViewProps) => {
               invalidStatusDetails.message?.description ??
               defaultInvalidStatusMessage.description,
             pictogram: "accessDenied",
+            ...(supportModal.hasContactMethods
+              ? { action: supportModalAction, secondaryAction: closeAction }
+              : { action: closeAction, secondaryAction: supportModalAction })
+          };
+        }
+        case CredentialIssuanceFailureType.ISSUER_GENERIC:
+        case CredentialIssuanceFailureType.UNEXPECTED:
+        case CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC: {
+          const closeAction = {
+            label: I18n.t(
+              "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
+            ),
+            onPress: closeIssuance
+          };
+          return {
+            title: I18n.t("features.itWallet.issuance.genericError.title"),
+            subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
+            pictogram: "umbrella",
             ...(supportModal.hasContactMethods
               ? { action: supportModalAction, secondaryAction: closeAction }
               : { action: closeAction, secondaryAction: supportModalAction })
@@ -186,29 +194,13 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
-        case CredentialIssuanceFailureType.HARDWARE_KEY_INVALID:
-          return {
-            title: I18n.t("features.itWallet.hardwareKeyInvalid.error.title"),
-            subtitle: I18n.t("features.itWallet.hardwareKeyInvalid.error.body"),
-            pictogram: "fatalError",
-            action: {
-              label: I18n.t(
-                "features.itWallet.hardwareKeyInvalid.error.primaryAction"
-              ),
-              onPress: supportModal.present
-            },
-            secondaryAction: {
-              label: I18n.t("global.buttons.close"),
-              onPress: closeIssuance
-            }
-          };
       }
     };
 
   useCredentialEventsTracking({
     failure,
     isItwL3,
-    credentialType: O.toUndefined(credentialType),
+    credentialType,
     invalidErrorCode: invalidStatusDetails.errorCode
   });
 
@@ -220,63 +212,3 @@ const ContentView = ({ failure }: ContentViewProps) => {
     </>
   );
 };
-
-type GetCredentialInvalidStatusDetailsParams = {
-  credentialType: O.Option<string>;
-  issuerConf: O.Option<IssuerConfiguration>;
-};
-
-/**
- * Utility to safely extract details from an invalid status failure, including the localized message.
- * **Note:** The message is dynamic and is extracted from the EC.
- */
-const getCredentialInvalidStatusDetails = (
-  failure: CredentialIssuanceFailure,
-  { issuerConf }: GetCredentialInvalidStatusDetailsParams
-) => {
-  const { errorCodeOption, credentialConfigurationId } = pipe(
-    failure,
-    O.fromPredicate(isInvalidStatusFailure),
-    O.map(({ reason }) => ({
-      errorCodeOption: pipe(
-        O.fromEither(StatusAssertionError.decode(reason?.reason)),
-        O.map(({ error }) => error)
-      ),
-      credentialConfigurationId: O.fromNullable(reason?.metadata?.credentialId)
-    })),
-    O.getOrElse(() => ({
-      errorCodeOption: O.none as O.Option<string>,
-      credentialConfigurationId: O.none as O.Option<string>
-    }))
-  );
-
-  const localizedMessage = pipe(
-    sequenceS(O.Monad)({
-      errorCode: errorCodeOption,
-      credentialConfigurationId,
-      issuerConf
-    }),
-    O.chain(params =>
-      O.tryCatch(() =>
-        Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
-          credentialType: params.credentialConfigurationId,
-          issuerConf: params.issuerConf
-        })
-      )
-    ),
-    O.map(message => message?.[getClaimsFullLocale()]),
-    O.toUndefined
-  );
-
-  return {
-    message: localizedMessage,
-    errorCode: pipe(errorCodeOption, O.toUndefined)
-  };
-};
-
-const isInvalidStatusFailure = (
-  failure: CredentialIssuanceFailure
-): failure is Extract<
-  CredentialIssuanceFailure,
-  { type: CredentialIssuanceFailureType.INVALID_STATUS }
-> => failure.type === CredentialIssuanceFailureType.INVALID_STATUS;

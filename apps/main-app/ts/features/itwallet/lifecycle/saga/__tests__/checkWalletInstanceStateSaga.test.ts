@@ -1,15 +1,15 @@
-import * as O from "fp-ts/lib/Option";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { type DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
-import { Errors } from "@pagopa/io-react-native-wallet";
-import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
+
 import { GlobalState } from "../../../../../store/reducers/types";
+import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { getWalletInstanceStatus } from "../../../common/utils/itwAttestationUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { itwIntegrityServiceStatusSelector } from "../../../issuance/store/selectors";
-
+import { itwUpdateWalletInstanceStatus } from "../../../walletInstance/store/actions";
 import { checkIntegrityServiceReadySaga } from "../checkIntegrityServiceReadySaga";
 import {
   checkWalletInstanceInconsistencySaga,
@@ -17,7 +17,6 @@ import {
   getStatusOrResetWalletInstance
 } from "../checkWalletInstanceStateSaga";
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
-import { itwUpdateWalletInstanceStatus } from "../../../walletInstance/store/actions";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
@@ -34,7 +33,9 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          issuance: { integrityKeyTag: O.none },
+          remoteConfig: {},
+          issuance: { integrityKeyTag: undefined },
+          preferences: {},
           credentials: { credentials: {} }
         }
       }
@@ -51,9 +52,10 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: {
             integrityServiceStatus: "ready",
-            integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
+            integrityKeyTag: "aac6e82a-e27e-4293-9b55-94a9fab22763"
           },
           credentials: { credentials: {} },
           environment: {
@@ -82,8 +84,9 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: {
-            integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
+            integrityKeyTag: "aac6e82a-e27e-4293-9b55-94a9fab22763"
           },
           credentials: { credentials: {} },
           environment: {
@@ -111,8 +114,9 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: {
-            integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
+            integrityKeyTag: "3396d31e-ac6a-4357-8083-cb5d3cda4d74"
           },
           credentials: {
             credentials: { [mockPid.credentialId]: mockPid }
@@ -142,8 +146,9 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: {
-            integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
+            integrityKeyTag: "3396d31e-ac6a-4357-8083-cb5d3cda4d74"
           },
           credentials: {
             credentials: { [mockPid.credentialId]: mockPid }
@@ -173,10 +178,12 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          issuance: { integrityKeyTag: O.none },
+          remoteConfig: {},
+          issuance: { integrityKeyTag: undefined },
           credentials: {
             credentials: { [mockPid.credentialId]: mockPid }
-          }
+          },
+          preferences: {}
         }
       }
     };
@@ -193,11 +200,13 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          remoteConfig: {},
           issuance: {
-            integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
+            integrityKeyTag: "aac6e82a-e27e-4293-9b55-94a9fab22763"
           },
           credentials: { credentials: {} },
-          environment: { env: "prod" }
+          environment: { env: "prod" },
+          preferences: {}
         }
       }
     };

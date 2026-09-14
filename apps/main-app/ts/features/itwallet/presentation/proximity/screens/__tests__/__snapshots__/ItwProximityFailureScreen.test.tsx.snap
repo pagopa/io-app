@@ -611,7 +611,6 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -635,7 +634,6 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -835,7 +833,14 @@ L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
                             <View
                               style={
                                 {
-                                  "height": 0,
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
                                 }
                               }
                             />
@@ -1507,7 +1512,6 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1531,7 +1535,6 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1731,7 +1734,14 @@ L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
                             <View
                               style={
                                 {
-                                  "height": 0,
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
                                 }
                               }
                             />
@@ -2426,7 +2436,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2450,7 +2459,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2666,7 +2674,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2690,7 +2697,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2888,7 +2894,14 @@ L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
                             <View
                               style={
                                 {
-                                  "height": 0,
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
                                 }
                               }
                             />

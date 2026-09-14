@@ -1,11 +1,12 @@
 import * as E from "fp-ts/lib/Either";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { getPaymentsReceiptDetailsAction } from "../store/actions";
+
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
-import { TransactionClient } from "../../common/api/client";
 import { readablePrivacyReport } from "../../../../utils/reporters";
+import { TransactionClient } from "../../common/api/client";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
+import { getPaymentsReceiptDetailsAction } from "../store/actions";
 
 /**
  * Handle the remote call to get the transaction details from the biz events API

@@ -1,10 +1,11 @@
 /* eslint-disable no-bitwise */
 import { createStore } from "redux";
-import { ProfileNotificationSettings } from "../ProfileNotificationsSettings";
-import { appReducer } from "../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
+import { ProfileNotificationSettings } from "../ProfileNotificationsSettings";
 
 describe("ProfileNotificationSettings", () => {
   [...Array(128).keys()].forEach(index => {
@@ -55,12 +56,12 @@ const renderComponent = (
   return renderScreenWithNavigationStoreContext(
     () => (
       <ProfileNotificationSettings
-        previewSwitchValue={previewSwitchValue}
-        remindersSwitchValue={reminderSwitchValue}
         disablePreviewSetting={previewSwitchDisabled}
         disableRemindersSetting={reminderSwitchDisabled}
         isUpdatingPreviewSetting={previewSwitchIsUpdating}
         isUpdatingRemindersSetting={reminderSwitchIsUpdating}
+        previewSwitchValue={previewSwitchValue}
+        remindersSwitchValue={reminderSwitchValue}
         showSettingsPath={showSettingsPath}
       />
     ),

@@ -1,26 +1,27 @@
-import I18n from "i18next";
 import { act, fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import _ from "lodash";
 import { Alert } from "react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
 import {
+  trackSendAarMandateCieNfcActivation,
+  trackSendAarMandateCieReadingClosureAlert,
+  trackSendAarMandateCieReadingClosureAlertAccepted,
+  trackSendAarMandateCieReadingClosureAlertContinue
+} from "../../analytics";
+import * as AAR_SELECTORS from "../../store/selectors";
+import { sendAarFlowStates } from "../../utils/stateUtils";
+import { sendAarMockStates } from "../../utils/testUtils";
+import {
   SendAarActivateNfcScreen,
   SendAarActivateNfcScreenProps
 } from "../SendAarActivateNfcScreen";
-import { sendAarMockStates } from "../../utils/testUtils";
-import { sendAarFlowStates } from "../../utils/stateUtils";
-import * as AAR_SELECTORS from "../../store/selectors";
-import {
-  trackSendAarMandateCieReadingClosureAlert,
-  trackSendAarMandateCieReadingClosureAlertAccepted,
-  trackSendAarMandateCieReadingClosureAlertContinue,
-  trackSendAarMandateCieNfcActivation
-} from "../../analytics";
 
 const mockReplace = jest.fn();
 const mockShouldNeverCall = jest.fn();
@@ -67,7 +68,6 @@ describe("SendAarActivateNfcScreen", () => {
 
       if (isCieScanning) {
         const { type: _T, ...params } = aarState;
-
         expect(mockReplace).toHaveBeenCalledTimes(1);
         expect(mockReplace).toHaveBeenCalledWith(
           PN_ROUTES.SEND_AAR_CIE_CARD_READING,
@@ -200,12 +200,12 @@ function renderComponent() {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     ({ navigation, route }: SendAarActivateNfcScreenProps) => (
       <SendAarActivateNfcScreen
-        route={route}
         navigation={{
           ..._.mapValues(navigation, () => mockShouldNeverCall),
           setOptions: navigation.setOptions,
           replace: mockReplace
         }}
+        route={route}
       />
     ),
     PN_ROUTES.SEND_AAR_NFC_ACTIVATION,

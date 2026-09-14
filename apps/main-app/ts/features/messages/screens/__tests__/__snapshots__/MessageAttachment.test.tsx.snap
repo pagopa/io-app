@@ -211,7 +211,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
                                 "justifyContent": "center",
                                 "left": 0,
@@ -222,7 +221,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               },
                               {
                                 "backgroundColor": "rgba(255,255,255,0.7)",
-                                "opacity": 1,
                               },
                             ]
                           }
@@ -562,15 +560,16 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -582,15 +581,16 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -671,7 +671,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -695,7 +694,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",

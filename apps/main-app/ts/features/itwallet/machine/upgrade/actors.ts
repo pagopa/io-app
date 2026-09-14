@@ -1,194 +1,263 @@
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import * as O from "fp-ts/Option";
+import type {
+  CredentialIssuance,
+  ItwVersion
+} from "@pagopa/io-react-native-wallet";
+
 import { fromPromise } from "xstate";
-import { useIOStore } from "../../../../store/hooks";
+
 import { assert } from "../../../../utils/assert";
-import { Env } from "../../common/utils/environment";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
+import { getRepresentativeVaultId } from "../../common/utils/itwCredentialUtils";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
+  CredentialFormat,
   CredentialMetadata,
   IssuerConfiguration,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { CredentialsVault } from "../../credentials/utils/vault";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { getCredentialStatusFromStatusList } from "../../statusList/utils";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { EidIssuanceMode } from "../eid/context";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { createCommonActorsImplementation } from "../utils/actors";
-import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
-import { getIoWallet } from "../../common/utils/itwIoWallet";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { CredentialUpgradeMachineDeps } from "./input";
 
-export type RequestAccessTokenParams = {
-  pid: CredentialBundle | undefined;
-  walletInstanceAttestation: string | undefined;
-  credential: CredentialMetadata;
-  issuanceMode: EidIssuanceMode;
+export type LoadContextInput = {
+  deps: CredentialUpgradeMachineDeps;
+};
+
+export type LoadContextOutput = {
+  integrityKeyTag: string;
+  pid: CredentialBundle;
+  walletInstanceAttestation: WalletInstanceAttestations;
 };
 
 export type RequestAccessTokenOutput = {
   accessToken: CredentialAccessToken;
-  issuerConf: IssuerConfiguration;
   clientId: string;
+  issuerConf: IssuerConfiguration;
 };
 
-export type UpgradeCredentialParams = {
+export type RequestAccessTokenParams = WithItwVersion<{
   credential: CredentialMetadata;
-  integrityKeyTag: string | undefined;
-} & Partial<RequestAccessTokenOutput>;
+  deps: CredentialUpgradeMachineDeps;
+  issuanceMode: EidIssuanceMode;
+  pid: CredentialBundle | undefined;
+  walletInstanceAttestation: string | undefined;
+}>;
 
 export type UpgradeCredentialOutput = {
-  credentialType: string;
-  walletUnitAttestations: Record<string, string>;
   credentials: ReadonlyArray<CredentialBundle>;
+  credentialType: string;
+  keyAttestations: Record<string, string>;
 };
 
-export type LoadContextOutput = {
-  pid: CredentialBundle;
-  walletInstanceAttestation: WalletInstanceAttestations;
-  integrityKeyTag: string;
+export type UpgradeCredentialParams = WithItwVersion<
+  Partial<RequestAccessTokenOutput> & {
+    credential: CredentialMetadata;
+    deps: CredentialUpgradeMachineDeps;
+    integrityKeyTag: string | undefined;
+  }
+>;
+
+type WithItwVersion<T = { [K: string]: any }> = T & {
+  itwVersion: ItwVersion;
 };
 
-export const createCredentialUpgradeActorsImplementation = (
-  env: Env,
-  itwVersion: ItwVersion,
-  store: ReturnType<typeof useIOStore>
-) => ({
-  loadContext: fromPromise<LoadContextOutput>(async () => {
-    const state = store.getState();
-    const walletInstanceAttestation =
-      itwWalletInstanceAttestationSelector(state);
-    assert(
-      walletInstanceAttestation,
-      "walletInstanceAttestation is not present in the store"
-    );
-    const integrityKeyTagOption = itwIntegrityKeyTagSelector(state);
-    assert(
-      O.isSome(integrityKeyTagOption),
-      "Integrity key tag is not present in the store"
-    );
+export const loadContextActor = fromPromise<
+  LoadContextOutput,
+  LoadContextInput
+>(async ({ input }) => {
+  const state = input.deps.store.getState();
+  const walletInstanceAttestation = itwWalletInstanceAttestationSelector(state);
+  assert(
+    walletInstanceAttestation,
+    "walletInstanceAttestation is not present in the store"
+  );
+  const integrityKeyTag = itwIntegrityKeyTagSelector(state);
+  assert(integrityKeyTag, "Integrity key tag is not present in the store");
 
-    const pidOption = itwCredentialsEidSelector(state);
-    assert(O.isSome(pidOption), "PID credential is not present in the store");
+  const pidMetadata = itwCredentialsEidSelector(state);
+  assert(pidMetadata, "PID credential is not present in the store");
 
-    const pid = await CredentialsVault.get(pidOption.value.credentialId);
-    assert(pid, "PID credential not found in secure storage");
+  const pid = await CredentialsVault.get(getRepresentativeVaultId(pidMetadata));
+  assert(pid, "PID credential not found in secure storage");
 
-    return {
-      pid: {
-        metadata: pidOption.value,
-        credential: pid
-      },
-      walletInstanceAttestation,
-      integrityKeyTag: integrityKeyTagOption.value
-    };
-  }),
-
-  requestAccessToken: fromPromise<
-    RequestAccessTokenOutput,
-    RequestAccessTokenParams
-  >(async ({ input }) => {
-    const { pid, walletInstanceAttestation, credential, issuanceMode } = input;
-    const isUpgrade = issuanceMode === "upgrade";
-
-    assert(pid, "PID credential is undefined");
-    assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
-
-    const {
-      requestedCredential,
-      issuerConf,
-      clientId,
-      codeVerifier,
-      evaluatedDcqlQuery,
-      responseMode
-    } = await credentialIssuanceUtils.requestCredential({
-      env,
-      itwVersion,
-      credentialType: credential.credentialType,
-      walletInstanceAttestation,
-      // TODO [SIW-3091]: Update when the L3 PID reissuance flow is ready
-      skipMdocIssuance: !isUpgrade,
-      pid
-    });
-
-    const { accessToken } = await credentialIssuanceUtils.completeAuthFlow({
-      env,
-      itwVersion,
-      codeVerifier,
-      responseMode,
-      issuerConf,
-      walletInstanceAttestation,
-      requestedCredential,
-      evaluatedDcqlQuery
-    });
-
-    return { accessToken, issuerConf, clientId };
-  }),
-
-  /**
-   * Handles both upgrading and reissuing credentials depending on issuanceMode.
-   * - upgrade → performs credential upgrade (skipMdocIssuance = false)
-   * - reissuance → performs credential reissuing (skipMdocIssuance = true)
-   *
-   * To ensure a smooth experience when the session token expires, it is important to keep this actor
-   * retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
-   * rejected for session expired, so it can be reentered and retried from where it failed.
-   */
-  upgradeCredential: fromPromise<
-    UpgradeCredentialOutput,
-    UpgradeCredentialParams
-  >(async ({ input }) => {
-    const { accessToken, issuerConf, clientId, credential, integrityKeyTag } =
-      input;
-
-    const sessionToken = sessionTokenSelector(store.getState());
-    assert(sessionToken, "sessionToken is undefined");
-    assert(
-      issuerConf && clientId && accessToken && integrityKeyTag,
-      "Some of the required parameters for credential upgrade are undefined"
-    );
-
-    // The Wallet Unit Attestation makes use of the integrity service
-    if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
-      await ensureIntegrityServiceIsStoreReadyOrThrow(store);
-    }
-
-    const authorizedCredentials =
-      await credentialIssuanceUtils.generateKeysWithWalletUnitAttestation(
-        accessToken,
-        {
-          env,
-          itwVersion,
-          hardwareKeyTag: integrityKeyTag,
-          sessionToken
-        }
-      );
-
-    const credentials = await credentialIssuanceUtils.obtainCredential({
-      env,
-      itwVersion,
-      credentialType: credential.credentialType,
-      issuerConf,
-      clientId,
-      accessToken,
-      authorizedCredentials
-    });
-
-    return {
-      credentialType: credential.credentialType,
-      credentials,
-      walletUnitAttestations: authorizedCredentials.reduce(
-        (acc, c) =>
-          c.walletUnitAttestationId && c.walletUnitAttestation
-            ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
-            : acc,
-        {} as Record<string, string>
-      )
-    };
-  }),
-
-  ...createCommonActorsImplementation(store)
+  return {
+    pid: {
+      metadata: pidMetadata,
+      credential: pid
+    },
+    walletInstanceAttestation,
+    integrityKeyTag
+  };
 });
+
+export const requestAccessTokenActor = fromPromise<
+  RequestAccessTokenOutput,
+  RequestAccessTokenParams
+>(async ({ input }) => {
+  const { pid, walletInstanceAttestation, credential, issuanceMode } = input;
+  const { env } = input.deps;
+  const isUpgrade = issuanceMode === "upgrade";
+
+  assert(pid, "PID credential is undefined");
+  assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
+
+  const {
+    requestedCredential,
+    issuerConf,
+    clientId,
+    codeVerifier,
+    evaluatedDcqlQuery,
+    responseMode
+  } = await credentialIssuanceUtils.requestCredential({
+    env,
+    itwVersion: input.itwVersion,
+    credentialType: credential.credentialType,
+    walletInstanceAttestation,
+    // TODO [SIW-3091]: Update when the L3 PID reissuance flow is ready
+    skipMdocIssuance: !isUpgrade,
+    pid
+  });
+
+  const { accessToken } = await credentialIssuanceUtils.completeAuthFlow({
+    env,
+    itwVersion: input.itwVersion,
+    codeVerifier,
+    responseMode,
+    issuerConf,
+    walletInstanceAttestation,
+    requestedCredential,
+    evaluatedDcqlQuery
+  });
+
+  return { accessToken, issuerConf, clientId };
+});
+
+/**
+ * Handles both upgrading and reissuing credentials depending on issuanceMode.
+ * - upgrade → performs credential upgrade (skipMdocIssuance = false)
+ * - reissuance → performs credential reissuing (skipMdocIssuance = true)
+ *
+ * To ensure a smooth experience when the session token expires, it is important to keep this actor
+ * retriable: it must fail as early as possible when `generateKeysWithKeyAttestation` is
+ * rejected for session expired, so it can be reentered and retried from where it failed.
+ */
+export const upgradeCredentialActor = fromPromise<
+  UpgradeCredentialOutput,
+  UpgradeCredentialParams
+>(async ({ input }) => {
+  const {
+    accessToken,
+    issuerConf,
+    clientId,
+    credential,
+    integrityKeyTag,
+    itwVersion
+  } = input;
+  const { env, store } = input.deps;
+
+  const sessionToken = sessionTokenSelector(store.getState());
+  assert(sessionToken, "sessionToken is undefined");
+  assert(
+    issuerConf && clientId && accessToken && integrityKeyTag,
+    "Some of the required parameters for credential upgrade are undefined"
+  );
+
+  // The Key Attestation makes use of the integrity service
+  if (getIoWallet(itwVersion).KeyAttestation.isSupported) {
+    await ensureIntegrityServiceIsStoreReadyOrThrow(store);
+  }
+
+  const authorizedCredentials =
+    await credentialIssuanceUtils.generateKeysWithKeyAttestation(accessToken, {
+      env,
+      itwVersion,
+      hardwareKeyTag: integrityKeyTag,
+      sessionToken
+    });
+
+  const credentials = await credentialIssuanceUtils.obtainCredential({
+    env,
+    itwVersion,
+    credentialType: credential.credentialType,
+    issuerConf,
+    clientId,
+    accessToken,
+    authorizedCredentials
+  });
+
+  const bundles = await enrichBundlesWithStatusList(
+    itwVersion,
+    issuerConf,
+    credentials
+  );
+
+  return {
+    credentialType: credential.credentialType,
+    credentials: bundles,
+    keyAttestations: authorizedCredentials.reduce(
+      (acc, c) =>
+        c.keyAttestationId && c.keyAttestation
+          ? { ...acc, [c.keyAttestationId]: c.keyAttestation }
+          : acc,
+      {} as Record<string, string>
+    )
+  };
+});
+
+/**
+ * For each credential bundle fetch and validate its status list, then enrich it with the
+ * extracted status in `metadata.validity` and the status list content for subsequent storage.
+ * @param itwVersion The current IT-Wallet specs version
+ * @param issuerConf The Issuer Configuration to get the keys for verification
+ * @param bundles The credential bundles to enrich
+ * @returns The enriched credential bundles
+ */
+const enrichBundlesWithStatusList = async (
+  itwVersion: ItwVersion,
+  issuerConf: IssuerConfiguration,
+  bundles: ReadonlyArray<CredentialBundle>
+): Promise<ReadonlyArray<CredentialBundle>> => {
+  if (!getIoWallet(itwVersion).CredentialStatus.statusList.isSupported) {
+    return bundles;
+  }
+
+  return Promise.all(
+    bundles.map(async bundle => {
+      // TODO: [SIW-4681] Handle status list for mdoc credentials
+      if (bundle.metadata.format === CredentialFormat.MDOC) {
+        return bundle;
+      }
+
+      const { status, rawStatus, uri, idx, parsedStatusList } =
+        await getCredentialStatusFromStatusList(
+          itwVersion,
+          bundle.credential,
+          bundle.metadata.credentialId,
+          bundle.metadata.format as CredentialIssuance.CredentialFormat,
+          issuerConf.keys
+        );
+
+      return {
+        credential: bundle.credential,
+        metadata: {
+          ...bundle.metadata,
+          validity: {
+            type: "status_list",
+            status,
+            rawStatus,
+            statusList: { uri, idx }
+          }
+        },
+        statusList: { uri, payload: parsedStatusList }
+      };
+    })
+  );
+};

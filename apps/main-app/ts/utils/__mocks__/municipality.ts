@@ -1,4 +1,4 @@
-import { Municipality } from "../../../definitions/content/Municipality";
+import { Municipality } from "@io-app/api-types/generated/definitions/content/Municipality";
 
 export const mockedMunicipality: Municipality = {
   codiceProvincia: "091",

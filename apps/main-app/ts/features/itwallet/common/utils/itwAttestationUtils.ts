@@ -1,10 +1,13 @@
 import {
-  type ItwVersion,
-  createCryptoContextFor
+  createCryptoContextFor,
+  type ItwVersion
 } from "@pagopa/io-react-native-wallet";
-import { createItWalletFetch } from "../../api/client";
+
 import { getAppVersion } from "../../../../utils/appVersion";
 import { assert } from "../../../../utils/assert";
+import { createItWalletFetch } from "../../api/client";
+import { WALLET_SOLUTION_ID } from "./constants";
+import { Env } from "./environment.ts";
 import {
   createKeyAttestationCryptoContextFor,
   regenerateCryptoKey,
@@ -14,10 +17,8 @@ import {
   generateIntegrityHardwareKeyTag,
   getIntegrityContext
 } from "./itwIntegrityUtils";
-import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
-import { Env } from "./environment.ts";
-import { WALLET_SOLUTION_ID } from "./constants";
 import { getIoWallet } from "./itwIoWallet";
+import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
 
 /**
  * Getter for the integrity hardware keytag to be used for an {@link IntegrityContext}.
@@ -178,7 +179,7 @@ export const getCurrentWalletInstanceStatus = (
   });
 };
 
-export const getWalletUnitAttestation = async (
+export const getKeyAttestation = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
   itwVersion: ItwVersion,
   keyTags: ReadonlyArray<string>,
@@ -188,8 +189,8 @@ export const getWalletUnitAttestation = async (
   const ioWallet = getIoWallet(itwVersion);
 
   assert(
-    ioWallet.WalletUnitAttestation.isSupported,
-    `Wallet Unit Attestation is not supported by IT-Wallet v${itwVersion}`
+    ioWallet.KeyAttestation.isSupported,
+    `Key Attestation is not supported by IT-Wallet v${itwVersion}`
   );
 
   const integrityContext = getIntegrityContext(hardwareKeyTag);
@@ -199,7 +200,7 @@ export const getWalletUnitAttestation = async (
     WALLET_PROVIDER_BASE_URL
   );
 
-  const { attestation } = await ioWallet.WalletUnitAttestation.getAttestation(
+  const { attestation } = await ioWallet.KeyAttestation.getAttestation(
     {
       walletSolutionId: WALLET_SOLUTION_ID,
       walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
