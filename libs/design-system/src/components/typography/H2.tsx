@@ -1,13 +1,15 @@
 import { useIOTheme } from "../../context";
-import { IOFontSize, IOFontWeight } from "../../utils/fonts";
+import { IOTypography } from "../../core";
+import { IOFontWeight } from "../../utils/fonts";
 import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
 type H2StyleProps = TypographicStyleProps & {
   weight?: Extract<IOFontWeight, "Bold" | "Semibold">;
 };
 
-export const h2FontSize: IOFontSize = 26;
-export const h2LineHeight = 34;
+const {
+  h2: { colorToken, ...h2Style }
+} = IOTypography;
 
 /**
  * `H2` typographic style
@@ -21,11 +23,9 @@ export const H2 = ({
 
   const H2Props: IOTextProps = {
     ...props,
-    dynamicTypeRamp: "title1", // iOS only
-    weight: customWeight ?? "Semibold",
-    size: h2FontSize,
-    lineHeight: h2LineHeight,
-    color: customColor ?? theme["textHeading-default"]
+    ...h2Style,
+    weight: customWeight ?? h2Style.weight,
+    color: customColor ?? theme[colorToken]
   };
 
   return <IOText {...H2Props}>{props.children}</IOText>;

@@ -1,5 +1,4 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 
 import { SagaCallReturnType } from "../../../../../../../types/utils";
@@ -23,15 +22,15 @@ const pollingTimeThreshold = (10 * 1000) as Millisecond;
 export function* handleEycaActivationSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
 ) {
-  const startPollingTime = new Date().getTime();
+  const startPollingTime = Date.now();
   while (true) {
     const activationInfo: SagaCallReturnType<typeof getActivation> =
       yield* call(getActivation, getEycaActivation);
-    if (E.isLeft(activationInfo)) {
-      yield* put(cgnEycaActivation.failure(activationInfo.left));
+    if (activationInfo.isErr()) {
+      yield* put(cgnEycaActivation.failure(activationInfo.error));
       return;
     }
-    switch (activationInfo.right) {
+    switch (activationInfo.value) {
       case "COMPLETED":
         yield* put(cgnEycaActivation.success("COMPLETED"));
         return;
@@ -47,7 +46,7 @@ export function* handleEycaActivationSaga(
     yield* put(cgnEycaActivation.success("POLLING"));
     // sleep
     yield* call(startTimer, cgnResultPolling);
-    const now = new Date().getTime();
+    const now = Date.now();
     // stop polling if threshold is exceeded
     if (now - startPollingTime >= pollingTimeThreshold) {
       yield* put(cgnEycaActivation.success("POLLING_TIMEOUT"));

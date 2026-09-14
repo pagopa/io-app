@@ -19,6 +19,7 @@ export type EventsPayload = ISO18013_5.EventsPayload;
 export type ProximityDetails = NonEmptyArray<{
   claimsToDisplay: Array<ClaimDisplayFormat>;
   credentialType: string;
+  rpDisplayName?: string;
   rpId: string;
 }>;
 

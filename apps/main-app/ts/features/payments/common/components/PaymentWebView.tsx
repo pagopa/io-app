@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { useRef, useState } from "react";
 import { Linking } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -6,7 +5,7 @@ import WebView from "react-native-webview";
 
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { isDevEnv } from "../../../../utils/environment";
-import { getIntentFallbackUrl } from "../../../authentication/common/utils/login";
+import { getIntentFallbackUrl } from "../../../authentication/common/utils";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
 
 type PaymentWebViewProps<T> = {
@@ -87,8 +86,8 @@ const PaymentWebView = <T,>({
             return false;
           }
           const intent = getIntentFallbackUrl(url);
-          if (O.isSome(intent)) {
-            void Linking.openURL(decodeURIComponent(intent.value));
+          if (intent != null) {
+            void Linking.openURL(decodeURIComponent(intent));
             return false;
           }
           return true;

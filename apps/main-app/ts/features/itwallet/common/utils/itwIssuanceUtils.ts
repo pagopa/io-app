@@ -98,7 +98,7 @@ const startAuthFlow: StartAuthFlow = async ({
   };
 };
 
-export type CompleteAuthFlow = (args: {
+type CompleteAuthFlow = (args: {
   callbackUrl: string;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
@@ -150,7 +150,7 @@ const completeAuthFlow: CompleteAuthFlow = async ({
   return { accessToken };
 };
 
-export type GetPid = (args: {
+type GetPid = (args: {
   accessToken: CredentialAccessToken;
   authorizedCredential: AuthorizedCredentialMetadata;
   clientId: string;
@@ -177,8 +177,8 @@ const getPid: GetPid = async ({
   const {
     keyTag,
     authDetails: { credential_configuration_id, credential_identifiers },
-    walletUnitAttestationId,
-    walletUnitAttestation
+    keyAttestation,
+    keyAttestationId
   } = authorizedCredential;
 
   const credentialCryptoContext = createCryptoContextFor(keyTag);
@@ -195,7 +195,7 @@ const getPid: GetPid = async ({
       },
       {
         credentialCryptoContext,
-        walletUnitAttestation,
+        keyAttestation,
         dPopCryptoContext
       }
     );
@@ -231,7 +231,7 @@ const getPid: GetPid = async ({
         credential,
         parsedCredential
       }),
-      walletUnitAttestationId
+      keyAttestationId
     }
   };
 };

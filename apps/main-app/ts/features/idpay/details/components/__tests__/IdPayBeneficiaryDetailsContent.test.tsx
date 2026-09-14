@@ -54,7 +54,7 @@ const T_REWARD_VALUE_PERCENTAGE_STRING = "30%";
 const T_REWARD_VALUE_ABSOLUTE_STRING = "30,00 €";
 
 describe("Test IdPayBeneficiaryDetailsContent component", () => {
-  it("should correctly render all the info ", () => {
+  it("should correctly render all the info", () => {
     const { component } = renderComponent(InitiativeRewardTypeEnum.REFUND);
 
     const statusRow = within(component.getByTestId("statusTestID"));

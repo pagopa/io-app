@@ -6,6 +6,7 @@ import {
   generateAcceptedFields,
   getDocuments,
   getProximityDetails,
+  getVerifierDisplayName,
   getVerifierIdentity
 } from "../presentation";
 
@@ -128,6 +129,38 @@ describe("getVerifierIdentity", () => {
         "Missing certificate data for RP identification"
       );
     });
+  });
+});
+
+describe("getVerifierDisplayName", () => {
+  it("prefers the certificate organization", () => {
+    expect(
+      getVerifierDisplayName({
+        commonName: mockCommonName,
+        organization: "Verifier organization",
+        country: undefined,
+        serialNumber: undefined
+      })
+    ).toBe("Verifier organization");
+  });
+
+  it("falls back to the certificate common name", () => {
+    expect(getVerifierDisplayName(mockCertificateData)).toBe(mockCommonName);
+  });
+
+  it("falls back to the certificate common name when organization is empty", () => {
+    expect(
+      getVerifierDisplayName({
+        commonName: mockCommonName,
+        organization: "",
+        country: undefined,
+        serialNumber: undefined
+      })
+    ).toBe(mockCommonName);
+  });
+
+  it("returns undefined when certificate data is unavailable", () => {
+    expect(getVerifierDisplayName(undefined)).toBeUndefined();
   });
 });
 
@@ -351,6 +384,7 @@ describe("getProximityDetails", () => {
     expect(result).toEqual([
       {
         rpId: mockCommonName,
+        rpDisplayName: mockCommonName,
         claimsToDisplay: [
           {
             id: "org.iso.18013.5.1.aamva:family_name",

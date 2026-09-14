@@ -1,6 +1,5 @@
 import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/CgnActivationDetail";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as E from "fp-ts/lib/Either";
 import { call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
@@ -32,19 +31,16 @@ export const handleCgnStatusPolling = (
     ActionType<typeof cgnActivationStatus>,
     any
   > {
-    const startPollingTime = new Date().getTime();
+    const startPollingTime = Date.now();
     while (true) {
       const cgnActivationResult: SagaCallReturnType<typeof getCgnActivation> =
         yield* call(getCgnActivation, {});
       // blocking error -> stop polling
-      if (E.isLeft(cgnActivationResult)) {
+      if ("left" in cgnActivationResult) {
         throw cgnActivationResult.left;
       }
       // we got the result -> stop polling
-      else if (
-        E.isRight(cgnActivationResult) &&
-        cgnActivationResult.right.status === 200
-      ) {
+      else if (cgnActivationResult.right.status === 200) {
         switch (cgnActivationResult.right.value.status) {
           case StatusEnum.COMPLETED:
             return cgnActivationStatus.success({
@@ -68,7 +64,7 @@ export const handleCgnStatusPolling = (
       // sleep
       yield* call(startTimer, cgnResultPolling);
       // check if the time threshold was exceeded, if yes stop polling
-      const now = new Date().getTime();
+      const now = Date.now();
       if (now - startPollingTime >= pollingTimeThreshold) {
         return cgnActivationStatus.success({
           status: CgnActivationProgressEnum.TIMEOUT
