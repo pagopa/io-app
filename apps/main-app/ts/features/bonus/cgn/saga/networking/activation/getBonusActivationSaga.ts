@@ -1,4 +1,3 @@
-import * as E from "fp-ts/lib/Either";
 import { call } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -45,7 +44,7 @@ export const cgnActivationSaga = (
         typeof startCgnActivation
       > = yield* call(startCgnActivation, {});
 
-      if (E.isRight(startCgnActivationResult)) {
+      if ("right" in startCgnActivationResult) {
         const status = startCgnActivationResult.right.status;
         // Status is 201 request has been created -> Start Polling
         if (status === 201) {
@@ -64,10 +63,12 @@ export const cgnActivationSaga = (
             status: statusProgressRecord[status]
           });
         }
-        throw Error(`response status ${startCgnActivationResult.right.status}`);
+        throw new Error(
+          `response status ${startCgnActivationResult.right.status}`
+        );
       }
       // decoding failure
-      throw Error(readablePrivacyReport(startCgnActivationResult.left));
+      throw new Error(readablePrivacyReport(startCgnActivationResult.left));
     } catch (e) {
       return cgnActivationStatus.failure(getError(e));
     }

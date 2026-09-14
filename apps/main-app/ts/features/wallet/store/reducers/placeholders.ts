@@ -10,12 +10,12 @@ import {
   walletToggleLoadingState
 } from "../actions/placeholders";
 
-export type WalletPlaceholders = { [key: string]: WalletCardCategory };
-
 export type WalletPlaceholdersState = {
   isLoading: boolean;
   items: WalletPlaceholders;
 };
+
+type WalletPlaceholders = { [key: string]: WalletCardCategory };
 
 const INITIAL_STATE: WalletPlaceholdersState = {
   items: {},

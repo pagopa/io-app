@@ -1,24 +1,23 @@
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { AnyEventObject } from "xstate";
 
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { Context } from "./context";
 
-export const createItwTrustmarkGuardsImplementation = (
-  itwVersion: ItwVersion
-) => ({
-  isSessionExpired: ({ event }: { event: AnyEventObject }) =>
-    "error" in event && event.error instanceof ItwSessionExpiredError,
+type GuardArgs = {
+  context: Context;
+  event: AnyEventObject;
+};
 
-  hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
-    pipe(
-      O.fromNullable(context.walletInstanceAttestation?.jwt),
-      O.map(attestation =>
-        isWalletInstanceAttestationValid(itwVersion, attestation)
-      ),
-      O.getOrElse(() => false)
-    )
-});
+export const isSessionExpiredGuard = ({ event }: GuardArgs) =>
+  "error" in event && event.error instanceof ItwSessionExpiredError;
+
+export const hasValidWalletInstanceAttestationGuard = ({
+  context
+}: GuardArgs) => {
+  const attestation = context.walletInstanceAttestation?.jwt;
+  return (
+    attestation !== undefined &&
+    isWalletInstanceAttestationValid(context.deps.itwVersion, attestation)
+  );
+};

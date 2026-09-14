@@ -1,6 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwIsRemotelyActiveSelector } from "../../walletInstance/store/selectors";
 
@@ -19,13 +16,10 @@ export const useItwDiscoveryBannerType = ():
   // Get the wallet instance status from Redux
   const isRemotelyActive = useIOSelector(itwIsRemotelyActiveSelector);
 
-  return pipe(
-    O.fromNullable(isRemotelyActive),
-    O.fold(
-      // If the value is still undefined, do nothing
-      () => undefined,
-      // Otherwise, set the banner type based on the definitive value
-      isActive => (isActive ? "reactivating" : "onboarding")
-    )
-  );
+  // While the value is still undefined, no banner is shown
+  if (isRemotelyActive === undefined) {
+    return undefined;
+  }
+
+  return isRemotelyActive ? "reactivating" : "onboarding";
 };

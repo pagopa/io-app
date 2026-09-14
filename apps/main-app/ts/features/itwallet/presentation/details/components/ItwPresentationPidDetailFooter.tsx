@@ -1,5 +1,4 @@
 import { ListItemAction } from "@io-app/design-system";
-import { constVoid } from "fp-ts/function";
 import I18n from "i18next";
 import { memo } from "react";
 import { Alert, View } from "react-native";
@@ -48,7 +47,7 @@ const ItwPresentationPidDetailFooter = () => {
         label={I18n.t(
           "features.itWallet.presentation.credentialDetails.discoverItWallet"
         )}
-        onPress={useNotAvailableToastGuard(constVoid)}
+        onPress={useNotAvailableToastGuard(() => undefined)}
         variant="primary"
       />
       <ListItemAction

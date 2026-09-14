@@ -25,14 +25,13 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
     },
   },
   "issuance": {
-    "integrityKeyTag": {
-      "_tag": "None",
-    },
+    "integrityKeyTag": undefined,
   },
   "preferences": {},
   "proximity": {
     "consents": {},
   },
+  "remoteConfig": {},
   "securePreferences": {
     "offlineAccessCounter": 0,
     "unverifiedCredentialsAccessCounter": 0,
@@ -45,12 +44,12 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
   "walletInstance": {
     "attestation": undefined,
     "isRemotelyActive": undefined,
+    "keyAttestations": {},
     "renewalError": false,
     "status": {
       "kind": "PotNone",
     },
     "statusList": undefined,
-    "walletUnitAttestations": {},
   },
 }
 `;

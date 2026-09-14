@@ -87,38 +87,33 @@ const convertTimestampToReadableFormat = timestamp =>
     timeZone: "Europe/Rome"
   });
 
-fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
-  if (err) {
-    console.log("Timestamp file not found.");
-    throw err;
-  }
+async function run() {
+  try {
+    const timestamp = fs.readFileSync(timestampFilePath, "utf8");
 
-  console.log(
-    "Last processed timestamp:",
-    convertTimestampToReadableFormat(timestamp)
-  );
-  console.log(`————————————————`);
+    console.log(
+      "Last processed timestamp:",
+      convertTimestampToReadableFormat(timestamp)
+    );
+    console.log(`————————————————`);
 
-  fs.readdir(svgDir, (err, files) => {
-    if (err) {
-      throw err;
-    }
+    const files = fs.readdirSync(svgDir);
 
-    files.forEach(file => {
+    for (const file of files) {
       const filePath = join(svgDir, file);
       const fileStats = fs.statSync(filePath);
 
-      /* Only process files with a more recent creation
+      /* Only process files with a creation/modification
       date later than the timestamp value */
       if (fileStats.mtime > new Date(timestamp)) {
         if (!file.endsWith(".svg")) {
-          return;
+          continue;
         }
 
         const excludedPrefixes = ["IconSystem", "IconBiom", "IconProduct"];
-        if (excludedPrefixes.some(prefix => file.startsWith(prefix))) {
+        if (excludedPrefixes.some((prefix) => file.startsWith(prefix))) {
           console.log(`⚠️ Skipping excluded file: ${file}`);
-          return;
+          continue;
         }
 
         const data = fs.readFileSync(filePath, "utf8");
@@ -137,24 +132,21 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
             "removeViewBox"
           ]
         });
+        
         // Overwrite original SVG file with optimized code
         fs.writeFileSync(filePath, result.data);
 
         // Convert SVG to JSX using `svgr`
         const jsxCode = transform.sync(result.data, {
-          // Optimize SVG code using SVGO
           svgo: true,
           svgoConfig: {
             removeRasterImages: true,
             removeScriptElement: true,
-            removeUselessDefs: true
+            removeUselessDefs: true,
           },
-          // Transform tags in Capital Case for React Native
           native: true,
-          // Remove `width` and `height` attrs
           dimensions: false,
-          /* Prettify the result */
-          plugins: ["@svgr/plugin-jsx"]
+          plugins: ["@svgr/plugin-jsx"],
         });
 
         /* Replace hardcoded color value with `currentColor` */
@@ -163,27 +155,53 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
           'fill="currentColor"'
         );
 
-        // Extract only the Path tags from the JSX code
-        const pathTagRegex = /<Path[^>]*\/>/g;
+        // Regex updated to support multiline tags and </Path> closing tags
+        const pathTagRegex = /<Path[\s\S]*?(?:\/>|<\/Path>)/g;
         const pathTags = jsxCodeWithoutHardcodedColors.match(pathTagRegex);
-        const jsxCodeWithPathOnly = pathTags.join("");
 
-        const template = fs.readFileSync(templateFilePath, "utf8");
-        const componentData = template
+        if (!pathTags) {
+          console.log(`⚠️ No Path tags found in ${file}`);
+          continue;
+        }
+
+        const jsxCodeWithPathOnly = pathTags.join("\n");
+
+        let template = fs.readFileSync(templateFilePath, "utf8");
+
+        // 1. Restore any commented-out import lines
+        template = template.replace(/\/\/\s*(import\s+.*)/g, "$1");
+
+        // 2. Remove remaining single-line comments safely
+        template = template.replace(/\/\/(?!.*import).*\n/g, "\n");
+
+        // 3. Inject icon name and path content
+        let componentData = template
           .replace(/IconTemplate/g, file.replace(".svg", ""))
-          .replace(/\/\/.*\n/g, "") // Remove lines starting with //
           .replace(`{/* SVGContent */}`, jsxCodeWithPathOnly);
+
+        // 4. Ensure Path is included in the react-native-svg import block if missing
+        if (
+          jsxCodeWithPathOnly.includes("<Path") &&
+          !/import\s+.*Path.*\s+from\s+['"]react-native-svg['"]/.test(componentData)
+        ) {
+          componentData = componentData.replace(
+            /import\s+\{([^}]+)\}\s+from\s+['"]react-native-svg['"]/,
+            (match, imports) => `import { ${imports.trim()}, Path } from "react-native-svg"`
+          );
+        }
 
         const fileWithTsxExtension = file.replace(".svg", ".tsx");
         const tsxFilePath = join(tsxDir, fileWithTsxExtension);
-        fs.writeFileSync(
-          tsxFilePath,
-          prettier.format(componentData, { parser: "typescript" })
-        );
+
+        const formattedData = await prettier.format(componentData, {
+          parser: "typescript",
+        });
+
+        fs.writeFileSync(tsxFilePath, formattedData);
 
         console.log(`${file} → ${fileWithTsxExtension}`);
       }
-    });
+    }
 
     const newTimestamp = new Date();
     const convertedISOTimestamp = newTimestamp.toISOString();
@@ -194,5 +212,10 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
 
     console.log(`————————————————`);
     console.log("Updated timestamp:", readableUpdatedTimestamp);
-  });
-});
+  } catch (err) {
+    console.error("Error during execution:", err);
+    process.exit(1);
+  }
+}
+
+run();

@@ -1,4 +1,3 @@
-import { useIOStore } from "../../../../store/hooks";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwIntegrityServiceStatusSelector } from "../../issuance/store/selectors";
 import { type CredentialIssuanceFailure } from "../../machine/credential/failure";
@@ -111,9 +110,9 @@ const mapFailureReason = (reason: unknown) => {
  * @param store The Redux store instance.
  * @throws Error if the integrity service is not ready within the timeout period.
  */
-export const ensureIntegrityServiceIsStoreReadyOrThrow = async (
-  store: ReturnType<typeof useIOStore>
-): Promise<void> => {
+export const ensureIntegrityServiceIsStoreReadyOrThrow = async (store: {
+  getState(): GlobalState;
+}): Promise<void> => {
   const integrityServiceStatus = await pollForStoreValue({
     getState: store.getState,
     selector: itwIntegrityServiceStatusSelector,
