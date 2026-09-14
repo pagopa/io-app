@@ -3,7 +3,6 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
-  resetIsBlockingScreen,
   resetOfflineAccessReason,
   setIsBlockingScreen,
   setOfflineAccessReason
@@ -46,13 +45,6 @@ export const ingressScreenReducer = (
         ...state,
         checkSession: { hasError: false }
       };
-    // reset the blocking flag once connectivity is restored, so the
-    // startup saga can retry the bootstrap flow instead of staying stuck
-    case getType(resetIsBlockingScreen):
-      return {
-        ...state,
-        isBlockingScreen: false
-      };
     // reset value of offlineAccessReason when user back online
     // Evaluate whether this data reset is needed
     case getType(resetOfflineAccessReason):
@@ -63,7 +55,7 @@ export const ingressScreenReducer = (
     case getType(setIsBlockingScreen):
       return {
         ...state,
-        isBlockingScreen: true
+        isBlockingScreen: action.payload
       };
     case getType(setOfflineAccessReason):
       return {

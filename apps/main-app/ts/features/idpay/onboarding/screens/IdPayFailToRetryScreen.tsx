@@ -80,7 +80,7 @@ export const IdPayFailToRetryScreen = () => {
         }
         setShowSubtitle(false);
         setShowBlockingScreen(true);
-        dispatch(setIsBlockingScreen());
+        dispatch(setIsBlockingScreen(true));
         timeouts.shift();
       }, TIMEOUT_BLOCKING_SCREEN)
     );

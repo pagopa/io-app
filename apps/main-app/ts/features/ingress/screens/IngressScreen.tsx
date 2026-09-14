@@ -41,11 +41,7 @@ import {
   trackIngressTimeout,
   trackSettingsDiscoverBannerVisualized
 } from "../analytics";
-import {
-  resetIsBlockingScreen,
-  setIsBlockingScreen,
-  setOfflineAccessReason
-} from "../store/actions";
+import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import {
   checkSessionErrorSelector,
@@ -142,7 +138,7 @@ export const IngressScreen = () => {
 
     timeouts.push(
       setTimeout(() => {
-        dispatch(setIsBlockingScreen());
+        dispatch(setIsBlockingScreen(true));
         setShowBlockingScreen(true);
         timeouts.shift();
       }, TIMEOUT_BLOCKING_SCREEN)
@@ -207,7 +203,7 @@ export const IngressScreen = () => {
     if (isConnected && wasOfflineRef.current) {
       wasOfflineRef.current = false;
       if (isBlockingScreenFlag) {
-        dispatch(resetIsBlockingScreen());
+        dispatch(setIsBlockingScreen(false));
         dispatch(startApplicationInitialization());
         setShowBlockingScreen(false);
         setShowBanner(false);
@@ -262,7 +258,7 @@ const IngressScreenNoInternetConnection = memo(() => {
   const dispatch = useIODispatch();
 
   useOnFirstRender(() => {
-    dispatch(setIsBlockingScreen());
+    dispatch(setIsBlockingScreen(true));
   });
 
   useEffect(() => {
