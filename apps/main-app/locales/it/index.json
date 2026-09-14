@@ -271,6 +271,7 @@
         "secondaryAction": "Chiudi"
       }
     },
+
     "landing": {
       "accessibility": {
         "carousel": {
@@ -2694,7 +2695,7 @@
               "info": "Lo trovi stampato sul fronte della Carta di Identità Elettronica (CIE) di {{denomination}}, in basso a destra.",
               "title": "Dove trovo il codice CAN?"
             },
-            "description": "È il codice che trovi sul fronte della Carta di Identità Elettronica, in basso a destra (CAN). [Dove lo trovo?](internal://can-location)",
+            "description": "È il codice che trovi sul fronte della Carta di Identità Elettronica, in basso a destra (CAN). [Dove lo trovo?](internal:\/\/can-location)",
             "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della CIE"
           },
           "cieScanning": {
@@ -3193,7 +3194,7 @@
       "invalid": "data non valida"
     },
     "dateFormats": {
-      "dayMonth": "DD/MM"
+      "dayMonth": "DD\/MM"
     },
     "genericAlert": "Attenzione!",
     "genericError": "C'è un problema temporaneo, riprova.",
@@ -3387,7 +3388,7 @@
           "subTitle": "Associa un IBAN salvato nel tuo profilo per poter ricevere i rimborsi legati all’iniziativa."
         },
         "landing": {
-          "body": "Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.\n\n**[Scopri di più](info://details)**",
+          "body": "Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.\n\n**[Scopri di più](info:\/\/details)**",
           "header": "Aggiungi un IBAN al tuo Profilo",
           "modal": {
             "button": "Ok, ho capito",
@@ -3969,7 +3970,7 @@
         "ON_WAITING_LIST": {
           "accessibilityInfoLabel": "Pulsante informazioni",
           "bottomSheet": {
-            "content": "La tua richiesta per {{initiativeName}} è stata inserita **in lista d’attesa**, poiché al momento non ci sono fondi disponibili.\n\n\n###### ***Cosa succede ora?***\n\nNon devi fare nulla: la tua richiesta rimane valida. Riceverai un messaggio con l’esito se si renderanno disponibili nuove risorse.\n\n\n###### ***Hai attivato le notifiche?***\n\nSe non l’hai già fatto, attiva le notifiche push per non perderti i messaggi.\n[Leggi come fare](https://assistenza.ioapp.it/hc/it/articles/39312288127377-Come-attivare-le-notifiche-push-su-IO)",
+            "content": "La tua richiesta per {{initiativeName}} è stata inserita **in lista d’attesa**, poiché al momento non ci sono fondi disponibili.\n\n\n###### ***Cosa succede ora?***\n\nNon devi fare nulla: la tua richiesta rimane valida. Riceverai un messaggio con l’esito se si renderanno disponibili nuove risorse.\n\n\n###### ***Hai attivato le notifiche?***\n\nSe non l’hai già fatto, attiva le notifiche push per non perderti i messaggi.\n[Leggi come fare](https:\/\/assistenza.ioapp.it\/hc\/it\/articles\/39312288127377-Come-attivare-le-notifiche-push-su-IO)",
             "title": "Sei in lista d'attesa"
           },
           "label": "In lista d'attesa"
@@ -4356,7 +4357,7 @@
       "feeAppliedBy": "Applicata da",
       "pay": "Paga",
       "payWith": "Paga con",
-      "termsAndConditions": "Proseguendo accetti i [Termini e condizioni d’uso](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) e confermi di aver letto l'[Informativa Privacy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) di {{pspName}}",
+      "termsAndConditions": "Proseguendo accetti i [Termini e condizioni d’uso](https:\/\/www.pagopa.gov.it\/it\/prestatori-servizi-di-pagamento\/trasparenza-bancaria\/) e confermi di aver letto l'[Informativa Privacy](https:\/\/www.pagopa.gov.it\/it\/prestatori-servizi-di-pagamento\/trasparenza-bancaria\/) di {{pspName}}",
       "totalAmount": "Totale da pagare"
     },
     "noticeCode": "Codice Avviso"
@@ -4479,7 +4480,7 @@
           "cta": "Richiedi una copia dei dati",
           "description": "Ricevi una copia dei dati associati al tuo profilo IO",
           "detail": {
-            "body": "**I dati sono:**\n- il tuo codice fiscale;\n- l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;\n- il testo dei Messaggi che hai ricevuto;\n- le tue preferenze di notifica.\n\nLe informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.\n\nRiceverai un **messaggio su IO** in cui sono presenti un link e una password validi per 15 giorni.\n\nPer maggiori informazioni consulta l’**[Informativa privacy di IO.](privacy://policy)**"
+            "body": "**I dati sono:**\n- il tuo codice fiscale;\n- l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;\n- il testo dei Messaggi che hai ricevuto;\n- le tue preferenze di notifica.\n\nLe informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.\n\nRiceverai un **messaggio su IO** in cui sono presenti un link e una password validi per 15 giorni.\n\nPer maggiori informazioni consulta l’**[Informativa privacy di IO.](privacy:\/\/policy)**"
           },
           "error": "Si è verificato un errore nella richiesta di esportazione dei dati, riprova.",
           "subtitle": "Puoi scaricare i dati principali del tuo profilo IO in qualsiasi momento.",
@@ -5031,8 +5032,8 @@
         "amount": "Importo",
         "creditor": "Ente creditore",
         "debtor": "Debitore",
-        "noticeCode": "Codice avviso/IUV",
-        "noticeCodeAccessible": "Codice avviso/Identificativo Univoco Versamento",
+        "noticeCode": "Codice avviso\/IUV",
+        "noticeCodeAccessible": "Codice avviso\/Identificativo Univoco Versamento",
         "taxCode": "Codice Fiscale Ente"
       },
       "title": "Dettaglio operazione",
@@ -5070,7 +5071,7 @@
     "capability": {
       "title": "Iniziative disponibili"
     },
-    "contextualHelpContent": "**Nella sezione Portafoglio sono elencati i tuoi metodi di pagamento, i tuoi Bonus e carte sconto e lo storico delle transazioni effettuate con pagoPA**, la piattaforma dei pagamenti per la Pubblica Amministrazione. \nQui potrai inoltre pagare tutti gli avvisi di pagamento cartaceo con il logo pagoPA: inquadra il QR code che trovi nell'avviso cartaceo e completa il pagamento direttamente dall'app. IO supporta al momento solo pagamenti con carta di credito/debito, ma presto saranno aggiunti altri metodi di pagamento.",
+    "contextualHelpContent": "**Nella sezione Portafoglio sono elencati i tuoi metodi di pagamento, i tuoi Bonus e carte sconto e lo storico delle transazioni effettuate con pagoPA**, la piattaforma dei pagamenti per la Pubblica Amministrazione. \nQui potrai inoltre pagare tutti gli avvisi di pagamento cartaceo con il logo pagoPA: inquadra il QR code che trovi nell'avviso cartaceo e completa il pagamento direttamente dall'app. IO supporta al momento solo pagamenti con carta di credito\/debito, ma presto saranno aggiunti altri metodi di pagamento.",
     "contextualHelpTitle": "Cosa puoi fare nel tuo Portafoglio",
     "continue": "Vai al pagamento",
     "creditCard": {

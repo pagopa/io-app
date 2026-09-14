@@ -2681,7 +2681,7 @@
               "info": "You'll find it printed on the front of {{denomination}}'s Electronic ID Card (CIE), in the bottom-right corner.",
               "title": "Where can I find the CAN code?"
             },
-            "description": "This is the code located on the front of your Electronic ID Card, in the lower right corner (CAN). [Where can I find it?](internal://can-location)",
+            "description": "This is the code located on the front of your Electronic ID Card, in the lower right corner (CAN). [Where can I find it?](internal:\/\/can-location)",
             "title": "Enter the 6-digit code located in the lower right corner of the CIE"
           },
           "cieScanning": {
@@ -3180,7 +3180,7 @@
       "invalid": "invalid date"
     },
     "dateFormats": {
-      "dayMonth": "DD/MM"
+      "dayMonth": "DD\/MM"
     },
     "genericAlert": "Warning!",
     "genericError": "There's a temporary problem. Please try again.",
@@ -3374,7 +3374,7 @@
           "subTitle": "Link an IBAN saved in your profile so you can receive refunds related to this initiative."
         },
         "landing": {
-          "body": "Save your account information and get the refunds you're entitled to more easily.\n\n**[Learn more](info://details)**",
+          "body": "Save your account information and get the refunds you're entitled to more easily.\n\n**[Learn more](info:\/\/details)**",
           "header": "Add an IBAN to your Profile",
           "modal": {
             "button": "OK, got it",
@@ -3956,7 +3956,7 @@
         "ON_WAITING_LIST": {
           "accessibilityInfoLabel": "Information button",
           "bottomSheet": {
-            "content": "Your request for {{initiativeName}} has been placed **on the waiting list**, as there are currently no funds available.\n\n\n###### ***What happens next?***\n\nYou don’t need to do anything—your request remains valid. You’ll receive a message with the outcome if new resources become available.\n\n\n###### ***Have you enabled notifications?***\n\nIf you haven’t already, enable push notifications so you don’t miss any messages.\n[Learn how](https://assistenza.ioapp.it/hc/it/articles/39312288127377-Come-attivare-le-notifiche-push-su-IO)",
+            "content": "Your request for {{initiativeName}} has been placed **on the waiting list**, as there are currently no funds available.\n\n\n###### ***What happens next?***\n\nYou don’t need to do anything—your request remains valid. You’ll receive a message with the outcome if new resources become available.\n\n\n###### ***Have you enabled notifications?***\n\nIf you haven’t already, enable push notifications so you don’t miss any messages.\n[Learn how](https:\/\/assistenza.ioapp.it\/hc\/it\/articles\/39312288127377-Come-attivare-le-notifiche-push-su-IO)",
             "title": "You're on the waiting list"
           },
           "label": "On the waiting list"
@@ -4343,7 +4343,7 @@
       "feeAppliedBy": "Charged by",
       "pay": "Pay",
       "payWith": "Pay with",
-      "termsAndConditions": "By continuing, you agree to the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) and confirm that you have read the[Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) of {{pspName}}",
+      "termsAndConditions": "By continuing, you agree to the [Terms and Conditions of Use](https:\/\/www.pagopa.gov.it\/it\/prestatori-servizi-di-pagamento\/trasparenza-bancaria\/) and confirm that you have read the[Privacy Policy](https:\/\/www.pagopa.gov.it\/it\/prestatori-servizi-di-pagamento\/trasparenza-bancaria\/) of {{pspName}}",
       "totalAmount": "Total due"
     },
     "noticeCode": "Notice Code"
@@ -4466,7 +4466,7 @@
           "cta": "Request a copy of the data",
           "description": "Get a copy of the information associated with your IO profile",
           "detail": {
-            "body": "**The data includes:**\n- your fiscal code;\n- the email address you provided and, if applicable, confirmation that it has been validated;\n- the text of the messages you have received;\n- your notification preferences.\n\nThe information will be downloaded in YAML format, a standard format used in computing that allows for the exchange of data between different applications.\n\nYou will receive a **message on IO** containing a link and a password that are valid for 15 days.\n\nFor more information, see the **[IO Privacy Policy.](privacy://policy)**"
+            "body": "**The data includes:**\n- your fiscal code;\n- the email address you provided and, if applicable, confirmation that it has been validated;\n- the text of the messages you have received;\n- your notification preferences.\n\nThe information will be downloaded in YAML format, a standard format used in computing that allows for the exchange of data between different applications.\n\nYou will receive a **message on IO** containing a link and a password that are valid for 15 days.\n\nFor more information, see the **[IO Privacy Policy.](privacy:\/\/policy)**"
           },
           "error": "An error occurred while requesting the data export. Please try again.",
           "subtitle": "You can download the key information from your IO profile at any time.",
@@ -5018,8 +5018,8 @@
         "amount": "Amount",
         "creditor": "Payee",
         "debtor": "Debtor",
-        "noticeCode": "Notice Code/IUV",
-        "noticeCodeAccessible": "Notice Code/Unique Payment ID",
+        "noticeCode": "Notice Code\/IUV",
+        "noticeCodeAccessible": "Notice Code\/Unique Payment ID",
         "taxCode": "Institution Fiscal Code"
       },
       "title": "Transaction Details",
@@ -5057,7 +5057,7 @@
     "capability": {
       "title": "Available programs"
     },
-    "contextualHelpContent": "**The \"Wallet\" section lists your payment methods, your bonuses and discount cards, and the history of transactions made with pagoPA**, the payment platform for the Public Administration. \nHere, you can also pay all paper payment notices bearing the pagoPA logo: scan the QR code on the paper notice and complete the payment directly from the app. IO currently supports only credit/debit card payments, but other payment methods will be added soon.",
+    "contextualHelpContent": "**The \"Wallet\" section lists your payment methods, your bonuses and discount cards, and the history of transactions made with pagoPA**, the payment platform for the Public Administration. \nHere, you can also pay all paper payment notices bearing the pagoPA logo: scan the QR code on the paper notice and complete the payment directly from the app. IO currently supports only credit\/debit card payments, but other payment methods will be added soon.",
     "contextualHelpTitle": "What you can d in your Wallet",
     "continue": "Proceed to checkout",
     "creditCard": {
