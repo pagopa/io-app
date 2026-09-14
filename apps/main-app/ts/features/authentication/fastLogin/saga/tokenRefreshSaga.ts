@@ -69,7 +69,6 @@ function* handleRefreshSessionToken(
   yield* call(dismissSupport);
 
   const isPinAvailable = (yield* call(getPin)) !== undefined;
-
   const { withUserInteraction } = refreshSessionTokenRequestAction.payload;
 
   if (!isPinAvailable) {

@@ -20,13 +20,7 @@ import Animated, { AnimatedRef } from "react-native-reanimated";
 
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { useScrollHeaderAnimation } from "../../hooks/useScrollHeaderAnimation";
-import {
-  IOScrollView,
-  IOScrollViewActions,
-  renderActionButtons
-} from "./IOScrollView";
-
-export type IOListViewActions = IOScrollViewActions;
+import { IOScrollView, renderActionButtons } from "./IOScrollView";
 
 type IOListView<T> = ComponentProps<typeof Animated.FlatList<T>> &
   ComponentProps<typeof IOScrollView> & {

@@ -10,6 +10,7 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import * as credentialsSelectors from "../../../credentials/store/selectors/index";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCardOnboardingL2Screen } from "../ItwCardOnboardingL2Screen";
 
@@ -81,7 +82,10 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
+      >
         <ItwCardOnboardingL2Screen />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),

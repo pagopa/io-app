@@ -8,7 +8,7 @@ IO_BACKEND_VERSION=v20.0.0
 # Legacy version kept for backward-compatibility definitions removed in v20.0.0
 # (e.g. api_trial_system.yaml, UserMetadata, ServerInfo from api_backend.yaml)
 IO_BACKEND_LEGACY_VERSION=v17.5.2
-IO_SERVICES_METADATA_VERSION=1.1.3
+IO_SERVICES_METADATA_VERSION=1.1.4
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.23.1
 # Send function version
