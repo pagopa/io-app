@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import i18n from "i18next";
 import { useEffect } from "react";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { SendUserType } from "../../../pushNotifications/analytics";

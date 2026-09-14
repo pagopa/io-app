@@ -17,12 +17,6 @@ export const navigateToMainNavigatorAction = () =>
   );
 
 /**
- * @deprecated
- */
-export const navigateBack = () =>
-  NavigationService.dispatchNavigationAction(CommonActions.goBack());
-
-/**
  * Authentication
  */
 

@@ -29,7 +29,7 @@ import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
 jest.mock("../../components/MessageDetail/MessageDetailsAttachments");
 
-export const thirdPartyMessage: ThirdPartyMessageWithContent = {
+const thirdPartyMessage: ThirdPartyMessageWithContent = {
   ...message_1,
   created_at: new Date("2020-01-01T00:00:00.000Z"),
   third_party_message: {

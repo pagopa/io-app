@@ -4,8 +4,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ImageURISource } from "react-native";
 
-export type IconSource = ImageURISource | IOIcons | undefined;
-
 export type SupportedBrand = {
   cvvLength: number;
   iconForm: IconSource;
@@ -18,6 +16,8 @@ type CreditCardDetector = {
   supportedBrands: Record<string, SupportedBrand>;
   validate: (pan: O.Option<string>) => SupportedBrand;
 };
+
+type IconSource = ImageURISource | IOIcons | undefined;
 
 export const CreditCardDetector: CreditCardDetector = {
   supportedBrands: {

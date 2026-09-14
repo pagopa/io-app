@@ -2,10 +2,9 @@ import { TransactionBarCodeResponse } from "@io-app/api-types/generated/definiti
 import {
   Body,
   H3,
-  h3FontSize,
-  h3LineHeight,
   IOColors,
   IOText,
+  IOTypography,
   IOVisualCostants,
   useIOTheme,
   VSpacer
@@ -209,8 +208,8 @@ const SuccessContent = ({
           <IOText
             color={theme["textBody-default"]}
             font="FiraCode"
-            lineHeight={h3LineHeight}
-            size={h3FontSize}
+            lineHeight={IOTypography.h3.lineHeight}
+            size={IOTypography.h3.size}
             weight="Medium"
           >
             {trx}

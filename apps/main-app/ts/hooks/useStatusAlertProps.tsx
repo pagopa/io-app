@@ -18,6 +18,7 @@ import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import { useOfflineAlertDetailModal } from "../features/itwallet/common/hooks/useOfflineAlertDetailModal";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import { ITW_PROXIMITY_ROUTES } from "../features/itwallet/presentation/proximity/navigation/routes";
 import { trackItwOfflineBottomSheet } from "../features/itwallet/wallet/analytics";
 import { useAppRestartAction } from "../features/itwallet/wallet/hooks/useAppRestartAction";
 import { mixpanelTrack } from "../mixpanel";
@@ -39,7 +40,8 @@ const blackListOfflineAlertRoutes = new Set<string>([
   AUTHENTICATION_ROUTES.LANDING,
   ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
   ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
-  ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL
+  ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL,
+  ...Object.values(ITW_PROXIMITY_ROUTES)
 ]);
 
 const statusVariantMap: Record<LevelEnum, AlertEdgeToEdgeProps["variant"]> = {

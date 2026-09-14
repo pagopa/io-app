@@ -10,12 +10,12 @@ import {
   walletToggleLoadingState
 } from "../actions/placeholders";
 
-export type WalletPlaceholders = { [key: string]: WalletCardCategory };
-
 export type WalletPlaceholdersState = {
   isLoading: boolean;
   items: WalletPlaceholders;
 };
+
+type WalletPlaceholders = { [key: string]: WalletCardCategory };
 
 const INITIAL_STATE: WalletPlaceholdersState = {
   items: {},
@@ -81,9 +81,9 @@ const persistConfig: PersistConfig = {
   version: CURRENT_REDUX_WALLET_PLACEHOLDERS_STORE_VERSION
 };
 
-export const walletReducerPersistor = persistReducer<
-  WalletPlaceholdersState,
-  Action
->(persistConfig, reducer);
+const walletReducerPersistor = persistReducer<WalletPlaceholdersState, Action>(
+  persistConfig,
+  reducer
+);
 
 export default walletReducerPersistor;

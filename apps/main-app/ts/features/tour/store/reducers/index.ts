@@ -123,7 +123,7 @@ const persistConfig: PersistConfig = {
   whitelist: ["completed"]
 };
 
-export const persistedReducer = persistReducer<TourState, Action>(
+const persistedReducer = persistReducer<TourState, Action>(
   persistConfig,
   reducer
 );

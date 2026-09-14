@@ -1,5 +1,5 @@
 /**
- * This is an updater for the utility "standard-version" that allows to update the values
+ * This is an updater for the utility "commit-and-tag-version" that allows to update the values
  * CFBundleShortVersionString and CFBundleVersion.
  *
  * eg.

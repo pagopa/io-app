@@ -6,6 +6,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../ItwIssuanceCredentialTrustIssuerScreen";
 
@@ -14,7 +15,7 @@ jest.mock("../../../../../utils/hooks/usePreventScreenCapture", () => ({
 }));
 
 describe("ItwIssuanceCredentialTrustIssuerScreen", () => {
-  it("it should render the screen correctly", () => {
+  it("should render the screen correctly", () => {
     const component = renderComponent();
     expect(component).toBeTruthy();
   });
@@ -31,7 +32,10 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
+      >
         <ItwIssuanceCredentialTrustIssuerScreen />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),

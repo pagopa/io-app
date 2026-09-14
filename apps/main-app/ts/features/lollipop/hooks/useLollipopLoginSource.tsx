@@ -1,7 +1,4 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
 import { useCallback, useState } from "react";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
@@ -17,7 +14,7 @@ import {
   isActiveSessionLoginSelector
 } from "../../authentication/activeSessionLogin/store/selectors";
 import { selectedIdentityProviderSelector } from "../../authentication/common/store/selectors";
-import { getLoginHeaders } from "../../authentication/common/utils/login";
+import { getLoginHeaders } from "../../authentication/common/utils";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../authentication/login/cie/utils";
 import {
@@ -78,7 +75,7 @@ export const useLollipopLoginSource = (
     [onLollipopCheckFailure]
   );
 
-  const regenerateLoginSource = useCallback(() => {
+  const regenerateLoginSource = useCallback(async () => {
     if (!loginUri) {
       // When the redux state is LoggedOutWithIdp the loginUri is always defined.
       // After the user has logged in, the status changes to LoggedIn and the loginUri is not
@@ -92,38 +89,27 @@ export const useLollipopLoginSource = (
      * need to garantee the public key uniqueness on every login request.
      * https://pagopa.atlassian.net/browse/LLK-37
      */
-
-    void pipe(
-      () =>
-        handleRegenerateEphemeralKey(
-          ephemeralKeyTag,
-          mixpanelEnabled,
-          dispatch
-        ),
-      T.map(nullableKey =>
-        pipe(
-          nullableKey,
-          O.fromNullable,
-          O.fold(
-            () =>
-              setWebviewSource({
-                uri: loginUri
-              }),
-            key =>
-              setWebviewSource({
-                uri: loginUri,
-                headers: getLoginHeaders(
-                  key,
-                  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-                  isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-                  cieFlowForDevServerEnabled ? idp?.id : undefined,
-                  isActiveSessionLogin ? hashedFiscalCode : undefined
-                )
-              })
-          )
-        )
+    const regeneratedPublickKey = await handleRegenerateEphemeralKey(
+      ephemeralKeyTag,
+      mixpanelEnabled,
+      dispatch
+    );
+    if (!regeneratedPublickKey) {
+      setWebviewSource({
+        uri: loginUri
+      });
+      return;
+    }
+    setWebviewSource({
+      uri: loginUri,
+      headers: getLoginHeaders(
+        regeneratedPublickKey,
+        DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
+        isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+        cieFlowForDevServerEnabled ? idp?.id : undefined,
+        isActiveSessionLogin ? hashedFiscalCode : undefined
       )
-    )();
+    });
   }, [
     dispatch,
     ephemeralKeyTag,
@@ -145,7 +131,7 @@ export const useLollipopLoginSource = (
     // (i.e., the loaded webViewSource uri will be different from
     // the loginSource.uri)
     setWebviewSource(undefined);
-    regenerateLoginSource();
+    void regenerateLoginSource();
   }, [regenerateLoginSource]);
 
   const shouldBlockUrlNavigationWhileCheckingLollipop = useCallback(
@@ -193,7 +179,7 @@ export const useLollipopLoginSource = (
   );
 
   useOnFirstRender(() => {
-    regenerateLoginSource();
+    void regenerateLoginSource();
   });
 
   return {

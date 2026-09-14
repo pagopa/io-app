@@ -11,15 +11,11 @@ import {
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  getValueOrElse,
-  isError,
-  isLoading
-} from "../../../../../common/model/RemoteValue";
+import { isError, isLoading } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
@@ -33,7 +29,7 @@ import {
   cgnOfflineMerchantsSelector,
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
-import { mixAndSortMerchants } from "../../utils/merchants";
+import { useMixedSortedMerchants } from "../../utils/merchants";
 
 export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 
@@ -46,14 +42,7 @@ export const CgnMerchantsListScreen = () => {
   const onlineMerchants = useSelector(cgnOnlineMerchantsSelector);
   const offlineMerchants = useSelector(cgnOfflineMerchantsSelector);
 
-  const data = useMemo(
-    () =>
-      mixAndSortMerchants(
-        getValueOrElse(onlineMerchants, []),
-        getValueOrElse(offlineMerchants, [])
-      ),
-    [onlineMerchants, offlineMerchants]
-  );
+  const data = useMixedSortedMerchants(onlineMerchants, offlineMerchants);
 
   const initLoadingLists = useCallback(() => {
     dispatch(cgnOfflineMerchants.request({}));
