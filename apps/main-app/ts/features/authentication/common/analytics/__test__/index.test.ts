@@ -58,48 +58,76 @@ describe("analytics/index.ts", () => {
     });
   });
 
-  it("tracks cie pin login selected and updates profile", async () => {
-    const updateMixpanelProfilePropertiesSpyOn = jest
-      .spyOn(PROFILEPROPERTIES, "updateMixpanelProfileProperties")
-      .mockImplementation(_state => new Promise(resolve => resolve()));
+  const flowScenarios = [
+    { name: "auth", flow: "auth" as const, shouldUpdateProfile: true },
+    { name: "reauth", flow: "reauth" as const, shouldUpdateProfile: false }
+  ];
 
-    const state = { mock: "state" } as any;
-    await trackCiePinLoginSelected(state);
+  it.each(flowScenarios)(
+    "tracks cie pin login selected ($name)",
+    async ({ flow, shouldUpdateProfile }) => {
+      const updateMixpanelProfilePropertiesSpyOn = jest
+        .spyOn(PROFILEPROPERTIES, "updateMixpanelProfileProperties")
+        .mockImplementation(_state => new Promise(resolve => resolve()));
 
-    expect(mixpanelTrackSpyOn).toHaveBeenCalledTimes(1);
-    expect(mixpanelTrackSpyOn).toHaveBeenCalledWith("LOGIN_CIE_PIN_SELECTED", {
-      event_category: "UX",
-      event_type: "action",
-      flow: "auth"
-    });
+      const state = { mock: "state" } as any;
+      await trackCiePinLoginSelected(state, flow);
 
-    expect(updateMixpanelProfilePropertiesSpyOn).toHaveBeenCalledWith(state, {
-      property: "LOGIN_METHOD",
-      value: IdpCIE.id
-    });
-  });
+      expect(mixpanelTrackSpyOn).toHaveBeenCalledTimes(1);
+      expect(mixpanelTrackSpyOn).toHaveBeenCalledWith(
+        "LOGIN_CIE_PIN_SELECTED",
+        {
+          event_category: "UX",
+          event_type: "action",
+          flow
+        }
+      );
 
-  it("tracks cieID login selected with spid level", async () => {
-    const updateMixpanelProfilePropertiesSpyOn = jest
-      .spyOn(PROFILEPROPERTIES, "updateMixpanelProfileProperties")
-      .mockImplementation(_state => new Promise(resolve => resolve()));
+      if (shouldUpdateProfile) {
+        expect(updateMixpanelProfilePropertiesSpyOn).toHaveBeenCalledWith(
+          state,
+          {
+            property: "LOGIN_METHOD",
+            value: IdpCIE.id
+          }
+        );
+      } else {
+        expect(updateMixpanelProfilePropertiesSpyOn).not.toHaveBeenCalled();
+      }
+    }
+  );
 
-    const state = { mock: "state" } as any;
-    await trackCieIDLoginSelected(state, AUTH_LEVELS.L2);
+  it.each(flowScenarios)(
+    "tracks cieID login selected with spid level ($name)",
+    async ({ flow, shouldUpdateProfile }) => {
+      const updateMixpanelProfilePropertiesSpyOn = jest
+        .spyOn(PROFILEPROPERTIES, "updateMixpanelProfileProperties")
+        .mockImplementation(_state => new Promise(resolve => resolve()));
 
-    expect(mixpanelTrackSpyOn).toHaveBeenCalledTimes(1);
-    expect(mixpanelTrackSpyOn).toHaveBeenCalledWith("LOGIN_CIEID_SELECTED", {
-      event_category: "UX",
-      event_type: "action",
-      flow: "auth",
-      security_level: "L2"
-    });
+      const state = { mock: "state" } as any;
+      await trackCieIDLoginSelected(state, AUTH_LEVELS.L2, flow);
 
-    expect(updateMixpanelProfilePropertiesSpyOn).toHaveBeenCalledWith(state, {
-      property: "LOGIN_METHOD",
-      value: IdpCIE_ID.id
-    });
-  });
+      expect(mixpanelTrackSpyOn).toHaveBeenCalledTimes(1);
+      expect(mixpanelTrackSpyOn).toHaveBeenCalledWith("LOGIN_CIEID_SELECTED", {
+        event_category: "UX",
+        event_type: "action",
+        flow,
+        security_level: "L2"
+      });
+
+      if (shouldUpdateProfile) {
+        expect(updateMixpanelProfilePropertiesSpyOn).toHaveBeenCalledWith(
+          state,
+          {
+            property: "LOGIN_METHOD",
+            value: IdpCIE_ID.id
+          }
+        );
+      } else {
+        expect(updateMixpanelProfilePropertiesSpyOn).not.toHaveBeenCalled();
+      }
+    }
+  );
 
   it("tracks cie bottom sheet screen", async () => {
     await trackCieBottomSheetScreenView();
