@@ -83,11 +83,3 @@ catalog:
   react-native-reanimated: "4.3.1"
   react-native-safe-area-context: "^5.6.2"
   react-native-svg: "^15.14.0"
-
-minimumReleaseAgeExclude:
-  - '@pagopa/io-react-native-wallet@3.7.2'
-  - '@pagopa/io-wallet-oauth2@1.5.6'
-  - '@pagopa/io-wallet-oid-federation@1.5.6'
-  - '@pagopa/io-wallet-oid4vci@1.5.6'
-  - '@pagopa/io-wallet-oid4vp@1.5.6'
-  - '@pagopa/io-wallet-utils@1.5.6'
