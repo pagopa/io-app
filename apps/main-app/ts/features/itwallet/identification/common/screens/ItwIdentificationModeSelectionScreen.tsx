@@ -135,7 +135,10 @@ export const ItwIdentificationModeSelectionScreen = ({
   const handleNoCiePress = useCallback(() => {
     trackItwUserWithoutCie();
 
-    if (!isL2Active && isL2Credential(credentialType)) {
+    if (
+      !isL2Active &&
+      (credentialType === undefined || isL2Credential(credentialType))
+    ) {
       machineRef.send({
         type: "restart",
         mode: "issuance",
