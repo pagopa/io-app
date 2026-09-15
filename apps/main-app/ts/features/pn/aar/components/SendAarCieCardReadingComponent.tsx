@@ -1,5 +1,5 @@
 import { IOColors, useIOTheme } from "@io-app/design-system";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -141,14 +141,14 @@ export const SendAarCieCardReadingComponent = ({
         case "TAG_LOST":
           return {
             pictogram: "empty",
-            title: i18n.t(
+            title: I18n.t(
               "features.pn.aar.flow.cieScanning.error.TAG_LOST.title"
             ),
-            subtitle: i18n.t(
+            subtitle: I18n.t(
               "features.pn.aar.flow.cieScanning.error.TAG_LOST.subtitle"
             ),
             primaryAction: {
-              label: i18n.t("global.buttons.retry"),
+              label: I18n.t("global.buttons.retry"),
               onPress: () => {
                 trackSendAarMandateCieErrorRetry(errorName);
                 handleStartReading();
@@ -156,7 +156,7 @@ export const SendAarCieCardReadingComponent = ({
             },
             secondaryAction: {
               testID: "tagLostCloseButton",
-              label: i18n.t("global.buttons.close"),
+              label: I18n.t("global.buttons.close"),
               onPress: () => {
                 trackSendAarMandateCieErrorClosure(errorName);
                 restartToScanningAdvisory();
@@ -165,22 +165,22 @@ export const SendAarCieCardReadingComponent = ({
           };
         case "WRONG_CAN":
           const platformizedSubtitle = Platform.select({
-            ios: i18n.t(
+            ios: I18n.t(
               "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleIos"
             ),
-            default: i18n.t(
+            default: I18n.t(
               "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleAndroid"
             )
           });
           return {
             pictogram: "attention",
-            title: i18n.t(
+            title: I18n.t(
               "features.pn.aar.flow.cieScanning.error.WRONG_CAN.title"
             ),
             subtitle: platformizedSubtitle,
             primaryAction: {
               testID: "wrongCanRetryButton",
-              label: i18n.t("global.buttons.retry"),
+              label: I18n.t("global.buttons.retry"),
               onPress: () => {
                 trackSendAarMandateCieErrorRetry(errorName);
                 restartToCanAdvisory();
@@ -188,7 +188,7 @@ export const SendAarCieCardReadingComponent = ({
             },
             secondaryAction: {
               testID: "wrongCanCloseButton",
-              label: i18n.t("global.buttons.close"),
+              label: I18n.t("global.buttons.close"),
               onPress: () => {
                 trackSendAarMandateCieErrorClosure(errorName);
                 errorCloseHandler();
@@ -199,15 +199,15 @@ export const SendAarCieCardReadingComponent = ({
           const currentErrorName = errorName ?? "GENERIC_ERROR";
           return {
             pictogram: "umbrella",
-            title: i18n.t(
+            title: I18n.t(
               "features.pn.aar.flow.cieScanning.error.GENERIC.title"
             ),
-            subtitle: i18n.t(
+            subtitle: I18n.t(
               "features.pn.aar.flow.cieScanning.error.GENERIC.subtitle"
             ),
             primaryAction: {
               testID: "genericErrorPrimaryAction",
-              label: i18n.t("global.buttons.retry"),
+              label: I18n.t("global.buttons.retry"),
               onPress: () => {
                 trackSendAarMandateCieErrorRetry(currentErrorName);
                 restartToCanAdvisory();
@@ -219,7 +219,7 @@ export const SendAarCieCardReadingComponent = ({
                 trackSendAarMandateCieErrorDetail(currentErrorName);
                 present();
               },
-              label: i18n.t(
+              label: I18n.t(
                 "features.pn.aar.flow.cieScanning.error.GENERIC.secondaryAction"
               )
             }
@@ -229,27 +229,27 @@ export const SendAarCieCardReadingComponent = ({
 
     return {
       [ReadStatus.IDLE]: {
-        title: i18n.t("features.pn.aar.flow.cieScanning.idle.title"),
-        subtitle: i18n.t("features.pn.aar.flow.cieScanning.idle.subtitle"),
+        title: I18n.t("features.pn.aar.flow.cieScanning.idle.title"),
+        subtitle: I18n.t("features.pn.aar.flow.cieScanning.idle.subtitle"),
         pictogram: "nfcScanAndroid",
         secondaryAction: {
           testID: "idleCloseButton",
-          label: i18n.t("global.buttons.close"),
+          label: I18n.t("global.buttons.close"),
           onPress: restartToScanningAdvisory
         }
       },
       [ReadStatus.READING]: {
-        title: i18n.t("features.pn.aar.flow.cieScanning.reading.title"),
-        subtitle: i18n.t("features.pn.aar.flow.cieScanning.reading.subtitle"),
+        title: I18n.t("features.pn.aar.flow.cieScanning.reading.title"),
+        subtitle: I18n.t("features.pn.aar.flow.cieScanning.reading.subtitle"),
         pictogram: "nfcScanAndroid",
         secondaryAction: {
           testID: "readingCloseButton",
-          label: i18n.t("global.buttons.close"),
+          label: I18n.t("global.buttons.close"),
           onPress: restartToScanningAdvisory
         }
       },
       [ReadStatus.SUCCESS]: {
-        title: i18n.t("features.pn.aar.flow.cieScanning.success.title"),
+        title: I18n.t("features.pn.aar.flow.cieScanning.success.title"),
         pictogram: "success"
       },
       [ReadStatus.ERROR]: generateErrorContent()
