@@ -6,9 +6,9 @@ import { CieCardReaderScreenNavigationParams } from "../../../login/cie/screens/
 import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
 import { UrlNotCompliant } from "../../../login/cie/screens/CieIdAuthUrlError";
 import { CieWrongCiePinScreenNavigationParams } from "../../../login/cie/screens/CieWrongCiePinScreen";
-import { CieIdLoginProps } from "../../../login/cie/shared/utils";
 import { ChosenIdentifier } from "../../../login/optIn/screens/OptInScreen";
 import { UnlockAccessProps } from "../../../login/unlockAccess/components/UnlockAccessComponent";
+import { CieIdLoginProps } from "../../utils/cie.ts";
 import { AUTHENTICATION_ROUTES } from "../routes";
 
 export type AuthenticationParamsList = {
