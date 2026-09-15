@@ -164,6 +164,24 @@ export const trackItwUpgradeL3Mandatory = (action: ItwL3UpgradeTrigger) => {
   );
 };
 
+export const trackItwUpgradeL3MandatoryConfirm = (
+  action: ItwL3UpgradeTrigger
+) => {
+  void mixpanelTrack(
+    ITW_REMOTE_ACTIONS_EVENTS.ITW_UPGRADE_L3_MANDATORY_CONFIRM,
+    buildEventProperties("KO", "action", { action })
+  );
+};
+
+export const trackItwUpgradeL3MandatoryCancel = (
+  action: ItwL3UpgradeTrigger
+) => {
+  void mixpanelTrack(
+    ITW_REMOTE_ACTIONS_EVENTS.ITW_UPGRADE_L3_MANDATORY_CANCEL,
+    buildEventProperties("KO", "action", { action })
+  );
+};
+
 // Tech events
 
 export const trackItwRemoteStart = () => {
