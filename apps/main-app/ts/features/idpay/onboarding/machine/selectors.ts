@@ -1,6 +1,5 @@
 import { OnboardingInitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingInitiativeDTO";
 import { SelfCriteriaBoolDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaBoolDTO";
-import { SelfCriteriaMultiDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiDTO";
 import { SelfCriteriaMultiTypeDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiTypeDTO";
 import { SelfCriteriaTextDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaTextDTO";
 import { pipe } from "fp-ts/lib/function";
@@ -41,10 +40,8 @@ const filterMultiCriteria = <T>(criteria: O.Option<OnboardingInitiativeDTO>) =>
     O.fold(
       () => [],
       some =>
-        some.beneficiaryRule?.selfDeclarationCriteria?.filter(
-          el =>
-            el &&
-            (SelfCriteriaMultiTypeDTO.is(el) || SelfCriteriaMultiDTO.is(el))
+        some.beneficiaryRule?.selfDeclarationCriteria?.filter(el =>
+          SelfCriteriaMultiTypeDTO.is(el)
         )
     )
   ) as Array<T>;
@@ -52,9 +49,7 @@ const filterMultiCriteria = <T>(criteria: O.Option<OnboardingInitiativeDTO>) =>
 export const multiRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
-    filterMultiCriteria<SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO>(
-      requiredCriteria
-    )
+    filterMultiCriteria<SelfCriteriaMultiTypeDTO>(requiredCriteria)
 );
 
 const filterCriteria = <T>(
@@ -121,10 +116,7 @@ export const stepperCountSelector = createSelector(
 
 export const getMultiSelfDeclarationListFromContext = (
   context: Context.Context
-) =>
-  filterMultiCriteria<SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO>(
-    context.requiredCriteria
-  );
+) => filterMultiCriteria<SelfCriteriaMultiTypeDTO>(context.requiredCriteria);
 
 export const getBooleanSelfDeclarationListFromContext = (
   context: Context.Context

@@ -133,6 +133,13 @@ const initiativeData: {
     ...createRandomInitiativeDataDTO(),
     initiativeId: initiativeIdToString(IDPayInitiativeID.KO_TOO_MANY_REQUESTS),
     initiativeName: "Iniziativa - Troppe richieste"
+  },
+  [IDPayServiceID.KO_USER_BONUS_ALREADY_USED]: {
+    ...createRandomInitiativeDataDTO(),
+    initiativeId: initiativeIdToString(
+      IDPayInitiativeID.KO_USER_BONUS_ALREADY_USED
+    ),
+    initiativeName: "Iniziativa - Bonus già utilizzato"
   }
 };
 

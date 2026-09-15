@@ -15,12 +15,9 @@ import {
   _typeEnum as SelfDeclarationBoolType
 } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaBoolDTO";
 import {
-  SelfCriteriaMultiDTO,
-  _typeEnum as SelfDeclarationMultiType
-} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiDTO";
-import {
   CodeEnum as SelfCriteriaMultiCodeEnum,
-  _typeEnum as SelfCriteriaMultiTypeDTO
+  SelfCriteriaMultiTypeDTO,
+  _typeEnum as SelfCriteriaMultiTypeVariationEnum
 } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiTypeDTO";
 import { _typeEnum as SelfDeclaratioTextType } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaTextDTO";
 import * as O from "fp-ts/lib/Option";
@@ -84,27 +81,27 @@ const criterionArray: ReadonlyArray<RowDataDTO> = [
     value: "Value criterion 3"
   }
 ];
-const selfDeclarationMulti: ReadonlyArray<SelfCriteriaMultiDTO> = [
+const selfDeclarationMulti: ReadonlyArray<SelfCriteriaMultiTypeDTO> = [
   {
-    _type: SelfDeclarationMultiType.multi,
-    code: ulid(),
+    _type: SelfCriteriaMultiTypeVariationEnum.multi_consent,
+    code: SelfCriteriaMultiCodeEnum.isee,
     description:
       "Testo dove viene descritto il criterio con opzioni di scelta multipla:",
     value: criterionArray
   },
   {
-    _type: SelfDeclarationMultiType.multi,
-    code: ulid(),
+    _type: SelfCriteriaMultiTypeVariationEnum.multi_consent,
+    code: SelfCriteriaMultiCodeEnum.isee,
     description:
       "Testo dove viene descritto il criterio con opzioni di scelta multipla, seconda pagina:",
     value: criterionArray
   }
 ];
 
-const guidoniaSelfDeclarationMulti: ReadonlyArray<SelfCriteriaMultiDTO> = [
+const guidoniaSelfDeclarationMulti: ReadonlyArray<SelfCriteriaMultiTypeDTO> = [
   {
-    _type: SelfDeclarationMultiType.multi,
-    code: ulid(),
+    _type: SelfCriteriaMultiTypeVariationEnum.multi_consent,
+    code: SelfCriteriaMultiCodeEnum.isee,
     description: "Costituire una famiglia monogenitoriale:",
     value: [
       {
@@ -192,7 +189,7 @@ const checkPrerequisites: {
       automatedCriteria: familyUnityOnlyAutomatedCriteria,
       selfDeclarationCriteria: [
         {
-          _type: SelfCriteriaMultiTypeDTO.multi_consent,
+          _type: SelfCriteriaMultiTypeVariationEnum.multi_consent,
           code: SelfCriteriaMultiCodeEnum.isee,
           description: "Hai un ISEE 2025 in corso di validità?",
           subDescription: "Quando un ISEE è valido?",
@@ -261,6 +258,10 @@ const prerequisitesErrors: {
   },
   [IDPayInitiativeID.KO_TOO_MANY_REQUESTS]: {
     code: OnboardingErrorCodeEnum.ONBOARDING_TOO_MANY_REQUESTS,
+    message: ""
+  },
+  [IDPayInitiativeID.KO_USER_BONUS_ALREADY_USED]: {
+    code: OnboardingErrorCodeEnum.ONBOARDING_USER_BONUS_ALREADY_USED,
     message: ""
   }
 };
