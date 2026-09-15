@@ -67,8 +67,7 @@ const pictogramByOutcome: Record<
 
 type OutcomeCopy = {
   primaryAction: string;
-  /** Omitted for the outcomes whose title is self-explanatory */
-  subtitle?: string;
+  subtitle: string | undefined;
   title: string;
 };
 
@@ -80,6 +79,7 @@ const getOutcomeCopy = (outcome: WalletOnboardingOutcome): OutcomeCopy => {
     case WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED:
       return {
         title: I18n.t("wallet.onboarding.outcome.ALREADY_ONBOARDED.title"),
+        subtitle: undefined,
         primaryAction: I18n.t(
           "wallet.onboarding.outcome.ALREADY_ONBOARDED.primaryAction"
         )
@@ -109,6 +109,7 @@ const getOutcomeCopy = (outcome: WalletOnboardingOutcome): OutcomeCopy => {
     case WalletOnboardingOutcomeEnum.CANCELED_BY_USER:
       return {
         title: I18n.t("wallet.onboarding.outcome.CANCELED_BY_USER.title"),
+        subtitle: undefined,
         primaryAction: I18n.t(
           "wallet.onboarding.outcome.CANCELED_BY_USER.primaryAction"
         )
@@ -142,6 +143,7 @@ const getOutcomeCopy = (outcome: WalletOnboardingOutcome): OutcomeCopy => {
     case WalletOnboardingOutcomeEnum.SUCCESS:
       return {
         title: I18n.t("wallet.onboarding.outcome.SUCCESS.title"),
+        subtitle: undefined,
         primaryAction: I18n.t("wallet.onboarding.outcome.SUCCESS.primaryAction")
       };
     case WalletOnboardingOutcomeEnum.TIMEOUT:
