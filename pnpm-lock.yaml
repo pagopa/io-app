@@ -379,8 +379,8 @@ importers:
         specifier: 0.8.4
         version: 0.8.4(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-jwt':
-        specifier: ^2.2.0
-        version: 2.2.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+        specifier: git+https://github.com/pagopa/io-react-native-jwt.git#refs/pull/53/head
+        version: https://codeload.github.com/pagopa/io-react-native-jwt/tar.gz/213b46a1c7a3caf4c6abce63c94e51ba8db0dda0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-login-utils':
         specifier: 1.2.0
         version: 1.2.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
@@ -389,7 +389,7 @@ importers:
         version: 0.2.1(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-wallet':
         specifier: 3.7.2
-        version: 3.7.2(93ee64fd53d75631576dc5558ab8691c)
+        version: 3.7.2(4498b111db5a954c0c8413c5f283dd6a)
       '@pagopa/io-react-native-zendesk':
         specifier: ^0.3.30
         version: 0.3.30(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
@@ -3293,8 +3293,9 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@pagopa/io-react-native-jwt@2.2.0':
-    resolution: {integrity: sha512-eQsOJ8syRHMfXlvK41hvXwBb0tk622J8+PHByzOX2hpAm7dg+qy5FfDE2W5xX5VLUXf18EwKeVcKkPJezNttLg==}
+  '@pagopa/io-react-native-jwt@https://codeload.github.com/pagopa/io-react-native-jwt/tar.gz/213b46a1c7a3caf4c6abce63c94e51ba8db0dda0':
+    resolution: {gitHosted: true, integrity: sha512-0TTftGlkvk4KS9BHmXYw95eiS1/zxj9gzlfZYkCgi0iyztfU5cS17qF8HQ5zn92EU5c1dELec2fvpE45leO/ZA==, tarball: https://codeload.github.com/pagopa/io-react-native-jwt/tar.gz/213b46a1c7a3caf4c6abce63c94e51ba8db0dda0}
+    version: 1.4.0
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -15509,12 +15510,12 @@ snapshots:
       react-native: 0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
       zod: 4.3.6
 
-  '@pagopa/io-react-native-jwt@2.2.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)':
+  '@pagopa/io-react-native-jwt@https://codeload.github.com/pagopa/io-react-native-jwt/tar.gz/213b46a1c7a3caf4c6abce63c94e51ba8db0dda0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)':
     dependencies:
       js-base64: 3.7.8
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
-      zod: 3.25.76
+      zod: 4.3.6
 
   '@pagopa/io-react-native-login-utils@1.2.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)':
     dependencies:
@@ -15526,11 +15527,11 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
 
-  '@pagopa/io-react-native-wallet@3.7.2(93ee64fd53d75631576dc5558ab8691c)':
+  '@pagopa/io-react-native-wallet@3.7.2(4498b111db5a954c0c8413c5f283dd6a)':
     dependencies:
       '@pagopa/io-react-native-crypto': 1.2.5(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-iso18013': 0.8.4(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
-      '@pagopa/io-react-native-jwt': 2.2.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+      '@pagopa/io-react-native-jwt': https://codeload.github.com/pagopa/io-react-native-jwt/tar.gz/213b46a1c7a3caf4c6abce63c94e51ba8db0dda0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-wallet-oauth2': 1.5.6
       '@pagopa/io-wallet-oid-federation': 1.5.6
       '@pagopa/io-wallet-oid4vci': 1.5.6
