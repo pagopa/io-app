@@ -1,6 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -32,24 +31,40 @@ export function* handleGetInitiativeWaitingList(
       typeof getOnboardingInitiativeWaitingList
     >;
 
-    yield* put(
-      pipe(
-        getOnboardingInitiativeWaitingListResult,
-        E.fold(
-          error =>
-            idPayInitiativeWaitingListGet.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
+    const result = (
+      "isOk" in getOnboardingInitiativeWaitingListResult
+        ? getOnboardingInitiativeWaitingListResult
+        : "right" in getOnboardingInitiativeWaitingListResult
+          ? ok(getOnboardingInitiativeWaitingListResult.right)
+          : err(getOnboardingInitiativeWaitingListResult.left)
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof getOnboardingInitiativeWaitingList>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
 
-          res => {
-            if (res.status === 200) {
-              return idPayInitiativeWaitingListGet.success(res.value);
-            }
-            return idPayInitiativeWaitingListGet.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
+    yield* put(
+      result.match(
+        res => {
+          if (res.status === 200) {
+            return idPayInitiativeWaitingListGet.success(res.value);
           }
-        )
+          return idPayInitiativeWaitingListGet.failure({
+            ...getGenericError(new Error(`Error: ${res.status}`))
+          });
+        },
+        error =>
+          idPayInitiativeWaitingListGet.failure({
+            ...getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
+          })
       )
     );
   } catch (e) {
