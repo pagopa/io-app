@@ -16,7 +16,7 @@ type Category = {
   type: ProductCategory;
 };
 
-export const categories: Record<ProductCategory, Category> = {
+const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.cultureAndEntertainment]: {
     type: ProductCategoryEnum.cultureAndEntertainment,
     icon: "categCulture",
