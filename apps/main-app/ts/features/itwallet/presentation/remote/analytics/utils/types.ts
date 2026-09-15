@@ -24,13 +24,3 @@ export type ItwRemoteFailure = {
   reason: unknown;
   type: string;
 };
-
-export type ItwRemoteInvalidCredential = {
-  not_valid_credential: string;
-  not_valid_credential_number: number;
-};
-
-export type ItwRemoteMissingCredential = {
-  missing_credential: string;
-  missing_credential_number: number;
-};
