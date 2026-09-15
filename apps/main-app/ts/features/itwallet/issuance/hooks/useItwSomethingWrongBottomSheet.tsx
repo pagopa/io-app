@@ -1,10 +1,4 @@
-import {
-  Body,
-  FooterActions,
-  IOMarkdown,
-  VSpacer,
-  VStack
-} from "@io-app/design-system";
+import { FooterActions, IOMarkdown, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 
 import { useIOSelector } from "../../../../store/hooks";
@@ -32,8 +26,8 @@ export const useItwSomethingWrongBottomSheet = ({ credential }: Props) => {
     itwAuthenticSourceContactsSelector(credential.credentialType)
   );
 
-  const contactsText = I18n.t(
-    "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyAuthSource",
+  const markdownContent = I18n.t(
+    "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyMarkdown",
     {
       contacts: getAuthSourceContactsMarkdown({
         authSource,
@@ -51,20 +45,8 @@ export const useItwSomethingWrongBottomSheet = ({ credential }: Props) => {
     ),
     component: (
       <>
-        <VStack space={16}>
-          <Body>
-            {I18n.t(
-              "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.body"
-            )}
-          </Body>
-          <Body>
-            {I18n.t(
-              "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyFooter"
-            )}
-          </Body>
-          <IOMarkdown content={contactsText} />
-        </VStack>
-        <VSpacer size={48} />
+        <IOMarkdown content={markdownContent} />
+        <VSpacer size={32} />
       </>
     ),
     footer: (
