@@ -1,5 +1,5 @@
 import { FeatureInfo, VSpacer } from "@io-app/design-system";
-import i18n from "i18next";
+import I18n from "i18next";
 
 import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
 import { useIODispatch } from "../../../../store/hooks";
@@ -17,7 +17,7 @@ export const FciNfcNotAvailableScreen = () => {
     trackFciNfcNotSupported();
   });
 
-  const featureInfoText = i18n.t(
+  const featureInfoText = I18n.t(
     "features.fci.requestL3.nfcNotAvailable.featureInfoText",
     { returnObjects: true }
   );
@@ -32,15 +32,15 @@ export const FciNfcNotAvailableScreen = () => {
             trackFciNfcNotSupportedClose();
             dispatch(fciEndRequest());
           },
-          label: i18n.t("features.fci.requestL3.nfcNotAvailable.cta")
+          label: I18n.t("features.fci.requestL3.nfcNotAvailable.cta")
         }
       }}
       contentContainerStyle={{
         paddingHorizontal: 32
       }}
-      description={i18n.t("features.fci.requestL3.nfcNotAvailable.description")}
+      description={I18n.t("features.fci.requestL3.nfcNotAvailable.description")}
       pictogram="updateOS"
-      title={i18n.t("features.fci.requestL3.nfcNotAvailable.title")}
+      title={I18n.t("features.fci.requestL3.nfcNotAvailable.title")}
     >
       <VSpacer size={24} />
       <FeatureInfo body={featureInfoText[0]} iconName="contactless" />

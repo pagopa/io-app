@@ -1,4 +1,4 @@
-import i18next from "i18next";
+import I18n from "i18next";
 import { put } from "typed-redux-saga/macro";
 
 import { preferencesLanguagesLoadSuccess } from "../store/actions/preferences";
@@ -12,6 +12,6 @@ export function* loadSystemPreferencesSaga(): Generator<
   void,
   SagaCallReturnType<any>
 > {
-  const languages = i18next.languages;
+  const languages = I18n.languages;
   yield* put(preferencesLanguagesLoadSuccess(languages));
 }
