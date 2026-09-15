@@ -6,8 +6,37 @@ import { useIODispatch } from "../../../../store/hooks";
 import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayConfigurationRoutes } from "../navigation/routes";
-import { InitiativeFailure } from "../types/failure";
+import { InitiativeFailure, InitiativeFailureType } from "../types/failure";
 import * as Context from "./context";
+
+const getFailureMessage = (failure: InitiativeFailure): string => {
+  switch (failure) {
+    case InitiativeFailureType.GENERIC:
+      return I18n.t("idpay.configuration.failureStates.GENERIC");
+    case InitiativeFailureType.IBAN_ENROLL_FAILURE:
+      return I18n.t("idpay.configuration.failureStates.IBAN_ENROLL_FAILURE");
+    case InitiativeFailureType.IBAN_LIST_LOAD_FAILURE:
+      return I18n.t("idpay.configuration.failureStates.IBAN_LIST_LOAD_FAILURE");
+    case InitiativeFailureType.INITIATIVE_ERROR:
+      return I18n.t("idpay.configuration.failureStates.INITIATIVE_ERROR");
+    case InitiativeFailureType.INSTRUMENT_DELETE_FAILURE:
+      return I18n.t(
+        "idpay.configuration.failureStates.INSTRUMENT_DELETE_FAILURE"
+      );
+    case InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE:
+      return I18n.t(
+        "idpay.configuration.failureStates.INSTRUMENT_ENROLL_FAILURE"
+      );
+    case InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE:
+      return I18n.t(
+        "idpay.configuration.failureStates.INSTRUMENTS_LIST_LOAD_FAILURE"
+      );
+    case InitiativeFailureType.SESSION_EXPIRED:
+      return I18n.t("idpay.configuration.failureStates.SESSION_EXPIRED");
+    case InitiativeFailureType.TOO_MANY_REQUESTS:
+      return I18n.t("idpay.configuration.failureStates.TOO_MANY_REQUESTS");
+  }
+};
 
 const createActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -79,9 +108,7 @@ const createActionsImplementation = (
   const showFailureToast = (args: { context: Context.Context }) => {
     const failure = InitiativeFailure.decode(args.context.failure);
     if ("right" in failure) {
-      IOToast.error(
-        I18n.t(`idpay.configuration.failureStates.${failure.right}`)
-      );
+      IOToast.error(getFailureMessage(failure.right));
     }
   };
 
