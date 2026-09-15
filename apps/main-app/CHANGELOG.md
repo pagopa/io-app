@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.7](https://github.com/pagopa/io-app/compare/3.39.0-rc.6...3.39.0-rc.7) (2026-09-14)
+
+### Features
+
+* [[IOPID-4123](https://pagopa.atlassian.net/browse/IOPID-4123)] Add CieID login flow via OneIdentity ([#8593](https://github.com/pagopa/io-app/issues/8593)) ([6488116](https://github.com/pagopa/io-app/commit/648811692fa70e985ebcae74cd3586f2466a42a9))
+* [[IOPID-4172](https://pagopa.atlassian.net/browse/IOPID-4172)] error screen for IDP list loading failure ([#8589](https://github.com/pagopa/io-app/issues/8589)) ([9ff3be9](https://github.com/pagopa/io-app/commit/9ff3be960c780e21508095a4f2a29cde7615b476))
+
+### Bug Fixes
+
+* [[IOPLT-2011](https://pagopa.atlassian.net/browse/IOPLT-2011)] blocking screen connectivity issue ([#8468](https://github.com/pagopa/io-app/issues/8468)) ([50ced86](https://github.com/pagopa/io-app/commit/50ced8617331769932172ea670fa0a8884cdae07))
+* **IT-Wallet:** [[SIW-4922](https://pagopa.atlassian.net/browse/SIW-4922)] Fix proximity success tracking event ([#8551](https://github.com/pagopa/io-app/issues/8551)) ([e69caf0](https://github.com/pagopa/io-app/commit/e69caf058feed872bfadeff9f416580e8d8be8c6))
+
+### Chores
+
+* [[IOPLT-2067](https://pagopa.atlassian.net/browse/IOPLT-2067)] Adopt official `jest` mock for `pulsar` library ([#8582](https://github.com/pagopa/io-app/issues/8582)) ([49cc8bf](https://github.com/pagopa/io-app/commit/49cc8bf980309e208a98db2845c66f2b6bd2a524))
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] remove `minimumReleaseAgeExclude` ([#8594](https://github.com/pagopa/io-app/issues/8594)) ([4c1baae](https://github.com/pagopa/io-app/commit/4c1baae25213e39ad264441e92ffc42864ab6496))
 ## [3.39.0-rc.6](https://github.com/pagopa/io-app/compare/3.39.0-rc.5...3.39.0-rc.6) (2026-09-11)
 
 ### Features

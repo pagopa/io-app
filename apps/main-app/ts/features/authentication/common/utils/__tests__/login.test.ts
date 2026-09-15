@@ -1,6 +1,13 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 
-import { extractLoginResult, getIntentFallbackUrl, getLoginHeaders } from "..";
+import {
+  extractLoginResult,
+  getIntentFallbackUrl,
+  getLoginHeaders,
+  isValidCallbackUrl
+} from "..";
+
+const mockApiUrlPrefix = "https://mock-api.io.pagopa.it";
 
 jest.mock("../../../../../utils/environment", () => ({
   isLocalEnv: true
@@ -9,6 +16,11 @@ jest.mock("../../../../../utils/environment", () => ({
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
   getVersion: jest.fn().mockReturnValue("1.2.3.4")
+}));
+
+jest.mock("../../../../../config", () => ({
+  apiUrlPrefix: "https://mock-api.io.pagopa.it",
+  spidRelayState: "mock-relay-state"
 }));
 
 describe("hook the login outcome from the url", () => {
@@ -189,5 +201,39 @@ describe("getLoginHeaders", () => {
       "x-pagopa-login-type": "LV",
       "x-pagopa-idp-id": idpId
     });
+  });
+});
+
+describe("isValidCallbackUrl", () => {
+  const callbackUrlCases: ReadonlyArray<[string, string, boolean]> = [
+    [
+      "v1 callback URL is a valid callback",
+      `${mockApiUrlPrefix}/api/auth/v1/callback`,
+      true
+    ],
+    [
+      "v2 callback URL is a valid callback",
+      `${mockApiUrlPrefix}/api/auth/v2/callback`,
+      true
+    ],
+    [
+      "URL with an unrelated path is not a valid callback",
+      `${mockApiUrlPrefix}/api/auth/v1/login`,
+      false
+    ],
+    [
+      "URL that only contains the callback path as a substring is not a valid callback",
+      `${mockApiUrlPrefix}/api/auth/v1/callback/extra-path`,
+      false
+    ],
+    [
+      "URL with a different host is not a valid callback",
+      "https://evil.com/api/auth/v2/callback",
+      false
+    ]
+  ];
+
+  test.each(callbackUrlCases)("%s", (_, url, expectedResult) => {
+    expect(isValidCallbackUrl(url)).toBe(expectedResult);
   });
 });
