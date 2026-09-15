@@ -27,6 +27,11 @@ import {
   preconditionsCategoryTagSelector,
   preconditionsMessageIdSelector
 } from "../store/reducers/messagePrecondition";
+import {
+  decodeSendFailureReason,
+  SendFailureReason,
+  WrappedSendError
+} from "../utils";
 import { getCommunicationClient } from "./commons";
 
 export function* getMessageIdAndCategoryTag(): Generator<
@@ -101,14 +106,27 @@ function* messagePreconditionWorker(
         );
         return;
       }
-      throw Error(`response status ${result.right.status}`);
+      throw new WrappedSendError(
+        decodeSendFailureReason({
+          kind: "http_status",
+          status: result.right.status
+        }),
+        `response status ${result.right.status}`
+      );
     } else {
-      throw Error(readableReport(result.left));
+      throw new WrappedSendError(
+        SendFailureReason.DECODE_ERROR,
+        readableReport(result.left)
+      );
     }
   } catch (e) {
     const categoryTag = messageIdAndCategoryTag?.categoryTag;
     if (categoryTag) {
-      trackDisclaimerLoadError(categoryTag);
+      const reason =
+        e instanceof WrappedSendError
+          ? e.reason
+          : decodeSendFailureReason({ kind: "caught", error: e });
+      trackDisclaimerLoadError(categoryTag, reason);
     }
     yield* put(
       errorPreconditionStatusAction(
