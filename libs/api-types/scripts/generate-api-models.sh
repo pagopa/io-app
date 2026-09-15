@@ -8,7 +8,7 @@ IO_BACKEND_VERSION=v20.0.0
 # Legacy version kept for backward-compatibility definitions removed in v20.0.0
 # (e.g. api_trial_system.yaml, UserMetadata, ServerInfo from api_backend.yaml)
 IO_BACKEND_LEGACY_VERSION=v17.5.2
-IO_SERVICES_METADATA_VERSION=1.1.4
+IO_SERVICES_METADATA_VERSION=1.1.5
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.23.1
 # Send function version
@@ -64,18 +64,26 @@ declare -a apisNoClientNoRM=(
 )
 
 for elem in "${apis[@]}"; do
-    read -a strarr <<< "$elem"  # uses default whitespace IFS
-    echo ${strarr[0]}; rm -rf ${strarr[0]}; mkdir -p ${strarr[0]}; pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types --client &
+  read -a strarr <<<"$elem" # uses default whitespace IFS
+  echo ${strarr[0]}
+  rm -rf ${strarr[0]}
+  mkdir -p ${strarr[0]}
+  pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types --client &
 done
 wait
 
 for elem in "${apisNoClient[@]}"; do
-  read -a strarr <<< "$elem"  # uses default whitespace IFS
-  echo ${strarr[0]}; rm -rf ${strarr[0]}; mkdir -p ${strarr[0]}; pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types &
+  read -a strarr <<<"$elem" # uses default whitespace IFS
+  echo ${strarr[0]}
+  rm -rf ${strarr[0]}
+  mkdir -p ${strarr[0]}
+  pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types &
 done
 wait
 
 for elem in "${apisNoClientNoRM[@]}"; do
-  read -a strarr <<< "$elem"  # uses default whitespace IFS
-  echo ${strarr[0]}; mkdir -p ${strarr[0]}; pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types
+  read -a strarr <<<"$elem" # uses default whitespace IFS
+  echo ${strarr[0]}
+  mkdir -p ${strarr[0]}
+  pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types
 done
