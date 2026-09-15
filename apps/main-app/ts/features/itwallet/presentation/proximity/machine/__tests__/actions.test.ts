@@ -1,6 +1,7 @@
 import {
   closeProximityAction,
   trackProximityStartAction,
+  trackProximitySuccessAction,
   trackQrCodeLoadingFailureAction
 } from "../actions";
 import { ProximityFailureType } from "../failure";
@@ -8,10 +9,12 @@ import { ProximityFailureType } from "../failure";
 jest.mock("../../analytics", () => ({
   trackItwProximityQrCode: jest.fn(),
   trackItwProximityQrCodeLoadingFailure: jest.fn(),
+  trackItwProximityPresentationCompleted: jest.fn(),
   trackItwProximityStart: jest.fn()
 }));
 
 import {
+  trackItwProximityPresentationCompleted,
   trackItwProximityQrCodeLoadingFailure,
   trackItwProximityStart
 } from "../../analytics";
@@ -71,6 +74,20 @@ describe("itwProximityMachine actions", () => {
       trackProximityStartAction({ context: { engagementMode } } as any);
 
       expect(trackItwProximityStart).toHaveBeenCalledWith({ proximity_flow });
+    }
+  );
+
+  it.each([
+    { engagementMode: "qrcode", proximity_flow: "qr_code" },
+    { engagementMode: "nfc", proximity_flow: "nfc" }
+  ] as const)(
+    "tracks the proximity success with proximity_flow $proximity_flow for engagementMode $engagementMode",
+    ({ engagementMode, proximity_flow }) => {
+      trackProximitySuccessAction({ context: { engagementMode } } as any);
+
+      expect(trackItwProximityPresentationCompleted).toHaveBeenCalledWith({
+        proximity_flow
+      });
     }
   );
 });

@@ -30,11 +30,22 @@ export async function trackCieIDLoginSelected(
   authLevel: AuthLevel,
   flow: LoginType = "auth"
 ) {
-  trackLoginCieIdSelected(authLevel, flow);
-  await updateMixpanelProfileProperties(state, {
-    property: "LOGIN_METHOD",
-    value: IdpCIE_ID.id
-  });
+  void mixpanelTrack(
+    "LOGIN_CIEID_SELECTED",
+    buildEventProperties("UX", "action", {
+      security_level: authLevel,
+      flow
+    })
+  );
+
+  // Only the first login (auth) should update the LOGIN_METHOD profile
+  // property: a reauth doesn't change how the user normally logs in.
+  if (flow === "auth") {
+    await updateMixpanelProfileProperties(state, {
+      property: "LOGIN_METHOD",
+      value: IdpCIE_ID.id
+    });
+  }
 }
 // As in the `trackCieIDLoginSelected` event, there should be a `security_level` property;
 // however, this value might differ from the one selected before,
@@ -72,31 +83,21 @@ export async function trackCiePinLoginSelected(
   state: GlobalState,
   flow: LoginType = "auth"
 ) {
-  trackLoginCiePinSelected(flow);
-  await updateMixpanelProfileProperties(state, {
-    property: "LOGIN_METHOD",
-    value: IdpCIE.id
-  });
-}
-export function trackLoginCieIdSelected(
-  authLevel: AuthLevel,
-  flow: LoginType = "auth"
-) {
-  void mixpanelTrack(
-    "LOGIN_CIEID_SELECTED",
-    buildEventProperties("UX", "action", {
-      security_level: authLevel,
-      flow
-    })
-  );
-}
-export function trackLoginCiePinSelected(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGIN_CIE_PIN_SELECTED",
     buildEventProperties("UX", "action", {
       flow
     })
   );
+
+  // Only the first login (auth) should update the LOGIN_METHOD profile
+  // property: a reauth doesn't change how the user normally logs in.
+  if (flow === "auth") {
+    await updateMixpanelProfileProperties(state, {
+      property: "LOGIN_METHOD",
+      value: IdpCIE.id
+    });
+  }
 }
 
 export function trackLoginEnded(
