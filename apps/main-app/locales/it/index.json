@@ -269,8 +269,15 @@
       "contextualHelpTitle": "Chi è il tuo Identity Provider",
       "idps": {
         "loadingAccessibilityLabel": "Caricamento Identity Provider"
+      },
+      "loadingError": {
+        "description": "Riprova più tardi oppure entra su IO con la tua Carta d’Identità Elettronica (CIE).",
+        "title": "Non riusciamo a caricare la lista dei gestori SPID",
+        "primaryAction": "Entra con CIE",
+        "secondaryAction": "Chiudi"
       }
     },
+
     "landing": {
       "accessibility": {
         "carousel": {
@@ -2417,10 +2424,16 @@
         }
       },
       "unsupportedDevice": {
-        "error": {
+        "errorL2": {
           "secondaryAction": "Chiudi",
           "subtitle": "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi **[Scopri di più]({{faqUrl}})**",
           "title": "Il tuo dispositivo non supporta Documenti su IO"
+        },
+        "errorL3": {
+          "title": "Il tuo dispositivo non supporta IT Wallet",
+          "subtitle": "Questo dispositivo non ha i requisiti di sicurezza necessari per il suo funzionamento.",
+          "primaryAction": "Chiudi",
+          "secondaryAction": "Scopri di più"
         }
       },
       "verifiableCredentials": {

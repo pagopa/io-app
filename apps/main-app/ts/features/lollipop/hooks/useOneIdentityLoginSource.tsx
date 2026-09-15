@@ -9,16 +9,19 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
-import { SpidIdp } from "../../../utils/idps";
 import {
   isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
 } from "../../authentication/activeSessionLogin/store/selectors";
 import { oneIdentityEnvSelector } from "../../authentication/common/store/selectors/loginConfig";
+import {
+  AUTH_LEVELS,
+  AuthLevel,
+  SPID_AUTH_LEVEL_MAP
+} from "../../authentication/common/utils";
 import { createRetriableFetch } from "../../authentication/common/utils/fetch";
 import { jsonFetchToSchema } from "../../authentication/common/utils/jsonFetchToSchema";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
-import { SpidLevel } from "../../authentication/login/cie/utils";
 import {
   ephemeralKeyTagSelector,
   ephemeralPublicKeySelector
@@ -64,14 +67,14 @@ type LoginSourceState =
  */
 const buildReserveRequestBody = (
   env: string,
-  minAuthLevel: SpidLevel,
+  minAuthLevel: AuthLevel,
   publicKey: PublicKey,
   hashAlgorithm: string,
   isFastLogin: boolean,
   hashedFiscalCode?: string
 ) => ({
   env: env.toUpperCase(),
-  min_auth_level: minAuthLevel,
+  min_auth_level: SPID_AUTH_LEVEL_MAP[minAuthLevel],
   lollipop_pub_key: Buffer.from(JSON.stringify(publicKey)).toString(
     "base64url"
   ),
@@ -92,7 +95,7 @@ const buildAuthorizationUrl = (
     state: string;
   },
   idp: string,
-  minAuthLevel: SpidLevel
+  minAuthLevel: AuthLevel
 ): string => {
   const { authorization_endpoint, client_id, nonce, redirect_uri, state } =
     reserveResponse;
@@ -105,7 +108,7 @@ const buildAuthorizationUrl = (
     state,
     nonce,
     response_type: "code",
-    minAuthLevel
+    minAuthLevel: SPID_AUTH_LEVEL_MAP[minAuthLevel]
   });
   return authorizationUrl.toString();
 };
@@ -130,13 +133,13 @@ const buildWebviewSource = (
 
 export type UseOneIdentityLoginSource = (params: {
   /**
-   * The identity provider the user selected to login with.
+   * The ID of the identity provider the user selected to login with.
    */
-  idp: SpidIdp;
+  idpId: string;
   /**
-   * The minimum required SPID level for the authentication flow. Defaults to "SpidL2".
+   * The minimum required SPID level for the authentication flow. Defaults to "L2".
    */
-  minAuthLevel?: SpidLevel;
+  minAuthLevel?: AuthLevel;
   /**
    * Handler called upon a failure during the login flow.
    */
@@ -154,9 +157,9 @@ export type UseOneIdentityLoginSource = (params: {
 };
 
 export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
-  idp,
+  idpId,
   onFailure,
-  minAuthLevel = "SpidL2"
+  minAuthLevel = AUTH_LEVELS.L2
 }) => {
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -277,7 +280,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
     const authorizationUrl = buildAuthorizationUrl(
       result.value,
-      idp.id,
+      idpId,
       minAuthLevel
     );
 
@@ -286,7 +289,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       webviewSource: buildWebviewSource(authorizationUrl, publicKey)
     });
   }, [
-    idp,
+    idpId,
     ephemeralKeyTag,
     mixpanelEnabled,
     dispatch,

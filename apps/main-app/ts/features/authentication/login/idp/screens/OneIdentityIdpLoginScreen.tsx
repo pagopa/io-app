@@ -22,6 +22,7 @@ import {
   loggedInAuthSelector,
   loggedOutWithIdpAuthSelector
 } from "../../../common/store/selectors";
+import { AUTH_LEVELS } from "../../../common/utils";
 
 export const OneIdentityIdpLoginScreen = () => {
   const loggedInAuth = useIOSelector(loggedInAuthSelector);
@@ -74,7 +75,7 @@ const OneIdentityIdpLoginScreenContent = ({
         params: {
           errorCodeOrMessage,
           authMethod: "SPID",
-          authLevel: "L2"
+          authLevel: AUTH_LEVELS.L2
         }
       });
     },
