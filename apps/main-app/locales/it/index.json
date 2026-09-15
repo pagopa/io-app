@@ -269,8 +269,15 @@
       "contextualHelpTitle": "Chi è il tuo Identity Provider",
       "idps": {
         "loadingAccessibilityLabel": "Caricamento Identity Provider"
+      },
+      "loadingError": {
+        "description": "Riprova più tardi oppure entra su IO con la tua Carta d’Identità Elettronica (CIE).",
+        "title": "Non riusciamo a caricare la lista dei gestori SPID",
+        "primaryAction": "Entra con CIE",
+        "secondaryAction": "Chiudi"
       }
     },
+
     "landing": {
       "accessibility": {
         "carousel": {
