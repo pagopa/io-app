@@ -3,6 +3,7 @@ import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
 import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import {
@@ -57,6 +58,14 @@ export const OneIdentityIdpSelectionScreen = ({
     }
     return [];
   }, [state]);
+
+  const debugInfo = useMemo(
+    () => ({
+      failure: state.status === "failure" ? state.error : undefined
+    }),
+    [state]
+  );
+  useDebugInfo(debugInfo);
 
   useOnFirstRender(() => {
     trackSpidLoginIdpSelection(loginFlow);
@@ -118,7 +127,6 @@ export const OneIdentityIdpSelectionScreen = ({
   if (state.status === "failure") {
     return (
       <OneIdentityIdpSelectionFailureContent
-        failure={state.error}
         isActiveSessionLogin={isActiveSessionLogin}
       />
     );
