@@ -277,7 +277,6 @@
         "secondaryAction": "Chiudi"
       }
     },
-
     "landing": {
       "accessibility": {
         "carousel": {
@@ -1563,7 +1562,6 @@
         "credentialPreview": {
           "actions": {
             "primary": "Aggiungi al Portafoglio",
-            "secondary": "Annulla",
             "somethingWrong": "Qualcosa non torna?"
           },
           "bottomSheet": {
@@ -1585,8 +1583,7 @@
           },
           "detailsTitle": "Controlla i dettagli",
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",
-          "subtitle": "Se i dati sono corretti, aggiungi il documento al Portafoglio.",
-          "title": "{{credential}}: ecco l'anteprima dei tuoi dati"
+          "subtitle": "Se i dati sono corretti, aggiungi il documento al Portafoglio."
         },
         "credentialResult": {
           "toast": "Fatto!"
@@ -2619,7 +2616,6 @@
             "title": "Qui vedrai le ricevute dei pagamenti fatti da te"
           }
         },
-        "multiplePayment": "Pagamento multiplo",
         "receipt": {
           "a11y": {
             "preview": "Anteprima ricevuta in formato PDF"
@@ -3090,8 +3086,6 @@
       "cards": {
         "categories": {
           "all": "Tutti",
-          "bonus": "Iniziative welfare",
-          "cgn": "Carta Giovani Nazionale",
           "itw": "Documenti",
           "other": "Bonus e altro"
         }
@@ -3131,7 +3125,6 @@
           "addRestricted": "Aggiungi documenti con funzionalità ridotte"
         },
         "l3-sections": {
-          "added": "Già presenti",
           "itw": "Documenti",
           "other": "Bonus e Altro"
         },
@@ -3141,8 +3134,7 @@
         },
         "options": {
           "cgn": "Carta Giovani Nazionale",
-          "payments": "Metodi di pagamento",
-          "welfare": "Iniziative welfare"
+          "payments": "Metodi di pagamento"
         },
         "sections": {
           "itw": "Documenti",
@@ -3462,7 +3454,6 @@
         },
         "paymentMethods": {
           "APP_IO_PAYMENT": {
-            "actionItem": "Come funziona?",
             "description": "Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa.",
             "title": "Usa l'app IO"
           },
@@ -3709,7 +3700,6 @@
           "ISEE": "ISEE",
           "RESIDENCE": "Residenza"
         },
-        "fallbackInitiativeName": "l'iniziativa",
         "familyUnitCode": {
           "ANPR": {
             "description": "Ministero dell’Interno",
@@ -3733,8 +3723,7 @@
         "prerequisites": {
           "info": {
             "body": "Comunichiamo direttamente con l’ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
-            "header": "Come avviene la verifica?",
-            "understoodCTA": "Ho capito"
+            "header": "Come avviene la verifica?"
           }
         },
         "subtitle": "Per accedere all’iniziativa {{service}}, consulteremo altri enti per verificare se hai i requisiti previsti",
@@ -3863,7 +3852,6 @@
         "button": {
           "continue": "Ok, chiudi"
         },
-        "pleaseWait": "Un attimo di pazienza...",
         "requestSent": {
           "subtitle": "Riceverai un **messaggio su IO** quando l’esito della tua richiesta sarà disponibile.\n\nPuoi verificare lo stato della tua richiesta dalla sezione **Servizi**",
           "title": "La tua richiesta è stata inviata!"
@@ -4021,16 +4009,12 @@
   "locales": {
     "de": "tedesco",
     "en": "inglese",
-    "fr": "francese",
-    "it": "italiano",
-    "sl": "sloveno"
+    "it": "italiano"
   },
   "localesTranslated": {
     "de": "Deutsch",
     "en": "English",
-    "fr": "Français",
-    "it": "Italiano",
-    "sl": "Slovenščina"
+    "it": "Italiano"
   },
   "login": {
     "help_banner_action": "Leggi come fare",
@@ -4166,8 +4150,6 @@
       "paid": "Pagato"
     },
     "contentTitle": "Messaggi",
-    "contextualHelpContent": "**La sezione Messaggi raccoglie tutte le comunicazioni in arrivo dagli enti che offrono i propri servizi tramite IO**. \nÈ possibile fissare dei promemoria per le scadenze o procedere al pagamento di un avviso direttamente dal messaggio.  \nI messaggi sono suddivisi tra **ricevuti** (che contiene tutti i messaggi arrivati e non archiviati), **scadenze** (che visualizza al suo interno solo i messaggi contenenti una data di scadenza, in modo da facilitare la gestione delle cose da fare), e **archiviati** (che tiene traccia di tutti i messaggi archiviati).  \nPer archiviare un messaggio è sufficiente tenere premuta l'area del messaggio da archiviare, e selezionare il pulsante \"archivia\" che comparirà in quel momento sullo schermo.\n",
-    "contextualHelpTitle": "Cosa puoi fare nei tuoi Messaggi",
     "cta": {
       "archive": "Archivia",
       "calendarPermDenied": {
@@ -4180,7 +4162,6 @@
       "errors": {
         "fetchCalendars": "Errore durante il recupero dei calendari"
       },
-      "reminder": "Promemoria",
       "reminderAddFailure": "Errore durante l'aggiunta del promemoria, riprova per piacere",
       "reminderAddSuccess": "Promemoria aggiunto",
       "reminderAlertAdd": "Aggiungi un nuovo evento",
@@ -4294,8 +4275,6 @@
         "title": "Proteggi il tuo dispositivo"
       }
     },
-    "contextualHelpContent": "**Se vuoi accedere più velocemente all'app senza dover ogni volta inserire il codice di sblocco, puoi farlo** abilitando il riconoscimento biometrico tramite impronta digitale direttamente dalle impostazioni del tuo sistema operativo.  \nDalle impostazioni dell'app IO potrai in ogni momento decidere se mantenere o disabilitare il riconoscimento biometrico... provalo, e vedrai che non vorrai più farne a meno!\n",
-    "contextualHelpTitle": "Come funziona il riconoscimento biometrico",
     "exitAlert": {
       "description": "Dovrai entrare di nuovo con SPID o CIE per usare l’app.",
       "title": "Vuoi uscire da IO?"
@@ -4772,8 +4751,6 @@
     "title": "Inoltro dei messaggi via email"
   },
   "services": {
-    "contextualHelpContent": "**Nella sezione Servizi puoi visualizzare la lista degli enti che offrono i propri servizi su IO, e l'elenco dei servizi associato ad ogni ente.** I servizi sono divisi tra locali, dove puoi selezionare gli enti d'interesse rispetto all'area geografica dove vivi, nazionali, ovvero le amministrazioni centrali che offrono servizi a tutti i cittadini italiani, e infine tutti, dove puoi trovare l'elenco completo di tutti i servizi disponibili su IO (sia locali che nazionali).   \nTi invitiamo ad utilizzare questa sezione per esplorare i servizi messi a disposizione da IO, impostare la tua lista di servizi locali e i dettagli dei singoli servizi. Ogni volta che arriverà su IO un nuovo servizio locale o nazionale, riceverai una notifica in modo da poter subito verificare di cosa si tratta e se ti risulta utile o meno.\n",
-    "contextualHelpTitle": "Cosa puoi fare nei tuoi Servizi",
     "details": {
       "failure": {
         "back": "Indietro",
@@ -5127,8 +5104,6 @@
     "capability": {
       "title": "Iniziative disponibili"
     },
-    "contextualHelpContent": "**Nella sezione Portafoglio sono elencati i tuoi metodi di pagamento, i tuoi Bonus e carte sconto e lo storico delle transazioni effettuate con pagoPA**, la piattaforma dei pagamenti per la Pubblica Amministrazione. \nQui potrai inoltre pagare tutti gli avvisi di pagamento cartaceo con il logo pagoPA: inquadra il QR code che trovi nell'avviso cartaceo e completa il pagamento direttamente dall'app. IO supporta al momento solo pagamenti con carta di credito\/debito, ma presto saranno aggiunti altri metodi di pagamento.",
-    "contextualHelpTitle": "Cosa puoi fare nel tuo Portafoglio",
     "continue": "Vai al pagamento",
     "creditCard": {
       "validUntil": "Valida fino al {{expDate}}"
@@ -5335,8 +5310,7 @@
             "countdownExpiredTitle": "C’è già un’operazione in corso, riprova più tardi",
             "countdownTitle": "C’è già un’operazione in corso, riprova tra {{minutes}} minuti",
             "subtitle": "Se il problema persiste, contatta l'assistenza."
-          },
-          "title": "C’è già un’operazione in corso, riprova più tardi"
+          }
         },
         "PAYMENT_SLOWDOWN_ERROR": {
           "subtitle": "Riprova più tardi.",
