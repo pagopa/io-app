@@ -4,29 +4,33 @@ import { useLinkTo } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback } from "react";
 
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../store/hooks";
-import { CTA, CTAS } from "../../../../types/LocalizedCTAs";
-import { useFIMSFromServiceId } from "../../../fims/common/hooks";
-import { trackPNOptInMessageAccepted } from "../../../pn/analytics";
-import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
-import {
-  canNavigateToPaymentFromMessageSelector,
-  paymentsButtonStateSelector
-} from "../../store/reducers/payments";
-import { PaymentData } from "../../types";
-import {
-  getRptIdStringFromPaymentData,
-  initializeAndNavigateToWalletForPayment
-} from "../../utils";
-import { handleCtaAction } from "../../utils/ctas";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { CTA, CTAS } from "../../../types/LocalizedCTAs";
+import { useFIMSFromServiceId } from "../../fims/common/hooks";
+import { trackPNOptInMessageAccepted } from "../../pn/analytics";
 import {
   computeAndTrackCTAPressAnalytics,
   computeAndTrackPaymentStart
-} from "./detailsUtils";
+} from "../components/MessageDetail/detailsUtils";
+import { messagePaymentDataSelector } from "../store/reducers/detailsById";
+import {
+  canNavigateToPaymentFromMessageSelector,
+  paymentsButtonStateSelector
+} from "../store/reducers/payments";
+import { PaymentData } from "../types";
+import {
+  getRptIdStringFromPaymentData,
+  initializeAndNavigateToWalletForPayment
+} from "../utils";
+import { handleCtaAction } from "../utils/ctas";
+
+export type UseMessageDetailsFooterActionsProps = {
+  ctas?: CTAS;
+  firstCTAIsPNOptInMessage: boolean;
+  messageId: string;
+  secondCTAIsPNOptInMessage: boolean;
+  serviceId: ServiceId;
+};
 
 type FooterCTA = {
   cta1: CTA;
@@ -64,16 +68,6 @@ type FooterPaymentWithDoubleCTA = {
   paymentData: PaymentData;
   tag: "PaymentWithDoubleCTA";
 };
-type MessageDetailsPaymentButtonProps = {
-  ctas?: CTAS;
-  firstCTAIsPNOptInMessage: boolean;
-  messageId: string;
-  secondCTAIsPNOptInMessage: boolean;
-  serviceId: ServiceId;
-};
-
-const isNone = (footerData: FooterData): footerData is FooterNone =>
-  footerData.tag === "None";
 
 const computeFooterData = (
   paymentData: PaymentData | undefined,
@@ -197,13 +191,19 @@ const mapFooterDataToActions = (
   }
 };
 
-export const MessageDetailsStickyFooter = ({
+/**
+ * Builds the payment and CTA actions displayed in a standard message footer,
+ * preserving their navigation and analytics behavior.
+ */
+export const useMessageDetailsFooterActions = ({
   ctas,
   firstCTAIsPNOptInMessage,
   messageId,
   secondCTAIsPNOptInMessage,
   serviceId
-}: MessageDetailsPaymentButtonProps) => {
+}: UseMessageDetailsFooterActionsProps): ComponentProps<
+  typeof FooterActions
+>["actions"] => {
   const store = useIOStore();
   const dispatch = useIODispatch();
   const toast = useIOToast();
@@ -250,13 +250,9 @@ export const MessageDetailsStickyFooter = ({
   }, [paymentData, canNavigateToPayment, dispatch, serviceId, store, toast]);
 
   const footerData = computeFooterData(paymentData, paymentButtonStatus, ctas);
-  if (isNone(footerData)) {
-    return null;
-  }
-
   const isPaymentLoading = paymentButtonStatus === "loading";
 
-  const actions = mapFooterDataToActions(
+  return mapFooterDataToActions(
     footerData,
     onCTAPressedCallback,
     firstCTAIsPNOptInMessage,
@@ -265,6 +261,4 @@ export const MessageDetailsStickyFooter = ({
     isPaymentLoading,
     handlePaymentPress
   );
-
-  return actions && <FooterActions actions={actions} />;
 };
