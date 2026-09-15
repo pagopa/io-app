@@ -1,0 +1,31 @@
+{
+  "name": "@io-app/xstate-inspector",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Development-only XState inspector: React Native bridge, Metro middleware and browser UI",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "react-native": "src/index.ts",
+  "scripts": {
+    "build": "node browser/build.mjs",
+    "start": "node browser/build.mjs --watch",
+    "test": "jest --config='./jest.config.js'",
+    "tsc-noemit": "tsc --noEmit",
+    "lint": "eslint \"**/*.ts\""
+  },
+  "devDependencies": {
+    "@react-native/typescript-config": "catalog:",
+    "@types/jest": "catalog:",
+    "@types/node": "^22.20.1",
+    "esbuild": "^0.28.2",
+    "jest": "catalog:",
+    "typescript": "catalog:",
+    "zustand": "^5.0.15"
+  },
+  "dependencies": {
+    "@statelyai/inspect": "0.7.2",
+    "react-native": "catalog:",
+    "react-native-url-polyfill": "^2.0.0",
+    "xstate": "catalog:"
+  }
+}

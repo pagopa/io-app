@@ -1,4 +1,5 @@
 import { useIOToast } from "@io-app/design-system";
+import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { PropsWithChildren } from "react";
 
@@ -11,8 +12,11 @@ import {
 import { getEnv } from "../../common/utils/environment";
 import { itwCredentialIssuanceMachine } from "./machine.ts";
 
+const inspector = createBrowserInspector();
+
 export const ItwCredentialIssuanceMachineContext = createActorContext(
-  itwCredentialIssuanceMachine
+  itwCredentialIssuanceMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
 );
 
 export const ItwCredentialIssuanceMachineProvider = (

@@ -1,4 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -24,12 +25,15 @@ import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";
 import { idPayOnboardingMachine } from "./machine";
 
+const inspector = createBrowserInspector();
+
 type Props = {
   children: ReactNode;
 };
 
 export const IdPayOnboardingMachineContext = createActorContext(
-  idPayOnboardingMachine
+  idPayOnboardingMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
 );
 
 export const IdPayOnboardingMachineProvider = ({ children }: Props) => {

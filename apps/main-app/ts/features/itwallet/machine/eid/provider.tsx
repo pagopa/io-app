@@ -1,4 +1,5 @@
 import { useIOToast } from "@io-app/design-system";
+import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { PropsWithChildren } from "react";
 
@@ -8,8 +9,11 @@ import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 import { itwEidIssuanceMachine } from "./../eid/machine";
 
+const inspector = createBrowserInspector();
+
 export const ItwEidIssuanceMachineContext = createActorContext(
-  itwEidIssuanceMachine
+  itwEidIssuanceMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
 );
 
 export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {
