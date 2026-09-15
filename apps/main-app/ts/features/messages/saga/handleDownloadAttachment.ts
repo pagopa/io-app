@@ -158,11 +158,11 @@ function* downloadAttachmentWorker(
         );
         // In this case we produce a taking error that can be
         // shown directly to the user
-        const errorKey =
+        const error = new Error(
           status === 415
-            ? "messageDetails.attachments.badFormat"
-            : "messageDetails.attachments.downloadFailed";
-        const error = new Error(I18n.t(errorKey));
+            ? I18n.t("messageDetails.attachments.badFormat")
+            : I18n.t("messageDetails.attachments.downloadFailed")
+        );
         yield* put(
           downloadAttachment.failure({ attachment, messageId, error })
         );
