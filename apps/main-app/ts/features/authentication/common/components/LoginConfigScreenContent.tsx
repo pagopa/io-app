@@ -18,6 +18,7 @@ import {
   setOneIdentityEnv,
   setOneIdentityLocalFeatureFlag
 } from "../store/actions/loginConfig";
+import { ONE_IDENTITY_ENVS } from "../store/reducers/loginConfig";
 import {
   oneIdentityEnvSelector,
   oneIdentityLocalFeatureFlagSelector
@@ -82,7 +83,11 @@ export const LoginConfigScreenContent = ({
 
   const handleOneIdentityEnv = useCallback(
     (isUat: boolean) => {
-      dispatch(setOneIdentityEnv(isUat ? "uat" : "prod"));
+      dispatch(
+        setOneIdentityEnv(
+          isUat ? ONE_IDENTITY_ENVS.UAT : ONE_IDENTITY_ENVS.PROD
+        )
+      );
     },
     [dispatch]
   );
@@ -113,7 +118,7 @@ export const LoginConfigScreenContent = ({
         description="Questa opzione serve agli sviluppatori per testare la login con OneIdentity in ambiente di UAT."
         disabled={disabled}
         onValueChange={handleOneIdentityEnv}
-        selected={oneIdentityEnv === "uat"}
+        selected={oneIdentityEnv === ONE_IDENTITY_ENVS.UAT}
         value="Abilita ambiente di UAT OneIdentity"
       />
       <VSpacer size={24} />

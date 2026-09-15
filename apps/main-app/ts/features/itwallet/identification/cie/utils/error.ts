@@ -1,10 +1,12 @@
 import { NfcError } from "@pagopa/io-react-native-cie";
+import z from "zod";
 
 // Custom error for webview
-export type WebViewError = {
-  message: string;
-  name: "WEBVIEW_ERROR";
-};
+export const webViewError = z.object({
+  name: z.literal("WEBVIEW_ERROR"),
+  message: z.string()
+});
+export type WebViewError = z.output<typeof webViewError>;
 
 // Utiltiy that verifies if the failure is an NfcError
 export const isNfcError = (

@@ -1,8 +1,11 @@
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent
+} from "react-native-webview/lib/WebViewTypes";
 
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import {
@@ -53,18 +56,24 @@ const ItwSpidIdpLoginScreen = () => {
     setWebViewLoading(false);
   }, []);
 
-  const onError = useCallback(() => {
-    machineRef.send({ type: "error", scope: "spid-login" });
-  }, [machineRef]);
+  const onError = useCallback(
+    (error: WebViewErrorEvent | WebViewHttpErrorEvent) => {
+      machineRef.send({
+        type: "error",
+        scope: "spid-login",
+        error: { name: "WEBVIEW_ERROR", message: error.nativeEvent.title }
+      });
+    },
+    [machineRef]
+  );
 
   const handleShouldStartLoading = useCallback(
     (event: WebViewNavigation): boolean => {
       const url = event.url;
-      // `getIntentFallbackUrl` belongs to the authentication feature, which still returns an
-      // fp-ts Option: unwrap it here, at the boundary.
-      const idpIntentUrl = O.toUndefined(getIntentFallbackUrl(url));
 
-      if (idpIntentUrl === undefined) {
+      const idpIntentUrl = getIntentFallbackUrl(url);
+
+      if (idpIntentUrl == null) {
         return true;
       }
 

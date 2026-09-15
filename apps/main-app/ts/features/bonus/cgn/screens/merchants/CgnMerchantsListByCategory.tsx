@@ -16,11 +16,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, RefreshControl, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
-import {
-  getValueOrElse,
-  isError,
-  isLoading
-} from "../../../../../common/model/RemoteValue";
+import { isError, isLoading } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -39,7 +35,7 @@ import {
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
 import { getCategorySpecs } from "../../utils/filters";
-import { mixAndSortMerchants } from "../../utils/merchants";
+import { useMixedSortedMerchants } from "../../utils/merchants";
 
 export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
   category: ProductCategoryEnum;
@@ -89,15 +85,9 @@ const CgnMerchantsListByCategory = () => {
 
   useEffect(initLoadingLists, [route, categoryFilter, dispatch]);
 
-  // Mixes online and offline merchants to render on the same list
-  // merchants are sorted by name
-  const merchantsAll = useMemo(
-    () =>
-      mixAndSortMerchants(
-        getValueOrElse(onlineMerchants, []),
-        getValueOrElse(offlineMerchants, [])
-      ),
-    [onlineMerchants, offlineMerchants]
+  const merchantsAll = useMixedSortedMerchants(
+    onlineMerchants,
+    offlineMerchants
   );
 
   const onItemPress = useCallback(

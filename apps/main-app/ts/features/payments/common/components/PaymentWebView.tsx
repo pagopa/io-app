@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { useRef, useState } from "react";
 import { Linking } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -87,8 +86,8 @@ const PaymentWebView = <T,>({
             return false;
           }
           const intent = getIntentFallbackUrl(url);
-          if (O.isSome(intent)) {
-            void Linking.openURL(decodeURIComponent(intent.value));
+          if (intent != null) {
+            void Linking.openURL(decodeURIComponent(intent));
             return false;
           }
           return true;
