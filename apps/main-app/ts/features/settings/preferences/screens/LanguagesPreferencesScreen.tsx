@@ -16,7 +16,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Alert, View } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { availableTranslations, Locales, setLocale } from "../../../../i18n";
+import {
+  availableTranslations,
+  Locales,
+  localeToPreferredLanguageMapping,
+  setLocale
+} from "../../../../i18n";
 import { preferredLanguageSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
@@ -75,13 +80,15 @@ const LanguagesPreferencesScreen = () => {
 
   const renderedItem: Array<RadioItem<string>> = useMemo(
     () =>
-      availableTranslations.map(item => ({
-        value: I18n.t(`localesTranslated.${item}`, {
-          defaultValue: item
-        }),
-        id: item,
-        techName: `${item}-${item.toUpperCase()}`
-      })),
+      availableTranslations
+        .filter(item => localeToPreferredLanguageMapping.has(item))
+        .map(item => ({
+          value: I18n.t(`localesTranslated.${item}`, {
+            defaultValue: item
+          }),
+          id: item,
+          techName: `${item}-${item.toUpperCase()}`
+        })),
     []
   );
 
@@ -120,12 +127,15 @@ const LanguagesPreferencesScreen = () => {
   );
 
   const initialAppSelectedItem = useMemo(
-    () => renderedItem.find(item => item.id === preferredLanguage)?.id,
-    [preferredLanguage, renderedItem]
+    () =>
+      appLocaleOptions.find(
+        item => item.id === `app-locale-${preferredLanguage}`
+      )?.id,
+    [preferredLanguage, appLocaleOptions]
   );
 
   const [selectedAppLocale, setSelectedAppLocale] = useState<AppLocaleId>(
-    `app-locale-${initialAppSelectedItem as Locales}`
+    initialAppSelectedItem ?? `app-locale-${preferredLanguage}`
   );
 
   const handleAppLocaleChange = useCallback(

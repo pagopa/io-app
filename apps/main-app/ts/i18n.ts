@@ -12,6 +12,7 @@ import { initReactI18next } from "react-i18next";
 import de from "../locales/de/index.json";
 import en from "../locales/en/index.json";
 import it from "../locales/it/index.json";
+import sl from "../locales/sl/index.json";
 // import { contentRepoUrl } from "./config";
 
 export const resources = {
@@ -23,6 +24,9 @@ export const resources = {
   },
   de: {
     index: de
+  },
+  sl: {
+    index: sl
   }
 };
 
@@ -49,23 +53,31 @@ type FallBackLocale = {
   localizedMessageKey: LocalizedMessageKeys;
 };
 
-export const localeToLocalizedMessageKey = new Map<
+const backendSupportedLocales = {
+  de: PreferredLanguageEnum.de_DE,
+  en: PreferredLanguageEnum.en_GB,
+  it: PreferredLanguageEnum.it_IT
+} as const satisfies Partial<Record<Locales, PreferredLanguageEnum>>;
+
+export type BackendSupportedLocale = keyof typeof backendSupportedLocales;
+
+export const localeToLocalizedMessageKey: ReadonlyMap<
   Locales,
   LocalizedMessageKeys
->([
+> = new Map<BackendSupportedLocale, LocalizedMessageKeys>([
   ["de", "de-DE"],
   ["en", "en-EN"],
   ["it", "it-IT"]
 ]);
 
-export const localeToPreferredLanguageMapping = new Map<
+export const localeToPreferredLanguageMapping: ReadonlyMap<
   Locales,
   PreferredLanguageEnum
->([
-  ["de", PreferredLanguageEnum.de_DE],
-  ["en", PreferredLanguageEnum.en_GB],
-  ["it", PreferredLanguageEnum.it_IT]
-]);
+> = new Map<BackendSupportedLocale, PreferredLanguageEnum>(
+  Object.entries(backendSupportedLocales) as Array<
+    [BackendSupportedLocale, PreferredLanguageEnum]
+  >
+);
 
 // define the locale fallback used in the whole app code
 export const localeFallback: FallBackLocale = {
