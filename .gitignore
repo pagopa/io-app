@@ -83,6 +83,7 @@ buck-out/
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
+!.vscode/launch.json
 
 # Bundler
 vendor
