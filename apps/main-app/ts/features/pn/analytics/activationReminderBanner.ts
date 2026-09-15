@@ -38,14 +38,14 @@ const bannerClose = () => {
 };
 
 const bannerKO = (
-  type: "aar" | ErrorFlowStateKeys,
-  reason?: SendFailureReason
+  reason: "aar" | ErrorFlowStateKeys,
+  reasonType?: SendFailureReason
 ) => {
   void mixpanelTrack(
     "SEND_ACTIVATION_FAILURE",
     buildEventProperties("KO", "error", {
-      type,
-      reason
+      reason,
+      reason_type: reasonType
     })
   );
 };

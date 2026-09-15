@@ -62,27 +62,27 @@ describe("activationReminderBanner", () => {
     );
   });
 
-  it("should track banner KO event with type only", () => {
+  it("should track banner KO event with reason only", () => {
     sendBannerMixpanelEvents.bannerKO("MISSING-SID");
 
     expect(mixpanelTrack).toHaveBeenCalledWith(
       "SEND_ACTIVATION_FAILURE",
       testBuildEventProperties("KO", "error", {
-        type: "MISSING-SID",
-        reason: undefined
+        reason: "MISSING-SID",
+        reason_type: undefined
       })
     );
   });
 
-  it("should track banner KO event with type and a reason", () => {
+  it("should track banner KO event with reason and a reason type", () => {
     const testReason = SendFailureReason.NETWORK_ERROR;
     sendBannerMixpanelEvents.bannerKO("FAILURE_ACTIVATION", testReason);
 
     expect(mixpanelTrack).toHaveBeenCalledWith(
       "SEND_ACTIVATION_FAILURE",
       testBuildEventProperties("KO", "error", {
-        type: "FAILURE_ACTIVATION",
-        reason: testReason
+        reason: "FAILURE_ACTIVATION",
+        reason_type: testReason
       })
     );
   });

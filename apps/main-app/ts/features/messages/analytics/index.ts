@@ -1,4 +1,5 @@
 import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as S from "fp-ts/lib/string";
 import * as t from "io-ts";
@@ -232,7 +233,11 @@ export const trackDisclaimerLoadError = (
   reason: "MARKDOWN_RENDER_ERROR" | SendFailureReason
 ) => {
   const eventName = `${S.toUpperCase(tag)}_DISCLAIMER_LOAD_ERROR`;
-  const props = buildEventProperties("TECH", undefined, { reason });
+  const props = buildEventProperties(
+    "TECH",
+    undefined,
+    tag === TagEnum.PN ? { reason } : undefined
+  );
   void mixpanelTrack(eventName, props);
 };
 
