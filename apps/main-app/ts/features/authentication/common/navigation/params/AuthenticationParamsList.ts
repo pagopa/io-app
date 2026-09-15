@@ -8,7 +8,6 @@ import { UrlNotCompliant } from "../../../login/cie/screens/CieIdAuthUrlError";
 import { CieWrongCiePinScreenNavigationParams } from "../../../login/cie/screens/CieWrongCiePinScreen";
 import { ChosenIdentifier } from "../../../login/optIn/screens/OptInScreen";
 import { UnlockAccessProps } from "../../../login/unlockAccess/components/UnlockAccessComponent";
-import { CieIdLoginProps } from "../../utils/cie.ts";
 import { AUTHENTICATION_ROUTES } from "../routes";
 
 export type AuthenticationParamsList = {

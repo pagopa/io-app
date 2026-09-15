@@ -112,8 +112,7 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
       params: {
         errorCodeOrMessage: "err-code",
         authMethod: "CIE_ID",
-        authLevel: MOCK_AUTH_LEVEL_L2,
-        params: { spidLevel: MOCK_AUTH_LEVEL_L2, isUat: false }
+        authLevel: MOCK_AUTH_LEVEL_L2
       }
     });
   });
@@ -133,8 +132,7 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
       params: {
         errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
         authMethod: "CIE_ID",
-        authLevel: MOCK_AUTH_LEVEL_L2,
-        params: { spidLevel: MOCK_AUTH_LEVEL_L2, isUat: false }
+        authLevel: MOCK_AUTH_LEVEL_L2
       }
     });
   });
@@ -167,8 +165,7 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
       params: {
         errorCodeOrMessage: undefined,
         authMethod: "CIE_ID",
-        authLevel: MOCK_AUTH_LEVEL_L2,
-        params: { spidLevel: MOCK_AUTH_LEVEL_L2, isUat: false }
+        authLevel: MOCK_AUTH_LEVEL_L2
       }
     });
   });

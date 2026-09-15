@@ -31,7 +31,6 @@ import { setFastLoginOptSessionLogin } from "../../../activeSessionLogin/store/a
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { CieIdLoginProps } from "../../../common/utils/cie";
 import {
   trackLoginSessionOptIn,
   trackLoginSessionOptIn30,
