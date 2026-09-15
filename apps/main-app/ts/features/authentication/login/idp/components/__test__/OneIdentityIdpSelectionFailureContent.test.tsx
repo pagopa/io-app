@@ -25,6 +25,11 @@ jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => ({ navigate: mockNavigate })
 }));
 
+const mockUseDebugInfo = jest.fn();
+jest.mock("../../../../../../hooks/useDebugInfo", () => ({
+  useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
+}));
+
 describe("OneIdentityIdpSelectionFailureContent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -39,13 +44,14 @@ describe("OneIdentityIdpSelectionFailureContent", () => {
       .mockImplementation(jest.fn());
   });
 
-  const renderComponent = (isActiveSessionLogin = false) => {
+  const renderComponent = (isActiveSessionLogin = false, failure?: string) => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
     return renderScreenWithNavigationStoreContext(
       () => (
         <OneIdentityIdpSelectionFailureContent
+          failure={failure}
           isActiveSessionLogin={isActiveSessionLogin}
         />
       ),
@@ -94,5 +100,13 @@ describe("OneIdentityIdpSelectionFailureContent", () => {
     ).toHaveBeenCalled();
     expect(commonAnalytics.trackCieLoginSelected).not.toHaveBeenCalled();
     expect(mockHandleCieLoginRequested).toHaveBeenCalled();
+  });
+
+  it("should forward the error code to useDebugInfo", () => {
+    renderComponent(false, "IDP_LIST_FETCH_ERROR");
+
+    expect(mockUseDebugInfo).toHaveBeenCalledWith({
+      failure: "IDP_LIST_FETCH_ERROR"
+    });
   });
 });

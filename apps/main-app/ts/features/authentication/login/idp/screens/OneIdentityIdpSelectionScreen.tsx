@@ -118,6 +118,7 @@ export const OneIdentityIdpSelectionScreen = ({
   if (state.status === "failure") {
     return (
       <OneIdentityIdpSelectionFailureContent
+        failure={state.error}
         isActiveSessionLogin={isActiveSessionLogin}
       />
     );
