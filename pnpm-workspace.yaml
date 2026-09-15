@@ -38,6 +38,7 @@ allowBuilds:
   nx: true
   tls-impersonate: false
   unrs-resolver: true
+  "@pagopa/io-react-native-jwt@https://codeload.github.com/pagopa/io-react-native-jwt/tar.gz/213b46a1c7a3caf4c6abce63c94e51ba8db0dda0": true
 
 catalog:
   # --- Nx ---
