@@ -69,6 +69,31 @@ const getInstrumentPaymentMethodBage = (
   }
 };
 
+const getInstrumentPaymentMethodCopy = (
+  instrumentType: ValidInstrumentType
+): { description: string; title: string } => {
+  switch (instrumentType) {
+    case InstrumentTypeEnum.APP_IO_PAYMENT:
+      return {
+        title: I18n.t(
+          "idpay.configuration.instruments.paymentMethods.APP_IO_PAYMENT.title"
+        ),
+        description: I18n.t(
+          "idpay.configuration.instruments.paymentMethods.APP_IO_PAYMENT.description"
+        )
+      };
+    case InstrumentTypeEnum.IDPAYCODE:
+      return {
+        title: I18n.t(
+          "idpay.configuration.instruments.paymentMethods.IDPAYCODE.title"
+        ),
+        description: I18n.t(
+          "idpay.configuration.instruments.paymentMethods.IDPAYCODE.description"
+        )
+      };
+  }
+};
+
 /**
  * A component to enable/disable the payment method of an instrument into discount initiative configuration
  */
@@ -84,11 +109,13 @@ const IdPayDiscountInstrumentEnrollmentSwitch = (
     onValueChange
   } = props;
 
+  const { title, description } = getInstrumentPaymentMethodCopy(instrumentType);
+
   const renderSwitchAction = () => {
-    if (instrumentType !== InstrumentTypeEnum.APP_IO_PAYMENT) {
+    if (instrumentType === InstrumentTypeEnum.IDPAYCODE) {
       return {
         label: I18n.t(
-          `idpay.configuration.instruments.paymentMethods.${instrumentType}.actionItem`
+          "idpay.configuration.instruments.paymentMethods.IDPAYCODE.actionItem"
         ),
         onPress: onPressAction
       } as SwitchAction;
@@ -100,14 +127,10 @@ const IdPayDiscountInstrumentEnrollmentSwitch = (
     <ListItemSwitch
       action={renderSwitchAction()}
       badge={getInstrumentPaymentMethodBage(instrumentType, status)}
-      description={I18n.t(
-        `idpay.configuration.instruments.paymentMethods.${instrumentType}.description`
-      )}
+      description={description}
       icon={getInstrumentPaymentMethodIcon(instrumentType)}
       isLoading={isLoading}
-      label={I18n.t(
-        `idpay.configuration.instruments.paymentMethods.${instrumentType}.title`
-      )}
+      label={title}
       onSwitchValueChange={value => onValueChange?.(value)}
       value={value}
     />
