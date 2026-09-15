@@ -391,7 +391,17 @@ export default defineConfig([
       ],
 
       // Disallow dynamically-built i18n keys so unused-key detection stays reliable
-      "@io-app/i18n-no-dynamic-keys": "warn",
+      "@io-app/i18n-no-dynamic-keys": "error",
+
+      // A single import name lets the i18n rules above, which match `I18n.t`, see every call
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            "ImportDeclaration[source.value='i18next'] > :matches(ImportDefaultSpecifier, ImportNamespaceSpecifier)[local.name!='I18n']",
+          message: 'Import i18next as `I18n`: import I18n from "i18next".'
+        }
+      ],
 
       // Remove this after the migration of fp-ts is being completed and replaced by neverthrow;
       "@io-app/no-fp-ts": "warn"
