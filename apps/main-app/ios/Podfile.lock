@@ -3434,8 +3434,6 @@ PODS:
     - Yoga
   - RNDeviceInfo (14.0.4):
     - React-Core
-  - RNFS (2.18.0):
-    - React
   - RNGestureHandler (2.31.0):
     - boost
     - DoubleConversion
@@ -4027,7 +4025,6 @@ DEPENDENCIES:
   - ReactNativeExceptionHandler (from `../../../node_modules/react-native-exception-handler`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-async-storage/async-storage`)"
   - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
-  - RNFS (from `../../../node_modules/react-native-fs`)
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../../../node_modules/react-native-keychain`)
   - RNPermissions (from `../../../node_modules/react-native-permissions`)
@@ -4344,8 +4341,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@react-native-async-storage/async-storage"
   RNDeviceInfo:
     :path: "../../../node_modules/react-native-device-info"
-  RNFS:
-    :path: "../../../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../../../node_modules/react-native-gesture-handler"
   RNKeychain:
@@ -4402,8 +4397,8 @@ SPEC CHECKSUMS:
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 07433c4ab85da44d0b5ceac374ff4e1d57c7aa23
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
-  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  hermes-engine: 037eacbb56098bf69c62cf905ec96fb01eab8248
+  glog: 0456694f3aaf09460b660ea327cfc11defbeea4c
+  hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 730061a6443f611f163c38ec49b6dc5a4aae3f81
@@ -4517,7 +4512,6 @@ SPEC CHECKSUMS:
   ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
-  RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 884f03ad24511911552480eb2058266db0b177ce
   RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19

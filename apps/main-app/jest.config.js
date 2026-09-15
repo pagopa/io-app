@@ -13,7 +13,8 @@ module.exports = {
   ],
   moduleNameMapper: {
     "\\.svg": "<rootDir>/ts/__mocks__/svgMock.js",
-    "^@io-app/design-system$": "<rootDir>/../../libs/design-system/src/index.tsx"
+    "^@io-app/design-system$": "<rootDir>/../../libs/design-system/src/index.tsx",
+    "^expo-file-system$": "<rootDir>/ts/__mocks__/expo-file-system.js"
   },
   setupFiles: [
     "./jestSetup.js",
