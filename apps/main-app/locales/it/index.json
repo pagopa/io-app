@@ -1570,8 +1570,9 @@
             },
             "somethingWrong": {
               "body": "Se riscontri errori o incongruenze, ti invitiamo a segnalarli all'ente che detiene i dati e ne è responsabile.",
-              "bodyAuthSource": "Per questo documento digitale, l'ente di riferimento è {{authSource}}.",
+              "bodyAuthSource": "Per questo documento digitale, fai riferimento a:\n{{contacts}}",
               "bodyFooter": "Una volta che i dati saranno stati corretti, potrai ripetere l'operazione di aggiunta del documento al portafoglio.",
+              "contactUrl": "Sito web",
               "primaryAction": "Ho capito",
               "title": "Qualcosa non torna sui dati del documento"
             }
