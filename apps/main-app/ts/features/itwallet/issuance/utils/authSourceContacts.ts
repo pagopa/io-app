@@ -9,6 +9,14 @@ type GetAuthSourceContactsMarkdownParams = Readonly<{
   websiteLabel: string;
 }>;
 
+/**
+ * Removes Markdown syntax characters from interpolated values and replaces
+ * line breaks/tabs with spaces so values remain inline text.
+ * URL punctuation is preserved.
+ */
+const sanitizeMarkdownString = (value: string): string =>
+  value.replace(/[\r\n\t]+/g, " ").replace(/[\\`*_[\]{}()#!|~<>]/g, "");
+
 // Contacts that link to websites must be displayed on top.
 const sortContactsByUrl = (contacts: ReadonlyArray<AuthSourceContact>) =>
   [...contacts].sort((first, second) => {
@@ -22,8 +30,8 @@ const sortContactsByUrl = (contacts: ReadonlyArray<AuthSourceContact>) =>
   });
 
 /**
- * Formats authentic-source contacts as the Markdown list consumed by the
- * credential-preview bottom sheet. This is deliberately pure so each contact
+ * Formats the Authentic Source's contacts as the Markdown list ready to be
+ * consumed by `IOMarkdown`. This is deliberately pure so each contact
  * type and its ordering can be verified without rendering the bottom sheet.
  */
 export const getAuthSourceContactsMarkdown = ({
@@ -31,19 +39,24 @@ export const getAuthSourceContactsMarkdown = ({
   contacts,
   websiteLabel
 }: GetAuthSourceContactsMarkdownParams): string => {
+  const sanitizedAuthSource = sanitizeMarkdownString(authSource ?? "");
+
   if (!contacts || contacts.length === 0) {
-    return `- ${authSource}`;
+    return `- ${sanitizedAuthSource}`;
   }
 
   return sortContactsByUrl(contacts)
     .map(contact => {
+      const sanitizedValue = sanitizeMarkdownString(contact.value);
       switch (contact.type) {
         case "email":
-          return `- [${contact.value}](mailto:${contact.value})`;
+          return `- [${sanitizedValue}](mailto:${sanitizedValue})`;
+        case "phone":
+          return `- [${sanitizedValue}](tel:${sanitizedValue})`;
         case "url":
-          return `- [${websiteLabel} ${authSource}](${contact.value})`;
+          return `- [${websiteLabel} ${sanitizedAuthSource}](${sanitizedValue})`;
         default:
-          return `- [${contact.value}](${contact.value})`;
+          return `- ${sanitizedValue}`;
       }
     })
     .join("\n");

@@ -35,9 +35,9 @@ describe("getAuthSourceContactsMarkdown", () => {
       name: "URL"
     },
     {
-      contact: { type: "phone", value: "tel:+39000000000" },
-      expected: "- [tel:+39000000000](tel:+39000000000)",
-      name: "an unknown type"
+      contact: { type: "phone", value: "+39000000000" },
+      expected: "- [+39000000000](tel:+39000000000)",
+      name: "phone"
     }
   ])("formats $name contacts", ({ contact, expected }) => {
     expect(formatContacts([contact])).toBe(expected);
@@ -48,14 +48,36 @@ describe("getAuthSourceContactsMarkdown", () => {
       formatContacts([
         { type: "email", value: "info@example.com" },
         { type: "url", value: "https://example.com" },
-        { type: "phone", value: "tel:+39000000000" }
+        { type: "phone", value: "+39000000000" }
       ])
     ).toBe(
       [
         `- [${WEBSITE_LABEL} ${AUTH_SOURCE}](https://example.com)`,
         "- [info@example.com](mailto:info@example.com)",
-        "- [tel:+39000000000](tel:+39000000000)"
+        "- [+39000000000](tel:+39000000000)"
       ].join("\n")
+    );
+  });
+
+  it("sanitizes Markdown syntax and line breaks in plain-text values", () => {
+    expect(
+      formatContacts([
+        { type: "other", value: "[not a link](https://evil)\nnext line" }
+      ])
+    ).toBe("- not a linkhttps://evil next line");
+  });
+
+  it("removes Markdown syntax before interpolating link values", () => {
+    expect(
+      getAuthSourceContactsMarkdown({
+        authSource: "[Example] authority",
+        contacts: [
+          { type: "url", value: "https://example.com/[unexpected](value)" }
+        ],
+        websiteLabel: "Website"
+      })
+    ).toBe(
+      "- [Website Example authority](https://example.com/unexpectedvalue)"
     );
   });
 });
