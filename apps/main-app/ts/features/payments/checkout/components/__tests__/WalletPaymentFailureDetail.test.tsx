@@ -98,7 +98,8 @@ describe("WalletPaymentFailureDetail", () => {
   ] as ReadonlyArray<
     Exclude<
       WalletPaymentFailure["faultCodeCategory"],
-      "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION"
+      // PAYMENT_ONGOING has no generic title: it's covered by the dedicated tests below
+      "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION" | "PAYMENT_ONGOING"
     >
   >)(
     "should render with the right screen props when faultCodeCategory is %p",

@@ -119,9 +119,7 @@
   "locales": {
     "it": "Italienisch",
     "en": "Englisch",
-    "de": "Deutsch",
-    "fr": "Französisch",
-    "sl": "Slowenisch"
+    "de": "Deutsch"
   },
   "clipboard": {
     "copyIntoClipboard": "in die Zwischenablage kopieren",
@@ -764,7 +762,6 @@
     }
   },
   "onboarding": {
-    "contextualHelpTitle": "Wie funktioniert die biometrische Erkennung",
     "tos": {
       "accept": "Akzeptieren",
       "error": "Wir konnten die Datenschutzrichtlinie und die Allgemeinen Geschäftsbedingungen nicht abrufen"
@@ -993,7 +990,6 @@
     "alert": {
       "favorite": "Um diese Option zu ändern, wähle eine andere Zahlungsmethode aus deinem Konto und lege diese als bevorzugt fest."
     },
-    "contextualHelpTitle": "Was du in deinem Konto machen kannst",
     "delete": {
       "ios": {
         "confirm": "Zahlungsmethode entfernen"
@@ -1140,9 +1136,6 @@
         "DOMAIN_UNKNOWN": {
           "title": "Die ausstellende Körperschaft hat Probleme bei der Bearbeitung",
           "subtitle": "Bitte versuche es später noch einmal. Wenn das Problem weiterhin besteht, wende dich bitte an den Support."
-        },
-        "PAYMENT_ONGOING": {
-          "title": "Es ist bereits eine Zahlung im Gange, bitte versuche es später noch einmal"
         },
         "PAYMENT_EXPIRED": {
           "title": "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr bezahlt werden",
@@ -1297,7 +1290,6 @@
         "unread": "Ungelesene Mitteilung"
       }
     },
-    "contextualHelpTitle": "Mitteilungen verwenden",
     "tab": {
       "inbox": "Erhalten",
       "archive": "Archiviert"
@@ -1314,7 +1306,6 @@
     "cta": {
       "archive": "Archivieren",
       "unarchive": "Wiederherstellen",
-      "reminder": "Erinnerung",
       "reminderCalendarSelect": "In welchem Kalender möchtest du die Erinnerung hinzufügen?",
       "reminderTitle": "Erinnerung für: {{title}}",
       "reminderAlertTitle": "Ein Ereignis ist bereits vorhanden",
@@ -1490,7 +1481,6 @@
       }
     },
     "title": "Dienste",
-    "contextualHelpTitle": "Was du in deinen Diensten machen kannst",
     "new": "Neu",
     "home": {
       "bottomSheet": {
@@ -1964,8 +1954,6 @@
       "cards": {
         "categories": {
           "all": "Alle",
-          "bonus": "Initiativen für das Gemeinwohl",
-          "cgn": "Nationale Jugendkarte",
           "itw": "Dokumente",
           "other": "Bonus und mehr"
         }
@@ -1983,7 +1971,6 @@
         },
         "options": {
           "cgn": "Nationale Jugendkarte",
-          "welfare": "Initiativen für das Gemeinwohl",
           "payments": "Zahlungsmethoden"
         }
       }
@@ -2020,7 +2007,6 @@
         }
       },
       "transactions": {
-        "multiplePayment": "Mehrfache Zahlung",
         "title": "Transaktionsverlauf",
         "button": "Alle anzeigen",
         "empty": {
@@ -2210,7 +2196,6 @@
         },
         "credentialPreview": {
           "loading": "Warte noch ein paar Sekunden, ohne die App zu beenden.",
-          "title": "{{credential}}: Hier eine Vorschau deiner Daten",
           "bottomSheet": {
             "about": {
               "title": "Wer ist das?",
@@ -2222,8 +2207,7 @@
             }
           },
           "actions": {
-            "primary": "Dem Konto hinzufügen",
-            "secondary": "Abbrechen"
+            "primary": "Dem Konto hinzufügen"
           }
         },
         "credentialResult": {
