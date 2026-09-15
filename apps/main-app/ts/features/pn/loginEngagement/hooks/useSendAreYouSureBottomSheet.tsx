@@ -6,7 +6,7 @@ import {
   VStack
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useCallback, useRef } from "react";
 import { View } from "react-native";
 
@@ -37,7 +37,7 @@ export const useSendAreYouSureBottomSheet = () => {
     present: presentAreYouSureBottomSheet,
     dismiss
   } = useIOBottomSheetModal({
-    title: i18n.t(
+    title: I18n.t(
       "features.pn.loginEngagement.send.areYouSureBottomSheet.title"
     ),
     component: (
@@ -45,7 +45,7 @@ export const useSendAreYouSureBottomSheet = () => {
         <FeatureInfo
           body={
             <IOMarkdownLite
-              content={i18n.t(
+              content={I18n.t(
                 "features.pn.loginEngagement.send.areYouSureBottomSheet.content.features.savingMoney"
               )}
             />
@@ -55,7 +55,7 @@ export const useSendAreYouSureBottomSheet = () => {
         <FeatureInfo
           body={
             <IOMarkdownLite
-              content={i18n.t(
+              content={I18n.t(
                 "features.pn.loginEngagement.send.areYouSureBottomSheet.content.features.notification"
               )}
             />
@@ -63,7 +63,7 @@ export const useSendAreYouSureBottomSheet = () => {
           pictogramProps={{ name: "message", pictogramStyle: "default" }}
         />
         <IOMarkdownLite
-          content={i18n.t(
+          content={I18n.t(
             "features.pn.loginEngagement.send.areYouSureBottomSheet.content.privacyAndTos",
             { privacyUrl: privacy, tosUrl: tos }
           )}
@@ -71,7 +71,7 @@ export const useSendAreYouSureBottomSheet = () => {
         <VStack space={16} style={{ alignItems: "center" }}>
           <IOButton
             fullWidth
-            label={i18n.t(
+            label={I18n.t(
               "features.pn.loginEngagement.send.areYouSureBottomSheet.action"
             )}
             loading={isActivating}
@@ -84,7 +84,7 @@ export const useSendAreYouSureBottomSheet = () => {
           />
           <View>
             <IOButton
-              label={i18n.t(
+              label={I18n.t(
                 "features.pn.loginEngagement.send.areYouSureBottomSheet.secondaryAction"
               )}
               onPress={() => {

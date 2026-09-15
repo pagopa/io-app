@@ -7,7 +7,7 @@ import {
   IOSpacingScale,
   useIOTheme
 } from "@io-app/design-system";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useCallback } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
@@ -76,7 +76,7 @@ export const OrganizationHeader = ({
       >
         {thirdPartySenderDenomination}
         <BodySmall weight="Regular">
-          {i18n.t(
+          {I18n.t(
             "features.pn.aar.flow.displayingNotificationData.headerText-through"
           )}
         </BodySmall>

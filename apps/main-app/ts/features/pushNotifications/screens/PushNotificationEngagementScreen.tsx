@@ -1,6 +1,6 @@
 import { Body, HeaderSecondLevel } from "@io-app/design-system";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import i18next from "i18next";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 
 import { WhatsNewScreenContent } from "../../../components/screens/WhatsNewScreenContent";
@@ -108,7 +108,7 @@ const PushNotificationEngagementScreenContent = ({
           firstAction={{
             icon: "closeMedium",
             onPress: handleCloseScreen,
-            accessibilityLabel: i18next.t("global.buttons.close"),
+            accessibilityLabel: I18n.t("global.buttons.close"),
             testID: "header-close"
           }}
           ignoreSafeAreaMargin={false}
@@ -123,19 +123,19 @@ const PushNotificationEngagementScreenContent = ({
     <WhatsNewScreenContent
       action={{
         fullWidth: true,
-        label: i18next.t("features.pushNotifications.engagementScreen.cta"),
+        label: I18n.t("features.pushNotifications.engagementScreen.cta"),
         testID: "engagement-cta",
         onPress: onPressActivate
       }}
       badge={{
         variant: "highlight",
-        text: i18next.t("features.pushNotifications.engagementScreen.badge")
+        text: I18n.t("features.pushNotifications.engagementScreen.badge")
       }}
       pictogram="notification"
-      title={i18next.t("features.pushNotifications.engagementScreen.title")}
+      title={I18n.t("features.pushNotifications.engagementScreen.title")}
     >
       <Body style={{ textAlign: "center" }}>
-        {i18next.t("features.pushNotifications.engagementScreen.body")}
+        {I18n.t("features.pushNotifications.engagementScreen.body")}
       </Body>
     </WhatsNewScreenContent>
   );
