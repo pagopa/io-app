@@ -45,7 +45,10 @@ type TabOption = {
   title: string;
 };
 
-const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
+const getTabOptions = (): Record<
+  keyof CgnMerchantsHomeTabParamsList,
+  TabOption
+> => ({
   [CgnMerchantsHomeTabRoutes.CGN_CATEGORIES]: {
     icon: "initiatives",
     title: I18n.t("bonus.cgn.merchantsList.tabs.perInitiative")
@@ -54,7 +57,7 @@ const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
     icon: "merchant",
     title: I18n.t("bonus.cgn.merchantsList.tabs.perMerchant")
   }
-};
+});
 
 const isCategoryRow = (item: CgnMerchantsListItem): item is CategoryRow =>
   "categories" in item;
@@ -139,8 +142,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     }
   }, [refreshControlProps?.refreshing]);
 
-  const ListHeaderComponent = useMemo(
-    () => (
+  const ListHeaderComponent = useMemo(() => {
+    const tabOptions = getTabOptions();
+    return (
       <>
         <CgnAnimatedHeader
           isRefreshingValue={isRefreshingSharedValue}
@@ -180,10 +184,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
         </View>
         <VSpacer size={16} />
       </>
-    ),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedTab]
-  );
+  }, [selectedTab]);
 
   return (
     <Animated.FlatList<CgnMerchantsListItem>
