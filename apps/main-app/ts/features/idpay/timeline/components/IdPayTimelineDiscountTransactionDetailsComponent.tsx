@@ -23,6 +23,31 @@ type Props = {
   transaction: TransactionDetailDTO;
 };
 
+const getTransactionStatusLabel = (status: TransactionStatusEnum): string => {
+  switch (status) {
+    case TransactionStatusEnum.AUTHORIZED:
+      return I18n.t(
+        "idpay.initiative.operationDetails.discount.labels.AUTHORIZED"
+      );
+    case TransactionStatusEnum.CANCELLED:
+      return I18n.t(
+        "idpay.initiative.operationDetails.discount.labels.CANCELLED"
+      );
+    case TransactionStatusEnum.CAPTURED:
+      return I18n.t(
+        "idpay.initiative.operationDetails.discount.labels.CAPTURED"
+      );
+    case TransactionStatusEnum.REFUNDED:
+      return I18n.t(
+        "idpay.initiative.operationDetails.discount.labels.REFUNDED"
+      );
+    case TransactionStatusEnum.REWARDED:
+      return I18n.t(
+        "idpay.initiative.operationDetails.discount.labels.REWARDED"
+      );
+  }
+};
+
 const IdPayTimelineDiscountTransactionDetailsComponent = (props: Props) => {
   const { transaction } = props;
 
@@ -97,9 +122,7 @@ const IdPayTimelineDiscountTransactionDetailsComponent = (props: Props) => {
         label={I18n.t(
           "idpay.initiative.operationDetails.discount.details.labels.status"
         )}
-        value={I18n.t(
-          `idpay.initiative.operationDetails.discount.labels.${transaction.status}`
-        )}
+        value={getTransactionStatusLabel(transaction.status)}
       />
       <Divider />
       <ListItemInfo

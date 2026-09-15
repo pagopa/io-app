@@ -28,6 +28,51 @@ const getStatusBadgeVariant = (
   }
 };
 
+const getStatusLabel = (status: StatusEnum | VoucherStatusEnum): string => {
+  switch (status) {
+    case StatusEnum.NOT_REFUNDABLE:
+      return I18n.t(
+        "idpay.initiative.details.initiativeCard.statusLabels.NOT_REFUNDABLE"
+      );
+    case StatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
+      return I18n.t(
+        "idpay.initiative.details.initiativeCard.statusLabels.NOT_REFUNDABLE_ONLY_IBAN"
+      );
+    case StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
+      return I18n.t(
+        "idpay.initiative.details.initiativeCard.statusLabels.NOT_REFUNDABLE_ONLY_INSTRUMENT"
+      );
+    case StatusEnum.REFUNDABLE:
+      return I18n.t(
+        "idpay.initiative.details.initiativeCard.statusLabels.REFUNDABLE"
+      );
+    case StatusEnum.SUSPENDED:
+      return I18n.t(
+        "idpay.initiative.details.initiativeCard.statusLabels.SUSPENDED"
+      );
+    case StatusEnum.UNSUBSCRIBED:
+      return I18n.t(
+        "idpay.initiative.details.initiativeCard.statusLabels.UNSUBSCRIBED"
+      );
+    case VoucherStatusEnum.ACTIVE:
+      return I18n.t(
+        "idpay.initiative.details.initiativeCard.statusLabels.ACTIVE"
+      );
+    case VoucherStatusEnum.EXPIRED:
+      return I18n.t(
+        "idpay.initiative.details.initiativeCard.statusLabels.EXPIRED"
+      );
+    case VoucherStatusEnum.EXPIRING:
+      return I18n.t(
+        "idpay.initiative.details.initiativeCard.statusLabels.EXPIRING"
+      );
+    case VoucherStatusEnum.USED:
+      return I18n.t(
+        "idpay.initiative.details.initiativeCard.statusLabels.USED"
+      );
+  }
+};
+
 type IdPayInitiativeStatusItemProps = {
   status: StatusEnum;
   voucherStatus?: VoucherStatusEnum;
@@ -37,11 +82,7 @@ export const IdPayInitiativeStatusItem = ({
   status,
   voucherStatus
 }: IdPayInitiativeStatusItemProps) => {
-  const statusString = I18n.t(
-    `idpay.initiative.details.initiativeCard.statusLabels.${
-      voucherStatus ?? status
-    }`
-  );
+  const statusString = getStatusLabel(voucherStatus ?? status);
 
   return (
     <View testID="statusTestID">
