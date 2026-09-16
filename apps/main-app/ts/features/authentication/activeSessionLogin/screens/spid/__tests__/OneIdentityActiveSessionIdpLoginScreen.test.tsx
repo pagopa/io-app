@@ -1,6 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
+import { apiUrlPrefix } from "../../../../../../config";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
@@ -8,7 +9,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { AUTH_ERRORS } from "../../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import { CALLBACK_PATH } from "../../../../common/utils";
+import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
@@ -59,8 +60,8 @@ const mockIdp = {
   profileUrl: ""
 };
 
-const remoteApiLoginUrlPrefix = "https://api-app.io.pagopa.it";
-const callbackUrl = `${remoteApiLoginUrlPrefix}${CALLBACK_PATH}`;
+const MOCK_AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
+const MOCK_VALID_CALLBACK_URL = `${apiUrlPrefix}/api/auth/v2/callback`;
 
 const mockForceLogoutAndNavigateToLanding = jest.fn();
 
@@ -89,10 +90,6 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     jest
       .spyOn(activeSessionSelectors, "activeSessionUserLoggedSelector")
       .mockReturnValue(false);
-
-    jest
-      .spyOn(activeSessionSelectors, "remoteApiLoginUrlPrefixSelector")
-      .mockReturnValue(remoteApiLoginUrlPrefix);
 
     jest
       .spyOn(useActiveSessionLoginNavigationModule, "default")
@@ -148,7 +145,7 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       params: {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: MOCK_AUTH_LEVEL_L2
       }
     });
   });
@@ -168,7 +165,7 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       params: {
         errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: MOCK_AUTH_LEVEL_L2
       }
     });
   });
@@ -178,11 +175,33 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     const webview = getByTestId("webview-idp-login-screen");
 
     fireEvent(webview, "onHttpError", {
-      nativeEvent: { url: callbackUrl, statusCode: 500 }
+      nativeEvent: { url: MOCK_VALID_CALLBACK_URL, statusCode: 500 }
     });
 
     expect(mockForceLogoutAndNavigateToLanding).toHaveBeenCalled();
     expect(mockReplace).not.toHaveBeenCalled();
+  });
+
+  it("should navigate to AuthErrorScreen (not force logout) on a HTTP error on a URL that only contains the callback path as a substring", () => {
+    const { getByTestId } = renderComponent();
+    const webview = getByTestId("webview-idp-login-screen");
+
+    fireEvent(webview, "onHttpError", {
+      nativeEvent: {
+        url: `${MOCK_VALID_CALLBACK_URL}/extra-path`,
+        statusCode: 500
+      }
+    });
+
+    expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
+    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      params: {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: MOCK_AUTH_LEVEL_L2
+      }
+    });
   });
 
   it("should not navigate to AuthErrorScreen on a HTTP 403 error on a non-callback URL", () => {
@@ -210,7 +229,7 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       params: {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: MOCK_AUTH_LEVEL_L2
       }
     });
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
@@ -229,7 +248,7 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       params: {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: MOCK_AUTH_LEVEL_L2
       }
     });
   });
