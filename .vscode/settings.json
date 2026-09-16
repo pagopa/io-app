@@ -1,0 +1,15 @@
+{
+  "i18n-ally.localesPaths": ["apps/main-app/locales"],
+  "i18n-ally.pathMatcher": "{locale}/{namespace}.json",
+  "i18n-ally.annotations": true,
+  "i18n-ally.annotationInPlace": true,
+  "editor.inlayHints.enabled": "on",
+  "i18n-ally.extract.targetPickingStrategy": "most-similar",
+  "i18n-ally.namespace": true,
+  "i18n-ally.defaultNamespace": "index",
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.enabledFrameworks": ["i18next", "react-i18next"],
+  "i18n-ally.regex.usageMatchAppend": [
+    "I18n\\.t\\(\\s*['\"`]({key})['\"`]\\s*\\)"
+  ]
+}
