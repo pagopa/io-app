@@ -15,6 +15,7 @@ import {
   onInitAction,
   storeConsentAction,
   trackProximityStartAction,
+  trackProximitySuccessAction,
   trackQrCodeLoadingFailureAction
 } from "./actions";
 import {
@@ -78,6 +79,7 @@ export const itwProximityMachineSetup = setup({
      */
 
     trackProximityStart: trackProximityStartAction,
+    trackProximitySuccess: trackProximitySuccessAction,
     trackQrCodeLoadingFailure: trackQrCodeLoadingFailureAction
   },
   actors: {
