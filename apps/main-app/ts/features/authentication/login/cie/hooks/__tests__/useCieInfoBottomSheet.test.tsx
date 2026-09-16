@@ -1,7 +1,10 @@
 import { fireEvent, render, renderHook } from "@testing-library/react-native";
 import I18n from "i18next";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
 
-import * as hooks from "../../../../../../store/hooks";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
 import * as bottomSheetUtils from "../../../../../../utils/hooks/bottomSheet";
 import * as urlUtils from "../../../../../../utils/url";
 import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
@@ -14,10 +17,19 @@ jest.mock("../../../../../../utils/hooks/bottomSheet", () => ({
   useIOBottomSheetModal: jest.fn()
 }));
 
+const createTestStore = () => {
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  return createStore(appReducer, initialState as any);
+};
+
+const renderUseCieInfoBottomSheet = (store = createTestStore()) =>
+  renderHook(() => useCieInfoBottomSheet(), {
+    wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
+  });
+
 describe("useCieInfoBottomSheet", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(hooks, "useIOSelector").mockReturnValue("auth");
     jest.spyOn(bottomSheetUtils, "useIOBottomSheetModal").mockImplementation(
       ({ component }) =>
         ({
@@ -29,16 +41,16 @@ describe("useCieInfoBottomSheet", () => {
   });
 
   it("should return present, dismiss and bottomSheet", () => {
-    const { result } = renderHook(() => useCieInfoBottomSheet());
+    const { result } = renderUseCieInfoBottomSheet();
 
     expect(result.current.dismiss).toBe(mockDismiss);
     expect(result.current.bottomSheet).toBeTruthy();
     expect(typeof result.current.present).toBe("function");
   });
 
-  it("should track the info event and present the bottom sheet when present() is called", () => {
+  it("should track the info event (with the current login flow) and present the bottom sheet when present() is called", () => {
     const trackSpy = jest.spyOn(cieAnalytics, "trackLoginCiePinInfo");
-    const { result } = renderHook(() => useCieInfoBottomSheet());
+    const { result } = renderUseCieInfoBottomSheet();
 
     result.current.present();
 
@@ -50,7 +62,7 @@ describe("useCieInfoBottomSheet", () => {
     const openWebUrlSpy = jest
       .spyOn(urlUtils, "openWebUrl")
       .mockImplementation(() => undefined);
-    const { result } = renderHook(() => useCieInfoBottomSheet());
+    const { result } = renderUseCieInfoBottomSheet();
 
     const { getByText } = render(result.current.bottomSheet);
 

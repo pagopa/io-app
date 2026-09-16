@@ -27,7 +27,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { helpCenterHowToLoginWithEicUrl } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
@@ -50,8 +55,9 @@ export const OneIdentityCiePinScreen = () => {
   const isFocused = useIsFocused();
 
   const dispatch = useIODispatch();
-  const loginFlow = useIOSelector(cieLoginFlowSelector);
-  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const store = useIOStore();
+
+  const useUat = useIOSelector(isCieLoginUatEnabledSelector);
 
   const toast = useIOToast();
 
@@ -60,13 +66,14 @@ export const OneIdentityCiePinScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
+      const loginFlow = cieLoginFlowSelector(store.getState());
       trackLoginCiePinScreen(loginFlow);
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
-    }, [loginFlow])
+    }, [store])
   );
 
   useHeaderSecondLevel({
-    title: withTrailingPoliceCarLightEmojii("", useCieUat),
+    title: withTrailingPoliceCarLightEmojii("", useUat),
     supportRequest: true
   });
 
