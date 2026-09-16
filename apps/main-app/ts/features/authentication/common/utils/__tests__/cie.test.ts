@@ -1,6 +1,11 @@
 import { Platform } from "react-native";
 
-import { defaultUserAgent, iOSUserAgent, isAllowedUrl } from "../cie";
+import {
+  defaultUserAgent,
+  iOSUserAgent,
+  isAllowedUrl,
+  WHITELISTED_DOMAINS
+} from "../cie";
 
 const TEST_ALLOWED_ORIGINS = [
   "https://idserver.example.it",
@@ -60,6 +65,17 @@ describe("isAllowedUrl", () => {
 
   it("should return false for any URL when allowedOrigins is empty", () => {
     expect(isAllowedUrl("https://idserver.example.it", [])).toBe(false);
+  });
+
+  it.each(WHITELISTED_DOMAINS)(
+    "should default to WHITELISTED_DOMAINS when no allowedOrigins is provided, allowing %s",
+    domain => {
+      expect(isAllowedUrl(domain)).toBe(true);
+    }
+  );
+
+  it("should return false for a non-allowed origin when no allowedOrigins is provided", () => {
+    expect(isAllowedUrl("https://evil.com")).toBe(false);
   });
 });
 

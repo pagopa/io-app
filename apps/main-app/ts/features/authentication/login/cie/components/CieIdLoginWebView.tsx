@@ -3,6 +3,7 @@ import _isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Linking, Platform, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { URL } from "react-native-url-polyfill";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -23,13 +24,12 @@ import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSucce
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
-import { oneIdentityAllowedCieOriginsSelector } from "../../../common/store/selectors/remoteConfig";
 import { AUTH_LEVELS, onLoginUriChanged } from "../../../common/utils";
 import {
   CieIdLoginProps,
   defaultUserAgent,
-  isAllowedUrl,
-  originSchemasWhiteList
+  originSchemasWhiteList,
+  WHITELISTED_DOMAINS
 } from "../../../common/utils/cie";
 import { IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 import { LoadingOverlay } from "../shared/LoadingSpinnerOverlay";
@@ -52,7 +52,6 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(null);
   const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
-  const allowedCieOrigins = useIOSelector(oneIdentityAllowedCieOriginsSelector);
   const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
   const [isLoadingWebView, setIsLoadingWebView] = useState(true);
   const navigateToCieIdAuthenticationError = useCallback(() => {
@@ -77,19 +76,27 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     });
   }, [navigation]);
 
-  const checkIfOriginIsAllowed = useCallback(
+  const checkIfUrlIsWhitelisted = useCallback(
     (url: string) => {
       // Checks if the URL starts with one of the valid URLs
 
-      if (isAllowedUrl(url, allowedCieOrigins)) {
-        // Set the URL as valid
-        setAuthenticatedUrl(url);
-      } else {
+      try {
+        const { origin } = new URL(url);
+        const isDomainValid = WHITELISTED_DOMAINS.includes(origin);
+
+        if (isDomainValid) {
+          // Set the URL as valid
+          setAuthenticatedUrl(url);
+        } else {
+          // Redirects the user to the error screen
+          navigateToCieIdAuthUrlError(url);
+        }
+      } catch {
         // Redirects the user to the error screen
         navigateToCieIdAuthUrlError(url);
       }
     },
-    [allowedCieOrigins, navigateToCieIdAuthUrlError]
+    [navigateToCieIdAuthUrlError]
   );
 
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
@@ -150,7 +157,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
                 handleLoginFailure();
               }
             } else {
-              checkIfOriginIsAllowed(continueUrl);
+              checkIfUrlIsWhitelisted(continueUrl);
             }
           }
         }
@@ -158,7 +165,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     );
 
     return () => urlListenerSubscription.remove();
-  }, [handleLoginFailure, checkIfOriginIsAllowed]);
+  }, [handleLoginFailure, checkIfUrlIsWhitelisted]);
 
   const handleLoginSuccess = useCallback(
     (token: string) => {
@@ -181,14 +188,14 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
             if (result.id === "ERROR") {
               handleLoginFailure(result.code);
             } else {
-              checkIfOriginIsAllowed(result.url);
+              checkIfUrlIsWhitelisted(result.url);
             }
           },
           getCieIdEnvironment(isUat)
         );
       }
     },
-    [handleLoginFailure, isUat, checkIfOriginIsAllowed]
+    [handleLoginFailure, isUat, checkIfUrlIsWhitelisted]
   );
 
   const handleOnShouldStartLoadWithRequest = (

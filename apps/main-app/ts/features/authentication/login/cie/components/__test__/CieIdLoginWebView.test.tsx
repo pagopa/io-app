@@ -7,7 +7,6 @@ import * as loginHooks from "../../../../../lollipop/hooks/useLollipopLoginSourc
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../../common/store/actions";
 import * as authSelectors from "../../../../common/store/selectors";
-import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig";
 import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
 import CieIdLoginWebView from "../CieIdLoginWebView";
 
@@ -270,9 +269,6 @@ describe(CieIdLoginWebView, () => {
   });
   it("Should set authenticatedUrl if URL is whitelisted", () => {
     const url = "https://idserver.servizicie.interno.gov.it/profile";
-    jest
-      .spyOn(remoteConfigSelectors, "oneIdentityAllowedCieOriginsSelector")
-      .mockReturnValue(["https://idserver.servizicie.interno.gov.it"]);
     jest
       .spyOn(Linking, "addEventListener")
       .mockImplementation(
