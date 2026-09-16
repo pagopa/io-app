@@ -27,7 +27,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { helpCenterHowToLoginWithEicUrl } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import {
   useIODispatch,
   useIOSelector,
