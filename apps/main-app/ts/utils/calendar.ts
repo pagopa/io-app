@@ -8,7 +8,6 @@ import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "i18next";
 import { Platform } from "react-native";
 
-import { TranslationKeys } from "../i18n";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
 
@@ -22,17 +21,6 @@ import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calenda
  * otherwise comes from a previous recorded choice
  */
 type CalendarAuthorization = { asked: boolean; authorized: boolean };
-
-type CalendarTitleTranslation = { [key: string]: TranslationKeys };
-
-/**
- * This Type has been introduced after this story https://www.pivotaltracker.com/story/show/172079415
- * to solve the bug on some android devices (mostly the one running MIUI) naming their local calendar
- * with camel case notation this is a common situation as figured on a related reddit post
- * https://www.reddit.com/r/Xiaomi/comments/84jgdn/google_calendars_not_syncing_or_even_requesting/
- * and can be seen on MIUI's github repository
- * https://github.com/ChameleonOS/miui_framework/blob/master/java/miui/provider/ExtraCalendarContracts.java
- */
 
 /**
  * A function that checks if the user has already permission to read/write to Calendars
@@ -79,21 +67,22 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
   }
 }
 
-const calendarTitleTranslations: CalendarTitleTranslation = {
-  calendar_displayname_local: "profile.preferences.calendar.local_calendar",
-  calendar_displayname_birthday:
-    "profile.preferences.calendar.birthday_calendar"
-};
-
+/**
+ * Translates the system names of the local and birthday calendars; any other
+ * title is returned unchanged. Titles are matched ignoring case and spaces
+ * because some Android devices (mostly MIUI) name their local calendar in camel
+ * case, see https://www.pivotaltracker.com/story/show/172079415 and
+ * https://github.com/ChameleonOS/miui_framework/blob/master/java/miui/provider/ExtraCalendarContracts.java
+ */
 export function convertLocalCalendarName(calendarTitle: string) {
-  return pipe(
-    calendarTitleTranslations[calendarTitle.trim().toLowerCase()],
-    O.fromNullable,
-    O.fold(
-      () => calendarTitle,
-      s => I18n.t(s)
-    )
-  );
+  switch (calendarTitle.trim().toLowerCase()) {
+    case "calendar_displayname_birthday":
+      return I18n.t("profile.preferences.calendar.birthday_calendar");
+    case "calendar_displayname_local":
+      return I18n.t("profile.preferences.calendar.local_calendar");
+    default:
+      return calendarTitle;
+  }
 }
 
 /**
