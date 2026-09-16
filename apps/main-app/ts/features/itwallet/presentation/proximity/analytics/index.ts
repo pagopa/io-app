@@ -12,7 +12,6 @@ import {
   ItwProximityFlowProperties,
   ItwProximityGenericFailure,
   ItwProximityHttpFailure,
-  ItwProximityMandatoryCredentialMissing,
   ItwProximityQrCode,
   ItwProximityShowQrCode,
   ItwRevokeConsentUserAction,
@@ -364,16 +363,10 @@ export const trackItwProximityRequestObjectFailure = ({
   );
 };
 
-export const trackItwProximityMandatoryCredentialMissing = ({
-  missing_credential,
-  missing_credential_number
-}: ItwProximityMandatoryCredentialMissing) => {
+export const trackItwProximityMandatoryCredentialMissing = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING,
-    buildEventProperties("KO", "screen_view", {
-      missing_credential,
-      missing_credential_number
-    })
+    buildEventProperties("KO", "screen_view")
   );
 };
 
