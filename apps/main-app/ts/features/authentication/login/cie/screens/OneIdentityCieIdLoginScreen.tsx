@@ -19,7 +19,11 @@ import { AuthenticationParamsList } from "../../../common/navigation/params/Auth
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
-import { AuthLevel } from "../../../common/utils";
+import { AUTH_LEVELS, AuthLevel } from "../../../common/utils";
+import {
+  cieIDSelectedSecurityLevelSelector,
+  isCieLoginUatEnabledSelector
+} from "../../cie/store/selectors";
 import { IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 
 type OneIdentityCieIdLoginScreenProps = IOStackNavigationRouteProps<
@@ -28,11 +32,15 @@ type OneIdentityCieIdLoginScreenProps = IOStackNavigationRouteProps<
 >;
 
 export const OneIdentityCieIdLoginScreen = ({
-  navigation,
-  route
+  navigation
 }: OneIdentityCieIdLoginScreenProps) => {
-  const { spidLevel: authLevel, isUat } = route.params;
-
+  const isUat = useIOSelector(isCieLoginUatEnabledSelector);
+  // cieIDSelectedSecurityLevel is always set before this screen is reached
+  // (navigateToCieIdLoginScreen dispatches it synchronously before navigating);
+  // the fallback only satisfies the type, since the reducer marks it optional.
+  // L2 matches navigateToCieIdLoginScreen's own default for the same value
+  const authLevel =
+    useIOSelector(cieIDSelectedSecurityLevelSelector) ?? AUTH_LEVELS.L2;
   const loggedInAuth = useIOSelector(loggedInAuthSelector);
 
   const { showAlert } = useOnboardingAbortAlert();
@@ -81,7 +89,7 @@ const OneIdentityCieIdLoginScreenContent = ({
     navigateToCieIdAuthenticationError,
     navigateToCieIdAuthUrlError,
     navigateToAuthErrorScreen
-  } = useCieIdWebViewLoginNavigation({ authLevel, isUat });
+  } = useCieIdWebViewLoginNavigation({ authLevel });
 
   const handleLoginFailure = useCallback(
     (reason: string, code?: string, message?: string) => {
