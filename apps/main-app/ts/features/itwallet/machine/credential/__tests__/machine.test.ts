@@ -217,6 +217,24 @@ describe("itwCredentialIssuanceMachine", () => {
     jest.resetAllMocks();
   });
 
+  it("initializes updated dependencies when leaving the idle state", () => {
+    const deps = { ...T_DEPS, itwVersion: "1.4.6" as const };
+    onInit.mockImplementation(({ context }) => ({
+      deps: { ...context.deps, itwVersion: "1.0.0" }
+    }));
+    const actor = createActor(mockedMachine, { input: { deps } });
+    actor.start();
+
+    actor.send({
+      type: "select-credential",
+      credentialType: T_CREDENTIAL_TYPE,
+      mode: "issuance"
+    });
+
+    expect(onInit).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().context.deps.itwVersion).toBe("1.0.0");
+  });
+
   it("Should obtain a credential with a valid status assertion", async () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
     getWalletAttestation.mockImplementation(() =>
