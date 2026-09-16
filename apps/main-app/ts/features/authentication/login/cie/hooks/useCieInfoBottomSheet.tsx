@@ -4,14 +4,14 @@ import { useCallback } from "react";
 import { View } from "react-native";
 
 import { pinPukHelpUrl } from "../../../../../config";
-import { useIOSelector } from "../../../../../store/hooks";
+import { useIOStore } from "../../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
 import { cieLoginFlowSelector } from "../../../activeSessionLogin/store/selectors";
 import { trackLoginCiePinInfo } from "../../../common/analytics/cieAnalytics";
 
 export const useCieInfoBottomSheet = () => {
-  const loginFlow = useIOSelector(cieLoginFlowSelector);
+  const store = useIOStore();
 
   const handlePress = useCallback(() => {
     openWebUrl(pinPukHelpUrl);
@@ -34,6 +34,7 @@ export const useCieInfoBottomSheet = () => {
   return {
     ...bottomSheet,
     present: () => {
+      const loginFlow = cieLoginFlowSelector(store.getState());
       trackLoginCiePinInfo(loginFlow);
       bottomSheet.present();
     }
