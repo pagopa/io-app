@@ -65,6 +65,7 @@ describe("itwProximityMachine", () => {
 
   const storeConsent = jest.fn();
   const trackProximityStart = jest.fn();
+  const trackProximitySuccess = jest.fn();
   const trackQrCodeLoadingFailure = jest.fn();
 
   const checkBluetoothPermissions = jest.fn();
@@ -95,6 +96,7 @@ describe("itwProximityMachine", () => {
       navigateToSuccessScreen,
       closeProximity,
       trackProximityStart,
+      trackProximitySuccess,
       trackQrCodeLoadingFailure,
       grantConsent: assign(({ context }) => {
         if (!context.proximityDetails) {
@@ -467,11 +469,29 @@ describe("itwProximityMachine", () => {
 
     actor.send({ type: "device-disconnected" });
     expect(actor.getSnapshot().value).toStrictEqual("Success");
+    expect(trackProximitySuccess).toHaveBeenCalledTimes(1);
     expect(navigateToSuccessScreen).toHaveBeenCalledTimes(1);
 
     actor.send({ type: "close" });
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(closeProximity).toHaveBeenCalledTimes(1);
+  });
+
+  it("tracks NFC success without navigating away from the NFC screen", () => {
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot(
+        { Presentment: "SendingDocuments" },
+        { engagementMode: "nfc", retrievalMethod: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({ type: "device-disconnected" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Success");
+    expect(trackProximitySuccess).toHaveBeenCalledTimes(1);
+    expect(navigateToSuccessScreen).not.toHaveBeenCalled();
   });
 
   it("device-connecting with QR engagement pre-navigates to claims disclosure", () => {

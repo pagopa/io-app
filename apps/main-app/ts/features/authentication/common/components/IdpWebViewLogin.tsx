@@ -78,7 +78,7 @@ export const IdpWebViewLogin = memo(
 
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
-        idp,
+        idpId: idp.id,
         onFailure: handleFailure,
         minAuthLevel: AUTH_LEVELS.L2
       });

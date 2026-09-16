@@ -7,6 +7,17 @@ import { AuthLevel, SPID_AUTH_LEVEL_MAP } from "../../../common/utils";
 export const cieFlowForDevServerEnabled =
   isDevEnv && cieLoginFlowWithDevServerEnabled;
 
+const CIE_IDP_ID_MAP: Record<"prod" | "uat", string> = {
+  prod: "https://idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO",
+  uat: "https://preproduzione.idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO"
+};
+
+/**
+ * Returns the CIE Identity Provider ID based on the UAT flag.
+ */
+export const getCieIdpId = (useUat: boolean) =>
+  useUat ? CIE_IDP_ID_MAP.uat : CIE_IDP_ID_MAP.prod;
+
 /**
  * Maps the CIE login UAT flag to the CieID app environment to open.
  */
@@ -32,7 +43,7 @@ export const getCieIDLoginUri = (
  * @returns a `boolean`
  */
 export const isAuthenticationUrl = (url: string) => {
-  const authUrlRegex = /\/(livello1|livello2|nextUrl|openApp)(\/|\?|$)/;
+  const authUrlRegex = /\/(livello1|livello2|nextUrl|OpenApp)(\/|\?|$)/;
 
   return authUrlRegex.test(url);
 };
