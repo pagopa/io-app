@@ -1,10 +1,9 @@
 import { useFocusEffect } from "@react-navigation/core";
 import I18n from "i18next";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { View } from "react-native";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { trackLoginReauthEngagementCieSelected } from "../../../activeSessionLogin/screens/analytics";
@@ -13,19 +12,14 @@ import { useCieLoginMethodSelection } from "../../../common/hooks/useCieLoginMet
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 type OneIdentityIdpSelectionFailureContentProps = {
-  failure?: string;
   isActiveSessionLogin: boolean;
 };
 
 export const OneIdentityIdpSelectionFailureContent = ({
-  failure,
   isActiveSessionLogin
 }: OneIdentityIdpSelectionFailureContentProps) => {
   const navigation = useIONavigation();
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
-
-  const debugInfo = useMemo(() => ({ failure }), [failure]);
-  useDebugInfo(debugInfo);
 
   const {
     bottomSheet,
