@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.8](https://github.com/pagopa/io-app/compare/3.39.0-rc.7...3.39.0-rc.8) (2026-09-15)
+
+### Features
+
+* [[IOCOM-3127](https://pagopa.atlassian.net/browse/IOCOM-3127)] sticky footer in messages' details screens ([#8424](https://github.com/pagopa/io-app/issues/8424)) ([549a3e2](https://github.com/pagopa/io-app/commit/549a3e2e2f90deee438c80127b1e35101732b9db))
+* **IT-Wallet:** [[SIW-3593](https://pagopa.atlassian.net/browse/SIW-3593)] Check Wallet Instance validity with TSL ([#8439](https://github.com/pagopa/io-app/issues/8439)) ([b08dbb5](https://github.com/pagopa/io-app/commit/b08dbb5e4f57150b7e89ba4b26ca21076d6dc096))
+* **IT-Wallet:** [[SIW-4973](https://pagopa.atlassian.net/browse/SIW-4973)] add mandatory L3 upgrade Mixpanel events ([#8604](https://github.com/pagopa/io-app/issues/8604)) ([fc28136](https://github.com/pagopa/io-app/commit/fc281363c39589d5dd8a9f76db63295943e33f91))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4991](https://pagopa.atlassian.net/browse/SIW-4991)] remove credential detail properties from mandatory events ([#8605](https://github.com/pagopa/io-app/issues/8605)) ([8c31577](https://github.com/pagopa/io-app/commit/8c3157779c878aa3e2adf14ed116f4fd73c6442c))
+
+### Chores
+
+* [[IOPLT-2077](https://pagopa.atlassian.net/browse/IOPLT-2077)] Add `i18n Ally` conf for the IDE ([#8599](https://github.com/pagopa/io-app/issues/8599)) ([01d9b60](https://github.com/pagopa/io-app/commit/01d9b6046dcd6bb6ef9bb2e5e2e959057f0ff3b6))
+* [[IOPLT-2078](https://pagopa.atlassian.net/browse/IOPLT-2078)] Add dev server debug extension ([#8601](https://github.com/pagopa/io-app/issues/8601)) ([4e4b880](https://github.com/pagopa/io-app/commit/4e4b8806ad5768ff5264aa4441c28db01f1d1458))
 ## [3.39.0-rc.7](https://github.com/pagopa/io-app/compare/3.39.0-rc.6...3.39.0-rc.7) (2026-09-14)
 
 ### Features
