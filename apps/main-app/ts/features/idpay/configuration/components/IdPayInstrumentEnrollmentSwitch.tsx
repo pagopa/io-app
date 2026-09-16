@@ -8,7 +8,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { CreditCardType, Wallet } from "../../../../types/pagopa";
-import { instrumentStatusLabels } from "../../common/labels";
+import { getInstrumentStatusLabel } from "../../common/labels";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import { instrumentStatusByIdWalletSelector } from "../machine/selectors";
 
@@ -46,7 +46,7 @@ const IdPayInstrumentEnrollmentSwitch = (
     instrumentStatus === InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST ||
     instrumentStatus === InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST
       ? ({
-          text: instrumentStatusLabels[instrumentStatus],
+          text: getInstrumentStatusLabel(instrumentStatus),
           variant: "default"
         } as Badge)
       : undefined;

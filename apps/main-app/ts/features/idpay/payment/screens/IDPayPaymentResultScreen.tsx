@@ -120,12 +120,6 @@ const IDPayPaymentResultScreen = () => {
   );
 };
 
-const genericErrorProps: OperationResultScreenContentProps = {
-  pictogram: "accessDenied",
-  title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
-  subtitle: I18n.t("idpay.payment.result.failure.GENERIC.subtitle")
-};
-
 const mapFailureToContentProps = (
   failure: PaymentFailureEnum
 ): OperationResultScreenContentProps => {
@@ -198,7 +192,11 @@ const mapFailureToContentProps = (
         )
       };
     default:
-      return genericErrorProps;
+      return {
+        pictogram: "accessDenied",
+        title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
+        subtitle: I18n.t("idpay.payment.result.failure.GENERIC.subtitle")
+      };
   }
 };
 
