@@ -117,6 +117,7 @@ describe("checkProfileEnabledSaga", () => {
           undefined
         ]
       ])
+      .not.put(startApplicationInitialization())
       .call(handleApplicationStartupTransientError, "GET_PROFILE_DOWN")
       .returns(false)
       .dispatch(profileUpsert.failure(Error()))
