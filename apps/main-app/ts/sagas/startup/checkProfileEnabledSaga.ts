@@ -19,7 +19,7 @@ export function* checkProfileEnabledSaga(
   profile: InitializedProfile
 ): Generator<
   ReduxSagaEffect,
-  void,
+  boolean,
   | ActionType<(typeof profileUpsert)["failure"]>
   | ActionType<(typeof profileUpsert)["success"]>
 > {
@@ -52,6 +52,7 @@ export function* checkProfileEnabledSaga(
       // handler, which surfaces an error to the user after the
       // maximum number of retries.
       yield* call(handleApplicationStartupTransientError, "GET_PROFILE_DOWN");
+      return false;
     } else {
       // First time login
       if (isProfileFirstOnBoarding(profile)) {
@@ -59,6 +60,7 @@ export function* checkProfileEnabledSaga(
       }
     }
   }
+  return true;
 }
 
 function* enableProfileInboxWebhook() {
