@@ -38,7 +38,6 @@ allowBuilds:
   nx: true
   tls-impersonate: false
   unrs-resolver: true
-  "@pagopa/io-react-native-jwt@https://codeload.github.com/pagopa/io-react-native-jwt/tar.gz/213b46a1c7a3caf4c6abce63c94e51ba8db0dda0": true
 
 catalog:
   # --- Nx ---
@@ -84,3 +83,6 @@ catalog:
   react-native-reanimated: "4.3.1"
   react-native-safe-area-context: "^5.6.2"
   react-native-svg: "^15.14.0"
+
+minimumReleaseAgeExclude:
+  - '@pagopa/io-react-native-jwt@2.2.2'
