@@ -9,6 +9,8 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
+import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
+import { navigateToTosScreenAction } from "../../../../machine/eid/actions";
 import {
   EidIssuanceLevel,
   EidIssuanceMode
@@ -28,6 +30,7 @@ jest.mock("../../../../../../config", () => ({
 }));
 
 const mockNavigate = jest.fn();
+const mockNavigateToTos = jest.fn(navigateToTosScreenAction);
 
 const every12Months = () =>
   I18n.t(
@@ -40,6 +43,9 @@ const every90Days = () =>
 
 describe("ItwIdentificationModeSelectionScreen", () => {
   beforeEach(() => {
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(false);
     jest
       .spyOn(remoteConfigSelectors, "itwDisabledIdentificationMethodsSelector")
       .mockReturnValue([]);
@@ -112,6 +118,8 @@ describe("ItwIdentificationModeSelectionScreen", () => {
 
   it.each([
     { name: "banner", credentialType: undefined },
+    { name: "L3 credential", credentialType: CredentialType.EDUCATION_DEGREE },
+    { name: "unknown credential", credentialType: "unsupported-credential" },
     { name: "driving licence", credentialType: CredentialType.DRIVING_LICENSE },
     {
       name: "disability card",
@@ -128,6 +136,23 @@ describe("ItwIdentificationModeSelectionScreen", () => {
 
       fireEvent.press(getByTestId("noCieButtonTestID"));
 
+      const supportedTypes: ReadonlyArray<string> = [
+        CredentialType.DRIVING_LICENSE,
+        CredentialType.EUROPEAN_DISABILITY_CARD,
+        CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+      ];
+      expect(mockNavigateToTos).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({
+            credentialType:
+              credentialType && supportedTypes.includes(credentialType)
+                ? credentialType
+                : undefined
+          })
+        }),
+        undefined
+      );
+
       await waitFor(() =>
         expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.DISCOVERY.INFO,
@@ -139,22 +164,32 @@ describe("ItwIdentificationModeSelectionScreen", () => {
 
   it.each([
     { name: "L3 credential", credentialType: CredentialType.EDUCATION_DEGREE },
-    { name: "unknown credential", credentialType: "unsupported-credential" }
-  ])("shows the CIE warning for $name", async ({ credentialType }) => {
-    const { getByTestId } = renderComponent("issuance", "l3", credentialType);
+    { name: "unknown credential", credentialType: "unsupported-credential" },
+    {
+      name: "Doc su IO credential",
+      credentialType: CredentialType.DRIVING_LICENSE
+    }
+  ])(
+    "shows the CIE warning for $name when Doc su IO is already active",
+    async ({ credentialType }) => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(true);
+      const { getByTestId } = renderComponent("issuance", "l3", credentialType);
 
-    fireEvent.press(getByTestId("noCieButtonTestID"));
+      fireEvent.press(getByTestId("noCieButtonTestID"));
 
-    await waitFor(() =>
-      expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
-        params: {
-          type: "card",
-          routeName: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
-        }
-      })
-    );
-  });
+      await waitFor(() =>
+        expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
+          params: {
+            type: "card",
+            routeName: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
+          }
+        })
+      );
+    }
+  );
 
   describe("disabled identification methods", () => {
     it("hides CiePin when disabled", () => {
@@ -217,6 +252,7 @@ const renderComponent = (
     const logic = itwEidIssuanceMachine.provide({
       actions: {
         onInit: jest.fn(),
+        navigateToTosScreen: mockNavigateToTos,
         navigateToIdentificationScreen: () => undefined
       }
     });
