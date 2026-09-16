@@ -6,7 +6,9 @@ import { AccessibilityInfo } from "react-native";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { WalletPaymentPspSortType } from "../types";
 
-const sortPspListOptions: Array<RadioItem<WalletPaymentPspSortType>> = [
+const getSortPspListOptions = (): Array<
+  RadioItem<WalletPaymentPspSortType>
+> => [
   {
     id: "default",
     value: I18n.t("wallet.payment.psp.sortBottomSheet.default"),
@@ -53,7 +55,7 @@ const useSortPspBottomSheet = ({
 
   const getModalContent = () => (
     <RadioGroup<WalletPaymentPspSortType>
-      items={sortPspListOptions}
+      items={getSortPspListOptions()}
       onPress={handleChangeSort}
       selectedItem={sortType}
       type="radioListItem"
