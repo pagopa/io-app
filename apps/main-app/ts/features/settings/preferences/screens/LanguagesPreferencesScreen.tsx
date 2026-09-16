@@ -34,6 +34,28 @@ import { profileSelector } from "../../common/store/selectors";
 
 type AppLocaleId = `app-locale-${Locales}`;
 
+const getLocaleNativeName = (locale: Locales): string => {
+  switch (locale) {
+    case "de":
+      return I18n.t("localesTranslated.de");
+    case "en":
+      return I18n.t("localesTranslated.en");
+    case "it":
+      return I18n.t("localesTranslated.it");
+  }
+};
+
+const getLocaleName = (locale: Locales): string => {
+  switch (locale) {
+    case "de":
+      return I18n.t("locales.de");
+    case "en":
+      return I18n.t("locales.en");
+    case "it":
+      return I18n.t("locales.it");
+  }
+};
+
 const LanguagesPreferencesScreen = () => {
   const dispatch = useIODispatch();
   const toast = useIOToast();
@@ -76,9 +98,7 @@ const LanguagesPreferencesScreen = () => {
   const renderedItem: Array<RadioItem<string>> = useMemo(
     () =>
       availableTranslations.map(item => ({
-        value: I18n.t(`localesTranslated.${item}`, {
-          defaultValue: item
-        }),
+        value: getLocaleNativeName(item),
         id: item,
         techName: `${item}-${item.toUpperCase()}`
       })),
@@ -111,9 +131,7 @@ const LanguagesPreferencesScreen = () => {
           ...[...availableTranslations].sort((a, b) => a.localeCompare(b))
         ])
       ].map(locale => ({
-        value: I18n.t(`localesTranslated.${locale}`, {
-          defaultValue: locale
-        }),
+        value: getLocaleNativeName(locale),
         id: `app-locale-${locale}`
       })),
     []
@@ -193,7 +211,7 @@ const LanguagesPreferencesScreen = () => {
         const locale = language.replace("app-locale-", "") as Locales;
         Alert.alert(
           I18n.t("profile.preferences.list.preferred_language.alert.title", {
-            lang: I18n.t(`locales.${locale}`)
+            lang: getLocaleName(locale)
           }),
           I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
           [
