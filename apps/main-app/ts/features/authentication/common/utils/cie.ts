@@ -17,23 +17,16 @@ export const originSchemasWhiteList = [
   ...(isDevEnv ? ["http://*"] : [])
 ];
 
-export const WHITELISTED_DOMAINS = [
-  "https://idserver.servizicie.interno.gov.it",
-  "https://oidc.idserver.servizicie.interno.gov.it",
-  "https://mtls.oidc.idserver.servizicie.interno.gov.it",
-  "https://mtls.idserver.servizicie.interno.gov.it",
-  "https://ios.idserver.servizicie.interno.gov.it",
-  "https://ios.oidc.idserver.servizicie.interno.gov.it",
-  "https://preproduzione.idserver.servizicie.interno.gov.it"
-];
-
 /**
- * Checks whether `url`'s origin is one of the trusted CIE ID identity server in `WHITELISTED_DOMAINS`.
+ * Checks whether `url`'s origin is one of the trusted CIE ID identity servers in `allowedOrigins`.
  */
-export const isAllowedUrl = (url: string) => {
+export const isAllowedUrl = (
+  url: string,
+  allowedOrigins: ReadonlyArray<string>
+) => {
   try {
     const { origin } = new URL(url);
-    return WHITELISTED_DOMAINS.includes(origin);
+    return allowedOrigins.includes(origin);
   } catch {
     return false;
   }

@@ -3,7 +3,6 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Linking, Platform, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { URL } from "react-native-url-polyfill";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -19,6 +18,7 @@ import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { oneIdentityAllowedCieOriginsSelector } from "../../../common/store/selectors/remoteConfig";
 import {
   AUTH_LEVELS,
   onLoginUriChanged,
@@ -27,7 +27,7 @@ import {
 import {
   CieIdLoginProps,
   defaultUserAgent,
-  WHITELISTED_DOMAINS
+  isAllowedUrl
 } from "../../../common/utils/cie";
 import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
 import {
@@ -64,6 +64,7 @@ const ActiveSessionCieIdLoginWebView = ({
   const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(null);
   const isLoginUrlWithTokenRef = useRef<boolean>(false);
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
+  const allowedCieOrigins = useIOSelector(oneIdentityAllowedCieOriginsSelector);
   const acsUrl = `${apiLoginUrlPrefix}${ACS_PATH}`;
   const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
   const [isLoadingWebView, setIsLoadingWebView] = useState(true);
@@ -87,27 +88,19 @@ const ActiveSessionCieIdLoginWebView = ({
     [navigation]
   );
 
-  const checkIfUrlIsWhitelisted = useCallback(
+  const checkIfOriginIsAllowed = useCallback(
     (url: string) => {
       // Checks if the URL starts with one of the valid URLs
 
-      try {
-        const { origin } = new URL(url);
-        const isDomainValid = WHITELISTED_DOMAINS.includes(origin);
-
-        if (isDomainValid) {
-          // Set the URL as valid
-          setAuthenticatedUrl(url);
-        } else {
-          // Redirects the user to the error screen
-          navigateToCieIdAuthUrlError(url);
-        }
-      } catch {
+      if (isAllowedUrl(url, allowedCieOrigins)) {
+        // Set the URL as valid
+        setAuthenticatedUrl(url);
+      } else {
         // Redirects the user to the error screen
         navigateToCieIdAuthUrlError(url);
       }
     },
-    [navigateToCieIdAuthUrlError]
+    [allowedCieOrigins, navigateToCieIdAuthUrlError]
   );
 
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
@@ -167,7 +160,7 @@ const ActiveSessionCieIdLoginWebView = ({
                 handleLoginFailure();
               }
             } else {
-              checkIfUrlIsWhitelisted(continueUrl);
+              checkIfOriginIsAllowed(continueUrl);
             }
           }
         }
@@ -175,7 +168,7 @@ const ActiveSessionCieIdLoginWebView = ({
     );
 
     return () => urlListenerSubscription.remove();
-  }, [handleLoginFailure, checkIfUrlIsWhitelisted]);
+  }, [handleLoginFailure, checkIfOriginIsAllowed]);
 
   const handleLoginSuccess = useCallback(
     (token: string) => {
@@ -198,14 +191,14 @@ const ActiveSessionCieIdLoginWebView = ({
             if (result.id === "ERROR") {
               handleLoginFailure(result.code);
             } else {
-              checkIfUrlIsWhitelisted(result.url);
+              checkIfOriginIsAllowed(result.url);
             }
           },
           getCieIdEnvironment(isUat)
         );
       }
     },
-    [handleLoginFailure, isUat, checkIfUrlIsWhitelisted]
+    [handleLoginFailure, isUat, checkIfOriginIsAllowed]
   );
 
   const handleOnShouldStartLoadWithRequest = (

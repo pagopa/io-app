@@ -1,59 +1,65 @@
 import { Platform } from "react-native";
 
-import {
-  defaultUserAgent,
-  iOSUserAgent,
-  isAllowedUrl,
-  WHITELISTED_DOMAINS
-} from "../cie";
+import { defaultUserAgent, iOSUserAgent, isAllowedUrl } from "../cie";
+
+const TEST_ALLOWED_ORIGINS = [
+  "https://idserver.example.it",
+  "https://oidc.idserver.example.it"
+];
 
 describe("isAllowedUrl", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  it.each(WHITELISTED_DOMAINS)(
-    "should return true for the whitelisted domain %s",
-    domain => {
-      expect(isAllowedUrl(domain)).toBe(true);
+  it.each(TEST_ALLOWED_ORIGINS)(
+    "should return true for the allowed origin %s",
+    origin => {
+      expect(isAllowedUrl(origin, TEST_ALLOWED_ORIGINS)).toBe(true);
     }
   );
 
-  it.each(WHITELISTED_DOMAINS)(
-    "should return true for the whitelisted domain %s with a path and query string",
-    domain => {
-      expect(isAllowedUrl(`${domain}/some/path?foo=bar`)).toBe(true);
+  it.each(TEST_ALLOWED_ORIGINS)(
+    "should return true for the allowed origin %s with a path and query string",
+    origin => {
+      expect(
+        isAllowedUrl(`${origin}/some/path?foo=bar`, TEST_ALLOWED_ORIGINS)
+      ).toBe(true);
     }
   );
 
-  it("should return false for a non-whitelisted domain", () => {
-    expect(isAllowedUrl("https://evil.com")).toBe(false);
+  it("should return false for a non-allowed origin", () => {
+    expect(isAllowedUrl("https://evil.com", TEST_ALLOWED_ORIGINS)).toBe(false);
   });
 
-  it("should return false for a domain that merely contains a whitelisted domain as a suffix of its hostname", () => {
-    expect(isAllowedUrl("https://evilidserver.servizicie.interno.gov.it")).toBe(
-      false
-    );
-  });
-
-  it("should return false for a domain that appends a whitelisted domain as a prefix of an unrelated hostname", () => {
+  it("should return false for an origin that merely contains an allowed origin as a suffix of its hostname", () => {
     expect(
-      isAllowedUrl("https://idserver.servizicie.interno.gov.it.evil.com")
+      isAllowedUrl("https://evilidserver.example.it", TEST_ALLOWED_ORIGINS)
     ).toBe(false);
   });
 
-  it("should return false when the scheme doesn't match a whitelisted domain (http instead of https)", () => {
-    expect(isAllowedUrl("http://idserver.servizicie.interno.gov.it")).toBe(
-      false
-    );
+  it("should return false for an origin that appends an allowed origin as a prefix of an unrelated hostname", () => {
+    expect(
+      isAllowedUrl("https://idserver.example.it.evil.com", TEST_ALLOWED_ORIGINS)
+    ).toBe(false);
+  });
+
+  it("should return false when the scheme doesn't match an allowed origin (http instead of https)", () => {
+    expect(
+      isAllowedUrl("http://idserver.example.it", TEST_ALLOWED_ORIGINS)
+    ).toBe(false);
   });
 
   it("should return false for a malformed URL", () => {
-    expect(isAllowedUrl("not-a-url")).toBe(false);
+    expect(isAllowedUrl("not-a-url", TEST_ALLOWED_ORIGINS)).toBe(false);
   });
 
   it("should return false for an empty string", () => {
-    expect(isAllowedUrl("")).toBe(false);
+    expect(isAllowedUrl("", TEST_ALLOWED_ORIGINS)).toBe(false);
+  });
+
+  it("should return false for any URL when allowedOrigins is empty", () => {
+    expect(isAllowedUrl("https://idserver.example.it", [])).toBe(false);
   });
 });
 
@@ -125,17 +131,5 @@ describe("originSchemasWhiteList", () => {
     expect(originSchemasWhiteList).not.toEqual(
       expect.arrayContaining(["http://*"])
     );
-  });
-});
-
-describe("WHITELISTED_DOMAINS", () => {
-  it("should only contain https origins", () => {
-    WHITELISTED_DOMAINS.forEach(domain => {
-      expect(domain.startsWith("https://")).toBe(true);
-    });
-  });
-
-  it("should not contain duplicate entries", () => {
-    expect(new Set(WHITELISTED_DOMAINS).size).toBe(WHITELISTED_DOMAINS.length);
   });
 });
