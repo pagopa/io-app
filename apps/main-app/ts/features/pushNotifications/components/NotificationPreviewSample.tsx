@@ -10,8 +10,6 @@ import {
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
-import { TranslationKeys } from "../../../i18n";
-
 const notificationMarginVertical: IOSpacingScale = 4;
 const notificationPaddingVertical: IOSpacingScale = 8;
 const notificationPaddingHorizontal: IOSpacingScale = 24;
@@ -35,30 +33,46 @@ type Props = {
   remindersEnabled: boolean;
 };
 
-const computeTitleAndMessageKeys = (
+const computeTitleAndMessage = (
   isPreviewEnabled: boolean,
   areRemindersEnabled: boolean
-): Record<"messageKey" | "titleKey", TranslationKeys> => {
+): Record<"message" | "title", string> => {
   if (isPreviewEnabled && areRemindersEnabled) {
     return {
-      titleKey: "onboarding.notifications.preview.reminderOnPreviewOnTitle",
-      messageKey: "onboarding.notifications.preview.reminderOnPreviewOnMessage"
+      title: I18n.t(
+        "onboarding.notifications.preview.reminderOnPreviewOnTitle"
+      ),
+      message: I18n.t(
+        "onboarding.notifications.preview.reminderOnPreviewOnMessage"
+      )
     };
   } else if (isPreviewEnabled && !areRemindersEnabled) {
     return {
-      titleKey: "onboarding.notifications.preview.reminderOffPreviewOnTitle",
-      messageKey: "onboarding.notifications.preview.reminderOffPreviewOnMessage"
+      title: I18n.t(
+        "onboarding.notifications.preview.reminderOffPreviewOnTitle"
+      ),
+      message: I18n.t(
+        "onboarding.notifications.preview.reminderOffPreviewOnMessage"
+      )
     };
   } else if (!isPreviewEnabled && areRemindersEnabled) {
     return {
-      titleKey: "onboarding.notifications.preview.reminderOnPreviewOffTitle",
-      messageKey: "onboarding.notifications.preview.reminderOnPreviewOffMessage"
+      title: I18n.t(
+        "onboarding.notifications.preview.reminderOnPreviewOffTitle"
+      ),
+      message: I18n.t(
+        "onboarding.notifications.preview.reminderOnPreviewOffMessage"
+      )
     };
   }
 
   return {
-    titleKey: "onboarding.notifications.preview.reminderOffPreviewOffTitle",
-    messageKey: "onboarding.notifications.preview.reminderOffPreviewOffMessage"
+    title: I18n.t(
+      "onboarding.notifications.preview.reminderOffPreviewOffTitle"
+    ),
+    message: I18n.t(
+      "onboarding.notifications.preview.reminderOffPreviewOffMessage"
+    )
   };
 };
 
@@ -66,7 +80,7 @@ export const NotificationPreviewSample = ({
   previewEnabled,
   remindersEnabled
 }: Props) => {
-  const { titleKey, messageKey } = computeTitleAndMessageKeys(
+  const { title, message } = computeTitleAndMessage(
     previewEnabled,
     remindersEnabled
   );
@@ -86,8 +100,8 @@ export const NotificationPreviewSample = ({
       <Icon name="productIOAppBlueBg" size={24} />
       <HSpacer />
       <View style={{ flex: 1 }}>
-        <H6>{I18n.t(titleKey)}</H6>
-        <BodySmall weight="Regular">{I18n.t(messageKey)}</BodySmall>
+        <H6>{title}</H6>
+        <BodySmall weight="Regular">{message}</BodySmall>
       </View>
     </View>
   );
