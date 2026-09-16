@@ -311,7 +311,7 @@ PODS:
     - SocketRocket
     - SwiftCBOR
     - Yoga
-  - pagopa-io-react-native-jwt (2.2.2):
+  - pagopa-io-react-native-jwt (2.2.3):
     - boost
     - DoubleConversion
     - fast_float
@@ -4418,7 +4418,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-cieid: 3969ed1784e0b9041baf892b461be3640315acd1
   pagopa-io-react-native-crypto: afc8ee2585a7944dc115687eb2938009608f062a
   pagopa-io-react-native-integrity: 3e84754db0333a531db86f83f786f60a6da22337
-  pagopa-io-react-native-jwt: 36cc9a2a9f851a3f4e391074ffdba6e1eedc2eb7
+  pagopa-io-react-native-jwt: 1ba79b0ef1450c59fb82266632dcaa2d5dcdafa0
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
