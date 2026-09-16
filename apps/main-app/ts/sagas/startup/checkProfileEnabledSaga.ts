@@ -12,7 +12,7 @@ import {
   hasProfileEmail,
   isProfileFirstOnBoarding
 } from "../../features/settings/common/store/utils/guards";
-import { startApplicationInitialization } from "../../store/actions/application";
+import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { ReduxSagaEffect } from "../../types/utils";
 
 export function* checkProfileEnabledSaga(
@@ -48,9 +48,10 @@ export function* checkProfileEnabledSaga(
     >([profileUpsert.success, profileUpsert.failure]);
     // We got an error
     if (action.type === getType(profileUpsert.failure)) {
-      // Restart the initialization loop to let the user retry.
-      // FIXME: show an error message
-      yield* put(startApplicationInitialization());
+      // Retry the initialization flow through the transient error
+      // handler, which surfaces an error to the user after the
+      // maximum number of retries.
+      yield* call(handleApplicationStartupTransientError, "GET_PROFILE_DOWN");
     } else {
       // First time login
       if (isProfileFirstOnBoarding(profile)) {
