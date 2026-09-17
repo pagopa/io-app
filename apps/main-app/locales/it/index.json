@@ -1274,6 +1274,12 @@
               "secondaryAction": "Non ho la CIE",
               "title": "Carta di Identità Elettronica (CIE)"
             },
+            "nfc": {
+              "content": "Se hai un iPhone®, il chip per leggere la CIE si trova nella parte alta del dispositivo, sul retro.\n\nSe hai un Android®, il chip per leggere la CIE può trovarsi invece in punti diversi del retro del telefono, in base al modello. Potrebbe ad esempio trovarsi sul retro in corrispondenza della parte alta, del centro oppure più in basso.",
+              "primaryAction": "Ho capito",
+              "secondaryAction": "Hai bisogno di aiuto?",
+              "title": "Come funziona la lettura della CIE?"
+            },
             "pin": {
               "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
               "dialog": {
@@ -1349,6 +1355,7 @@
               "title": "Prepara la tua Carta di Identità Elettronica (CIE)"
             },
             "nfc": {
+              "buttonLink": "Come funziona?",
               "cta": "Inizia lettura CIE",
               "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
               "title": "Posiziona la tua CIE su una superficie stabile per la lettura"
