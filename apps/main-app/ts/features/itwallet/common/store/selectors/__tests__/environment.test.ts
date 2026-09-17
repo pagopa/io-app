@@ -1,5 +1,3 @@
-import * as O from "fp-ts/lib/Option";
-
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { CredentialType } from "../../../utils/itwMocksUtils";
 import { CredentialFormat } from "../../../utils/itwTypesUtils";
@@ -80,9 +78,9 @@ describe("selectItwSpecsVersion", () => {
     "Whitelist: $isWhitelisted, PID: $pidSpecVersion -> ITW: $expected",
     ({ isWhitelisted, pidSpecVersion, expected }) => {
       const state = {
-        remoteConfig: O.none,
         features: {
           itWallet: {
+            remoteConfig: {},
             preferences: {
               isFiscalCodeWhitelisted: isWhitelisted
             },

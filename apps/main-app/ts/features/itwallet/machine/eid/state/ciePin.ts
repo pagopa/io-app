@@ -154,7 +154,11 @@ export const ciePinState = itwEidIssuanceMachineSetup.createStateConfig({
         ],
         target: "#itwEidIssuanceMachine.UserIdentification.CieID"
       }
-    ]
+    ],
+    error: {
+      actions: "setFailure",
+      target: "#itwEidIssuanceMachine.Failure"
+    }
   },
   onDone: {
     target: "#itwEidIssuanceMachine.UserIdentification.Completed"

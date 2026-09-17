@@ -30,11 +30,11 @@ import {
 } from "../../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
 import { watchItwEnvironment } from "../environment";
-import { watchItwOfflineAccess } from "../offlineAccess";
+import { watchItwOfflineSaga } from "../offlineAccess";
 
-type TakeEffect = {
+type TakeEffect<TAction> = {
   payload: {
-    pattern: (action: ReturnType<typeof setConnectionStatus>) => boolean;
+    pattern: (action: TAction) => boolean;
   };
 };
 
@@ -42,7 +42,7 @@ describe("watchItwSaga", () => {
   it("starts offline-safe watchers and waits for connectivity before Status List checks", () => {
     testSaga(watchItwSaga)
       .next()
-      .fork(watchItwOfflineAccess)
+      .fork(watchItwOfflineSaga)
       .next()
       .fork(watchItwEnvironment)
       .next()
@@ -136,7 +136,9 @@ describe("waitForConnection", () => {
       .next(false)
       .inspect(effect => {
         expect(effect).toMatchObject({ type: "TAKE" });
-        const takeEffect = effect as TakeEffect;
+        const takeEffect = effect as TakeEffect<
+          ReturnType<typeof setConnectionStatus>
+        >;
         expect(takeEffect.payload.pattern(setConnectionStatus(true))).toBe(
           true
         );

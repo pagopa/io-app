@@ -20,6 +20,10 @@ import {
 import { getEnv } from "../../../common/utils/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { selectAuthUrl } from "../../../machine/eid/selectors";
+import {
+  WEBVIEW_ERROR_CODE_PREFIX,
+  WEBVIEW_HTTP_ERROR_CODE_PREFIX
+} from "../../cie/utils/constants";
 import { useCieIdApp } from "../hooks/useCieIdApp";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
@@ -34,14 +38,6 @@ const isAuthenticationUrl = (url: string) => {
   const authUrlRegex = /\/(livello[123]|nextUrl|openApp|app)(\/|\?|$)/;
   return authUrlRegex.test(url);
 };
-
-/**
- * Prefixes of the error codes reported when the WebView fails to load a page.
- * These codes end up in the support modal, in the Zendesk ticket and in the Mixpanel
- * KO event, so they must stay stable and readable to keep failures diagnosable.
- */
-const WEBVIEW_ERROR_CODE_PREFIX = "CIEID_WEBVIEW_ERROR";
-const WEBVIEW_HTTP_ERROR_CODE_PREFIX = "CIEID_WEBVIEW_HTTP_ERROR";
 
 /**
  * This component renders a WebView that loads the URL obtained from the startAuthFlow.

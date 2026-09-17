@@ -45,6 +45,7 @@ import {
   selectedIdentityProviderSelector
 } from "../../../common/store/selectors";
 import {
+  AUTH_LEVELS,
   getIdpLoginUri,
   getIntentFallbackUrl,
   onLoginUriChanged,
@@ -116,7 +117,7 @@ const IdpLoginScreen = () => {
     remoteApiLoginUrlPrefixSelector
   );
   const loginUri = idpId
-    ? getIdpLoginUri(idpId, 2, remoteApiLoginUrlPrefix)
+    ? getIdpLoginUri(idpId, AUTH_LEVELS.L2, remoteApiLoginUrlPrefix)
     : undefined;
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
@@ -271,7 +272,7 @@ const IdpLoginScreen = () => {
       params: {
         errorCodeOrMessage,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     });
   }, [errorCodeOrMessage, replace]);

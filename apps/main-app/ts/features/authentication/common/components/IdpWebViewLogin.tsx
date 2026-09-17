@@ -27,6 +27,7 @@ import {
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
 import { idpLoginUrlChanged } from "../store/actions";
 import {
+  AUTH_LEVELS,
   getIntentFallbackUrl,
   onLoginUriChanged,
   originSchemasWhiteList
@@ -77,9 +78,9 @@ export const IdpWebViewLogin = memo(
 
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
-        idp,
+        idpId: idp.id,
         onFailure: handleFailure,
-        minAuthLevel: "SpidL2"
+        minAuthLevel: AUTH_LEVELS.L2
       });
 
     const handleError = useCallback(

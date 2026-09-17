@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 
 import {
   itwAvailableCredentialsListSelector,
@@ -46,6 +45,7 @@ const buildState = (
   ({
     features: {
       itWallet: {
+        remoteConfig: {},
         credentialsCatalogue: {
           isEnabledForCredentialsList:
             overrides.isEnabledForCredentialsList ?? false,
@@ -66,8 +66,7 @@ const buildState = (
         overrides.preferredLanguage !== undefined
           ? overrides.preferredLanguage
           : "it"
-    },
-    remoteConfig: O.none
+    }
   }) as unknown as GlobalState;
 
 describe("itwCredentialsCatalogueSelector", () => {
