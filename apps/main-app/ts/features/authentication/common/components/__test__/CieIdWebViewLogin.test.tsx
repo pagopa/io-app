@@ -1,8 +1,11 @@
 import { fireEvent, render } from "@testing-library/react-native";
 
+import { withStore } from "../../../../../utils/jest/withStore";
 import * as useOneIdentityLoginSourceModule from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import * as useCieIdAppModule from "../../hooks/useCieIdApp";
-import { CieIdWebViewLogin } from "../CieIdWebViewLogin";
+import { CieIdWebViewLogin as CieIdWebViewLoginComponent } from "../CieIdWebViewLogin";
+
+const CieIdWebViewLogin = withStore(CieIdWebViewLoginComponent);
 
 jest.mock("react-native-webview", () => {
   const { forwardRef: reactForwardRef } = jest.requireActual("react");
