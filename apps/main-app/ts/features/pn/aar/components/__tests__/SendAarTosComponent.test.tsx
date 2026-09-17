@@ -49,7 +49,7 @@ describe("SendAarTosComponent", () => {
     fireEvent.press(button);
     expect(mockGoNextState).toHaveBeenCalledTimes(1);
   });
-  it("quits out of the flow on secondary button press and call 'trackSendAarToSDismissed' ", () => {
+  it("quits out of the flow on secondary button press and call 'trackSendAarToSDismissed'", () => {
     const spiedOnMockedTrackSendAarToSDismissed = jest
       .spyOn(ANALYTICS, "trackSendAarToSDismissed")
       .mockImplementation();

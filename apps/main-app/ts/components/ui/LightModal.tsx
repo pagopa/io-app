@@ -1,9 +1,19 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /**
  * Provides a mechanism to display non-native modals (i.e. overlays)
  * on top of the root component.
  */
 
-import { Component, createContext, PropsWithChildren, ReactNode } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import {
   Animated,
   Dimensions,
@@ -38,8 +48,6 @@ export const LightModalContext = createContext<LightModalContextInterface>({
 });
 
 type Props = Record<string, unknown>;
-
-type State = LightModalContextInterface;
 
 const styles = StyleSheet.create({
   container: {
@@ -131,54 +139,57 @@ export type AnimationLightModal =
   | typeof ScaleAnimation
   | typeof TopBottomAnimation;
 
-export const LightModalConsumer = LightModalContext.Consumer;
+const LightModalConsumer = LightModalContext.Consumer;
 
-export class LightModalProvider extends Component<
-  PropsWithChildren<Props>,
-  State
-> {
-  public hideModal = () => {
-    fadeAnim.setValue(0);
-    FadeInAnimation.stop();
-    this.setState(
-      {
-        component: null
-      },
-      () => {
-        this.state.onHiddenModal();
-      }
-    );
-  };
+export const LightModalProvider = ({ children }: PropsWithChildren<Props>) => {
+  const [component, setComponent] = useState<ReactNode>(null);
+  const onHiddenModalRef = useRef<() => void>(() => undefined);
+  // Tracks a pending hideModal call so we can invoke onHiddenModal after
+  // the component state is cleared — matching the original setState callback timing.
+  const pendingHideRef = useRef(false);
 
-  public setOnHiddenModal = (onHiddenModal: () => void) => {
-    this.setState({ onHiddenModal });
-  };
+  const showAnimatedModal = useCallback(
+    async (
+      childComponent: ReactNode,
+      styledAnimation: AnimationLightModal = RightLeftAnimation
+    ) => {
+      const isScreenReaderActive = await isScreenReaderEnabled();
+      const comp = (
+        <Animated.View style={[styles.container, styledAnimation]}>
+          {isScreenReaderActive ? (
+            <Modal>{childComponent}</Modal>
+          ) : (
+            childComponent
+          )}
+        </Animated.View>
+      );
+      setComponent(comp);
+      animationCallback();
+    },
+    []
+  );
 
-  public showAnimatedModal = async (
-    childComponent: ReactNode,
-    styledAnimation: AnimationLightModal = RightLeftAnimation
-  ) => {
+  const showModalFadeInAnimation = useCallback(
+    async (childComponent: ReactNode) => {
+      const isScreenReaderActive = await isScreenReaderEnabled();
+      const comp = (
+        <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+          {isScreenReaderActive ? (
+            <Modal>{childComponent}</Modal>
+          ) : (
+            childComponent
+          )}
+        </Animated.View>
+      );
+      setComponent(comp);
+      FadeInAnimation.start();
+    },
+    []
+  );
+
+  const showModal = useCallback(async (childComponent: ReactNode) => {
     const isScreenReaderActive = await isScreenReaderEnabled();
-    const component = (
-      <Animated.View style={[styles.container, styledAnimation]}>
-        {isScreenReaderActive ? (
-          <Modal>{childComponent}</Modal>
-        ) : (
-          childComponent
-        )}
-      </Animated.View>
-    );
-    this.setState(
-      {
-        component
-      },
-      animationCallback
-    );
-  };
-
-  public showModal = async (childComponent: ReactNode) => {
-    const isScreenReaderActive = await isScreenReaderEnabled();
-    const component = (
+    const comp = (
       <View style={styles.container}>
         {isScreenReaderActive ? (
           <Modal>{childComponent}</Modal>
@@ -187,50 +198,61 @@ export class LightModalProvider extends Component<
         )}
       </View>
     );
-    this.setState({
-      component
-    });
-  };
+    setComponent(comp);
+  }, []);
 
-  public showModalFadeInAnimation = async (childComponent: ReactNode) => {
-    const isScreenReaderActive = await isScreenReaderEnabled();
-    const component = (
-      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
-        {isScreenReaderActive ? (
-          <Modal>{childComponent}</Modal>
-        ) : (
-          childComponent
-        )}
-      </Animated.View>
-    );
-    this.setState(
-      {
-        component
-      },
-      () => {
-        FadeInAnimation.start();
-      }
-    );
-  };
+  // Stable wrapper that always calls the latest registered onHiddenModal
+  const onHiddenModal = useCallback(() => {
+    onHiddenModalRef.current();
+  }, []);
 
-  public state = {
-    component: null,
-    showModal: this.showModal,
-    showAnimatedModal: this.showAnimatedModal,
-    showModalFadeInAnimation: this.showModalFadeInAnimation,
-    hideModal: this.hideModal,
-    onHiddenModal: () => undefined,
-    setOnHiddenModal: this.setOnHiddenModal
-  };
+  const setOnHiddenModal = useCallback((callback: () => void) => {
+    onHiddenModalRef.current = callback;
+  }, []);
 
-  public render() {
-    return (
-      <LightModalContext.Provider value={this.state}>
-        {this.props.children}
-      </LightModalContext.Provider>
-    );
-  }
-}
+  const hideModal = useCallback(() => {
+    fadeAnim.setValue(0);
+    FadeInAnimation.stop();
+    pendingHideRef.current = true;
+    setComponent(null);
+  }, []);
+
+  // Invoke onHiddenModal after component is cleared, matching the original
+  // setState callback behavior.
+  useEffect(() => {
+    if (component === null && pendingHideRef.current) {
+      pendingHideRef.current = false;
+      onHiddenModalRef.current();
+    }
+  }, [component]);
+
+  const contextValue = useMemo<LightModalContextInterface>(
+    () => ({
+      component,
+      showModal,
+      showModalFadeInAnimation,
+      showAnimatedModal,
+      hideModal,
+      onHiddenModal,
+      setOnHiddenModal
+    }),
+    [
+      component,
+      showModal,
+      showModalFadeInAnimation,
+      showAnimatedModal,
+      hideModal,
+      onHiddenModal,
+      setOnHiddenModal
+    ]
+  );
+
+  return (
+    <LightModalContext.Provider value={contextValue}>
+      {children}
+    </LightModalContext.Provider>
+  );
+};
 
 export const LightModalRoot = () => (
   <LightModalConsumer>{({ component }) => component}</LightModalConsumer>

@@ -13,10 +13,12 @@ import { ActiveSessionLandingScreen } from "../../activeSessionLogin/screens/Act
 import ActiveSessionLoginCieCardReaderScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieCardReaderScreen";
 import ActiveSessionLoginCieConsentDataUsageScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieConsentDataUsageScreen";
 import ActiveSessionCieIdLoginScreen from "../../activeSessionLogin/screens/cieId/ActiveSessionCieIdLoginScreen";
+import { OneIdentityActiveSessionCieIdLoginScreen } from "../../activeSessionLogin/screens/cieId/OneIdentityActiveSessionCieIdLoginScreen";
 import ActiveSessionIdpLoginScreen from "../../activeSessionLogin/screens/spid/ActiveSessionIdpLoginScreen";
+import { OneIdentityActiveSessionIdpLoginScreen } from "../../activeSessionLogin/screens/spid/OneIdentityActiveSessionIdpLoginScreen";
 import AuthErrorScreen from "../../login/authError/screens/AuthErrorScreen";
 import ActivateNfcScreen from "../../login/cie/screens/ActivateNfcScreen";
-import { CieCardReaderScreenWrapper } from "../../login/cie/screens/CieCardReaderScreenWrapper";
+import CieCardReaderScreen from "../../login/cie/screens/CieCardReaderScreen";
 import CieConsentDataUsageScreen from "../../login/cie/screens/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../../login/cie/screens/CieExpiredOrInvalidScreen";
 import CieExtendedApduNotSupportedScreen from "../../login/cie/screens/CieExtendedApduNotSupportedScreen";
@@ -28,12 +30,14 @@ import CiePinScreen from "../../login/cie/screens/CiePinScreen";
 import CieUnexpectedErrorScreen from "../../login/cie/screens/CieUnexpectedErrorScreen";
 import CieWrongCardScreen from "../../login/cie/screens/CieWrongCardScreen";
 import CieWrongCiePinScreen from "../../login/cie/screens/CieWrongCiePinScreen";
+import { OneIdentityCieIdLoginScreen } from "../../login/cie/screens/OneIdentityCieIdLoginScreen";
 import CieIdWizard from "../../login/cie/screens/wizards/CieIdWizard";
 import CiePinWizard from "../../login/cie/screens/wizards/CiePinWizard";
 import IDActivationWizard from "../../login/cie/screens/wizards/IDActivationWizard";
 import SpidWizard from "../../login/cie/screens/wizards/SpidWizard";
 import IdpLoginScreen from "../../login/idp/screens/IdpLoginScreen";
 import IdpSelectionScreen from "../../login/idp/screens/IdpSelectionScreen";
+import { OneIdentityIdpLoginScreen } from "../../login/idp/screens/OneIdentityIdpLoginScreen";
 import { OneIdentityIdpSelectionScreen } from "../../login/idp/screens/OneIdentityIdpSelectionScreen";
 import { LandingScreen } from "../../login/landing/screens/LandingScreen";
 import OptInScreen from "../../login/optIn/screens/OptInScreen";
@@ -122,11 +126,17 @@ const AuthenticationStackNavigator = () => {
       />
 
       <Stack.Screen
-        component={IdpLoginScreen}
+        component={
+          oneIdentityLoginEnabled ? OneIdentityIdpLoginScreen : IdpLoginScreen
+        }
         name={AUTHENTICATION_ROUTES.IDP_LOGIN}
       />
       <Stack.Screen
-        component={ActiveSessionIdpLoginScreen}
+        component={
+          oneIdentityLoginEnabled
+            ? OneIdentityActiveSessionIdpLoginScreen
+            : ActiveSessionIdpLoginScreen
+        }
         name={AUTHENTICATION_ROUTES.IDP_LOGIN_ACTIVE_SESSION_LOGIN}
       />
 
@@ -142,19 +152,27 @@ const AuthenticationStackNavigator = () => {
       />
 
       <Stack.Screen
-        component={CieIdLoginScreen}
+        component={
+          oneIdentityLoginEnabled
+            ? OneIdentityCieIdLoginScreen
+            : CieIdLoginScreen
+        }
         name={AUTHENTICATION_ROUTES.CIE_ID_LOGIN}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
-        component={ActiveSessionCieIdLoginScreen}
+        component={
+          oneIdentityLoginEnabled
+            ? OneIdentityActiveSessionCieIdLoginScreen
+            : ActiveSessionCieIdLoginScreen
+        }
         name={AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
-        component={CieCardReaderScreenWrapper}
+        component={CieCardReaderScreen}
         name={AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN}
       />
 
