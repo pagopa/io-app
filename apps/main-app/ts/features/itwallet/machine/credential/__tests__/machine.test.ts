@@ -223,7 +223,9 @@ describe("itwCredentialIssuanceMachine", () => {
   // When the issuance flow actually starts, we must ensure the itwVersion is updated.
   // This test uses the real `onInit` implementation to catch regressions.
   it("initializes dependencies from the store when leaving the idle state", () => {
-    jest.spyOn(envSelectors, "selectItwSpecsVersion").mockReturnValue("1.0.0");
+    jest
+      .spyOn(envSelectors, "selectItwSpecsVersion")
+      .mockReturnValueOnce("1.0.0");
 
     const deps = testCredentialIssuanceDeps({ itwVersion: "1.4.6" });
     const machineWithRealOnInit = mockedMachine.provide({
