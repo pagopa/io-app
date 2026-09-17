@@ -23,7 +23,6 @@ jest.mock("../../../../../store/hooks", () => ({
 
 describe("useCieIdWebViewLoginNavigation", () => {
   const authLevel = AUTH_LEVELS.L2;
-  const isUat = false;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -31,7 +30,7 @@ describe("useCieIdWebViewLoginNavigation", () => {
 
   it("navigateToCieIdAuthenticationError should replace with CIE_ID_ERROR", () => {
     const { result } = renderHook(() =>
-      useCieIdWebViewLoginNavigation({ authLevel, isUat })
+      useCieIdWebViewLoginNavigation({ authLevel })
     );
 
     result.current.navigateToCieIdAuthenticationError();
@@ -43,7 +42,7 @@ describe("useCieIdWebViewLoginNavigation", () => {
 
   it("navigateToCieIdAuthUrlError should replace with CIE_ID_INCORRECT_URL and the url param", () => {
     const { result } = renderHook(() =>
-      useCieIdWebViewLoginNavigation({ authLevel, isUat })
+      useCieIdWebViewLoginNavigation({ authLevel })
     );
 
     result.current.navigateToCieIdAuthUrlError("https://untrusted.example.com");
@@ -56,7 +55,7 @@ describe("useCieIdWebViewLoginNavigation", () => {
 
   it("navigateToAuthErrorScreen should replace with AUTH_ERROR_SCREEN and the CIE_ID context parameters", () => {
     const { result } = renderHook(() =>
-      useCieIdWebViewLoginNavigation({ authLevel, isUat })
+      useCieIdWebViewLoginNavigation({ authLevel })
     );
 
     result.current.navigateToAuthErrorScreen("err-code");
@@ -66,8 +65,7 @@ describe("useCieIdWebViewLoginNavigation", () => {
       params: {
         errorCodeOrMessage: "err-code",
         authMethod: "CIE_ID",
-        authLevel,
-        params: { spidLevel: authLevel, isUat }
+        authLevel
       }
     });
   });
