@@ -106,10 +106,10 @@ export const getAuthErrorDetails = (
   errorCodeOrMessage?: string
 ): AuthErrorDetails => {
   const detailsByError = getAuthErrorDetailsMap();
+  const genericDetails = detailsByError[AUTH_ERRORS.GENERIC_ERROR];
 
-  return (
-    (errorCodeOrMessage !== undefined
-      ? detailsByError[errorCodeOrMessage]
-      : undefined) ?? detailsByError[AUTH_ERRORS.GENERIC_ERROR]
-  );
+  if (!errorCodeOrMessage) {
+    return genericDetails;
+  }
+  return detailsByError[errorCodeOrMessage] ?? genericDetails;
 };
