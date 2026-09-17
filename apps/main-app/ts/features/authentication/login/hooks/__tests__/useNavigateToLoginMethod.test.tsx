@@ -59,11 +59,7 @@ describe(useNavigateToLoginMethod, () => {
       fireEvent.press(navigateToCieIdScreen);
 
       expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
-        params: {
-          spidLevel: AUTH_LEVEL_L2,
-          isUat: IS_UAT
-        }
+        screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN
       });
     });
     it(
@@ -115,11 +111,7 @@ describe(useNavigateToLoginMethod, () => {
       expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
         screen: AUTHENTICATION_ROUTES.OPT_IN,
         params: {
-          identifier: Identifier.CIE_ID,
-          params: {
-            spidLevel: AUTH_LEVEL_L2,
-            isUat: IS_UAT
-          }
+          identifier: Identifier.CIE_ID
         }
       });
     });

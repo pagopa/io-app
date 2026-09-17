@@ -6,12 +6,10 @@ import { AUTHENTICATION_ROUTES } from "../navigation/routes";
 
 type UseCieIdWebViewLoginNavigationProps = {
   authLevel: AuthLevel;
-  isUat: boolean;
 };
 
 export const useCieIdWebViewLoginNavigation = ({
-  authLevel,
-  isUat
+  authLevel
 }: UseCieIdWebViewLoginNavigationProps) => {
   const navigation = useIONavigation();
 
@@ -40,12 +38,11 @@ export const useCieIdWebViewLoginNavigation = ({
         params: {
           errorCodeOrMessage,
           authMethod: "CIE_ID",
-          authLevel,
-          params: { spidLevel: authLevel, isUat }
+          authLevel
         }
       });
     },
-    [navigation, authLevel, isUat]
+    [navigation, authLevel]
   );
 
   return {
