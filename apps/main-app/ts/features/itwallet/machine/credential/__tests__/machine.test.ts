@@ -9,6 +9,7 @@ import {
   waitFor as waitForActor
 } from "xstate";
 
+import * as envSelectors from "../../../common/store/selectors/environment";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
@@ -20,6 +21,7 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import { testCredentialIssuanceDeps } from "../../utils/testDeps";
+import { onInitAction } from "../actions";
 import {
   GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput,
@@ -219,21 +221,23 @@ describe("itwCredentialIssuanceMachine", () => {
 
   // The machine may be idle with a stale itwVersion from its input.
   // When the issuance flow actually starts, we must ensure the itwVersion is updated.
-  it("initializes updated dependencies when leaving the idle state", () => {
-    const deps = { ...T_DEPS, itwVersion: "1.4.6" as const };
-    onInit.mockImplementation(({ context }) => ({
-      deps: { ...context.deps, itwVersion: "1.0.0" }
-    }));
-    const actor = createActor(mockedMachine, { input: { deps } });
-    actor.start();
+  // This test uses the real `onInit` implementation to catch regressions.
+  it("initializes dependencies from the store when leaving the idle state", () => {
+    jest.spyOn(envSelectors, "selectItwSpecsVersion").mockReturnValue("1.0.0");
 
+    const deps = testCredentialIssuanceDeps({ itwVersion: "1.4.6" });
+    const machineWithRealOnInit = mockedMachine.provide({
+      actions: { onInit: onInitAction }
+    });
+    const actor = createActor(machineWithRealOnInit, { input: { deps } });
+
+    actor.start();
     actor.send({
       type: "select-credential",
       credentialType: T_CREDENTIAL_TYPE,
       mode: "issuance"
     });
 
-    expect(onInit).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context.deps.itwVersion).toBe("1.0.0");
   });
 
