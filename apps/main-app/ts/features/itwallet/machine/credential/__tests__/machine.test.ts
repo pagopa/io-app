@@ -217,6 +217,8 @@ describe("itwCredentialIssuanceMachine", () => {
     jest.resetAllMocks();
   });
 
+  // The machine may be idle with a stale itwVersion from its input.
+  // When the issuance flow actually starts, we must ensure the itwVersion is updated.
   it("initializes updated dependencies when leaving the idle state", () => {
     const deps = { ...T_DEPS, itwVersion: "1.4.6" as const };
     onInit.mockImplementation(({ context }) => ({
