@@ -8,7 +8,7 @@ import {
 } from "../../actions/loginConfig";
 import {
   CURRENT_REDUX_LOGIN_CONFIG_STORE_VERSION,
-  OneIdentityEnv,
+  ONE_IDENTITY_ENVS,
   persistConfig
 } from "../loginConfig";
 
@@ -29,7 +29,7 @@ describe("loginConfig reducer", () => {
 
     expect(state.features.loginFeatures.loginConfig).toEqual({
       oneIdentityLocalFeatureFlag: undefined,
-      oneIdentityEnv: "prod"
+      oneIdentityEnv: ONE_IDENTITY_ENVS.PROD
     });
   });
 
@@ -43,12 +43,12 @@ describe("loginConfig reducer", () => {
 
       expect(store.getState().features.loginFeatures.loginConfig).toEqual({
         oneIdentityLocalFeatureFlag: value,
-        oneIdentityEnv: "prod"
+        oneIdentityEnv: ONE_IDENTITY_ENVS.PROD
       });
     }
   );
 
-  it.each(["prod", "uat"] as ReadonlyArray<OneIdentityEnv>)(
+  it.each([ONE_IDENTITY_ENVS.PROD, ONE_IDENTITY_ENVS.UAT])(
     "should handle setOneIdentityEnv action with %s",
     value => {
       const state = appReducer(undefined, applicationChangeState("active"));

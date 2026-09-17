@@ -1,9 +1,10 @@
 import { useIOTheme } from "../../context";
-import { IOFontSize } from "../../utils/fonts";
+import { IOTypography } from "../../core";
 import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
-export const heroFontSize: IOFontSize = 32;
-export const heroLineHeight = 48;
+const {
+  hero: { colorToken, ...heroStyle }
+} = IOTypography;
 
 /**
  * `Hero` typographic style
@@ -16,10 +17,8 @@ export const Hero = ({
 
   const HeroProps: IOTextProps = {
     ...props,
-    weight: "Semibold",
-    size: 32,
-    lineHeight: 48,
-    color: customColor ?? theme["textHeading-default"]
+    ...heroStyle,
+    color: customColor ?? theme[colorToken]
   };
 
   return <IOText {...HeroProps}>{props.children}</IOText>;

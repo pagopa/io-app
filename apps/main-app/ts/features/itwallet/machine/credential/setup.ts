@@ -40,11 +40,6 @@ import {
 } from "./guards";
 import { Input } from "./input";
 
-/** Placeholder used to detect provider implementations that were not injected. */
-export const notImplemented = () => {
-  throw new Error("Not implemented");
-};
-
 /** Keeps provider-injected side effects and credential actors fully typed across modules. */
 export const itwCredentialSetup = setup({
   types: {

@@ -5,13 +5,13 @@ import {
   CredentialMetadata,
   RequestObject,
   WalletInstanceAttestations
-} from "../../../../common/utils/itwTypesUtils.ts";
+} from "../../../../common/utils/itwTypesUtils";
 import { testRemoteDeps } from "../../../../machine/utils/testDeps";
 import {
   EnrichedPresentationDetails,
   ItwRemoteRequestPayload,
   RelyingPartyConfiguration
-} from "../../utils/itwRemoteTypeUtils.ts";
+} from "../../utils/itwRemoteTypeUtils";
 import {
   EvaluateRelyingPartyTrustInput,
   EvaluateRelyingPartyTrustOutput,
@@ -22,10 +22,10 @@ import {
   GetWalletAttestationInput,
   SendAuthorizationResponseInput,
   SendAuthorizationResponseOutput
-} from "../actors.ts";
-import { Context, InitialContext } from "../context.ts";
-import { RemoteFailureType } from "../failure.ts";
-import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
+} from "../actors";
+import { Context, InitialContext } from "../context";
+import { RemoteFailureType } from "../failure";
+import { ItwRemoteMachine, itwRemoteMachine } from "../machine";
 
 const T_DEPS = testRemoteDeps();
 

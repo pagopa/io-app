@@ -13,23 +13,23 @@ import {
   getBolderFontWeight,
   IOColors,
   IOMaxFontSizeMultiplier,
+  IOTypography,
   makeFontPostScriptName,
   useBoldTextEnabled,
-  useIONewTypeface
+  useIONewTypeface,
+  useIOTheme
 } from "@io-app/design-system";
 import { useMemo } from "react";
 import { Platform, useWindowDimensions } from "react-native";
 
 import { BaselineNumericText } from "./BaselineNumericText";
-import {
-  DEFAULT_COLOR,
-  DEFAULT_FONT_SIZE,
-  DEFAULT_FONT_WEIGHT
-} from "./constants";
 import { AnimatedNumericTextProps } from "./types";
 
 /** Spring used for the digit transition, in seconds. */
 const TRANSITION_SPRING = { response: 0.4, dampingFraction: 0.6 };
+
+/* Typographic style the value is rendered with, the same the baseline reads */
+const { h1 } = IOTypography;
 
 /**
  * Check if the current iOS version supports numeric text transition.
@@ -50,14 +50,15 @@ const supportsNumericTextTransition = () =>
 const SwiftUINumericText = ({
   accessibilityLabel,
   allowFontScaling = true,
-  color = DEFAULT_COLOR,
+  color,
   countsDown = true,
   formatValue,
   maxFontSizeMultiplier,
-  size = DEFAULT_FONT_SIZE,
+  size = h1.size,
   value,
-  weight = DEFAULT_FONT_WEIGHT
+  weight = h1.weight
 }: AnimatedNumericTextProps) => {
+  const theme = useIOTheme();
   const { newTypefaceEnabled } = useIONewTypeface();
   const boldEnabled = useBoldTextEnabled();
   const { fontScale } = useWindowDimensions();
@@ -71,6 +72,9 @@ const SwiftUINumericText = ({
 
   const computedWeight = boldEnabled ? getBolderFontWeight(weight) : weight;
 
+  /* Unlike the other attributes, the default is only known at runtime */
+  const computedColor = color ?? theme[h1.colorToken];
+
   const modifiers = useMemo(
     () => [
       font({
@@ -82,7 +86,7 @@ const SwiftUINumericText = ({
         ),
         size: scaledSize
       }),
-      foregroundStyle(IOColors[color]),
+      foregroundStyle(IOColors[computedColor]),
       accessibilityLabelModifier(accessibilityLabel),
       contentTransition("numericText", { countsDown }),
       animation(Animation.spring(TRANSITION_SPRING), value),
@@ -94,7 +98,7 @@ const SwiftUINumericText = ({
     ],
     [
       accessibilityLabel,
-      color,
+      computedColor,
       computedWeight,
       countsDown,
       newTypefaceEnabled,
