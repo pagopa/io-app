@@ -28,17 +28,14 @@ import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
-import { getCategorySpecs } from "../../utils/filters";
+import { getCategoryName, getCategorySpecs } from "../../utils/filters";
 
 export type CategoryRow = {
   categories: ReadonlyArray<RenderableCategory>;
   id: string;
 };
 
-type CategorySpecs = Extract<
-  ReturnType<typeof getCategorySpecs>,
-  { value: unknown }
->["value"];
+type CategorySpecs = NonNullable<ReturnType<typeof getCategorySpecs>>;
 
 type RenderableCategory = {
   category: ProductCategoryWithNewDiscountsCount;
@@ -56,11 +53,9 @@ const getRenderableCategories = (
   categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>
 ): ReadonlyArray<RenderableCategory> =>
   categories.flatMap(category => {
-    const specsOption = getCategorySpecs(category.productCategory);
+    const specs = getCategorySpecs(category.productCategory);
 
-    return "value" in specsOption
-      ? [{ category, specs: specsOption.value }]
-      : [];
+    return specs ? [{ category, specs }] : [];
   });
 
 const getCategoryRows = (
@@ -187,8 +182,8 @@ export const CgnMerchantCategoriesListScreen = () => {
 
     const accessibilityLabel =
       (countAvailable
-        ? `${I18n.t(specs.nameKey)} ${I18n.t("bonus.cgn.merchantsList.news")}`
-        : `${I18n.t(specs.nameKey)}`) +
+        ? `${getCategoryName(specs.type)} ${I18n.t("bonus.cgn.merchantsList.news")}`
+        : `${getCategoryName(specs.type)}`) +
       getListItemAccessibilityLabelCount(totalCategories, index);
 
     return (
@@ -197,7 +192,7 @@ export const CgnMerchantCategoriesListScreen = () => {
         backgroundColor={specs.colors}
         icon={specs.icon}
         isNew={countAvailable}
-        name={I18n.t(specs.nameKey)}
+        name={getCategoryName(specs.type)}
         onPress={() => {
           navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
             category: specs.type

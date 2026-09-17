@@ -21,10 +21,6 @@ export type EmailAlreadyUsedScreenParamList = {
   email: string;
 };
 
-export type OnboardingServicesPreferenceScreenNavigationParams = {
-  isFirstOnboarding: boolean;
-};
-
 const EmailAlreadyTakenScreen = () => {
   const { email } =
     useRoute<

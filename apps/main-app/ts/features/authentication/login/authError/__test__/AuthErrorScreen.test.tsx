@@ -93,16 +93,12 @@ describe("AuthErrorScreen", () => {
     });
   });
 
-  it("should navigate with params when authMethod is CIE_ID", () => {
+  it("should navigate to CIE_ID_LOGIN when authMethod is CIE_ID", () => {
     mockUseRoute.mockReturnValue({
       params: {
         errorCodeOrMessage: 25,
         authMethod: "CIE_ID",
-        authLevel: "L2",
-        params: {
-          authorizationUri: "https://example.com",
-          ciePin: "123456"
-        }
+        authLevel: "L2"
       }
     });
 
@@ -111,11 +107,7 @@ describe("AuthErrorScreen", () => {
     fireEvent.press(getByTestId("retry-button-test-id"));
 
     expect(mockNavigation).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
-      params: {
-        authorizationUri: "https://example.com",
-        ciePin: "123456"
-      }
+      screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN
     });
   });
 

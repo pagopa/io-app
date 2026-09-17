@@ -13,6 +13,7 @@ import {
 } from "../../../../machine/eid/context.ts";
 import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
+import { testEidIssuanceDeps } from "../../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import * as identificationSelectors from "../../store/selectors";
 import {
@@ -166,7 +167,9 @@ const renderComponent = (mode: EidIssuanceMode, level: EidIssuanceLevel) => {
       }
     });
 
-    const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+    const initialSnapshot = createActor(logic, {
+      input: { deps: testEidIssuanceDeps() }
+    }).getSnapshot();
     const snapshot: typeof initialSnapshot = {
       ...initialSnapshot,
       value: { UserIdentification: "Identification" },

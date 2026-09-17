@@ -1,11 +1,15 @@
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { createStore } from "redux";
+import configureMockStore from "redux-mock-store";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { openWebUrl } from "../../../../../../utils/url";
+import { itwCloseBanner } from "../../../../common/store/actions/banners";
+import { getNewCredentialValidityBannerId } from "../../../../common/store/reducers/banners";
 import {
   NewCredential,
   newCredentials
@@ -61,6 +65,81 @@ describe("ItwPresentationAdditionalInfoSection", () => {
   it("does not render alert for non-new credentials", () => {
     const { queryByTestId } = renderComponent(CredentialType.DRIVING_LICENSE);
     expect(queryByTestId("newCredentialAlertTestID")).toBeNull();
+  });
+
+  describe("new credential validity banner dismissal", () => {
+    test.each(newCredentials.filter(c => c !== CredentialType.PROOF_OF_AGE))(
+      "dispatches the close action mapped to %s when dismissed",
+      (credentialType: NewCredential) => {
+        const globalState = appReducer(
+          undefined,
+          applicationChangeState("active")
+        );
+        const mockStore = configureMockStore<GlobalState>();
+        const store: ReturnType<typeof mockStore> = mockStore(globalState);
+
+        const { getByLabelText } =
+          renderScreenWithNavigationStoreContext<GlobalState>(
+            () => (
+              <ItwPresentationAdditionalInfoSection
+                credential={{
+                  ...ItwStoredCredentialsMocks.dc,
+                  credentialType
+                }}
+              />
+            ),
+            ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+            {},
+            store
+          );
+
+        fireEvent.press(getByLabelText(I18n.t("global.buttons.close")));
+
+        expect(store.getActions()).toContainEqual(
+          itwCloseBanner(getNewCredentialValidityBannerId(credentialType))
+        );
+      }
+    );
+
+    it("does not render the banner once it has been dismissed", () => {
+      const globalState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      const stateWithDismissedBanner: GlobalState = {
+        ...globalState,
+        features: {
+          ...globalState.features,
+          itWallet: {
+            ...globalState.features.itWallet,
+            banners: {
+              ...globalState.features.itWallet.banners,
+              [getNewCredentialValidityBannerId(CredentialType.RESIDENCY)]: {
+                dismissedOn: new Date().toISOString(),
+                dismissCount: 1
+              }
+            }
+          }
+        }
+      };
+
+      const { queryByTestId } =
+        renderScreenWithNavigationStoreContext<GlobalState>(
+          () => (
+            <ItwPresentationAdditionalInfoSection
+              credential={{
+                ...ItwStoredCredentialsMocks.dc,
+                credentialType: CredentialType.RESIDENCY
+              }}
+            />
+          ),
+          ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+          {},
+          createStore(appReducer, stateWithDismissedBanner as any)
+        );
+
+      expect(queryByTestId("newCredentialAlertTestID")).toBeNull();
+    });
   });
 });
 

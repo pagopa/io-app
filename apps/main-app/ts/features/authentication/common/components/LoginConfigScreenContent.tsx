@@ -1,13 +1,17 @@
 import {
   ListItemCheckbox,
   ListItemHeader,
+  ListItemSwitch,
   RadioGroup,
   RadioItem,
   VSpacer
 } from "@io-app/design-system";
+import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
+import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import { CieEntityIds } from "../../login/cie/components/CieRequestAuthenticationOverlay";
 import {
   cieLoginDisableUat,
@@ -18,6 +22,7 @@ import {
   setOneIdentityEnv,
   setOneIdentityLocalFeatureFlag
 } from "../store/actions/loginConfig";
+import { ONE_IDENTITY_ENVS } from "../store/reducers/loginConfig";
 import {
   oneIdentityEnvSelector,
   oneIdentityLocalFeatureFlagSelector
@@ -63,6 +68,7 @@ export const LoginConfigScreenContent = ({
     oneIdentityLocalFeatureFlagSelector
   );
   const oneIdentityEnv = useIOSelector(oneIdentityEnvSelector);
+  const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
 
   const radioGroupItems = useMemo(
     () =>
@@ -82,7 +88,11 @@ export const LoginConfigScreenContent = ({
 
   const handleOneIdentityEnv = useCallback(
     (isUat: boolean) => {
-      dispatch(setOneIdentityEnv(isUat ? "uat" : "prod"));
+      dispatch(
+        setOneIdentityEnv(
+          isUat ? ONE_IDENTITY_ENVS.UAT : ONE_IDENTITY_ENVS.PROD
+        )
+      );
     },
     [dispatch]
   );
@@ -98,8 +108,22 @@ export const LoginConfigScreenContent = ({
     [dispatch]
   );
 
+  const handleDebugMode = useCallback(
+    (enabled: boolean) => {
+      dispatch(setDebugModeEnabled(enabled));
+    },
+    [dispatch]
+  );
+
   return (
     <>
+      <ListItemSwitch
+        disabled={disabled}
+        label={I18n.t("profile.main.debugMode")}
+        onSwitchValueChange={handleDebugMode}
+        testID="debugModeSwitch"
+        value={isDebugModeEnabled}
+      />
       <ListItemHeader label="Login flow" />
       <RadioGroup<OneIdentityLocalFeatureFlag>
         items={radioGroupItems}
@@ -113,7 +137,7 @@ export const LoginConfigScreenContent = ({
         description="Questa opzione serve agli sviluppatori per testare la login con OneIdentity in ambiente di UAT."
         disabled={disabled}
         onValueChange={handleOneIdentityEnv}
-        selected={oneIdentityEnv === "uat"}
+        selected={oneIdentityEnv === ONE_IDENTITY_ENVS.UAT}
         value="Abilita ambiente di UAT OneIdentity"
       />
       <VSpacer size={24} />
@@ -125,6 +149,7 @@ export const LoginConfigScreenContent = ({
         selected={useCieUat}
         value={`Abilita endpoint di collaudo (${CieEntityIds.DEV})`}
       />
+      <VSpacer size={24} />
     </>
   );
 };

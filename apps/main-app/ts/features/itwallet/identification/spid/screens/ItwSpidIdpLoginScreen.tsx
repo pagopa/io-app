@@ -1,9 +1,11 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent
+} from "react-native-webview/lib/WebViewTypes";
 
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import {
@@ -20,7 +22,7 @@ import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
-  selectAuthUrlOption,
+  selectAuthUrl,
   selectIsLoading,
   selectIssuanceLevel
 } from "../../../machine/eid/selectors";
@@ -39,11 +41,10 @@ const defaultUserAgent =
  * and sends the redirectAuthUrl back to the state machine.
  */
 const ItwSpidIdpLoginScreen = () => {
-  const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
+  const { ISSUANCE_REDIRECT_URI } = getEnv(useIOSelector(selectItwEnv));
   const isMachineLoading =
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const spidAuthUrl =
-    ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
+  const spidAuthUrl = ItwEidIssuanceMachineContext.useSelector(selectAuthUrl);
   const issuanceLevel =
     ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -55,25 +56,29 @@ const ItwSpidIdpLoginScreen = () => {
     setWebViewLoading(false);
   }, []);
 
-  const onError = useCallback(() => {
-    machineRef.send({ type: "error", scope: "spid-login" });
-  }, [machineRef]);
+  const onError = useCallback(
+    (error: WebViewErrorEvent | WebViewHttpErrorEvent) => {
+      machineRef.send({
+        type: "error",
+        scope: "spid-login",
+        error: { name: "WEBVIEW_ERROR", message: error.nativeEvent.title }
+      });
+    },
+    [machineRef]
+  );
 
   const handleShouldStartLoading = useCallback(
     (event: WebViewNavigation): boolean => {
       const url = event.url;
-      const idpIntent = getIntentFallbackUrl(url);
 
-      return pipe(
-        idpIntent,
-        O.fold(
-          () => true,
-          intentUrl => {
-            void Linking.openURL(intentUrl);
-            return false;
-          }
-        )
-      );
+      const idpIntentUrl = getIntentFallbackUrl(url);
+
+      if (idpIntentUrl == null) {
+        return true;
+      }
+
+      void Linking.openURL(idpIntentUrl);
+      return false;
     },
     []
   );
@@ -81,14 +86,8 @@ const ItwSpidIdpLoginScreen = () => {
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
       const authRedirectUrl = event.url;
-      const isIssuanceRedirect = pipe(
-        authRedirectUrl,
-        O.fromNullable,
-        O.fold(
-          () => false,
-          s => s.startsWith(ISSUANCE_REDIRECT_URI)
-        )
-      );
+      const isIssuanceRedirect =
+        authRedirectUrl?.startsWith(ISSUANCE_REDIRECT_URI) ?? false;
 
       if (isIssuanceRedirect) {
         machineRef.send({
@@ -115,29 +114,26 @@ const ItwSpidIdpLoginScreen = () => {
 
   const content = useMemo(
     () =>
-      O.fold(
-        () => null,
-        (url: string) => (
-          <WebView
-            allowsInlineMediaPlayback
-            androidCameraAccessDisabled
-            androidMicrophoneAccessDisabled
-            cacheEnabled={false}
-            javaScriptEnabled
-            key={"spid_webview"}
-            mediaPlaybackRequiresUserAction
-            onError={onError}
-            onHttpError={onError}
-            onLoadEnd={onLoadEnd}
-            onNavigationStateChange={handleNavigationStateChange}
-            onShouldStartLoadWithRequest={handleShouldStartLoading}
-            originWhitelist={originSchemasWhiteList}
-            source={{ uri: url }}
-            textZoom={100}
-            userAgent={defaultUserAgent}
-          />
-        )
-      )(spidAuthUrl),
+      spidAuthUrl ? (
+        <WebView
+          allowsInlineMediaPlayback
+          androidCameraAccessDisabled
+          androidMicrophoneAccessDisabled
+          cacheEnabled={false}
+          javaScriptEnabled
+          key={"spid_webview"}
+          mediaPlaybackRequiresUserAction
+          onError={onError}
+          onHttpError={onError}
+          onLoadEnd={onLoadEnd}
+          onNavigationStateChange={handleNavigationStateChange}
+          onShouldStartLoadWithRequest={handleShouldStartLoading}
+          originWhitelist={originSchemasWhiteList}
+          source={{ uri: spidAuthUrl }}
+          textZoom={100}
+          userAgent={defaultUserAgent}
+        />
+      ) : null,
     [
       spidAuthUrl,
       handleNavigationStateChange,

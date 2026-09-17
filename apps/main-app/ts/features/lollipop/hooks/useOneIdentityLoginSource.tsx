@@ -9,16 +9,19 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
-import { SpidIdp } from "../../../utils/idps";
 import {
   isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
 } from "../../authentication/activeSessionLogin/store/selectors";
 import { oneIdentityEnvSelector } from "../../authentication/common/store/selectors/loginConfig";
+import {
+  AUTH_LEVELS,
+  AuthLevel,
+  SPID_AUTH_LEVEL_MAP
+} from "../../authentication/common/utils";
 import { createRetriableFetch } from "../../authentication/common/utils/fetch";
 import { jsonFetchToSchema } from "../../authentication/common/utils/jsonFetchToSchema";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
-import { SpidLevel } from "../../authentication/login/cie/utils";
 import {
   ephemeralKeyTagSelector,
   ephemeralPublicKeySelector
@@ -60,20 +63,24 @@ type LoginSourceState =
   | { status: "verifying-assertion-ref"; url: string };
 
 /**
- * Builds the headers required by the Session Manager `/reserve` endpoint.
+ * Builds the request body for the `/reserve` endpoint.
  */
-const buildReserveHeaders = (
+const buildReserveRequestBody = (
+  env: string,
+  minAuthLevel: AuthLevel,
   publicKey: PublicKey,
   hashAlgorithm: string,
   isFastLogin: boolean,
   hashedFiscalCode?: string
 ) => ({
-  "x-pagopa-lollipop-hash-algorithm": hashAlgorithm,
-  "x-pagopa-lollipop-pub-key": Buffer.from(JSON.stringify(publicKey)).toString(
+  env: env.toUpperCase(),
+  min_auth_level: SPID_AUTH_LEVEL_MAP[minAuthLevel],
+  lollipop_pub_key: Buffer.from(JSON.stringify(publicKey)).toString(
     "base64url"
   ),
-  "x-pagopa-login-type": isFastLogin ? "LV" : "LEGACY",
-  ...(hashedFiscalCode && { "x-pagopa-current-user": hashedFiscalCode })
+  lollipop_hash_algo: hashAlgorithm,
+  login_type: isFastLogin ? "LV" : "LEGACY",
+  ...(hashedFiscalCode && { current_user: hashedFiscalCode })
 });
 
 /**
@@ -81,17 +88,18 @@ const buildReserveHeaders = (
  */
 const buildAuthorizationUrl = (
   reserveResponse: {
+    authorization_endpoint: string;
     client_id: string;
-    issuer: string;
     nonce: string;
     redirect_uri: string;
     state: string;
   },
   idp: string,
-  minAuthLevel: SpidLevel
+  minAuthLevel: AuthLevel
 ): string => {
-  const { client_id, issuer, nonce, redirect_uri, state } = reserveResponse;
-  const authorizationUrl = new URLParse(`${issuer}oidc/authorize`, true);
+  const { authorization_endpoint, client_id, nonce, redirect_uri, state } =
+    reserveResponse;
+  const authorizationUrl = new URLParse(authorization_endpoint, true);
   authorizationUrl.set("query", {
     idp,
     client_id,
@@ -100,15 +108,15 @@ const buildAuthorizationUrl = (
     state,
     nonce,
     response_type: "code",
-    minAuthLevel
+    minAuthLevel: SPID_AUTH_LEVEL_MAP[minAuthLevel]
   });
   return authorizationUrl.toString();
 };
 
 /**
  * Builds the WebView source for the OneIdentity `/authorize` request: the
- * URL (via `buildAuthorizationUrl`) plus the `assertion-ref` header, required so
- * that OneIdentity can associate the incoming request with the lollipop
+ * URL (via `buildAuthorizationUrl`) plus the `x-pagopa-lollipop-assertion-ref` header,
+ * required so that OneIdentity can associate the incoming request with the lollipop
  * session just reserved via `/reserve`.
  */
 const buildWebviewSource = (
@@ -117,7 +125,7 @@ const buildWebviewSource = (
 ): WebViewSourceUri => ({
   uri,
   headers: {
-    "assertion-ref": `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toBase64EncodedThumbprint(
+    "x-pagopa-lollipop-assertion-ref": `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toBase64EncodedThumbprint(
       publicKey
     )}`
   }
@@ -125,13 +133,13 @@ const buildWebviewSource = (
 
 export type UseOneIdentityLoginSource = (params: {
   /**
-   * The identity provider the user selected to login with.
+   * The ID of the identity provider the user selected to login with.
    */
-  idp: SpidIdp;
+  idpId: string;
   /**
-   * The minimum required SPID level for the authentication flow. Defaults to "SpidL2".
+   * The minimum required SPID level for the authentication flow. Defaults to "L2".
    */
-  minAuthLevel?: SpidLevel;
+  minAuthLevel?: AuthLevel;
   /**
    * Handler called upon a failure during the login flow.
    */
@@ -149,9 +157,9 @@ export type UseOneIdentityLoginSource = (params: {
 };
 
 export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
-  idp,
+  idpId,
   onFailure,
-  minAuthLevel = "SpidL2"
+  minAuthLevel = AUTH_LEVELS.L2
 }) => {
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -244,38 +252,35 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       return;
     }
 
-    const reserveUrl = new URLParse(
-      `${apiUrlPrefix}${reserveEndpointPath}`,
-      true
+    const reserveUrl = `${apiUrlPrefix}${reserveEndpointPath}`;
+    const reserveRequestBody = buildReserveRequestBody(
+      oneIdentityEnv,
+      minAuthLevel,
+      publicKey,
+      DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
+      isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+      isActiveSessionLogin ? hashedFiscalCode : undefined
     );
-    reserveUrl.set("query", {
-      env: oneIdentityEnv.toUpperCase(),
-      minAuthLevel
-    });
 
-    const requestPromise = fetch(reserveUrl.toString(), {
+    const reservePromise = fetch(reserveUrl, {
       method: "POST",
-      headers: buildReserveHeaders(
-        publicKey,
-        DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-        isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-        isActiveSessionLogin ? hashedFiscalCode : undefined
-      ),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reserveRequestBody),
       signal: controller.signal
     });
-    const result = await jsonFetchToSchema(requestPromise, ReserveSchema);
+    const result = await jsonFetchToSchema(reservePromise, ReserveSchema);
     // Clear the abort controller reference as the request has completed.
     abortControllerRef.current = null;
 
-    if (!result.ok) {
+    if (result.isErr()) {
       setLoginSourceState({ status: "failure", error: result.error });
       onFailure(result.error);
       return;
     }
 
     const authorizationUrl = buildAuthorizationUrl(
-      result.data,
-      idp.id,
+      result.value,
+      idpId,
       minAuthLevel
     );
 
@@ -284,7 +289,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       webviewSource: buildWebviewSource(authorizationUrl, publicKey)
     });
   }, [
-    idp,
+    idpId,
     ephemeralKeyTag,
     mixpanelEnabled,
     dispatch,

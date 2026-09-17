@@ -32,10 +32,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import {
-  IOStackNavigationProp,
-  IOStackNavigationRouteProps
-} from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
@@ -69,11 +66,6 @@ import {
 } from "../store/actions";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieUatEndpoint } from "../utils/endpoints";
-
-export type CieCardReaderNavigationProps = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "CIE_CARD_READER_SCREEN"
->;
 
 export type CieCardReaderScreenNavigationParams = {
   authorizationUri: string;

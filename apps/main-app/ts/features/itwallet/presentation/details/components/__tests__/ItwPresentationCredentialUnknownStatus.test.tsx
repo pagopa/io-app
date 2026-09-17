@@ -8,6 +8,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../../machine/utils/testDeps";
 import { ItwPresentationCredentialUnknownStatus } from "../ItwPresentationCredentialUnknownStatus";
 
 jest.mock("@react-navigation/native", () => ({
@@ -75,7 +76,10 @@ const renderComponent = (component: ReactElement) => {
 
   const Wrapper = ({ children }: PropsWithChildren) => (
     <Provider store={store}>
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
+      >
         {children}
       </ItwCredentialIssuanceMachineContext.Provider>
     </Provider>
