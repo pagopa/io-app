@@ -61,7 +61,7 @@ const mockIdp = {
 };
 
 const MOCK_AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
-const MOCK_VALID_CALLBACK_URL = `${apiUrlPrefix}/api/auth/v2/callback`;
+const MOCK_VALID_CALLBACK_URL = `${apiUrlPrefix}/api/auth/v1/callback`;
 
 const mockForceLogoutAndNavigateToLanding = jest.fn();
 

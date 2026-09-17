@@ -39,7 +39,7 @@ const fetch = createRetriableFetch();
  * Path of the Session Manager endpoint that reserves the public key
  * and returns the `/authorize` parameters.
  */
-const reserveEndpointPath = "/api/auth/v2/reserve";
+const reserveEndpointPath = "/api/auth/v1/reserve";
 
 /**
  * State of the OneIdentity login source flow. At any given moment the flow
