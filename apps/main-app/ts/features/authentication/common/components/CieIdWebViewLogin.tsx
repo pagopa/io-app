@@ -7,7 +7,7 @@ import {
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 
-import { useIOSelector } from "../../../../store/hooks";
+import { useIOStore } from "../../../../store/hooks";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
@@ -53,9 +53,7 @@ export const CieIdWebViewLogin = memo(
     const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(
       null
     );
-    const allowedCieOrigins = useIOSelector(
-      oneIdentityAllowedCieOriginsSelector
-    );
+    const store = useIOStore();
 
     const handleLoginSuccess = useCallback(
       (token: string) => {
@@ -82,13 +80,16 @@ export const CieIdWebViewLogin = memo(
 
     const handleAuthenticationSuccess = useCallback(
       (url: string) => {
+        const allowedCieOrigins = oneIdentityAllowedCieOriginsSelector(
+          store.getState()
+        );
         if (!isAllowedUrl(url, allowedCieOrigins)) {
           onEvent({ type: "NOT_ALLOWED_URL", payload: { url } });
           return;
         }
         setAuthenticatedUrl(url);
       },
-      [allowedCieOrigins, onEvent]
+      [store, onEvent]
     );
 
     const { startCieIdApp } = useCieIdApp({
