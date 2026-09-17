@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { trackLoginFailure } from "../../../common/analytics";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
@@ -13,13 +13,15 @@ import {
 import { useCieIdWebViewLoginNavigation } from "../../../common/hooks/useCieIdWebViewLoginNavigation";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { isValidCallbackUrl } from "../../../common/utils";
+import { AUTH_LEVELS, isValidCallbackUrl } from "../../../common/utils";
+import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
   setFinishedActiveSessionLoginFlow
 } from "../../store/actions";
+import { cieIDSelectedSecurityLevelActiveSessionLoginSelector } from "../../store/selectors";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
 
 type OneIdentityActiveSessionCieIdLoginScreenProps =
@@ -29,10 +31,16 @@ type OneIdentityActiveSessionCieIdLoginScreenProps =
   >;
 
 export const OneIdentityActiveSessionCieIdLoginScreen = ({
-  navigation,
-  route
+  navigation
 }: OneIdentityActiveSessionCieIdLoginScreenProps) => {
-  const { spidLevel: authLevel, isUat } = route.params;
+  const isUat = useIOSelector(isCieLoginUatEnabledSelector);
+  // cieIDSelectedSecurityLevel is always set before this screen is reached
+  // (navigateToCieIdLoginScreen dispatches it synchronously before navigating);
+  // the fallback only satisfies the type, since the reducer marks it optional.
+  // L2 matches navigateToCieIdLoginScreen's own default for the same value
+  const authLevel =
+    useIOSelector(cieIDSelectedSecurityLevelActiveSessionLoginSelector) ??
+    AUTH_LEVELS.L2;
 
   const dispatch = useIODispatch();
 
@@ -42,7 +50,7 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
     navigateToCieIdAuthenticationError,
     navigateToCieIdAuthUrlError,
     navigateToAuthErrorScreen
-  } = useCieIdWebViewLoginNavigation({ authLevel, isUat });
+  } = useCieIdWebViewLoginNavigation({ authLevel });
 
   const handleLoginFailure = useCallback(
     (reason: string, code?: string, message?: string) => {
