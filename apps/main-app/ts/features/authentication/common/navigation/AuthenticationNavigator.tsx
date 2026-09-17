@@ -31,6 +31,7 @@ import CieUnexpectedErrorScreen from "../../login/cie/screens/CieUnexpectedError
 import CieWrongCardScreen from "../../login/cie/screens/CieWrongCardScreen";
 import CieWrongCiePinScreen from "../../login/cie/screens/CieWrongCiePinScreen";
 import { OneIdentityCieIdLoginScreen } from "../../login/cie/screens/OneIdentityCieIdLoginScreen";
+import { OneIdentityCiePinScreen } from "../../login/cie/screens/OneIdentityCiePinScreen";
 import CieIdWizard from "../../login/cie/screens/wizards/CieIdWizard";
 import CiePinWizard from "../../login/cie/screens/wizards/CiePinWizard";
 import IDActivationWizard from "../../login/cie/screens/wizards/IDActivationWizard";
@@ -146,7 +147,9 @@ const AuthenticationStackNavigator = () => {
       />
 
       <Stack.Screen
-        component={CiePinScreen}
+        component={
+          oneIdentityLoginEnabled ? OneIdentityCiePinScreen : CiePinScreen
+        }
         name={AUTHENTICATION_ROUTES.CIE_PIN_SCREEN}
         options={{ headerShown: true }}
       />
