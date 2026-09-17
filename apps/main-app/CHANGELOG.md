@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.9](https://github.com/pagopa/io-app/compare/3.39.0-rc.8...3.39.0-rc.9) (2026-09-16)
+
+### Features
+
+* [[IOPID-4184](https://pagopa.atlassian.net/browse/IOPID-4184)] enable debug mode before login ([#8596](https://github.com/pagopa/io-app/issues/8596)) ([3fb30d1](https://github.com/pagopa/io-app/commit/3fb30d12b38bd1617879ede4c08a204ee26ee054))
 ## [3.39.0-rc.8](https://github.com/pagopa/io-app/compare/3.39.0-rc.7...3.39.0-rc.8) (2026-09-15)
 
 ### Features
