@@ -7,9 +7,9 @@ import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
-import { AUTH_ERRORS } from "../../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
+import { AUTH_ERRORS } from "../../../../common/utils/authError";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
