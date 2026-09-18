@@ -74,7 +74,7 @@ export const OneIdentityCieAuthenticationWebView = ({
   const {
     loginSourceState,
     shouldBlockUrlNavigationWhileCheckingLollipop,
-    regenerateLoginSource
+    generateLoginSource
   } = useOneIdentityLoginSource({
     idpId: getCieIdpId(useUat),
     onFailure: handleFailure,
@@ -154,8 +154,8 @@ export const OneIdentityCieAuthenticationWebView = ({
 
   const handleRetry = useCallback(() => {
     setWebViewState({ status: "authenticating" });
-    regenerateLoginSource();
-  }, [regenerateLoginSource]);
+    void generateLoginSource();
+  }, [generateLoginSource]);
 
   const handleCancel = useCallback(() => {
     navigation.goBack();

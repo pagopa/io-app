@@ -161,7 +161,7 @@ describe("useOneIdentityLoginSource", () => {
     expect(onFailure).toHaveBeenCalled();
   });
 
-  it("should trigger a new reserve request when regenerateLoginSource is called after a successful response", async () => {
+  it("should trigger a new reserve request when generateLoginSource is called after a successful response", async () => {
     mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
 
     const { result } = setupTest();
@@ -174,7 +174,7 @@ describe("useOneIdentityLoginSource", () => {
     });
 
     act(() => {
-      result.current.regenerateLoginSource();
+      void result.current.generateLoginSource();
     });
 
     expect(result.current.loginSourceState.status).toBe("reserving-public-key");
@@ -187,7 +187,7 @@ describe("useOneIdentityLoginSource", () => {
     });
   });
 
-  it("should abort a still pending reserve request when regenerateLoginSource is called before it resolves", async () => {
+  it("should abort a still pending reserve request when generateLoginSource is called before it resolves", async () => {
     // eslint-disable-next-line functional/no-let
     let resolveFirstFetch: (value: FetchResponse) => void = () => undefined;
 
@@ -217,7 +217,7 @@ describe("useOneIdentityLoginSource", () => {
     expect(firstFetchSignal.aborted).toBe(false);
 
     act(() => {
-      result.current.regenerateLoginSource();
+      void result.current.generateLoginSource();
     });
 
     expect(firstFetchSignal.aborted).toBe(true);

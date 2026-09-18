@@ -67,7 +67,7 @@ describe("OneIdentityCieIdLoginScreen", () => {
           status: "one-identity-authorize",
           webviewSource: { uri: "https://example.com/authorize" }
         },
-        regenerateLoginSource: jest.fn(),
+        generateLoginSource: jest.fn(),
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(() => false)
       });
     jest.spyOn(useCieIdAppModule, "useCieIdApp").mockReturnValue({

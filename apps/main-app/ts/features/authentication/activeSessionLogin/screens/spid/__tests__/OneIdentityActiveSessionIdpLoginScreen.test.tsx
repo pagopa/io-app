@@ -80,7 +80,7 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
           status: "one-identity-authorize",
           webviewSource: { uri: "https://example.com/authorize" }
         },
-        regenerateLoginSource: jest.fn(),
+        generateLoginSource: jest.fn(),
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(() => false)
       });
 

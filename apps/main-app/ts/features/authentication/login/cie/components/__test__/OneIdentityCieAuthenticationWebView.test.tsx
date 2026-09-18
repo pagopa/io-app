@@ -34,7 +34,7 @@ const OneIdentityCieAuthenticationWebView = withStore(
 );
 
 const mockShouldBlockUrlNavigationWhileCheckingLollipop = jest.fn(() => false);
-const mockRegenerateLoginSource = jest.fn();
+const mockGenerateLoginSource = jest.fn();
 
 const mockUseOneIdentityLoginSource = (
   overrides?: Partial<
@@ -50,7 +50,7 @@ const mockUseOneIdentityLoginSource = (
       },
       shouldBlockUrlNavigationWhileCheckingLollipop:
         mockShouldBlockUrlNavigationWhileCheckingLollipop,
-      regenerateLoginSource: mockRegenerateLoginSource,
+      generateLoginSource: mockGenerateLoginSource,
       ...overrides
     });
 
@@ -264,7 +264,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
   });
 
   describe("retry / cancel", () => {
-    it("should reset to the authenticating state and call regenerateLoginSource when retry is pressed", () => {
+    it("should reset to the authenticating state and call generateLoginSource when retry is pressed", () => {
       mockUseOneIdentityLoginSource({
         loginSourceState: { status: "failure", error: "some error" }
       });
@@ -277,7 +277,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       fireEvent.press(getByText(I18n.t("global.buttons.retry")));
 
-      expect(mockRegenerateLoginSource).toHaveBeenCalledTimes(1);
+      expect(mockGenerateLoginSource).toHaveBeenCalledTimes(1);
     });
 
     it("should navigate back when cancel is pressed from the failure screen", () => {
