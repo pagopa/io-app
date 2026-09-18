@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.10](https://github.com/pagopa/io-app/compare/3.39.0-rc.9...3.39.0-rc.10) (2026-09-17)
+
+### Features
+
+* [[IOPID-4124](https://pagopa.atlassian.net/browse/IOPID-4124)] Add OneIdentity CIE PIN screen ([#8620](https://github.com/pagopa/io-app/issues/8620)) ([b2371e6](https://github.com/pagopa/io-app/commit/b2371e659a93addc90eda2dc41c75cb71845ce35))
+* [[IOPID-4210](https://pagopa.atlassian.net/browse/IOPID-4210)] use remote CIE allowed origins instead of hardcoded whitelist ([#8618](https://github.com/pagopa/io-app/issues/8618)) ([95a1e75](https://github.com/pagopa/io-app/commit/95a1e75bb782fd1b135cb7bf88f39a836affb9f6))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Get the latest `itwVersion` when starting the credential issuance ([#8622](https://github.com/pagopa/io-app/issues/8622)) ([cd8c9e3](https://github.com/pagopa/io-app/commit/cd8c9e3afb6a410c715764b25aead96947d09018))
+* **IT-Wallet:** [[SIW-4993](https://pagopa.atlassian.net/browse/SIW-4993)] restrict reissuance survey trigger to L3 context ([#8619](https://github.com/pagopa/io-app/issues/8619)) ([771e905](https://github.com/pagopa/io-app/commit/771e9055580d7f1423c2a1fc0fb9e98d32e50206))
+
+### Chores
+
+* [[IOPID-4214](https://pagopa.atlassian.net/browse/IOPID-4214)] Update reserve endpoint path to v1 ([#8624](https://github.com/pagopa/io-app/issues/8624)) ([12b4e9b](https://github.com/pagopa/io-app/commit/12b4e9bdf6ee7569e77c060201fedc1432949bde))
 ## [3.39.0-rc.9](https://github.com/pagopa/io-app/compare/3.39.0-rc.8...3.39.0-rc.9) (2026-09-16)
 
 ### Features
