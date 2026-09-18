@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { ONE_IDENTITY_ENVS, OneIdentityEnv } from "../../reducers/loginConfig";
 import {
+  oneIdentityAllowedCieOriginsSelector,
   oneIdentityIdpFriendlyNamesUrlSelector,
   oneIdentityIdpsUrlSelector,
   oneIdentityRolloutPercentageSelector,
@@ -40,6 +41,30 @@ describe("oneIdentityRolloutPercentageSelector", () => {
     expect(
       oneIdentityRolloutPercentageSelector(makeState({ rolloutPercentage: 75 }))
     ).toBe(75);
+  });
+});
+
+describe("oneIdentityAllowedCieOriginsSelector", () => {
+  it("should return an empty array when remoteConfig is none", () => {
+    expect(oneIdentityAllowedCieOriginsSelector(makeState())).toEqual([]);
+  });
+
+  it("should return an empty array when allowedCieOrigins is absent", () => {
+    expect(oneIdentityAllowedCieOriginsSelector(makeState({}))).toEqual([]);
+  });
+
+  it("should return the remote allowedCieOrigins when present", () => {
+    const allowedCieOrigins = ["https://example.com", "https://example.org"];
+
+    expect(
+      oneIdentityAllowedCieOriginsSelector(makeState({ allowedCieOrigins }))
+    ).toEqual(allowedCieOrigins);
+  });
+
+  it("should return the same empty array reference across calls when the field is missing", () => {
+    expect(oneIdentityAllowedCieOriginsSelector(makeState())).toBe(
+      oneIdentityAllowedCieOriginsSelector(makeState({}))
+    );
   });
 });
 
