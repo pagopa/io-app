@@ -20,10 +20,10 @@ import {
 import { unknownToString } from "./errors";
 
 const isWebViewErrorEvent = (
-  e: Parameters<typeof trackSpidLoginError>[1]
+  e: Parameters<typeof trackLoginError>[1]
 ): e is WebViewErrorEvent => "nativeEvent" in e && e.nativeEvent != null;
 const isWebViewHttpErrorEvent = (
-  e: Parameters<typeof trackSpidLoginError>[1]
+  e: Parameters<typeof trackLoginError>[1]
 ): e is WebViewHttpErrorEvent =>
   isWebViewErrorEvent(e) &&
   "statusCode" in e.nativeEvent &&
@@ -182,21 +182,19 @@ export function trackLollipopIsKeyStrongboxBackedSuccess(
   );
 }
 
-// End of lollipop events
-
 export function trackLollipopKeyGenerationFailure(reason: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
     reason
   });
 }
-// End of SPID Login
 
-// Lollipop events
 export function trackLollipopKeyGenerationSuccess(keyType?: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
     kty: keyType
   });
 }
+
+// End of lollipop events
 
 const extractSpidLoginErrorPayload = (
   error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
@@ -235,8 +233,7 @@ const extractSpidLoginErrorPayload = (
   return { code: "unknown", description: unknownError, domain: "unknown" };
 };
 
-// SPID Login
-export function trackSpidLoginError(
+export function trackLoginError(
   idpName: string | undefined,
   error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
 ) {

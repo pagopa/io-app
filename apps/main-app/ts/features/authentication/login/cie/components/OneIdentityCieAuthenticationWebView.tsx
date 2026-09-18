@@ -14,7 +14,7 @@ import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverl
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../../store/hooks";
-import { trackSpidLoginError } from "../../../../../utils/analytics";
+import { trackLoginError } from "../../../../../utils/analytics";
 import { useOneIdentityLoginSource } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { cieLoginFlowSelector } from "../../../activeSessionLogin/store/selectors";
 import { AUTH_LEVELS, onLoginUriChanged } from "../../../common/utils";
@@ -68,7 +68,7 @@ export const OneIdentityCieAuthenticationWebView = ({
 
   const handleFailure = useCallback((reason: string) => {
     setWebViewState({ status: "failure", reason });
-    trackSpidLoginError("cie", new Error(reason));
+    trackLoginError("cie", new Error(reason));
   }, []);
 
   const {
@@ -140,7 +140,7 @@ export const OneIdentityCieAuthenticationWebView = ({
 
   const handleError = useCallback(
     (event: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-      trackSpidLoginError("cie", event);
+      trackLoginError("cie", event);
       const nativeEvent = event.nativeEvent;
       const reason =
         "statusCode" in nativeEvent
