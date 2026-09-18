@@ -38,6 +38,7 @@ const mockUseOneIdentityLoginSource = (
       },
       shouldBlockUrlNavigationWhileCheckingLollipop:
         mockShouldBlockUrlNavigationWhileCheckingLollipop,
+      regenerateLoginSource: jest.fn(),
       ...overrides
     });
 

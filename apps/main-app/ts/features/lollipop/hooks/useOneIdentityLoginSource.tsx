@@ -150,6 +150,11 @@ export type UseOneIdentityLoginSource = (params: {
    */
   loginSourceState: LoginSourceState;
   /**
+   * Handler that restarts the login flow by generating a new login source.
+   * It automatically resets the internal state and safely aborts any ongoing network requests.
+   */
+  regenerateLoginSource: () => void;
+  /**
    * Handler to be passed to the WebView's `onShouldStartLoadWithRequest` prop.
    * Intercepts navigation towards the identity provider and verifies the lollipop assertion-ref.
    */
@@ -230,6 +235,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   );
 
   const generateLoginSource = useCallback(async () => {
+    abortControllerRef.current?.abort();
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
@@ -302,6 +308,10 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     onFailure
   ]);
 
+  const regenerateLoginSource = useCallback(() => {
+    void generateLoginSource();
+  }, [generateLoginSource]);
+
   useEffect(() => {
     void generateLoginSource();
 
@@ -312,6 +322,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
   return {
     loginSourceState,
-    shouldBlockUrlNavigationWhileCheckingLollipop
+    shouldBlockUrlNavigationWhileCheckingLollipop,
+    regenerateLoginSource
   };
 };

@@ -27,6 +27,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { helpCenterHowToLoginWithEicUrl } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import {
   useIODispatch,
   useIOSelector,
@@ -39,6 +40,7 @@ import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
 import { cieLoginFlowSelector } from "../../../activeSessionLogin/store/selectors";
 import { trackLoginCiePinScreen } from "../../../common/analytics/cieAnalytics";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 import { nfcIsEnabled } from "../store/actions";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
@@ -53,12 +55,12 @@ export const OneIdentityCiePinScreen = () => {
   const headerHeight = useHeaderHeight();
   const isFocused = useIsFocused();
 
-  const dispatch = useIODispatch();
   const store = useIOStore();
+  const toast = useIOToast();
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
 
   const useUat = useIOSelector(isCieLoginUatEnabledSelector);
-
-  const toast = useIOToast();
 
   const [pin, setPin] = useState("");
   const pinPadViewRef = useRef<View>(null);
@@ -84,7 +86,11 @@ export const OneIdentityCiePinScreen = () => {
     if (value.length === CIE_PIN_LENGTH) {
       dispatch(nfcIsEnabled.request());
       Keyboard.dismiss();
-      // TODO: Navigate to the next screen in the CIE login flow
+
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.CIE_AUTH_SCREEN,
+        params: { pin: value }
+      });
     }
   };
 

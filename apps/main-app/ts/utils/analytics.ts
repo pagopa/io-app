@@ -197,45 +197,56 @@ export function trackLollipopKeyGenerationSuccess(keyType?: string) {
   });
 }
 
+const extractSpidLoginErrorPayload = (
+  error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
+) => {
+  if (isLoginUtilsError(error)) {
+    return {
+      code: error.userInfo?.statusCode,
+      description: error.userInfo?.error,
+      domain: error.userInfo?.url
+    };
+  }
+
+  if (isWebViewHttpErrorEvent(error)) {
+    const { description, statusCode, url } = error.nativeEvent;
+    return {
+      code: statusCode,
+      description,
+      domain: toUrlWithoutQueryParams(url)
+    };
+  }
+
+  if (isWebViewErrorEvent(error)) {
+    const { code, description, domain } = error.nativeEvent;
+    return { code, description, domain };
+  }
+
+  if (error.message !== undefined) {
+    return {
+      code: error.message,
+      description: error.message,
+      domain: error.message
+    };
+  }
+
+  return null;
+};
+
 // SPID Login
 export function trackSpidLoginError(
   idpName: string | undefined,
   error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
 ) {
-  const eventName = "SPID_ERROR";
-  if (isLoginUtilsError(error)) {
-    void mixpanelTrack(eventName, {
-      idp: idpName,
-      code: error.userInfo?.statusCode,
-      description: error.userInfo?.error,
-      domain: error.userInfo?.url
-    });
-  } else {
-    if (isWebViewHttpErrorEvent(error)) {
-      const { description, statusCode, url } = error.nativeEvent;
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code: statusCode,
-        description,
-        domain: toUrlWithoutQueryParams(url)
-      });
-    } else if (isWebViewErrorEvent(error)) {
-      const { code, description, domain } = error.nativeEvent;
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code,
-        description,
-        domain
-      });
-    } else if (error.message !== undefined) {
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code: error.message,
-        description: error.message,
-        domain: error.message
-      });
-    }
+  const errorPayload = extractSpidLoginErrorPayload(error);
+  if (!errorPayload) {
+    return;
   }
+
+  void mixpanelTrack("SPID_ERROR", {
+    idp: idpName,
+    ...errorPayload
+  });
 }
 
 // #region Help Center

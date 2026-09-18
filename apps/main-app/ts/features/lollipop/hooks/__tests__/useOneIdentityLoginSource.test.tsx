@@ -161,6 +161,77 @@ describe("useOneIdentityLoginSource", () => {
     expect(onFailure).toHaveBeenCalled();
   });
 
+  it("should trigger a new reserve request when regenerateLoginSource is called after a successful response", async () => {
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
+
+    const { result } = setupTest();
+
+    await waitFor(() => {
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(1);
+    });
+
+    act(() => {
+      result.current.regenerateLoginSource();
+    });
+
+    expect(result.current.loginSourceState.status).toBe("reserving-public-key");
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(2);
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+  });
+
+  it("should abort a still pending reserve request when regenerateLoginSource is called before it resolves", async () => {
+    // eslint-disable-next-line functional/no-let
+    let resolveFirstFetch: (value: FetchResponse) => void = () => undefined;
+
+    mockRetriableFetch.mockImplementationOnce(
+      () =>
+        new Promise<FetchResponse>(resolve => {
+          resolveFirstFetch = resolve;
+        })
+    );
+
+    mockRetriableFetch.mockResolvedValueOnce(
+      successResponse(200, reserveResponse)
+    );
+
+    const { result } = setupTest();
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(1);
+    });
+
+    const [, fetchOptions] = mockRetriableFetch.mock.lastCall as [
+      string,
+      RequestInit
+    ];
+    const firstFetchSignal = fetchOptions.signal as AbortSignal;
+
+    expect(firstFetchSignal.aborted).toBe(false);
+
+    act(() => {
+      result.current.regenerateLoginSource();
+    });
+
+    expect(firstFetchSignal.aborted).toBe(true);
+
+    resolveFirstFetch(successResponse(200, reserveResponse));
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(2);
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+  });
+
   it("should fail if ephemeral key generation fails", async () => {
     mockHandleRegenerateEphemeralKey.mockResolvedValueOnce(undefined);
 
