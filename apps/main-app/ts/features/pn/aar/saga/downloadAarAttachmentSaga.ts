@@ -13,7 +13,12 @@ import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { downloadAttachment } from "../../../messages/store/actions";
-import { unknownToReason } from "../../../messages/utils";
+import {
+  decodeSendFailureReason,
+  SendFailureReason,
+  unknownToReason,
+  WrappedSendError
+} from "../../../messages/utils";
 import {
   attachmentDisplayName,
   pdfSavePath,
@@ -29,11 +34,13 @@ import { isAarAttachmentTtlError } from "../utils/aarErrorMappings";
 import { SendAarFailurePhase } from "../utils/stateUtils";
 class SendServerError extends Error {
   public readonly aarProblemJson: AARProblemJson;
-  constructor(message: string, aarProblemJson: AARProblemJson) {
+  public readonly status: number;
+  constructor(message: string, aarProblemJson: AARProblemJson, status: number) {
     super(message);
 
     this.name = "SendServerError";
     this.aarProblemJson = aarProblemJson;
+    this.status = status;
   }
 }
 
@@ -79,7 +86,8 @@ export function* downloadAarAttachmentSaga(
     );
   } catch (e) {
     const reason = unknownToReason(e);
-    if (isFastLoginError(e)) {
+    const isFastLogin = isFastLoginError(e);
+    if (isFastLogin) {
       yield* call(
         trackSendAarFailure,
         sendAarFailurePhase,
@@ -97,11 +105,19 @@ export function* downloadAarAttachmentSaga(
       );
     }
 
+    const apiFailureReason = isFastLogin
+      ? SendFailureReason.SESSION_EXPIRED
+      : e instanceof SendServerError
+        ? decodeSendFailureReason({ kind: "http_status", status: e.status })
+        : e instanceof WrappedSendError
+          ? e.reason
+          : decodeSendFailureReason({ kind: "caught", error: e });
+
     yield* put(
       downloadAttachment.failure({
         attachment,
         messageId,
-        error: Error(reason)
+        error: new WrappedSendError(apiFailureReason, reason)
       })
     );
   } finally {
@@ -142,7 +158,10 @@ function* getAttachmentMetadata(
 
   if (isLeft(responseEither)) {
     const reason = readableReportSimplified(responseEither.left);
-    throw Error(`Decoding failure (${reason})`);
+    throw new WrappedSendError(
+      SendFailureReason.DECODE_ERROR,
+      `Decoding failure (${reason})`
+    );
   }
 
   const { status, value } = responseEither.right;
@@ -153,12 +172,12 @@ function* getAttachmentMetadata(
     const errorCode = value.errors?.[0]?.code;
     if (isAarAttachmentTtlError(errorCode)) {
       yield* call(trackSendAarNotificationDetailTtlError);
-      throw new SendServerError(errorCode, value);
+      throw new SendServerError(errorCode, value, status);
     }
   }
   if (status !== 200) {
     const reason = aarProblemJsonAnalyticsReport(status, value);
-    throw new SendServerError(reason, value);
+    throw new SendServerError(reason, value, status);
   }
 
   const { retryAfter, url } = value;
@@ -167,7 +186,8 @@ function* getAttachmentMetadata(
   } else if (retryAfter != null) {
     return retryAfter;
   }
-  throw Error(
+  throw new WrappedSendError(
+    SendFailureReason.MALFORMED_RESPONSE,
     `Both 'retryAfter' and 'url' fields are missing or invalid (${retryAfter}) (${url})`
   );
 }
@@ -232,7 +252,8 @@ function* downloadAttachmentFromPrevalidatedUrl(
   if (status === 200) {
     return result.path();
   }
-  throw Error(
+  throw new WrappedSendError(
+    decodeSendFailureReason({ kind: "http_status", status }),
     `Download from prevalidated url failed: ${
       timeout ? "Timeout " : ""
     }${status} ${state} ${respType}`
