@@ -1,5 +1,9 @@
-import { fireEvent } from "@testing-library/react-native";
-import { RefreshControlProps } from "react-native";
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { act, fireEvent, within } from "@testing-library/react-native";
+import { ReactElement } from "react";
+import { RefreshControlProps, View } from "react-native";
 import { createStore } from "redux";
 
 import { pageSize } from "../../../../../config";
@@ -12,7 +16,10 @@ import {
   loadNextPageMessages,
   reloadAllMessages
 } from "../../../store/actions";
+import { toggleScheduledMessageArchivingAction } from "../../../store/actions/archiving";
+import { UIMessage } from "../../../types";
 import { MessageListCategory } from "../../../types/messageListCategory";
+import * as listItemMessage from "../DS/ListItemMessage";
 import * as homeUtils from "../homeUtils";
 import { MessageList } from "../MessageList";
 
@@ -35,6 +42,61 @@ describe("MessageList", () => {
     jest.restoreAllMocks();
     mockAccessibilityInfo(false);
   });
+  test.each<MessageListCategory>(["INBOX", "ARCHIVE"])(
+    "renders section tabs inside the scrollable %s list header",
+    category => {
+      const component = renderComponent(
+        category,
+        <View testID="section_tabs" />
+      );
+      const list = component.getByTestId(
+        `message_list_${category.toLowerCase()}`
+      );
+
+      expect(within(list).getByTestId("section_tabs")).toBeTruthy();
+      expect(list.props.stickyHeaderIndices).toEqual([]);
+    }
+  );
+  test.each<MessageListCategory>(["INBOX", "ARCHIVE"])(
+    "updates the selected row in %s",
+    category => {
+      const renderRow = jest
+        .spyOn(listItemMessage, "ListItemMessage")
+        .mockImplementation(() => <View />);
+      const message: UIMessage = {
+        id: "message-1",
+        category: { tag: "GENERIC" } as MessageCategory,
+        createdAt: new Date(2026, 0, 1),
+        hasPrecondition: false,
+        isArchived: category === "ARCHIVE",
+        isRead: false,
+        organizationFiscalCode: "00000000000",
+        organizationName: "Organization",
+        serviceId: "service-1" as ServiceId,
+        serviceName: "Service",
+        title: "Message"
+      };
+      const component = renderComponent(
+        category,
+        <View testID="section_tabs" />,
+        [message]
+      );
+      expect(renderRow).toHaveBeenCalled();
+      renderRow.mockClear();
+
+      act(() => {
+        component.store.dispatch(
+          toggleScheduledMessageArchivingAction({
+            messageId: message.id,
+            fromInboxToArchive: category === "INBOX"
+          })
+        );
+      });
+
+      expect(renderRow).toHaveBeenCalled();
+      expect(renderRow.mock.lastCall?.[0].selected).toBe(true);
+    }
+  );
   it("should dispatch 'loadNextPageMessages.request' when output from 'getLoadNextPageMessagesActionIfNeeded' is not undefined", () => {
     const expectedCategory: MessageListCategory = "INBOX";
     const expectedAction = loadNextPageMessages.request({
@@ -178,14 +240,42 @@ describe("MessageList", () => {
   });
 });
 
-const renderComponent = (category: MessageListCategory) => {
+const renderComponent = (
+  category: MessageListCategory,
+  header?: ReactElement,
+  messages?: Array<UIMessage>
+) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const store = createStore(appReducer, initialState as any);
+  const collectionKey = category === "INBOX" ? "inbox" : "archive";
+  const state = {
+    ...initialState,
+    entities: {
+      ...initialState.entities,
+      messages: {
+        ...initialState.entities.messages,
+        allPaginated: {
+          ...initialState.entities.messages.allPaginated,
+          ...(messages
+            ? {
+                [collectionKey]: {
+                  ...initialState.entities.messages.allPaginated[collectionKey],
+                  data: pot.some({ page: messages })
+                }
+              }
+            : {})
+        }
+      }
+    }
+  };
+  const store = createStore(appReducer, state as any);
 
-  return renderScreenWithNavigationStoreContext(
-    () => <MessageList category={category} />,
-    MESSAGES_ROUTES.MESSAGES_HOME,
-    {},
+  return {
+    ...renderScreenWithNavigationStoreContext(
+      () => <MessageList category={category} NavigationBar={header} />,
+      MESSAGES_ROUTES.MESSAGES_HOME,
+      {},
+      store
+    ),
     store
-  );
+  };
 };

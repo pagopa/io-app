@@ -1,121 +1,71 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { Ref, useCallback, useRef } from "react";
-import { FlatList, NativeSyntheticEvent } from "react-native";
-import PagerView from "react-native-pager-view";
-import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { FlatList } from "react-native";
 
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { pageSize } from "../../../../config";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
-import { GlobalState } from "../../../../store/reducers/types";
 import { trackAutoRefresh, trackMessagesPage } from "../../analytics";
 import { setShownMessageCategoryAction } from "../../store/actions";
 import {
   messageCountForCategorySelector,
   shownMessageCategorySelector
 } from "../../store/reducers/allPaginated";
+import { MessageListCategory } from "../../types/messageListCategory";
 import { ArchiveRestoreBar } from "./ArchiveRestoreBar";
 import {
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadPreviousPageMessagesActionIfAllowed,
-  getMessagesViewPagerInitialPageIndex,
+  messageListCategoryToViewPageIndex,
   messageViewPageIndexToListCategory,
   trackMessagePageOnFocusEventIfAllowed
 } from "./homeUtils";
 import { MessageList } from "./MessageList";
+import { TabNavigationContainer } from "./TabNavigationContainer";
 
-export const PagerViewContainer = ({ ref }: { ref?: Ref<PagerView> }) => {
+/** Loads and tracks the selected category and handles Messages tab reselection. */
+export const MessagesListContainer = () => {
   const dispatch = useIODispatch();
   const store = useIOStore();
-  const archiveFlatListRef = useRef<FlatList>(null);
-  const inboxFlatListRef = useRef<FlatList>(null);
-
-  const initialPageIndex = getMessagesViewPagerInitialPageIndex(
-    store.getState()
+  const listRef = useRef<FlatList>(null);
+  // Local state drives rendering so a tab press updates the UI in the same
+  // render pass, without waiting for a Redux round-trip. The store is only
+  // read once to seed the initial value and is kept in sync on every change.
+  const [category, setCategory] = useState<MessageListCategory>(() =>
+    shownMessageCategorySelector(store.getState())
   );
 
   const onTabPressedCallback = useCallback(() => {
-    const state = store.getState();
-    const shownCategory = shownMessageCategorySelector(state);
-    const flatlistRef =
-      shownCategory === "INBOX" ? inboxFlatListRef : archiveFlatListRef;
-    flatlistRef.current?.scrollToOffset({ animated: true, offset: 0 });
-  }, [store]);
+    listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+  }, []);
 
   const loadNewlyReceivedMessagesIfNeededCallback = useCallback(() => {
     const state = store.getState();
     const loadPreviousPageAction =
       getLoadPreviousPageMessagesActionIfAllowed(state);
     if (loadPreviousPageAction) {
-      const shownCategory = shownMessageCategorySelector(state);
-      trackAutoRefresh(shownCategory);
+      trackAutoRefresh(shownMessageCategorySelector(state));
       dispatch(loadPreviousPageAction);
     }
   }, [dispatch, store]);
-  const dispatchReloadAllMessagesIfNeeded = useCallback(
-    (state: GlobalState) => {
-      const reloadAllMessagesActionOrUndefined =
-        getInitialReloadAllMessagesActionIfNeeded(state);
-      if (reloadAllMessagesActionOrUndefined) {
-        dispatch(reloadAllMessagesActionOrUndefined);
-      }
-    },
-    [dispatch]
-  );
-  const onPagerViewPageSelected = useCallback(
-    (selectionEvent: NativeSyntheticEvent<OnPageSelectedEventData>) => {
-      // Be aware that this callback is triggered:
-      // - upon first PagerView rendering;
-      // - when the user completes a full horizontal swipe;
-      // - when the TabNavigationContainer uses the PagerView's ref to switch page.
 
-      // Also note that this method is called only on an effective page
-      // change so if there is none (i.e., the user swipe is not wide
-      // enough to move to a new page and the pager view scrolls back
-      // to the current displayed page), this callback is not invoked,
-      // thus allowing us not to check for a changed category/page-index.
+  useEffect(() => {
+    // Runs on first render and on every category switch. The store already
+    // holds the new category at this point, since `setShownMessageCategoryAction`
+    // is dispatched synchronously together with `setCategory`.
+    const state = store.getState();
+    const messageCount = messageCountForCategorySelector(state, category);
+    trackMessagesPage(category, messageCount, pageSize, true);
+    const reloadAction = getInitialReloadAllMessagesActionIfNeeded(state);
+    if (reloadAction) {
+      dispatch(reloadAction);
+    }
+    // Does nothing if the reload above was already requested: it only
+    // refreshes the list when switching tabs without leaving the screen.
+    loadNewlyReceivedMessagesIfNeededCallback();
+  }, [category, dispatch, loadNewlyReceivedMessagesIfNeededCallback, store]);
 
-      const selectedTabIndex = selectionEvent.nativeEvent.position;
-      const selectedShownCategory =
-        messageViewPageIndexToListCategory(selectedTabIndex);
-      dispatch(setShownMessageCategoryAction(selectedShownCategory));
-
-      // Be aware that the store.state must not be extracted outside of
-      // this useEffect hook, otherwise it will re-run the callback on
-      // every state change.
-      const state = store.getState();
-
-      // Make sure that the above call to
-      // 'setShownMessageCategoryAction(selectedShownCategory)'
-      // has been done before all the following code below, otherwise
-      // the store will not have the proper 'shownCategory' value
-
-      // Track message category change
-      const messageCount = messageCountForCategorySelector(
-        state,
-        selectedShownCategory
-      );
-      trackMessagesPage(selectedShownCategory, messageCount, pageSize, true);
-
-      // Handle inizial message loading (if needed)
-      dispatchReloadAllMessagesIfNeeded(state);
-
-      // The following onvoked method has an internal logic by
-      // which it does not dispatch anything if the previous
-      // `dispatchReloadAllMessagesIfNeeded` has already requested
-      // a 'reloadAllMessages.request'. It is called here to refresh
-      // the message list when not changing the screen but only
-      // switching between tabs.
-      loadNewlyReceivedMessagesIfNeededCallback();
-    },
-    [
-      dispatch,
-      dispatchReloadAllMessagesIfNeeded,
-      loadNewlyReceivedMessagesIfNeededCallback,
-      store
-    ]
-  );
   useTabItemPressWhenScreenActive(onTabPressedCallback, false);
   useFocusEffect(
     useCallback(() => {
@@ -142,25 +92,30 @@ export const PagerViewContainer = ({ ref }: { ref?: Ref<PagerView> }) => {
     }, [loadNewlyReceivedMessagesIfNeededCallback, store])
   );
 
+  const onTabNavigationItemPressed = useCallback(
+    (selectedTabIndex: number) => {
+      if (messageListCategoryToViewPageIndex(category) === selectedTabIndex) {
+        return;
+      }
+      const newCategory = messageViewPageIndexToListCategory(selectedTabIndex);
+      dispatch(setShownMessageCategoryAction(newCategory));
+      setCategory(newCategory);
+    },
+    [category, dispatch]
+  );
+
   return (
     <>
-      <PagerView
-        initialPage={initialPageIndex}
-        onPageSelected={onPagerViewPageSelected}
-        ref={ref}
-        style={{ flex: 1 }}
-      >
-        <MessageList
-          category={"INBOX"}
-          key={`message_list_inbox`}
-          ref={inboxFlatListRef}
-        />
-        <MessageList
-          category={"ARCHIVE"}
-          key={`message_list_category`}
-          ref={archiveFlatListRef}
-        />
-      </PagerView>
+      <MessageList
+        category={category}
+        NavigationBar={
+          <TabNavigationContainer
+            currentCategory={category}
+            onTabPressed={onTabNavigationItemPressed}
+          />
+        }
+        ref={listRef}
+      />
       <SectionStatusComponent sectionKey="messages" />
       <ArchiveRestoreBar />
     </>

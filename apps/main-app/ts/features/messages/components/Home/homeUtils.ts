@@ -64,11 +64,6 @@ export const getInitialReloadAllMessagesActionIfNeeded = (
     : undefined;
 };
 
-export const getMessagesViewPagerInitialPageIndex = (state: GlobalState) => {
-  const messageCategory = shownMessageCategorySelector(state);
-  return messageListCategoryToViewPageIndex(messageCategory);
-};
-
 export const messageListCategoryToViewPageIndex = (
   category: MessageListCategory
 ) => (category === "ARCHIVE" ? 1 : 0);

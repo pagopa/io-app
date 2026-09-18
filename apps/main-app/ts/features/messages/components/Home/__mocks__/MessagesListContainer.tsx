@@ -1,10 +1,5 @@
-import { Ref } from "react";
 import { View } from "react-native";
-import PagerView from "react-native-pager-view";
 
-export const PagerViewContainer = ({ ref }: { ref?: Ref<PagerView> }) => (
-  <PagerView ref={ref} testID="mock_pager_view_container">
-    <View>Mock Inbox</View>
-    <View>Mock Archive</View>
-  </PagerView>
+export const MessagesListContainer = () => (
+  <View testID="mock_messages_list_container" />
 );

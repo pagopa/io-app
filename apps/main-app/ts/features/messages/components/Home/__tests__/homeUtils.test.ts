@@ -42,7 +42,6 @@ import {
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadNextPageMessagesActionIfAllowed,
   getLoadPreviousPageMessagesActionIfAllowed,
-  getMessagesViewPagerInitialPageIndex,
   getReloadAllMessagesActionForRefreshIfAllowed,
   messageListCategoryToViewPageIndex,
   messageViewPageIndexToListCategory,
@@ -174,19 +173,6 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
       )
     )
   );
-});
-
-describe("getMessagesViewPagerInitialPageIndex", () => {
-  it("should return 1 when shownCategory is ARCHIVED", () => {
-    const globalState = createGlobalState(pot.none, pot.none, "ARCHIVE");
-    const pageIndex = getMessagesViewPagerInitialPageIndex(globalState);
-    expect(pageIndex).toBe(1);
-  });
-  it("should return 0 when shownCategory is INBOX", () => {
-    const globalState = createGlobalState(pot.none, pot.none, "INBOX");
-    const pageIndex = getMessagesViewPagerInitialPageIndex(globalState);
-    expect(pageIndex).toBe(0);
-  });
 });
 
 describe("messageListCategoryToViewPageIndex", () => {

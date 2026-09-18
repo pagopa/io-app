@@ -1,5 +1,4 @@
-import { fireEvent } from "@testing-library/react-native";
-import PagerView from "react-native-pager-view";
+import { cleanup, fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -7,83 +6,77 @@ import { appReducer } from "../../../../../store/reducers";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import { setShownMessageCategoryAction } from "../../../store/actions";
 import { MessageListCategory } from "../../../types/messageListCategory";
+import { messageListCategoryToViewPageIndex } from "../homeUtils";
 import { TabNavigationContainer } from "../TabNavigationContainer";
 
 describe("TabNavigationContainer", () => {
   beforeEach(() => {
+    jest.useFakeTimers({ doNotFake: ["queueMicrotask", "setImmediate"] });
     jest.resetAllMocks();
     jest.clearAllMocks();
     mockAccessibilityInfo(false);
   });
-  it("should match snapshot when shownCategory is INBOX", () => {
-    const screen = renderScreen("INBOX");
-    expect(screen.toJSON()).toMatchSnapshot();
+  afterEach(() => {
+    cleanup();
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
   });
-  it("should match snapshot when shownCategory is ARCHIVE", () => {
-    const screen = renderScreen("ARCHIVE");
-    expect(screen.toJSON()).toMatchSnapshot();
-  });
-  it("when displaying INBOX and ARCHIVE chips is pressed, it should trigger pagerViewRef", () => {
-    const setPageMock = jest.fn();
-    const screen = renderScreen("INBOX", setPageMock);
-    const archivePressableComponent = screen.getByTestId(
-      "home_tab_item_archive"
-    );
-    expect(archivePressableComponent).toBeDefined();
-    fireEvent.press(archivePressableComponent);
-    expect(setPageMock.mock.calls[0][0]).toStrictEqual(1);
-  });
-  it("when displaying INBOX and INBOX chips is pressed, it should NOT trigger pagerViewRef", () => {
-    const setPageMock = jest.fn();
-    const screen = renderScreen("INBOX", setPageMock);
-    const inboxPressableComponent = screen.getByTestId("home_tab_item_inbox");
-    expect(inboxPressableComponent).toBeDefined();
-    fireEvent.press(inboxPressableComponent);
-    expect(setPageMock.mock.calls[0]).toBeUndefined();
-  });
-  it("when displaying INBOX and INBOX chips is pressed, it should trigger pagerViewRef", () => {
-    const setPageMock = jest.fn();
-    const screen = renderScreen("ARCHIVE", setPageMock);
-    const inboxPressableComponent = screen.getByTestId("home_tab_item_inbox");
-    expect(inboxPressableComponent).toBeDefined();
-    fireEvent.press(inboxPressableComponent);
-    expect(setPageMock.mock.calls[0][0]).toStrictEqual(0);
-  });
-  it("when displaying INBOX and ARCHIVE chips is pressed, it should NOT trigger pagerViewRef", () => {
-    const setPageMock = jest.fn();
-    const screen = renderScreen("ARCHIVE", setPageMock);
-    const archivePressableComponent = screen.getByTestId(
-      "home_tab_item_archive"
-    );
-    expect(archivePressableComponent).toBeDefined();
-    fireEvent.press(archivePressableComponent);
-    expect(setPageMock.mock.calls[0]).toBeUndefined();
-  });
+  test.each<MessageListCategory>(["INBOX", "ARCHIVE"])(
+    "should match snapshot when currentCategory is %s",
+    category => {
+      const { screen } = renderScreen(category);
+      expect(screen.toJSON()).toMatchSnapshot();
+    }
+  );
+  test.each<{
+    currentCategory: MessageListCategory;
+    expectedCategory: MessageListCategory;
+    pressedTab: "archive" | "inbox";
+  }>([
+    {
+      currentCategory: "INBOX",
+      pressedTab: "archive",
+      expectedCategory: "ARCHIVE"
+    },
+    {
+      currentCategory: "ARCHIVE",
+      pressedTab: "inbox",
+      expectedCategory: "INBOX"
+    },
+    { currentCategory: "INBOX", pressedTab: "inbox", expectedCategory: "INBOX" }
+  ])(
+    "calls onTabPressed with the $pressedTab tab index when current is $currentCategory",
+    ({ currentCategory, pressedTab, expectedCategory }) => {
+      const { screen, onTabPressed } = renderScreen(currentCategory);
+
+      fireEvent.press(screen.getByTestId(`home_tab_item_${pressedTab}`));
+
+      expect(onTabPressed).toHaveBeenCalledTimes(1);
+      expect(onTabPressed).toHaveBeenCalledWith(
+        messageListCategoryToViewPageIndex(expectedCategory)
+      );
+    }
+  );
 });
 
-const renderScreen = (
-  shownCategory: MessageListCategory,
-  setPageMock: jest.Mock<any, any> = jest.fn()
-) => {
+const renderScreen = (currentCategory: MessageListCategory) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const finalState = appReducer(
-    initialState,
-    setShownMessageCategoryAction(shownCategory)
-  );
-  const store = createStore(appReducer, finalState as any);
+  const store = createStore(appReducer, initialState as any);
+  const onTabPressed = jest.fn();
 
-  const mockPaferViewRef = {
-    current: {
-      setPage: (_: number) => setPageMock(_)
-    } as PagerView
+  return {
+    screen: renderScreenWithNavigationStoreContext(
+      () => (
+        <TabNavigationContainer
+          currentCategory={currentCategory}
+          onTabPressed={onTabPressed}
+        />
+      ),
+      MESSAGES_ROUTES.MESSAGES_HOME,
+      {},
+      store
+    ),
+    onTabPressed
   };
-
-  return renderScreenWithNavigationStoreContext(
-    () => <TabNavigationContainer pagerViewRef={mockPaferViewRef} />,
-    MESSAGES_ROUTES.MESSAGES_HOME,
-    {},
-    store
-  );
 };

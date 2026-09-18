@@ -1,8 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RefObject } from "react";
-import { NativeSyntheticEvent } from "react-native";
-import PagerView from "react-native-pager-view";
-import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
+import { cleanup, fireEvent, within } from "@testing-library/react-native";
 import { createStore } from "redux";
 
 import { pageSize } from "../../../../../config";
@@ -18,7 +15,7 @@ import {
 } from "../../../store/actions";
 import { MessagePagePot } from "../../../store/reducers/allPaginated/types";
 import { MessageListCategory } from "../../../types/messageListCategory";
-import { PagerViewContainer } from "../PagerViewContainer";
+import { MessagesListContainer } from "../MessagesListContainer";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -26,56 +23,91 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
-// Avoid Skottie errrors because the `jest` environment doesn't support it
+// Avoid Skottie errors because the `jest` environment doesn't support it
 jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
   AnimatedPictogram: () => null,
   IOAnimatedPictogramsAssets: {}
 }));
 
-describe("PagerViewContainer", () => {
+const emptyPage = pot.some({ page: [] });
+
+describe("MessagesListContainer", () => {
   beforeEach(() => {
+    jest.useFakeTimers({ doNotFake: ["queueMicrotask", "setImmediate"] });
     jest.resetAllMocks();
-    jest.clearAllMocks();
-    jest.restoreAllMocks();
     mockAccessibilityInfo(false);
   });
-  it("should not dispatch 'reloadAllMessages.request' upon first rendering for INBOX with useEffect (since it is dispatched by the PagerView's pageSelected callback)", () => {
-    renderComponent("INBOX", pot.none, pot.none);
-    expect(mockDispatch.mock.calls.length).toBe(0);
+
+  afterEach(() => {
+    cleanup();
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
   });
-  it("should not dispatch 'reloadAllMessages.request' upon first rendering for ARCHIVE with useEffect (since it is dispatched by the PagerView's pageSelected callback)", () => {
-    renderComponent("ARCHIVE", pot.none, pot.none);
-    expect(mockDispatch.mock.calls.length).toBe(0);
+
+  test.each<MessageListCategory>(["INBOX", "ARCHIVE"])(
+    "loads the %s category on its initial mount when uncached",
+    category => {
+      const { component } = renderComponent(category, pot.none, pot.none);
+
+      expect(
+        component.getByTestId(`message_list_${category.toLowerCase()}`)
+      ).toBeTruthy();
+      expect(mockDispatch).toHaveBeenCalledWith(
+        reloadAllMessages.request({
+          pageSize,
+          filter: { getArchived: category === "ARCHIVE" },
+          fromUserAction: false
+        })
+      );
+    }
+  );
+
+  it("does not reload cached categories", () => {
+    renderComponent("INBOX", emptyPage, emptyPage);
+
+    expect(mockDispatch).not.toHaveBeenCalled();
   });
-  it("should not dispatch 'reloadAllMessages.request' when INBOX has (empty) data, should dispatch both 'setShownMessageCategoryAction('ARCHIVE')' when setting page 1 and 'reloadAllMessages.request'", () => {
-    const mockUseRefOutput: RefObject<null | PagerView> = {
-      current: null
-    };
-    const { store } = renderComponent(
+
+  it("does not automatically reload an initially failed category", () => {
+    renderComponent(
       "INBOX",
-      pot.some({ page: [] }),
-      pot.none,
-      mockUseRefOutput
-    );
-    expect(mockUseRefOutput.current).toBeTruthy();
-    expect(mockDispatch.mock.calls.length).toBe(0);
-
-    mockDispatch.mockImplementationOnce(() =>
-      store.dispatch(setShownMessageCategoryAction("ARCHIVE"))
+      pot.noneError({ reason: "", time: new Date() }),
+      pot.none
     );
 
-    const pageSelected = mockUseRefOutput.current?.props.onPageSelected;
-    void pageSelected?.({
-      nativeEvent: {
-        position: 1
-      }
-    } as NativeSyntheticEvent<OnPageSelectedEventData>);
+    expect(mockDispatch).not.toHaveBeenCalled();
+  });
 
-    expect(mockDispatch.mock.calls.length).toBe(2);
-    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
+  test.each<MessageListCategory>(["INBOX", "ARCHIVE"])(
+    "renders only the %s list with the section tabs nested inside it",
+    category => {
+      const { component } = renderComponent(category, emptyPage, emptyPage);
+      const otherCategory = category === "INBOX" ? "archive" : "inbox";
+
+      const list = component.getByTestId(
+        `message_list_${category.toLowerCase()}`
+      );
+      expect(
+        component.queryByTestId(`message_list_${otherCategory}`)
+      ).toBeNull();
+      expect(within(list).getByTestId("home_tab_item_inbox")).toBeTruthy();
+      expect(within(list).getByTestId("home_tab_item_archive")).toBeTruthy();
+    }
+  );
+
+  it("switches list, syncs the store and loads the uncached category when a different tab is pressed", () => {
+    const { component, store } = renderComponent("INBOX", emptyPage, pot.none);
+    mockDispatch.mockImplementation(store.dispatch);
+    const initialList = component.getByTestId("message_list_inbox");
+
+    fireEvent.press(component.getByTestId("home_tab_item_archive"));
+
+    expect(component.queryByTestId("message_list_inbox")).toBeNull();
+    expect(component.getByTestId("message_list_archive")).toBe(initialList);
+    expect(mockDispatch).toHaveBeenCalledWith(
       setShownMessageCategoryAction("ARCHIVE")
     );
-    expect(mockDispatch.mock.calls[1][0]).toStrictEqual(
+    expect(mockDispatch).toHaveBeenCalledWith(
       reloadAllMessages.request({
         pageSize,
         filter: { getArchived: true },
@@ -83,110 +115,21 @@ describe("PagerViewContainer", () => {
       })
     );
   });
-  it("should not dispatch 'reloadAllMessages.request' when INBOX has (empty) data, should dispatch 'setShownMessageCategoryAction('ARCHIVE')' when setting page 1 but no 'reloadAllMessages.request' when ARCHIVE has data", () => {
-    const mockUseRefOutput: RefObject<null | PagerView> = {
-      current: null
-    };
-    const { store } = renderComponent(
-      "INBOX",
-      pot.some({ page: [] }),
-      pot.some({ page: [] }),
-      mockUseRefOutput
-    );
-    expect(mockUseRefOutput.current).toBeTruthy();
-    expect(mockDispatch.mock.calls.length).toBe(0);
 
-    mockDispatch.mockImplementationOnce(() =>
-      store.dispatch(setShownMessageCategoryAction("ARCHIVE"))
-    );
+  it("does nothing when the selected tab is pressed again", () => {
+    const { component } = renderComponent("INBOX", emptyPage, emptyPage);
 
-    const pageSelected = mockUseRefOutput.current?.props.onPageSelected;
-    void pageSelected?.({
-      nativeEvent: {
-        position: 1
-      }
-    } as NativeSyntheticEvent<OnPageSelectedEventData>);
+    fireEvent.press(component.getByTestId("home_tab_item_inbox"));
 
-    expect(mockDispatch.mock.calls.length).toBe(1);
-    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
-      setShownMessageCategoryAction("ARCHIVE")
-    );
-    expect(mockDispatch.mock.calls[1]).toBeUndefined();
-  });
-
-  it("should not dispatch 'reloadAllMessages.request' when ARCHIVE has (empty) data, should dispatch both 'setShownMessageCategoryAction('INBOX')' when setting page 0 and 'reloadAllMessages.request'", () => {
-    const mockUseRefOutput: RefObject<null | PagerView> = {
-      current: null
-    };
-    const { store } = renderComponent(
-      "ARCHIVE",
-      pot.none,
-      pot.some({ page: [] }),
-      mockUseRefOutput
-    );
-    expect(mockUseRefOutput.current).toBeTruthy();
-    expect(mockDispatch.mock.calls.length).toBe(0);
-
-    mockDispatch.mockImplementationOnce(() =>
-      store.dispatch(setShownMessageCategoryAction("INBOX"))
-    );
-
-    const pageSelected = mockUseRefOutput.current?.props.onPageSelected;
-    void pageSelected?.({
-      nativeEvent: {
-        position: 0
-      }
-    } as NativeSyntheticEvent<OnPageSelectedEventData>);
-
-    expect(mockDispatch.mock.calls.length).toBe(2);
-    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
-      setShownMessageCategoryAction("INBOX")
-    );
-    expect(mockDispatch.mock.calls[1][0]).toStrictEqual(
-      reloadAllMessages.request({
-        pageSize,
-        filter: { getArchived: false },
-        fromUserAction: false
-      })
-    );
-  });
-  it("should not dispatch 'reloadAllMessages.request' when ARCHIVE has (empty) data, should dispatch 'setShownMessageCategoryAction('INBOX')' when setting page 0 but no 'reloadAllMessages.request' when INBOX has data", () => {
-    const mockUseRefOutput: RefObject<null | PagerView> = {
-      current: null
-    };
-    const { store } = renderComponent(
-      "ARCHIVE",
-      pot.some({ page: [] }),
-      pot.some({ page: [] }),
-      mockUseRefOutput
-    );
-    expect(mockUseRefOutput.current).toBeTruthy();
-    expect(mockDispatch.mock.calls.length).toBe(0);
-
-    mockDispatch.mockImplementationOnce(() =>
-      store.dispatch(setShownMessageCategoryAction("INBOX"))
-    );
-
-    const pageSelected = mockUseRefOutput.current?.props.onPageSelected;
-    void pageSelected?.({
-      nativeEvent: {
-        position: 0
-      }
-    } as NativeSyntheticEvent<OnPageSelectedEventData>);
-
-    expect(mockDispatch.mock.calls.length).toBe(1);
-    expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
-      setShownMessageCategoryAction("INBOX")
-    );
-    expect(mockDispatch.mock.calls[1]).toBeUndefined();
+    expect(component.getByTestId("message_list_inbox")).toBeTruthy();
+    expect(mockDispatch).not.toHaveBeenCalled();
   });
 });
 
 const renderComponent = (
   shownCategory: MessageListCategory,
   inboxMessagePagePot: MessagePagePot,
-  archiveMessagePagePot: MessagePagePot,
-  ref?: RefObject<null | PagerView>
+  archiveMessagePagePot: MessagePagePot
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const finalState = {
@@ -202,7 +145,6 @@ const renderComponent = (
             ...initialState.entities.messages.allPaginated.archive,
             data: archiveMessagePagePot
           },
-
           inbox: {
             ...initialState.entities.messages.allPaginated.inbox,
             data: inboxMessagePagePot
@@ -215,7 +157,7 @@ const renderComponent = (
 
   return {
     component: renderScreenWithNavigationStoreContext(
-      () => <PagerViewContainer ref={ref} />,
+      () => <MessagesListContainer />,
       MESSAGES_ROUTES.MESSAGES_HOME,
       {},
       store
