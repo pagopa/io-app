@@ -200,7 +200,6 @@
     "babel-plugin-module-resolver": "^5.0.2",
     "commit-and-tag-version": "13.1.0",
     "eslint": "catalog:",
-    "eslint-config-prettier": "catalog:",
     "eslint-plugin-ft-flow": "^3.0.11",
     "eslint-plugin-functional": "catalog:",
     "eslint-plugin-i18next": "^6.1.3",
