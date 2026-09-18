@@ -16,7 +16,7 @@ import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useCgnStyle } from "../../hooks/useCgnStyle";
-import { getCategorySpecs } from "../../utils/filters";
+import { getCategoryName, getCategorySpecs } from "../../utils/filters";
 import {
   isValidDiscount,
   moduleCGNaccessibilityLabel,
@@ -41,7 +41,7 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
         name: categorySpecs.icon,
         color: "lightGrey"
       }}
-      text={I18n.t(categorySpecs.nameKey)}
+      text={getCategoryName(category)}
       variant="custom"
     />
   ) : null;
