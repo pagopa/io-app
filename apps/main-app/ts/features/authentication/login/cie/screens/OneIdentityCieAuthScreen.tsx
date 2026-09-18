@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
@@ -10,6 +10,11 @@ export type OneIdentityCieAuthRouteParams = {
   pin: string;
 };
 
+type AuthState =
+  | { authenticationUrl: string; status: "02_reading_card_data" }
+  | { authorizationUrl: string; status: "03_user_authentication" }
+  | { status: "01_authentication_url_retrieval" };
+
 type OneIdentityCieAuthScreenProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
   "CIE_AUTH_SCREEN"
@@ -20,16 +25,31 @@ export const OneIdentityCieAuthScreen = ({
 }: OneIdentityCieAuthScreenProps) => {
   const { pin } = route.params;
 
-  const [authenticationUrl, setAuthenticationUrl] = useState<string>();
-  const [authorizationUrl, setAuthorizationUrl] = useState<string>();
+  const [authState, setAuthState] = useState<AuthState>({
+    status: "01_authentication_url_retrieval"
+  });
+
+  const handleAuthenticationUrlReceived = useCallback(
+    (authenticationUrl: string) => {
+      setAuthState({ status: "02_reading_card_data", authenticationUrl });
+    },
+    []
+  );
+
+  const handleAuthorizationUrlReceived = useCallback(
+    (authorizationUrl: string) => {
+      setAuthState({ status: "03_user_authentication", authorizationUrl });
+    },
+    []
+  );
 
   /**
    * Step 1: Display the authentication webview to obtain the authentication URL.
    */
-  if (authenticationUrl === undefined) {
+  if (authState.status === "01_authentication_url_retrieval") {
     return (
       <OneIdentityCieAuthenticationWebView
-        onAuthenticationUrlReceived={setAuthenticationUrl}
+        onAuthenticationUrlReceived={handleAuthenticationUrlReceived}
       />
     );
   }
@@ -37,11 +57,11 @@ export const OneIdentityCieAuthScreen = ({
   /**
    * Step 2: Display the CIE card reader to obtain the authorization URL.
    */
-  if (authorizationUrl === undefined) {
+  if (authState.status === "02_reading_card_data") {
     return (
       <OneIdentityCieCardReader
-        authenticationUrl={authenticationUrl}
-        onAuthorizationUrlReceived={setAuthorizationUrl}
+        authenticationUrl={authState.authenticationUrl}
+        onAuthorizationUrlReceived={handleAuthorizationUrlReceived}
         pin={pin}
       />
     );
@@ -51,6 +71,8 @@ export const OneIdentityCieAuthScreen = ({
    * Step 3: Display the authorization webview to complete the login flow
    */
   return (
-    <OneIdentityCieAuthorizationWebView authorizationUrl={authorizationUrl} />
+    <OneIdentityCieAuthorizationWebView
+      authorizationUrl={authState.authorizationUrl}
+    />
   );
 };
