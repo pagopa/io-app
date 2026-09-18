@@ -5,7 +5,6 @@ import { IOStackNavigationRouteProps } from "../../../../../navigation/params/Ap
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { trackLoginFailure } from "../../../common/analytics";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import {
   CieIdWebViewLogin,
   CieIdWebViewLoginEvent
@@ -14,6 +13,7 @@ import { useCieIdWebViewLoginNavigation } from "../../../common/hooks/useCieIdWe
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { AUTH_LEVELS, isValidCallbackUrl } from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
 import {

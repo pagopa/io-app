@@ -1586,9 +1586,11 @@
               "title": "Chi è"
             },
             "somethingWrong": {
+              "bodyMarkdown": "Se riscontri errori o incongruenze, dovrai segnalarlo all'ente che detiene i dati e ne è responsabile.\n\nUna volta che i dati saranno stati corretti potrai aggiungere di nuovo il documento al Portafoglio.\n\nPer questo documento digitale, fai riferimento a:\n{{contacts}}",
               "body": "Se riscontri errori o incongruenze, ti invitiamo a segnalarli all'ente che detiene i dati e ne è responsabile.",
               "bodyAuthSource": "Per questo documento digitale, l'ente di riferimento è {{authSource}}.",
               "bodyFooter": "Una volta che i dati saranno stati corretti, potrai ripetere l'operazione di aggiunta del documento al portafoglio.",
+              "contactUrl": "Sito web",
               "primaryAction": "Ho capito",
               "title": "Qualcosa non torna sui dati del documento"
             }
