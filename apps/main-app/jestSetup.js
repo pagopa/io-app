@@ -96,6 +96,10 @@ jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
 }));
 
+jest.mock("@io-app/expo-pdf-high-res-generator", () => ({
+  generatePdfHighResImages: jest.fn().mockResolvedValue([])
+}));
+
 /* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.
    The `react-native` preset resolves the `.ios` implementations by default, so
    every platform-branched component would otherwise pull in the native views. */
