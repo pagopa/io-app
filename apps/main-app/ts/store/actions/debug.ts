@@ -8,15 +8,6 @@ export const setDebugModeEnabled = createStandardAction(
 )<boolean>();
 
 /**
- * Used only for debug purpose until to react-navigation v6 the upgrade
- * TODO: Remove after the upgrade to react-navigation v6
- * @deprecated
- */
-export const setDebugCurrentRouteName = createStandardAction(
-  "DEBUG_SET_CURRENT_ROUTE"
-)<string>();
-
-/**
  * Adds debug data to be displayed in the DebugInfoOverlay
  */
 export const setDebugData =
@@ -30,6 +21,5 @@ export const resetDebugData =
 
 export type DebugActions =
   | ActionType<typeof resetDebugData>
-  | ActionType<typeof setDebugCurrentRouteName>
   | ActionType<typeof setDebugData>
   | ActionType<typeof setDebugModeEnabled>;

@@ -69,7 +69,6 @@ import entitiesReducer, {
   EntitiesState
 } from "./entities";
 import installationReducer from "./installation";
-import { navigationReducer } from "./navigation";
 import persistedPreferencesReducer, {
   initialPreferencesState
 } from "./persistedPreferences";
@@ -128,7 +127,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   // ephemeral state
   //
   appState: appStateReducer,
-  navigation: navigationReducer,
   versionInfo: versionInfoReducer,
   remoteConfig: remoteConfigReducer,
   statusMessages: statusMessagesReducer,
