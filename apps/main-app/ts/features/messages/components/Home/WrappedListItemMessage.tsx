@@ -36,6 +36,8 @@ import {
   minDelayBetweenNavigationMilliseconds
 } from "./homeUtils";
 
+type LastNavigation = undefined | { date: Date; messageId: string };
+
 type WrappedListItemMessageProps = {
   index: number;
   message: UIMessage;
@@ -48,7 +50,7 @@ export const WrappedListItemMessage = memo(
     const dispatch = useIODispatch();
     const navigation = useIONavigation();
     const store = useIOStore();
-    const lastNavigationDate = useRef<Date>(new Date(0));
+    const lastNavigation = useRef<LastNavigation>(undefined);
 
     const serviceId = message.serviceId;
     const organizationFiscalCode = message.organizationFiscalCode;
@@ -106,9 +108,9 @@ export const WrappedListItemMessage = memo(
         ) {
           // When the onLongPress event is triggered, VoiceOver and TalkBack do
           // not announce the accessibilityLabel of the ListItemMessage so we
-          // have to force the announcement (but we do it only if VoiceOver and
-          // TalkBack are enabled). Unfortunately, programmatically requesting
-          // the announcement disables the automatic announcement on Android
+          // have to force the announcement.
+          // Unfortunately, programmatically requesting the announcement
+          // disables the automatic announcement on Android
           // if the standard selection gesture (onPress) is used to select /
           // deselect a message for archiving/unarchiving, so on Android we
           // always have to force the announcement.
@@ -140,10 +142,6 @@ export const WrappedListItemMessage = memo(
         isInboxOrArchiveSource(source) &&
         isArchivingInSchedulingModeSelector(state)
       ) {
-        // The workaround to force the announcement of the accessibilityLabel
-        // when the onLongPress event is triggered disables the automatic
-        // announcement on Android for the standard selection gesture (onPress),
-        // so we must handle that case here
         toggleScheduledMessageArchivingCallback(isAndroid);
       } else if (isSearchSource(source) || isArchivingDisabledSelector(state)) {
         if (message.hasPrecondition) {
@@ -154,16 +152,18 @@ export const WrappedListItemMessage = memo(
           );
         } else {
           const now = new Date();
+          const previous = lastNavigation.current;
           if (
-            lastNavigationDate.current.getTime() +
-              minDelayBetweenNavigationMilliseconds >=
-            now.getTime()
+            previous !== undefined &&
+            previous.messageId === message.id &&
+            previous.date.getTime() + minDelayBetweenNavigationMilliseconds >=
+              now.getTime()
           ) {
             // This prevents an unwanted double tap that triggers
             // a dobule navigation towards the message details
             return;
           }
-          lastNavigationDate.current = now;
+          lastNavigation.current = { messageId: message.id, date: now };
 
           if (isSearchSource(source)) {
             trackMessageSearchSelection();
@@ -194,8 +194,6 @@ export const WrappedListItemMessage = memo(
         formattedDate={messageDate}
         isRead={isRead}
         messageTitle={messageTitle}
-        // Accessibility label is not announced if the onLonPress
-        // event is triggered, so we have to force the announcement
         onLongPress={() => toggleScheduledMessageArchivingCallback(true)}
         onPress={onPressCallback}
         organizationName={organizationName}

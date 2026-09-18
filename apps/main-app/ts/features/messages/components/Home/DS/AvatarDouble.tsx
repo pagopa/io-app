@@ -6,14 +6,8 @@ import {
   IOVisualCostants,
   useIOTheme
 } from "@io-app/design-system";
-import { useCallback, useRef, useState } from "react";
-import {
-  Image,
-  ImageSourcePropType,
-  ImageURISource,
-  StyleSheet,
-  View
-} from "react-native";
+import { useEffect, useMemo, useState } from "react";
+import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 
 import { addCacheTimestampToUri } from "../../../../../utils/image";
 
@@ -51,20 +45,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const getImageState = (backgroundLogoUri?: ImageSourcePropType) => {
-  switch (typeof backgroundLogoUri) {
-    case "number":
-      return backgroundLogoUri;
-    case "object":
-      if (Array.isArray(backgroundLogoUri)) {
-        return addCacheTimestampToUri(backgroundLogoUri[0]);
-      }
-      return addCacheTimestampToUri(backgroundLogoUri as ImageURISource);
-    default:
-      return undefined;
-  }
-};
-
 /**
  * `AvatarDouble` component is used to display the background logo of an organization, with a fixed pagoPA icon on top. It accepts the following props:
  * - `backgroundLogoUri`: the uri of the image to display. If not provided, a placeholder icon will be displayed. It can be a single uri or an array of uris, in which case the first one that is available will be used.
@@ -73,26 +53,35 @@ const getImageState = (backgroundLogoUri?: ImageSourcePropType) => {
  */
 export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
   const theme = useIOTheme();
-  const indexValue = useRef<number>(0);
+  const [failedUris, setFailedUris] = useState<ReadonlyArray<string>>([]);
+  useEffect(() => {
+    // Reset failed URIs when there's a prop change for backgroundLogoUri
+    setFailedUris(prev => (prev.length === 0 ? prev : []));
+  }, [backgroundLogoUri]);
 
-  const imageInitialState = useCallback(
-    () => getImageState(backgroundLogoUri),
-    [backgroundLogoUri]
-  );
-  const [imageSource, setImageSource] = useState(imageInitialState);
+  const candidate = useMemo(() => {
+    if (
+      backgroundLogoUri === undefined ||
+      typeof backgroundLogoUri === "number"
+    ) {
+      return backgroundLogoUri;
+    }
+    const candidates = Array.isArray(backgroundLogoUri)
+      ? backgroundLogoUri
+      : [backgroundLogoUri];
+    return candidates.find(
+      source => source.uri === undefined || !failedUris.includes(source.uri)
+    );
+  }, [backgroundLogoUri, failedUris]);
+
+  const imageSource =
+    typeof candidate === "object"
+      ? addCacheTimestampToUri(candidate)
+      : candidate;
 
   const onError = () => {
-    if (
-      Array.isArray(backgroundLogoUri) &&
-      indexValue.current + 1 < backgroundLogoUri.length
-    ) {
-      indexValue.current = indexValue.current + 1;
-      setImageSource(
-        addCacheTimestampToUri(backgroundLogoUri[indexValue.current])
-      );
-      return;
-    }
-    setImageSource(undefined);
+    const uri = typeof candidate === "object" ? candidate.uri : undefined;
+    setFailedUris(prev => (uri === undefined ? prev : [...prev, uri]));
   };
 
   return (
@@ -137,6 +126,7 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
               onError={onError}
               source={imageSource}
               style={styles.avatarImage}
+              testID="avatar_double_background_image"
             />
           </View>
         )}

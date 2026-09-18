@@ -1,13 +1,8 @@
 import { Divider } from "@io-app/design-system";
+import { FlashList, FlashListRef, ListRenderItem } from "@shopify/flash-list";
 import I18n from "i18next";
 import { forwardRef, useCallback, useMemo } from "react";
-import {
-  FlatList,
-  ListRenderItem,
-  RefreshControl,
-  StyleSheet,
-  View
-} from "react-native";
+import { RefreshControl, StyleSheet, View } from "react-native";
 import {
   useSafeAreaFrame,
   useSafeAreaInsets
@@ -33,10 +28,8 @@ import {
 import { EmptyList } from "./EmptyList";
 import { Footer } from "./Footer";
 import {
-  generateMessageListLayoutInfo,
   getLoadNextPageMessagesActionIfAllowed,
   getReloadAllMessagesActionForRefreshIfAllowed,
-  LayoutInfo,
   trackMessageListEndReachedIfAllowed
 } from "./homeUtils";
 import { WrappedListItemMessage } from "./WrappedListItemMessage";
@@ -54,134 +47,131 @@ type MessageListProps = {
 const topBarHeight = 108;
 const bottomTabHeight = 54;
 
-export const MessageList = forwardRef<FlatList, MessageListProps>(
-  ({ category, NavigationBar }, ref) => {
-    const store = useIOStore();
-    const dispatch = useIODispatch();
-    const safeAreaFrame = useSafeAreaFrame();
-    const safeAreaInsets = useSafeAreaInsets();
-    const messageList = useIOSelector(state =>
-      messageListForCategorySelector(state, category)
+export type MessageListItem = number | UIMessage;
+
+/**
+ * Skeleton rows and message rows have different layouts, so they are kept in
+ * separate recycling pools to avoid reusing a cell of the wrong shape.
+ */
+const getItemType = (item: MessageListItem) =>
+  typeof item === "number" ? "skeleton" : "message";
+
+const keyExtractor = (item: MessageListItem) =>
+  typeof item === "number" ? `${item}` : item.id;
+
+const maintainVisibleContentPosition = { disabled: true };
+
+export const MessageList = forwardRef<
+  FlashListRef<MessageListItem>,
+  MessageListProps
+>(({ category, NavigationBar }, ref) => {
+  const store = useIOStore();
+  const dispatch = useIODispatch();
+  const safeAreaFrame = useSafeAreaFrame();
+  const safeAreaInsets = useSafeAreaInsets();
+  const messageList = useIOSelector(state =>
+    messageListForCategorySelector(state, category)
+  );
+  const isRefreshing = useIOSelector(state =>
+    shouldShowRefreshControllOnListSelector(state, category)
+  );
+  const isLoading = messageList === undefined;
+
+  const loadingList: ReadonlyArray<number> = useMemo(() => {
+    const listHeight =
+      safeAreaFrame.height -
+      safeAreaInsets.top -
+      safeAreaInsets.bottom -
+      topBarHeight -
+      bottomTabHeight;
+    const count = Math.floor(listHeight / SkeletonHeight);
+    return [...Array(count).keys()];
+  }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
+
+  const data: ReadonlyArray<MessageListItem> = isLoading
+    ? loadingList
+    : messageList;
+
+  const renderItem: ListRenderItem<MessageListItem> = useCallback(
+    ({ item, index }) =>
+      typeof item === "number" ? (
+        <ListItemMessageSkeleton
+          accessibilityLabel={I18n.t("messages.loading")}
+        />
+      ) : (
+        <WrappedListItemMessage
+          index={index}
+          message={item}
+          source={category}
+        />
+      ),
+    [category]
+  );
+
+  const onRefreshCallback = useCallback(() => {
+    trackPullToRefresh(category);
+    const state = store.getState();
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(state, category);
+    if (reloadAllMessagesAction) {
+      dispatch(reloadAllMessagesAction);
+    }
+  }, [category, dispatch, store]);
+
+  const onEndReachedCallback = useCallback(() => {
+    const state = store.getState();
+    const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
+      state,
+      category,
+      new Date()
     );
-    const isRefreshing = useIOSelector(state =>
-      shouldShowRefreshControllOnListSelector(state, category)
+    trackMessageListEndReachedIfAllowed(
+      category,
+      !!loadNextPageMessages,
+      state
     );
-    const isLoading = messageList === undefined;
+    if (loadNextPageMessages) {
+      dispatch(loadNextPageMessages);
+    }
+  }, [category, dispatch, store]);
 
-    const loadingList: ReadonlyArray<number> = useMemo(() => {
-      const listHeight =
-        safeAreaFrame.height -
-        safeAreaInsets.top -
-        safeAreaInsets.bottom -
-        topBarHeight -
-        bottomTabHeight;
-      const count = Math.floor(listHeight / SkeletonHeight);
-      return [...Array(count).keys()];
-    }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
-
-    const data: ReadonlyArray<number | UIMessage> = isLoading
-      ? loadingList
-      : messageList;
-
-    const layoutInfo: ReadonlyArray<LayoutInfo> = useMemo(
-      () =>
-        generateMessageListLayoutInfo(
-          loadingList,
-          messageList,
-          store.getState()
-        ),
-      [loadingList, messageList, store]
-    );
-
-    const getItemLayoutCallback = useCallback(
-      (_: ArrayLike<number | UIMessage> | null | undefined, index: number) =>
-        layoutInfo[index],
-      [layoutInfo]
-    );
-
-    const renderItem: ListRenderItem<number | UIMessage> = useCallback(
-      ({ item, index }) =>
-        typeof item === "number" ? (
-          <ListItemMessageSkeleton
-            accessibilityLabel={I18n.t("messages.loading")}
-          />
-        ) : (
-          <WrappedListItemMessage
-            index={index}
-            message={item}
-            source={category}
-          />
-        ),
-      [category]
-    );
-
-    const onRefreshCallback = useCallback(() => {
-      trackPullToRefresh(category);
-      const state = store.getState();
-      const reloadAllMessagesAction =
-        getReloadAllMessagesActionForRefreshIfAllowed(state, category);
-      if (reloadAllMessagesAction) {
-        dispatch(reloadAllMessagesAction);
-      }
-    }, [category, dispatch, store]);
-
-    const onEndReachedCallback = useCallback(() => {
-      const state = store.getState();
-      const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
-        state,
-        category,
-        new Date()
-      );
-      trackMessageListEndReachedIfAllowed(
-        category,
-        !!loadNextPageMessages,
-        state
-      );
-      if (loadNextPageMessages) {
-        dispatch(loadNextPageMessages);
-      }
-    }, [category, dispatch, store]);
-
-    const ListHeader = useMemo(() => {
-      const BannerPicker =
-        category === "INBOX" ? <LandingScreenBannerPicker /> : null;
-      return (
-        <View>
-          {NavigationBar}
-          {BannerPicker}
-        </View>
-      );
-    }, [NavigationBar, category]);
-
-    const keyExtractor = useCallback(
-      (item: number | UIMessage) =>
-        typeof item === "number" ? `${item}` : item.id,
-      []
-    );
-
+  const ListHeader = useMemo(() => {
+    const BannerPicker =
+      category === "INBOX" ? <LandingScreenBannerPicker /> : null;
     return (
-      <FlatList
-        contentContainerStyle={styles.contentContainer}
-        data={data}
-        getItemLayout={getItemLayoutCallback}
-        ItemSeparatorComponent={isLoading ? undefined : Divider}
-        keyExtractor={keyExtractor}
-        ListEmptyComponent={<EmptyList category={category} />}
-        ListFooterComponent={<Footer category={category} />}
-        ListHeaderComponent={ListHeader}
-        onEndReached={onEndReachedCallback}
-        onEndReachedThreshold={0.1}
-        ref={ref}
-        refreshControl={
-          <RefreshControl
-            onRefresh={onRefreshCallback}
-            refreshing={isRefreshing}
-            testID={`custom_refresh_control_${category.toLowerCase()}`}
-          />
-        }
-        renderItem={renderItem}
-        testID={`message_list_${category.toLowerCase()}`}
-      />
+      <View>
+        {NavigationBar}
+        {BannerPicker}
+      </View>
     );
-  }
-);
+  }, [NavigationBar, category]);
+
+  return (
+    <FlashList
+      contentContainerStyle={styles.contentContainer}
+      data={data}
+      getItemType={getItemType}
+      ItemSeparatorComponent={isLoading ? undefined : Divider}
+      keyExtractor={keyExtractor}
+      ListEmptyComponent={<EmptyList category={category} />}
+      ListFooterComponent={<Footer category={category} />}
+      ListHeaderComponent={ListHeader}
+      // FlashList anchors the viewport by default, which would hide newly
+      // received or freshly archived messages above the fold instead of
+      // showing them at the top of the list
+      maintainVisibleContentPosition={maintainVisibleContentPosition}
+      onEndReached={onEndReachedCallback}
+      onEndReachedThreshold={0.1}
+      ref={ref}
+      refreshControl={
+        <RefreshControl
+          onRefresh={onRefreshCallback}
+          refreshing={isRefreshing}
+          testID={`custom_refresh_control_${category.toLowerCase()}`}
+        />
+      }
+      renderItem={renderItem}
+      testID={`message_list_${category.toLowerCase()}`}
+    />
+  );
+});

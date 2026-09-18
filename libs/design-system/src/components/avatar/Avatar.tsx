@@ -1,4 +1,4 @@
-import { ComponentProps, memo, useRef, useState } from "react";
+import { ComponentProps, memo, useEffect, useMemo, useState } from "react";
 import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 
 import { Icon } from "../../components/icons";
@@ -67,19 +67,35 @@ const styles = StyleSheet.create({
  */
 export const Avatar = ({ logoUri, size }: Avatar) => {
   const theme = useIOTheme();
-  const indexValue = useRef<number>(0);
+  const [failedUris, setFailedUris] = useState<ReadonlyArray<string>>([]);
+  useEffect(() => {
+    // Reset failed URIs when there's a prop change for logoUri
+    setFailedUris(prev => (prev.length === 0 ? prev : []));
+  }, [logoUri]);
 
-  const [imageSource, setImageSource] = useState(
-    logoUri === undefined ? undefined : addCacheTimestampToUri(logoUri)
-  );
+  const candidate = useMemo(() => {
+    if (
+      logoUri === undefined ||
+      typeof logoUri === "number" ||
+      failedUris.length === 0
+    ) {
+      return logoUri;
+    }
+    const candidates = Array.isArray(logoUri) ? logoUri : [logoUri];
+    return candidates.find(
+      source => source.uri === undefined || !failedUris.includes(source.uri)
+    );
+  }, [logoUri, failedUris]);
+
+  const imageSource =
+    candidate === undefined ? undefined : addCacheTimestampToUri(candidate);
 
   const onError = () => {
-    if (Array.isArray(logoUri) && indexValue.current + 1 < logoUri.length) {
-      indexValue.current = indexValue.current + 1;
-      setImageSource(addCacheTimestampToUri(logoUri[indexValue.current]));
-      return;
-    }
-    setImageSource(undefined);
+    const uri =
+      typeof candidate === "object"
+        ? (Array.isArray(candidate) ? candidate[0] : candidate)?.uri
+        : undefined;
+    setFailedUris(prev => (uri === undefined ? prev : [...prev, uri]));
   };
 
   return (
@@ -121,6 +137,7 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
             onError={onError}
             source={imageSource}
             style={styles.avatarImage}
+            testID="avatar_image"
           />
         </View>
       )}

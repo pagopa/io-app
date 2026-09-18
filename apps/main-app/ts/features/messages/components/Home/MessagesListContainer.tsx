@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
+import { FlashListRef } from "@shopify/flash-list";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FlatList } from "react-native";
 
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { pageSize } from "../../../../config";
@@ -21,14 +21,14 @@ import {
   messageViewPageIndexToListCategory,
   trackMessagePageOnFocusEventIfAllowed
 } from "./homeUtils";
-import { MessageList } from "./MessageList";
+import { MessageList, MessageListItem } from "./MessageList";
 import { TabNavigationContainer } from "./TabNavigationContainer";
 
 /** Loads and tracks the selected category and handles Messages tab reselection. */
 export const MessagesListContainer = () => {
   const dispatch = useIODispatch();
   const store = useIOStore();
-  const listRef = useRef<FlatList>(null);
+  const listRef = useRef<FlashListRef<MessageListItem>>(null);
   // Local state drives rendering so a tab press updates the UI in the same
   // render pass, without waiting for a Redux round-trip. The store is only
   // read once to seed the initial value and is kept in sync on every change.
@@ -100,6 +100,9 @@ export const MessagesListContainer = () => {
       const newCategory = messageViewPageIndexToListCategory(selectedTabIndex);
       dispatch(setShownMessageCategoryAction(newCategory));
       setCategory(newCategory);
+      // The same list instance renders both categories, so the scroll offset
+      // would otherwise carry over from one category to the other
+      listRef.current?.scrollToOffset({ animated: false, offset: 0 });
     },
     [category, dispatch]
   );

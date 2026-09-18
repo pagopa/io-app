@@ -37,8 +37,7 @@ jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
 
 describe("MessageList", () => {
   beforeEach(() => {
-    jest.resetAllMocks();
-    jest.clearAllMocks();
+    mockDispatch.mockReset();
     jest.restoreAllMocks();
     mockAccessibilityInfo(false);
   });
@@ -54,7 +53,7 @@ describe("MessageList", () => {
       );
 
       expect(within(list).getByTestId("section_tabs")).toBeTruthy();
-      expect(list.props.stickyHeaderIndices).toEqual([]);
+      expect(list.props.stickyHeaderIndices).toBeUndefined();
     }
   );
   test.each<MessageListCategory>(["INBOX", "ARCHIVE"])(
