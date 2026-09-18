@@ -5,7 +5,7 @@ import {
   render,
   renderHook
 } from "@testing-library/react-native";
-import i18n from "i18next";
+import I18n from "i18next";
 
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
@@ -126,7 +126,7 @@ describe(useSendAreYouSureBottomSheet, () => {
 
     expect(useIOBottomSheetModalMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        title: i18n.t(
+        title: I18n.t(
           "features.pn.loginEngagement.send.areYouSureBottomSheet.title"
         )
       })

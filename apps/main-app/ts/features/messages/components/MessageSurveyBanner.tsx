@@ -1,7 +1,7 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { Banner, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import i18next from "i18next";
+import I18n from "i18next";
 
 import { useIOSelector } from "../../../store/hooks";
 import { messageSurveyBannerUriSelector } from "../../../store/reducers/backendStatus/remoteConfig";
@@ -100,9 +100,9 @@ const MessageSurveyBanner = (props: QualtricsParameters) => {
     <>
       <VSpacer size={16} />
       <Banner
-        action={i18next.t("messageDetails.surveyBanner.action")}
+        action={I18n.t("messageDetails.surveyBanner.action")}
         color="neutral"
-        content={i18next.t("messageDetails.surveyBanner.content")}
+        content={I18n.t("messageDetails.surveyBanner.content")}
         onPress={() => openWebUrl(url)}
         pictogramName="feedback"
         testID="message-survey-banner"
