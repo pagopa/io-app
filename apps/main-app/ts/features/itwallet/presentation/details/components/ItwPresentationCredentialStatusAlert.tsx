@@ -470,19 +470,21 @@ const DocumentExpiringAlert = ({
 const MdlSuspendedAlert = ({
   onTrack
 }: Pick<CredentialStatusAlertProps, "onTrack">) => {
-  const alertNs = "features.itWallet.presentation.alerts.mdl.suspended";
-  const bottomSheetNs =
-    "features.itWallet.presentation.bottomSheets.mDL.suspended";
-
   const bottomSheet = useIOBottomSheetModal({
-    title: I18n.t(`${alertNs}.title`),
+    title: I18n.t("features.itWallet.presentation.alerts.mdl.suspended.title"),
     component: (
       <VStack space={24}>
-        <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
+        <IOMarkdown
+          content={I18n.t(
+            "features.itWallet.presentation.bottomSheets.mDL.suspended.content"
+          )}
+        />
         <View style={{ marginBottom: 16 }}>
           <IOButton
             fullWidth
-            label={I18n.t(`${bottomSheetNs}.cta`)}
+            label={I18n.t(
+              "features.itWallet.presentation.bottomSheets.mDL.suspended.cta"
+            )}
             onPress={() => bottomSheet.dismiss()}
             variant="solid"
           />
@@ -496,8 +498,12 @@ const MdlSuspendedAlert = ({
   return (
     <>
       <Alert
-        action={I18n.t(`${alertNs}.action`)}
-        content={I18n.t(`${alertNs}.title`)}
+        action={I18n.t(
+          "features.itWallet.presentation.alerts.mdl.suspended.action"
+        )}
+        content={I18n.t(
+          "features.itWallet.presentation.alerts.mdl.suspended.title"
+        )}
         onPress={handleAlertPress}
         variant="error"
       />
