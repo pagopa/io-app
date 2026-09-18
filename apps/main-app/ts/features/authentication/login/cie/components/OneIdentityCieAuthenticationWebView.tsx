@@ -121,14 +121,14 @@ export const OneIdentityCieAuthenticationWebView = ({
       // At this stage of the login flow, we only monitor the URL for potential errors.
       // The success callback is intentionally ignored (no-op), as a success URL
       // is not expected to be handled here.
-      const isLoginUrlWithToken = onLoginUriChanged(
+      const bearerTokenFoundInUrl = onLoginUriChanged(
         handleLoginFailure,
         () => null,
         "cie",
         loginFlow
       )(event);
 
-      return !isLoginUrlWithToken;
+      return !bearerTokenFoundInUrl;
     },
     [
       handleLoginFailure,
