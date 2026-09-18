@@ -282,3 +282,17 @@ export const itwCredentialIntroContentSelector =
       ? translations[user_information_l10n_id]
       : user_information;
   };
+
+/**
+ * Select the Authentic Source's contacts for the provided credential type.
+ * @param credentialType The credential type to get the contacts for
+ * @returns A list of the Authentic Source's contacts, if existing
+ */
+export const itwAuthenticSourceContactsSelector =
+  (credentialType: string) => (state: GlobalState) => {
+    const catalogue = itwCredentialsCatalogueByTypesSelector(state);
+    if (!catalogue?.[credentialType]) {
+      return;
+    }
+    return catalogue[credentialType].authentic_sources.at(0)?.contacts;
+  };
