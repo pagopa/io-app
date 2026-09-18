@@ -1274,6 +1274,15 @@
               "secondaryAction": "Non ho la CIE",
               "title": "Carta di Identità Elettronica (CIE)"
             },
+            "nfc": {
+              "content": {
+                "android": "Sui dispositivi Android® l'antenna NFC per leggere la CIE può trovarsi in punti diversi del retro del telefono, in base al modello. Potrebbe ad esempio trovarsi in corrispondenza della parte alta, del centro oppure più in basso.\n\nPosiziona la CIE su una superficie stabile e poggia il tuo telefono sulla carta seguendo le istruzioni in app. Se la lettura non parte, ripeti l'operazione nelle altre posizioni indicate.",
+                "ios": "Su iPhone® l'antenna NFC per leggere la CIE si trova nella parte alta del dispositivo, sul retro.\n\nPosiziona la CIE su una superficie stabile e poggia il tuo telefono sulla carta, senza muoverlo."
+              },
+              "primaryAction": "Ho capito",
+              "secondaryAction": "Hai bisogno di aiuto?",
+              "title": "Come funziona la lettura della CIE?"
+            },
             "pin": {
               "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
               "dialog": {
@@ -1349,6 +1358,7 @@
               "title": "Prepara la tua Carta di Identità Elettronica (CIE)"
             },
             "nfc": {
+              "buttonLink": "Come funziona?",
               "cta": "Inizia lettura CIE",
               "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
               "title": "Posiziona la tua CIE su una superficie stabile per la lettura"
