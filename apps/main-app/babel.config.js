@@ -14,15 +14,22 @@ module.exports = {
       }
     ],
     "macros",
-    ["@babel/plugin-transform-class-properties", { loose: true }],
-    ["@babel/plugin-transform-private-methods", { loose: true }],
     ["@babel/plugin-transform-export-namespace-from", { loose: true }],
-    ["@babel/plugin-transform-private-property-in-object", { loose: true }],
     [
       "react-native-worklets/plugin",
       {
         globals: ["__scanCodes"]
       }
     ]
+  ],
+  overrides: [
+    {
+      exclude: /node_modules/,
+      plugins: [
+        ["@babel/plugin-transform-class-properties", { loose: true }],
+        ["@babel/plugin-transform-private-methods", { loose: true }],
+        ["@babel/plugin-transform-private-property-in-object", { loose: true }]
+      ]
+    }
   ]
 };

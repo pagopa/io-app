@@ -3,8 +3,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { CommonActions, StackActions } from "@react-navigation/native";
+import { File } from "expo-file-system";
 import I18n from "i18next";
-import RNFS from "react-native-fs";
 import { SagaIterator } from "redux-saga";
 import {
   call,
@@ -211,9 +211,10 @@ function* clearFciDownloadPreview(
 }
 
 function* deletePath(path: string) {
-  yield RNFS.exists(path).then(exists =>
-    exists ? RNFS.unlink(path) : Promise.resolve()
-  );
+  const file = new File(path);
+  if (file.exists) {
+    yield* call([file, file.delete]);
+  }
 }
 
 function* standardFciFlowStartSaga(): SagaIterator {

@@ -1,9 +1,9 @@
 import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { useIOToast } from "@io-app/design-system";
+import { File } from "expo-file-system";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
-import RNFS from "react-native-fs";
 
 import NavigationService from "../../../navigation/NavigationService";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
@@ -104,7 +104,7 @@ export const useAttachmentDownload = (
 
   const handleAttachmentDownloadSuccess = useCallback(
     async (downloadPath: string) => {
-      if (await RNFS.exists(downloadPath)) {
+      if (new File(downloadPath).exists) {
         doNavigate();
       } else {
         dispatch(clearRequestedAttachmentDownload());
@@ -141,7 +141,7 @@ export const useAttachmentDownload = (
     // Make sure to cancel whatever download may already be running
     dispatch(cancelPreviousAttachmentDownload());
 
-    if (download && (await RNFS.exists(download.path))) {
+    if (download && new File(download.path).exists) {
       doNavigate();
     } else {
       dispatch(
