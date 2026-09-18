@@ -1275,7 +1275,10 @@
               "title": "Carta di Identità Elettronica (CIE)"
             },
             "nfc": {
-              "content": "Se hai un iPhone®, il chip per leggere la CIE si trova nella parte alta del dispositivo, sul retro.\n\nSe hai un Android®, il chip per leggere la CIE può trovarsi invece in punti diversi del retro del telefono, in base al modello. Potrebbe ad esempio trovarsi sul retro in corrispondenza della parte alta, del centro oppure più in basso.",
+              "content": {
+                "android": "Sui dispositivi Android® l'antenna NFC per leggere la CIE può trovarsi in punti diversi del retro del telefono, in base al modello. Potrebbe ad esempio trovarsi in corrispondenza della parte alta, del centro oppure più in basso.\n\nPosiziona la CIE su una superficie stabile e poggia il tuo telefono sulla carta seguendo le istruzioni in app. Se la lettura non parte, ripeti l'operazione nelle altre posizioni indicate.",
+                "ios": "Su iPhone® l'antenna NFC per leggere la CIE si trova nella parte alta del dispositivo, sul retro.\n\nPosiziona la CIE su una superficie stabile e poggia il tuo telefono sulla carta, senza muoverlo."
+              },
               "primaryAction": "Ho capito",
               "secondaryAction": "Hai bisogno di aiuto?",
               "title": "Come funziona la lettura della CIE?"

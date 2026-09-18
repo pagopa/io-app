@@ -1,6 +1,6 @@
 import { IOMarkdown, VStack } from "@io-app/design-system";
 import I18n from "i18next";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { helpCenterHowToReadCieUrl } from "../../../../../config";
@@ -19,7 +19,9 @@ export const useCieNfcInfoBottomSheet = () => {
       <VStack space={24}>
         <IOMarkdown
           content={I18n.t(
-            "features.itWallet.identification.cie.bottomSheet.nfc.content"
+            Platform.OS === "ios"
+              ? "features.itWallet.identification.cie.bottomSheet.nfc.content.ios"
+              : "features.itWallet.identification.cie.bottomSheet.nfc.content.android"
           )}
         />
         <View>
