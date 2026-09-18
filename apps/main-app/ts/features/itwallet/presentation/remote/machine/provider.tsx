@@ -1,3 +1,4 @@
+import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { JSX } from "react";
 
@@ -10,11 +11,16 @@ import {
 import { getEnv } from "../../../common/utils/environment.ts";
 import { itwRemoteMachine } from "./machine.ts";
 
+const inspector = createBrowserInspector();
+
 type Props = {
   children: JSX.Element;
 };
 
-export const ItwRemoteMachineContext = createActorContext(itwRemoteMachine);
+export const ItwRemoteMachineContext = createActorContext(
+  itwRemoteMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
+);
 
 export const ItwRemoteMachineProvider = (props: Props) => {
   const navigation = useIONavigation();

@@ -1,3 +1,4 @@
+import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { PropsWithChildren } from "react";
 
@@ -9,8 +10,12 @@ import { selectItwEnv } from "../../../common/store/selectors/environment.ts";
 import { getEnv } from "../../../common/utils/environment.ts";
 import { itwProximityMachine } from "./machine.ts";
 
-export const ItwProximityMachineContext =
-  createActorContext(itwProximityMachine);
+const inspector = createBrowserInspector();
+
+export const ItwProximityMachineContext = createActorContext(
+  itwProximityMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
+);
 
 export const ItwProximityMachineProvider = ({
   children

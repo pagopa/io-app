@@ -1,0 +1,9 @@
+{
+  "extends": ["../../tsconfig.base.json", "@react-native/typescript-config"],
+  "compilerOptions": {
+    "checkJs": true,
+    "types": ["jest", "node"],
+    "lib": ["es2022", "dom", "dom.iterable"]
+  },
+  "include": ["src", "middleware.js", "metro.js", "browser/src", "browser/build.mjs"]
+}
