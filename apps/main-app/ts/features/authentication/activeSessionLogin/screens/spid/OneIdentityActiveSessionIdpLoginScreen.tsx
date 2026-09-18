@@ -11,13 +11,13 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SpidIdp } from "../../../../../utils/idps";
 import { trackLoginFailure } from "../../../common/analytics";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import {
   IdpWebViewLogin,
   WebViewLoginEvent
 } from "../../../common/components/IdpWebViewLogin";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { AUTH_LEVELS, isValidCallbackUrl } from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
