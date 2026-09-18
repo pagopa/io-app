@@ -196,7 +196,7 @@ export function trackLollipopKeyGenerationSuccess(keyType?: string) {
 
 // End of lollipop events
 
-const extractSpidLoginErrorPayload = (
+const extractLoginErrorPayload = (
   error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
 ) => {
   if (isLoginUtilsError(error)) {
@@ -237,7 +237,7 @@ export function trackLoginError(
   idpName: string | undefined,
   error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
 ) {
-  const errorPayload = extractSpidLoginErrorPayload(error);
+  const errorPayload = extractLoginErrorPayload(error);
   if (!errorPayload) {
     return;
   }
