@@ -17,6 +17,7 @@ import {
   removeKeychainError,
   setKeychainError
 } from "../store/storages/keychain";
+import { unknownToString } from "./errors";
 
 const isWebViewErrorEvent = (
   e: Parameters<typeof trackSpidLoginError>[1]
@@ -230,7 +231,8 @@ const extractSpidLoginErrorPayload = (
     };
   }
 
-  return null;
+  const unknownError = unknownToString(error);
+  return { code: "unknown", description: unknownError, domain: "unknown" };
 };
 
 // SPID Login
