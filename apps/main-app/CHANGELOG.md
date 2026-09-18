@@ -2,6 +2,58 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.10](https://github.com/pagopa/io-app/compare/3.39.0-rc.9...3.39.0-rc.10) (2026-09-17)
+
+### Features
+
+* [[IOPID-4124](https://pagopa.atlassian.net/browse/IOPID-4124)] Add OneIdentity CIE PIN screen ([#8620](https://github.com/pagopa/io-app/issues/8620)) ([b2371e6](https://github.com/pagopa/io-app/commit/b2371e659a93addc90eda2dc41c75cb71845ce35))
+* [[IOPID-4210](https://pagopa.atlassian.net/browse/IOPID-4210)] use remote CIE allowed origins instead of hardcoded whitelist ([#8618](https://github.com/pagopa/io-app/issues/8618)) ([95a1e75](https://github.com/pagopa/io-app/commit/95a1e75bb782fd1b135cb7bf88f39a836affb9f6))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Get the latest `itwVersion` when starting the credential issuance ([#8622](https://github.com/pagopa/io-app/issues/8622)) ([cd8c9e3](https://github.com/pagopa/io-app/commit/cd8c9e3afb6a410c715764b25aead96947d09018))
+* **IT-Wallet:** [[SIW-4993](https://pagopa.atlassian.net/browse/SIW-4993)] restrict reissuance survey trigger to L3 context ([#8619](https://github.com/pagopa/io-app/issues/8619)) ([771e905](https://github.com/pagopa/io-app/commit/771e9055580d7f1423c2a1fc0fb9e98d32e50206))
+
+### Chores
+
+* [[IOPID-4214](https://pagopa.atlassian.net/browse/IOPID-4214)] Update reserve endpoint path to v1 ([#8624](https://github.com/pagopa/io-app/issues/8624)) ([12b4e9b](https://github.com/pagopa/io-app/commit/12b4e9bdf6ee7569e77c060201fedc1432949bde))
+## [3.39.0-rc.9](https://github.com/pagopa/io-app/compare/3.39.0-rc.8...3.39.0-rc.9) (2026-09-16)
+
+### Features
+
+* [[IOPID-4184](https://pagopa.atlassian.net/browse/IOPID-4184)] enable debug mode before login ([#8596](https://github.com/pagopa/io-app/issues/8596)) ([3fb30d1](https://github.com/pagopa/io-app/commit/3fb30d12b38bd1617879ede4c08a204ee26ee054))
+## [3.39.0-rc.8](https://github.com/pagopa/io-app/compare/3.39.0-rc.7...3.39.0-rc.8) (2026-09-15)
+
+### Features
+
+* [[IOCOM-3127](https://pagopa.atlassian.net/browse/IOCOM-3127)] sticky footer in messages' details screens ([#8424](https://github.com/pagopa/io-app/issues/8424)) ([549a3e2](https://github.com/pagopa/io-app/commit/549a3e2e2f90deee438c80127b1e35101732b9db))
+* **IT-Wallet:** [[SIW-3593](https://pagopa.atlassian.net/browse/SIW-3593)] Check Wallet Instance validity with TSL ([#8439](https://github.com/pagopa/io-app/issues/8439)) ([b08dbb5](https://github.com/pagopa/io-app/commit/b08dbb5e4f57150b7e89ba4b26ca21076d6dc096))
+* **IT-Wallet:** [[SIW-4973](https://pagopa.atlassian.net/browse/SIW-4973)] add mandatory L3 upgrade Mixpanel events ([#8604](https://github.com/pagopa/io-app/issues/8604)) ([fc28136](https://github.com/pagopa/io-app/commit/fc281363c39589d5dd8a9f76db63295943e33f91))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4991](https://pagopa.atlassian.net/browse/SIW-4991)] remove credential detail properties from mandatory events ([#8605](https://github.com/pagopa/io-app/issues/8605)) ([8c31577](https://github.com/pagopa/io-app/commit/8c3157779c878aa3e2adf14ed116f4fd73c6442c))
+
+### Chores
+
+* [[IOPLT-2077](https://pagopa.atlassian.net/browse/IOPLT-2077)] Add `i18n Ally` conf for the IDE ([#8599](https://github.com/pagopa/io-app/issues/8599)) ([01d9b60](https://github.com/pagopa/io-app/commit/01d9b6046dcd6bb6ef9bb2e5e2e959057f0ff3b6))
+* [[IOPLT-2078](https://pagopa.atlassian.net/browse/IOPLT-2078)] Add dev server debug extension ([#8601](https://github.com/pagopa/io-app/issues/8601)) ([4e4b880](https://github.com/pagopa/io-app/commit/4e4b8806ad5768ff5264aa4441c28db01f1d1458))
+## [3.39.0-rc.7](https://github.com/pagopa/io-app/compare/3.39.0-rc.6...3.39.0-rc.7) (2026-09-14)
+
+### Features
+
+* [[IOPID-4123](https://pagopa.atlassian.net/browse/IOPID-4123)] Add CieID login flow via OneIdentity ([#8593](https://github.com/pagopa/io-app/issues/8593)) ([6488116](https://github.com/pagopa/io-app/commit/648811692fa70e985ebcae74cd3586f2466a42a9))
+* [[IOPID-4172](https://pagopa.atlassian.net/browse/IOPID-4172)] error screen for IDP list loading failure ([#8589](https://github.com/pagopa/io-app/issues/8589)) ([9ff3be9](https://github.com/pagopa/io-app/commit/9ff3be960c780e21508095a4f2a29cde7615b476))
+
+### Bug Fixes
+
+* [[IOPLT-2011](https://pagopa.atlassian.net/browse/IOPLT-2011)] blocking screen connectivity issue ([#8468](https://github.com/pagopa/io-app/issues/8468)) ([50ced86](https://github.com/pagopa/io-app/commit/50ced8617331769932172ea670fa0a8884cdae07))
+* **IT-Wallet:** [[SIW-4922](https://pagopa.atlassian.net/browse/SIW-4922)] Fix proximity success tracking event ([#8551](https://github.com/pagopa/io-app/issues/8551)) ([e69caf0](https://github.com/pagopa/io-app/commit/e69caf058feed872bfadeff9f416580e8d8be8c6))
+
+### Chores
+
+* [[IOPLT-2067](https://pagopa.atlassian.net/browse/IOPLT-2067)] Adopt official `jest` mock for `pulsar` library ([#8582](https://github.com/pagopa/io-app/issues/8582)) ([49cc8bf](https://github.com/pagopa/io-app/commit/49cc8bf980309e208a98db2845c66f2b6bd2a524))
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] remove `minimumReleaseAgeExclude` ([#8594](https://github.com/pagopa/io-app/issues/8594)) ([4c1baae](https://github.com/pagopa/io-app/commit/4c1baae25213e39ad264441e92ffc42864ab6496))
 ## [3.39.0-rc.6](https://github.com/pagopa/io-app/compare/3.39.0-rc.5...3.39.0-rc.6) (2026-09-11)
 
 ### Features

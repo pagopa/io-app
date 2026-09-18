@@ -30,7 +30,6 @@ import {
 import { getUrlBasepath } from "../../../../../utils/url";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { trackLoginFailure } from "../../../common/analytics";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpLoginUrlChanged } from "../../../common/store/actions";
 import {
@@ -40,6 +39,7 @@ import {
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { usePosteIDApp2AppEducational } from "../../../login/idp/hooks/usePosteIDApp2AppEducational";
 import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import { getSpidErrorCodeDescription } from "../../../login/idp/utils/spidErrorCode";

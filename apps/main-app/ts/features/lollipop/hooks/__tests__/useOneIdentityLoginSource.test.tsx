@@ -84,7 +84,7 @@ const setupTest = ({
   const utils = renderHook(
     () =>
       useOneIdentityLoginSource({
-        idp: mockIdp,
+        idpId: mockIdp.id,
         onFailure,
         minAuthLevel
       }),
@@ -120,7 +120,7 @@ describe("useOneIdentityLoginSource", () => {
     });
 
     expect(mockRetriableFetch).toHaveBeenCalledWith(
-      `${apiUrlPrefix}/api/auth/v2/reserve`,
+      `${apiUrlPrefix}/api/auth/v1/reserve`,
       expect.objectContaining({
         method: "POST",
         headers: expect.objectContaining({
@@ -187,7 +187,7 @@ describe("useOneIdentityLoginSource", () => {
 
     await waitFor(() => {
       expect(mockRetriableFetch).toHaveBeenCalledWith(
-        `${apiUrlPrefix}/api/auth/v2/reserve`,
+        `${apiUrlPrefix}/api/auth/v1/reserve`,
         expect.objectContaining({
           body: JSON.stringify({
             env: "PROD",
@@ -211,7 +211,7 @@ describe("useOneIdentityLoginSource", () => {
 
     await waitFor(() => {
       expect(mockRetriableFetch).toHaveBeenCalledWith(
-        `${apiUrlPrefix}/api/auth/v2/reserve`,
+        `${apiUrlPrefix}/api/auth/v1/reserve`,
         expect.objectContaining({
           body: JSON.stringify({
             env: "UAT",

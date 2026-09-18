@@ -21,27 +21,6 @@ const SOCIAL_ICON_SIZE = 32;
 const SOCIAL_LINK_LABEL_SIZE = 16;
 const SOCIAL_LINK_LABEL_LINE_HEIGHT = 20;
 
-const cgnSocialLinks = [
-  {
-    id: "instagram",
-    iconName: "instagram",
-    labelKey: "bonus.cgn.merchantsList.categoriesList.socialLinks.instagram",
-    url: "https://www.instagram.com/giovani_e_servizio_civile/"
-  },
-  {
-    id: "facebook",
-    iconName: "facebook",
-    labelKey: "bonus.cgn.merchantsList.categoriesList.socialLinks.facebook",
-    url: "https://www.facebook.com/PcmGiovaniServiziocivile"
-  },
-  {
-    id: "linkedin",
-    iconName: "linkedin",
-    labelKey: "bonus.cgn.merchantsList.categoriesList.socialLinks.linkedin",
-    url: "https://www.linkedin.com/company/carta-giovani-nazionale/"
-  }
-] as const;
-
 const styles = StyleSheet.create({
   root: {
     flexGrow: 1
@@ -65,6 +44,33 @@ const styles = StyleSheet.create({
 export const CgnMerchantCategoriesSocialLinks = () => {
   const theme = useIOTheme();
 
+  const cgnSocialLinks = [
+    {
+      id: "instagram",
+      iconName: "instagram",
+      label: I18n.t(
+        "bonus.cgn.merchantsList.categoriesList.socialLinks.instagram"
+      ),
+      url: "https://www.instagram.com/giovani_e_servizio_civile/"
+    },
+    {
+      id: "facebook",
+      iconName: "facebook",
+      label: I18n.t(
+        "bonus.cgn.merchantsList.categoriesList.socialLinks.facebook"
+      ),
+      url: "https://www.facebook.com/PcmGiovaniServiziocivile"
+    },
+    {
+      id: "linkedin",
+      iconName: "linkedin",
+      label: I18n.t(
+        "bonus.cgn.merchantsList.categoriesList.socialLinks.linkedin"
+      ),
+      url: "https://www.linkedin.com/company/carta-giovani-nazionale/"
+    }
+  ] as const;
+
   return (
     <View
       style={[
@@ -79,7 +85,7 @@ export const CgnMerchantCategoriesSocialLinks = () => {
             <Fragment key={socialLink.id}>
               {index > 0 && <VSpacer size={SOCIAL_LINKS_V_SPACING} />}
               <Pressable
-                accessibilityLabel={I18n.t(socialLink.labelKey)}
+                accessibilityLabel={socialLink.label}
                 accessibilityRole="link"
                 onPress={() => openWebUrl(socialLink.url)}
                 style={styles.socialLink}
@@ -99,7 +105,7 @@ export const CgnMerchantCategoriesSocialLinks = () => {
                   size={SOCIAL_LINK_LABEL_SIZE}
                   weight="Semibold"
                 >
-                  {I18n.t(socialLink.labelKey)}
+                  {socialLink.label}
                 </IOText>
               </Pressable>
             </Fragment>

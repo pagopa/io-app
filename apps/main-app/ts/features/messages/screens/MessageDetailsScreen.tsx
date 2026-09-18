@@ -1,12 +1,17 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
-import { ContentWrapper, Icon, VSpacer } from "@io-app/design-system";
+import {
+  ContentWrapper,
+  Icon,
+  ScrollViewWithStickyFooterActions,
+  VSpacer
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { useCallback, useEffect, useMemo } from "react";
+import { StyleSheet, View } from "react-native";
 
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
@@ -24,10 +29,9 @@ import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetails
 import { MessageDetailsHeader } from "../components/MessageDetail/MessageDetailsHeader";
 import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
-import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
-import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
 import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
 import { StandardMessageSurveyBanner } from "../components/MessageSurveyBanner";
+import { useMessageDetailsFooterActions } from "../hooks/useMessageDetailsFooterActions";
 import { MessagesParamsList } from "../navigation/params";
 import {
   cancelPaymentStatusTracking,
@@ -70,8 +74,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   const { messageId, serviceId } = props.route.params;
 
   const dispatch = useIODispatch();
-  const scrollViewRef = useRef<ScrollView>(null);
-
   const message = pipe(
     useIOSelector(state => getPaginatedMessageById(state, messageId)),
     pot.toOption,
@@ -111,6 +113,13 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     state
   );
   const isPNOptInMessage = pnOptInMessageInfo.isPNOptInMessage;
+  const footerActions = useMessageDetailsFooterActions({
+    ctas: maybeCTAs,
+    firstCTAIsPNOptInMessage: pnOptInMessageInfo.cta1LinksToPNService,
+    messageId,
+    secondCTAIsPNOptInMessage: pnOptInMessageInfo.cta2LinksToPNService,
+    serviceId
+  });
 
   useHeaderSecondLevel({
     title: "",
@@ -160,11 +169,16 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     );
   }
   return (
-    <>
-      <ScrollView
-        contentContainerStyle={styles.scrollContentContainer}
-        ref={scrollViewRef}
-      >
+    <ScrollViewWithStickyFooterActions
+      afterPlaceholder={
+        <MessageDetailsFooter
+          messageId={messageId}
+          noticeNumber={messageDetails.paymentData?.noticeNumber}
+          payeeFiscalCode={messageDetails.paymentData?.payee.fiscalCode}
+          serviceId={serviceId}
+        />
+      }
+      beforePlaceholder={
         <View style={styles.container}>
           <ContentWrapper>
             <MessageDetailsHeader
@@ -210,26 +224,12 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             <StandardMessageSurveyBanner message={message} />
           </ContentWrapper>
         </View>
-        <VSpacer size={24} />
-        <MessageDetailsFooter
-          messageId={messageId}
-          noticeNumber={messageDetails.paymentData?.noticeNumber}
-          payeeFiscalCode={messageDetails.paymentData?.payee.fiscalCode}
-          serviceId={serviceId}
-        />
-        <MessageDetailsScrollViewAdditionalSpace
-          hasCTA1={!!maybeCTAs?.cta_1}
-          hasCTA2={!!maybeCTAs?.cta_2}
-          messageId={messageId}
-        />
-      </ScrollView>
-      <MessageDetailsStickyFooter
-        ctas={maybeCTAs}
-        firstCTAIsPNOptInMessage={pnOptInMessageInfo.cta1LinksToPNService}
-        messageId={messageId}
-        secondCTAIsPNOptInMessage={pnOptInMessageInfo.cta2LinksToPNService}
-        serviceId={serviceId}
-      />
-    </>
+      }
+      footerActionProps={{ actions: footerActions }}
+      scrollViewProps={{
+        contentContainerStyle: styles.scrollContentContainer,
+        testID: "MessageDetailsScrollView"
+      }}
+    />
   );
 };
