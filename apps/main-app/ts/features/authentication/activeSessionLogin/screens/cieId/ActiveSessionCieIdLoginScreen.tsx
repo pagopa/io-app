@@ -15,13 +15,13 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { trackLoginFailure } from "../../../common/analytics";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
   AUTH_LEVELS,
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
 import {
   defaultUserAgent,
   WHITELISTED_DOMAINS
