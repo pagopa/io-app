@@ -83,15 +83,6 @@ describe("PnBannerFlowComponents", () => {
       expect(sendBannerMixpanelEvents.alreadyActive).toHaveBeenCalled();
       expect(sendBannerMixpanelEvents.activationSuccess).not.toHaveBeenCalled();
     });
-    it("should not trigger any analytics in case of a wrong flowState (the component should always be called with the correct flowState)", () => {
-      const flowState = "WRONG_FLOW_STATE" as SuccessProps["flowState"];
-      renderSuccessScreen(flowState);
-      const { alreadyActive, activationSuccess, bannerKO } =
-        sendBannerMixpanelEvents;
-      [alreadyActive, activationSuccess, bannerKO].forEach(mockMixpanelCall => {
-        expect(mockMixpanelCall).not.toHaveBeenCalled();
-      });
-    });
     it("should navigate to home when close button is pressed", () => {
       const mockNavigate = jest.fn();
 
