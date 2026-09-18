@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.11](https://github.com/pagopa/io-app/compare/3.39.0-rc.10...3.39.0-rc.11) (2026-09-18)
+
+### Features
+
+* [[IOPID-4212](https://pagopa.atlassian.net/browse/IOPID-4212)] add debug info to AuthErrorScreen ([#8623](https://github.com/pagopa/io-app/issues/8623)) ([f9e5e6d](https://github.com/pagopa/io-app/commit/f9e5e6d8727df77438c957b97536ecaf6fa530ab))
+* **IT-Wallet:** [[SIW-4984](https://pagopa.atlassian.net/browse/SIW-4984)] Display Authentic Source contacts in credential detail bottom sheet ([#8606](https://github.com/pagopa/io-app/issues/8606)) ([1d0174b](https://github.com/pagopa/io-app/commit/1d0174bb09fcbedda7fa8a1147840461636009dd))
+
+### Chores
+
+* **IT-Wallet:** [[SIW-5011](https://pagopa.atlassian.net/browse/SIW-5011)] Replace PID with NPID—`urn:it-wallet:eid:1` ([#8592](https://github.com/pagopa/io-app/issues/8592)) ([c057002](https://github.com/pagopa/io-app/commit/c057002f77a21f016bf17a82b1280c73237368d0))
 ## [3.39.0-rc.10](https://github.com/pagopa/io-app/compare/3.39.0-rc.9...3.39.0-rc.10) (2026-09-17)
 
 ### Features
