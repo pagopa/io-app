@@ -45,6 +45,7 @@ export const LoginConfigScreen = () => {
             })
           }
           autoFocus={isFocused}
+          // eslint-disable-next-line i18next/no-literal-string
           errorMessage="Wrong pin"
           length={PIN_LENGTH}
           onValidate={handleValidatePin}

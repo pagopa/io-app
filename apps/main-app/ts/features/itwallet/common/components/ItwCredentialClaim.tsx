@@ -316,7 +316,7 @@ const AttachmentsClaimItem = ({
         type: "badge",
         componentProps: {
           variant: "default",
-          text: "PDF"
+          text: I18n.t("global.badges.pdf")
         }
       }}
       label={I18n.t(
