@@ -1,32 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
   <head>
     <script>
       function sendSuccess() {
         const payload = {
-          "it": "Richiesta avvenuta con successo",
-          "en": "Request successfully sent"
+          it: "Richiesta avvenuta con successo",
+          en: "Request successfully sent"
         };
         showSuccess(payload);
       }
 
       function sendError() {
         const payload = {
-          "it": "È avvenuto un errore!",
-          "en": "An error occurred!"
+          it: "È avvenuto un errore!",
+          en: "An error occurred!"
         };
         showErrorMessage(payload);
       }
 
       function sendAlertBox() {
         const payload = {
-          "it": {
-            "title": "Attenzione",
-            "description": "Sembra che ci sia qualcosa che non va!"
+          it: {
+            title: "Attenzione",
+            description: "Sembra che ci sia qualcosa che non va!"
           },
-          "en": {
-            "title": "Warning",
-            "description": "Seems there's something wrong!"
+          en: {
+            title: "Warning",
+            description: "Seems there's something wrong!"
           }
         };
         showAlertBox(payload);

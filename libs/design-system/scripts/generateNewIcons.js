@@ -111,7 +111,7 @@ async function run() {
         }
 
         const excludedPrefixes = ["IconSystem", "IconBiom", "IconProduct"];
-        if (excludedPrefixes.some((prefix) => file.startsWith(prefix))) {
+        if (excludedPrefixes.some(prefix => file.startsWith(prefix))) {
           console.log(`⚠️ Skipping excluded file: ${file}`);
           continue;
         }
@@ -123,7 +123,7 @@ async function run() {
           path: filePath,
           js2svg: {
             pretty: true,
-            indent: 2,
+            indent: 2
           },
           plugins: [
             "removeDimensions",
@@ -132,7 +132,7 @@ async function run() {
             "removeViewBox"
           ]
         });
-        
+
         // Overwrite original SVG file with optimized code
         fs.writeFileSync(filePath, result.data);
 
@@ -142,11 +142,11 @@ async function run() {
           svgoConfig: {
             removeRasterImages: true,
             removeScriptElement: true,
-            removeUselessDefs: true,
+            removeUselessDefs: true
           },
           native: true,
           dimensions: false,
-          plugins: ["@svgr/plugin-jsx"],
+          plugins: ["@svgr/plugin-jsx"]
         });
 
         /* Replace hardcoded color value with `currentColor` */
@@ -182,11 +182,14 @@ async function run() {
         // 4. Ensure Path is included in the react-native-svg import block if missing
         if (
           jsxCodeWithPathOnly.includes("<Path") &&
-          !/import\s+.*Path.*\s+from\s+['"]react-native-svg['"]/.test(componentData)
+          !/import\s+.*Path.*\s+from\s+['"]react-native-svg['"]/.test(
+            componentData
+          )
         ) {
           componentData = componentData.replace(
             /import\s+\{([^}]+)\}\s+from\s+['"]react-native-svg['"]/,
-            (match, imports) => `import { ${imports.trim()}, Path } from "react-native-svg"`
+            (match, imports) =>
+              `import { ${imports.trim()}, Path } from "react-native-svg"`
           );
         }
 
@@ -194,7 +197,7 @@ async function run() {
         const tsxFilePath = join(tsxDir, fileWithTsxExtension);
 
         const formattedData = await prettier.format(componentData, {
-          parser: "typescript",
+          parser: "typescript"
         });
 
         fs.writeFileSync(tsxFilePath, formattedData);
