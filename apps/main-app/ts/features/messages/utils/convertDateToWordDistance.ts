@@ -7,6 +7,12 @@ import { dateToAccessibilityReadableFormat } from "../../../utils/accessibility"
 import { format, formatDateAsLocal } from "../../../utils/dates";
 import { maybeNotNullyString } from "../../../utils/strings";
 
+// Memoized formatter to avoid unnecessary re-instantiation
+const shortDateFormatter = new Intl.DateTimeFormat("it", {
+  day: "2-digit",
+  month: "short"
+});
+
 /**
  * This function converts the distance from now to date in :
  * H.mm, yesterday, MM/DD (or DD/MM) and MM/DD/YYYY (or DD/MM/YYYY) depending on the system locale
@@ -36,10 +42,7 @@ export function convertDateToWordDistance(
     return lastDayLabel;
   } // 1 day < distance, year is the current year
   else if (distance > 1 && date.getFullYear() === today.getFullYear()) {
-    return new Intl.DateTimeFormat("it", {
-      day: "2-digit",
-      month: "short"
-    }).format(date);
+    return shortDateFormatter.format(date);
   } else if (isNaN(distance)) {
     return pipe(
       invalidDateLabel,
