@@ -324,7 +324,9 @@ export const IOScrollView = ({
         snapToOffsets={
           // If there is a refresh control, don't snap to offsets
           // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
-          RefreshControlComponent ? undefined : [0, snapOffset || 0]
+          RefreshControlComponent || snapOffset === undefined
+            ? undefined
+            : [0, snapOffset]
         }
         testID={testID}
       >
