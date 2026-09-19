@@ -467,7 +467,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                           <View>
                             <View
                               accessibilityLabel="Item 1; Value 1"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -564,7 +566,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                           <View>
                             <View
                               accessibilityLabel="Item 2; Value 2"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -2302,7 +2306,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
                           <View>
                             <View
                               accessibilityLabel="Item 1; Value 1"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -2399,7 +2405,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
                           <View>
                             <View
                               accessibilityLabel="Item 2; Value 2"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
