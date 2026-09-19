@@ -6,8 +6,6 @@ import {
 import { OnboardingStatusDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
 import { TimelineDTO } from "@io-app/api-types/generated/definitions/idpay/TimelineDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -135,13 +133,7 @@ export const idpayInitiativeDetailsSelector = createSelector(
 
 export const idpayInitiativeIdSelector = createSelector(
   idpayInitiativeDetailsSelector,
-  details =>
-    pipe(
-      details,
-      pot.toOption,
-      O.map(details => details.initiativeId),
-      O.toUndefined
-    )
+  details => pot.toUndefined(details)?.initiativeId
 );
 
 export const idpayPaginatedTimelineSelector = createSelector(
@@ -172,15 +164,14 @@ export const initiativeNeedsConfigurationSelector = createSelector(
   idpayInitiativeDetailsSelector,
   idpayOperationListLengthSelector,
   (initiative, timelineLenght) =>
-    pipe(
-      initiative,
-      pot.toOption,
-      O.map(
+    pot.getOrElse(
+      pot.map(
+        initiative,
         initiative =>
           initiative.status === InitiativeStatusEnum.NOT_REFUNDABLE &&
           timelineLenght <= 1
       ),
-      O.getOrElse(() => false)
+      false
     )
 );
 

@@ -1,6 +1,4 @@
 import { StatusEnum } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
 type InstrumentStatusLabels = {
@@ -37,11 +35,6 @@ const circuitTypeLabels: OperationTypeLabels = {
 };
 
 export const getLabelForCircuitType = (circuitType: string | undefined) =>
-  pipe(
-    circuitType,
-    O.fromNullable,
-    O.chain(type => O.fromNullable(circuitTypeLabels[type])),
-    O.getOrElse(() => "-")
-  );
+  (circuitType && circuitTypeLabels[circuitType]) ?? "-";
 
 export { instrumentStatusLabels };

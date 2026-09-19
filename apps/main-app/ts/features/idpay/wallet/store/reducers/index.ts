@@ -4,7 +4,6 @@ import { InitiativesWithInstrumentDTO } from "@io-app/api-types/generated/defini
 import { ListUsersOnboardingStatusDTO } from "@io-app/api-types/generated/definitions/idpay/ListUsersOnboardingStatusDTO";
 import { WalletDTO } from "@io-app/api-types/generated/definitions/idpay/WalletDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
@@ -89,12 +88,10 @@ const reducer = (
         initiativesWithInstrument: state.initiativesWithInstrument
       };
     case getType(idPayInitiativesFromInstrumentGet.success):
-      const initiativesToKeepInLoadingState = pipe(
-        state.initiativesAwaitingStatusUpdate,
-        Object.entries,
-        // remove all entries that have completed their request
-        entries => entries.filter(([_, value]) => value),
-        Object.fromEntries
+      const initiativesToKeepInLoadingState = Object.fromEntries(
+        Object.entries(state.initiativesAwaitingStatusUpdate).filter(
+          ([_, value]) => value
+        )
       );
 
       return {

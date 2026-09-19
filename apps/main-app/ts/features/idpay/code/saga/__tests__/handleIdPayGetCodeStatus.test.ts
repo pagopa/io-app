@@ -1,4 +1,4 @@
-import * as E from "fp-ts/lib/Either";
+import { err, ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
@@ -30,7 +30,7 @@ describe("handleIdPayGetCodeStatus", () => {
           }),
           idPayGetCodeStatus.request()
         )
-        .next(E.right({ status: 200, value: { isIdPayCodeEnabled: true } }))
+        .next(ok({ status: 200, value: { isIdPayCodeEnabled: true } }))
         .put(idPayGetCodeStatus.success({ isIdPayCodeEnabled: true }))
         .next()
         .isDone();
@@ -56,7 +56,7 @@ describe("handleIdPayGetCodeStatus", () => {
           }),
           idPayGetCodeStatus.request()
         )
-        .next(E.right({ status: 500 }))
+        .next(ok({ status: 500 }))
         .put(
           idPayGetCodeStatus.failure({
             ...getGenericError(new Error(`response status code 500`))
@@ -86,7 +86,7 @@ describe("handleIdPayGetCodeStatus", () => {
           }),
           idPayGetCodeStatus.request()
         )
-        .next(E.left([]))
+        .next(err([]))
         .put(
           idPayGetCodeStatus.failure({
             ...getGenericError(new Error(readablePrivacyReport([])))

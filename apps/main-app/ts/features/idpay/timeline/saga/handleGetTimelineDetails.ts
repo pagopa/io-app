@@ -1,6 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -38,26 +37,43 @@ export function* handleGetTimelineDetails(
       action
     )) as unknown as SagaCallReturnType<typeof getTimelineDetail>;
 
-    yield pipe(
-      getTimelineDetailResult,
-      E.fold(
-        error =>
-          put(
-            idpayTimelineDetailsGet.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            })
-          ),
-        response =>
-          put(
-            response.status === 200
-              ? idpayTimelineDetailsGet.success(response.value)
-              : idpayTimelineDetailsGet.failure({
-                  ...getGenericError(
-                    new Error(`response status code ${response.status}`)
-                  )
-                })
-          )
-      )
+    const result = (
+      "isOk" in getTimelineDetailResult
+        ? getTimelineDetailResult
+        : "right" in getTimelineDetailResult
+          ? ok(getTimelineDetailResult.right)
+          : err(getTimelineDetailResult.left)
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof getTimelineDetail>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield result.match(
+      response =>
+        put(
+          response.status === 200
+            ? idpayTimelineDetailsGet.success(response.value)
+            : idpayTimelineDetailsGet.failure({
+                ...getGenericError(
+                  new Error(`response status code ${response.status}`)
+                )
+              })
+        ),
+      error =>
+        put(
+          idpayTimelineDetailsGet.failure({
+            ...getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
+          })
+        )
     );
   } catch (e) {
     yield* put(idpayTimelineDetailsGet.failure({ ...getNetworkError(e) }));

@@ -11,8 +11,6 @@ import {
   ListItemInfoCopy,
   VSpacer
 } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { View } from "react-native";
 
@@ -28,11 +26,8 @@ type Props = {
 const IdPayTimelineTransactionDetailsComponent = (props: Props) => {
   const { transaction } = props;
 
-  const reversalAlertComponent = pipe(
-    transaction.operationType,
-    O.of,
-    O.filter(type => type === TransactionTypeEnum.REVERSAL),
-    O.map(() => (
+  const reversalAlertComponent =
+    transaction.operationType === TransactionTypeEnum.REVERSAL ? (
       <>
         <Alert
           content={I18n.t(
@@ -42,19 +37,15 @@ const IdPayTimelineTransactionDetailsComponent = (props: Props) => {
         />
         <VSpacer size={16} />
       </>
-    )),
-    O.toNullable
-  );
+    ) : null;
 
   const idTrxIssuer = transaction.idTrxIssuer || "";
   const idTrxAcquirer = transaction.idTrxAcquirer || "";
 
-  const formattedAmount = pipe(
-    transaction.amountCents,
-    O.fromNullable,
-    O.map(amount => formatNumberCentsToAmount(amount, true)),
-    O.getOrElse(() => "-")
-  );
+  const formattedAmount =
+    transaction.amountCents !== undefined
+      ? formatNumberCentsToAmount(transaction.amountCents, true)
+      : "-";
 
   const formattedAccrued = formatNumberCentsToAmount(
     transaction.accruedCents,
