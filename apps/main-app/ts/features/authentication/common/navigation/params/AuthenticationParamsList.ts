@@ -6,6 +6,7 @@ import { CieCardReaderScreenNavigationParams } from "../../../login/cie/screens/
 import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
 import { UrlNotCompliant } from "../../../login/cie/screens/CieIdAuthUrlError";
 import { CieWrongCiePinScreenNavigationParams } from "../../../login/cie/screens/CieWrongCiePinScreen";
+import { OneIdentityCieAuthRouteParams } from "../../../login/cie/screens/OneIdentityCieAuthScreen";
 import { ChosenIdentifier } from "../../../login/optIn/screens/OptInScreen";
 import { UnlockAccessProps } from "../../../login/unlockAccess/components/UnlockAccessComponent";
 import { AUTHENTICATION_ROUTES } from "../routes";
@@ -13,6 +14,7 @@ import { AUTHENTICATION_ROUTES } from "../routes";
 export type AuthenticationParamsList = {
   [AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN]: AuthErrorScreenProps;
   [AUTHENTICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN]: CieCardReaderScreenNavigationParams;
+  [AUTHENTICATION_ROUTES.CIE_AUTH_SCREEN]: OneIdentityCieAuthRouteParams;
   [AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN]: CieCardReaderScreenNavigationParams;
   [AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN]: ActiveSessionCieCardReaderScreenNavigationParams;
   [AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE]: CieConsentDataUsageScreenNavigationParams;
