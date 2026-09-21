@@ -269,6 +269,12 @@
       "contextualHelpTitle": "Who is your Identity Provider?",
       "idps": {
         "loadingAccessibilityLabel": "Loading Identity Provider"
+      },
+      "loadingError": {
+        "description": "Please try again later, or log in to IO using your Electronic ID Card (CIE).",
+        "primaryAction": "Log in with CIE",
+        "secondaryAction": "Close",
+        "title": "We are unable to load the list of SPID providers"
       }
     },
     "landing": {
@@ -1005,6 +1011,7 @@
           "expired": "Expired",
           "expiring": "Expiring",
           "invalid": "Invalid",
+          "suspended": "Invalid",
           "unknown": "Not available",
           "upgradePending": "To be updated",
           "verificationExpired": "Action required",
@@ -1477,7 +1484,7 @@
               }
             }
           },
-          "noCieCta": "Don't have an electronic ID card?",
+          "noCieCta": "Don't have an Electronic ID Card?",
           "section": {
             "l2": "Verify identity",
             "l3-issuance": "Activate IT-Wallet",
@@ -1571,6 +1578,8 @@
               "body": "If you find any errors or inconsistencies, please report them to the institution that holds the data and is responsible for it.",
               "bodyAuthSource": "For this digital document, the reference institution is {{authSource}}.",
               "bodyFooter": "Once the data has been corrected, you can repeat the process of adding the document to your portfolio.",
+              "bodyMarkdown": "If you find any errors or inconsistencies, you must report them to the entity that holds the data and is responsible for it.\n\nOnce the data has been corrected, you can add the document back to your Portfolio.\n\nFor this digital document, please refer to:\n{{contacts}}",
+              "contactUrl": "Website",
               "primaryAction": "Got it",
               "title": "Something doesn't add up with the data in the document"
             }
@@ -1636,8 +1645,8 @@
         "issuerNotTrustedCommonError": {
           "primaryAction": "Got it",
           "secondaryAction": "Show details",
-          "subtitle": "A technical error has occurred that prevents you from accessing {{credential}}. Please try again.\nIf the problem persists, contact support.",
-          "title": "A problem is preventing you from continuing."
+          "subtitle": "There is currently a problem preventing {{credential}}from updating: please try again later. If the problem persists, contact support.",
+          "title": "Something went wrong"
         },
         "landingError": {
           "action": "Close",
@@ -1693,8 +1702,8 @@
             "title": "Activate Documenti su IO to continue"
           },
           "itWallet": {
-            "subtitle": "To add new documents to your IO Wallet, get IT-Wallet: all you need is your Electronic ID Card (CIE).",
-            "title": "Get IT-Wallet to continue"
+            "subtitle": "To add new documents to your IO Portfolio, activate IT-Wallet: all you need is your Electronic ID Card (CIE).",
+            "title": "Activate IT-Wallet to continue"
           },
           "primaryAction": "Get started",
           "secondaryAction": "Not now"
@@ -1943,8 +1952,8 @@
           "hiddenClaim": "Hidden",
           "mdl": {
             "walletUpgradeBanner": {
-              "action": "Get IT-Wallet",
-              "content": "Get IT-Wallet to use your driver's license as an ID card too!",
+              "action": "Activate IT-Wallet",
+              "content": "Activate IT-Wallet to use your driver's license as an ID card too!",
               "title": "IT-Wallet News"
             }
           },
@@ -2316,10 +2325,10 @@
             "alert": {
               "body": "You will not be able to complete the login process for the online services."
             },
-            "primaryAction": "Get IT-Wallet",
+            "primaryAction": "Activate IT-Wallet",
             "secondaryAction": "Not now",
             "subtitle": "To access online services, you must activate IT-Wallet using your Electronic ID Card (CIE) and your PIN.",
-            "title": "Get IT-Wallet to \ncontinue"
+            "title": "Activate IT-Wallet to \ncontinue"
           }
         },
         "selectiveDisclosure": {
@@ -2362,9 +2371,9 @@
           "title": "IT-Wallet"
         },
         "manage": {
-          "content": "###### What can you do with IT-Wallet?\n - Get digital versions of your personal documents, certificates, and credentials\n - Prove your identity and eligibility to drive with the digital driver’s license\n - Access digital government services in just a few steps\n - Use your Health Insurance Card to purchase medications and schedule medical appointments\n To learn more, [go to IT-Wallet website]()",
+          "content": "###### What can you do with IO’s IT-Wallet?\n - Get digital versions of your personal documents, certificates and qualifications\n - Prove your identity and eligibility to drive with your digital driving licence\n - Access public administration digital services in just a few steps\n - Use your Health Insurance Card to buy medicines and book medical appointments\n To find out more, [visit the IT-Wallet website]",
           "cta": {
-            "obtain": "Get IT-Wallet",
+            "obtain": "Activate IT-Wallet",
             "revoke": "Disable IT-Wallet"
           },
           "description": "It's your official digital wallet.",
@@ -2416,10 +2425,16 @@
         }
       },
       "unsupportedDevice": {
-        "error": {
+        "errorL2": {
           "secondaryAction": "Close",
           "subtitle": "To learn about the security requirements for this feature, click **[Learn More]({{faqUrl}})**",
           "title": "Your device does not support Documenti su IO"
+        },
+        "errorL3": {
+          "primaryAction": "Close",
+          "secondaryAction": "Learn more",
+          "subtitle": "This device does not meet the safety requirements necessary for its operation.",
+          "title": "Your device does not support IT Wallet"
         }
       },
       "verifiableCredentials": {
@@ -3935,7 +3950,7 @@
       },
       "checks": {
         "1": {
-          "content": "If you continue, you will no longer be able to rejoin the program through the IO app or any other supported channels.",
+          "content": "If you continue, you will lose the right to re-enroll in the initiative through the IO app and all other authorized channels.",
           "title": "You can't enroll again."
         },
         "2": {

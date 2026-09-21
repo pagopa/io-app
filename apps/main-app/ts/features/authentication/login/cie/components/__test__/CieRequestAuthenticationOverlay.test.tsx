@@ -17,9 +17,7 @@ import { isFastLoginEnabledSelector } from "../../../../fastLogin/store/selector
 import { isCieLoginUatEnabledSelector } from "../../store/selectors";
 import { CieRequestAuthenticationOverlay } from "../CieRequestAuthenticationOverlay";
 
-jest
-  .spyOn(AnalyticsUtils, "trackSpidLoginError")
-  .mockImplementation(() => null);
+jest.spyOn(AnalyticsUtils, "trackLoginError").mockImplementation(() => null);
 
 jest.mock("@react-native-cookies/cookies", () => ({
   removeSessionCookies: jest.fn(() => Promise.resolve(true))
@@ -126,7 +124,7 @@ describe("CieRequestAuthenticationOverlay", () => {
     await expect(
       findByText(I18n.t("global.buttons.retry"))
     ).resolves.toBeTruthy();
-    expect(AnalyticsUtils.trackSpidLoginError).toHaveBeenCalledWith(
+    expect(AnalyticsUtils.trackLoginError).toHaveBeenCalledWith(
       "cie",
       errorValue
     );
