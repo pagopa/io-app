@@ -100,7 +100,10 @@ function flatten(value, prefix = "", out = new Map()) {
     return out;
   }
   if (RAW_SOURCE in value) {
-    out.set(prefix, /** @type {Record<symbol, string | undefined>} */ (value)[RAW_SOURCE]);
+    out.set(
+      prefix,
+      /** @type {Record<symbol, string | undefined>} */ (value)[RAW_SOURCE]
+    );
     return out;
   }
   const entries = Array.isArray(value)
