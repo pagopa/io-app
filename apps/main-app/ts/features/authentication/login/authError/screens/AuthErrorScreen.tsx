@@ -1,6 +1,7 @@
 import { Route, useRoute } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -14,6 +15,7 @@ import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/
 import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { AuthLevel } from "../../../common/utils";
+import { getAuthErrorDetails } from "../../../common/utils/authError";
 import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
@@ -49,6 +51,17 @@ const AuthErrorScreen = () => {
       >
     >();
   const { errorCodeOrMessage, authMethod, authLevel } = route.params;
+
+  const debugInfo = useMemo(() => {
+    const { title } = getAuthErrorDetails(errorCodeOrMessage);
+    return {
+      errorCodeOrMessage,
+      errorTitle: title,
+      authMethod,
+      authLevel
+    };
+  }, [errorCodeOrMessage, authMethod, authLevel]);
+  useDebugInfo(debugInfo);
 
   const navigation = useIONavigation();
 

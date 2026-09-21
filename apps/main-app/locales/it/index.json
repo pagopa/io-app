@@ -266,12 +266,11 @@
       },
       "loadingError": {
         "description": "Riprova più tardi oppure entra su IO con la tua Carta d’Identità Elettronica (CIE).",
-        "title": "Non riusciamo a caricare la lista dei gestori SPID",
         "primaryAction": "Entra con CIE",
-        "secondaryAction": "Chiudi"
+        "secondaryAction": "Chiudi",
+        "title": "Non riusciamo a caricare la lista dei gestori SPID"
       }
     },
-
     "landing": {
       "accessibility": {
         "carousel": {
@@ -1461,7 +1460,7 @@
               }
             }
           },
-          "noCieCta": "Non hai la Carta di Identità Elettronica?",
+          "noCieCta": "Non hai una Carta di Identità Elettronica?",
           "section": {
             "l2": "Conferma identità",
             "l3-issuance": "Attiva IT-Wallet",
@@ -1555,6 +1554,8 @@
               "body": "Se riscontri errori o incongruenze, ti invitiamo a segnalarli all'ente che detiene i dati e ne è responsabile.",
               "bodyAuthSource": "Per questo documento digitale, l'ente di riferimento è {{authSource}}.",
               "bodyFooter": "Una volta che i dati saranno stati corretti, potrai ripetere l'operazione di aggiunta del documento al portafoglio.",
+              "bodyMarkdown": "Se riscontri errori o incongruenze, dovrai segnalarlo all'ente che detiene i dati e ne è responsabile.\n\nUna volta che i dati saranno stati corretti potrai aggiungere di nuovo il documento al Portafoglio.\n\nPer questo documento digitale, fai riferimento a:\n{{contacts}}",
+              "contactUrl": "Sito web",
               "primaryAction": "Ho capito",
               "title": "Qualcosa non torna sui dati del documento"
             }
@@ -1620,8 +1621,8 @@
         "issuerNotTrustedCommonError": {
           "primaryAction": "Ho capito",
           "secondaryAction": "Mostra dettagli",
-          "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere {{credential}}. Riprova.\nSe il problema persiste, contatta l’assistenza.",
-          "title": "Un problema non permette di continuare"
+          "subtitle": "Un problema impedisce di aggiornare ora {{credential}}: riprova più tardi. Se il problema persiste, contatta l’assistenza.",
+          "title": "Qualcosa non ha funzionato"
         },
         "landingError": {
           "action": "Chiudi",
@@ -1677,8 +1678,8 @@
             "title": "Attiva Documenti su IO per continuare"
           },
           "itWallet": {
-            "subtitle": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
-            "title": "Ottieni IT-Wallet per continuare"
+            "subtitle": "Per aggiungere nuovi documenti al tuo Portafoglio di IO attiva IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
+            "title": "Attiva IT-Wallet per continuare"
           },
           "primaryAction": "Inizia",
           "secondaryAction": "Non ora"
@@ -1927,8 +1928,8 @@
           "hiddenClaim": "Nascosto",
           "mdl": {
             "walletUpgradeBanner": {
-              "action": "Ottieni IT-Wallet",
-              "content": "Ottieni IT-Wallet per usare la tua Patente anche come documento d'identità!",
+              "action": "Attiva IT-Wallet",
+              "content": "Attiva IT-Wallet per usare la tua Patente anche come documento d'identità!",
               "title": "Novità IT-Wallet"
             }
           },
@@ -2299,10 +2300,10 @@
             "alert": {
               "body": "Non potrai completare l'accesso ai servizi online."
             },
-            "primaryAction": "Ottieni IT-Wallet",
+            "primaryAction": "Attiva IT-Wallet",
             "secondaryAction": "Non ora",
             "subtitle": "Per accedere ai servizi online è necessario attivare IT-Wallet utilizzando la tua Carta di Identità Elettronica (CIE) e il PIN.",
-            "title": "Ottieni IT-Wallet per \ncontinuare"
+            "title": "Attiva IT-Wallet per \ncontinuare"
           }
         },
         "selectiveDisclosure": {
@@ -2345,9 +2346,9 @@
           "title": "IT-Wallet"
         },
         "manage": {
-          "content": "###### Cosa puoi fare con IT-Wallet?\n - Ottieni la versione digitale dei tuoi documenti personali, titoli, attestati\n - Dimostri identità e idoneità alla guida con la Patente digitale\n - Accedi ai servizi digitali della PA in pochi passaggi\n - Usi la Tessera Sanitaria per acquistare farmaci e prenotare visite mediche\n Per saperne di più, [visita il sito IT-Wallet]()",
+          "content": "###### Cosa puoi fare con il portafoglio IT-Wallet di IO?\n - Ottieni la versione digitale dei tuoi documenti personali, titoli, attestati\n - Dimostri identità e idoneità alla guida con la Patente digitale\n - Accedi ai servizi digitali della PA in pochi passaggi\n - Usi la Tessera Sanitaria per acquistare farmaci e prenotare visite mediche\n Per saperne di più, [visita il sito IT-Wallet]()",
           "cta": {
-            "obtain": "Ottieni IT-Wallet",
+            "obtain": "Attiva IT-Wallet",
             "revoke": "Disattiva IT-Wallet"
           },
           "description": "È il tuo portafoglio digitale ufficiale.",
@@ -2405,10 +2406,10 @@
           "title": "Il tuo dispositivo non supporta Documenti su IO"
         },
         "errorL3": {
-          "title": "Il tuo dispositivo non supporta IT Wallet",
-          "subtitle": "Questo dispositivo non ha i requisiti di sicurezza necessari per il suo funzionamento.",
           "primaryAction": "Chiudi",
-          "secondaryAction": "Scopri di più"
+          "secondaryAction": "Scopri di più",
+          "subtitle": "Questo dispositivo non ha i requisiti di sicurezza necessari per il suo funzionamento.",
+          "title": "Il tuo dispositivo non supporta IT Wallet"
         }
       },
       "verifiableCredentials": {
@@ -3919,7 +3920,7 @@
       },
       "checks": {
         "1": {
-          "content": "Proseguendo, perdi il diritto di poter aderire nuovamente all’iniziativa da app IO e tutti gli altri canali abilitati.",
+          "content": "Proseguendo, perdi il diritto di poter aderire di nuovo all’iniziativa dall'app IO e tutti gli altri canali abilitati.",
           "title": "Non puoi iscriverti un’altra volta"
         },
         "2": {
