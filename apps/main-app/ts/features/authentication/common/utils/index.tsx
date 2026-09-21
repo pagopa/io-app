@@ -208,8 +208,6 @@ export const originSchemasWhiteList = [
   ...(isDevEnv ? ["http://*"] : [])
 ];
 
-export const CALLBACK_PATH = "/api/auth/v2/callback";
-
 /**
  * Checks whether `url` is an exact match of one of the OIDC callback endpoints
  * (`v1` or `v2`) exposed by the backend at `apiUrlPrefix`. Both versions are accepted.

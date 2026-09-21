@@ -13430,7 +13430,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                                 ]
                               }
                             >
-                              Ottieni IT-Wallet per 
+                              Attiva IT-Wallet per 
 continuare
                             </Text>
                             <View
@@ -13459,7 +13459,7 @@ continuare
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Ottieni IT-Wallet"
+                                  accessibilityLabel="Attiva IT-Wallet"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -13668,7 +13668,7 @@ continuare
                                           ]
                                         }
                                       >
-                                        Ottieni IT-Wallet
+                                        Attiva IT-Wallet
                                       </Text>
                                     </View>
                                   </View>

@@ -28,12 +28,16 @@ export const WHITELISTED_DOMAINS = [
 ];
 
 /**
- * Checks whether `url`'s origin is one of the trusted CIE ID identity server in `WHITELISTED_DOMAINS`.
+ * Checks whether `url`'s origin is one of the trusted CIE ID identity servers in `allowedOrigins`.
+ * Defaults to `WHITELISTED_DOMAINS` for callers that don't yet source the list from remote config.
  */
-export const isAllowedUrl = (url: string) => {
+export const isAllowedUrl = (
+  url: string,
+  allowedOrigins: ReadonlyArray<string> = WHITELISTED_DOMAINS
+) => {
   try {
     const { origin } = new URL(url);
-    return WHITELISTED_DOMAINS.includes(origin);
+    return allowedOrigins.includes(origin);
   } catch {
     return false;
   }
