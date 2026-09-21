@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-rc.1](https://github.com/pagopa/io-app/compare/3.40.0-rc.0...3.40.0-rc.1) (2026-09-18)
+
+### Features
+
+* [[IOPID-4125](https://pagopa.atlassian.net/browse/IOPID-4125)] Introduce OneIdentity CIE+PIN authentication flow ([#8630](https://github.com/pagopa/io-app/issues/8630)) ([8fc992b](https://github.com/pagopa/io-app/commit/8fc992b691b32ec9e09a9cf7ead72f9c52566b50))
+
+### Chores
+
+* Update translations from Lokalise ([#8631](https://github.com/pagopa/io-app/issues/8631)) ([0bded35](https://github.com/pagopa/io-app/commit/0bded352d055fe8f20a12df75230ecc907c041a7))
 ## [3.40.0-rc.0](https://github.com/pagopa/io-app/compare/3.39.0-rc.11...3.40.0-rc.0) (2026-09-18)
 ## [3.39.0-rc.11](https://github.com/pagopa/io-app/compare/3.39.0-rc.10...3.39.0-rc.11) (2026-09-18)
 

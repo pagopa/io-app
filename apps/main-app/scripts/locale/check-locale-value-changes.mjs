@@ -16,7 +16,8 @@
  *
  * This script compares the base revision of each tracked locale file with the
  * `HEAD` revision and fails when the value of a key that exists in both
- * revisions has changed.
+ * revisions has changed. Values are compared as raw JSON source text, so a
+ * rewrite that only re-escapes a value (e.g. `\/` → `/`) is reported too.
  *
  * Comparing against the *tip* of the base branch (not the merge base) is
  * intentional: it also forces branches to stay aligned with translations that
@@ -24,7 +25,7 @@
  *
  * Usage
  * -----
- *   node scripts/locales/check-locale-value-changes.mjs [--base <git-ref>]
+ *   node apps/main-app/scripts/locale/check-locale-value-changes.mjs [--base <git-ref>]
  *
  * The base ref defaults to the `BASE_REF` env variable, then to `origin/master`.
  * Exit codes: 0 on success, 1 when at least one forbidden value change is
@@ -35,6 +36,9 @@ import { execFileSync } from "node:child_process";
 
 /** Root that contains every localized bundle we want to protect. */
 const LOCALES_DIR = "apps/main-app/locales";
+
+/** Marks a parsed leaf value wrapped together with its raw JSON source text. */
+const RAW_SOURCE = Symbol("rawSource");
 
 /**
  * Reads a CLI flag value (e.g. `--base origin/master`).
@@ -61,41 +65,66 @@ function git(args) {
 }
 
 /**
- * Flattens a nested JSON object into a map of `dot.path` -> stringified value.
- * Arrays are indexed (`key.0`, `key.1`). Leaf values are JSON-stringified so
- * that primitive comparisons are exact and type-aware.
+ * `JSON.parse` reviver that wraps every primitive with its raw source text.
+ * @param {string} _key
+ * @param {unknown} value
+ * @param {{ source?: string }} [context] Only passed by Node.js >= 21.
+ * @returns {unknown}
+ */
+function keepSource(_key, value, context) {
+  return value !== null && typeof value === "object"
+    ? value
+    : { [RAW_SOURCE]: context?.source };
+}
+
+/**
+ * Parses JSON keeping the raw source text of each leaf (e.g. `"a\/b"` rather
+ * than `"a/b"`), so formatting-only rewrites of a value stay visible.
+ * @param {string} content
+ * @returns {unknown}
+ */
+function parseWithSource(content) {
+  return JSON.parse(content, keepSource);
+}
+
+/**
+ * Flattens the output of `parseWithSource` into a map of `dot.path` -> raw
+ * source text of the leaf. Arrays are indexed (`key.0`, `key.1`).
  * @param {unknown} value
  * @param {string} prefix
- * @param {Map<string, string>} out
- * @returns {Map<string, string>}
+ * @param {Map<string, string | undefined>} out
+ * @returns {Map<string, string | undefined>}
  */
 function flatten(value, prefix = "", out = new Map()) {
-  if (value !== null && typeof value === "object") {
-    const entries = Array.isArray(value)
-      ? value.map((item, index) => [String(index), item])
-      : Object.entries(value);
-    for (const [key, child] of entries) {
-      const path = prefix ? `${prefix}.${key}` : key;
-      flatten(child, path, out);
-    }
-  } else {
-    out.set(prefix, JSON.stringify(value));
+  if (value === null || typeof value !== "object") {
+    return out;
+  }
+  if (RAW_SOURCE in value) {
+    out.set(prefix, /** @type {Record<symbol, string | undefined>} */ (value)[RAW_SOURCE]);
+    return out;
+  }
+  const entries = Array.isArray(value)
+    ? value.map((item, index) => [String(index), item])
+    : Object.entries(value);
+  for (const [key, child] of entries) {
+    const path = prefix ? `${prefix}.${key}` : key;
+    flatten(child, path, out);
   }
   return out;
 }
 
 /**
- * Detects keys whose value changed between two revisions of the same file.
- * Added and removed keys are intentionally ignored.
+ * Detects keys whose raw value text changed between two revisions of the same
+ * file. Added and removed keys are intentionally ignored.
  * @param {string} baseContent
  * @param {string} headContent
- * @returns {Array<{ key: string; from: string; to: string }>}
+ * @returns {Array<{ key: string; from: string | undefined; to: string | undefined }>}
  */
 function findChangedValues(baseContent, headContent) {
-  const base = flatten(JSON.parse(baseContent));
-  const head = flatten(JSON.parse(headContent));
+  const base = flatten(parseWithSource(baseContent));
+  const head = flatten(parseWithSource(headContent));
 
-  /** @type {Array<{ key: string; from: string; to: string }>} */
+  /** @type {Array<{ key: string; from: string | undefined; to: string | undefined }>} */
   const changes = [];
   for (const [key, baseValue] of base) {
     const headValue = head.get(key);
@@ -162,7 +191,8 @@ function main() {
     "❌ Manual value changes to existing locale keys are not allowed.\n" +
       "   Existing translations can only be updated through the Lokalise pull\n" +
       "   automation (PRs opened from a `lok_*` branch).\n" +
-      "   You may still add new keys or remove unused ones.\n\n" +
+      "   You may still add new keys or remove unused ones.\n" +
+      "   Formatting-only rewrites count too (e.g. `\\/` → `/`): keep the original text.\n\n" +
       "   ℹ️  If you did NOT change the keys listed below, their translation\n" +
       "   was probably updated on master via Lokalise after your branch was\n" +
       "   created: merge master into your branch to make this check pass.\n"
