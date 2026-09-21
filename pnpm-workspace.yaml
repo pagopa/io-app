@@ -65,14 +65,15 @@ catalog:
   eslint-plugin-prettier: "^5.5.6"
   eslint-plugin-react-native-a11y: "^3.3.0"
 
+  # --- React ---
+  react: "19.2.0"
+  react-dom: "19.2.0"
+  react-test-renderer: "19.2.0"
+
   # --- React Native ---
   "@react-native/typescript-config": "0.83.10"
   "@react-native/eslint-config": "0.83.10"
-  react: "19.2.0"
-  # React 19 refuses to start when react and react-dom are not the same version.
-  react-dom: "19.2.0"
   react-native: "0.83.10"
-  react-test-renderer: "19.2.0"
 
   # --- State management ---
   redux: "4.1.1"
