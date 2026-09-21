@@ -12,7 +12,7 @@ import {
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { trackSpidLoginError } from "../../../../utils/analytics";
+import { trackLoginError } from "../../../../utils/analytics";
 import { SpidIdp } from "../../../../utils/idps";
 import {
   assistanceToolRemoteConfig,
@@ -85,7 +85,7 @@ export const IdpWebViewLogin = memo(
 
     const handleError = useCallback(
       (event: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-        trackSpidLoginError(idp.id, event);
+        trackLoginError(idp.id, event);
 
         const { nativeEvent } = event;
         if ("statusCode" in nativeEvent) {
