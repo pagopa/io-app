@@ -275,7 +275,8 @@ export const closeIssuanceAction = ({ context, event }: EidActionArgs) => {
   const isSurveyHidden = itwIsPidReissuingSurveyHiddenSelector(
     store.getState()
   );
-  const isReissuance = context.mode === "reissuance";
+  // This survey is reserved to IT-Wallet (L3): "Documenti su IO" (L2/l2-fallback) reissuance must never trigger it.
+  const isReissuance = context.mode === "reissuance" && context.level === "l3";
 
   const surveyStep = event.type === "close" ? event.surveyStep : undefined;
 
