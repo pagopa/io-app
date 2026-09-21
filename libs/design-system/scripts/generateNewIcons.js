@@ -70,9 +70,9 @@ Prerequisites:
 const path = require("path");
 const join = path.join;
 const { optimize } = require("svgo");
-const prettier = require("prettier");
 const fs = require("fs-extra");
 const { transform } = require("@svgr/core");
+const { formatComponent } = require("./formatComponent");
 
 const svgDir = join(__dirname, "../src/components/icons/svg/originals");
 const tsxDir = join(__dirname, "../src/components/icons/svg");
@@ -196,9 +196,10 @@ async function run() {
         const fileWithTsxExtension = file.replace(".svg", ".tsx");
         const tsxFilePath = join(tsxDir, fileWithTsxExtension);
 
-        const formattedData = await prettier.format(componentData, {
-          parser: "typescript"
-        });
+        const formattedData = await formatComponent(
+          fileWithTsxExtension,
+          componentData
+        );
 
         fs.writeFileSync(tsxFilePath, formattedData);
 
