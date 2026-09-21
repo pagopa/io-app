@@ -21,6 +21,7 @@
       },
       "inAppBrowserError": "C’è stato un problema nell’invio della richiesta. Riprova",
       "privacy": "Per maggiori informazioni, leggi **[l’Informativa sulla Privacy]({{privacyUrl}})**",
+      "requiredData": "Dati richiesti",
       "subtitle": "IO condividerà con ",
       "subtitle2": " i dati necessari alla tua autenticazione su ",
       "title": "Per accedere al servizio, consenti la condivisione dei seguenti dati"
@@ -559,9 +560,15 @@
           "revoked": "Attenzione! Questa carta è stata revocata per {{reason}}"
         },
         "ownership": "Chi può usare la Carta?",
+        "ownershipData": {
+          "fiscalCode": "Codice Fiscale",
+          "name": "Nome",
+          "surname": "Cognome"
+        },
         "status": {
           "a11y": {
-            "cardStatus": "Stato della carta: {{status}}"
+            "cardStatus": "Stato della carta: {{status}}",
+            "eycaInfo": "Maggiori informazioni sul circuito EYCA"
           },
           "badge": {
             "active": "Attiva",
@@ -2576,6 +2583,7 @@
         },
         "error": {
           "banner": {
+            "label": "Il caricamento delle ricevute è fallito.",
             "retryButton": "Prova di nuovo"
           }
         },
@@ -3160,9 +3168,11 @@
       "retry": "Si è verificato un errore, si prega di riprovare"
     },
     "badges": {
+      "beta": "Beta",
       "cancelled": "Annullata",
       "failed": "Fallito",
       "onGoing": "In corso",
+      "pdf": "PDF",
       "reversal": "Storno"
     },
     "buttons": {
@@ -3641,6 +3651,8 @@
         "errorBody": "Impossibile caricare il dettaglio",
         "refund": {
           "amount": "Importo rimborso",
+          "cro": "CRO",
+          "date": "Data rimborso",
           "iban": "IBAN",
           "period": "Periodo di riferimento",
           "rejectedAdvice": {
