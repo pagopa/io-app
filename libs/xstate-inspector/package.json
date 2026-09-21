@@ -5,7 +5,6 @@
   "description": "Standalone local XState inspector for io-app development",
   "type": "module",
   "scripts": {
-    "build": "vite build",
     "start": "vite",
     "test": "vitest run",
     "tsc-noemit": "tsc --noEmit",

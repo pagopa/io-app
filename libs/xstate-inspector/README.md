@@ -83,5 +83,4 @@ parsed best-effort.
 pnpm nx run xstate-inspector:test
 pnpm nx run xstate-inspector:tsc-noemit
 pnpm nx run xstate-inspector:lint
-pnpm nx run xstate-inspector:build
 ```
