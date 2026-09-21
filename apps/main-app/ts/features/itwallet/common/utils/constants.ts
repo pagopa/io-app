@@ -45,3 +45,12 @@ export const IT_WALLET_SURVEY_CREDENTIAL_EXIT =
  * Fixed Wallet Solution identifier to get the Wallet Instance and Key attestations.
  */
 export const WALLET_SOLUTION_ID = "appio";
+
+/**
+ * List of `scope` values that qualify as PID, used to retrieve the correct
+ * credential configuration ID from the PID Issuer's Entity Configuration.
+ */
+export const pidScopes = [
+  "PersonIdentificationData", // Legacy 1.0 PID (will be removed in the future)
+  "eid" // New 1.4 NPID
+];
