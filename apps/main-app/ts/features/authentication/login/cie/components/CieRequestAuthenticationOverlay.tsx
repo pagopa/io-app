@@ -33,7 +33,7 @@ import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButto
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
-import { trackSpidLoginError } from "../../../../../utils/analytics";
+import { trackLoginError } from "../../../../../utils/analytics";
 import { closeInjectedScript } from "../../../../../utils/webview";
 import {
   isActiveSessionFastLoginEnabledSelector,
@@ -178,7 +178,7 @@ const CieWebView = (props: Props) => {
     (
       e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
     ) => {
-      trackSpidLoginError("cie", e);
+      trackLoginError("cie", e);
       setInternalState(state => generateErrorState(state));
     },
     []
