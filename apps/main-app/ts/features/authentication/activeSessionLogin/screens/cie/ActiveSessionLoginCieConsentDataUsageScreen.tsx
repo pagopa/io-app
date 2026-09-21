@@ -23,13 +23,13 @@ import {
   trackLoginCieConsentDataUsageScreen,
   trackLoginCieDataSharingError
 } from "../../../common/analytics/cieAnalytics";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
   AUTH_LEVELS,
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { LoaderComponent } from "../../shared/components/LoaderComponent";
 import { ACS_PATH } from "../../shared/utils";
 import {
