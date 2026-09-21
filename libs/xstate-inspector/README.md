@@ -6,7 +6,7 @@ A development-only inspector for the XState machines in the [IO app](../../apps/
 
 The React Native bridge receives every inspection event XState emits and batches them. It posts a batch to `<metro-host>/xstate-inspector/ingest` every 150 ms, or sooner when the batch reaches 50 events. Metro’s dev server mounts `middleware.js` on that path, and the middleware fans every event out to the connected pages over Server-Sent Events (SSE).
 
-The UI keys a tab by the machine id in the actor registration event. A machine that the app disposes and sets up again replaces its own timeline instead of opening a second tab. The UI renders the three XState event types, `@xstate.actor`, `@xstate.event`, and `@xstate.snapshot`, and shows any other event as-is. `browser/src/types.d.ts` declares the wire format.
+The UI keys a tab by the machine id in the actor registration event. A machine that the app disposes and sets up again replaces its own timeline instead of opening a second tab. The UI renders the three XState event types, `@xstate.actor`, `@xstate.event`, and `@xstate.snapshot`, and shows any other event as-is. `browser/src/types.ts` declares the wire format.
 
 ## What this package contains
 
@@ -20,17 +20,28 @@ libs/xstate-inspector/
 │   └── __tests__/                  unit tests for the bridge
 ├── middleware.js                   Connect middleware that Metro mounts
 ├── metro.js                        Metro config plugin: middleware + RN shims
-├── browser/                        inspector UI
-│   ├── build.mjs                   bundles src/ into dist/ with esbuild
-│   ├── index.html                  markup and styles, copied into dist/
-│   ├── src/                        UI sources, one module per concern
-│   │   ├── app.js                  entry point: toolbar, export, SSE stream
-│   │   ├── store.js                zustand store: machine tabs and their caps
-│   │   ├── view.js                 tab strip and timeline rendering
-│   │   ├── wire.js                 wire event to timeline entry
-│   │   ├── format.js               payload to text helpers
-│   │   ├── constants.js            retention and rendering tunables
-│   │   └── types.d.ts              wire format declarations
+├── browser/                        inspector UI, React 19 in TypeScript
+│   ├── build.mjs                   bundles src/main.tsx into dist/ with esbuild
+│   ├── index.html                  styles and the mount point, copied into dist/
+│   ├── src/                        UI sources, grouped by purpose
+│   │   ├── main.tsx                mounts the app on #root
+│   │   ├── types.ts                wire format and view types
+│   │   ├── constants.ts            retention and rendering tunables
+│   │   ├── lib/                    pure modules, no React
+│   │   │   ├── entry.ts            wire event to timeline entry
+│   │   │   ├── export.ts           the JSON the export button downloads
+│   │   │   └── format.ts           payload to text helpers
+│   │   ├── state/                  the timeline store and the hooks around it
+│   │   │   ├── timeline.ts         zustand store: tabs, caps, filter, expansion
+│   │   │   ├── useTimeline.ts      store subscription for React
+│   │   │   ├── useStream.ts        stream to store, and the connection status
+│   │   │   └── useSelectedTab.ts   selected tab, kept in the URL hash
+│   │   └── ui/                     components
+│   │       ├── App.tsx             the screen, and its only subscription
+│   │       ├── MachineTabs.tsx     the tab strip
+│   │       ├── Toolbar.tsx         filter, export, clear
+│   │       ├── Timeline.tsx        the rows, plus what the caps and filter hide
+│   │       └── EventRow.tsx        one row
 │   └── dist/                       built bundle the middleware serves, not committed
 ├── package.json
 ├── tsconfig.json
@@ -40,7 +51,7 @@ libs/xstate-inspector/
 
 `@io-app/xstate-inspector` resolves to `src/index.ts` for the app bundle. `@io-app/xstate-inspector/middleware` resolves to `middleware.js` for Node. `@io-app/xstate-inspector/metro` resolves to `metro.js`, the only Metro config the app has to apply. Neither bundle includes the browser UI, because the middleware reads it from disk.
 
-`browser/src` holds one module per concern: the zustand store keeps the machine tabs and their retention caps, `view.js` renders the tabs and the timeline and repaints when the store changes, `wire.js` normalizes the wire events, and `app.js` wires the toolbar and the stream together. `browser/build.mjs` bundles them into `browser/dist`, the directory the middleware serves, so the page loads a single file while the sources stay separate. `dist` is generated, not committed.
+`browser/src` splits by purpose. `state/timeline.ts` is the timeline itself: one tab per machine, the retention caps, the filter and the expanded rows. It is the only module that mutates state, and React subscribes to it through `state/useTimeline.ts`. `lib/entry.ts` normalizes the wire events, `lib/format.ts` turns payloads into text, and `lib/export.ts` builds the JSON the Export button downloads. The components under `ui/` render it: `App.tsx` is the only subscriber, and the rows below it render from props. `browser/build.mjs` bundles them into `browser/dist`, the directory the middleware serves, so the page loads a single file while the sources stay separate. `dist` is generated, not committed.
 
 ## Report a machine to the inspector
 
@@ -136,7 +147,7 @@ pnpm nx run xstate-inspector:lint
 
 Run `start` in its own terminal, next to `pnpm nx run main-app:start`. The middleware serves the bundle in `browser/dist`, not the sources, so Metro never picks up an edit by itself: reloading the page is not enough. Use `build` when the UI only has to exist once, for example in a checkout that is not being worked on.
 
-`tsc-noemit` also checks `middleware.js`, `browser/build.mjs` and the modules under `browser/src`, because the package tsconfig sets `checkJs`. `pnpm nx affected --targets=lint,tsc-noemit,test` runs the same targets for every project that changed.
+`tsc-noemit` checks the TypeScript under `browser/src` and, because the package tsconfig sets `checkJs`, the Node-side `middleware.js`, `metro.js` and `browser/build.mjs` as well. `pnpm nx affected --targets=lint,tsc-noemit,test` runs the same targets for every project that changed.
 
 ## Troubleshooting
 
