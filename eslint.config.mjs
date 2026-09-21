@@ -460,6 +460,32 @@ export default defineConfig([
     }
   },
   {
+    // The inspector UI is a browser app served by the dev server, not a screen
+    // of the app, so its labels never enter the translation catalogue.
+    files: ["libs/xstate-inspector/browser/**/*.{ts,tsx}"],
+
+    rules: {
+      "i18next/no-literal-string": "off"
+    }
+  },
+  {
+    // Two deliberate mutation points in the inspector UI. `state/timeline.ts`
+    // mutates its tabs in place, because copying a tab with 20000 retained
+    // events on every ingested event would allocate far more than the render
+    // the copy exists to trigger; `version` is what React compares. The other
+    // two files set DOM properties, which is the only way to select a tab or to
+    // hand a Blob to a download anchor.
+    files: [
+      "libs/xstate-inspector/browser/src/state/timeline.ts",
+      "libs/xstate-inspector/browser/src/state/useSelectedTab.ts",
+      "libs/xstate-inspector/browser/src/ui/Toolbar.tsx"
+    ],
+
+    rules: {
+      "functional/immutable-data": "off"
+    }
+  },
+  {
     files: ["**/locales/it/index.json"],
     languageOptions: {
       parser: jsonParser

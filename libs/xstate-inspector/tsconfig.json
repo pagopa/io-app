@@ -2,6 +2,7 @@
   "extends": ["../../tsconfig.base.json", "@react-native/typescript-config"],
   "compilerOptions": {
     "checkJs": true,
+    "jsx": "react-jsx",
     "types": ["jest", "node"],
     "lib": ["es2022", "dom", "dom.iterable"]
   },
