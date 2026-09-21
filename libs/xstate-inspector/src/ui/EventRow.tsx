@@ -25,6 +25,9 @@ export const EventRow = memo(({ entry, onToggle, open }: EventRowProps) => (
       <span className={`kind ${entry.kind}`}>{entry.kind}</span>
       <span className="headline">{entry.headline}</span>
       <span className="spacer" />
+      <time className="meta" dateTime={new Date(entry.at).toISOString()}>
+        {new Date(entry.at).toLocaleTimeString()}
+      </time>
     </summary>
     {open ? <pre>{pretty(entry.payload)}</pre> : null}
   </details>

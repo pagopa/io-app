@@ -4,7 +4,6 @@ const path = require('path');
 const { getDefaultConfig } = require('expo/metro-config');
 const { mergeConfig } = require('@react-native/metro-config');
 const { getRewriteRequestUrl } = require('@expo/metro-config/build/rewriteRequestUrl');
-const { withXStateInspector } = require('./xstate-inspector/metro');
 
 const projectRoot = path.resolve(__dirname);
 
@@ -63,4 +62,4 @@ const config = {
   }
 };
 
-module.exports = mergeConfig(defaultConfig, config, withXStateInspector);
+module.exports = mergeConfig(defaultConfig, config);

@@ -2,10 +2,9 @@
  * The JSON the Export button downloads: one block per tab, each holding the raw
  * wire events, so an inspection can be attached to a bug report.
  */
-import type { MachineTimeline } from "../types";
+import type { InspectorRuntime, MachineTimeline } from "../types";
 
 export interface ExportedMachine {
-  droppedEvents: number;
   events: Array<unknown>;
   key: string;
   label: string;
@@ -13,21 +12,25 @@ export interface ExportedMachine {
 }
 
 export interface TimelineExport {
+  droppedEvents: number;
   exportedAt: string;
   machines: Array<ExportedMachine>;
+  runtime?: InspectorRuntime;
 }
 
 export const buildExport = (
   machines: ReadonlyMap<string, MachineTimeline>,
-  dropped: ReadonlyMap<string, number>,
+  dropped: number,
+  runtime: InspectorRuntime | undefined,
   now: Date
 ): TimelineExport => ({
+  droppedEvents: dropped,
   exportedAt: now.toISOString(),
+  runtime,
   machines: [...machines.values()].map(machine => ({
     key: machine.key,
     label: machine.label,
     rootId: machine.rootId,
-    droppedEvents: dropped.get(machine.key) ?? 0,
     events: machine.events.map(entry => entry.payload)
   }))
 });

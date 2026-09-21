@@ -32,8 +32,10 @@ export const toEntry = (
   const sourceId = asString(event.sourceId);
   const body = asRecord(event.event);
   const snapshot = asRecord(event.snapshot) ?? {};
-  const at = Date.now();
+  const createdAt = Number(asString(event.createdAt));
+  const at = Number.isFinite(createdAt) ? createdAt : Date.now();
   const id = asString(event.id) ?? `${at}-${Math.random()}`;
+  const sessionId = asString(event.sessionId);
 
   if (type === "@xstate.actor") {
     const name = asString(event.name) ?? "actor";
@@ -51,6 +53,7 @@ export const toEntry = (
       headline: `${spawn}: ${name} · ${status}${outputText}`,
       at,
       size,
+      sessionId,
       payload: raw
     };
   }
@@ -77,6 +80,7 @@ export const toEntry = (
       headline: `${transition} · after ${eventType}${output}${error}`,
       at,
       size,
+      sessionId,
       payload: raw
     };
   }
@@ -96,6 +100,7 @@ export const toEntry = (
       headline: `${eventType}${payload}${origin}`,
       at,
       size,
+      sessionId,
       payload: raw
     };
   }
@@ -108,6 +113,7 @@ export const toEntry = (
     headline: compact(raw, PREVIEW_LIMIT),
     at,
     size,
+    sessionId,
     payload: raw
   };
 };

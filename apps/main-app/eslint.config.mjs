@@ -24,6 +24,14 @@ export default [
     }
   },
   {
+    // WebSocket transport and serialization use bounded mutable buffers.
+    files: ['ts/utils/xstate/inspector/**/*.ts'],
+    rules: {
+      'functional/immutable-data': 'off',
+      'functional/no-let': 'off'
+    }
+  },
+  {
     ignores: [
     '**/*.js',
 		'**/*.cjs',

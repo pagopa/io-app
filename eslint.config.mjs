@@ -469,20 +469,20 @@ export default defineConfig([
     }
   },
   {
-    // Two deliberate mutation points in the inspector UI. `state/timeline.ts`
-    // mutates its tabs in place, because copying a tab with 20000 retained
-    // events on every ingested event would allocate far more than the render
-    // the copy exists to trigger; `version` is what React compares. The other
-    // two files set DOM properties, which is the only way to select a tab or to
-    // hand a Blob to a download anchor.
+    // Bounded inspector buffers mutate in place to avoid copying up to 16 MB on
+    // every event. The remaining files update browser/server objects whose
+    // interfaces are mutable by design.
     files: [
+      "libs/xstate-inspector/server/**/*.ts",
       "libs/xstate-inspector/src/state/timeline.ts",
+      "libs/xstate-inspector/src/state/useStream.ts",
       "libs/xstate-inspector/src/state/useSelectedTab.ts",
       "libs/xstate-inspector/src/ui/Toolbar.tsx"
     ],
 
     rules: {
-      "functional/immutable-data": "off"
+      "functional/immutable-data": "off",
+      "functional/no-let": "off"
     }
   },
   {

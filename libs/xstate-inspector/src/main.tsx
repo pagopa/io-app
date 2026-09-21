@@ -1,6 +1,5 @@
 /**
- * Mounts the inspector UI. The Metro dev server serves this page and its bundle
- * under `/xstate-inspector`, and `index.html` carries the styles.
+ * Mounts the standalone inspector UI served by its Vite process.
  */
 import { createRoot } from "react-dom/client";
 

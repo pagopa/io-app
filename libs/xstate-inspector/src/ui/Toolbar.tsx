@@ -9,19 +9,23 @@ import { clear, setFilter, timelineStore } from "../state/timeline";
 
 export const Toolbar = () => {
   const onExport = () => {
-    const { machines, dropped } = timelineStore.getState();
+    const { machines, dropped, runtime } = timelineStore.getState();
     const now = new Date();
     const blob = new Blob(
-      [JSON.stringify(buildExport(machines, dropped, now), null, 2)],
+      [JSON.stringify(buildExport(machines, dropped, runtime, now), null, 2)],
       {
         type: "application/json"
       }
     );
     const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `xstate-inspector-${now.getTime()}.json`;
-    link.click();
-    URL.revokeObjectURL(link.href);
+    const url = URL.createObjectURL(blob);
+    try {
+      link.href = url;
+      link.download = `xstate-inspector-${now.getTime()}.json`;
+      link.click();
+    } finally {
+      URL.revokeObjectURL(url);
+    }
   };
 
   return (

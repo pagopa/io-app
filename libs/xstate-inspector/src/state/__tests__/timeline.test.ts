@@ -21,7 +21,7 @@ const wire = (
   _version: "1.0.0",
   createdAt: "2026-01-01T00:00:00.000Z",
   id,
-  sessionId: "session",
+  sessionId: rootId,
   rootId,
   ...extra
 });
@@ -79,11 +79,31 @@ describe("timeline store", () => {
   it("keeps every actor session of one machine in the same tab", () => {
     feed([
       actor("a1", "rootA", "eidMachine"),
-      actor("a2", "rootA", "eidMachine", { parentId: "rootA" })
+      actor("a2", "rootA", "childMachine", {
+        parentId: "rootA",
+        sessionId: "child"
+      })
     ]);
 
     expect(tabs()).toEqual([
       { key: "rootA", label: "eidMachine", rootId: "rootA", events: 2 }
+    ]);
+    expect([
+      ...(timelineStore.getState().machines.get("rootA")?.actors.values() ?? [])
+    ]).toEqual([
+      {
+        id: "rootA",
+        name: "eidMachine",
+        status: "active",
+        state: "idle"
+      },
+      {
+        id: "child",
+        name: "childMachine",
+        parentId: "rootA",
+        status: "active",
+        state: "idle"
+      }
     ]);
   });
 
@@ -147,7 +167,7 @@ describe("timeline store", () => {
     const machine = timelineStore.getState().machines.get("rootA");
     expect(machine?.events.length).toBe(MAX_EVENTS);
     expect(machine?.events[0].id).toBe("z2");
-    expect(timelineStore.getState().dropped.get("rootA")).toBe(2);
+    expect(timelineStore.getState().dropped).toBe(2);
   });
 
   it("ignores an expand toggle that does not change the row", () => {
@@ -177,7 +197,7 @@ describe("timeline store", () => {
     clear();
 
     expect(timelineStore.getState().machines.size).toBe(0);
-    expect(timelineStore.getState().dropped.size).toBe(0);
+    expect(timelineStore.getState().dropped).toBe(0);
     expect(timelineStore.getState().expanded.size).toBe(0);
   });
 });

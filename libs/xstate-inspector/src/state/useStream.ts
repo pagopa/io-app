@@ -1,35 +1,119 @@
-/**
- * Subscribes to the middleware stream and reports whether the page is connected.
- * The stream keeps no history, so a reload starts from an empty timeline.
- */
-import { useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 
-import { ingest } from "./timeline";
+import type { ConnectionStatus, InspectorRuntime } from "../types";
 
-export type ConnectionStatus = "connected" | "connecting" | "reconnecting";
+import { INSPECTOR_PROTOCOL_VERSION } from "../constants";
+import { asRecord, asString } from "../lib/format";
+import { ingest, reset, setDropped } from "./timeline";
 
-export const useStream = (): ConnectionStatus => {
-  const [status, setStatus] = useState<ConnectionStatus>("connecting");
+export type StreamState = {
+  error?: string;
+  runtime?: InspectorRuntime;
+  status: ConnectionStatus;
+};
+
+const runtimeFrom = (value: unknown): InspectorRuntime | undefined => {
+  const record = asRecord(value);
+  const id = asString(record?.id);
+  const appVersion = asString(record?.appVersion);
+  const platform = asString(record?.platform);
+  return id !== undefined && appVersion !== undefined && platform !== undefined
+    ? { id, appVersion, platform }
+    : undefined;
+};
+
+const connectStream = (
+  setState: Dispatch<SetStateAction<StreamState>>
+): (() => void) => {
+  let socket: undefined | WebSocket;
+  let retry: ReturnType<typeof setTimeout> | undefined;
+  let disposed = false;
+  let hasProtocolError = false;
+
+  const connect = () => {
+    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+    socket = new WebSocket(
+      `${protocol}//${window.location.host}/xstate-inspector/browser`
+    );
+    socket.addEventListener("message", message => {
+      let frame: Record<string, unknown> | undefined;
+      try {
+        frame = asRecord(JSON.parse(String(message.data)));
+      } catch {
+        return;
+      }
+      if (
+        frame === undefined ||
+        frame.protocolVersion !== INSPECTOR_PROTOCOL_VERSION
+      ) {
+        hasProtocolError = true;
+        setState({
+          status: "error",
+          error: `Inspector protocol ${INSPECTOR_PROTOCOL_VERSION} required`
+        });
+        socket?.close();
+        return;
+      }
+      if (frame.type === "protocol-error") {
+        hasProtocolError = true;
+        setState({
+          status: "error",
+          error: asString(frame.message) ?? "Inspector protocol mismatch"
+        });
+        return;
+      }
+      if (frame.type === "session-state") {
+        const runtime = runtimeFrom(frame.runtime);
+        const dropped = Number(frame.dropped) || 0;
+        if (frame.reset === true) {
+          reset(runtime, dropped);
+        } else {
+          setDropped(dropped);
+        }
+        setState({
+          status:
+            frame.status === "connected" ||
+            frame.status === "disconnected" ||
+            frame.status === "waiting"
+              ? frame.status
+              : "error",
+          runtime
+        });
+        return;
+      }
+      if (frame.type === "inspection-event") {
+        const serialized = JSON.stringify(frame.event);
+        ingest(frame.event, serialized.length);
+      }
+    });
+    socket.addEventListener("close", () => {
+      if (disposed || hasProtocolError) {
+        return;
+      }
+      setState(current => ({ ...current, status: "connecting" }));
+      retry = setTimeout(connect, 1000);
+    });
+    socket.addEventListener("error", () => socket?.close());
+  };
+
+  connect();
+  return () => {
+    disposed = true;
+    if (retry !== undefined) {
+      clearTimeout(retry);
+    }
+    socket?.close();
+  };
+};
+
+/** Connects the local browser UI to replay and live inspection events. */
+export const useStream = (): StreamState => {
+  const [state, setState] = useState<StreamState>({ status: "connecting" });
 
   useEffect(() => {
-    const stream = new EventSource("stream");
-    const onOpen = () => setStatus("connected");
-    const onError = () => setStatus("reconnecting");
-    const onMessage = (message: MessageEvent<string>) => {
-      try {
-        ingest(JSON.parse(message.data), message.data.length);
-      } catch {
-        // A malformed frame is dropped; the stream stays usable.
-      }
-    };
-
-    stream.addEventListener("open", onOpen);
-    stream.addEventListener("error", onError);
-    stream.addEventListener("message", onMessage);
-    return () => {
-      stream.close();
-    };
+    const disconnect = connectStream(setState);
+    return disconnect;
   }, []);
 
-  return status;
+  return state;
 };

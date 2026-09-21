@@ -10,8 +10,13 @@ export interface TabSelection {
   selected: string | undefined;
 }
 
-const hashKey = (): string =>
-  decodeURIComponent(window.location.hash.replace(/^#/, ""));
+const hashKey = (): string => {
+  try {
+    return decodeURIComponent(window.location.hash.replace(/^#/, ""));
+  } catch {
+    return "";
+  }
+};
 
 export const useSelectedTab = (keys: ReadonlyArray<string>): TabSelection => {
   const [hash, setHash] = useState(hashKey);

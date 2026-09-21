@@ -52,7 +52,7 @@ export const Timeline = ({
       ) : null}
       {dropped > 0 ? (
         <p className="note">
-          {`${dropped} event(s) dropped past the per-machine memory cap (${MAX_EVENTS} events or ${megabytes} MB)`}
+          {`${dropped} event(s) dropped past the runtime memory cap (${MAX_EVENTS} events or ${megabytes} MB)`}
         </p>
       ) : null}
       {matched.length === 0 ? (

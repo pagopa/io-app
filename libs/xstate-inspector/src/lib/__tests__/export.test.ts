@@ -27,7 +27,7 @@ const event = wire("e2", {
   event: { type: "START", docId: "ABC123" }
 });
 
-it("exports the raw wire events of every machine, with its dropped count", () => {
+it("exports runtime metadata and the raw events of every machine", () => {
   clear();
   [actor, event].forEach(entry => ingest(entry, JSON.stringify(entry).length));
 
@@ -35,17 +35,19 @@ it("exports the raw wire events of every machine, with its dropped count", () =>
   const payload = buildExport(
     machines,
     dropped,
+    { id: "runtime", appVersion: "1.0.0", platform: "ios" },
     new Date("2026-02-02T10:00:00.000Z")
   );
 
   expect(payload).toEqual({
+    droppedEvents: 0,
     exportedAt: "2026-02-02T10:00:00.000Z",
+    runtime: { id: "runtime", appVersion: "1.0.0", platform: "ios" },
     machines: [
       {
         key: "sessionA",
         label: "eidMachine",
         rootId: "sessionA",
-        droppedEvents: 0,
         events: [actor, event]
       }
     ]

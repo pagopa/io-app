@@ -81,6 +81,11 @@
         background: var(--state);
       }
 
+      .runtime {
+        color: var(--muted);
+        font-size: 11px;
+      }
+
       .tabs {
         display: flex;
         gap: 4px;
@@ -145,7 +150,57 @@
         border-color: var(--accent);
       }
 
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(190px, 260px) minmax(0, 1fr);
+        min-height: calc(100vh - 92px);
+      }
+
+      .actor-tree {
+        border-right: 1px solid var(--line);
+        padding: 12px;
+        overflow: auto;
+      }
+
+      .actor-tree h2 {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        margin: 0 0 8px;
+        text-transform: uppercase;
+      }
+
+      .actor-tree ul {
+        list-style: none;
+        margin: 0;
+        padding-left: 14px;
+      }
+
+      .actor-tree > ul {
+        padding-left: 0;
+      }
+
+      .actor-tree li {
+        border-left: 1px solid var(--line);
+        padding: 3px 0 3px 9px;
+      }
+
+      .actor-name,
+      .actor-state {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .actor-state {
+        color: var(--muted);
+        font-size: 11px;
+      }
+
       main {
+        min-width: 0;
         padding: 8px 12px 40px;
       }
 
@@ -222,6 +277,18 @@
 
       .failure .headline {
         color: var(--error);
+      }
+
+      @media (max-width: 720px) {
+        .workspace {
+          grid-template-columns: 1fr;
+        }
+
+        .actor-tree {
+          border-bottom: 1px solid var(--line);
+          border-right: 0;
+          max-height: 220px;
+        }
       }
     </style>
   </head>

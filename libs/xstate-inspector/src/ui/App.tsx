@@ -6,13 +6,14 @@
 import { useSelectedTab } from "../state/useSelectedTab";
 import { useStream } from "../state/useStream";
 import { useTimeline } from "../state/useTimeline";
+import { ActorTree } from "./ActorTree";
 import { MachineTabs } from "./MachineTabs";
 import { Timeline } from "./Timeline";
 import { Toolbar } from "./Toolbar";
 
 export const App = () => {
   const { machines, dropped, expanded, filter, setExpanded } = useTimeline();
-  const status = useStream();
+  const stream = useStream();
   const { select, selected } = useSelectedTab([...machines.keys()]);
   const machine = selected === undefined ? undefined : machines.get(selected);
 
@@ -24,11 +25,16 @@ export const App = () => {
           <span className="spacer" />
           <span
             className="status"
-            data-online={status === "connected" ? "true" : "false"}
+            data-online={stream.status === "connected" ? "true" : "false"}
             id="status"
           >
-            {status}
+            {stream.error ?? stream.status}
           </span>
+          {stream.runtime === undefined ? null : (
+            <span className="runtime">
+              {`${stream.runtime.platform} · ${stream.runtime.appVersion}`}
+            </span>
+          )}
         </div>
         <MachineTabs
           machines={machines}
@@ -37,13 +43,18 @@ export const App = () => {
         />
       </header>
       <Toolbar />
-      <Timeline
-        dropped={machine === undefined ? 0 : (dropped.get(machine.key) ?? 0)}
-        expanded={expanded}
-        filter={filter}
-        machine={machine}
-        onToggle={setExpanded}
-      />
+      <div className="workspace">
+        {machine === undefined ? null : (
+          <ActorTree actors={machine.actors} rootId={machine.rootId} />
+        )}
+        <Timeline
+          dropped={dropped}
+          expanded={expanded}
+          filter={filter}
+          machine={machine}
+          onToggle={setExpanded}
+        />
+      </div>
     </>
   );
 };
