@@ -34,6 +34,8 @@ allowBuilds:
   "@shopify/react-native-skia": true
   "@swc/core": true
   core-js: true
+  # The inspector UI build links esbuild's platform binary through vite.
+  esbuild: true
   lefthook: true
   nx: true
   tls-impersonate: false
@@ -53,6 +55,7 @@ catalog:
   jest: "~30.3.0"
   "@types/jest": "^30.0.0"
   "@types/react": "^19.2.0"
+  "@types/react-dom": "^19.2.0"
 
   # --- Linting ---
   eslint-config-prettier: "^10.1.8"
@@ -62,12 +65,15 @@ catalog:
   eslint-plugin-prettier: "^5.5.6"
   eslint-plugin-react-native-a11y: "^3.3.0"
 
+  # --- React ---
+  react: "19.2.0"
+  react-dom: "19.2.0"
+  react-test-renderer: "19.2.0"
+
   # --- React Native ---
   "@react-native/typescript-config": "0.83.10"
   "@react-native/eslint-config": "0.83.10"
-  react: "19.2.0"
   react-native: "0.83.10"
-  react-test-renderer: "19.2.0"
 
   # --- State management ---
   redux: "4.1.1"

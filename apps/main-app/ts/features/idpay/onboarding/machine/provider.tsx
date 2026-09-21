@@ -18,18 +18,22 @@ import {
   preferredLanguageSelector
 } from "../../../../store/reducers/persistedPreferences";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
+import { createBrowserInspector } from "../../../../utils/xstate/inspector";
 import { bpdTokenSelector } from "../../../authentication/common/store/selectors";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";
 import { idPayOnboardingMachine } from "./machine";
 
+const inspector = createBrowserInspector();
+
 type Props = {
   children: ReactNode;
 };
 
 export const IdPayOnboardingMachineContext = createActorContext(
-  idPayOnboardingMachine
+  idPayOnboardingMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
 );
 
 export const IdPayOnboardingMachineProvider = ({ children }: Props) => {

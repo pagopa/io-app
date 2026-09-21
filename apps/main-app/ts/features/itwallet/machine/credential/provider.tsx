@@ -4,6 +4,7 @@ import { PropsWithChildren } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import { createBrowserInspector } from "../../../../utils/xstate/inspector";
 import {
   selectItwEnv,
   selectItwSpecsVersion
@@ -11,8 +12,11 @@ import {
 import { getEnv } from "../../common/utils/environment";
 import { itwCredentialIssuanceMachine } from "./machine.ts";
 
+const inspector = createBrowserInspector();
+
 export const ItwCredentialIssuanceMachineContext = createActorContext(
-  itwCredentialIssuanceMachine
+  itwCredentialIssuanceMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
 );
 
 export const ItwCredentialIssuanceMachineProvider = (

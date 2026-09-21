@@ -460,6 +460,32 @@ export default defineConfig([
     }
   },
   {
+    // The inspector UI is a browser app served by the dev server, not a screen
+    // of the app, so its labels never enter the translation catalogue.
+    files: ["libs/xstate-inspector/src/**/*.{ts,tsx}"],
+
+    rules: {
+      "i18next/no-literal-string": "off"
+    }
+  },
+  {
+    // Bounded inspector buffers mutate in place to avoid copying up to 16 MB on
+    // every event. The remaining files update browser/server objects whose
+    // interfaces are mutable by design.
+    files: [
+      "libs/xstate-inspector/server/**/*.ts",
+      "libs/xstate-inspector/src/state/timeline.ts",
+      "libs/xstate-inspector/src/state/useStream.ts",
+      "libs/xstate-inspector/src/state/useSelectedTab.ts",
+      "libs/xstate-inspector/src/ui/Toolbar.tsx"
+    ],
+
+    rules: {
+      "functional/immutable-data": "off",
+      "functional/no-let": "off"
+    }
+  },
+  {
     files: ["**/locales/it/index.json"],
     languageOptions: {
       parser: jsonParser

@@ -1,0 +1,29 @@
+{
+  "name": "@io-app/xstate-inspector",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Standalone local XState inspector for io-app development",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "start": "vite",
+    "test": "vitest run",
+    "tsc-noemit": "tsc --noEmit",
+    "lint": "eslint \"**/*.{ts,tsx}\""
+  },
+  "dependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^6.1.1",
+    "@types/ws": "^8.18.1",
+    "typescript": "catalog:",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1",
+    "ws": "^8.20.0"
+  }
+}

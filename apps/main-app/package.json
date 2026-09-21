@@ -77,6 +77,7 @@
     "@shopify/flash-list": "2.2.0",
     "@shopify/react-native-skia": "2.6.4",
     "@swmansion/react-native-bottom-sheet": "0.15.1",
+    "@statelyai/inspect": "0.7.2",
     "@textlint/ast-node-types": "14.0.4",
     "@textlint/markdown-to-ast": "^14.0.4",
     "@xstate/react": "^6.1.0",

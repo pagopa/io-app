@@ -4,12 +4,16 @@ import { PropsWithChildren } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import { createBrowserInspector } from "../../../../utils/xstate/inspector";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 import { itwEidIssuanceMachine } from "./../eid/machine";
 
+const inspector = createBrowserInspector();
+
 export const ItwEidIssuanceMachineContext = createActorContext(
-  itwEidIssuanceMachine
+  itwEidIssuanceMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
 );
 
 export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {

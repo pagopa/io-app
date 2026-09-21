@@ -129,3 +129,6 @@ apps/dev-api-server/pnpm-debug.log
 apps/dev-api-server/*.js
 apps/dev-api-server/*.js.map
 apps/dev-api-server/local.*
+
+# XState inspector UI bundle, built by `pnpm nx run xstate-inspector:build`
+libs/xstate-inspector/dist
