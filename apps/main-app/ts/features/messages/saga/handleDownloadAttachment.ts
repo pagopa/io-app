@@ -32,7 +32,11 @@ import {
   downloadAttachment
 } from "../store/actions";
 import { thirdPartyMessageSelector } from "../store/reducers/thirdPartyById";
-import { decodeSendFailureReason, WrappedSendError } from "../utils";
+import {
+  decodeSendFailureReason,
+  SendFailureReason,
+  WrappedSendError
+} from "../utils";
 import {
   attachmentDisplayName,
   getHeaderValueByKey,
@@ -166,10 +170,11 @@ function* downloadAttachmentWorker(
           status === 415
             ? "messageDetails.attachments.badFormat"
             : "messageDetails.attachments.downloadFailed";
-        const error = new WrappedSendError(
-          decodeSendFailureReason({ kind: "http_status", status }),
-          I18n.t(errorKey)
-        );
+        const reason =
+          status === 401
+            ? SendFailureReason.SESSION_EXPIRED
+            : decodeSendFailureReason({ kind: "http_status", status });
+        const error = new WrappedSendError(reason, I18n.t(errorKey));
         yield* put(
           downloadAttachment.failure({ attachment, messageId, error })
         );

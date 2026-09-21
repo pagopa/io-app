@@ -914,6 +914,33 @@ describe("downloadAttachmentFromPrevalidatedUrl", () => {
       });
     });
   });
+
+  it("should throw FAST_LOGIN_EXPIRED on a 401 response", () => {
+    const fakeConfigFetch = (_method: string, _url: string) => undefined;
+    jest.spyOn(attachmentsUtils, "pdfSavePath").mockReturnValue(savePath);
+
+    // eslint-disable-next-line functional/no-let
+    let expectionThrown = false;
+    try {
+      testSaga(
+        testable!.downloadAttachmentFromPrevalidatedUrl,
+        attachment,
+        messageId,
+        prevalidatedUrl
+      )
+        .next()
+        .call(ReactNativeBlobUtil.config, { path: savePath, timeout: 8000 })
+        .next({ fetch: fakeConfigFetch })
+        .call(fakeConfigFetch, "get", prevalidatedUrl)
+        .next({ info: () => ({ status: 401 }) });
+    } catch (e: unknown) {
+      expectionThrown = true;
+      expect(e).toEqual(new Error("FAST_LOGIN_EXPIRED"));
+    }
+
+    expect(expectionThrown).toBe(true);
+    expect(decodeSendFailureReason).not.toHaveBeenCalled();
+  });
 });
 
 const generateMocks = (response: E.Either<unknown, unknown>) => {

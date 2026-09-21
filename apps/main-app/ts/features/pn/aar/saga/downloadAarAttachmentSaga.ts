@@ -252,6 +252,9 @@ function* downloadAttachmentFromPrevalidatedUrl(
   if (status === 200) {
     return result.path();
   }
+  if (status === 401) {
+    throw fastLoginError;
+  }
   throw new WrappedSendError(
     decodeSendFailureReason({ kind: "http_status", status }),
     `Download from prevalidated url failed: ${
