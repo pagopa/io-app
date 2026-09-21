@@ -4,7 +4,7 @@ import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superP
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
-import { AUTH_ERRORS } from "../components/AuthErrorComponent";
+import { AUTH_ERRORS } from "../utils/authError";
 
 export type EventProperties = {
   "error message"?: string;

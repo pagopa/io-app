@@ -39,7 +39,7 @@ const fetch = createRetriableFetch();
  * Path of the Session Manager endpoint that reserves the public key
  * and returns the `/authorize` parameters.
  */
-const reserveEndpointPath = "/api/auth/v2/reserve";
+const reserveEndpointPath = "/api/auth/v1/reserve";
 
 /**
  * State of the OneIdentity login source flow. At any given moment the flow
@@ -146,6 +146,11 @@ export type UseOneIdentityLoginSource = (params: {
   onFailure: (reason: string) => void;
 }) => {
   /**
+   * Handler that restarts the login flow by generating a new login source.
+   * It automatically resets the internal state and safely aborts any ongoing network requests.
+   */
+  generateLoginSource: () => Promise<void>;
+  /**
    * The current state of the OneIdentity OIDC flow.
    */
   loginSourceState: LoginSourceState;
@@ -230,6 +235,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   );
 
   const generateLoginSource = useCallback(async () => {
+    abortControllerRef.current?.abort();
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
@@ -312,6 +318,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
   return {
     loginSourceState,
-    shouldBlockUrlNavigationWhileCheckingLollipop
+    shouldBlockUrlNavigationWhileCheckingLollipop,
+    generateLoginSource
   };
 };
