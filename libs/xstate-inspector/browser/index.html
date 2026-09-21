@@ -226,26 +226,7 @@
     </style>
   </head>
   <body>
-    <header>
-      <div class="bar">
-        <h1>XState inspector</h1>
-        <span class="spacer"></span>
-        <span class="status" id="status" data-online="false">connecting</span>
-      </div>
-      <div class="tabs" id="tabs"></div>
-    </header>
-    <div class="toolbar">
-      <input
-        type="search"
-        id="filter"
-        placeholder="filter by type, state or payload text"
-        aria-label="Filter events"
-        autocomplete="off"
-      />
-      <button type="button" id="export">Export JSON</button>
-      <button type="button" id="clear">Clear</button>
-    </div>
-    <main id="timeline"></main>
+    <div id="root"></div>
     <script type="module" src="app.js"></script>
   </body>
 </html>

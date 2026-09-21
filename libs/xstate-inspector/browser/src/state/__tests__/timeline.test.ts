@@ -2,14 +2,14 @@
  * The store owns the tab bookkeeping — adoption, orphan cleanup, retention —
  * which the DOM is not needed to exercise.
  */
-import { MAX_EVENTS } from "../constants.js";
+import { MAX_EVENTS } from "../../constants";
 import {
   clear,
   ingest,
   setExpanded,
   setFilter,
   timelineStore
-} from "../store.js";
+} from "../timeline";
 
 type Wire = Record<string, unknown>;
 

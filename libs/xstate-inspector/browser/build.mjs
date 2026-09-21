@@ -1,7 +1,8 @@
 /**
  * Builds the inspector UI into `browser/dist`, the directory the middleware
  * serves. `index.html` is authored, so it is copied verbatim rather than
- * generated; only the ES modules under `browser/src` are bundled.
+ * generated; only the React and TypeScript modules under `browser/src` are
+ * bundled.
  *
  * Run it through `pnpm nx run xstate-inspector:build` for a one-off build, or
  * `pnpm nx run xstate-inspector:start` to keep rebuilding while you work on the
@@ -19,11 +20,12 @@ const indexHtmlOut = join(distDir, "index.html");
 
 /** @type {import("esbuild").BuildOptions} */
 const options = {
-  entryPoints: [join(browserDir, "src", "app.js")],
+  entryPoints: [join(browserDir, "src", "main.tsx")],
   outfile: join(distDir, "app.js"),
   bundle: true,
   format: "esm",
   target: "es2022",
+  jsx: "automatic",
   // The UI is only ever served by the dev server, so it stays readable and
   // mapped back to `src/` instead of being minified.
   sourcemap: true,
