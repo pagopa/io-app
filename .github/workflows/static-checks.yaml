@@ -7,7 +7,7 @@ permissions:
   contents: read
 jobs:
   static-checks:
-    name: Typescript lint and formatting
+    name: Typescript lint and prettier
     runs-on: ubuntu-latest
     environment: dev
     permissions:
