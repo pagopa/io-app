@@ -1,10 +1,10 @@
 import { useIOToast } from "@io-app/design-system";
-import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { PropsWithChildren } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import { createBrowserInspector } from "../../../../utils/xstate/inspector";
 import {
   selectItwEnv,
   selectItwSpecsVersion

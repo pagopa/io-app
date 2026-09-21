@@ -2,8 +2,8 @@
  * Provides one optional XState inspector for development machines.
  *
  * Events are batched and posted to the inspector bridge mounted on Metro's dev
- * server (see `middleware.js` in this package), which relays them to the
- * browser UI over Server-Sent Events. Sharing Metro's port means there is no
+ * server (`xstate-inspector/middleware.js` in this app), which relays them to
+ * the browser UI over Server-Sent Events. Sharing Metro's port means there is no
  * extra process to launch and no extra port to forward.
  */
 import type { StatelyInspectionEvent } from "@statelyai/inspect";

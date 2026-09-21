@@ -1,9 +1,9 @@
-import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { JSX } from "react";
 
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector, useIOStore } from "../../../../../store/hooks.ts";
+import { createBrowserInspector } from "../../../../../utils/xstate/inspector";
 import {
   selectItwEnv,
   selectItwSpecsVersion

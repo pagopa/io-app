@@ -21,8 +21,14 @@ const fs = require("fs");
 const path = require("path");
 
 const PREFIX = "/xstate-inspector";
-/** Built by `browser/build.mjs`: the middleware serves the bundle, not the sources. */
-const BROWSER_DIR = path.join(__dirname, "browser", "dist");
+/**
+ * Built by `pnpm nx run xstate-inspector:build`, which is why the app depends on
+ * that workspace package: the middleware serves its bundle, not its sources.
+ */
+const BROWSER_DIR = path.join(
+  path.dirname(require.resolve("@io-app/xstate-inspector/package.json")),
+  "dist"
+);
 const INDEX_FILE = "index.html";
 
 /** Upper bound for a single ingest request, to keep a runaway app from exhausting memory. */

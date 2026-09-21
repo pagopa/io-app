@@ -1,4 +1,3 @@
-import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { ReactNode } from "react";
 
@@ -12,6 +11,7 @@ import {
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { createBrowserInspector } from "../../../../utils/xstate/inspector";
 import { bpdTokenSelector } from "../../../authentication/common/store/selectors";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";

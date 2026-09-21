@@ -1,5 +1,4 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import { createBrowserInspector } from "@io-app/xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -26,6 +25,7 @@ import {
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { SessionManager } from "../../../../utils/SessionManager";
+import { createBrowserInspector } from "../../../../utils/xstate/inspector";
 import {
   bpdTokenSelector,
   walletTokenSelector

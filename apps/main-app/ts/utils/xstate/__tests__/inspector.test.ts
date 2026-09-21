@@ -7,7 +7,7 @@ import {
   createBrowserInspector,
   inspectorEndpointFromSourceUrl,
   metroSourceUrlFromNativeModules
-} from "../createBrowserInspector";
+} from "../inspector";
 
 /** Minimal event stand-in: the adapter only serializes what it is given. */
 const inspectedEvent = (id: string): StatelyInspectionEvent =>
