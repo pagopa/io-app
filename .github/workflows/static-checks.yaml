@@ -27,8 +27,11 @@ jobs:
       - id: generate-api-models
         run: pnpm nx run @io-app/api-types:generate
       - id: run-affected-checks
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'lok_master_')
         run: pnpm validate
+      - id: run-lokalise-checks
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'lok_master_')
+        run: pnpm nx affected --targets=lint,tsc-noemit --configuration=ci --nx-bail
       - id: run-all-checks
         if: github.event_name != 'pull_request'
         run: pnpm validate-all
