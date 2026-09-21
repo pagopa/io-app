@@ -94,6 +94,23 @@ describe("OneIdentityCiePinScreen", () => {
     fireEvent(otpInput, "valueChange", "12345678");
 
     expect(mockDispatch).toHaveBeenCalledWith(nfcIsEnabled.request());
+    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.CIE_AUTH_SCREEN,
+      params: { pin: "12345678" }
+    });
+  });
+
+  it("should not navigate when the pin is not yet complete", () => {
+    const { getByLabelText } = renderComponent();
+
+    const otpInput = getByLabelText(
+      I18n.t("authentication.cie.pin.accessibility.label")
+    );
+
+    fireEvent(otpInput, "valueChange", "1234");
+
+    expect(mockDispatch).not.toHaveBeenCalledWith(nfcIsEnabled.request());
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 
   it("should track the help center CTA and open the help url when the banner is pressed", () => {
