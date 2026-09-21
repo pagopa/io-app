@@ -12,7 +12,12 @@ permissions:
 
 jobs:
   update-snapshots:
-    if: ${{ startsWith(github.head_ref, 'lok_master_') }}
+    if: >-
+      ${{
+        startsWith(github.head_ref, 'lok_master_') &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        github.event.pull_request.user.login == 'github-actions[bot]'
+      }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout pull request branch
