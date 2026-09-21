@@ -296,7 +296,28 @@ export default defineConfig([
               "accessibilityHint",
               "placeholder",
               "title",
-              "alt"
+              "alt",
+              // Text-bearing props
+              "actions",
+              "label",
+              "description",
+              "text",
+              "errorMessage",
+              "value",
+              "subtitle",
+              "content",
+              "message",
+              // Props whose object value nests text in `componentProps`
+              "endElement",
+              "startElement",
+              "topElement",
+              "headerAction",
+              "firstAction",
+              "secondaryAction",
+              "startAction",
+              "endAction",
+              "scrollViewAction",
+              "footerActionProps"
             ],
             exclude: []
           },
@@ -304,6 +325,28 @@ export default defineConfig([
           "jsx-components": {
             include: [],
             exclude: ["Trans"]
+          },
+
+          // Options replace the plugin defaults, so the default excludes are
+          // respelled here: patterns full-match with a leading dot allowed, so
+          // `t` is what exempts `I18n.t(...)` arguments.
+          callees: {
+            exclude: [
+              "i18n(ext)?",
+              "t",
+              "require",
+              "addEventListener",
+              "removeEventListener",
+              "postMessage",
+              "getElementById",
+              "dispatch",
+              "commit",
+              "includes",
+              "indexOf",
+              "endsWith",
+              "startsWith",
+              "format"
+            ]
           },
 
           words: {
