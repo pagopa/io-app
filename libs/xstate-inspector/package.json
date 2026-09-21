@@ -2,34 +2,26 @@
   "name": "@io-app/xstate-inspector",
   "version": "1.0.0",
   "private": true,
-  "description": "Development-only XState inspector: React Native bridge, Metro middleware and browser UI",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "react-native": "src/index.ts",
+  "description": "Browser UI of the XState inspector, served by Metro's dev server",
+  "type": "module",
   "scripts": {
-    "build": "node browser/build.mjs",
-    "start": "node browser/build.mjs --watch",
-    "test": "jest --config='./jest.config.js'",
+    "build": "vite build",
+    "start": "vite build --watch",
+    "test": "vitest run",
     "tsc-noemit": "tsc --noEmit",
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
-  "devDependencies": {
-    "@react-native/typescript-config": "catalog:",
-    "@types/jest": "catalog:",
-    "@types/node": "^22.20.1",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "esbuild": "^0.28.2",
-    "jest": "catalog:",
+  "dependencies": {
     "react": "catalog:",
     "react-dom": "catalog:",
-    "typescript": "catalog:",
     "zustand": "^5.0.15"
   },
-  "dependencies": {
-    "@statelyai/inspect": "0.7.2",
-    "react-native": "catalog:",
-    "react-native-url-polyfill": "^2.0.0",
-    "xstate": "catalog:"
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^6.1.1",
+    "typescript": "catalog:",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
   }
 }

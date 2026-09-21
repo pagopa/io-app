@@ -1,12 +1,14 @@
 # @io-app/xstate-inspector
 
-A development-only inspector for the XState machines in the [IO app](../../apps/main-app/README.md). The app reports machine events to Metro, and a browser page shows them as a timeline per machine. Nothing runs in production.
+The browser page that shows the XState machines of the [IO app](../../apps/main-app/README.md) as a timeline, one tab per machine. It is a Vite and React app, served by Metro's dev server under `/xstate-inspector/`. Nothing runs in production.
+
+The rest of the tool lives in the app: the React Native bridge is [ts/utils/xstate/inspector.ts](../../apps/main-app/ts/utils/xstate/inspector.ts) and the dev-server relay is [xstate-inspector/](../../apps/main-app/xstate-inspector).
 
 ## Run the inspector
 
-You need Metro and a development build that loads its bundle from Metro. The [main app README](../../apps/main-app/README.md#xstate-inspector) lists the device commands for iOS and Android.
+You need Metro and a development build that loads its bundle from Metro.
 
-1. Start the UI build in its own terminal. It rebuilds as you edit the UI sources.
+1. Start the page build in its own terminal. It rebuilds as you edit the sources.
 
    ```bash
    pnpm nx run xstate-inspector:start
@@ -38,11 +40,11 @@ Every control applies to the machine in the selected tab:
 
 ## Report a machine to the inspector
 
-Import the bridge and pass it to the machine context. The providers in the app follow this pattern, for example [the IT Wallet eID provider](../../apps/main-app/ts/features/itwallet/machine/eid/provider.tsx):
+The bridge is app code, so a provider imports it by relative path, for example [the IT Wallet eID provider](../../apps/main-app/ts/features/itwallet/machine/eid/provider.tsx):
 
 ```typescript
 import { createActorContext } from "@xstate/react";
-import { createBrowserInspector } from "@io-app/xstate-inspector";
+import { createBrowserInspector } from "../../../utils/xstate/inspector";
 
 const inspector = createBrowserInspector();
 
@@ -64,9 +66,9 @@ Inspector failures never reach the app. The bridge drops a failed POST, a serial
 
 Every failure looks like one of three things: a status line that never reaches `connected`, a page that will not load, or a timeline that stays empty.
 
-**The status says `reconnecting`.** Nothing answers the stream route. Confirm Metro is running, then open `http://localhost:8081/xstate-inspector/health`. A `404` means the middleware did not mount, which happens when `withXStateInspector` is missing from `metro.config.js`.
+**The status says `reconnecting`.** Nothing answers the stream route. Confirm Metro is running, then open `http://localhost:8081/xstate-inspector/health`. A `404` means the middleware did not mount, which happens when `withXStateInspector` is missing from [metro.config.js](../../apps/main-app/metro.config.js).
 
-**The page returns `404`, or shows a change you made earlier.** `browser/dist` is missing or stale. Run `pnpm nx run xstate-inspector:start` while you work on the UI, or `pnpm nx run xstate-inspector:build` for a one-off build.
+**The page returns `404`, or shows a change you made earlier.** `libs/xstate-inspector/dist` is missing or stale. Run `pnpm nx run xstate-inspector:start` while you work on the UI, or `pnpm nx run xstate-inspector:build` for a one-off build. The middleware serves that directory, so Metro never picks up an unbuilt UI edit on its own.
 
 **Metro answers `Unauthorized request from http://127.0.0.1:8081`.** Open the page through `localhost` instead. Module scripts send an `Origin` header, and the Metro dev server rejects every Origin that is not localhost.
 
@@ -78,39 +80,26 @@ Every failure looks like one of three things: a status line that never reaches `
 
 | Command | What it does |
 | --- | --- |
-| `pnpm nx run xstate-inspector:start` | Builds `browser/src` into `browser/dist`, and rebuilds on change |
-| `pnpm nx run xstate-inspector:build` | Builds the UI once |
-| `pnpm nx run xstate-inspector:test` | Runs the Jest suites |
-| `pnpm nx run xstate-inspector:tsc-noemit` | Type-checks the bridge, the middleware and the UI |
+| `pnpm nx run xstate-inspector:start` | Builds `src` into `dist`, and rebuilds on change |
+| `pnpm nx run xstate-inspector:build` | Builds the page once |
+| `pnpm nx run xstate-inspector:test` | Runs the Vitest suites |
+| `pnpm nx run xstate-inspector:tsc-noemit` | Type-checks the page |
 | `pnpm nx run xstate-inspector:lint` | Lints the TypeScript |
 
-Run the UI build next to `pnpm nx run main-app:start`. The middleware serves `browser/dist`, not the sources, so Metro never picks up a UI edit on its own. Reloading the page is not enough.
+Run the page build next to `pnpm nx run main-app:start`, then reload the page to see the new bundle.
 
-## What the inspector keeps
+## What the page keeps
 
-The inspector caps what it keeps, so a long session on a large context cannot exhaust the app, the dev server, or the browser tab:
+The page caps what it holds, so a long session on a large context cannot exhaust the browser tab:
 
-- Batch: 50 events or 150 ms, whichever comes first.
-- Request body: 16 MB. The middleware rejects a larger batch with `413`.
-- Serialization depth: 10 levels of machine context.
 - Per machine: 20000 events or 32 MB, whichever comes first. The page evicts the oldest events and counts them above the timeline.
 - Rendered rows: the last 400 after filtering, with the rest counted.
-- Slow page: the middleware disconnects a client with 4 MB queued instead of buffering for it.
-- Idle stream: a comment frame every 15s keeps the connection open through proxies and device tunnels.
+
+The app side caps the batches it sends and the relay caps the bodies it accepts; both live in `apps/main-app/xstate-inspector`.
 
 ## How the pieces connect
 
-The bridge batches inspection events and posts them to the dev server. The middleware fans each batch out to the open pages over Server-Sent Events (SSE). The React page renders one timeline per machine.
-
-`@io-app/xstate-inspector` resolves to `src/index.ts`, the bridge the app imports. `@io-app/xstate-inspector/middleware` resolves to `middleware.js`, which Metro mounts. `@io-app/xstate-inspector/metro` resolves to `metro.js`, the Metro wrapper the app applies. Neither bundle includes the page, because the middleware reads it from disk.
-
-The app’s `metro.config.js` already applies `withXStateInspector`. Pass it to `mergeConfig` as a function argument, otherwise the last `resolver` or `server` function wins and the app loses its own Metro customisation:
-
-```javascript
-const { withXStateInspector } = require("@io-app/xstate-inspector/metro");
-
-module.exports = mergeConfig(defaultConfig, config, withXStateInspector);
-```
+The bridge in the app batches inspection events and posts them to the dev server. The middleware in the app fans each batch out to the open pages over Server-Sent Events (SSE). This app renders one timeline per machine, and the middleware serves it from `dist`.
 
 Every route sits under `/xstate-inspector`, and the middleware passes every other path to Metro:
 
@@ -121,4 +110,6 @@ Every route sits under `/xstate-inspector`, and the middleware passes every othe
 | `/xstate-inspector/ingest` | POST | Accepts a JSON batch from the app and answers `204` |
 | `/xstate-inspector/health` | GET | Reports the `clients`, `received` and `rejected` counts |
 
-Look at `browser/src` for the page itself. It groups by purpose: `lib/` holds pure modules, `state/` holds the timeline store and the hooks around it, and `ui/` holds the components.
+`vite.config.ts` sets `base` to `/xstate-inspector/`, so the built asset URLs match those routes.
+
+Look at `src` for the page itself. It groups by purpose: `lib/` holds pure modules, `state/` holds the timeline store and the hooks around it, and `ui/` holds the components.

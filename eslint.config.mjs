@@ -462,7 +462,7 @@ export default defineConfig([
   {
     // The inspector UI is a browser app served by the dev server, not a screen
     // of the app, so its labels never enter the translation catalogue.
-    files: ["libs/xstate-inspector/browser/**/*.{ts,tsx}"],
+    files: ["libs/xstate-inspector/src/**/*.{ts,tsx}"],
 
     rules: {
       "i18next/no-literal-string": "off"
@@ -476,9 +476,9 @@ export default defineConfig([
     // two files set DOM properties, which is the only way to select a tab or to
     // hand a Blob to a download anchor.
     files: [
-      "libs/xstate-inspector/browser/src/state/timeline.ts",
-      "libs/xstate-inspector/browser/src/state/useSelectedTab.ts",
-      "libs/xstate-inspector/browser/src/ui/Toolbar.tsx"
+      "libs/xstate-inspector/src/state/timeline.ts",
+      "libs/xstate-inspector/src/state/useSelectedTab.ts",
+      "libs/xstate-inspector/src/ui/Toolbar.tsx"
     ],
 
     rules: {

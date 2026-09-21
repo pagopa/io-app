@@ -34,7 +34,7 @@ allowBuilds:
   "@shopify/react-native-skia": true
   "@swc/core": true
   core-js: true
-  # Links the platform binary the inspector UI build runs.
+  # The inspector UI build links esbuild's platform binary through vite.
   esbuild: true
   lefthook: true
   nx: true

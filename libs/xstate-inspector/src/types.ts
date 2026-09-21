@@ -1,9 +1,10 @@
 /**
  * Wire format and view types.
  *
- * The wire half declares what the React Native bridge in `src/` forwards
- * through the middleware. The view half is what the UI renders after
- * `lib/entry.ts` has parsed one wire event.
+ * The wire half declares what the React Native bridge in
+ * `apps/main-app/ts/utils/xstate/inspector.ts` forwards through the
+ * middleware. The view half is what the UI renders after `lib/entry.ts` has
+ * parsed one wire event.
  *
  * The wire declarations are documentation: the parser reads `unknown` and
  * narrows defensively, because a malformed frame must never break the page.

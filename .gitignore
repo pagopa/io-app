@@ -130,5 +130,5 @@ apps/dev-api-server/*.js
 apps/dev-api-server/*.js.map
 apps/dev-api-server/local.*
 
-# XState inspector UI bundle, built by libs/xstate-inspector/browser/build.mjs
-libs/xstate-inspector/browser/dist
+# XState inspector UI bundle, built by `pnpm nx run xstate-inspector:build`
+libs/xstate-inspector/dist
