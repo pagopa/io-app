@@ -33,14 +33,14 @@ import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButto
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
-import { trackSpidLoginError } from "../../../../../utils/analytics";
+import { trackLoginError } from "../../../../../utils/analytics";
 import { closeInjectedScript } from "../../../../../utils/webview";
 import {
   isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector,
   remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
-import { getIdpLoginUri } from "../../../common/utils";
+import { AUTH_LEVELS, getIdpLoginUri } from "../../../common/utils";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
@@ -153,7 +153,11 @@ const CieWebView = (props: Props) => {
   const remoteApiLoginUrlPrefix = useIOSelector(
     remoteApiLoginUrlPrefixSelector
   );
-  const loginUri = getIdpLoginUri(CIE_IDP_ID, 3, remoteApiLoginUrlPrefix);
+  const loginUri = getIdpLoginUri(
+    CIE_IDP_ID,
+    AUTH_LEVELS.L3,
+    remoteApiLoginUrlPrefix
+  );
 
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const dispatch = useIODispatch();
@@ -174,7 +178,7 @@ const CieWebView = (props: Props) => {
     (
       e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
     ) => {
-      trackSpidLoginError("cie", e);
+      trackLoginError("cie", e);
       setInternalState(state => generateErrorState(state));
     },
     []

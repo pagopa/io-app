@@ -55,8 +55,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   });
 
   useItwProximityEventsTracking({
-    failure,
-    getCredentialTypeFromDocType
+    failure
   });
 
   const { bottomSheet, present } = useIOBottomSheetModal({

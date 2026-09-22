@@ -46,6 +46,9 @@ const ASSERTION_FAILED_FAQ_URL =
 const PID_ANPR_MISMATCH_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/40032473652881-Continuare-a-usare-Documenti-su-IO-senza-limitazioni-dopo-12-mesi";
 
+const ITW_REQUIREMENTS_FAQ_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
+
 const failureLinkMapper: Partial<Record<IssuanceFailureType, string>> = {
   [IssuanceFailureType.HARDWARE_KEY_INVALID]: ASSERTION_FAILED_FAQ_URL,
   [IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND]: PID_ANPR_MISMATCH_FAQ_URL
@@ -300,33 +303,68 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         case IssuanceFailureType.UNSUPPORTED_DEVICE:
-          return {
-            title: I18n.t("features.itWallet.unsupportedDevice.error.title"),
-            subtitle: I18n.t(
-              "features.itWallet.unsupportedDevice.error.subtitle",
-              { faqUrl: FAQ_URL }
-            ),
-            onSubtitleLinkPress: url => {
-              openWebUrl(url, () =>
-                toast.error(I18n.t("global.jserror.title"))
-              );
-            },
-            pictogram: "workInProgress",
-            action: supportModalAction,
-            secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.unsupportedDevice.error.secondaryAction"
-              ),
-              onPress: () =>
-                closeIssuance({
-                  reason: failure.reason,
-                  cta_category: "custom_1",
-                  cta_id: I18n.t(
-                    "features.itWallet.unsupportedDevice.error.secondaryAction"
-                  )
-                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-            }
-          };
+          return isL3Issuance
+            ? {
+                title: I18n.t(
+                  "features.itWallet.unsupportedDevice.errorL3.title"
+                ),
+                subtitle: I18n.t(
+                  "features.itWallet.unsupportedDevice.errorL3.subtitle"
+                ),
+                pictogram: "accessDenied",
+                action: {
+                  label: I18n.t(
+                    "features.itWallet.unsupportedDevice.errorL3.primaryAction"
+                  ),
+                  onPress: () =>
+                    closeIssuance({
+                      reason: failure.reason,
+                      cta_category: "custom_1",
+                      cta_id: I18n.t(
+                        "features.itWallet.unsupportedDevice.errorL3.primaryAction"
+                      )
+                    })
+                },
+                secondaryAction: {
+                  label: I18n.t(
+                    "features.itWallet.unsupportedDevice.errorL3.secondaryAction"
+                  ),
+                  onPress: () => {
+                    openWebUrl(ITW_REQUIREMENTS_FAQ_URL, () =>
+                      toast.error(I18n.t("global.jserror.title"))
+                    );
+                  }
+                }
+              }
+            : {
+                title: I18n.t(
+                  "features.itWallet.unsupportedDevice.errorL2.title"
+                ),
+                subtitle: I18n.t(
+                  "features.itWallet.unsupportedDevice.errorL2.subtitle",
+                  { faqUrl: FAQ_URL }
+                ),
+                onSubtitleLinkPress: url => {
+                  openWebUrl(url, () =>
+                    toast.error(I18n.t("global.jserror.title"))
+                  );
+                },
+                pictogram: "workInProgress",
+                action: supportModalAction,
+                secondaryAction: {
+                  label: I18n.t(
+                    "features.itWallet.unsupportedDevice.errorL2.secondaryAction"
+                  ),
+                  onPress: () =>
+                    closeIssuance({
+                      reason: failure.reason,
+                      cta_category: "custom_1",
+                      cta_id: I18n.t(
+                        "features.itWallet.unsupportedDevice.errorL2.secondaryAction"
+                      )
+                    }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+                }
+              };
         case IssuanceFailureType.UNTRUSTED_ISS:
           return {
             title: I18n.t(

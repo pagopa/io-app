@@ -41,11 +41,8 @@ jest.mock("expo-task-manager", () => ({
   defineTask: jest.fn(),
   isTaskRegisteredAsync: jest.fn().mockResolvedValue(false)
 }));
-// Pulsar is a TurboModule, so importing it under Jest throws: there is no
-// native module for TurboModuleRegistry.getEnforcing("RNPulsar") to bind to.
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 jest.mock("react-native-pulsar", () =>
-  require("./ts/__mocks__/pulsarJestMock")
+  require("react-native-pulsar/jest-mock")
 );
 
 // eslint-disable-next-line functional/immutable-data
@@ -97,6 +94,11 @@ jest.mock("expo-brightness", () => ({
 
 jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
+}));
+
+jest.mock("@io-app/expo-nfc-antenna-info", () => ({
+  getNfcAntennaInfo: jest.fn(),
+  isHceSupported: jest.fn()
 }));
 
 /* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.

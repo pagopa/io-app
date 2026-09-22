@@ -6,14 +6,14 @@ import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../../components/ui/IOScrollView";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { isItwProximityEnabledSelector } from "../../common/store/selectors";
 import { trackItwProximityShowQrCode } from "../../presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../presentation/proximity/navigation/routes";
-import { hasPresentableCredentialsSelector } from "../../presentation/proximity/store/selectors/credentials";
 import { trackItwOfflineWallet } from "../analytics";
-import { ItwOfflineAccessGate } from "../components/ItwOfflineAccessGate.tsx";
+import { ItwOfflineAccessGate } from "../components/ItwOfflineAccessGate";
 import { ItwWalletCardsContainer } from "../components/ItwWalletCardsContainer";
 
 const OfflineWalletScreenContent = () => {
@@ -31,11 +31,10 @@ const OfflineWalletScreenContent = () => {
     });
   }, [navigation]);
 
-  const hasPresentableCredentials = useIOSelector(
-    hasPresentableCredentialsSelector
-  );
+  const isProximityenabled = useIOSelector(isItwProximityEnabledSelector);
+
   const proximityActionProps: IOScrollViewActions["primary"] | undefined =
-    hasPresentableCredentials
+    isProximityenabled
       ? {
           label: I18n.t("features.itWallet.presentation.ctas.present"),
           icon: "productITWallet",

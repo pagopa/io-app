@@ -10,12 +10,12 @@ import { appReducer } from "../../../../store/reducers";
 import { SpidIdp } from "../../../../utils/idps";
 import { setOneIdentityEnv } from "../../../authentication/common/store/actions/loginConfig";
 import { ONE_IDENTITY_ENVS } from "../../../authentication/common/store/reducers/loginConfig";
+import { AUTH_LEVELS, AuthLevel } from "../../../authentication/common/utils";
 import {
   createRetriableFetch,
   FetchResponse
 } from "../../../authentication/common/utils/fetch";
 import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
-import { SpidLevel } from "../../../authentication/login/cie/utils";
 import { lollipopSetEphemeralPublicKey } from "../../store/actions/lollipop";
 import { toBase64EncodedThumbprint } from "../../utils/crypto";
 import { lollipopSamlVerify } from "../../utils/login";
@@ -66,7 +66,7 @@ const successResponse = (status: number, body: unknown): FetchResponse => ({
 });
 
 interface SetupOptions {
-  minAuthLevel?: SpidLevel;
+  minAuthLevel?: AuthLevel;
   store?: ReturnType<typeof createTestStore>;
 }
 
@@ -76,7 +76,7 @@ const createTestStore = () => {
 };
 
 const setupTest = ({
-  minAuthLevel = "SpidL2",
+  minAuthLevel = AUTH_LEVELS.L2,
   store = createTestStore()
 }: SetupOptions = {}) => {
   const onFailure = jest.fn();
@@ -84,7 +84,7 @@ const setupTest = ({
   const utils = renderHook(
     () =>
       useOneIdentityLoginSource({
-        idp: mockIdp,
+        idpId: mockIdp.id,
         onFailure,
         minAuthLevel
       }),
@@ -120,7 +120,7 @@ describe("useOneIdentityLoginSource", () => {
     });
 
     expect(mockRetriableFetch).toHaveBeenCalledWith(
-      `${apiUrlPrefix}/api/auth/v2/reserve`,
+      `${apiUrlPrefix}/api/auth/v1/reserve`,
       expect.objectContaining({
         method: "POST",
         headers: expect.objectContaining({
@@ -161,6 +161,77 @@ describe("useOneIdentityLoginSource", () => {
     expect(onFailure).toHaveBeenCalled();
   });
 
+  it("should trigger a new reserve request when generateLoginSource is called after a successful response", async () => {
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
+
+    const { result } = setupTest();
+
+    await waitFor(() => {
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(1);
+    });
+
+    act(() => {
+      void result.current.generateLoginSource();
+    });
+
+    expect(result.current.loginSourceState.status).toBe("reserving-public-key");
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(2);
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+  });
+
+  it("should abort a still pending reserve request when generateLoginSource is called before it resolves", async () => {
+    // eslint-disable-next-line functional/no-let
+    let resolveFirstFetch: (value: FetchResponse) => void = () => undefined;
+
+    mockRetriableFetch.mockImplementationOnce(
+      () =>
+        new Promise<FetchResponse>(resolve => {
+          resolveFirstFetch = resolve;
+        })
+    );
+
+    mockRetriableFetch.mockResolvedValueOnce(
+      successResponse(200, reserveResponse)
+    );
+
+    const { result } = setupTest();
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(1);
+    });
+
+    const [, fetchOptions] = mockRetriableFetch.mock.lastCall as [
+      string,
+      RequestInit
+    ];
+    const firstFetchSignal = fetchOptions.signal as AbortSignal;
+
+    expect(firstFetchSignal.aborted).toBe(false);
+
+    act(() => {
+      void result.current.generateLoginSource();
+    });
+
+    expect(firstFetchSignal.aborted).toBe(true);
+
+    resolveFirstFetch(successResponse(200, reserveResponse));
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(2);
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+  });
+
   it("should fail if ephemeral key generation fails", async () => {
     mockHandleRegenerateEphemeralKey.mockResolvedValueOnce(undefined);
 
@@ -187,7 +258,7 @@ describe("useOneIdentityLoginSource", () => {
 
     await waitFor(() => {
       expect(mockRetriableFetch).toHaveBeenCalledWith(
-        `${apiUrlPrefix}/api/auth/v2/reserve`,
+        `${apiUrlPrefix}/api/auth/v1/reserve`,
         expect.objectContaining({
           body: JSON.stringify({
             env: "PROD",
@@ -211,7 +282,7 @@ describe("useOneIdentityLoginSource", () => {
 
     await waitFor(() => {
       expect(mockRetriableFetch).toHaveBeenCalledWith(
-        `${apiUrlPrefix}/api/auth/v2/reserve`,
+        `${apiUrlPrefix}/api/auth/v1/reserve`,
         expect.objectContaining({
           body: JSON.stringify({
             env: "UAT",
