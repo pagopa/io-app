@@ -10,10 +10,11 @@
  * gets synced with Lokalise. Contributors are allowed to:
  *
  * - Add a brand new key
- * - Delete an unused key but they are NOT allowed to change the _value_ of an
- *   already existing key by hand. Translations (i.e. value changes) may only
- *   land through the automated `lokalise/lokalise-pull-action`, which opens PRs
- *   from a `lok_*` branch.
+ * - Delete an unused key
+ *
+ * They are NOT allowed to change the _value_ of an already existing key by
+ * hand. Translations (i.e. value changes) may only land through the automated
+ * `lokalise/lokalise-pull-action`, which opens PRs from a `lok_*` branch.
  *
  * This script compares the base revision of each tracked locale file with the
  * `HEAD` revision and fails when the value of a key that exists in both
@@ -26,8 +27,8 @@
  *
  * ## Usage
  *
- * Node apps/main-app/scripts/locale/check-locale-value-changes.mjs [--base
- * <git-ref>]
+ * Run this file with `node` from the repository root, optionally passing
+ * `--base <git-ref>`.
  *
  * The base ref defaults to the `BASE_REF` env variable, then to
  * `origin/master`. Exit codes: 0 on success, 1 when at least one forbidden
