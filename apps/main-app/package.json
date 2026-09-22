@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.40.0-rc.1",
+  "version": "3.40.0-rc.2",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -81,6 +81,7 @@
     "expo": "^55.0.8",
     "expo-background-task": "~55.0.18",
     "expo-brightness": "~55.0.15",
+    "@io-app/expo-nfc-antenna-info": "workspace:*",
     "expo-calendar": "~55.0.17",
     "expo-clipboard": "~55.0.15",
     "expo-constants": "~55.0.16",
