@@ -175,7 +175,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
           <ItwProximityPresentationDetails data={proximityDetails} />
           <IOMarkdownLite
             content={I18n.t(
-              "features.itWallet.presentation.proximity.selectiveDisclosure.tos",
+              "features.itWallet.presentation.proximity.selectiveDisclosure.privacyAndTos",
               { privacyUrl: ITW_PRIVACY_URL, tosUrl: ITW_TOS_URL }
             )}
           />

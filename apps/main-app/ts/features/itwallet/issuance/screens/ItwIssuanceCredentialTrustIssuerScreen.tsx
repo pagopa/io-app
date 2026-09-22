@@ -240,10 +240,13 @@ const ContentView = ({
         <ItwRequestedClaimsList items={requiredClaims} />
         <VSpacer size={32} />
         <IOMarkdown
-          content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
-            privacyUrl: ITW_PRIVACY_URL,
-            tosUrl: ITW_TOS_URL
-          })}
+          content={I18n.t(
+            "features.itWallet.issuance.credentialAuth.privacyAndTos",
+            {
+              privacyUrl: ITW_PRIVACY_URL,
+              tosUrl: ITW_TOS_URL
+            }
+          )}
           rules={generateItwIOMarkdownRules({
             linkCallback: trackOpenItwTos
           })}
