@@ -1,4 +1,6 @@
-/** Action types and action creator related to the Profile. */
+/**
+ * Action types and action creator related to the Profile.
+ */
 
 import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { Omit } from "@pagopa/ts-commons/lib/types";

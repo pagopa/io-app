@@ -72,10 +72,7 @@ describe("getServiceDetails", () => {
       .next()
       .take([loadServiceDetail.success, loadServiceDetail.failure])
       .next(
-        loadServiceDetail.failure({
-          service_id: serviceId,
-          error: new Error()
-        })
+        loadServiceDetail.failure({ service_id: serviceId, error: new Error() })
       )
       .returns(undefined);
   });

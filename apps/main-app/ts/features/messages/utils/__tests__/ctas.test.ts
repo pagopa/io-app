@@ -68,10 +68,7 @@ const messageWithContentWithoutDueDate = {
 
 const messageWithContent = {
   ...messageWithContentWithoutDueDate,
-  content: {
-    ...messageWithContentWithoutDueDate.content,
-    due_date: new Date()
-  }
+  content: { ...messageWithContentWithoutDueDate.content, due_date: new Date() }
 };
 
 const mockAnalytics = jest.fn();

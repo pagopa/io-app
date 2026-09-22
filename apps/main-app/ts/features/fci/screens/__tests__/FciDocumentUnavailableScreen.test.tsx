@@ -50,9 +50,7 @@ describe("FciDocumentUnavailableScreen", () => {
     it("should show retry and close buttons", () => {
       const store = createTestStore();
       store.dispatch(
-        fciSignatureRequestFromId.success({
-          ...mockSignatureRequestDetailView
-        })
+        fciSignatureRequestFromId.success({ ...mockSignatureRequestDetailView })
       );
       const component = renderComponent(store);
       expect(component.queryByTestId("FciRetryButtonTestID")).not.toBeNull();
@@ -62,9 +60,7 @@ describe("FciDocumentUnavailableScreen", () => {
     it("should dispatch fciSignatureRequestRetryFromId on retry button press", () => {
       const store = createTestStore();
       store.dispatch(
-        fciSignatureRequestFromId.success({
-          ...mockSignatureRequestDetailView
-        })
+        fciSignatureRequestFromId.success({ ...mockSignatureRequestDetailView })
       );
       const dispatchSpy = jest.spyOn(store, "dispatch");
       const component = renderComponent(store);
