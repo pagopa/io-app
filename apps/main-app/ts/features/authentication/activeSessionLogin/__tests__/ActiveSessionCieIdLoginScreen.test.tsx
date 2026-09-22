@@ -15,8 +15,6 @@ import {
 } from "../store/actions";
 
 const API_PREFIX_URL = "http://example.com";
-const SPID_LEVEL = "SpidL2";
-const IS_UAT = false;
 
 const mockReplace = jest.fn();
 const mockDispatch = jest.fn();
@@ -31,12 +29,6 @@ jest.mock("@react-navigation/native", () => {
     useNavigation: () => ({
       replace: mockReplace,
       popToTop: mockPopToTop
-    }),
-    useRoute: () => ({
-      params: {
-        spidLevel: SPID_LEVEL,
-        isUat: IS_UAT
-      }
     })
   };
 });
@@ -240,7 +232,7 @@ function renderComponent() {
   return renderScreenWithNavigationStoreContext(
     ActiveSessionCieIdLoginScreen,
     AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN,
-    { spidLevel: SPID_LEVEL, isUat: IS_UAT },
+    {},
     store
   );
 }

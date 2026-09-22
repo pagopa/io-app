@@ -16,6 +16,7 @@ import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/sele
 import { getMixPanelCredential } from "../../analytics/utils";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
 import { itwSetCredentialExitSurvey } from "../../common/store/actions/ui";
+import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
@@ -52,7 +53,11 @@ export const onInitAction = assign<
     isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
     walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
     credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state),
-    isWalletValid: itwLifecycleIsValidSelector(state)
+    isWalletValid: itwLifecycleIsValidSelector(state),
+    deps: {
+      ...context.deps,
+      itwVersion: selectItwSpecsVersion(state) // Ensure IT-Wallet version is always updated
+    }
   };
 });
 

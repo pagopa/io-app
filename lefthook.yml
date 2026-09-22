@@ -2,10 +2,9 @@ pre-commit:
   piped: true
   jobs:
     - name: format staged files
-      run: pnpm oxfmt {staged_files}
-      glob:
-        - "*.{ts,tsx}"
-        - "apps/main-app/locales/**/*.json"
+      # Without the flag, oxfmt fails when every staged file is ignored (e.g. only CHANGELOG.md)
+      run: pnpm oxfmt --no-error-on-unmatched-pattern {staged_files}
+      glob: "*.{ts,tsx,js,mjs,cjs,json,jsonc,yml,yaml,md,html}"
       stage_fixed: true
 
     - name: lint staged files
@@ -20,7 +19,5 @@ pre-push:
       run: pnpm nx affected --targets=lint,tsc-noemit --base=origin/master --head=HEAD --nx-bail
 
     - name: check pushed files formatting
-      run: pnpm oxfmt --check {push_files}
-      glob:
-        - "*.{ts,tsx}"
-        - "apps/main-app/locales/**/*.json"
+      run: pnpm oxfmt --check --no-error-on-unmatched-pattern {push_files}
+      glob: "*.{ts,tsx,js,mjs,cjs,json,jsonc,yml,yaml,md,html}"

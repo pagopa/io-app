@@ -63,6 +63,7 @@ const join = path.join;
 const { optimize } = require("svgo");
 const fs = require("fs-extra");
 const { transform } = require("@svgr/core");
+const { formatComponent } = require("./formatComponent");
 
 const svgDir = join(__dirname, "../src/components/pictograms/svg/originals");
 const tsxDir = join(__dirname, "../src/components/pictograms/svg");

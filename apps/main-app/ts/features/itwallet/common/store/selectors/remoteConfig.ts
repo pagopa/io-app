@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 
@@ -16,20 +15,25 @@ const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
  * plain values.
  */
 const itwRemoteConfigSelector = (state: GlobalState) =>
-  O.toUndefined(state.remoteConfig)?.itw;
+  state.features.itWallet.remoteConfig;
 
 /** Returns the remote config for docIO */
 export const isItwEnabledSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): boolean =>
-    itwConfig !== undefined &&
-    isVersionSupported(
-      Platform.OS === "ios"
-        ? itwConfig.min_app_version.ios
-        : itwConfig.min_app_version.android,
+  ({ enabled, min_app_version }): boolean => {
+    if (!enabled) {
+      return false;
+    }
+
+    if (min_app_version === undefined) {
+      return false;
+    }
+
+    return isVersionSupported(
+      Platform.OS === "ios" ? min_app_version.ios : min_app_version.android,
       getAppVersion()
-    ) &&
-    itwConfig.enabled
+    );
+  }
 );
 
 /**
@@ -38,14 +42,14 @@ export const isItwEnabledSelector = createSelector(
  */
 export const itwDisabledIdentificationMethodsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> =>
-    itwConfig?.disabled_identification_methods ?? emptyArray
+  ({ disabled_identification_methods }): ReadonlyArray<string> =>
+    disabled_identification_methods ?? emptyArray
 );
 
 /** Return whether the IT Wallet feedback banner is remotely enabled. */
 export const isItwFeedbackBannerEnabledSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig => itwConfig?.feedback_banner_visible ?? false
+  ({ feedback_banner_visible }) => feedback_banner_visible ?? false
 );
 
 /**
@@ -55,19 +59,19 @@ export const isItwFeedbackBannerEnabledSelector = createSelector(
  */
 export const itwIsActivationDisabledSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig => itwConfig?.wallet_activation_disabled ?? false
+  ({ wallet_activation_disabled }) => wallet_activation_disabled ?? false
 );
 
 /** Return IT Wallet credentials that have been disabled remotely. */
 export const itwDisabledCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig => itwConfig?.disabled_credentials ?? emptyArray
+  ({ disabled_credentials }) => disabled_credentials ?? emptyArray
 );
 
 /** Return the remote config content for the iPatente CTA's visibility. */
 export const itwIsIPatenteCtaEnabledSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig => itwConfig?.ipatente_cta_visible ?? false
+  ({ ipatente_cta_visible }) => ipatente_cta_visible ?? false
 );
 
 /**
@@ -76,13 +80,13 @@ export const itwIsIPatenteCtaEnabledSelector = createSelector(
  */
 export const itwIPatenteCtaConfigSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig => itwConfig?.ipatente_cta_config
+  ({ ipatente_cta_config }) => ipatente_cta_config
 );
 
 /** Return the remote config about ipzs privacy url for the IPZS privacy screen. */
 export const itwIpzsPrivacyUrlSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig => itwConfig?.ipzs_privacy_url
+  ({ ipzs_privacy_url }) => ipzs_privacy_url
 );
 
 /**
@@ -91,8 +95,8 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
  */
 export const isItwMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): boolean => {
-    const version = itwConfig?.itw_l3?.min_app_version;
+  ({ itw_l3 }): boolean => {
+    const version = itw_l3?.min_app_version;
     if (!version) {
       return false;
     }
@@ -109,8 +113,8 @@ export const isItwMinAppVersionSupportedSelector = createSelector(
  */
 export const isItwProximityMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): boolean => {
-    const version = itwConfig?.proximity?.min_app_version;
+  ({ proximity }): boolean => {
+    const version = proximity?.min_app_version;
     if (!version) {
       return false;
     }
@@ -127,8 +131,8 @@ export const isItwProximityMinAppVersionSupportedSelector = createSelector(
  */
 export const itwPinnedCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> =>
-    itwConfig?.pinned_credentials ?? emptyArray
+  ({ pinned_credentials }): ReadonlyArray<string> =>
+    pinned_credentials ?? emptyArray
 );
 
 /**
@@ -137,12 +141,12 @@ export const itwPinnedCredentialsSelector = createSelector(
  */
 export const itwNewCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> => itwConfig?.new_credentials ?? emptyArray
+  ({ new_credentials }): ReadonlyArray<string> => new_credentials ?? emptyArray
 );
 
 /** Return the credential types that are hidden from the catalogue list. */
 export const itwHiddenCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> =>
-    itwConfig?.hidden_credentials ?? emptyArray
+  ({ hidden_credentials }): ReadonlyArray<string> =>
+    hidden_credentials ?? emptyArray
 );

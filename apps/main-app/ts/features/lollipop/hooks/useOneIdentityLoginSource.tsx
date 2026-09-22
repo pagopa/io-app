@@ -9,16 +9,19 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
-import { SpidIdp } from "../../../utils/idps";
 import {
   isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
 } from "../../authentication/activeSessionLogin/store/selectors";
 import { oneIdentityEnvSelector } from "../../authentication/common/store/selectors/loginConfig";
+import {
+  AUTH_LEVELS,
+  AuthLevel,
+  SPID_AUTH_LEVEL_MAP
+} from "../../authentication/common/utils";
 import { createRetriableFetch } from "../../authentication/common/utils/fetch";
 import { jsonFetchToSchema } from "../../authentication/common/utils/jsonFetchToSchema";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
-import { SpidLevel } from "../../authentication/login/cie/utils";
 import {
   ephemeralKeyTagSelector,
   ephemeralPublicKeySelector
@@ -36,7 +39,7 @@ const fetch = createRetriableFetch();
  * Path of the Session Manager endpoint that reserves the public key and returns
  * the `/authorize` parameters.
  */
-const reserveEndpointPath = "/api/auth/v2/reserve";
+const reserveEndpointPath = "/api/auth/v1/reserve";
 
 /**
  * State of the OneIdentity login source flow. At any given moment the flow is
@@ -66,14 +69,14 @@ type LoginSourceState =
 /** Builds the request body for the `/reserve` endpoint. */
 const buildReserveRequestBody = (
   env: string,
-  minAuthLevel: SpidLevel,
+  minAuthLevel: AuthLevel,
   publicKey: PublicKey,
   hashAlgorithm: string,
   isFastLogin: boolean,
   hashedFiscalCode?: string
 ) => ({
   env: env.toUpperCase(),
-  min_auth_level: minAuthLevel,
+  min_auth_level: SPID_AUTH_LEVEL_MAP[minAuthLevel],
   lollipop_pub_key: Buffer.from(JSON.stringify(publicKey)).toString(
     "base64url"
   ),
@@ -92,7 +95,7 @@ const buildAuthorizationUrl = (
     state: string;
   },
   idp: string,
-  minAuthLevel: SpidLevel
+  minAuthLevel: AuthLevel
 ): string => {
   const { authorization_endpoint, client_id, nonce, redirect_uri, state } =
     reserveResponse;
@@ -105,7 +108,7 @@ const buildAuthorizationUrl = (
     state,
     nonce,
     response_type: "code",
-    minAuthLevel
+    minAuthLevel: SPID_AUTH_LEVEL_MAP[minAuthLevel]
   });
   return authorizationUrl.toString();
 };
@@ -129,16 +132,22 @@ const buildWebviewSource = (
 });
 
 export type UseOneIdentityLoginSource = (params: {
-  /** The identity provider the user selected to login with. */
-  idp: SpidIdp;
+  /** The ID of the identity provider the user selected to login with. */
+  idpId: string;
   /**
    * The minimum required SPID level for the authentication flow. Defaults to
-   * "SpidL2".
+   * "L2".
    */
-  minAuthLevel?: SpidLevel;
+  minAuthLevel?: AuthLevel;
   /** Handler called upon a failure during the login flow. */
   onFailure: (reason: string) => void;
 }) => {
+  /**
+   * Handler that restarts the login flow by generating a new login source. It
+   * automatically resets the internal state and safely aborts any ongoing
+   * network requests.
+   */
+  generateLoginSource: () => Promise<void>;
   /** The current state of the OneIdentity OIDC flow. */
   loginSourceState: LoginSourceState;
   /**
@@ -150,9 +159,9 @@ export type UseOneIdentityLoginSource = (params: {
 };
 
 export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
-  idp,
+  idpId,
   onFailure,
-  minAuthLevel = "SpidL2"
+  minAuthLevel = AUTH_LEVELS.L2
 }) => {
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -223,6 +232,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   );
 
   const generateLoginSource = useCallback(async () => {
+    abortControllerRef.current?.abort();
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
@@ -273,7 +283,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
     const authorizationUrl = buildAuthorizationUrl(
       result.value,
-      idp.id,
+      idpId,
       minAuthLevel
     );
 
@@ -282,7 +292,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       webviewSource: buildWebviewSource(authorizationUrl, publicKey)
     });
   }, [
-    idp,
+    idpId,
     ephemeralKeyTag,
     mixpanelEnabled,
     dispatch,
@@ -305,6 +315,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
   return {
     loginSourceState,
-    shouldBlockUrlNavigationWhileCheckingLollipop
+    shouldBlockUrlNavigationWhileCheckingLollipop,
+    generateLoginSource
   };
 };

@@ -213,7 +213,7 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
       <ListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}
         paymentLogoIcon={"payPal"}
-        value="PayPal"
+        value={I18n.t("wallet.onboarding.paypal.name")}
       />
     );
   }

@@ -1,7 +1,9 @@
-import { NativeModules, Platform } from "react-native";
+import {
+  isHceSupported as getNativeIsHceSupported,
+  getNfcAntennaInfo as getNativeNfcAntennaInfo
+} from "@io-app/expo-nfc-antenna-info";
+import { Platform } from "react-native";
 import { z } from "zod";
-
-const NfcAntennaInfoNativeModule = NativeModules.NfcAntennaInfo;
 
 /**
  * Position of the NFC antenna on the device, in millimeters from the top-left
@@ -25,6 +27,12 @@ const NfcAntennaInfoSchema = z.object({
 
 export type NfcAntennaInfo = z.infer<typeof NfcAntennaInfoSchema>;
 
+function getUnsupportedPlatformHceInfo(): Promise<boolean> {
+  return Promise.reject(
+    new Error("HCE info is only available on Android devices.")
+  );
+}
+
 function getUnsupportedPlatformNfcInfo(): Promise<NfcAntennaInfo> {
   return Promise.reject(
     new Error("NFC info is only available on Android devices.")
@@ -43,7 +51,7 @@ function getUnsupportedPlatformNfcInfo(): Promise<NfcAntennaInfo> {
 export const getNfcAntennaInfo: () => Promise<NfcAntennaInfo> = Platform.select(
   {
     android: async () => {
-      const raw = await NfcAntennaInfoNativeModule.getNfcAntennaInfo();
+      const raw = await getNativeNfcAntennaInfo();
       return NfcAntennaInfoSchema.parse(raw);
     },
     default: getUnsupportedPlatformNfcInfo
@@ -60,6 +68,6 @@ export const getNfcAntennaInfo: () => Promise<NfcAntennaInfo> = Platform.select(
  *   provide valid data.
  */
 export const isHceSupported: () => Promise<boolean> = Platform.select({
-  android: () => NfcAntennaInfoNativeModule.isHceSupported(),
-  default: getUnsupportedPlatformNfcInfo
+  android: () => getNativeIsHceSupported(),
+  default: getUnsupportedPlatformHceInfo
 });

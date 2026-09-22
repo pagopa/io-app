@@ -48,18 +48,16 @@ catalog:
 
   # --- TypeScript ---
   typescript: "6.0.3"
-  oxfmt: "0.67.0"
+  oxfmt: "0.68.0"
   eslint: "^10.9.0"
   jest: "~30.3.0"
   "@types/jest": "^30.0.0"
   "@types/react": "^19.2.0"
 
   # --- Linting ---
-  eslint-config-prettier: "^10.1.8"
   eslint-plugin-functional: "^10.0.0"
   eslint-plugin-import: "^2.32.0"
   eslint-plugin-jest: "^29.15.5"
-  eslint-plugin-prettier: "^5.5.6"
   eslint-plugin-react-native-a11y: "^3.3.0"
 
   # --- React Native ---
@@ -79,7 +77,7 @@ catalog:
   expo-linear-gradient: "~55.0.16"
   react-native-easing-gradient: "^1.1.1"
   react-native-gesture-handler: "^2.28.0"
-  react-native-pulsar: "^1.6.1"
+  react-native-pulsar: "^1.7.0"
   react-native-reanimated: "4.3.1"
   react-native-safe-area-context: "^5.6.2"
   react-native-svg: "^15.14.0"

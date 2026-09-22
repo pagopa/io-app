@@ -20,6 +20,24 @@ export const oneIdentityRolloutPercentageSelector = (state: GlobalState) => {
   return oneIdentityConfig?.rolloutPercentage ?? 0;
 };
 
+/**
+ * Stable empty array reference, so the selector doesn't return a new array on
+ * every call when the field is missing (which would break memoization).
+ */
+const EMPTY_ALLOWED_CIE_ORIGINS: ReadonlyArray<string> = [];
+
+/**
+ * Retrieves the list of allowed CIE origins for the OneIdentity login.
+ *
+ * Defaults to an empty array (no origin allowed) if the remote configuration is
+ * not yet loaded or if the field is missing, so CIE ID login is blocked until a
+ * valid list is received from the remote config.
+ */
+export const oneIdentityAllowedCieOriginsSelector = (state: GlobalState) => {
+  const oneIdentityConfig = oneIdentityRemoteConfigSelector(state);
+  return oneIdentityConfig?.allowedCieOrigins ?? EMPTY_ALLOWED_CIE_ORIGINS;
+};
+
 type OneIdentityEnvConfig = {
   idpFriendlyNamesUrl: string;
   idpsUrl: string;

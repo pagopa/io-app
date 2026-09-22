@@ -3,7 +3,7 @@ import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
-import { spidRelayState } from "../../../../config";
+import { apiUrlPrefix, spidRelayState } from "../../../../config";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
@@ -13,6 +13,15 @@ import {
   trackSessionTokenSource
 } from "../analytics";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
+
+export const AUTH_LEVELS = { L2: "L2", L3: "L3" } as const;
+export type AuthLevel = (typeof AUTH_LEVELS)[keyof typeof AUTH_LEVELS];
+
+export type SpidAuthLevel = `Spid${AuthLevel}`;
+export const SPID_AUTH_LEVEL_MAP: Record<AuthLevel, SpidAuthLevel> = {
+  [AUTH_LEVELS.L2]: "SpidL2",
+  [AUTH_LEVELS.L3]: "SpidL3"
+};
 
 type LoginFailure = {
   errorCode?: string;
@@ -120,10 +129,10 @@ export const extractLoginResult = (
 /** For a given idp id get the relative login uri */
 export const getIdpLoginUri = (
   idpId: string,
-  level: number,
+  authLevel: AuthLevel,
   apiLoginUrlPrefix: string
 ) =>
-  `${apiLoginUrlPrefix}/api/auth/v1/login?authLevel=SpidL${level}&entityID=${idpId}&RelayState=${spidRelayState}`;
+  `${apiLoginUrlPrefix}/api/auth/v1/login?authLevel=${SPID_AUTH_LEVEL_MAP[authLevel]}&entityID=${idpId}&RelayState=${spidRelayState}`;
 
 /**
  * Extract the login result from the given url. Return true if the url contains
@@ -206,4 +215,16 @@ export const originSchemasWhiteList = [
   ...(isDevEnv ? ["http://*"] : [])
 ];
 
-export const CALLBACK_PATH = "/api/auth/v2/callback";
+/**
+ * Checks whether `url` is an exact match of one of the OIDC callback endpoints
+ * (`v1` or `v2`) exposed by the backend at `apiUrlPrefix`. Both versions are
+ * accepted.
+ */
+export const isValidCallbackUrl = (url: string) => {
+  const validUrls = [
+    `${apiUrlPrefix}/api/auth/v1/callback`,
+    `${apiUrlPrefix}/api/auth/v2/callback`
+  ];
+
+  return validUrls.includes(url);
+};

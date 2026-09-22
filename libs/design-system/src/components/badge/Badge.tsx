@@ -178,10 +178,14 @@ export const Badge = ({
     }
   };
 
-  // prettier-ignore
-  const variantMap = themeType === "light"
-    ? (outline ? mapOutlineVariantsLightMode : mapVariantsLightMode)
-    : (outline ? mapOutlineVariantsDarkMode : mapVariantsDarkMode);
+  const variantMap =
+    themeType === "light"
+      ? outline
+        ? mapOutlineVariantsLightMode
+        : mapVariantsLightMode
+      : outline
+        ? mapOutlineVariantsDarkMode
+        : mapVariantsDarkMode;
 
   const { background, foreground } = variantMap[variant];
 

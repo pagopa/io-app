@@ -132,6 +132,9 @@ export const helpCenterHowToLoginWithSpidUrl =
 /** Help Center URL for the "How to login with EIC" article */
 export const helpCenterHowToLoginWithEicUrl =
   "https://assistenza.ioapp.it/hc/it/articles/30724124984593#h_01JF0DQRRPJWY61RAFNG2AKF3R" as NonEmptyString;
+/** Help Center URL for the "How to read the CIE" article */
+export const helpCenterHowToReadCieUrl =
+  "https://assistenza.ioapp.it/hc/it/articles/50892848629905-Leggere-la-CIE" as NonEmptyString;
 
 // #endregion
 
