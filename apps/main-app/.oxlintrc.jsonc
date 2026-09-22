@@ -387,6 +387,16 @@
                 "name": "redux-saga/effects",
                 "message": "Importing from \"redux-saga/effects\" is not allowed. Use \"typed-redux-saga/macro\" instead for type-safe saga effects."
               }
+            ],
+            // Consumers must use the public design-system API instead of its monorepo path or internals
+            "patterns": [
+              {
+                "group": [
+                  "**/libs/design-system/**", // Avoid monorepo path
+                  "@io-app/design-system/**" // Avoid internals
+                ],
+                "message": "Import from \"@io-app/design-system\" to use the design system."
+              }
             ]
           }
         ],
@@ -490,7 +500,21 @@
     {
       "files": ["**/*.test.{ts,tsx}"],
       "rules": {
-        "no-restricted-imports": "off",
+        // Tests may use the restricted `paths`, but not design-system internals
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": [
+                  "**/libs/design-system/**", // Avoid monorepo path
+                  "@io-app/design-system/**" // Avoid internals
+                ],
+                "message": "Import from \"@io-app/design-system\" to use the design system."
+              }
+            ]
+          }
+        ],
         "no-shadow": "off",
         "no-empty-function": "off",
         "typescript/no-non-null-assertion": "off",
