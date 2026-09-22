@@ -7,22 +7,9 @@ pre-commit:
       glob: "*.{ts,tsx,js,mjs,cjs,json,jsonc,yml,yaml,md,html}"
       stage_fixed: true
 
-    # One job per project: `options.typeAware` is only allowed in the root
-    # config, so oxlint must run from the project that owns .oxlintrc.jsonc.
-    - name: oxlint main-app staged files
-      root: "apps/main-app/"
-      run: pnpm oxlint --fix {staged_files}
-      glob: "*.{ts,tsx}"
-      stage_fixed: true
-
-    - name: oxlint design-system staged files
-      root: "libs/design-system/"
-      run: pnpm oxlint --fix {staged_files}
-      glob: "*.{ts,tsx}"
-      stage_fixed: true
-
-    - name: oxlint dev-api-server staged files
-      root: "apps/dev-api-server/"
+    # Runs from the repo root: oxlint picks each file's nearest .oxlintrc.jsonc,
+    # with the root-only options (typeAware, ...) from the root config
+    - name: oxlint staged files
       run: pnpm oxlint --fix {staged_files}
       glob: "*.{ts,tsx}"
       stage_fixed: true

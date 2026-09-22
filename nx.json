@@ -33,6 +33,11 @@
     ]
   },
   "targetDefaults": {
+    "oxlint": {
+      "options": {
+        "args": "--type-aware --report-unused-disable-directives-severity=warn"
+      }
+    },
     "test": {
       "configurations": {
         "ci": {

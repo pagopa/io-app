@@ -4,11 +4,6 @@
   "categories": {
     "correctness": "off"
   },
-  "options": {
-    "typeAware": true,
-    // Covers `oxlint-disable` comments, which ESLint's eslint-comments rules never see
-    "reportUnusedDisableDirectives": "warn"
-  },
   "env": {
     "builtin": true
   },
