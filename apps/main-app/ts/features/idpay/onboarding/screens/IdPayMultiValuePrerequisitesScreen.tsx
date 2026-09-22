@@ -105,7 +105,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
       return;
     }
     const value = selfDeclaration.value?.[selectedValueIndex].value;
-    if (selfDeclaration.code == null || value == null) {
+    if (!selfDeclaration.code || !value) {
       IOToast.error(I18n.t("global.genericError"));
       return;
     }
