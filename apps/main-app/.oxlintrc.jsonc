@@ -257,6 +257,7 @@
             // oxlint's jsPlugin bridge does not expose.
             "ignoreAccessorPattern": [
               "navigation.**",
+              "**.navigation.**",
               "navigate.**",
               "StackActions.**",
               "**.value",
@@ -337,7 +338,12 @@
                 "fontStyle", // typography style tokens (e.g. "italic")
                 "accessibilityRole", // RN a11y role literals (e.g. "link")
                 "textDecorationLine", // RN style literals (e.g. "underline")
-                "importantForAccessibility" // RN a11y config literals (e.g. "no-hide-descendants")
+                "importantForAccessibility", // RN a11y config literals (e.g. "no-hide-descendants")
+                "icon", // icon identifier strings
+                "iconPosition", // layout config strings (e.g. "end")
+                "variant", // component variant tokens (e.g. "error")
+                "cta_category", // analytics enum values
+                "survey_id" // analytics identifiers
               ]
             },
             // callees.exclude overrides the plugin defaults (lodash _.defaults is
@@ -365,7 +371,9 @@
                 "formatNumberCentsToAmount", // alignment arg is a typed literal
                 "getOrFallback", // locale code arg is a typed literal
                 "getAccessibleExpirationDate", // status arg is a typed enum
-                "toString" // date format string arg (e.g. "DD/MM/YY")
+                "toString", // date format string arg (e.g. "DD/MM/YY")
+                "trackSystemNotificationPermissionScreenOutcome", // analytics enum args
+                "copyToMediaStore" // media collection arg is a typed literal
               ]
             }
           }
