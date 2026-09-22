@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
 import { getType } from "typesafe-actions";
 
@@ -29,10 +27,10 @@ export enum IdentificationBackActionType {
 }
 
 export enum IdentificationResult {
-  "cancel" = "cancel",
-  "failure" = "failure",
-  "pinreset" = "pinreset",
-  "success" = "success"
+  cancel = "cancel",
+  failure = "failure",
+  pinreset = "pinreset",
+  success = "success"
 }
 
 export type IdentificationCancelData = { label: string; onCancel: () => void };
@@ -140,19 +138,15 @@ export const identificationReducer = (
       };
 
     case getType(identificationFailure):
-      const newErrorData = pipe(
-        state.fail,
-        O.fromNullable,
-        O.fold(
-          () => ({
+      const newErrorData = state.fail
+        ? nextErrorData(state.fail)
+        : {
             nextLegalAttempt: new Date(),
             remainingAttempts: maxAttempts - 1,
             timespanBetweenAttempts: 0,
             showLockModal: false
-          }),
-          errorData => nextErrorData(errorData)
-        )
-      );
+          };
+
       return {
         ...state,
         fail: newErrorData

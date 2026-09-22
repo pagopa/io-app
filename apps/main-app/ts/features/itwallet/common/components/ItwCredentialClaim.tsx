@@ -185,6 +185,7 @@ const DateClaimItem = ({
           "features.itWallet.presentation.credentialDetails.status.valid"
         );
       case "invalid":
+      case "suspended":
         return I18n.t(
           "features.itWallet.presentation.credentialDetails.status.invalid"
         );
@@ -315,7 +316,7 @@ const AttachmentsClaimItem = ({
         type: "badge",
         componentProps: {
           variant: "default",
-          text: "PDF"
+          text: I18n.t("global.badges.pdf")
         }
       }}
       label={I18n.t(

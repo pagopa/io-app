@@ -22,7 +22,6 @@ import {
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-// import { trackSpidLoginError } from "../../../../../utils/analytics";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -30,15 +29,16 @@ import {
 import { getUrlBasepath } from "../../../../../utils/url";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { trackLoginFailure } from "../../../common/analytics";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpLoginUrlChanged } from "../../../common/store/actions";
 import {
+  AUTH_LEVELS,
   getIdpLoginUri,
   getIntentFallbackUrl,
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { usePosteIDApp2AppEducational } from "../../../login/idp/hooks/usePosteIDApp2AppEducational";
 import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import { getSpidErrorCodeDescription } from "../../../login/idp/utils/spidErrorCode";
@@ -118,7 +118,7 @@ const ActiveSessionIdpLoginScreen = () => {
   const acsUrl = `${remoteApiLoginUrlPrefix}${ACS_PATH}`;
 
   const loginUri = idpId
-    ? getIdpLoginUri(idpId, 2, remoteApiLoginUrlPrefix)
+    ? getIdpLoginUri(idpId, AUTH_LEVELS.L2, remoteApiLoginUrlPrefix)
     : undefined;
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
@@ -138,7 +138,6 @@ const ActiveSessionIdpLoginScreen = () => {
 
   const handleLoadingError = useCallback(
     (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-      // trackSpidLoginError(selectedIdp?.id, error);
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
@@ -286,7 +285,7 @@ const ActiveSessionIdpLoginScreen = () => {
       params: {
         errorCodeOrMessage,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     });
   }, [errorCodeOrMessage, replace]);

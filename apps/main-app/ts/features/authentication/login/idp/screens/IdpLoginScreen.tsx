@@ -23,7 +23,7 @@ import {
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { trackSpidLoginError } from "../../../../../utils/analytics";
+import { trackLoginError } from "../../../../../utils/analytics";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -45,6 +45,7 @@ import {
   selectedIdentityProviderSelector
 } from "../../../common/store/selectors";
 import {
+  AUTH_LEVELS,
   getIdpLoginUri,
   getIntentFallbackUrl,
   onLoginUriChanged,
@@ -116,7 +117,7 @@ const IdpLoginScreen = () => {
     remoteApiLoginUrlPrefixSelector
   );
   const loginUri = idpId
-    ? getIdpLoginUri(idpId, 2, remoteApiLoginUrlPrefix)
+    ? getIdpLoginUri(idpId, AUTH_LEVELS.L2, remoteApiLoginUrlPrefix)
     : undefined;
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
@@ -133,7 +134,7 @@ const IdpLoginScreen = () => {
 
   const handleLoadingError = useCallback(
     (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-      trackSpidLoginError(loggedOutWithIdpAuth?.idp.id, error);
+      trackLoginError(loggedOutWithIdpAuth?.idp.id, error);
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
@@ -271,7 +272,7 @@ const IdpLoginScreen = () => {
       params: {
         errorCodeOrMessage,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     });
   }, [errorCodeOrMessage, replace]);

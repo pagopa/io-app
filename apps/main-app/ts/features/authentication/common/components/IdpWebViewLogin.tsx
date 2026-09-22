@@ -12,7 +12,7 @@ import {
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { trackSpidLoginError } from "../../../../utils/analytics";
+import { trackLoginError } from "../../../../utils/analytics";
 import { SpidIdp } from "../../../../utils/idps";
 import {
   assistanceToolRemoteConfig,
@@ -27,6 +27,7 @@ import {
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
 import { idpLoginUrlChanged } from "../store/actions";
 import {
+  AUTH_LEVELS,
   getIntentFallbackUrl,
   onLoginUriChanged,
   originSchemasWhiteList
@@ -77,14 +78,14 @@ export const IdpWebViewLogin = memo(
 
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
-        idp,
+        idpId: idp.id,
         onFailure: handleFailure,
-        minAuthLevel: "SpidL2"
+        minAuthLevel: AUTH_LEVELS.L2
       });
 
     const handleError = useCallback(
       (event: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-        trackSpidLoginError(idp.id, event);
+        trackLoginError(idp.id, event);
 
         const { nativeEvent } = event;
         if ("statusCode" in nativeEvent) {

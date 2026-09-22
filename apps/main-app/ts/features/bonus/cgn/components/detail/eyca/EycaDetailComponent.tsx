@@ -97,7 +97,9 @@ const EycaDetailComponent = () => {
               componentProps: {
                 icon: "info",
                 onPress: present,
-                accessibilityLabel: "Apri bottom sheet"
+                accessibilityLabel: I18n.t(
+                  "bonus.cgn.detail.status.a11y.eycaInfo"
+                )
               }
             }}
             label={I18n.t("bonus.cgn.detail.status.eyca")}

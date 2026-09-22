@@ -44,7 +44,7 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import {
   getCredentialStatusFromStatusList,
-  getKeysForKaStatusList
+  getKeysForStatusListToken
 } from "../../statusList/utils";
 import { StatusListRepository } from "../../statusList/utils/repository";
 import {
@@ -74,7 +74,9 @@ export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
 export type ObtainStatusListActorInput = Pick<
   Context,
   "itwVersion" | "keyAttestations"
->;
+> & {
+  deps: EidIssuanceMachineDeps;
+};
 
 export type ObtainStatusListActorOutput = Context["walletInstanceStatusList"];
 
@@ -434,6 +436,7 @@ export const obtainStatusListActor = fromPromise<
   ObtainStatusListActorOutput,
   ObtainStatusListActorInput
 >(async ({ input }) => {
+  const { env } = input.deps;
   const { itwVersion, keyAttestations } = input;
 
   const ioWallet = getIoWallet(itwVersion);
@@ -453,8 +456,10 @@ export const obtainStatusListActor = fromPromise<
   // reference the same Status List. We can take the first one.
   const [keyAttestationId, keyAttestation] = Object.entries(keyAttestations)[0];
 
-  // Fetch the JWKS from the Wallet Provider's OpenID Federation metadata,
-  const keys = await getKeysForKaStatusList(keyAttestation);
+  const keys = await getKeysForStatusListToken(
+    keyAttestation,
+    env.X509_CERT_ROOT
+  );
 
   return await getCredentialStatusFromStatusList(
     itwVersion,

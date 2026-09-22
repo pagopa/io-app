@@ -80,6 +80,7 @@ export const issuanceState = itwEidIssuanceMachineSetup.createStateConfig({
       invoke: {
         src: "obtainStatusList",
         input: ({ context }) => ({
+          deps: context.deps,
           itwVersion: context.itwVersion,
           keyAttestations: context.keyAttestations
         }),
