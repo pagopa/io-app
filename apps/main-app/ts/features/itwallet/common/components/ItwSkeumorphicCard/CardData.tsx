@@ -1,3 +1,5 @@
+/* eslint-disable dot-notation */
+/* eslint-disable @typescript-eslint/dot-notation */
 import { ElementType, Fragment, memo } from "react";
 import { StyleSheet, View } from "react-native";
 

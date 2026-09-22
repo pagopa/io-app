@@ -6,17 +6,14 @@
   },
   "options": {
     "typeAware": true,
-    // Replaces eslint-plugin-eslint-comments/no-unused-disable
+    // Covers `oxlint-disable` comments, which ESLint's eslint-comments rules never see
     "reportUnusedDisableDirectives": "warn"
   },
   "env": {
     "builtin": true
   },
-  // Patterns are "**/"-anchored so they match regardless of the working
-  // directory: oxlint runs from the project root via `nx lint` (cwd =
-  // apps/main-app) but from the repo root via lint-staged in the pre-commit
-  // hook (with --config). A bare "definitions/*" would not match
-  // "apps/main-app/definitions/*" in the latter case.
+  // Patterns are "**/"-anchored so they also match when this config is reached
+  // through `extends` from another project (design-system, dev-api-server).
   "ignorePatterns": [
     "**/*.js",
     "**/*.cjs",
@@ -172,8 +169,6 @@
         "no-shadow": "warn",
         "no-undefined": "off",
         "no-use-before-define": "off",
-        // eslint-plugin-eslint-comments is replaced by oxlint's native reportUnusedDisableDirectives (see options above)
-        // eslint-comments/no-aggregating-enable and no-unlimited-disable are not supported natively; the plugin crashes in oxlint's JS runner
         "object-shorthand": "error",
         "no-underscore-dangle": [
           "error",
@@ -187,11 +182,6 @@
             ]
           }
         ],
-        "io-app/delegate-effects": "error",
-        // Disallow dynamically-built i18n keys so unused-key detection stays reliable
-        "io-app/i18n-no-dynamic-keys": "warn",
-        // Remove this after the migration of fp-ts is being completed and replaced by neverthrow;
-        "io-app/no-fp-ts": "warn",
         "func-names": "off",
         "func-style": "off",
         "new-cap": "off",
@@ -216,27 +206,12 @@
         "react/no-unknown-property": "off",
         "react/react-in-jsx-scope": "off",
         "react/self-closing-comp": "warn",
-        "react-native/no-inline-styles": "off",
         "jest/no-disabled-tests": "warn",
         "jest/no-focused-tests": "warn",
         "jest/no-identical-title": "warn",
         "jest/valid-expect": "warn",
         "react/rules-of-hooks": "error",
         "react/exhaustive-deps": "error",
-        "react-native-a11y/has-accessibility-hint": "off",
-        "react-native-a11y/has-accessibility-props": "error",
-        "react-native-a11y/has-valid-accessibility-actions": "error",
-        "react-native-a11y/has-valid-accessibility-component-type": "error",
-        "react-native-a11y/has-valid-accessibility-descriptors": "error",
-        "react-native-a11y/has-valid-accessibility-role": "error",
-        "react-native-a11y/has-valid-accessibility-state": "error",
-        "react-native-a11y/has-valid-accessibility-states": "error",
-        "react-native-a11y/has-valid-accessibility-traits": "error",
-        "react-native-a11y/has-valid-accessibility-value": "error",
-        "react-native-a11y/no-nested-touchables": "error",
-        "react-native-a11y/has-valid-accessibility-ignores-invert-colors": "error",
-        "react-native-a11y/has-valid-accessibility-live-region": "error",
-        "react-native-a11y/has-valid-important-for-accessibility": "error",
         "prefer-const": "error",
         "no-var": "error",
         "no-param-reassign": "error",
@@ -245,139 +220,6 @@
         "arrow-body-style": "error",
         "react/jsx-key": "error",
         "react/jsx-no-constructed-context-values": "error",
-        "functional/no-let": "error",
-        "functional/immutable-data": [
-          "error",
-          {
-            // TODO: Remove `navigation`/`navigate`/`StackActions` once we
-            // migrate to newer versions of `react-navigation`.
-            // `**.value` and `**.current` cover reanimated `SharedValue` and React
-            // `RefObject` writes: eslint's config exempts those with type-aware
-            // `overrides.specifiers` entries, which need the parserServices that
-            // oxlint's jsPlugin bridge does not expose.
-            "ignoreAccessorPattern": [
-              "navigation.**",
-              "**.navigation.**",
-              "navigate.**",
-              "StackActions.**",
-              "**.value",
-              "**.current"
-            ]
-          }
-        ],
-        "sonarjs/no-small-switch": "off",
-        "sonarjs/no-duplicate-string": "off",
-        "sonarjs/no-nested-template-literals": "error",
-        "react-native/no-unused-styles": "error",
-        "react-native/split-platform-components": "off",
-        "react-native/no-color-literals": "error",
-        "react-native/no-raw-text": "off",
-        "react-native/no-single-element-style-arrays": "error",
-        // NOTE: oxlint's jsPlugin bridge does not expose TypeScript parserServices
-        // (esTreeNodeToTSNodeMap / program) to ESLint plugins. The i18next rule
-        // normally uses the TypeScript type checker to skip string literals that
-        // are typed as specific string literal types (e.g. discriminant unions
-        // like "TwoButtons" | "SingleButton", locale codes, format strings).
-        // Without the type checker those are false positives, so we suppress
-        // them explicitly via object-properties.exclude and callees.exclude.
-        // See: https://github.com/oxc-project/oxc/issues (jsPlugin TS support)
-        "i18next/no-literal-string": [
-          "error",
-          {
-            "mode": "jsx-only",
-            "jsx-attributes": {
-              "include": [
-                "accessibilityLabel",
-                "accessibilityHint",
-                "placeholder",
-                "title",
-                "alt",
-                // Text-bearing props
-                "actions",
-                "label",
-                "description",
-                "text",
-                "errorMessage",
-                "value",
-                "subtitle",
-                "content",
-                "message",
-                // Props whose object value nests text in `componentProps`
-                "endElement",
-                "startElement",
-                "topElement",
-                "headerAction",
-                "firstAction",
-                "secondaryAction",
-                "startAction",
-                "endAction",
-                "scrollViewAction",
-                "footerActionProps"
-              ],
-              "exclude": []
-            },
-            "jsx-components": {
-              "include": [],
-              "exclude": ["Trans"]
-            },
-            "words": {
-              "exclude": ["\\s+", "[0-9!-/:-@\\[-`{-~]+", "[•·]+", "."]
-            },
-            // Exclude object property keys whose values are typed string literal
-            // unions (discriminants, icon ids, layout configs). Without TS type
-            // info these would be false positives.
-            "object-properties": {
-              "include": [],
-              "exclude": [
-                "testID",
-                "type", // discriminant fields (e.g. "TwoButtons" | "SingleButton")
-                "pictogram", // icon identifier strings
-                "position", // analytics / layout config strings
-                "color", // color variant config strings
-                "weight", // typography weight tokens (e.g. "Semibold")
-                "fontStyle", // typography style tokens (e.g. "italic")
-                "accessibilityRole", // RN a11y role literals (e.g. "link")
-                "textDecorationLine", // RN style literals (e.g. "underline")
-                "importantForAccessibility", // RN a11y config literals (e.g. "no-hide-descendants")
-                "icon", // icon identifier strings
-                "iconPosition", // layout config strings (e.g. "end")
-                "variant", // component variant tokens (e.g. "error")
-                "cta_category", // analytics enum values
-                "survey_id" // analytics identifiers
-              ]
-            },
-            // callees.exclude overrides the plugin defaults (lodash _.defaults is
-            // shallow), so the default list must be repeated here alongside the
-            // project-specific additions.
-            // Default exclusions: i18n helpers, DOM APIs, common array methods.
-            // Added: functions whose string args are typed literal types and
-            // would be false positives without the TS type checker.
-            "callees": {
-              "exclude": [
-                "i18n(ext)?",
-                "t",
-                "require",
-                "addEventListener",
-                "removeEventListener",
-                "postMessage",
-                "getElementById",
-                "dispatch",
-                "commit",
-                "includes",
-                "indexOf",
-                "endsWith",
-                "startsWith",
-                "format",
-                "formatNumberCentsToAmount", // alignment arg is a typed literal
-                "getOrFallback", // locale code arg is a typed literal
-                "getAccessibleExpirationDate", // status arg is a typed enum
-                "toString", // date format string arg (e.g. "DD/MM/YY")
-                "trackSystemNotificationPermissionScreenOutcome", // analytics enum args
-                "copyToMediaStore" // media collection arg is a typed literal
-              ]
-            }
-          }
-        ],
         "no-restricted-imports": [
           "error",
           {
@@ -430,34 +272,9 @@
             "allowNullableString": true
           }
         ],
-        "typescript/unified-signatures": "error",
-        // Curated perfectionist sorts (natural order), a subset of master's
-        // `recommended-natural` preset covering the highest-value cases.
-        // `sort-objects` is intentionally left off, matching master, since its
-        // auto-fix corrupts multi-line property values.
-        "perfectionist/sort-imports": ["error", { "type": "natural" }],
-        "perfectionist/sort-named-imports": ["error", { "type": "natural" }],
-        "perfectionist/sort-jsx-props": ["error", { "type": "natural" }],
-        "perfectionist/sort-interfaces": ["error", { "type": "natural" }],
-        "perfectionist/sort-object-types": ["error", { "type": "natural" }],
-        "perfectionist/sort-union-types": ["error", { "type": "natural" }],
-        "perfectionist/sort-enums": ["error", { "type": "natural" }]
+        "typescript/unified-signatures": "error"
       },
       "plugins": ["typescript", "unicorn", "react", "jest"],
-      "jsPlugins": [
-        // eslint-plugin-flowtype: removed, all rules were off and it's no longer used
-        // eslint-plugin-eslint-comments: removed, crashes in oxlint's JS runner (RangeError on no-unlimited-disable);
-        //   replaced by oxlint's native reportUnusedDisableDirectives (see options above)
-        "eslint-plugin-react-native",
-        "eslint-plugin-react-native-a11y",
-        "eslint-plugin-functional",
-        "eslint-plugin-sonarjs",
-        // Local plugin exposing the project's custom rules (no native oxlint equivalent)
-        // Source: scripts/eslint (installed as a local package)
-        "eslint-plugin-io-app",
-        "eslint-plugin-i18next",
-        "eslint-plugin-perfectionist"
-      ],
       "env": {
         "es2026": true
       },
@@ -529,7 +346,6 @@
         "typescript/no-require-imports": "off",
         "typescript/unbound-method": "off",
         "typescript/no-misused-spread": "off",
-        "i18next/no-literal-string": "off",
         "react/jsx-no-constructed-context-values": "off"
       },
       "plugins": ["typescript", "react"]
@@ -541,6 +357,25 @@
       // hold the assertions for a parameterised suite.
       "files": ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
       "rules": {
+        // Mirrors @pagopa/eslint-config/jest, which master applies to test files
+        "jest/no-alias-methods": "error",
+        "jest/no-commented-out-tests": "warn",
+        "jest/no-deprecated-functions": "error",
+        "jest/no-done-callback": "error",
+        "jest/no-export": "error",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/no-interpolation-in-snapshots": "error",
+        "jest/no-jasmine-globals": "error",
+        "jest/no-standalone-expect": "error",
+        "jest/no-test-prefixes": "error",
+        "jest/prefer-equality-matcher": "error",
+        "jest/prefer-expect-resolves": "error",
+        "jest/prefer-spy-on": "error",
+        "jest/prefer-todo": "error",
+        "jest/valid-describe-callback": "error",
+        "jest/valid-expect": "error",
+        "jest/valid-expect-in-promise": "error",
         "jest/valid-title": [
           "error",
           {
@@ -573,11 +408,9 @@
         "**/__mocks__/**/*.{ts,tsx}"
       ],
       "rules": {
-        "i18next/no-literal-string": "off",
         // Mocks, playgrounds and dev tooling legitimately use empty stubs.
         "no-empty-function": "off"
-      },
-      "jsPlugins": ["eslint-plugin-i18next"]
+      }
     }
   ]
 }

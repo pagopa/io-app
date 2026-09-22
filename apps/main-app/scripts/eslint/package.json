@@ -1,7 +1,0 @@
-{
-  "name": "eslint-plugin-io-app",
-  "version": "0.0.1",
-  "description": "Local ESLint plugin exposing the project's custom rules for oxlint jsPlugins",
-  "main": "index.js",
-  "private": true
-}

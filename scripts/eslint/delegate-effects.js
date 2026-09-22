@@ -1,9 +1,7 @@
 /**
- * Custom `delegate-effects` rule, exposed to oxlint via the local plugin in
- * `index.js`. This rule has no native oxlint equivalent and is not a
- * compatibility shim: it enforces a project-specific typed-redux-saga guideline.
+ * Custom ESLint rule: delegate-effects
  *
- * The rule enforces `yield*` (delegation) over `yield` when calling effects
+ * Enforces `yield*` (delegation) over `yield` when calling effects
  * imported from "typed-redux-saga/macro". Using plain `yield` returns `any`,
  * losing type safety, while `yield*` preserves the return type.
  *
@@ -13,7 +11,7 @@
 "use strict";
 
 /** @type {import("eslint").Rule.RuleModule} */
-const delegateEffectsRule = {
+module.exports = {
   meta: {
     type: "problem",
     docs: {
@@ -74,7 +72,7 @@ const delegateEffectsRule = {
             node,
             messageId: "useYieldStar",
             fix(fixer) {
-              const sourceCode = context.sourceCode;
+              const sourceCode = context.sourceCode ?? context.getSourceCode();
               const yieldToken = sourceCode.getFirstToken(node);
               // Replace "yield" with "yield*"
               return fixer.replaceText(yieldToken, "yield*");
@@ -85,5 +83,3 @@ const delegateEffectsRule = {
     };
   }
 };
-
-module.exports = delegateEffectsRule;
