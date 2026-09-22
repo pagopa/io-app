@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-rc.2](https://github.com/pagopa/io-app/compare/3.40.0-rc.1...3.40.0-rc.2) (2026-09-21)
+
+### Features
+
+* [[SIW-5013](https://pagopa.atlassian.net/browse/SIW-5013)] add info bottom sheet for CIE NFC reading ([#8625](https://github.com/pagopa/io-app/issues/8625)) ([c543b8f](https://github.com/pagopa/io-app/commit/c543b8f3a2c8932ada7f26dd7385ba8f97d4caed))
+
+### Bug Fixes
+
+* [[IOPLT-2096](https://pagopa.atlassian.net/browse/IOPLT-2096)] Fix missing `i18n` strings + Enforce relative `eslint` rule ([#8626](https://github.com/pagopa/io-app/issues/8626)) ([03ebeba](https://github.com/pagopa/io-app/commit/03ebeba13fd2a9ba2157227291cb034f51ba1bf0))
+
+### Chores
+
+* [[IOPLT-2075](https://pagopa.atlassian.net/browse/IOPLT-2075)] Remove unused locales ([#8597](https://github.com/pagopa/io-app/issues/8597)) ([0684dd0](https://github.com/pagopa/io-app/commit/0684dd014724e977d9db7509d9cac60e36dc40a6))
 ## [3.40.0-rc.1](https://github.com/pagopa/io-app/compare/3.40.0-rc.0...3.40.0-rc.1) (2026-09-18)
 
 ### Features

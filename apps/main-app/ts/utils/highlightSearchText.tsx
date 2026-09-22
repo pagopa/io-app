@@ -34,7 +34,7 @@ export function highlightSearchText({
         );
   const relevantTextLowerCase = relevantText.toLowerCase();
   const matchMap = new Array(relevantText.length).fill(false);
-  for (let textIndex = 0; textIndex < relevantText.length; ) {
+  for (let textIndex = 0; textIndex < relevantText.length;) {
     const matchStart = relevantTextLowerCase.indexOf(
       searchTextLowerCase,
       textIndex
