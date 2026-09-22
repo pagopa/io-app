@@ -52,10 +52,6 @@ export const userIdentificationState =
               actions: "navigateToTosScreen"
             },
             {
-              guard: "isL3FeaturesEnabled",
-              target: "#itwEidIssuanceMachine.TosAcceptance"
-            },
-            {
               target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
             }
           ],

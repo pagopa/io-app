@@ -142,7 +142,7 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
           },
           {
             // When reissuing, fallback to L2 or L3, if both integrity key tag and wallet instance attestation are valid,
-            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
+            guard: or(["isReissuance", "isL2Fallback"]),
             target: "UserIdentification.Identification"
           },
           {
@@ -161,7 +161,7 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
       after: {
         5000: [
           {
-            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
+            guard: or(["isReissuance", "isL2Fallback"]),
             actions: "navigateToIdentificationScreen"
           },
           {
@@ -252,7 +252,7 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
         }),
         onDone: [
           {
-            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
+            guard: or(["isReissuance", "isL2Fallback"]),
             actions: [
               assign(({ event }) => ({
                 walletInstanceAttestation: event.output

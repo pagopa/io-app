@@ -9,6 +9,7 @@ import {
   itwDisabledIdentificationMethodsSelector,
   itwHiddenCredentialsSelector,
   itwIPatenteCtaConfigSelector,
+  itwIpzsItwalletPrivacyUrlSelector,
   itwIpzsPrivacyUrlSelector,
   itwIsActivationDisabledSelector,
   itwIsIPatenteCtaEnabledSelector,
@@ -175,6 +176,22 @@ describe("itwIpzsPrivacyUrlSelector", () => {
 
     expect(
       itwIpzsPrivacyUrlSelector(makeState({ ipzs_privacy_url: url }))
+    ).toBe(url);
+  });
+});
+
+describe("itwIpzsItwalletPrivacyUrlSelector", () => {
+  it("returns undefined when config is missing", () => {
+    expect(itwIpzsItwalletPrivacyUrlSelector(makeState({}))).toBeUndefined();
+  });
+
+  it("returns configured value", () => {
+    const url = "https://example.com/itwallet-privacy";
+
+    expect(
+      itwIpzsItwalletPrivacyUrlSelector(
+        makeState({ ipzs_itwallet_privacy_url: url })
+      )
     ).toBe(url);
   });
 });

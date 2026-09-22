@@ -98,6 +98,14 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
 );
 
 /**
+ * Return the remote config about the IPZS privacy url shown during the IT-Wallet (L3) activation.
+ */
+export const itwIpzsItwalletPrivacyUrlSelector = createSelector(
+  itwRemoteConfigSelector,
+  ({ ipzs_itwallet_privacy_url }) => ipzs_itwallet_privacy_url
+);
+
+/**
  * Returns whether the current app version meets the minimum required to use IT Wallet.
  */
 export const isItwMinAppVersionSupportedSelector = createSelector(

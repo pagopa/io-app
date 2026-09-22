@@ -390,6 +390,12 @@ describe("itwEidIssuanceMachine", () => {
 
     // Wallet instance creation and attestation obtainment success
 
+    // Accept the mandatory IPZS privacy policy
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance")
+    );
+    actor.send({ type: "accept-ipzs-privacy" });
+
     // Navigate to identification mode selection
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
@@ -1146,7 +1152,7 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
-  it("Should skip IPZS privacy when privacy and ToS have been confirmed from discovery", async () => {
+  it("Should require IPZS privacy acceptance in the L3 flow", async () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
@@ -1176,11 +1182,14 @@ describe("itwEidIssuanceMachine", () => {
     );
     await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
 
+    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
+    expect(navigateToIpzsPrivacyScreen).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "accept-ipzs-privacy" });
+
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: "Identification"
     });
-    expect(navigateToIpzsPrivacyScreen).not.toHaveBeenCalled();
-    expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
   });
 
   it("Should navigate to IPZS privacy from ToS acceptance without changing state", () => {
