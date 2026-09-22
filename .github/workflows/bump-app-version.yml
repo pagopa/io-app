@@ -1,7 +1,7 @@
 # Reusable workflow that bumps the main-app version according to the given
-# release type, pushes the resulting commit/tag, and creates the corresponding GitHub release. 
+# release type, pushes the resulting commit/tag, and creates the corresponding GitHub release.
 # The supported release types correspond to the commands defined in the main-app's package.json:
-# - start-breaking-cycle: bumps the major version 
+# - start-breaking-cycle: bumps the major version
 # - start-release-cycle: bumps the minor version
 # - start-fix-cycle: bumps the patch version
 # - release-rc: bumps the build version
@@ -35,9 +35,9 @@ jobs:
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-          
+
       - uses: ./.github/actions/setup-pnpm
-      
+
       # Validate provided release-type input against the one defined in the package.json of main-app.
       - id: validate-release-type
         env:
@@ -50,7 +50,7 @@ jobs:
               exit 1
               ;;
           esac
-          
+
       # Runs the nx release target matching the requested release type, which
       # bumps the version in main-app's package.json and creates a local commit + tag.
       - id: bump-version
@@ -60,12 +60,12 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           pnpm nx run "main-app:$RELEASE_TYPE"
-          
+
       # Pushes the version bump commit and its tag created above back to the triggering branch.
       - id: push-tags
         run: |
           git push --no-verify --follow-tags origin "HEAD:${GITHUB_REF#refs/heads/}"
-          
+
       # Reads the newly bumped version and publishes a GitHub release for it,
       # exposing it as CURRENT_APP_VERSION for the job/workflow outputs.
       - id: github-release-creation
