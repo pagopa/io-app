@@ -44,6 +44,11 @@ export default [
       "perfectionist/sort-named-imports": "off"
     }
   },
+  {
+    // ESLint sees disables for rules moved to oxlint as unused, and `--fix`
+    // would delete them although oxlint still needs them. oxlint reports its own.
+    linterOptions: { reportUnusedDisableDirectives: "off" }
+  },
   // Must stay last: turns off every rule that oxlint already runs, so the two
   // linters never report the same problem.
   ...oxlint.buildFromOxlintConfigFile(
