@@ -167,7 +167,7 @@
     "@eslint/compat": "^2.0.3",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
-    "@pagopa/eslint-config": "6.2.2",
+    "@pagopa/eslint-config": "7.0.0",
     "@pagopa/openapi-codegen-ts": "^14.2.0",
     "@react-native-community/cli": "20.0.0",
     "@react-native-community/cli-platform-android": "20.0.0",
