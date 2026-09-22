@@ -116,6 +116,12 @@ export default defineConfig([
       // type used as a generic record argument throughout the codebase.
       "@typescript-eslint/consistent-type-definitions": "off",
 
+      // Formatting is owned by oxfmt, not prettier. @pagopa/eslint-config bundles
+      // eslint-plugin-prettier, whose rule enforces prettier defaults (trailing
+      // commas, arrow parens) that directly conflict with .oxfmtrc.json — leaving
+      // it on makes eslint --fix revert every oxfmt-formatted file.
+      "prettier/prettier": "off",
+
       // Auto-fix corrupts multi-line property values (see comment below)
       "perfectionist/sort-objects": "off",
 
@@ -290,7 +296,28 @@ export default defineConfig([
               "accessibilityHint",
               "placeholder",
               "title",
-              "alt"
+              "alt",
+              // Text-bearing props
+              "actions",
+              "label",
+              "description",
+              "text",
+              "errorMessage",
+              "value",
+              "subtitle",
+              "content",
+              "message",
+              // Props whose object value nests text in `componentProps`
+              "endElement",
+              "startElement",
+              "topElement",
+              "headerAction",
+              "firstAction",
+              "secondaryAction",
+              "startAction",
+              "endAction",
+              "scrollViewAction",
+              "footerActionProps"
             ],
             exclude: []
           },
@@ -298,6 +325,28 @@ export default defineConfig([
           "jsx-components": {
             include: [],
             exclude: ["Trans"]
+          },
+
+          // Options replace the plugin defaults, so the default excludes are
+          // respelled here: patterns full-match with a leading dot allowed, so
+          // `t` is what exempts `I18n.t(...)` arguments.
+          callees: {
+            exclude: [
+              "i18n(ext)?",
+              "t",
+              "require",
+              "addEventListener",
+              "removeEventListener",
+              "postMessage",
+              "getElementById",
+              "dispatch",
+              "commit",
+              "includes",
+              "indexOf",
+              "endsWith",
+              "startsWith",
+              "format"
+            ]
           },
 
           words: {
