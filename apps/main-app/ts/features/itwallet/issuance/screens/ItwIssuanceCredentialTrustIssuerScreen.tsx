@@ -18,7 +18,8 @@ import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { ITW_PRIVACY_URL, ITW_TOS_URL } from "../../../../urls";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { ITW_IPZS_PRIVACY_URL_BODY, ITW_TOS_URL } from "../../../../urls";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackOpenItwTos } from "../../analytics";
@@ -29,6 +30,7 @@ import { RequiresConnectivity } from "../../common/components/RequiresConnectivi
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { itwIpzsItwalletPrivacyUrlSelector } from "../../common/store/selectors/remoteConfig";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
@@ -131,6 +133,10 @@ const ContentView = ({
   const route = useRoute();
   const hasScrolledToBottom = useRef(false);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const ipzsPrivacyUrl = useIOSelector(state =>
+    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
+  );
+  const itwalletPrivacyUrl = useIOSelector(itwIpzsItwalletPrivacyUrlSelector);
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
@@ -240,13 +246,19 @@ const ContentView = ({
         <ItwRequestedClaimsList items={requiredClaims} />
         <VSpacer size={32} />
         <IOMarkdown
-          content={I18n.t(
-            "features.itWallet.issuance.credentialAuth.privacyAndTos",
-            {
-              privacyUrl: ITW_PRIVACY_URL,
-              tosUrl: ITW_TOS_URL
-            }
-          )}
+          content={
+            isItwL3
+              ? I18n.t(
+                  "features.itWallet.issuance.credentialAuth.privacyAndTos",
+                  {
+                    privacyUrl: itwalletPrivacyUrl,
+                    tosUrl: ITW_TOS_URL
+                  }
+                )
+              : I18n.t("features.itWallet.issuance.credentialAuth.tos", {
+                  privacyUrl: ipzsPrivacyUrl
+                })
+          }
           rules={generateItwIOMarkdownRules({
             linkCallback: trackOpenItwTos
           })}

@@ -3,7 +3,8 @@ import I18n from "i18next";
 import { useMemo } from "react";
 
 import { useIOSelector } from "../../../../store/hooks";
-import { ITW_PRIVACY_URL } from "../../../../urls";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import {
   trackWalletCredentialShowAuthSource,
   trackWalletCredentialShowIssuer
@@ -12,6 +13,7 @@ import { getMixPanelCredential } from "../../analytics/utils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwAuthSourceName } from "../hooks/useItwAuthSourceName";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
+import { itwIpzsItwalletPrivacyUrlSelector } from "../store/selectors/remoteConfig";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils.ts";
@@ -94,6 +96,11 @@ export const ItwIssuanceMetadata = ({
     credential.issuerConf.federation_entity.organization_name;
   const itwCredential = isItwCredential(credential);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const ipzsPrivacyUrl = useIOSelector(state =>
+    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
+  );
+  const itwalletPrivacyUrl = useIOSelector(itwIpzsItwalletPrivacyUrlSelector);
+  const privacyUrl = isItwL3 ? itwalletPrivacyUrl : ipzsPrivacyUrl;
   const mixPanelCredential = getMixPanelCredential(
     credential.credentialType,
     isItwL3
@@ -116,7 +123,7 @@ export const ItwIssuanceMetadata = ({
         contentBody: I18n.t(
           "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle",
           {
-            privacyUrl: ITW_PRIVACY_URL
+            privacyUrl
           }
         ),
         onPress: () =>
@@ -125,7 +132,7 @@ export const ItwIssuanceMetadata = ({
             credential_screen_type: isPreview ? "preview" : "detail"
           })
       }),
-      [isPreview, mixPanelCredential]
+      [isPreview, mixPanelCredential, privacyUrl]
     );
 
   const authSourceBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
