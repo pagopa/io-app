@@ -72,6 +72,7 @@ const join = path.join;
 const { optimize } = require("svgo");
 const fs = require("fs-extra");
 const { transform } = require("@svgr/core");
+const { formatComponent } = require("./formatComponent");
 
 const svgDir = join(__dirname, "../src/components/icons/svg/originals");
 const tsxDir = join(__dirname, "../src/components/icons/svg");
@@ -81,38 +82,22 @@ const templateFilePath = join(
 );
 const timestampFilePath = join(__dirname, "icons_timestamp.txt");
 
-/* Reuse the repo-wide config so generated components already match `prettify`. */
-const oxfmtOptions = fs.readJsonSync(join(__dirname, "../../../.oxfmtrc.json"));
-delete oxfmtOptions.$schema;
-
-/* `oxfmt` is ESM-only, hence the dynamic import from this CommonJS script. */
-const formatComponent = async (fileName, sourceText) => {
-  const { format } = await import("oxfmt");
-  const { code } = await format(fileName, sourceText, oxfmtOptions);
-  return code;
-};
-
 const convertTimestampToReadableFormat = timestamp =>
   new Date(timestamp).toLocaleString("it-IT", {
     timeZone: "Europe/Rome"
   });
 
-fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
-  if (err) {
-    console.log("Timestamp file not found.");
-    throw err;
-  }
+async function run() {
+  try {
+    const timestamp = fs.readFileSync(timestampFilePath, "utf8");
 
-  console.log(
-    "Last processed timestamp:",
-    convertTimestampToReadableFormat(timestamp)
-  );
-  console.log(`————————————————`);
+    console.log(
+      "Last processed timestamp:",
+      convertTimestampToReadableFormat(timestamp)
+    );
+    console.log(`————————————————`);
 
-  fs.readdir(svgDir, async (err, files) => {
-    if (err) {
-      throw err;
-    }
+    const files = fs.readdirSync(svgDir);
 
     for (const file of files) {
       if (!file.endsWith(".svg")) {
@@ -133,7 +118,7 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
         fs.closeSync(fd);
       }
 
-      /* Only process files with a more recent creation
+      /* Only process files with a creation/modification
       date later than the timestamp value */
       if (fileStats.mtime > new Date(timestamp)) {
         const excludedPrefixes = ["IconSystem", "IconBiom", "IconProduct"];
@@ -147,7 +132,7 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
           path: filePath,
           js2svg: {
             pretty: true,
-            indent: 2,
+            indent: 2
           },
           plugins: [
             "removeDimensions",
@@ -156,23 +141,20 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
             "removeViewBox"
           ]
         });
+
         // Overwrite original SVG file with optimized code
         fs.writeFileSync(filePath, result.data);
 
         // Convert SVG to JSX using `svgr`
         const jsxCode = transform.sync(result.data, {
-          // Optimize SVG code using SVGO
           svgo: true,
           svgoConfig: {
             removeRasterImages: true,
             removeScriptElement: true,
             removeUselessDefs: true
           },
-          // Transform tags in Capital Case for React Native
           native: true,
-          // Remove `width` and `height` attrs
           dimensions: false,
-          /* Prettify the result */
           plugins: ["@svgr/plugin-jsx"]
         });
 
@@ -182,24 +164,53 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
           'fill="currentColor"'
         );
 
-        // Extract only the Path tags from the JSX code
-        const pathTagRegex = /<Path[^>]*\/>/g;
+        // Regex updated to support multiline tags and </Path> closing tags
+        const pathTagRegex = /<Path[\s\S]*?(?:\/>|<\/Path>)/g;
         const pathTags = jsxCodeWithoutHardcodedColors.match(pathTagRegex);
-        const jsxCodeWithPathOnly = pathTags.join("");
 
-        const template = fs.readFileSync(templateFilePath, "utf8");
-        const componentData = template
+        if (!pathTags) {
+          console.log(`⚠️ No Path tags found in ${file}`);
+          continue;
+        }
+
+        const jsxCodeWithPathOnly = pathTags.join("\n");
+
+        let template = fs.readFileSync(templateFilePath, "utf8");
+
+        // 1. Restore any commented-out import lines
+        template = template.replace(/\/\/\s*(import\s+.*)/g, "$1");
+
+        // 2. Remove remaining single-line comments safely
+        template = template.replace(/\/\/(?!.*import).*\n/g, "\n");
+
+        // 3. Inject icon name and path content
+        let componentData = template
           .replace(/IconTemplate/g, file.replace(".svg", ""))
-          .replace(/\/\/.*\n/g, "") // Remove lines starting with //
           .replace(`{/* SVGContent */}`, jsxCodeWithPathOnly);
+
+        // 4. Ensure Path is included in the react-native-svg import block if missing
+        if (
+          jsxCodeWithPathOnly.includes("<Path") &&
+          !/import\s+.*Path.*\s+from\s+['"]react-native-svg['"]/.test(
+            componentData
+          )
+        ) {
+          componentData = componentData.replace(
+            /import\s+\{([^}]+)\}\s+from\s+['"]react-native-svg['"]/,
+            (match, imports) =>
+              `import { ${imports.trim()}, Path } from "react-native-svg"`
+          );
+        }
 
         const fileWithTsxExtension = file.replace(".svg", ".tsx");
         const tsxFilePath = join(tsxDir, fileWithTsxExtension);
-        const formattedComponentData = await formatComponent(
+
+        const formattedData = await formatComponent(
           fileWithTsxExtension,
           componentData
         );
-        fs.writeFileSync(tsxFilePath, formattedComponentData);
+
+        fs.writeFileSync(tsxFilePath, formattedData);
 
         console.log(`${file} → ${fileWithTsxExtension}`);
       }
@@ -214,5 +225,10 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
 
     console.log(`————————————————`);
     console.log("Updated timestamp:", readableUpdatedTimestamp);
-  });
-});
+  } catch (err) {
+    console.error("Error during execution:", err);
+    process.exit(1);
+  }
+}
+
+run();

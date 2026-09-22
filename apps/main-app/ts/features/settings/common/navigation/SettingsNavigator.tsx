@@ -43,7 +43,9 @@ import { SETTINGS_ROUTES } from "./routes";
 
 const Stack = createStackNavigator<SettingsParamsList>();
 
-/** A navigator for all the screens of the Settings section */
+/**
+ * A navigator for all the screens of the Settings section
+ */
 const SettingsStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={SETTINGS_ROUTES.SETTINGS_MAIN}

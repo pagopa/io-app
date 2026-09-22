@@ -1,6 +1,5 @@
 /**
- * This state / reducer represents and handles all those data should be kept
- * across multiple users sessions
+ * this state / reducer represents and handles all those data should be kept across multiple users sessions
  */
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { pipe } from "fp-ts/lib/function";
@@ -44,9 +43,8 @@ export const hashedProfileFiscalCodeSelector = (
 ): HashedFiscalCode => state.crossSessions.hashedFiscalCode;
 
 /**
- * Return true if the given fiscal code is different from the hashed stored one,
- * false otherwise if there is no stored hashed fiscal code it returns undefined
- * (cant say if they are different)
+ * return true if the given fiscal code is different from the hashed stored one, false otherwise
+ * if there is no stored hashed fiscal code it returns undefined (cant say if they are different)
  */
 export const isDifferentFiscalCodeSelector = (
   state: GlobalState,

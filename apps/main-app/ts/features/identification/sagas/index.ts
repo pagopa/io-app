@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
@@ -36,8 +35,8 @@ type ResultAction =
   | ActionType<typeof identificationPinReset>
   | ActionType<typeof identificationSuccess>;
 /**
- * If you need to start the identification process and wait the result in a
- * "sync" way, like we do in the startup saga, use this generator
+ * If you need to start the identification process and wait the result in a "sync" way,
+ * like we do in the startup saga, use this generator
  */
 export function* startAndReturnIdentificationResult(
   pin: PinString,
@@ -82,12 +81,12 @@ function* startAndHandleIdentificationResult(
   identificationRequestAction: ActionType<typeof identificationRequest>
 ) {
   const pin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
-  if (O.isNone(pin)) {
+  if (pin == null) {
     return;
   }
   yield* put(
     identificationStart(
-      pin.value,
+      pin,
       identificationRequestAction.payload.canResetPin,
       identificationRequestAction.payload.isValidatingTask,
       identificationRequestAction.payload.identificationGenericData,

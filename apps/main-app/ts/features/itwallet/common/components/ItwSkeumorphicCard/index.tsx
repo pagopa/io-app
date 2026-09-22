@@ -96,6 +96,7 @@ export const ItwSkeumorphicCard = ({
       [key in ItwCredentialStatus]?: string;
     } = {
       invalid: I18n.t("features.itWallet.card.status.invalid"),
+      suspended: I18n.t("features.itWallet.card.status.suspended"),
       expired: I18n.t("features.itWallet.card.status.expired"),
       jwtExpired: I18n.t("features.itWallet.card.status.verificationExpired"),
       expiring: I18n.t("features.itWallet.card.status.expiring"),
@@ -145,7 +146,9 @@ export const ItwSkeumorphicCard = ({
   );
 };
 
-/** Maps credential status to the corresponding gradient variant. */
+/**
+ * Maps credential status to the corresponding gradient variant.
+ */
 const gradientVariantByStatus: Record<
   ItwCredentialStatus,
   ItwIridescentBorderVariant
@@ -156,6 +159,7 @@ const gradientVariantByStatus: Record<
   jwtExpiring: "warning",
   jwtExpired: "error",
   invalid: "error",
+  suspended: "error",
   unknown: "error"
 };
 

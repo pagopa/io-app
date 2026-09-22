@@ -15,11 +15,6 @@ import * as O from "fp-ts/lib/Option";
 
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 
-export type LogoPaymentExtOrDefaultIconProps = {
-  cardIcon?: IOLogoPaymentExtType;
-  fallbackIconColor?: IOColors;
-  size?: IOIconSizeScale;
-};
 export type LogoPaymentWithFallback = {
   brand?: string;
   fallbackIconColor?: IOColors;
@@ -27,17 +22,14 @@ export type LogoPaymentWithFallback = {
   size?: IOIconSizeScale;
 };
 /**
- * This component renders either:
- *
- * - A LogoPayment/LogoPaymentExt component
- * - A default credit card icon
- *
+ * This component renders either
+ * - a LogoPayment/LogoPaymentExt component
+ * - a default credit card icon
  * @param cardIcon: IOLogoPaymentType icon
- * @param size: The size of the icon (standard is 24/48)
- * @param fallbackIconColor: Default icon color (standard is grey-700)
- * @param isExtended: If true, renders a LogoPaymentExt component
- * @returns A LogoPayment/LogopaymentExt component if the cardIcon is supported,
- *   a default credit card icon otherwise
+ * @param size: the size of the icon (standard is 24/48)
+ * @param fallbackIconColor: default icon color (standard is grey-700)
+ * @param isExtended: if true, renders a LogoPaymentExt component
+ * @returns a LogoPayment/LogopaymentExt component if the cardIcon is supported, a default credit card icon otherwise
  */
 export const LogoPaymentWithFallback = ({
   brand,

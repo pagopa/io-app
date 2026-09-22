@@ -1,109 +1,13 @@
-import { and, assign, fromCallback, fromPromise, not, setup } from "xstate";
+import { and, assign, not } from "xstate";
 
-import {
-  CredentialAccessToken,
-  CredentialBundle
-} from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
-import {
-  GetWalletAttestationActorOutput,
-  ObtainAccessTokenActorInput,
-  ObtainCredentialActorInput,
-  ObtainCredentialActorOutput,
-  ObtainCredentialStatusActorInput,
-  ProcessCredentialOfferActorInput,
-  ProcessCredentialOfferActorOutput,
-  RequestCredentialActorInput,
-  RequestCredentialActorOutput,
-  VerifyTrustFederationActorInput
-} from "./actors";
-import { Context, InitialContext } from "./context";
-import { CredentialIssuanceEvents } from "./events";
-import { mapEventToFailure } from "./failure";
+import { InitialContext } from "./context";
+import { itwCredentialSetup } from "./setup";
+import { issuanceState } from "./state/issuance";
 
-/**
- * Placeholder for every action, actor and guard that the provider must
- * implement. Exported so tests can assert no implementation is missing at
- * runtime.
- */
-export const notImplemented = () => {
-  throw new Error("Not implemented");
-};
-
-export const itwCredentialIssuanceMachine = setup({
-  types: {
-    context: {} as Context,
-    events: {} as CredentialIssuanceEvents
-  },
-  actions: {
-    onInit: notImplemented,
-    handleSessionExpired: notImplemented,
-
-    /** Context manipulation actions */
-
-    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-
-    /** Navigation actions */
-
-    navigateToCredentialIntroductionScreen: notImplemented,
-    navigateToTrustIssuerScreen: notImplemented,
-    navigateToCredentialPreviewScreen: notImplemented,
-    navigateToFailureScreen: notImplemented,
-    navigateToWallet: notImplemented,
-    navigateToEidVerificationExpiredScreen: notImplemented,
-    closeIssuance: notImplemented,
-    navigateToCardOnboardingScreen: notImplemented,
-
-    /** Store actions */
-
-    storeWalletInstanceAttestation: notImplemented,
-    storeCredential: notImplemented,
-
-    /** Analytics actions */
-
-    trackStartAddCredential: notImplemented,
-    trackStartCredentialReissuing: notImplemented,
-    trackAddCredential: notImplemented,
-    trackCredentialIssuingDataShare: notImplemented,
-    trackCredentialIssuingDataShareAccepted: notImplemented
-  },
-  actors: {
-    verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
-      notImplemented
-    ),
-    getWalletAttestation:
-      fromPromise<GetWalletAttestationActorOutput>(notImplemented),
-    requestCredential: fromPromise<
-      RequestCredentialActorOutput,
-      RequestCredentialActorInput
-    >(notImplemented),
-    obtainAccessToken: fromPromise<
-      CredentialAccessToken,
-      ObtainAccessTokenActorInput
-    >(notImplemented),
-    obtainCredential: fromPromise<
-      ObtainCredentialActorOutput,
-      ObtainCredentialActorInput
-    >(notImplemented),
-    obtainCredentialStatus: fromPromise<
-      ReadonlyArray<CredentialBundle>,
-      ObtainCredentialStatusActorInput
-    >(notImplemented),
-    processCredentialOffer: fromPromise<
-      ProcessCredentialOfferActorOutput,
-      ProcessCredentialOfferActorInput
-    >(notImplemented),
-    waitForSessionRefresh: fromCallback(notImplemented)
-  },
-  guards: {
-    isSessionExpired: notImplemented,
-    hasValidWalletInstanceAttestation: notImplemented,
-    isEidExpired: notImplemented,
-    hasCredentialIntroContent: notImplemented
-  }
-}).createMachine({
+export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
   id: "itwCredentialIssuanceMachine",
-  context: { ...InitialContext },
+  context: ({ input }) => ({ ...InitialContext, deps: input.deps }),
   initial: "Idle",
   states: {
     Idle: {
@@ -138,7 +42,8 @@ export const itwCredentialIssuanceMachine = setup({
       invoke: {
         src: "processCredentialOffer",
         input: ({ context }) => ({
-          credentialOfferUri: context.credentialOfferUri
+          credentialOfferUri: context.credentialOfferUri,
+          deps: context.deps
         }),
         onDone: {
           target: "CredentialOfferResolved",
@@ -171,7 +76,7 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "confirm-credential-offer": {
           target: "EvaluateFlow",
-          actions: ["onInit", assign({ mode: "issuance" as const })]
+          actions: ["onInit", assign({ mode: "issuance" })]
         },
         close: {
           target: "Idle",
@@ -237,7 +142,8 @@ export const itwCredentialIssuanceMachine = setup({
       invoke: {
         src: "verifyTrustFederation",
         input: ({ context }) => ({
-          resolvedCredentialOffer: context.resolvedCredentialOffer
+          resolvedCredentialOffer: context.resolvedCredentialOffer,
+          deps: context.deps
         }),
         onDone: {
           target: "CheckingWalletInstanceAttestation"
@@ -275,6 +181,7 @@ export const itwCredentialIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "getWalletAttestation",
+        input: ({ context }) => ({ deps: context.deps }),
         onDone: {
           target: "RequestingCredential",
           actions: [
@@ -305,7 +212,8 @@ export const itwCredentialIssuanceMachine = setup({
           credentialType: context.credentialType,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           resolvedCredentialOffer: context.resolvedCredentialOffer,
-          skipMdocIssuance: !context.isItWalletValid // Do not request mDoc credentials for non IT-Wallet instances
+          skipMdocIssuance: !context.isItWalletValid, // Do not request mDoc credentials for non IT-Wallet instances
+          deps: context.deps
         }),
         onDone: {
           target: "DisplayingTrustIssuer",
@@ -333,103 +241,7 @@ export const itwCredentialIssuanceMachine = setup({
         }
       }
     },
-    Issuance: {
-      initial: "ObtainingAccessToken",
-      tags: [ItwTags.Issuing],
-      states: {
-        WaitingForSessionRefresh: {
-          invoke: {
-            src: "waitForSessionRefresh"
-          },
-          on: {
-            "session-refresh-complete": { target: "ObtainingCredential" }
-          }
-        },
-        ObtainingAccessToken: {
-          invoke: {
-            src: "obtainAccessToken",
-            input: ({ context }) => ({
-              requestedCredential: context.requestedCredential,
-              evaluatedDcqlQuery: context.evaluatedDcqlQuery,
-              codeVerifier: context.codeVerifier,
-              issuerConf: context.issuerConf,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-              responseMode: context.responseMode
-            }),
-            onDone: {
-              target: "ObtainingCredential",
-              actions: assign(({ event }) => ({ accessToken: event.output }))
-            },
-            onError: {
-              target: "#itwCredentialIssuanceMachine.Failure",
-              actions: "setFailure"
-            }
-          }
-        },
-        ObtainingCredential: {
-          description:
-            "Obtain the credential(s) with the WUA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
-          invoke: {
-            src: "obtainCredential",
-            input: ({ context }) => ({
-              credentialType: context.credentialType,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-              clientId: context.clientId,
-              codeVerifier: context.codeVerifier,
-              requestedCredential: context.requestedCredential,
-              issuerConf: context.issuerConf,
-              accessToken: context.accessToken
-            }),
-            onDone: {
-              target: "ObtainingCredentialStatus",
-              actions: assign(({ event }) => event.output)
-            },
-            onError: [
-              {
-                guard: "isSessionExpired",
-                actions: "handleSessionExpired",
-                target: "WaitingForSessionRefresh"
-              },
-              {
-                target: "#itwCredentialIssuanceMachine.Failure",
-                actions: "setFailure"
-              }
-            ]
-          }
-        },
-        ObtainingCredentialStatus: {
-          invoke: {
-            src: "obtainCredentialStatus",
-            input: ({ context }) => ({
-              credentials: context.credentials,
-              issuerConf: context.issuerConf
-            }),
-            onDone: {
-              target: "Completed",
-              actions: assign(({ event }) => ({
-                credentials: event.output
-              }))
-            },
-            onError: {
-              target: "#itwCredentialIssuanceMachine.Failure",
-              actions: "setFailure"
-            }
-          }
-        },
-        Completed: {
-          type: "final"
-        }
-      },
-      after: {
-        // If this step takes more than 4 seconds, we navigate to the next screen and display a loading indicator
-        4000: {
-          actions: "navigateToCredentialPreviewScreen"
-        }
-      },
-      onDone: {
-        target: "DisplayingCredentialPreview"
-      }
-    },
+    Issuance: issuanceState,
     DisplayingCredentialPreview: {
       entry: "navigateToCredentialPreviewScreen",
       on: {

@@ -1,6 +1,5 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { IOToast } from "@io-app/design-system";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Alert } from "react-native";
@@ -20,7 +19,9 @@ import { cgnActivationStart } from "../store/actions/activation";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 
-/** Hook to handle the CGN activation/deactivation */
+/**
+ * Hook to handle the CGN activation/deactivation
+ */
 const useCgnActivation = (serviceId: ServiceId) => {
   const isFirstRender = useRef<boolean>(true);
 
@@ -34,8 +35,8 @@ const useCgnActivation = (serviceId: ServiceId) => {
     if (!isFirstRender.current) {
       fold(
         unsubscriptionStatus,
-        constNull,
-        constNull,
+        () => null,
+        () => null,
         () => {
           IOToast.success(I18n.t("bonus.cgn.activation.deactivate.toast"));
           dispatch(loadServicePreference.request(serviceId));
@@ -87,8 +88,8 @@ const useCgnActivation = (serviceId: ServiceId) => {
 };
 
 /**
- * This hook determines and returns the appropriate primary action prop for
- * activating and deactivating the CGN service.
+ * This hook determines and returns the appropriate primary action prop
+ * for activating and deactivating the CGN service.
  */
 export const useSpecialCtaCgn = (
   serviceId: ServiceId

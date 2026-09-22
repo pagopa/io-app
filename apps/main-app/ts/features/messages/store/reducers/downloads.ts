@@ -23,11 +23,6 @@ export type Download = {
   path: string;
 };
 
-export type DownloadError = {
-  attachment: ThirdPartyAttachment;
-  error: Error;
-};
-
 export type Downloads = {
   requestedDownload?: RequestedDownload;
   statusById: Record<string, IndexedById<pot.Pot<Download, Error>> | undefined>;
@@ -42,7 +37,9 @@ export const INITIAL_STATE: Downloads = {
   statusById: {}
 };
 
-/** A reducer to store all downloads */
+/**
+ * A reducer to store all downloads
+ */
 export const downloadsReducer = (
   state: Downloads = INITIAL_STATE,
   action: Action

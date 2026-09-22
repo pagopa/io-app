@@ -3,7 +3,9 @@ import {
   cubicBezier
 } from "react-native-reanimated";
 
-/** A collection of animation styles used for interactive elements within IO App. */
+/**
+ * A collection of animation styles used for interactive elements within IO App.
+ */
 
 export const IOEasingCurves = {
   easeInOutSine: cubicBezier(0.37, 0, 0.63, 1),

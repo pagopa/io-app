@@ -6,7 +6,7 @@ const CSSAnimatedView = createCSSAnimatedComponent(View);
 
 const DEFAULT_DURATION = 500;
 
-export type FlippableCardProps = {
+type FlippableCardProps = {
   BackComponent: ReactElement;
   containerStyle?: StyleProp<ViewStyle>;
   duration?: number;
@@ -15,8 +15,7 @@ export type FlippableCardProps = {
 };
 
 /**
- * Renders a component which can be flipped to show both of its sides with an
- * animation.
+ * Renders a component which can be flipped to show both of its sides with an animation.
  */
 const FlippableCard = ({
   FrontComponent,

@@ -7,8 +7,10 @@ import {
   isAssertionGenerationError,
   isFederationError,
   isLocalIntegrityError,
-  isMrtdTaxIdCodeMismatchFailure
+  isMrtdTaxIdCodeMismatchFailure,
+  isWebViewError
 } from "../../common/utils/itwFailureUtils";
+import { type WebViewError } from "../../identification/cie/utils/error";
 import { type EidIssuanceEvents } from "./events";
 
 const {
@@ -40,14 +42,16 @@ export type IssuanceFailure =
   TypedIssuanceFailures[keyof TypedIssuanceFailures];
 
 /**
- * Type that maps known reasons with the corresponding failure, in order to
- * avoid unknowns as much as possible.
+ * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
-export type ReasonTypeByFailure = {
+type ReasonTypeByFailure = {
   [IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY]: Errors.IssuerResponseError;
   [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
   [IssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
-  [IssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
+  [IssuanceFailureType.ISSUER_GENERIC]:
+    | Error
+    | Errors.IssuerResponseError
+    | WebViewError;
   [IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR]: Errors.IssuerResponseError;
   [IssuanceFailureType.NOT_MATCHING_IDENTITY]: string;
   [IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND]: Errors.IssuerResponseError;
@@ -66,12 +70,10 @@ type TypedIssuanceFailures = {
 };
 
 /**
- * Maps an event dispatched by the eID issuance machine to a failure object. If
- * the event is not an error event, a generic failure is returned.
- *
+ * Maps an event dispatched by the eID issuance machine to a failure object.
+ * If the event is not an error event, a generic failure is returned.
  * @param event - The event to map
- * @returns A failure object which can be used to fill the failure screen with
- *   the appropriate content
+ * @returns a failure object which can be used to fill the failure screen with the appropriate content
  */
 export const mapEventToFailure = (
   event: EidIssuanceEvents
@@ -126,6 +128,14 @@ export const mapEventToFailure = (
   }
 
   if (isIssuerResponseError(error)) {
+    return {
+      type: IssuanceFailureType.ISSUER_GENERIC,
+      reason: error
+    };
+  }
+
+  // A WebView error during the eID issuance can be attributed to the Issuer
+  if (isWebViewError(error)) {
     return {
       type: IssuanceFailureType.ISSUER_GENERIC,
       reason: error

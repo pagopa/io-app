@@ -11,13 +11,9 @@ import { getMixPanelCredential } from "../../utils";
 import { CREDENTIAL_STATUS_MAP, ItwCredentialDetails } from "../../utils/types";
 
 /**
- * Map all the credentials in the Wallet and their status to the corresponding
- * MixPanel format.
- *
- * @example
- *   { "ITW_PG_V2": "valid", "ITW_TS_V3": "expired" }
- *
+ * Map all the credentials in the Wallet and their status to the corresponding MixPanel format.
  * @returns An object `{credential:status}` ready to be sent to MixPanel.
+ * @example { "ITW_PG_V2": "valid", "ITW_TS_V3": "expired" }
  */
 export const itwMixPanelCredentialDetailsSelector = createSelector(
   itwCredentialsSelector,

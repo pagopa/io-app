@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { useMemo } from "react";
 
 import { useIOSelector } from "../../../../store/hooks";
@@ -15,33 +14,29 @@ import {
 import { itwCredentialSelector } from "../store/selectors";
 
 /**
- * Get the localized message corresponding to the status list/status assertion
- * code, if present. The message is dynamic and extracted either - From the
- * credentials catalog, for newer credentials that support status list, or -
- * From the issuer configuration, for legacy 1.0 credentials.
+ * Get the localized message corresponding to the status list/status assertion code, if present.
+ * The message is dynamic and extracted either
+ * - From the credentials catalog, for newer credentials that support status list, or
+ * - From the issuer configuration, for legacy 1.0 credentials.
  *
- * Note: this hook exists mainly because of circular dependencies across
- * IT-Wallet selectors, that become a problem when this logic is moved to a
- * selector.
+ * Note: this hook exists mainly because of circular dependencies across IT-Wallet selectors,
+ * that become a problem when this logic is moved to a selector.
  *
  * TODO: task SIW-4723 aims at improving the selectors structure.
  *
  * @param credentialType - The credential type.
- * @returns The localized message corresponding to the status list/status
- *   assertion code, if present.
+ * @returns The localized message corresponding to the status list/status assertion code, if present.
  */
 export const useCredentialStatusMessage = (
   credentialType: string
 ): CredentialStatusMessage | undefined => {
   const ioWallet = useIoWallet();
 
-  const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
+  const credential = useIOSelector(itwCredentialSelector(credentialType));
   const catalog = useIOSelector(itwCredentialsCatalogueByTypesSelector);
   const catalogTranslations = useIOSelector(
     itwCatalogueTranslationsByLocaleSelector
   );
-
-  const credential = O.toUndefined(credentialOption);
 
   return useMemo(() => {
     if (!credential) {

@@ -23,15 +23,15 @@ import { IT_WALLET_SURVEY_CREDENTIAL_EXIT } from "../utils/constants";
 export type CredentialExitStep = "data_share" | "doc_preview";
 
 /**
- * Module-level set: tracks which credentials have already shown the survey this
- * app session. Resets automatically when the app is killed and restarted.
+ * Module-level set: tracks which credentials have already shown the survey
+ * this app session. Resets automatically when the app is killed and restarted.
  */
 const credentialExitSurveyShownInSession = new Set<MixPanelCredential>();
 
 /**
  * Shows a Qualtrics survey bottom sheet when the user exits a credential
- * issuance flow. The survey includes the step at which the user dropped off and
- * the credential being issued.
+ * issuance flow. The survey includes the step at which the user dropped off
+ * and the credential being issued.
  *
  * The bottom sheet is shown at most once per credential per app session.
  */
@@ -79,8 +79,8 @@ export const useItwCredentialExitSurveyBottomSheet = () => {
               onPress={() => {
                 skipDeclinedEvent.current = true;
                 trackItwSurveyRequestAccepted(trackingProps);
-                openWebUrl(surveyUrl);
                 dismiss();
+                openWebUrl(surveyUrl);
               }}
               variant="solid"
             />
@@ -99,6 +99,7 @@ export const useItwCredentialExitSurveyBottomSheet = () => {
       </VStack>
     ),
     onDismiss: () => {
+      dispatch(itwSetCredentialExitSurvey(undefined));
       if (!skipDeclinedEvent.current) {
         trackItwSurveyRequestDeclined(trackingProps);
       }
@@ -119,9 +120,8 @@ export const useItwCredentialExitSurveyBottomSheet = () => {
     useCallback(() => {
       if (credentialExitSurveyState) {
         presentSurvey();
-        dispatch(itwSetCredentialExitSurvey(undefined));
       }
-    }, [credentialExitSurveyState, dispatch, presentSurvey])
+    }, [credentialExitSurveyState, presentSurvey])
   );
 
   return { bottomSheet };

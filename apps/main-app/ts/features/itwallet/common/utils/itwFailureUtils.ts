@@ -6,22 +6,31 @@ import {
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import { z } from "zod";
 
+import {
+  WEBVIEW_ERROR_CODE_PREFIX,
+  WEBVIEW_HTTP_ERROR_CODE_PREFIX
+} from "../../identification/cie/utils/constants";
+import {
+  type WebViewError,
+  webViewError
+} from "../../identification/cie/utils/error";
 import { WithCredentialMetadata } from "./ItwFailureTypes";
 
 /**
- * This file contains utility functions related to failures in the context of
- * common xState flows
+ * This file contains utility functions related to failures in the context of common xState flows
  */
 
-/** Guard used to check if the error is a `FederationError`. */
+/**
+ * Guard used to check if the error is a `FederationError`.
+ */
 export const isFederationError = (
   error: unknown
 ): error is Trust.Errors.FederationError =>
   error instanceof Trust.Errors.FederationError;
 
 /**
- * Integrity errors thrown by the device. These errors might occur locally
- * before calling the Wallet Provider.
+ * Integrity errors thrown by the device.
+ * These errors might occur locally before calling the Wallet Provider.
  */
 const localIntegrityErrors: Array<CryptoErrorCodes | IntegrityErrorCodes> = [
   "REQUEST_ATTESTATION_FAILED",
@@ -64,9 +73,8 @@ const mrtdTaxIdCodeMismatchFailure = z.object({
 });
 
 /**
- * Guard used to identify ANPR PID 404 issuance failures. It is identified by
- * the presence of reason.error with value "credential_not_found" inside an
- * IssuerResponseError with code `CredentialInvalidStatus` and HTTP status 404.
+ * Guard used to identify ANPR PID 404 issuance failures.
+ * It is identified by the presence of reason.error with value "credential_not_found" inside an IssuerResponseError with code `CredentialInvalidStatus` and HTTP status 404.
  */
 export const isAnprPid404Failure = (
   e: unknown
@@ -74,17 +82,15 @@ export const isAnprPid404Failure = (
   Errors.isIssuerResponseError(e) && anprPid404Failure.safeParse(e).success;
 
 /**
- * Enrich instances of Error with `credentialId` so it is possible to retrieve
- * the credential configuration from `credential_configurations_supported` in
- * the Issuer's EC. This is needed during multi-credential issuance to get
- * dynamic error messages, because the original error may not contain the
- * credential configuration ID.
+ * Enrich instances of Error with `credentialId` so it is possible to retrieve the credential configuration
+ * from `credential_configurations_supported` in the Issuer's EC. This is needed during multi-credential issuance
+ * to get dynamic error messages, because the original error may not contain the credential configuration ID.
  *
  * This function **modifies the original error**.
  *
  * @param metadata.credentialId The credential configuration ID
  * @param metadata.credentialType The credential type
- * @returns A function that enriches the error and rethrows it
+ * @return A function that enriches the error and rethrows it
  * @throws The original error, with the new `metadata` property
  */
 export const enrichErrorWithMetadata =
@@ -106,8 +112,24 @@ export const isMrtdTaxIdCodeMismatchFailure = (
   Errors.isIssuerResponseError(e) &&
   mrtdTaxIdCodeMismatchFailure.safeParse(e).success;
 
-/** Shape of a credential status assertion response error. */
+/**
+ * Shape of a credential status assertion response error.
+ */
 export const statusAssertionFailure = z.object({
   error: z.string(),
   error_description: z.string().optional()
 });
+
+/**
+ * Type guard for errors originated from WebViews. CieID and CIE PIN WebView errors
+ * are handled slighly different, so two checks are needed here.
+ */
+export const isWebViewError = (e: unknown): e is Error | WebViewError => {
+  if (e instanceof Error) {
+    return (
+      e.message.includes(WEBVIEW_ERROR_CODE_PREFIX) ||
+      e.message.includes(WEBVIEW_HTTP_ERROR_CODE_PREFIX)
+    );
+  }
+  return webViewError.safeParse(e).success;
+};

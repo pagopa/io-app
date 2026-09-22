@@ -9,10 +9,8 @@ import { capitalizeTextName } from "../../../../../utils/strings";
 import { profileSelector } from "../../../../settings/common/store/selectors";
 
 /**
- * Renders the CGN ownership block for detail screen, including Owner's Fiscal
- * Code (The current user logged in)
- *
- * @class
+ * Renders the CGN ownership block for detail screen, including Owner's Fiscal Code (The current user logged in)
+ * @constructor
  */
 const CgnOwnershipInformation = (): ReactElement => {
   const currentProfile = useIOSelector(profileSelector);
@@ -22,17 +20,17 @@ const CgnOwnershipInformation = (): ReactElement => {
         <>
           <ListItemHeader label={I18n.t("bonus.cgn.detail.ownership")} />
           <ListItemInfo
-            label="Nome"
+            label={I18n.t("bonus.cgn.detail.ownershipData.name")}
             value={capitalizeTextName(currentProfile.value.name)}
           />
           <Divider />
           <ListItemInfo
-            label="Cognome"
+            label={I18n.t("bonus.cgn.detail.ownershipData.surname")}
             value={capitalizeTextName(currentProfile.value.family_name)}
           />
           <Divider />
           <ListItemInfo
-            label="Codice Fiscale"
+            label={I18n.t("bonus.cgn.detail.ownershipData.fiscalCode")}
             value={currentProfile.value.fiscal_code}
           />
         </>

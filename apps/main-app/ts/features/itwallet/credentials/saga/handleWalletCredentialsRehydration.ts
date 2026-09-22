@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { put, select } from "typed-redux-saga/macro";
 
 import { walletAddCards } from "../../../wallet/store/actions/cards";
@@ -10,8 +9,8 @@ import {
 } from "../store/selectors";
 
 /**
- * This saga adds stored credentials to the wallet screen as cards. It should be
- * invoked as soon as possible to properly sync credentials to the wallet.
+ * This saga adds stored credentials to the wallet screen as cards.
+ * It should be invoked as soon as possible to properly sync credentials to the wallet.
  */
 export function* handleWalletCredentialsRehydration() {
   const isItWalletValid = yield* select(itwLifecycleIsValidSelector);
@@ -19,7 +18,7 @@ export function* handleWalletCredentialsRehydration() {
   const credentials = yield* select(itwCredentialsSelector);
 
   // Only a valid wallet should contain credentials to display
-  if (!isItWalletValid || O.isNone(pid)) {
+  if (!isItWalletValid || pid === undefined) {
     return;
   }
 

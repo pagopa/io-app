@@ -19,7 +19,8 @@ import Animated, {
 import {
   enterTransitionInnerContent,
   enterTransitionInnerContentSmall,
-  exitTransitionInnerContent
+  exitTransitionInnerContent,
+  IOTypography
 } from "../../../core";
 import { triggerHaptic } from "../../../functions";
 import { useScaleAnimation } from "../../../hooks";
@@ -32,10 +33,6 @@ import {
 } from "../../icons";
 import { LoadingSpinner } from "../../loadingSpinner";
 import { AnimatedIOText } from "../../typography";
-import {
-  buttonTextFontSize,
-  buttonTextLineHeight
-} from "../../typography/ButtonText";
 import { useButtonAnimatedStyles, useButtonColorMap } from "./styles";
 
 export type IOButtonBlockSpecificProps = Omit<
@@ -55,23 +52,37 @@ export type IOButtonProps = WithTestID<
       ComponentProps<typeof Pressable>,
       "accessibilityHint" | "accessibilityLabel" | "disabled"
     > & {
-      /** @default button */
+      /**
+       * @default button
+       */
       accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
-      /** @default primary */
+      /**
+       * @default primary
+       */
       color?: IOButtonColor;
-      /** @default false */
+      /**
+       * @default false
+       */
       fullWidth?: boolean;
       icon?: IOIcons;
-      /** @default start */
+      /**
+       * @default start
+       */
       iconPosition?: "end" | "start";
       label: string;
-      /** @default false */
+      /**
+       * @default false
+       */
       loading?: boolean;
-      /** @default 1 */
+      /**
+       * @default 1
+       */
       numberOfLines?: number;
       onPress: (event: GestureResponderEvent) => void;
       ref?: Ref<View>;
-      /** @default auto */
+      /**
+       * @default auto
+       */
       textAlign?: TextStyle["textAlign"];
     }
 >;
@@ -247,9 +258,11 @@ export const IOButton = ({
             accessible={false}
             ellipsizeMode="tail"
             importantForAccessibility="no-hide-descendants"
-            lineHeight={isLinkButton ? buttonTextLineHeight : undefined}
+            lineHeight={
+              isLinkButton ? IOTypography.buttonText.lineHeight : undefined
+            }
             numberOfLines={numberOfLines}
-            size={buttonTextFontSize}
+            size={IOTypography.buttonText.size}
             style={[
               { textAlign },
               disabled

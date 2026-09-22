@@ -1,15 +1,16 @@
-/** Generic utilities for strings */
+/**
+ * Generic utilities for strings
+ */
 
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 
 /**
- * Return the same text with each token has the first char in uppercase. tokens
- * are retrieved by splitting the text with the provided separator ex
- * capitalize("Hello World") -> "Hello Word" ex capitalize("hello,world",",") ->
- * "Hello,Word"
- *
+ * return the same text with each token has the first char in uppercase.
+ * tokens are retrieved by splitting the text with the provided separator
+ * ex capitalize("Hello World") -> "Hello Word"
+ * ex capitalize("hello,world",",") -> "Hello,Word"
  * @param text
  * @param separator
  */
@@ -27,8 +28,9 @@ export function capitalize(text: string, separator = " ") {
 }
 
 /**
- * Check if the source includes searchText. To make a case-insensitive check
- * both the source and the searchText are converted to lower-case.
+ * Check if the source includes searchText.
+ * To make a case-insensitive check both the source and the searchText are
+ * converted to lower-case.
  *
  * @param source Source string where you want to search
  * @param searchText String you want search for
@@ -41,8 +43,7 @@ export function isTextIncludedCaseInsensitive(
 }
 
 /**
- * Determine if the text is undefined or empty (or composed only by blanks)
- *
+ * determine if the text is undefined or empty (or composed only by blanks)
  * @param text
  */
 export const isStringNullyOrEmpty = (
@@ -58,9 +59,7 @@ export const isStringNullyOrEmpty = (
   );
 
 /**
- * Return some(text) if the text is not nully and not empty (or composed only by
- * blanks)
- *
+ * return some(text) if the text is not nully and not empty (or composed only by blanks)
  * @param text
  */
 export const maybeNotNullyString = (
@@ -77,8 +76,7 @@ export const maybeNotNullyString = (
   );
 
 /**
- * Return a string by adding 'toAdd' every 'every' chars
- *
+ * return a string by adding 'toAdd' every 'every' chars
  * @param text
  * @param toAdd
  * @param every
@@ -89,8 +87,7 @@ export const addEvery = (text: string, toAdd: string, every: number): string =>
     .replace(new RegExp(`(.{${every}})`, "g"), `$1${toAdd}`);
 
 /**
- * Split text using the specified splitter and return the first substring
- *
+ * split text using the specified splitter and return the first substring
  * @param text
  * @param splitter
  */
@@ -109,11 +106,10 @@ export const withTrailingPoliceCarLightEmojii = (
 };
 
 /**
- * Format a number of bytes in a human readable format with the appropriate unit
- * (B, KB, MB, GB, TB) rounded to the first decimal.
- *
- * @param bytes - Number of bytes to format
- * @returns Formatted string in the form of "value unit"
+ * Format a number of bytes in a human readable format with the appropriate unit (B, KB, MB, GB, TB)
+ * rounded to the first decimal.
+ * @param bytes - number of bytes to format
+ * @returns formatted string in the form of "value unit"
  */
 export const formatBytesWithUnit = (bytes: number) => {
   if (!bytes || bytes < 0) {
@@ -128,20 +124,19 @@ export const formatBytesWithUnit = (bytes: number) => {
 };
 
 /**
- * Capitalizes the first letter of each word in the given text, preserving
- * leading and trailing spaces. Words are separated by the specified separator.
- * Handles words with apostrophes by capitalizing the first letter of each
- * sub-token.
- *
- * @example
- *   capitalizeTextName(" hello world "); // returns " Hello World "
- *
- * @example
- *   capitalizeTextName("d'angelo"); //returns "D'Angelo"
+ * Capitalizes the first letter of each word in the given text, preserving leading and trailing spaces.
+ * Words are separated by the specified separator.
+ * Handles words with apostrophes by capitalizing the first letter of each sub-token.
  *
  * @param {string} text
- * @param {string} [separator=" "] Default is `" "`
+ * @param {string} [separator=" "]
  * @returns {string}
+ *
+ * @example
+ * capitalizeTextName(" hello world "); // returns " Hello World "
+ *
+ * @example
+ * capitalizeTextName("d'angelo"); //returns "D'Angelo"
  */
 
 export const capitalizeTextName = (text: string, separator = " "): string => {

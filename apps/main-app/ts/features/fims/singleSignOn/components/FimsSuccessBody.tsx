@@ -149,7 +149,10 @@ export const FimsFlowSuccessBody = ({
           variant="link"
         />
         <VSpacer size={24} />
-        <ListItemHeader iconName="security" label="Dati richiesti" />
+        <ListItemHeader
+          iconName="security"
+          label={I18n.t("FIMS.consentsScreen.requiredData")}
+        />
         <FimsClaimsList claims={consents.user_metadata} />
         <VSpacer size={24} />
 

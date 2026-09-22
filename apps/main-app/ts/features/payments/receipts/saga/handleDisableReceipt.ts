@@ -22,7 +22,6 @@ import {
 } from "../store/selectors";
 /**
  * Handle the remote call to hide the transaction receipt
- *
  * @param action
  */
 export function* handleDisableReceipt(

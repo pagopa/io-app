@@ -7,6 +7,7 @@
 
 const delegateEffects = require("./delegate-effects.js");
 const i18nNoDynamicKeys = require("./no-dynamic-i18n-keys.js");
+const noFpTs = require("./no-fp-ts.js");
 
 module.exports = {
   meta: {
@@ -14,6 +15,7 @@ module.exports = {
   },
   rules: {
     "delegate-effects": delegateEffects,
-    "i18n-no-dynamic-keys": i18nNoDynamicKeys
+    "i18n-no-dynamic-keys": i18nNoDynamicKeys,
+    "no-fp-ts": noFpTs
   }
 };

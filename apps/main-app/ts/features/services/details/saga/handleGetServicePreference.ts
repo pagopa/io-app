@@ -25,8 +25,7 @@ export function* fetchServicePreferencesForStartup() {
 }
 
 /**
- * Saga to handle the load of service preferences for a specific service
- *
+ * saga to handle the load of service preferences for a specific service
  * @param getServicePreference
  * @param action
  */

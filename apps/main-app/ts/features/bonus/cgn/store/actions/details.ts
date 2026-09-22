@@ -3,7 +3,9 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 
 import { NetworkError } from "../../../../../utils/errors";
 
-/** Get and handle activation state of a CGN */
+/**
+ * get and handle activation state of a CGN
+ */
 export const cgnDetails = createAsyncAction(
   "CGN_DETAILS_REQUEST",
   "CGN_DETAILS_SUCCESS",

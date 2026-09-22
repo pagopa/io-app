@@ -17,10 +17,9 @@ import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
 
 /**
- * `showDialogOnBack` — when `true` (default), pressing back shows the abort
- * confirmation dialog. When `false`, back is handled internally: calls
- * `onBackPress` if provided, otherwise `navigation.goBack()`. `onBackPress` —
- * custom back handler used when `showDialogOnBack` is `false`.
+ * `showDialogOnBack` — when `true` (default), pressing back shows the abort confirmation dialog.
+ *   When `false`, back is handled internally: calls `onBackPress` if provided, otherwise `navigation.goBack()`.
+ * `onBackPress` — custom back handler used when `showDialogOnBack` is `false`.
  */
 type Props = {
   onBackPress?: () => void;
@@ -28,9 +27,8 @@ type Props = {
 };
 
 /**
- * A hook that returns a function to present the abort signature flow bottom
- * sheet. Always intercepts the hardware back button; behavior is controlled via
- * {@link Props}.
+ * A hook that returns a function to present the abort signature flow bottom sheet.
+ * Always intercepts the hardware back button; behavior is controlled via {@link Props}.
  */
 export const useFciAbortSignatureFlow = (props?: Props) => {
   const dispatch = useIODispatch();
@@ -40,7 +38,9 @@ export const useFciAbortSignatureFlow = (props?: Props) => {
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const { isExperimental } = useIOExperimentalDesign();
 
-  /** Callback function to abort the signature flow. */
+  /**
+   * Callback function to abort the signature flow.
+   */
   const abortSignatureFlow = () => {
     trackFciUserExit(route.name, fciEnvironment);
     dispatch(fciEndRequest());
@@ -78,7 +78,9 @@ export const useFciAbortSignatureFlow = (props?: Props) => {
     )
   });
 
-  /** Show an alert to confirm the abort signature flow. */
+  /**
+   * Show an alert to confirm the abort signature flow.
+   */
   const showAlert = () => {
     Alert.alert(I18n.t("features.fci.abort.alert.title"), undefined, [
       {
@@ -93,10 +95,9 @@ export const useFciAbortSignatureFlow = (props?: Props) => {
   };
 
   /**
-   * Overrides the present function of the bottom sheet to show an alert instead
-   * if the experimental design is enabled. This allows us to use an alert
-   * without changing single components which use the hook. TODO: remove when
-   * the experimental design will be enabled by default (SFEQS-2090)
+   * Overrides the present function of the bottom sheet to show an alert instead if the experimental design is enabled.
+   * This allows us to use an alert without changing single components which use the hook.
+   * TODO: remove when the experimental design will be enabled by default (SFEQS-2090)
    */
   const present = () => (isExperimental ? showAlert() : presentBs());
 

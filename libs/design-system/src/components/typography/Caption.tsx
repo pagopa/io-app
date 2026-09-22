@@ -1,10 +1,14 @@
 import { useIOTheme } from "../../context";
-import { IOFontSize } from "../../utils/fonts";
+import { IOTypography } from "../../core";
 import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
-export const captionFontSize: IOFontSize = 12;
+const {
+  caption: { colorToken, ...captionStyle }
+} = IOTypography;
 
-/** `Caption` typographic style */
+/**
+ * `Caption` typographic style
+ */
 export const Caption = ({
   color: customColor,
   ...props
@@ -13,14 +17,8 @@ export const Caption = ({
 
   const CaptionProps: IOTextProps = {
     ...props,
-    dynamicTypeRamp: "caption1", // iOS only
-    weight: "Regular",
-    size: captionFontSize,
-    color: customColor ?? theme["textBody-default"],
-    textStyle: {
-      textTransform: "uppercase",
-      letterSpacing: 0.5
-    }
+    ...captionStyle,
+    color: customColor ?? theme[colorToken]
   };
 
   return <IOText {...CaptionProps}>{props.children}</IOText>;

@@ -1,6 +1,6 @@
 /**
- * A screen to display, by a webview, the consent to send user sensitive data to
- * backend and proceed with the onboarding process
+ * A screen to display, by a webview, the consent to send user sensitive data
+ * to backend and proceed with the onboarding process
  */
 import { Route, useRoute } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
@@ -23,8 +23,11 @@ import {
 } from "../../../common/analytics/cieAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
-import { onLoginUriChanged } from "../../../common/utils/login";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
+import {
+  AUTH_LEVELS,
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -141,7 +144,7 @@ const CieConsentDataUsageScreen = () => {
         params: {
           errorCodeOrMessage,
           authMethod: "CIE",
-          authLevel: "L2"
+          authLevel: AUTH_LEVELS.L2
         }
       });
     }

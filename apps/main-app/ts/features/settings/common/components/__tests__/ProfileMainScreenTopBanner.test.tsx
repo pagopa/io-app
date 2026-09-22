@@ -152,7 +152,7 @@ describe("ProfileMainScreenTopBanner", () => {
   });
 });
 
-export const renderComponent = (component: ReactElement) => {
+const renderComponent = (component: ReactElement) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
 

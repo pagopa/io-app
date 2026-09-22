@@ -25,7 +25,9 @@ export type QrCodeImageProps = {
 
 const defaultAccessibilityLabel = "QR Code";
 
-/** This components renders a QR Code which resolves in the provided value */
+/**
+ * This components renders a QR Code which resolves in the provided value
+ */
 const QrCodeImage = ({
   value,
   size = 200,

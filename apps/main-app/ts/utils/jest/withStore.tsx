@@ -7,8 +7,7 @@ import { appReducer } from "../../store/reducers";
 
 /**
  * A HOC to provide the redux `Context`
- *
- * @param Component The component to wrap
+ * @param Component the component to wrap
  * @returns The given `Component` wrapped with the redux `Provider`
  */
 export function withStore<P extends Record<string, unknown>>(

@@ -8,8 +8,9 @@ import I18n from "i18next";
 import { maybeNotNullyString } from "./strings";
 
 /**
- * Decode a Data Matrix string from Poste returning a tuple with an `RptId` and
- * an `AmountInEuroCents` or none.
+ * Decode a Data Matrix string from Poste returning
+ * a tuple with an `RptId` and an `AmountInEuroCents`
+ * or none.
  */
 export function decodePosteDataMatrix(
   data: string
@@ -42,7 +43,6 @@ export function decodePosteDataMatrix(
 
 /**
  * This tags are defined in PagoPA specs for transaction description.
- *
  * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
  */
 const prefixes: ReadonlyArray<string> = ["RFA", "RFB", "RFS"];
@@ -53,8 +53,7 @@ const hasDescriptionPrefix = (description: string) =>
   );
 
 /**
- * This function removes the tag from payment description of a PagoPA
- * transaction.
+ * This function removes the tag from payment description of a PagoPA transaction.
  */
 export const cleanTransactionDescription = (description: string): string => {
   const descriptionParts = description.split("TXT/");
@@ -82,7 +81,6 @@ export type ErrorTypes =
 /**
  * This function is used to convert the raw error code to the main error type.
  * Main error types is represented by the union type ErrorTypes.
- *
  * @param error
  */
 export const getV2ErrorMainType = (

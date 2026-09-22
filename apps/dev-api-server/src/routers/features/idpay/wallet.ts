@@ -31,17 +31,23 @@ const getWalletInstrument = (id: string) =>
     O.chain(id => O.fromNullable(getWalletV2().find(w => w.idWallet === id)))
   );
 
-/** Returns the list of active initiatives of a citizen */
+/**
+ * Returns the list of active initiatives of a citizen
+ */
 addIdPayHandler("get", "/wallet/", (req, res) =>
   res.status(200).json(getWalletResponse())
 );
 
-/** Get code onboarding status */
+/**
+ *   Get code onboarding status
+ */
 addIdPayHandler("get", "/wallet/code/status", (req, res) =>
   res.status(200).json({ isIdPayCodeEnabled: idPayCode !== undefined })
 );
 
-/** Generates a new IdPay code and (optionially) enrolls it to an initiative */
+/**
+ * Generates a new IdPay code and (optionially) enrolls it to an initiative
+ */
 addIdPayHandler("post", "/wallet/code/generate", (req, res) => {
   if (req.body.initiativeId) {
     return pipe(
@@ -66,7 +72,9 @@ addIdPayHandler("post", "/wallet/code/generate", (req, res) => {
   return res.status(200).json({ idpayCode: idPayCode });
 });
 
-/** Returns the initiatives list associated to a payment instrument */
+/**
+ *   Returns the initiatives list associated to a payment instrument
+ */
 addIdPayHandler("get", "/wallet/instrument/:walletId/initiatives", (req, res) =>
   pipe(
     req.params.walletId,
@@ -79,7 +87,9 @@ addIdPayHandler("get", "/wallet/instrument/:walletId/initiatives", (req, res) =>
   )
 );
 
-/** Returns the detail of an active initiative of a citizen */
+/**
+ * Returns the detail of an active initiative of a citizen
+ */
 addIdPayHandler("get", "/wallet/:initiativeId", (req, res) =>
   pipe(
     req.params.initiativeId,
@@ -92,7 +102,9 @@ addIdPayHandler("get", "/wallet/:initiativeId", (req, res) =>
   )
 );
 
-/** Returns the detail of an initiative */
+/**
+ *  Returns the detail of an initiative
+ */
 addIdPayHandler("get", "/wallet/:initiativeId/detail", (req, res) =>
   pipe(
     req.params.initiativeId,
@@ -105,7 +117,9 @@ addIdPayHandler("get", "/wallet/:initiativeId/detail", (req, res) =>
   )
 );
 
-/** Returns the actual wallet status */
+/**
+ *  Returns the actual wallet status
+ */
 addIdPayHandler("get", "/wallet/:initiativeId/status", (req, res) =>
   pipe(
     req.params.initiativeId,
@@ -118,7 +132,9 @@ addIdPayHandler("get", "/wallet/:initiativeId/status", (req, res) =>
   )
 );
 
-/** Unsubscribe to an initiative */
+/**
+ *   Unsubscribe to an initiative
+ */
 addIdPayHandler("delete", "/wallet/:initiativeId/unsubscribe", (req, res) =>
   pipe(
     req.params.initiativeId,
@@ -147,7 +163,9 @@ addIdPayHandler("delete", "/wallet/:initiativeId/unsubscribe", (req, res) =>
   )
 );
 
-/** Association of an IBAN to an initiative */
+/**
+ *  Association of an IBAN to an initiative
+ */
 addIdPayHandler("put", "/wallet/:initiativeId/iban", (req, res) =>
   pipe(
     req.params.initiativeId,
@@ -173,8 +191,7 @@ addIdPayHandler("put", "/wallet/:initiativeId/iban", (req, res) =>
 );
 
 /**
- * Returns the list of payment instruments associated to the initiative by the
- * citizen
+ *  Returns the list of payment instruments associated to the initiative by the citizen
  */
 addIdPayHandler("get", "/wallet/:initiativeId/instruments", (req, res) =>
   pipe(
@@ -195,7 +212,9 @@ addIdPayHandler("get", "/wallet/:initiativeId/instruments", (req, res) =>
   )
 );
 
-/** Enroll code to an initiative */
+/**
+ * Enroll code to an initiative
+ */
 addIdPayHandler("put", "/wallet/:initiativeId/code/instruments", (req, res) =>
   pipe(
     req.params.initiativeId,
@@ -211,7 +230,9 @@ addIdPayHandler("put", "/wallet/:initiativeId/code/instruments", (req, res) =>
   )
 );
 
-/** Association of a payment instrument to an initiative */
+/**
+ *  Association of a payment instrument to an initiative
+ */
 addIdPayHandler(
   "put",
   "/wallet/:initiativeId/instruments/by-wallet/:walletId",
@@ -242,7 +263,9 @@ addIdPayHandler(
     )
 );
 
-/** Delete a payment instrument from an initiative */
+/**
+ *   Delete a payment instrument from an initiative
+ */
 addIdPayHandler(
   "delete",
   "/wallet/:initiativeId/instruments/:instrumentId",

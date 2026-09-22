@@ -204,8 +204,6 @@
           "label": "Field for entering the Electronic ID Card PIN"
         },
         "bottomSheetCTA": "Forgot your PIN?",
-        "contextualHelpBody": "The **PIN** code consists of 8 digits:\n• The first 4 digits were provided to you at the registry office;  \n• The last 4 digits were mailed to your home along with your electronic ID card.  \n  \nCombine them and enter them in this order.  \nThe PUK code, on the other hand, is needed to unlock the **PIN** after three failed attempts. It consists of 8 digits and is issued along with the **PIN**.",
-        "contextualHelpTitle": "Where can I find my PIN and PUK codes?",
         "incorrectCiePinContent1": "You still have 2 more tries; check it and try again.",
         "incorrectCiePinContent2": "After three incorrect attempts, your PIN will be locked. To unlock it and set a new one, you'll need to enter the PUK code in the CieID app.",
         "incorrectCiePinSecondaryActionLabel2": "Forgot your PIN?",
@@ -248,8 +246,6 @@
       }
     },
     "idp_login": {
-      "contextualHelpContent": "The password is the alphanumeric code you chose when you created your SPID Digital Identity.\nIf you don’t remember it, you can recover it or set a new password by following the instructions provided by your Identity Provider.  \nOnce you’ve entered the required information, you’ll receive an OTP code from your Identity Provider. Confirm the login request and return to the IO app to complete the login process. You will then see a screen authorizing the Identity Provider to send IO a set of information necessary to enable you to use the app and the various services offered by public agencies through IO. Tap “I agree” to give your consent and proceed with authentication.\n",
-      "contextualHelpTitle": "What is your password",
       "headerTitle": "Log In",
       "poste_id": {
         "bottom_sheet": {
@@ -265,8 +261,15 @@
       "contentTitle": "Hi, {{name}}!"
     },
     "idp_selection": {
-      "contextualHelpContent": "**The Identity Provider manages your digital identity**. You can begin your authentication flow only after selecting the Identity Provider that issued your SPID identity.\n",
-      "contextualHelpTitle": "Who is your Identity Provider?"
+      "idps": {
+        "loadingAccessibilityLabel": "Loading Identity Provider"
+      },
+      "loadingError": {
+        "description": "Please try again later, or log in to IO using your Electronic ID Card (CIE).",
+        "primaryAction": "Log in with CIE",
+        "secondaryAction": "Close",
+        "title": "We are unable to load the list of SPID providers"
+      }
     },
     "landing": {
       "accessibility": {
@@ -306,8 +309,6 @@
         },
         "title": "How do you want to log in?"
       },
-      "contextualHelpContent": "To access the IO app, you’ll need to sign in using your SPID (Public Digital Identity System) credentials or your CIE (Electronic ID Card).\n**Thanks to these authentication methods, your access to the app will always be secure.**  \nTo apply for a SPID digital identity, visit [spid.gov.it](https:\/\/www.spid.gov.it) and choose an Identity Provider from the list provided. \nIf you’re interested in applying for the CIE, you can find more information on your municipality’s website and schedule an appointment.\n",
-      "contextualHelpTitle": "How to access the IO app",
       "expiredCardContent": "The card you're using may have expired or may no longer be valid. Try using SPID to sign in to the app.",
       "expiredCardTitle": "The CIE verification was unsuccessful",
       "loginCie": "Log in with CIE",
@@ -335,8 +336,6 @@
     "opt_in": {
       "button_accept_lv": "Continue with quick access",
       "button_decline_lv": "Log in with SPID or CIE every 30 days",
-      "contextualHelpContent": "Here you can find information on how to authenticate on IO, along with some security tips.",
-      "contextualHelpTitle": "Authentication",
       "identity_check": "You will no longer have to log in with SPID or CIE every 30 days, but only once a year or if you log out of the app",
       "notification": "You'll receive an email every time someone logs in. If you don't recognize the login, you can block access to IO",
       "passcode": "Next time, you can simply use your face, fingerprint, or unlock code",
@@ -743,17 +742,11 @@
     "cduScreens": {
       "emailAlreadyTaken": {
         "editButton": "Edit email",
-        "help": {
-          "body": "Your email address is already in use on IO. You'll need to enter a different one to continue using the app."
-        },
         "subtitle": "Your email address **{{email}}** is already in use on IO; you must enter a different one to continue using the app.",
         "title": "Change your email address"
       },
       "validateMail": {
         "editButton": "No, edit",
-        "help": {
-          "body": "To continue using the app, you must verify your email address."
-        },
         "subtitle": "To continue using the app, you must confirm that your email address is **{{email}}**",
         "title": "Is this your email address?",
         "validateButton": "Yes, confirm"
@@ -767,11 +760,7 @@
     "insert": {
       "alertButton": "Use a different email address",
       "alertDescription": "This can happen if you share the same address with a family member",
-      "alertTitle": "This email address is already in use",
-      "help": {
-        "content": "This page is used to enter or edit your **email** address. The email address you enter must be verified.\n",
-        "title": "Email"
-      }
+      "alertTitle": "This email address is already in use"
     },
     "newinsert": {
       "alert": {
@@ -883,10 +872,6 @@
           "signing": {
             "subTitle": "Due to a technical issue, the signature was not successful. If the problem occurs again, please contact support.",
             "title": "The signing was unsuccessful"
-          },
-          "update": {
-            "subTitle": "Make sure you have the latest version of IO installed, and log in again using SPID or CIE.",
-            "title": "Update the app"
           },
           "wrongUser": {
             "subTitle": "The signature request is not associated with your fiscal code.",
@@ -1002,6 +987,7 @@
           "expired": "Expired",
           "expiring": "Expiring",
           "invalid": "Invalid",
+          "suspended": "Invalid",
           "unknown": "Not available",
           "upgradePending": "To be updated",
           "verificationExpired": "Action required",
@@ -1136,7 +1122,7 @@
               "4": "The new official digital documents are available exclusively on the IO app",
               "5": "Access public administration digital services in just a few taps"
             },
-            "title": "IO is now your public digital wallet: secure, free, and yours.",
+            "title": "Your digital documents with IT-Wallet: secure, official and always with you",
             "tos": "By clicking **Continue**, you acknowledge that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{tos_url}})."
           },
           "legacy": {
@@ -1323,6 +1309,10 @@
             "title": "Enter your CIE PIN"
           },
           "prepare": {
+            "animation": {
+              "pause": "Pause animation",
+              "play": "Play animation"
+            },
             "can": {
               "cta": "Continue",
               "description": "You'll need to use it and enter its 6-digit code (CAN), which is printed on the front in the lower right corner.",
@@ -1470,7 +1460,7 @@
               }
             }
           },
-          "noCieCta": "Don't have an electronic ID card?",
+          "noCieCta": "Don't have an Electronic ID Card?",
           "section": {
             "l2": "Verify identity",
             "l3-issuance": "Activate IT-Wallet",
@@ -1486,7 +1476,7 @@
           "description": "To allow IO to read your CIE, enable NFC in your device's Settings.",
           "header": "How to",
           "primaryAction": "Open Settings",
-          "secondaryAction": "Continue",
+          "secondaryAction": "I've already done that",
           "steps": {
             "1": "Open \"Settings\"",
             "2": "Search for the \"NFC\" feature",
@@ -1532,6 +1522,15 @@
           "title": "Add the document to Wallet"
         },
         "credentialOffer": {
+          "activation": {
+            "primaryAction": "Activate IT-Wallet",
+            "subtitle": "To add {{ credential }} , you must first activate the IO IT-Wallet.",
+            "title": "Activate IT-Wallet to continue"
+          },
+          "confirmIdentity": {
+            "subtitle": "You must verify the identity associated with {{ wallet }} to add {{ credential }}",
+            "title": "Verify your identity to add the document"
+          },
           "intro": {
             "fallbackTitle": "Add a document to your Wallet"
           }
@@ -1539,7 +1538,8 @@
         "credentialPreview": {
           "actions": {
             "primary": "Add to Wallet",
-            "secondary": "Cancel"
+            "secondary": "Cancel",
+            "somethingWrong": "Does something seem off?"
           },
           "bottomSheet": {
             "about": {
@@ -1549,9 +1549,20 @@
             "authSource": {
               "subtitle": "It is the institution or digital database that holds the data contained in your document.",
               "title": "Who is it?"
+            },
+            "somethingWrong": {
+              "body": "If you find any errors or inconsistencies, please report them to the institution that holds the data and is responsible for it.",
+              "bodyAuthSource": "For this digital document, the reference institution is {{authSource}}.",
+              "bodyFooter": "Once the data has been corrected, you can repeat the process of adding the document to your portfolio.",
+              "bodyMarkdown": "If you find any errors or inconsistencies, you must report them to the entity that holds the data and is responsible for it.\n\nOnce the data has been corrected, you can add the document back to your Portfolio.\n\nFor this digital document, please refer to:\n{{contacts}}",
+              "contactUrl": "Website",
+              "primaryAction": "Got it",
+              "title": "Something doesn't add up with the data in the document"
             }
           },
+          "detailsTitle": "Check the details",
           "loading": "Please wait a few more seconds without exiting the app",
+          "subtitle": "If the information is correct, add the document to the Portfolio.",
           "title": "{{credential}}: here's a preview of your data"
         },
         "credentialResult": {
@@ -1610,8 +1621,8 @@
         "issuerNotTrustedCommonError": {
           "primaryAction": "Got it",
           "secondaryAction": "Show details",
-          "subtitle": "A technical error has occurred that prevents you from accessing {{credential}}. Please try again.\nIf the problem persists, contact support.",
-          "title": "A problem is preventing you from continuing."
+          "subtitle": "There is currently a problem preventing {{credential}}from updating: please try again later. If the problem persists, contact support.",
+          "title": "Something went wrong"
         },
         "landingError": {
           "action": "Close",
@@ -1667,8 +1678,8 @@
             "title": "Activate Documenti su IO to continue"
           },
           "itWallet": {
-            "subtitle": "To add new documents to your IO Wallet, get IT-Wallet: all you need is your Electronic ID Card (CIE).",
-            "title": "Get IT-Wallet to continue"
+            "subtitle": "To add new documents to your IO Portfolio, activate IT-Wallet: all you need is your Electronic ID Card (CIE).",
+            "title": "Activate IT-Wallet to continue"
           },
           "primaryAction": "Get started",
           "secondaryAction": "Not now"
@@ -1698,7 +1709,7 @@
             "content": "No connection."
           },
           "modal": {
-            "content": "###### What can I do?\n\nWhen your device is offline, some of the app's features may not work.\n\n\"Documenti su IO\" still works **even offline** for limited use, but the validity of your documents is updated at the last online app access.\n\nConnect to the internet and refresh the app to continue using all of IO’s services.",
+            "content": "###### What can I do?\n\nWhen your device is offline, some app features may not work.\n\n You can still use your digital documents if you’ve added them to your Wallet: their validity is updated to the last time you accessed the app while connected to a network. \n\nConnect to the internet and refresh the app to continue using all IO services.",
             "footerAction": "Restart the IO app",
             "title": "No connection"
           }
@@ -1733,7 +1744,7 @@
             "content": "Some of the app's features are currently limited."
           },
           "modal": {
-            "content": "###### What can I do?\n\nWhen authentication fails or your network connection is unstable, some of the app’s features may be limited.\n\n\"Documenti su IO\" still works **even in these cases** for limited use, but the validity of your documents is updated at the last online app access.\n\nPlease wait a few minutes and refresh the app to continue using all of IO’s services.",
+            "content": "###### What can I do?\n\nWhen authentication fails or the network connection is unstable, some of the app’s features may be limited.\n\n You can continue to use your digital documents if you’ve added them to your Wallet: their validity is updated the last time you accessed the app while connected to a network. \n\nPlease wait a few minutes and refresh the app to continue using all IO services.",
             "footerAction": "restart the IO app",
             "title": "Limited app features"
           }
@@ -1792,9 +1803,6 @@
       },
       "presentation": {
         "alerts": {
-          "ehc": {
-            "content": "You can use your Health Card—European Health Insurance Card—on IO to access the services provided by the National Health Service."
-          },
           "expired": {
             "content": "The document is no longer valid. If you already have a new, valid document, you can update the digital version in your Wallet."
           },
@@ -1819,9 +1827,14 @@
             "suspended": {
               "action": "Learn more",
               "title": "Your driver's license is not valid."
-            }
+            },
+            "title": "Did you know that?"
           },
-          "statusAction": "What can I do?"
+          "statusAction": "What can I do?",
+          "ts": {
+            "content": "You can use your Health Card—European Health Insurance Card—on IO to access the services provided by the National Health Service.",
+            "title": "Did you know?"
+          }
         },
         "bottomSheets": {
           "EuropeanDisabilityCard": {
@@ -1849,7 +1862,7 @@
                 "action": "Verify Identity",
                 "expired": "Verify your identity to continue using your documents without restrictions.",
                 "expiring": "Please verify your identity by {{date}} to continue using your documents without restrictions.",
-                "valid": "You activated your ID using your CIE on {{date}}."
+                "valid": "You activated IT-Wallet with your CIE on {{date}}."
               }
             },
             "contentBottom": "###### How does it work?\n\nYour **identity is verified** during the activation process using SPID or CIE.",
@@ -1915,8 +1928,8 @@
           "hiddenClaim": "Hidden",
           "mdl": {
             "walletUpgradeBanner": {
-              "action": "Get IT-Wallet",
-              "content": "Get IT-Wallet to use your driver's license as an ID card too!",
+              "action": "Activate IT-Wallet",
+              "content": "Activate IT-Wallet to use your driver's license as an ID card too!",
               "title": "IT-Wallet News"
             }
           },
@@ -1927,7 +1940,8 @@
               "education_diploma": "Your digital diplomas are fully valid and officially recognized.",
               "education_enrollment": "Your digital academic records are fully valid and officially recognized.",
               "residency": "Your digital certificate of residence is fully valid for official purposes."
-            }
+            },
+            "title": "Did you know?"
           },
           "openCardDocument": "Open a copy of the document",
           "partOf": "Part of",
@@ -1942,7 +1956,7 @@
         },
         "ctas": {
           "openPdf": "View document",
-          "present": "Start verification",
+          "present": "Use for verification",
           "shareButton": "Save or share",
           "trustmark": "Show certificate of authenticity"
         },
@@ -1969,7 +1983,9 @@
               "title": "Are you sure you want to disable IT-Wallet?"
             }
           },
-          "listItemHeader": "My IT-Wallet ID information"
+          "listItemHeader": "My IT-Wallet ID information",
+          "listItemHeaderHideValues": "Hide your IT-Wallet ID information",
+          "listItemHeaderShowValues": "Show your IT-Wallet ID details"
         },
         "missingCredentials": {
           "one": {
@@ -1995,7 +2011,7 @@
             "activation": {
               "actions": {
                 "primary": "Open Settings",
-                "secondary": "Continue"
+                "secondary": "I've already done that"
               },
               "alert": {
                 "message": "Go to Settings and change your preferences, then try again.",
@@ -2057,26 +2073,66 @@
             "subtitle": "Please wait a few seconds...",
             "title": "Waiting for a connection to verify..."
           },
+          "consentDenied": {
+            "subtitle": "You can start a new verification by tapping “Use for verification” in the Wallet section.",
+            "title": "You have stopped the verification process"
+          },
+          "consentManagement": {
+            "accessibility": {
+              "openDetail": "View the consent details for {{relyingParty}}",
+              "revoke": "Withdraw consent for {{relyingParty}}"
+            },
+            "alert": {
+              "cancel": "No, keep it",
+              "confirm": "Yes, revoke it",
+              "message": "You will be asked to provide new consent the next time you make a contactless payment for {{relyingParty}}.",
+              "title": "Do you want to withdraw your consent?"
+            },
+            "cta": "Manage Consents",
+            "detail": {
+              "message": "You have saved your consent for contactless verification of this data for **{{relyingParty}}**.",
+              "revokeAction": "Withdraw Consent"
+            },
+            "fallback": "Service",
+            "header": "Saved Consents",
+            "revocationSuccess": {
+              "subtitle": "You'll be able to save your consent to the transmission of your document data again during your next contactless transaction",
+              "title": "You have revoked all saved consents for {{credentialName}}"
+            },
+            "revokeAll": {
+              "action": "Withdraw all consents",
+              "alert": {
+                "message": "You will be asked to provide new consent the next time you make a contactless payment.",
+                "title": "Do you want to revoke all consents for this document?"
+              }
+            },
+            "savedAt": "Saved on {{date}}",
+            "subtitle": "Here you can view and revoke your saved consents for contactless document verification: {{credentialName}}.",
+            "title": "Manage Consents",
+            "toast": {
+              "done": "Done!"
+            }
+          },
           "engagement": {
             "banner": {
               "action": "Learn more",
               "content": "It allows you to have the digital documents you've added to your Wallet verified.",
-              "title": "How does a QR code work?"
+              "title": "How the verification works?"
             },
-            "instruction": "Show the QR code to the person verifying your digital documents",
+            "instruction": "Show the QR code or hold it up to a scanner. Those verifying in person will use an official app.",
             "invalidBanner": {
               "action": "Verify your identity",
               "content": "Verify your identity to continue using your IT-Wallet."
             },
             "nfc": {
-              "action": "Start contactless verification",
+              "action": "Use contactless",
               "or": "or"
             },
             "qrCode": {
               "accessibilityLabel": "Image of the QR code to show to the person verifying the digital documents",
               "error": "We had a problem generating the QR code."
             },
-            "title": "Start verification"
+            "title": "Ready for verification"
           },
           "nfc": {
             "activation": {
@@ -2244,10 +2300,10 @@
             "alert": {
               "body": "You will not be able to complete the login process for the online services."
             },
-            "primaryAction": "Get IT-Wallet",
+            "primaryAction": "Activate IT-Wallet",
             "secondaryAction": "Not now",
             "subtitle": "To access online services, you must activate IT-Wallet using your Electronic ID Card (CIE) and your PIN.",
-            "title": "Get IT-Wallet to \ncontinue"
+            "title": "Activate IT-Wallet to \ncontinue"
           }
         },
         "selectiveDisclosure": {
@@ -2275,7 +2331,7 @@
       "reissuanceLandingScreen": {
         "itWalletActivation": {
           "primaryAction": "Learn more",
-          "subtitle": "Take your digital documents to the next level with the Government’s only digital wallet: public, secure, and free.",
+          "subtitle": "Take your digital documents to the next level with IO's IT-Wallet: public, secure, and yours.",
           "title": "Did you know? You can now activate IT-Wallet"
         },
         "notNecessary": {
@@ -2290,9 +2346,9 @@
           "title": "IT-Wallet"
         },
         "manage": {
-          "content": "###### What can you do with IT-Wallet?\n - Get digital versions of your personal documents, certificates, and credentials\n - Prove your identity and eligibility to drive with the digital driver’s license\n - Access digital government services in just a few steps\n - Use your Health Insurance Card to purchase medications and schedule medical appointments\n To learn more, [go to IT-Wallet website]()",
+          "content": "###### What can you do with IO’s IT-Wallet?\n - Get digital versions of your personal documents, certificates and qualifications\n - Prove your identity and eligibility to drive with your digital driving licence\n - Access public administration digital services in just a few steps\n - Use your Health Insurance Card to buy medicines and book medical appointments\n To find out more, [visit the IT-Wallet website]",
           "cta": {
-            "obtain": "Get IT-Wallet",
+            "obtain": "Activate IT-Wallet",
             "revoke": "Disable IT-Wallet"
           },
           "description": "It's your official digital wallet.",
@@ -2326,8 +2382,8 @@
           "title": "Your IT-Wallet ID"
         },
         "qrCode": {
-          "description": "The person verifying your documents in person uses an official app to scan this QR code. ",
-          "title": "Show the QR code to the person checking it"
+          "description": "Use this feature to submit your documents via IT-Wallet in real time.",
+          "title": "Show your documents to the person verifying them"
         }
       },
       "trustmark": {
@@ -2344,10 +2400,16 @@
         }
       },
       "unsupportedDevice": {
-        "error": {
+        "errorL2": {
           "secondaryAction": "Close",
           "subtitle": "To learn about the security requirements for this feature, click **[Learn More]({{faqUrl}})**",
           "title": "Your device does not support Documenti su IO"
+        },
+        "errorL3": {
+          "primaryAction": "Close",
+          "secondaryAction": "Learn more",
+          "subtitle": "This device does not meet the safety requirements necessary for its operation.",
+          "title": "Your device does not support IT Wallet"
         }
       },
       "verifiableCredentials": {
@@ -2683,10 +2745,6 @@
             "title": "Do you want to close the SEND notification?"
           },
           "delegated": {
-            "cieContextualHelp": {
-              "body": "To view a SEND notification intended for another person, you need that person's Electronic ID Card and a smartphone capable of reading it.",
-              "title": "How to access a SEND notification intended for someone else"
-            },
             "createMandate": {
               "loadingText": "Please wait a few seconds"
             },
@@ -3073,7 +3131,6 @@
         "hint": "Please wait while the content loads",
         "label": "Loading..."
       },
-      "alert": "Notice",
       "cieReadingProgress": "Reading {{percentage}}% completed",
       "collapsed": "Compressed",
       "contextualHelp": {
@@ -3171,7 +3228,7 @@
     },
     "offline": {
       "bottomSheet": {
-        "content": "###### What can I do? \n\nWhen you're offline, some of the app's features may not work. \n\n Documents on IO also work offline (if you’ve enabled the feature), but the validity of the documents is updated at the last online app access.\n\nConnect to the internet and refresh the app to resume using all IO services.",
+        "content": "###### What can I do? \n\nWhen you’re offline, some of the app’s services may not work.\n\nYou can continue to use your digital documents if you’ve added them to your Wallet: their validity is updated to the last time you accessed the app whilst connected to a network.\n\nConnect to the internet and refresh the app to start using all IO services again.",
         "footerAction": "Restart the IO app",
         "title": "No connection"
       },
@@ -3863,7 +3920,7 @@
       },
       "checks": {
         "1": {
-          "content": "If you continue, you will no longer be able to rejoin the program through the IO app or any other supported channels.",
+          "content": "If you continue, you will lose the right to re-enroll in the initiative through the IO app and all other authorized channels.",
           "title": "You can't enroll again."
         },
         "2": {
@@ -4281,10 +4338,6 @@
     "tos": {
       "accept": "Accept and continue",
       "error": "We were unable to upload the Privacy Policy and the Terms and Conditions"
-    },
-    "unlockCode": {
-      "contextualHelpContent": "**The unlock code is the security code that keeps your data secure in the IO app, and you set it yourself the first time you log in**.   \nIf this is your first time logging in to the app, choose any numeric code you like and make sure to remember it so you can use it every time you log in.  \nIf you’ve already set it up and can’t remember it, you can select “Forgot unlock code” and set a new one.  \nThe unlock code is tied to the device on which you set it: if you change phones, you’ll need to set it again the first time you log in to the IO app.\n",
-      "contextualHelpTitle": "What is your unlock code"
     }
   },
   "openMaps": {
@@ -4341,9 +4394,7 @@
       "codeCopied": "Code copied!",
       "copyCode": "Copy fiscal code",
       "description": "Use the barcode to provide your fiscal code when prompted.",
-      "fiscalCode": "fiscal code",
-      "help": "A facsimile of your fiscal code is displayed here. \nThe facsimile does not replace the physical document but allows you to read the information and the barcode on the back. \nIn the event of a duplicate fiscal code, the information displayed in the facsimile may not match your personal records.\n",
-      "title": "Your personal documents"
+      "fiscalCode": "fiscal code"
     },
     "logout": {
       "activeWiAlertMessage": "You'll need to log in again with SPID or CIE to use the app.\n\nIf you log in to IO from a device other than your usual one, the \"Documents\" feature on IO will be reset for security reasons.",
@@ -4377,8 +4428,6 @@
         "cleared": "The cache has been cleared."
       },
       "clearAsyncStorage": "Clear the contents of AsyncStorage",
-      "contextualHelpContent": "**In the Settings section, you can manage your information and preferences.**\nSpecifically, here you can manage your preferences, privacy settings, and account. In this section, you can also access digital versions of your documents by selecting the cards that appear at the top of the screen.",
-      "contextualHelpTitle": "What You Can Do in the Settings Section",
       "data": {
         "description": "Review your information",
         "title": "Your information"
@@ -4440,8 +4489,6 @@
         },
         "loading": "Please wait a few seconds; we're verifying your profile...",
         "privacyPolicy": {
-          "contextualHelpContentPolicy": "### What are the Privacy Policy and Terms of Use?\n\nIn accordance with Article 13 of EU Regulation No. 2016\/679 (commonly known as the GDPR), the Privacy Policy provides a complete description of how the IO app handles your personal information. The Terms of Use, on the other hand, set forth your rights and obligations when using the app and its services. <br\/> <br\/> <br\/> <br\/> \n\n\n",
-          "contextualHelpTitlePolicy": "Privacy Policy and Terms of Service",
           "description": "Please review IO's Privacy Policy and Terms and Conditions of Use",
           "infobox": "You must read and accept the Privacy Policy and the Terms and Conditions of Use",
           "title": "Privacy Policy and Terms and Conditions of Use",
@@ -4540,23 +4587,9 @@
     "preferences": {
       "calendar": {
         "birthday_calendar": "Birthdays",
-        "contextualHelpContent": "**Your default calendar is the one linked to your email address,** if you signed up with a Google account. You can change the email address linked to your calendar at any time so that you receive IO reminders on the calendar you use most often.\n",
-        "contextualHelpTitle": "What's your favorite calendar?",
         "local_calendar": "Local calendar"
       },
-      "contextualHelpContent": "**In the Preferences section, you can view and change the settings** used by all services on IO. \nHere, you can view the email address, phone number, and language associated with your account, and enable or disable biometric recognition.\n",
-      "contextualHelpTitle": "Your preferences",
-      "email": {
-        "forward": {
-          "contextualHelpContent": "**Here you can enable or disable email forwarding.**\nYou can enable or disable forwarding of all messages you receive via IO to your email inbox, or enable or disable forwarding on a case-by-case basis in the respective service details tab. \n",
-          "contextualHelpTitle": "How to manage message forwarding"
-        }
-      },
       "genericToastTitle": "Preferences updated!",
-      "language": {
-        "contextualHelpContent": "**Currently, IO uses the language set by your device's operating system:** \nYou can change the language in your phone's settings, and it will automatically be updated within the app as well. \nThe language of the message content, however, is determined by each institution on a message-by-message basis: they have the discretion to send content translated into different languages.\n",
-        "contextualHelpTitle": "How to manage language settings on IO"
-      },
       "list": {
         "appearance": {
           "subtitle": "Customize the app to suit your needs",
@@ -4597,7 +4630,7 @@
         "preferred_language": {
           "alert": {
             "subtitle": "Restart the app to apply the changes",
-            "title": "Would you like to change the app's language to \" {{lang}}\"?"
+            "title": "Would you like to change the app's language to {{lang}}?"
           },
           "sections": {
             "app": {
@@ -5024,8 +5057,6 @@
       "identificationMessage": "Confirm the transaction by entering your unlock code"
     },
     "QRtoPay": {
-      "contextualHelpContent": "**Here you can make a voluntary payment for a notice using pagoPA**, the payment platform for the public administration. You can pay using a paper notice by scanning the QR code on the notice and then completing the payment directly through the app. You can also upload a QR code from your phone’s gallery or manually enter the notice’s identification details (Notice Code).",
-      "contextualHelpTitle": "How to pay a notice",
       "settingsAlert": {
         "buttonText": {
           "cancel": "Cancel",

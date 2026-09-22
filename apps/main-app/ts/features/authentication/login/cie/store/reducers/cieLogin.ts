@@ -12,7 +12,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../../utils/environment";
 import { consolidateActiveSessionLoginData } from "../../../../activeSessionLogin/store/actions";
-import { SpidLevel } from "../../utils";
+import { AuthLevel } from "../../../../common/utils";
 import {
   cieIDDisableTourGuide,
   cieIDSetSelectedSecurityLevel,
@@ -21,7 +21,7 @@ import {
 } from "../actions";
 
 export type CieLoginState = {
-  cieIDSelectedSecurityLevel?: SpidLevel;
+  cieIDSelectedSecurityLevel?: AuthLevel;
   isCieIDTourGuideEnabled: boolean;
   useUat: boolean;
 };
@@ -74,8 +74,8 @@ const migrations: MigrationManifest = {
     isCieIDTourGuideEnabled: true
   }),
   /**
-   * @param state The slice state Removes `isCieIDFeatureEnabled` from the
-   *   persist rehydration actions
+   * @param state The slice state
+   * Removes `isCieIDFeatureEnabled` from the persist rehydration actions
    */
   "1": (state: PersistedState) => omit(state, "isCieIDFeatureEnabled")
 };

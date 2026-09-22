@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
 
@@ -12,7 +11,7 @@ import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsRefreshStatusByType } from "../../../credentials/store/actions";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider.tsx";
 import {
-  selectCredentialTypeOption,
+  selectCredentialType,
   selectIsLoading
 } from "../../../machine/credential/selectors.ts";
 
@@ -24,8 +23,7 @@ type Props = {
  * Rendered when it is not possible to determine the status of a credential,
  * i.e. the API call to fetch the status assertion from the issuer failed.
  *
- * The screen allows the user to retry the status assertion once, or reissue the
- * credential.
+ * The screen allows the user to retry the status assertion once, or reissue the credential.
  */
 export const ItwPresentationCredentialUnknownStatus = ({
   credential
@@ -37,9 +35,8 @@ export const ItwPresentationCredentialUnknownStatus = ({
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isMachineLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const credentialType = O.toUndefined(
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialTypeOption)
-  );
+  const credentialType =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
 
   const navigation = useIONavigation();
   const credentialName = useItwCredentialName(credential.credentialType);

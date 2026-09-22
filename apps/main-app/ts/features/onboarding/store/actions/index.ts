@@ -1,4 +1,6 @@
-/** Action types and action creator related to the Onboarding. */
+/**
+ * Action types and action creator related to the Onboarding.
+ */
 
 import { ActionType, createStandardAction } from "typesafe-actions";
 

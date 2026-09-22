@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
 import { getType } from "typesafe-actions";
 
@@ -48,11 +46,6 @@ export type IdentificationGenericData = {
   message: string;
 };
 
-export type IdentificationProgressState =
-  | IdentificationIdentifiedState
-  | IdentificationStartedState
-  | IdentificationUnidentifiedState;
-
 export type IdentificationState = {
   fail?: IdentificationFailData;
   progress: IdentificationProgressState;
@@ -65,6 +58,11 @@ export type PersistedIdentificationState = IdentificationState & PersistPartial;
 type IdentificationIdentifiedState = {
   kind: "identified";
 };
+
+type IdentificationProgressState =
+  | IdentificationIdentifiedState
+  | IdentificationStartedState
+  | IdentificationUnidentifiedState;
 
 type IdentificationStartedState = {
   canResetPin: boolean;
@@ -140,19 +138,15 @@ export const identificationReducer = (
       };
 
     case getType(identificationFailure):
-      const newErrorData = pipe(
-        state.fail,
-        O.fromNullable,
-        O.fold(
-          () => ({
+      const newErrorData = state.fail
+        ? nextErrorData(state.fail)
+        : {
             nextLegalAttempt: new Date(),
             remainingAttempts: maxAttempts - 1,
             timespanBetweenAttempts: 0,
             showLockModal: false
-          }),
-          errorData => nextErrorData(errorData)
-        )
-      );
+          };
+
       return {
         ...state,
         fail: newErrorData

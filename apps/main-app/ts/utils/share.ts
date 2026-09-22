@@ -2,10 +2,9 @@ import * as Sharing from "expo-sharing";
 import * as TE from "fp-ts/lib/TaskEither";
 
 /**
- * Share a local file url
- *
- * @param url Local file:// URI
- * @param message Optional dialog title
+ * share a local file url
+ * @param url local file:// URI
+ * @param message optional dialog title
  */
 export const share = (url: string, message?: string, _failOnCancel = false) =>
   TE.tryCatch(

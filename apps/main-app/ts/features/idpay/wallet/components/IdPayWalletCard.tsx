@@ -30,5 +30,7 @@ const WrappedIdPayCard = (props: IdPayWalletCardProps) => {
   );
 };
 
-/** Wrapper component which adds wallet capabilites to the IdPayCard component */
+/**
+ * Wrapper component which adds wallet capabilites to the IdPayCard component
+ */
 export const IdPayWalletCard = withWalletCardBaseComponent(WrappedIdPayCard);

@@ -6,7 +6,9 @@ import { BackendCGN } from "../../../api/backendCgn";
 import { cgnEycaActivationCancel } from "../../../store/actions/eyca/activation";
 import { eycaActivationWorker } from "./eycaActivationWorker";
 
-/** This saga handles the CGN activation polling */
+/**
+ * This saga handles the CGN activation polling
+ */
 export function* eycaActivationSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]

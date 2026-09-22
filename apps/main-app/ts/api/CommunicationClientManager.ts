@@ -10,7 +10,7 @@ import { isTestEnv } from "../utils/environment";
 import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
 
 export type CommunicationClient = Client<"Bearer">;
-export type CommunicationClientOptions = BaseClientOptions & {
+type CommunicationClientOptions = BaseClientOptions & {
   keyInfo: KeyInfo;
 };
 

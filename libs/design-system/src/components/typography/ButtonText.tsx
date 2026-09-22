@@ -1,26 +1,22 @@
-import { IOColors } from "../../core";
-import { IOFontSize } from "../../utils/fonts";
+import { IOTypography } from "../../core";
 import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
-export const buttonTextFontSize: IOFontSize = 16;
-export const buttonTextLineHeight = 20;
+/* `color` is a static value and not a theme token because `IOButton` and
+`SearchInput` animate it through Reanimated */
+const {
+  buttonText: { color: defaultColor, ...buttonTextStyle }
+} = IOTypography;
 
-/* Needed to render `ButtonOutline` and`ButtonLink` because they use
-`AnimatedText` for color transition through Reanimated */
-const defaultColor: IOColors = "white";
-
-/** `ButtonText` typographic style */
+/**
+ * `ButtonText` typographic style
+ */
 export const ButtonText = ({
   color: customColor,
   ...props
 }: TypographicStyleProps) => {
   const ButtonTextProps: IOTextProps = {
     ...props,
-    weight: "Semibold",
-    size: buttonTextFontSize,
-    lineHeight: buttonTextLineHeight,
-    /* Needed to render `ButtonOutline` and`ButtonLink` because they use
-`AnimatedText` for color transition through Reanimated */
+    ...buttonTextStyle,
     color: customColor ?? defaultColor
   };
 

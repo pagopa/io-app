@@ -9,8 +9,8 @@ import { startTimer } from "../../../../../utils/timer";
 import { cieIsSupported, nfcIsEnabled } from "../store/actions";
 
 /**
- * Check if the device is compatible with CIE authentication see
- * https://github.com/pagopa/io-cie-android-sdk/blob/29cc1165bbd3d90d61239369f22ec78b2e4c8f6c/index.js#L125
+ * check if the device is compatible with CIE authentication
+ * see https://github.com/pagopa/io-cie-android-sdk/blob/29cc1165bbd3d90d61239369f22ec78b2e4c8f6c/index.js#L125
  */
 export function* checkCieAvailabilitySaga(
   isCIEAuthenticationSupported: (typeof cieManager)["isCIEAuthenticationSupported"]
@@ -44,8 +44,7 @@ export function* watchCieAuthenticationSaga(): SagaIterator {
 }
 const CIE_NFC_STATUS_INTERVAL = 1500 as Millisecond;
 /**
- * Checks if the nfc is enabled. If it is NOT enbled it checks again with a
- * delay
+ * checks if the nfc is enabled. If it is NOT enbled it checks again with a delay
  */
 export function* checkNfcEnablementSaga(): SagaIterator {
   try {

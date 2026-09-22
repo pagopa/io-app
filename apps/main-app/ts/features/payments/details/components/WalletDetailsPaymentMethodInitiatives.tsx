@@ -20,11 +20,9 @@ type Props = Pick<ComponentProps<typeof View>, "style"> & {
 };
 
 /**
- * This component enlists the different initiatives active on the payment
- * methods
- *
- * @class
+ * This component enlists the different initiatives active on the payment methods
  * @param props
+ * @constructor
  */
 const WalletDetailsPaymentMethodInitiatives = (
   props: Props

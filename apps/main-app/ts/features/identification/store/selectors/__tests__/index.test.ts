@@ -1,19 +1,17 @@
-import * as O from "fp-ts/lib/Option";
-
 import { identificationFailSelector, progressSelector } from "../../selectors";
 
 describe("identificationFailSelector", () => {
   it("should return None when fail is undefined", () => {
     const state = { identification: { fail: undefined } };
     const result = identificationFailSelector(state as any);
-    expect(result).toEqual(O.none);
+    expect(result).toEqual(undefined);
   });
 
   it("should return Some when fail is defined", () => {
     const failData = { remainingAttempts: 3, nextLegalAttempt: new Date() };
     const state = { identification: { fail: failData } };
     const result = identificationFailSelector(state as any);
-    expect(result).toEqual(O.some(failData));
+    expect(result).toEqual(failData);
   });
 });
 

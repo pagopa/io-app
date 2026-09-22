@@ -28,8 +28,8 @@ type Props = {
   handleOnClose: () => void;
 };
 /**
- * To use in case the banner's visibility has to be handled externally (see
- * MultiBanner feature for the landing screen)
+ * to use in case the banner's visibility has to be handled externally
+ * (see MultiBanner feature for the landing screen)
  */
 export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   const { name: routeName } = useRoute();

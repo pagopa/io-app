@@ -2,6 +2,7 @@ import { Ref } from "react";
 import { Pressable, View } from "react-native";
 
 import { useIOTheme } from "../../context";
+import { IOTypographicLinkColorToken, IOTypography } from "../../core";
 import { IOFontWeight } from "../../utils/fonts";
 import {
   IOText,
@@ -16,7 +17,13 @@ type LabelMiniProps = Omit<TypographicStyleProps, "ref"> &
     weight?: Extract<IOFontWeight, "Regular" | "Semibold">;
   };
 
-/** `LabelMini` typographic style */
+const {
+  labelMini: { colorToken, ...labelMiniStyle }
+} = IOTypography;
+
+/**
+ * `LabelMini` typographic style
+ */
 export const LabelMini = ({
   ref,
   weight: customWeight,
@@ -30,15 +37,13 @@ export const LabelMini = ({
   const theme = useIOTheme();
 
   const defaultColor = asLink
-    ? theme["interactiveElem-default"]
-    : theme["textBody-tertiary"];
+    ? theme[IOTypographicLinkColorToken]
+    : theme[colorToken];
 
   const LabelMiniProps: IOTextProps = {
     ...props,
-    dynamicTypeRamp: "footnote" /* iOS only */,
-    weight: customWeight || "Semibold",
-    size: 12,
-    lineHeight: 18,
+    ...labelMiniStyle,
+    weight: customWeight || labelMiniStyle.weight,
     color: customColor ?? defaultColor,
     ...(asLink
       ? {

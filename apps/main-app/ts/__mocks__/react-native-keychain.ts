@@ -1,4 +1,6 @@
-/** A mocked version of the Keychain */
+/**
+ * A mocked version of the Keychain
+ */
 
 export type KeychainDB = {
   [key: string]: {

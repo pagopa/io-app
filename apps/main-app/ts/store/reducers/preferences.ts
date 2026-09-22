@@ -1,4 +1,6 @@
-/** A reducer for not persisted preferences. */
+/**
+ * A reducer for not persisted preferences.
+ */
 import { isActionOf } from "typesafe-actions";
 
 import {

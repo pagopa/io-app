@@ -10,8 +10,7 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { featuredInstitutionsGet } from "../store/actions";
 
 /**
- * Saga to handle the loading of featured institutions
- *
+ * saga to handle the loading of featured institutions
  * @param getFeaturedInstitutions
  * @param action
  */

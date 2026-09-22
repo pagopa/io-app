@@ -47,8 +47,7 @@ const ALL_CREDENTIAL_TYPES: ReadonlyArray<string> = [
 
 /**
  * Cards section for ITW Playground
- *
- * @returns Cards section displaying ID card components
+ * @returns cards section displaying ID card components
  */
 export const ItwCardsSection = () => (
   <VStack space={8}>

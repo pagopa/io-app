@@ -2,7 +2,9 @@ import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { z } from "zod";
 
+import { EnvType, EnvTypeSchema } from "../../common/utils/environment";
 import {
+  STORAGE_KEY_ITW_ENV,
   STORAGE_KEY_ITW_SPECS_VERSION,
   STORAGE_KEY_LAST_CHECK_TIME
 } from "./consts";
@@ -39,6 +41,14 @@ export const getItwSpecsVersion = async (): Promise<ItwVersion> => {
   return itwVersion as ItwVersion;
 };
 
+/** Persists the environment needed by the background Status List task. */
+export const storeItwEnv = async (env: EnvType): Promise<void> =>
+  AsyncStorage.setItem(STORAGE_KEY_ITW_ENV, env);
+
+/** Retrieves the environment needed by the background Status List task. */
+export const getItwEnv = async (): Promise<EnvType> =>
+  EnvTypeSchema.parse(await AsyncStorage.getItem(STORAGE_KEY_ITW_ENV));
+
 /**
  * Stores the timestamps of the latest checks made of the Status List
  *
@@ -66,9 +76,8 @@ export const storeLastStatusListCheckTimestamp = async (
 
 /**
  * Retrieves the timestamps of the latest checks for the ITW Status List.
- *
  * @returns A promise that resolves to the timestamps of the latest checks in
- *   milliseconds since the Unix epoch
+ * milliseconds since the Unix epoch
  */
 export const getLastStatusListCheckTimestamps = async (): Promise<
   Array<number>

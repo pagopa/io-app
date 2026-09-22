@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 
@@ -11,126 +9,101 @@ import {
 
 const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 
+/**
+ * The whole remote configuration still lives in the app store as an fp-ts Option:
+ * unwrap it here, at the boundary, so the IT-Wallet selectors work on plain values.
+ */
 const itwRemoteConfigSelector = (state: GlobalState) =>
-  pipe(
-    state.remoteConfig,
-    O.map(config => config.itw)
-  );
+  state.features.itWallet.remoteConfig;
 
-/** Returns the remote config for docIO */
+/**
+ * Returns the remote config for docIO
+ */
 export const isItwEnabledSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): boolean =>
-    pipe(
-      itwConfig,
-      O.map(
-        itw =>
-          isVersionSupported(
-            Platform.OS === "ios"
-              ? itw.min_app_version.ios
-              : itw.min_app_version.android,
-            getAppVersion()
-          ) && itw.enabled
-      ),
-      O.getOrElse(() => false)
-    )
+  ({ enabled, min_app_version }): boolean => {
+    if (!enabled) {
+      return false;
+    }
+
+    if (min_app_version === undefined) {
+      return false;
+    }
+
+    return isVersionSupported(
+      Platform.OS === "ios" ? min_app_version.ios : min_app_version.android,
+      getAppVersion()
+    );
+  }
 );
 
 /**
- * Returns the authentication methods that are disabled. If there is no data, an
- * empty array is returned as the default value.
+ * Returns the authentication methods that are disabled.
+ * If there is no data, an empty array is returned as the default value.
  */
 export const itwDisabledIdentificationMethodsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> =>
-    pipe(
-      itwConfig,
-      O.chainNullableK(itw => itw.disabled_identification_methods),
-      O.getOrElse(() => emptyArray)
-    )
-);
-
-/** Return whether the IT Wallet feedback banner is remotely enabled. */
-export const isItwFeedbackBannerEnabledSelector = createSelector(
-  itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.map(itw => itw.feedback_banner_visible),
-      O.getOrElse(() => false)
-    )
+  ({ disabled_identification_methods }): ReadonlyArray<string> =>
+    disabled_identification_methods ?? emptyArray
 );
 
 /**
- * Return whether the Wallet activation is disabled. This is purely a "cosmetic"
- * configuration to disable UI elements, it does not disable the entire IT
- * Wallet feature.
+ * Return whether the IT Wallet feedback banner is remotely enabled.
+ */
+export const isItwFeedbackBannerEnabledSelector = createSelector(
+  itwRemoteConfigSelector,
+  ({ feedback_banner_visible }) => feedback_banner_visible ?? false
+);
+
+/**
+ * Return whether the Wallet activation is disabled.
+ * This is purely a "cosmetic" configuration to disable UI elements,
+ * it does not disable the entire IT Wallet feature.
  */
 export const itwIsActivationDisabledSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.chainNullableK(itw => itw.wallet_activation_disabled),
-      O.getOrElse(() => false)
-    )
-);
-
-/** Return IT Wallet credentials that have been disabled remotely. */
-export const itwDisabledCredentialsSelector = createSelector(
-  itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.chainNullableK(itw => itw.disabled_credentials),
-      O.getOrElse(() => emptyArray)
-    )
-);
-
-/** Return the remote config content for the iPatente CTA's visibility. */
-export const itwIsIPatenteCtaEnabledSelector = createSelector(
-  itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.map(itw => itw.ipatente_cta_visible),
-      O.getOrElse(() => false)
-    )
+  ({ wallet_activation_disabled }) => wallet_activation_disabled ?? false
 );
 
 /**
- * Return the remote config about iPatente CTA inside the MDL credential details
- * screen.
+ * Return IT Wallet credentials that have been disabled remotely.
+ */
+export const itwDisabledCredentialsSelector = createSelector(
+  itwRemoteConfigSelector,
+  ({ disabled_credentials }) => disabled_credentials ?? emptyArray
+);
+
+/**
+ * Return the remote config content for the iPatente CTA's visibility.
+ */
+export const itwIsIPatenteCtaEnabledSelector = createSelector(
+  itwRemoteConfigSelector,
+  ({ ipatente_cta_visible }) => ipatente_cta_visible ?? false
+);
+
+/**
+ * Return the remote config about iPatente CTA inside the MDL credential details screen.
  */
 export const itwIPatenteCtaConfigSelector = createSelector(
   itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.map(itw => itw.ipatente_cta_config),
-      O.toUndefined
-    )
-);
-
-/** Return the remote config about ipzs privacy url for the IPZS privacy screen. */
-export const itwIpzsPrivacyUrlSelector = createSelector(
-  itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.map(itw => itw.ipzs_privacy_url),
-      O.toUndefined
-    )
+  ({ ipatente_cta_config }) => ipatente_cta_config
 );
 
 /**
- * Returns whether the current app version meets the minimum required to use IT
- * Wallet.
+ * Return the remote config about ipzs privacy url for the IPZS privacy screen.
+ */
+export const itwIpzsPrivacyUrlSelector = createSelector(
+  itwRemoteConfigSelector,
+  ({ ipzs_privacy_url }) => ipzs_privacy_url
+);
+
+/**
+ * Returns whether the current app version meets the minimum required to use IT Wallet.
  */
 export const isItwMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): boolean => {
-    const version = O.toUndefined(itwConfig)?.itw_l3?.min_app_version;
+  ({ itw_l3 }): boolean => {
+    const version = itw_l3?.min_app_version;
     if (!version) {
       return false;
     }
@@ -142,13 +115,12 @@ export const isItwMinAppVersionSupportedSelector = createSelector(
 );
 
 /**
- * Returns whether the current app version meets the minimum required to use
- * Proximity presentation.
+ * Returns whether the current app version meets the minimum required to use Proximity presentation.
  */
 export const isItwProximityMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): boolean => {
-    const version = O.toUndefined(itwConfig)?.proximity?.min_app_version;
+  ({ proximity }): boolean => {
+    const version = proximity?.min_app_version;
     if (!version) {
       return false;
     }
@@ -165,23 +137,24 @@ export const isItwProximityMinAppVersionSupportedSelector = createSelector(
  */
 export const itwPinnedCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> =>
-    O.toUndefined(itwConfig)?.pinned_credentials ?? emptyArray
+  ({ pinned_credentials }): ReadonlyArray<string> =>
+    pinned_credentials ?? emptyArray
 );
 
 /**
- * Return the credential types that are marked as new in the catalogue list. New
- * credentials are displayed first with a "NOVITÀ" badge.
+ * Return the credential types that are marked as new in the catalogue list.
+ * New credentials are displayed first with a "NOVITÀ" badge.
  */
 export const itwNewCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> =>
-    O.toUndefined(itwConfig)?.new_credentials ?? emptyArray
+  ({ new_credentials }): ReadonlyArray<string> => new_credentials ?? emptyArray
 );
 
-/** Return the credential types that are hidden from the catalogue list. */
+/**
+ * Return the credential types that are hidden from the catalogue list.
+ */
 export const itwHiddenCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
-  (itwConfig): ReadonlyArray<string> =>
-    O.toUndefined(itwConfig)?.hidden_credentials ?? emptyArray
+  ({ hidden_credentials }): ReadonlyArray<string> =>
+    hidden_credentials ?? emptyArray
 );

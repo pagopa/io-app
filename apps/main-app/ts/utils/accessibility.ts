@@ -6,8 +6,7 @@ import { AccessibilityInfo, HostInstance } from "react-native";
 import { format } from "./dates";
 
 /**
- * Moves the screen reader focus onto `nodeReference` once `executionDelay` has
- * elapsed.
+ * Moves the screen reader focus onto `nodeReference` once `executionDelay` has elapsed.
  *
  * The node is read after the delay, so a reference that is no longer mounted
  * makes this a no-op and `callback` is not invoked.
@@ -33,8 +32,7 @@ export const setAccessibilityFocus = (
 };
 
 /**
- * Return a Promise where true means there is a screen reader active (VoiceOver
- * / TalkBack)
+ * return a Promise where true means there is a screen reader active (VoiceOver / TalkBack)
  */
 export const isScreenReaderEnabled = async (): Promise<boolean> => {
   try {

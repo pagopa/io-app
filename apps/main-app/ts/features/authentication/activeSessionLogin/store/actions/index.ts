@@ -1,7 +1,7 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 import { SpidIdp } from "../../../../../utils/idps";
-import { SpidLevel } from "../../../login/cie/utils";
+import { AuthLevel } from "../../../common/utils";
 import { ActiveSessionLoginState } from "../reducer";
 
 export const setActiveSessionLoginLocalFlag = createStandardAction(
@@ -38,7 +38,7 @@ export const setFastLoginOptSessionLogin = createStandardAction(
 export const consolidateActiveSessionLoginData = createStandardAction(
   "CONSOLIDATE_ACTIVE_SESSION_LOGIN_DATA"
 )<{
-  cieIDSelectedSecurityLevel?: SpidLevel;
+  cieIDSelectedSecurityLevel?: AuthLevel;
   fastLoginOptIn: boolean;
   idp: SpidIdp;
   token: string;
@@ -56,12 +56,14 @@ export const setLoggedOutUserWithDifferentCF = createStandardAction(
  * Action to trigger logout before session corruption.
  *
  * This action is dispatched when the session needs to be corrupted but we still
- * have a valid token to perform the logout API call. It initiates a logout
- * request to the backend and then proceeds to corrupt the session.
+ * have a valid token to perform the logout API call. It initiates a logout request
+ * to the backend and then proceeds to corrupt the session.
  *
- * Flow: 1. Dispatch this action with valid token 2. Perform logout API call to
- * backend 3. Clean up crypto keys and reset mixpanel 4. Finally dispatch
- * sessionCorrupted() to complete the flow
+ * Flow:
+ * 1. Dispatch this action with valid token
+ * 2. Perform logout API call to backend
+ * 3. Clean up crypto keys and reset mixpanel
+ * 4. Finally dispatch sessionCorrupted() to complete the flow
  *
  * This approach preserves the existing sessionCorrupted logic while ensuring
  * proper backend logout when we still have access to the session token.
@@ -77,7 +79,7 @@ export const setFinalizeLoggedOutUserWithDifferentCF = createStandardAction(
 export const setCieIDSelectedSecurityLevelActiveSessionLogin =
   createStandardAction(
     "SET_CIE_ID_SELECTED_SECURITY_LEVEL_ACTIVE_SESSION_LOGIN"
-  )<SpidLevel>();
+  )<AuthLevel>();
 
 export const closeSessionExpirationBanner = createStandardAction(
   "CLOSE_SESSION_EXPIRATION_BANNER"

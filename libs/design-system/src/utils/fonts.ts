@@ -1,12 +1,14 @@
 /**
- * Utility functions to manage font properties to style mapping for both iOS and
- * Android Fonts are managed differently on Android and iOS. Read the Font
- * section of the README file included in this repository.
+ * Utility functions to manage font properties to style mapping for both iOS and Android
+ * Fonts are managed differently on Android and iOS. Read the Font section of the
+ * README file included in this repository.
  */
 
 import { Platform, TextStyle } from "react-native";
 
-/** Choose the font name based on the platform */
+/**
+ * Choose the font name based on the platform
+ */
 const fonts = {
   TitilliumSansPro: Platform.select({
     android: "TitilliumSansPro",
@@ -33,7 +35,7 @@ export type IOFontFamily = keyof typeof fonts;
 /*
  * Font Sizes
  */
-const fontSizes = [12, 14, 16, 20, 22, 26, 28, 32] as const;
+const fontSizes = [12, 14, 16, 18, 20, 22, 26, 28, 32] as const;
 const fontSizesLegacy = [17, 28, 31, 35] as const;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const allFontSizes = [...new Set([...fontSizes, ...fontSizesLegacy])];
@@ -59,8 +61,8 @@ const weightValues = ["200", "300", "400", "500", "600", "700", "900"] as const;
 export type IOFontWeightNumeric = (typeof weightValues)[number];
 
 /**
- * Mapping between the nominal description of the weight (also the postfix used
- * on Android) and the numeric value used on iOS
+ * Mapping between the nominal description of the weight (also the postfix used on Android) and the numeric value
+ * used on iOS
  */
 export const fontWeights: Record<IOFontWeight, IOFontWeightNumeric> = {
   Thin: "200",
@@ -89,7 +91,7 @@ For example, if I set it to `Regular`, the function
 should return `Medium`, and so on. If I set it to the last `FontWeight`
 value, the function will return the same value.
 */
-const getBolderFontWeight = (weight: IOFontWeight): IOFontWeight => {
+export const getBolderFontWeight = (weight: IOFontWeight): IOFontWeight => {
   const currentWeight = weights.indexOf(weight);
   return currentWeight === weights.length - 1
     ? weight
@@ -98,7 +100,6 @@ const getBolderFontWeight = (weight: IOFontWeight): IOFontWeight => {
 
 /**
  * Get the correct `fontFamily` name on both Android and iOS.
- *
  * @param font
  * @param weight
  * @param isItalic
@@ -117,16 +118,55 @@ export const makeFontFamilyName = (
     default: fonts[font]
   });
 
-/** Default `IOText` typography style */
+/**
+ * Abbreviated faces of `TitilliumSansPro`, whose regular italic also drops the
+ * weight. The other families need no table: `Titillio` names its faces after
+ * the weight token and `FiraCode` embeds a single one.
+ */
+const sansProFaces: Record<IOFontWeight, [normal: string, italic: string]> = {
+  Thin: ["Th", "ThIt"],
+  Light: ["Lt", "LtIt"],
+  Regular: ["Rg", "It"],
+  Medium: ["Rg", "It"],
+  Semibold: ["Sbd", "SbdIt"],
+  Bold: ["Bd", "BdIt"],
+  Black: ["Bl", "BlIt"]
+};
+
+const faceName: Record<
+  IOFontFamily,
+  (weight: IOFontWeight, italic: boolean) => string
+> = {
+  FiraCode: () => "Medium",
+  /* No `Medium` face is embedded, in any family */
+  Titillio: (weight, italic) =>
+    `${weight === "Medium" ? "Regular" : weight}${italic ? "Italic" : ""}`,
+  TitilliumSansPro: (weight, italic) => sansProFaces[weight][italic ? 1 : 0]
+};
+
+/**
+ * Get the PostScript name of a single face, for native APIs that resolve a
+ * font by face instead of by family and weight, like SwiftUI's `Font.custom`.
+ * @param font
+ * @param weight
+ * @param fontStyle
+ */
+export const makeFontPostScriptName = (
+  font: IOFontFamily,
+  weight: IOFontWeight = defaultWeight,
+  fontStyle: TextStyle["fontStyle"] = "normal"
+): string => `${font}-${faceName[font](weight, fontStyle === "italic")}`;
+
+/**
+ * Default `IOText` typography style
+ */
 const defaultFont: IOFontFamily = "TitilliumSansPro";
 const defaultWeight: IOFontWeight = "Regular";
 const defaultFontSize: IOFontSize = 16;
 export const IOMaxFontSizeMultiplier = 1.5;
 
 /**
- * Return a {@link FontStyleObject} with the fields filled based on the platform
- * (iOS or Android).
- *
+ * Return a {@link FontStyleObject} with the fields filled based on the platform (iOS or Android).
  * @param size
  * @param font
  * @param weight

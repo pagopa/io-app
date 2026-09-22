@@ -1,8 +1,5 @@
 import { Alert } from "@io-app/design-system";
 import { format } from "date-fns";
-import { sequenceT } from "fp-ts/lib/Apply";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { View } from "react-native";
@@ -30,30 +27,35 @@ const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
 
 type Props = {
   /**
-   * The name of the current screen, used for analytics tracking and conditional
-   * rendering logic (e.g. PID detail screen).
+   * The name of the current screen, used for analytics tracking
+   * and conditional rendering logic (e.g. PID detail screen).
    */
   currentScreenName?: string;
-  /** The eID statuses that will render the alert. */
+  /**
+   * The eID statuses that will render the alert.
+   */
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
   navigation: ReturnType<typeof useIONavigation>;
   skipViewTracking?: boolean;
 };
 
-/** This component renders an alert that displays information on the eID status. */
+/**
+ * This component renders an alert that displays information on the eID status.
+ */
 export const ItwEidLifecycleAlert = ({
   lifecycleStatus = defaultLifecycleStatus,
   navigation,
   currentScreenName,
   skipViewTracking
 }: Props) => {
-  const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const eid = useIOSelector(itwCredentialsEidSelector);
   const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
   const isOffline = offlineAccessReason !== undefined;
 
   const { trackAlertTap } = useItwEidLifecycleAlertTracking({
+    isItwCredential: isItw,
     maybeEidStatus,
     navigation,
     skipViewTracking,
@@ -160,10 +162,11 @@ export const ItwEidLifecycleAlert = ({
     );
   };
 
-  return pipe(
-    sequenceT(O.Monad)(eidOption, O.fromNullable(maybeEidStatus)),
-    O.fold(constNull, ([eid, eidStatus]) => (
-      <Content eid={eid} eidStatus={eidStatus} isItwCredential={isItw} />
-    ))
+  if (!eid || !maybeEidStatus) {
+    return null;
+  }
+
+  return (
+    <Content eid={eid} eidStatus={maybeEidStatus} isItwCredential={isItw} />
   );
 };

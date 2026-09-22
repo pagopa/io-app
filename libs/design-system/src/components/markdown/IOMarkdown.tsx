@@ -9,14 +9,11 @@ import type {
 } from "./types";
 
 import { useIOTheme } from "../../context";
-import {
-  bodyFontSize,
-  bodyLineHeight,
-  bodySmallFontSize,
-  bodySmallLineHeight
-} from "../typography";
+import { IOTypographicLinkColorToken, IOTypography } from "../../core";
 import { parse } from "./parser";
 import { DEFAULT_RULES } from "./rules";
+
+const { body, bodySmall } = IOTypography;
 
 export type IOMarkdownProps = {
   /** The markdown string to render */
@@ -36,15 +33,18 @@ export type IOMarkdownProps = {
 };
 
 /**
- * Full-featured markdown component that renders markdown content using design
- * system primitives.
+ * Full-featured markdown component that renders markdown content
+ * using design system primitives.
  *
  * @remarks
- *   This component is still experimental. Check that it is correctly formatting
- *   your text before proceeding to use it. Supports headings, paragraphs, bold,
- *   italic, links, lists, blockquotes (as Banner), images, code, horizontal
- *   rules, and HTML breaks. Individual node types can be disabled via
- *   `disabledRules`, and render rules can be overridden via the `rules` prop.
+ * This component is still experimental. Check that it is correctly
+ * formatting your text before proceeding to use it.
+ *
+ * Supports headings, paragraphs, bold, italic, links, lists,
+ * blockquotes (as Banner), images, code, horizontal rules, and HTML breaks.
+ *
+ * Individual node types can be disabled via `disabledRules`, and
+ * render rules can be overridden via the `rules` prop.
  */
 export const IOMarkdown = ({
   content,
@@ -76,10 +76,10 @@ export const IOMarkdown = ({
   const context = useMemo<RenderContext>(
     () => ({
       onLinkPress: handleLinkPress,
-      linkColor: theme["interactiveElem-default"],
+      linkColor: theme[IOTypographicLinkColorToken],
       textAlign: textAlign ?? "auto",
-      fontSize: small ? bodySmallFontSize : bodyFontSize,
-      lineHeight: small ? bodySmallLineHeight : bodyLineHeight
+      fontSize: small ? bodySmall.size : body.size,
+      lineHeight: small ? bodySmall.lineHeight : body.lineHeight
     }),
     [handleLinkPress, textAlign, small, theme]
   );

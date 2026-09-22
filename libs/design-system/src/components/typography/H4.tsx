@@ -1,21 +1,21 @@
 import { useIOTheme } from "../../context";
-import { IOFontSize } from "../../utils/fonts";
+import { IOTypography } from "../../core";
 import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
-export const h4FontSize: IOFontSize = 20;
-export const h4LineHeight = 24;
+const {
+  h4: { colorToken, ...h4Style }
+} = IOTypography;
 
-/** `H4` typographic style */
+/**
+ * `H4` typographic style
+ */
 export const H4 = ({ color: customColor, ...props }: TypographicStyleProps) => {
   const theme = useIOTheme();
 
   const H4Props: IOTextProps = {
     ...props,
-    dynamicTypeRamp: "title3", // iOS only
-    weight: "Semibold",
-    size: h4FontSize,
-    lineHeight: h4LineHeight,
-    color: customColor ?? theme["textHeading-default"]
+    ...h4Style,
+    color: customColor ?? theme[colorToken]
   };
 
   return <IOText {...H4Props}>{props.children}</IOText>;

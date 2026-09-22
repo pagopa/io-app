@@ -1,4 +1,6 @@
-/** This component renders the card displayed in the landing page carousel */
+/**
+ * This component renders the card displayed in the landing page carousel
+ */
 
 import {
   Body,

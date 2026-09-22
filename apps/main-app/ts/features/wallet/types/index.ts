@@ -22,66 +22,65 @@ export type WalletCard = WalletCardBase &
     | WalletCardPlaceholder
   );
 
-// Specific type for ID Pay bonus cards
-export type WalletCardBonus = Prettify<
-  IdPayWalletCardProps & {
-    type: "idPay";
-  }
->;
-
 export type WalletCardCategoryFilter =
   (typeof walletCardCategoryFilters)[number];
-
-// Specific type for CDC bonus cards
-export type WalletCardCdc = Prettify<
-  CdcCardProps & {
-    type: "cdc";
-  }
->;
-
-// Specific type for CGN bonus cards
-export type WalletCardCgn = Prettify<
-  CgnWalletCardProps & {
-    type: "cgn";
-  }
->;
-
-// IT Wallet
-export type WalletCardItw = Prettify<
-  ItwCredentialCard & {
-    type: "itw";
-  }
->;
-
-// Specific type for payment cards
-export type WalletCardPayment = Prettify<
-  PaymentWalletCardProps & {
-    type: "payment";
-  }
->;
-
-// This card type renders a loading skeleton, used as a placeholder for other cards
-export type WalletCardPlaceholder = {
-  type: "placeholder";
-};
 
 // Used to map the card to the specific component that will render the card.
 export type WalletCardType = WalletCard["type"];
 
 /**
- * Base type definition for all wallet cards. Every card in the wallet must
- * implement these essential properties to ensure proper identification,
- * categorization, and lifecycle management.
+ * Base type definition for all wallet cards.
+ * Every card in the wallet must implement these essential properties
+ * to ensure proper identification, categorization, and lifecycle management.
  */
 type WalletCardBase = {
   /** Classification of the card (e.g., itw, cgn, bonus, payment) */
   category: WalletCardCategory;
   /**
    * Marks a card as hidden. Hidden cards are not displayed in the wallet UI
-   * Usefull when we need to remove card without deleting its data from the
-   * wallet
+   * Usefull when we need to remove card without deleting its data from the wallet
    */
   hidden?: true;
   /** Unique identifier used to track and reference individual cards */
   key: string;
+};
+
+// Specific type for ID Pay bonus cards
+type WalletCardBonus = Prettify<
+  IdPayWalletCardProps & {
+    type: "idPay";
+  }
+>;
+
+// Specific type for CDC bonus cards
+type WalletCardCdc = Prettify<
+  CdcCardProps & {
+    type: "cdc";
+  }
+>;
+
+// Specific type for CGN bonus cards
+type WalletCardCgn = Prettify<
+  CgnWalletCardProps & {
+    type: "cgn";
+  }
+>;
+
+// IT Wallet
+type WalletCardItw = Prettify<
+  ItwCredentialCard & {
+    type: "itw";
+  }
+>;
+
+// Specific type for payment cards
+type WalletCardPayment = Prettify<
+  PaymentWalletCardProps & {
+    type: "payment";
+  }
+>;
+
+// This card type renders a loading skeleton, used as a placeholder for other cards
+type WalletCardPlaceholder = {
+  type: "placeholder";
 };

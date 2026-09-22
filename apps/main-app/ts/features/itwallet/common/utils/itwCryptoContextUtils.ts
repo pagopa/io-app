@@ -4,7 +4,6 @@ import {
   createCryptoContextFor,
   KeyAttestationCryptoContext
 } from "@pagopa/io-react-native-wallet";
-import { constNull } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 
 // Key tags
@@ -13,18 +12,16 @@ export const DPOP_KEYTAG = "DPOP_KEYTAG";
 
 export const regenerateCryptoKey = (keyTag: string) =>
   deleteKey(keyTag)
-    .catch(constNull)
+    .catch(() => null)
     // `finally` awaits a returned thenable, so key generation is not fire-and-forget
     // oxlint-disable-next-line typescript/no-misused-promises
     .finally(() => generate(keyTag));
 
 /**
- * Create an extended CryptoContext bound to the provided key tag suitable for
- * Android key attestation.
+ * Create an extended CryptoContext bound to the provided key tag suitable for Android key attestation.
  *
- * In contrast to the standard CryptoContext the key must not be generated
- * outside, as `generateKeyWithAttestation` handles key generation with
- * attestation on Android.
+ * In contrast to the standard CryptoContext the key must not be generated outside,
+ * as `generateKeyWithAttestation` handles key generation with attestation on Android.
  *
  * @param keyTag - The tag to reference the cryptographic key
  * @returns KeyAttestationCryptoContext

@@ -40,7 +40,7 @@ const themeKeys = [
   "card-background"
 ] as const;
 
-export type ItWalletTheme = {
+type ItWalletTheme = {
   [K in (typeof themeKeys)[number]]: string;
 };
 
@@ -62,8 +62,7 @@ export const ItWalletThemes = {
 };
 
 /**
- * Returns IT-Wallet specific theme colors based on the current app theme
- * (light/dark).
+ * Returns IT-Wallet specific theme colors based on the current app theme (light/dark).
  */
 export const useItWalletTheme = () => {
   const { themeType } = useIOThemeContext();

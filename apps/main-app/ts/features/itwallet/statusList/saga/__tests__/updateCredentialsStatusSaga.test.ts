@@ -81,7 +81,7 @@ describe("updateCredentialsStatusSaga", () => {
       rawStatus: "0x01"
     });
 
-    testSaga(updateCredentialsStatusSaga, { itwVersion: "1.3.3" })
+    testSaga(updateCredentialsStatusSaga, { itwVersion: "1.4.6" })
       .next()
       .select(itwAllStoredCredentialsSelector)
       .next([credential, credentialWithoutStatusList])
@@ -100,7 +100,7 @@ describe("updateCredentialsStatusSaga", () => {
       rawStatus: "0x00"
     });
 
-    testSaga(updateCredentialsStatusSaga, { itwVersion: "1.3.3" })
+    testSaga(updateCredentialsStatusSaga, { itwVersion: "1.4.6" })
       .next()
       .select(itwAllStoredCredentialsSelector)
       .next([credential])
@@ -112,7 +112,7 @@ describe("updateCredentialsStatusSaga", () => {
   it("skips credentials whose status list is not cached", () => {
     const credential = makeCredential();
 
-    testSaga(updateCredentialsStatusSaga, { itwVersion: "1.3.3" })
+    testSaga(updateCredentialsStatusSaga, { itwVersion: "1.4.6" })
       .next()
       .select(itwAllStoredCredentialsSelector)
       .next([credential])

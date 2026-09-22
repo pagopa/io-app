@@ -5,7 +5,9 @@ type IOAlertVisibleContext = {
   setAlertVisible: (isAlertVisible: boolean) => void;
 };
 
-/** Experimental Context for new UI Representations */
+/**
+ * Experimental Context for new UI Representations
+ */
 export const IOAlertVisibleContext = React.createContext<IOAlertVisibleContext>(
   {
     isAlertVisible: false,

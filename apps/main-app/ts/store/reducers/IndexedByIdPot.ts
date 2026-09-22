@@ -4,11 +4,12 @@ import * as O from "fp-ts/lib/Option";
 
 import { IndexedById } from "../helpers/indexer";
 
-/** Utility functions to work with an IndexedById<pot.Pot<T, E>> */
+/**
+ * Utility functions to work with an IndexedById<pot.Pot<T, E>>
+ */
 
 /**
  * Try to read a pot from a {@link IndexedById}. Return pot.none if not found
- *
  * @param id
  * @param data
  */
@@ -23,9 +24,7 @@ export const readPot = <T, E>(
   );
 
 /**
- * Return a new IndexedById<pot.Pot<T, E>>, updating the entry with key id to
- * pot.loading
- *
+ * Return a new IndexedById<pot.Pot<T, E>>, updating the entry with key id to pot.loading
  * @param id
  * @param data
  */
@@ -38,9 +37,7 @@ export const toLoading = <T, E>(
 });
 
 /**
- * Return a new IndexedById<pot.Pot<T, E>>, updating the entry with id with the
- * new pot.some value
- *
+ * Return a new IndexedById<pot.Pot<T, E>>, updating the entry with id with the new pot.some value
  * @param id
  * @param data
  * @param value
@@ -56,7 +53,6 @@ export const toSome = <T, E>(
 
 /**
  * Return a new IndexedById<pot.Pot<T, E>>, changing the entry with id to error
- *
  * @param id
  * @param data
  * @param value
@@ -71,9 +67,7 @@ export const toError = <T, E>(
 });
 
 /**
- * Return a new IndexedById<pot.Pot<T, E>>, updating the entry with id to
- * updating
- *
+ * Return a new IndexedById<pot.Pot<T, E>>, updating the entry with id to updating
  * @param id
  * @param data
  * @param value
@@ -89,7 +83,6 @@ export const toUpdating = <T, E>(
 
 /**
  * Return a new IndexedById<pot.Pot<T, E>>, updating the entry with id to none
- *
  * @param id
  * @param data
  */

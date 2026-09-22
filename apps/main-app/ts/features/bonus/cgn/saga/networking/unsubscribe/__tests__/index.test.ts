@@ -1,5 +1,4 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 
 import { cgnUnsubscriptionHandler } from "..";
@@ -15,7 +14,7 @@ describe("cgnUnsubscriptionHandler", () => {
     it(`should dispatch success on ${status} response`, () => {
       testSaga(cgnUnsubscriptionHandler, unsubscribeRequest, request)
         .next()
-        .next(E.right({ status }))
+        .next({ _tag: "Right", right: { status } })
         .put(walletRemoveCardsByType("cgn"))
         .next()
         .put(cgnUnsubscribe.success())
@@ -25,7 +24,7 @@ describe("cgnUnsubscriptionHandler", () => {
   });
 
   it("should dispatch failure action on API error", () => {
-    const leftResponse = E.left([]);
+    const leftResponse = { _tag: "Left", left: [] };
     const expectedError = new Error(readableReport([]));
 
     testSaga(cgnUnsubscriptionHandler, unsubscribeRequest, request)
@@ -39,7 +38,7 @@ describe("cgnUnsubscriptionHandler", () => {
   it("should not dispatch success or failure on 401 response", () => {
     testSaga(cgnUnsubscriptionHandler, unsubscribeRequest, request)
       .next()
-      .next(E.right({ status: 401 }))
+      .next({ _tag: "Right", right: { status: 401 } })
       .next()
       .isDone();
   });

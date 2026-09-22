@@ -1,9 +1,7 @@
 import { CieIdErrorResult, openCieIdApp } from "@pagopa/io-react-native-cieid";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as t from "io-ts";
 import { useCallback, useEffect, useState } from "react";
 import { Linking } from "react-native";
+import { z } from "zod";
 
 import { useIOSelector } from "../../../../../store/hooks";
 import { convertUnknownToError } from "../../../../../utils/errors";
@@ -19,45 +17,44 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 
 type CieIdHookResult = {
   /**
-   * The authentication url obtained after a successful identification through
-   * CieID.
+   * The authentication url obtained after a successful identification through CieID.
    */
-  authUrl: O.Option<string>;
-  /** Function that handles CieID related errors. */
+  authUrl: string | undefined;
+  /**
+   * Function that handles CieID related errors.
+   */
   handleAuthenticationFailure: (error: unknown) => void;
-  /** Whether the CieID app has been opened separately from IO (iOS only). */
+  /**
+   * Whether the CieID app has been opened separately from IO (iOS only).
+   */
   isAppLaunched: boolean;
-  /** Function that starts the authentication with CieID. */
+  /**
+   * Function that starts the authentication with CieID.
+   */
   startCieIdAppAuthentication: (url: string) => void;
 };
 
-const cieIdAppError = t.type({
-  id: t.literal("ERROR"),
-  code: t.string
+const cieIdAppError = z.object({
+  id: z.literal("ERROR"),
+  code: z.string()
 });
 
 const isCieIdAppError = (e: unknown): e is CieIdErrorResult =>
-  cieIdAppError.is(e);
+  cieIdAppError.safeParse(e).success;
 
 const extractCieIdErrorFromUrl = (url: string) =>
-  pipe(
-    url,
-    O.fromPredicate(x => x.includes(CIE_ID_ERROR)),
-    O.map(
-      x => x.split(CIE_ID_ERROR_MESSAGE)[1] ?? "Unexpected error from CieID"
-    ),
-    O.toUndefined
-  );
+  url.includes(CIE_ID_ERROR)
+    ? (url.split(CIE_ID_ERROR_MESSAGE)[1] ?? "Unexpected error from CieID")
+    : undefined;
 
 /**
  * Hook that contains CieID related logic and handlers.
- *
  * @returns CieIdHookResult: {@link CieIdHookResult}
  */
 export const useCieIdApp = (): CieIdHookResult => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const cieIdEnvironment = useIOSelector(selectItwCieIdEnvironment);
-  const [authUrl, setAuthUrl] = useState<O.Option<string>>(O.none);
+  const [authUrl, setAuthUrl] = useState<string | undefined>(undefined);
   const [isAppLaunched, setIsAppLaunched] = useState(false);
 
   const sendErrorToMachine = useCallback(
@@ -93,7 +90,7 @@ export const useCieIdApp = (): CieIdHookResult => {
           url,
           result => {
             if (result.id === "URL") {
-              setAuthUrl(O.some(result.url));
+              setAuthUrl(result.url);
             } else {
               handleAuthenticationFailure(result);
             }
@@ -129,7 +126,7 @@ export const useCieIdApp = (): CieIdHookResult => {
           return sendErrorToMachine(new Error(cieIdError));
         }
 
-        setAuthUrl(O.some(continueUrl));
+        setAuthUrl(continueUrl);
         setIsAppLaunched(false);
       }
     );

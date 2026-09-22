@@ -11,9 +11,7 @@ type ConfirmConfig = {
   title: string;
 };
 /**
- * A generic way to ask confirmation with {@link Alert.alert} for a specific
- * action
- *
+ * A generic way to ask confirmation with {@link Alert.alert} for a specific action
  * @param confirmConfig
  */
 export const actionWithAlert = (confirmConfig: ConfirmConfig) => {

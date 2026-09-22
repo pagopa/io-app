@@ -18,55 +18,59 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
+  itwKeyAttestationsRemoveById,
+  itwKeyAttestationsStore,
   itwSetWalletInstanceRemotelyActive,
   itwSetWalletInstanceRenewalError,
   itwStoreWalletInstanceStatusList,
   itwUpdateWalletInstanceStatus,
-  itwWalletInstanceAttestationStore,
-  itwWalletUnitAttestationsRemoveById,
-  itwWalletUnitAttestationsStore
+  itwWalletInstanceAttestationStore
 } from "../actions";
 
 export type ItwWalletInstanceState = {
-  /** The new Wallet Attestation in multiple formats */
+  /**
+   * The new Wallet Attestation in multiple formats
+   */
   attestation: undefined | WalletInstanceAttestations;
   /**
-   * Indicates whether the user has an already active wallet instance but the
-   * actual local wallet is not active.
+   * Indicates whether the user has an already active wallet instance
+   * but the actual local wallet is not active.
    */
   isRemotelyActive: boolean | undefined;
   /**
-   * Whether a wallet instance renewal has already failed. Used to prevent
-   * re-entering the recovery block on subsequent actor retries.
+   * Record of Key Attestations keyed by ID. They are not stored on
+   * credentials to avoid duplication (one KA might contain multiple keys)
+   * and to avoid bloating the stored credential unnecessarily.
+   */
+  keyAttestations: Record<string, string>;
+  /**
+   * Whether a wallet instance renewal has already failed.
+   * Used to prevent re-entering the recovery block on subsequent actor retries.
    */
   renewalError: boolean;
-  /** The Wallet Instance status fetched from the Wallet Provider backend */
+  /**
+   * The Wallet Instance status fetched from the Wallet Provider backend
+   */
   status: pot.Pot<WalletInstanceStatus, NetworkError>;
   /**
-   * [1.3.3+] The Status List entry for the wallet instance, if available. This
-   * is used to check the validity of the wallet instance.
+   * [1.3.3+] The Status List entry for the wallet instance, if available.
+   * This is used to check the validity of the wallet instance.
    */
   statusList: undefined | { idx: number; uri: string };
-  /**
-   * Record of Wallet Unit Attestations keyed by ID. They are not stored on
-   * credentials to avoid duplication (one WUA might contain multiple keys) and
-   * to avoid bloating the stored credential unnecessarily.
-   */
-  walletUnitAttestations: Record<string, string>;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
   isRemotelyActive: undefined,
+  keyAttestations: {},
   renewalError: false,
   status: pot.none,
-  statusList: undefined,
-  walletUnitAttestations: {}
+  statusList: undefined
 };
 
 type MigrationState = PersistedState & Record<string, any>;
 
-const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 5;
+const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 7;
 
 export const migrations: MigrationManifest = {
   // Convert status into a pot for better async handling
@@ -96,10 +100,21 @@ export const migrations: MigrationManifest = {
     ...state,
     isRemotelyActive: undefined
   }),
-  // Add statusList
+  // Reset isRemotelyActive after changing its semantics
   "5": (state: MigrationState) => ({
     ...state,
     isRemotelyActive: undefined
+  }),
+  // Migrate walletUnitAttestations to keyAttestations
+  "6": (state: MigrationState) => ({
+    ...state,
+    keyAttestations: state.walletUnitAttestations ?? {},
+    walletUnitAttestations: undefined
+  }),
+  // Add statusList
+  "7": (state: MigrationState) => ({
+    ...state,
+    statusList: undefined
   })
 };
 
@@ -108,6 +123,27 @@ const reducer = (
   action: Action
 ): ItwWalletInstanceState => {
   switch (action.type) {
+    case getType(itwKeyAttestationsRemoveById): {
+      return {
+        ...state,
+        keyAttestations: Object.fromEntries(
+          Object.entries(state.keyAttestations).filter(
+            ([id]) => !action.payload.includes(id)
+          )
+        )
+      };
+    }
+
+    case getType(itwKeyAttestationsStore): {
+      return {
+        ...state,
+        keyAttestations: {
+          ...state.keyAttestations,
+          ...action.payload
+        }
+      };
+    }
+
     case getType(itwLifecycleStoresReset):
       return {
         ...itwWalletInstanceInitialState,
@@ -162,27 +198,6 @@ const reducer = (
         status: pot.none,
         attestation: action.payload,
         renewalError: false
-      };
-    }
-
-    case getType(itwWalletUnitAttestationsRemoveById): {
-      return {
-        ...state,
-        walletUnitAttestations: Object.fromEntries(
-          Object.entries(state.walletUnitAttestations).filter(
-            ([id]) => !action.payload.includes(id)
-          )
-        )
-      };
-    }
-
-    case getType(itwWalletUnitAttestationsStore): {
-      return {
-        ...state,
-        walletUnitAttestations: {
-          ...state.walletUnitAttestations,
-          ...action.payload
-        }
       };
     }
 

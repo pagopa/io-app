@@ -3,6 +3,7 @@ import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
 import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import {
@@ -27,6 +28,7 @@ import { AuthenticationParamsList } from "../../../common/navigation/params/Auth
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpSelected } from "../../../common/store/actions";
 import IdpsGrid, { IdpsGridSkeleton } from "../components/IdpsGrid";
+import { OneIdentityIdpSelectionFailureContent } from "../components/OneIdentityIdpSelectionFailureContent";
 import { useGetIdps } from "../hooks/useGetIdps";
 import { fromIdpToLocalSpidIdp, randomOrderIdps } from "../utils/idps";
 
@@ -57,13 +59,21 @@ export const OneIdentityIdpSelectionScreen = ({
     return [];
   }, [state]);
 
+  const debugInfo = useMemo(
+    () => ({
+      failure: state.status === "failure" ? state.error : undefined
+    }),
+    [state]
+  );
+  useDebugInfo(debugInfo);
+
   useOnFirstRender(() => {
     trackSpidLoginIdpSelection(loginFlow);
   });
 
   useHeaderSecondLevel(
     state.status === "failure"
-      ? { title: "", supportRequest: false, canGoBack: false }
+      ? { title: "", headerShown: false }
       : { title: "", supportRequest: true }
   );
 
@@ -114,9 +124,12 @@ export const OneIdentityIdpSelectionScreen = ({
 
   const ListEmptyComponent = useCallback(() => <IdpsGridSkeleton />, []);
 
-  // TODO: handle error state and show a proper error message
   if (state.status === "failure") {
-    return null;
+    return (
+      <OneIdentityIdpSelectionFailureContent
+        isActiveSessionLogin={isActiveSessionLogin}
+      />
+    );
   }
 
   return (

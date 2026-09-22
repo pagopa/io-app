@@ -21,6 +21,7 @@ import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/pr
 import { selectHasResolvedCredentialOffer } from "../../machine/credential/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
+  hasCredentialsToUpgrade,
   isL3FeaturesEnabledSelector,
   selectCredentialType,
   selectIdentification,
@@ -90,7 +91,7 @@ export const ItwIssuanceEidResultScreen = () => {
     handleBackToWallet();
     trackBackToWallet({
       exit_page: route.name,
-      credential: "ITW_ID_V2"
+      credential: isL3IssuanceFlow ? "ITW_PID" : "ITW_ID_V2"
     });
   };
 
@@ -169,8 +170,8 @@ export const ItwIssuanceEidResultScreen = () => {
  * IT-Wallet (L3) success TYP shown after the PID has been obtained (both in the
  * standard issuance flow and at the end of the "Documenti su IO" → IT-Wallet
  * upgrade flow). Two versions are shown depending on whether the wallet already
- * contains at least one digital document (the eID/PID is not counted,
- * regardless of "Documenti su IO" activation)
+ * contains at least one digital document (the eID/PID is not counted, regardless
+ * of "Documenti su IO" activation)
  */
 const ItwEidSuccessResultContent = ({
   isWalletEmpty,
@@ -185,7 +186,6 @@ const ItwEidSuccessResultContent = ({
   onGoToWallet: () => void;
   showBanner?: boolean;
 }) => {
-  const route = useRoute();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const authMethod = toSurveyAuthMethod(identification);
@@ -220,10 +220,7 @@ const ItwEidSuccessResultContent = ({
     <ItwIssuanceEidIssuanceResultContent
       docStatus={docStatus}
       onAddCredential={onAddDocument}
-      onBackToWallet={() => {
-        onGoToWallet();
-        trackBackToWallet({ exit_page: route.name, credential: "ITW_ID_V2" });
-      }}
+      onBackToWallet={onGoToWallet}
       showBanner={showBanner}
     />
   );
@@ -288,7 +285,9 @@ const ItwIssuanceEidUpgradeResultContent = ({
   const route = useRoute();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
+  const hasUpgradedCredentials = ItwEidIssuanceMachineContext.useSelector(
+    hasCredentialsToUpgrade
+  );
   const failedCredentialName = useItwCredentialName(
     failedCredentials[0]?.credentialType
   );
@@ -304,7 +303,7 @@ const ItwIssuanceEidUpgradeResultContent = ({
     handleBackToWallet();
     trackBackToWallet({
       exit_page: route.name,
-      credential: "ITW_ID_V2"
+      credential: "ITW_PID"
     });
   };
 
@@ -342,10 +341,12 @@ const ItwIssuanceEidUpgradeResultContent = ({
 
   // The upgrade flow means the user already had DocIO (L2) active, so docStatus is "active".
   // The survey banner is shown in WalletHome (via Redux) instead of here.
+  // The empty wallet state is determined by whether any credentials were upgraded, not by the Redux store,
+  // which is cleared before the new credentials are added, causing a UI glitch.
   return (
     <ItwEidSuccessResultContent
       docStatus="active"
-      isWalletEmpty={isWalletEmpty}
+      isWalletEmpty={!hasUpgradedCredentials}
       onAddDocument={handleAddCredential}
       onGoToWallet={handleGoToWalletWithTracking}
       showBanner={false}
@@ -356,6 +357,9 @@ const ItwIssuanceEidUpgradeResultContent = ({
 const ItwIssuanceEidReissuanceResultContent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+  const isL3IssuanceFlow = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
   const route = useRoute();
 
   if (isLoading) {
@@ -384,15 +388,16 @@ const ItwIssuanceEidReissuanceResultContent = () => {
         "features.itWallet.issuance.eidResult.success.reissuance.title"
       )}
     >
-      <ItwReissuanceFeedbackBanner />
+      {/* This survey is reserved to IT-Wallet (L3): "Documenti su IO" (L2/l2-fallback) reissuance must never trigger it. */}
+      {isL3IssuanceFlow && <ItwReissuanceFeedbackBanner />}
     </OperationResultScreenContent>
   );
 };
 
 /**
- * Transitional screen shown right after the eID issuance is completed. Its only
- * purpose is to display a loading indicator while navigation proceeds toward
- * the credential issuance flow.
+ * Transitional screen shown right after the eID issuance is completed.
+ * Its only purpose is to display a loading indicator while navigation
+ * proceeds toward the credential issuance flow.
  */
 const ItwIssuanceEidCredentialTriggerContent = () => (
   <LoadingScreenContent title={I18n.t("global.genericWaiting")} />

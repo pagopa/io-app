@@ -41,7 +41,9 @@ addPaymentWalletHandler("delete", "/wallets/:idWallet", (req, res) => {
   );
 });
 
-/** This API is used to start an onboarding process for a new method of payment */
+/**
+ * This API is used to start an onboarding process for a new method of payment
+ */
 addPaymentWalletHandler("post", "/wallets", (req, res) => {
   pipe(
     WalletCreateRequest.decode(req.body),
@@ -55,7 +57,9 @@ addPaymentWalletHandler("post", "/wallets", (req, res) => {
   );
 });
 
-/** This API is used to enable and disable an existing wallet application */
+/**
+ * This API is used to enable and disable an existing wallet application
+ */
 addPaymentWalletHandler(
   "put",
   "/wallets/:idWallet/applications",
@@ -82,7 +86,9 @@ addPaymentWalletHandler(
   }
 );
 
-/** This API is used to start an onboarding process for a new method of payment */
+/**
+ * This API is used to start an onboarding process for a new method of payment
+ */
 addPaymentWalletHandler("post", "/wallets/mock", (req, res) => {
   const { paymentMethodId, isContextualOnboarding, wantsToOnboard } = req.body;
 
@@ -97,7 +103,9 @@ addPaymentWalletHandler("post", "/wallets/mock", (req, res) => {
   });
 });
 
-/** This API is used to retrieve a list of payment methods available */
+/**
+ * This API is used to retrieve a list of payment methods available
+ */
 addPaymentWalletHandler("get", "/payment-methods", (req, res) => {
   res.json(generateOnboardablePaymentMethods());
 });

@@ -4,13 +4,14 @@ import { handleStoredLinkingUrlIfNeeded } from "../features/linking/sagas";
 import { handlePushNotificationIfNeeded } from "../features/pushNotifications/sagas/common";
 
 /**
- * This method is used to handle all actions that are triggered when the app is
- * resumed from scratch or transitions from background to foreground, and also
- * need to be handled later on in the app's life cycle.
+ * this method is used to handle all actions that
+ * are triggered when the app is resumed from scratch or transitions from
+ * background to foreground, and also need to be handled
+ * later on in the app's life cycle.
  *
- * Two examples are Universal/App Links and Push Notifications, which can
- * transition the app from background or from a closed state to foreground, and
- * need to be handled once the app has finished loading/initializing.
+ * two examples are Universal/App Links and Push Notifications, which
+ * can transition the app from background or from a closed state to foreground,
+ *  and need to be handled once the app has finished loading/initializing.
  */
 export function* maybeHandlePendingBackgroundActions(
   shouldResetToMainNavigator = false

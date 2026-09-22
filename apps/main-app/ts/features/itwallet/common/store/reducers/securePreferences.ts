@@ -16,7 +16,10 @@ export type ItwSecurePreferencesState = {
    * return online
    */
   offlineAccessCounter: number;
-  /** Number of accesses that user can perform during IPZS or AS down periods */
+  /**
+   * Number of accesses that user can perform during IPZS or AS
+   * down periods
+   */
   unverifiedCredentialsAccessCounter: number;
 };
 

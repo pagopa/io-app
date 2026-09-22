@@ -25,7 +25,6 @@ import {
 
 /**
  * Handle IDPAY initiative requests
- *
  * @param idPayClient
  * @param bpdToken
  * @param preferredLanguage

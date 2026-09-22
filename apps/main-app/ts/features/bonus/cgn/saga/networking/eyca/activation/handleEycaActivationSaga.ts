@@ -1,5 +1,4 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 
 import { SagaCallReturnType } from "../../../../../../../types/utils";
@@ -14,25 +13,24 @@ const cgnResultPolling = 1000 as Millisecond;
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
 /**
- * Function that handles the activation of EYCA card see
- * https://www.pivotaltracker.com/story/show/177062719/comments/222747527 first
- * it checks for the status activation depending on that, it could start a
- * polling to wait about completion or ends with a defined state
- *
- * @param getEycaActivation Asks for the status of EYCA card activation
+ * Function that handles the activation of EYCA card
+ * see https://www.pivotaltracker.com/story/show/177062719/comments/222747527
+ * first it checks for the status activation
+ * depending on that, it could start a polling to wait about completion or ends with a defined state
+ * @param getEycaActivation asks for the status of EYCA card activation
  */
 export function* handleEycaActivationSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
 ) {
-  const startPollingTime = new Date().getTime();
+  const startPollingTime = Date.now();
   while (true) {
     const activationInfo: SagaCallReturnType<typeof getActivation> =
       yield* call(getActivation, getEycaActivation);
-    if (E.isLeft(activationInfo)) {
-      yield* put(cgnEycaActivation.failure(activationInfo.left));
+    if (activationInfo.isErr()) {
+      yield* put(cgnEycaActivation.failure(activationInfo.error));
       return;
     }
-    switch (activationInfo.right) {
+    switch (activationInfo.value) {
       case "COMPLETED":
         yield* put(cgnEycaActivation.success("COMPLETED"));
         return;
@@ -48,7 +46,7 @@ export function* handleEycaActivationSaga(
     yield* put(cgnEycaActivation.success("POLLING"));
     // sleep
     yield* call(startTimer, cgnResultPolling);
-    const now = new Date().getTime();
+    const now = Date.now();
     // stop polling if threshold is exceeded
     if (now - startPollingTime >= pollingTimeThreshold) {
       yield* put(cgnEycaActivation.success("POLLING_TIMEOUT"));

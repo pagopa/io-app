@@ -17,12 +17,13 @@ import {
   removeKeychainError,
   setKeychainError
 } from "../store/storages/keychain";
+import { unknownToString } from "./errors";
 
 const isWebViewErrorEvent = (
-  e: Parameters<typeof trackSpidLoginError>[1]
+  e: Parameters<typeof trackLoginError>[1]
 ): e is WebViewErrorEvent => "nativeEvent" in e && e.nativeEvent != null;
 const isWebViewHttpErrorEvent = (
-  e: Parameters<typeof trackSpidLoginError>[1]
+  e: Parameters<typeof trackLoginError>[1]
 ): e is WebViewHttpErrorEvent =>
   isWebViewErrorEvent(e) &&
   "statusCode" in e.nativeEvent &&
@@ -35,10 +36,10 @@ export type FlowType =
   | "preferenze";
 
 /**
- * @param isOnBoarding Existing user making new login
- * @param isFirstOnBoarding New user making new login
- * @param isUserBrowsing User navigating the app after
- *   firstOnboarding/onboarding
+ *
+ * @param isOnBoarding existing user making new login
+ * @param isFirstOnBoarding new user making new login
+ * @param isUserBrowsing user navigating the app after firstOnboarding/onboarding
  * @returns
  */
 export const getFlowType = (
@@ -113,13 +114,11 @@ export const trackAppCaughtError = (
 };
 
 /**
- * Track the event when the user taps on the [Help Center
- * CTA](https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33561#1130270800)
+ * Track the event when the user taps on the [Help Center CTA](https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33561#1130270800)
  *
  * @param hc_id - The contextual ID of the CTA (ex: SESSION_EXPIRED)
  * @param hc_landing_url - The URL where we navigate the user
- * @param hc_source - The route name where the CTA is (ex:
- *   AUTHENTICATION_LANDING)
+ * @param hc_source - The route name where the CTA is (ex: AUTHENTICATION_LANDING)
  */
 export function trackHelpCenterCtaTapped(
   hc_id?: string,
@@ -183,61 +182,70 @@ export function trackLollipopIsKeyStrongboxBackedSuccess(
   );
 }
 
-// End of lollipop events
-
 export function trackLollipopKeyGenerationFailure(reason: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
     reason
   });
 }
-// End of SPID Login
 
-// Lollipop events
 export function trackLollipopKeyGenerationSuccess(keyType?: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
     kty: keyType
   });
 }
 
-// SPID Login
-export function trackSpidLoginError(
-  idpName: string | undefined,
+// End of lollipop events
+
+const extractLoginErrorPayload = (
   error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
-) {
-  const eventName = "SPID_ERROR";
+) => {
   if (isLoginUtilsError(error)) {
-    void mixpanelTrack(eventName, {
-      idp: idpName,
+    return {
       code: error.userInfo?.statusCode,
       description: error.userInfo?.error,
       domain: error.userInfo?.url
-    });
-  } else {
-    if (isWebViewHttpErrorEvent(error)) {
-      const { description, statusCode, url } = error.nativeEvent;
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code: statusCode,
-        description,
-        domain: toUrlWithoutQueryParams(url)
-      });
-    } else if (isWebViewErrorEvent(error)) {
-      const { code, description, domain } = error.nativeEvent;
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code,
-        description,
-        domain
-      });
-    } else if (error.message !== undefined) {
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code: error.message,
-        description: error.message,
-        domain: error.message
-      });
-    }
+    };
   }
+
+  if (isWebViewHttpErrorEvent(error)) {
+    const { description, statusCode, url } = error.nativeEvent;
+    return {
+      code: statusCode,
+      description,
+      domain: toUrlWithoutQueryParams(url)
+    };
+  }
+
+  if (isWebViewErrorEvent(error)) {
+    const { code, description, domain } = error.nativeEvent;
+    return { code, description, domain };
+  }
+
+  if (error.message !== undefined) {
+    return {
+      code: error.message,
+      description: error.message,
+      domain: error.message
+    };
+  }
+
+  const unknownError = unknownToString(error);
+  return { code: "unknown", description: unknownError, domain: "unknown" };
+};
+
+export function trackLoginError(
+  idpName: string | undefined,
+  error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
+) {
+  const errorPayload = extractLoginErrorPayload(error);
+  if (!errorPayload) {
+    return;
+  }
+
+  void mixpanelTrack("SPID_ERROR", {
+    idp: idpName,
+    ...errorPayload
+  });
 }
 
 // #region Help Center
@@ -252,8 +260,7 @@ function toUrlWithoutQueryParams(url: string) {
 // #region Offline
 
 /**
- * Track the event when the user tries to perform an action that is not
- * available offline
+ * Track the event when the user tries to perform an action that is not available offline
  *
  * @param screen - The screen where the user tried to perform the action
  */
@@ -265,8 +272,7 @@ export const trackOfflineActionNotAllowed = (screen: string) => {
 };
 
 /**
- * Track the event when the user tries to access a content that is not available
- * offline
+ * Track the event when the user tries to access a content that is not available offline
  *
  * @param content - The screen where the user tried to access the content
  */

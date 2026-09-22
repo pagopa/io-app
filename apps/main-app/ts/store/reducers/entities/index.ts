@@ -1,4 +1,6 @@
-/** Entities reducer */
+/**
+ * Entities reducer
+ */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { omit } from "lodash";
 import { combineReducers } from "redux";

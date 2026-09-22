@@ -1,6 +1,6 @@
 /**
- * A screen to display, by a webview, the consent to send user sensitive data to
- * backend and proceed with the onboarding process
+ * A screen to display, by a webview, the consent to send user sensitive data
+ * to backend and proceed with the onboarding process
  */
 import { Route, useRoute } from "@react-navigation/native";
 import { useCallback, useState } from "react";
@@ -23,10 +23,13 @@ import {
   trackLoginCieConsentDataUsageScreen,
   trackLoginCieDataSharingError
 } from "../../../common/analytics/cieAnalytics";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { onLoginUriChanged } from "../../../common/utils/login";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
+import {
+  AUTH_LEVELS,
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { LoaderComponent } from "../../shared/components/LoaderComponent";
 import { ACS_PATH } from "../../shared/utils";
 import {
@@ -70,7 +73,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
         params: {
           errorCodeOrMessage: errorCodeOrMessageProp,
           authMethod: "CIE",
-          authLevel: "L2"
+          authLevel: AUTH_LEVELS.L2
         }
       });
     },

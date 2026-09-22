@@ -1,4 +1,6 @@
-/** Returns a random value from an enum. */
+/**
+ * Returns a random value from an enum.
+ */
 export const getRandomEnumValue = <T extends object>(
   enumObj: T
 ): T[keyof T] => {

@@ -1,4 +1,6 @@
-/** Types of messages sent from inside the webview. */
+/**
+ * Types of messages sent from inside the webview.
+ */
 
 import * as t from "io-ts";
 

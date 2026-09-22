@@ -5,12 +5,13 @@ import {
   CredentialMetadata,
   RequestObject,
   WalletInstanceAttestations
-} from "../../../../common/utils/itwTypesUtils.ts";
+} from "../../../../common/utils/itwTypesUtils";
+import { testRemoteDeps } from "../../../../machine/utils/testDeps";
 import {
   EnrichedPresentationDetails,
   ItwRemoteRequestPayload,
   RelyingPartyConfiguration
-} from "../../utils/itwRemoteTypeUtils.ts";
+} from "../../utils/itwRemoteTypeUtils";
 import {
   EvaluateRelyingPartyTrustInput,
   EvaluateRelyingPartyTrustOutput,
@@ -18,12 +19,15 @@ import {
   GetPresentationDetailsOutput,
   GetRequestObjectInput,
   GetRequestObjectOutput,
+  GetWalletAttestationInput,
   SendAuthorizationResponseInput,
   SendAuthorizationResponseOutput
-} from "../actors.ts";
-import { Context, InitialContext } from "../context.ts";
-import { RemoteFailureType } from "../failure.ts";
-import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
+} from "../actors";
+import { Context, InitialContext } from "../context";
+import { RemoteFailureType } from "../failure";
+import { ItwRemoteMachine, itwRemoteMachine } from "../machine";
+
+const T_DEPS = testRemoteDeps();
 
 const T_FLOW_TYPE = "cross-device";
 const T_CLIENT_ID = "clientId";
@@ -98,8 +102,10 @@ describe("itwRemoteMachine", () => {
         SendAuthorizationResponseOutput,
         SendAuthorizationResponseInput
       >(sendAuthorizationResponse),
-      getWalletAttestation:
-        fromPromise<WalletInstanceAttestations>(getWalletAttestation)
+      getWalletAttestation: fromPromise<
+        WalletInstanceAttestations,
+        GetWalletAttestationInput
+      >(getWalletAttestation)
     },
     guards: {
       isItWalletL3Active,
@@ -114,7 +120,7 @@ describe("itwRemoteMachine", () => {
   });
 
   it("should initialize correctly", () => {
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
@@ -123,7 +129,7 @@ describe("itwRemoteMachine", () => {
   it("should transition from Idle to WalletInactive when wallet is inactive or the identification is not L3", () => {
     isItWalletL3Active.mockReturnValue(false);
 
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     actor.send({
@@ -141,8 +147,9 @@ describe("itwRemoteMachine", () => {
   });
 
   it("Should navigate to wallet when user not accept to active IT Wallet", async () => {
-    const initialSnapshot: MachineSnapshot =
-      createActor(itwRemoteMachine).getSnapshot();
+    const initialSnapshot: MachineSnapshot = createActor(mockedMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "Failure",
@@ -152,6 +159,7 @@ describe("itwRemoteMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot
     });
     actor.start();
@@ -161,8 +169,9 @@ describe("itwRemoteMachine", () => {
   });
 
   it("Should navigate to TOS when user accept to active IT Wallet", async () => {
-    const initialSnapshot: MachineSnapshot =
-      createActor(itwRemoteMachine).getSnapshot();
+    const initialSnapshot: MachineSnapshot = createActor(mockedMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "Failure",
@@ -172,6 +181,7 @@ describe("itwRemoteMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot
     });
     actor.start();
@@ -181,8 +191,9 @@ describe("itwRemoteMachine", () => {
   });
 
   it("Should navigate to Identification mode when user start the reissuing flow", async () => {
-    const initialSnapshot: MachineSnapshot =
-      createActor(itwRemoteMachine).getSnapshot();
+    const initialSnapshot: MachineSnapshot = createActor(mockedMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "Failure",
@@ -192,6 +203,7 @@ describe("itwRemoteMachine", () => {
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot
     });
     actor.start();
@@ -201,7 +213,7 @@ describe("itwRemoteMachine", () => {
   });
 
   it("should transition from Idle to EvaluatingRelyingPartyTrust when IT Wallet is active", () => {
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     isItWalletL3Active.mockReturnValue(true);
@@ -221,7 +233,9 @@ describe("itwRemoteMachine", () => {
   });
 
   it("should complete the presentation without errors", async () => {
-    /** Mocks */
+    /**
+     * Mocks
+     */
     const rpConf = {
       subject: T_CLIENT_ID
     } as RelyingPartyConfiguration;
@@ -256,8 +270,10 @@ describe("itwRemoteMachine", () => {
       presentedKeyTags: T_PRESENTED_KEY_TAGS
     });
 
-    /** Start the presentation */
-    const actor = createActor(mockedMachine);
+    /**
+     * Start the presentation
+     */
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     actor.send({
@@ -267,23 +283,29 @@ describe("itwRemoteMachine", () => {
     });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      deps: T_DEPS,
       walletInstanceAttestation: T_WIA,
       credentials: T_CREDENTIALS,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE
     });
 
-    /** Ensure the Wallet Attestation is not requested again if valid */
+    /**
+     * Ensure the Wallet Attestation is not requested again if valid
+     */
     expect(hasValidWalletInstanceAttestation).toHaveBeenCalledTimes(1);
     expect(getWalletAttestation).not.toHaveBeenCalled();
 
-    /** Evaluate the Relying Party Trust */
+    /**
+     * Evaluate the Relying Party Trust
+     */
     await waitFor(actor, snapshot =>
       snapshot.matches("EvaluatingRelyingPartyTrust")
     );
     expect(evaluateRelyingPartyTrust).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      deps: T_DEPS,
       walletInstanceAttestation: T_WIA,
       credentials: T_CREDENTIALS,
       payload: qrCodePayload,
@@ -291,11 +313,14 @@ describe("itwRemoteMachine", () => {
       rpConf
     });
 
-    /** Get the RequestObject from the RP */
+    /**
+     * Get the RequestObject from the RP
+     */
     await waitFor(actor, snapshot => snapshot.matches("GettingRequestObject"));
     expect(getRequestObject).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      deps: T_DEPS,
       walletInstanceAttestation: T_WIA,
       credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
@@ -304,13 +329,16 @@ describe("itwRemoteMachine", () => {
       rpConf
     });
 
-    /** Get the presentation details from the RP */
+    /**
+     * Get the presentation details from the RP
+     */
     await waitFor(actor, snapshot =>
       snapshot.matches("GettingPresentationDetails")
     );
     expect(getPresentationDetails).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      deps: T_DEPS,
       walletInstanceAttestation: T_WIA,
       credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
@@ -322,8 +350,7 @@ describe("itwRemoteMachine", () => {
     });
 
     /**
-     * The user selects optional credentials and gives consent to share the
-     * credentials with the RP
+     * The user selects optional credentials and gives consent to share the credentials with the RP
      */
     await waitFor(actor, snapshot => snapshot.matches("ClaimsDisclosure"));
     expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
@@ -335,6 +362,7 @@ describe("itwRemoteMachine", () => {
     actor.send({ type: "toggle-credential", credentialIds: ["cred03"] });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      deps: T_DEPS,
       walletInstanceAttestation: T_WIA,
       credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
@@ -347,7 +375,9 @@ describe("itwRemoteMachine", () => {
     });
     actor.send({ type: "holder-consent" });
 
-    /** The Wallet sends the Authorization Response to the RP */
+    /**
+     * The Wallet sends the Authorization Response to the RP
+     */
     await waitFor(actor, snapshot =>
       snapshot.matches("SendingAuthorizationResponse")
     );
@@ -355,6 +385,7 @@ describe("itwRemoteMachine", () => {
     expect(sendAuthorizationResponse).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      deps: T_DEPS,
       walletInstanceAttestation: T_WIA,
       credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
@@ -371,16 +402,17 @@ describe("itwRemoteMachine", () => {
     await waitFor(actor, snapshot => snapshot.matches("Success"));
 
     /**
-     * Once the presentation succeeds, the presented keyTags are stored in
-     * context and the consumption of any batch-issued credential's presented
-     * copy is triggered
+     * Once the presentation succeeds, the presented keyTags are stored in context and the
+     * consumption of any batch-issued credential's presented copy is triggered
      */
     expect(actor.getSnapshot().context.presentedKeyTags).toStrictEqual(
       T_PRESENTED_KEY_TAGS
     );
     expect(consumePresentedBatchCredentials).toHaveBeenCalledTimes(1);
 
-    /** The user closes the presentation flow */
+    /**
+     * The user closes the presentation flow
+     */
     actor.send({ type: "close" });
     expect(closePresentation).toHaveBeenCalledTimes(1);
   });
@@ -394,7 +426,7 @@ describe("itwRemoteMachine", () => {
     getRequestObject.mockResolvedValue("encoded-jwt");
     getPresentationDetails.mockRejectedValue({ message: "ERROR" });
 
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     actor.send({
@@ -415,8 +447,11 @@ describe("itwRemoteMachine", () => {
   it("should transition to failure when an error occurs in SendingAuthorizationResponse", async () => {
     sendAuthorizationResponse.mockRejectedValue({ message: "ERROR" });
 
-    const initialSnapshot = createActor(itwRemoteMachine).getSnapshot();
+    const initialSnapshot = createActor(mockedMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: _.merge(undefined, initialSnapshot, {
         // Start in the previous state to invoke the actor when transitioning to SendingAuthorizationResponse
         value: "ClaimsDisclosure"
@@ -440,7 +475,7 @@ describe("itwRemoteMachine", () => {
       throw new Error("Trust evaluation failed");
     });
 
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     actor.send({
@@ -458,12 +493,16 @@ describe("itwRemoteMachine", () => {
   });
 
   it("should reset the machine", async () => {
-    const initialSnapshot = createActor(itwRemoteMachine).getSnapshot();
+    const initialSnapshot = createActor(mockedMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: _.merge(undefined, initialSnapshot, {
         value: "ClaimsDisclosure",
         context: {
           ...InitialContext,
+          deps: T_DEPS,
           flowType: T_FLOW_TYPE,
           payload: qrCodePayload
         }
@@ -473,7 +512,11 @@ describe("itwRemoteMachine", () => {
     actor.send({ type: "reset" });
 
     await waitFor(actor, snapshot => snapshot.matches("Idle"));
-    expect(actor.getSnapshot().context).toStrictEqual<Context>(InitialContext);
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      ...InitialContext,
+      deps: T_DEPS,
+      walletInstanceAttestation: T_WIA
+    });
   });
 
   it("should fetch the Wallet Attestation when it is invalid", async () => {
@@ -486,7 +529,7 @@ describe("itwRemoteMachine", () => {
     hasValidWalletInstanceAttestation.mockReturnValueOnce(false);
     getWalletAttestation.mockResolvedValue(mockWalletAttestation);
 
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     actor.send({
@@ -511,7 +554,7 @@ describe("itwRemoteMachine", () => {
     isOpenIdFederationClient.mockReturnValue(true);
     evaluateRelyingPartyTrust.mockResolvedValue({});
 
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     actor.send({
@@ -535,7 +578,7 @@ describe("itwRemoteMachine", () => {
     isOpenIdFederationClient.mockReturnValue(false);
     isX509HashClient.mockReturnValue(true);
 
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
     actor.send({

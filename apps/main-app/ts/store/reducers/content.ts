@@ -1,7 +1,9 @@
 import { ContextualHelp } from "@io-app/api-types/generated/definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMetadata } from "@io-app/api-types/generated/definitions/content/Municipality";
 import { ScreenCHData } from "@io-app/api-types/generated/definitions/content/ScreenCHData";
-/** Implements the reducers for static content. */
+/**
+ * Implements the reducers for static content.
+ */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
@@ -33,8 +35,8 @@ import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";
 
 /**
- * Stores useful content such as services and organizations metadata, help
- * pages, etc...
+ * Stores useful content such as services and organizations metadata,
+ * help pages, etc...
  */
 export type ContentState = Readonly<{
   contextualHelp: pot.Pot<ContextualHelp, Error>;
@@ -83,9 +85,7 @@ export const idpsRemoteValueSelector = createSelector(
 );
 
 /**
- * Return a pot with screen contextual help data if they are loaded and defined
- * otherwise
- *
+ * return a pot with screen contextual help data if they are loaded and defined otherwise
  * @param id
  */
 export const screenContextualHelpDataSelector = createSelector<
@@ -115,9 +115,7 @@ export const screenContextualHelpDataSelector = createSelector<
 );
 
 /**
- * Return a pot with screen contextual help data given a route if they are
- * loaded and defined otherwise return undefined
- *
+ * Return a pot with screen contextual help data given a route if they are loaded and defined otherwise return undefined
  * @param route
  */
 export const getContextualHelpDataFromRouteSelector = (route: string) =>

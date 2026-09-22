@@ -1,4 +1,6 @@
-/** Action type related to the installation of the app. */
+/**
+ * Action type related to the installation of the app.
+ */
 
 import { ActionType, createStandardAction } from "typesafe-actions";
 

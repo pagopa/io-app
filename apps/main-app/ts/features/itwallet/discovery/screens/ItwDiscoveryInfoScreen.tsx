@@ -22,7 +22,9 @@ export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
   "ITW_DISCOVERY_INFO"
 >;
 
-/** Screen displaying information about the discovery process for DIW activation. */
+/**
+ * Screen displaying information about the discovery process for DIW activation.
+ */
 export const ItwDiscoveryInfoScreen = ({
   route
 }: ItwDiscoveryInfoScreenProps) => {

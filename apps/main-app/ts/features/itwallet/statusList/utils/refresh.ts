@@ -1,26 +1,23 @@
-import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
-import { CredentialStatus } from "@pagopa/io-react-native-wallet";
-
+import { getKeysForStatusListToken } from ".";
 import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { StatusListRepository } from "./repository";
 import { storeLastStatusListCheckTimestamp } from "./storage";
-import { StatusListContext } from "./types";
+import { StatusListVerificationContext } from "./types";
 import { isStale } from "./validity";
 
 /** Maximum number of concurrent refresh operations. */
 const MAX_CONCURRENT_REFRESHES = 3;
 
 /**
- * Fetches, decodes, validates, and persists a Status List Token for the given
- * URI. The URI serves both as cache identity and fetch endpoint (matches the
- * JWT `sub` claim).
+ * Fetches, decodes, validates, and persists a Status List Token for the given URI.
+ * The URI serves both as cache identity and fetch endpoint (matches the JWT `sub` claim).
  *
- * Best-effort: returns `true` on success, `false` on any failure. A failed
- * refresh never evicts an existing cached entry.
+ * Best-effort: returns `true` on success, `false` on any failure.
+ * A failed refresh never evicts an existing cached entry.
  */
 export const refreshStatusListToken = async (
-  { itwVersion }: StatusListContext,
+  { itwVersion, x509CertRoot }: StatusListVerificationContext,
   uri: string
 ): Promise<boolean> => {
   try {
@@ -31,10 +28,11 @@ export const refreshStatusListToken = async (
     );
 
     const statusList = await ioWallet.CredentialStatus.statusList.getByUri(uri);
-    // TODO [SIW-4542] add JWT verification
-    // const parsed = await statusListApi.verifyAndParse(jwks, statusList);
-    const decoded = decodeJwt(statusList).payload;
-    const parsed = CredentialStatus.StatusList.parse(decoded);
+    const keys = await getKeysForStatusListToken(statusList, x509CertRoot);
+    const parsed = await ioWallet.CredentialStatus.statusList.verifyAndParse(
+      keys,
+      statusList
+    );
 
     assert(
       parsed.sub === uri,
@@ -49,11 +47,11 @@ export const refreshStatusListToken = async (
 };
 
 /**
- * Executes refresh operations in parallel with bounded concurrency. Each
- * refresh is best-effort: individual failures do not affect others.
+ * Executes refresh operations in parallel with bounded concurrency.
+ * Each refresh is best-effort: individual failures do not affect others.
  */
 export const refreshWithBoundedParallelism = async (
-  context: StatusListContext,
+  context: StatusListVerificationContext,
   uris: Array<string>
 ): Promise<void> => {
   const batches = Array.from(
@@ -72,19 +70,17 @@ export const refreshWithBoundedParallelism = async (
 };
 
 /**
- * Owner-blind cache refresh, usable both at startup and from the background
- * task.
+ * Owner-blind cache refresh, usable both at startup and from the background task.
  *
  * 1. Lists the cache once
  * 2. Refreshes only stale entries with bounded parallelism
  *
- * Does not prune unreferenced entries; pruning is handled by
- * `startupCoherence`.
+ * Does not prune unreferenced entries; pruning is handled by `startupCoherence`.
  *
  * @param now - Current time in ms since epoch (injected for testability)
  */
 export const refreshStaleEntries = async (
-  context: StatusListContext
+  context: StatusListVerificationContext
 ): Promise<void> => {
   const now = Date.now();
   const entries = await StatusListRepository.list();

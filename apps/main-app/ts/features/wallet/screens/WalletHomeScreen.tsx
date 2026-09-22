@@ -25,10 +25,10 @@ import {
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors";
-import { useItwActivationExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwActivationExitSurveyBottomSheet.tsx";
-import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet.tsx";
-import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
-import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
+import { useItwActivationExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwActivationExitSurveyBottomSheet";
+import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet";
+import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet";
+import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences";
 import { itwSetFeedbackBottomSheetVisible } from "../../itwallet/common/store/actions/ui";
 import {
   isItwProximityEnabledSelector,
@@ -41,7 +41,7 @@ import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navi
 import {
   ITW_TOUR_GROUP_ID,
   ITW_TOUR_STEP_QR_BUTTON
-} from "../../itwallet/tour/utils/constants.ts";
+} from "../../itwallet/tour/utils/constants";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";
@@ -130,7 +130,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     }
   });
 
-  /** Return to the top of the screen when the tab item is pressed */
+  /**
+   * Return to the top of the screen when the tab item is pressed
+   */
   useTabItemPressWhenScreenActive(
     useCallback(() => {
       scrollViewContentRef.current?.scrollTo({ y: 0, animated: true });
@@ -139,9 +141,8 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
 
   /**
-   * Fetch the wallet data and enable the loading state on first render ! Note:
-   * to add new content to refresh, add an action dispatch to the `walletUpdate`
-   * action handler saga
+   * Fetch the wallet data and enable the loading state on first render
+   * ! Note: to add new content to refresh, add an action dispatch to the `walletUpdate` action handler saga
    */
   useOnFirstRender(() => {
     dispatch(walletToggleLoadingState(true));
@@ -155,8 +156,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
 
   /**
-   * Handles the "New element added" toast display once the user returns to this
-   * screen
+   * Handles the "New element added" toast display once the user returns to this screen
    */
   useFocusEffect(
     useCallback(() => {
@@ -167,7 +167,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     }, [isNewElementAdded])
   );
 
-  /** Handles the EID feedback bottom sheet display */
+  /**
+   * Handles the EID feedback bottom sheet display
+   */
   useFocusEffect(
     useCallback(() => {
       if (isRequiredEidFeedback) {

@@ -12,7 +12,6 @@ import { paymentsGetMethodDetailsAction } from "../store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
- *
  * @param getPaymentMethods
  * @param action
  */

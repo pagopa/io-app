@@ -11,13 +11,12 @@ import {
   useScaleAnimation,
   VStack
 } from "@io-app/design-system";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useCgnStyle } from "../../hooks/useCgnStyle";
-import { getCategorySpecs } from "../../utils/filters";
+import { getCategoryName, getCategorySpecs } from "../../utils/filters";
 import {
   isValidDiscount,
   moduleCGNaccessibilityLabel,
@@ -36,13 +35,13 @@ type CategoryTagProps = {
 export const CategoryTag = ({ category }: CategoryTagProps) => {
   const categorySpecs = getCategorySpecs(category);
 
-  return O.isSome(categorySpecs) ? (
+  return categorySpecs ? (
     <Tag
       icon={{
-        name: categorySpecs.value.icon,
+        name: categorySpecs.icon,
         color: "lightGrey"
       }}
-      text={I18n.t(categorySpecs.value.nameKey)}
+      text={getCategoryName(category)}
       variant="custom"
     />
   ) : null;

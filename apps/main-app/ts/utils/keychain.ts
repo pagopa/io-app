@@ -1,20 +1,21 @@
 /**
  * Helpers for setting a getting the PIN code.
  *
- * Note: setGenerigPassword and getGenericPassword will use the App bundle ID as
- * the service ID by default.
- *
+ * Note: setGenerigPassword and getGenericPassword will use the App bundle ID
+ * as the service ID by default.
  * @see https://github.com/oblador/react-native-keychain#options
  */
 
-import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import * as Keychain from "react-native-keychain";
 
 import { PinString } from "../types/PinString";
 
 const PIN_KEY = "PIN";
 
-/** Removes the unlock code from the Keychain */
+/**
+ * Removes the unlock code from the Keychain
+ */
 export async function deletePin(): Promise<boolean> {
   return await Keychain.resetGenericPassword();
 }
@@ -24,12 +25,13 @@ export async function deletePin(): Promise<boolean> {
  *
  * The promise fails when there is no valid unlock code stored.
  */
-export async function getPin(): Promise<O.Option<PinString>> {
+export async function getPin(): Promise<PinString | undefined> {
   const credentials = await Keychain.getGenericPassword();
   if (typeof credentials !== "boolean" && credentials.password.length > 0) {
-    return O.fromEither(PinString.decode(credentials.password));
+    const decoded = PinString.decode(credentials.password);
+    return E.isRight(decoded) ? decoded.right : undefined;
   } else {
-    return O.none;
+    return undefined;
   }
 }
 
@@ -56,7 +58,9 @@ export async function setGenericPasswordWithDefaultAccessibleOption(
   });
 }
 
-/** Saves the provided unlock code in the Keychain */
+/**
+ * Saves the provided unlock code in the Keychain
+ */
 export async function setPin(pin: PinString): Promise<boolean> {
   const result = await setGenericPasswordWithDefaultAccessibleOption(
     PIN_KEY,

@@ -58,6 +58,9 @@ import { ItwPresentationCredentialDetailScreen } from "../presentation/details/s
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/details/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
+import { ItwConsentManagementDetailScreen } from "../presentation/proximity/screens/ItwConsentManagementDetailScreen.tsx";
+import { ItwConsentManagementScreen } from "../presentation/proximity/screens/ItwConsentManagementScreen.tsx";
+import { ItwConsentRevocationSuccessScreen } from "../presentation/proximity/screens/ItwConsentRevocationSuccessScreen";
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
@@ -274,6 +277,19 @@ const InnerNavigator = memo(() => {
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
+        component={ItwConsentManagementScreen}
+        name={ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT}
+      />
+      <Stack.Screen
+        component={ItwConsentManagementDetailScreen}
+        name={ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT_DETAIL}
+      />
+      <Stack.Screen
+        component={ItwConsentRevocationSuccessScreen}
+        name={ITW_ROUTES.PRESENTATION.CONSENT_REVOCATION_SUCCESS}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
         component={ItwPresentationCredentialDetailScreen}
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
         options={hiddenHeader}
@@ -343,9 +359,8 @@ const InnerNavigator = memo(() => {
 });
 
 /**
- * A higher-order component which renders the screen only if IT Wallet is
- * enabled. In case IT Wallet is not enabled, it renders an error screen.
- *
+ * A higher-order component which renders the screen only if IT Wallet is enabled.
+ * In case IT Wallet is not enabled, it renders an error screen.
  * @param Screen - The screen to render
  * @returns The component or the error screen
  */

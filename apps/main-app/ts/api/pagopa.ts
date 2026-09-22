@@ -47,7 +47,10 @@ import {
   GetPansUsingGETT,
   getWalletsV2UsingGETDecoder
 } from "@io-app/api-types/generated/definitions/pagopa/walletv2/requestTypes";
-/** PagoPA backend client, with functions to call the different API available */
+/**
+ * pagoPA backend client, with functions
+ * to call the different API available
+ */
 import * as r from "@pagopa/ts-commons/lib/requests";
 import {
   AddResponseType,
@@ -89,7 +92,9 @@ import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { getLookUpId, pmLookupHeaderKey } from "../utils/pmLookUpId";
 import { fixWalletPspTagsValues } from "../utils/wallet";
 
-/** A decoder that ignores the content of the payload and only decodes the status */
+/**
+ * A decoder that ignores the content of the payload and only decodes the status
+ */
 const constantEmptyDecoder = composeResponseDecoders(
   composeResponseDecoders(
     composeResponseDecoders(
@@ -116,7 +121,7 @@ const getSession: MapResponseType<StartSessionUsingGETT, 200, SessionResponse> =
 
 // to support 'start' param in query string we re-define the type GetTransactionsUsingGETT
 // because the generated one doesn't support 'start' due to weak specs in api definition
-export type GetTransactionsUsingGETT = r.IGetApiRequestType<
+type GetTransactionsUsingGETT = r.IGetApiRequestType<
   { readonly Bearer: string; readonly start: number },
   "Authorization",
   never,
@@ -188,13 +193,13 @@ type GetWalletsUsingGETExtraT = MapResponseType<
 >;
 
 /**
- * This patch is needed because 'tags' field (an array of strings) in psp
- * objects often contains mixed (and duplicated too) values e.g tags =
- * ["value1",null,null] Psp codec fails decoding 'tags' having these values, so
- * this getPatchedWalletsUsingGETDecoder alterates the payload just before the
- * decoding phase making 'tags' an empty array TODO: temporary patch. Remove
- * this patch once SIA has fixed the spec.
  *
+ * This patch is needed because 'tags' field (an array of strings) in psp objects
+ * often contains mixed (and duplicated too) values
+ * e.g tags = ["value1",null,null]
+ * Psp codec fails decoding 'tags' having these values, so this getPatchedWalletsUsingGETDecoder alterates the
+ * payload just before the decoding phase making 'tags' an empty array
+ * TODO: temporary patch. Remove this patch once SIA has fixed the spec.
  * @see https://www.pivotaltracker.com/story/show/166665367
  */
 const getPatchedWalletsUsingGETDecoder = <O>(
@@ -236,7 +241,7 @@ const getWallets: GetWalletsUsingGETExtraT = {
 const getWalletsV2UsingGETDecoderCustom = getWalletsV2UsingGETDecoder({
   200: PatchedWalletV2ListResponse
 });
-export type GetWalletsV2UsingGETTExtra = r.IGetApiRequestType<
+type GetWalletsV2UsingGETTExtra = r.IGetApiRequestType<
   { readonly Bearer: string },
   "Authorization",
   never,
@@ -435,7 +440,7 @@ const getPans: GetPansUsingGETT = {
   response_decoder: getPansUsingGETDefaultDecoder()
 };
 
-export type AddWalletsBancomatCardUsingPOSTTExtra = r.IPostApiRequestType<
+type AddWalletsBancomatCardUsingPOSTTExtra = r.IPostApiRequestType<
   {
     readonly bancomatCardsRequest: BancomatCardsRequest;
     readonly Bearer: string;
@@ -503,7 +508,7 @@ const searchCobadgePans: GetCobadgeByRequestIdUsingGETT = {
   response_decoder: getCobadgeByRequestIdUsingGETDefaultDecoder()
 };
 
-export type AddWalletsCobadge = r.IPostApiRequestType<
+type AddWalletsCobadge = r.IPostApiRequestType<
   {
     readonly Bearer: string;
     readonly cobadegPaymentInstrumentsRequest: CobadegPaymentInstrumentsRequest;
@@ -544,7 +549,7 @@ const addCobadgeToWallet: AddWalletsCobadge = {
     addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoderCustom
 };
 
-export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
+type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
   { readonly Bearer: string; readonly bPayRequest: BPayRequest },
   "Authorization" | "Content-Type",
   never,
@@ -568,7 +573,7 @@ const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
 };
 
 // Request type definition
-export type ChangePayOptionT = r.IPutApiRequestType<
+type ChangePayOptionT = r.IPutApiRequestType<
   {
     readonly Bearer: string;
     readonly idWallet: number;
@@ -595,7 +600,7 @@ const updatePaymentStatus: ChangePayOptionT = {
   response_decoder: changePayOptionDecoderCustom
 };
 
-export type DeleteWalletsByServiceUsingDELETETExtra = r.IDeleteApiRequestType<
+type DeleteWalletsByServiceUsingDELETETExtra = r.IDeleteApiRequestType<
   { readonly Bearer: string; readonly service: string },
   "Authorization",
   never,

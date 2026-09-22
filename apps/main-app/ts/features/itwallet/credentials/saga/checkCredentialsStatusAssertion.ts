@@ -1,5 +1,4 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
-import * as O from "fp-ts/lib/Option";
 import { all, call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -42,8 +41,7 @@ import { CredentialsVault } from "../utils/vault";
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
 /**
- * This saga is responsible to check the status assertion for each credential in
- * the wallet.
+ * This saga is responsible to check the status assertion for each credential in the wallet.
  */
 export function* checkCredentialsStatusAssertion() {
   const isWalletValid = yield* select(itwLifecycleIsValidSelector);
@@ -106,18 +104,18 @@ export function* checkCredentialsStatusAssertion() {
 }
 
 /**
- * Saga that updates a specific credential status assertion without additional
- * logic. It is triggered by the user when the credential status is unknown.
+ * Saga that updates a specific credential status assertion without additional logic.
+ * It is triggered by the user when the credential status is unknown.
  */
 export function* handleCredentialStatusAssertionRetry(
   action: ActionType<typeof itwCredentialsRefreshStatusByType>
 ) {
   const credential = yield* select(itwCredentialSelector(action.payload));
 
-  if (O.isSome(credential)) {
+  if (credential !== undefined) {
     const updatedCredential = yield* call(
       updateCredentialStatusAssertionSaga,
-      credential.value
+      credential
     );
     yield* put(itwCredentialsStore([updatedCredential]));
   }

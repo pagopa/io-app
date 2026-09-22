@@ -1,4 +1,6 @@
-/** A mocked version of the BackgroundTimer */
+/**
+ * A mocked version of the BackgroundTimer
+ */
 
 const setTimeout = jest.fn();
 

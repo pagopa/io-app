@@ -10,8 +10,7 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { paginatedInstitutionsGet } from "../store/actions";
 
 /**
- * Saga to handle the loading of institutions
- *
+ * saga to handle the loading of institutions
  * @param findInstitutions
  * @param action
  */

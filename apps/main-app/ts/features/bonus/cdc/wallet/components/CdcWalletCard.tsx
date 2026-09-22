@@ -36,5 +36,7 @@ const WrappedCdcCard = (props: CdcCardProps) => {
   );
 };
 
-/** Wrapper component which adds wallet capabilites to the PaymentCard component */
+/**
+ * Wrapper component which adds wallet capabilites to the PaymentCard component
+ */
 export const CdcWalletCard = withWalletCardBaseComponent(WrappedCdcCard);

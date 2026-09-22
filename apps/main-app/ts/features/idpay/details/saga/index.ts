@@ -16,7 +16,6 @@ import { handleGetTimelinePage } from "./handleGetTimelinePage";
 
 /**
  * Handle IDPAY initiative requests
- *
  * @param idPayClient
  * @param bpdToken
  * @param preferredLanguage

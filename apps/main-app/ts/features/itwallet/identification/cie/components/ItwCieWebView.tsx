@@ -1,4 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { ComponentProps, createRef } from "react";
 import { Platform, StyleSheet, View } from "react-native";
@@ -29,10 +28,10 @@ const defaultUserAgent = Platform.select({
 const AUTH_LINK_PATTERN = "lettura carta";
 
 /**
- * To obtain the authentication URL on CIE L3 it is necessary to take the link
- * contained in the "Entra con lettura carta CIE" button. This link can then be
- * used on CieManager. This javascript code takes the link in question and sends
- * it to the react native function via postMessage
+ * To obtain the authentication URL on CIE L3 it is necessary to take the
+ * link contained in the "Entra con lettura carta CIE" button.
+ * This link can then be used on CieManager.
+ * This javascript code takes the link in question and sends it to the react native function via postMessage
  */
 const injectedJavaScript = `
     (function() {
@@ -63,35 +62,37 @@ type ItwCieWebViewProps = ComponentProps<typeof WebView> & {
   onWebViewError: (error: WebViewError) => void;
 };
 
-/** Base WebView component used for the CIE flow */
+/**
+ * Base WebView component used for the CIE flow
+ */
 const ItwCieWebView = ({ onWebViewError, ...props }: ItwCieWebViewProps) => {
   const webView = createRef<WebView>();
+
+  const getWebViewErrorMessage = (
+    err: Error | WebViewErrorEvent | WebViewHttpErrorEvent
+  ): string => {
+    const error = err as Error;
+    const webViewError = err as WebViewErrorEvent;
+    const webViewHttpError = err as WebViewHttpErrorEvent;
+
+    if (webViewHttpError.nativeEvent?.statusCode) {
+      const { description, statusCode } = webViewHttpError.nativeEvent;
+      return `WebView http error: ${description} with status code: ${statusCode}`;
+    }
+    if (webViewError.nativeEvent) {
+      const { code, description } = webViewError.nativeEvent;
+      return `WebView error: ${description} with code: ${code}`;
+    }
+    return error.message || "An error occurred in the WebView";
+  };
 
   const handleOnError = (
     err: Error | WebViewErrorEvent | WebViewHttpErrorEvent
   ): void =>
-    pipe(
-      err,
-      e => {
-        const error = e as Error;
-        const webViewError = e as WebViewErrorEvent;
-        const webViewHttpError = e as WebViewHttpErrorEvent;
-        if (webViewHttpError.nativeEvent?.statusCode) {
-          const { description, statusCode } = webViewHttpError.nativeEvent;
-          return `WebView http error: ${description} with status code: ${statusCode}`;
-        } else if (webViewError.nativeEvent) {
-          const { code, description } = webViewError.nativeEvent;
-          return `WebView error: ${description} with code: ${code}`;
-        } else {
-          return error.message || "An error occurred in the WebView";
-        }
-      },
-      message =>
-        onWebViewError({
-          name: "WEBVIEW_ERROR",
-          message
-        })
-    );
+    onWebViewError({
+      name: "WEBVIEW_ERROR",
+      message: getWebViewErrorMessage(err)
+    });
 
   const handleOnLoadEnd = (e: WebViewErrorEvent | WebViewNavigationEvent) => {
     const eventTitle = e.nativeEvent.title.toLowerCase();
@@ -126,9 +127,8 @@ type ItwCieAuthenticationWebviewProps = {
 };
 
 /**
- * Webview used to fetch the authentication url to use a servide provider for
- * the CIE authentication It displayes a loading spinner, with the webview
- * working in the background
+ * Webview used to fetch the authentication url to use a servide provider for the CIE authentication
+ * It displayes a loading spinner, with the webview working in the background
  */
 export const ItwCieAuthenticationWebview = ({
   authenticationUrl,
@@ -179,15 +179,14 @@ type ItwCieAuthorizationWebviewProps = {
 };
 
 /**
- * Webview used to display to the user the authorization request after the CIE
- * authentication
+ * Webview used to display to the user the authorization request after the CIE authentication
  */
 export const ItwCieAuthorizationWebview = ({
   authorizationUrl,
   onAuthorizationComplete,
   onWebViewError
 }: ItwCieAuthorizationWebviewProps) => {
-  const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
+  const { ISSUANCE_REDIRECT_URI } = getEnv(useIOSelector(selectItwEnv));
 
   const handleShouldStartLoadWithRequest = (
     event: WebViewNavigation

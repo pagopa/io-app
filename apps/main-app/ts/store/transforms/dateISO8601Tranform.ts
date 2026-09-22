@@ -6,25 +6,19 @@ import { createTransform, TransformIn, TransformOut } from "redux-persist";
 import { DateFromISOString } from "../../utils/dates";
 
 /**
- * DateFieldsTransformable contains the name of the fields that are instance of
- * Date and those ones we want to persist/rehydrate in redux persist store
+ * dateFieldsTransformable contains the name of the fields that are
+ * instance of Date and those ones we want to persist/rehydrate in redux persist store
  *
- * Actually entities state (whitelisted in this transform) contains these
- * following date (Timestamp) fields
+ * actually entities state (whitelisted in this transform) contains these following date (Timestamp) fields
  *
  * EntitiesState
- *
- * - MessageState
- *
- *   - CreatedMessageWithContent
- *
- *       - Created_at *
- *       - Content
- *
- *           - Due_date *
- *   - CreatedMessageWithoutContent
- *
- *       - Created_at *
+ *  - MessageState
+ *    - CreatedMessageWithContent
+ *      - created_at *
+ *      - content
+ *        - due_date *
+ *    - CreatedMessageWithoutContent
+ *      - created_at *
  *
  * https://www.pivotaltracker.com/story/show/167507349
  */
@@ -35,7 +29,9 @@ const dateFieldsTransformable = new Set<string>([
   "nextLegalAttempt"
 ]);
 
-/** If value is a Date object, a string in ISO8601 format is returned */
+/**
+ *  if value is a Date object, a string in ISO8601 format is returned
+ */
 
 const dataReplacer = (_: any, value: any): any => {
   if (value !== undefined && value instanceof Date) {
@@ -45,8 +41,7 @@ const dataReplacer = (_: any, value: any): any => {
 };
 
 /**
- * If value is in a string in ISO8601 format the corrisponding Date object is
- * returned
+ *  if value is in a string in ISO8601 format the corrisponding Date object is returned
  */
 const dateReviver = (key: any, value: any): any => {
   const decodedValue = DateFromISOString.decode(value);
@@ -71,7 +66,9 @@ const decoder: TransformOut<string, any> = (value: any, _: string): any =>
     O.toUndefined
   );
 
-/** Date tasformer will be applied only to entities (whitelist) */
+/**
+ * date tasformer will be applied only to entities (whitelist)
+ */
 export const DateISO8601Transform = createTransform(encoder, decoder, {
   whitelist: ["entities", "fail", "walletById"]
 });
