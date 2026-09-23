@@ -93,7 +93,7 @@ export const backendStatus: BackendStatus = {
       }
     },
     oneIdentity: {
-      rolloutPercentage: 100,
+      rolloutPercentage: 0,
       allowedCieOrigins: [
         "https://idserver.servizicie.interno.gov.it",
         "https://oidc.idserver.servizicie.interno.gov.it",
