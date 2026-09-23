@@ -192,6 +192,7 @@ export const ItwIdentificationModeSelectionScreen = ({
                   label={I18n.t(
                     "features.itWallet.identification.modeSelection.noCieCta"
                   )}
+                  numberOfLines={0}
                   onPress={handleNoCiePress}
                   testID="noCieButtonTestID"
                   textAlign="center"
