@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import { renderHook } from "@testing-library/react-native";
 
 import { AUTHENTICATION_ROUTES } from "../../navigation/routes";
@@ -5,6 +6,7 @@ import { AUTH_LEVELS } from "../../utils";
 import { useCieIdWebViewLoginNavigation } from "../useCieIdWebViewLoginNavigation";
 
 const mockReplace = jest.fn();
+const mockDispatch = jest.fn();
 const mockSelector = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
@@ -12,7 +14,8 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
-      replace: mockReplace
+      replace: mockReplace,
+      dispatch: mockDispatch
     })
   };
 });
@@ -53,20 +56,20 @@ describe("useCieIdWebViewLoginNavigation", () => {
     });
   });
 
-  it("navigateToAuthErrorScreen should replace with AUTH_ERROR_SCREEN and the CIE_ID context parameters", () => {
+  it("navigateToAuthErrorScreen should locally dispatch a replace to AUTH_ERROR_SCREEN with the CIE_ID context parameters, without touching MAIN", () => {
     const { result } = renderHook(() =>
       useCieIdWebViewLoginNavigation({ authLevel })
     );
 
     result.current.navigateToAuthErrorScreen("err-code");
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockDispatch).toHaveBeenCalledWith(
+      StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
         errorCodeOrMessage: "err-code",
         authMethod: "CIE_ID",
         authLevel
-      }
-    });
+      })
+    );
+    expect(mockReplace).not.toHaveBeenCalled();
   });
 });
