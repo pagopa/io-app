@@ -23,6 +23,7 @@ import {
   downloadAttachment
 } from "../../store/actions";
 import { thirdPartyMessageSelector } from "../../store/reducers/thirdPartyById";
+import { SendFailureReason, WrappedSendError } from "../../utils";
 import {
   handleDownloadAttachment,
   testable
@@ -307,6 +308,51 @@ describe("handleDownloadAttachment", () => {
             })
           )
           .run());
+    });
+
+    describe("when a download request fails because the session has expired", () => {
+      it("then it puts a failure action with a SESSION_EXPIRED reason", () =>
+        expectSaga(
+          testable!.downloadAttachmentWorker,
+          sessionToken,
+          keyInfo,
+          downloadAttachment.request({
+            attachment,
+            messageId,
+            skipMixpanelTrackingOnFailure: false,
+            serviceId
+          })
+        )
+          .provide([
+            [
+              matchers.call.fn(ReactNativeBlobUtil.config),
+              {
+                fetch: jest.fn().mockReturnValue({
+                  info: jest.fn().mockReturnValue({ status: 401 })
+                })
+              }
+            ],
+            [matchers.select(lollipopKeyTagSelector), someKeyTag],
+            [matchers.select(lollipopPublicKeySelector), somePublicKey]
+          ])
+          .silentRun()
+          .then(result => {
+            const [putEffect] = result.effects.put;
+            const dispatchedAction = putEffect.payload.action;
+            expect(dispatchedAction).toEqual(
+              downloadAttachment.failure({
+                attachment,
+                messageId,
+                error: expect.any(Error)
+              })
+            );
+            const error = dispatchedAction.payload.error as WrappedSendError;
+            expect(error).toBeInstanceOf(WrappedSendError);
+            expect(error.reason).toBe(SendFailureReason.SESSION_EXPIRED);
+            expect(error.message).toBe(
+              I18n.t("messageDetails.attachments.downloadFailed")
+            );
+          }));
     });
   });
   describe("getDelayMilliseconds", () => {

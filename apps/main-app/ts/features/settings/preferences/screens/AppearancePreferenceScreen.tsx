@@ -185,7 +185,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
             endElement={{
               type: "badge",
               componentProps: {
-                text: "Beta",
+                text: I18n.t("global.badges.beta"),
                 variant: "highlight"
               }
             }}
