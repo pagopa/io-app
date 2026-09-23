@@ -1,10 +1,7 @@
-import {
-  NavigatorScreenParams,
-  Route,
-  useRoute
-} from "@react-navigation/native";
+import { Route, useRoute } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -16,34 +13,20 @@ import {
 } from "../../../activeSessionLogin/store/actions";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { CieIdLoginProps } from "../../../common/utils/cie";
+import { AuthLevel } from "../../../common/utils";
+import { getAuthErrorDetails } from "../../../common/utils/authError";
 import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
 } from "../../idp/store/actions";
-import { UnlockAccessProps } from "../../unlockAccess/components/UnlockAccessComponent";
 
-export type AuthErrorScreenProps = (CieIdProps | CieProps | SpidProps) &
-  CommonAuthErrorScreenProps;
-
-type CieIdProps = {
-  authMethod: "CIE_ID";
-  params: CieIdLoginProps;
-};
-
-type CieProps = {
-  authMethod: "CIE";
-};
-
-type CommonAuthErrorScreenProps = UnlockAccessProps & {
+export type AuthErrorScreenProps = {
+  authLevel: AuthLevel;
+  authMethod: AuthMethod;
   errorCodeOrMessage?: string;
 };
-
-type SpidProps = {
-  authMethod: "SPID";
-};
+export type AuthMethod = "CIE" | "CIE_ID" | "SPID";
 
 const AuthErrorScreen = () => {
   const dispatch = useIODispatch();
@@ -69,39 +52,40 @@ const AuthErrorScreen = () => {
     >();
   const { errorCodeOrMessage, authMethod, authLevel } = route.params;
 
+  const debugInfo = useMemo(() => {
+    const { title } = getAuthErrorDetails(errorCodeOrMessage);
+    return {
+      errorCodeOrMessage,
+      errorTitle: title,
+      authMethod,
+      authLevel
+    };
+  }, [errorCodeOrMessage, authMethod, authLevel]);
+  useDebugInfo(debugInfo);
+
   const navigation = useIONavigation();
-
-  const getNavigationParams =
-    useCallback((): NavigatorScreenParams<AuthenticationParamsList> => {
-      if (authMethod === "CIE_ID") {
-        return {
-          screen: authScreenByAuthMethod[authMethod],
-          params: route.params.params
-        };
-      }
-
-      return {
-        screen: authScreenByAuthMethod[authMethod]
-      };
-    }, [authMethod, authScreenByAuthMethod, route.params]);
 
   const onRetry = useCallback(() => {
     if (authMethod === "SPID") {
       dispatch(setSpidLoginInLoadingState());
     }
 
+    const navigationParams = {
+      screen: authScreenByAuthMethod[authMethod]
+    };
+
     if (isActiveSessionLogin) {
       dispatch(setRetryActiveSessionLogin());
-      navigation.replace(SETTINGS_ROUTES.AUTHENTICATION, getNavigationParams());
+      navigation.replace(SETTINGS_ROUTES.AUTHENTICATION, navigationParams);
     } else {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, getNavigationParams());
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, navigationParams);
     }
   }, [
     authMethod,
+    authScreenByAuthMethod,
     isActiveSessionLogin,
     dispatch,
-    navigation,
-    getNavigationParams
+    navigation
   ]);
 
   const onCancel = useCallback(() => {

@@ -23,7 +23,7 @@ import {
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { trackSpidLoginError } from "../../../../../utils/analytics";
+import { trackLoginError } from "../../../../../utils/analytics";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -134,7 +134,7 @@ const IdpLoginScreen = () => {
 
   const handleLoadingError = useCallback(
     (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-      trackSpidLoginError(loggedOutWithIdpAuth?.idp.id, error);
+      trackLoginError(loggedOutWithIdpAuth?.idp.id, error);
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
