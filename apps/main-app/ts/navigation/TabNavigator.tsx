@@ -66,8 +66,10 @@ export const MainTabNavigator = () => {
           name={MESSAGES_ROUTES.MESSAGES_HOME}
           options={{
             title: I18n.t("global.navigator.messages"),
-            tabBarIcon: () => ({
-              uri: "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavMessages.svg"
+            tabBarIcon: ({ focused }) => ({
+              uri: focused
+                ? "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavMessagesFocused.svg"
+                : "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavMessages.svg"
             })
           }}
         />
@@ -76,8 +78,10 @@ export const MainTabNavigator = () => {
           name={ROUTES.WALLET_HOME}
           options={{
             title: I18n.t("global.navigator.wallet"),
-            tabBarIcon: () => ({
-              uri: "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavWallet.svg"
+            tabBarIcon: ({ focused }) => ({
+              uri: focused
+                ? "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavWalletFocused.svg"
+                : "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavWallet.svg"
             })
           }}
         />
@@ -103,8 +107,10 @@ export const MainTabNavigator = () => {
           name={ROUTES.PAYMENTS_HOME}
           options={{
             title: I18n.t("global.navigator.payments"),
-            tabBarIcon: () => ({
-              uri: "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconCreditCard.svg"
+            tabBarIcon: ({ focused }) => ({
+              uri: focused
+                ? "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconCreditCardFilled.svg"
+                : "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconCreditCard.svg"
             })
           }}
         />
@@ -114,8 +120,10 @@ export const MainTabNavigator = () => {
           name={SERVICES_ROUTES.SERVICES_HOME}
           options={{
             title: I18n.t("global.navigator.services"),
-            tabBarIcon: () => ({
-              uri: "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavServices.svg"
+            tabBarIcon: ({ focused }) => ({
+              uri: focused
+                ? "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavServicesFocused.svg"
+                : "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavServices.svg"
             })
           }}
         />
