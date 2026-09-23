@@ -18,6 +18,7 @@ while in iOS the code to be applied is:
   fontWeight: '600',
 }
 ```
+
 The different font handling is managed by the `makeFontFamilyName` function. It's included in the [fonts.ts](../../utils/fonts.ts) file, which contains many other utility functions that simplify font management.
 
 ## `IOTypography`
@@ -43,16 +44,24 @@ type Props = { typographicStyle?: IOTypography }; // "hero" | "h1" | …
 The keys mirror the `IOText` props, so an entry can be spread straight into the component. That's what every style does:
 
 ```tsx
-<IOText {...h1Style} color={theme[colorToken]}>…</IOText>
+<IOText {...h1Style} color={theme[colorToken]}>
+  …
+</IOText>
 ```
 
 Reach for it when you have to reproduce a style outside the React Native text tree — a SwiftUI text, a canvas, a skeleton placeholder sized on the text it stands in for — instead of copying the numbers:
 
 ```tsx
-<IOSkeleton height={IOTypography.h2.size} radius={4} shape="rectangle" width="80%" />
+<IOSkeleton
+  height={IOTypography.h2.size}
+  radius={4}
+  shape="rectangle"
+  width="80%"
+/>
 ```
 
 Two entries need a word of warning:
+
 - `buttonText` pins a static `color` rather than a `colorToken`, because `IOButton` and `SearchInput` animate it through Reanimated;
 - `h6` carries a `legacySize`, applied while the legacy typeface is enabled.
 
@@ -65,5 +74,6 @@ This library already offers a range of predefined typographic styles, such as `H
 In this case, you can define a custom typographic style using the `IOText` component, which is specifically designed to replace the native `Text` component.
 
 It has some useful features:
+
 - Built-in support for bold text, if set by the user (iOS only)
 - Based on the new `IOFontSize` scale

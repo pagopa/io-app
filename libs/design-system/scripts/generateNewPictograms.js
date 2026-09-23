@@ -61,9 +61,9 @@ Prerequisites:
 const path = require("path");
 const join = path.join;
 const { optimize } = require("svgo");
-const prettier = require("prettier");
 const fs = require("fs-extra");
 const { transform } = require("@svgr/core");
+const { formatComponent } = require("./formatComponent");
 
 const svgDir = join(__dirname, "../src/components/pictograms/svg/originals");
 const tsxDir = join(__dirname, "../src/components/pictograms/svg");
@@ -102,19 +102,28 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
     }
 
     for (const file of files) {
+      // Check if the file is an SVG
+      if (!file.endsWith(".svg")) {
+        continue;
+      }
+
       const filePath = join(svgDir, file);
-      const fileStats = fs.statSync(filePath);
+
+      /* Stat and read through the same descriptor: re-opening by name would
+      leave a window for the file to change between the two operations. */
+      const fd = fs.openSync(filePath, "r");
+      let fileStats;
+      let data;
+      try {
+        fileStats = fs.fstatSync(fd);
+        data = fs.readFileSync(fd, "utf8");
+      } finally {
+        fs.closeSync(fd);
+      }
 
       /* Only process files with a more recent creation
       date later than the timestamp value */
       if (fileStats.mtime > new Date(timestamp)) {
-        const data = fs.readFileSync(filePath, "utf8");
-
-        // Check if the file is an SVG
-        if (!file.endsWith(".svg")) {
-          continue;
-        }
-
         // Using SVGO to optimize the SVG
         const result = optimize(data, {
           path: filePath,
@@ -162,9 +171,10 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
         // Save the file with the same filename with `.tsx` extension
         const fileWithTsxExtension = file.replace(".svg", ".tsx");
         const tsxFilePath = join(tsxDir, fileWithTsxExtension);
-        const formattedComponentData = await prettier.format(componentData, {
-          parser: "typescript"
-        });
+        const formattedComponentData = await formatComponent(
+          fileWithTsxExtension,
+          componentData
+        );
         fs.writeFileSync(tsxFilePath, formattedComponentData);
 
         console.log(`${file} → ${fileWithTsxExtension}`);
