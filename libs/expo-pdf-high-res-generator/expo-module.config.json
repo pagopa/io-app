@@ -4,6 +4,8 @@
     "modules": ["ExpoPdfHighResGeneratorModule"]
   },
   "android": {
-    "modules": ["expo.modules.pdfhighresgenerator.ExpoPdfHighResGeneratorModule"]
+    "modules": [
+      "expo.modules.pdfhighresgenerator.ExpoPdfHighResGeneratorModule"
+    ]
   }
 }
