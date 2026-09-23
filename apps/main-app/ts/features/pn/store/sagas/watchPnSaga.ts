@@ -11,7 +11,12 @@ import { apiUrlPrefix } from "../../../../config";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { isTestEnv } from "../../../../utils/environment";
-import { unknownToReason } from "../../../messages/utils";
+import {
+  decodeSendFailureReason,
+  SendFailureReason,
+  unknownToReason,
+  WrappedSendError
+} from "../../../messages/utils";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
@@ -29,8 +34,6 @@ export function* tryLoadSENDPreferences() {
     yield* put(loadServicePreference.request(pnServiceId));
   }
 }
-const tooManyRequestsError = new Error("timeout -- too many requests");
-
 export function* watchPnSaga(bearerToken: string): SagaIterator {
   const pnClient = createPnClient(apiUrlPrefix, bearerToken);
 
@@ -75,20 +78,29 @@ function* handlePnActivation(
           ]);
           action.payload.onSuccess?.();
           break;
-        case 429:
-          throw tooManyRequestsError;
         default:
-          throw Error(
+          throw new WrappedSendError(
+            decodeSendFailureReason({
+              kind: "http_status",
+              status: result.right.status
+            }),
             `Status code: ${result.right.status} Request data: ${JSON.stringify(
               requestData
             )}`
           );
       }
     } else if (E.isLeft(result)) {
-      throw Error(readableReport(result.left));
+      throw new WrappedSendError(
+        SendFailureReason.DECODE_ERROR,
+        readableReport(result.left)
+      );
     }
   } catch (e) {
-    const isRateLimitError = e === tooManyRequestsError;
+    const reason =
+      e instanceof WrappedSendError
+        ? e.reason
+        : decodeSendFailureReason({ kind: "caught", error: e });
+    const isRateLimitError = reason === SendFailureReason.RATE_LIMITED;
     yield* all([
       call(
         reportPNServiceStatusOnFailure,
@@ -98,7 +110,7 @@ function* handlePnActivation(
       put(pnActivationUpsert.failure()),
       call(tryLoadSENDPreferences)
     ]);
-    action.payload.onFailure?.(isRateLimitError);
+    action.payload.onFailure?.(isRateLimitError, reason);
   }
 }
 
