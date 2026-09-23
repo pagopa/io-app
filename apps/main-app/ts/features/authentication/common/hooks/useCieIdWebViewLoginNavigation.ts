@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import { useCallback } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -31,16 +32,20 @@ export const useCieIdWebViewLoginNavigation = ({
 
   const navigateToAuthErrorScreen = useCallback(
     (errorCodeOrMessage?: string) => {
-      // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
-      // ensuring the re-execution of the `useOneIdentityLoginSource` hook.
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        params: {
+      // A local, non-`MAIN`-targeting `replace` keeps the unmount confined
+      // to this screen instead of remounting the whole nested navigator.
+      // `dispatch` (instead of retyping `navigation` to the local
+      // `AuthenticationParamsList`) avoids affecting the other calls above,
+      // which still need to target `MAIN`. `AuthErrorScreen`'s CIE_ID retry
+      // replaces back to this route, which still re-triggers the Lollipop
+      // key generation on mount.
+      navigation.dispatch(
+        StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
           errorCodeOrMessage,
           authMethod: "CIE_ID",
           authLevel
-        }
-      });
+        })
+      );
     },
     [navigation, authLevel]
   );
