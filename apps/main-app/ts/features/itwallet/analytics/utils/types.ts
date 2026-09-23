@@ -150,6 +150,7 @@ export const CREDENTIAL_STATUS_MAP: Record<
 > = {
   valid: "valid",
   invalid: "not_valid",
+  suspended: "not_valid",
   expired: "expired",
   expiring: "expiring",
   jwtExpired: "verification_expired",

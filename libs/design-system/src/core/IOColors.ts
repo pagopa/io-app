@@ -487,7 +487,7 @@ export const hexToRgba = (hexCode: ColorValue, opacity = 1) => {
 REFACTORING REFERENCES
 Alias tokens:
 */
-/* 
+/*
 itemSeparator → grey-200
 textColor → grey-700
 footerShadowColor → black

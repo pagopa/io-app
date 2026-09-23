@@ -15,11 +15,6 @@ import * as O from "fp-ts/lib/Option";
 
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 
-export type LogoPaymentExtOrDefaultIconProps = {
-  cardIcon?: IOLogoPaymentExtType;
-  fallbackIconColor?: IOColors;
-  size?: IOIconSizeScale;
-};
 export type LogoPaymentWithFallback = {
   brand?: string;
   fallbackIconColor?: IOColors;

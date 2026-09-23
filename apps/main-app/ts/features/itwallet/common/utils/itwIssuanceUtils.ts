@@ -6,6 +6,7 @@ import {
 } from "@pagopa/io-react-native-wallet";
 
 import { type IdentificationContext } from "../../machine/eid/context";
+import { pidScopes } from "./constants";
 import { Env } from "./environment";
 import { AuthorizedCredentialMetadata } from "./itwCredentialIssuanceUtils";
 import { extractVerification } from "./itwCredentialUtils";
@@ -98,7 +99,7 @@ const startAuthFlow: StartAuthFlow = async ({
   };
 };
 
-export type CompleteAuthFlow = (args: {
+type CompleteAuthFlow = (args: {
   callbackUrl: string;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
@@ -150,7 +151,7 @@ const completeAuthFlow: CompleteAuthFlow = async ({
   return { accessToken };
 };
 
-export type GetPid = (args: {
+type GetPid = (args: {
   accessToken: CredentialAccessToken;
   authorizedCredential: AuthorizedCredentialMetadata;
   clientId: string;
@@ -177,8 +178,8 @@ const getPid: GetPid = async ({
   const {
     keyTag,
     authDetails: { credential_configuration_id, credential_identifiers },
-    walletUnitAttestationId,
-    walletUnitAttestation
+    keyAttestation,
+    keyAttestationId
   } = authorizedCredential;
 
   const credentialCryptoContext = createCryptoContextFor(keyTag);
@@ -195,7 +196,7 @@ const getPid: GetPid = async ({
       },
       {
         credentialCryptoContext,
-        walletUnitAttestation,
+        keyAttestation,
         dPopCryptoContext
       }
     );
@@ -231,7 +232,7 @@ const getPid: GetPid = async ({
         credential,
         parsedCredential
       }),
-      walletUnitAttestationId
+      keyAttestationId
     }
   };
 };
@@ -298,11 +299,6 @@ export const getSpidProductionIdpHint = (spidIdpId: string) => {
   }
   return SPID_IDP_HINTS[spidIdpId];
 };
-
-const pidScopes = [
-  "PersonIdentificationData", // Legacy 1.0 PID (will be removed in the future)
-  CredentialType.PID // New 1.3+ PID
-];
 
 /**
  * Get the credential configuration ID for the SD-JWT PID from its scope.

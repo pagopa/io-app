@@ -30,15 +30,19 @@
     "test": "jest --config='./jest.config.js'",
     "tsc-noemit": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "prettify": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "prettier:check": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "format": "oxfmt \"src/**/*.{ts,tsx}\"",
+    "format:check": "oxfmt --check \"src/**/*.{ts,tsx}\"",
     "prepack": "bob build",
     "release": "release-it",
     "generate:icons": "node scripts/generateNewIcons.js",
     "generate:pictograms": "node scripts/generateNewPictograms.js",
     "generate": "pnpm generate:icons && pnpm generate:pictograms"
   },
-  "keywords": ["react-native", "ios", "android"],
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
   "repository": "https://github.com/pagopa/io-app.git",
   "author": "PagoPa (https://github.com/pagopa)",
   "license": "MIT",
@@ -63,11 +67,9 @@
     "commitlint": "^17.0.2",
     "del-cli": "^5.0.0",
     "eslint": "catalog:",
-    "eslint-config-prettier": "catalog:",
     "eslint-plugin-functional": "catalog:",
     "eslint-plugin-import": "catalog:",
     "eslint-plugin-jest": "catalog:",
-    "eslint-plugin-prettier": "catalog:",
     "eslint-plugin-react-native-a11y": "catalog:",
     "fs-extra": "^11.1.1",
     "jest": "catalog:",
@@ -76,7 +78,7 @@
     "react-native-builder-bob": "^0.38.0",
     "react-test-renderer": "catalog:",
     "release-it": "^21.0.2",
-    "svgo": "^3.0.2",
+    "svgo": "^3.3.5",
     "typescript": "catalog:"
   },
   "peerDependencies": {
@@ -95,7 +97,9 @@
     "node": ">= 20"
   },
   "commitlint": {
-    "extends": ["@commitlint/config-conventional"]
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "release-it": {
     "git": {

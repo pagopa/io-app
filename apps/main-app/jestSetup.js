@@ -26,7 +26,9 @@ require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
 jest.mock("expo-screen-capture", () => ({}));
 jest.mock("expo-image-picker", () => ({
-  launchImageLibraryAsync: jest.fn().mockResolvedValue({ canceled: true, assets: null })
+  launchImageLibraryAsync: jest
+    .fn()
+    .mockResolvedValue({ canceled: true, assets: null })
 }));
 jest.mock("expo-background-task", () => ({
   BackgroundTaskStatus: { Available: 2, Restricted: 1 },
@@ -41,11 +43,8 @@ jest.mock("expo-task-manager", () => ({
   defineTask: jest.fn(),
   isTaskRegisteredAsync: jest.fn().mockResolvedValue(false)
 }));
-// Pulsar is a TurboModule, so importing it under Jest throws: there is no
-// native module for TurboModuleRegistry.getEnforcing("RNPulsar") to bind to.
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 jest.mock("react-native-pulsar", () =>
-  require("./ts/__mocks__/pulsarJestMock")
+  require("react-native-pulsar/jest-mock")
 );
 
 // eslint-disable-next-line functional/immutable-data
@@ -88,15 +87,40 @@ jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
 jest.mock("expo-clipboard", () => mockClipboard);
 jest.mock("expo-calendar", () => ({
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
-  getEventsAsync: jest.fn().mockResolvedValue([]),
+  getEventsAsync: jest.fn().mockResolvedValue([])
 }));
 jest.mock("expo-brightness", () => ({
   getBrightnessAsync: jest.fn().mockResolvedValue(0),
-  setBrightnessAsync: jest.fn().mockResolvedValue(undefined),
+  setBrightnessAsync: jest.fn().mockResolvedValue(undefined)
 }));
 
 jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
+}));
+
+jest.mock("@io-app/expo-nfc-antenna-info", () => ({
+  getNfcAntennaInfo: jest.fn(),
+  isHceSupported: jest.fn()
+}));
+
+/* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.
+   The `react-native` preset resolves the `.ios` implementations by default, so
+   every platform-branched component would otherwise pull in the native views. */
+jest.mock("@expo/ui/swift-ui", () => ({
+  Host: "Host",
+  Text: "Text"
+}));
+
+jest.mock("@expo/ui/swift-ui/modifiers", () => ({
+  Animation: { spring: jest.fn(() => ({})) },
+  accessibilityLabel: jest.fn(() => ({})),
+  animation: jest.fn(() => ({})),
+  contentTransition: jest.fn(() => ({})),
+  fixedSize: jest.fn(() => ({})),
+  font: jest.fn(() => ({})),
+  foregroundStyle: jest.fn(() => ({})),
+  frame: jest.fn(() => ({})),
+  monospacedDigit: jest.fn(() => ({}))
 }));
 
 jest.mock("expo-local-authentication", () => ({
@@ -105,9 +129,13 @@ jest.mock("expo-local-authentication", () => ({
     FACIAL_RECOGNITION: 2,
     IRIS: 3
   },
-  supportedAuthenticationTypesAsync: jest.fn().mockResolvedValue(Promise.resolve([])),
-  authenticateAsync: jest.fn().mockResolvedValue(Promise.resolve({ success: true })),
-  cancelAuthenticate: jest.fn().mockResolvedValue(Promise.resolve()),
+  supportedAuthenticationTypesAsync: jest
+    .fn()
+    .mockResolvedValue(Promise.resolve([])),
+  authenticateAsync: jest
+    .fn()
+    .mockResolvedValue(Promise.resolve({ success: true })),
+  cancelAuthenticate: jest.fn().mockResolvedValue(Promise.resolve())
 }));
 // Mock react-native-worklets before reanimated setup
 // See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/

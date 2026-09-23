@@ -12,6 +12,7 @@ import {
   CredentialMetadata,
   WalletInstanceAttestations
 } from "../../../../common/utils/itwTypesUtils";
+import { testProximityDeps } from "../../../../machine/utils/testDeps";
 import {
   generateConsentKey,
   getConsentDataFromProximityDetails
@@ -21,6 +22,8 @@ import { ProximityFailureType } from "../failure";
 import { ItwProximityMachine, itwProximityMachine } from "../machine";
 
 type MachineSnapshot = StateFrom<ItwProximityMachine>;
+
+const T_DEPS = testProximityDeps();
 
 const T_WIA = { jwt: "test-wia" } as WalletInstanceAttestations;
 const T_CREDENTIALS = {} as Record<string, CredentialMetadata>;
@@ -62,6 +65,7 @@ describe("itwProximityMachine", () => {
 
   const storeConsent = jest.fn();
   const trackProximityStart = jest.fn();
+  const trackProximitySuccess = jest.fn();
   const trackQrCodeLoadingFailure = jest.fn();
 
   const checkBluetoothPermissions = jest.fn();
@@ -92,6 +96,7 @@ describe("itwProximityMachine", () => {
       navigateToSuccessScreen,
       closeProximity,
       trackProximityStart,
+      trackProximitySuccess,
       trackQrCodeLoadingFailure,
       grantConsent: assign(({ context }) => {
         if (!context.proximityDetails) {
@@ -135,7 +140,9 @@ describe("itwProximityMachine", () => {
     value: MachineSnapshot["value"],
     context: Partial<MachineSnapshot["context"]> = {}
   ): MachineSnapshot => {
-    const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+    const initialSnapshot = createActor(mockedMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
 
     return _.merge(undefined, initialSnapshot, {
       value,
@@ -153,7 +160,7 @@ describe("itwProximityMachine", () => {
   });
 
   it("initializes in Idle", () => {
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
 
     actor.start();
 
@@ -162,7 +169,7 @@ describe("itwProximityMachine", () => {
   });
 
   it("close from Idle is ignored", () => {
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
 
     actor.start();
     actor.send({ type: "close" });
@@ -173,7 +180,7 @@ describe("itwProximityMachine", () => {
 
   it("start moves to Bluetooth.CheckPermissions", () => {
     checkBluetoothPermissions.mockReturnValue(new Promise(() => {}));
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
 
     actor.start();
     actor.send({ type: "start" });
@@ -186,7 +193,7 @@ describe("itwProximityMachine", () => {
   it("granted bluetooth permissions move to Bluetooth.CheckActivation", async () => {
     checkBluetoothPermissions.mockResolvedValue(true);
     checkBluetoothActivation.mockReturnValue(new Promise(() => {}));
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
 
     actor.start();
     actor.send({ type: "start" });
@@ -198,7 +205,7 @@ describe("itwProximityMachine", () => {
 
   it("denied bluetooth permissions move to Bluetooth.RequirePermissions", async () => {
     checkBluetoothPermissions.mockResolvedValue(false);
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
 
     actor.start();
     actor.send({ type: "start" });
@@ -213,7 +220,7 @@ describe("itwProximityMachine", () => {
     checkBluetoothPermissions.mockRejectedValue(
       new Error("permissions unavailable")
     );
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
 
     actor.start();
     actor.send({ type: "start" });
@@ -226,6 +233,7 @@ describe("itwProximityMachine", () => {
 
   it("close from Bluetooth.RequirePermissions calls closeProximity", () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Bluetooth: "RequirePermissions" })
     });
 
@@ -241,6 +249,7 @@ describe("itwProximityMachine", () => {
   it("continue from Bluetooth.RequirePermissions moves to Bluetooth.CheckActivation", async () => {
     checkBluetoothActivation.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Bluetooth: "RequirePermissions" })
     });
 
@@ -256,7 +265,7 @@ describe("itwProximityMachine", () => {
     checkBluetoothPermissions.mockResolvedValue(true);
     checkBluetoothActivation.mockResolvedValue(true);
     startEngagement.mockReturnValue(new Promise(() => {}));
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
 
     actor.start();
     actor.send({ type: "start" });
@@ -264,14 +273,14 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Presentment: "Starting" })
     );
-    expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    expect(trackProximityStart).not.toHaveBeenCalled();
     expect(actor.getSnapshot().context.engagementMode).toEqual("qrcode");
   });
 
   it("inactive bluetooth moves to Bluetooth.RequireActivation", async () => {
     checkBluetoothPermissions.mockResolvedValue(true);
     checkBluetoothActivation.mockResolvedValue(false);
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
 
     actor.start();
     actor.send({ type: "start" });
@@ -287,7 +296,7 @@ describe("itwProximityMachine", () => {
     checkBluetoothActivation.mockRejectedValue(
       new Error("bluetooth unavailable")
     );
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
 
     actor.start();
     actor.send({ type: "start" });
@@ -300,6 +309,7 @@ describe("itwProximityMachine", () => {
 
   it("close from Bluetooth.RequireActivation calls closeProximity", () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Bluetooth: "RequireActivation" })
     });
 
@@ -315,6 +325,7 @@ describe("itwProximityMachine", () => {
   it("continue from Bluetooth.RequireActivation moves to Presentment.Starting", async () => {
     startEngagement.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Bluetooth: "RequireActivation" })
     });
 
@@ -329,6 +340,7 @@ describe("itwProximityMachine", () => {
   it("start-nfc-presentment from AwaitingConnection enters Nfc gate", async () => {
     checkNfcActivation.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
 
@@ -343,6 +355,7 @@ describe("itwProximityMachine", () => {
   it("inactive NFC from start-nfc-presentment moves to Nfc.RequireActivation", async () => {
     checkNfcActivation.mockResolvedValue(false);
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
 
@@ -358,6 +371,7 @@ describe("itwProximityMachine", () => {
   it("NFC activation errors from start-nfc-presentment move to Nfc.RequireActivation", async () => {
     checkNfcActivation.mockRejectedValue(new Error("nfc unavailable"));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
 
@@ -373,6 +387,7 @@ describe("itwProximityMachine", () => {
   it("close from Nfc.RequireActivation returns to Presentment", async () => {
     startEngagement.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Nfc: "RequireActivation" })
     });
 
@@ -387,6 +402,7 @@ describe("itwProximityMachine", () => {
   it("continue from Nfc.RequireActivation moves to Presentment.Starting with NFC mode", async () => {
     startEngagement.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Nfc: "RequireActivation" })
     });
 
@@ -398,12 +414,13 @@ describe("itwProximityMachine", () => {
     );
     expect(actor.getSnapshot().context.engagementMode).toEqual("nfc");
     expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
-    expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    expect(trackProximityStart).not.toHaveBeenCalled();
   });
 
   it("handles the happy path in Presentment", async () => {
     sendDocuments.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "Starting" })
     });
 
@@ -452,6 +469,7 @@ describe("itwProximityMachine", () => {
 
     actor.send({ type: "device-disconnected" });
     expect(actor.getSnapshot().value).toStrictEqual("Success");
+    expect(trackProximitySuccess).toHaveBeenCalledTimes(1);
     expect(navigateToSuccessScreen).toHaveBeenCalledTimes(1);
 
     actor.send({ type: "close" });
@@ -459,8 +477,26 @@ describe("itwProximityMachine", () => {
     expect(closeProximity).toHaveBeenCalledTimes(1);
   });
 
+  it("tracks NFC success without navigating away from the NFC screen", () => {
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot(
+        { Presentment: "SendingDocuments" },
+        { engagementMode: "nfc", retrievalMethod: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({ type: "device-disconnected" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Success");
+    expect(trackProximitySuccess).toHaveBeenCalledTimes(1);
+    expect(navigateToSuccessScreen).not.toHaveBeenCalled();
+  });
+
   it("device-connecting with QR engagement pre-navigates to claims disclosure", () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
 
@@ -470,11 +506,13 @@ describe("itwProximityMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       Presentment: "Connecting"
     });
+    expect(trackProximityStart).not.toHaveBeenCalled();
     expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
   });
 
   it("device-connecting with NFC engagement does not pre-navigate to claims disclosure", () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "AwaitingConnection" },
         { engagementMode: "nfc" }
@@ -487,11 +525,31 @@ describe("itwProximityMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       Presentment: "Connecting"
     });
+    expect(trackProximityStart).not.toHaveBeenCalled();
     expect(navigateToClaimsDisclosureScreen).not.toHaveBeenCalled();
   });
 
+  test.each(["qrcode", "nfc"] as const)(
+    "tracks %s proximity start when verifier connects",
+    engagementMode => {
+      const actor = createActor(mockedMachine, {
+        input: { deps: T_DEPS },
+        snapshot: makeSnapshot(
+          { Presentment: "Connecting" },
+          { engagementMode }
+        )
+      });
+
+      actor.start();
+      actor.send({ type: "device-connected" });
+
+      expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    }
+  );
+
   it("close from Presentment.AwaitingConnection calls closeProximity", () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
 
@@ -506,6 +564,7 @@ describe("itwProximityMachine", () => {
 
   it("close from Presentment.Connected closes the flow and returns to Idle", () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "Connected" })
     });
 
@@ -519,6 +578,7 @@ describe("itwProximityMachine", () => {
   it("holder-consent from ClaimsDisclosure moves to SendingDocuments", () => {
     sendDocuments.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "ClaimsDisclosure" },
         { proximityDetails: T_PROXIMITY_DETAILS }
@@ -536,6 +596,7 @@ describe("itwProximityMachine", () => {
   it("sendDocuments errors move to Failure", async () => {
     sendDocuments.mockRejectedValue(new Error("send failed"));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "ClaimsDisclosure" },
         { proximityDetails: T_PROXIMITY_DETAILS }
@@ -555,6 +616,7 @@ describe("itwProximityMachine", () => {
   it("device-disconnected before SendingDocuments terminates the session and closes the flow", async () => {
     terminateSession.mockResolvedValue(undefined);
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
 
@@ -575,6 +637,7 @@ describe("itwProximityMachine", () => {
 
   it("device-disconnected in ClaimsDisclosure with NFC retrieval is consumed without failure", () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "ClaimsDisclosure" },
         { retrievalMethod: "nfc" }
@@ -594,6 +657,7 @@ describe("itwProximityMachine", () => {
 
   it("nfc-stopped from AwaitingConnection closes the proximity flow", () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
 
@@ -608,6 +672,7 @@ describe("itwProximityMachine", () => {
 
   it("device-error moves to Failure", async () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
 
@@ -624,13 +689,14 @@ describe("itwProximityMachine", () => {
 
   it("close from ClaimsDisclosure terminates the session and shows the consent denied failure", () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "ClaimsDisclosure" })
     });
 
     actor.start();
     actor.send({ type: "close" });
 
-    expect(actor.getSnapshot().value).toBe("Failure");
+    expect(actor.getSnapshot().matches("Failure")).toBe(true);
     expect(actor.getSnapshot().context.failure?.type).toBe(
       ProximityFailureType.CONSENT_DENIED
     );
@@ -641,6 +707,7 @@ describe("itwProximityMachine", () => {
 
   it("holder-consent with NFC retrieval moves to StoreConsent", () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "ClaimsDisclosure" },
         { retrievalMethod: "nfc", proximityDetails: T_PROXIMITY_DETAILS }
@@ -664,6 +731,7 @@ describe("itwProximityMachine", () => {
   it("NFC document request without consent terminates the session before disclosing claims", async () => {
     terminateSession.mockResolvedValue(undefined);
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "Connected" },
         { engagementMode: "nfc" }
@@ -689,6 +757,7 @@ describe("itwProximityMachine", () => {
   it("NFC termination failure still proceeds to claims disclosure", async () => {
     terminateSession.mockRejectedValue(new Error("terminate failed"));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "Connected" },
         { engagementMode: "nfc" }
@@ -714,6 +783,7 @@ describe("itwProximityMachine", () => {
     // Never resolves: keep the machine parked in TerminatingForConsent
     terminateSession.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "Connected" },
         { engagementMode: "nfc" }
@@ -745,6 +815,7 @@ describe("itwProximityMachine", () => {
     // Never resolves: keep the machine parked in TerminatingForConsent
     terminateSession.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "Connected" },
         { engagementMode: "nfc" }
@@ -777,6 +848,7 @@ describe("itwProximityMachine", () => {
 
   it("device-error in ClaimsDisclosure with NFC retrieval is consumed without failure", () => {
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "ClaimsDisclosure" },
         { retrievalMethod: "nfc" }
@@ -799,6 +871,7 @@ describe("itwProximityMachine", () => {
   it("NFC document request with prior consent sends documents without re-terminating", async () => {
     sendDocuments.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "Connected" },
         {
@@ -827,6 +900,7 @@ describe("itwProximityMachine", () => {
   it("NFC document request with mismatched consent key goes through TerminatingForConsent and ClaimsDisclosure", async () => {
     terminateSession.mockResolvedValue(undefined);
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot(
         { Presentment: "Connected" },
         {
@@ -857,6 +931,7 @@ describe("itwProximityMachine", () => {
   it("store-consent from StoreConsent stores consent and moves to Retrying", () => {
     startEngagement.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "StoreConsent" })
     });
 
@@ -872,6 +947,7 @@ describe("itwProximityMachine", () => {
   it("continue from StoreConsent skips storing and moves to Retrying", () => {
     startEngagement.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "StoreConsent" })
     });
 
@@ -885,7 +961,7 @@ describe("itwProximityMachine", () => {
   });
 
   it("retry from Starting clears the failure after a startEngagement error", async () => {
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
 
     checkBluetoothPermissions.mockResolvedValue(true);
     checkBluetoothActivation.mockResolvedValue(true);
@@ -914,7 +990,8 @@ describe("itwProximityMachine", () => {
 
   it("close from Failure returns to Idle", () => {
     const actor = createActor(mockedMachine, {
-      snapshot: makeSnapshot("Failure")
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot({ Failure: "Idle" })
     });
 
     actor.start();

@@ -1,7 +1,10 @@
+import { TagEnum as BaseTagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryBase";
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 
 import {
   trackCTAFrontMatterDecodingError,
+  trackDisclaimerLoadError,
   trackMessageNotFoundScreen,
   trackMessageNotificationParsingFailure,
   trackMessageNotificationTap,
@@ -105,6 +108,43 @@ describe("index", () => {
         reason,
         serviceId
       });
+    });
+  });
+
+  describe("trackDisclaimerLoadError", () => {
+    it("should include the reason when the category tag is PN", () => {
+      const spyOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation();
+
+      trackDisclaimerLoadError(TagEnum.PN, "MARKDOWN_RENDER_ERROR");
+
+      expect(spyOnMixpanelTrack).toHaveBeenCalledWith(
+        "PN_DISCLAIMER_LOAD_ERROR",
+        {
+          event_category: "TECH",
+          event_type: undefined,
+          flow: undefined,
+          reason: "MARKDOWN_RENDER_ERROR"
+        }
+      );
+    });
+
+    it("should not include the reason when the category tag is not PN", () => {
+      const spyOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation();
+
+      trackDisclaimerLoadError(BaseTagEnum.GENERIC, "MARKDOWN_RENDER_ERROR");
+
+      expect(spyOnMixpanelTrack).toHaveBeenCalledWith(
+        "GENERIC_DISCLAIMER_LOAD_ERROR",
+        {
+          event_category: "TECH",
+          event_type: undefined,
+          flow: undefined
+        }
+      );
     });
   });
 

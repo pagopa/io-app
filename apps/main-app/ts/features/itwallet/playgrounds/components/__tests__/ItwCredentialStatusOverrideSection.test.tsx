@@ -43,7 +43,7 @@ const createCredential = (
       value: "2030-01-01"
     }
   },
-  spec_version: "1.3.3"
+  spec_version: "1.4.6"
 });
 
 const pid = createCredential("dc_sd_jwt_pid", "pid", CredentialFormat.SD_JWT);

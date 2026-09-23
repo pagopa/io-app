@@ -1,11 +1,10 @@
 import { defineConfig, globalIgnores } from "eslint/config";
-import { fixupConfigRules } from "@eslint/compat";
+import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
 import { FlatCompat } from "@eslint/eslintrc";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import pagopaConfig from "@pagopa/eslint-config/jest";
 import tseslint from "typescript-eslint";
-import reactNativeConfig from "@react-native/eslint-config/flat";
 import importPlugin from "eslint-plugin-import";
 import functional from "eslint-plugin-functional";
 import sonarjs from "eslint-plugin-sonarjs";
@@ -14,6 +13,7 @@ import js from "@eslint/js";
 import delegateEffectsRule from "./scripts/eslint/delegate-effects.js";
 import noDynamicI18nKeysRule from "./scripts/eslint/no-dynamic-i18n-keys.js";
 import noUnusedI18nKeysRule from "./scripts/eslint/no-unused-i18n-keys.js";
+import noFpTsRule from "./scripts/eslint/no-fp-ts.js";
 import jsonParser from "./scripts/eslint/json-parser.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -24,6 +24,10 @@ const compat = new FlatCompat({
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all
 });
+
+const reactNativeConfig = fixupConfigRules(
+  compat.extends("@react-native/eslint-config")
+);
 
 // @typescript-eslint and jest are already registered by pagopaConfig (via
 // typescript-eslint and @pagopa/eslint-config/jest, the latter scoping jest to
@@ -92,8 +96,13 @@ export default defineConfig([
       import: importPlugin,
       functional,
       sonarjs,
-      i18next: i18Next,
-      "@io-app": { rules: { "i18n-no-dynamic-keys": noDynamicI18nKeysRule } },
+      i18next: fixupPluginRules(i18Next),
+      "@io-app": {
+        rules: {
+          "i18n-no-dynamic-keys": noDynamicI18nKeysRule,
+          "no-fp-ts": noFpTsRule
+        }
+      },
       "typed-redux-saga": { rules: { "delegate-effects": delegateEffectsRule } }
     },
 
@@ -106,6 +115,12 @@ export default defineConfig([
       // This affects analytics helpers, navigation param lists, and any other
       // type used as a generic record argument throughout the codebase.
       "@typescript-eslint/consistent-type-definitions": "off",
+
+      // Formatting is owned by oxfmt, not prettier. @pagopa/eslint-config bundles
+      // eslint-plugin-prettier, whose rule enforces prettier defaults (trailing
+      // commas, arrow parens) that directly conflict with .oxfmtrc.json — leaving
+      // it on makes eslint --fix revert every oxfmt-formatted file.
+      "prettier/prettier": "off",
 
       // Auto-fix corrupts multi-line property values (see comment below)
       "perfectionist/sort-objects": "off",
@@ -161,10 +176,6 @@ export default defineConfig([
       ],
       "one-var": ["error", "never"],
       "object-shorthand": "error",
-      // TODO: Remove this property once the migration
-      // from class components is completed
-      "max-classes-per-file": ["error", 1],
-
       // GENERAL JS SAFETY
       // Deprecated since ESLint 5.1.0 — overrides @react-native/eslint-config warn
       "no-catch-shadow": "off",
@@ -227,11 +238,6 @@ export default defineConfig([
       // It could highlight performance issues,
       // with some noise on trivial cases
       "react/no-unstable-nested-components": "off",
-      // TODO: Remove these two properties once the migration
-      // from class components is completed
-      "react/no-direct-mutation-state": "off",
-      "react/require-render-return": "off",
-
       // REACT NATIVE
       "react-native/no-unused-styles": "error",
       "react-native/no-inline-styles": "off",
@@ -290,7 +296,28 @@ export default defineConfig([
               "accessibilityHint",
               "placeholder",
               "title",
-              "alt"
+              "alt",
+              // Text-bearing props
+              "actions",
+              "label",
+              "description",
+              "text",
+              "errorMessage",
+              "value",
+              "subtitle",
+              "content",
+              "message",
+              // Props whose object value nests text in `componentProps`
+              "endElement",
+              "startElement",
+              "topElement",
+              "headerAction",
+              "firstAction",
+              "secondaryAction",
+              "startAction",
+              "endAction",
+              "scrollViewAction",
+              "footerActionProps"
             ],
             exclude: []
           },
@@ -298,6 +325,28 @@ export default defineConfig([
           "jsx-components": {
             include: [],
             exclude: ["Trans"]
+          },
+
+          // Options replace the plugin defaults, so the default excludes are
+          // respelled here: patterns full-match with a leading dot allowed, so
+          // `t` is what exempts `I18n.t(...)` arguments.
+          callees: {
+            exclude: [
+              "i18n(ext)?",
+              "t",
+              "require",
+              "addEventListener",
+              "removeEventListener",
+              "postMessage",
+              "getElementById",
+              "dispatch",
+              "commit",
+              "includes",
+              "indexOf",
+              "endsWith",
+              "startsWith",
+              "format"
+            ]
           },
 
           words: {
@@ -348,7 +397,10 @@ export default defineConfig([
       ],
 
       // Disallow dynamically-built i18n keys so unused-key detection stays reliable
-      "@io-app/i18n-no-dynamic-keys": "warn"
+      "@io-app/i18n-no-dynamic-keys": "warn",
+
+      // Remove this after the migration of fp-ts is being completed and replaced by neverthrow;
+      "@io-app/no-fp-ts": "warn"
     },
 
     settings: {
@@ -373,10 +425,8 @@ export default defineConfig([
   {
     // Data-driven tests here derive titles dynamically (loop variables,
     // `fn.name`, ternaries). Allow non-string titles while keeping the
-    // empty/whitespace/duplicate-prefix checks active. Scoped to `.ts` test
-    // files only: `jest/valid-title` is an active rule and pagopa's config
-    // only registers the jest plugin for `.{js,ts}` test files, not `.tsx`.
-    files: ["**/*.test.ts", "**/__tests__/**/*.ts"],
+    // empty/whitespace/duplicate-prefix checks active.
+    files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
 
     rules: {
       "jest/valid-title": [
@@ -389,10 +439,19 @@ export default defineConfig([
       // Saga tests assert through redux-saga-test-plan's chainable APIs
       // (`testSaga(...).next()`, `expectSaga(...).run()`) rather than a bare
       // `expect`, so teach the rule to treat those as assertion helpers.
+      // The trailing entries are local helpers that hold the assertions for a
+      // parameterised suite; inlining them would duplicate the body per case.
       "jest/expect-expect": [
         "warn",
         {
-          assertFunctionNames: ["expect", "expectSaga", "testSaga"]
+          assertFunctionNames: [
+            "expect",
+            "expectSaga",
+            "testSaga",
+            "commonAccessibilityTestCode",
+            "testIsAppSupportedSelector",
+            "testRootModal"
+          ]
         }
       ]
     }

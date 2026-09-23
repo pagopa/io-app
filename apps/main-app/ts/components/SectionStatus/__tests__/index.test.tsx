@@ -68,7 +68,7 @@ const mockSectionStatusState = (
           credentials: { [CredentialType.PID]: {} as CredentialMetadata },
           legacyCredentials: {}
         } as ItwCredentialsState,
-        issuance: { integrityKeyTag: O.some("key-tag") }
+        issuance: { integrityKeyTag: "key-tag" }
       } as ItWalletState
     } as PersistedFeaturesState
   }) as unknown as GlobalState;
@@ -160,13 +160,6 @@ describe("SectionStatusComponent", () => {
       expect(view.props.accessibilityRole).toBe("alert");
     });
 
-    it("should display the accessibility alert text", () => {
-      const component = getComponent("messages");
-      expect(
-        component.queryByText(new RegExp(I18n.t("global.accessibility.alert")))
-      ).toBeNull();
-    });
-
     it("should render the touchable wrapper which opens the correct url", () => {
       setLocale("it");
       const component = getComponent("messages", store);
@@ -191,7 +184,7 @@ describe("Section Status Component should return null", () => {
               credentials: { [CredentialType.PID]: {} as CredentialMetadata },
               legacyCredentials: {}
             } as ItwCredentialsState,
-            issuance: { integrityKeyTag: O.some("key-tag") }
+            issuance: { integrityKeyTag: "key-tag" }
           } as ItWalletState
         } as PersistedFeaturesState
       })

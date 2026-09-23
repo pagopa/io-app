@@ -10,11 +10,11 @@ on:
         required: true
         type: choice
         default: minor
-        options: 
-        - major
-        - minor
-        - patch
-        - build
+        options:
+          - major
+          - minor
+          - patch
+          - build
 jobs:
   run-static-checks:
     uses: ./.github/workflows/static-checks.yaml

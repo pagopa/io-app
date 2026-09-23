@@ -19,8 +19,8 @@ import * as catalogSelectors from "../../../credentialsCatalogue/store/selectors
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import {
-  selectCredentialTypeOption,
-  selectResolvedCredentialOfferOption
+  selectCredentialType,
+  selectResolvedCredentialOffer
 } from "../../../machine/credential/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -37,7 +37,6 @@ const T_TRUST_ISSUER_BASE_URL = "https://eaa.wallet.ipzs.it";
 const TEST_NAVIGATOR_ROUTE = "TEST_NAVIGATOR";
 
 const Stack = createStackNavigator<ItwParamsList>();
-const someOption = <T,>(value: T) => ({ _tag: "Some" as const, value });
 
 describe("ItwIssuanceCredentialOfferIntroScreen", () => {
   const machineSend = jest.fn();
@@ -69,8 +68,8 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     jest
       .spyOn(ItwCredentialIssuanceMachineContext, "useSelector")
       .mockImplementation(selector => {
-        if (selector === selectResolvedCredentialOfferOption) {
-          return someOption({
+        if (selector === selectResolvedCredentialOffer) {
+          return {
             offer: { credential_issuer: T_TRUST_ISSUER_BASE_URL },
             grantDetails: {
               authorizationCodeGrant: {
@@ -78,11 +77,11 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
                 scope: T_CREDENTIAL_TYPE
               }
             }
-          }) as any;
+          } as any;
         }
 
-        if (selector === selectCredentialTypeOption) {
-          return someOption(T_CREDENTIAL_TYPE) as any;
+        if (selector === selectCredentialType) {
+          return T_CREDENTIAL_TYPE as any;
         }
 
         return undefined as any;
@@ -169,7 +168,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
   it("blocks the flow when the offered credential is already in the wallet and valid", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialSelector")
-      .mockReturnValue((() => someOption({})) as any);
+      .mockReturnValue((() => ({})) as any);
     jest
       .spyOn(credentialStatusUtils, "getCredentialStatus")
       .mockReturnValue("valid");
@@ -189,7 +188,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
   it("continues the flow when the stored credential is no longer valid", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialSelector")
-      .mockReturnValue((() => someOption({})) as any);
+      .mockReturnValue((() => ({})) as any);
     jest
       .spyOn(credentialStatusUtils, "getCredentialStatus")
       .mockReturnValue("expired");
