@@ -46,7 +46,8 @@ import {
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
   zendeskidentityProviderId,
-  zendeskVersionsHistoryId
+  zendeskVersionsHistoryId,
+  zendeskWalletStatusId
 } from "../../../utils/supportAssistance";
 import { handleItemOnPress, openWebUrl } from "../../../utils/url";
 import {
@@ -54,6 +55,7 @@ import {
   zendeskTokenSelector
 } from "../../authentication/common/store/selectors";
 import { isLoggedIn } from "../../authentication/common/store/utils/guards";
+import { itwZendeskWalletStatusSelector } from "../../itwallet/common/store/selectors/zendesk";
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
@@ -123,6 +125,7 @@ const ZendeskAskPermissions = () => {
     O.getOrElse(() => notAvailable)
   );
   const versionsHistory = useIOSelector(appVersionHistorySelector);
+  const walletStatus = useIOSelector(itwZendeskWalletStatusSelector);
   const zendeskSelectedCategory = useIOSelector(
     zendeskSelectedCategorySelector
   );
@@ -334,6 +337,11 @@ const ZendeskAskPermissions = () => {
 
     // Tag the ticket with the current app version
     addTicketTag(currentVersion);
+
+    // TODO: [SIW-5093] remove the guard once zendeskWalletStatusId is set
+    if (zendeskWalletStatusId) {
+      addTicketCustomField(zendeskWalletStatusId, walletStatus);
+    }
 
     openSupportTicket(() => dispatchZendeskUiDismissed());
     void mixpanelTrack("ZENDESK_OPEN_TICKET");

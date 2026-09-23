@@ -17,12 +17,19 @@ import {
   idpSelected,
   loginSuccess
 } from "../../../authentication/common/store/actions";
+import * as itwZendeskSelectors from "../../../itwallet/common/store/selectors/zendesk";
 import { profileLoadSuccess } from "../../../settings/common/store/actions";
 import * as zendeskAction from "../../store/actions";
 import { zendeskSelectedCategory } from "../../store/actions";
 import ZendeskAskPermissions from "../ZendeskAskPermissions";
 
 jest.useFakeTimers();
+
+jest.mock("../../../../utils/supportAssistance", () => ({
+  ...jest.requireActual("../../../../utils/supportAssistance"),
+  // The real field ID is not available yet
+  zendeskWalletStatusId: "123456"
+}));
 
 const mockedIdp: SpidIdp = {
   id: "1",
@@ -252,6 +259,29 @@ describe("the ZendeskAskPermissions screen", () => {
       expect(mixpanelTrackSpy).toHaveBeenCalled();
       expect(MockZendesk.openTicket).toHaveBeenCalled();
     });
+
+    test.each(Object.values(itwZendeskSelectors.ItwZendeskWalletStatus))(
+      "should send the %s wallet status custom field",
+      walletStatus => {
+        jest
+          .spyOn(itwZendeskSelectors, "itwZendeskWalletStatusSelector")
+          .mockReturnValue(walletStatus);
+        const store: Store<GlobalState> = createStore(
+          appReducer,
+          globalState as any
+        );
+        act(() => {
+          store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+        });
+        const component: RenderAPI = renderComponent(store, false);
+
+        fireEvent(component.getByTestId("continueButtonId"), "onPress");
+        expect(MockZendesk.addTicketCustomField).toHaveBeenCalledWith(
+          "123456",
+          walletStatus
+        );
+      }
+    );
   });
 });
 
