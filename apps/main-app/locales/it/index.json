@@ -21,6 +21,7 @@
       },
       "inAppBrowserError": "C’è stato un problema nell’invio della richiesta. Riprova",
       "privacy": "Per maggiori informazioni, leggi **[l’Informativa sulla Privacy]({{privacyUrl}})**",
+      "requiredData": "Dati richiesti",
       "subtitle": "IO condividerà con ",
       "subtitle2": " i dati necessari alla tua autenticazione su ",
       "title": "Per accedere al servizio, consenti la condivisione dei seguenti dati"
@@ -204,8 +205,6 @@
           "label": "Campo di inserimento per pin della Carta di Identità elettronica"
         },
         "bottomSheetCTA": "Hai dimenticato il PIN?",
-        "contextualHelpBody": "Il codice **PIN** è composto da 8 cifre: \n• le prime 4 cifre ti sono state consegnate all'anagrafe;  \n• le ultime 4 cifre ti sono state spedite a casa, insieme alla carta d'identità elettronica.  \n  \nMettile insieme e inseriscile in quest'ordine.  \nIl codice PUK è necessario invece per sbloccare il **PIN** a seguito di tre tentativi errati. È composto da 8 cifre, e viene rilasciato insieme al **PIN**.",
-        "contextualHelpTitle": "Dove trovo i codici PIN e PUK?",
         "incorrectCiePinContent1": "Hai ancora 2 tentativi, controllalo e riprova.",
         "incorrectCiePinContent2": "Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
         "incorrectCiePinSecondaryActionLabel2": "Hai dimenticato il PIN?",
@@ -248,8 +247,6 @@
       }
     },
     "idp_login": {
-      "contextualHelpContent": "La password è il codice alfanumerico che hai scelto al momento della creazione della tua Identità Digitale SPID.\nSe non la ricordi, puoi recuperarla o impostare una nuova password seguendo le indicazioni del tuo Identity Provider.  \nUna volta inseriti i dati richiesti, riceverai un codice OTP dal tuo Identity Provider. Conferma la richiesta di accesso e torna sull'app IO per completare l’accesso. Troverai a questo punto una schermata che autorizza l'Identity Provider a trasmettere a IO una serie di informazioni necessarie per abilitarti all'utilizzo dell'app e dei vari servizi offerti dagli enti pubblici tramite IO. Premi \"acconsento\" per dare il tuo consenso e procedere con l’autenticazione.\n",
-      "contextualHelpTitle": "Qual è la tua password",
       "headerTitle": "Accedi",
       "poste_id": {
         "bottom_sheet": {
@@ -265,8 +262,6 @@
       "contentTitle": "Ciao {{name}}!"
     },
     "idp_selection": {
-      "contextualHelpContent": "**L'Identity Provider è il gestore della tua identità digitale**. Puoi iniziare il tuo flusso di autenticazione solo dopo aver selezionato l'Identity Provider che ha rilasciato la tua identità SPID.\n",
-      "contextualHelpTitle": "Chi è il tuo Identity Provider",
       "idps": {
         "loadingAccessibilityLabel": "Caricamento Identity Provider"
       },
@@ -315,8 +310,6 @@
         },
         "title": "Come vuoi entrare?"
       },
-      "contextualHelpContent": "Per accedere all'app IO dovrai autenticarti con la tua identità SPID (Sistema Pubblico di Identità Digitale) oppure utilizzando la CIE (Carta d'Identità Elettronica).\n**Grazie a questi sistemi di registrazione il tuo accesso all'app sarà sempre sicuro.**  \nPer richiedere un'identità digitale SPID puoi visitare [spid.gov.it](https:\/\/www.spid.gov.it) e scegliere un Identity Provider tra quelli proposti. \nSe invece sei interessato a fare richiesta per la CIE, puoi consultare maggiori informazioni sul sito del tuo Comune e prenotare un appuntamento.\n",
-      "contextualHelpTitle": "Come accedere all'app IO",
       "expiredCardContent": "La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.",
       "expiredCardTitle": "La verifica della CIE non è andata a buon fine",
       "loginCie": "Entra con CIE",
@@ -344,8 +337,6 @@
     "opt_in": {
       "button_accept_lv": "Continua con l’accesso rapido",
       "button_decline_lv": "Entra con SPID o CIE ogni 30 giorni",
-      "contextualHelpContent": "Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.",
-      "contextualHelpTitle": "Autenticazione",
       "identity_check": "Non dovrai più identificarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app",
       "notification": "Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO",
       "passcode": "Per tutte le altre volte basterà il tuo volto, impronta o codice di sblocco",
@@ -569,9 +560,15 @@
           "revoked": "Attenzione! Questa carta è stata revocata per {{reason}}"
         },
         "ownership": "Chi può usare la Carta?",
+        "ownershipData": {
+          "fiscalCode": "Codice Fiscale",
+          "name": "Nome",
+          "surname": "Cognome"
+        },
         "status": {
           "a11y": {
-            "cardStatus": "Stato della carta: {{status}}"
+            "cardStatus": "Stato della carta: {{status}}",
+            "eycaInfo": "Maggiori informazioni sul circuito EYCA"
           },
           "badge": {
             "active": "Attiva",
@@ -752,17 +749,11 @@
     "cduScreens": {
       "emailAlreadyTaken": {
         "editButton": "Modifica email",
-        "help": {
-          "body": "Il tuo indirizzo email risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app."
-        },
         "subtitle": "Il tuo indirizzo email **{{email}}** è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.",
         "title": "Modifica la tua email"
       },
       "validateMail": {
         "editButton": "No, modifica",
-        "help": {
-          "body": "Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email."
-        },
         "subtitle": "Per continuare a usare l’app, devi confermare che la tua email è **{{email}}**",
         "title": "È questa la tua email?",
         "validateButton": "Sì, conferma"
@@ -776,11 +767,7 @@
     "insert": {
       "alertButton": "Usa un’altra email",
       "alertDescription": "Può succedere se condividi lo stesso indirizzo con un familiare",
-      "alertTitle": "Questa email è già in uso",
-      "help": {
-        "content": "Questa pagina viene utilizzata per inserire o modificare l'indirizzo **e-mail**. L'email inserita deve essere convalidata.\n",
-        "title": "Email"
-      }
+      "alertTitle": "Questa email è già in uso"
     },
     "newinsert": {
       "alert": {
@@ -892,10 +879,6 @@
           "signing": {
             "subTitle": "A causa di un problema tecnico, la firma non è andata a buon fine. Se il problema si ripete, contatta l’assistenza.",
             "title": "La firma non è andata a buon fine"
-          },
-          "update": {
-            "subTitle": "Verifica di avere installato l’ultima versione di IO e accedi di nuovo con SPID o CIE.",
-            "title": "Aggiorna l’app"
           },
           "wrongUser": {
             "subTitle": "La richiesta di firma non è associata al tuo Codice Fiscale.",
@@ -1273,6 +1256,15 @@
               "secondaryAction": "Non ho la CIE",
               "title": "Carta di Identità Elettronica (CIE)"
             },
+            "nfc": {
+              "content": {
+                "android": "Sui dispositivi Android® l'antenna NFC per leggere la CIE può trovarsi in punti diversi del retro del telefono, in base al modello. Potrebbe ad esempio trovarsi in corrispondenza della parte alta, del centro oppure più in basso.\n\nPosiziona la CIE su una superficie stabile e poggia il tuo telefono sulla carta seguendo le istruzioni in app. Se la lettura non parte, ripeti l'operazione nelle altre posizioni indicate.",
+                "ios": "Su iPhone® l'antenna NFC per leggere la CIE si trova nella parte alta del dispositivo, sul retro.\n\nPosiziona la CIE su una superficie stabile e poggia il tuo telefono sulla carta, senza muoverlo."
+              },
+              "primaryAction": "Ho capito",
+              "secondaryAction": "Hai bisogno di aiuto?",
+              "title": "Come funziona la lettura della CIE?"
+            },
             "pin": {
               "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
               "dialog": {
@@ -1348,6 +1340,7 @@
               "title": "Prepara la tua Carta di Identità Elettronica (CIE)"
             },
             "nfc": {
+              "buttonLink": "Come funziona?",
               "cta": "Inizia lettura CIE",
               "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
               "title": "Posiziona la tua CIE su una superficie stabile per la lettura"
@@ -2115,8 +2108,7 @@
             "cta": "Gestisci consensi",
             "detail": {
               "message": "Hai salvato il consenso per le verifiche contactless di questi dati per **{{relyingParty}}**.",
-              "revokeAction": "Revoca consenso",
-              "title": "Dettaglio consenso"
+              "revokeAction": "Revoca consenso"
             },
             "fallback": "Servizio",
             "header": "Consensi salvati",
@@ -2601,6 +2593,7 @@
         },
         "error": {
           "banner": {
+            "label": "Il caricamento delle ricevute è fallito.",
             "retryButton": "Prova di nuovo"
           }
         },
@@ -2770,10 +2763,6 @@
             "title": "Vuoi chiudere la notifica SEND?"
           },
           "delegated": {
-            "cieContextualHelp": {
-              "body": "Per visualizzare una notifica SEND destinata a un’altra persona hai bisogno della sua Carta di Identità Elettronica e di uno smartphone che ne supporti la lettura.",
-              "title": "Come accedere a una notifica SEND destinata a un’altra persona"
-            },
             "createMandate": {
               "loadingText": "Attendi qualche secondo"
             },
@@ -3160,7 +3149,6 @@
         "hint": "Attendi il caricamento del contenuto",
         "label": "Caricamento in corso"
       },
-      "alert": "Avviso",
       "cieReadingProgress": "Lettura {{percentage}}% completata",
       "collapsed": "Compresso",
       "contextualHelp": {
@@ -3190,9 +3178,11 @@
       "retry": "Si è verificato un errore, si prega di riprovare"
     },
     "badges": {
+      "beta": "Beta",
       "cancelled": "Annullata",
       "failed": "Fallito",
       "onGoing": "In corso",
+      "pdf": "PDF",
       "reversal": "Storno"
     },
     "buttons": {
@@ -3671,6 +3661,8 @@
         "errorBody": "Impossibile caricare il dettaglio",
         "refund": {
           "amount": "Importo rimborso",
+          "cro": "CRO",
+          "date": "Data rimborso",
           "iban": "IBAN",
           "period": "Periodo di riferimento",
           "rejectedAdvice": {
@@ -4368,10 +4360,6 @@
     "tos": {
       "accept": "Accetta e continua",
       "error": "Non siamo riusciti a caricare l’Informativa privacy e i Termini e condizioni"
-    },
-    "unlockCode": {
-      "contextualHelpContent": "**Il codice di sblocco è il codice di sicurezza che mantiene nell'app IO i tuoi dati protetti, e viene impostato da te al primo accesso**.   \nSe è la prima volta che entri nell'app, imposta liberamente il tuo codice numerico e memorizzalo in modo da poterlo utilizzare durante tutti i successivi accessi.  \nSe l'hai già impostato e non lo ricordi, puoi selezionare \"Codice di sblocco dimenticato\" e impostare un nuovo codice.  \nIl codice di sblocco è legato al dispositivo su cui l'hai impostato: se cambi telefono, dovrai impostarlo nuovamente al primo accesso all'app IO.\n",
-      "contextualHelpTitle": "Qual è il tuo codice di sblocco"
     }
   },
   "openMaps": {
@@ -4428,9 +4416,7 @@
       "codeCopied": "Codice copiato!",
       "copyCode": "Copia codice fiscale",
       "description": "Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.",
-      "fiscalCode": "Codice fiscale",
-      "help": "Qui è visualizzato un fac-simile del tuo codice fiscale. \nIl fac-simile non sostituisce il documento fisico ma ne permette la lettura dei dati e del codice a barre sul retro. \nIn caso di omocodia, i dati generati nel fac-simile potrebbero non corrispondere ai dati anagrafici.\n",
-      "title": "I tuoi documenti personali"
+      "fiscalCode": "Codice fiscale"
     },
     "logout": {
       "activeWiAlertMessage": "Dovrai entrare di nuovo con SPID o CIE per usare l’app.\n\nSe accedi a IO da un dispositivo diverso da quello abituale, per motivi di sicurezza la funzionalità Documenti su IO verrà reimpostata.",
@@ -4464,8 +4450,6 @@
         "cleared": "La cache è stata eliminata."
       },
       "clearAsyncStorage": "Cancella contenuto di AsyncStorage",
-      "contextualHelpContent": "**Nella sezione Impostazioni puoi gestire i tuoi dati e le preferenze.**\nIn particolare qui puoi gestire le tue preferenze, la tua privacy e il tuo account. In questa sezione puoi inoltre accedere a i tuoi documenti in versione digitale, selezionando le card che compaiono nella parte alta della schermata.",
-      "contextualHelpTitle": "Cosa puoi fare nella sezione Impostazioni",
       "data": {
         "description": "Rivedi le tue informazioni",
         "title": "I tuoi dati"
@@ -4527,8 +4511,6 @@
         },
         "loading": "Attendi qualche secondo, stiamo verificando il tuo profilo...",
         "privacyPolicy": {
-          "contextualHelpContentPolicy": "### Cosa sono l'informativa e i termini d'uso?\n\nSecondo quanto stabilito dall'art. 13 del Regolamento UE n. 2016\/679 (comunemente GDPR), nell'informativa puoi trovare la descrizione completa di come l'app IO gestisce i tuoi dati personali. I termini e condizioni d'uso invece stabiliscono i tuoi diritti e obblighi nell'utilizzo dell'app e dei suoi servizi. <br\/> <br\/> <br\/> <br\/> \n\n\n",
-          "contextualHelpTitlePolicy": "Informativa sul trattamento dei dati personali e condizioni d'uso del servizio",
           "description": "Consulta l’Informativa Privacy e i Termini e condizioni d’uso di IO",
           "infobox": "È necessario prendere visione e accettare l'Informativa ed i Termini e condizioni d'uso",
           "title": "Informativa Privacy e Termini e condizioni d'uso",
@@ -4627,23 +4609,9 @@
     "preferences": {
       "calendar": {
         "birthday_calendar": "Compleanni",
-        "contextualHelpContent": "**Il tuo calendario preferito è di default quello associato alla tua mail,** se ti sei registrato con un account Google. Puoi in ogni momento modificare la mail associata al tuo calendario, in modo da ricevere i promemoria di IO sul calendario che usi di più.\n",
-        "contextualHelpTitle": "Cos'è il tuo calendario preferito",
         "local_calendar": "Calendario locale"
       },
-      "contextualHelpContent": "**Nella sezione Preferenze puoi verificare e modificare le impostazioni** che vengono utilizzate da tutti i servizi presenti su IO. \nQui puoi consultare indirizzo email, numero di telefono e lingua associate all'account e attivare o disattivare il riconoscimento biometrico.\n",
-      "contextualHelpTitle": "Le tue preferenze",
-      "email": {
-        "forward": {
-          "contextualHelpContent": "**Qui puoi abilitare o disabilitare l'inoltro dei messaggi sulla mail.**\nÈ possibile abilitare o disabilitare l'inoltro di tutti i messaggi che ricevi tramite IO sulla tua casella di posta, oppure abilitarli e disabilitarli puntualmente nella rispettiva scheda di dettaglio del servizio. \n",
-          "contextualHelpTitle": "Come gestire l'inoltro dei messaggi"
-        }
-      },
       "genericToastTitle": "Preferenze aggiornate!",
-      "language": {
-        "contextualHelpContent": "**Al momento IO eredita la lingua dal sistema operativo del tuo dispositivo:** \npuoi modificare la lingua dalle impostazioni del tuo telefono, e automaticamente la troverai aggiornata anche all'interno dell'app. \nLa lingua del contenuto dei messaggi è invece definita da ciascun ente comunicazione per comunicazione: a loro discrezione l'invio di un contenuto tradotto in diverse lingue.\n",
-        "contextualHelpTitle": "Come gestire la lingua su IO"
-      },
       "list": {
         "appearance": {
           "subtitle": "Personalizza l'app in base alle tue esigenze",
@@ -5111,8 +5079,6 @@
       "identificationMessage": "Conferma l'operazione inserendo il tuo codice di sblocco"
     },
     "QRtoPay": {
-      "contextualHelpContent": "**Qui puoi procedere al pagamento spontaneo di un avviso con pagoPA**, la piattaforma dei pagamenti per la Pubblica Amministrazione. Puoi pagare partendo da un avviso cartaceo, inquadrando il QR code che trovi nell'avviso e poi procedendo con il pagamento direttamente dall'app. Puoi anche caricare un QRcode dalla galleria del tuo telefono o procedere con la compilazione manuale dei dati di riconoscimento dell'avviso (Codice Avviso).",
-      "contextualHelpTitle": "Come puoi pagare un avviso",
       "settingsAlert": {
         "buttonText": {
           "cancel": "Annulla",
