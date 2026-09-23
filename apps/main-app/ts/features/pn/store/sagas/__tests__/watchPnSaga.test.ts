@@ -6,6 +6,7 @@ import { call, select } from "redux-saga/effects";
 
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
+import { SendFailureReason } from "../../../../messages/utils";
 import { loadServicePreference } from "../../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../../services/details/store/selectors";
 import {
@@ -118,13 +119,24 @@ describe("watchPnSaga", () => {
           expect(trackPNServiceStatusChangeSuccess).not.toHaveBeenCalled();
           expect(onSuccess).not.toHaveBeenCalled();
           expect(onFailure).toHaveBeenCalled();
-          expect(onFailure).toHaveBeenCalledWith(true);
+          expect(onFailure).toHaveBeenCalledWith(
+            true,
+            SendFailureReason.RATE_LIMITED
+          );
         });
     });
 
-    for (const resolvedValue of [
-      E.left(["API error"]),
-      E.right({ status: 500 })
+    for (const { resolvedValue, expectedReason } of [
+      // `readableReport` fails on this non-io-ts-shaped left value, so the
+      // saga's catch-all ends up classifying it as a generic network error.
+      {
+        resolvedValue: E.left(["API error"]),
+        expectedReason: SendFailureReason.NETWORK_ERROR
+      },
+      {
+        resolvedValue: E.right({ status: 500 }),
+        expectedReason: SendFailureReason.HTTP_STATUS_ERROR
+      }
     ]) {
       it("should handle a right(status:500) and a left response", () => {
         mockUpsertPNActivation.mockResolvedValueOnce(resolvedValue);
@@ -145,7 +157,7 @@ describe("watchPnSaga", () => {
           .run()
           .then(() => {
             expect(onFailure).toHaveBeenCalled();
-            expect(onFailure).toHaveBeenCalledWith(false);
+            expect(onFailure).toHaveBeenCalledWith(false, expectedReason);
             expect(onSuccess).not.toHaveBeenCalled();
           });
       });
