@@ -36,7 +36,6 @@
       "minusSymbol": "minus",
       "reload": "Neu laden",
       "search": "Suchen",
-      "alert": "Hinweis",
       "activityIndicator": {
         "label": "Wird geladen",
         "hint": "Warte, bis der Inhalt geladen ist"
@@ -157,7 +156,6 @@
   },
   "profile": {
     "fiscalCode": {
-      "title": "Deine persönlichen Dokumente",
       "fiscalCode": "Steuernummer",
       "description": "Verwende den Strichcode, um deine Steuernummer mitzuteilen, wenn du dazu aufgefordert wirst.",
       "copyCode": "Steuernummer kopieren",
@@ -178,7 +176,6 @@
       "forgetCurrentSession": "Aktuelle Sitzung löschen",
       "clearAsyncStorage": "Inhalt von AsyncStorage löschen",
       "dumpAsyncStorage": "AsyncStorage-Inhalt herunterladen",
-      "contextualHelpTitle": "Was du in deinem Profil machen kannst",
       "developerModeOn": "Entwicklermodus aktiviert",
       "cache": {
         "alert": "Bist du sicher den Cache löschen zu wollen?",
@@ -260,8 +257,7 @@
           "title": "Datenschutz und Nutzungsbedingungen",
           "description": "Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an",
           "updated": "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert.",
-          "infobox": "Es ist notwendig, die Datenschutzbestimmungen und die Nutzungsbedingungen zu lesen und zu akzeptieren",
-          "contextualHelpTitlePolicy": "Informationen über die Datenschutzbestimmungen und die Nutzungsbedingungen des Dienstes"
+          "infobox": "Es ist notwendig, die Datenschutzbestimmungen und die Nutzungsbedingungen zu lesen und zu akzeptieren"
         },
         "shareData": {
           "listItem": {
@@ -345,7 +341,6 @@
       "title": "Einstellungen",
       "subtitle": "Mit diesen Einstellungen kannst du dein IO-Erlebnis individuell gestalten.",
       "genericToastTitle": "Einstellungen aktualisiert!",
-      "contextualHelpTitle": "Deine Einstellungen",
       "list": {
         "wip": "In Bearbeitung",
         "service_contact": {
@@ -397,16 +392,7 @@
           "subtitle": "Vorschau und Erinnerung zulassen"
         }
       },
-      "language": {
-        "contextualHelpTitle": "Wie verwalte ich die Spracheinstellung?"
-      },
-      "email": {
-        "forward": {
-          "contextualHelpTitle": "Wie verwalte ich die Nachrichtenweiterleitung?"
-        }
-      },
       "calendar": {
-        "contextualHelpTitle": "Was ist dein bevorzugter Kalender?",
         "local_calendar": "Lokaler Kalender",
         "birthday_calendar": "Geburtstage"
       },
@@ -453,7 +439,6 @@
           "action": "Wir helfen dir"
         }
       },
-      "contextualHelpTitle": "Zugang zur IO-App",
       "loginSpid": "Anmeldung mit SPID",
       "loginCie": "Anmeldung mit CIE",
       "expiredCardTitle": "CIE-Verifizierung fehlgeschlagen",
@@ -620,8 +605,7 @@
         "lockedCiePinContent": "Die PIN deiner CIE wurde gesperrt. Um sie zu entsperren und eine neue einzustellen, musst du den PUK-Code in der CieID-App eingeben.",
         "lockedSecondaryActionLabel": "Hast du deinen PUK vergessen?",
         "subtitleCTA": "Wo finde ich ihn?",
-        "bottomSheetCTA": "Hast du deine PIN vergessen?",
-        "contextualHelpTitle": "Wo kann ich meine PIN und meinen PUK finden?"
+        "bottomSheetCTA": "Hast du deine PIN vergessen?"
       },
       "card": {
         "title": "Halte die CIE auf die Rückseite des Geräts",
@@ -656,8 +640,6 @@
       }
     },
     "opt_in": {
-      "contextualHelpTitle": "Authentifizierung",
-      "contextualHelpContent": "Hier findest du Informationen darüber, wie du dich bei IO authentifizieren kannst, sowie einige Sicherheitstipps.",
       "title": "Ab sofort kannst du leichter auf IO zugreifen",
       "identity_check": "Du musst dich nicht mehr alle 30 Tage mit SPID oder CIE identifizieren, sondern nur noch einmal im Jahr oder wenn du die App verlässt",
       "security_suggests": "Einige Sicherheitstipps",
@@ -673,12 +655,8 @@
       "access_new_device": "Wenn du mit einem fremden Gerät auf IO zugreifst, denk daran, dich bei der App abzumelden.",
       "navigate_to_the_site": "Website besuchen"
     },
-    "idp_selection": {
-      "contextualHelpTitle": "Wer ist dein Identitätsanbieter?"
-    },
     "idp_login": {
-      "headerTitle": "Anmelden",
-      "contextualHelpTitle": "Wie lautet dein Passwort"
+      "headerTitle": "Anmelden"
     },
     "idp_login_success": {
       "contentTitle": "Hallo {{name}}!"
@@ -711,24 +689,15 @@
         "title": "Ist das deine E-Mail?",
         "subtitle": "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen: **{{email}}**",
         "editButton": "Nein, ändern",
-        "validateButton": "Ja, bestätigen",
-        "help": {
-          "body": "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen"
-        }
+        "validateButton": "Ja, bestätigen"
       },
       "emailAlreadyTaken": {
         "title": "Deine E-Mail-Adresse ändern",
         "subtitle": "Deine E-Mail-Adresse **{{email}}** wird bereits auf IO verwendet, du musst eine andere eingeben, um die App weiter nutzen zu können.",
-        "editButton": "E-Mail-Adresse ändern",
-        "help": {
-          "body": "Deine E-Mail-Adresse wird bereits auf IO verwendet; du musst eine andere eingeben, um die App weiter benutzen zu können."
-        }
+        "editButton": "E-Mail-Adresse ändern"
       }
     },
     "insert": {
-      "help": {
-        "title": "E-Mail"
-      },
       "alertTitle": "Diese E-Mail-Adresse wird bereits verwendet",
       "alertDescription": "Dies kann der Fall sein, wenn du mit einem Familienmitglied die gleiche Adresse teilst",
       "alertButton": "Andere E-Mail-Adresse verwenden"
@@ -768,9 +737,6 @@
     "tos": {
       "accept": "Akzeptieren",
       "error": "Wir konnten die Datenschutzrichtlinie und die Allgemeinen Geschäftsbedingungen nicht abrufen"
-    },
-    "unlockCode": {
-      "contextualHelpTitle": "Wie lautet dein Entsperrcode?"
     },
     "pin": {
       "title": "Entsprerrcode erstellen",
@@ -1060,8 +1026,7 @@
           "settings": "Berechtigungen aktivieren",
           "cancel": "Abbrechen"
         }
-      },
-      "contextualHelpTitle": "Wie man eine Zahlungsmitteilung bezahlen kann"
+      }
     },
     "errors": {
       "GENERIC_ERROR": "Ein unerwarteter Fehler ist aufgetreten",

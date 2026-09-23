@@ -42,6 +42,15 @@ describe("ItwConsentManagementScreen", () => {
     jest
       .spyOn(analytics, "trackItwConsentManagement")
       .mockImplementation(jest.fn());
+    jest
+      .spyOn(analytics, "trackItwRevokeConsent")
+      .mockImplementation(jest.fn());
+    jest
+      .spyOn(analytics, "trackItwRevokeConsentOperationBlock")
+      .mockImplementation(jest.fn());
+    jest
+      .spyOn(analytics, "trackItwRevokeConsentOperationBlockAction")
+      .mockImplementation(jest.fn());
   });
 
   it("returns to the document without showing an empty state when no consents exist", async () => {
@@ -109,11 +118,20 @@ describe("ItwConsentManagementScreen", () => {
       await fireEventAsync.press(
         component.getByTestId("revoke-all-consents-action")
       );
+
+      expect(analytics.trackItwRevokeConsent).toHaveBeenCalledTimes(1);
+      expect(
+        analytics.trackItwRevokeConsentOperationBlock
+      ).toHaveBeenCalledTimes(1);
+
       const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
       await act(async () => {
         alertButtons[0].onPress();
       });
 
+      expect(
+        analytics.trackItwRevokeConsentOperationBlockAction
+      ).toHaveBeenCalledWith("confirm");
       expect(store.getState().features.itWallet.proximity.consents).toEqual({
         unrelated
       });
@@ -142,6 +160,9 @@ describe("ItwConsentManagementScreen", () => {
     await act(async () => {
       cancelButton.onPress?.();
     });
+    expect(
+      analytics.trackItwRevokeConsentOperationBlockAction
+    ).toHaveBeenCalledWith("cancel");
     expect(store.getState().features.itWallet.proximity.consents).toEqual(
       consents
     );
