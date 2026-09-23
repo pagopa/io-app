@@ -75,10 +75,9 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
 
   const navigateToAuthErrorScreen = useCallback(
     (errorCodeOrMessage?: string) => {
-      // Local `replace` (not targeting `MAIN`) keeps the unmount confined to
-      // this screen instead of remounting the whole nested navigator:
-      // `AuthErrorScreen`'s SPID retry replaces back to this route, which
-      // resets the webview's internal Lollipop/login state.
+      // `replace` removes this screen from the stack, so that retrying
+      // picks a fresh IdP from IDP_SELECTION instead of resuming this
+      // failed attempt.
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
         errorCodeOrMessage,
         authMethod: "SPID",
