@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-canary.8230](https://github.com/pagopa/io-app/compare/3.40.0-rc.3...3.40.0-canary.8230) (2026-09-23)
+
+### Bug Fixes
+
+* restore missing pod ([34a6de9](https://github.com/pagopa/io-app/commit/34a6de99c945c98550076b99e268ed055100908e))
+
+### Chores
+
+* **deps:** replaced react-native-keychain with expo-secure-store ([791864b](https://github.com/pagopa/io-app/commit/791864be9ef095e050de98ec37901847d8f6558b))
+* file format ([1adcef7](https://github.com/pagopa/io-app/commit/1adcef712023d04e06c17f16294d995c8fb83ebe))
+* **knip:** removed unused export ([d230503](https://github.com/pagopa/io-app/commit/d23050350f1f36487893b06f588119428f9fd5dc))
+* legacy fallback ([6e9ec68](https://github.com/pagopa/io-app/commit/6e9ec6859dd421229d647e7a55d18fa3a8591fff))
+* restore react-native-keychain ([51c9d00](https://github.com/pagopa/io-app/commit/51c9d009a56be06087ea752d8918d1ab7b0e8bc0))
 ## [3.40.0-rc.3](https://github.com/pagopa/io-app/compare/3.40.0-rc.2...3.40.0-rc.3) (2026-09-22)
 
 ### Features
