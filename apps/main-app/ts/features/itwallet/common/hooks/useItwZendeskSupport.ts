@@ -1,4 +1,5 @@
 import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
 import { useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
 
@@ -11,7 +12,6 @@ import {
   resetCustomFields,
   resetLog,
   zendeskCategoryId,
-  zendeskItWalletCategory,
   zendeskItWalletFailureCode,
   zendeskItWalletSubcategoryId
 } from "../../../../utils/supportAssistance";
@@ -19,6 +19,7 @@ import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
+import { itwZendeskCategorySelector } from "../store/selectors/zendesk";
 
 export enum ZendeskSubcategoryValue {
   IT_WALLET_AGGIUNTA_DOCUMENTI = "it_wallet_aggiunta_documenti",
@@ -26,6 +27,12 @@ export enum ZendeskSubcategoryValue {
 }
 
 export type ItwZendeskSupportParams = {
+  /**
+   * Overrides the category derived from the wallet status. Use it when the flow
+   * itself determines the category, e.g. an IT-Wallet activation for a user
+   * whose wallet is not active yet.
+   */
+  category?: ZendeskCategory;
   /** When provided, sets the `zendeskItWalletFailureCode` custom field. */
   errorCode?: string;
   /** When provided, appended to the Zendesk ticket log. */
@@ -44,10 +51,16 @@ export const useItwZendeskSupport = () => {
   const dispatch = useIODispatch();
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+  const walletStatusCategory = useIOSelector(itwZendeskCategorySelector);
   const { name: startingRoute } = useRoute();
 
   const startItwZendeskSupport = useCallback(
-    ({ subcategory, errorCode, logData }: ItwZendeskSupportParams) => {
+    ({
+      category = walletStatusCategory,
+      subcategory,
+      errorCode,
+      logData
+    }: ItwZendeskSupportParams) => {
       if (choosenTool !== ToolEnum.zendesk) {
         return;
       }
@@ -55,7 +68,7 @@ export const useItwZendeskSupport = () => {
       resetCustomFields();
       resetLog();
 
-      addTicketCustomField(zendeskCategoryId, zendeskItWalletCategory.value);
+      addTicketCustomField(zendeskCategoryId, category.value);
       addTicketCustomField(zendeskItWalletSubcategoryId, subcategory);
 
       if (errorCode) {
@@ -73,9 +86,9 @@ export const useItwZendeskSupport = () => {
           }
         })
       );
-      dispatch(zendeskSelectedCategory(zendeskItWalletCategory));
+      dispatch(zendeskSelectedCategory(category));
     },
-    [choosenTool, dispatch, startingRoute]
+    [choosenTool, dispatch, startingRoute, walletStatusCategory]
   );
 
   return { startItwZendeskSupport };

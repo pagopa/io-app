@@ -83,22 +83,22 @@ describe("useItwStartCredentialSupportRequest", () => {
     expect(supportStartAction?.payload?.assistanceType?.itWallet).toBe(true);
   });
 
-  it("dispatches zendeskSelectedCategory with it_wallet category", () => {
+  it("dispatches zendeskSelectedCategory with documenti_su_io category when IT-Wallet is not active", () => {
     const actions = renderAndAct(baseMockedCredential);
 
     const selectedCategoryAction = actions.find(
       a => a.type === "ZENDESK_SELECTED_CATEGORY"
     );
     expect(selectedCategoryAction).toBeDefined();
-    expect(selectedCategoryAction?.payload?.value).toBe("it_wallet");
+    expect(selectedCategoryAction?.payload?.value).toBe("documenti_su_io");
   });
 
-  it("sets the IT Wallet category custom field", () => {
+  it("sets the documenti_su_io category custom field when IT-Wallet is not active", () => {
     renderAndAct(baseMockedCredential);
 
     expect(mockedAddTicketCustomField).toHaveBeenCalledWith(
       supportAssistance.zendeskCategoryId,
-      supportAssistance.zendeskItWalletCategory.value
+      supportAssistance.zendeskDocumentiSuIoCategory.value
     );
   });
 

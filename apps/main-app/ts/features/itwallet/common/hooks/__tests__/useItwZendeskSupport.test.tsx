@@ -7,6 +7,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as supportAssistance from "../../../../../utils/supportAssistance";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import {
   useItwZendeskSupport,
   ZendeskSubcategoryValue
@@ -60,6 +61,7 @@ const renderAndCall = (
 
 describe("useItwZendeskSupport", () => {
   beforeEach(() => {
+    jest.restoreAllMocks();
     jest.clearAllMocks();
     mockedAssistanceToolRemoteConfig.mockReturnValue("zendesk");
   });
@@ -79,20 +81,50 @@ describe("useItwZendeskSupport", () => {
     expect(action?.payload?.startingRoute).toBe("MOCK_SCREEN");
   });
 
-  it("dispatches zendeskSelectedCategory with it_wallet category", () => {
-    const actions = renderAndCall(baseParams);
+  test.each([
+    {
+      name: "IT-Wallet user",
+      isItwValid: true,
+      expectedCategory: "it_wallet"
+    },
+    {
+      name: "Documenti su IO user",
+      isItwValid: false,
+      expectedCategory: "documenti_su_io"
+    }
+  ])(
+    "uses the $expectedCategory category for $name",
+    ({ isItwValid, expectedCategory }) => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(isItwValid);
+
+      const actions = renderAndCall(baseParams);
+
+      const action = actions.find(a => a.type === "ZENDESK_SELECTED_CATEGORY");
+      expect(action?.payload?.value).toBe(expectedCategory);
+      expect(mockedAddTicketCustomField).toHaveBeenCalledWith(
+        supportAssistance.zendeskCategoryId,
+        expectedCategory
+      );
+    }
+  );
+
+  it("uses the provided category instead of the wallet status one", () => {
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(false);
+
+    const actions = renderAndCall({
+      ...baseParams,
+      category: supportAssistance.zendeskItWalletCategory
+    });
 
     const action = actions.find(a => a.type === "ZENDESK_SELECTED_CATEGORY");
-    expect(action).toBeDefined();
     expect(action?.payload?.value).toBe("it_wallet");
-  });
-
-  it("sets the it_wallet category custom field", () => {
-    renderAndCall(baseParams);
-
     expect(mockedAddTicketCustomField).toHaveBeenCalledWith(
       supportAssistance.zendeskCategoryId,
-      supportAssistance.zendeskItWalletCategory.value
+      "it_wallet"
     );
   });
 

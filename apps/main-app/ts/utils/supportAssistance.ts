@@ -143,8 +143,24 @@ export const zendeskFCICategory: ZendeskCategory = {
     "de-DE": "Firma con IO"
   }
 };
+/**
+ * Category for IT-Wallet (L3) support tickets.
+ * In-app wallet flows pick between this and {@link zendeskDocumentiSuIoCategory}
+ * based on the user's wallet status, unless the flow itself determines it.
+ */
 export const zendeskItWalletCategory: ZendeskCategory = {
   value: "it_wallet",
+  description: {
+    "it-IT": "IT-Wallet",
+    "en-EN": "IT-Wallet",
+    "de-DE": "IT-Wallet"
+  }
+};
+/**
+ * Category for Documenti su IO support tickets.
+ */
+export const zendeskDocumentiSuIoCategory: ZendeskCategory = {
+  value: "documenti_su_io",
   description: {
     "it-IT": "Documenti su IO",
     "en-EN": "Documenti su IO",
