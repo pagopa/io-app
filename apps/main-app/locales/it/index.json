@@ -1843,6 +1843,10 @@
               "jwtExpiring": "Verifica la versione digitale del tuo documento entro il {{date}} per continuare a usarlo senza limitazioni."
             }
           },
+          "needsUpgrade": {
+            "content": "Non è stato possibile aggiornare il documento automaticamente.\nAggiornalo ora per continuare a usarlo senza limitazioni.",
+            "action": "Aggiorna documento digitale"
+          },
           "mdl": {
             "content": "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine.",
             "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano.",
