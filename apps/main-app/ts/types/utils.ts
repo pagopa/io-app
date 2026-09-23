@@ -1,3 +1,4 @@
+// oxlint-disable-next-line no-restricted-imports -- type-only: `typed-redux-saga/macro` has no equivalent
 import { Effect } from "redux-saga/effects";
 
 /**
