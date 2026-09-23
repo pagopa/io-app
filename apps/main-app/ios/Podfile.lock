@@ -428,14 +428,14 @@ PODS:
     - ZendeskChatSDK
     - ZendeskMessagingAPISDK
     - ZendeskSupportSDK
-  - Pulsar (1.6.1):
+  - Pulsar (1.7.0):
     - boost
     - DoubleConversion
     - fast_float
     - fmt
     - glog
     - hermes-engine
-    - Pulsar-haptics (= 1.1.4)
+    - PulsarHaptics (= 1.4.0)
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -457,7 +457,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - Pulsar-haptics (1.1.4)
+  - PulsarHaptics (1.4.0)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -4051,7 +4051,7 @@ SPEC REPOS:
     - Mixpanel-swift
     - MultiplatformBleAdapter
     - OpenSSL-Universal
-    - Pulsar-haptics
+    - PulsarHaptics
     - React-Codegen
     - SocketRocket
     - SwiftCBOR
@@ -4402,8 +4402,8 @@ SPEC CHECKSUMS:
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 07433c4ab85da44d0b5ceac374ff4e1d57c7aa23
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
-  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  hermes-engine: 037eacbb56098bf69c62cf905ec96fb01eab8248
+  glog: 0456694f3aaf09460b660ea327cfc11defbeea4c
+  hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 730061a6443f611f163c38ec49b6dc5a4aae3f81
@@ -4422,8 +4422,8 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
-  Pulsar: c743a993d501c276827f8fc83c9a26a916f111ef
-  Pulsar-haptics: f795eaf55d8d0290148fd97c747dcc6689c3d079
+  Pulsar: b74a2333a1f655d04a8bc144a7273cb7ffdf7122
+  PulsarHaptics: 62d13e9ef63535263f110a925e587d5d027dc683
   RCT-Folly: b29feb752b08042c62badaef7d453f3bb5e6ae23
   RCTDeprecation: f05668eea7b0e209e77e8ab1dc6a5e3b342f6f65
   RCTRequired: c1ddbcb9ab4d51c36bda2a96556d064cb8825357

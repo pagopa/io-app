@@ -84,7 +84,7 @@ const setupTest = ({
   const utils = renderHook(
     () =>
       useOneIdentityLoginSource({
-        idp: mockIdp,
+        idpId: mockIdp.id,
         onFailure,
         minAuthLevel
       }),
@@ -120,7 +120,7 @@ describe("useOneIdentityLoginSource", () => {
     });
 
     expect(mockRetriableFetch).toHaveBeenCalledWith(
-      `${apiUrlPrefix}/api/auth/v2/reserve`,
+      `${apiUrlPrefix}/api/auth/v1/reserve`,
       expect.objectContaining({
         method: "POST",
         headers: expect.objectContaining({
@@ -161,6 +161,77 @@ describe("useOneIdentityLoginSource", () => {
     expect(onFailure).toHaveBeenCalled();
   });
 
+  it("should trigger a new reserve request when generateLoginSource is called after a successful response", async () => {
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
+
+    const { result } = setupTest();
+
+    await waitFor(() => {
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(1);
+    });
+
+    act(() => {
+      void result.current.generateLoginSource();
+    });
+
+    expect(result.current.loginSourceState.status).toBe("reserving-public-key");
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(2);
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+  });
+
+  it("should abort a still pending reserve request when generateLoginSource is called before it resolves", async () => {
+    // eslint-disable-next-line functional/no-let
+    let resolveFirstFetch: (value: FetchResponse) => void = () => undefined;
+
+    mockRetriableFetch.mockImplementationOnce(
+      () =>
+        new Promise<FetchResponse>(resolve => {
+          resolveFirstFetch = resolve;
+        })
+    );
+
+    mockRetriableFetch.mockResolvedValueOnce(
+      successResponse(200, reserveResponse)
+    );
+
+    const { result } = setupTest();
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(1);
+    });
+
+    const [, fetchOptions] = mockRetriableFetch.mock.lastCall as [
+      string,
+      RequestInit
+    ];
+    const firstFetchSignal = fetchOptions.signal as AbortSignal;
+
+    expect(firstFetchSignal.aborted).toBe(false);
+
+    act(() => {
+      void result.current.generateLoginSource();
+    });
+
+    expect(firstFetchSignal.aborted).toBe(true);
+
+    resolveFirstFetch(successResponse(200, reserveResponse));
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(2);
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+  });
+
   it("should fail if ephemeral key generation fails", async () => {
     mockHandleRegenerateEphemeralKey.mockResolvedValueOnce(undefined);
 
@@ -187,7 +258,7 @@ describe("useOneIdentityLoginSource", () => {
 
     await waitFor(() => {
       expect(mockRetriableFetch).toHaveBeenCalledWith(
-        `${apiUrlPrefix}/api/auth/v2/reserve`,
+        `${apiUrlPrefix}/api/auth/v1/reserve`,
         expect.objectContaining({
           body: JSON.stringify({
             env: "PROD",
@@ -211,7 +282,7 @@ describe("useOneIdentityLoginSource", () => {
 
     await waitFor(() => {
       expect(mockRetriableFetch).toHaveBeenCalledWith(
-        `${apiUrlPrefix}/api/auth/v2/reserve`,
+        `${apiUrlPrefix}/api/auth/v1/reserve`,
         expect.objectContaining({
           body: JSON.stringify({
             env: "UAT",
