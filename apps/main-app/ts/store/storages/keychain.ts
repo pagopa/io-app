@@ -114,7 +114,11 @@ export default function createSecureStorage(): Storage {
 
     removeItem: async key => {
       try {
-        return await removeChunked(sanitizeKey(key));
+        await removeChunked(sanitizeKey(key));
+        // TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
+        // clears the legacy entry too, in case migration never completed (e.g. after a write failure)
+        await LegacyKeychain.resetGenericPassword({ service: key });
+        return true;
       } catch (err) {
         removeKeychainError = JSON.stringify(err);
         return false;

@@ -23,6 +23,9 @@ const DEFAULT_OPTIONS: SecureStore.SecureStoreOptions = {
  */
 export async function deletePin(): Promise<boolean> {
   await SecureStore.deleteItemAsync(PIN_KEY, DEFAULT_OPTIONS);
+  // TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
+  // clears the legacy entry too, in case migration never completed (e.g. after a write failure)
+  await LegacyKeychain.resetGenericPassword();
   return true;
 }
 
