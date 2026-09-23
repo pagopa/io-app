@@ -5,7 +5,7 @@ on:
     types:
       - opened
     paths:
-      - 'apps/main-app/locales/**'
+      - "apps/main-app/locales/**"
 
 permissions:
   contents: write
