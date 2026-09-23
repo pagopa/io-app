@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /**
  * Aggregates all defined reducers
  */

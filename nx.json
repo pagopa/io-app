@@ -8,6 +8,7 @@
       "default",
       "!{projectRoot}/.eslintrc.json",
       "!{projectRoot}/eslint.config.mjs",
+      "!{projectRoot}/.oxlintrc.jsonc",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.json",
       "!{projectRoot}/jest.config.[jt]s",
@@ -32,6 +33,11 @@
     ]
   },
   "targetDefaults": {
+    "oxlint": {
+      "options": {
+        "args": "--type-aware --report-unused-disable-directives-severity=warn"
+      }
+    },
     "test": {
       "configurations": {
         "ci": {
@@ -56,6 +62,12 @@
       "plugin": "@nx/eslint/plugin",
       "options": {
         "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/oxlint",
+      "options": {
+        "targetName": "oxlint"
       }
     }
   ]
