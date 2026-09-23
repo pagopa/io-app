@@ -15,15 +15,14 @@ module.exports = {
   meta: {
     type: "problem",
     docs: {
-      description:
-        'Enforce `yield*` over `yield` for typed-redux-saga effects',
+      description: "Enforce `yield*` over `yield` for typed-redux-saga effects"
     },
     fixable: "code",
     messages: {
       useYieldStar:
-        'Use `yield*` instead of `yield` when calling typed-redux-saga effects to preserve type safety.',
+        "Use `yield*` instead of `yield` when calling typed-redux-saga effects to preserve type safety."
     },
-    schema: [],
+    schema: []
   },
 
   create(context) {
@@ -77,10 +76,10 @@ module.exports = {
               const yieldToken = sourceCode.getFirstToken(node);
               // Replace "yield" with "yield*"
               return fixer.replaceText(yieldToken, "yield*");
-            },
+            }
           });
         }
-      },
+      }
     };
-  },
+  }
 };
