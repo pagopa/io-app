@@ -97,7 +97,7 @@ jest.mock("expo-secure-store", () => {
     deleteItemAsync: jest.fn(key => {
       store.delete(key);
       return Promise.resolve();
-    }),
+    })
   };
 });
 jest.mock("expo-calendar", () => ({
