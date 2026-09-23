@@ -10,7 +10,6 @@ import {
   IOAnimatedPictograms,
   IOAnimatedPictogramsAssets
 } from "../../../../components/ui/AnimatedPictogram";
-import { TranslationKeys } from "../../../../i18n";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import {
   AppParamsList,
@@ -66,26 +65,94 @@ const pictogramByOutcome: Record<
   [WalletOnboardingOutcomeEnum.BE_KO]: "umbrella"
 };
 
+type OutcomeCopy = {
+  primaryAction: string;
+  subtitle: string | undefined;
+  title: string;
+};
+
 /**
- * Subtitle shown under the outcome title, if any.
- * `undefined` marks the outcomes whose title is self-explanatory and that are
- * therefore rendered without a subtitle.
+ * Title, optional subtitle and primary action label shown for an onboarding outcome.
  */
-export const subtitleKeyByOutcome: Record<
-  keyof typeof WalletOnboardingOutcomeEnum,
-  TranslationKeys | undefined
-> = {
-  SUCCESS: undefined,
-  CANCELED_BY_USER: undefined,
-  ALREADY_ONBOARDED: undefined,
-  GENERIC_ERROR: "wallet.onboarding.outcome.GENERIC_ERROR.subtitle",
-  AUTH_ERROR: "wallet.onboarding.outcome.AUTH_ERROR.subtitle",
-  TIMEOUT: "wallet.onboarding.outcome.TIMEOUT.subtitle",
-  INVALID_SESSION: "wallet.onboarding.outcome.INVALID_SESSION.subtitle",
-  BPAY_NOT_FOUND: "wallet.onboarding.outcome.BPAY_NOT_FOUND.subtitle",
-  PSP_ERROR_ONBOARDING:
-    "wallet.onboarding.outcome.PSP_ERROR_ONBOARDING.subtitle",
-  BE_KO: "wallet.onboarding.outcome.BE_KO.subtitle"
+const getOutcomeCopy = (outcome: WalletOnboardingOutcome): OutcomeCopy => {
+  switch (outcome) {
+    case WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.ALREADY_ONBOARDED.title"),
+        subtitle: undefined,
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.ALREADY_ONBOARDED.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.AUTH_ERROR:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.AUTH_ERROR.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.AUTH_ERROR.subtitle"),
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.AUTH_ERROR.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.BE_KO:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.BE_KO.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.BE_KO.subtitle"),
+        primaryAction: I18n.t("wallet.onboarding.outcome.BE_KO.primaryAction")
+      };
+    case WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.BPAY_NOT_FOUND.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.BPAY_NOT_FOUND.subtitle"),
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.BPAY_NOT_FOUND.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.CANCELED_BY_USER:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.CANCELED_BY_USER.title"),
+        subtitle: undefined,
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.CANCELED_BY_USER.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.GENERIC_ERROR:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.GENERIC_ERROR.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.GENERIC_ERROR.subtitle"),
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.GENERIC_ERROR.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.INVALID_SESSION:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.INVALID_SESSION.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.INVALID_SESSION.subtitle"),
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.INVALID_SESSION.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.PSP_ERROR_ONBOARDING.title"),
+        subtitle: I18n.t(
+          "wallet.onboarding.outcome.PSP_ERROR_ONBOARDING.subtitle"
+        ),
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.PSP_ERROR_ONBOARDING.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.SUCCESS:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.SUCCESS.title"),
+        subtitle: undefined,
+        primaryAction: I18n.t("wallet.onboarding.outcome.SUCCESS.primaryAction")
+      };
+    case WalletOnboardingOutcomeEnum.TIMEOUT:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.TIMEOUT.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.TIMEOUT.subtitle"),
+        primaryAction: I18n.t("wallet.onboarding.outcome.TIMEOUT.primaryAction")
+      };
+  }
 };
 
 const PAYMENT_AUTHORIZATION_DENIED_ERROR = "PAYMENT_AUTHORIZATION_DENIED_ERROR";
@@ -111,11 +178,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const paymentMethodSelectedRef = useRef<string | undefined>(undefined);
   const store = useIOStore();
 
-  const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
-    Object.values(WalletOnboardingOutcomeEnum).indexOf(outcome)
-  ] as keyof typeof WalletOnboardingOutcomeEnum;
-
-  const subtitleKey = subtitleKeyByOutcome[outcomeEnumKey];
+  const outcomeCopy = getOutcomeCopy(outcome);
 
   useOnFirstRender(() => {
     const payment_method_selected = availablePaymentMethods?.find(
@@ -237,18 +300,14 @@ const PaymentsOnboardingFeedbackScreen = () => {
       <OperationResultScreenContent
         {...animationProps}
         action={{
-          label: I18n.t(
-            `wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`
-          ),
-          accessibilityLabel: I18n.t(
-            `wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`
-          ),
+          label: outcomeCopy.primaryAction,
+          accessibilityLabel: outcomeCopy.primaryAction,
           onPress: handleContinueButton,
           testID: "wallet-onboarding-continue-button"
         }}
         secondaryAction={renderSecondaryAction()}
-        subtitle={subtitleKey !== undefined ? I18n.t(subtitleKey) : undefined}
-        title={I18n.t(`wallet.onboarding.outcome.${outcomeEnumKey}.title`)}
+        subtitle={outcomeCopy.subtitle}
+        title={outcomeCopy.title}
       />
       {supportModal.bottomSheet}
     </View>
