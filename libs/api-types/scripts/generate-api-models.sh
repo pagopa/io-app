@@ -64,26 +64,18 @@ declare -a apisNoClientNoRM=(
 )
 
 for elem in "${apis[@]}"; do
-  read -a strarr <<<"$elem" # uses default whitespace IFS
-  echo ${strarr[0]}
-  rm -rf ${strarr[0]}
-  mkdir -p ${strarr[0]}
-  pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types --client &
+    read -a strarr <<< "$elem"  # uses default whitespace IFS
+    echo ${strarr[0]}; rm -rf ${strarr[0]}; mkdir -p ${strarr[0]}; pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types --client &
 done
 wait
 
 for elem in "${apisNoClient[@]}"; do
-  read -a strarr <<<"$elem" # uses default whitespace IFS
-  echo ${strarr[0]}
-  rm -rf ${strarr[0]}
-  mkdir -p ${strarr[0]}
-  pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types &
+  read -a strarr <<< "$elem"  # uses default whitespace IFS
+  echo ${strarr[0]}; rm -rf ${strarr[0]}; mkdir -p ${strarr[0]}; pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types &
 done
 wait
 
 for elem in "${apisNoClientNoRM[@]}"; do
-  read -a strarr <<<"$elem" # uses default whitespace IFS
-  echo ${strarr[0]}
-  mkdir -p ${strarr[0]}
-  pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types
+  read -a strarr <<< "$elem"  # uses default whitespace IFS
+  echo ${strarr[0]}; mkdir -p ${strarr[0]}; pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types
 done

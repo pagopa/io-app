@@ -22,7 +22,7 @@ const itwRemoteConfigSelector = (state: GlobalState) =>
 export const isItwEnabledSelector = createSelector(
   itwRemoteConfigSelector,
   ({ enabled, min_app_version }): boolean => {
-    if (enabled === undefined || enabled === false) {
+    if (!enabled) {
       return false;
     }
 
@@ -104,7 +104,7 @@ export const isItwMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
   ({ itw_l3 }): boolean => {
     const version = itw_l3?.min_app_version;
-    if (version === undefined) {
+    if (!version) {
       return false;
     }
     return isVersionSupported(
@@ -121,7 +121,7 @@ export const isItwProximityMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
   ({ proximity }): boolean => {
     const version = proximity?.min_app_version;
-    if (version === undefined) {
+    if (!version) {
       return false;
     }
     return isVersionSupported(
