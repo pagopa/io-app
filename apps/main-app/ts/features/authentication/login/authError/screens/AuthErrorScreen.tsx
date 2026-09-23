@@ -1,18 +1,18 @@
-import { Route, useRoute } from "@react-navigation/native";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import { SETTINGS_ROUTES } from "../../../../settings/common/navigation/routes";
 import {
   setFinishedActiveSessionLoginFlow,
   setRetryActiveSessionLogin
 } from "../../../activeSessionLogin/store/actions";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { AuthLevel } from "../../../common/utils";
 import { getAuthErrorDetails } from "../../../common/utils/authError";
@@ -63,22 +63,47 @@ const AuthErrorScreen = () => {
   }, [errorCodeOrMessage, authMethod, authLevel]);
   useDebugInfo(debugInfo);
 
-  const navigation = useIONavigation();
+  const navigation =
+    useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();
 
   const onRetry = useCallback(() => {
     if (authMethod === "SPID") {
       dispatch(setSpidLoginInLoadingState());
     }
 
-    const navigationParams = {
-      screen: authScreenByAuthMethod[authMethod]
-    };
-
     if (isActiveSessionLogin) {
       dispatch(setRetryActiveSessionLogin());
-      navigation.replace(SETTINGS_ROUTES.AUTHENTICATION, navigationParams);
-    } else {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, navigationParams);
+    }
+
+    // The active session login flow pushes its own instance of this same
+    // nested authentication navigator (from Settings), so `navigation`
+    // always refers to whichever instance currently renders this screen:
+    // the same local navigation works for both the first-login and the
+    // active session flows.
+    switch (authMethod) {
+      case "CIE":
+        // The CIE PIN screen navigates to this one with `navigate`, so it's
+        // still in the stack, possibly with a card reader screen on top of
+        // it: `navigate` to an existing route pops back to it instead of
+        // pushing a new instance.
+        navigation.navigate(authScreenByAuthMethod.CIE);
+        break;
+      case "CIE_ID":
+        // CIE_ID_LOGIN reaches this screen via `replace`, so it's no
+        // longer in the stack: it has to be recreated to retry, which also
+        // re-triggers the Lollipop key generation on mount.
+        navigation.replace(authScreenByAuthMethod.CIE_ID);
+        break;
+      case "SPID":
+        // `navigate` to IDP_SELECTION works regardless of how this screen
+        // was reached: when it's still in the stack (OneIdentity, which
+        // reaches this screen with a local `navigate`), it pops back to
+        // that existing instance; when it isn't (legacy entry points,
+        // which still collapse the stack with `replace(MAIN, ...)`),
+        // `navigate` just pushes a fresh one. Either way the user lands on
+        // a working IDP_SELECTION to pick an IdP again.
+        navigation.navigate(authScreenByAuthMethod.SPID);
+        break;
     }
   }, [
     authMethod,
@@ -91,6 +116,10 @@ const AuthErrorScreen = () => {
   const onCancel = useCallback(() => {
     if (isActiveSessionLogin) {
       dispatch(setFinishedActiveSessionLoginFlow());
+      // The active session login flow is entered with `push`, so `MAIN` is
+      // already below it in the stack: `navigate` to it pops the whole
+      // pushed Settings/Authentication stack instead of pushing a new
+      // instance, so no `reset` is needed here.
       navigation.navigate(ROUTES.MAIN, {
         screen: MESSAGES_ROUTES.MESSAGES_HOME
       });
@@ -98,8 +127,13 @@ const AuthErrorScreen = () => {
     }
 
     dispatch(resetSpidLoginState());
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
+    // `reset` (instead of `popToTop`) sets the stack directly to LANDING
+    // regardless of what's currently in it: unlike the other entry points,
+    // legacy screens still remount this navigator down to a single
+    // AUTH_ERROR_SCREEN route on error, so `popToTop` would be a no-op here.
+    navigation.reset({
+      index: 0,
+      routes: [{ name: AUTHENTICATION_ROUTES.LANDING }]
     });
   }, [dispatch, isActiveSessionLogin, navigation]);
 
