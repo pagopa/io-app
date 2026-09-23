@@ -1,16 +1,9 @@
 {
-    "platforms": [
-        "apple",
-        "android"
-    ],
-    "apple": {
-        "modules": [
-            "ExpoAppReviewModule"
-        ]
-    },
-    "android": {
-        "modules": [
-            "expo.modules.appreview.ExpoAppReviewModule"
-        ]
-    }
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["ExpoAppReviewModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.appreview.ExpoAppReviewModule"]
+  }
 }
