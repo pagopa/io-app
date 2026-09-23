@@ -78,7 +78,7 @@ export const ItwCredentialCard = memo(
     const statusTagProps = useMemo<Tag | undefined>(() => {
       if (needsItwUpgrade) {
         return {
-          variant: "info",
+          variant: "error",
           text: I18n.t("features.itWallet.card.status.upgradePending")
         };
       }
@@ -182,7 +182,7 @@ export const ItwCredentialCardLegacy = ({
   const statusTagProps = useMemo<Tag | undefined>(() => {
     if (needsItwUpgrade) {
       return {
-        variant: "info",
+        variant: "error",
         text: I18n.t("features.itWallet.card.status.upgradePending")
       };
     }

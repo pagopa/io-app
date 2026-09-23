@@ -988,6 +988,14 @@
       "title": "Questo servizio non è più attivo su IO"
     },
     "itWallet": {
+      "modal": {
+        "credentialUpgrade": {
+          "title": "Aggiorna il documento",
+          "content": "Non è stato possibile aggiornare il documento automaticamente.\n\nPremi ‘Aggiorna il documento digitale’ per continuare a usarlo senza limitazioni.",
+          "primaryButton": "Aggiorna documento digitale",
+          "secondaryButton": "Non ora"
+        }
+      },
       "card": {
         "digital": "Versione digitale",
         "status": {
