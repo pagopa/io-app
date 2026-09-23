@@ -2,8 +2,8 @@
  * ESLint rule that warns when a file imports from `fp-ts`.
  *
  * Remove this rule once the migration is complete.
- * 
- * The codebase is migrating from `fp-ts` to `neverthrow`. 
+ *
+ * The codebase is migrating from `fp-ts` to `neverthrow`.
  * This rule doesn't block imports (kept as a warning) but nudges authors of new/touched code
  * towards the replacement, with a quick-reference mapping in the message.
  */

@@ -204,8 +204,6 @@
           "label": "Field for entering the Electronic ID Card PIN"
         },
         "bottomSheetCTA": "Forgot your PIN?",
-        "contextualHelpBody": "The **PIN** code consists of 8 digits:\n• The first 4 digits were provided to you at the registry office;  \n• The last 4 digits were mailed to your home along with your electronic ID card.  \n  \nCombine them and enter them in this order.  \nThe PUK code, on the other hand, is needed to unlock the **PIN** after three failed attempts. It consists of 8 digits and is issued along with the **PIN**.",
-        "contextualHelpTitle": "Where can I find my PIN and PUK codes?",
         "incorrectCiePinContent1": "You still have 2 more tries; check it and try again.",
         "incorrectCiePinContent2": "After three incorrect attempts, your PIN will be locked. To unlock it and set a new one, you'll need to enter the PUK code in the CieID app.",
         "incorrectCiePinSecondaryActionLabel2": "Forgot your PIN?",
@@ -248,8 +246,6 @@
       }
     },
     "idp_login": {
-      "contextualHelpContent": "The password is the alphanumeric code you chose when you created your SPID Digital Identity.\nIf you don’t remember it, you can recover it or set a new password by following the instructions provided by your Identity Provider.  \nOnce you’ve entered the required information, you’ll receive an OTP code from your Identity Provider. Confirm the login request and return to the IO app to complete the login process. You will then see a screen authorizing the Identity Provider to send IO a set of information necessary to enable you to use the app and the various services offered by public agencies through IO. Tap “I agree” to give your consent and proceed with authentication.\n",
-      "contextualHelpTitle": "What is your password",
       "headerTitle": "Log In",
       "poste_id": {
         "bottom_sheet": {
@@ -265,8 +261,6 @@
       "contentTitle": "Hi, {{name}}!"
     },
     "idp_selection": {
-      "contextualHelpContent": "**The Identity Provider manages your digital identity**. You can begin your authentication flow only after selecting the Identity Provider that issued your SPID identity.\n",
-      "contextualHelpTitle": "Who is your Identity Provider?",
       "idps": {
         "loadingAccessibilityLabel": "Loading Identity Provider"
       },
@@ -315,8 +309,6 @@
         },
         "title": "How do you want to log in?"
       },
-      "contextualHelpContent": "To access the IO app, you’ll need to sign in using your SPID (Public Digital Identity System) credentials or your CIE (Electronic ID Card).\n**Thanks to these authentication methods, your access to the app will always be secure.**  \nTo apply for a SPID digital identity, visit [spid.gov.it](https:\/\/www.spid.gov.it) and choose an Identity Provider from the list provided. \nIf you’re interested in applying for the CIE, you can find more information on your municipality’s website and schedule an appointment.\n",
-      "contextualHelpTitle": "How to access the IO app",
       "expiredCardContent": "The card you're using may have expired or may no longer be valid. Try using SPID to sign in to the app.",
       "expiredCardTitle": "The CIE verification was unsuccessful",
       "loginCie": "Log in with CIE",
@@ -344,8 +336,6 @@
     "opt_in": {
       "button_accept_lv": "Continue with quick access",
       "button_decline_lv": "Log in with SPID or CIE every 30 days",
-      "contextualHelpContent": "Here you can find information on how to authenticate on IO, along with some security tips.",
-      "contextualHelpTitle": "Authentication",
       "identity_check": "You will no longer have to log in with SPID or CIE every 30 days, but only once a year or if you log out of the app",
       "notification": "You'll receive an email every time someone logs in. If you don't recognize the login, you can block access to IO",
       "passcode": "Next time, you can simply use your face, fingerprint, or unlock code",
@@ -752,17 +742,11 @@
     "cduScreens": {
       "emailAlreadyTaken": {
         "editButton": "Edit email",
-        "help": {
-          "body": "Your email address is already in use on IO. You'll need to enter a different one to continue using the app."
-        },
         "subtitle": "Your email address **{{email}}** is already in use on IO; you must enter a different one to continue using the app.",
         "title": "Change your email address"
       },
       "validateMail": {
         "editButton": "No, edit",
-        "help": {
-          "body": "To continue using the app, you must verify your email address."
-        },
         "subtitle": "To continue using the app, you must confirm that your email address is **{{email}}**",
         "title": "Is this your email address?",
         "validateButton": "Yes, confirm"
@@ -776,11 +760,7 @@
     "insert": {
       "alertButton": "Use a different email address",
       "alertDescription": "This can happen if you share the same address with a family member",
-      "alertTitle": "This email address is already in use",
-      "help": {
-        "content": "This page is used to enter or edit your **email** address. The email address you enter must be verified.\n",
-        "title": "Email"
-      }
+      "alertTitle": "This email address is already in use"
     },
     "newinsert": {
       "alert": {
@@ -892,10 +872,6 @@
           "signing": {
             "subTitle": "Due to a technical issue, the signature was not successful. If the problem occurs again, please contact support.",
             "title": "The signing was unsuccessful"
-          },
-          "update": {
-            "subTitle": "Make sure you have the latest version of IO installed, and log in again using SPID or CIE.",
-            "title": "Update the app"
           },
           "wrongUser": {
             "subTitle": "The signature request is not associated with your fiscal code.",
@@ -2115,8 +2091,7 @@
             "cta": "Manage Consents",
             "detail": {
               "message": "You have saved your consent for contactless verification of this data for **{{relyingParty}}**.",
-              "revokeAction": "Withdraw Consent",
-              "title": "Consent Details"
+              "revokeAction": "Withdraw Consent"
             },
             "fallback": "Service",
             "header": "Saved Consents",
@@ -2770,10 +2745,6 @@
             "title": "Do you want to close the SEND notification?"
           },
           "delegated": {
-            "cieContextualHelp": {
-              "body": "To view a SEND notification intended for another person, you need that person's Electronic ID Card and a smartphone capable of reading it.",
-              "title": "How to access a SEND notification intended for someone else"
-            },
             "createMandate": {
               "loadingText": "Please wait a few seconds"
             },
@@ -3160,7 +3131,6 @@
         "hint": "Please wait while the content loads",
         "label": "Loading..."
       },
-      "alert": "Notice",
       "cieReadingProgress": "Reading {{percentage}}% completed",
       "collapsed": "Compressed",
       "contextualHelp": {
@@ -4368,10 +4338,6 @@
     "tos": {
       "accept": "Accept and continue",
       "error": "We were unable to upload the Privacy Policy and the Terms and Conditions"
-    },
-    "unlockCode": {
-      "contextualHelpContent": "**The unlock code is the security code that keeps your data secure in the IO app, and you set it yourself the first time you log in**.   \nIf this is your first time logging in to the app, choose any numeric code you like and make sure to remember it so you can use it every time you log in.  \nIf you’ve already set it up and can’t remember it, you can select “Forgot unlock code” and set a new one.  \nThe unlock code is tied to the device on which you set it: if you change phones, you’ll need to set it again the first time you log in to the IO app.\n",
-      "contextualHelpTitle": "What is your unlock code"
     }
   },
   "openMaps": {
@@ -4428,9 +4394,7 @@
       "codeCopied": "Code copied!",
       "copyCode": "Copy fiscal code",
       "description": "Use the barcode to provide your fiscal code when prompted.",
-      "fiscalCode": "fiscal code",
-      "help": "A facsimile of your fiscal code is displayed here. \nThe facsimile does not replace the physical document but allows you to read the information and the barcode on the back. \nIn the event of a duplicate fiscal code, the information displayed in the facsimile may not match your personal records.\n",
-      "title": "Your personal documents"
+      "fiscalCode": "fiscal code"
     },
     "logout": {
       "activeWiAlertMessage": "You'll need to log in again with SPID or CIE to use the app.\n\nIf you log in to IO from a device other than your usual one, the \"Documents\" feature on IO will be reset for security reasons.",
@@ -4464,8 +4428,6 @@
         "cleared": "The cache has been cleared."
       },
       "clearAsyncStorage": "Clear the contents of AsyncStorage",
-      "contextualHelpContent": "**In the Settings section, you can manage your information and preferences.**\nSpecifically, here you can manage your preferences, privacy settings, and account. In this section, you can also access digital versions of your documents by selecting the cards that appear at the top of the screen.",
-      "contextualHelpTitle": "What You Can Do in the Settings Section",
       "data": {
         "description": "Review your information",
         "title": "Your information"
@@ -4527,8 +4489,6 @@
         },
         "loading": "Please wait a few seconds; we're verifying your profile...",
         "privacyPolicy": {
-          "contextualHelpContentPolicy": "### What are the Privacy Policy and Terms of Use?\n\nIn accordance with Article 13 of EU Regulation No. 2016\/679 (commonly known as the GDPR), the Privacy Policy provides a complete description of how the IO app handles your personal information. The Terms of Use, on the other hand, set forth your rights and obligations when using the app and its services. <br\/> <br\/> <br\/> <br\/> \n\n\n",
-          "contextualHelpTitlePolicy": "Privacy Policy and Terms of Service",
           "description": "Please review IO's Privacy Policy and Terms and Conditions of Use",
           "infobox": "You must read and accept the Privacy Policy and the Terms and Conditions of Use",
           "title": "Privacy Policy and Terms and Conditions of Use",
@@ -4627,23 +4587,9 @@
     "preferences": {
       "calendar": {
         "birthday_calendar": "Birthdays",
-        "contextualHelpContent": "**Your default calendar is the one linked to your email address,** if you signed up with a Google account. You can change the email address linked to your calendar at any time so that you receive IO reminders on the calendar you use most often.\n",
-        "contextualHelpTitle": "What's your favorite calendar?",
         "local_calendar": "Local calendar"
       },
-      "contextualHelpContent": "**In the Preferences section, you can view and change the settings** used by all services on IO. \nHere, you can view the email address, phone number, and language associated with your account, and enable or disable biometric recognition.\n",
-      "contextualHelpTitle": "Your preferences",
-      "email": {
-        "forward": {
-          "contextualHelpContent": "**Here you can enable or disable email forwarding.**\nYou can enable or disable forwarding of all messages you receive via IO to your email inbox, or enable or disable forwarding on a case-by-case basis in the respective service details tab. \n",
-          "contextualHelpTitle": "How to manage message forwarding"
-        }
-      },
       "genericToastTitle": "Preferences updated!",
-      "language": {
-        "contextualHelpContent": "**Currently, IO uses the language set by your device's operating system:** \nYou can change the language in your phone's settings, and it will automatically be updated within the app as well. \nThe language of the message content, however, is determined by each institution on a message-by-message basis: they have the discretion to send content translated into different languages.\n",
-        "contextualHelpTitle": "How to manage language settings on IO"
-      },
       "list": {
         "appearance": {
           "subtitle": "Customize the app to suit your needs",
@@ -5111,8 +5057,6 @@
       "identificationMessage": "Confirm the transaction by entering your unlock code"
     },
     "QRtoPay": {
-      "contextualHelpContent": "**Here you can make a voluntary payment for a notice using pagoPA**, the payment platform for the public administration. You can pay using a paper notice by scanning the QR code on the notice and then completing the payment directly through the app. You can also upload a QR code from your phone’s gallery or manually enter the notice’s identification details (Notice Code).",
-      "contextualHelpTitle": "How to pay a notice",
       "settingsAlert": {
         "buttonText": {
           "cancel": "Cancel",
