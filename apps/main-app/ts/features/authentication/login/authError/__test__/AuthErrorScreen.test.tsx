@@ -24,6 +24,11 @@ jest.mock("../../../../../store/hooks", () => ({
 
 jest.spyOn(hooks, "useIODispatch").mockReturnValue(mockDispatch);
 
+const mockUseDebugInfo = jest.fn();
+jest.mock("../../../../../hooks/useDebugInfo", () => ({
+  useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
+}));
+
 const mockUseRoute = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
@@ -41,6 +46,48 @@ jest.mock("../../../../../navigation/params/AppParamsList", () => ({
 }));
 
 describe("AuthErrorScreen", () => {
+  beforeEach(() => {
+    mockUseDebugInfo.mockClear();
+  });
+
+  it("should forward the raw error code and the translated title to useDebugInfo for a mapped error", () => {
+    mockUseRoute.mockReturnValue({
+      params: {
+        errorCodeOrMessage: "25",
+        authMethod: "SPID",
+        authLevel: "L2"
+      }
+    });
+
+    renderComponent();
+
+    expect(mockUseDebugInfo).toHaveBeenCalledWith({
+      errorCodeOrMessage: "25",
+      errorTitle: I18n.t("authentication.auth_errors.error_25.title"),
+      authMethod: "SPID",
+      authLevel: "L2"
+    });
+  });
+
+  it("should forward the raw error code and the generic title to useDebugInfo for an unmapped error", () => {
+    mockUseRoute.mockReturnValue({
+      params: {
+        errorCodeOrMessage: "some_unmapped_raw_error",
+        authMethod: "SPID",
+        authLevel: "L2"
+      }
+    });
+
+    renderComponent();
+
+    expect(mockUseDebugInfo).toHaveBeenCalledWith({
+      errorCodeOrMessage: "some_unmapped_raw_error",
+      errorTitle: I18n.t("authentication.auth_errors.generic.title"),
+      authMethod: "SPID",
+      authLevel: "L2"
+    });
+  });
+
   it("rendersCorrectly", () => {
     mockUseRoute.mockReturnValue({
       params: {
@@ -93,16 +140,12 @@ describe("AuthErrorScreen", () => {
     });
   });
 
-  it("should navigate with params when authMethod is CIE_ID", () => {
+  it("should navigate to CIE_ID_LOGIN when authMethod is CIE_ID", () => {
     mockUseRoute.mockReturnValue({
       params: {
         errorCodeOrMessage: 25,
         authMethod: "CIE_ID",
-        authLevel: "L2",
-        params: {
-          authorizationUri: "https://example.com",
-          ciePin: "123456"
-        }
+        authLevel: "L2"
       }
     });
 
@@ -111,11 +154,7 @@ describe("AuthErrorScreen", () => {
     fireEvent.press(getByTestId("retry-button-test-id"));
 
     expect(mockNavigation).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
-      params: {
-        authorizationUri: "https://example.com",
-        ciePin: "123456"
-      }
+      screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN
     });
   });
 

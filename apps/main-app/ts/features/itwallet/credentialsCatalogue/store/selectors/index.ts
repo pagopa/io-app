@@ -1,7 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { isAfter } from "date-fns";
-import { constTrue, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
 import { Locales } from "../../../../../i18n";
@@ -12,6 +10,7 @@ import {
   itwNewCredentialsSelector,
   itwPinnedCredentialsSelector
 } from "../../../common/store/selectors/remoteConfig";
+import { pidScopes } from "../../../common/utils/constants";
 import {
   DigitalCredentialMetadata,
   DigitalCredentialsCatalogue
@@ -48,7 +47,7 @@ const hardcodedCredentialsList: ReadonlyArray<CredentialsListEntry> = [
 /**
  * Select the last fetched credentials catalogue. **Note:** the catalogue may be stale.
  *
- * The catalogue credentials are mapped to replace the legacy "PersonIdentificationData" credential type with the new "pid".
+ * The catalogue credentials are mapped to replace the possible PID types (legacy, NPID and so on) with the value `pid`.
  * This ensures the PID can always be identified with the same type, avoiding the need to keep separate values for the same credential.
  *
  * The original credential_type can still be found in the raw persisted catalogue, before any transformation.
@@ -61,10 +60,9 @@ export const itwCredentialsCatalogueSelector = createSelector(
       ...catalogue,
       credentials: catalogue.credentials.map(credential => ({
         ...credential,
-        credential_type:
-          credential.credential_type === "PersonIdentificationData"
-            ? CredentialType.PID
-            : credential.credential_type
+        credential_type: pidScopes.includes(credential.credential_type)
+          ? CredentialType.PID
+          : credential.credential_type
       }))
     }));
     return pot.toUndefined(mappedCatalogue);
@@ -77,32 +75,24 @@ export const itwCredentialsCatalogueSelector = createSelector(
  * Normally, the catalogue is fetched every 24 hours according to the `expires` HTTP header.
  * If the fetch fails, it is still possible to select the persisted catalogue, but it may be stale.
  */
-export const itwIsCredentialsCatalogueStale = (state: GlobalState) =>
-  pipe(
-    itwCredentialsCatalogueSelector(state),
-    O.fromNullable,
-    O.map(catalogue => isAfter(new Date(), new Date(catalogue.exp * 1000))),
-    O.getOrElse(constTrue)
-  );
+export const itwIsCredentialsCatalogueStale = (state: GlobalState) => {
+  const catalogue = itwCredentialsCatalogueSelector(state);
+  // A missing catalogue is considered stale, so that a new fetch is attempted
+  return catalogue ? isAfter(new Date(), new Date(catalogue.exp * 1000)) : true;
+};
 
 /**
  * Return a dictionary that maps each credential type to its metadata in the catalogue.
  */
 export const itwCredentialsCatalogueByTypesSelector = createSelector(
   itwCredentialsCatalogueSelector,
-  maybeCatalogue =>
-    pipe(
-      O.fromNullable(maybeCatalogue),
-      O.map(catalogue =>
-        catalogue.credentials.reduce(
-          (acc, credential) => ({
-            ...acc,
-            [credential.credential_type]: credential
-          }),
-          {} as Record<string, DigitalCredentialMetadata>
-        )
-      ),
-      O.toUndefined
+  catalogue =>
+    catalogue?.credentials.reduce(
+      (acc, credential) => ({
+        ...acc,
+        [credential.credential_type]: credential
+      }),
+      {} as Record<string, DigitalCredentialMetadata>
     )
 );
 
@@ -291,4 +281,18 @@ export const itwCredentialIntroContentSelector =
     return translations && user_information_l10n_id
       ? translations[user_information_l10n_id]
       : user_information;
+  };
+
+/**
+ * Select the Authentic Source's contacts for the provided credential type.
+ * @param credentialType The credential type to get the contacts for
+ * @returns A list of the Authentic Source's contacts, if existing
+ */
+export const itwAuthenticSourceContactsSelector =
+  (credentialType: string) => (state: GlobalState) => {
+    const catalogue = itwCredentialsCatalogueByTypesSelector(state);
+    if (!catalogue?.[credentialType]) {
+      return;
+    }
+    return catalogue[credentialType].authentic_sources.at(0)?.contacts;
   };

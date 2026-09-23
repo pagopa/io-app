@@ -11,21 +11,20 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SpidIdp } from "../../../../../utils/idps";
 import { trackLoginFailure } from "../../../common/analytics";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import {
   IdpWebViewLogin,
   WebViewLoginEvent
 } from "../../../common/components/IdpWebViewLogin";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { CALLBACK_PATH } from "../../../common/utils";
+import { AUTH_LEVELS, isValidCallbackUrl } from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
 } from "../../store/actions";
 import {
   activeSessionUserLoggedSelector,
-  idpSelectedActiveSessionLoginSelector,
-  remoteApiLoginUrlPrefixSelector
+  idpSelectedActiveSessionLoginSelector
 } from "../../store/selectors";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
 
@@ -69,11 +68,6 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  const remoteApiLoginUrlPrefix = useIOSelector(
-    remoteApiLoginUrlPrefixSelector
-  );
-  const callbackUrl = `${remoteApiLoginUrlPrefix}${CALLBACK_PATH}`;
-
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
   const navigateToAuthErrorScreen = useCallback(
@@ -85,7 +79,7 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
         params: {
           errorCodeOrMessage,
           authMethod: "SPID",
-          authLevel: "L2"
+          authLevel: AUTH_LEVELS.L2
         }
       });
     },
@@ -134,7 +128,7 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
         case "WEBVIEW_HTTP_ERROR": {
           const { url, statusCode } = event.payload;
 
-          if (url.includes(callbackUrl)) {
+          if (isValidCallbackUrl(url)) {
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
             break;
@@ -150,7 +144,6 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
       }
     },
     [
-      callbackUrl,
       forceLogoutAndNavigateToLanding,
       handleLoginFailure,
       handleLoginSuccess,

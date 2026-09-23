@@ -168,7 +168,7 @@ jobs:
           fi
 
   send-slack-notification:
-    name: Send Slack notification 
+    name: Send Slack notification
     # Run this job only if the user chose 'Update App Version'
     if: github.event.inputs.action == 'Update App Version'
     runs-on: ubuntu-latest
