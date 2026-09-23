@@ -44,7 +44,7 @@ class FileSystemDirectory {
 const Paths = {
   document: new FileSystemDirectory(documentDirectory),
   cache: new FileSystemDirectory(cacheDirectory),
-  bundle: new FileSystemDirectory(bundleDirectory),
+  bundle: new FileSystemDirectory(bundleDirectory)
 };
 
 module.exports = {
@@ -62,5 +62,5 @@ module.exports = {
   makeDirectoryAsync: jest.fn().mockResolvedValue(undefined),
   readDirectoryAsync: jest.fn().mockResolvedValue([]),
   readAsStringAsync: jest.fn().mockResolvedValue(""),
-  writeAsStringAsync: jest.fn().mockResolvedValue(undefined),
+  writeAsStringAsync: jest.fn().mockResolvedValue(undefined)
 };
