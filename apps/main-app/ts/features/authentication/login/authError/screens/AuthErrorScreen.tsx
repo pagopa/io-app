@@ -95,13 +95,9 @@ const AuthErrorScreen = () => {
         navigation.replace(authScreenByAuthMethod.CIE_ID);
         break;
       case "SPID":
-        // `navigate` to IDP_SELECTION works regardless of how this screen
-        // was reached: when it's still in the stack (OneIdentity, which
-        // reaches this screen with a local `navigate`), it pops back to
-        // that existing instance; when it isn't (legacy entry points,
-        // which still collapse the stack with `replace(MAIN, ...)`),
-        // `navigate` just pushes a fresh one. Either way the user lands on
-        // a working IDP_SELECTION to pick an IdP again.
+        // Lets the user pick an IdP again from IDP_SELECTION: `navigate`
+        // pops back to it if still in the stack (OneIdentity), or pushes a
+        // fresh one otherwise (legacy).
         navigation.navigate(authScreenByAuthMethod.SPID);
         break;
     }
@@ -116,10 +112,9 @@ const AuthErrorScreen = () => {
   const onCancel = useCallback(() => {
     if (isActiveSessionLogin) {
       dispatch(setFinishedActiveSessionLoginFlow());
-      // The active session login flow is entered with `push`, so `MAIN` is
-      // already below it in the stack: `navigate` to it pops the whole
-      // pushed Settings/Authentication stack instead of pushing a new
-      // instance, so no `reset` is needed here.
+      // Navigating back to the Messages home collapses the whole pushed
+      // Settings/Authentication stack in one step, since it's already
+      // mounted below it: no explicit reset is needed here.
       navigation.navigate(ROUTES.MAIN, {
         screen: MESSAGES_ROUTES.MESSAGES_HOME
       });
@@ -127,10 +122,9 @@ const AuthErrorScreen = () => {
     }
 
     dispatch(resetSpidLoginState());
-    // `reset` (instead of `popToTop`) sets the stack directly to LANDING
-    // regardless of what's currently in it: unlike the other entry points,
-    // legacy screens still remount this navigator down to a single
-    // AUTH_ERROR_SCREEN route on error, so `popToTop` would be a no-op here.
+    // `reset` sets the stack directly to LANDING regardless of what's
+    // currently in it, so it works even when legacy entry points have
+    // already collapsed it down to a single AUTH_ERROR_SCREEN route.
     navigation.reset({
       index: 0,
       routes: [{ name: AUTHENTICATION_ROUTES.LANDING }]

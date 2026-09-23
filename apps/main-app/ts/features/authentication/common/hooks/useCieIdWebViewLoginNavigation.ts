@@ -32,13 +32,10 @@ export const useCieIdWebViewLoginNavigation = ({
 
   const navigateToAuthErrorScreen = useCallback(
     (errorCodeOrMessage?: string) => {
-      // A local, non-`MAIN`-targeting `replace` keeps the unmount confined
-      // to this screen instead of remounting the whole nested navigator.
-      // `dispatch` (instead of retyping `navigation` to the local
-      // `AuthenticationParamsList`) avoids affecting the other calls above,
-      // which still need to target `MAIN`. `AuthErrorScreen`'s CIE_ID retry
-      // replaces back to this route, which still re-triggers the Lollipop
-      // key generation on mount.
+      // `replace` swaps this screen for AuthErrorScreen, so retrying can
+      // recreate it and re-trigger the Lollipop key generation on mount.
+      // Dispatched directly, rather than through `navigation.replace`, to
+      // leave `navigation`'s type untouched for the other two calls above.
       navigation.dispatch(
         StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
           errorCodeOrMessage,
