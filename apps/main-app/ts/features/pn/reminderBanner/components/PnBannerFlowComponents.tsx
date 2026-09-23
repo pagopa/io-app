@@ -15,6 +15,7 @@ import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../utils/url";
 import LoadingComponent from "../../../fci/components/LoadingComponent";
+import { SendFailureReason } from "../../../messages/utils";
 import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 import {
   pnBannerFlowStateEnum,
@@ -23,7 +24,7 @@ import {
 
 // ---------------------------- COMPONENT TYPES ---------------------------
 
-type ErrorFlowStateKeys =
+export type ErrorFlowStateKeys =
   | "MISSING-SID"
   | Extract<
       PnBannerFlowStateKey,
@@ -31,6 +32,7 @@ type ErrorFlowStateKeys =
     >;
 type ErrorFlowStateProps = {
   flowState: ErrorFlowStateKeys;
+  reason?: SendFailureReason;
 };
 
 type LoadingStateProps = {
@@ -83,10 +85,10 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
   );
 };
 
-const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
+const ErrorScreen = ({ flowState, reason }: ErrorFlowStateProps) => {
   const navigation = useIONavigation();
   useOnFirstRender(() => {
-    sendBannerMixpanelEvents.bannerKO(flowState);
+    sendBannerMixpanelEvents.bannerKO(flowState, reason);
   });
   return (
     <OperationResultScreenContent
