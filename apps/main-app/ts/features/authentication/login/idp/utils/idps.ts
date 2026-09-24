@@ -2,15 +2,15 @@ import { SpidIdp } from "../../../../../utils/idps";
 import { Idp, Idps } from "../types/idps";
 
 /**
- * Base URL of the CDN serving OneIdentity IDPs logos. The image for a given
- * IDP is available at `<CDN>/<base64url(entityID)>.png`, and its dark-mode
- * variant at `<CDN>/<base64url(entityID)>-dark.png`.
+ * Base URL of the CDN serving OneIdentity IDPs logos. The image for a given IDP
+ * is available at `<CDN>/<base64url(entityID)>.png`, and its dark-mode variant
+ * at `<CDN>/<base64url(entityID)>-dark.png`.
  */
 const IDPS_LOGO_CDN_URL = "https://assets.oneid.pagopa.it/assets/idps";
 
 /**
- * Computes the light and dark logo URLs for a given OneIdentity IDP
- * based on its base64url-encoded `entityID`.
+ * Computes the light and dark logo URLs for a given OneIdentity IDP based on
+ * its base64url-encoded `entityID`.
  */
 const getIdpLogos = (entityID: Idp["entityID"]) => {
   const encodedId = Buffer.from(entityID).toString("base64url");
@@ -35,9 +35,7 @@ export const fromIdpToLocalSpidIdp = (idps: Idps): ReadonlyArray<SpidIdp> =>
     profileUrl: ""
   }));
 
-/**
- * Returns a new shuffled copy of the provided array using a random sort order.
- */
+/** Returns a new shuffled copy of the provided array using a random sort order. */
 export const randomOrderIdps = <T>(array: ReadonlyArray<T>): Array<T> => {
   const result = [...array];
   // eslint-disable-next-line functional/no-let

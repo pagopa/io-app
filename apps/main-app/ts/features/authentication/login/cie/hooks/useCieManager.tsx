@@ -62,12 +62,11 @@ export type CieManagerState =
 
 type UseCieManager = (params: { onSuccess: (authUrl: string) => void }) => {
   /**
-   * Starts the reading process for the CIE card by providing the user's PIN and the authentication URL.
+   * Starts the reading process for the CIE card by providing the user's PIN and
+   * the authentication URL.
    */
   startReading: (pin: string, authUrl: string) => Promise<void>;
-  /**
-   * The current state of the CIE manager.
-   */
+  /** The current state of the CIE manager. */
   state: CieManagerState;
 };
 

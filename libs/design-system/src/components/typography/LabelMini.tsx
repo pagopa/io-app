@@ -21,9 +21,7 @@ const {
   labelMini: { colorToken, ...labelMiniStyle }
 } = IOTypography;
 
-/**
- * `LabelMini` typographic style
- */
+/** `LabelMini` typographic style */
 export const LabelMini = ({
   ref,
   weight: customWeight,

@@ -21,9 +21,9 @@ export type ItwCredentialsCatalogueState = {
    */
   isEnabledForCredentialsList: boolean;
   /**
-   * Locale bundles fetched from the catalogue's localization endpoints.
-   * Only populated for IT-Wallet spec v1.3.3.
-   * Keyed by locale code (e.g. "it"), then by l10n_id.
+   * Locale bundles fetched from the catalogue's localization endpoints. Only
+   * populated for IT-Wallet spec v1.3.3. Keyed by locale code (e.g. "it"), then
+   * by l10n_id.
    */
   translations: pot.Pot<CatalogueTranslations, NetworkError>;
 };

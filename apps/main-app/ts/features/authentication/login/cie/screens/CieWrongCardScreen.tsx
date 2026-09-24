@@ -5,9 +5,7 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
-/**
- * Screen to alert the user about the number of attempts remaining
- */
+/** Screen to alert the user about the number of attempts remaining */
 const CieWrongCardScreen = () => {
   const navigation = useIONavigation();
 

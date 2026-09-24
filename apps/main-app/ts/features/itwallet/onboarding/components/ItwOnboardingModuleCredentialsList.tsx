@@ -62,8 +62,8 @@ export const ItwOnboardingModuleCredentialsList = ({
 
         if (isUpcomingCredential(type)) {
           /**
-           * The credential is an upcoming one, navigate to the screens which displays
-           * more information about the upcoming credential
+           * The credential is an upcoming one, navigate to the screens which
+           * displays more information about the upcoming credential
            */
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
@@ -71,14 +71,14 @@ export const ItwOnboardingModuleCredentialsList = ({
         } else if (isL2Credential && !isItWalletValid) {
           if (isL2WalletValid) {
             /**
-             * User has a whitelisted fiscal code but has requested a credential in restricted mode
-             * the user has DocIO enabled
+             * User has a whitelisted fiscal code but has requested a credential
+             * in restricted mode the user has DocIO enabled
              */
             sendSelectCredential();
           } else {
             /**
-             * User has a whitelisted fiscal code but has requested a credential in restricted mode
-             * the user has DocIO disabled
+             * User has a whitelisted fiscal code but has requested a credential
+             * in restricted mode the user has DocIO disabled
              */
             navigation.navigate(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO,
@@ -87,17 +87,16 @@ export const ItwOnboardingModuleCredentialsList = ({
           }
         } else if (isL3Enabled && !isItWalletValid) {
           /**
-           * User has a whitelisted fiscal code but has not yet obtained an IT Wallet.
-           * If he requests an ITW credential, start the credential issuance flow with contextual PID issuance
+           * User has a whitelisted fiscal code but has not yet obtained an IT
+           * Wallet. If he requests an ITW credential, start the credential
+           * issuance flow with contextual PID issuance
            */
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.DISCOVERY.INFO,
             params: { level: "l3", credentialType: type }
           });
         } else {
-          /**
-           * Standard credential issuance
-           */
+          /** Standard credential issuance */
           sendSelectCredential();
         }
       },

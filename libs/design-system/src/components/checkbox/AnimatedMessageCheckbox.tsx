@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Animated message checkbox used for the specific message
- * list item (Select mode that enables related actions)
+ * Animated message checkbox used for the specific message list item (Select
+ * mode that enables related actions)
  */
 export const AnimatedMessageCheckbox = ({
   accessible,

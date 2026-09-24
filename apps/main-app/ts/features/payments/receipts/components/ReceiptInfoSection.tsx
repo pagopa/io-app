@@ -32,9 +32,7 @@ type Props = {
   transaction?: NoticeDetailResponse;
 };
 
-/**
- * Component that shows the biz-events transaction info
- */
+/** Component that shows the biz-events transaction info */
 // oxlint-disable-next-line complexity
 const ReceiptInfoSection = ({
   transaction,
