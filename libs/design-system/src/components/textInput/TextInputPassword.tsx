@@ -9,7 +9,8 @@ type TextInputPasswordProps = Omit<
 > & {
   /**
    * Announced by screen readers for the button that shows/hides the password.
-   * Required because this package has no i18n layer: the consumer owns the copy.
+   * Required because this package has no i18n layer: the consumer owns the
+   * copy.
    */
   buttonAccessibilityLabel: string;
 };
