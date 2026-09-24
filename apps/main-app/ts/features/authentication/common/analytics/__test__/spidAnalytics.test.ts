@@ -2,7 +2,7 @@ import { mixpanelTrack } from "../../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../../../mixpanelConfig/superProperties";
 import { buildEventProperties } from "../../../../../utils/analytics";
-import { AUTH_ERRORS } from "../../components/AuthErrorComponent";
+import { AUTH_ERRORS } from "../../utils/authError";
 import {
   EventProperties,
   trackLoginSpidError,

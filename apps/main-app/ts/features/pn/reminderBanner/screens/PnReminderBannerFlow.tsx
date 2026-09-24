@@ -7,6 +7,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { SendFailureReason } from "../../../messages/utils";
 import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 import { usePnPreferencesFetcher } from "../../hooks/usePnPreferencesFetcher";
 import { pnActivationUpsert } from "../../store/actions";
@@ -39,6 +40,8 @@ const PNFlowScreenPicker = ({ serviceId }: { serviceId: ServiceId }) => {
   const [flowState, setFlowState] = useState<PnBannerFlowStateKey>(
     pnBannerFlowStateEnum.WAITING_USER_INPUT
   );
+  const [activationFailureReason, setActivationFailureReason] =
+    useState<SendFailureReason>();
 
   const { isError, isLoading, isEnabled } = usePnPreferencesFetcher(serviceId);
 
@@ -52,6 +55,9 @@ const PNFlowScreenPicker = ({ serviceId }: { serviceId: ServiceId }) => {
       return <SuccessScreen flowState={flowState} />;
 
     case pnBannerFlowStateEnum.FAILURE_ACTIVATION:
+      return (
+        <ErrorScreen flowState={flowState} reason={activationFailureReason} />
+      );
     case pnBannerFlowStateEnum.FAILURE_DETAILS_FETCH:
       return <ErrorScreen flowState={flowState} />;
     case pnBannerFlowStateEnum.WAITING_USER_INPUT:
@@ -61,15 +67,24 @@ const PNFlowScreenPicker = ({ serviceId }: { serviceId: ServiceId }) => {
       if (isError) {
         setFlowState(pnBannerFlowStateEnum.FAILURE_DETAILS_FETCH);
       }
-      return <PnActivationInputScreen setFlowState={setFlowState} />;
+      return (
+        <PnActivationInputScreen
+          setActivationFailureReason={setActivationFailureReason}
+          setFlowState={setFlowState}
+        />
+      );
   }
 };
 
 type FlowScreenProps = {
+  setActivationFailureReason: (reason: SendFailureReason | undefined) => void;
   setFlowState: (state: PnBannerFlowStateKey) => void;
 };
 
-const PnActivationInputScreen = ({ setFlowState }: FlowScreenProps) => {
+const PnActivationInputScreen = ({
+  setActivationFailureReason,
+  setFlowState
+}: FlowScreenProps) => {
   const dispatch = useIODispatch();
   const isLoadingActivation = useIOSelector(isLoadingPnActivationSelector);
   const navigation = useIONavigation();
@@ -83,7 +98,10 @@ const PnActivationInputScreen = ({ setFlowState }: FlowScreenProps) => {
       pnActivationUpsert.request({
         value: true,
         onSuccess: () => setFlowState(pnBannerFlowStateEnum.SUCCESS_ACTIVATION),
-        onFailure: () => setFlowState(pnBannerFlowStateEnum.FAILURE_ACTIVATION)
+        onFailure: (_isRateLimitError, reason) => {
+          setActivationFailureReason(reason);
+          setFlowState(pnBannerFlowStateEnum.FAILURE_ACTIVATION);
+        }
       })
     );
   };

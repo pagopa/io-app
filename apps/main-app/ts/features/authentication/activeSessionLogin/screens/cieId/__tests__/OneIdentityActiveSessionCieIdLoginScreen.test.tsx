@@ -8,9 +8,9 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { AUTH_ERRORS } from "../../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
+import { AUTH_ERRORS } from "../../../../common/utils/authError";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
@@ -55,7 +55,7 @@ jest.mock("../../../../common/analytics/spidAnalytics", () => ({
 }));
 
 const MOCK_AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
-const MOCK_CALLBACK_URL = `${apiUrlPrefix}/api/auth/v2/callback`;
+const MOCK_VALID_CALLBACK_URL = `${apiUrlPrefix}/api/auth/v1/callback`;
 
 const mockForceLogoutAndNavigateToLanding = jest.fn();
 
@@ -112,8 +112,7 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
       params: {
         errorCodeOrMessage: "err-code",
         authMethod: "CIE_ID",
-        authLevel: MOCK_AUTH_LEVEL_L2,
-        params: { spidLevel: MOCK_AUTH_LEVEL_L2, isUat: false }
+        authLevel: MOCK_AUTH_LEVEL_L2
       }
     });
   });
@@ -133,8 +132,7 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
       params: {
         errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
         authMethod: "CIE_ID",
-        authLevel: MOCK_AUTH_LEVEL_L2,
-        params: { spidLevel: MOCK_AUTH_LEVEL_L2, isUat: false }
+        authLevel: MOCK_AUTH_LEVEL_L2
       }
     });
   });
@@ -145,7 +143,7 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
 
     fireEvent(cieIdLoginMock, "event", {
       type: "WEBVIEW_HTTP_ERROR",
-      payload: { url: MOCK_CALLBACK_URL, statusCode: 500 }
+      payload: { url: MOCK_VALID_CALLBACK_URL, statusCode: 500 }
     });
 
     expect(mockForceLogoutAndNavigateToLanding).toHaveBeenCalled();
@@ -167,8 +165,7 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
       params: {
         errorCodeOrMessage: undefined,
         authMethod: "CIE_ID",
-        authLevel: MOCK_AUTH_LEVEL_L2,
-        params: { spidLevel: MOCK_AUTH_LEVEL_L2, isUat: false }
+        authLevel: MOCK_AUTH_LEVEL_L2
       }
     });
   });

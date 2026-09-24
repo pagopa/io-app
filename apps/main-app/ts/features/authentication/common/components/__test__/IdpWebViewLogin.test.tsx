@@ -38,6 +38,7 @@ const mockUseOneIdentityLoginSource = (
       },
       shouldBlockUrlNavigationWhileCheckingLollipop:
         mockShouldBlockUrlNavigationWhileCheckingLollipop,
+      generateLoginSource: jest.fn(),
       ...overrides
     });
 
@@ -51,7 +52,7 @@ describe("IdpWebViewLogin", () => {
     jest.spyOn(IOHooks, "useIODispatch").mockReturnValue(mockDispatch);
     jest.spyOn(IOHooks, "useIOSelector").mockReturnValue(undefined);
 
-    jest.spyOn(analyticsUtils, "trackSpidLoginError").mockImplementation();
+    jest.spyOn(analyticsUtils, "trackLoginError").mockImplementation();
     jest.spyOn(Linking, "openURL").mockResolvedValue(undefined);
 
     mockShouldBlockUrlNavigationWhileCheckingLollipop.mockReturnValue(false);
@@ -127,10 +128,9 @@ describe("IdpWebViewLogin", () => {
         type: "WEBVIEW_ERROR",
         payload: { url: nativeEvent.url }
       });
-      expect(analyticsUtils.trackSpidLoginError).toHaveBeenCalledWith(
-        mockIdp.id,
-        { nativeEvent }
-      );
+      expect(analyticsUtils.trackLoginError).toHaveBeenCalledWith(mockIdp.id, {
+        nativeEvent
+      });
     });
 
     it("should call onEvent with WEBVIEW_HTTP_ERROR and track the error when there is a WebViewHttpErrorEvent", () => {
@@ -149,10 +149,9 @@ describe("IdpWebViewLogin", () => {
         type: "WEBVIEW_HTTP_ERROR",
         payload: { url: nativeEvent.url, statusCode: nativeEvent.statusCode }
       });
-      expect(analyticsUtils.trackSpidLoginError).toHaveBeenCalledWith(
-        mockIdp.id,
-        { nativeEvent }
-      );
+      expect(analyticsUtils.trackLoginError).toHaveBeenCalledWith(mockIdp.id, {
+        nativeEvent
+      });
     });
   });
 

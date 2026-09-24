@@ -17,10 +17,35 @@ import { PNMessage } from "../store/types/types";
 
 export const maxVisiblePaymentCount = 5;
 
-export const getNotificationStatusInfo = (status: NotificationStatus) =>
-  I18n.t(`features.pn.details.timeline.status.${status}`, {
-    defaultValue: status
-  });
+export const getNotificationStatusInfo = (
+  status: NotificationStatus
+): string => {
+  switch (status) {
+    case "ACCEPTED":
+      return I18n.t("features.pn.details.timeline.status.ACCEPTED");
+    case "CANCELLED":
+      return I18n.t("features.pn.details.timeline.status.CANCELLED");
+    case "DELIVERED":
+      return I18n.t("features.pn.details.timeline.status.DELIVERED");
+    case "DELIVERING":
+      return I18n.t("features.pn.details.timeline.status.DELIVERING");
+    case "EFFECTIVE_DATE":
+      return I18n.t("features.pn.details.timeline.status.EFFECTIVE_DATE");
+    case "IN_VALIDATION":
+      return I18n.t("features.pn.details.timeline.status.IN_VALIDATION");
+    case "PAID":
+      return I18n.t("features.pn.details.timeline.status.PAID");
+    case "REFUSED":
+      return I18n.t("features.pn.details.timeline.status.REFUSED");
+    case "UNREACHABLE":
+      return I18n.t("features.pn.details.timeline.status.UNREACHABLE");
+    case "VIEWED":
+      return I18n.t("features.pn.details.timeline.status.VIEWED");
+    default:
+      // The backend may send statuses that have no translation yet
+      return status;
+  }
+};
 
 export const getNotificationStatusAccessibilityLabel = (
   historyItem: NotificationStatusHistoryElement

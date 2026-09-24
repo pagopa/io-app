@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error"
+  },
+  // Root-only options: they apply when oxlint runs from the repo root (VS Code,
+  // pre-commit). The per-project `oxlint` Nx target passes them as CLI flags.
+  "options": {
+    "typeAware": true,
+    // Covers `oxlint-disable` comments, which ESLint's eslint-comments rules never see
+    "reportUnusedDisableDirectives": "warn"
+  },
+  "rules": {},
+  "env": {
+    "builtin": true
+  }
+}
