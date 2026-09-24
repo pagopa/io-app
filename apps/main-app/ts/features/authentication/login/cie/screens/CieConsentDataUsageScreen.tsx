@@ -144,7 +144,7 @@ const CieConsentDataUsageScreen = () => {
         params: {
           errorCodeOrMessage,
           authMethod: "CIE",
-          authLevel: AUTH_LEVELS.L2
+          authLevel: AUTH_LEVELS.L3
         }
       });
     }
