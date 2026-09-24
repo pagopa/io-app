@@ -77,11 +77,7 @@ export const getZendeskIdentity = (zendeskToken: string | undefined) =>
 
 // If is not possible to get the assistance tool remotely assume it is none.
 export const assistanceToolRemoteConfig = (aTC: ToolEnum | undefined) =>
-  pipe(
-    aTC,
-    O.fromNullable,
-    O.getOrElseW(() => ToolEnum.none)
-  );
+  aTC ?? ToolEnum.none;
 
 // If is not possible to get the zendeskConfig remotely assume panicMode is not active.
 export const isPanicModeActive = (zendeskConfig: ZendeskConfig) =>
