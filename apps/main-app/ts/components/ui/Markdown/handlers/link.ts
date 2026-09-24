@@ -18,8 +18,8 @@ export const isCustomHandledLink = (href: string): boolean => {
 /**
  * URL schemas supported by CustomHandledLink.
  * `http`/`https`/`sms`/`tel`/`mailto` are handled by React Native's Linking
- * (see https://reactnative.dev/docs/linking#built-in-url-schemes);
- * `copy` is handled internally by IO.
+ * (see https://reactnative.dev/docs/linking#built-in-url-schemes); `copy` is
+ * handled internally by IO.
  */
 const CUSTOM_LINK_SCHEMAS_REGEX = new RegExp(
   `^(http|https|sms|tel|mailto|copy)$`,
@@ -31,8 +31,8 @@ const CUSTOM_LINK_SCHEMAS_REGEX = new RegExp(
 export const IO_CUSTOM_HANDLED_PRESS_PREFIX = "iohandledlink://";
 
 /**
- * Parses an `iohandledlink://` href and returns the structured link data
- * or `undefined` if the href is not a valid handled link.
+ * Parses an `iohandledlink://` href and returns the structured link data or
+ * `undefined` if the href is not a valid handled link.
  */
 export const deriveCustomHandledLink = (href: string): string | undefined => {
   const url = href.trim();

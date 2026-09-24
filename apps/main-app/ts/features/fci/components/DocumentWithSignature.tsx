@@ -82,9 +82,7 @@ const DocumentWithSignature = (props: Props) => {
     return true;
   });
 
-  /**
-   * Dispatches the request to draw the signature field on the pdf.
-   */
+  /** Dispatches the request to draw the signature field on the pdf. */
   useOnFirstRender(() => {
     dispatch(
       fciDocumentSignatureFields.request({
@@ -96,7 +94,8 @@ const DocumentWithSignature = (props: Props) => {
 
   /**
    * Points the pdf to the given page by using its ref.
-   * @param page the page to point the pdf to
+   *
+   * @param page The page to point the pdf to
    */
   const pointToPage = (page: number) =>
     pipe(
@@ -105,16 +104,15 @@ const DocumentWithSignature = (props: Props) => {
       O.map(_ => _.setPage(page))
     );
 
-  /**
-   * Renders the pdf with the signature field drawn on it.
-   */
+  /** Renders the pdf with the signature field drawn on it. */
   const RenderPdf = useCallback(
     ({ document, page }: { document: string; page: number }) => (
-      /** Be aware that, in react-native-pdf 6.7.7, on Android, there
-       * is a bug where onLoadComplete callback is not called. So,
-       * in order to detect proper PDF loading ending, we rely on
-       * onPageChanged, which is called to report that the first page
-       * has loaded */
+      /**
+       * Be aware that, in react-native-pdf 6.7.7, on Android, there is a bug
+       * where onLoadComplete callback is not called. So, in order to detect
+       * proper PDF loading ending, we rely on onPageChanged, which is called to
+       * report that the first page has loaded
+       */
       <Pdf
         enablePaging
         // TODO: add test for errors https://pagopa.atlassian.net/browse/SFEQS-1606
@@ -141,8 +139,8 @@ const DocumentWithSignature = (props: Props) => {
   );
 
   /**
-   * Callback to be used when the user presses the previous button.
-   * It decrements the current page and points the pdf to the new page.
+   * Callback to be used when the user presses the previous button. It
+   * decrements the current page and points the pdf to the new page.
    */
   const onPrevious = () => {
     pipe(
@@ -157,8 +155,8 @@ const DocumentWithSignature = (props: Props) => {
   };
 
   /**
-   * Callback to be used when the user presses the next button.
-   * It increments the current page and points the pdf to the new page.
+   * Callback to be used when the user presses the next button. It increments
+   * the current page and points the pdf to the new page.
    */
   const onNext = () => {
     pipe(
@@ -173,8 +171,9 @@ const DocumentWithSignature = (props: Props) => {
   };
 
   /**
-   * Callback to be used when the pdf cannot be loaded or the signature field cannot be drawn.
-   * It returns an empty fragment and calls the `onError` callback.
+   * Callback to be used when the pdf cannot be loaded or the signature field
+   * cannot be drawn. It returns an empty fragment and calls the `onError`
+   * callback.
    */
   const ErrorView = useCallback(() => {
     props.onError();
@@ -182,7 +181,8 @@ const DocumentWithSignature = (props: Props) => {
   }, [props]);
 
   /**
-   * Renders the pdf, a loading view or an error view depending on the state of the pot.
+   * Renders the pdf, a loading view or an error view depending on the state of
+   * the pot.
    */
   const RenderMask = useCallback(
     () =>

@@ -33,10 +33,11 @@ const BATCH_CREDENTIAL_TYPES = Object.keys(BATCH_ISSUANCE_CREDENTIALS);
 /**
  * Playground section for one-time-use credentials obtained in batch.
  *
- * It exposes the two triggers of the silent renewal so they can be exercised without a real
- * remote presentation: consuming a copy (as a successful presentation would) and requesting the
- * renewal directly. Both go through the production sagas, so the threshold and lifecycle checks
- * still apply: a pool above its refill threshold is left untouched by the renewal request.
+ * It exposes the two triggers of the silent renewal so they can be exercised
+ * without a real remote presentation: consuming a copy (as a successful
+ * presentation would) and requesting the renewal directly. Both go through the
+ * production sagas, so the threshold and lifecycle checks still apply: a pool
+ * above its refill threshold is left untouched by the renewal request.
  */
 export const ItwBatchCredentialsSection = () => {
   const dispatch = useIODispatch();

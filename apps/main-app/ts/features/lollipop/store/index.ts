@@ -43,10 +43,11 @@ const fromNullable = <T>(value: null | T | undefined): SerializedOption<T> =>
 
 /**
  * This function is used to migrate the redux store from version 0 to version 1.
- * The migration is needed because the type of the persisted redux state has changed.
- * The keyTag field should be an Option<string>.
- * @param state the persisted redux state
- * @returns the migrated persisted redux state
+ * The migration is needed because the type of the persisted redux state has
+ * changed. The keyTag field should be an Option<string>.
+ *
+ * @param state The persisted redux state
+ * @returns The migrated persisted redux state
  */
 
 export type PersistedLollipopStateV0V1 = PersistPartial & {
@@ -74,8 +75,9 @@ export const migrationKeyTagFunctional = (
 
 /**
  * The keyTag field type was changed from O.Option<string> to string | undefined
- * @param state the persisted redux state
- * @returns the migrated persisted redux state
+ *
+ * @param state The persisted redux state
+ * @returns The migrated persisted redux state
  */
 
 export const migrationKeyTagToStringUndefined = (
