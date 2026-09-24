@@ -273,8 +273,8 @@ importers:
         specifier: ^2.3.0
         version: 2.4.0
       uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
+        specifier: ^11.1.1
+        version: 11.1.1
       xml2js:
         specifier: ^0.5.0
         version: 0.5.0
@@ -312,9 +312,6 @@ importers:
       '@types/supertest':
         specifier: ^2.0.8
         version: 2.0.16
-      '@types/uuid':
-        specifier: ^9.0.8
-        version: 9.0.8
       '@types/xml2js':
         specifier: ^0.4.11
         version: 0.4.11
@@ -4788,9 +4785,6 @@ packages:
 
   '@types/use-sync-external-store@0.0.3':
     resolution: {integrity: sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==}
-
-  '@types/uuid@9.0.8':
-    resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
 
   '@types/validator@9.4.4':
     resolution: {integrity: sha512-7bWNKQ3lDMhRS2lxe1aHGTBijZ/a6wQfZmCtKJDefpb81sYd+FrfNqj6Gda1Tcw8bYK0gG1CVuNLWV2JS7K8Dw==}
@@ -19226,8 +19220,6 @@ snapshots:
   '@types/url-parse@1.4.3': {}
 
   '@types/use-sync-external-store@0.0.3': {}
-
-  '@types/uuid@9.0.8': {}
 
   '@types/validator@9.4.4': {}
 
