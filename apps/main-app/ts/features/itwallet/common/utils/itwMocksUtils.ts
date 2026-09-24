@@ -17,9 +17,7 @@ import { CredentialMetadata, ParsedStatusAssertion } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 
-/**
- * Credential types mocks.
- */
+/** Credential types mocks. */
 export enum CredentialType {
   DRIVING_LICENSE = "mDL",
   EDUCATION_ATTENDANCE = "education_attendance",
@@ -31,8 +29,9 @@ export enum CredentialType {
   /**
    * Internal type used to identify the Person Identification Data credential.
    * It does not distinguish between legacy PID, PID and NPID in order to avoid
-   * significant refactoring; use the vct to differentiate between them, if needed.
-   * Depending on future use cases, we may create separate credential types for PID and NPID.
+   * significant refactoring; use the vct to differentiate between them, if
+   * needed. Depending on future use cases, we may create separate credential
+   * types for PID and NPID.
    */
   PID = "pid",
   PROOF_OF_AGE = "proof_of_age",

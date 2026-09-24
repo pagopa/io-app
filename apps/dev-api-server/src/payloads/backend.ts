@@ -92,6 +92,18 @@ export const backendStatus: BackendStatus = {
           "https://www.fascicolosanitario.gov.it/portale/accedi-al-fascicolo"
       }
     },
+    oneIdentity: {
+      rolloutPercentage: 0,
+      allowedCieOrigins: [
+        "https://idserver.servizicie.interno.gov.it",
+        "https://oidc.idserver.servizicie.interno.gov.it",
+        "https://mtls.oidc.idserver.servizicie.interno.gov.it",
+        "https://mtls.idserver.servizicie.interno.gov.it",
+        "https://ios.idserver.servizicie.interno.gov.it",
+        "https://ios.oidc.idserver.servizicie.interno.gov.it",
+        "https://preproduzione.idserver.servizicie.interno.gov.it"
+      ]
+    },
     fims: {
       domain: `${serverUrl}/fims/provider/`,
       enabled: true,
