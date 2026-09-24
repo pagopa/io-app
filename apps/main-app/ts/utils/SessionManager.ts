@@ -27,14 +27,10 @@ export class SessionManager<T> {
     private maxRetries = 0
   ) {}
 
-  /**
-   * Returns the current token, if there's one
-   */
+  /** Returns the current token, if there's one */
   public get = () => O.fromNullable(this.token);
 
-  /**
-   * Returns a new token
-   */
+  /** Returns a new token */
   public getNewToken = async (): Promise<O.Option<T>> => {
     let count = 0;
     while (count <= this.maxRetries) {
@@ -49,9 +45,7 @@ export class SessionManager<T> {
     return O.none;
   };
 
-  /**
-   * enable/disable to perform action that need token and token refreshing too
-   */
+  /** Enable/disable to perform action that need token and token refreshing too */
   public setSessionEnabled = async (enabled: boolean) =>
     await this.setEnabledSession(enabled);
 
@@ -105,15 +99,15 @@ export class SessionManager<T> {
   /**
    * Critical section:
    *
-   * 1) Request (A) arrives and it needs to update the token, so it enters this
+   * 1. Request (A) arrives and it needs to update the token, so it enters this
    *    section.
-   * 2) While updating the token, another request arrives (B) that also sees the
+   * 2. While updating the token, another request arrives (B) that also sees the
    *    token is invalid and enters this section to update the token.
-   * 3) (B) gets paused up since the mutex is locked by (A).
-   * 4) (A) finishes updating the token with either a success or a failure.
-   * 5) (B) gets resumed and could either find a valid token refreshed by (A)
-   *    or a still invalid (undefined) token if (A)'s refresh failed.
-   * 6) If the refresh failed, one or both (A) and (B) could retry the refresh
+   * 3. (B) gets paused up since the mutex is locked by (A).
+   * 4. (A) finishes updating the token with either a success or a failure.
+   * 5. (B) gets resumed and could either find a valid token refreshed by (A) or a
+   *    still invalid (undefined) token if (A)'s refresh failed.
+   * 6. If the refresh failed, one or both (A) and (B) could retry the refresh
    *    again (depending on the state of their retry policy) and the flow starts
    *    again from (1)
    */
@@ -136,12 +130,11 @@ export class SessionManager<T> {
   };
 
   /**
-   * if enabled is false it invalidates the session token
-   * and sets a block to avoid to perform any token refreshing and
-   * requests that need token
+   * If enabled is false it invalidates the session token and sets a block to
+   * avoid to perform any token refreshing and requests that need token
    *
-   * if enable is true the block will be removed and token requesting
-   * will be performed
+   * If enable is true the block will be removed and token requesting will be
+   * performed
    */
   private setEnabledSession = async (enabled: boolean) => {
     await this.mutex.runExclusive(() => {

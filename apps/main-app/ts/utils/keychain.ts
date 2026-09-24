@@ -1,8 +1,8 @@
 /**
  * Helpers for setting and getting the PIN code using expo-secure-store.
  *
- * Data is stored with WHEN_UNLOCKED_THIS_DEVICE_ONLY accessibility,
- * meaning it is not backed up and only accessible while the device is unlocked.
+ * Data is stored with WHEN_UNLOCKED_THIS_DEVICE_ONLY accessibility, meaning it
+ * is not backed up and only accessible while the device is unlocked.
  */
 
 import * as SecureStore from "expo-secure-store";
@@ -18,9 +18,7 @@ const DEFAULT_OPTIONS: SecureStore.SecureStoreOptions = {
   keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY
 };
 
-/**
- * Removes the unlock code from the secure store.
- */
+/** Removes the unlock code from the secure store. */
 export async function deletePin(): Promise<boolean> {
   await SecureStore.deleteItemAsync(PIN_KEY, DEFAULT_OPTIONS);
   // TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
@@ -29,9 +27,7 @@ export async function deletePin(): Promise<boolean> {
   return true;
 }
 
-/**
- * Returns the unlock code from the secure store.
- */
+/** Returns the unlock code from the secure store. */
 export async function getPin(): Promise<PinString | undefined> {
   const value = await SecureStore.getItemAsync(PIN_KEY, DEFAULT_OPTIONS);
   if (value !== null && PinString.is(value)) {
@@ -40,9 +36,7 @@ export async function getPin(): Promise<PinString | undefined> {
   return await migrateLegacyPin();
 }
 
-/**
- * Saves the provided unlock code in the secure store.
- */
+/** Saves the provided unlock code in the secure store. */
 export async function setPin(pin: PinString): Promise<boolean> {
   try {
     await SecureStore.setItemAsync(PIN_KEY, pin, DEFAULT_OPTIONS);

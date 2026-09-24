@@ -1,8 +1,8 @@
 /**
- * A screen to show the app Terms of Service. If the user accepted an old version
- * of ToS and a new version is available, an alert is displayed to highlight the user
- * has to accept the new version of ToS.
- * This screen is used also as Privacy screen From Profile section.
+ * A screen to show the app Terms of Service. If the user accepted an old
+ * version of ToS and a new version is available, an alert is displayed to
+ * highlight the user has to accept the new version of ToS. This screen is used
+ * also as Privacy screen From Profile section.
  */
 import {
   Alert as AlertDS,
@@ -35,9 +35,7 @@ import TosWebviewComponent from "../../settings/privacy/shared/components/TosWeb
 import { tosConfigSelector } from "../../tos/store/selectors";
 import { abortOnboarding, tosAccepted } from "../store/actions";
 
-/**
- * A screen to show the ToS to the user.
- */
+/** A screen to show the ToS to the user. */
 const OnboardingTosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 

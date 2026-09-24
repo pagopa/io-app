@@ -1,13 +1,9 @@
 import { environment } from "../config";
 
-/**
- * Return true if the app is running with local env
- */
+/** Return true if the app is running with local env */
 export const isLocalEnv = environment === "DEV";
 
-/**
- * Return true if the app is running in dev mode
- */
+/** Return true if the app is running in dev mode */
 export const isDevEnv = __DEV__;
 
 // true if the env is in testing phase
