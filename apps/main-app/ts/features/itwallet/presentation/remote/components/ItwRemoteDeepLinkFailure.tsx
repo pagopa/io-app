@@ -15,19 +15,15 @@ import { trackItwRemoteDeepLinkFailure } from "../analytics";
 import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
 
 type Props = {
-  /**
-   * The validation error
-   */
+  /** The validation error */
   failure: Error;
-  /**
-   * The original payload that caused the error
-   */
+  /** The original payload that caused the error */
   payload: Partial<ItwRemoteRequestPayload>;
 };
 
 /**
- * Component that renders an error message for an invalid deep link payload
- * and provides access to the support bottom sheet.
+ * Component that renders an error message for an invalid deep link payload and
+ * provides access to the support bottom sheet.
  */
 export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   const navigation = useIONavigation();
@@ -61,10 +57,10 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   };
 
   /**
-   * Using useEffect delays this tracking call
-   * until after all layout effects (including the parent’s) have run.
-   * This ensures trackItwRemoteDeepLinkFailure() is triggered
-   * only after trackItwRemoteStart(), maintaining the correct event order.
+   * Using useEffect delays this tracking call until after all layout effects
+   * (including the parent’s) have run. This ensures
+   * trackItwRemoteDeepLinkFailure() is triggered only after
+   * trackItwRemoteStart(), maintaining the correct event order.
    */
   useEffect(() => {
     trackItwRemoteDeepLinkFailure(failure);

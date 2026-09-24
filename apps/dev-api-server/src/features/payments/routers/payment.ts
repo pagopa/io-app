@@ -271,15 +271,14 @@ addPaymentHandler("get", "/user/lastPaymentMethodUsed", (req, res) => {
   });
 });
 
-/**
- * This API is used to retrieve a list of payment methods available
- */
+/** This API is used to retrieve a list of payment methods available */
 addPaymentHandler("get", "/payment-methods", (req, res) => {
   res.json(generateOnboardablePaymentMethods());
 });
 
 /**
- * API to retrieve the redirect URL to open in the app browser for the given payment method id
+ * API to retrieve the redirect URL to open in the app browser for the given
+ * payment method id
  */
 addPaymentHandler("get", "/payment-methods/:id/redirectUrl", (req, res) => {
   const { id } = req.params;

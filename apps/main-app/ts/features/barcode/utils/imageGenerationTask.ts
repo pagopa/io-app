@@ -4,8 +4,8 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { BarcodeFailure } from "../types/failure";
 
 /**
- * Creates a TaskEither that generates all the images from a PDF document
- * using the Native Module for High Resolution rendering (Scale 3.0).
+ * Creates a TaskEither that generates all the images from a PDF document using
+ * the Native Module for High Resolution rendering (Scale 3.0).
  */
 export const imageGenerationTask = (
   pdfUri: string

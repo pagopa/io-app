@@ -26,9 +26,7 @@ import {
 import { Context } from "./context";
 import { RemoteEvents } from "./events";
 
-/**
- * Initializes the remote presentation machine from the Redux store.
- */
+/** Initializes the remote presentation machine from the Redux store. */
 export const onInitAction = assign<
   Context,
   RemoteEvents,
@@ -104,11 +102,15 @@ export const trackRemoteDataShareAction = ({
     const data_type = optional.length > 0 ? "optional" : "required";
 
     /**
-     * Returns the request type based on the "purpose" fields in the credentials:
+     * Returns the request type based on the "purpose" fields in the
+     * credentials:
+     *
      * - "no_purpose" if none are defined
-     * - "unique_purpose" if there's only one purpose, or all share the same purpose
-     * - "multiple_purpose" if there are multiple distinct valid purposes
-     * A purpose is considered valid only if it's a non-empty, non-whitespace string.
+     * - "unique_purpose" if there's only one purpose, or all share the same
+     *   purpose
+     * - "multiple_purpose" if there are multiple distinct valid purposes A
+     *   purpose is considered valid only if it's a non-empty, non-whitespace
+     *   string.
      */
     const purposes = [
       ...new Set(

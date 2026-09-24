@@ -137,11 +137,12 @@ export const ItwPresentationCredentialAttachmentScreen = ({
         paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
       }}
     >
-      {/** Be aware that, in react-native-pdf 6.7.7, on Android, there
-       * is a bug where onLoadComplete callback is not called. So,
-       * if you have to use such callback, you should rely upon
-       * onPageChanged, which is called to report that the first page
-       * has loaded */}
+      {/**
+       * Be aware that, in react-native-pdf 6.7.7, on Android, there is a bug where
+       * onLoadComplete callback is not called. So, if you have to use such callback,
+       * you should rely upon onPageChanged, which is called to report that the first
+       * page has loaded
+       */}
       <Pdf
         enablePaging
         fitPolicy={0}
@@ -165,9 +166,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
   );
 };
 
-/**
- * Given the attachment claim, return the data needed to display the attachment
- */
+/** Given the attachment claim, return the data needed to display the attachment */
 const getAttachmentData = ({
   name,
   value
@@ -187,7 +186,8 @@ const getAttachmentData = ({
 };
 
 /**
- * Given the filename and the type of the attachment, returns the filename with the extension.
+ * Given the filename and the type of the attachment, returns the filename with
+ * the extension.
  */
 const getFileNameWithExtension = (
   fileName: string,
