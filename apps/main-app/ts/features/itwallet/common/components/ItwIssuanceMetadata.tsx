@@ -13,6 +13,7 @@ import { getMixPanelCredential } from "../../analytics/utils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwAuthSourceName } from "../hooks/useItwAuthSourceName";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
+import { itwIpzsItwalletPrivacyUrlSelector } from "../store/selectors/remoteConfig";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils.ts";
@@ -94,10 +95,12 @@ export const ItwIssuanceMetadata = ({
   const releaserName =
     credential.issuerConf.federation_entity.organization_name;
   const itwCredential = isItwCredential(credential);
-  const privacyUrl = useIOSelector(state =>
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const ipzsPrivacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const itwalletPrivacyUrl = useIOSelector(itwIpzsItwalletPrivacyUrlSelector);
+  const privacyUrl = isItwL3 ? itwalletPrivacyUrl : ipzsPrivacyUrl;
   const mixPanelCredential = getMixPanelCredential(
     credential.credentialType,
     isItwL3
