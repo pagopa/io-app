@@ -9,36 +9,23 @@ import {
 } from "../../../../components/QrCodeImage";
 
 type Props = QrCodeImageProps & {
-  /**
-   * If true, shows a loading indicator on the retry button
-   */
+  /** If true, shows a loading indicator on the retry button */
   isRetrying?: boolean;
-  /**
-   * Function called when the retry button is pressed
-   */
+  /** Function called when the retry button is pressed */
   onRetry: () => void;
-  /**
-   * Text shown above the retry button to describe the issue or context
-   */
+  /** Text shown above the retry button to describe the issue or context */
   retryDescription: string;
-  /**
-   * Icon shown above the retry description (defaults to "noticeFilled")
-   */
+  /** Icon shown above the retry description (defaults to "noticeFilled") */
   retryIcon?: Extract<IOIcons, "noticeFilled" | "warningFilled">;
-  /**
-   * Label of the retry button
-   */
+  /** Label of the retry button */
   retryLabel: string;
-  /**
-   * If `true`, displays the retry UI instead of the QR code
-   */
+  /** If `true`, displays the retry UI instead of the QR code */
   shouldRetry?: boolean;
 };
 
 /**
- * Component that renders a QR code from a given value and,
- * if any error occur, it displays a cta that allows to retry
- * the operation
+ * Component that renders a QR code from a given value and, if any error occur,
+ * it displays a cta that allows to retry the operation
  */
 const ItwRetryableQRCode = ({
   shouldRetry,

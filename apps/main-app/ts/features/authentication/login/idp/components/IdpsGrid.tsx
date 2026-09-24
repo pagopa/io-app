@@ -1,6 +1,7 @@
 /**
  * A component that show a Grid with every Identity Provider passed in the idps
- * array property. When an Identity Provider is selected a callback function is called.
+ * array property. When an Identity Provider is selected a callback function is
+ * called.
  */
 
 import {
