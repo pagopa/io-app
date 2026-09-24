@@ -29,8 +29,6 @@ export type CredentialsListEntry = {
   type: string;
 };
 
-const EMPTY_ARRAY: ReadonlyArray<CredentialsListEntry> = [];
-
 /**
  * Hardcoded list of all obtainable credentials. When the credentials catalogue is not enabled,
  * this list is used as the source of truth for displaying credentials in the UI.
@@ -118,6 +116,7 @@ export const itwCatalogueTranslationsSelector = (state: GlobalState) => {
     state.features.itWallet.credentialsCatalogue.translations;
   // Guard against missing field in persisted state from app versions
   // prior to migration 13 (before catalogue translations were introduced).
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   if (!translations) {
     return undefined;
   }
@@ -213,34 +212,32 @@ export const itwAvailableCredentialsListSelector = createSelector(
     itwHiddenCredentialsSelector
   ],
   (
-    isEnabled,
+    isCatalogueEnabled,
     catalogue,
     resolveName,
     pinnedCredentials,
     remoteNewCredentials,
     hiddenCredentials
   ): ReadonlyArray<CredentialsListEntry> => {
-    if (!isEnabled) {
-      return hardcodedCredentialsList;
-    }
+    const selectCredentials = () => {
+      if (!isCatalogueEnabled || !catalogue) {
+        return hardcodedCredentialsList;
+      }
 
-    if (!catalogue) {
-      return EMPTY_ARRAY;
-    }
-
-    const entries: ReadonlyArray<CredentialsListEntry> = catalogue.credentials
-      .filter(
-        credential =>
-          credential.credential_type !== CredentialType.PID &&
-          !hiddenCredentials.includes(credential.credential_type)
-      )
-      .map(credential => ({
+      return catalogue.credentials.map(credential => ({
         name: resolveName(
           credential.credential_type,
           credential.name ?? credential.credential_type
         ),
         type: credential.credential_type
       }));
+    };
+
+    const entries: ReadonlyArray<CredentialsListEntry> =
+      selectCredentials().filter(
+        ({ type }) =>
+          type !== CredentialType.PID && !hiddenCredentials.includes(type)
+      );
 
     const newEntries = remoteNewCredentials
       .map(type => entries.find(e => e.type === type))

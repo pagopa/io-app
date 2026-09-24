@@ -45,6 +45,12 @@ import {
 } from "../../../common/analytics/cieAnalytics";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import {
+  accessibityTimeout,
+  cieErrorMessagesMap,
+  WAIT_TIMEOUT_NAVIGATION,
+  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
+} from "../../../common/utils/constants";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../login/cie/components/CieCardReadingAnimation";
@@ -54,14 +60,7 @@ import {
 } from "../../../login/cie/store/actions";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { getCieUatEndpoint } from "../../../login/cie/utils/endpoints";
-import {
-  accessibityTimeout,
-  analyticActions,
-  getTextForState,
-  TextForState,
-  WAIT_TIMEOUT_NAVIGATION,
-  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
-} from "../../shared/utils";
+import { getTextForState, TextForState } from "../../shared/utils";
 import { ReauthLoginType } from "../analytics";
 
 export type ActiveSessionCieCardReaderScreenNavigationParams = {
@@ -189,7 +188,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
       trackLoginCieCardReadingError(loginType);
 
       const cieDescription =
-        errorDescription ?? analyticActions.get(eventReason) ?? "";
+        errorDescription ?? cieErrorMessagesMap[eventReason] ?? "";
 
       dispatch(
         cieAuthenticationError({
