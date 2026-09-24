@@ -77,10 +77,9 @@ type UseCieManager = (params: { onSuccess: (authUrl: string) => void }) => {
 export const useCieManager: UseCieManager = ({ onSuccess }) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
-  const loginFlow = cieLoginFlowSelector(store.getState());
 
+  const loginFlow = cieLoginFlowSelector(store.getState());
   const assistanceToolConfig = assistanceToolConfigSelector(store.getState());
-  const isScreenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const useUat = useIOSelector(isCieLoginUatEnabledSelector);
 
   const [state, setState] = useState<CieManagerState>({ status: "idle" });
@@ -157,6 +156,10 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
       handleSendAssistanceLog(choosenTool, "authentication SUCCESS");
       trackLoginCieCardReadingSuccess(loginFlow);
 
+      const isScreenReaderEnabled = isScreenReaderEnabledSelector(
+        store.getState()
+      );
+
       setTimeout(
         () => onSuccess(url),
         isScreenReaderEnabled
@@ -164,7 +167,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
           : WAIT_TIMEOUT_NAVIGATION
       );
     },
-    [choosenTool, isScreenReaderEnabled, loginFlow, onSuccess]
+    [choosenTool, loginFlow, onSuccess, store]
   );
 
   const startReading = useCallback(
