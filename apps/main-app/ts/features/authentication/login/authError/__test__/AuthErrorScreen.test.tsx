@@ -1,11 +1,16 @@
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
+import { BackHandler } from "react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as hooks from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import {
+  setFinishedActiveSessionLoginFlow,
+  setRetryActiveSessionLogin
+} from "../../../activeSessionLogin/store/actions";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
   resetSpidLoginState,
@@ -13,7 +18,8 @@ import {
 } from "../../idp/store/actions";
 import AuthErrorScreen from "../screens/AuthErrorScreen";
 
-const mockNavigation = jest.fn();
+const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
 const mockDispatch = jest.fn();
 
 jest.mock("../../../../../store/hooks", () => ({
@@ -35,22 +41,21 @@ jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
-    useRoute: () => mockUseRoute()
+    useRoute: () => mockUseRoute(),
+    useNavigation: () => ({
+      navigate: mockNavigate,
+      replace: mockReplace
+    })
   };
 });
 
-jest.mock("../../../../../navigation/params/AppParamsList", () => ({
-  useIONavigation: () => ({
-    navigate: mockNavigation
-  })
-}));
-
 describe("AuthErrorScreen", () => {
   beforeEach(() => {
-    mockUseDebugInfo.mockClear();
+    jest.clearAllMocks();
   });
 
   it("should forward the raw error code and the translated title to useDebugInfo for a mapped error", () => {
+    mockIsActiveSessionLogin(false);
     mockUseRoute.mockReturnValue({
       params: {
         errorCodeOrMessage: "25",
@@ -70,6 +75,7 @@ describe("AuthErrorScreen", () => {
   });
 
   it("should forward the raw error code and the generic title to useDebugInfo for an unmapped error", () => {
+    mockIsActiveSessionLogin(false);
     mockUseRoute.mockReturnValue({
       params: {
         errorCodeOrMessage: "some_unmapped_raw_error",
@@ -89,6 +95,7 @@ describe("AuthErrorScreen", () => {
   });
 
   it("rendersCorrectly", () => {
+    mockIsActiveSessionLogin(false);
     mockUseRoute.mockReturnValue({
       params: {
         errorCodeOrMessage: 25,
@@ -102,81 +109,163 @@ describe("AuthErrorScreen", () => {
     ).toBeTruthy();
   });
 
-  it("should dispatch setSpidLoginInLoadingState and navigate onRetry", () => {
-    mockUseRoute.mockReturnValue({
-      params: {
-        errorCodeOrMessage: 25,
-        authMethod: "SPID",
-        authLevel: "L2"
+  describe("onRetry", () => {
+    it.each([
+      { authMethod: "CIE" as const },
+      { authMethod: "CIE_ID" as const },
+      { authMethod: "SPID" as const }
+    ])(
+      "should dispatch setSpidLoginInLoadingState only for SPID ($authMethod)",
+      ({ authMethod }) => {
+        mockIsActiveSessionLogin(false);
+        mockUseRoute.mockReturnValue({
+          params: { errorCodeOrMessage: 25, authMethod, authLevel: "L2" }
+        });
+
+        const { getByTestId } = renderComponent();
+        fireEvent.press(getByTestId("retry-button-test-id"));
+
+        if (authMethod === "SPID") {
+          expect(mockDispatch).toHaveBeenCalledWith(
+            setSpidLoginInLoadingState()
+          );
+        } else {
+          expect(mockDispatch).not.toHaveBeenCalledWith(
+            setSpidLoginInLoadingState()
+          );
+        }
       }
+    );
+
+    it("should navigate locally to CIE_PIN_SCREEN for CIE, without touching MAIN", () => {
+      mockIsActiveSessionLogin(false);
+      mockUseRoute.mockReturnValue({
+        params: { errorCodeOrMessage: 25, authMethod: "CIE", authLevel: "L2" }
+      });
+
+      const { getByTestId } = renderComponent();
+      fireEvent.press(getByTestId("retry-button-test-id"));
+
+      expect(mockNavigate).toHaveBeenCalledWith(
+        AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
+      );
+      expect(mockReplace).not.toHaveBeenCalled();
     });
 
-    const { getByTestId } = renderComponent();
+    it("should replace locally with CIE_ID_LOGIN for CIE_ID in a normal login", () => {
+      mockIsActiveSessionLogin(false);
+      mockUseRoute.mockReturnValue({
+        params: {
+          errorCodeOrMessage: 25,
+          authMethod: "CIE_ID",
+          authLevel: "L2"
+        }
+      });
 
-    fireEvent.press(getByTestId("retry-button-test-id"));
+      const { getByTestId } = renderComponent();
+      fireEvent.press(getByTestId("retry-button-test-id"));
 
-    expect(mockDispatch).toHaveBeenCalledWith(setSpidLoginInLoadingState());
-    expect(mockNavigation).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.IDP_SELECTION
+      expect(mockReplace).toHaveBeenCalledWith(
+        AUTHENTICATION_ROUTES.CIE_ID_LOGIN
+      );
+      expect(mockNavigate).not.toHaveBeenCalled();
+    });
+
+    it("should replace locally with CIE_ID_ACTIVE_SESSION_LOGIN for CIE_ID in an active session login", () => {
+      mockIsActiveSessionLogin(true);
+      mockUseRoute.mockReturnValue({
+        params: {
+          errorCodeOrMessage: 25,
+          authMethod: "CIE_ID",
+          authLevel: "L2"
+        }
+      });
+
+      const { getByTestId } = renderComponent();
+      fireEvent.press(getByTestId("retry-button-test-id"));
+
+      expect(mockDispatch).toHaveBeenCalledWith(setRetryActiveSessionLogin());
+      expect(mockReplace).toHaveBeenCalledWith(
+        AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
+      );
+    });
+
+    it("should navigate locally to IDP_SELECTION for SPID, regardless of active session", () => {
+      mockIsActiveSessionLogin(true);
+      mockUseRoute.mockReturnValue({
+        params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
+      });
+
+      const { getByTestId } = renderComponent();
+      fireEvent.press(getByTestId("retry-button-test-id"));
+
+      expect(mockDispatch).toHaveBeenCalledWith(setRetryActiveSessionLogin());
+      expect(mockNavigate).toHaveBeenCalledWith(
+        AUTHENTICATION_ROUTES.IDP_SELECTION
+      );
+      expect(mockReplace).not.toHaveBeenCalled();
     });
   });
 
-  it("should dispatch resetSpidLoginState and navigate onCancel", () => {
-    mockUseRoute.mockReturnValue({
-      params: {
-        errorCodeOrMessage: 25,
-        authMethod: "SPID",
-        authLevel: "L2"
-      }
+  describe("onCancel", () => {
+    it("should navigate locally back to LANDING for a normal login", () => {
+      mockIsActiveSessionLogin(false);
+      mockUseRoute.mockReturnValue({
+        params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
+      });
+
+      const { getByTestId } = renderComponent();
+      fireEvent.press(getByTestId("cancel-button-test-id"));
+
+      expect(mockDispatch).toHaveBeenCalledWith(resetSpidLoginState());
+      expect(mockNavigate).toHaveBeenCalledTimes(1);
+      expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.LANDING);
     });
 
-    const { getByTestId } = renderComponent();
+    it("should navigate to the Messages home for an active session login", () => {
+      mockIsActiveSessionLogin(true);
+      mockUseRoute.mockReturnValue({
+        params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
+      });
 
-    fireEvent.press(getByTestId("cancel-button-test-id"));
+      const { getByTestId } = renderComponent();
+      fireEvent.press(getByTestId("cancel-button-test-id"));
 
-    expect(mockDispatch).toHaveBeenCalledWith(resetSpidLoginState());
-    expect(mockNavigation).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
-  });
-
-  it("should navigate to CIE_ID_LOGIN when authMethod is CIE_ID", () => {
-    mockUseRoute.mockReturnValue({
-      params: {
-        errorCodeOrMessage: 25,
-        authMethod: "CIE_ID",
-        authLevel: "L2"
-      }
-    });
-
-    const { getByTestId } = renderComponent();
-
-    fireEvent.press(getByTestId("retry-button-test-id"));
-
-    expect(mockNavigation).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN
+      expect(mockDispatch).toHaveBeenCalledWith(
+        setFinishedActiveSessionLoginFlow()
+      );
+      expect(mockNavigate).toHaveBeenCalled();
     });
   });
 
-  it("should dispatch setSpidLoginInLoadingState", () => {
-    mockUseRoute.mockReturnValue({
-      params: {
-        errorCodeOrMessage: "Errore",
-        authMethod: "SPID",
-        authLevel: "L2"
-      }
-    });
+  describe("hardware back button", () => {
+    it("should consume the Android back press without navigating, so the user can leave only via Retry or Close", () => {
+      const addEventListenerSpy = jest.spyOn(BackHandler, "addEventListener");
+      mockIsActiveSessionLogin(false);
+      mockUseRoute.mockReturnValue({
+        params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
+      });
 
-    const { getByTestId } = renderComponent();
+      renderComponent();
 
-    fireEvent.press(getByTestId("retry-button-test-id"));
+      // Mimics BackHandler: listeners run from the most recent one until
+      // one of them consumes the event by returning `true`.
+      const isBackPressConsumed = addEventListenerSpy.mock.calls
+        .filter(([eventName]) => eventName === "hardwareBackPress")
+        .map(([, handler]) => handler)
+        .reverse()
+        .some(handler => handler() === true);
 
-    expect(mockDispatch).toHaveBeenCalledWith(setSpidLoginInLoadingState());
-    expect(mockNavigation).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.IDP_SELECTION
+      expect(isBackPressConsumed).toBe(true);
+      expect(mockNavigate).not.toHaveBeenCalled();
+      expect(mockReplace).not.toHaveBeenCalled();
     });
   });
 });
+
+const mockIsActiveSessionLogin = (value: boolean) => {
+  jest.spyOn(hooks, "useIOSelector").mockReturnValue(value);
+};
 
 const renderComponent = () => {
   const initialState = appReducer(undefined, applicationChangeState("active"));

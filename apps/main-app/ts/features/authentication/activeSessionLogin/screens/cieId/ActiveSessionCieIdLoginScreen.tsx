@@ -1,4 +1,5 @@
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
+import { StackActions } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Linking, Platform, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -132,17 +133,17 @@ const ActiveSessionCieIdLoginScreen = () => {
         ...(message ? { "error message": message } : {}),
         flow: "reauth"
       });
-      // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
-      // because on `navigation.replace` this screen will be unmounted and a further navigation to this screen
-      // will mount it again and the `useLollipopLoginSource` hook will be re-executed.
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        params: {
+      // `replace` drops the failed login screen, so retrying mounts a new
+      // one, with a new Lollipop key, instead of popping back to it.
+      // Dispatched as an action because `navigation` is typed on the root
+      // params list.
+      navigation.dispatch(
+        StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
           errorCodeOrMessage: code || message,
           authMethod: "CIE_ID",
           authLevel: AUTH_LEVELS.L2
-        }
-      });
+        })
+      );
     },
     [dispatch, navigation]
   );
