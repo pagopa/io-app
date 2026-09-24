@@ -53,8 +53,9 @@ type Props = {
 
 /**
  * `OTPInput` is a component that allows the user to enter a one-time password.
- * It has an hidden `TextInput` that is used to handle the keyboard and the focus.
- * The input handles the autocompletion of the OTP code.
+ * It has an hidden `TextInput` that is used to handle the keyboard and the
+ * focus. The input handles the autocompletion of the OTP code.
+ *
  * @param value - The value of the OTP code
  * @param onValueChange - The function to call when the value changes
  * @param length - The length of the OTP code

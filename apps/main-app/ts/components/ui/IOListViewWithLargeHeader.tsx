@@ -23,9 +23,10 @@ type Props<T> = ComponentProps<typeof IOListView<T>> &
   };
 
 /**
- * Special `IOListView` screen with a large title that is hidden by a transition when
- * the user scrolls. It also handles the contextual help and the FAQ.
- * Use of LargeHeader naming is due to similar behavior offered by the native iOS API.
+ * Special `IOListView` screen with a large title that is hidden by a transition
+ * when the user scrolls. It also handles the contextual help and the FAQ. Use
+ * of LargeHeader naming is due to similar behavior offered by the native iOS
+ * API.
  */
 export const IOListViewWithLargeHeader = <T,>({
   ref,

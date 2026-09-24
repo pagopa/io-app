@@ -11,20 +11,19 @@ import { Platform } from "react-native";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
 
-/**
- * Utility functions to interact with the device calendars
- */
+/** Utility functions to interact with the device calendars */
 
 /**
- * A type that brings info about calendar authorization
- * asked means (when true) that the authorized values comes from user choise
- * otherwise comes from a previous recorded choice
+ * A type that brings info about calendar authorization asked means (when true)
+ * that the authorized values comes from user choise otherwise comes from a
+ * previous recorded choice
  */
 type CalendarAuthorization = { asked: boolean; authorized: boolean };
 
 /**
- * A function that checks if the user has already permission to read/write to Calendars
- * and in case of not already defined permission try to get the authorization.
+ * A function that checks if the user has already permission to read/write to
+ * Calendars and in case of not already defined permission try to get the
+ * authorization.
  */
 export async function checkAndRequestPermission(): Promise<CalendarAuthorization> {
   try {
@@ -86,8 +85,9 @@ export function convertLocalCalendarName(calendarTitle: string) {
 }
 
 /**
- * return a TaskEither where left is an error
- * and right is a boolean -> true === the is in calendar
+ * Return a TaskEither where left is an error and right is a boolean -> true ===
+ * the is in calendar
+ *
  * @param eventId
  */
 export const legacyIsEventInCalendar = (
@@ -203,7 +203,8 @@ export const removeCalendarEventFromDeviceCalendar = (
 
 /**
  * Check and request the permission to access the device calendar
- * @returns a boolean that is true if the permission is granted
+ *
+ * @returns A boolean that is true if the permission is granted
  */
 export const requestCalendarPermission = async (): Promise<boolean> => {
   const { status: calendarResult } =
@@ -218,9 +219,7 @@ export const requestCalendarPermission = async (): Promise<boolean> => {
   return requestCalendarStatus === "granted";
 };
 
-/**
- * Check if the event is in the device calendar
- */
+/** Check if the event is in the device calendar */
 export const isEventInCalendar = (eventId: string) =>
   pipe(
     TE.tryCatch(() => requestCalendarPermission(), E.toError),
@@ -231,9 +230,7 @@ export const isEventInCalendar = (eventId: string) =>
     TE.map(ev => ev !== null)
   );
 
-/**
- * Add an event to the device calendar
- */
+/** Add an event to the device calendar */
 export const saveEventToDeviceCalendarTask = (
   calendarId: string,
   dueDate: Date,
@@ -251,18 +248,14 @@ export const saveEventToDeviceCalendarTask = (
     E.toError
   );
 
-/**
- * Remove an event from the device calendar
- */
+/** Remove an event from the device calendar */
 export const removeEventFromDeviceCalendarTask = (eventId: string) =>
   pipe(
     TE.tryCatch(() => Calendar.deleteEventAsync(eventId), E.toError),
     TE.map(_ => eventId)
   );
 
-/**
- * Find the device calendars
- */
+/** Find the device calendars */
 export const findDeviceCalendarsTask = TE.tryCatch(
   () => Calendar.getCalendarsAsync(),
   E.toError

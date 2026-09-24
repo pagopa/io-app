@@ -27,11 +27,12 @@ type RadioButtonLabelProps = Pick<
   Props;
 
 /**
- * A radio button with the automatic state management that uses a {@link AnimatedRadio}
- * The toggleValue change when a `onPress` event is received and dispatch the `onValueChange`.
+ * A radio button with the automatic state management that uses a
+ * {@link AnimatedRadio} The toggleValue change when a `onPress` event is
+ * received and dispatch the `onValueChange`.
  *
+ * @class
  * @param props
- * @constructor
  */
 export const RadioButtonLabel = ({
   label,

@@ -5,17 +5,13 @@ import { walletRemoveCardsByCategory } from "../../../wallet/store/actions/cards
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { itwResetEnv, itwSetEnv } from "../store/actions/environment";
 
-/**
- * Watch environment actions and triggers the IT Wallet reset.
- */
+/** Watch environment actions and triggers the IT Wallet reset. */
 export function* watchItwEnvironment(): SagaIterator {
   yield* takeLatest(itwSetEnv, handleItwEnvironmentChanged);
   yield* takeLatest(itwResetEnv, handleItwEnvironmentChanged);
 }
 
-/**
- * Ensures the wallet is correctly reset when the environment changes.
- */
+/** Ensures the wallet is correctly reset when the environment changes. */
 function* handleItwEnvironmentChanged(): SagaIterator {
   yield* put(itwLifecycleStoresReset());
   yield* put(walletRemoveCardsByCategory("itw"));

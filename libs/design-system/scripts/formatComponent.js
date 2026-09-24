@@ -7,8 +7,8 @@ delete oxfmtOptions.$schema;
 
 /**
  * Formats a generated asset component with oxfmt, using the repo-wide config.
- * `fileName` drives language detection (e.g. `.tsx`).
- * `oxfmt` is ESM-only, hence the dynamic import from these CommonJS scripts.
+ * `fileName` drives language detection (e.g. `.tsx`). `oxfmt` is ESM-only,
+ * hence the dynamic import from these CommonJS scripts.
  */
 const formatComponent = async (fileName, sourceText) => {
   const { format } = await import("oxfmt");

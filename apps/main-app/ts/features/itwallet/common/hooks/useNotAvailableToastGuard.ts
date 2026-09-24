@@ -6,10 +6,10 @@ import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 /**
- * A hook that wraps a function to show a "feature not available" toast
- * if the user has an ITW PID credential.
- * This is useful for features that are not yet available for ITW credentials such as
- * support request.
+ * A hook that wraps a function to show a "feature not available" toast if the
+ * user has an ITW PID credential. This is useful for features that are not yet
+ * available for ITW credentials such as support request.
+ *
  * @param fn The function to be wrapped
  */
 export const useNotAvailableToastGuard = (
