@@ -28,8 +28,9 @@ type OneIdentityCieAuthorizationWebViewProps = {
 };
 
 /**
- * Component responsible for handling the One Identity CIE authorization web view.
- * It checks for an active session login and renders the appropriate content component.
+ * Component responsible for handling the One Identity CIE authorization web
+ * view. It checks for an active session login and renders the appropriate
+ * content component.
  */
 export const OneIdentityCieAuthorizationWebView = ({
   authorizationUrl
