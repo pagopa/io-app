@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-rc.4](https://github.com/pagopa/io-app/compare/3.40.0-rc.3...3.40.0-rc.4) (2026-09-23)
+
+### Features
+
+* [[IOPID-4225](https://pagopa.atlassian.net/browse/IOPID-4225)] add oneIdentity.allowedCieOrigins to dev-api-serve… ([#8637](https://github.com/pagopa/io-app/issues/8637)) ([9218416](https://github.com/pagopa/io-app/commit/9218416ef854f1fc3622df976fc70781b6fb8956))
+* **IT-Wallet:** [[SIW-4908](https://pagopa.atlassian.net/browse/SIW-4908)] ITW discovery link ([#8556](https://github.com/pagopa/io-app/issues/8556)) ([273e79b](https://github.com/pagopa/io-app/commit/273e79b5544d14997d99ae85daad6240e838ed39))
+
+### Bug Fixes
+
+* [[SIW-5012](https://pagopa.atlassian.net/browse/SIW-5012)] Prevent truncated link on L3 identification screen ([#8636](https://github.com/pagopa/io-app/issues/8636)) ([746326f](https://github.com/pagopa/io-app/commit/746326f35e6e7487f73e5627855d4aab5ddb3e64))
+
+### Chores
+
+* [[IOPLT-1738](https://pagopa.atlassian.net/browse/IOPLT-1738)] Add `oxlint` alongside `eslint` ([#7989](https://github.com/pagopa/io-app/issues/7989)) ([801241b](https://github.com/pagopa/io-app/commit/801241bb80328986c87122817df6b3db4af9e31e))
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Apply filters to both dynamic and static catalogue ([#8638](https://github.com/pagopa/io-app/issues/8638)) ([df4451f](https://github.com/pagopa/io-app/commit/df4451f953516e7e221440e8920f4dde39231dcb))
+* **IT-Wallet:** [[SIW-4978](https://pagopa.atlassian.net/browse/SIW-4978)] Add tracking for "Discover more" button in proximity failure screen ([#8628](https://github.com/pagopa/io-app/issues/8628)) ([8365650](https://github.com/pagopa/io-app/commit/8365650bcc7ce66783f8e749729201b87eff5099))
+* **IT-Wallet:** [[SIW-4996](https://pagopa.atlassian.net/browse/SIW-4996)] Implement L2 fallback for CIE identification without credentials ([#8612](https://github.com/pagopa/io-app/issues/8612)) ([ac77045](https://github.com/pagopa/io-app/commit/ac77045196695466a308fb8dbe997da6a7da8562))
+## [3.40.0-rc.3](https://github.com/pagopa/io-app/compare/3.40.0-rc.2...3.40.0-rc.3) (2026-09-22)
+
+### Features
+
+* **IT-Wallet:** [[SIW-4724](https://pagopa.atlassian.net/browse/SIW-4724)] Track NFC consent management events ([#8579](https://github.com/pagopa/io-app/issues/8579)) ([d83536b](https://github.com/pagopa/io-app/commit/d83536b0877a4cbdf56558fa66deb672f6cf351c))
+
+### Chores
+
+* [[IEL-238](https://pagopa.atlassian.net/browse/IEL-238),[IEL-239](https://pagopa.atlassian.net/browse/IEL-239),[IEL-240](https://pagopa.atlassian.net/browse/IEL-240)] Added reason to PN_ATTACHMENT_DOWNLOAD_FAILURE, PN_DISCLAIMER_LOAD_ERROR and SEND_ACTIVATION_FAILURE MP events. ([#8547](https://github.com/pagopa/io-app/issues/8547)) ([c0c6464](https://github.com/pagopa/io-app/commit/c0c646495d352f58dcfcbf8491f81de600475782))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Align Podfile ([#8633](https://github.com/pagopa/io-app/issues/8633)) ([ae8cded](https://github.com/pagopa/io-app/commit/ae8cded5f6d2d8bc5f42dc10701886d14de5163c))
+* [[IOPLT-1737](https://pagopa.atlassian.net/browse/IOPLT-1737)] Replace `prettier` with `oxfmt` ([#7972](https://github.com/pagopa/io-app/issues/7972)) ([96d8524](https://github.com/pagopa/io-app/commit/96d8524416d0091d7277c381ce91aef66aae4b9c))
+* [[IOPLT-2069](https://pagopa.atlassian.net/browse/IOPLT-2069)] Upgrade `Nx` to `23.2.1` ([#8586](https://github.com/pagopa/io-app/issues/8586)) ([2077881](https://github.com/pagopa/io-app/commit/20778818b150b5eabb4dcc5c6e3294455c6728e7))
 ## [3.40.0-rc.2](https://github.com/pagopa/io-app/compare/3.40.0-rc.1...3.40.0-rc.2) (2026-09-21)
 
 ### Features

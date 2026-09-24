@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /** Aggregates all defined reducers */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, Reducer } from "redux";

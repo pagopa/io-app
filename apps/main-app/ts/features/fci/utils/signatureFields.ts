@@ -14,18 +14,20 @@ import I18n from "i18next";
 import { PDFDocument, rgb } from "pdf-lib";
 import ReactNativeBlobUtil from "react-native-blob-util";
 
-import { TranslationKeys } from "../../../i18n";
 import { SignatureFieldAttrType } from "../components/DocumentWithSignature";
 import { savePath } from "../saga/networking/handleDownloadDocument";
 
-const clausesEnumValues: Record<ClauseTypeEnum, TranslationKeys> = {
-  [ClauseTypeEnum.REQUIRED]: "features.fci.signatureFields.required",
-  [ClauseTypeEnum.UNFAIR]: "features.fci.signatureFields.unfair",
-  [ClauseTypeEnum.OPTIONAL]: "features.fci.signatureFields.optional"
+/** Get the section title for a signature clause type */
+export const getClauseLabel = (clauseType: ClauseTypeEnum): string => {
+  switch (clauseType) {
+    case ClauseTypeEnum.OPTIONAL:
+      return I18n.t("features.fci.signatureFields.optional");
+    case ClauseTypeEnum.REQUIRED:
+      return I18n.t("features.fci.signatureFields.required");
+    case ClauseTypeEnum.UNFAIR:
+      return I18n.t("features.fci.signatureFields.unfair");
+  }
 };
-
-export const getClauseLabel = (clauseType: ClauseTypeEnum) =>
-  I18n.t(clausesEnumValues[clauseType]);
 
 export type LIST_DATA_TYPE = {
   data: ReadonlyArray<SignatureField>;

@@ -204,7 +204,6 @@ export type IOColorsExtra = keyof typeof IOColorsExtra;
 ░░░ THEME COLORS ░░░
 */
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const themeKeys = [
   // General
   "appBackground-primary",

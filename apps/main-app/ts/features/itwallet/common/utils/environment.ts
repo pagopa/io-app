@@ -38,6 +38,7 @@ class ItwSpecsEnvVar {
   }
 }
 
+// oxlint-disable-next-line complexity
 export const getEnv = (env: EnvType): Env => {
   switch (env) {
     case "pre":

@@ -177,6 +177,7 @@ export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
  * - When accessing the Wallet mini app in offline mode
  */
 
+// oxlint-disable-next-line complexity
 export function* initializeApplicationSaga(
   startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {

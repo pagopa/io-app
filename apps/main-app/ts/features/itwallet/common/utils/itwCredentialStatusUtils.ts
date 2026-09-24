@@ -31,6 +31,7 @@ type GetCredentialStatusOptions = {
  * @param options See {@link GetCredentialStatusOptions}
  * @returns ItwCredentialStatus
  */
+// oxlint-disable-next-line complexity
 export const getCredentialStatus = (
   credential: CredentialMetadata,
   options: GetCredentialStatusOptions = {}

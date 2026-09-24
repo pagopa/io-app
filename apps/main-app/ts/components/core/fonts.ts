@@ -11,7 +11,6 @@ type IOFontFamily = keyof typeof fonts;
 const weights = ["Light", "Regular", "Semibold", "Bold"] as const;
 export type IOFontWeight = (typeof weights)[number];
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const weightValues = ["300", "400", "600", "700"] as const;
 export type FontWeightValue = (typeof weightValues)[number];
 
