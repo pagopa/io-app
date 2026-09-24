@@ -15,10 +15,8 @@ const matchMarkdownLink = /!?\[([^\]]*)\]\(([^\\)]+)\)/g;
 const getMatchedLinks = (text: string) => text.match(matchMarkdownLink) ?? [];
 
 /**
- * This function returns the replacement url
- * for the tag DOCUMENT_URL and PRIVACY_URL
- * otherwise returns the tag because
- * it's a custom link
+ * This function returns the replacement url for the tag DOCUMENT_URL and
+ * PRIVACY_URL otherwise returns the tag because it's a custom link
  */
 const getOrReplaceTagWithLink = (tagLink: string, replacementUrl: string) => {
   switch (tagLink) {
@@ -30,9 +28,7 @@ const getOrReplaceTagWithLink = (tagLink: string, replacementUrl: string) => {
   }
 };
 
-/**
- * This component renders a text with markdown links
- */
+/** This component renders a text with markdown links */
 const LinkedText = (props: Props) => {
   const parts = getMatchedLinks(props.text);
   // generate unique string with the separator
@@ -48,8 +44,8 @@ const LinkedText = (props: Props) => {
   );
 
   /**
-   * This function generates an array of Link components
-   * used to render the list of clauses
+   * This function generates an array of Link components used to render the list
+   * of clauses
    */
   const generateArrayOfLinkedText = (
     text: string,

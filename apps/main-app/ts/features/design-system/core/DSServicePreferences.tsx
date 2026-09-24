@@ -22,17 +22,11 @@ import Animated, {
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
-/**
- * Spring config for the transition applied to the secondary switches
- */
+/** Spring config for the transition applied to the secondary switches */
 const SPRING_CONFIG = IOSpringValues.accordion;
-/**
- * Delay (ms) added per switch position, so each one trails the previous.
- */
+/** Delay (ms) added per switch position, so each one trails the previous. */
 const STAGGER_DELAY = 75;
-/**
- * Vertical offset (in points) applied to the secondary switches
- */
+/** Vertical offset (in points) applied to the secondary switches */
 const TRANSLATE_Y = 16;
 
 /**
@@ -69,9 +63,7 @@ const exitToggleTransition = () => {
   };
 };
 
-/**
- * Layout transition shared by the reflowing containers.
- */
+/** Layout transition shared by the reflowing containers. */
 const LAYOUT_TRANSITION = LinearTransition.springify()
   .mass(SPRING_CONFIG.mass)
   .damping(SPRING_CONFIG.damping)
@@ -117,8 +109,8 @@ const PlaceholderBox = ({
 /**
  * Experimental rebuild of the `ServiceDetailsPreferences` block.
  *
- * The first ("main") switch acts as a master toggle: the two dependent
- * switches are only mounted while it is on.
+ * The first ("main") switch acts as a master toggle: the two dependent switches
+ * are only mounted while it is on.
  */
 export const DSServicePreferences = () => {
   // States for the main switch.
