@@ -4,11 +4,7 @@ import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform } from "react-native";
 
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../../store/hooks";
+import { useIODispatch, useIOStore } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { isDevEnv } from "../../../../../utils/environment";
@@ -80,7 +76,6 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
 
   const loginFlow = cieLoginFlowSelector(store.getState());
   const assistanceToolConfig = assistanceToolConfigSelector(store.getState());
-  const useUat = useIOSelector(isCieLoginUatEnabledSelector);
 
   const [state, setState] = useState<CieManagerState>({ status: "idle" });
 
@@ -182,7 +177,10 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
       cieManager.enableLog(isDevEnv);
       // Set the IDP URL based on the environment:
       // Uses the UAT endpoint for Pre-production or null to fallback to PROD (default).
-      cieManager.setCustomIdpUrl(useUat ? getCieUatEndpoint() : null);
+      const idpUrl = isCieLoginUatEnabledSelector(store.getState())
+        ? getCieUatEndpoint()
+        : null;
+      cieManager.setCustomIdpUrl(idpUrl);
       cieManager.setAuthenticationUrl(authUrl);
 
       try {
@@ -193,7 +191,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
         handleError(new Error("Failed to start reading CIE"));
       }
     },
-    [handleEvent, handleError, handleSuccess, useUat]
+    [handleEvent, handleError, handleSuccess, store]
   );
 
   useEffect(
