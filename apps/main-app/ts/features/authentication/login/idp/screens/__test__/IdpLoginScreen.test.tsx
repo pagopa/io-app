@@ -9,6 +9,7 @@ import * as useLollipopLoginSource from "../../../../../lollipop/hooks/useLollip
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as commonStoreSelector from "../../../../common/store/selectors";
 import * as requestinfo from "../../store/selectors";
+import { ErrorType } from "../../store/types";
 import IdpLoginScreen from "../IdpLoginScreen";
 
 jest.mock("@react-navigation/native", () => {
@@ -16,12 +17,14 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
-      navigate: mockNavigate
+      navigate: mockNavigate,
+      replace: mockReplace
     })
   };
 });
 
 const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
 
 jest.mock("../../../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
@@ -29,6 +32,10 @@ jest.mock("../../../../../../hooks/useHeaderSecondLevel", () => ({
 
 describe("IdpLoginScreen", () => {
   const mockDispatch = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   jest.spyOn(IOHooks, "useIODispatch").mockReturnValue(mockDispatch);
 
@@ -100,6 +107,24 @@ describe("IdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
 
     expect(getByTestId("idp-successful-authentication")).toBeTruthy();
+  });
+
+  it("should replace locally with AuthErrorScreen when requestState is error, without touching MAIN", () => {
+    jest.spyOn(requestinfo, "spidLoginRequestInfoSelector").mockReturnValue({
+      requestState: pot.noneError(ErrorType.LOGIN_ERROR)
+    });
+
+    renderComponent();
+
+    expect(mockReplace).toHaveBeenCalledTimes(1);
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: "L2"
+      }
+    );
   });
 });
 

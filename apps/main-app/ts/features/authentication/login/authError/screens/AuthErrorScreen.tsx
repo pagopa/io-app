@@ -75,17 +75,10 @@ const AuthErrorScreen = () => {
       dispatch(setRetryActiveSessionLogin());
     }
 
-    // The active session login flow pushes its own instance of this same
-    // nested authentication navigator (from Settings), so `navigation`
-    // always refers to whichever instance currently renders this screen:
-    // the same local navigation works for both the first-login and the
-    // active session flows.
     switch (authMethod) {
       case "CIE":
-        // The CIE PIN screen navigates to this one with `navigate`, so it's
-        // still in the stack, possibly with a card reader screen on top of
-        // it: `navigate` to an existing route pops back to it instead of
-        // pushing a new instance.
+        // CIE_PIN_SCREEN is still in the stack, below the card reader:
+        // `navigate` pops back to it instead of pushing a new instance.
         navigation.navigate(authScreenByAuthMethod.CIE);
         break;
       case "CIE_ID":
@@ -96,8 +89,7 @@ const AuthErrorScreen = () => {
         break;
       case "SPID":
         // Lets the user pick an IdP again from IDP_SELECTION: `navigate`
-        // pops back to it if still in the stack (OneIdentity), or pushes a
-        // fresh one otherwise (legacy).
+        // pops back to it.
         navigation.navigate(authScreenByAuthMethod.SPID);
         break;
     }
