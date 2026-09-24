@@ -79,7 +79,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
   const store = useIOStore();
   const loginFlow = cieLoginFlowSelector(store.getState());
 
-  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+  const assistanceToolConfig = assistanceToolConfigSelector(store.getState());
   const isScreenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const useUat = useIOSelector(isCieLoginUatEnabledSelector);
 
