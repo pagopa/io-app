@@ -8,7 +8,8 @@ const ExpoPdfHighResGenerator =
   requireNativeModule<ExpoPdfHighResGeneratorModule>("ExpoPdfHighResGenerator");
 
 /**
- * Renders every page of the PDF at `filePath` to a high resolution JPEG and returns the `file://` URIs.
+ * Renders every page of the PDF at `filePath` to a high resolution JPEG and
+ * returns the `file://` URIs.
  */
 export const generatePdfHighResImages = (
   filePath: string,
