@@ -19,7 +19,6 @@ import AuthErrorScreen from "../screens/AuthErrorScreen";
 
 const mockNavigate = jest.fn();
 const mockReplace = jest.fn();
-const mockReset = jest.fn();
 const mockDispatch = jest.fn();
 
 jest.mock("../../../../../store/hooks", () => ({
@@ -44,8 +43,7 @@ jest.mock("@react-navigation/native", () => {
     useRoute: () => mockUseRoute(),
     useNavigation: () => ({
       navigate: mockNavigate,
-      replace: mockReplace,
-      reset: mockReset
+      replace: mockReplace
     })
   };
 });
@@ -209,7 +207,7 @@ describe("AuthErrorScreen", () => {
   });
 
   describe("onCancel", () => {
-    it("should reset the local stack to LANDING for a normal login, without touching MAIN", () => {
+    it("should navigate locally back to LANDING for a normal login", () => {
       mockIsActiveSessionLogin(false);
       mockUseRoute.mockReturnValue({
         params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
@@ -219,11 +217,8 @@ describe("AuthErrorScreen", () => {
       fireEvent.press(getByTestId("cancel-button-test-id"));
 
       expect(mockDispatch).toHaveBeenCalledWith(resetSpidLoginState());
-      expect(mockReset).toHaveBeenCalledWith({
-        index: 0,
-        routes: [{ name: AUTHENTICATION_ROUTES.LANDING }]
-      });
-      expect(mockNavigate).not.toHaveBeenCalled();
+      expect(mockNavigate).toHaveBeenCalledTimes(1);
+      expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.LANDING);
     });
 
     it("should navigate to the Messages home for an active session login", () => {
@@ -239,7 +234,6 @@ describe("AuthErrorScreen", () => {
         setFinishedActiveSessionLoginFlow()
       );
       expect(mockNavigate).toHaveBeenCalled();
-      expect(mockReset).not.toHaveBeenCalled();
     });
   });
 });

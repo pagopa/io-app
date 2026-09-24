@@ -114,13 +114,9 @@ const AuthErrorScreen = () => {
     }
 
     dispatch(resetSpidLoginState());
-    // `reset` sets the stack directly to LANDING regardless of what's
-    // currently in it, so it works even when legacy entry points have
-    // already collapsed it down to a single AUTH_ERROR_SCREEN route.
-    navigation.reset({
-      index: 0,
-      routes: [{ name: AUTHENTICATION_ROUTES.LANDING }]
-    });
+    // LANDING is the initial route of this stack in the first-login flow:
+    // `navigate` pops back to it without remounting it.
+    navigation.navigate(AUTHENTICATION_ROUTES.LANDING);
   }, [dispatch, isActiveSessionLogin, navigation]);
 
   return (
