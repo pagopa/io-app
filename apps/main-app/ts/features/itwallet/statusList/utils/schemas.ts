@@ -7,9 +7,7 @@ const StatusListSigningKeysSchema = z.object({
 /** Valid x5c header shape. Certificate encoding is validated natively. */
 export const StatusListX5cSchema = z.array(z.string().min(1)).min(1);
 
-/**
- * Validates Wallet Provider metadata needed to verify Status List Tokens.
- */
+/** Validates Wallet Provider metadata needed to verify Status List Tokens. */
 export const WalletProviderMetadataSchema = z.object({
   metadata: z.object({
     wallet_solution: z.object({
