@@ -20,8 +20,8 @@ type Props = {
 };
 
 /**
- * Builds the optional endElement info button that opens a bottom sheet
- * with claim details when pressed.
+ * Builds the optional endElement info button that opens a bottom sheet with
+ * claim details when pressed.
  */
 const buildInfoEndElement = (
   present: Props["present"],
@@ -43,10 +43,10 @@ const buildInfoEndElement = (
 };
 
 /**
- * Renders a single claim item based on its display format.
- * Handles text, image, list, driving privileges, nested objects and
- * nested object arrays following the same rendering logic as the
- * old `mapClaimsToClaimsSelectorItems` utility.
+ * Renders a single claim item based on its display format. Handles text, image,
+ * list, driving privileges, nested objects and nested object arrays following
+ * the same rendering logic as the old `mapClaimsToClaimsSelectorItems`
+ * utility.
  */
 export const ClaimItem = ({
   item,

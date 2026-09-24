@@ -87,6 +87,7 @@ const fakeDenominationFromFiscalCode = (fiscalCode: string) => {
   )}`;
 };
 
+// oxlint-disable-next-line complexity -- A-Z lookup table
 const fakeNameFromCharacter = (character: string) => {
   switch (character) {
     case "A":
@@ -146,6 +147,7 @@ const fakeNameFromCharacter = (character: string) => {
   }
 };
 
+// oxlint-disable-next-line complexity -- A-Z lookup table
 const fakeSurnameFromCharacter = (character: string) => {
   switch (character) {
     case "A":
