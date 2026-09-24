@@ -311,7 +311,7 @@ PODS:
     - SocketRocket
     - SwiftCBOR
     - Yoga
-  - pagopa-io-react-native-jwt (2.2.3):
+  - pagopa-io-react-native-jwt (2.2.4):
     - boost
     - DoubleConversion
     - fast_float
@@ -3402,8 +3402,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - ReactNativeExceptionHandler (2.10.8):
-    - React
+  - ReactNativeExceptionHandler (2.10.10):
+    - React-Core
   - RNCAsyncStorage (2.0.0):
     - boost
     - DoubleConversion
@@ -4418,7 +4418,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-cieid: 3969ed1784e0b9041baf892b461be3640315acd1
   pagopa-io-react-native-crypto: afc8ee2585a7944dc115687eb2938009608f062a
   pagopa-io-react-native-integrity: 3e84754db0333a531db86f83f786f60a6da22337
-  pagopa-io-react-native-jwt: 1ba79b0ef1450c59fb82266632dcaa2d5dcdafa0
+  pagopa-io-react-native-jwt: 87d7def44fe0bf9be9e4170b4b7e747a07cd2526
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
@@ -4514,7 +4514,7 @@ SPEC CHECKSUMS:
   ReactCodegen: f74348d34edd01ba2ed662c40e1beb94fca9aff3
   ReactCommon: d71e3b6d0134b09c1ec8e656f81daefae6902a97
   ReactNativeBottomSheet: 03b2317ce62b9f686e6caad94fe5124534791831
-  ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
+  ReactNativeExceptionHandler: a23922ca00122b050ae9412f960061791c232c47
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9

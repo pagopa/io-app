@@ -88,4 +88,4 @@ catalog:
   react-native-svg: "^15.14.0"
 
 minimumReleaseAgeExclude:
-  - "@pagopa/io-react-native-jwt@2.2.3"
+  - "@pagopa/io-react-native-jwt@2.2.4"
