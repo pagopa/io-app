@@ -32,10 +32,10 @@ export const useCieIdWebViewLoginNavigation = ({
 
   const navigateToAuthErrorScreen = useCallback(
     (errorCodeOrMessage?: string) => {
-      // `replace` swaps this screen for AuthErrorScreen, so retrying can
-      // recreate it and re-trigger the Lollipop key generation on mount.
-      // Dispatched directly, rather than through `navigation.replace`, to
-      // leave `navigation`'s type untouched for the other two calls above.
+      // `replace` drops the failed login screen, so retrying mounts a new
+      // one, with a new Lollipop key, instead of popping back to it.
+      // Dispatched as an action because `navigation` is typed on the root
+      // params list.
       navigation.dispatch(
         StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
           errorCodeOrMessage,

@@ -75,9 +75,8 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
 
   const navigateToAuthErrorScreen = useCallback(
     (errorCodeOrMessage?: string) => {
-      // `replace` removes this screen from the stack, so that retrying
-      // picks a fresh IdP from IDP_SELECTION instead of resuming this
-      // failed attempt.
+      // `replace` drops the failed login webview, so it doesn't stay
+      // mounted behind the error screen.
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
         errorCodeOrMessage,
         authMethod: "SPID",
