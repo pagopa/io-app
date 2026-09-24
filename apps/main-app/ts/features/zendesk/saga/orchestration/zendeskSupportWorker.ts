@@ -2,6 +2,7 @@ import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 
 import NavigationService from "../../../../navigation/NavigationService";
+import { ReduxSagaEffect } from "../../../../types/utils";
 import { isLoggedIn } from "../../../authentication/common/store/utils/guards";
 import ZENDESK_ROUTES from "../../navigation/routes";
 import {
@@ -17,7 +18,16 @@ export type ZendeskSupportResult = "back" | "cancel" | "completed" | "failure";
 
 export function* zendeskSupportWorker(
   zendeskStart: ActionType<typeof zendeskSupportStart>
-): Generator<any, ZendeskSupportResult, any> {
+): Generator<
+  ReduxSagaEffect,
+  ZendeskSupportResult,
+  ActionType<
+    | typeof zendeskSupportBack
+    | typeof zendeskSupportCancel
+    | typeof zendeskSupportCompleted
+    | typeof zendeskSupportFailure
+  >
+> {
   const isLoggedinUser = yield* select(s => isLoggedIn(s.authentication));
   const needToNavigateInAskPermissionScreen = Object.values(
     zendeskStart.payload.assistanceType
@@ -77,7 +87,7 @@ export function* zendeskSupportWorker(
 function* navigateToZendeskSupportScreen(
   needToNavigateInAskPermissionScreen: boolean,
   payload: ActionType<typeof zendeskSupportStart>["payload"]
-) {
+): Generator<ReduxSagaEffect, void> {
   yield* call(NavigationService.navigate, ZENDESK_ROUTES.MAIN, {
     screen: needToNavigateInAskPermissionScreen
       ? ZENDESK_ROUTES.ASK_PERMISSIONS
