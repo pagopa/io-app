@@ -132,7 +132,5 @@ export const MainTabNavigator = () => {
   );
 };
 
-/**
- * Used to mock tab content. This will never be rendered.
- */
+/** Used to mock tab content. This will never be rendered. */
 const EmptyComponent = () => <></>;

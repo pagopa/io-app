@@ -3,10 +3,10 @@ const versionModule = require("./version_utility.js");
 
 const packagePath = "package.json";
 
-/***
- * Prepare the package.json file for a new fix|release|breaking cycle.
- * In order to use the automatic functionality of commit-and-tag-version, just remove the -rc.x suffix to initiate
- * a new cycle.
+/**
+ * Prepare the package.json file for a new fix|release|breaking cycle. In order
+ * to use the automatic functionality of commit-and-tag-version, just remove the
+ * -rc.x suffix to initiate a new cycle.
  */
 const prepareToNewCycle = () => {
   // read package.json as JSON

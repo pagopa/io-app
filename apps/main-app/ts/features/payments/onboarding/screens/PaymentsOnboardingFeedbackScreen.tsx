@@ -72,7 +72,8 @@ type OutcomeCopy = {
 };
 
 /**
- * Title, optional subtitle and primary action label shown for an onboarding outcome.
+ * Title, optional subtitle and primary action label shown for an onboarding
+ * outcome.
  */
 const getOutcomeCopy = (outcome: WalletOnboardingOutcome): OutcomeCopy => {
   switch (outcome) {

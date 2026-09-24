@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* globals jest, require, global */
-/**
- * Set up of the testing environment
- */
+/** Set up of the testing environment */
 
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import * as mockClipboard from "expo-clipboard/mocks/ExpoClipboard.ts";
@@ -287,9 +285,7 @@ jest
   .spyOn(AccessibilityInfo, "isBoldTextEnabled")
   .mockImplementation(() => Promise.resolve(false));
 
-/**
- * NefInfo's `fetch` method mock
- */
+/** NefInfo's `fetch` method mock */
 jest.mock("@react-native-community/netinfo", () => ({
   fetch: jest.fn().mockResolvedValue({ isConnected: true })
 }));

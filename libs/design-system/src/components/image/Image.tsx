@@ -26,7 +26,9 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Image component that supports specific aspect ratio scales and sets alt text as mandatory.
+ * Image component that supports specific aspect ratio scales and sets alt text
+ * as mandatory.
+ *
  * @param imageProps
  * @param alt
  * @param aspectRatio
