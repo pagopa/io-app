@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react-native";
 
-import { SpidIdp } from "../../../../../../utils/idps";
-import { useOneIdentityPosteIDApp2AppEducational } from "../../hooks/useOneIdentityPosteIDApp2AppEducational";
+import { SpidIdp } from "../../../../../utils/idps";
+import { useOneIdentityPosteIDApp2AppEducational } from "../useOneIdentityPosteIDApp2AppEducational";
 
 const mockPresent = jest.fn();
 
-jest.mock("../../../../../../utils/hooks/bottomSheet", () => ({
+jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
   useIOBottomSheetModal: jest.fn(() => ({
     present: mockPresent,
     bottomSheet: <></>

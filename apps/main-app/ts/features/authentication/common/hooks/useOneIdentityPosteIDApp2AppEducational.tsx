@@ -8,8 +8,8 @@ import I18n from "i18next";
 import { useEffect, useMemo, useRef } from "react";
 import { View } from "react-native";
 
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import { SpidIdp } from "../../../../../utils/idps";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { SpidIdp } from "../../../../utils/idps";
 
 const POSTE_ID_IDP_ID = "posteid";
 

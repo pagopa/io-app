@@ -1,6 +1,6 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import I18n from "i18next";
-import { memo, useCallback, useMemo, useRef } from "react";
+import { memo, useCallback, useMemo, useRef, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
@@ -25,6 +25,7 @@ import {
   trackSpidLoginIntent
 } from "../../activeSessionLogin/screens/analytics";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
+import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { idpLoginUrlChanged } from "../store/actions";
 import {
   AUTH_LEVELS,
@@ -52,8 +53,7 @@ export type WebViewLoginEvent =
       type: "WEBVIEW_HTTP_ERROR";
     }
   | { payload: { token: string }; type: "LOGIN_SUCCESS" }
-  | { payload: { url: string }; type: "WEBVIEW_ERROR" }
-  | { type: "WEBVIEW_LOADED" };
+  | { payload: { url: string }; type: "WEBVIEW_ERROR" };
 
 export const IdpWebViewLogin = memo(
   ({ idp, flow = "auth", onEvent }: IdpWebViewLoginProps) => {
@@ -178,9 +178,16 @@ export const IdpWebViewLogin = memo(
       [dispatch]
     );
 
+    const [isWebViewLoaded, setIsWebViewLoaded] = useState(false);
+
+    const posteIdBottomSheet = useOneIdentityPosteIDApp2AppEducational({
+      idp,
+      isWebViewLoaded
+    });
+
     const handleLoadEnd = useCallback(() => {
-      onEvent({ type: "WEBVIEW_LOADED" });
-    }, [onEvent]);
+      setIsWebViewLoaded(true);
+    }, []);
 
     if (
       loginSourceState.status === "reserving-public-key" ||
@@ -211,6 +218,7 @@ export const IdpWebViewLogin = memo(
           testID="webview-idp-login-screen"
           textZoom={100}
         />
+        {posteIdBottomSheet}
       </View>
     );
   }
