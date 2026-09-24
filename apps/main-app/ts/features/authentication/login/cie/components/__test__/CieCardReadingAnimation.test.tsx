@@ -11,9 +11,8 @@ import CieCardReadingAnimation, {
 } from "../CieCardReadingAnimation";
 
 /**
- * in order to test all other behaviors and side effects
- * there is a need for the screen to be refactored.
- * https://pagopa.atlassian.net/browse/IOPID-1857
+ * In order to test all other behaviors and side effects there is a need for the
+ * screen to be refactored. https://pagopa.atlassian.net/browse/IOPID-1857
  */
 
 if (!testableCieCardReadingAnimation) {
