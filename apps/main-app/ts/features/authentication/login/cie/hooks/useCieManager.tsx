@@ -1,7 +1,7 @@
 import { triggerHaptic } from "@io-app/design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import I18n from "i18next";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
 
 import { useIODispatch, useIOStore } from "../../../../../store/hooks";
@@ -77,13 +77,9 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
 
   const loginFlow = cieLoginFlowSelector(store.getState());
   const assistanceToolConfig = assistanceToolConfigSelector(store.getState());
+  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
 
   const [state, setState] = useState<CieManagerState>({ status: "idle" });
-
-  const choosenTool = useMemo(
-    () => assistanceToolRemoteConfig(assistanceToolConfig),
-    [assistanceToolConfig]
-  );
 
   const commonErrorHandling = useCallback(
     (
