@@ -5,9 +5,7 @@ import { ActionType } from "typesafe-actions";
 import { removeCachedAttachment } from "../store/actions";
 import { AttachmentsDirectoryPath } from "../utils/attachments";
 
-/**
- * Clears cached files for all the attachments
- */
+/** Clears cached files for all the attachments */
 export function* handleClearAllAttachments() {
   const dir = new File(AttachmentsDirectoryPath);
   if (dir.exists) {
@@ -17,6 +15,7 @@ export function* handleClearAllAttachments() {
 
 /**
  * Clears cached file for the attachment
+ *
  * @param action
  */
 export function* handleClearAttachment(

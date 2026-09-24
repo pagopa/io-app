@@ -6,9 +6,7 @@ export type GenericError = { readonly kind: "generic"; value: Error };
 export type NetworkError = GenericError | TimeoutError;
 export type TimeoutError = { readonly kind: "timeout" };
 
-/**
- * return an error starting from an unknown input value
- */
+/** Return an error starting from an unknown input value */
 export const getError = (error: unknown): Error => {
   if (error instanceof Error) {
     return error;
@@ -50,15 +48,11 @@ export const getErrorFromNetworkError = (networkError: NetworkError): Error => {
   }
 };
 
-/**
- * Convert an `unknown` variable to a generic `Error`.
- */
+/** Convert an `unknown` variable to a generic `Error`. */
 export const convertUnknownToError = (e: unknown): Error =>
   e instanceof Error ? e : new Error(`${e}`);
 
-/**
- * Convert an `unknown` variable to a `MessagesFailurePayload`.
- */
+/** Convert an `unknown` variable to a `MessagesFailurePayload`. */
 export const convertUnknownToMessagesFailure = (
   e: unknown
 ): MessagesFailurePayload => {
@@ -75,21 +69,21 @@ export const convertUnknownToMessagesFailure = (
 };
 
 /**
- * Serializes an Error object into a plain object that can be safely
- * converted to JSON using `JSON.stringify()`.
+ * Serializes an Error object into a plain object that can be safely converted
+ * to JSON using `JSON.stringify()`.
  *
- * This is needed because `JSON.stringify(error)` returns `"{}"` for Error objects.
- * The reason is that the standard Error properties (`name`, `message`, `stack`)
- * are **non-enumerable** by default, and `JSON.stringify()` only serializes
- * enumerable own properties.
+ * This is needed because `JSON.stringify(error)` returns `"{}"` for Error
+ * objects. The reason is that the standard Error properties (`name`, `message`,
+ * `stack`) are **non-enumerable** by default, and `JSON.stringify()` only
+ * serializes enumerable own properties.
+ *
+ * @example
+ *   const error = new Error("Something went wrong");
+ *   JSON.stringify(error); // "{}" - properties are non-enumerable!
+ *   JSON.stringify(serializeError(error)); // {"name":"Error","message":"Something went wrong","stack":"..."}
  *
  * @param error - The Error object to serialize
  * @returns A plain object containing `name`, `message`, and `stack` properties
- *
- * @example
- * const error = new Error("Something went wrong");
- * JSON.stringify(error); // "{}" - properties are non-enumerable!
- * JSON.stringify(serializeError(error)); // {"name":"Error","message":"Something went wrong","stack":"..."}
  */
 export const serializeError = (error: Error) => ({
   name: error.name,
@@ -100,7 +94,8 @@ export const serializeError = (error: Error) => ({
 /**
  * Safely converts an `unknown` value into a descriptive string.
  *
- * @param {unknown} input - The value to be stringified (often from a catch block).
+ * @param {unknown} input - The value to be stringified (often from a catch
+ *   block).
  * @returns {string} A human-readable string representation of the input.
  */
 export const unknownToString = (input: unknown): string => {

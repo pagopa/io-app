@@ -22,9 +22,10 @@ const debugMode = false;
 const debugBg = hexToRgba(IOColors["error-600"], 0.2);
 
 /**
-Native `Spacer` component
-@param  {string} orientation
-@param {IOSpacer} size
+ * Native `Spacer` component
+ *
+ * @param {string} orientation
+ * @param {IOSpacer} size
  */
 const Spacer = ({ allowScaleSpacing, orientation, size }: BaseSpacerProps) => {
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
@@ -58,15 +59,17 @@ const Spacer = ({ allowScaleSpacing, orientation, size }: BaseSpacerProps) => {
 };
 
 /**
-Horizontal spacer component
-@param {IOSpacer} size
+ * Horizontal spacer component
+ *
+ * @param {IOSpacer} size
  */
 export const HSpacer = ({ size = DEFAULT_SIZE }: SpacerProps) => (
   <Spacer orientation={"horizontal"} size={size} />
 );
 /**
-Vertical spacer component
-@param {IOSpacer} size
+ * Vertical spacer component
+ *
+ * @param {IOSpacer} size
  */
 export const VSpacer = ({ size = DEFAULT_SIZE }: SpacerProps) => (
   <Spacer orientation={"vertical"} size={size} />

@@ -10,8 +10,9 @@ type PaymentsMethodPspDetailsAlertProps = {
 };
 
 /**
- * this component shows information about how does it works a psp preselected
- * @constructor
+ * This component shows information about how does it works a psp preselected
+ *
+ * @class
  */
 export const PaymentsMethodPspDetailsAlert = ({
   pspBusinessName

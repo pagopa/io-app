@@ -24,9 +24,7 @@ type Params = {
   isItwL3: boolean;
 };
 
-/**
- * Track errors occurred during the credential issuance process for analytics.
- */
+/** Track errors occurred during the credential issuance process for analytics. */
 
 export const useCredentialEventsTracking = ({
   failure,

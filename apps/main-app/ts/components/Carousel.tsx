@@ -31,27 +31,21 @@ type Props<T> = Pick<
   | "style"
   | "viewabilityConfig"
 > & {
-  /**
-   * The component used to render the single item.
-   */
+  /** The component used to render the single item. */
   Component: JSXElementConstructor<T>;
-  /**
-   * The array used to build the carousel items.
-   */
+  /** The array used to build the carousel items. */
   data: Array<T>;
-  /**
-   * The horizontal space between carousel items.
-   */
+  /** The horizontal space between carousel items. */
   itemsGap?: 0 | IOAppMargin;
-  /**
-   * The number of items displayed simultaneously.
-   */
+  /** The number of items displayed simultaneously. */
   itemsPerTime?: number;
 };
 
 /**
- * This component renders a carousel of elements from a given `data` entry and a `Component` of your choice.
- * It allows you to define how many items to display at a time, how many space between the rendered elements and other important features inherited from the `FlatList` component.
+ * This component renders a carousel of elements from a given `data` entry and a
+ * `Component` of your choice. It allows you to define how many items to display
+ * at a time, how many space between the rendered elements and other important
+ * features inherited from the `FlatList` component.
  */
 export const Carousel = <T extends Record<string, unknown>>({
   ref,
