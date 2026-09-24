@@ -6,9 +6,10 @@ import { addFavouriteServiceSuccess } from "../store/actions";
 import { favouriteServiceByIdSelector } from "../store/selectors";
 
 /**
- * saga to align the stored favourite service data with the newly loaded details.
- * if the service just loaded is found in the user's favourites list,
+ * Saga to align the stored favourite service data with the newly loaded
+ * details. if the service just loaded is found in the user's favourites list,
  * this saga updates its local information to ensure consistency.
+ *
  * @param action
  */
 export function* handleSyncFavouriteService(

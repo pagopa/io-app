@@ -11,9 +11,9 @@ function replaceVersionCode(_, version, p1, __) {
 }
 
 /**
- * Prepare the package.json file for a new fix|release|breaking cycle.
- * In order to use the automatic functionality of commit-and-tag-version, just remove the -rc.x suffix to initiate
- * a new cycle.
+ * Prepare the package.json file for a new fix|release|breaking cycle. In order
+ * to use the automatic functionality of commit-and-tag-version, just remove the
+ * -rc.x suffix to initiate a new cycle.
  */
 const replaceCanaryVersion = () => {
   // read package.json as JSON

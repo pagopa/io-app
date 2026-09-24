@@ -15,15 +15,17 @@ import { itwAllStoredCredentialsSelector } from "../store/selectors";
 import { CredentialsVault } from "../utils/vault";
 
 /**
- * Consumes one presented copy of a batch-issued credential (e.g. Proof of Age) after a
- * successful remote presentation, as required by the IT-Wallet spec: the consumed copy is
- * removed from the vault and its crypto key deleted, and the credential's `keyTags` are reduced
- * by one to decrease the batch count. When the consumed copy was the last one, the credential is
- * fully removed instead (mirroring `itwCredentialsRemoveByType`).
+ * Consumes one presented copy of a batch-issued credential (e.g. Proof of Age)
+ * after a successful remote presentation, as required by the IT-Wallet spec:
+ * the consumed copy is removed from the vault and its crypto key deleted, and
+ * the credential's `keyTags` are reduced by one to decrease the batch count.
+ * When the consumed copy was the last one, the credential is fully removed
+ * instead (mirroring `itwCredentialsRemoveByType`).
  *
- * Storage cleanup is best-effort: if it fails for one instance, the failure is only tracked via
- * analytics and processing continues with the remaining instances, since the presentation has
- * already succeeded from the Relying Party's perspective by the time this saga runs.
+ * Storage cleanup is best-effort: if it fails for one instance, the failure is
+ * only tracked via analytics and processing continues with the remaining
+ * instances, since the presentation has already succeeded from the Relying
+ * Party's perspective by the time this saga runs.
  */
 export function* handleItwCredentialsConsumeInstanceSaga(
   action: ReturnType<typeof itwCredentialsConsumeInstance>

@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Runs the callback only on the first render.
- * If `shouldRun` is provided and returns false, doesn't run the callback.
+ * Runs the callback only on the first render. If `shouldRun` is provided and
+ * returns false, doesn't run the callback.
  *
  * @param callback
- * @param shouldRun additional condition
+ * @param shouldRun Additional condition
  */
 export const useOnFirstRender = (
   callback: () => void,

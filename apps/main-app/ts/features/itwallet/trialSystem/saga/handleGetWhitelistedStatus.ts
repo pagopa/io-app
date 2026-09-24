@@ -5,8 +5,10 @@ import { ItWalletClient } from "../../api/client.ts";
 import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences.ts";
 
 /**
- * Saga that handles the retrieval of the whitelisted status for the fiscal code.
- * It checks if the fiscal code is whitelisted and updates the L3 enabled state accordingly.
+ * Saga that handles the retrieval of the whitelisted status for the fiscal
+ * code. It checks if the fiscal code is whitelisted and updates the L3 enabled
+ * state accordingly.
+ *
  * @param client - The IT Wallet client used to make the API call.
  * @param sessionToken - The session token used for authentication.
  */
@@ -18,7 +20,6 @@ export function* handleGetWhitelistedStatus(
     const response = yield* call(client.isFiscalCodeWhitelisted, {
       Bearer: sessionToken
     });
-    // eslint-disable-next-line no-underscore-dangle
     if (response._tag === "Right" && response.right.status === 200) {
       const { whitelisted } = response.right.value;
       yield* put(itwSetFiscalCodeWhitelisted(whitelisted));

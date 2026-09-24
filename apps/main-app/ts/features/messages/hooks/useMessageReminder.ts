@@ -29,9 +29,7 @@ export const useMessageReminder = (
   const { addEventToCalendar, removeEventFromCalendar } =
     useMessageCalendar(messageId);
 
-  /**
-   * Hook that checks if the event is in the device calendar
-   */
+  /** Hook that checks if the event is in the device calendar */
   useEffect(() => {
     void pipe(
       calendarEvent,

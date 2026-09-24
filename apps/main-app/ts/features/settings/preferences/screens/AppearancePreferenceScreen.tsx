@@ -48,8 +48,9 @@ export const updateNavigationBarColor = (theme?: ColorModeChoice) => {
 
 /**
  * Display the appearance related settings
+ *
+ * @class
  * @param props
- * @constructor
  */
 const AppearancePreferenceScreen = (): ReactElement => {
   const store = useIOStore();
