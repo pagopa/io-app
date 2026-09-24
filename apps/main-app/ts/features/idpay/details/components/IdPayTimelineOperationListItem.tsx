@@ -153,13 +153,11 @@ const getTransactionOperationProps = (
 
   const title: string =
     businessName ||
-    (isQRCode
-      ? I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.TRANSACTION_ONLINE"
-        )
-      : I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.TRANSACTION"
-        ));
+    I18n.t(
+      `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${
+        isQRCode ? "TRANSACTION_ONLINE" : "TRANSACTION"
+      }`
+    );
 
   const subtitle = getOperationSubtitleWithAmount(
     operationDate,
@@ -222,39 +220,19 @@ const getInstrumentOperationProps = (
     operationType ===
       RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT;
 
-  const getTitle = (): string => {
+  const getTitle = () => {
     if (instrumentType === InstrumentTypeEnum.IDPAYCODE) {
       return I18n.t(
         `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.CIE`
       );
     }
 
-    const options = {
-      maskedPan: maskedPan !== undefined ? `···· ${maskedPan}` : ""
-    };
-
-    switch (operationType) {
-      case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
-        return I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_INSTRUMENT",
-          options
-        );
-      case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
-        return I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.DELETE_INSTRUMENT",
-          options
-        );
-      case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
-        return I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.REJECTED_ADD_INSTRUMENT",
-          options
-        );
-      case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
-        return I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.REJECTED_DELETE_INSTRUMENT",
-          options
-        );
-    }
+    return I18n.t(
+      `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operationType}`,
+      {
+        maskedPan: maskedPan !== undefined ? `···· ${maskedPan}` : ""
+      }
+    );
   };
 
   const subtitle = getOperationSubtitle(operationDate);
