@@ -7,9 +7,7 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { storeItwSpecsVersion } from "../utils/storage";
 
-/**
- * Matches credential store actions containing an eID.
- */
+/** Matches credential store actions containing an eID. */
 export const isItwCredentialsStoreWithEid = (
   action: Action
 ): action is ReturnType<typeof itwCredentialsStore> =>
@@ -19,9 +17,9 @@ export const isItwCredentialsStoreWithEid = (
   );
 
 /**
- * Persists the specs version carried by the stored eID.
- * Storage failures are ignored because this background-task projection must not
- * affect credential storage.
+ * Persists the specs version carried by the stored eID. Storage failures are
+ * ignored because this background-task projection must not affect credential
+ * storage.
  */
 export function* handleItwSpecsVersionStorageSaga(
   action: ReturnType<typeof itwCredentialsStore>
@@ -37,9 +35,7 @@ export function* handleItwSpecsVersionStorageSaga(
   }
 }
 
-/**
- * Keeps the background-task specs version synchronized with the latest eID.
- */
+/** Keeps the background-task specs version synchronized with the latest eID. */
 export function* watchItwSpecsVersionStorageSaga(): SagaIterator {
   yield* takeLatest(
     isItwCredentialsStoreWithEid,

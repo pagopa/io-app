@@ -100,7 +100,8 @@ const ItwPresentationDetailsHeader = ({
 };
 
 /**
- * @deprecated Legacy header component for presentation details, to be used until the new design is enabled for all users.
+ * @deprecated Legacy header component for presentation details, to be used
+ *   until the new design is enabled for all users.
  */
 const ItwPresentationDetailsHeaderLegacy = ({
   credential
@@ -171,9 +172,7 @@ const styles = StyleSheet.create({
 
 const MemoizedItwPresentationDetailsHeader = memo(ItwPresentationDetailsHeader);
 
-/**
- * @deprecated
- */
+/** @deprecated */
 const MemoizedItwPresentationDetailsHeaderLegacy = memo(
   ItwPresentationDetailsHeaderLegacy
 );

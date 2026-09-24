@@ -1,6 +1,4 @@
-/**
- * The root saga that forks and includes all the other sagas.
- */
+/** The root saga that forks and includes all the other sagas. */
 import { all, call } from "typed-redux-saga/macro";
 
 import versionInfoSaga from "../common/versionInfo/saga/versionInfo";

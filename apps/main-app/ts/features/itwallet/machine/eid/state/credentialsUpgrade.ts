@@ -4,7 +4,10 @@ import { assert } from "../../../../../utils/assert.ts";
 import { ItwTags } from "../../tags";
 import { itwEidIssuanceMachineSetup } from "../setup";
 
-/** Upgrades eligible wallet credentials after successful electronic identity issuance. */
+/**
+ * Upgrades eligible wallet credentials after successful electronic identity
+ * issuance.
+ */
 export const credentialsUpgradeState =
   itwEidIssuanceMachineSetup.createStateConfig({
     description: "This state handles the upgrade of credentials in the wallet",
