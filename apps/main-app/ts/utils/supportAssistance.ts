@@ -118,7 +118,7 @@ export const zendeskItWalletSubcategoryId = "29326690756369";
  * Must be numeric: the Android SDK parses it with `Long.parseLong`.
  */
 // TODO: [SIW-5093] Replace `undefined` with the numeric ID of the "Stato wallet" field,
-// then remove the `zendeskWalletStatusId` guard in ZendeskAskPermissions.
+// then remove the `zendeskItWalletStatusId` guard in ZendeskAskPermissions.
 // Required Zendesk setup before release:
 // - Create the "Stato wallet" drop-down ticket field (end-user visible: no) with
 //   the tag values `it_wallet`, `documenti_su_io`, `not_active` (ItwZendeskWalletStatus)
@@ -128,7 +128,7 @@ export const zendeskItWalletSubcategoryId = "29326690756369";
 // - Duplicate the triggers, views and macros based on `it_wallet` for `documenti_su_io`
 // - Split the remote config wallet category into "IT-Wallet" (`it_wallet`) and
 //   "Documenti su IO" (`documenti_su_io`)
-export const zendeskWalletStatusId: string | undefined = undefined;
+export const zendeskItWalletStatusId: string | undefined = undefined;
 
 export const defaultZendeskPaymentCategory: ZendeskCategory = {
   value: "io_pagamenti_pagopa",

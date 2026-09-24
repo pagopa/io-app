@@ -47,7 +47,7 @@ import {
   zendeskDeviceAndOSId,
   zendeskidentityProviderId,
   zendeskVersionsHistoryId,
-  zendeskWalletStatusId
+  zendeskItWalletStatusId
 } from "../../../utils/supportAssistance";
 import { handleItemOnPress, openWebUrl } from "../../../utils/url";
 import {
@@ -338,9 +338,9 @@ const ZendeskAskPermissions = () => {
     // Tag the ticket with the current app version
     addTicketTag(currentVersion);
 
-    // TODO: [SIW-5093] remove the guard once zendeskWalletStatusId is set
-    if (zendeskWalletStatusId) {
-      addTicketCustomField(zendeskWalletStatusId, walletStatus);
+    // TODO: [SIW-5093] remove the guard once zendeskItWalletStatusId is set
+    if (zendeskItWalletStatusId) {
+      addTicketCustomField(zendeskItWalletStatusId, walletStatus);
     }
 
     openSupportTicket(() => dispatchZendeskUiDismissed());

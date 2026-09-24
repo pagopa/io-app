@@ -28,7 +28,7 @@ jest.useFakeTimers();
 jest.mock("../../../../utils/supportAssistance", () => ({
   ...jest.requireActual("../../../../utils/supportAssistance"),
   // The real field ID is not available yet
-  zendeskWalletStatusId: "123456"
+  zendeskItWalletStatusId: "123456"
 }));
 
 const mockedIdp: SpidIdp = {
