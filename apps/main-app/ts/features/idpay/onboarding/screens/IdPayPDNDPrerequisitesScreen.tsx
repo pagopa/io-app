@@ -126,6 +126,8 @@ const IdPayPDNDPrerequisitesScreen = () => {
           <VSpacer size={16} />
         </Fragment>
       ))}
+      {/* TODO: ask to the team PARI if the data on the family unit will continue to depend
+      on this data or if it will be removed and only informativeCriteria will be used */}
       {familyUnitCriteria && (
         <>
           <ModuleSummary
