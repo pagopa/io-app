@@ -4,9 +4,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { pad } from "./dates";
 
-/**
- * Generic utilities for profile
- */
+/** Generic utilities for profile */
 type FiscalCodeDerivedData = Readonly<{
   birthDate?: Date;
   denominazione: string;

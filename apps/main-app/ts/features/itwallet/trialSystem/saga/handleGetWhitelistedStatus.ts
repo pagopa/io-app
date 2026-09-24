@@ -5,8 +5,10 @@ import { ItWalletClient } from "../../api/client.ts";
 import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences.ts";
 
 /**
- * Saga that handles the retrieval of the whitelisted status for the fiscal code.
- * It checks if the fiscal code is whitelisted and updates the L3 enabled state accordingly.
+ * Saga that handles the retrieval of the whitelisted status for the fiscal
+ * code. It checks if the fiscal code is whitelisted and updates the L3 enabled
+ * state accordingly.
+ *
  * @param client - The IT Wallet client used to make the API call.
  * @param sessionToken - The session token used for authentication.
  */

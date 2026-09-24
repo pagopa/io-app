@@ -8,6 +8,7 @@ const WALLET_UPDATE_PATHS = [
 
 /**
  * Check if the URL requires wallet update based on specific criteria
+ *
  * - External Universal Links from web
  * - Specific internal paths that need wallet refresh
  */

@@ -14,8 +14,9 @@ type Props = {
 };
 
 /**
- * proof_of_age is a new credential but shows its own usage banner instead of this generic
- * validity alert, so it is excluded here (no validity message exists for it).
+ * `proof_of_age` is a new credential but shows its own usage banner instead of
+ * this generic validity alert, so it is excluded here (no validity message
+ * exists for it).
  */
 type ValidityAlertCredential = Exclude<
   NewCredential,
@@ -23,10 +24,11 @@ type ValidityAlertCredential = Exclude<
 >;
 
 /**
- * Dismissable banner showing information about the validity of new IT Wallet credentials.
- * Each credential type is tracked with its own persisted banner id (see
- * `getNewCredentialValidityBannerId`), so dismissing it for one credential does not hide
- * it for the others, including credential types added in the future.
+ * Dismissable banner showing information about the validity of new IT Wallet
+ * credentials. Each credential type is tracked with its own persisted banner id
+ * (see `getNewCredentialValidityBannerId`), so dismissing it for one credential
+ * does not hide it for the others, including credential types added in the
+ * future.
  */
 export const ItwPresentationNewCredentialValidityAlert = ({
   credentialType

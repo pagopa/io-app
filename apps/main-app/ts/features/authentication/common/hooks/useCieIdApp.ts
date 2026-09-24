@@ -27,17 +27,11 @@ const extractCieIdErrorFromUrl = (url: string): string | undefined => {
 };
 
 type UseCieIdApp = (params: {
-  /**
-   * Handler called upon failure of the CIE authentication flow.
-   */
+  /** Handler called upon failure of the CIE authentication flow. */
   onFailure: (error: string) => void;
-  /**
-   * Handler called upon successful CIE authentication flow.
-   */
+  /** Handler called upon successful CIE authentication flow. */
   onSuccess: (authenticationUrl: string) => void;
-  /**
-   * Wether to use UAT endpoints for CIE auth operations.
-   */
+  /** Wether to use UAT endpoints for CIE auth operations. */
   useUat?: boolean;
 }) => {
   startCieIdApp: (url: string) => void;

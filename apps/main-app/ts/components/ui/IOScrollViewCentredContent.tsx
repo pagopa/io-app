@@ -30,8 +30,8 @@ export type IOScrollViewCentredContentProps = Omit<
 };
 
 /**
- * Istance of `IOScrollView` where the main content is centred,
- * and a pictogram->title->description->link layout is provided.
+ * Istance of `IOScrollView` where the main content is centred, and a
+ * pictogram->title->description->link layout is provided.
  */
 export const IOScrollViewCentredContent = ({
   title,

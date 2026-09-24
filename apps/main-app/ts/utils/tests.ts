@@ -2,6 +2,7 @@ import { Action } from "../store/actions/types";
 
 /**
  * Reproduce a sequence of action, returning the state after this sequence
+ *
  * @param initialState
  * @param reducer
  * @param sequenceOfActions

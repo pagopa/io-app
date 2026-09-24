@@ -47,8 +47,8 @@ type TourContextValue = {
   /** Returns true if the item is region-based (no ref tracking needed). */
   isRegionItem: (groupId: string, index: number) => boolean;
   /**
-   * When true, the active GuidedTour component continuously tracks its
-   * position via useFrameCallback. Set to false during step transitions.
+   * When true, the active GuidedTour component continuously tracks its position
+   * via useFrameCallback. Set to false during step transitions.
    */
   isTracking: SharedValue<boolean>;
   /** Animated ref for the overlay container, used for coordinate conversion. */

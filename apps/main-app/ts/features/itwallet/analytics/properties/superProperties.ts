@@ -12,9 +12,7 @@ export type ItwSuperProperties = ItwBaseProperties & {
   OFFLINE_ACCESS_REASON: string;
 };
 
-/**
- * Updates only ITW Profile properties.
- */
+/** Updates only ITW Profile properties. */
 export const updateItwSuperProperties = (state: GlobalState) => {
   if (!isMixpanelInstanceInitialized()) {
     return;
