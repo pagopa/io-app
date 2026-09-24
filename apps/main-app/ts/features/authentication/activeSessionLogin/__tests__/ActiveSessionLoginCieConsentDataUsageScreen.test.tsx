@@ -27,7 +27,11 @@ jest.mock("../../../../store/hooks", () => ({
   useIOStore: jest.fn()
 }));
 
-const mockNavigation = { navigate: jest.fn(), replace: jest.fn() };
+const mockNavigation = {
+  dispatch: jest.fn(),
+  navigate: jest.fn(),
+  replace: jest.fn()
+};
 jest.mock("../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => mockNavigation
 }));
@@ -53,7 +57,6 @@ runConsentScreenSuite({
   render: renderActive,
   mockNavigation,
   onLoginUriChangedSpy,
-  expectErrorRedirectMethod: "replace",
   makeHttpError: () =>
     ({
       nativeEvent: {

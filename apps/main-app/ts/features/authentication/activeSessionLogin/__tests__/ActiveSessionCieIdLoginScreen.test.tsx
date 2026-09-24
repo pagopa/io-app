@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import { act, fireEvent } from "@testing-library/react-native";
 import { EmitterSubscription, Linking } from "react-native";
 import { createStore } from "redux";
@@ -17,6 +18,7 @@ import {
 const API_PREFIX_URL = "http://example.com";
 
 const mockReplace = jest.fn();
+const mockNavigationDispatch = jest.fn();
 const mockDispatch = jest.fn();
 const mockPopToTop = jest.fn();
 
@@ -28,6 +30,7 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () => ({
       replace: mockReplace,
+      dispatch: mockNavigationDispatch,
       popToTop: mockPopToTop
     })
   };
@@ -116,12 +119,15 @@ describe("ActiveSessionCieIdLoginScreen", () => {
     });
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: expect.objectContaining({
-        errorCodeOrMessage: "invalid_cf"
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction("invalid_cf")
+    );
+    expect(mockReplace).not.toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.MAIN,
+      expect.objectContaining({
+        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN
       })
-    });
+    );
   });
 
   it("should dispatch setFinishedActiveSessionLoginFlow on goBack", () => {
@@ -197,12 +203,15 @@ describe("ActiveSessionCieIdLoginScreen", () => {
 
     renderComponent();
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: expect.objectContaining({
-        errorCodeOrMessage: message
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction(message)
+    );
+    expect(mockReplace).not.toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.MAIN,
+      expect.objectContaining({
+        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN
       })
-    });
+    );
   });
 
   it("should block URL navigation if shouldBlockUrlNavigationWhileCheckingLollipop returns true", () => {
@@ -224,6 +233,13 @@ describe("ActiveSessionCieIdLoginScreen", () => {
     expect(result).toBe(false);
   });
 });
+
+const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
+  StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+    errorCodeOrMessage,
+    authMethod: "CIE_ID",
+    authLevel: "L2"
+  });
 
 function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
