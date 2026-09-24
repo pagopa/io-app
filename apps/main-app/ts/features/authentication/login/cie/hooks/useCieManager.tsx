@@ -84,21 +84,24 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
     [assistanceToolConfig]
   );
 
-  const errorHandler = useCallback(
-    (reason: "GENERIC" | CEvent["event"], description?: string) =>
-      (handler: () => void) => {
-        trackLoginCieCardReadingError(loginFlow);
+  const commonErrorHandling = useCallback(
+    (
+      reason: "GENERIC" | CEvent["event"],
+      description: string | undefined,
+      handler: () => void
+    ) => {
+      trackLoginCieCardReadingError(loginFlow);
 
-        dispatch(
-          cieAuthenticationError({
-            reason,
-            cieDescription: description ?? cieErrorMessagesMap[reason] ?? "",
-            flow: loginFlow
-          })
-        );
-        triggerHaptic("notificationError");
-        handler();
-      },
+      dispatch(
+        cieAuthenticationError({
+          reason,
+          cieDescription: description ?? cieErrorMessagesMap[reason] ?? "",
+          flow: loginFlow
+        })
+      );
+      triggerHaptic("notificationError");
+      handler();
+    },
     [dispatch, loginFlow]
   );
 
@@ -106,12 +109,11 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
     (error: Error) => {
       handleSendAssistanceLog(choosenTool, error.message);
 
-      const handler = errorHandler("GENERIC", error.message);
-      handler(() =>
+      commonErrorHandling("GENERIC", error.message, () =>
         setState({ failure: error.message, status: "reading-failure" })
       );
     },
-    [choosenTool, errorHandler]
+    [choosenTool, commonErrorHandling]
   );
 
   const handleEvent = useCallback(
@@ -125,8 +127,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
         return;
       }
 
-      const handler = errorHandler(event.event);
-      handler(() => {
+      commonErrorHandling(event.event, undefined, () => {
         // ON_TAG_LOST and "Transmission Error" are handled inline
         // by the reading screen itself
         if (
@@ -140,7 +141,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
         setState({ failure: event, status: "failure" });
       });
     },
-    [choosenTool, errorHandler]
+    [choosenTool, commonErrorHandling]
   );
 
   const handleSuccess = useCallback(
