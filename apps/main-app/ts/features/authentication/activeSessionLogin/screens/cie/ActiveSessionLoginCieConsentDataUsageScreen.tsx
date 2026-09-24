@@ -73,7 +73,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
         params: {
           errorCodeOrMessage: errorCodeOrMessageProp,
           authMethod: "CIE",
-          authLevel: AUTH_LEVELS.L2
+          authLevel: AUTH_LEVELS.L3
         }
       });
     },

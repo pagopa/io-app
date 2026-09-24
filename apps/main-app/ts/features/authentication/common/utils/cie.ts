@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
 
-import { AuthLevel } from ".";
 import { isDevEnv } from "../../../../utils/environment";
 
 export const iOSUserAgent =
@@ -42,9 +41,4 @@ export const isAllowedUrl = (
   } catch {
     return false;
   }
-};
-
-export type CieIdLoginProps = {
-  isUat: boolean;
-  spidLevel: AuthLevel;
 };

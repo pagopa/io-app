@@ -44,13 +44,7 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
-import {
-  accessibityTimeout,
-  analyticActions,
-  getTextForState,
-  WAIT_TIMEOUT_NAVIGATION,
-  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
-} from "../../../activeSessionLogin/shared/utils";
+import { getTextForState } from "../../../activeSessionLogin/shared/utils";
 import {
   trackLoginCieCardReaderScreen,
   trackLoginCieCardReadingError,
@@ -58,6 +52,12 @@ import {
 } from "../../../common/analytics/cieAnalytics";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import {
+  accessibityTimeout,
+  cieErrorMessagesMap,
+  WAIT_TIMEOUT_NAVIGATION,
+  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
+} from "../../../common/utils/constants";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../components/CieCardReadingAnimation";
@@ -195,7 +195,7 @@ const CieCardReaderScreen = () => {
   const setError = useCallback(
     ({ eventReason, errorDescription, navigation: nav }: SetErrorParameter) => {
       const cieDescription =
-        errorDescription ?? analyticActions.get(eventReason) ?? "";
+        errorDescription ?? cieErrorMessagesMap[eventReason] ?? "";
       dispatchAnalyticEvent({
         reason: eventReason,
         cieDescription,

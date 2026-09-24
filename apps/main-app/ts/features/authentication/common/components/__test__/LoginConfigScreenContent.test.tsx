@@ -24,7 +24,7 @@ describe("LoginConfigScreenContent", () => {
     expect(
       getByLabelText(/Abilita ambiente di UAT OneIdentity/i)
     ).toBeDisabled();
-    expect(getByLabelText(/Abilita endpoint di collaudo/i)).toBeDisabled();
+    expect(getByLabelText(/Abilita endpoint di preproduzione/i)).toBeDisabled();
     expect(getByLabelText("Modalità debug")).toBeDisabled();
   });
 
@@ -37,17 +37,17 @@ describe("LoginConfigScreenContent", () => {
     expect(
       getByLabelText(/Abilita ambiente di UAT OneIdentity/i)
     ).toBeEnabled();
-    expect(getByLabelText(/Abilita endpoint di collaudo/i)).toBeEnabled();
+    expect(getByLabelText(/Abilita endpoint di preproduzione/i)).toBeEnabled();
     expect(getByLabelText("Modalità debug")).toBeEnabled();
   });
 
   it("should dispatch CIE UAT enable/disable actions when the checkbox is toggled", () => {
     const { store, getByLabelText } = renderComponent();
 
-    fireEvent.press(getByLabelText(/Abilita endpoint di collaudo/i));
+    fireEvent.press(getByLabelText(/Abilita endpoint di preproduzione/i));
     expect(isCieLoginUatEnabledSelector(store.getState())).toBe(true);
 
-    fireEvent.press(getByLabelText(/Abilita endpoint di collaudo/i));
+    fireEvent.press(getByLabelText(/Abilita endpoint di preproduzione/i));
     expect(isCieLoginUatEnabledSelector(store.getState())).toBe(false);
   });
 
