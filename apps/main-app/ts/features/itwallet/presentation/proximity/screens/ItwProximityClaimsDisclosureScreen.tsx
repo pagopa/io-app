@@ -11,15 +11,14 @@ import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
 
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
-import { ITW_TOS_URL } from "../../../../../urls.ts";
+import { useIODispatch } from "../../../../../store/hooks.ts";
+import { ITW_PRIVACY_URL, ITW_TOS_URL } from "../../../../../urls.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { identificationRequest } from "../../../../identification/store/actions";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
-import { itwIpzsItwalletPrivacyUrlSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { ISSUER_MOCK_NAME } from "../../../common/utils/itwMocksUtils.ts";
 import {
   trackItwProximityContinuePresentation,
@@ -69,7 +68,6 @@ type ContentViewProps = {
 const ContentView = ({ proximityDetails }: ContentViewProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const itwalletPrivacyUrl = useIOSelector(itwIpzsItwalletPrivacyUrlSelector);
 
   const machineRef = ItwProximityMachineContext.useActorRef();
   const isNfcRetrieval =
@@ -178,7 +176,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
           <IOMarkdownLite
             content={I18n.t(
               "features.itWallet.presentation.proximity.selectiveDisclosure.privacyAndTos",
-              { privacyUrl: itwalletPrivacyUrl, tosUrl: ITW_TOS_URL }
+              { privacyUrl: ITW_PRIVACY_URL, tosUrl: ITW_TOS_URL }
             )}
           />
         </VStack>

@@ -4,7 +4,7 @@ import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ITW_TOS_URL } from "../../../../../urls";
+import { ITW_PRIVACY_URL, ITW_TOS_URL } from "../../../../../urls";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as urlUtils from "../../../../../utils/url";
 import * as identificationSelectors from "../../../identification/common/store/selectors";
@@ -17,8 +17,6 @@ import {
   ItwDiscoveryInfoScreen,
   ItwDiscoveryInfoScreenProps
 } from "../ItwDiscoveryInfoScreen";
-
-const ITWALLET_PRIVACY_URL = "https://example.com/itwallet-privacy";
 
 jest.mock("@io-app/design-system", () => {
   const actual = jest.requireActual("@io-app/design-system");
@@ -49,7 +47,7 @@ describe("ItwDiscoveryInfoScreen", () => {
     {
       name: "privacy policy",
       label: "Informativa Privacy",
-      url: ITWALLET_PRIVACY_URL
+      url: ITW_PRIVACY_URL
     },
     {
       name: "terms of service",
@@ -97,19 +95,7 @@ describe("ItwDiscoveryInfoScreen", () => {
 const renderComponent = (level: EidIssuanceLevel | undefined) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore({
-    ...globalState,
-    features: {
-      ...globalState.features,
-      itWallet: {
-        ...globalState.features.itWallet,
-        remoteConfig: {
-          ...globalState.features.itWallet.remoteConfig,
-          ipzs_itwallet_privacy_url: ITWALLET_PRIVACY_URL
-        }
-      }
-    }
-  } as GlobalState);
+  const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   const WrappedComponent = (props: ItwDiscoveryInfoScreenProps) => {
     const logic = itwEidIssuanceMachine.provide({
