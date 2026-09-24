@@ -8,8 +8,9 @@ import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
 
 /**
- * Hook to display a bottom sheet explaining how the CIE NFC reading works,
- * with a link to the related Help Center article.
+ * Hook to display a bottom sheet explaining how the CIE NFC reading works, with
+ * a link to the related Help Center article.
+ *
  * @returns The bottom sheet component
  */
 export const useCieNfcInfoBottomSheet = () => {

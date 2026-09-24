@@ -81,7 +81,8 @@ type Props = {
 };
 
 /**
- * Hook that renders several support methods, with direct integration with Zendesk.
+ * Hook that renders several support methods, with direct integration with
+ * Zendesk.
  */
 export const useItwFailureSupportModal = ({
   failure,
@@ -130,6 +131,7 @@ export const useItwFailureSupportModal = ({
       contactMethods.mobile ? (
         <ListItemAction
           icon="phone"
+          key="contact-method-mobile"
           label={I18n.t("features.itWallet.support.phone", {
             phoneNumber: contactMethods.mobile
           })}
@@ -141,6 +143,7 @@ export const useItwFailureSupportModal = ({
       contactMethods.email ? (
         <ListItemAction
           icon="chat"
+          key="contact-method-email"
           label={I18n.t("features.itWallet.support.email")}
           onPress={() => void Linking.openURL(`mailto:${contactMethods.email}`)}
           testID="contact-method-email"
@@ -150,6 +153,7 @@ export const useItwFailureSupportModal = ({
       contactMethods.website ? (
         <ListItemAction
           icon="website"
+          key="contact-method-website"
           label={I18n.t("features.itWallet.support.website")}
           onPress={() => void Linking.openURL(contactMethods.website as string)}
           testID="contact-method-website"
@@ -159,6 +163,7 @@ export const useItwFailureSupportModal = ({
       contactMethods.landline ? (
         <ListItemInfo
           icon="phone"
+          key="contact-method-landline"
           label={I18n.t("features.itWallet.support.landline")}
           testID="contact-method-landline"
           value={contactMethods.landline}

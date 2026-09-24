@@ -61,8 +61,6 @@ const WrappedPaymentCard = (props: PaymentWalletCardProps) => {
   );
 };
 
-/**
- * Wrapper component which adds wallet capabilites to the PaymentCard component
- */
+/** Wrapper component which adds wallet capabilites to the PaymentCard component */
 export const PaymentWalletCard =
   withWalletCardBaseComponent(WrappedPaymentCard);

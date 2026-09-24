@@ -35,11 +35,11 @@ const getBleManager = () => {
 };
 
 /**
- * Checks and requests necessary Bluetooth permissions based on the platform
- * and OS version.
+ * Checks and requests necessary Bluetooth permissions based on the platform and
+ * OS version.
  *
  * @returns A promise that resolves to true if all required permissions are
- * granted, or false otherwise.
+ *   granted, or false otherwise.
  */
 export const checkBluetoothPermissions = async () => {
   // Warm up the native adapter as soon as the Bluetooth gate starts, so its
@@ -92,7 +92,9 @@ const getSettledBluetoothState = () =>
 
 /**
  * Checks if Bluetooth is currently activated on the device.
- * @returns A promise that resolves to true if Bluetooth is powered on, or false otherwise.
+ *
+ * @returns A promise that resolves to true if Bluetooth is powered on, or false
+ *   otherwise.
  */
 export const checkBluetoothActivation = async () => {
   const bluetoothState = await promiseWithTimeout(

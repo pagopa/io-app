@@ -4,9 +4,10 @@ import { NextFunction, Request, Response } from "express-serve-static-core";
 import { ioDevServerConfig } from "../config";
 
 /**
- * if the response error is defined as a global config
- * this middleware returns an error from those ones defined
- * if the current change is less or equal than one defined
+ * If the response error is defined as a global config this middleware returns
+ * an error from those ones defined if the current change is less or equal than
+ * one defined
+ *
  * @param _
  * @param res
  * @param next
