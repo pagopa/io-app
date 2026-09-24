@@ -7,11 +7,13 @@ import {
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 
+import { useIOStore } from "../../../../store/hooks";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
 import { getCieIdpId, isAuthenticationUrl } from "../../login/cie/utils";
 import { useCieIdApp } from "../hooks/useCieIdApp";
+import { oneIdentityAllowedCieOriginsSelector } from "../store/selectors/remoteConfig";
 import { AUTH_LEVELS, onLoginUriChanged } from "../utils";
 import {
   defaultUserAgent,
@@ -51,6 +53,7 @@ export const CieIdWebViewLogin = memo(
     const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(
       null
     );
+    const store = useIOStore();
 
     const handleLoginSuccess = useCallback(
       (token: string) => {
@@ -77,13 +80,16 @@ export const CieIdWebViewLogin = memo(
 
     const handleAuthenticationSuccess = useCallback(
       (url: string) => {
-        if (!isAllowedUrl(url)) {
+        const allowedCieOrigins = oneIdentityAllowedCieOriginsSelector(
+          store.getState()
+        );
+        if (!isAllowedUrl(url, allowedCieOrigins)) {
           onEvent({ type: "NOT_ALLOWED_URL", payload: { url } });
           return;
         }
         setAuthenticatedUrl(url);
       },
-      [onEvent]
+      [store, onEvent]
     );
 
     const { startCieIdApp } = useCieIdApp({

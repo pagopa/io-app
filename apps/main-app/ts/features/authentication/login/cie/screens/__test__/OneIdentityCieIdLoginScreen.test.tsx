@@ -67,6 +67,7 @@ describe("OneIdentityCieIdLoginScreen", () => {
           status: "one-identity-authorize",
           webviewSource: { uri: "https://example.com/authorize" }
         },
+        generateLoginSource: jest.fn(),
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(() => false)
       });
     jest.spyOn(useCieIdAppModule, "useCieIdApp").mockReturnValue({
@@ -126,8 +127,7 @@ describe("OneIdentityCieIdLoginScreen", () => {
       params: {
         errorCodeOrMessage: "err-code",
         authMethod: "CIE_ID",
-        authLevel: AUTH_LEVELS.L2,
-        params: { spidLevel: AUTH_LEVELS.L2, isUat: false }
+        authLevel: AUTH_LEVELS.L2
       }
     });
   });

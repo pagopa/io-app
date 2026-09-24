@@ -204,7 +204,6 @@ export type IOColorsExtra = keyof typeof IOColorsExtra;
 ░░░ THEME COLORS ░░░
 */
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const themeKeys = [
   // General
   "appBackground-primary",
@@ -487,7 +486,7 @@ export const hexToRgba = (hexCode: ColorValue, opacity = 1) => {
 REFACTORING REFERENCES
 Alias tokens:
 */
-/* 
+/*
 itemSeparator → grey-200
 textColor → grey-700
 footerShadowColor → black

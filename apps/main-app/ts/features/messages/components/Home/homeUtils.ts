@@ -82,9 +82,9 @@ export const accessibilityLabelForMessageItem = (
   isSelected?: boolean
 ): string =>
   I18n.t("messages.accessibility.message.description", {
-    newMessage: I18n.t(
-      `messages.accessibility.message.${message.isRead ? "read" : "unread"}`
-    ),
+    newMessage: message.isRead
+      ? I18n.t("messages.accessibility.message.read")
+      : I18n.t("messages.accessibility.message.unread"),
     selected: isSelected
       ? I18n.t("messages.accessibility.message.selected")
       : "",

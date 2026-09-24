@@ -253,6 +253,7 @@ type TrackErrorParams = {
   readProgress?: number;
 };
 
+// oxlint-disable-next-line complexity
 const trackError = ({
   failure,
   isL3,

@@ -17,7 +17,10 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
 import { itwCredentialTypeFromDocTypeSelector } from "../../../credentialsCatalogue/store/selectors/index.ts";
 import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent.tsx";
-import { trackItwProximityRpNotTrustedBottomSheet } from "../analytics/index.ts";
+import {
+  trackItwProximityRpNotTrustedBottomSheet,
+  trackItwProximityRpNotTrustedDiscoverMore
+} from "../analytics/index.ts";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
@@ -52,8 +55,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   });
 
   useItwProximityEventsTracking({
-    failure,
-    getCredentialTypeFromDocType
+    failure
   });
 
   const { bottomSheet, present } = useIOBottomSheetModal({
@@ -76,7 +78,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
           type: "SingleButton",
           primary: {
             label: I18n.t("global.buttons.findOutMore"),
-            onPress: () => openWebUrl(faqUrl)
+            onPress: () => {
+              trackItwProximityRpNotTrustedDiscoverMore();
+              openWebUrl(faqUrl);
+            }
           }
         }}
       />

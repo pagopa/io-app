@@ -70,9 +70,9 @@ Prerequisites:
 const path = require("path");
 const join = path.join;
 const { optimize } = require("svgo");
-const prettier = require("prettier");
 const fs = require("fs-extra");
 const { transform } = require("@svgr/core");
+const { formatComponent } = require("./formatComponent");
 
 const svgDir = join(__dirname, "../src/components/icons/svg/originals");
 const tsxDir = join(__dirname, "../src/components/icons/svg");
@@ -100,30 +100,39 @@ async function run() {
     const files = fs.readdirSync(svgDir);
 
     for (const file of files) {
+      if (!file.endsWith(".svg")) {
+        continue;
+      }
+
       const filePath = join(svgDir, file);
-      const fileStats = fs.statSync(filePath);
+
+      /* Stat and read through the same descriptor: re-opening by name would
+      leave a window for the file to change between the two operations. */
+      const fd = fs.openSync(filePath, "r");
+      let fileStats;
+      let data;
+      try {
+        fileStats = fs.fstatSync(fd);
+        data = fs.readFileSync(fd, "utf8");
+      } finally {
+        fs.closeSync(fd);
+      }
 
       /* Only process files with a creation/modification
       date later than the timestamp value */
       if (fileStats.mtime > new Date(timestamp)) {
-        if (!file.endsWith(".svg")) {
-          continue;
-        }
-
         const excludedPrefixes = ["IconSystem", "IconBiom", "IconProduct"];
-        if (excludedPrefixes.some((prefix) => file.startsWith(prefix))) {
+        if (excludedPrefixes.some(prefix => file.startsWith(prefix))) {
           console.log(`⚠️ Skipping excluded file: ${file}`);
           continue;
         }
-
-        const data = fs.readFileSync(filePath, "utf8");
 
         // Using SVGO to optimize the SVG
         const result = optimize(data, {
           path: filePath,
           js2svg: {
             pretty: true,
-            indent: 2,
+            indent: 2
           },
           plugins: [
             "removeDimensions",
@@ -132,7 +141,7 @@ async function run() {
             "removeViewBox"
           ]
         });
-        
+
         // Overwrite original SVG file with optimized code
         fs.writeFileSync(filePath, result.data);
 
@@ -142,11 +151,11 @@ async function run() {
           svgoConfig: {
             removeRasterImages: true,
             removeScriptElement: true,
-            removeUselessDefs: true,
+            removeUselessDefs: true
           },
           native: true,
           dimensions: false,
-          plugins: ["@svgr/plugin-jsx"],
+          plugins: ["@svgr/plugin-jsx"]
         });
 
         /* Replace hardcoded color value with `currentColor` */
@@ -182,20 +191,24 @@ async function run() {
         // 4. Ensure Path is included in the react-native-svg import block if missing
         if (
           jsxCodeWithPathOnly.includes("<Path") &&
-          !/import\s+.*Path.*\s+from\s+['"]react-native-svg['"]/.test(componentData)
+          !/import\s+.*Path.*\s+from\s+['"]react-native-svg['"]/.test(
+            componentData
+          )
         ) {
           componentData = componentData.replace(
             /import\s+\{([^}]+)\}\s+from\s+['"]react-native-svg['"]/,
-            (match, imports) => `import { ${imports.trim()}, Path } from "react-native-svg"`
+            (match, imports) =>
+              `import { ${imports.trim()}, Path } from "react-native-svg"`
           );
         }
 
         const fileWithTsxExtension = file.replace(".svg", ".tsx");
         const tsxFilePath = join(tsxDir, fileWithTsxExtension);
 
-        const formattedData = await prettier.format(componentData, {
-          parser: "typescript",
-        });
+        const formattedData = await formatComponent(
+          fileWithTsxExtension,
+          componentData
+        );
 
         fs.writeFileSync(tsxFilePath, formattedData);
 
