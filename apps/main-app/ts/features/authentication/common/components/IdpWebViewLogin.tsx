@@ -52,7 +52,8 @@ export type WebViewLoginEvent =
       type: "WEBVIEW_HTTP_ERROR";
     }
   | { payload: { token: string }; type: "LOGIN_SUCCESS" }
-  | { payload: { url: string }; type: "WEBVIEW_ERROR" };
+  | { payload: { url: string }; type: "WEBVIEW_ERROR" }
+  | { type: "WEBVIEW_LOADED" };
 
 export const IdpWebViewLogin = memo(
   ({ idp, flow = "auth", onEvent }: IdpWebViewLoginProps) => {
@@ -177,6 +178,10 @@ export const IdpWebViewLogin = memo(
       [dispatch]
     );
 
+    const handleLoadEnd = useCallback(() => {
+      onEvent({ type: "WEBVIEW_LOADED" });
+    }, [onEvent]);
+
     if (
       loginSourceState.status === "reserving-public-key" ||
       loginSourceState.status === "verifying-assertion-ref"
@@ -196,6 +201,7 @@ export const IdpWebViewLogin = memo(
           cacheEnabled={false}
           onError={handleError}
           onHttpError={handleError}
+          onLoadEnd={handleLoadEnd}
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
           originWhitelist={originSchemasWhiteList}

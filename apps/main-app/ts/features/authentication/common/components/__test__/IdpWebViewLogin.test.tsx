@@ -267,4 +267,20 @@ describe("IdpWebViewLogin", () => {
       expect(mockDispatch).toHaveBeenCalledTimes(2);
     });
   });
+
+  describe("onLoadEnd", () => {
+    beforeEach(() => {
+      mockUseOneIdentityLoginSource();
+    });
+
+    it("should call onEvent with WEBVIEW_LOADED when the WebView finishes loading", () => {
+      const { getByTestId } = render(
+        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+      );
+
+      fireEvent(getByTestId("webview-idp-login-screen"), "onLoadEnd");
+
+      expect(onEvent).toHaveBeenCalledWith({ type: "WEBVIEW_LOADED" });
+    });
+  });
 });
