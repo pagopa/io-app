@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
 
 /**
  * Component to show the TOS for the bonus activation flow
+ *
  * @deprecated This component is really old and should be removed/refactored
  */
 const TosBonusComponent: FunctionComponent<Props> = props => {

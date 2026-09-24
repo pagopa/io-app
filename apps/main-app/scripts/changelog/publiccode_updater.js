@@ -1,14 +1,9 @@
 /**
- * This is an updater for the utility "commit-and-tag-version" that increase the versionName value
- * for publiccode.yml file.
- * Replace the line:
- * softwareVersion: $VERSION
- * with the new generated version.
+ * This is an updater for the utility "commit-and-tag-version" that increase the
+ * versionName value for publiccode.yml file. Replace:
  *
- * and the line:
- * releaseDate: '$DATE'
- * with the today date.
- *
+ * - The line `softwareVersion: $VERSION` with the new generated version
+ * - The line `releaseDate: '$DATE'` with the today date
  */
 
 const softwareVersionRegex = /(softwareVersion: )(.+)/m;
