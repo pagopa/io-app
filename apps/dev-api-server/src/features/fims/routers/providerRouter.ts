@@ -149,6 +149,7 @@ addHandler(
   fimsProviderRouter,
   "get",
   `${baseProviderPath()}/interaction/:id`,
+  // oxlint-disable-next-line complexity -- mock handler mirroring the OIDC error matrix
   (req, res) => {
     const requestInteractionId = req.params.id;
     const oidcData = interactionIds.get(requestInteractionId);
@@ -683,6 +684,7 @@ const validateCookies = (
   requestCookies: Record<string, unknown>,
   res: Response
 ) => {
+  // oxlint-disable-next-line guard-for-in -- iterating a local object literal
   for (const mandatoryCookieKey in mandatoryCookies) {
     const cookieValue = requestCookies[mandatoryCookieKey];
     if (!cookieValue) {
