@@ -585,36 +585,39 @@ type GenerateKeysWithKeyAttestation = (
 export const generateKeysWithKeyAttestation: GenerateKeysWithKeyAttestation =
   async (accessToken, { env, itwVersion, hardwareKeyTag, sessionToken }) => {
     const ioWallet = getIoWallet(itwVersion);
+    const authorizedCredentials: Array<AuthorizedCredentialMetadata> = [];
 
-    return Promise.all(
-      accessToken.authorization_details.map(async authDetails => {
-        const keyTag = uuidv4().toString();
+    for (const authDetails of accessToken.authorization_details) {
+      const keyTag = uuidv4().toString();
 
-        // If the KA is supported, keys are generated via the KeyAttestationCryptoContext
-        // and sent to the Wallet Provider to get the Key Attestation
-        if (ioWallet.KeyAttestation.isSupported) {
-          const keyAttestation = await getKeyAttestation(
-            env,
-            itwVersion,
-            [keyTag],
-            hardwareKeyTag,
-            sessionToken
-          );
-          // Unique ID to correlate multiple keys to the same KA (ex. batch issuance)
-          const keyAttestationId = uuidv4().toString();
-          return {
-            keyTag,
-            authDetails,
-            keyAttestation,
-            keyAttestationId
-          };
-        }
-
+      // If the KA is supported, keys are generated via the KeyAttestationCryptoContext
+      // and sent to the Wallet Provider to get the Key Attestation
+      if (ioWallet.KeyAttestation.isSupported) {
+        const keyAttestation = await getKeyAttestation(
+          env,
+          itwVersion,
+          [keyTag],
+          hardwareKeyTag,
+          sessionToken
+        );
+        // Unique ID to correlate multiple keys to the same KA (ex. batch issuance)
+        const keyAttestationId = uuidv4().toString();
+        // eslint-disable-next-line functional/immutable-data
+        authorizedCredentials.push({
+          keyTag,
+          authDetails,
+          keyAttestation,
+          keyAttestationId
+        });
+      } else {
         // If the KA is not supported, only generate the cryptographic key
         await generate(keyTag);
-        return { keyTag, authDetails };
-      })
-    );
+        // eslint-disable-next-line functional/immutable-data
+        authorizedCredentials.push({ keyTag, authDetails });
+      }
+    }
+
+    return authorizedCredentials;
   };
 
 type AuthorizedBatchCredentialMetadata = {
@@ -658,36 +661,41 @@ export const generateBatchKeysWithKeyAttestation: GenerateBatchKeysWithKeyAttest
     { env, itwVersion, hardwareKeyTag, sessionToken }
   ) => {
     const ioWallet = getIoWallet(itwVersion);
+    const authorizedCredentials: Array<AuthorizedBatchCredentialMetadata> = [];
 
-    return Promise.all(
-      accessToken.authorization_details.map(async authDetails => {
-        const keyTags = Array.from({ length: batchSize }, () =>
-          uuidv4().toString()
+    for (const authDetails of accessToken.authorization_details) {
+      const keyTags = Array.from({ length: batchSize }, () =>
+        uuidv4().toString()
+      );
+
+      // If the KA is supported, all keys are attested by a single Key Attestation
+      if (ioWallet.KeyAttestation.isSupported) {
+        const keyAttestation = await getKeyAttestation(
+          env,
+          itwVersion,
+          keyTags,
+          hardwareKeyTag,
+          sessionToken
         );
-
-        // If the KA is supported, all keys are attested by a single Key Attestation
-        if (ioWallet.KeyAttestation.isSupported) {
-          const keyAttestation = await getKeyAttestation(
-            env,
-            itwVersion,
-            keyTags,
-            hardwareKeyTag,
-            sessionToken
-          );
-          const keyAttestationId = uuidv4().toString();
-          return {
-            keyTags,
-            authDetails,
-            keyAttestation,
-            keyAttestationId
-          };
-        }
-
+        const keyAttestationId = uuidv4().toString();
+        // eslint-disable-next-line functional/immutable-data
+        authorizedCredentials.push({
+          keyTags,
+          authDetails,
+          keyAttestation,
+          keyAttestationId
+        });
+      } else {
         // If the KA is not supported, only generate the cryptographic keys
-        await Promise.all(keyTags.map(generate));
-        return { keyTags, authDetails };
-      })
-    );
+        for (const keyTag of keyTags) {
+          await generate(keyTag);
+        }
+        // eslint-disable-next-line functional/immutable-data
+        authorizedCredentials.push({ keyTags, authDetails });
+      }
+    }
+
+    return authorizedCredentials;
   };
 
 export type ObtainCredentialsBatch = (args: {
