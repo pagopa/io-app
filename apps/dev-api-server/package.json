@@ -20,7 +20,8 @@
     "preset": "ts-jest",
     "collectCoverage": false,
     "moduleNameMapper": {
-      "^axios$": "axios/dist/node/axios.cjs"
+      "^axios$": "axios/dist/node/axios.cjs",
+      "^uuid$": "<rootDir>/jest.uuid.cjs"
     }
   },
   "dependencies": {
