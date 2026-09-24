@@ -24,21 +24,23 @@ import {
 import { trackCredentialCardModal } from "../analytics";
 
 /**
- * This magic number is the lenght of the encoded fiscal code in a CODE39 barcode.
- * It should be always the same as long as the fiscal code is always 16 characters long.
- * This is used to calculate the width of the barcode since the barcode library doesn't support
- * a max width parameter.
+ * This magic number is the lenght of the encoded fiscal code in a CODE39
+ * barcode. It should be always the same as long as the fiscal code is always 16
+ * characters long. This is used to calculate the width of the barcode since the
+ * barcode library doesn't support a max width parameter.
  */
 const ENCODED_FISCAL_CODE_LENGTH_CODE39 = 288;
 
 /**
- * Window height is used to calculate the width of the barcode rotated by 90 degrees.
- * Window width is used to calculate the height of the barcode to fit the screen.
+ * Window height is used to calculate the width of the barcode rotated by 90
+ * degrees. Window width is used to calculate the height of the barcode to fit
+ * the screen.
  */
 const { height: windowHeight, width: windowWidth } = Dimensions.get("window");
 
 /**
- * The available height is the height of the screen minus the height of the header and the vertical padding of the screen.
+ * The available height is the height of the screen minus the height of the
+ * header and the vertical padding of the screen.
  */
 const availableHeight =
   windowHeight - // Start with the height of the screen
@@ -46,26 +48,23 @@ const availableHeight =
   IOAppMargin[2] - // Removes the vertical padding of the fiscal code container
   IOAppMargin[4]; // Removes the vertical padding of the screen
 
-/**
- * For aesthetics, we take the 90% of the available height.
- */
+/** For aesthetics, we take the 90% of the available height. */
 const barcodeTotalHeight = availableHeight * 0.9;
 
 /**
- * The width of the barcode is 35% of the window width.
- * This is a magic number that looks good on landscape.
+ * The width of the barcode is 35% of the window width. This is a magic number
+ * that looks good on landscape.
  */
 const barcodeWidth = windowWidth * 0.35;
 
-/**
- * Dispalys a full screen modal with the fiscal code.
- */
+/** Dispalys a full screen modal with the fiscal code. */
 const ItwPresentationCredentialFiscalCodeModal = () => {
   const navigation = useIONavigation();
   const safeAreaInsets = useSafeAreaInsets();
 
   /**
-   * Finally, barcodeWidth is calculated dividing the barcode container width minus the safe area insets by the encoded fiscal code length.
+   * Finally, barcodeWidth is calculated dividing the barcode container width
+   * minus the safe area insets by the encoded fiscal code length.
    */
   const barcodeHeigth =
     (barcodeTotalHeight - safeAreaInsets.top - safeAreaInsets.bottom) /
