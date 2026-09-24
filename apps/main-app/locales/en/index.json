@@ -1550,9 +1550,6 @@
               "title": "Who is it?"
             },
             "somethingWrong": {
-              "body": "If you find any errors or inconsistencies, please report them to the institution that holds the data and is responsible for it.",
-              "bodyAuthSource": "For this digital document, the reference institution is {{authSource}}.",
-              "bodyFooter": "Once the data has been corrected, you can repeat the process of adding the document to your portfolio.",
               "bodyMarkdown": "If you find any errors or inconsistencies, you must report them to the entity that holds the data and is responsible for it.\n\nOnce the data has been corrected, you can add the document back to your Portfolio.\n\nFor this digital document, please refer to:\n{{contacts}}",
               "contactUrl": "Website",
               "primaryAction": "Got it",
