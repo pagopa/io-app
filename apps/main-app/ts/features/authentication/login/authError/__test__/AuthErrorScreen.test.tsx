@@ -1,5 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
+import { BackHandler } from "react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -234,6 +235,30 @@ describe("AuthErrorScreen", () => {
         setFinishedActiveSessionLoginFlow()
       );
       expect(mockNavigate).toHaveBeenCalled();
+    });
+  });
+
+  describe("hardware back button", () => {
+    it("should consume the Android back press without navigating, so the user can leave only via Retry or Close", () => {
+      const addEventListenerSpy = jest.spyOn(BackHandler, "addEventListener");
+      mockIsActiveSessionLogin(false);
+      mockUseRoute.mockReturnValue({
+        params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
+      });
+
+      renderComponent();
+
+      // Mimics BackHandler: listeners run from the most recent one until
+      // one of them consumes the event by returning `true`.
+      const isBackPressConsumed = addEventListenerSpy.mock.calls
+        .filter(([eventName]) => eventName === "hardwareBackPress")
+        .map(([, handler]) => handler)
+        .reverse()
+        .some(handler => handler() === true);
+
+      expect(isBackPressConsumed).toBe(true);
+      expect(mockNavigate).not.toHaveBeenCalled();
+      expect(mockReplace).not.toHaveBeenCalled();
     });
   });
 });

@@ -5,6 +5,7 @@ import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import {
   setFinishedActiveSessionLoginFlow,
@@ -29,6 +30,8 @@ export type AuthErrorScreenProps = {
 export type AuthMethod = "CIE" | "CIE_ID" | "SPID";
 
 const AuthErrorScreen = () => {
+  useAvoidHardwareBackButton();
+
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
