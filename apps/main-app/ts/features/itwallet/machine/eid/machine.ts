@@ -102,15 +102,6 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
             target: "TrustFederationVerification"
           }
         ],
-        "go-to-ipzs-privacy": {
-          actions: "navigateToIpzsPrivacyScreen"
-        },
-        "accept-ipzs-privacy": [
-          {
-            // The IPZS privacy can be opened from the Discovery screen in the L3 flow.
-            target: "TrustFederationVerification"
-          }
-        ],
         close: {
           target: "#itwEidIssuanceMachine.Idle",
           actions: "closeIssuance"

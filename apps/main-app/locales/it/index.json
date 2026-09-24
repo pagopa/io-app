@@ -1129,6 +1129,7 @@
               "4": "I nuovi documenti digitali ufficiali, solo sull’app IO",
               "5": "Accedi in pochi tocchi ai servizi digitali della PA"
             },
+            "privacyAndTos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
             "title": "I tuoi documenti digitali con IT-Wallet: sicuri, ufficiali e sempre con te",
             "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso.]({{privacyUrl}})"
           },

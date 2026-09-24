@@ -11,6 +11,7 @@ import {
   IOColors,
   IOIcons,
   IOMarkdownLite,
+  IOToast,
   useIOTheme,
   useIOThemeContext,
   VSpacer,
@@ -29,11 +30,16 @@ import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../store/hooks.ts";
+import { ITW_TOS_URL } from "../../../../urls.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import { openWebUrl } from "../../../../utils/url";
 import { trackOpenItwTos } from "../../analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
-import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
+import {
+  itwIpzsItwalletPrivacyUrlSelector,
+  itwIsActivationDisabledSelector
+} from "../../common/store/selectors/remoteConfig.ts";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
@@ -55,6 +61,7 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
+  const itwalletPrivacyUrl = useIOSelector(itwIpzsItwalletPrivacyUrlSelector);
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const mixPanelCredentialDetails = useIOSelector(
     itwMixPanelCredentialDetailsSelector
@@ -85,10 +92,10 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     machineRef.send({ type: "accept-tos" });
   }, [machineRef, mixPanelCredentialDetails]);
 
-  const handlePrivacyAndTermsPress = useCallback(() => {
+  const handlePrivacyAndTosLinkPress = useCallback((url: string) => {
     trackOpenItwTos();
-    machineRef.send({ type: "go-to-ipzs-privacy" });
-  }, [machineRef]);
+    openWebUrl(url, () => IOToast.error(I18n.t("global.jserror.title")));
+  }, []);
 
   const {
     present: presentItwDetailsBottomSheet,
@@ -233,10 +240,11 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
             </VStack>
             <VSpacer size={32} />
             <IOMarkdownLite
-              content={I18n.t("features.itWallet.discovery.screen.itw.tos", {
-                privacyUrl: "itw-privacy-and-terms"
-              })}
-              onLinkPress={handlePrivacyAndTermsPress}
+              content={I18n.t(
+                "features.itWallet.discovery.screen.itw.privacyAndTos",
+                { privacyUrl: itwalletPrivacyUrl, tosUrl: ITW_TOS_URL }
+              )}
+              onLinkPress={handlePrivacyAndTosLinkPress}
               small
             />
           </ContentWrapper>

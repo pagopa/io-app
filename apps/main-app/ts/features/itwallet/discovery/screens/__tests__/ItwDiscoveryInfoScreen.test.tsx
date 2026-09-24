@@ -1,9 +1,12 @@
+import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { ITW_TOS_URL } from "../../../../../urls";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as urlUtils from "../../../../../utils/url";
 import * as identificationSelectors from "../../../identification/common/store/selectors";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
@@ -14,6 +17,8 @@ import {
   ItwDiscoveryInfoScreen,
   ItwDiscoveryInfoScreenProps
 } from "../ItwDiscoveryInfoScreen";
+
+const ITWALLET_PRIVACY_URL = "https://example.com/itwallet-privacy";
 
 jest.mock("@io-app/design-system", () => {
   const actual = jest.requireActual("@io-app/design-system");
@@ -40,16 +45,31 @@ describe("ItwDiscoveryInfoScreen", () => {
     expect(getByTestId("itwDiscoveryInfoComponentTestID")).toBeTruthy();
   });
 
-  it("should render privacy and terms as a link for level l3", () => {
+  test.each([
+    {
+      name: "privacy policy",
+      label: "Informativa Privacy",
+      url: ITWALLET_PRIVACY_URL
+    },
+    {
+      name: "terms of service",
+      label: "Termini e Condizioni d'uso",
+      url: ITW_TOS_URL
+    }
+  ])("should open the IT-Wallet $name link for level l3", ({ label, url }) => {
     jest
       .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
       .mockReturnValue(true);
+    const openWebUrlSpy = jest
+      .spyOn(urlUtils, "openWebUrl")
+      .mockImplementation(jest.fn());
     const { getByText } = renderComponent("l3");
 
-    expect(
-      getByText("Informativa Privacy e i Termini e Condizioni d'uso.").props
-        .accessibilityRole
-    ).toBe("link");
+    const link = getByText(label);
+    expect(link.props.accessibilityRole).toBe("link");
+
+    fireEvent.press(link);
+    expect(openWebUrlSpy).toHaveBeenCalledWith(url, expect.any(Function));
   });
 
   it("should render ItwNfcNotSupportedComponent for level l3 when NFC is not supported", () => {
@@ -77,7 +97,19 @@ describe("ItwDiscoveryInfoScreen", () => {
 const renderComponent = (level: EidIssuanceLevel | undefined) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore(globalState);
+  const store: ReturnType<typeof mockStore> = mockStore({
+    ...globalState,
+    features: {
+      ...globalState.features,
+      itWallet: {
+        ...globalState.features.itWallet,
+        remoteConfig: {
+          ...globalState.features.itWallet.remoteConfig,
+          ipzs_itwallet_privacy_url: ITWALLET_PRIVACY_URL
+        }
+      }
+    }
+  } as GlobalState);
 
   const WrappedComponent = (props: ItwDiscoveryInfoScreenProps) => {
     const logic = itwEidIssuanceMachine.provide({

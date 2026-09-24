@@ -1192,17 +1192,6 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
-  it("Should navigate to IPZS privacy from ToS acceptance without changing state", () => {
-    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
-    actor.start();
-
-    actor.send({ type: "start", mode: "issuance", level: "l3" });
-    actor.send({ type: "go-to-ipzs-privacy" });
-
-    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
-    expect(navigateToIpzsPrivacyScreen).toHaveBeenCalledTimes(1);
-  });
-
   it("Should allow the user to add a new credential once eID issuance is complete", () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine,
