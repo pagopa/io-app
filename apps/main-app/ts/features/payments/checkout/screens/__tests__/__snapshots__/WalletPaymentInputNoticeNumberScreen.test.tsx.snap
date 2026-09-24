@@ -659,6 +659,7 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                               <TextInput
                                 accessibilityElementsHidden={false}
                                 accessibilityLabel="Codice avviso"
+                                accessibilityLabelledBy="labelledItem"
                                 accessibilityLiveRegion="polite"
                                 accessibilityState={
                                   {
@@ -754,8 +755,10 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   accessible={false}
                                   collapsable={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   jestAnimatedProps={
                                     {
                                       "value": {},
