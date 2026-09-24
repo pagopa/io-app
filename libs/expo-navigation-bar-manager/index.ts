@@ -17,9 +17,7 @@ const NavigationBarManagerModule =
       )
     : undefined;
 
-/**
- * Sets the Android navigation bar color and icon contrast for the given theme.
- */
+/** Sets the Android navigation bar color and icon contrast for the given theme. */
 export const setNavigationBarColor = (
   theme: NavigationBarTheme,
   backgroundColor: string
