@@ -15,6 +15,7 @@ import { Context, InitialContext } from "./context";
 import { IdPayOnboardingEvents } from "./events";
 import {
   getBooleanSelfDeclarationListFromContext,
+  getInformativeSelfDeclarationListFromContext,
   getInputFormSelfDeclarationFromContext,
   getMultiSelfDeclarationListFromContext
 } from "./selectors";
@@ -71,7 +72,8 @@ export const idPayOnboardingMachine = setup({
           ({ beneficiaryRule, general }) =>
             (beneficiaryRule?.automatedCriteria?.length || 0) > 0 ||
             // since familyUnitComposition can also display Family Unit criteria if it's ANPR
-            general?.familyUnitComposition !== undefined
+            general?.familyUnitComposition !== undefined ||
+            getInformativeSelfDeclarationListFromContext(context).length > 0
         ),
         O.getOrElse(() => false)
       ),

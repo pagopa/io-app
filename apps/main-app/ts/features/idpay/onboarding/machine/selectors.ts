@@ -1,5 +1,6 @@
 import { OnboardingInitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingInitiativeDTO";
 import { SelfCriteriaBoolDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaBoolDTO";
+import { SelfCriteriaInformativeDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaInformativeDTO";
 import { SelfCriteriaMultiTypeDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiTypeDTO";
 import { SelfCriteriaTextDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaTextDTO";
 import { pipe } from "fp-ts/lib/function";
@@ -54,7 +55,10 @@ export const multiRequiredCriteriaSelector = createSelector(
 
 const filterCriteria = <T>(
   criteria: O.Option<OnboardingInitiativeDTO>,
-  filterFunc: typeof SelfCriteriaBoolDTO | typeof SelfCriteriaTextDTO
+  filterFunc:
+    | typeof SelfCriteriaBoolDTO
+    | typeof SelfCriteriaInformativeDTO
+    | typeof SelfCriteriaTextDTO
 ) =>
   pipe(
     criteria,
@@ -83,6 +87,18 @@ export const pdndCriteriaSelector = createSelector(
     )
 );
 
+// Self-declaration criteria of type "informative" carry BE-computed content
+// (code, description, organization, value) that is rendered as-is in the
+// PDND prerequisites screen, alongside the automated (PDND) criteria.
+export const informativeCriteriaSelector = createSelector(
+  selectRequiredCriteria,
+  requiredCriteria =>
+    filterCriteria<SelfCriteriaInformativeDTO>(
+      requiredCriteria,
+      SelfCriteriaInformativeDTO
+    )
+);
+
 export const familyUnitCompositionCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
@@ -107,11 +123,21 @@ export const stepperCountSelector = createSelector(
   textRequiredCriteriaSelector,
   pdndCriteriaSelector,
   familyUnitCompositionCriteriaSelector,
-  (multiCriteria, boolCriteria, textCriteria, pdndCriteria, familyCriteria) =>
+  informativeCriteriaSelector,
+  (
+    multiCriteria,
+    boolCriteria,
+    textCriteria,
+    pdndCriteria,
+    familyCriteria,
+    informativeCriteria
+  ) =>
     (boolCriteria.length > 0 ? 1 : 0) +
     multiCriteria.length +
     textCriteria.length +
-    (pdndCriteria.length > 0 || familyCriteria ? 1 : 0)
+    (pdndCriteria.length > 0 || familyCriteria || informativeCriteria.length > 0
+      ? 1
+      : 0)
 );
 
 export const getMultiSelfDeclarationListFromContext = (
@@ -124,6 +150,14 @@ export const getBooleanSelfDeclarationListFromContext = (
   filterCriteria<SelfCriteriaBoolDTO>(
     context.requiredCriteria,
     SelfCriteriaBoolDTO
+  );
+
+export const getInformativeSelfDeclarationListFromContext = (
+  context: Context.Context
+) =>
+  filterCriteria<SelfCriteriaInformativeDTO>(
+    context.requiredCriteria,
+    SelfCriteriaInformativeDTO
   );
 
 export const getInputFormSelfDeclarationFromContext = (

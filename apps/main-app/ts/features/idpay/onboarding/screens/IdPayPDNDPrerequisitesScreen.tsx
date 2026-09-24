@@ -12,6 +12,7 @@ import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   familyUnitCompositionCriteriaSelector,
+  informativeCriteriaSelector,
   pdndCriteriaSelector,
   selectInitiative
 } from "../machine/selectors";
@@ -22,6 +23,12 @@ const IdPayPDNDPrerequisitesScreen = () => {
   const machine = useActorRef();
 
   const [authority, setAuthority] = useState<string | undefined>();
+  // Holds the free-text "value" of an "informative" self-declaration
+  // criteria (BE-provided), shown as-is in the bottom sheet instead of
+  // the generic templated body used for automated/PDND criteria.
+  const [informativeValue, setInformativeValue] = useState<
+    string | undefined
+  >();
 
   const initiative = useSelector(selectInitiative);
 
@@ -41,20 +48,36 @@ const IdPayPDNDPrerequisitesScreen = () => {
     component: (
       <>
         <IOMarkdownLite
-          content={I18n.t(
-            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
-            {
-              provider: authority
-            }
-          )}
+          content={
+            informativeValue ??
+            I18n.t(
+              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
+              {
+                provider: authority
+              }
+            )
+          }
         />
         <VSpacer size={24} />
       </>
     )
   });
 
+  const openPdndInfoBottomSheet = (criteriaAuthority: string | undefined) => {
+    setInformativeValue(undefined);
+    setAuthority(criteriaAuthority);
+    present();
+  };
+
+  const openInformativeBottomSheet = (value: string) => {
+    setAuthority(undefined);
+    setInformativeValue(value);
+    present();
+  };
+
   const pdndCriteria = useSelector(pdndCriteriaSelector);
   const familyUnitCriteria = useSelector(familyUnitCompositionCriteriaSelector);
+  const informativeCriteria = useSelector(informativeCriteriaSelector);
 
   const initiativeId = pipe(
     initiative,
@@ -97,10 +120,7 @@ const IdPayPDNDPrerequisitesScreen = () => {
               label={I18n.t(
                 `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
               )}
-              onPress={() => {
-                setAuthority(criteria.authority);
-                present();
-              }}
+              onPress={() => openPdndInfoBottomSheet(criteria.authority)}
             />
           )}
           <VSpacer size={16} />
@@ -115,18 +135,27 @@ const IdPayPDNDPrerequisitesScreen = () => {
             label={I18n.t(
               `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.title`
             )}
-            onPress={() => {
-              setAuthority(
+            onPress={() =>
+              openPdndInfoBottomSheet(
                 I18n.t(
                   `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.description`
                 )
-              );
-              present();
-            }}
+              )
+            }
           />
           <VSpacer size={16} />
         </>
       )}
+      {informativeCriteria?.map(criteria => (
+        <Fragment key={criteria.code}>
+          <ModuleSummary
+            description={criteria.organization}
+            label={criteria.description}
+            onPress={() => openInformativeBottomSheet(criteria.value)}
+          />
+          <VSpacer size={16} />
+        </Fragment>
+      ))}
       {bottomSheet}
     </IOScrollViewWithLargeHeader>
   );

@@ -15,6 +15,11 @@ import {
   _typeEnum as SelfDeclarationBoolType
 } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaBoolDTO";
 import {
+  CodeEnum as SelfCriteriaInformativeCodeEnum,
+  SelfCriteriaInformativeDTO,
+  _typeEnum as SelfCriteriaInformativeTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaInformativeDTO";
+import {
   CodeEnum as SelfCriteriaMultiCodeEnum,
   SelfCriteriaMultiTypeDTO,
   _typeEnum as SelfCriteriaMultiTypeVariationEnum
@@ -52,6 +57,25 @@ const automatedCriteria: ReadonlyArray<AutomatedCriteriaDTO> = [
     authority: "AGID",
     operator: getRandomEnumValue(OperatorEnum),
     value: faker.location.country()
+  }
+];
+
+const selfDeclarationInformative: ReadonlyArray<SelfCriteriaInformativeDTO> = [
+  {
+    _type: SelfCriteriaInformativeTypeEnum.informative,
+    code: SelfCriteriaInformativeCodeEnum.ANPR,
+    description: "Famiglia anagrafica",
+    organization: "Ministero dell'Interno",
+    value:
+      "Comunichiamo direttamente con l'Anagrafe Nazionale della Popolazione Residente (ANPR) per verificare la composizione del tuo nucleo familiare."
+  },
+  {
+    _type: SelfCriteriaInformativeTypeEnum.informative,
+    code: SelfCriteriaInformativeCodeEnum.ADE,
+    description: "Canone TV",
+    organization: "Agenzia delle Entrate",
+    value:
+      "Verificheremo con l'Agenzia delle Entrate che tu non risulti moroso rispetto al pagamento del canone TV."
   }
 ];
 
@@ -175,7 +199,7 @@ const checkPrerequisites: {
   [IDPayInitiativeID.OK_PDND_ONLY]: {
     beneficiaryRule: {
       automatedCriteria,
-      selfDeclarationCriteria: []
+      selfDeclarationCriteria: [...selfDeclarationInformative]
     }
   },
   [IDPayInitiativeID.OK_SELF_ONLY]: {
