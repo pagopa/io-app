@@ -1,17 +1,14 @@
 import { triggerHaptic } from "@io-app/design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import I18n from "i18next";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
 
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../../store/hooks";
+import { useIODispatch, useIOStore } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { isDevEnv } from "../../../../../utils/environment";
+import { unknownToString } from "../../../../../utils/errors";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -77,47 +74,43 @@ type UseCieManager = (params: { onSuccess: (authUrl: string) => void }) => {
 export const useCieManager: UseCieManager = ({ onSuccess }) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
-  const loginFlow = cieLoginFlowSelector(store.getState());
 
-  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
-  const isScreenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
-  const useUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const loginFlow = cieLoginFlowSelector(store.getState());
+  const assistanceToolConfig = assistanceToolConfigSelector(store.getState());
+  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
 
   const [state, setState] = useState<CieManagerState>({ status: "idle" });
 
-  const choosenTool = useMemo(
-    () => assistanceToolRemoteConfig(assistanceToolConfig),
-    [assistanceToolConfig]
-  );
+  const commonErrorHandling = useCallback(
+    (
+      reason: "GENERIC" | CEvent["event"],
+      description: string | undefined,
+      handler: () => void
+    ) => {
+      trackLoginCieCardReadingError(loginFlow);
 
-  const errorHandler = useCallback(
-    (reason: "GENERIC" | CEvent["event"], description?: string) =>
-      (handler: () => void) => {
-        trackLoginCieCardReadingError(loginFlow);
-
-        dispatch(
-          cieAuthenticationError({
-            reason,
-            cieDescription: description ?? cieErrorMessagesMap[reason] ?? "",
-            flow: loginFlow
-          })
-        );
-        triggerHaptic("notificationError");
-        handler();
-      },
+      dispatch(
+        cieAuthenticationError({
+          reason,
+          cieDescription: description ?? cieErrorMessagesMap[reason] ?? "",
+          flow: loginFlow
+        })
+      );
+      triggerHaptic("notificationError");
+      handler();
+    },
     [dispatch, loginFlow]
   );
 
   const handleError = useCallback(
-    (error: Error) => {
-      handleSendAssistanceLog(choosenTool, error.message);
+    (errorMessage: string) => {
+      handleSendAssistanceLog(choosenTool, errorMessage);
 
-      const handler = errorHandler("GENERIC", error.message);
-      handler(() =>
-        setState({ failure: error.message, status: "reading-failure" })
+      commonErrorHandling("GENERIC", errorMessage, () =>
+        setState({ failure: errorMessage, status: "reading-failure" })
       );
     },
-    [choosenTool, errorHandler]
+    [choosenTool, commonErrorHandling]
   );
 
   const handleEvent = useCallback(
@@ -131,8 +124,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
         return;
       }
 
-      const handler = errorHandler(event.event);
-      handler(() => {
+      commonErrorHandling(event.event, undefined, () => {
         // ON_TAG_LOST and "Transmission Error" are handled inline
         // by the reading screen itself
         if (
@@ -146,7 +138,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
         setState({ failure: event, status: "failure" });
       });
     },
-    [choosenTool, errorHandler]
+    [choosenTool, commonErrorHandling]
   );
 
   const handleSuccess = useCallback(
@@ -157,6 +149,10 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
       handleSendAssistanceLog(choosenTool, "authentication SUCCESS");
       trackLoginCieCardReadingSuccess(loginFlow);
 
+      const isScreenReaderEnabled = isScreenReaderEnabledSelector(
+        store.getState()
+      );
+
       setTimeout(
         () => onSuccess(url),
         isScreenReaderEnabled
@@ -164,7 +160,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
           : WAIT_TIMEOUT_NAVIGATION
       );
     },
-    [choosenTool, isScreenReaderEnabled, loginFlow, onSuccess]
+    [choosenTool, loginFlow, onSuccess, store]
   );
 
   const startReading = useCallback(
@@ -173,24 +169,28 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
 
       cieManager.removeAllListeners();
       cieManager.onEvent(handleEvent);
-      cieManager.onError(handleError);
+      cieManager.onError(error => handleError(error.message));
       cieManager.onSuccess(handleSuccess);
 
       cieManager.enableLog(isDevEnv);
       // Set the IDP URL based on the environment:
       // Uses the UAT endpoint for Pre-production or null to fallback to PROD (default).
-      cieManager.setCustomIdpUrl(useUat ? getCieUatEndpoint() : null);
+      const idpUrl = isCieLoginUatEnabledSelector(store.getState())
+        ? getCieUatEndpoint()
+        : null;
+      cieManager.setCustomIdpUrl(idpUrl);
       cieManager.setAuthenticationUrl(authUrl);
 
       try {
         await cieManager.setPin(pin);
         await cieManager.start(CIE_ALERT_MESSAGES_CONFIG);
         await cieManager.startListeningNFC();
-      } catch {
-        handleError(new Error("Failed to start reading CIE"));
+      } catch (e: unknown) {
+        const errorMessage = unknownToString(e);
+        handleError(errorMessage);
       }
     },
-    [handleEvent, handleError, handleSuccess, useUat]
+    [handleEvent, handleError, handleSuccess, store]
   );
 
   useEffect(

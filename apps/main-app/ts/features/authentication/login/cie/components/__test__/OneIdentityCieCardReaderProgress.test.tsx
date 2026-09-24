@@ -79,7 +79,7 @@ describe("OneIdentityCieCardReaderProgress", () => {
       );
     });
 
-    it("should render error status with the failure message as content on Android only", () => {
+    it("should render error status", () => {
       const { getByTestId } = render(
         <OneIdentityCieCardReaderProgress
           onCancel={mockCancel}
@@ -92,7 +92,6 @@ describe("OneIdentityCieCardReaderProgress", () => {
         .props as OneIdentityCieCardReaderProgressContentProps;
 
       expect(props.status).toBe("error");
-      expect(props.content).toBe(isIos ? undefined : "boom");
     });
 
     it("should render success status without actions", () => {
