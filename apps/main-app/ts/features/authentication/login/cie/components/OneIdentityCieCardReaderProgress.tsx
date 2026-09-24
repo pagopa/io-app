@@ -88,7 +88,7 @@ export const OneIdentityCieCardReaderProgress = ({
                 "authentication.cie.card.error.readerCardLostTitle"
               ),
               subtitle: I18n.t("authentication.cie.card.error.onTagLost"),
-              content: state.failure,
+              content: I18n.t("authentication.cie.card.error.onTagLost"),
               ...actionsProps
             };
 

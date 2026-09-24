@@ -8,6 +8,7 @@ import { useIODispatch, useIOStore } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { isDevEnv } from "../../../../../utils/environment";
+import { unknownToString } from "../../../../../utils/errors";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -106,11 +107,11 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
   );
 
   const handleError = useCallback(
-    (error: Error) => {
-      handleSendAssistanceLog(choosenTool, error.message);
+    (errorMessage: string) => {
+      handleSendAssistanceLog(choosenTool, errorMessage);
 
-      commonErrorHandling("GENERIC", error.message, () =>
-        setState({ failure: error.message, status: "reading-failure" })
+      commonErrorHandling("GENERIC", errorMessage, () =>
+        setState({ failure: errorMessage, status: "reading-failure" })
       );
     },
     [choosenTool, commonErrorHandling]
@@ -172,7 +173,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
 
       cieManager.removeAllListeners();
       cieManager.onEvent(handleEvent);
-      cieManager.onError(handleError);
+      cieManager.onError(error => handleError(error.message));
       cieManager.onSuccess(handleSuccess);
 
       cieManager.enableLog(isDevEnv);
@@ -188,8 +189,9 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
         await cieManager.setPin(pin);
         await cieManager.start(CIE_ALERT_MESSAGES_CONFIG);
         await cieManager.startListeningNFC();
-      } catch {
-        handleError(new Error("Failed to start reading CIE"));
+      } catch (e: unknown) {
+        const errorMessage = unknownToString(e);
+        handleError(errorMessage);
       }
     },
     [handleEvent, handleError, handleSuccess, store]
