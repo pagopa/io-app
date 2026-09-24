@@ -93,7 +93,7 @@ describe("OneIdentityCieCardReaderProgress", () => {
 
       expect(props.status).toBe("error");
       expect(props.content).toBe(
-        isIos ? undefined : I18n.t("authentication.cie.card.error.generic")
+        isIos ? undefined : I18n.t("authentication.cie.card.error.onTagLost")
       );
     });
 
