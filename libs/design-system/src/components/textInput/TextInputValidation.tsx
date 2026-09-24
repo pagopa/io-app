@@ -27,29 +27,33 @@ type TextInputValidationProps = Omit<
   ComponentProps<typeof TextInputBase>,
   "bottomMessageColor" | "isPassword" | "ref" | "rightElement" | "status"
 > & {
-  /**
-   * A string that will be read by screen readers when the field is not valid.
-   */
+  /** A string that will be read by screen readers when the field is not valid. */
   accessibilityErrorLabel?: string;
   /**
-   * In case of a dynamic `errorMessage`, use the `onValidate` function with a `ValidationWithOptions` object as the return value to ensure that screen readers announce the correct value.
+   * In case of a dynamic `errorMessage`, use the `onValidate` function with a
+   * `ValidationWithOptions` object as the return value to ensure that screen
+   * readers announce the correct value.
    */
   errorMessage: string;
   /**
-   * This function can return either a `boolean` or a `ValidationWithOptions` object.
-   * If a `boolean` is returned and the field is not valid, the value of the errorMessage prop will be displayed/announced.
-   * If a `ValidationWithOptions` object is returned and the field is not valid, the value displayed/announced will be the one contained within this object.
+   * This function can return either a `boolean` or a `ValidationWithOptions`
+   * object. If a `boolean` is returned and the field is not valid, the value of
+   * the errorMessage prop will be displayed/announced. If a
+   * `ValidationWithOptions` object is returned and the field is not valid, the
+   * value displayed/announced will be the one contained within this object.
    */
   onValidate: (value: string) => boolean | ValidationWithOptions;
   ref?: Ref<TextInputValidationRefProps>;
   /**
-   * If true, the character counter will only be displayed/announced when the counter limit is reached.
-   * If false or undefined, the character counter will be displayed/announced whenever the counter is enabled,
-   * including before the user starts typing (for example, `0 / limit`).
+   * If true, the character counter will only be displayed/announced when the
+   * counter limit is reached. If false or undefined, the character counter will
+   * be displayed/announced whenever the counter is enabled, including before
+   * the user starts typing (for example, `0 / limit`).
    */
   showCounterOnlyWhenLimitReached?: boolean;
   /**
-   * Determines the validation mode. If "onBlur", validation occurs on blur. If "onContinue", validation occurs when an external button is pressed.
+   * Determines the validation mode. If "onBlur", validation occurs on blur. If
+   * "onContinue", validation occurs when an external button is pressed.
    */
   validationMode?: "onBlur" | "onContinue";
 };

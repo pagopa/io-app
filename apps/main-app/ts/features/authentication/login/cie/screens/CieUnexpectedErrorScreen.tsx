@@ -5,9 +5,7 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
-/**
- * Screen to display an unexpected error during the CIE authentication process
- */
+/** Screen to display an unexpected error during the CIE authentication process */
 const CieUnexpectedErrorScreen = () => {
   const navigation = useIONavigation();
 

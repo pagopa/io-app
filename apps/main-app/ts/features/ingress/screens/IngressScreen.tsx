@@ -1,9 +1,7 @@
 /* eslint-disable functional/immutable-data */
 import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
-/**
- * An ingress screen to choose the real first screen the user must navigate to.
- */
+/** An ingress screen to choose the real first screen the user must navigate to. */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "i18next";

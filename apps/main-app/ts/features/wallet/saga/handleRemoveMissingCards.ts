@@ -4,7 +4,10 @@ import { GlobalState } from "../../../store/reducers/types";
 import { walletRemoveCards } from "../store/actions/cards";
 import { WalletCard } from "../types";
 
-/** * Saga to remove wallet cards that are missing from the latest API response, based on type filter
+/**
+ * Saga to remove wallet cards that are missing from the latest API response,
+ * based on type filter
+ *
  * @param keys - The set of keys that are present in the latest API response
  * @param type - The type of wallet cards to consider for removal
  */
