@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-canary.8231](https://github.com/pagopa/io-app/compare/3.40.0-rc.4...3.40.0-canary.8231) (2026-09-24)
+
+### Features
+
+* Adaptation to the new PARI APIs ([a21fbb7](https://github.com/pagopa/io-app/commit/a21fbb7bae46b2e0b5a0cb46912e2ac9cfa95203))
+* Add handling for user bonus already used error and corresponding initiative data ([8e4117d](https://github.com/pagopa/io-app/commit/8e4117d8762df170d5d5ee6d5e1801712c59ad7c))
+* **IdPay:** add informative self-declaration criteria and update selectors and screen components ([c930c75](https://github.com/pagopa/io-app/commit/c930c75e68c08257f3b0417f7c1878e7857fedae))
+
+### Bug Fixes
+
+* **IdPayMultiValuePrerequisitesScreen:** simplify null checks for selfDeclaration properties ([d1af829](https://github.com/pagopa/io-app/commit/d1af829f875c875e06dc52d15e7a5104477ad022))
+* **locales:** update bonus usage messages for clarity ([d913440](https://github.com/pagopa/io-app/commit/d913440b3816c8447b2b375e3d33b133dc2041f1))
 ## [3.40.0-rc.4](https://github.com/pagopa/io-app/compare/3.40.0-rc.3...3.40.0-rc.4) (2026-09-23)
 
 ### Features
