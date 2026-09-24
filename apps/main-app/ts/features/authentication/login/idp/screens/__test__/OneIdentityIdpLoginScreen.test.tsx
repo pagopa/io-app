@@ -11,6 +11,7 @@ import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../../common/store/actions";
 import * as commonStoreSelector from "../../../../common/store/selectors";
+import * as usePosteIDEducationalModule from "../../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { OneIdentityIdpLoginScreen } from "../OneIdentityIdpLoginScreen";
 
 jest.mock("react-native-webview", () => {
@@ -225,6 +226,25 @@ describe("OneIdentityIdpLoginScreen", () => {
         authMethod: "SPID",
         authLevel: "L2"
       }
+    });
+  });
+  it("should notify the PosteID educational hook when the WebView finishes loading", () => {
+    const usePosteIDEducationalSpy = jest.spyOn(
+      usePosteIDEducationalModule,
+      "useOneIdentityPosteIDApp2AppEducational"
+    );
+    const { getByTestId } = renderComponent();
+
+    expect(usePosteIDEducationalSpy).toHaveBeenLastCalledWith({
+      idp: mockIdp,
+      isWebViewLoaded: false
+    });
+
+    fireEvent(getByTestId("webview-idp-login-screen"), "onLoadEnd");
+
+    expect(usePosteIDEducationalSpy).toHaveBeenLastCalledWith({
+      idp: mockIdp,
+      isWebViewLoaded: true
     });
   });
 });

@@ -10,6 +10,7 @@ import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
 import { AUTH_ERRORS } from "../../../../common/utils/authError";
+import * as usePosteIDEducationalModule from "../../../../login/idp/hooks/useOneIdentityPosteIDApp2AppEducational";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
@@ -251,6 +252,25 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2
       }
+    });
+  });
+  it("should notify the PosteID educational hook when the WebView finishes loading", () => {
+    const usePosteIDEducationalSpy = jest.spyOn(
+      usePosteIDEducationalModule,
+      "useOneIdentityPosteIDApp2AppEducational"
+    );
+    const { getByTestId } = renderComponent();
+
+    expect(usePosteIDEducationalSpy).toHaveBeenLastCalledWith({
+      idp: mockIdp,
+      isWebViewLoaded: false
+    });
+
+    fireEvent(getByTestId("webview-idp-login-screen"), "onLoadEnd");
+
+    expect(usePosteIDEducationalSpy).toHaveBeenLastCalledWith({
+      idp: mockIdp,
+      isWebViewLoaded: true
     });
   });
 });

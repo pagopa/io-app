@@ -1,6 +1,6 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import I18n from "i18next";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent";
 import { apiUrlPrefix } from "../../../../../config";
@@ -23,6 +23,7 @@ import {
   loggedOutWithIdpAuthSelector
 } from "../../../common/store/selectors";
 import { AUTH_LEVELS } from "../../../common/utils";
+import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
 
 export const OneIdentityIdpLoginScreen = () => {
   const loggedInAuth = useIOSelector(loggedInAuthSelector);
@@ -65,6 +66,12 @@ const OneIdentityIdpLoginScreenContent = ({
 }: OneIdentityIdpLoginScreenContentProps) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+  const [isWebViewLoaded, setIsWebViewLoaded] = useState(false);
+
+  const posteIdBottomSheet = useOneIdentityPosteIDApp2AppEducational({
+    idp,
+    isWebViewLoaded
+  });
 
   const navigateToAuthErrorScreen = useCallback(
     (errorCodeOrMessage?: string) => {
@@ -128,6 +135,10 @@ const OneIdentityIdpLoginScreenContent = ({
           navigateToAuthErrorScreen();
           break;
         }
+        case "WEBVIEW_LOADED": {
+          setIsWebViewLoaded(true);
+          break;
+        }
         default:
           break;
       }
@@ -135,6 +146,11 @@ const OneIdentityIdpLoginScreenContent = ({
     [handleLoginFailure, handleLoginSuccess, navigateToAuthErrorScreen]
   );
 
-  // TODO: Remove flow to keep IdpWebViewLogin agnostic
-  return <IdpWebViewLogin flow="auth" idp={idp} onEvent={handleEvent} />;
+  return (
+    <>
+      {/* TODO: Remove flow to keep IdpWebViewLogin agnostic */}
+      <IdpWebViewLogin flow="auth" idp={idp} onEvent={handleEvent} />
+      {posteIdBottomSheet}
+    </>
+  );
 };
