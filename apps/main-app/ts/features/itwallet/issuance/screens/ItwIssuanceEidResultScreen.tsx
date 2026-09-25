@@ -357,6 +357,9 @@ const ItwIssuanceEidUpgradeResultContent = ({
 const ItwIssuanceEidReissuanceResultContent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+  const isL3 = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
   const route = useRoute();
 
   if (isLoading) {
@@ -385,7 +388,8 @@ const ItwIssuanceEidReissuanceResultContent = () => {
         "features.itWallet.issuance.eidResult.success.reissuance.title"
       )}
     >
-      <ItwReissuanceFeedbackBanner />
+      {/* This survey is reserved to "Documenti su IO" (L2) reissuance */}
+      {!isL3 && <ItwReissuanceFeedbackBanner />}
     </OperationResultScreenContent>
   );
 };

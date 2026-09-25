@@ -56,15 +56,27 @@ const buildArgs = ({
 };
 
 describe("closeIssuanceAction", () => {
-  // SIW-5129: the reissuance survey belongs to both Documenti su IO and IT-Wallet
-  test.each<{ level: EidIssuanceLevel; name: string }>([
-    { name: "Documenti su IO (L2)", level: "l2" },
-    { name: "IT-Wallet (L3)", level: "l3" }
-  ])("shows the reissuance survey on $name reissuance exit", ({ level }) => {
-    const { args, dispatch } = buildArgs({ mode: "reissuance", level });
+  // SIW-5129: the reissuance survey is reserved to Documenti su IO (L2) reissuance
+  it("shows the reissuance survey on Documenti su IO (L2) reissuance exit", () => {
+    const { args, dispatch } = buildArgs({ mode: "reissuance", level: "l2" });
     closeIssuanceAction(args);
     expect(dispatch).toHaveBeenCalledWith(
       itwSetFeedbackBottomSheetVisible(true)
+    );
+  });
+
+  it("does not show any survey on IT-Wallet (L3) reissuance exit", () => {
+    const { args, dispatch } = buildArgs({
+      mode: "reissuance",
+      level: "l3",
+      event: { type: "close", surveyStep: "select_method" }
+    });
+    closeIssuanceAction(args);
+    expect(dispatch).not.toHaveBeenCalledWith(
+      itwSetFeedbackBottomSheetVisible(true)
+    );
+    expect(dispatch).not.toHaveBeenCalledWith(
+      itwSetActivationExitSurvey({ step: "select_method" })
     );
   });
 

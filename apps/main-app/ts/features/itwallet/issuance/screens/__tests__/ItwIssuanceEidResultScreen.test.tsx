@@ -299,14 +299,16 @@ describe("ItwIssuanceEidResultScreen", () => {
     });
   });
 
-  // SIW-5129: the reissuance survey belongs to both Documenti su IO and IT-Wallet
+  // SIW-5129: the reissuance survey is reserved to Documenti su IO (L2) reissuance
   describe("reissuance flow", () => {
-    test.each<{ level: EidIssuanceLevel; name: string }>([
-      { name: "Documenti su IO (L2)", level: "l2" },
-      { name: "IT-Wallet (L3)", level: "l3" }
-    ])("renders the reissuance survey banner for $name", ({ level }) => {
-      const { getByTestId } = renderComponent(level, { mode: "reissuance" });
+    it("renders the reissuance survey banner for Documenti su IO (L2)", () => {
+      const { getByTestId } = renderComponent("l2", { mode: "reissuance" });
       expect(getByTestId("itwFeedbackBannerTestID")).toBeTruthy();
+    });
+
+    it("does not render the reissuance survey banner for IT-Wallet (L3)", () => {
+      const { queryByTestId } = renderComponent("l3", { mode: "reissuance" });
+      expect(queryByTestId("itwFeedbackBannerTestID")).toBeNull();
     });
   });
 
