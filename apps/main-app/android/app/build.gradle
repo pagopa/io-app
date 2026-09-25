@@ -118,7 +118,7 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100155276
+        versionCode 100155282
         versionName "3.39.0.11"
         multiDexEnabled true
         manifestPlaceholders = [usesCleartextTraffic: "true"]
