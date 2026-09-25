@@ -1,8 +1,6 @@
 import { InitiativeDataDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDataDTO";
 import { OnboardingInitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingInitiativeDTO";
 import { StatusEnum as OnboardingStatusEnum } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { and, assertEvent, assign, fromPromise, setup } from "xstate";
 
 import { IdPayTags } from "../../common/machine/tags";
@@ -50,12 +48,12 @@ export const idPayOnboardingMachine = setup({
       notImplementedStub
     ),
     getOnboardingStatus: fromPromise<
-      O.Option<OnboardingStatusEnum>,
-      O.Option<string>
+      OnboardingStatusEnum | undefined,
+      string | undefined
     >(notImplementedStub),
     getRequiredCriteria: fromPromise<
-      O.Option<OnboardingInitiativeDTO>,
-      O.Option<string>
+      OnboardingInitiativeDTO | undefined,
+      string | undefined
     >(notImplementedStub),
     acceptRequiredCriteria: fromPromise<undefined, Context>(notImplementedStub)
   },
@@ -65,25 +63,12 @@ export const idPayOnboardingMachine = setup({
       return event.serviceId.length > 0;
     },
     hasPdndCriteria: ({ context }) =>
-      pipe(
-        context.requiredCriteria,
-        O.map(
-          ({ beneficiaryRule, general }) =>
-            (beneficiaryRule?.automatedCriteria?.length || 0) > 0 ||
-            // since familyUnitComposition can also display Family Unit criteria if it's ANPR
-            general?.familyUnitComposition !== undefined
-        ),
-        O.getOrElse(() => false)
-      ),
+      (context.requiredCriteria?.beneficiaryRule?.automatedCriteria?.length ??
+        0) > 0 ||
+      context.requiredCriteria?.general?.familyUnitComposition !== undefined,
     hasSelfDecalrationList: ({ context }) =>
-      pipe(
-        context.requiredCriteria,
-        O.map(
-          ({ beneficiaryRule }) =>
-            (beneficiaryRule?.selfDeclarationCriteria?.length || 0) > 0
-        ),
-        O.getOrElse(() => false)
-      ),
+      (context.requiredCriteria?.beneficiaryRule?.selfDeclarationCriteria
+        ?.length ?? 0) > 0,
     hasBooleanSelfDeclarationList: ({ context }) =>
       getBooleanSelfDeclarationListFromContext(context).length > 0,
     hasMultiSelfDeclarationList: ({ context }) =>
@@ -145,7 +130,7 @@ export const idPayOnboardingMachine = setup({
             input: ({ context }) => context.serviceId,
             onDone: {
               actions: assign(({ event }) => ({
-                initiative: O.some(event.output)
+                initiative: event.output
               })),
               target: "LoadingOnboardingStatus"
             },
@@ -156,10 +141,7 @@ export const idPayOnboardingMachine = setup({
               },
               {
                 actions: assign(({ event }) => ({
-                  failure: pipe(
-                    OnboardingFailure.decode(event.error),
-                    O.fromEither
-                  )
+                  failure: decodeOnboardingFailure(event.error)
                 })),
                 target: "#idpay-onboarding.OnboardingFailure"
               }
@@ -179,10 +161,7 @@ export const idPayOnboardingMachine = setup({
             },
             onError: {
               actions: assign(({ event }) => ({
-                failure: pipe(
-                  OnboardingFailure.decode(event.error),
-                  O.fromEither
-                )
+                failure: decodeOnboardingFailure(event.error)
               })),
               target: "#idpay-onboarding.OnboardingFailure"
             }
@@ -232,7 +211,7 @@ export const idPayOnboardingMachine = setup({
           },
           {
             actions: assign(({ event }) => ({
-              failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+              failure: decodeOnboardingFailure(event.error)
             })),
             target: "OnboardingFailure"
           }
@@ -263,7 +242,7 @@ export const idPayOnboardingMachine = setup({
           },
           {
             actions: assign(({ event }) => ({
-              failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+              failure: decodeOnboardingFailure(event.error)
             })),
             target: "OnboardingFailure"
           }
@@ -558,7 +537,7 @@ export const idPayOnboardingMachine = setup({
           },
           {
             actions: assign(({ event }) => ({
-              failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+              failure: decodeOnboardingFailure(event.error)
             })),
             target: "OnboardingFailure"
           }
@@ -635,9 +614,11 @@ export const idPayOnboardingMachine = setup({
 });
 
 const selectInitiativeId = (context: Context) =>
-  pipe(
-    context.initiative,
-    O.map(initiative => initiative.initiativeId)
-  );
+  context.initiative?.initiativeId;
+
+const decodeOnboardingFailure = (error: unknown) => {
+  const result = OnboardingFailure.decode(error);
+  return "right" in result ? result.right : undefined;
+};
 
 export type IdPayOnboardingMachine = typeof idPayOnboardingMachine;

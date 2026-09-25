@@ -6,9 +6,6 @@ import { ChannelEnum } from "@io-app/api-types/generated/definitions/idpay/Trans
 import { H6, IOSkeleton, Pictogram, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { enumType } from "@pagopa/ts-commons/lib/types";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import * as t from "io-ts";
 import { useState } from "react";
@@ -58,15 +55,8 @@ const useIdPayTimelineDetailsBottomSheet = (
 
   const [title, setTitle] = useState<string>();
 
-  const titleComponent = pipe(
-    title,
-    O.fromNullable,
-    O.filter(_ => !isError),
-    O.fold(
-      () => null,
-      title => (isLoading ? <TitleSkeleton /> : <H6>{title}</H6>)
-    )
-  );
+  const titleComponent =
+    title && !isError ? isLoading ? <TitleSkeleton /> : <H6>{title}</H6> : null;
 
   const getModalContent = () => {
     if (isLoading) {
@@ -77,60 +67,59 @@ const useIdPayTimelineDetailsBottomSheet = (
       return <ErrorComponent />;
     }
 
-    return pipe(
-      detailsPot,
-      pot.toOption,
-      // oxlint-disable-next-line react/jsx-key -- O.map is fp-ts Option map, not Array.map; key prop is not needed
-      O.map(details => {
-        switch (details.operationType) {
-          case RefundOperationTypeEnum.PAID_REFUND:
+    const details = pot.toUndefined(detailsPot);
+    if (details === undefined) {
+      return null;
+    }
 
-          case RefundOperationTypeEnum.REJECTED_REFUND:
-            return <IdPayTimelineRefundDetailsComponent refund={details} />;
-          case TransactionOperationTypeEnum.REVERSAL:
+    return (() => {
+      switch (details.operationType) {
+        case RefundOperationTypeEnum.PAID_REFUND:
+
+        case RefundOperationTypeEnum.REJECTED_REFUND:
+          return <IdPayTimelineRefundDetailsComponent refund={details} />;
+        case TransactionOperationTypeEnum.REVERSAL:
+          return (
+            <IdPayTimelineTransactionDetailsComponent transaction={details} />
+          );
+        case TransactionOperationTypeEnum.TRANSACTION:
+          if (details.channel === ChannelEnum.RTD) {
             return (
               <IdPayTimelineTransactionDetailsComponent transaction={details} />
             );
-          case TransactionOperationTypeEnum.TRANSACTION:
-            if (details.channel === ChannelEnum.RTD) {
-              return (
-                <IdPayTimelineTransactionDetailsComponent
-                  transaction={details}
-                />
-              );
-            }
-            return (
-              <IdPayTimelineDiscountTransactionDetailsComponent
-                transaction={details}
-              />
-            );
-          default:
-            // We don't show additional info for other operation types
-            return <></>;
-        }
-      }),
-      O.toUndefined
-    );
+          }
+          return (
+            <IdPayTimelineDiscountTransactionDetailsComponent
+              transaction={details}
+            />
+          );
+        default:
+          // We don't show additional info for other operation types
+          return <></>;
+      }
+    })();
   };
   const modal = useIOBottomSheetModal({
     component: getModalContent(),
     title: titleComponent
   });
 
-  const present = (operation: OperationListDTO) =>
-    pipe(
-      OperationWithDetailsType.decode(operation.operationType),
-      E.map(type => {
-        setTitle(I18n.t(`idpay.initiative.operationDetails.title.${type}`));
-        dispatch(
-          idpayTimelineDetailsGet.request({
-            initiativeId,
-            operationId: operation.operationId
-          })
-        );
-        modal.present();
-      })
+  const present = (operation: OperationListDTO) => {
+    const decodedOperation = OperationWithDetailsType.decode(
+      operation.operationType
     );
+    if ("right" in decodedOperation) {
+      const type = decodedOperation.right;
+      setTitle(I18n.t(`idpay.initiative.operationDetails.title.${type}`));
+      dispatch(
+        idpayTimelineDetailsGet.request({
+          initiativeId,
+          operationId: operation.operationId
+        })
+      );
+      modal.present();
+    }
+  };
 
   return { ...modal, present };
 };

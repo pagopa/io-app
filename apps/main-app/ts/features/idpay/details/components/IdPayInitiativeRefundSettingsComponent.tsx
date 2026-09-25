@@ -9,8 +9,6 @@ import {
   ListItemNavAlert
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/core";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { View } from "react-native";
 
@@ -54,25 +52,23 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
     );
   };
 
-  const instrumentsSettingsButton = pipe(
-    initiative,
-    O.fromNullable,
-    O.fold(
-      () => (
-        <ListItemNav
-          accessibilityLabel={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-          )}
-          description={
-            <IOSkeleton height={21} radius={4} shape="rectangle" width={100} />
-          }
-          onPress={() => null}
-          value={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-          )}
-        />
-      ),
-      ({ initiativeId, nInstr, status }) => {
+  const instrumentsSettingsButton =
+    initiative === undefined ? (
+      <ListItemNav
+        accessibilityLabel={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+        )}
+        description={
+          <IOSkeleton height={21} radius={4} shape="rectangle" width={100} />
+        }
+        onPress={() => null}
+        value={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+        )}
+      />
+    ) : (
+      (() => {
+        const { initiativeId, nInstr, status } = initiative;
         // between ListItemNav and ListItemNavAlert, ListItemNavAlert is the least inclusive one
         const methodCountString = I18n.t(
           `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods`,
@@ -110,29 +106,26 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
         ) : (
           <ListItemNav {...listItemOptions} />
         );
-      }
-    )
-  );
+      })()
+    );
 
-  const ibanSettingsButton = pipe(
-    initiative,
-    O.fromNullable,
-    O.fold(
-      () => (
-        <ListItemNav
-          accessibilityLabel={`${I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
-          )}, ${I18n.t("global.remoteStates.loading")}`}
-          description={
-            <IOSkeleton height={21} radius={4} shape="rectangle" width={270} />
-          }
-          onPress={() => null}
-          value={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
-          )}
-        />
-      ),
-      ({ initiativeId, iban, status }) => {
+  const ibanSettingsButton =
+    initiative === undefined ? (
+      <ListItemNav
+        accessibilityLabel={`${I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+        )}, ${I18n.t("global.remoteStates.loading")}`}
+        description={
+          <IOSkeleton height={21} radius={4} shape="rectangle" width={270} />
+        }
+        onPress={() => null}
+        value={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+        )}
+      />
+    ) : (
+      (() => {
+        const { initiativeId, iban, status } = initiative;
         const listItemOptions: ListItemNavAlert = {
           value: I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
@@ -164,9 +157,8 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
             accessibilityLabel={`${listItemOptions.accessibilityLabel} , ${listItemOptions.description}`}
           />
         );
-      }
-    )
-  );
+      })()
+    );
 
   return (
     <View testID={"IDPayDetailsSettingsTestID"}>

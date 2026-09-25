@@ -3,8 +3,6 @@ import {
   TextInputValidation,
   VSpacer
 } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useState } from "react";
 
@@ -18,14 +16,14 @@ export const IdPayIbanOnboardingScreen = () => {
 
   const [iban, setIban] = useState<{
     text: string;
-    value: O.Option<string>;
-  }>({ text: "", value: O.none });
+    value: string | undefined;
+  }>({ text: "", value: undefined });
 
   const [ibanName, setIbanName] = useState<string>("");
   const isLoading =
     IdPayConfigurationMachineContext.useSelector(isLoadingSelector);
 
-  const isInputValid = O.isSome(iban.value) && ibanName.length > 0;
+  const isInputValid = iban.value !== undefined && ibanName.length > 0;
 
   return (
     <IOScrollViewWithLargeHeader
@@ -36,15 +34,12 @@ export const IdPayIbanOnboardingScreen = () => {
           loading: isLoading,
           disabled: isLoading || !isInputValid,
           onPress: () => {
-            pipe(
-              iban.value,
-              O.map(iban =>
-                machine.send({
-                  type: "confirm-iban-onboarding",
-                  ibanBody: { iban, description: ibanName || "" }
-                })
-              )
-            );
+            if (iban.value !== undefined) {
+              machine.send({
+                type: "confirm-iban-onboarding",
+                ibanBody: { iban: iban.value, description: ibanName || "" }
+              });
+            }
           }
         }
       }}
@@ -66,7 +61,7 @@ export const IdPayIbanOnboardingScreen = () => {
         onChangeText={text => {
           const result = IbanSchema.safeParse(text);
           setIban({
-            value: result.success ? O.some(result.data) : O.none,
+            value: result.success ? result.data : undefined,
             text
           });
         }}

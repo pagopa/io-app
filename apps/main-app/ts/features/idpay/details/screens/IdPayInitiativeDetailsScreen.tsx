@@ -16,9 +16,6 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useRoute } from "@react-navigation/core";
 import { RouteProp, useFocusEffect } from "@react-navigation/native";
-import { sequenceS } from "fp-ts/lib/Apply";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
 import { Linking, View } from "react-native";
@@ -205,182 +202,158 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     const availableAmount = initiative.amountCents || 0;
     const accruedAmount = initiative.accruedCents || 0;
 
-    const amountProgress = pipe(
-      sequenceS(O.Monad)({
-        amount: O.fromNullable(initiative.amountCents),
-        accrued: O.fromNullable(initiative.accruedCents),
-        refunded: O.fromNullable(initiative.refundedCents)
-      }),
-      O.map(({ amount, accrued, refunded }) => ({
-        total: amount + accrued + refunded,
-        amount
-      })),
-      O.filter(({ total }) => total !== 0),
-      O.map(({ amount, total }) => (amount / total) * 100.0),
-      O.getOrElse(() => 100.0)
-    );
+    const amountProgress =
+      initiative.amountCents !== undefined &&
+      initiative.accruedCents !== undefined &&
+      initiative.refundedCents !== undefined &&
+      initiative.amountCents +
+        initiative.accruedCents +
+        initiative.refundedCents !==
+        0
+        ? (initiative.amountCents /
+            (initiative.amountCents +
+              initiative.accruedCents +
+              initiative.refundedCents)) *
+          100.0
+        : 100.0;
 
-    return pipe(
-      initiative.initiativeRewardType,
-      O.fromNullable,
-      O.altW(() => O.some(InitiativeRewardTypeEnum.REFUND)),
-      O.fold(
-        () => [],
-        (type): ReadonlyArray<BonusCardCounter> => {
-          switch (type) {
-            case InitiativeRewardTypeEnum.DISCOUNT:
-              return [
-                {
-                  type: "ValueWithProgress",
-                  label: I18n.t(
-                    "idpay.initiative.details.initiativeCard.availableAmount"
-                  ),
-                  value: formatNumberCentsToAmount(
-                    availableAmount,
-                    true,
-                    "right"
-                  ),
-                  progress: amountProgress
-                }
-              ];
-            case InitiativeRewardTypeEnum.EXPENSE:
-              return [
-                {
-                  type: "Value",
-                  label: I18n.t(
-                    "idpay.initiative.details.initiativeCard.refundRequestedAmount"
-                  ),
-                  value: formatNumberCentsToAmount(accruedAmount, true, "right")
-                }
-              ];
-            case InitiativeRewardTypeEnum.REFUND:
-              return [
-                {
-                  type: "ValueWithProgress",
-                  label: I18n.t(
-                    "idpay.initiative.details.initiativeCard.availableAmount"
-                  ),
-                  value: formatNumberCentsToAmount(
-                    availableAmount,
-                    true,
-                    "right"
-                  ),
-                  progress: amountProgress
-                },
-                {
-                  type: "Value",
-                  label: I18n.t(
-                    "idpay.initiative.details.initiativeCard.toRefund"
-                  ),
-                  value: formatNumberCentsToAmount(accruedAmount, true, "right")
-                }
-              ];
-            default:
-              return [];
-          }
-        }
-      )
-    );
+    const type =
+      initiative.initiativeRewardType ?? InitiativeRewardTypeEnum.REFUND;
+    return (() => {
+      switch (type) {
+        case InitiativeRewardTypeEnum.DISCOUNT:
+          return [
+            {
+              type: "ValueWithProgress",
+              label: I18n.t(
+                "idpay.initiative.details.initiativeCard.availableAmount"
+              ),
+              value: formatNumberCentsToAmount(availableAmount, true, "right"),
+              progress: amountProgress
+            }
+          ];
+        case InitiativeRewardTypeEnum.EXPENSE:
+          return [
+            {
+              type: "Value",
+              label: I18n.t(
+                "idpay.initiative.details.initiativeCard.refundRequestedAmount"
+              ),
+              value: formatNumberCentsToAmount(accruedAmount, true, "right")
+            }
+          ];
+        case InitiativeRewardTypeEnum.REFUND:
+          return [
+            {
+              type: "ValueWithProgress",
+              label: I18n.t(
+                "idpay.initiative.details.initiativeCard.availableAmount"
+              ),
+              value: formatNumberCentsToAmount(availableAmount, true, "right"),
+              progress: amountProgress
+            },
+            {
+              type: "Value",
+              label: I18n.t("idpay.initiative.details.initiativeCard.toRefund"),
+              value: formatNumberCentsToAmount(accruedAmount, true, "right")
+            }
+          ];
+        default:
+          return [];
+      }
+    })();
   };
 
   const getInitiativeDetailsContent = (initiative: InitiativeDTO) =>
-    pipe(
-      initiative.initiativeRewardType,
-      O.fromNullable,
-      O.altW(() => O.some(InitiativeRewardTypeEnum.REFUND)),
-      O.fold(
-        () => undefined,
-        rewardType => {
-          switch (rewardType) {
-            case InitiativeRewardTypeEnum.DISCOUNT:
-              return (
-                <ContentWrapper>
-                  <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
-                  <Animated.View layout={LinearTransition.duration(200)}>
-                    <IdPayInitiativeTimelineComponent
-                      initiativeId={initiative.initiativeId}
-                      size={5}
-                    />
-                    <IdPayInitiativeDiscountSettingsComponent
-                      initiative={initiative}
-                    />
-                  </Animated.View>
-                </ContentWrapper>
-              );
-            case InitiativeRewardTypeEnum.EXPENSE:
-              return (
-                <ContentWrapper>
-                  <VSpacer size={8} />
-                  <IdPayInitiativeTimelineComponent
-                    initiativeId={initiativeId}
-                    size={3}
-                  />
-                  <VSpacer size={24} />
-                </ContentWrapper>
-              );
-            case InitiativeRewardTypeEnum.REFUND:
-              if (initiativeNeedsConfiguration) {
-                return (
-                  <View
-                    style={{
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: 32,
-                      flex: 1,
-                      flexGrow: 1
-                    }}
-                  >
-                    <Pictogram name="empty" size={72} />
-                    <VSpacer size={16} />
-                    <H6>
-                      {I18n.t(
-                        "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
-                      )}
-                    </H6>
-                    <VSpacer size={8} />
-                    <Body style={{ textAlign: "center" }}>
-                      {I18n.t(
-                        "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
-                        { initiative: initiative.initiativeName }
-                      )}
-                    </Body>
-                    <VSpacer size={16} />
-                    <IOButton
-                      fullWidth
-                      label={I18n.t(
-                        "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
-                      )}
-                      onPress={navigateToConfiguration}
-                      variant="solid"
-                    />
-                  </View>
-                );
-              }
-
-              return (
-                <ContentWrapper>
-                  <IdPayMissingConfigurationAlert
-                    initiativeId={initiativeId}
-                    status={initiative.status}
-                  />
-                  <VSpacer size={8} />
-                  <IdPayInitiativeTimelineComponent
-                    initiativeId={initiativeId}
-                    size={3}
-                  />
-                  <VSpacer size={24} />
-                  <IdPayInitiativeRefundSettingsComponent
-                    initiative={initiative}
-                  />
-                  <VSpacer size={32} />
-                </ContentWrapper>
-              );
-            default:
-              return undefined;
+    (() => {
+      const rewardType =
+        initiative.initiativeRewardType ?? InitiativeRewardTypeEnum.REFUND;
+      switch (rewardType) {
+        case InitiativeRewardTypeEnum.DISCOUNT:
+          return (
+            <ContentWrapper>
+              <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
+              <Animated.View layout={LinearTransition.duration(200)}>
+                <IdPayInitiativeTimelineComponent
+                  initiativeId={initiative.initiativeId}
+                  size={5}
+                />
+                <IdPayInitiativeDiscountSettingsComponent
+                  initiative={initiative}
+                />
+              </Animated.View>
+            </ContentWrapper>
+          );
+        case InitiativeRewardTypeEnum.EXPENSE:
+          return (
+            <ContentWrapper>
+              <VSpacer size={8} />
+              <IdPayInitiativeTimelineComponent
+                initiativeId={initiativeId}
+                size={3}
+              />
+              <VSpacer size={24} />
+            </ContentWrapper>
+          );
+        case InitiativeRewardTypeEnum.REFUND:
+          if (initiativeNeedsConfiguration) {
+            return (
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 32,
+                  flex: 1,
+                  flexGrow: 1
+                }}
+              >
+                <Pictogram name="empty" size={72} />
+                <VSpacer size={16} />
+                <H6>
+                  {I18n.t(
+                    "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
+                  )}
+                </H6>
+                <VSpacer size={8} />
+                <Body style={{ textAlign: "center" }}>
+                  {I18n.t(
+                    "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
+                    { initiative: initiative.initiativeName }
+                  )}
+                </Body>
+                <VSpacer size={16} />
+                <IOButton
+                  fullWidth
+                  label={I18n.t(
+                    "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
+                  )}
+                  onPress={navigateToConfiguration}
+                  variant="solid"
+                />
+              </View>
+            );
           }
-        }
-      )
-    );
+
+          return (
+            <ContentWrapper>
+              <IdPayMissingConfigurationAlert
+                initiativeId={initiativeId}
+                status={initiative.status}
+              />
+              <VSpacer size={8} />
+              <IdPayInitiativeTimelineComponent
+                initiativeId={initiativeId}
+                size={3}
+              />
+              <VSpacer size={24} />
+              <IdPayInitiativeRefundSettingsComponent initiative={initiative} />
+              <VSpacer size={32} />
+            </ContentWrapper>
+          );
+        default:
+          return undefined;
+      }
+    })();
 
   const handleOnShowMerchants = () => {
     if (!initiative.webViewUrl) {

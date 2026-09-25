@@ -14,8 +14,6 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { flow, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { JSX } from "react";
 import { StyleSheet, View } from "react-native";
@@ -146,78 +144,60 @@ export const useIDPayStaticCodeModal = (
       return <StaticCodeSkeleton />;
     }
 
-    const decodeFailure = flow(TransactionErrorDTO.decode, O.fromEither);
+    const barcode = pot.toUndefined(barcodePot);
 
-    return pipe(
-      barcodePot,
-      pot.toOption,
-      O.fold(
-        () => {
-          if (pot.isError(barcodePot)) {
-            const reason = pipe(
-              decodeFailure(barcodePot.error),
-              O.fold(
-                () => undefined,
-                failure => failure.code
-              )
-            );
+    if (barcode === undefined) {
+      if (pot.isError(barcodePot)) {
+        const decodedFailure = TransactionErrorDTO.decode(barcodePot.error);
+        const failure =
+          "right" in decodedFailure ? decodedFailure.right : undefined;
 
-            const technicalMessage = pipe(
-              decodeFailure(barcodePot.error),
-              O.fold(
-                () => undefined,
-                failure => failure.message
-              )
-            );
+        trackIDPayStaticCodeGenerationError({
+          initiativeId,
+          initiativeName,
+          reason: failure?.code,
+          technicalMessage: failure?.message
+        });
+      }
+      bottomSheet.dismiss();
+      return <></>;
+    }
 
-            trackIDPayStaticCodeGenerationError({
-              initiativeId,
-              initiativeName,
-              reason,
-              technicalMessage
-            });
-          }
-          bottomSheet.dismiss();
-          return <></>;
-        },
-        barcode => {
-          trackIDPayStaticCodeGenerationSuccess({
-            initiativeId,
-            initiativeName
-          });
-          return <SuccessContent {...barcode} />;
-        }
-      )
-    );
+    trackIDPayStaticCodeGenerationSuccess({
+      initiativeId,
+      initiativeName
+    });
+    return <SuccessContent {...barcode} />;
   };
 
   const FooterComponent = () =>
-    pipe(
-      barcodePot,
-      pot.toOption,
-      O.fold(
-        () => null,
-        barcode => (
-          <ContentWrapper>
-            <IOButton
-              fullWidth
-              label={I18n.t(
-                "idpay.initiative.beneficiaryDetails.staticCodeModal.footer"
-              )}
-              onPress={() => {
-                trackIDPayStaticCodeGenerationCopy({
-                  initiativeId,
-                  initiativeName
-                });
-                clipboardSetStringWithFeedback(barcode.trxCode);
-              }}
-              variant="solid"
-            />
-            <VSpacer size={32} />
-          </ContentWrapper>
-        )
-      )
-    );
+    (() => {
+      const barcode = pot.toUndefined(barcodePot);
+
+      if (barcode === undefined) {
+        return null;
+      }
+
+      return (
+        <ContentWrapper>
+          <IOButton
+            fullWidth
+            label={I18n.t(
+              "idpay.initiative.beneficiaryDetails.staticCodeModal.footer"
+            )}
+            onPress={() => {
+              trackIDPayStaticCodeGenerationCopy({
+                initiativeId,
+                initiativeName
+              });
+              clipboardSetStringWithFeedback(barcode.trxCode);
+            }}
+            variant="solid"
+          />
+          <VSpacer size={32} />
+        </ContentWrapper>
+      );
+    })();
 
   const bottomSheet = useIOBottomSheetModal({
     title: null,

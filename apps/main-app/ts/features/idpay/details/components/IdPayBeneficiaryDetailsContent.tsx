@@ -20,8 +20,6 @@ import {
 } from "@io-app/design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { View } from "react-native";
@@ -103,62 +101,40 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
 
   const { initiativeRewardType: initiativeType } = initiativeDetails;
 
-  const ruleInfoBox = pipe(
-    beneficiaryDetails.ruleDescription,
-    O.fromNullable,
-    O.fold(
-      () => undefined,
-      info => <IdPayInitiativeRulesInfoBox content={info} />
-    )
-  );
+  const ruleInfoBox = beneficiaryDetails.ruleDescription ? (
+    <IdPayInitiativeRulesInfoBox content={beneficiaryDetails.ruleDescription} />
+  ) : undefined;
 
-  const endDateString = pipe(
-    initiativeDetails.voucherEndDate,
-    O.fromNullable,
-    O.map(formatDate("DD/MM/YYYY")),
-    O.getOrElse(() => "-")
-  );
+  const endDateString = initiativeDetails.voucherEndDate
+    ? formatDate("DD/MM/YYYY")(initiativeDetails.voucherEndDate)
+    : "-";
+  const fruitionStartDateString = beneficiaryDetails.fruitionStartDate
+    ? formatDate("DD MMM YYYY")(beneficiaryDetails.fruitionStartDate)
+    : undefined;
+  const fruitionEndDateString = beneficiaryDetails.fruitionEndDate
+    ? formatDate("DD MMM YYYY")(beneficiaryDetails.fruitionEndDate)
+    : undefined;
 
-  const fruitionStartDateString = pipe(
-    beneficiaryDetails.fruitionStartDate,
-    O.fromNullable,
-    O.map(formatDate("DD MMM YYYY")),
-    O.getOrElseW(() => undefined)
-  );
-
-  const fruitionEndDateString = pipe(
-    beneficiaryDetails.fruitionEndDate,
-    O.fromNullable,
-    O.map(formatDate("DD MMM YYYY")),
-    O.getOrElseW(() => undefined)
-  );
-
-  const rewardRuleRow = pipe(
-    beneficiaryDetails.rewardRule,
-    O.fromNullable,
-    O.map<RewardValueDTO, TableRow>(({ rewardValue, rewardValueType }) => {
-      if (rewardValueType === RewardValueTypeEnum.ABSOLUTE) {
+  const rewardRuleRow: TableRow = beneficiaryDetails.rewardRule
+    ? (({ rewardValue, rewardValueType }: RewardValueDTO) => {
+        if (rewardValueType === RewardValueTypeEnum.ABSOLUTE) {
+          return {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.spendValue"),
+            value: formatNumberCurrencyCentsOrDefault(rewardValue),
+            testID: "spendValueTestID"
+          };
+        }
         return {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.spendValue"),
-          value: formatNumberCurrencyCentsOrDefault(rewardValue),
-          testID: "spendValueTestID"
+          label: I18n.t("idpay.initiative.beneficiaryDetails.spendPercentage"),
+          value: `${rewardValue}%`,
+          testID: "spendPercentageTestID"
         };
-      }
-      return {
-        label: I18n.t("idpay.initiative.beneficiaryDetails.spendPercentage"),
-        value: `${rewardValue}%`,
-        testID: "spendPercentageTestID"
-      };
-    }),
-    O.getOrElse<TableRow>(() => ({ label: "-", value: undefined }))
-  );
+      })(beneficiaryDetails.rewardRule)
+    : { label: "-", value: undefined };
 
-  const voucherStartDateString = pipe(
-    initiativeDetails.voucherStartDate,
-    O.fromNullable,
-    O.map(formatDate("DD MMM YYYY")),
-    O.getOrElse(() => "-")
-  );
+  const voucherStartDateString = initiativeDetails.voucherStartDate
+    ? formatDate("DD MMM YYYY")(initiativeDetails.voucherStartDate)
+    : "-";
 
   const getTypeDependantTableRows = (): Array<TableRow> => {
     switch (initiativeDetails.initiativeRewardType) {
@@ -200,16 +176,15 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   };
 
   const handlePrivacyLinkPress = () =>
-    pipe(
-      NonEmptyString.decode(beneficiaryDetails.serviceId),
-      O.fromEither,
-      O.map(serviceId =>
+    (() => {
+      const serviceId = NonEmptyString.decode(beneficiaryDetails.serviceId);
+      if ("right" in serviceId) {
         navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
           screen: SERVICES_ROUTES.SERVICE_DETAIL,
-          params: { serviceId }
-        })
-      )
-    );
+          params: { serviceId: serviceId.right }
+        });
+      }
+    })();
 
   const handleRequestHelpPress = () => {
     startIdPaySupport(IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY);
