@@ -76,10 +76,7 @@ import {
   ZendeskTokenStatusEnum
 } from "../store/reducers";
 
-/**
- * Transform an array of string into a Zendesk
- * value to display.
- */
+/** Transform an array of string into a Zendesk value to display. */
 const arrayToZendeskValue = (arr: Array<string>) => arr.join(", ");
 
 export type ItemPermissionProps = Pick<
@@ -95,8 +92,10 @@ export type ZendeskAskPermissionsNavigationParams = {
 };
 
 /**
- * this screen shows the kinds of data the app could collect when a user is asking for assistance
- * @constructor
+ * This screen shows the kinds of data the app could collect when a user is
+ * asking for assistance
+ *
+ * @class
  */
 const ZendeskAskPermissions = () => {
   const route =

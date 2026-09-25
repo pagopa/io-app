@@ -48,6 +48,7 @@ import { handleRequestInit } from "./handleRequestInit";
 
 /**
  * Handles the download of an attachment
+ *
  * @param bearerToken
  * @param action
  */

@@ -4,17 +4,18 @@ export type AnimatedNumericTextProps = InheritedTextProps & {
   /**
    * Direction the digits roll while transitioning to a new value. Only the
    * animated iOS implementation reads it.
+   *
    * @default true
    */
   countsDown?: boolean;
   /**
-   * Turns the numeric value into the string to display (for example `62` → `1:02`).
+   * Turns the numeric value into the string to display (for example `62` →
+   * `1:02`).
+   *
    * @default String(value)
    */
   formatValue?: (value: number) => string;
-  /**
-   * The numeric value to render. Each change is animated on iOS.
-   */
+  /** The numeric value to render. Each change is animated on iOS. */
   value: number;
 };
 

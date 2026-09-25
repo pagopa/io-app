@@ -4,7 +4,8 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 
 /**
- * Screen to display an error when the CIE card reader does not support extended APDU commands
+ * Screen to display an error when the CIE card reader does not support extended
+ * APDU commands
  */
 const CieExtendedApduNotSupportedScreen = () => {
   const { navigateToAuthenticationScreen } = useActiveSessionLoginNavigation();
