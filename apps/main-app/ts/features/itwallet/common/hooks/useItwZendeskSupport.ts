@@ -43,7 +43,7 @@ const getSubcategoryValue = (
   subcategory: ZendeskSubcategoryValue
 ) =>
   category.value === zendeskItWalletCategory.value
-    ? itWalletSubcategoryValues[subcategory] ?? subcategory
+    ? (itWalletSubcategoryValues[subcategory] ?? subcategory)
     : subcategory;
 
 export type ItwZendeskSupportParams = {
