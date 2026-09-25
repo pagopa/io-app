@@ -11,7 +11,7 @@ import { View } from "react-native";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { SpidIdp } from "../../../../utils/idps";
 
-const POSTE_ID_IDP_ID = "posteid";
+const POSTE_ID_IDP_ID = "https://posteid.poste.it";
 
 type Props = {
   idp: SpidIdp;
