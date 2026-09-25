@@ -5,6 +5,7 @@ import * as IOHooks from "../../../../../store/hooks";
 import * as analyticsUtils from "../../../../../utils/analytics";
 import { SpidIdp } from "../../../../../utils/idps";
 import * as useOneIdentityLoginSourceModule from "../../../../lollipop/hooks/useOneIdentityLoginSource";
+import * as usePosteIDEducationalModule from "../../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { IdpWebViewLogin } from "../IdpWebViewLogin";
 
 jest.mock("react-native-webview", () => {
@@ -16,6 +17,13 @@ jest.mock("react-native-webview", () => {
     ))
   };
 });
+
+jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
+  useIOBottomSheetModal: jest.fn(() => ({
+    present: jest.fn(),
+    bottomSheet: <></>
+  }))
+}));
 
 const mockIdp = {
   id: "idp-id",
@@ -265,6 +273,32 @@ describe("IdpWebViewLogin", () => {
       });
 
       expect(mockDispatch).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe("onLoadEnd", () => {
+    beforeEach(() => {
+      mockUseOneIdentityLoginSource();
+    });
+
+    it("should call the PosteID educational presentOnce when the WebView finishes loading", () => {
+      const mockPresentOnce = jest.fn();
+      jest
+        .spyOn(
+          usePosteIDEducationalModule,
+          "useOneIdentityPosteIDApp2AppEducational"
+        )
+        .mockReturnValue({ bottomSheet: <></>, presentOnce: mockPresentOnce });
+
+      const { getByTestId } = render(
+        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+      );
+
+      expect(mockPresentOnce).not.toHaveBeenCalled();
+
+      fireEvent(getByTestId("webview-idp-login-screen"), "onLoadEnd");
+
+      expect(mockPresentOnce).toHaveBeenCalledTimes(1);
     });
   });
 });

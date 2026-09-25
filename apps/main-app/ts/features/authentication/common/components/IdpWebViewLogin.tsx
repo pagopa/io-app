@@ -25,6 +25,7 @@ import {
   trackSpidLoginIntent
 } from "../../activeSessionLogin/screens/analytics";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
+import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { idpLoginUrlChanged } from "../store/actions";
 import {
   AUTH_LEVELS,
@@ -177,6 +178,9 @@ export const IdpWebViewLogin = memo(
       [dispatch]
     );
 
+    const { bottomSheet: posteIdBottomSheet, presentOnce: presentPosteIdOnce } =
+      useOneIdentityPosteIDApp2AppEducational(idp);
+
     if (
       loginSourceState.status === "reserving-public-key" ||
       loginSourceState.status === "verifying-assertion-ref"
@@ -196,6 +200,7 @@ export const IdpWebViewLogin = memo(
           cacheEnabled={false}
           onError={handleError}
           onHttpError={handleError}
+          onLoadEnd={presentPosteIdOnce}
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
           originWhitelist={originSchemasWhiteList}
@@ -205,6 +210,7 @@ export const IdpWebViewLogin = memo(
           testID="webview-idp-login-screen"
           textZoom={100}
         />
+        {posteIdBottomSheet}
       </View>
     );
   }
