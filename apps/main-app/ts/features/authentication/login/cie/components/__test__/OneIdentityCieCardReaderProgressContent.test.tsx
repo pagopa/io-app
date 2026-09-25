@@ -1,4 +1,4 @@
-import { AccessibilityInfo, Platform } from "react-native";
+import { AccessibilityInfo } from "react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -10,8 +10,8 @@ import {
 } from "../OneIdentityCieCardReaderProgressContent";
 
 describe("OneIdentityCieCardReaderProgressContent", () => {
-  const onPrimaryPress = jest.fn();
-  const onSecondaryPress = jest.fn();
+  const onPrimaryActionPress = jest.fn();
+  const onSecondaryActionPress = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -62,74 +62,52 @@ describe("OneIdentityCieCardReaderProgressContent", () => {
     expect(AccessibilityInfo.announceForAccessibility).not.toHaveBeenCalled();
   });
 
-  describe("on Android", () => {
-    beforeEach(() => {
-      jest
-        .spyOn(Platform, "select")
-        .mockImplementation(
-          (options: Record<string, unknown>) =>
-            options.default ?? options.android
-        );
+  it("should render both primary and secondary actions when provided", () => {
+    const { getByText } = renderComponent({
+      pictogram: "nfcScanAndroid",
+      primaryAction: { label: "Primary", onPress: onPrimaryActionPress },
+      secondaryAction: { label: "Secondary", onPress: onSecondaryActionPress },
+      status: "idle",
+      title: "a title"
     });
 
-    it("should render only the primary action when both actions are provided", () => {
-      const { getByText, queryByText } = renderComponent({
-        pictogram: "nfcScanAndroid",
-        primaryAction: { label: "Primary", onPress: onPrimaryPress },
-        secondaryAction: { label: "Secondary", onPress: onSecondaryPress },
-        status: "idle",
-        title: "a title"
-      });
-
-      expect(getByText("Primary")).toBeTruthy();
-      expect(queryByText("Secondary")).toBeNull();
-    });
-
-    it("should render nothing when no primary action is provided", () => {
-      const { queryByText } = renderComponent({
-        pictogram: "nfcScanAndroid",
-        secondaryAction: { label: "Secondary", onPress: onSecondaryPress },
-        status: "idle",
-        title: "a title"
-      });
-
-      expect(queryByText("Secondary")).toBeNull();
-    });
+    expect(getByText("Primary")).toBeTruthy();
+    expect(getByText("Secondary")).toBeTruthy();
   });
 
-  describe("on iOS", () => {
-    beforeEach(() => {
-      jest
-        .spyOn(Platform, "select")
-        .mockImplementation(
-          (options: Record<string, unknown>) => options.ios ?? options.default
-        );
+  it("should render only the primary action when the secondary one is missing", () => {
+    const { getByText, queryByText } = renderComponent({
+      pictogram: "nfcScanAndroid",
+      primaryAction: { label: "Primary", onPress: onPrimaryActionPress },
+      status: "idle",
+      title: "a title"
     });
 
-    it("should render both primary and secondary actions when provided", () => {
-      const { getByText } = renderComponent({
-        pictogram: "nfcScaniOS",
-        primaryAction: { label: "Primary", onPress: onPrimaryPress },
-        secondaryAction: { label: "Secondary", onPress: onSecondaryPress },
-        status: "idle",
-        title: "a title"
-      });
+    expect(getByText("Primary")).toBeTruthy();
+    expect(queryByText("Secondary")).toBeNull();
+  });
 
-      expect(getByText("Primary")).toBeTruthy();
-      expect(getByText("Secondary")).toBeTruthy();
+  it("should render only the secondary action when the primary one is missing", () => {
+    const { getByText, queryByText } = renderComponent({
+      pictogram: "nfcScanAndroid",
+      secondaryAction: { label: "Secondary", onPress: onSecondaryActionPress },
+      status: "idle",
+      title: "a title"
     });
 
-    it("should render only the secondary action when the primary one is missing", () => {
-      const { getByText, queryByText } = renderComponent({
-        pictogram: "nfcScaniOS",
-        secondaryAction: { label: "Secondary", onPress: onSecondaryPress },
-        status: "idle",
-        title: "a title"
-      });
+    expect(queryByText("Primary")).toBeNull();
+    expect(getByText("Secondary")).toBeTruthy();
+  });
 
-      expect(queryByText("Primary")).toBeNull();
-      expect(getByText("Secondary")).toBeTruthy();
+  it("should not render any action when neither is provided", () => {
+    const { queryByText } = renderComponent({
+      pictogram: "nfcScanAndroid",
+      status: "idle",
+      title: "a title"
     });
+
+    expect(queryByText("Primary")).toBeNull();
+    expect(queryByText("Secondary")).toBeNull();
   });
 });
 

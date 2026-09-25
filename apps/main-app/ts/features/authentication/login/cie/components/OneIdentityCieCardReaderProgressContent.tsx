@@ -130,26 +130,24 @@ const Actions = ({
 }: Pick<
   OneIdentityCieCardReaderProgressContentProps,
   "primaryAction" | "secondaryAction"
->) =>
-  Platform.select({
-    ios: (
+>) => (
+  <VStack space={24}>
+    {primaryAction && (
       <View style={{ alignItems: "center" }}>
-        <VStack space={24}>
-          {primaryAction ? (
-            <IOButton {...primaryAction} variant="solid" />
-          ) : null}
-          {secondaryAction ? (
-            <IOButton {...secondaryAction} variant="link" />
-          ) : null}
-        </VStack>
+        <View>
+          <IOButton variant="solid" {...primaryAction} />
+        </View>
       </View>
-    ),
-    default: (
+    )}
+    {secondaryAction && (
       <View style={{ alignItems: "center" }}>
-        {primaryAction ? <IOButton {...primaryAction} variant="solid" /> : null}
+        <View>
+          <IOButton variant="link" {...secondaryAction} />
+        </View>
       </View>
-    )
-  });
+    )}
+  </VStack>
+);
 
 // Image dimension
 const imgSize: IOPictogramSizeScale = 180;
