@@ -9,21 +9,16 @@ import {
 import { FunctionComponent, useState } from "react";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { connect } from "react-redux";
 
 import { selectItwEnv } from "../../features/itwallet/common/store/selectors/environment";
-import { ReduxProps } from "../../store/actions/types";
+import { useCurrentRouteName } from "../../navigation/NavigationService";
 import { useIOSelector } from "../../store/hooks";
-import { currentRouteSelector } from "../../store/reducers/navigation";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { GlobalState } from "../../store/reducers/types";
 import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import PagoPATestIndicator from "../PagoPATestIndicator";
 import { DebugDataIndicator } from "./DebugDataIndicator";
 import { DebugDataOverlay } from "./DebugDataOverlay";
-
-type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
 
 const debugItemBgColor = hexToRgba(IOColors.white, 0.4);
 const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
@@ -57,12 +52,13 @@ const styles = StyleSheet.create({
   }
 });
 
-const DebugInfoOverlay: FunctionComponent<Props> = (props: Props) => {
+const DebugInfoOverlay: FunctionComponent = () => {
   const theme = useIOTheme();
   const appVersion = getAppVersion();
   const [showRootName, setShowRootName] = useState(true);
   const [isDebugDataVisibile, showDebugData] = useState(false);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
+  const screenNameDebug = useCurrentRouteName();
 
   const insets = useSafeAreaInsets();
 
@@ -100,9 +96,7 @@ const DebugInfoOverlay: FunctionComponent<Props> = (props: Props) => {
             <Pressable
               accessibilityHint={"Copy the technical screen name"}
               accessibilityRole="button"
-              onPress={() =>
-                clipboardSetStringWithFeedback(props.screenNameDebug)
-              }
+              onPress={() => clipboardSetStringWithFeedback(screenNameDebug)}
               style={styles.routeText}
             >
               <IOText
@@ -115,7 +109,7 @@ const DebugInfoOverlay: FunctionComponent<Props> = (props: Props) => {
                 }}
                 weight="Regular"
               >
-                {props.screenNameDebug}
+                {screenNameDebug}
               </IOText>
             </Pressable>
           )}
@@ -161,10 +155,4 @@ const ItwPreIndicator = () => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  // We need to use the currentRouteDebugSelector because this component is outside the NavigationContext and otherwise
-  // doesn't receive the updates about the new screens
-  screenNameDebug: currentRouteSelector(state)
-});
-
-export default connect(mapStateToProps)(DebugInfoOverlay);
+export default DebugInfoOverlay;
