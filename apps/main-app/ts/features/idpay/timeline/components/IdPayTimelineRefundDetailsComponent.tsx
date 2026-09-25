@@ -102,9 +102,14 @@ const IdPayTimelineRefundDetailsComponent = (props: Props) => {
               refund.operationType === OperationTypeEnum.REJECTED_REFUND
                 ? "error"
                 : "highlight",
-            text: I18n.t(
-              `idpay.initiative.operationDetails.refund.result.${refund.operationType}`
-            )
+            text:
+              refund.operationType === OperationTypeEnum.REJECTED_REFUND
+                ? I18n.t(
+                    "idpay.initiative.operationDetails.refund.result.REJECTED_REFUND"
+                  )
+                : I18n.t(
+                    "idpay.initiative.operationDetails.refund.result.PAID_REFUND"
+                  )
           }
         }}
         label={I18n.t("idpay.initiative.operationDetails.refund.resultLabel")}

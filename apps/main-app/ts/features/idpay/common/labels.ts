@@ -7,16 +7,24 @@ type InstrumentStatusLabels = {
   [key in StatusEnum]: string;
 };
 
-const instrumentStatusLabels: InstrumentStatusLabels = {
-  [StatusEnum.ACTIVE]: I18n.t(
-    "idpay.configuration.instruments.instrumentStatus.active"
-  ),
-  [StatusEnum.PENDING_ENROLLMENT_REQUEST]: I18n.t(
-    "idpay.configuration.instruments.instrumentStatus.pendingActivation"
-  ),
-  [StatusEnum.PENDING_DEACTIVATION_REQUEST]: I18n.t(
-    "idpay.configuration.instruments.instrumentStatus.pendingDeactivation"
-  )
+/**
+ * Resolves the label at call time, so it follows the language currently
+ * selected by the user instead of the one active when this module loaded.
+ */
+const getInstrumentStatusLabel = (status: StatusEnum): string => {
+  const instrumentStatusLabels: InstrumentStatusLabels = {
+    [StatusEnum.ACTIVE]: I18n.t(
+      "idpay.configuration.instruments.instrumentStatus.active"
+    ),
+    [StatusEnum.PENDING_ENROLLMENT_REQUEST]: I18n.t(
+      "idpay.configuration.instruments.instrumentStatus.pendingActivation"
+    ),
+    [StatusEnum.PENDING_DEACTIVATION_REQUEST]: I18n.t(
+      "idpay.configuration.instruments.instrumentStatus.pendingDeactivation"
+    )
+  };
+
+  return instrumentStatusLabels[status];
 };
 
 type OperationTypeLabels = {
@@ -44,4 +52,4 @@ export const getLabelForCircuitType = (circuitType: string | undefined) =>
     O.getOrElse(() => "-")
   );
 
-export { instrumentStatusLabels };
+export { getInstrumentStatusLabel };
