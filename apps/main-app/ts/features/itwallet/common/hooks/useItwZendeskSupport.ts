@@ -31,11 +31,11 @@ export enum ZendeskSubcategoryValue {
  * Subcategory values of the IT-Wallet (L3) category. The legacy values belong
  * to the Documenti su IO category, which kept the `it_wallet` value.
  */
-const itWalletSubcategoryValues: Partial<
-  Record<ZendeskSubcategoryValue, string>
-> = {
+const itWalletSubcategoryValues: Record<ZendeskSubcategoryValue, string> = {
   [ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI]:
-    "it_wallet2_aggiunta_documenti"
+    "it_wallet2_aggiunta_documenti",
+  [ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA]:
+    "it_wallet2_presentazione_remota"
 };
 
 const getSubcategoryValue = (
@@ -43,7 +43,7 @@ const getSubcategoryValue = (
   subcategory: ZendeskSubcategoryValue
 ) =>
   category.value === zendeskItWalletCategory.value
-    ? (itWalletSubcategoryValues[subcategory] ?? subcategory)
+    ? itWalletSubcategoryValues[subcategory]
     : subcategory;
 
 export type ItwZendeskSupportParams = {

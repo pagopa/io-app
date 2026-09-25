@@ -139,7 +139,7 @@ describe("useItwZendeskSupport", () => {
       name: "IT-Wallet remote presentation",
       category: supportAssistance.zendeskItWalletCategory,
       subcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA,
-      expectedSubcategory: "it_wallet_presentazione_remota"
+      expectedSubcategory: "it_wallet2_presentazione_remota"
     },
     {
       name: "Documenti su IO document issuance",
