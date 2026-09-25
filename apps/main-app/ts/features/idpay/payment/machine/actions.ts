@@ -10,13 +10,15 @@ export const createActionsImplementation = (
   const navigateToAuthorizationScreen = () => {
     navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
       screen: IdPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION,
-      params: {}
+      params: {},
+      pop: true
     });
   };
 
   const navigateToResultScreen = () =>
     navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
-      screen: IdPayPaymentRoutes.IDPAY_PAYMENT_RESULT
+      screen: IdPayPaymentRoutes.IDPAY_PAYMENT_RESULT,
+      pop: true
     });
 
   const showErrorToast = () =>

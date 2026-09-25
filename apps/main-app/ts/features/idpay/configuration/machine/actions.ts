@@ -20,7 +20,8 @@ const createActionsImplementation = (
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
         screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
-        params: {}
+        params: {},
+        pop: true
       }
     );
   };
@@ -29,21 +30,24 @@ const createActionsImplementation = (
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
         screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
-        params: {}
+        params: {},
+        pop: true
       }
     );
   const navigateToIbanOnboardingScreen = () =>
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
-        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING
+        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING,
+        pop: true
       }
     );
   const navigateToIbanOnboardingFormScreen = () =>
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
-        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING
+        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING,
+        pop: true
       }
     );
   const navigateToInstrumentsEnrollmentScreen = () =>
@@ -52,14 +56,16 @@ const createActionsImplementation = (
       {
         screen:
           IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
-        params: {}
+        params: {},
+        pop: true
       }
     );
   const navigateToConfigurationSuccessScreen = () => {
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
-        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS
+        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS,
+        pop: true
       }
     );
   };
@@ -70,7 +76,8 @@ const createActionsImplementation = (
     const initiativeId = args.context.initiativeId;
     navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
-      params: { initiativeId }
+      params: { initiativeId },
+      pop: true
     });
   };
 

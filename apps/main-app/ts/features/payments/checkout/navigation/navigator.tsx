@@ -16,7 +16,9 @@ const Stack = createStackNavigator<PaymentsCheckoutParamsList>();
 
 export const PaymentsCheckoutNavigator = () => (
   <Stack.Navigator
-    initialRouteName={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR}
+    initialRouteName={
+      PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER
+    }
     screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <Stack.Screen
