@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -13,15 +13,12 @@ import { SpidIdp } from "../../../../utils/idps";
 
 const POSTE_ID_IDP_ID = "https://posteid.poste.it";
 
-type Props = {
-  idp: SpidIdp;
-  isWebViewLoaded: boolean;
-};
-
-export const useOneIdentityPosteIDApp2AppEducational = ({
-  idp,
-  isWebViewLoaded
-}: Props) => {
+/**
+ * Educational bottom sheet about the PosteID App2App flow. `presentOnce` shows
+ * it only when `idp` is PosteID and at most once per hook lifetime, so it can
+ * be safely called on every WebView load.
+ */
+export const useOneIdentityPosteIDApp2AppEducational = (idp: SpidIdp) => {
   const presentedRef = useRef(false);
   const bottomSheetContent = useMemo(
     () => (
@@ -73,16 +70,12 @@ export const useOneIdentityPosteIDApp2AppEducational = ({
     component: bottomSheetContent
   });
 
-  useEffect(() => {
-    if (
-      idp.id === POSTE_ID_IDP_ID &&
-      isWebViewLoaded &&
-      !presentedRef.current
-    ) {
+  const presentOnce = useCallback(() => {
+    if (idp.id === POSTE_ID_IDP_ID && !presentedRef.current) {
       presentedRef.current = true;
       present();
     }
-  }, [idp.id, isWebViewLoaded, present]);
+  }, [idp.id, present]);
 
-  return bottomSheet;
+  return { bottomSheet, presentOnce };
 };

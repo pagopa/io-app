@@ -281,26 +281,24 @@ describe("IdpWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
     });
 
-    it("should notify the PosteID educational hook when the WebView finishes loading", () => {
-      const usePosteIDEducationalSpy = jest.spyOn(
-        usePosteIDEducationalModule,
-        "useOneIdentityPosteIDApp2AppEducational"
-      );
+    it("should call the PosteID educational presentOnce when the WebView finishes loading", () => {
+      const mockPresentOnce = jest.fn();
+      jest
+        .spyOn(
+          usePosteIDEducationalModule,
+          "useOneIdentityPosteIDApp2AppEducational"
+        )
+        .mockReturnValue({ bottomSheet: <></>, presentOnce: mockPresentOnce });
+
       const { getByTestId } = render(
         <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
       );
 
-      expect(usePosteIDEducationalSpy).toHaveBeenLastCalledWith({
-        idp: mockIdp,
-        isWebViewLoaded: false
-      });
+      expect(mockPresentOnce).not.toHaveBeenCalled();
 
       fireEvent(getByTestId("webview-idp-login-screen"), "onLoadEnd");
 
-      expect(usePosteIDEducationalSpy).toHaveBeenLastCalledWith({
-        idp: mockIdp,
-        isWebViewLoaded: true
-      });
+      expect(mockPresentOnce).toHaveBeenCalledTimes(1);
     });
   });
 });

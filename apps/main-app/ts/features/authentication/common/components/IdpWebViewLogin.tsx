@@ -1,6 +1,6 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import I18n from "i18next";
-import { memo, useCallback, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useMemo, useRef } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
@@ -178,16 +178,8 @@ export const IdpWebViewLogin = memo(
       [dispatch]
     );
 
-    const [isWebViewLoaded, setIsWebViewLoaded] = useState(false);
-
-    const posteIdBottomSheet = useOneIdentityPosteIDApp2AppEducational({
-      idp,
-      isWebViewLoaded
-    });
-
-    const handleLoadEnd = useCallback(() => {
-      setIsWebViewLoaded(true);
-    }, []);
+    const { bottomSheet: posteIdBottomSheet, presentOnce: presentPosteIdOnce } =
+      useOneIdentityPosteIDApp2AppEducational(idp);
 
     if (
       loginSourceState.status === "reserving-public-key" ||
@@ -208,7 +200,7 @@ export const IdpWebViewLogin = memo(
           cacheEnabled={false}
           onError={handleError}
           onHttpError={handleError}
-          onLoadEnd={handleLoadEnd}
+          onLoadEnd={presentPosteIdOnce}
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
           originWhitelist={originSchemasWhiteList}

@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react-native";
+import { renderHook } from "@testing-library/react-native";
 
 import { SpidIdp } from "../../../../../utils/idps";
 import { useOneIdentityPosteIDApp2AppEducational } from "../useOneIdentityPosteIDApp2AppEducational";
@@ -15,67 +15,46 @@ jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
 const posteIdp = { id: "https://posteid.poste.it" } as SpidIdp;
 const otherIdp = { id: "arubaid" } as SpidIdp;
 
-type HookProps = Parameters<typeof useOneIdentityPosteIDApp2AppEducational>[0];
-
-const WrapperComponent = (props: HookProps) => {
-  const bottomSheet = useOneIdentityPosteIDApp2AppEducational(props);
-  return <>{bottomSheet}</>;
-};
-
 describe("useOneIdentityPosteIDApp2AppEducational", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("should present the bottom sheet when idp is posteid and the WebView is loaded", () => {
-    render(<WrapperComponent idp={posteIdp} isWebViewLoaded={true} />);
+  it("should not present the bottom sheet until presentOnce is called", () => {
+    renderHook(() => useOneIdentityPosteIDApp2AppEducational(posteIdp));
 
-    expect(mockPresent).toHaveBeenCalledTimes(1);
-  });
-
-  test.each([
-    {
-      name: "idp is posteid but the WebView is not loaded",
-      idp: posteIdp,
-      isWebViewLoaded: false
-    },
-    {
-      name: "idp is not posteid and the WebView is loaded",
-      idp: otherIdp,
-      isWebViewLoaded: true
-    },
-    {
-      name: "idp is not posteid and the WebView is not loaded",
-      idp: otherIdp,
-      isWebViewLoaded: false
-    }
-  ])(
-    "should not present the bottom sheet when $name",
-    ({ idp, isWebViewLoaded }) => {
-      render(<WrapperComponent idp={idp} isWebViewLoaded={isWebViewLoaded} />);
-
-      expect(mockPresent).not.toHaveBeenCalled();
-    }
-  );
-
-  it("should present the bottom sheet once the WebView becomes loaded", () => {
-    const { rerender } = render(
-      <WrapperComponent idp={posteIdp} isWebViewLoaded={false} />
-    );
     expect(mockPresent).not.toHaveBeenCalled();
+  });
 
-    rerender(<WrapperComponent idp={posteIdp} isWebViewLoaded={true} />);
+  it("should present the bottom sheet when presentOnce is called and idp is posteid", () => {
+    const { result } = renderHook(() =>
+      useOneIdentityPosteIDApp2AppEducational(posteIdp)
+    );
+
+    result.current.presentOnce();
 
     expect(mockPresent).toHaveBeenCalledTimes(1);
   });
 
-  it("should present the bottom sheet only once across re-renders", () => {
-    const { rerender } = render(
-      <WrapperComponent idp={posteIdp} isWebViewLoaded={true} />
+  it("should not present the bottom sheet when idp is not posteid", () => {
+    const { result } = renderHook(() =>
+      useOneIdentityPosteIDApp2AppEducational(otherIdp)
     );
 
-    rerender(<WrapperComponent idp={posteIdp} isWebViewLoaded={false} />);
-    rerender(<WrapperComponent idp={posteIdp} isWebViewLoaded={true} />);
+    result.current.presentOnce();
+
+    expect(mockPresent).not.toHaveBeenCalled();
+  });
+
+  it("should present the bottom sheet only once across multiple calls and re-renders", () => {
+    const { result, rerender } = renderHook(() =>
+      useOneIdentityPosteIDApp2AppEducational(posteIdp)
+    );
+
+    result.current.presentOnce();
+    rerender({});
+    result.current.presentOnce();
+    result.current.presentOnce();
 
     expect(mockPresent).toHaveBeenCalledTimes(1);
   });
