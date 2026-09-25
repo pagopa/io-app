@@ -275,14 +275,18 @@ export const closeIssuanceAction = ({ context, event }: EidActionArgs) => {
   const isSurveyHidden = itwIsPidReissuingSurveyHiddenSelector(
     store.getState()
   );
-  // This survey is reserved to IT-Wallet (L3): "Documenti su IO" (L2/l2-fallback) reissuance must never trigger it.
-  const isReissuance = context.mode === "reissuance" && context.level === "l3";
+  const isReissuance = context.mode === "reissuance";
+  const isL3 = context.level === "l3";
 
   const surveyStep = event.type === "close" ? event.surveyStep : undefined;
 
-  if (isReissuance && !isSurveyHidden) {
-    store.dispatch(itwSetFeedbackBottomSheetVisible(true));
-  } else if (surveyStep) {
+  // The reissuance survey is reserved to "Documenti su IO" (L2) reissuance,
+  // while the activation exit survey is reserved to IT-Wallet (L3) activation.
+  if (isReissuance) {
+    if (!isL3 && !isSurveyHidden) {
+      store.dispatch(itwSetFeedbackBottomSheetVisible(true));
+    }
+  } else if (surveyStep && isL3) {
     store.dispatch(itwSetActivationExitSurvey({ step: surveyStep }));
   }
 
