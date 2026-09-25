@@ -299,6 +299,28 @@ describe("ItwIssuanceEidResultScreen", () => {
     });
   });
 
+  // SIW-5129: the reissuance survey belongs to both Documenti su IO and IT-Wallet
+  describe("reissuance flow", () => {
+    test.each<{ level: EidIssuanceLevel; name: string }>([
+      { name: "Documenti su IO (L2)", level: "l2" },
+      { name: "IT-Wallet (L3)", level: "l3" }
+    ])("renders the reissuance survey banner for $name", ({ level }) => {
+      const { getByTestId } = renderComponent(level, { mode: "reissuance" });
+      expect(getByTestId("itwFeedbackBannerTestID")).toBeTruthy();
+    });
+  });
+
+  // SIW-4993: IT-Wallet surveys must never leak into the Documenti su IO fallback flow
+  it("does not render any survey banner for the Documenti su IO fallback issuance", () => {
+    const { queryByTestId } = renderComponent("l2-fallback", {
+      mode: "issuance"
+    });
+    expect(queryByTestId("itwFeedbackBannerTestID")).toBeNull();
+    expect(
+      queryByTestId("itwActivationSuccessFeedbackBannerTestID")
+    ).toBeNull();
+  });
+
   describe("credential offer flow", () => {
     it("resumes the resolved credential offer after eID issuance completes", async () => {
       mockHasResolvedCredentialOffer.mockReturnValue(true);
