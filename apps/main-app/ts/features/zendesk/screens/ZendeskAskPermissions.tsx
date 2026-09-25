@@ -338,10 +338,7 @@ const ZendeskAskPermissions = () => {
     // Tag the ticket with the current app version
     addTicketTag(currentVersion);
 
-    // TODO: [SIW-5093] remove the guard once zendeskItWalletStatusId is set
-    if (zendeskItWalletStatusId) {
-      addTicketCustomField(zendeskItWalletStatusId, walletStatus);
-    }
+    addTicketCustomField(zendeskItWalletStatusId, walletStatus);
 
     openSupportTicket(() => dispatchZendeskUiDismissed());
     void mixpanelTrack("ZENDESK_OPEN_TICKET");

@@ -85,12 +85,12 @@ describe("useItwZendeskSupport", () => {
     {
       name: "IT-Wallet user",
       isItwValid: true,
-      expectedCategory: "it_wallet"
+      expectedCategory: "it_wallet2"
     },
     {
       name: "Documenti su IO user",
       isItwValid: false,
-      expectedCategory: "documenti_su_io"
+      expectedCategory: "it_wallet"
     }
   ])(
     "uses the $expectedCategory category for $name",
@@ -121,24 +121,49 @@ describe("useItwZendeskSupport", () => {
     });
 
     const action = actions.find(a => a.type === "ZENDESK_SELECTED_CATEGORY");
-    expect(action?.payload?.value).toBe("it_wallet");
+    expect(action?.payload?.value).toBe("it_wallet2");
     expect(mockedAddTicketCustomField).toHaveBeenCalledWith(
       supportAssistance.zendeskCategoryId,
-      "it_wallet"
+      "it_wallet2"
     );
   });
 
-  it("sets the subcategory custom field", () => {
-    renderAndCall({
-      ...baseParams,
-      subcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA
-    });
+  test.each([
+    {
+      name: "IT-Wallet document issuance",
+      category: supportAssistance.zendeskItWalletCategory,
+      subcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
+      expectedSubcategory: "it_wallet2_aggiunta_documenti"
+    },
+    {
+      name: "IT-Wallet remote presentation",
+      category: supportAssistance.zendeskItWalletCategory,
+      subcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA,
+      expectedSubcategory: "it_wallet_presentazione_remota"
+    },
+    {
+      name: "Documenti su IO document issuance",
+      category: supportAssistance.zendeskDocumentiSuIoCategory,
+      subcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
+      expectedSubcategory: "it_wallet_aggiunta_documenti"
+    },
+    {
+      name: "Documenti su IO remote presentation",
+      category: supportAssistance.zendeskDocumentiSuIoCategory,
+      subcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA,
+      expectedSubcategory: "it_wallet_presentazione_remota"
+    }
+  ])(
+    "sets the $expectedSubcategory subcategory for $name",
+    ({ category, subcategory, expectedSubcategory }) => {
+      renderAndCall({ category, subcategory });
 
-    expect(mockedAddTicketCustomField).toHaveBeenCalledWith(
-      supportAssistance.zendeskItWalletSubcategoryId,
-      ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA
-    );
-  });
+      expect(mockedAddTicketCustomField).toHaveBeenCalledWith(
+        supportAssistance.zendeskItWalletSubcategoryId,
+        expectedSubcategory
+      );
+    }
+  );
 
   it("sets the failure code field when errorCode is provided", () => {
     renderAndCall({ ...baseParams, errorCode: "some_error_code" });

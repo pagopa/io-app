@@ -113,22 +113,7 @@ export const zendeskFciId = "14874226407825";
 export const zendeskItWalletFailureCode = "31775197295633";
 export const zendeskBonusAndInitiativeCategoryId = "8086481365265";
 export const zendeskItWalletSubcategoryId = "29326690756369";
-/**
- * Id of the custom field holding the user's wallet status, sent with every ticket.
- * Must be numeric: the Android SDK parses it with `Long.parseLong`.
- */
-// TODO: [SIW-5093] Replace `undefined` with the numeric ID of the "Stato wallet" field,
-// then remove the `zendeskItWalletStatusId` guard in ZendeskAskPermissions.
-// Required Zendesk setup before release:
-// - Create the "Stato wallet" drop-down ticket field (end-user visible: no) with
-//   the tag values `it_wallet`, `documenti_su_io`, `not_active` (ItwZendeskWalletStatus)
-// - Add `documenti_su_io` as an option of the category field (zendeskCategoryId)
-// - Make the IT-Wallet subcategory field (zendeskItWalletSubcategoryId) available
-//   for the `documenti_su_io` category too
-// - Duplicate the triggers, views and macros based on `it_wallet` for `documenti_su_io`
-// - Split the remote config wallet category into "IT-Wallet" (`it_wallet`) and
-//   "Documenti su IO" (`documenti_su_io`)
-export const zendeskItWalletStatusId: string | undefined = undefined;
+export const zendeskItWalletStatusId = "51228030915473";
 
 export const defaultZendeskPaymentCategory: ZendeskCategory = {
   value: "io_pagamenti_pagopa",
@@ -161,7 +146,7 @@ export const zendeskFCICategory: ZendeskCategory = {
  * based on the user's wallet status, unless the flow itself determines it.
  */
 export const zendeskItWalletCategory: ZendeskCategory = {
-  value: "it_wallet",
+  value: "it_wallet2",
   description: {
     "it-IT": "IT-Wallet",
     "en-EN": "IT-Wallet",
@@ -170,9 +155,11 @@ export const zendeskItWalletCategory: ZendeskCategory = {
 };
 /**
  * Category for Documenti su IO support tickets.
+ * Keeps the legacy `it_wallet` value, so tickets from older app versions,
+ * which send `it_wallet` for every wallet ticket, land in this category.
  */
 export const zendeskDocumentiSuIoCategory: ZendeskCategory = {
-  value: "documenti_su_io",
+  value: "it_wallet",
   description: {
     "it-IT": "Documenti su IO",
     "en-EN": "Documenti su IO",

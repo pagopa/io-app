@@ -11,6 +11,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import * as appVersion from "../../../../utils/appVersion";
 import * as device from "../../../../utils/device";
 import { SpidIdp } from "../../../../utils/idps";
+import { zendeskItWalletStatusId } from "../../../../utils/supportAssistance";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as url from "../../../../utils/url";
 import {
@@ -24,12 +25,6 @@ import { zendeskSelectedCategory } from "../../store/actions";
 import ZendeskAskPermissions from "../ZendeskAskPermissions";
 
 jest.useFakeTimers();
-
-jest.mock("../../../../utils/supportAssistance", () => ({
-  ...jest.requireActual("../../../../utils/supportAssistance"),
-  // The real field ID is not available yet
-  zendeskItWalletStatusId: "123456"
-}));
 
 const mockedIdp: SpidIdp = {
   id: "1",
@@ -277,7 +272,7 @@ describe("the ZendeskAskPermissions screen", () => {
 
         fireEvent(component.getByTestId("continueButtonId"), "onPress");
         expect(MockZendesk.addTicketCustomField).toHaveBeenCalledWith(
-          "123456",
+          zendeskItWalletStatusId,
           walletStatus
         );
       }

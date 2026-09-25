@@ -12,6 +12,7 @@ import {
   resetCustomFields,
   resetLog,
   zendeskCategoryId,
+  zendeskItWalletCategory,
   zendeskItWalletFailureCode,
   zendeskItWalletSubcategoryId
 } from "../../../../utils/supportAssistance";
@@ -25,6 +26,25 @@ export enum ZendeskSubcategoryValue {
   IT_WALLET_AGGIUNTA_DOCUMENTI = "it_wallet_aggiunta_documenti",
   IT_WALLET_PRESENTAZIONE_REMOTA = "it_wallet_presentazione_remota"
 }
+
+/**
+ * Subcategory values of the IT-Wallet (L3) category. The legacy values belong
+ * to the Documenti su IO category, which kept the `it_wallet` value.
+ */
+const itWalletSubcategoryValues: Partial<
+  Record<ZendeskSubcategoryValue, string>
+> = {
+  [ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI]:
+    "it_wallet2_aggiunta_documenti"
+};
+
+const getSubcategoryValue = (
+  category: ZendeskCategory,
+  subcategory: ZendeskSubcategoryValue
+) =>
+  category.value === zendeskItWalletCategory.value
+    ? itWalletSubcategoryValues[subcategory] ?? subcategory
+    : subcategory;
 
 export type ItwZendeskSupportParams = {
   /**
@@ -69,7 +89,10 @@ export const useItwZendeskSupport = () => {
       resetLog();
 
       addTicketCustomField(zendeskCategoryId, category.value);
-      addTicketCustomField(zendeskItWalletSubcategoryId, subcategory);
+      addTicketCustomField(
+        zendeskItWalletSubcategoryId,
+        getSubcategoryValue(category, subcategory)
+      );
 
       if (errorCode) {
         addTicketCustomField(zendeskItWalletFailureCode, errorCode);
