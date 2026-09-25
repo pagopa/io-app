@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.12](https://github.com/pagopa/io-app/compare/3.39.0-rc.11...3.39.0-rc.12) (2026-09-25)
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-5129](https://pagopa.atlassian.net/browse/SIW-5129)] show reissuance surveys only for Documenti su IO ([3cf7e7a](https://github.com/pagopa/io-app/commit/3cf7e7a7d9a900e5cd03492a9b01a5fbe8095192))
+
 ## [3.40.0-rc.5](https://github.com/pagopa/io-app/compare/3.40.0-rc.4...3.40.0-rc.5) (2026-09-24)
 
 ### Features
