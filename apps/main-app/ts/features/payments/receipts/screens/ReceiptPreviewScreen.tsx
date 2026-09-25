@@ -5,11 +5,11 @@ import {
   useIOTheme
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { File, Paths } from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import I18n from "i18next";
 import { useState } from "react";
 import { View } from "react-native";
-import RNFS from "react-native-fs";
 import Pdf from "react-native-pdf";
 
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -63,17 +63,18 @@ const ReceiptPreviewScreen = () => {
     const filename =
       transactionReceiptFileInfo.filename ??
       `${I18n.t("features.payments.transactions.receipt.title")}.pdf`;
-    const tempPath = `${RNFS.CachesDirectoryPath}/${filename}`;
-    await RNFS.writeFile(
-      tempPath,
-      transactionReceiptFileInfo.base64File,
-      "base64"
+    const file = new File(Paths.cache, filename);
+    // File.write requires binary data; decode the base64 string before writing
+    file.write(
+      Uint8Array.from(atob(transactionReceiptFileInfo.base64File), c =>
+        c.charCodeAt(0)
+      )
     );
-    await Sharing.shareAsync(`file://${tempPath}`, {
+    await Sharing.shareAsync(`file://${file.uri}`, {
       mimeType: "application/pdf",
       dialogTitle: filename
     });
-    await RNFS.unlink(tempPath);
+    file.delete();
   };
 
   const handleFooterActionsMeasurements = (

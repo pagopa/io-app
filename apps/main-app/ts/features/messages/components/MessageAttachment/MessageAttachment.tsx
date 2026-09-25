@@ -32,6 +32,9 @@ import {
 } from "../../utils/attachments";
 import { PdfViewer } from "./PdfViewer";
 
+const toFileUri = (path: string) =>
+  path.startsWith("file://") ? path : `file://${path}`;
+
 type MessageAttachmentFooterProps = {
   attachmentCategory?: string;
   downloadPath: string;
@@ -98,7 +101,7 @@ const MessageAttachmentFooter = ({
         accessibilityLabel: I18n.t("messagePDFPreview.shareAccessibility"),
         onPress: () => {
           onShare(isPN, attachmentCategory);
-          share(`file://${downloadPath}`, undefined, false)().catch(_ => {
+          share(toFileUri(downloadPath), undefined, false)().catch(_ => {
             IOToast.show(I18n.t("messagePDFPreview.errors.sharing"));
           });
         }
