@@ -46,8 +46,8 @@ import {
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
   zendeskidentityProviderId,
-  zendeskVersionsHistoryId,
-  zendeskItWalletStatusId
+  zendeskItWalletStatusId,
+  zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
 import { handleItemOnPress, openWebUrl } from "../../../utils/url";
 import {
