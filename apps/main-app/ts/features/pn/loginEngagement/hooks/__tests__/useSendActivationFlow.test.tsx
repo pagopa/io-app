@@ -1,6 +1,6 @@
 import { useIOToast } from "@io-app/design-system";
 import { act, renderHook } from "@testing-library/react-native";
-import i18n from "i18next";
+import I18n from "i18next";
 
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../../store/hooks";
@@ -118,7 +118,7 @@ describe(useSendActivationFlow, () => {
       expect(mockToastSuccess).toHaveBeenCalledTimes(1);
       expect(mockToastError).not.toHaveBeenCalled();
       expect(mockToastSuccess).toHaveBeenCalledWith(
-        i18n.t("features.pn.loginEngagement.send.toast")
+        I18n.t("features.pn.loginEngagement.send.toast")
       );
     });
 
@@ -155,7 +155,7 @@ describe(useSendActivationFlow, () => {
       expect(mockToastSuccess).toHaveBeenCalledTimes(1);
       expect(mockToastError).not.toHaveBeenCalled();
       expect(mockToastSuccess).toHaveBeenCalledWith(
-        i18n.t("features.pn.loginEngagement.send.toast")
+        I18n.t("features.pn.loginEngagement.send.toast")
       );
     });
   });
