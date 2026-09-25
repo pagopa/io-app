@@ -117,13 +117,10 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
           if (isValidCallbackUrl(url)) {
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
-            break;
-          }
-          if (statusCode !== 403) {
+          } else if (statusCode !== 403) {
             handleLoginFailure(
               `WebView HTTP error ${statusCode} for URL ${url}`
             );
-            break;
           }
           break;
         }
