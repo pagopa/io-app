@@ -8,9 +8,7 @@ import {
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
 
-/**
- * Wallet status values of the Zendesk "Stato wallet" custom field.
- */
+/** Wallet status values of the Zendesk "Stato wallet" custom field. */
 export enum ItwZendeskWalletStatus {
   DOCUMENTI_SU_IO = "documenti_su_io",
   IT_WALLET = "it_wallet",

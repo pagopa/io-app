@@ -141,9 +141,9 @@ export const zendeskFCICategory: ZendeskCategory = {
   }
 };
 /**
- * Category for IT-Wallet (L3) support tickets.
- * In-app wallet flows pick between this and {@link zendeskDocumentiSuIoCategory}
- * based on the user's wallet status, unless the flow itself determines it.
+ * Category for IT-Wallet (L3) support tickets. In-app wallet flows pick between
+ * this and {@link zendeskDocumentiSuIoCategory} based on the user's wallet
+ * status, unless the flow itself determines it.
  */
 export const zendeskItWalletCategory: ZendeskCategory = {
   value: "it_wallet2",
@@ -154,9 +154,9 @@ export const zendeskItWalletCategory: ZendeskCategory = {
   }
 };
 /**
- * Category for Documenti su IO support tickets.
- * Keeps the legacy `it_wallet` value, so tickets from older app versions,
- * which send `it_wallet` for every wallet ticket, land in this category.
+ * Category for Documenti su IO support tickets. Keeps the legacy `it_wallet`
+ * value, so tickets from older app versions, which send `it_wallet` for every
+ * wallet ticket, land in this category.
  */
 export const zendeskDocumentiSuIoCategory: ZendeskCategory = {
   value: "it_wallet",
