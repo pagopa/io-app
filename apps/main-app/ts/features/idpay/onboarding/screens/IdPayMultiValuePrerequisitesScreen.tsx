@@ -1,8 +1,4 @@
 import {
-  SelfCriteriaMultiDTO,
-  _typeEnum as SelfCriteriaMultiTypeEnum
-} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiDTO";
-import {
   SelfCriteriaMultiTypeDTO,
   _typeEnum as SelfCriteriaMultiTypeVariationEnum
 } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiTypeDTO";
@@ -84,7 +80,7 @@ const IdPayMultiValuePrerequisitesScreen = () => {
 
 type MultiValuePrerequisiteItemScreenContentProps = {
   initiativeId?: string;
-  selfDeclaration: SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO;
+  selfDeclaration: SelfCriteriaMultiTypeDTO;
 };
 
 const MultiValuePrerequisiteItemScreenContent = ({
@@ -96,11 +92,6 @@ const MultiValuePrerequisiteItemScreenContent = ({
   const [selectedValueIndex, setSelectedValueIndex] = useState<
     number | undefined
   >(undefined);
-
-  const isSelfCriteriaMultiTypeDTO = (
-    obj: SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO
-  ): obj is SelfCriteriaMultiTypeDTO =>
-    obj._type === SelfCriteriaMultiTypeVariationEnum.multi_consent;
 
   const handleContinuePress = () => {
     if (selectedValueIndex === undefined) {
@@ -121,17 +112,11 @@ const MultiValuePrerequisiteItemScreenContent = ({
 
     machine.send({
       type: "select-multi-consent",
-      data: isSelfCriteriaMultiTypeDTO(selfDeclaration)
-        ? {
-            _type: SelfCriteriaMultiTypeVariationEnum.multi_consent,
-            value,
-            code: selfDeclaration.code
-          }
-        : {
-            _type: SelfCriteriaMultiTypeEnum.multi,
-            value,
-            code: selfDeclaration.code
-          }
+      data: {
+        _type: SelfCriteriaMultiTypeVariationEnum.multi_consent,
+        value,
+        code: selfDeclaration.code
+      }
     });
   };
 

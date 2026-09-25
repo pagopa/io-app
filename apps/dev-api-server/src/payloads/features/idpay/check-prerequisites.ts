@@ -15,12 +15,14 @@ import {
   _typeEnum as SelfDeclarationBoolType
 } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaBoolDTO";
 import {
-  SelfCriteriaMultiDTO,
-  _typeEnum as SelfDeclarationMultiType
-} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiDTO";
+  CodeEnum as SelfCriteriaInformativeCodeEnum,
+  SelfCriteriaInformativeDTO,
+  _typeEnum as SelfCriteriaInformativeTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaInformativeDTO";
 import {
   CodeEnum as SelfCriteriaMultiCodeEnum,
-  _typeEnum as SelfCriteriaMultiTypeDTO
+  SelfCriteriaMultiTypeDTO,
+  _typeEnum as SelfCriteriaMultiTypeVariationEnum
 } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiTypeDTO";
 import { _typeEnum as SelfDeclaratioTextType } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaTextDTO";
 import * as O from "fp-ts/lib/Option";
@@ -58,6 +60,25 @@ const automatedCriteria: ReadonlyArray<AutomatedCriteriaDTO> = [
   }
 ];
 
+const selfDeclarationInformative: ReadonlyArray<SelfCriteriaInformativeDTO> = [
+  {
+    _type: SelfCriteriaInformativeTypeEnum.informative,
+    code: SelfCriteriaInformativeCodeEnum.ANPR,
+    description: "Famiglia anagrafica",
+    organization: "Ministero dell'Interno",
+    value:
+      "Comunichiamo direttamente con l'Anagrafe Nazionale della Popolazione Residente (ANPR) per verificare la composizione del tuo nucleo familiare."
+  },
+  {
+    _type: SelfCriteriaInformativeTypeEnum.informative,
+    code: SelfCriteriaInformativeCodeEnum.ADE,
+    description: "Canone TV",
+    organization: "Agenzia delle Entrate",
+    value:
+      "Verificheremo con l'Agenzia delle Entrate che tu non risulti moroso rispetto al pagamento del canone TV."
+  }
+];
+
 const familyUnityOnlyAutomatedCriteria: ReadonlyArray<AutomatedCriteriaDTO> = [
   {
     code: AutomatedCriteriaCodeEnum.FAMILY_UNIT,
@@ -84,27 +105,27 @@ const criterionArray: ReadonlyArray<RowDataDTO> = [
     value: "Value criterion 3"
   }
 ];
-const selfDeclarationMulti: ReadonlyArray<SelfCriteriaMultiDTO> = [
+const selfDeclarationMulti: ReadonlyArray<SelfCriteriaMultiTypeDTO> = [
   {
-    _type: SelfDeclarationMultiType.multi,
-    code: ulid(),
+    _type: SelfCriteriaMultiTypeVariationEnum.multi_consent,
+    code: SelfCriteriaMultiCodeEnum.isee,
     description:
       "Testo dove viene descritto il criterio con opzioni di scelta multipla:",
     value: criterionArray
   },
   {
-    _type: SelfDeclarationMultiType.multi,
-    code: ulid(),
+    _type: SelfCriteriaMultiTypeVariationEnum.multi_consent,
+    code: SelfCriteriaMultiCodeEnum.isee,
     description:
       "Testo dove viene descritto il criterio con opzioni di scelta multipla, seconda pagina:",
     value: criterionArray
   }
 ];
 
-const guidoniaSelfDeclarationMulti: ReadonlyArray<SelfCriteriaMultiDTO> = [
+const guidoniaSelfDeclarationMulti: ReadonlyArray<SelfCriteriaMultiTypeDTO> = [
   {
-    _type: SelfDeclarationMultiType.multi,
-    code: ulid(),
+    _type: SelfCriteriaMultiTypeVariationEnum.multi_consent,
+    code: SelfCriteriaMultiCodeEnum.isee,
     description: "Costituire una famiglia monogenitoriale:",
     value: [
       {
@@ -178,7 +199,7 @@ const checkPrerequisites: {
   [IDPayInitiativeID.OK_PDND_ONLY]: {
     beneficiaryRule: {
       automatedCriteria,
-      selfDeclarationCriteria: []
+      selfDeclarationCriteria: [...selfDeclarationInformative]
     }
   },
   [IDPayInitiativeID.OK_SELF_ONLY]: {
@@ -192,7 +213,7 @@ const checkPrerequisites: {
       automatedCriteria: familyUnityOnlyAutomatedCriteria,
       selfDeclarationCriteria: [
         {
-          _type: SelfCriteriaMultiTypeDTO.multi_consent,
+          _type: SelfCriteriaMultiTypeVariationEnum.multi_consent,
           code: SelfCriteriaMultiCodeEnum.isee,
           description: "Hai un ISEE 2025 in corso di validità?",
           subDescription: "Quando un ISEE è valido?",
@@ -261,6 +282,10 @@ const prerequisitesErrors: {
   },
   [IDPayInitiativeID.KO_TOO_MANY_REQUESTS]: {
     code: OnboardingErrorCodeEnum.ONBOARDING_TOO_MANY_REQUESTS,
+    message: ""
+  },
+  [IDPayInitiativeID.KO_USER_BONUS_ALREADY_USED]: {
+    code: OnboardingErrorCodeEnum.ONBOARDING_USER_BONUS_ALREADY_USED,
     message: ""
   }
 };
