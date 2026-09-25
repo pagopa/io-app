@@ -12,7 +12,7 @@ jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
   }))
 }));
 
-const posteIdp = { id: "posteid" } as SpidIdp;
+const posteIdp = { id: "https://posteid.poste.it" } as SpidIdp;
 const otherIdp = { id: "arubaid" } as SpidIdp;
 
 type HookProps = Parameters<typeof useOneIdentityPosteIDApp2AppEducational>[0];
