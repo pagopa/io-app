@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-rc.5](https://github.com/pagopa/io-app/compare/3.40.0-rc.4...3.40.0-rc.5) (2026-09-24)
+
+### Features
+
+* [[IOPID-4126](https://pagopa.atlassian.net/browse/IOPID-4126)] Add CIE card reading step for OneIdentity flow ([#8635](https://github.com/pagopa/io-app/issues/8635)) ([31e073c](https://github.com/pagopa/io-app/commit/31e073cd6b9b690a17928100ca1645f51f2e8d08))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Generate Key Attestation keys sequentially ([#8646](https://github.com/pagopa/io-app/issues/8646)) ([df3031b](https://github.com/pagopa/io-app/commit/df3031bbaf4162d1bee21ca64b49ecebd1e7b273))
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Omit wrong deprecated todo ([#8640](https://github.com/pagopa/io-app/issues/8640)) ([ed43dc3](https://github.com/pagopa/io-app/commit/ed43dc3924b087fd39a0a4c3b93dbbe4c117ec40))
+* [[IOPLT-2068](https://pagopa.atlassian.net/browse/IOPLT-2068)] Enable `jsdoc` formatting in `oxfmt` ([#8583](https://github.com/pagopa/io-app/issues/8583)) ([f689f4f](https://github.com/pagopa/io-app/commit/f689f4fd26ab2427f793da358c1bc6cdfe4d530d)), references [#7972](https://github.com/pagopa/io-app/issues/7972)
 ## [3.40.0-rc.4](https://github.com/pagopa/io-app/compare/3.40.0-rc.3...3.40.0-rc.4) (2026-09-23)
 
 ### Features
