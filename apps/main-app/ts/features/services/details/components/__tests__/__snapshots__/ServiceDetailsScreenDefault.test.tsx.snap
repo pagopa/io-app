@@ -225,12 +225,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
@@ -992,12 +986,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
@@ -2140,12 +2128,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
