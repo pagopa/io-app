@@ -77,12 +77,16 @@ export const idPayOnboardingMachine = setup({
         ),
         O.getOrElse(() => false)
       ),
+    // "informative" self-declarations are excluded: they are rendered directly
+    // on the PDND prerequisites screen, not by DisplayingSelfDeclarationList.
     hasSelfDecalrationList: ({ context }) =>
       pipe(
         context.requiredCriteria,
         O.map(
           ({ beneficiaryRule }) =>
-            (beneficiaryRule?.selfDeclarationCriteria?.length || 0) > 0
+            (beneficiaryRule?.selfDeclarationCriteria?.length || 0) -
+              getInformativeSelfDeclarationListFromContext(context).length >
+            0
         ),
         O.getOrElse(() => false)
       ),
