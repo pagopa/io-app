@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`TabNavigationContainer should match snapshot when shownCategory is ARCHIVE 1`] = `
+exports[`TabNavigationContainer should match snapshot when currentCategory is ARCHIVE 1`] = `
 <View
   style={
     {
@@ -795,7 +795,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
 </View>
 `;
 
-exports[`TabNavigationContainer should match snapshot when shownCategory is INBOX 1`] = `
+exports[`TabNavigationContainer should match snapshot when currentCategory is INBOX 1`] = `
 <View
   style={
     {
