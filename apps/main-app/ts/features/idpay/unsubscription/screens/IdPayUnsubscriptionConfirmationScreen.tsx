@@ -36,57 +36,6 @@ type RouteProps = RouteProp<
   "IDPAY_UNSUBSCRIPTION_CONFIRMATION"
 >;
 
-const checksByInitiativeType = {
-  [InitiativeRewardTypeEnum.REFUND]: [
-    {
-      title: I18n.t("idpay.unsubscription.checks.1.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.1.content")
-    },
-    {
-      title: I18n.t("idpay.unsubscription.checks.2.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.2.content")
-    },
-    {
-      title: I18n.t("idpay.unsubscription.checks.3.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.3.content")
-    },
-    {
-      title: I18n.t("idpay.unsubscription.checks.4.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.4.content")
-    }
-  ],
-
-  [InitiativeRewardTypeEnum.EXPENSE]: [
-    {
-      title: I18n.t("idpay.unsubscription.checks.1.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.1.content")
-    },
-    {
-      title: I18n.t("idpay.unsubscription.checks.2.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.2.content")
-    },
-    {
-      title: I18n.t("idpay.unsubscription.checks.3.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.3.content")
-    },
-    {
-      title: I18n.t("idpay.unsubscription.checks.4.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.4.content")
-    }
-  ],
-
-  [InitiativeRewardTypeEnum.DISCOUNT]: [
-    {
-      title: I18n.t("idpay.unsubscription.checks.1.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.1.content")
-    },
-    {
-      title: I18n.t("idpay.unsubscription.checks.3.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.3.content")
-    }
-  ]
-};
-
 const IdPayUnsubscriptionConfirmationScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
@@ -96,6 +45,57 @@ const IdPayUnsubscriptionConfirmationScreen = () => {
   const isLoading = useIOSelector(isLoadingSelector);
   const isSuccess = useIOSelector(isUnsubscriptionSuccessSelector);
   const isFailure = useIOSelector(isFailureSelector);
+  const checksByInitiativeType = {
+    [InitiativeRewardTypeEnum.REFUND]: [
+      {
+        title: I18n.t("idpay.unsubscription.checks.1.title"),
+        subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+      },
+      {
+        title: I18n.t("idpay.unsubscription.checks.2.title"),
+        subtitle: I18n.t("idpay.unsubscription.checks.2.content")
+      },
+      {
+        title: I18n.t("idpay.unsubscription.checks.3.title"),
+        subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+      },
+      {
+        title: I18n.t("idpay.unsubscription.checks.4.title"),
+        subtitle: I18n.t("idpay.unsubscription.checks.4.content")
+      }
+    ],
+
+    [InitiativeRewardTypeEnum.EXPENSE]: [
+      {
+        title: I18n.t("idpay.unsubscription.checks.1.title"),
+        subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+      },
+      {
+        title: I18n.t("idpay.unsubscription.checks.2.title"),
+        subtitle: I18n.t("idpay.unsubscription.checks.2.content")
+      },
+      {
+        title: I18n.t("idpay.unsubscription.checks.3.title"),
+        subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+      },
+      {
+        title: I18n.t("idpay.unsubscription.checks.4.title"),
+        subtitle: I18n.t("idpay.unsubscription.checks.4.content")
+      }
+    ],
+
+    [InitiativeRewardTypeEnum.DISCOUNT]: [
+      {
+        title: I18n.t("idpay.unsubscription.checks.1.title"),
+        subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+      },
+      {
+        title: I18n.t("idpay.unsubscription.checks.3.title"),
+        subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+      }
+    ]
+  };
+
   const unsubscriptionChecks = checksByInitiativeType[initiativeType];
   const checks = useConfirmationChecks(unsubscriptionChecks.length);
 
