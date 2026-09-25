@@ -1,9 +1,11 @@
 import { NonNegativeInteger } from "@pagopa/ts-commons/lib/numbers";
 import { expectSaga } from "redux-saga-test-plan";
+import { call } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { profileUpsert } from "../../../features/settings/common/store/actions";
+import { handleApplicationStartupTransientError } from "../../../features/startup/sagas";
 import { startApplicationInitialization } from "../../../store/actions/application";
 import { checkProfileEnabledSaga } from "../checkProfileEnabledSaga";
 
@@ -101,7 +103,7 @@ describe("checkProfileEnabledSaga", () => {
       )
       .run());
 
-  it("should restart the app if the profile update fails", () =>
+  it("should route the profile update failure to the transient error handler", () =>
     expectSaga(checkProfileEnabledSaga, {
       ...profile,
       is_inbox_enabled: false,
@@ -109,7 +111,15 @@ describe("checkProfileEnabledSaga", () => {
       email: undefined
     })
       .put(upsertAction)
-      .put(startApplicationInitialization())
+      .provide([
+        [
+          call(handleApplicationStartupTransientError, "GET_PROFILE_DOWN"),
+          undefined
+        ]
+      ])
+      .not.put(startApplicationInitialization())
+      .call(handleApplicationStartupTransientError, "GET_PROFILE_DOWN")
+      .returns(false)
       .dispatch(profileUpsert.failure(Error()))
       .run());
 });

@@ -498,7 +498,6 @@ export function* initializeApplicationSaga(
     yield* call(handleApplicationStartupTransientError, "GET_PROFILE_DOWN");
     return;
   }
-  yield* put(startupTransientError(startupTransientErrorInitialState));
 
   isBlockingScreen = yield* select(isBlockingScreenSelector);
   if (isBlockingScreen) {
@@ -698,7 +697,14 @@ export function* initializeApplicationSaga(
   yield* fork(watchCdcSaga, sessionToken);
 
   // Check that profile is up to date (e.g. inbox enabled)
-  yield* call(checkProfileEnabledSaga, userProfile);
+  const profileCheckSucceeded = yield* call(
+    checkProfileEnabledSaga,
+    userProfile
+  );
+  if (!profileCheckSucceeded) {
+    return;
+  }
+  yield* put(startupTransientError(startupTransientErrorInitialState));
 
   if (isSessionRefreshed) {
     // Only if the user are logging in check the account removal status and,
