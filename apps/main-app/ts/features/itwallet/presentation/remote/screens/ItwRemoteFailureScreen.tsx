@@ -6,6 +6,7 @@ import {
 } from "../../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../../../store/hooks";
+import { zendeskItWalletCategory } from "../../../../../utils/supportAssistance";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
 import { trackItwKoStateAction } from "../../../analytics";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
@@ -74,6 +75,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const failureSupportModal = useItwFailureSupportModal({
     failure,
     supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
+    // Remote presentation is an IT-Wallet feature, regardless of the wallet status
+    zendeskCategory: zendeskItWalletCategory,
     zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA
   });
 

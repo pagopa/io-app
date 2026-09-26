@@ -1,3 +1,4 @@
+import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
 import {
   Divider,
   ListItemAction,
@@ -77,6 +78,8 @@ type Props = {
     | RemoteFailure;
   supportChatEnabled: boolean;
   supportLink?: string;
+  /** Overrides the Zendesk category derived from the wallet status. */
+  zendeskCategory?: ZendeskCategory;
   zendeskSubcategory: ZendeskSubcategoryValue;
 };
 
@@ -88,6 +91,7 @@ export const useItwFailureSupportModal = ({
   failure,
   credentialType,
   supportChatEnabled,
+  zendeskCategory,
   zendeskSubcategory,
   supportLink
 }: Props) => {
@@ -96,6 +100,7 @@ export const useItwFailureSupportModal = ({
 
   const handleAskAssistance = () => {
     startItwZendeskSupport({
+      category: zendeskCategory,
       subcategory: zendeskSubcategory,
       errorCode: code,
       logData: JSON.stringify(failure)
