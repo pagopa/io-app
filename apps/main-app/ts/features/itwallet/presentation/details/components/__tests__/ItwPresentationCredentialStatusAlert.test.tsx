@@ -10,6 +10,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import * as bottomSheet from "../../../../../../utils/hooks/bottomSheet.tsx";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as itwAnalytics from "../../../../analytics";
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   CredentialMetadata,
   ItwCredentialStatus
@@ -82,6 +83,62 @@ describe("ItwPresentationCredentialStatusAlert", () => {
 
   afterAll(() => {
     MockDate.reset();
+  });
+
+  const academicStatusScenarios = [
+    { name: "revoked", status: "invalid", message: mockMessage },
+    { name: "suspended", status: "suspended", message: mockMessage },
+    {
+      name: "expired with issuer message",
+      status: "expired",
+      message: mockMessage
+    },
+    {
+      name: "expired without issuer message",
+      status: "expired",
+      message: undefined
+    },
+    { name: "expiring", status: "expiring", message: mockMessage }
+  ] satisfies ReadonlyArray<{
+    message: typeof mockMessage | undefined;
+    name: string;
+    status: ItwCredentialStatus;
+  }>;
+
+  describe.each([
+    CredentialType.EDUCATION_DEGREE,
+    CredentialType.EDUCATION_ENROLLMENT
+  ])("academic credential %s", credentialType => {
+    test.each(academicStatusScenarios)(
+      "does not offer a learn-more action when $name",
+      ({ status, message }) => {
+        mockBottomSheetModal();
+        jest
+          .spyOn(selectors, "itwCredentialStatusSelector")
+          .mockReturnValue({ status });
+        mockUseCredentialStatusMessage.mockReturnValue(message);
+
+        const component = renderComponent({ credentialType });
+
+        expect(
+          component.queryByText(
+            I18n.t("features.itWallet.presentation.alerts.statusAction")
+          )
+        ).toBeNull();
+        expect(component.queryByRole("button")).toBeNull();
+        expect(bottomSheet.useIOBottomSheetModal).not.toHaveBeenCalled();
+        if (status === "expiring") {
+          expect(component.queryByTestId("itwExpiringBannerTestID")).toBeNull();
+        } else {
+          expect(
+            component.getByText(
+              message?.title ??
+                I18n.t("features.itWallet.presentation.alerts.expired.content")
+            )
+          ).toBeTruthy();
+        }
+      }
+    );
   });
 
   test.each([
