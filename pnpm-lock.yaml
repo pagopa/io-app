@@ -403,8 +403,8 @@ importers:
         specifier: 0.8.4
         version: 0.8.4(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-jwt':
-        specifier: ^2.2.0
-        version: 2.2.0(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+        specifier: ^2.2.4
+        version: 2.2.4(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-login-utils':
         specifier: 1.2.0
         version: 1.2.0(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
@@ -413,7 +413,7 @@ importers:
         version: 0.2.1(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-wallet':
         specifier: 3.7.3
-        version: 3.7.3(ed1bb4374f1952ff1b683f1db0a96583)
+        version: 3.7.3(299479fb753058dc0c58954082558f17)
       '@pagopa/io-react-native-zendesk':
         specifier: ^0.3.30
         version: 0.3.30(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
@@ -608,7 +608,7 @@ importers:
         version: 1.1.1(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       react-native-exception-handler:
         specifier: ^2.10.8
-        version: 2.10.8(patch_hash=fd242598519fc7e652937710695c34417af98515385035ef8db1bb9921e896a8)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+        version: 2.10.10(patch_hash=fd242598519fc7e652937710695c34417af98515385035ef8db1bb9921e896a8)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       react-native-fs:
         specifier: ^2.18.0
         version: 2.18.0(react-native-windows@0.80.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.2.16)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1)(tslib@1.14.1)(typescript@6.0.3))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))
@@ -3691,8 +3691,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@pagopa/io-react-native-jwt@2.2.0':
-    resolution: {integrity: sha512-eQsOJ8syRHMfXlvK41hvXwBb0tk622J8+PHByzOX2hpAm7dg+qy5FfDE2W5xX5VLUXf18EwKeVcKkPJezNttLg==}
+  '@pagopa/io-react-native-jwt@2.2.4':
+    resolution: {integrity: sha512-j6lBfZOKvwyK9FMDIr/tZeK0r0NZ8Q0sthDkELDgvFXjawKe57CLTY394JpZNeZzI1xkQda1G9/Fb0OSPRsgfw==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -9962,8 +9962,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  react-native-exception-handler@2.10.8:
-    resolution: {integrity: sha512-ZN+jwpADRkCUNdad/50k0mZdMoICGrGdtaxgvRU+pNcWRRBAXJhuo4+jY0eQaoVpx1ghycGE6tBu9ka8gL2NOQ==}
+  react-native-exception-handler@2.10.10:
+    resolution: {integrity: sha512-otAXGoZDl1689OoUJWN/rXxVbdoZ3xcmyF1uq/CsizdLwwyZqVGd6d+p/vbYvnF996FfEyAEBnHrdFxulTn51w==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -17283,12 +17283,12 @@ snapshots:
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
       zod: 4.3.6
 
-  '@pagopa/io-react-native-jwt@2.2.0(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)':
+  '@pagopa/io-react-native-jwt@2.2.4(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)':
     dependencies:
       js-base64: 3.7.8
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
-      zod: 3.25.76
+      zod: 4.3.6
 
   '@pagopa/io-react-native-login-utils@1.2.0(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)':
     dependencies:
@@ -17300,11 +17300,11 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
 
-  '@pagopa/io-react-native-wallet@3.7.3(ed1bb4374f1952ff1b683f1db0a96583)':
+  '@pagopa/io-react-native-wallet@3.7.3(299479fb753058dc0c58954082558f17)':
     dependencies:
       '@pagopa/io-react-native-crypto': 1.2.5(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-iso18013': 0.8.4(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
-      '@pagopa/io-react-native-jwt': 2.2.0(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+      '@pagopa/io-react-native-jwt': 2.2.4(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-wallet-oauth2': 1.5.6
       '@pagopa/io-wallet-oid-federation': 1.5.6
       '@pagopa/io-wallet-oid4vci': 1.5.6
@@ -27026,7 +27026,7 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
 
-  react-native-exception-handler@2.10.8(patch_hash=fd242598519fc7e652937710695c34417af98515385035ef8db1bb9921e896a8)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0):
+  react-native-exception-handler@2.10.10(patch_hash=fd242598519fc7e652937710695c34417af98515385035ef8db1bb9921e896a8)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0):
     dependencies:
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
