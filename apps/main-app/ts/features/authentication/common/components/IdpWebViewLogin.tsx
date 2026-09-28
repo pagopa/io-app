@@ -84,6 +84,12 @@ export const IdpWebViewLogin = memo(
         minAuthLevel: AUTH_LEVELS.L2
       });
 
+    const {
+      bottomSheet: posteIdBottomSheet,
+      onWebViewLoad: onPosteIdWebViewLoad,
+      onWebViewError: onPosteIdWebViewError
+    } = useOneIdentityPosteIDApp2AppEducational(idp);
+
     const handleError = useCallback(
       (event: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
         trackLoginError(idp.id, event);
@@ -100,12 +106,13 @@ export const IdpWebViewLogin = memo(
           return;
         }
 
+        onPosteIdWebViewError();
         onEvent({
           type: "WEBVIEW_ERROR",
           payload: { url: nativeEvent.url }
         });
       },
-      [idp.id, onEvent]
+      [idp.id, onEvent, onPosteIdWebViewError]
     );
 
     const handleLoginFailure = useCallback(
@@ -178,9 +185,6 @@ export const IdpWebViewLogin = memo(
       [dispatch]
     );
 
-    const { bottomSheet: posteIdBottomSheet, presentOnce: presentPosteIdOnce } =
-      useOneIdentityPosteIDApp2AppEducational(idp);
-
     if (
       loginSourceState.status === "reserving-public-key" ||
       loginSourceState.status === "verifying-assertion-ref"
@@ -200,7 +204,7 @@ export const IdpWebViewLogin = memo(
           cacheEnabled={false}
           onError={handleError}
           onHttpError={handleError}
-          onLoadEnd={presentPosteIdOnce}
+          onLoad={onPosteIdWebViewLoad}
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
           originWhitelist={originSchemasWhiteList}

@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { View } from "react-native";
 
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -13,13 +13,20 @@ import { SpidIdp } from "../../../../utils/idps";
 
 const POSTE_ID_IDP_ID = "https://posteid.poste.it";
 
+type WebViewLoadStatus = "failed" | "idle" | "loaded";
+
 /**
- * Educational bottom sheet about the PosteID App2App flow. `presentOnce` shows
- * it only when `idp` is PosteID and at most once per hook lifetime, so it can
- * be safely called on every WebView load.
+ * Educational bottom sheet about the PosteID App2App flow, shown at most once
+ * per hook lifetime when `idp` is PosteID and the login WebView has loaded.
+ *
+ * `onWebViewLoad` and `onWebViewError` must be wired to the WebView load and
+ * (non-HTTP) error events. On Android a failed load emits `onLoad` right before
+ * `onError`: presenting from an effect lets both updates settle, and a failure
+ * dismisses the sheet if it was already presented.
  */
 export const useOneIdentityPosteIDApp2AppEducational = (idp: SpidIdp) => {
   const presentedRef = useRef(false);
+  const [loadStatus, setLoadStatus] = useState<WebViewLoadStatus>("idle");
   const bottomSheetContent = useMemo(
     () => (
       <View>
@@ -65,17 +72,35 @@ export const useOneIdentityPosteIDApp2AppEducational = (idp: SpidIdp) => {
     []
   );
 
-  const { bottomSheet, present } = useIOBottomSheetModal({
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
     title: I18n.t("authentication.idp_login.poste_id.bottom_sheet.title"),
     component: bottomSheetContent
   });
 
-  const presentOnce = useCallback(() => {
-    if (idp.id === POSTE_ID_IDP_ID && !presentedRef.current) {
+  const onWebViewLoad = useCallback(
+    () => setLoadStatus(status => (status === "idle" ? "loaded" : status)),
+    []
+  );
+
+  const onWebViewError = useCallback(() => setLoadStatus("failed"), []);
+
+  useEffect(() => {
+    if (loadStatus === "failed") {
+      // `dismiss` closes every sheet in the provider, so only call it for ours
+      if (presentedRef.current) {
+        dismiss();
+      }
+      return;
+    }
+    if (
+      idp.id === POSTE_ID_IDP_ID &&
+      loadStatus === "loaded" &&
+      !presentedRef.current
+    ) {
       presentedRef.current = true;
       present();
     }
-  }, [idp.id, present]);
+  }, [dismiss, idp.id, loadStatus, present]);
 
-  return { bottomSheet, presentOnce };
+  return { bottomSheet, onWebViewLoad, onWebViewError };
 };
