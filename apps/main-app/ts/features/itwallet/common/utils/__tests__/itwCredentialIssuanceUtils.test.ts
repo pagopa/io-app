@@ -3,6 +3,7 @@ import { generate } from "@pagopa/io-react-native-crypto";
 import { Env } from "../environment";
 import { getKeyAttestation } from "../itwAttestationUtils";
 import {
+  generateBatchKeysWithKeyAttestation,
   generateKeysWithKeyAttestation,
   requestCredential,
   shouldRefillBatch
@@ -50,6 +51,18 @@ describe("generateKeysWithKeyAttestation", () => {
     token_type: "DPoP"
   };
 
+  const mockAccessTokenWithTwoAuthorizationDetails: CredentialAccessToken = {
+    ...mockAccessToken,
+    authorization_details: [
+      ...mockAccessToken.authorization_details,
+      {
+        type: "openid_credential",
+        credential_configuration_id: "second-credential-config-id",
+        credential_identifiers: ["credential-id-2"]
+      }
+    ]
+  };
+
   it("should generate a key attestation when supported, skipping direct key generation", async () => {
     (getKeyAttestation as jest.Mock).mockImplementation(() => "ka-jwt");
 
@@ -94,6 +107,50 @@ describe("generateKeysWithKeyAttestation", () => {
         }
       }
     ]);
+  });
+
+  it("should generate key attestations sequentially", async () => {
+    (getKeyAttestation as jest.Mock).mockImplementation(async () => {
+      await Promise.resolve();
+      return "ka-jwt";
+    });
+
+    const resultPromise = generateKeysWithKeyAttestation(
+      mockAccessTokenWithTwoAuthorizationDetails,
+      {
+        env: {} as Env,
+        itwVersion: "1.4.6",
+        hardwareKeyTag: "hardware-key",
+        sessionToken: "session-token"
+      }
+    );
+
+    expect(getKeyAttestation).toHaveBeenCalledTimes(1);
+    const result = await resultPromise;
+    expect(getKeyAttestation).toHaveBeenCalledTimes(2);
+    expect(result).toHaveLength(2);
+  });
+
+  it("should generate batch keys sequentially", async () => {
+    (generate as jest.Mock).mockImplementation(async () => {
+      await Promise.resolve();
+    });
+
+    const resultPromise = generateBatchKeysWithKeyAttestation(
+      mockAccessTokenWithTwoAuthorizationDetails,
+      2,
+      {
+        env: {} as Env,
+        itwVersion: "1.0.0",
+        hardwareKeyTag: "hardware-key",
+        sessionToken: "session-token"
+      }
+    );
+
+    expect(generate).toHaveBeenCalledTimes(1);
+    const result = await resultPromise;
+    expect(generate).toHaveBeenCalledTimes(4);
+    expect(result).toHaveLength(2);
   });
 });
 
