@@ -24,6 +24,7 @@ import { getCieIdpId } from "../utils";
 
 /**
  * Checks if a given URL is an authentication URL.
+ *
  * @param url The URL to check if it is an authentication URL.
  * @returns `true` if the URL is an authentication URL, `false` otherwise.
  */
@@ -35,8 +36,10 @@ const isAuthUrl = (url: string) =>
 
 /**
  * Checks if a given page title corresponds to an error page.
+ *
  * @param title The page title to check.
- * @returns `true` if the page title corresponds to an error page, `false` otherwise.
+ * @returns `true` if the page title corresponds to an error page, `false`
+ *   otherwise.
  */
 const isErrorPage = (title?: string): boolean => {
   if (!title) {
@@ -92,12 +95,7 @@ export const OneIdentityCieAuthenticationWebView = ({
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
-      const reason = code
-        ? `login failed with code ${code}`
-        : message
-          ? `login failed with message ${message}`
-          : "login failed with no error code or message available";
-
+      const reason = `Login failed with code (${code}) and message (${message})`;
       handleFailure(reason);
     },
     [handleFailure]
@@ -198,8 +196,8 @@ export const OneIdentityCieAuthenticationWebView = ({
 
   return (
     /**
-     * The LoadingSpinnerOverlay is intentionally kept permanently active
-     * while retrieving the authentication URL.
+     * The LoadingSpinnerOverlay is intentionally kept permanently active while
+     * retrieving the authentication URL.
      */
     <LoadingSpinnerOverlay isLoading loadingOpacity={1} onCancel={handleCancel}>
       <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>

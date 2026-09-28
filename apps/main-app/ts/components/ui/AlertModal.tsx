@@ -28,9 +28,7 @@ type AlertModalProps = Readonly<{
   message: string;
 }>;
 
-/**
- * A custom alert to show a message
- */
+/** A custom alert to show a message */
 export const AlertModal = ({ message }: AlertModalProps) => {
   useHardwareBackButton(() => true);
 

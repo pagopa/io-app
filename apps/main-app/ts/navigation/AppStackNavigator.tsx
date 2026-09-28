@@ -150,11 +150,11 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   };
 
   /**
-   * If the app is swiped closed and it's opened with a deep link,
-   * the linking event in the NavigationContainer is not triggered.
-   * `Linking` has the option to get the initial URL when the app is opened.
-   * We can use this to check if the app was opened with a deep link and
-   * check if it has a `utm_medium` and `utm_source` parameters
+   * If the app is swiped closed and it's opened with a deep link, the linking
+   * event in the NavigationContainer is not triggered. `Linking` has the option
+   * to get the initial URL when the app is opened. We can use this to check if
+   * the app was opened with a deep link and check if it has a `utm_medium` and
+   * `utm_source` parameters
    */
   useOnFirstRender(() => {
     void Linking.getInitialURL().then(initialUrl => {
@@ -167,14 +167,14 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         trackIOOpenedFromUniversalAppLink(initialUrl, mixpanelEnabled);
         processUtmLink(initialUrl, dispatch);
         /**
-         *  We store the initialUrl in the redux store so that
-         *  it can be processed in case we need any kind of data
-         *  that would be accessible after the app's startup for that.
+         * We store the initialUrl in the redux store so that it can be
+         * processed in case we need any kind of data that would be accessible
+         * after the app's startup for that.
          *
-         *  while in `linkingSubscription` we avoid storing certain
-         *  blacklisted deep links, here it is not necessary since
-         *  this handler is called on app wake and thus there
-         *  is no risk of overwriting any previously stored deep link
+         * While in `linkingSubscription` we avoid storing certain blacklisted
+         * deep links, here it is not necessary since this handler is called on
+         * app wake and thus there is no risk of overwriting any previously
+         * stored deep link
          */
         dispatch(storeLinkingUrl(initialUrl));
       }
@@ -217,8 +217,10 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
 };
 
 /**
- * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
- * @constructor
+ * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of
+ * the app)
+ *
+ * @class
  */
 export const IONavigationContainer = () => (
   <InnerNavigationContainer>

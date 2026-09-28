@@ -17,6 +17,7 @@ import { handleGetReceiptPdf } from "./handleGetReceiptPdf";
 
 /**
  * Handle Wallet transaction requests
+ *
  * @param bearerToken
  */
 export function* watchPaymentsReceiptSaga(

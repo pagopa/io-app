@@ -14,74 +14,66 @@ import { CredentialIssuanceMachineDeps } from "./input";
 
 export type Context = {
   /**
-   * The access token obtained from the Issuer. If the session with the Wallet Provider expires
-   * before requesting the credential, this token is used to retry the request.
+   * The access token obtained from the Issuer. If the session with the Wallet
+   * Provider expires before requesting the credential, this token is used to
+   * retry the request.
    */
   accessToken: CredentialAccessToken | undefined;
   clientId: string | undefined;
   codeVerifier: string | undefined;
   credentialOfferUri: string | undefined;
-  /**
-   * Obtained credentials from the issuer.
-   */
+  /** Obtained credentials from the issuer. */
   credentials: ReadonlyArray<CredentialBundle> | undefined;
-  /**
-   * The type of the credential being issued.
-   */
+  /** The type of the credential being issued. */
   credentialType: string | undefined;
-  /**
-   * Runtime dependencies injected via machine input
-   */
+  /** Runtime dependencies injected via machine input */
   deps: CredentialIssuanceMachineDeps;
   /**
-   * Result of evaluating the issuer DCQL query against the PID before the trust issuer screen.
-   * It is reused to show the requested claims and complete the authorization without recalculating.
+   * Result of evaluating the issuer DCQL query against the PID before the trust
+   * issuer screen. It is reused to show the requested claims and complete the
+   * authorization without recalculating.
    */
   evaluatedDcqlQuery: EvaluatedDcqlQueryResult | undefined;
-  /**
-   * The failure that occurred during the credential issuance process, if any.
-   */
+  /** The failure that occurred during the credential issuance process, if any. */
   failure: CredentialIssuanceFailure | undefined;
-  /**
-   * Flag to indicate if the user has access to the L3 features.
-   */
+  /** Flag to indicate if the user has access to the L3 features. */
   isItWalletValid: boolean;
-  /**
-   * Credential request data
-   */
+  /** Credential request data */
   issuerConf: IssuerConfiguration | undefined;
   /**
-   * Flag to indicate if the wallet lifecycle is valid and can issue credentials.
+   * Flag to indicate if the wallet lifecycle is valid and can issue
+   * credentials.
    */
   isWalletValid: boolean;
-  /**
-   * An optional dictionary of Key Attestations generated for the issuance.
-   */
+  /** An optional dictionary of Key Attestations generated for the issuance. */
   keyAttestations?: Record<string, string>;
   /**
-   * The mode for the credential issuance process. It does not change how the credentials are requested,
-   * but it is needed to determine how the machine should behave.
+   * The mode for the credential issuance process. It does not change how the
+   * credentials are requested, but it is needed to determine how the machine
+   * should behave.
    */
   mode: CredentialIssuanceMode;
   requestedCredential: RequestObject | undefined;
   resolvedCredentialOffer: CredentialOfferResolved | undefined;
   responseMode: string | undefined;
   /**
-   * The wallet instance attestation of the wallet. If expired, it will be requested a new one.
+   * The wallet instance attestation of the wallet. If expired, it will be
+   * requested a new one.
    */
   walletInstanceAttestation: undefined | WalletInstanceAttestations;
   /**
-   * The WIA crypto context, which contains the necessary cryptographic information for the issuance.
+   * The WIA crypto context, which contains the necessary cryptographic
+   * information for the issuance.
    */
   wiaCryptoContext: CryptoContext | undefined;
 };
 
 /**
- * The mode for the credential issuance process.
- * It can be:
+ * The mode for the credential issuance process. It can be:
+ *
  * - "issuance": for a new credential issuance
- * - "reissuance": for reissuing an existing credential (for example, when the credential is expired
- *  or about to expire)
+ * - "reissuance": for reissuing an existing credential (for example, when the
+ *   credential is expired or about to expire)
  * - "upgrade": for upgrading an existing credential to a the new format
  */
 export type CredentialIssuanceMode = "issuance" | "reissuance" | "upgrade";

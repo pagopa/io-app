@@ -11,9 +11,9 @@ export type FetchFailureResponse = {
   message: string;
   reason: FetchFailureReason;
   /**
-   * The last response received from the server. Only set when `reason`
-   * is `"retryable-status"`, so callers can inspect it instead of just
-   * getting a generic `Error`.
+   * The last response received from the server. Only set when `reason` is
+   * `"retryable-status"`, so callers can inspect it instead of just getting a
+   * generic `Error`.
    */
   response?: Response;
   type: "failure";
@@ -61,18 +61,18 @@ export const isNoAttemptsResponse = (
 
 export type RetriableFetchOptions = {
   /**
-   * Maximum number of attempts (first call included).
-   * Defaults to `DEFAULT_FETCH_MAX_ATTEMPTS`.
+   * Maximum number of attempts (first call included). Defaults to
+   * `DEFAULT_FETCH_MAX_ATTEMPTS`.
    */
   readonly maxAttempts?: number;
   /**
-   * HTTP status codes that trigger a retry.
-   * The default set is `DEFAULT_RETRY_ON_STATUS_CODES`.
+   * HTTP status codes that trigger a retry. The default set is
+   * `DEFAULT_RETRY_ON_STATUS_CODES`.
    */
   readonly retryOnStatusCodes?: ReadonlyArray<number>;
   /**
-   * Timeout, in milliseconds, for a single attempt.
-   * Defaults to `DEFAULT_FETCH_TIMEOUT_MS`.
+   * Timeout, in milliseconds, for a single attempt. Defaults to
+   * `DEFAULT_FETCH_TIMEOUT_MS`.
    */
   readonly timeoutMs?: number;
 };
@@ -84,8 +84,8 @@ const BACKOFF_BASE_DELAY_MS = 200;
 const BACKOFF_MAX_DELAY_MS = 5000;
 
 /**
- * Exponential backoff delay, in milliseconds, for a given retry attempt:
- * 200ms, 400ms, 800ms, 1600ms, ... capped at {@link BACKOFF_MAX_DELAY_MS}.
+ * Exponential backoff delay, in milliseconds, for a given retry attempt: 200ms,
+ * 400ms, 800ms, 1600ms, ... capped at {@link BACKOFF_MAX_DELAY_MS}.
  */
 const exponentialBackoffDelay = (attempt: number): number =>
   Math.min(BACKOFF_BASE_DELAY_MS * 2 ** attempt, BACKOFF_MAX_DELAY_MS);
@@ -97,12 +97,12 @@ const exponentialBackoffDelay = (attempt: number): number =>
 const RETRY_AFTER_MAX_DELAY_MS = 60000;
 
 /**
- * Parses the `Retry-After` response header (seconds or HTTP-date form)
- * into a delay in milliseconds, capped at {@link RETRY_AFTER_MAX_DELAY_MS}
- * to guard against clock skew or a misbehaving/malicious server.
+ * Parses the `Retry-After` response header (seconds or HTTP-date form) into a
+ * delay in milliseconds, capped at {@link RETRY_AFTER_MAX_DELAY_MS} to guard
+ * against clock skew or a misbehaving/malicious server.
  *
- * @returns the delay in milliseconds, or `undefined` if the header is
- * missing or not parseable.
+ * @returns The delay in milliseconds, or `undefined` if the header is missing
+ *   or not parseable.
  */
 const getRetryAfterMs = (response: Response): number | undefined => {
   const retryAfterSecondsString = response.headers.get("Retry-After");
@@ -126,7 +126,8 @@ const getRetryAfterMs = (response: Response): number | undefined => {
 
 /**
  * Registers a one-shot `"abort"` listener that detaches itself once fired.
- * @returns a cleanup function to remove the listener early.
+ *
+ * @returns A cleanup function to remove the listener early.
  */
 const addAbortListener = (
   signal: AbortSignal | undefined,
@@ -148,17 +149,16 @@ const addAbortListener = (
 };
 
 /**
- * Type guard distinguishing a `Request` object from a plain URL string,
- * used to know whether the input can (and must) be `clone()`d before
- * each retry attempt.
+ * Type guard distinguishing a `Request` object from a plain URL string, used to
+ * know whether the input can (and must) be `clone()`d before each retry
+ * attempt.
  */
 const isRequestInput = (value: Request | string): value is Request =>
   typeof value !== "string";
 
 /**
- * Waits for `delayMs` milliseconds, resolving early if `signal` is
- * aborted in the meantime. Behaves as a plain delay when `signal` is
- * `undefined`.
+ * Waits for `delayMs` milliseconds, resolving early if `signal` is aborted in
+ * the meantime. Behaves as a plain delay when `signal` is `undefined`.
  */
 const sleep = (delayMs: number, signal?: AbortSignal): Promise<void> =>
   new Promise<void>(resolve => {
@@ -180,18 +180,19 @@ const sleep = (delayMs: number, signal?: AbortSignal): Promise<void> =>
 
 /**
  * Factory that returns a `fetch`-like function with:
- * - a timeout, in milliseconds, after which a single attempt fails;
- * - a maximum number of attempts (first call included, e.g. the default
- *   of 3 means at most 2 retries; `maxAttempts <= 0` makes no real call);
- * - an automatic retry on "transient" status codes (default
- *   `[429, 502, 503, 504]`), honoring a `Retry-After` response header in
- *   place of the exponential backoff when present;
- * - an automatic retry on generic network errors;
- * - a manual abort via an external `AbortSignal` passed as `init.signal`
- *   (same convention as native `fetch`), which stops any attempt or wait
- *   in progress and prevents further retries.
  *
- * @param options see {@link RetriableFetchOptions}
+ * - A timeout, in milliseconds, after which a single attempt fails;
+ * - A maximum number of attempts (first call included, e.g. the default of 3
+ *   means at most 2 retries; `maxAttempts <= 0` makes no real call);
+ * - An automatic retry on "transient" status codes (default `[429, 502, 503,
+ *   504]`), honoring a `Retry-After` response header in place of the
+ *   exponential backoff when present;
+ * - An automatic retry on generic network errors;
+ * - A manual abort via an external `AbortSignal` passed as `init.signal` (same
+ *   convention as native `fetch`), which stops any attempt or wait in progress
+ *   and prevents further retries.
+ *
+ * @param options See {@link RetriableFetchOptions}
  */
 export function createRetriableFetch(
   options: RetriableFetchOptions = {}

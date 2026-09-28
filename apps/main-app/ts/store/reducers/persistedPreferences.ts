@@ -1,8 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as Calendar from "expo-calendar";
-/**
- * A reducer for persisted preferences.
- */
+/** A reducer for persisted preferences. */
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";

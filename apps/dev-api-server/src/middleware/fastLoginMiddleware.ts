@@ -11,9 +11,10 @@ const responseFor401: FastLoginMiddleware401Response = {
 };
 
 /**
- * if the response error is defined as a global config
- * this middleware returns an error from those ones defined
- * if the current change is less or equal than one defined
+ * If the response error is defined as a global config this middleware returns
+ * an error from those ones defined if the current change is less or equal than
+ * one defined
+ *
  * @param req
  * @param res
  * @param next

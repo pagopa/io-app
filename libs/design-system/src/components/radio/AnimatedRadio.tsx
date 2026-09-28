@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
 });
 
 /**
- * An animated checkbox. This can be used to implement a
- * standard {@link CheckBox} or other composite components.
+ * An animated checkbox. This can be used to implement a standard
+ * {@link CheckBox} or other composite components.
  */
 export const AnimatedRadio = ({
   size,

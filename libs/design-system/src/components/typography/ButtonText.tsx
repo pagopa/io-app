@@ -7,9 +7,7 @@ const {
   buttonText: { color: defaultColor, ...buttonTextStyle }
 } = IOTypography;
 
-/**
- * `ButtonText` typographic style
- */
+/** `ButtonText` typographic style */
 export const ButtonText = ({
   color: customColor,
   ...props

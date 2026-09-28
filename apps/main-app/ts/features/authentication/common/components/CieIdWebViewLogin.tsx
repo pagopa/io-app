@@ -64,12 +64,7 @@ export const CieIdWebViewLogin = memo(
 
     const handleLoginFailure = useCallback(
       (code?: string, message?: string) => {
-        const reason = code
-          ? `login failed with code ${code}`
-          : message
-            ? `login failed with message ${message}`
-            : "login failed with no error code or message available";
-
+        const reason = `Login failed with code (${code}) and message (${message})`;
         onEvent({
           type: "LOGIN_FAILURE",
           payload: { code, message, reason }

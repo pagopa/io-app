@@ -140,11 +140,12 @@ const ModulePaymentNoticeContent = ({
 };
 
 /**
- * The `ModulePaymentNotice` component is a custom button component with an extended outline style.
- * It provides an animated scaling effect when pressed.
+ * The `ModulePaymentNotice` component is a custom button component with an
+ * extended outline style. It provides an animated scaling effect when pressed.
  *
  * @param {boolean} isLoading - If true, displays a skeleton loading component.
- * @param {function} onPress - The function to be executed when the item is pressed.
+ * @param {function} onPress - The function to be executed when the item is
+ *   pressed.
  * @param {string} title - The title text to display.
  * @param {string} subtitle - The subtitle text to display.
  * @param {string} testID - The test ID for testing purposes.
