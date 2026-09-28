@@ -191,7 +191,7 @@ export const requestCredential: RequestCredential = async ({
   // eslint-disable-next-line functional/no-let
   let issuerConf = resolvedIssuerConf;
 
-  // If not, valuate issuer trust here. The authorization server declared by the offer
+  // If not, evaluate issuer trust here. The authorization server declared by the offer
   // must match one of the issuer metadata `authorization_servers`.
   if (!issuerConf) {
     const credentialIssuer =
