@@ -23,7 +23,9 @@ export const ServiceContactListItem = ({
     serviceContactMap[variant];
 
   const handlePress = useCallback(() => {
-    if (!value) {return;}
+    if (!value) {
+      return;
+    }
     return onPress ? onPress(value) : openContact(value);
   }, [onPress, openContact, value]);
   if (!value) {

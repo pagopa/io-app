@@ -11,11 +11,6 @@ type ServiceContact = {
   openContact: (value: string) => void;
 };
 
-/**
- * Contact entries shared by service details and message contacts, keyed by the
- * service metadata field holding the contact, in display order.
- * Labels are functions so they follow the current app language.
- */
 export const serviceContactMap = {
   web_url: {
     accessibilityLabel: () => I18n.t("services.contacts.a11y.website"),
