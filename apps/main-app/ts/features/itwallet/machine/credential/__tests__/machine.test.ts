@@ -1048,7 +1048,8 @@ describe("itwCredentialIssuanceMachine", () => {
             credentialType: T_CREDENTIAL_TYPE,
             walletInstanceAttestation: T_WIA,
             resolvedCredentialOffer: T_RESOLVED_CREDENTIAL_OFFER,
-            skipMdocIssuance: false
+            skipMdocIssuance: false,
+            issuerConf: T_ISSUER_CONFIG
           })
         })
       );
