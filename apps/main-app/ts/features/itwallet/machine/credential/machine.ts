@@ -67,7 +67,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
           actions: assign({
             credentialOfferUri: undefined,
             resolvedCredentialOffer: undefined,
-            credentialType: undefined
+            credentialType: undefined,
+            issuerConf: undefined
           })
         }
       }
@@ -83,7 +84,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
           actions: assign({
             credentialOfferUri: undefined,
             resolvedCredentialOffer: undefined,
-            credentialType: undefined
+            credentialType: undefined,
+            issuerConf: undefined
           })
         }
       }
