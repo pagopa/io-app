@@ -159,7 +159,7 @@ export type RequestCredential = (args: {
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
  * @param issuerConf - An already evaluated issuer configuration (optional, if
- *   not provided )
+ *   not provided it is fetched by this function)
  * @param walletInstanceAttestation - The wallet instance attestation
  * @param skipMdocIssuance - Whether mDoc credential configurations must be
  *   excluded from the request
