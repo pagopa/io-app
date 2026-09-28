@@ -120,8 +120,29 @@ export const regenerateKeyGetRedirectsAndVerifySaml = async (
     hashedFiscalCode
   );
 
+  return getRedirectsAndVerifySaml(loginUri, headers, publicKey);
+};
+
+/**
+ * Natively follows the HTTP redirects starting from `url` until the one
+ * carrying the `SAMLRequest` query parameter, then verifies that the SAML
+ * request ID matches the thumbprint of `publicKey`. Cookies set along the
+ * redirects are synced into the WebView cookie store by the native module.
+ *
+ * @param url The URL to start following the redirects from.
+ * @param headers Headers sent with the first request only.
+ * @param publicKey The lollipop public key the SAML request must be bound to.
+ * @returns The verified `SAMLRequest` redirect URL (the IdP SSO URL).
+ * @throws {LoginUtilsError | Error} If the redirects fail, the `SAMLRequest` is
+ *   missing or its verification fails.
+ */
+export const getRedirectsAndVerifySaml = async (
+  url: string,
+  headers: Record<string, string | undefined>,
+  publicKey: PublicKey
+): Promise<string> => {
   // getRedirects throws LoginUtilsError or generic Error — let them propagate as-is
-  const redirects = await getRedirects(loginUri, headers, "SAMLRequest");
+  const redirects = await getRedirects(url, headers, "SAMLRequest");
 
   if (!redirects || redirects.length === 0) {
     throw new Error("Missing Redirects");

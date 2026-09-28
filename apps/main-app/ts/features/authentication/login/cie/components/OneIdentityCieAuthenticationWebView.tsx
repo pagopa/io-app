@@ -49,6 +49,14 @@ const isErrorPage = (title?: string): boolean => {
   return ERROR_PAGE_TITLES.includes(title.toLowerCase());
 };
 
+/**
+ * Whether the `/authorize` redirects up to the CIE IDP `SAMLRequest` are
+ * followed natively instead of inside the WebView.
+ *
+ * TODO: replace with the remote config flag.
+ */
+const FOLLOW_REDIRECTS_NATIVELY = true;
+
 export type OneIdentityCieAuthenticationWebViewProps = {
   onAuthenticationUrlReceived: (url: string) => void;
 };
@@ -79,6 +87,7 @@ export const OneIdentityCieAuthenticationWebView = ({
     shouldBlockUrlNavigationWhileCheckingLollipop,
     generateLoginSource
   } = useOneIdentityLoginSource({
+    followRedirectsNatively: FOLLOW_REDIRECTS_NATIVELY,
     idpId: getCieIdpId(useUat),
     onFailure: handleFailure,
     minAuthLevel: AUTH_LEVELS.L3
@@ -161,6 +170,7 @@ export const OneIdentityCieAuthenticationWebView = ({
 
   if (
     loginSourceState.status === "reserving-public-key" ||
+    loginSourceState.status === "following-redirects" ||
     loginSourceState.status === "verifying-assertion-ref"
   ) {
     return (
