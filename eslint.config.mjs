@@ -62,7 +62,7 @@ export default defineConfig([
   ]),
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
-  // eslint-plugin-prettier, perfectionist.
+  // eslint-config-prettier, perfectionist.
   ...pagopaConfig,
 
   {
@@ -115,12 +115,6 @@ export default defineConfig([
       // This affects analytics helpers, navigation param lists, and any other
       // type used as a generic record argument throughout the codebase.
       "@typescript-eslint/consistent-type-definitions": "off",
-
-      // Formatting is owned by oxfmt, not prettier. @pagopa/eslint-config bundles
-      // eslint-plugin-prettier, whose rule enforces prettier defaults (trailing
-      // commas, arrow parens) that directly conflict with .oxfmtrc.json — leaving
-      // it on makes eslint --fix revert every oxfmt-formatted file.
-      "prettier/prettier": "off",
 
       // Auto-fix corrupts multi-line property values (see comment below)
       "perfectionist/sort-objects": "off",

@@ -74,14 +74,10 @@ import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetSignatureRequests } from "./networking/handleGetSignatureRequests";
 
-/**
- * Maximum time to wait for the app to become active (20 seconds).
- */
+/** Maximum time to wait for the app to become active (20 seconds). */
 const APP_ACTIVE_POLLING_TIMEOUT = (20 * 1000) as Millisecond;
 
-/**
- * Interval between polling checks (2 seconds).
- */
+/** Interval between polling checks (2 seconds). */
 const APP_ACTIVE_POLLING_INTERVAL = (2 * 1000) as Millisecond;
 
 export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
@@ -103,6 +99,7 @@ export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
 
 /**
  * Handle the FCI Signature requests
+ *
  * @param bearerToken
  */
 export function* watchFciSaga(
@@ -184,18 +181,12 @@ export function* watchFciSaga(
   yield* takeLatest(identificationPinReset, watchIdentificationPinResetSaga);
 }
 
-/**
- * Clears cached file for the fci document preview
- * and reset the state to empty.
- */
+/** Clears cached file for the fci document preview and reset the state to empty. */
 function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
   yield* deletePath(action.payload.path);
 }
 
-/**
- * Clears cached file for the fci document preview
- * and reset the state to empty.
- */
+/** Clears cached file for the fci document preview and reset the state to empty. */
 function* clearFciDownloadPreview(
   action: ActionType<typeof fciDownloadPreviewClear>
 ) {
@@ -239,13 +230,13 @@ function* standardFciFlowStartSaga(): SagaIterator {
 
 /**
  * Waits for the app to return to the active state using a polling strategy.
- * This prevents network requests from being killed and auto-retried
- * when the app transitions from inactive to active.
+ * This prevents network requests from being killed and auto-retried when the
+ * app transitions from inactive to active.
  *
- * Polls the app state every APP_ACTIVE_POLLING_INTERVAL milliseconds
- * for a maximum of APP_ACTIVE_POLLING_TIMEOUT milliseconds.
- * If the app becomes active before the timeout, returns immediately.
- * If the timeout expires, continues anyway.
+ * Polls the app state every APP_ACTIVE_POLLING_INTERVAL milliseconds for a
+ * maximum of APP_ACTIVE_POLLING_TIMEOUT milliseconds. If the app becomes active
+ * before the timeout, returns immediately. If the timeout expires, continues
+ * anyway.
  */
 function* waitForAppActive() {
   const startTime = new Date().getTime();
@@ -270,9 +261,7 @@ function* waitForAppActive() {
   }
 }
 
-/**
- * Handle the FCI abort requests saga
- */
+/** Handle the FCI abort requests saga */
 function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
   yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));
@@ -282,9 +271,7 @@ function* watchFciEndSaga(): SagaIterator {
   );
 }
 
-/**
- * Handle the FCI requests to get the QTSP filled_document
- */
+/** Handle the FCI requests to get the QTSP filled_document */
 function* watchFciQtspClausesSaga(): SagaIterator {
   const potQtspClauses: FciQtspClausesState = yield* select(
     fciQtspClausesMetadataSelector
@@ -310,9 +297,8 @@ function* watchFciQtspClausesSaga(): SagaIterator {
 }
 
 /**
- * Handle the FCI signature request retry saga.
- * Clears FCI state and restarts the flow from the
- * router screen, which re-fetches fresh signature request.
+ * Handle the FCI signature request retry saga. Clears FCI state and restarts
+ * the flow from the router screen, which re-fetches fresh signature request.
  */
 function* watchFciSignatureRequestRetrySaga(
   action: ActionType<typeof fciSignatureRequestRetryFromId>
@@ -329,9 +315,7 @@ function* watchFciSignatureRequestRetrySaga(
   );
 }
 
-/**
- * Handle the FCI start signing saga
- */
+/** Handle the FCI start signing saga */
 function* watchFciSigningRequestSaga(): SagaIterator {
   yield* put(
     identificationRequest(false, true, undefined, {
@@ -394,9 +378,7 @@ function* watchFciSigningRequestSaga(): SagaIterator {
   }
 }
 
-/**
- * Handle the FCI start requests saga
- */
+/** Handle the FCI start requests saga */
 function* watchFciStartSaga(): SagaIterator {
   const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
   const isFciSecurityLevelCheckEnabled = yield* select(
@@ -421,9 +403,7 @@ function* watchFciStartSaga(): SagaIterator {
   }
 }
 
-/**
- * Handle the identification pin reset to clear fci state
- */
+/** Handle the identification pin reset to clear fci state */
 function* watchIdentificationPinResetSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
 }

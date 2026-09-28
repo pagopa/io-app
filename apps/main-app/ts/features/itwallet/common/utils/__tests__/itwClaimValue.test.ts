@@ -25,9 +25,10 @@ const claim = (value: unknown, id = "a_claim"): ClaimDisplayFormat => ({
 });
 
 /**
- * The order of the `ClaimValue` union members decides which kind a raw value is resolved to, and
- * every rendering path switches on that kind. These cases pin the resolution down so that adding
- * or reordering a member cannot silently change how a claim is displayed.
+ * The order of the `ClaimValue` union members decides which kind a raw value is
+ * resolved to, and every rendering path switches on that kind. These cases pin
+ * the resolution down so that adding or reordering a member cannot silently
+ * change how a claim is displayed.
  */
 describe("parseClaimValue", () => {
   it.each([

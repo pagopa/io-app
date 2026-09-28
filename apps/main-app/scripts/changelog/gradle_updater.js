@@ -2,14 +2,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable functional/immutable-data */
 /**
- * This is an updater for the utility "commit-and-tag-version" that increase the versionName value
- * for gradle files.
- * Replace the line
- *
- * versionName "$VERSION"
- *
+ * This is an updater for the utility "commit-and-tag-version" that increase the
+ * versionName value for gradle files. Replace the line `versionName "$VERSION"`
  * with the new generated version.
- *
  */
 
 const versionModule = require("./version_utility.js");

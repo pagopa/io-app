@@ -8,15 +8,15 @@ import { itwCredentialsEidSelector } from "../../../credentials/store/selectors"
 import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
 
 /**
- * The wallet instance is not active and there is no associated integrity key tag.
- * The user cannot get any credential.
+ * The wallet instance is not active and there is no associated integrity key
+ * tag. The user cannot get any credential.
  */
 export const itwLifecycleIsInstalledSelector = (state: GlobalState) =>
   state.features.itWallet.issuance.integrityKeyTag === undefined;
 
 /**
- * The wallet instance is registered and there is an associated integrity key tag.
- * The user can get a wallet attestation and an eID.
+ * The wallet instance is registered and there is an associated integrity key
+ * tag. The user can get a wallet attestation and an eID.
  */
 export const itwLifecycleIsOperationalSelector = (state: GlobalState) =>
   state.features.itWallet.issuance.integrityKeyTag !== undefined &&
@@ -24,21 +24,22 @@ export const itwLifecycleIsOperationalSelector = (state: GlobalState) =>
 
 /**
  * The wallet instance is registered, there is an associated integrity key tag
- * and the user has been issued a valid eID. The user can now get other credentials.
+ * and the user has been issued a valid eID. The user can now get other
+ * credentials.
  */
 export const itwLifecycleIsValidSelector = (state: GlobalState) =>
   state.features.itWallet.issuance.integrityKeyTag !== undefined &&
   itwCredentialsEidSelector(state) !== undefined;
 
-/**
- * Convenience selector that joins the states operational or valid.
- */
+/** Convenience selector that joins the states operational or valid. */
 export const itwLifecycleIsOperationalOrValid = (state: GlobalState) =>
   itwLifecycleIsOperationalSelector(state) ||
   itwLifecycleIsValidSelector(state);
 
 /**
- * The wallet instance is a **valid IT-Wallet instance**. The following requirements must be met:
+ * The wallet instance is a **valid IT-Wallet instance**. The following
+ * requirements must be met:
+ *
  * - The user is allowed to use IT-Wallet (whitelisted)
  * - The PID is an L3 credential
  */

@@ -1,6 +1,6 @@
 /**
- * A screen to display, by a webview, the consent to send user sensitive data
- * to backend and proceed with the onboarding process
+ * A screen to display, by a webview, the consent to send user sensitive data to
+ * backend and proceed with the onboarding process
  */
 import { Route, useRoute } from "@react-navigation/native";
 import { useCallback, useState } from "react";
@@ -73,7 +73,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
         params: {
           errorCodeOrMessage: errorCodeOrMessageProp,
           authMethod: "CIE",
-          authLevel: AUTH_LEVELS.L2
+          authLevel: AUTH_LEVELS.L3
         }
       });
     },

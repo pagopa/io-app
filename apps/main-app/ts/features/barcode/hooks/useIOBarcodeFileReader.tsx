@@ -35,52 +35,45 @@ import { imageGenerationTask } from "../utils/imageGenerationTask";
 
 type IOBarcodeFileReader = {
   /**
-   * Component which displays the bottom sheet to chosse which type of file tu upload (image or document)
+   * Component which displays the bottom sheet to chosse which type of file tu
+   * upload (image or document)
    */
   filePickerBottomSheet: JSX.Element;
-  /**
-   * Indicates whether file picker bottom sheet is currently being showed or not
-   */
+  /** Indicates whether file picker bottom sheet is currently being showed or not */
   isFilePickerVisible: boolean;
-  /**
-   * Indicates that the decoder is currently reading/decoding barcodes
-   */
+  /** Indicates that the decoder is currently reading/decoding barcodes */
   isLoading: boolean;
   /**
-   * Shows the document picker that lets the user select a PDF document from the library
+   * Shows the document picker that lets the user select a PDF document from the
+   * library
    */
   showDocumentPicker: () => void;
-  /**
-   * Function which toggle the visibility filePickerBottomSheet compoentn
-   */
+  /** Function which toggle the visibility filePickerBottomSheet compoentn */
   showFilePicker: () => void;
-  /**
-   * Shows the image picker that lets the user select an image from the library
-   */
+  /** Shows the image picker that lets the user select an image from the library */
   showImagePicker: () => void;
 };
 
 type IOBarcodeFileReaderConfiguration = {
-  /**
-   * Mixpanel analytics parameters
-   */
+  /** Mixpanel analytics parameters */
   barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
   /**
-   * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
-   * If the format is not supported it will return an UNSUPPORTED_FORMAT error
+   * Accepted barcoded formats that can be detected. Leave empty to accept all
+   * formats. If the format is not supported it will return an
+   * UNSUPPORTED_FORMAT error
    */
   barcodeFormats?: Array<IOBarcodeFormat>;
   /**
-   * Accepted barcode types that can be detected. Leave empty to accept all types.
-   * If the type is not supported it will return an UNKNOWN_CONTENT error
+   * Accepted barcode types that can be detected. Leave empty to accept all
+   * types. If the type is not supported it will return an UNKNOWN_CONTENT
+   * error
    */
   barcodeTypes?: Array<IOBarcodeType>;
-  /**
-   * Callback called when a barcode is not successfully decoded
-   */
+  /** Callback called when a barcode is not successfully decoded */
   onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
   /**
-   * Callback called when there is at least one barcode being successfully decoded
+   * Callback called when there is at least one barcode being successfully
+   * decoded
    */
   onBarcodeSuccess: (
     barcodes: Array<IOBarcode>,
@@ -120,7 +113,8 @@ const useIOBarcodeFileReader = ({
   };
 
   /**
-   * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
+   * Handles the selected image from the image picker and pass the asset to the
+   * {@link qrCodeFromImageTask} task
    */
   const onImageSelected = async (result: ImagePicker.ImagePickerResult) => {
     if (result.canceled) {
@@ -177,9 +171,7 @@ const useIOBarcodeFileReader = ({
     }
   };
 
-  /**
-   * Handles the Barcode decoding from a PDF document
-   */
+  /** Handles the Barcode decoding from a PDF document */
   const onDocumentSelected = async (asset: DocumentPickerAsset) => {
     const { uri, mimeType } = asset;
 
@@ -225,7 +217,8 @@ const useIOBarcodeFileReader = ({
   };
 
   /**
-   * Shows the document picker that lets the user select a PDF document from the library
+   * Shows the document picker that lets the user select a PDF document from the
+   * library
    */
   const showDocumentPicker = async () => {
     setIsLoading(true);
@@ -254,7 +247,8 @@ const useIOBarcodeFileReader = ({
   };
 
   /**
-   * Components that renders the bottom sheet with the options to select an image or a PDF document
+   * Components that renders the bottom sheet with the options to select an
+   * image or a PDF document
    */
   const filePickerModalComponent = (
     <View>

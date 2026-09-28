@@ -48,6 +48,7 @@ import { handleRequestInit } from "./handleRequestInit";
 
 /**
  * Handles the download of an attachment
+ *
  * @param bearerToken
  * @param action
  */
@@ -166,15 +167,16 @@ function* downloadAttachmentWorker(
         );
         // In this case we produce a taking error that can be
         // shown directly to the user
-        const errorKey =
-          status === 415
-            ? "messageDetails.attachments.badFormat"
-            : "messageDetails.attachments.downloadFailed";
         const reason =
           status === 401
             ? SendFailureReason.SESSION_EXPIRED
             : decodeSendFailureReason({ kind: "http_status", status });
-        const error = new WrappedSendError(reason, I18n.t(errorKey));
+        const error = new WrappedSendError(
+          reason,
+          status === 415
+            ? I18n.t("messageDetails.attachments.badFormat")
+            : I18n.t("messageDetails.attachments.downloadFailed")
+        );
         yield* put(
           downloadAttachment.failure({ attachment, messageId, error })
         );

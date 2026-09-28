@@ -44,6 +44,7 @@ import { getCommunicationClient } from "./commons";
 /**
  * The algorithm of this saga is as follows:
  *
+ * ```text
  * Get awaken by the receival of `startProcessingMessageArchivingAction` in takeLastest mode
  * do {
  *   Extract the first message ID for archiving/restoring queues, along with the info about archiving or restoring the message
@@ -66,15 +67,20 @@ import { getCommunicationClient } from "./commons";
  *       If resetMessageArchivingAction is received, then just go to the next do-while loop interaction, which will extract no data from the
  *         archiving/restoring queues (since they have been emptied by resetMessageArchivingAction) and will terminate
  * } while (true)
+ * ```
  *
- * If the session expires (due to fast login), it is expected that the legacy saga fails with a 401 error and the
- * 'upsertMessageStatusAttributes.failure' is triggered. If the authentication session is later restored, the original
- * 'upsertMessageStatusAttributes.request' action will be redispatched and the related legacy saga will either succeed or fail. At this point
- * the user may either discard the scheduled archiving/restoring of messages, in which case the UI is consistent (since the message has been
- * moved) or she may retry the restoring/archiving, in which case the message ID will not have a match into the original message collection
- * (INBOX or ARCHIVE) and so it will just be discarded, leaving the UI consistent. In case the automatically dispatched action from fast
- * login had failed, there will be a match and the process will resume.
- *
+ * If the session expires (due to fast login), it is expected that the legacy
+ * saga fails with a 401 error and the 'upsertMessageStatusAttributes.failure'
+ * is triggered. If the authentication session is later restored, the original
+ * 'upsertMessageStatusAttributes.request' action will be redispatched and the
+ * related legacy saga will either succeed or fail. At this point the user may
+ * either discard the scheduled archiving/restoring of messages, in which case
+ * the UI is consistent (since the message has been moved) or she may retry the
+ * restoring/archiving, in which case the message ID will not have a match into
+ * the original message collection (INBOX or ARCHIVE) and so it will just be
+ * discarded, leaving the UI consistent. In case the automatically dispatched
+ * action from fast login had failed, there will be a match and the process will
+ * resume.
  */
 export function* handleMessageArchivingRestoring(
   _: ActionType<typeof startProcessingMessageArchivingAction>
@@ -225,8 +231,8 @@ export function* raceUpsertMessageStatusAttributes(
 }
 
 /**
- * @throws invalid payload
  * @param payload
+ * @throws Invalid payload
  */
 function validatePayload(
   payload: UpsertMessageStatusAttributesPayload

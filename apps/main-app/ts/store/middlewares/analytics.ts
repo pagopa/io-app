@@ -57,6 +57,7 @@ import { searchMessagesEnabled } from "../actions/search";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import { trackContentAction } from "./contentAnalytics";
 
+// oxlint-disable-next-line complexity
 const trackAction = (action: Action): ReadonlyArray<null> | void => {
   switch (action.type) {
     case getType(analyticsAuthenticationCompleted):
