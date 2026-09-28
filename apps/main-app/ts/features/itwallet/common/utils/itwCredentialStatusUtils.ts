@@ -4,6 +4,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { getClaimsFullLocale, getCredentialExpireDate } from "./itwClaimsUtils";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
 import {
+  CredentialFormat,
   CredentialMetadata,
   IssuerConfiguration,
   ItwCredentialStatus
@@ -151,22 +152,34 @@ export const getCredentialStatusMessageFromCatalog = ({
 export const getCredentialStatusMessageFromIssuerConf = ({
   errorCode,
   credentialId,
+  credentialType,
   issuerConf
 }: {
-  credentialId?: string;
+  credentialId: string;
+  credentialType: string;
   errorCode?: string;
   issuerConf?: IssuerConfiguration;
 }): CredentialStatusMessage | undefined => {
-  if (!errorCode || !credentialId || !issuerConf) {
+  if (!errorCode || !issuerConf) {
     return undefined;
   }
+
+  // Some credentials only contain the errors in the SD-JWT configuration. To avoid inconsistencies
+  // we always use the SD-JWT credential configuration ID to extract the message.
+  const sdJwtConfig = Object.entries(
+    issuerConf.credential_configurations_supported
+  ).find(
+    ([, config]) =>
+      config.scope === credentialType &&
+      config.format === CredentialFormat.SD_JWT
+  );
 
   try {
     const messagesByLocale = Errors.extractErrorMessageFromIssuerConf(
       errorCode,
       {
         issuerConf,
-        credentialType: credentialId // Legacy mismatch: the param `credentialType` was not renamed
+        credentialType: sdJwtConfig?.[0] ?? credentialId // Legacy mismatch: the param `credentialType` was not renamed
       }
     );
     return messagesByLocale?.[getClaimsFullLocale()];

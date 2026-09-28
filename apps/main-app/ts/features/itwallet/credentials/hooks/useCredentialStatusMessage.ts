@@ -55,7 +55,8 @@ export const useCredentialStatusMessage = (
       return getCredentialStatusMessageFromIssuerConf({
         errorCode,
         issuerConf: credential.issuerConf,
-        credentialId: credential.credentialId
+        credentialId: credential.credentialId,
+        credentialType: credential.credentialType
       });
     }
 
