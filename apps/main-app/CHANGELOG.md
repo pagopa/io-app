@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-rc.7](https://github.com/pagopa/io-app/compare/3.40.0-rc.6...3.40.0-rc.7) (2026-09-28)
+
+### Bug Fixes
+
+* [[IOPID-4233](https://pagopa.atlassian.net/browse/IOPID-4233)] Ignore unknown CIE events to prevent state errors ([#8655](https://github.com/pagopa/io-app/issues/8655)) ([fcd16b5](https://github.com/pagopa/io-app/commit/fcd16b5bdd430af97b1f053d561b1f24ad57e8e3))
+* **IT-Wallet:** [[SIW-5133](https://pagopa.atlassian.net/browse/SIW-5133)] Remove scope from credential offer flow ([#8656](https://github.com/pagopa/io-app/issues/8656)) ([54e7250](https://github.com/pagopa/io-app/commit/54e7250dc08b09c7bc070541fd18a4f8e0c675b9))
 ## [3.40.0-rc.6](https://github.com/pagopa/io-app/compare/3.40.0-rc.5...3.40.0-rc.6) (2026-09-25)
 
 ### Features
