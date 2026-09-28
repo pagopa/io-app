@@ -415,8 +415,19 @@ export const processCredentialOfferActor = fromPromise<
   // Resolve the credential type/scope from the first configuration ID.
   // TODO: support multiple credential configuration IDs?
   const [credentialConfigurationId] = offer.credential_configuration_ids;
-  const { scope } =
+  const credentialConfig =
     issuerConf.credential_configurations_supported[credentialConfigurationId];
 
-  return { credentialType: scope, offer, grantDetails, issuerConf };
+  if (!credentialConfig) {
+    throw new Error(
+      `${credentialConfigurationId} could not be found in the Issuer metadata`
+    );
+  }
+
+  return {
+    credentialType: credentialConfig.scope,
+    offer,
+    grantDetails,
+    issuerConf
+  };
 });
