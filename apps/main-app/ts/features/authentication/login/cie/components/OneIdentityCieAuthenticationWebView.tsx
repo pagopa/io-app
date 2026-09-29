@@ -17,6 +17,7 @@ import { useIOSelector, useIOStore } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
 import { useOneIdentityLoginSource } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { cieLoginFlowSelector } from "../../../activeSessionLogin/store/selectors";
+import { oneIdentityCieNativeRedirectsEnabledSelector } from "../../../common/store/selectors/remoteConfig";
 import { AUTH_LEVELS, onLoginUriChanged } from "../../../common/utils";
 import { defaultUserAgent } from "../../../common/utils/cie";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
@@ -49,14 +50,6 @@ const isErrorPage = (title?: string): boolean => {
   return ERROR_PAGE_TITLES.includes(title.toLowerCase());
 };
 
-/**
- * Whether the `/authorize` redirects up to the CIE IDP `SAMLRequest` are
- * followed natively instead of inside the WebView.
- *
- * TODO: replace with the remote config flag.
- */
-const FOLLOW_REDIRECTS_NATIVELY = true;
-
 export type OneIdentityCieAuthenticationWebViewProps = {
   onAuthenticationUrlReceived: (url: string) => void;
 };
@@ -72,6 +65,9 @@ export const OneIdentityCieAuthenticationWebView = ({
   const navigation = useIONavigation();
 
   const useUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const followRedirectsNatively = useIOSelector(
+    oneIdentityCieNativeRedirectsEnabledSelector
+  );
 
   const [webViewState, setWebViewState] = useState<WebViewState>({
     status: "authenticating"
@@ -87,7 +83,7 @@ export const OneIdentityCieAuthenticationWebView = ({
     shouldBlockUrlNavigationWhileCheckingLollipop,
     generateLoginSource
   } = useOneIdentityLoginSource({
-    followRedirectsNatively: FOLLOW_REDIRECTS_NATIVELY,
+    followRedirectsNatively,
     idpId: getCieIdpId(useUat),
     onFailure: handleFailure,
     minAuthLevel: AUTH_LEVELS.L3
