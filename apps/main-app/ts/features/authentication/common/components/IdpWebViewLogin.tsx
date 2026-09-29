@@ -179,7 +179,8 @@ export const IdpWebViewLogin = memo(
 
     if (
       loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "verifying-assertion-ref"
+      loginSourceState.status === "verifying-assertion-ref" ||
+      loginSourceState.status === "following-redirects"
     ) {
       return <IdpWebViewLoginLoading />;
     }
