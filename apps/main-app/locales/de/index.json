@@ -1379,11 +1379,7 @@
     },
     "contactsBottomSheet": {
       "title": "Hilfe",
-      "body": "Wenn du dir über den Inhalt der Nachricht im Unklaren bist, wende dich an die Körperschaft, von der du die Nachricht erhalten hast.",
-      "actions": {
-        "call": "Anrufen",
-        "email": "E-Mail schreiben"
-      }
+      "body": "Wenn du dir über den Inhalt der Nachricht im Unklaren bist, wende dich an die Körperschaft, von der du die Nachricht erhalten hast."
     }
   },
   "messagePDFPreview": {
@@ -1427,6 +1423,12 @@
     }
   },
   "services": {
+    "contacts": {
+      "downloadApp": "App herunterladen",
+      "email": "E-Mail senden",
+      "pec": "PEC-Mail senden",
+      "website": "Website besuchen"
+    },
     "optIn": {
       "preferences": {
         "completed": {
@@ -1528,12 +1530,6 @@
       },
       "metadata": {
         "title": "Kontakte und Informationen",
-        "website": "Website besuchen",
-        "downloadApp": "App herunterladen",
-        "support": "Hilfe anfordern",
-        "phone": "Körperschaft anrufen",
-        "email": "E-Mail senden",
-        "pec": "PEC-Mail senden",
         "fiscalCode": "Steuernummer Körperschaft",
         "address": "Adresse",
         "serviceId": "Dienst ID"

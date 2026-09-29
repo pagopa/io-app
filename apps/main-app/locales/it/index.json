@@ -4069,10 +4069,6 @@
       "title": "Cos'è un messaggio dinamico?"
     },
     "contactsBottomSheet": {
-      "actions": {
-        "call": "Fai una chiamata",
-        "email": "Scrivi un'email"
-      },
       "body": "Se non ti è chiaro il contenuto del messaggio, contatta l’ente che te lo ha inviato.",
       "title": "Assistenza"
     },
@@ -4741,6 +4737,17 @@
     "title": "Inoltro dei messaggi via email"
   },
   "services": {
+    "contacts": {
+      "a11y": {
+        "website": "Visita il sito dell'ente"
+      },
+      "downloadApp": "Scarica l'app",
+      "email": "Invia un'email",
+      "pec": "Invia una PEC",
+      "phone": "Chiama",
+      "support": "Chiedi assistenza",
+      "website": "Visita il sito"
+    },
     "contextualHelpContent": "**Nella sezione Servizi puoi visualizzare la lista degli enti che offrono i propri servizi su IO, e l'elenco dei servizi associato ad ogni ente.** I servizi sono divisi tra locali, dove puoi selezionare gli enti d'interesse rispetto all'area geografica dove vivi, nazionali, ovvero le amministrazioni centrali che offrono servizi a tutti i cittadini italiani, e infine tutti, dove puoi trovare l'elenco completo di tutti i servizi disponibili su IO (sia locali che nazionali).   \nTi invitiamo ad utilizzare questa sezione per esplorare i servizi messi a disposizione da IO, impostare la tua lista di servizi locali e i dettagli dei singoli servizi. Ogni volta che arriverà su IO un nuovo servizio locale o nazionale, riceverai una notifica in modo da poter subito verificare di cosa si tratta e se ti risulta utile o meno.\n",
     "contextualHelpTitle": "Cosa puoi fare nei tuoi Servizi",
     "details": {
@@ -4752,19 +4759,12 @@
       },
       "metadata": {
         "a11y": {
-          "copyToClipboard": "Copia negli appunti",
-          "website": "Visita il sito dell'ente"
+          "copyToClipboard": "Copia negli appunti"
         },
         "address": "Indirizzo",
-        "downloadApp": "Scarica l'app",
-        "email": "Invia un'email",
         "fiscalCode": "Codice fiscale ente",
-        "pec": "Invia una PEC",
-        "phone": "Contatta l'ente",
         "serviceId": "ID servizio",
-        "support": "Richiedi assistenza",
-        "title": "Contatti ed informazioni",
-        "website": "Visita il sito"
+        "title": "Contatti ed informazioni"
       },
       "preferences": {
         "inbox": "Contattarti in app",
