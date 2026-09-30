@@ -145,7 +145,7 @@ describe("OneIdentityCieIdLoginScreen", () => {
     });
   });
 
-  it("should navigate to CIE_ID_ERROR on a generic WebView error", () => {
+  it("should navigate to CIE_ID_ERROR with the failure on a generic WebView error", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("cie-id-webview");
 
@@ -154,7 +154,13 @@ describe("OneIdentityCieIdLoginScreen", () => {
     });
 
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
+      params: {
+        failure: {
+          type: "WEBVIEW_ERROR",
+          payload: { url: "https://example.com/authorize" }
+        }
+      }
     });
   });
 });

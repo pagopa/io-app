@@ -84,7 +84,7 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
         case "CANCEL":
         case "ONE_IDENTITY_LOGIN_FAILURE":
         case "WEBVIEW_ERROR": {
-          navigateToCieIdAuthenticationError();
+          navigateToCieIdAuthenticationError(event);
           break;
         }
         case "LOGIN_FAILURE": {

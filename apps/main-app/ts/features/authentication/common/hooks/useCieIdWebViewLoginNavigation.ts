@@ -2,6 +2,7 @@ import { useCallback } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { AuthLevel } from "../../common/utils";
+import { CieIdWebViewLoginEvent } from "../components/CieIdWebViewLogin";
 import { AUTHENTICATION_ROUTES } from "../navigation/routes";
 
 type UseCieIdWebViewLoginNavigationProps = {
@@ -13,11 +14,15 @@ export const useCieIdWebViewLoginNavigation = ({
 }: UseCieIdWebViewLoginNavigationProps) => {
   const navigation = useIONavigation();
 
-  const navigateToCieIdAuthenticationError = useCallback(() => {
-    navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
-    });
-  }, [navigation]);
+  const navigateToCieIdAuthenticationError = useCallback(
+    (failure?: CieIdWebViewLoginEvent) => {
+      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
+        params: { failure }
+      });
+    },
+    [navigation]
+  );
 
   const navigateToCieIdAuthUrlError = useCallback(
     (url: string) => {
