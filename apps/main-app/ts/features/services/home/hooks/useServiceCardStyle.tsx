@@ -24,9 +24,7 @@ type ServiceCardStyleProps = {
   skeletonColor: ColorValue;
 };
 
-/**
- * Returns the common style used for service cards
- */
+/** Returns the common style used for service cards */
 export const useServiceCardStyle = (): ServiceCardStyleProps => {
   const theme = useIOTheme();
   const { themeType } = useIOThemeContext();

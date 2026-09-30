@@ -36,22 +36,26 @@ import {
 const fetch = createRetriableFetch();
 
 /**
- * Path of the Session Manager endpoint that reserves the public key
- * and returns the `/authorize` parameters.
+ * Path of the Session Manager endpoint that reserves the public key and returns
+ * the `/authorize` parameters.
  */
 const reserveEndpointPath = "/api/auth/v1/reserve";
 
 /**
- * State of the OneIdentity login source flow. At any given moment the flow
- * is in exactly one of the following statuses:
- * - `assertion-ref-verified`: the lollipop check succeeded; `webviewSource` is the IDP
- *   SSO URL, safe to (re)load without triggering another check.
- * - `one-identity-authorize`: the initial `/authorize` WebView source is available to load,
- *   but has not gone through the lollipop SAMLRequest check yet.
- * - `reserving-public-key`: `/reserve` (and ephemeral key generation) is in progress.
+ * State of the OneIdentity login source flow. At any given moment the flow is
+ * in exactly one of the following statuses:
+ *
+ * - `assertion-ref-verified`: the lollipop check succeeded; `webviewSource` is
+ *   the IDP SSO URL, safe to (re)load without triggering another check.
+ * - `one-identity-authorize`: the initial `/authorize` WebView source is
+ *   available to load, but has not gone through the lollipop SAMLRequest check
+ *   yet.
+ * - `reserving-public-key`: `/reserve` (and ephemeral key generation) is in
+ *   progress.
  * - `verifying-assertion-ref`: the WebView navigated to the IDP SSO URL and its
  *   lollipop assertion-ref is being verified; the WebView is hidden meanwhile.
- * - `failure`: The `/reserve` request, ephemeral key generation, or SAML verification failed.
+ * - `failure`: The `/reserve` request, ephemeral key generation, or SAML
+ *   verification failed.
  */
 type LoginSourceState =
   | { error: string; status: "failure" }
@@ -62,9 +66,7 @@ type LoginSourceState =
   | { status: "reserving-public-key" }
   | { status: "verifying-assertion-ref"; url: string };
 
-/**
- * Builds the request body for the `/reserve` endpoint.
- */
+/** Builds the request body for the `/reserve` endpoint. */
 const buildReserveRequestBody = (
   env: string,
   minAuthLevel: AuthLevel,
@@ -83,9 +85,7 @@ const buildReserveRequestBody = (
   ...(hashedFiscalCode && { current_user: hashedFiscalCode })
 });
 
-/**
- * Builds the OneIdentity `/authorize` URL to open in the login WebView.
- */
+/** Builds the OneIdentity `/authorize` URL to open in the login WebView. */
 const buildAuthorizationUrl = (
   reserveResponse: {
     authorization_endpoint: string;
@@ -114,10 +114,10 @@ const buildAuthorizationUrl = (
 };
 
 /**
- * Builds the WebView source for the OneIdentity `/authorize` request: the
- * URL (via `buildAuthorizationUrl`) plus the `x-pagopa-lollipop-assertion-ref` header,
- * required so that OneIdentity can associate the incoming request with the lollipop
- * session just reserved via `/reserve`.
+ * Builds the WebView source for the OneIdentity `/authorize` request: the URL
+ * (via `buildAuthorizationUrl`) plus the `x-pagopa-lollipop-assertion-ref`
+ * header, required so that OneIdentity can associate the incoming request with
+ * the lollipop session just reserved via `/reserve`.
  */
 const buildWebviewSource = (
   uri: string,
@@ -132,31 +132,28 @@ const buildWebviewSource = (
 });
 
 export type UseOneIdentityLoginSource = (params: {
-  /**
-   * The ID of the identity provider the user selected to login with.
-   */
+  /** The ID of the identity provider the user selected to login with. */
   idpId: string;
   /**
-   * The minimum required SPID level for the authentication flow. Defaults to "L2".
+   * The minimum required SPID level for the authentication flow. Defaults to
+   * "L2".
    */
   minAuthLevel?: AuthLevel;
-  /**
-   * Handler called upon a failure during the login flow.
-   */
+  /** Handler called upon a failure during the login flow. */
   onFailure: (reason: string) => void;
 }) => {
   /**
-   * Handler that restarts the login flow by generating a new login source.
-   * It automatically resets the internal state and safely aborts any ongoing network requests.
+   * Handler that restarts the login flow by generating a new login source. It
+   * automatically resets the internal state and safely aborts any ongoing
+   * network requests.
    */
   generateLoginSource: () => Promise<void>;
-  /**
-   * The current state of the OneIdentity OIDC flow.
-   */
+  /** The current state of the OneIdentity OIDC flow. */
   loginSourceState: LoginSourceState;
   /**
    * Handler to be passed to the WebView's `onShouldStartLoadWithRequest` prop.
-   * Intercepts navigation towards the identity provider and verifies the lollipop assertion-ref.
+   * Intercepts navigation towards the identity provider and verifies the
+   * lollipop assertion-ref.
    */
   shouldBlockUrlNavigationWhileCheckingLollipop: (url: string) => boolean;
 };

@@ -29,8 +29,8 @@ export type AuthErrorDetails = {
 
 /**
  * Maps each auth error code to its pictogram and already-translated
- * title/subtitle. Built with literal `I18n.t` calls (rather than resolving
- * a dynamic key) so `tsc` and the i18n lint rules can see every key.
+ * title/subtitle. Built with literal `I18n.t` calls (rather than resolving a
+ * dynamic key) so `tsc` and the i18n lint rules can see every key.
  */
 const getAuthErrorDetailsMap = (): { [key: string]: AuthErrorDetails } => ({
   [AUTH_ERRORS.ERROR_19]: {
@@ -98,9 +98,8 @@ const getAuthErrorDetailsMap = (): { [key: string]: AuthErrorDetails } => ({
 });
 
 /**
- * Retrieves the pictogram and translated title/subtitle for an auth error
- * code, falling back to the generic error entry when the code is unknown
- * or missing.
+ * Retrieves the pictogram and translated title/subtitle for an auth error code,
+ * falling back to the generic error entry when the code is unknown or missing.
  */
 export const getAuthErrorDetails = (
   errorCodeOrMessage?: string

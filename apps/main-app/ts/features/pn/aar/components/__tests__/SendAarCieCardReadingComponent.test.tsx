@@ -154,7 +154,10 @@ const mockReadStates: ReadonlyArray<ReadState> = [
   { status: ReadStatus.READING, progress: 0.5 },
   { status: ReadStatus.READING, progress: 1 },
   { status: ReadStatus.SUCCESS, data: successDataMock },
-  ...errorsMock.map<ReadState>(error => ({ status: ReadStatus.ERROR, error }))
+  ...errorsMock.map<ReadState>(error => ({
+    status: ReadStatus.ERROR,
+    error
+  }))
 ];
 
 describe("SendAarCieCardReadingComponent", () => {

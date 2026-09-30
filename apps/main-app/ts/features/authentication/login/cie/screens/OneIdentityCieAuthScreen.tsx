@@ -44,7 +44,8 @@ export const OneIdentityCieAuthScreen = ({
   );
 
   /**
-   * Step 1: Display the authentication webview to obtain the authentication URL.
+   * Step 1: Display the authentication webview to obtain the authentication
+   * URL.
    */
   if (authState.status === "01_authentication_url_retrieval") {
     return (
@@ -54,9 +55,7 @@ export const OneIdentityCieAuthScreen = ({
     );
   }
 
-  /**
-   * Step 2: Display the CIE card reader to obtain the authorization URL.
-   */
+  /** Step 2: Display the CIE card reader to obtain the authorization URL. */
   if (authState.status === "02_reading_card_data") {
     return (
       <OneIdentityCieCardReader
@@ -67,9 +66,7 @@ export const OneIdentityCieAuthScreen = ({
     );
   }
 
-  /**
-   * Step 3: Display the authorization webview to complete the login flow
-   */
+  /** Step 3: Display the authorization webview to complete the login flow */
   return (
     <OneIdentityCieAuthorizationWebView
       authorizationUrl={authState.authorizationUrl}

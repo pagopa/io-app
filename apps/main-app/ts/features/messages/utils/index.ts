@@ -25,9 +25,7 @@ export const errorToReason = (error: Error) => error.message;
 export const unknownToReason = (e: unknown) =>
   pipe(e, getNetworkError, networkErrorToError, errorToReason);
 
-/**
- * Set of failure "reason"s for Mixpanel tracking.
- */
+/** Set of failure "reason"s for Mixpanel tracking. */
 export enum SendFailureReason {
   BAD_FORMAT = "BAD_FORMAT",
   DECODE_ERROR = "DECODE_ERROR",
@@ -40,7 +38,8 @@ export enum SendFailureReason {
 }
 
 /**
- * Common helper to resolve an HTTP status or caught exception into a `SendFailureReason`.
+ * Common helper to resolve an HTTP status or caught exception into a
+ * `SendFailureReason`.
  */
 export type DecodableSendFailure =
   | { error: unknown; kind: "caught" }

@@ -103,9 +103,11 @@ const ArchiveRestoreCTAs = ({ category }: ArchiveRestoreCTAsProps) => {
         <IOButton
           disabled={!archiveRestoreCTAEnabled}
           fullWidth
-          label={I18n.t(
-            `messages.cta.${category === "ARCHIVE" ? "unarchive" : "archive"}`
-          )}
+          label={
+            category === "ARCHIVE"
+              ? I18n.t("messages.cta.unarchive")
+              : I18n.t("messages.cta.archive")
+          }
           loading={isProcessing}
           onPress={() => dispatch(startProcessingMessageArchivingAction())}
           variant="solid"

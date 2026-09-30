@@ -11,7 +11,8 @@ import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import {
   CredentialAccessToken,
-  CredentialBundle
+  CredentialBundle,
+  IssuerConfiguration
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { CredentialsVault } from "../../credentials/utils/vault";
@@ -67,7 +68,9 @@ export type ProcessCredentialOfferActorInput = {
 };
 
 export type ProcessCredentialOfferActorOutput = {
+  credentialType: string;
   grantDetails: CredentialOffer.ExtractGrantDetailsResult;
+  issuerConf: IssuerConfiguration;
   offer: CredentialOffer.CredentialOffer;
 };
 
@@ -89,9 +92,9 @@ export type VerifyTrustFederationActorInput = Pick<
 };
 
 /**
- * Builds the dictionary of Key Attestations generated during issuance, keyed by their
- * `keyAttestationId`. Works for both single and batch issuance, where a batch shares a
- * single KUA across all its keys.
+ * Builds the dictionary of Key Attestations generated during issuance, keyed by
+ * their `keyAttestationId`. Works for both single and batch issuance, where a
+ * batch shares a single KUA across all its keys.
  */
 const extractKeyAttestations = (
   authorizedCredentials: ReadonlyArray<{
@@ -214,6 +217,7 @@ export const requestCredentialActor = fromPromise<
   RequestCredentialActorInput
 >(async ({ input }) => {
   const {
+    issuerConf,
     credentialType,
     walletInstanceAttestation,
     skipMdocIssuance = true,
@@ -240,6 +244,7 @@ export const requestCredentialActor = fromPromise<
 
   const result = await credentialIssuanceUtils.requestCredential({
     env,
+    issuerConf,
     itwVersion,
     credentialType,
     walletInstanceAttestation,
@@ -397,8 +402,32 @@ export const processCredentialOfferActor = fromPromise<
   const offer = await wallet.CredentialsOffer.resolveCredentialOffer(
     input.credentialOfferUri
   );
-
   const grantDetails = wallet.CredentialsOffer.extractGrantDetails(offer);
 
-  return { offer, grantDetails };
+  const { issuerConf } = await wallet.CredentialIssuance.evaluateIssuerTrust(
+    offer.credential_issuer,
+    {
+      authorizationServer:
+        grantDetails.authorizationCodeGrant?.authorizationServer
+    }
+  );
+
+  // Resolve the credential type/scope from the first configuration ID.
+  // TODO: support multiple credential configuration IDs?
+  const [credentialConfigurationId] = offer.credential_configuration_ids;
+  const credentialConfig =
+    issuerConf.credential_configurations_supported[credentialConfigurationId];
+
+  if (!credentialConfig) {
+    throw new Error(
+      `${credentialConfigurationId} could not be found in the Issuer metadata`
+    );
+  }
+
+  return {
+    credentialType: credentialConfig.scope,
+    offer,
+    grantDetails,
+    issuerConf
+  };
 });

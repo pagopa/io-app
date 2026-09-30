@@ -130,7 +130,7 @@ describe("superProperties", () => {
       })
     );
   });
-  /** === === === === === === === === ===
+  /* === === === === === === === === ===
    * AUTH_SECURITY_LEVEL / LOGIN_METHOD
    * === === === === === === === === === */
   const generateIdp = (id: string, name: string): SpidIdp => ({

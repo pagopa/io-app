@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
 
-import { AuthLevel } from ".";
 import { isDevEnv } from "../../../../utils/environment";
 
 export const iOSUserAgent =
@@ -28,8 +27,9 @@ export const WHITELISTED_DOMAINS = [
 ];
 
 /**
- * Checks whether `url`'s origin is one of the trusted CIE ID identity servers in `allowedOrigins`.
- * Defaults to `WHITELISTED_DOMAINS` for callers that don't yet source the list from remote config.
+ * Checks whether `url`'s origin is one of the trusted CIE ID identity servers
+ * in `allowedOrigins`. Defaults to `WHITELISTED_DOMAINS` for callers that don't
+ * yet source the list from remote config.
  */
 export const isAllowedUrl = (
   url: string,
@@ -41,9 +41,4 @@ export const isAllowedUrl = (
   } catch {
     return false;
   }
-};
-
-export type CieIdLoginProps = {
-  isUat: boolean;
-  spidLevel: AuthLevel;
 };

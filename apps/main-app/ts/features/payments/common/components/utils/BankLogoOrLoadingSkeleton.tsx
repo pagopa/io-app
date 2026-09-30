@@ -12,11 +12,12 @@ type BankLogoOrSkeletonProps = {
 };
 
 /**
- *component that renders a bank logo based on the abiCode,
- * and displays a loader while the image is loading
+ * *component that renders a bank logo based on the abiCode, and displays a
+ * loader while the image is loading
+ *
  * @param abiCode
- * @param dimensions - height and width of the image and placeholder
- * @param placeHolderColor - color of the placeholder
+ * @param dimensions - Height and width of the image and placeholder
+ * @param placeHolderColor - Color of the placeholder
  */
 export const BankLogoOrSkeleton = ({
   abiCode,

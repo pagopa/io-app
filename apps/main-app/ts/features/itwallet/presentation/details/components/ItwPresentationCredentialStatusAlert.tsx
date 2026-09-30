@@ -114,6 +114,7 @@ const deriveJwtInvalidAlertType = ({
 }: JwtInvalidAlertProps): CredentialAlertType | undefined => {
   /**
    * 1. Don't show any alert if:
+   *
    * - The eID is expired or expiring AND the credential JWT is expiring
    * - OR the app is offline but the credential JWT is not yet expired
    */
@@ -127,6 +128,7 @@ const deriveJwtInvalidAlertType = ({
 
   /**
    * 2. Show the eID lifecycle alert if:
+   *
    * - Both the eID and the credential JWT are expired (and not in L3 mode)
    * - OR the app is offline and the credential JWT is expired
    */
@@ -212,9 +214,9 @@ export const deriveCredentialAlertType = (
 };
 
 /**
- * This component renders an alert related to the credential status (expiring or invalid).
- * It contains messages that are statically defined in the app's locale or
- * dynamically extracted from the issuer configuration.
+ * This component renders an alert related to the credential status (expiring or
+ * invalid). It contains messages that are statically defined in the app's
+ * locale or dynamically extracted from the issuer configuration.
  */
 const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const navigation = useIONavigation();
@@ -470,19 +472,21 @@ const DocumentExpiringAlert = ({
 const MdlSuspendedAlert = ({
   onTrack
 }: Pick<CredentialStatusAlertProps, "onTrack">) => {
-  const alertNs = "features.itWallet.presentation.alerts.mdl.suspended";
-  const bottomSheetNs =
-    "features.itWallet.presentation.bottomSheets.mDL.suspended";
-
   const bottomSheet = useIOBottomSheetModal({
-    title: I18n.t(`${alertNs}.title`),
+    title: I18n.t("features.itWallet.presentation.alerts.mdl.suspended.title"),
     component: (
       <VStack space={24}>
-        <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
+        <IOMarkdown
+          content={I18n.t(
+            "features.itWallet.presentation.bottomSheets.mDL.suspended.content"
+          )}
+        />
         <View style={{ marginBottom: 16 }}>
           <IOButton
             fullWidth
-            label={I18n.t(`${bottomSheetNs}.cta`)}
+            label={I18n.t(
+              "features.itWallet.presentation.bottomSheets.mDL.suspended.cta"
+            )}
             onPress={() => bottomSheet.dismiss()}
             variant="solid"
           />
@@ -496,8 +500,12 @@ const MdlSuspendedAlert = ({
   return (
     <>
       <Alert
-        action={I18n.t(`${alertNs}.action`)}
-        content={I18n.t(`${alertNs}.title`)}
+        action={I18n.t(
+          "features.itWallet.presentation.alerts.mdl.suspended.action"
+        )}
+        content={I18n.t(
+          "features.itWallet.presentation.alerts.mdl.suspended.title"
+        )}
         onPress={handleAlertPress}
         variant="error"
       />
