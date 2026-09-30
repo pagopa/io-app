@@ -1,5 +1,5 @@
 import { useIOToast } from "@io-app/design-system";
-import i18n from "i18next";
+import I18n from "i18next";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -24,7 +24,7 @@ export const useSendActivationFlow = () => {
   const handleRateLimitError = () => {
     dispatch(setSecurityAdviceReadyToShow(true));
     popToTop();
-    toast.error(i18n.t("features.pn.loginEngagement.send.rateLimitToast"));
+    toast.error(I18n.t("features.pn.loginEngagement.send.rateLimitToast"));
   };
 
   const onSENDActivationSucceeded = () => {
@@ -39,7 +39,7 @@ export const useSendActivationFlow = () => {
         sendUserType: "not_set"
       });
     }
-    toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
+    toast.success(I18n.t("features.pn.loginEngagement.send.toast"));
   };
   const onSENDActivationFailed = (isRateLimitError?: boolean) => {
     if (isRateLimitError === true) {
