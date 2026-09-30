@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-rc.7](https://github.com/pagopa/io-app/compare/3.40.0-rc.6...3.40.0-rc.7) (2026-09-28)
+
+### Bug Fixes
+
+* [[IOPID-4233](https://pagopa.atlassian.net/browse/IOPID-4233)] Ignore unknown CIE events to prevent state errors ([#8655](https://github.com/pagopa/io-app/issues/8655)) ([fcd16b5](https://github.com/pagopa/io-app/commit/fcd16b5bdd430af97b1f053d561b1f24ad57e8e3))
+* **IT-Wallet:** [[SIW-5133](https://pagopa.atlassian.net/browse/SIW-5133)] Remove scope from credential offer flow ([#8656](https://github.com/pagopa/io-app/issues/8656)) ([54e7250](https://github.com/pagopa/io-app/commit/54e7250dc08b09c7bc070541fd18a4f8e0c675b9))
+## [3.40.0-rc.6](https://github.com/pagopa/io-app/compare/3.40.0-rc.5...3.40.0-rc.6) (2026-09-25)
+
+### Features
+
+* [[IOPID-4127](https://pagopa.atlassian.net/browse/IOPID-4127)] Add user authentication step for OneIdentity flow ([#8642](https://github.com/pagopa/io-app/issues/8642)) ([66d9354](https://github.com/pagopa/io-app/commit/66d93548f43f3aa6b7e4c441c218dc19d06dac40))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-5129](https://pagopa.atlassian.net/browse/SIW-5129),[SIW-4993](https://pagopa.atlassian.net/browse/SIW-4993)] Show reissuance surveys only for L2 ([#8652](https://github.com/pagopa/io-app/issues/8652)) ([15f5c81](https://github.com/pagopa/io-app/commit/15f5c8156af4c14cef32a2917330203cb517ec28)), references [#8619](https://github.com/pagopa/io-app/issues/8619)
+
+### Chores
+
+* **release:** 3.39.0-rc.12 ([#8653](https://github.com/pagopa/io-app/issues/8653)) ([b889abc](https://github.com/pagopa/io-app/commit/b889abcd662822a8321fad218ac3a37732cf531f))
+## [3.39.0-rc.12](https://github.com/pagopa/io-app/compare/3.39.0-rc.11...3.39.0-rc.12) (2026-09-25)
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-5129](https://pagopa.atlassian.net/browse/SIW-5129)] show reissuance surveys only for Documenti su IO ([3cf7e7a](https://github.com/pagopa/io-app/commit/3cf7e7a7d9a900e5cd03492a9b01a5fbe8095192))
+
+## [3.40.0-rc.5](https://github.com/pagopa/io-app/compare/3.40.0-rc.4...3.40.0-rc.5) (2026-09-24)
+
+### Features
+
+* [[IOPID-4126](https://pagopa.atlassian.net/browse/IOPID-4126)] Add CIE card reading step for OneIdentity flow ([#8635](https://github.com/pagopa/io-app/issues/8635)) ([31e073c](https://github.com/pagopa/io-app/commit/31e073cd6b9b690a17928100ca1645f51f2e8d08))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Generate Key Attestation keys sequentially ([#8646](https://github.com/pagopa/io-app/issues/8646)) ([df3031b](https://github.com/pagopa/io-app/commit/df3031bbaf4162d1bee21ca64b49ecebd1e7b273))
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Omit wrong deprecated todo ([#8640](https://github.com/pagopa/io-app/issues/8640)) ([ed43dc3](https://github.com/pagopa/io-app/commit/ed43dc3924b087fd39a0a4c3b93dbbe4c117ec40))
+* [[IOPLT-2068](https://pagopa.atlassian.net/browse/IOPLT-2068)] Enable `jsdoc` formatting in `oxfmt` ([#8583](https://github.com/pagopa/io-app/issues/8583)) ([f689f4f](https://github.com/pagopa/io-app/commit/f689f4fd26ab2427f793da358c1bc6cdfe4d530d)), references [#7972](https://github.com/pagopa/io-app/issues/7972)
 ## [3.40.0-rc.4](https://github.com/pagopa/io-app/compare/3.40.0-rc.3...3.40.0-rc.4) (2026-09-23)
 
 ### Features

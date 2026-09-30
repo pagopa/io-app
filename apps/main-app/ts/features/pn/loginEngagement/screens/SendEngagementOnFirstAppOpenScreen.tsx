@@ -1,5 +1,5 @@
 import { Body } from "@io-app/design-system";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useEffect } from "react";
 
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -57,24 +57,24 @@ export const SendEngagementOnFirstAppOpenScreen = () => {
       <WhatsNewScreenContent
         action={{
           testID: "sendEngagementOnFirstAppOpenActionID",
-          label: i18n.t("features.pn.loginEngagement.send.action"),
+          label: I18n.t("features.pn.loginEngagement.send.action"),
           fullWidth: true,
           onPress: trackAndPresentActivationBottomSheet
         }}
         badge={{
-          text: i18n.t("features.pn.loginEngagement.send.topElement.label"),
+          text: I18n.t("features.pn.loginEngagement.send.topElement.label"),
           variant: "highlight"
         }}
         pictogram="savingMoney"
         secondaryAction={{
           testID: "sendEngagementOnFirstAppOpenSecondaryActionID",
-          label: i18n.t("features.pn.loginEngagement.send.secondaryAction"),
+          label: I18n.t("features.pn.loginEngagement.send.secondaryAction"),
           onPress: trackAndPresentAreYouSureBottomSheet
         }}
-        title={i18n.t("features.pn.loginEngagement.send.title")}
+        title={I18n.t("features.pn.loginEngagement.send.title")}
       >
         <IOMarkdown
-          content={i18n.t("features.pn.loginEngagement.send.description")}
+          content={I18n.t("features.pn.loginEngagement.send.description")}
           rules={customRules}
         />
       </WhatsNewScreenContent>
