@@ -4,9 +4,10 @@ import android.app.Activity
 import android.graphics.Color
 import android.os.Build
 import android.provider.Settings
-import android.view.View
 import android.view.WindowInsetsController
+import androidx.core.view.WindowCompat
 import expo.modules.kotlin.exception.CodedException
+import expo.modules.kotlin.functions.Queues
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
@@ -19,15 +20,12 @@ class NavigationBarManagerModule : Module() {
 
     AsyncFunction("setNavigationBarColor") { theme: String, backgroundColor: String ->
       val activity = appContext.currentActivity ?: throw NoActivityException()
-
-      activity.runOnUiThread {
-        when (theme.lowercase()) {
-          "dark" -> setDarkNavBar(activity, backgroundColor)
-          else -> setLightNavBar(activity, backgroundColor) // Default to light
-        }
+      when (theme.lowercase()) {
+        "dark" -> setDarkNavBar(activity, backgroundColor)
+        else -> setLightNavBar(activity, backgroundColor) // Default to light
       }
       true
-    }
+    }.runOnQueue(Queues.MAIN)
   }
 
   private fun isGestureNavigationEnabled(activity: Activity): Boolean =
@@ -53,11 +51,15 @@ class NavigationBarManagerModule : Module() {
     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
       // Android 14 (API 34) - disable contrast enforcement for edge-to-edge
       activity.window.isNavigationBarContrastEnforced = false
-      activity.window.navigationBarColor = if (isGestureNavigationEnabled(activity)) {
+      activity.window.insetsController?.setSystemBarsAppearance(
+        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+      )
+      setNavigationBarColor(activity, if (isGestureNavigationEnabled(activity)) {
         Color.TRANSPARENT
       } else {
         navBarColor
-      }
+      })
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
       // Android 11+ (API 30+)
       val controller = activity.window.insetsController
@@ -65,16 +67,15 @@ class NavigationBarManagerModule : Module() {
         WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
         WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
       )
-      activity.window.navigationBarColor = navBarColor
+      setNavigationBarColor(activity, navBarColor)
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       // Android 8.0+ (API 26+)
-      activity.window.decorView.systemUiVisibility =
-        activity.window.decorView.systemUiVisibility or
-          View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-      activity.window.navigationBarColor = navBarColor
+      WindowCompat.getInsetsController(activity.window, activity.window.decorView)
+        .isAppearanceLightNavigationBars = true
+      setNavigationBarColor(activity, navBarColor)
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       // Android 5.0+ (API 21+) - no light navigation bar support
-      activity.window.navigationBarColor = navBarColor
+      setNavigationBarColor(activity, navBarColor)
     }
   }
 
@@ -88,11 +89,15 @@ class NavigationBarManagerModule : Module() {
     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
       // Android 14 (API 34) - disable contrast enforcement for edge-to-edge
       activity.window.isNavigationBarContrastEnforced = false
-      activity.window.navigationBarColor = if (isGestureNavigationEnabled(activity)) {
+      activity.window.insetsController?.setSystemBarsAppearance(
+        0,
+        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+      )
+      setNavigationBarColor(activity, if (isGestureNavigationEnabled(activity)) {
         Color.TRANSPARENT
       } else {
         navBarColor
-      }
+      })
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
       // Android 11+ (API 30+)
       val controller = activity.window.insetsController
@@ -100,16 +105,20 @@ class NavigationBarManagerModule : Module() {
         0,
         WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
       )
-      activity.window.navigationBarColor = navBarColor
+      setNavigationBarColor(activity, navBarColor)
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       // Android 8.0+ (API 26+)
-      activity.window.decorView.systemUiVisibility =
-        activity.window.decorView.systemUiVisibility and
-          View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
-      activity.window.navigationBarColor = navBarColor
+      WindowCompat.getInsetsController(activity.window, activity.window.decorView)
+        .isAppearanceLightNavigationBars = false
+      setNavigationBarColor(activity, navBarColor)
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       // Android 5.0+ (API 21+)
-      activity.window.navigationBarColor = navBarColor
+      setNavigationBarColor(activity, navBarColor)
     }
+  }
+
+  @Suppress("DEPRECATION")
+  private fun setNavigationBarColor(activity: Activity, color: Int) {
+    activity.window.navigationBarColor = color
   }
 }
