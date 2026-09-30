@@ -28,12 +28,6 @@ jobs:
         run: pnpm format:check
       - id: generate-api-models
         run: pnpm nx run @io-app/api-types:generate
-      - id: run-affected-checks
-        if: github.event_name == 'pull_request'
-        run: pnpm validate
-      - id: run-all-checks
-        if: github.event_name != 'pull_request'
-        run: pnpm validate-all
       - id: knip
         name: Check unused files and/or references
         # Advisory only: reports code this PR left unused, and can never block a
@@ -75,6 +69,12 @@ jobs:
           path: knip-pr
           retention-days: 1
           if-no-files-found: ignore
+      - id: run-affected-checks
+        if: github.event_name == 'pull_request'
+        run: pnpm validate
+      - id: run-all-checks
+        if: github.event_name != 'pull_request'
+        run: pnpm validate-all
       - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
