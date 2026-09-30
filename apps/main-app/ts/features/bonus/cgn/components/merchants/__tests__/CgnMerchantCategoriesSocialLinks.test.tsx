@@ -37,9 +37,15 @@ describe("CgnMerchantCategoriesSocialLinks", () => {
   });
 
   it("opens social links when pressed", () => {
-    const { getByTestId } = render(<CgnMerchantCategoriesSocialLinks />);
+    const { getByRole } = render(<CgnMerchantCategoriesSocialLinks />);
 
-    fireEvent.press(getByTestId("cgn-social-link-instagram"));
+    fireEvent.press(
+      getByRole("button", {
+        name: I18n.t(
+          "bonus.cgn.merchantsList.categoriesList.socialLinks.instagram"
+        )
+      })
+    );
 
     expect(openWebUrl).toHaveBeenCalledWith(
       "https://www.instagram.com/giovani_e_servizio_civile/"
