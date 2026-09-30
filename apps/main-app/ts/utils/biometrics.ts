@@ -87,7 +87,7 @@ const biometricAuthenticationFailureHandler = (
 ) => {
   void mixpanelTrack("BIOMETRIC_ERROR", { error });
   if (isDebugBiometricIdentificationEnabled) {
-    Alert.alert("identification.biometric.title", `KO: ${error}`);
+    Alert.alert(I18n.t("identification.biometric.title"), `KO: ${error}`);
   }
   onError(error as LocalAuthentication.LocalAuthenticationError);
   if (Platform.OS === "android") {

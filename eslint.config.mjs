@@ -480,7 +480,8 @@ export default defineConfig([
       }
     },
     rules: {
-      "@io-app/i18n-no-unused-keys": "warn"
+      // Checked without cache by the `lint-locales` script
+      "@io-app/i18n-no-unused-keys": "error"
     }
   }
 ]);
