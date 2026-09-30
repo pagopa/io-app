@@ -48,8 +48,12 @@ async function migrateLegacyItem(
   if (typeof legacy === "boolean") {
     return undefined;
   }
-  await setChunked(sanitizedKey, legacy.password);
-  await LegacyKeychain.resetGenericPassword({ service: originalKey });
+  try {
+    await setChunked(sanitizedKey, legacy.password);
+    await LegacyKeychain.resetGenericPassword({ service: originalKey });
+  } catch (err) {
+    getKeychainError = JSON.stringify(err);
+  }
   return legacy.password;
 }
 
