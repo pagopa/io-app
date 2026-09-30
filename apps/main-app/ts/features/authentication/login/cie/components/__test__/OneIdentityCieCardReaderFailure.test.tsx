@@ -3,6 +3,11 @@ import { render, screen } from "@testing-library/react-native";
 
 import { OneIdentityCieCardReaderFailure } from "../OneIdentityCieCardReaderFailure";
 
+const mockUseDebugInfo = jest.fn();
+jest.mock("../../../../../../hooks/useDebugInfo", () => ({
+  useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
+}));
+
 jest.mock("../../screens/CieExpiredOrInvalidScreen", () => ({
   __esModule: true,
   default: () => {
@@ -113,6 +118,19 @@ describe("OneIdentityCieCardReaderFailure", () => {
       expect(wrongPinElement.props.remainingCount).toBe(2);
     }
   );
+
+  it.each<{ event: CEvent["event"]; name: string }>([
+    { name: "a wrong PIN", event: "ON_PIN_ERROR" },
+    { name: "a wrong card", event: "ON_TAG_DISCOVERED_NOT_CIE" },
+    { name: "an expired card", event: "CERTIFICATE_EXPIRED" },
+    { name: "an unhandled event", event: "Transmission Error" }
+  ])("should set the failure event as debug data on $name", ({ event }) => {
+    const failure = { event, attemptsLeft: 1 } as unknown as CEvent;
+
+    render(<OneIdentityCieCardReaderFailure failure={failure} />);
+
+    expect(mockUseDebugInfo).toHaveBeenLastCalledWith({ failure });
+  });
 
   it("should render nothing for an unhandled failure event", () => {
     const { toJSON } = render(

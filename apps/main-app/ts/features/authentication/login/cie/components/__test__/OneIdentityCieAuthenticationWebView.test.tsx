@@ -29,6 +29,11 @@ jest.mock("react-native-webview", () => {
   };
 });
 
+const mockUseDebugInfo = jest.fn();
+jest.mock("../../../../../../hooks/useDebugInfo", () => ({
+  useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
+}));
+
 const OneIdentityCieAuthenticationWebView = withStore(
   OneIdentityCieAuthenticationWebViewComponent
 );
@@ -260,6 +265,98 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       expect(
         getByText(I18n.t("authentication.errors.network.title"))
       ).toBeTruthy();
+    });
+  });
+
+  describe("debug info", () => {
+    it("should not set debug data while authenticating", () => {
+      mockUseOneIdentityLoginSource();
+
+      render(
+        <OneIdentityCieAuthenticationWebView
+          onAuthenticationUrlReceived={onAuthenticationUrlReceived}
+        />
+      );
+
+      expect(mockUseDebugInfo).toHaveBeenLastCalledWith({});
+    });
+
+    it("should set the login source error as debug data when the login source fails", () => {
+      mockUseOneIdentityLoginSource({
+        loginSourceState: { status: "failure", error: "some error" }
+      });
+
+      render(
+        <OneIdentityCieAuthenticationWebView
+          onAuthenticationUrlReceived={onAuthenticationUrlReceived}
+        />
+      );
+
+      expect(mockUseDebugInfo).toHaveBeenLastCalledWith({
+        failure: "some error"
+      });
+    });
+
+    it.each([
+      {
+        name: "a WebView error",
+        event: "onError",
+        nativeEvent: { url: "https://example.com/error" },
+        expectedFailure: "WebView error on https://example.com/error"
+      },
+      {
+        name: "an HTTP error",
+        event: "onHttpError",
+        nativeEvent: { url: "https://example.com/error", statusCode: 500 },
+        expectedFailure: "HTTP error 500 on https://example.com/error"
+      },
+      {
+        name: "an error page",
+        event: "onLoadEnd",
+        nativeEvent: { title: "Errore" },
+        expectedFailure: "Errore"
+      }
+    ])(
+      "should set the failure reason as debug data on $name",
+      ({ event, nativeEvent, expectedFailure }) => {
+        mockUseOneIdentityLoginSource();
+
+        const { getByTestId } = render(
+          <OneIdentityCieAuthenticationWebView
+            onAuthenticationUrlReceived={onAuthenticationUrlReceived}
+          />
+        );
+
+        fireEvent(getByTestId("cie-authentication-webview"), event, {
+          nativeEvent
+        });
+
+        expect(mockUseDebugInfo).toHaveBeenLastCalledWith({
+          failure: expectedFailure
+        });
+      }
+    );
+
+    it("should set the failure reason as debug data on a failed login URL", () => {
+      mockUseOneIdentityLoginSource();
+
+      const { getByTestId } = render(
+        <OneIdentityCieAuthenticationWebView
+          onAuthenticationUrlReceived={onAuthenticationUrlReceived}
+        />
+      );
+
+      fireEvent(
+        getByTestId("cie-authentication-webview"),
+        "onShouldStartLoadWithRequest",
+        {
+          url: "https://io.italia.it/error.html?errorCode=19&errorMessage=annullato"
+        }
+      );
+
+      expect(mockUseDebugInfo).toHaveBeenLastCalledWith({
+        failure: expect.stringContaining("(19)")
+      });
     });
   });
 
