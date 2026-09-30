@@ -66,6 +66,7 @@ const mockFileInstance = (exists: boolean) =>
 jest.mock("../../store/reducers/downloads");
 
 jest.mock("../../utils/attachments", () => ({
+  ...jest.requireActual("../../utils/attachments"),
   attachmentDisplayName: jest.fn(() => "test.pdf")
 }));
 
@@ -177,7 +178,7 @@ describe("useAttachmentDownload", () => {
         await result.current.onModuleAttachmentPress();
       });
 
-      expect(MockFile).toHaveBeenCalledWith(downloadPath);
+      expect(MockFile).toHaveBeenCalledWith(`file://${downloadPath}`);
       expect(mockDispatch).toHaveBeenCalledWith(
         clearRequestedAttachmentDownload()
       );
@@ -375,6 +376,7 @@ describe("useAttachmentDownload", () => {
             clearRequestedAttachmentDownload()
           );
         });
+        expect(MockFile).toHaveBeenCalledWith("file:///tmp/test.pdf");
         if (shouldNavigate) {
           expect(mockNavigate).toHaveBeenCalled();
         } else {

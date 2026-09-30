@@ -3,11 +3,11 @@ import { call } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
 import { removeCachedAttachment } from "../store/actions";
-import { AttachmentsDirectoryPath } from "../utils/attachments";
+import { AttachmentsDirectoryPath, toFileUri } from "../utils/attachments";
 
 /** Clears cached files for all the attachments */
 export function* handleClearAllAttachments() {
-  const dir = new File(AttachmentsDirectoryPath);
+  const dir = new File(toFileUri(AttachmentsDirectoryPath));
   if (dir.exists) {
     yield* call([dir, dir.delete]);
   }
@@ -23,7 +23,7 @@ export function* handleClearAttachment(
 ) {
   const path = action.payload.path;
   if (path) {
-    const file = new File(path);
+    const file = new File(toFileUri(path));
     if (file.exists) {
       yield* call([file, file.delete]);
     }

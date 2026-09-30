@@ -6,7 +6,8 @@ import {
   attachmentDownloadUrl,
   getHeaderValueByKey,
   pdfSavePath,
-  restrainRetryAfterIntervalInMilliseconds
+  restrainRetryAfterIntervalInMilliseconds,
+  toFileUri
 } from "../attachments";
 
 jest.mock("expo-file-system", () => ({
@@ -22,6 +23,18 @@ jest.mock("../../../../config", () => ({
 const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH";
 
 describe("attachments", () => {
+  describe("toFileUri", () => {
+    it("adds the file scheme to a plain filesystem path", () => {
+      expect(toFileUri("/tmp/document.pdf")).toBe("file:///tmp/document.pdf");
+    });
+
+    it("does not duplicate an existing file scheme", () => {
+      expect(toFileUri("file:///tmp/document.pdf")).toBe(
+        "file:///tmp/document.pdf"
+      );
+    });
+  });
+
   describe("pdfSavePath function", () => {
     it("should correctly format the save path for regular pdf filename (lowercase)", () => {
       const path = pdfSavePath(messageId, "att123", "document.pdf");

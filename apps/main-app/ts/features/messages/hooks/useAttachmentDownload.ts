@@ -31,7 +31,7 @@ import {
   requestedDownloadErrorSelector
 } from "../store/reducers/downloads";
 import { decodeSendFailureReason, WrappedSendError } from "../utils";
-import { attachmentDisplayName } from "../utils/attachments";
+import { attachmentDisplayName, toFileUri } from "../utils/attachments";
 
 export const useAttachmentDownload = (
   messageId: string,
@@ -105,7 +105,7 @@ export const useAttachmentDownload = (
 
   const handleAttachmentDownloadSuccess = useCallback(
     async (downloadPath: string) => {
-      if (new File(downloadPath).exists) {
+      if (new File(toFileUri(downloadPath)).exists) {
         doNavigate();
       } else {
         dispatch(clearRequestedAttachmentDownload());
@@ -149,7 +149,7 @@ export const useAttachmentDownload = (
     // Make sure to cancel whatever download may already be running
     dispatch(cancelPreviousAttachmentDownload());
 
-    if (download && new File(download.path).exists) {
+    if (download && new File(toFileUri(download.path)).exists) {
       doNavigate();
     } else {
       dispatch(
