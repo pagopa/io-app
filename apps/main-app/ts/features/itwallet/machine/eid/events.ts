@@ -169,6 +169,7 @@ type SimulateFailure = {
  *   from the beginning.
  */
 type Start = {
+  credentialOfferUri?: string;
   credentialType?: string;
   level: EidIssuanceLevel;
   mode: EidIssuanceMode;

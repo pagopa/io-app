@@ -162,6 +162,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
             navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
               animationEnabled: false,
               credentialType,
+              credentialOfferUri,
               level: isL3Enabled ? "l3" : "l2"
             });
           }
@@ -197,6 +198,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
             navigation.replace(ITW_ROUTES.IDENTIFICATION.MODE_SELECTION, {
               animationEnabled: false,
               credentialType,
+              credentialOfferUri,
               eidReissuing: true,
               level: isL3Enabled ? "l3" : "l2"
             });

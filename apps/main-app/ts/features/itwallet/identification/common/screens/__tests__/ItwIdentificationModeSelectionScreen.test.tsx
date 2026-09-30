@@ -41,6 +41,9 @@ const every90Days = () =>
     "features.itWallet.identification.modeSelection.frequency.every90Days"
   );
 
+const T_CREDENTIAL_OFFER_URI =
+  "openid-credential-offer://?credential_offer_uri=https://issuer.example/offer";
+
 describe("ItwIdentificationModeSelectionScreen", () => {
   beforeEach(() => {
     jest
@@ -191,6 +194,40 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     }
   );
 
+  it.each([
+    {
+      name: "Doc su IO credential",
+      credentialType: CredentialType.DRIVING_LICENSE,
+      expectedCredentialOfferUri: T_CREDENTIAL_OFFER_URI
+    },
+    {
+      name: "L3 credential",
+      credentialType: CredentialType.EDUCATION_DEGREE,
+      expectedCredentialOfferUri: undefined
+    }
+  ])(
+    "forwards the credential offer of a $name to the fallback issuance only when it can be resumed",
+    ({ credentialType, expectedCredentialOfferUri }) => {
+      const { getByTestId } = renderComponent(
+        "issuance",
+        "l3",
+        credentialType,
+        T_CREDENTIAL_OFFER_URI
+      );
+
+      fireEvent.press(getByTestId("noCieButtonTestID"));
+
+      expect(mockNavigateToTos).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({
+            credentialOfferUri: expectedCredentialOfferUri
+          })
+        }),
+        undefined
+      );
+    }
+  );
+
   describe("disabled identification methods", () => {
     it("hides CiePin when disabled", () => {
       jest
@@ -239,7 +276,8 @@ describe("ItwIdentificationModeSelectionScreen", () => {
 const renderComponent = (
   mode: EidIssuanceMode,
   level: EidIssuanceLevel,
-  credentialType?: string
+  credentialType?: string,
+  credentialOfferUri?: string
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -276,6 +314,7 @@ const renderComponent = (
         mode,
         level,
         credentialType,
+        credentialOfferUri,
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
