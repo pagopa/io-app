@@ -192,7 +192,7 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
   });
 
   it.each(["CANCEL", "ONE_IDENTITY_LOGIN_FAILURE", "WEBVIEW_ERROR"] as const)(
-    "should navigate to CIE_ID_ERROR on %s event",
+    "should navigate to CIE_ID_ERROR with the failure on %s event",
     eventType => {
       const { getByTestId } = renderComponent();
       const cieIdLoginMock = getByTestId("cie-id-webview-login-mock");
@@ -200,7 +200,8 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
       fireEvent(cieIdLoginMock, "event", { type: eventType });
 
       expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+        screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
+        params: { failure: { type: eventType } }
       });
     }
   );

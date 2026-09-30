@@ -25,6 +25,11 @@ jest.mock("@react-navigation/native", () => ({
   })
 }));
 
+const mockUseDebugInfo = jest.fn();
+jest.mock("../../../../../../hooks/useDebugInfo", () => ({
+  useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
+}));
+
 describe(CieIdNotInstalled, () => {
   afterEach(jest.clearAllMocks);
   it("Should match the snapshot", () => {
@@ -80,6 +85,18 @@ describe(CieIdNotInstalled, () => {
       expect(mockPopToTop).not.toHaveBeenCalled();
     });
   });
+  it.each(UAT_ENV_ENABLE_STATES)(
+    "Should set isUat %s and the login flow as debug data",
+    isUat => {
+      render(<CieIdNotInstalledWithStore isUat={isUat} />);
+
+      expect(mockUseDebugInfo).toHaveBeenLastCalledWith({
+        isUat,
+        flow: "auth"
+      });
+    }
+  );
+
   UAT_ENV_ENABLE_STATES.forEach(uatState => {
     it("Should call popToTop", () => {
       const { getByTestId } = render(
