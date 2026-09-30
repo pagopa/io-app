@@ -1,8 +1,10 @@
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
+import { State } from "react-native-ble-plx";
 
 import type { ProximityDetails, VerifierRequest } from "../utils/types";
 
 export type ProximityEvents =
+  | BluetoothStateChanged
   | Close
   | Consent
   | Continue
@@ -18,6 +20,11 @@ export type ProximityEvents =
   | Start
   | StartNfcPresentment
   | StoreConsent;
+
+type BluetoothStateChanged = {
+  state: State;
+  type: "bluetooth-state-changed";
+};
 
 type Close = {
   type: "close";
