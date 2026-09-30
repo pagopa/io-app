@@ -28,12 +28,10 @@ import {
 import { downloadedMessageAttachmentSelector } from "../../store/reducers/downloads";
 import {
   attachmentContentType,
-  attachmentDisplayName
+  attachmentDisplayName,
+  toFileUri
 } from "../../utils/attachments";
 import { PdfViewer } from "./PdfViewer";
-
-const toFileUri = (path: string) =>
-  path.startsWith("file://") ? path : `file://${path}`;
 
 type MessageAttachmentFooterProps = {
   attachmentCategory?: string;

@@ -7,6 +7,10 @@ import { apiUrlPrefix } from "../../../config";
 export const AttachmentsDirectoryPath =
   Paths.cache.uri.replace(/^file:\/\//, "").replace(/\/$/, "") + "/attachments";
 
+/** Converts a filesystem path to a file URI without adding a duplicate scheme. */
+export const toFileUri = (path: string) =>
+  path.startsWith("file://") ? path : `file://${path}`;
+
 /**
  * Builds the save path for the given attachment
  *
