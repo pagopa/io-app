@@ -1,6 +1,6 @@
 import { FeatureInfo, IOButton, VStack } from "@io-app/design-system";
 import { constUndefined } from "fp-ts/lib/function";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useRef } from "react";
 
 import { useIODispatch } from "../../../../store/hooks";
@@ -33,7 +33,7 @@ const BsFooterButton = ({
         true,
         undefined,
         {
-          label: i18n.t("global.buttons.cancel"),
+          label: I18n.t("global.buttons.cancel"),
           onCancel: onIdentificationCancel
         },
         {
@@ -46,7 +46,7 @@ const BsFooterButton = ({
   return (
     <IOButton
       fullWidth
-      label={i18n.t("global.buttons.continue")}
+      label={I18n.t("global.buttons.continue")}
       onPress={handlePress}
       testID="requestIdentification"
       variant="solid"
@@ -64,7 +64,7 @@ export const useSendAarDelegationProposalScreenBottomSheet = ({
 }: SendAarDelegationProposalBsProps) => {
   const ctaPressed = useRef(false);
 
-  const featureInfoText = i18n.t(
+  const featureInfoText = I18n.t(
     "features.pn.aar.flow.delegated.notAdressee.bottomSheet.featureInfos",
     { returnObjects: true, name: citizenName }
   );
@@ -97,7 +97,7 @@ export const useSendAarDelegationProposalScreenBottomSheet = ({
   );
 
   return useIOBottomSheetModal({
-    title: i18n.t(
+    title: I18n.t(
       "features.pn.aar.flow.delegated.notAdressee.bottomSheet.title"
     ),
     component: <Body />,
