@@ -5,15 +5,13 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { SpidIdp } from "../../../../utils/idps";
 
 const POSTE_ID_IDP_ID = "https://posteid.poste.it";
-
-type WebViewLoadStatus = "failed" | "idle" | "loaded";
 
 /**
  * Educational bottom sheet about the PosteID App2App flow, shown at most once
@@ -26,7 +24,7 @@ type WebViewLoadStatus = "failed" | "idle" | "loaded";
  */
 export const useOneIdentityPosteIDApp2AppEducational = (idp: SpidIdp) => {
   const presentedRef = useRef(false);
-  const [loadStatus, setLoadStatus] = useState<WebViewLoadStatus>("idle");
+
   const bottomSheetContent = useMemo(
     () => (
       <View>
@@ -72,35 +70,17 @@ export const useOneIdentityPosteIDApp2AppEducational = (idp: SpidIdp) => {
     []
   );
 
-  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
+  const { bottomSheet, present } = useIOBottomSheetModal({
     title: I18n.t("authentication.idp_login.poste_id.bottom_sheet.title"),
     component: bottomSheetContent
   });
 
-  const onWebViewLoad = useCallback(
-    () => setLoadStatus(status => (status === "idle" ? "loaded" : status)),
-    []
-  );
-
-  const onWebViewError = useCallback(() => setLoadStatus("failed"), []);
-
-  useEffect(() => {
-    if (loadStatus === "failed") {
-      // `dismiss` closes every sheet in the provider, so only call it for ours
-      if (presentedRef.current) {
-        dismiss();
-      }
-      return;
-    }
-    if (
-      idp.id === POSTE_ID_IDP_ID &&
-      loadStatus === "loaded" &&
-      !presentedRef.current
-    ) {
+  const presentOnce = useCallback(() => {
+    if (idp.id === POSTE_ID_IDP_ID && !presentedRef.current) {
       presentedRef.current = true;
       present();
     }
-  }, [dismiss, idp.id, loadStatus, present]);
+  }, [idp.id, present]);
 
-  return { bottomSheet, onWebViewLoad, onWebViewError };
+  return { bottomSheet, presentOnce };
 };

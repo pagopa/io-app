@@ -86,8 +86,7 @@ export const IdpWebViewLogin = memo(
 
     const {
       bottomSheet: posteIdBottomSheet,
-      onWebViewLoad: onPosteIdWebViewLoad,
-      onWebViewError: onPosteIdWebViewError
+      presentOnce: presentOncePosteIdBottomSheet
     } = useOneIdentityPosteIDApp2AppEducational(idp);
 
     const handleError = useCallback(
@@ -106,13 +105,12 @@ export const IdpWebViewLogin = memo(
           return;
         }
 
-        onPosteIdWebViewError();
         onEvent({
           type: "WEBVIEW_ERROR",
           payload: { url: nativeEvent.url }
         });
       },
-      [idp.id, onEvent, onPosteIdWebViewError]
+      [idp.id, onEvent]
     );
 
     const handleLoginFailure = useCallback(
@@ -184,7 +182,9 @@ export const IdpWebViewLogin = memo(
       },
       [dispatch]
     );
-
+    const handleOnLoad = () => {
+      presentOncePosteIdBottomSheet();
+    };
     if (
       loginSourceState.status === "reserving-public-key" ||
       loginSourceState.status === "verifying-assertion-ref"
@@ -204,7 +204,7 @@ export const IdpWebViewLogin = memo(
           cacheEnabled={false}
           onError={handleError}
           onHttpError={handleError}
-          onLoad={onPosteIdWebViewLoad}
+          onLoad={handleOnLoad}
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
           originWhitelist={originSchemasWhiteList}
