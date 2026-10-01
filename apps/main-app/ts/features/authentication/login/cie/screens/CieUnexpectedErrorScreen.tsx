@@ -1,6 +1,3 @@
-/**
- * A screen to alert the user about the number of attempts remains
- */
 import I18n from "i18next";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
@@ -8,6 +5,7 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
+/** Screen to display an unexpected error during the CIE authentication process */
 const CieUnexpectedErrorScreen = () => {
   const navigation = useIONavigation();
 

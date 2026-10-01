@@ -3,17 +3,13 @@ import { View } from "react-native";
 
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
-/**
- * The type of the content of the bottom sheet.
- */
+/** The type of the content of the bottom sheet. */
 type ItwInfoFlowContentType = {
   body: string;
   title?: string;
 };
 
-/**
- * Type of the props of the hook.
- */
+/** Type of the props of the hook. */
 type ItwInfoFlowProps = {
   content: Array<ItwInfoFlowContentType>;
   title: string;
@@ -21,8 +17,10 @@ type ItwInfoFlowProps = {
 
 /**
  * A hook that returns a function to present an info bottom sheet.
- * @param title - the title of the bottom sheet.
- * @param content - the content of the bottom sheet. Consists of an array of objects with a title and a body.
+ *
+ * @param title - The title of the bottom sheet.
+ * @param content - The content of the bottom sheet. Consists of an array of
+ *   objects with a title and a body.
  */
 export const useItwInfoBottomSheet = ({ title, content }: ItwInfoFlowProps) => {
   const BottomSheetBody = () => (

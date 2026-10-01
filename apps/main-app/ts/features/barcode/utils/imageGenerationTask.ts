@@ -11,8 +11,8 @@ const PdfHighResGenerator =
   NativeModules.PdfHighResGenerator as PdfHighResGeneratorType;
 
 /**
- * Creates a TaskEither that generates all the images from a PDF document
- * using the Native Module for High Resolution rendering (Scale 3.0).
+ * Creates a TaskEither that generates all the images from a PDF document using
+ * the Native Module for High Resolution rendering (Scale 3.0).
  */
 export const imageGenerationTask = (
   pdfUri: string

@@ -29,7 +29,9 @@ describe("handleIdPayGenerateCode", () => {
             bearerAuth: tBearerToken,
             initiativeId: tInitiativeId
           }),
-          { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
+          {
+            action: idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          }
         )
         .next(E.right({ status: 200, value: { idpayCode: tIdPayCode } }))
         .put(idPayGenerateCode.success({ idpayCode: tIdPayCode }))
@@ -55,7 +57,9 @@ describe("handleIdPayGenerateCode", () => {
             bearerAuth: tBearerToken,
             initiativeId: tInitiativeId
           }),
-          { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
+          {
+            action: idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          }
         )
         .next(E.right({ status: 500 }))
         .put(
@@ -85,7 +89,9 @@ describe("handleIdPayGenerateCode", () => {
             bearerAuth: tBearerToken,
             initiativeId: tInitiativeId
           }),
-          { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
+          {
+            action: idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          }
         )
         .next(E.left([]))
         .put(

@@ -5,11 +5,11 @@ import {
   useIOToast
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import { File, Paths } from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import RNFS from "react-native-fs";
 import Pdf from "react-native-pdf";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
@@ -91,15 +91,16 @@ export const ItwPresentationCredentialAttachmentScreen = ({
     ({ fileName, uri, type }: AttachmentData) =>
     async () => {
       const fileNameWithExtension = getFileNameWithExtension(fileName, type);
-      const tempPath = `${RNFS.CachesDirectoryPath}/${fileNameWithExtension}`;
+      const file = new File(Paths.cache, fileNameWithExtension);
 
       try {
-        await RNFS.writeFile(
-          tempPath,
-          uri.replace(PDF_DATA_URI_PREFIX, ""),
-          "base64"
+        const base64Data = uri.replace(PDF_DATA_URI_PREFIX, "");
+        file.write(
+          Uint8Array.from(atob(base64Data), character =>
+            character.charCodeAt(0)
+          )
         );
-        await Sharing.shareAsync(`file://${tempPath}`, {
+        await Sharing.shareAsync(file.uri, {
           mimeType: type,
           dialogTitle: fileNameWithExtension
         });
@@ -107,9 +108,8 @@ export const ItwPresentationCredentialAttachmentScreen = ({
         toast.show(I18n.t("messagePDFPreview.errors.sharing"));
       } finally {
         try {
-          const exists = await RNFS.exists(tempPath);
-          if (exists) {
-            await RNFS.unlink(tempPath);
+          if (file.exists) {
+            file.delete();
           }
         } catch {
           // Best-effort cleanup of a temporary cache file.
@@ -137,11 +137,12 @@ export const ItwPresentationCredentialAttachmentScreen = ({
         paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
       }}
     >
-      {/** Be aware that, in react-native-pdf 6.7.7, on Android, there
-       * is a bug where onLoadComplete callback is not called. So,
-       * if you have to use such callback, you should rely upon
-       * onPageChanged, which is called to report that the first page
-       * has loaded */}
+      {/**
+       * Be aware that, in react-native-pdf 6.7.7, on Android, there is a bug where
+       * onLoadComplete callback is not called. So, if you have to use such callback,
+       * you should rely upon onPageChanged, which is called to report that the first
+       * page has loaded
+       */}
       <Pdf
         enablePaging
         fitPolicy={0}
@@ -165,9 +166,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
   );
 };
 
-/**
- * Given the attachment claim, return the data needed to display the attachment
- */
+/** Given the attachment claim, return the data needed to display the attachment */
 const getAttachmentData = ({
   name,
   value
@@ -187,7 +186,8 @@ const getAttachmentData = ({
 };
 
 /**
- * Given the filename and the type of the attachment, returns the filename with the extension.
+ * Given the filename and the type of the attachment, returns the filename with
+ * the extension.
  */
 const getFileNameWithExtension = (
   fileName: string,

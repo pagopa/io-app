@@ -34,6 +34,19 @@ const OperationWithDetailsType = enumType<
   "OperationWithDetails"
 );
 
+const getOperationDetailsTitle = (type: OperationWithDetailsType): string => {
+  switch (type) {
+    case RefundOperationTypeEnum.PAID_REFUND:
+      return I18n.t("idpay.initiative.operationDetails.title.PAID_REFUND");
+    case RefundOperationTypeEnum.REJECTED_REFUND:
+      return I18n.t("idpay.initiative.operationDetails.title.REJECTED_REFUND");
+    case TransactionOperationTypeEnum.REVERSAL:
+      return I18n.t("idpay.initiative.operationDetails.title.REVERSAL");
+    case TransactionOperationTypeEnum.TRANSACTION:
+      return I18n.t("idpay.initiative.operationDetails.title.TRANSACTION");
+  }
+};
+
 type IdPayTimelineDetailsBottomSheetModal = Omit<
   IOBottomSheetModal,
   "present"
@@ -42,7 +55,9 @@ type IdPayTimelineDetailsBottomSheetModal = Omit<
 };
 
 /**
- * This hook is used to show the bottom sheet with the details of a timeline operation
+ * This hook is used to show the bottom sheet with the details of a timeline
+ * operation
+ *
  * @param initiativeId ID of the initiative associated to the operation details
  */
 const useIdPayTimelineDetailsBottomSheet = (
@@ -119,7 +134,7 @@ const useIdPayTimelineDetailsBottomSheet = (
     pipe(
       OperationWithDetailsType.decode(operation.operationType),
       E.map(type => {
-        setTitle(I18n.t(`idpay.initiative.operationDetails.title.${type}`));
+        setTitle(getOperationDetailsTitle(type));
         dispatch(
           idpayTimelineDetailsGet.request({
             initiativeId,

@@ -194,8 +194,8 @@ export const ItwIssuanceEidResultScreen = () => {
  * IT-Wallet (L3) success TYP shown after the PID has been obtained (both in the
  * standard issuance flow and at the end of the "Documenti su IO" → IT-Wallet
  * upgrade flow). Two versions are shown depending on whether the wallet already
- * contains at least one digital document (the eID/PID is not counted, regardless
- * of "Documenti su IO" activation)
+ * contains at least one digital document (the eID/PID is not counted,
+ * regardless of "Documenti su IO" activation)
  */
 const ItwEidSuccessResultContent = ({
   isWalletEmpty,
@@ -381,7 +381,7 @@ const ItwIssuanceEidUpgradeResultContent = ({
 const ItwIssuanceEidReissuanceResultContent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const isL3IssuanceFlow = ItwEidIssuanceMachineContext.useSelector(
+  const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
   const route = useRoute();
@@ -412,16 +412,16 @@ const ItwIssuanceEidReissuanceResultContent = () => {
         "features.itWallet.issuance.eidResult.success.reissuance.title"
       )}
     >
-      {/* This survey is reserved to IT-Wallet (L3): "Documenti su IO" (L2/l2-fallback) reissuance must never trigger it. */}
-      {isL3IssuanceFlow && <ItwReissuanceFeedbackBanner />}
+      {/* This survey is reserved to "Documenti su IO" (L2) reissuance */}
+      {!isL3 && <ItwReissuanceFeedbackBanner />}
     </OperationResultScreenContent>
   );
 };
 
 /**
- * Transitional screen shown right after the eID issuance is completed.
- * Its only purpose is to display a loading indicator while navigation
- * proceeds toward the credential issuance flow.
+ * Transitional screen shown right after the eID issuance is completed. Its only
+ * purpose is to display a loading indicator while navigation proceeds toward
+ * the credential issuance flow.
  */
 const ItwIssuanceEidCredentialTriggerContent = () => (
   <LoadingScreenContent title={I18n.t("global.genericWaiting")} />

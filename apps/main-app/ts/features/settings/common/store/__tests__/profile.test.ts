@@ -368,7 +368,9 @@ describe("pushNotificationRemindersEnabledSelector", () => {
   });
   it("should return false for a pot.someLoading profile with DISABLED reminder_status", () => {
     const globalState = {
-      profile: pot.someLoading({ reminder_status: ReminderStatusEnum.DISABLED })
+      profile: pot.someLoading({
+        reminder_status: ReminderStatusEnum.DISABLED
+      })
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);

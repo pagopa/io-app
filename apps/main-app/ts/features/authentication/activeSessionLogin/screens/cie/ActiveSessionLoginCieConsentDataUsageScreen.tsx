@@ -1,8 +1,8 @@
 /**
- * A screen to display, by a webview, the consent to send user sensitive data
- * to backend and proceed with the onboarding process
+ * A screen to display, by a webview, the consent to send user sensitive data to
+ * backend and proceed with the onboarding process
  */
-import { Route, useRoute } from "@react-navigation/native";
+import { Route, StackActions, useRoute } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
@@ -68,14 +68,13 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
 
   const navigateToErrorScreen = useCallback(
     (errorCodeOrMessageProp?: string) => {
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        params: {
+      navigation.dispatch(
+        StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
           errorCodeOrMessage: errorCodeOrMessageProp,
           authMethod: "CIE",
-          authLevel: AUTH_LEVELS.L2
-        }
-      });
+          authLevel: AUTH_LEVELS.L3
+        })
+      );
     },
     [navigation]
   );
@@ -158,7 +157,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   }
   if (!hasError) {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}

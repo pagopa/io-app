@@ -14,7 +14,10 @@ import { Store } from "redux";
 import { TestInnerNavigationContainer } from "../navigation/AppStackNavigator";
 import * as linkingSubscription from "../navigation/linkingSubscription";
 
-/** Renders a screen with a store and navigator, mocking the linking subscription. */
+/**
+ * Renders a screen with a store and navigator, mocking the linking
+ * subscription.
+ */
 export const renderScreenWithNavigationStoreContext = <S,>(
   screen: ComponentType<any>,
   route: string,
@@ -35,8 +38,9 @@ export const renderScreenWithNavigationStoreContext = <S,>(
   );
 
 /**
- * Awaits the initial render and effects with the same providers and linking mock
- * as the synchronous helper. Use asynchronous interactions with the result.
+ * Awaits the initial render and effects with the same providers and linking
+ * mock as the synchronous helper. Use asynchronous interactions with the
+ * result.
  */
 export const renderScreenWithNavigationStoreContextAsync = <S,>(
   screen: ComponentType<any>,
