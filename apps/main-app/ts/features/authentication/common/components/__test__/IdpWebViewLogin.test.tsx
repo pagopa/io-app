@@ -278,8 +278,7 @@ describe("IdpWebViewLogin", () => {
   });
 
   describe("PosteID educational bottom sheet", () => {
-    const mockOnWebViewLoad = jest.fn();
-    const mockOnWebViewError = jest.fn();
+    const mockPresentOnce = jest.fn();
 
     beforeEach(() => {
       mockUseOneIdentityLoginSource();
@@ -290,48 +289,44 @@ describe("IdpWebViewLogin", () => {
         )
         .mockReturnValue({
           bottomSheet: <></>,
-          onWebViewLoad: mockOnWebViewLoad,
-          onWebViewError: mockOnWebViewError
+          presentOnce: mockPresentOnce
         });
     });
 
-    it("should notify the WebView load", () => {
+    it("should present the bottom sheet when the WebView loads", () => {
       const { getByTestId } = render(
         <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
       );
 
-      expect(mockOnWebViewLoad).not.toHaveBeenCalled();
+      expect(mockPresentOnce).not.toHaveBeenCalled();
 
       fireEvent(getByTestId("webview-idp-login-screen"), "onLoad");
 
-      expect(mockOnWebViewLoad).toHaveBeenCalledTimes(1);
+      expect(mockPresentOnce).toHaveBeenCalledTimes(1);
     });
 
-    it("should notify the WebView error before emitting WEBVIEW_ERROR", () => {
-      const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
-      );
-
-      fireEvent(getByTestId("webview-idp-login-screen"), "onError", {
+    it.each([
+      {
+        name: "onError",
         nativeEvent: { url: "https://example.com/error" }
-      });
-
-      expect(mockOnWebViewError).toHaveBeenCalledTimes(1);
-      expect(mockOnWebViewError.mock.invocationCallOrder[0]).toBeLessThan(
-        onEvent.mock.invocationCallOrder[0]
-      );
-    });
-
-    it("should not notify the WebView error on HTTP errors", () => {
-      const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
-      );
-
-      fireEvent(getByTestId("webview-idp-login-screen"), "onHttpError", {
+      },
+      {
+        name: "onHttpError",
         nativeEvent: { url: "https://example.com/error", statusCode: 403 }
-      });
+      }
+    ])(
+      "should not present the bottom sheet on $name",
+      ({ name, nativeEvent }) => {
+        const { getByTestId } = render(
+          <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        );
 
-      expect(mockOnWebViewError).not.toHaveBeenCalled();
-    });
+        fireEvent(getByTestId("webview-idp-login-screen"), name, {
+          nativeEvent
+        });
+
+        expect(mockPresentOnce).not.toHaveBeenCalled();
+      }
+    );
   });
 });
