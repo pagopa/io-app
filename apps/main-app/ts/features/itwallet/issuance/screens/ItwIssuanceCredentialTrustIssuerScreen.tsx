@@ -125,9 +125,7 @@ type ContentViewProps = {
   requiredClaimNames: ReadonlyArray<string>;
 };
 
-/**
- * Renders the content of the screen
- */
+/** Renders the content of the screen */
 const ContentView = ({
   credentialType,
   requiredClaimNames,

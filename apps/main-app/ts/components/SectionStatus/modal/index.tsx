@@ -48,10 +48,11 @@ const statusVariantMap: Record<
 };
 
 /**
- * This component is a clone of `SectionStatusComponent` but, in addition,
- * when `sticky` prop is `true` it can be anchored to the top of the screen to avoid to push down the content.
- * Another additional feature is that it adds top padding related to `SafeAreaInsets` top value
- * to avoid content from being covered from device status bar.
+ * This component is a clone of `SectionStatusComponent` but, in addition, when
+ * `sticky` prop is `true` it can be anchored to the top of the screen to avoid
+ * to push down the content. Another additional feature is that it adds top
+ * padding related to `SafeAreaInsets` top value to avoid content from being
+ * covered from device status bar.
  */
 const ModalSectionStatusComponent = ({
   sectionKey,

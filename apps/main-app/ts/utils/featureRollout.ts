@@ -9,7 +9,8 @@ const MAX_UINT32 = 4294967295;
  *
  * @param deviceId - The unique identifier of the device.
  * @param rolloutPercentage - The current remote rollout threshold (0-100).
- * @param featureName - The feature name, used as a salt to ensure independent distributions across features.
+ * @param featureName - The feature name, used as a salt to ensure independent
+ *   distributions across features.
  * @returns `true` if the feature is enabled for the device; otherwise `false`.
  */
 export const isFeatureEnabled = (
@@ -38,7 +39,8 @@ export const isFeatureEnabled = (
  *
  * @param deviceId - The unique identifier of the device.
  * @param featureName - The feature name used as a cryptographic salt.
- * @returns A predictable decimal value representing the device's rollout bucket.
+ * @returns A predictable decimal value representing the device's rollout
+ *   bucket.
  */
 const computeDeviceRolloutRatio = (
   deviceId: string,

@@ -1,6 +1,4 @@
-/**
- * Defines types for the available actions and store related stuff.
- */
+/** Defines types for the available actions and store related stuff. */
 import {
   Dispatch as DispatchAPI,
   MiddlewareAPI as ReduxMiddlewareAPI,

@@ -38,18 +38,19 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
   const itwVersion = useIOSelector(selectItwSpecsVersion);
 
   /**
-   * Using useLayoutEffect here ensures that trackItwRemoteStart() runs
-   * as soon as the component is mounted, before any effect of its children.
+   * Using useLayoutEffect here ensures that trackItwRemoteStart() runs as soon
+   * as the component is mounted, before any effect of its children.
    */
   useLayoutEffect(() => {
     trackItwRemoteStart();
   }, []);
 
   /**
-   * There may be scenarios where the app is not running when the user opens the link,
-   * so the app is started and the user goes through the identification or the full authentication process.
-   * Here we wait for the startup status to be authenticated to avoid inconsistencies
-   * between the machine and the navigation.
+   * There may be scenarios where the app is not running when the user opens the
+   * link, so the app is started and the user goes through the identification or
+   * the full authentication process. Here we wait for the startup status to be
+   * authenticated to avoid inconsistencies between the machine and the
+   * navigation.
    */
   if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
     return (

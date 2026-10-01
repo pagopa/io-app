@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 
-/**
+/*
 DRAFT for an AUTOMATIC process to generate new pictogram components 
 (`Pictogram....tsx`) from the SVG files exported from Figma.
 
@@ -14,7 +14,7 @@ Prerequisites:
 
 // STEPS:
 
-/**
+/*
  * 1. Only process the newly added files
  *
  * Suggested path:
@@ -25,7 +25,7 @@ Prerequisites:
  * 4. After the process run, update the new file with the current timestamp.
  */
 
-/**
+/*
  * 2. Optimize SVG files with SVGO package (https://github.com/svg/svgo)
  *
  * Suggested path:
@@ -38,7 +38,7 @@ Prerequisites:
  * 3. Overwrite the original files
  */
 
-/**
+/*
  * 3. Create the relative React component (with .tsx)
  *
  * Suggested path:
@@ -72,6 +72,17 @@ const templateFilePath = join(
   "../src/components/pictograms/svg/_PictogramTemplate.tsx"
 );
 const timestampFilePath = join(__dirname, "pictograms_timestamp.txt");
+
+/* Reuse the repo-wide config so generated components already match `pnpm format`. */
+const oxfmtOptions = fs.readJsonSync(join(__dirname, "../../../.oxfmtrc.json"));
+delete oxfmtOptions.$schema;
+
+/* `oxfmt` is ESM-only, hence the dynamic import from this CommonJS script. */
+const formatComponent = async (fileName, sourceText) => {
+  const { format } = await import("oxfmt");
+  const { code } = await format(fileName, sourceText, oxfmtOptions);
+  return code;
+};
 
 const colorMapValues = {
   "#0B3EE3": "{colorValues.hands}",

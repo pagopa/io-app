@@ -36,10 +36,10 @@ export type FlowType =
   | "preferenze";
 
 /**
- *
- * @param isOnBoarding existing user making new login
- * @param isFirstOnBoarding new user making new login
- * @param isUserBrowsing user navigating the app after firstOnboarding/onboarding
+ * @param isOnBoarding Existing user making new login
+ * @param isFirstOnBoarding New user making new login
+ * @param isUserBrowsing User navigating the app after
+ *   firstOnboarding/onboarding
  * @returns
  */
 export const getFlowType = (
@@ -114,11 +114,13 @@ export const trackAppCaughtError = (
 };
 
 /**
- * Track the event when the user taps on the [Help Center CTA](https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33561#1130270800)
+ * Track the event when the user taps on the [Help Center
+ * CTA](https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33561#1130270800)
  *
  * @param hc_id - The contextual ID of the CTA (ex: SESSION_EXPIRED)
  * @param hc_landing_url - The URL where we navigate the user
- * @param hc_source - The route name where the CTA is (ex: AUTHENTICATION_LANDING)
+ * @param hc_source - The route name where the CTA is (ex:
+ *   AUTHENTICATION_LANDING)
  */
 export function trackHelpCenterCtaTapped(
   hc_id?: string,
@@ -260,7 +262,8 @@ function toUrlWithoutQueryParams(url: string) {
 // #region Offline
 
 /**
- * Track the event when the user tries to perform an action that is not available offline
+ * Track the event when the user tries to perform an action that is not
+ * available offline
  *
  * @param screen - The screen where the user tried to perform the action
  */
@@ -272,7 +275,8 @@ export const trackOfflineActionNotAllowed = (screen: string) => {
 };
 
 /**
- * Track the event when the user tries to access a content that is not available offline
+ * Track the event when the user tries to access a content that is not available
+ * offline
  *
  * @param content - The screen where the user tried to access the content
  */

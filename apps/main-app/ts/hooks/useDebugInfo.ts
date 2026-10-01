@@ -6,7 +6,9 @@ import { useIODispatch, useIOSelector } from "../store/hooks";
 import { isDebugModeEnabledSelector } from "../store/reducers/debug";
 
 /**
- * Sets debug data for the mounted component. Removes it when the component is unmounted
+ * Sets debug data for the mounted component. Removes it when the component is
+ * unmounted
+ *
  * @param data Data to be displayes in debug mode
  */
 export const useDebugInfo = (data: Record<string, unknown>) => {

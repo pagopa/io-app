@@ -40,13 +40,18 @@ const buildState = (
     catalogue: pot.Pot<DigitalCredentialsCatalogue, unknown>;
     isEnabledForCredentialsList: boolean;
     preferredLanguage: string;
+    remoteConfig: {
+      hidden_credentials?: ReadonlyArray<string>;
+      new_credentials?: ReadonlyArray<string>;
+      pinned_credentials?: ReadonlyArray<string>;
+    };
     translations: pot.Pot<Record<string, Record<string, string>>, unknown>;
   }> = {}
 ) =>
   ({
     features: {
       itWallet: {
-        remoteConfig: {},
+        remoteConfig: overrides.remoteConfig ?? {},
         credentialsCatalogue: {
           isEnabledForCredentialsList:
             overrides.isEnabledForCredentialsList ?? false,
@@ -269,6 +274,89 @@ describe("itwAvailableCredentialsListSelector", () => {
         name: "Frequenza scolastica",
         type: "education_attendance"
       }
+    ]);
+  });
+
+  it("should filter and order hardcoded credentials using remote config", () => {
+    const state = buildState({
+      catalogue: pot.some(mockCatalogue),
+      remoteConfig: {
+        new_credentials: [
+          "EuropeanHealthInsuranceCard",
+          "proof_of_age",
+          "residency"
+        ],
+        pinned_credentials: [
+          "mDL",
+          "EuropeanHealthInsuranceCard",
+          "education_degree"
+        ],
+        hidden_credentials: [
+          "proof_of_age",
+          "education_degree",
+          "EuropeanDisabilityCard"
+        ]
+      }
+    });
+
+    expect(
+      itwAvailableCredentialsListSelector(state).map(({ type }) => type)
+    ).toEqual([
+      "EuropeanHealthInsuranceCard",
+      "residency",
+      "mDL",
+      "education_enrollment",
+      "education_diploma",
+      "education_attendance"
+    ]);
+  });
+
+  it("should filter and order catalogue credentials using remote config", () => {
+    const state = buildState({
+      isEnabledForCredentialsList: true,
+      catalogue: pot.some({
+        ...mockCatalogue,
+        credentials: [
+          ...mockCatalogue.credentials,
+          { credential_type: pidScopes[0], name: "PID" },
+          { credential_type: "cred3", name: "Credential 3" },
+          { credential_type: "cred4", name: "Credential 4" }
+        ] as DigitalCredentialsCatalogue["credentials"]
+      }),
+      remoteConfig: {
+        new_credentials: ["cred2", "cred3", "unknown"],
+        pinned_credentials: ["cred1", "cred2", "cred3"],
+        hidden_credentials: ["cred3"]
+      }
+    });
+
+    expect(itwAvailableCredentialsListSelector(state)).toEqual([
+      { type: "cred2", name: "Credential 2" },
+      { type: "cred1", name: "Credential 1" },
+      { type: "cred4", name: "Credential 4" }
+    ]);
+  });
+
+  it("should filter hardcoded credentials while the enabled catalogue is unavailable", () => {
+    const state = buildState({
+      isEnabledForCredentialsList: true,
+      remoteConfig: {
+        new_credentials: ["residency"],
+        hidden_credentials: ["mDL"]
+      }
+    });
+
+    expect(
+      itwAvailableCredentialsListSelector(state).map(({ type }) => type)
+    ).toEqual([
+      "residency",
+      "EuropeanDisabilityCard",
+      "EuropeanHealthInsuranceCard",
+      "proof_of_age",
+      "education_degree",
+      "education_enrollment",
+      "education_diploma",
+      "education_attendance"
     ]);
   });
 });
