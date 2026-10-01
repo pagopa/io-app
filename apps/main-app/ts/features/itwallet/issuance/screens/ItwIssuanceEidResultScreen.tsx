@@ -357,7 +357,7 @@ const ItwIssuanceEidUpgradeResultContent = ({
 const ItwIssuanceEidReissuanceResultContent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const isL3IssuanceFlow = ItwEidIssuanceMachineContext.useSelector(
+  const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
   const route = useRoute();
@@ -388,8 +388,8 @@ const ItwIssuanceEidReissuanceResultContent = () => {
         "features.itWallet.issuance.eidResult.success.reissuance.title"
       )}
     >
-      {/* This survey is reserved to IT-Wallet (L3): "Documenti su IO" (L2/l2-fallback) reissuance must never trigger it. */}
-      {isL3IssuanceFlow && <ItwReissuanceFeedbackBanner />}
+      {/* This survey is reserved to "Documenti su IO" (L2) reissuance */}
+      {!isL3 && <ItwReissuanceFeedbackBanner />}
     </OperationResultScreenContent>
   );
 };

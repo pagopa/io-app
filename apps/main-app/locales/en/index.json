@@ -1538,7 +1538,6 @@
         "credentialPreview": {
           "actions": {
             "primary": "Add to Wallet",
-            "secondary": "Cancel",
             "somethingWrong": "Does something seem off?"
           },
           "bottomSheet": {
@@ -1551,9 +1550,6 @@
               "title": "Who is it?"
             },
             "somethingWrong": {
-              "body": "If you find any errors or inconsistencies, please report them to the institution that holds the data and is responsible for it.",
-              "bodyAuthSource": "For this digital document, the reference institution is {{authSource}}.",
-              "bodyFooter": "Once the data has been corrected, you can repeat the process of adding the document to your portfolio.",
               "bodyMarkdown": "If you find any errors or inconsistencies, you must report them to the entity that holds the data and is responsible for it.\n\nOnce the data has been corrected, you can add the document back to your Portfolio.\n\nFor this digital document, please refer to:\n{{contacts}}",
               "contactUrl": "Website",
               "primaryAction": "Got it",
@@ -1562,8 +1558,7 @@
           },
           "detailsTitle": "Check the details",
           "loading": "Please wait a few more seconds without exiting the app",
-          "subtitle": "If the information is correct, add the document to the Portfolio.",
-          "title": "{{credential}}: here's a preview of your data"
+          "subtitle": "If the information is correct, add the document to the Portfolio."
         },
         "credentialResult": {
           "toast": "Done!"
@@ -2595,7 +2590,6 @@
             "title": "Here you'll see the receipts for the payments you've made"
           }
         },
-        "multiplePayment": "Multiple payments",
         "receipt": {
           "a11y": {
             "preview": "Preview received in PDF format"
@@ -3062,8 +3056,6 @@
       "cards": {
         "categories": {
           "all": "All",
-          "bonus": "Welfare programs",
-          "cgn": "Carta Giovani Nazionale",
           "itw": "Documents",
           "other": "Bonuses and more"
         }
@@ -3103,7 +3095,6 @@
           "addRestricted": "Add documents with limited functionality"
         },
         "l3-sections": {
-          "added": "Active",
           "itw": "Documents",
           "other": "Bonuses and more"
         },
@@ -3113,8 +3104,7 @@
         },
         "options": {
           "cgn": "Carta Giovani Nazionale",
-          "payments": "Payment methods",
-          "welfare": "Welfare programs"
+          "payments": "Payment methods"
         },
         "sections": {
           "itw": "Documents",
@@ -3433,7 +3423,6 @@
         },
         "paymentMethods": {
           "APP_IO_PAYMENT": {
-            "actionItem": "How does it work?",
             "description": "Scan the QR code shown by the merchant and follow the instructions in the app to authorize the purchase.",
             "title": "Use the IO app"
           },
@@ -3680,7 +3669,6 @@
           "ISEE": "ISEE",
           "RESIDENCE": "Residence"
         },
-        "fallbackInitiativeName": "the program",
         "familyUnitCode": {
           "ANPR": {
             "description": "Ministry of the Interior",
@@ -3704,8 +3692,7 @@
         "prerequisites": {
           "info": {
             "body": "We communicate directly with the entity that holds the information needed to perform the verification—in this case, **{{provider}}**. This way, you do not need to submit any self-certification.",
-            "header": "How is the verification done?",
-            "understoodCTA": "Got it"
+            "header": "How is the verification done?"
           }
         },
         "subtitle": "To participate in the \" {{service}}\" program, we will consult with other institutions to verify whether you meet the eligibility requirements.",
@@ -3834,7 +3821,6 @@
         "button": {
           "continue": "OK, close"
         },
-        "pleaseWait": "Please wait a moment...",
         "requestSent": {
           "subtitle": "You will receive a **message on IO** when the status of your request is available.\n\nYou can check the status of your request in the **Services** section",
           "title": "Your request has been sent!"
@@ -3992,16 +3978,12 @@
   "locales": {
     "de": "German",
     "en": "English",
-    "fr": "French",
-    "it": "Italian",
-    "sl": "Slovenian"
+    "it": "Italian"
   },
   "localesTranslated": {
     "de": "German",
     "en": "English",
-    "fr": "French",
-    "it": "Italian",
-    "sl": "Slovenian"
+    "it": "Italian"
   },
   "login": {
     "help_banner_action": "Learn how to do it",
@@ -4137,8 +4119,6 @@
       "paid": "Paid"
     },
     "contentTitle": "Messages",
-    "contextualHelpContent": "**The Messages section contains all incoming communications from institutions that offer their services through IO**. \nYou can set reminders for deadlines or pay a bill directly from the message.  \nMessages are divided into **Received** (which contains all messages that have arrived and have not been archived), **Deadlines** (which displays only messages containing a due date, to help you manage your to-do list), and **Archived** (which keeps track of all archived messages).  \nTo archive a message, simply press and hold the message you want to archive, and select the “Archive” button that will appear on the screen.\n",
-    "contextualHelpTitle": "What you can do in your Messages",
     "cta": {
       "archive": "Archive",
       "calendarPermDenied": {
@@ -4151,7 +4131,6 @@
       "errors": {
         "fetchCalendars": "Error retrieving calendars"
       },
-      "reminder": "Reminder",
       "reminderAddFailure": "An error occurred while adding the reminder. Please try again.",
       "reminderAddSuccess": "Reminder added",
       "reminderAlertAdd": "Add a new event",
@@ -4265,8 +4244,6 @@
         "title": "Protect your device"
       }
     },
-    "contextualHelpContent": "**If you want to access the app more quickly without having to enter your unlock code every time, you can do so** by enabling fingerprint recognition directly from your operating system's settings.  \nFrom the IO app settings, you can decide at any time whether to keep or disable biometric recognition... give it a try, and you’ll see that you won’t want to be without it!\n",
-    "contextualHelpTitle": "How biometric recognition works",
     "exitAlert": {
       "description": "You'll need to log in again with SPID or CIE to use the app.",
       "title": "Are you sure you want to log out of IO?"
@@ -4719,8 +4696,6 @@
     "title": "Forwarding messages via email"
   },
   "services": {
-    "contextualHelpContent": "**In the Services section, you can view the list of agencies that offer their services on IO, as well as the list of services associated with each institution.** Services are divided into local services—where you can select institution of interest based on the geographic area where you live—national services—that is, central government institution offering services to all Italian citizens—and finally, all services, where you can find the complete list of all services available on IO (both local and national).   \nWe invite you to use this section to explore the services made available by IO, set up your list of local services, and view the details of individual services. Whenever a new local or national service is added to IO, you’ll receive a notification so you can immediately check what it is and whether it’s useful to you.\n",
-    "contextualHelpTitle": "What you can do in your Services",
     "details": {
       "failure": {
         "back": "Back",
@@ -5072,8 +5047,6 @@
     "capability": {
       "title": "Available programs"
     },
-    "contextualHelpContent": "**The \"Wallet\" section lists your payment methods, your bonuses and discount cards, and the history of transactions made with pagoPA**, the payment platform for the Public Administration. \nHere, you can also pay all paper payment notices bearing the pagoPA logo: scan the QR code on the paper notice and complete the payment directly from the app. IO currently supports only credit\/debit card payments, but other payment methods will be added soon.",
-    "contextualHelpTitle": "What you can d in your Wallet",
     "continue": "Proceed to checkout",
     "creditCard": {
       "validUntil": "Valid until {{expDate}}"
@@ -5280,8 +5253,7 @@
             "countdownExpiredTitle": "An operation is already in progress; please try again later.",
             "countdownTitle": "An operation is already in progress; please try again in {{minutes}} minutes",
             "subtitle": "If the problem persists, contact support."
-          },
-          "title": "An operation is already in progress; please try again later."
+          }
         },
         "PAYMENT_SLOWDOWN_ERROR": {
           "subtitle": "Please try again later.",

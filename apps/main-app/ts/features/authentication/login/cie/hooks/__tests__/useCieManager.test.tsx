@@ -1,5 +1,5 @@
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
-import { act, renderHook, waitFor } from "@testing-library/react-native";
+import { act, renderHook } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 
@@ -45,9 +45,6 @@ const createTestStore = () => {
 const setupTest = ({
   onSuccess = jest.fn(),
   store = createTestStore()
-}: {
-  onSuccess?: jest.Mock;
-  store?: ReturnType<typeof createTestStore>;
 } = {}) => {
   const utils = renderHook(() => useCieManager({ onSuccess }), {
     wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
@@ -55,23 +52,26 @@ const setupTest = ({
   return { ...utils, onSuccess, store };
 };
 
-// Convenience to grab the onEvent/onError/onSuccess callbacks registered by
-// the hook the last time `startReading` was invoked.
-const getRegisteredCallbacks = () => ({
-  emitEvent: mockedCieManager.onEvent.mock.calls.at(-1)?.[0] as (
-    event: CEvent
-  ) => void,
-  emitError: mockedCieManager.onError.mock.calls.at(-1)?.[0] as (
-    error: Error
-  ) => void,
-  emitSuccess: mockedCieManager.onSuccess.mock.calls.at(-1)?.[0] as (
-    url: string
-  ) => void
-});
-
 describe("useCieManager", () => {
+  // eslint-disable-next-line functional/no-let
+  let emitEvent: (event: CEvent) => void;
+  // eslint-disable-next-line functional/no-let
+  let emitError: (error: Error) => void;
+  // eslint-disable-next-line functional/no-let
+  let emitSuccess: (url: string) => void;
+
   beforeEach(() => {
     jest.clearAllMocks();
+
+    mockedCieManager.onEvent.mockImplementation(cb => {
+      emitEvent = cb;
+    });
+    mockedCieManager.onError.mockImplementation(cb => {
+      emitError = cb;
+    });
+    mockedCieManager.onSuccess.mockImplementation(cb => {
+      emitSuccess = cb;
+    });
   });
 
   it("should start in idle state", () => {
@@ -86,40 +86,39 @@ describe("useCieManager", () => {
       await result.current.startReading("12345678", "https://auth.example.com");
     });
 
-    const { emitEvent } = getRegisteredCallbacks();
     act(() => {
-      emitEvent({ event: "ON_TAG_DISCOVERED", attemptsLeft: 3 });
+      emitEvent({ event: "ON_TAG_DISCOVERED", attemptsLeft: 3 } as CEvent);
     });
 
     expect(result.current.state).toEqual({ status: "reading" });
   });
 
   it("should call onSuccess after the success event and set the success state", async () => {
+    jest.useFakeTimers();
+
     const { result, onSuccess } = setupTest();
 
     await act(async () => {
       await result.current.startReading("12345678", "https://auth.example.com");
     });
 
-    const { emitSuccess } = getRegisteredCallbacks();
     act(() => {
       emitSuccess("https://consent.example.com");
     });
 
     expect(result.current.state).toEqual({ status: "success" });
 
-    await waitFor(
-      () => {
-        expect(onSuccess).toHaveBeenCalledWith("https://consent.example.com");
-      },
-      { timeout: 3000 }
-    );
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(onSuccess).toHaveBeenCalledWith("https://consent.example.com");
+
+    jest.useRealTimers();
   });
 
   it("should set an inline reading-failure state for ON_TAG_LOST and dispatch cieAuthenticationError", async () => {
     const store = createTestStore();
-    // Simulate an active-session (re-authentication) login flow so that
-    // `cieLoginFlowSelector` resolves to "reauth" instead of the default "auth".
     store.dispatch(setStartActiveSessionLogin());
     const dispatchSpy = jest.spyOn(store, "dispatch");
     const { result } = setupTest({ store });
@@ -128,9 +127,8 @@ describe("useCieManager", () => {
       await result.current.startReading("12345678", "https://auth.example.com");
     });
 
-    const { emitEvent } = getRegisteredCallbacks();
     act(() => {
-      emitEvent({ event: "ON_TAG_LOST", attemptsLeft: 0 });
+      emitEvent({ event: "ON_TAG_LOST", attemptsLeft: 0 } as CEvent);
     });
 
     expect(result.current.state.status).toBe("reading-failure");
@@ -140,7 +138,7 @@ describe("useCieManager", () => {
         expect.objectContaining({
           reason: "ON_TAG_LOST",
           flow: "reauth"
-        }) as any
+        })
       )
     );
   });
@@ -152,7 +150,6 @@ describe("useCieManager", () => {
       await result.current.startReading("12345678", "https://auth.example.com");
     });
 
-    const { emitError } = getRegisteredCallbacks();
     act(() => {
       emitError(new Error("native error"));
     });
@@ -163,23 +160,70 @@ describe("useCieManager", () => {
     });
   });
 
-  it("should set a dedicated failure state for other error events", async () => {
-    const { result } = setupTest();
+  it.each([
+    "AUTHENTICATION_ERROR",
+    "CERTIFICATE_EXPIRED",
+    "CERTIFICATE_REVOKED",
+    "EXTENDED_APDU_NOT_SUPPORTED",
+    "ON_CARD_PIN_LOCKED",
+    "ON_NO_INTERNET_CONNECTION",
+    "ON_PIN_ERROR",
+    "ON_TAG_DISCOVERED_NOT_CIE",
+    "PIN Locked",
+    "TAG_ERROR_NFC_NOT_SUPPORTED",
+    "Function not supported"
+  ] as const)(
+    "should set a dedicated failure state for the %s error event",
+    async failureEvent => {
+      const { result } = setupTest();
 
-    await act(async () => {
-      await result.current.startReading("12345678", "https://auth.example.com");
-    });
+      await act(async () => {
+        await result.current.startReading(
+          "12345678",
+          "https://auth.example.com"
+        );
+      });
 
-    const { emitEvent } = getRegisteredCallbacks();
-    act(() => {
-      emitEvent({ event: "EXTENDED_APDU_NOT_SUPPORTED", attemptsLeft: 0 });
-    });
+      act(() => {
+        emitEvent({ event: failureEvent, attemptsLeft: 0 } as CEvent);
+      });
 
-    expect(result.current.state).toEqual({
-      status: "failure",
-      failure: { event: "EXTENDED_APDU_NOT_SUPPORTED", attemptsLeft: 0 }
-    });
-  });
+      expect(result.current.state).toEqual({
+        status: "failure",
+        failure: { event: failureEvent, attemptsLeft: 0 }
+      });
+      expect(mockedTrackLoginCieCardReadingError).toHaveBeenCalled();
+    }
+  );
+
+  it.each([
+    "PIN_INPUT_ERROR",
+    "START_NFC_ERROR",
+    "STOP_NFC_ERROR",
+    "SOME_UNHANDLED_EVENT"
+  ] as const)(
+    "should ignore the %s event and keep the current state",
+    async unhandledEvent => {
+      const { result } = setupTest();
+
+      await act(async () => {
+        await result.current.startReading(
+          "12345678",
+          "https://auth.example.com"
+        );
+      });
+
+      act(() => {
+        emitEvent({
+          event: unhandledEvent as unknown as CEvent["event"],
+          attemptsLeft: 0
+        } as CEvent);
+      });
+
+      expect(result.current.state).toEqual({ status: "idle" });
+      expect(mockedTrackLoginCieCardReadingError).not.toHaveBeenCalled();
+    }
+  );
 
   it("should set a failure state when starting the reading fails", async () => {
     mockedCieManager.setPin.mockRejectedValueOnce(new Error("boom"));
