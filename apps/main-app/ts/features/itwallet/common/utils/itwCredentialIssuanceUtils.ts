@@ -130,6 +130,7 @@ export const getEffectiveBatchSize = (
 export type RequestCredential = (args: {
   credentialType: string;
   env: Env;
+  issuerConf?: IssuerConfiguration;
   itwVersion: ItwVersion;
   pid: CredentialBundle;
   resolvedCredentialOffer?: CredentialOfferResolved;
@@ -149,12 +150,16 @@ export type RequestCredential = (args: {
  *
  * When issuance starts from a Credential Offer, the `authorization_code` grant
  * details drive the flow: the offer's `authorization_server` is validated
- * against the issuer metadata during trust evaluation, while `scope` and
- * `issuer_state` are forwarded to the Pushed Authorization Request.
+ * against the issuer metadata during trust evaluation, while the optional
+ * `issuer_state` value is forwarded to the Pushed Authorization Request. The
+ * issuer configuration can be supplied when it was already evaluated while
+ * resolving the offer.
  *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
+ * @param issuerConf - An already evaluated issuer configuration (optional, if
+ *   not provided it is fetched by this function)
  * @param walletInstanceAttestation - The wallet instance attestation
  * @param skipMdocIssuance - Whether mDoc credential configurations must be
  *   excluded from the request
@@ -168,6 +173,7 @@ export const requestCredential: RequestCredential = async ({
   env,
   itwVersion,
   credentialType,
+  issuerConf: resolvedIssuerConf,
   walletInstanceAttestation,
   skipMdocIssuance,
   resolvedCredentialOffer,
@@ -181,15 +187,23 @@ export const requestCredential: RequestCredential = async ({
   const authorizationCodeGrant =
     resolvedCredentialOffer?.grantDetails.authorizationCodeGrant;
 
-  // Evaluate issuer trust. The authorization server declared by the offer
+  // The issuer metadata might have already been fetched at the start of the credential offer flow
+  // eslint-disable-next-line functional/no-let
+  let issuerConf = resolvedIssuerConf;
+
+  // If not, evaluate issuer trust here. The authorization server declared by the offer
   // must match one of the issuer metadata `authorization_servers`.
-  const credentialIssuer =
-    resolvedCredentialOffer?.offer.credential_issuer ??
-    env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion);
-  const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
-    credentialIssuer,
-    { authorizationServer: authorizationCodeGrant?.authorizationServer }
-  );
+  if (!issuerConf) {
+    const credentialIssuer =
+      resolvedCredentialOffer?.offer.credential_issuer ??
+      env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion);
+
+    issuerConf = (
+      await ioWallet.CredentialIssuance.evaluateIssuerTrust(credentialIssuer, {
+        authorizationServer: authorizationCodeGrant?.authorizationServer
+      })
+    ).issuerConf;
+  }
 
   const credentialIds = resolvedCredentialOffer?.offer
     .credential_configuration_ids
@@ -221,8 +235,7 @@ export const requestCredential: RequestCredential = async ({
         walletInstanceAttestation,
         redirectUri: env.ISSUANCE_REDIRECT_URI,
         wiaCryptoContext,
-        // Offer flow only: forwarded to the PAR, omitted in the catalogue flow
-        scope: authorizationCodeGrant?.scope,
+        // Offer flow only: an optional issuer state is forwarded
         issuerState: authorizationCodeGrant?.issuerState
       }
     );
@@ -606,36 +619,39 @@ type GenerateKeysWithKeyAttestation = (
 export const generateKeysWithKeyAttestation: GenerateKeysWithKeyAttestation =
   async (accessToken, { env, itwVersion, hardwareKeyTag, sessionToken }) => {
     const ioWallet = getIoWallet(itwVersion);
+    const authorizedCredentials: Array<AuthorizedCredentialMetadata> = [];
 
-    return Promise.all(
-      accessToken.authorization_details.map(async authDetails => {
-        const keyTag = uuidv4().toString();
+    for (const authDetails of accessToken.authorization_details) {
+      const keyTag = uuidv4().toString();
 
-        // If the KA is supported, keys are generated via the KeyAttestationCryptoContext
-        // and sent to the Wallet Provider to get the Key Attestation
-        if (ioWallet.KeyAttestation.isSupported) {
-          const keyAttestation = await getKeyAttestation(
-            env,
-            itwVersion,
-            [keyTag],
-            hardwareKeyTag,
-            sessionToken
-          );
-          // Unique ID to correlate multiple keys to the same KA (ex. batch issuance)
-          const keyAttestationId = uuidv4().toString();
-          return {
-            keyTag,
-            authDetails,
-            keyAttestation,
-            keyAttestationId
-          };
-        }
-
+      // If the KA is supported, keys are generated via the KeyAttestationCryptoContext
+      // and sent to the Wallet Provider to get the Key Attestation
+      if (ioWallet.KeyAttestation.isSupported) {
+        const keyAttestation = await getKeyAttestation(
+          env,
+          itwVersion,
+          [keyTag],
+          hardwareKeyTag,
+          sessionToken
+        );
+        // Unique ID to correlate multiple keys to the same KA (ex. batch issuance)
+        const keyAttestationId = uuidv4().toString();
+        // eslint-disable-next-line functional/immutable-data
+        authorizedCredentials.push({
+          keyTag,
+          authDetails,
+          keyAttestation,
+          keyAttestationId
+        });
+      } else {
         // If the KA is not supported, only generate the cryptographic key
         await generate(keyTag);
-        return { keyTag, authDetails };
-      })
-    );
+        // eslint-disable-next-line functional/immutable-data
+        authorizedCredentials.push({ keyTag, authDetails });
+      }
+    }
+
+    return authorizedCredentials;
   };
 
 type AuthorizedBatchCredentialMetadata = {
@@ -682,36 +698,41 @@ export const generateBatchKeysWithKeyAttestation: GenerateBatchKeysWithKeyAttest
     { env, itwVersion, hardwareKeyTag, sessionToken }
   ) => {
     const ioWallet = getIoWallet(itwVersion);
+    const authorizedCredentials: Array<AuthorizedBatchCredentialMetadata> = [];
 
-    return Promise.all(
-      accessToken.authorization_details.map(async authDetails => {
-        const keyTags = Array.from({ length: batchSize }, () =>
-          uuidv4().toString()
+    for (const authDetails of accessToken.authorization_details) {
+      const keyTags = Array.from({ length: batchSize }, () =>
+        uuidv4().toString()
+      );
+
+      // If the KA is supported, all keys are attested by a single Key Attestation
+      if (ioWallet.KeyAttestation.isSupported) {
+        const keyAttestation = await getKeyAttestation(
+          env,
+          itwVersion,
+          keyTags,
+          hardwareKeyTag,
+          sessionToken
         );
-
-        // If the KA is supported, all keys are attested by a single Key Attestation
-        if (ioWallet.KeyAttestation.isSupported) {
-          const keyAttestation = await getKeyAttestation(
-            env,
-            itwVersion,
-            keyTags,
-            hardwareKeyTag,
-            sessionToken
-          );
-          const keyAttestationId = uuidv4().toString();
-          return {
-            keyTags,
-            authDetails,
-            keyAttestation,
-            keyAttestationId
-          };
-        }
-
+        const keyAttestationId = uuidv4().toString();
+        // eslint-disable-next-line functional/immutable-data
+        authorizedCredentials.push({
+          keyTags,
+          authDetails,
+          keyAttestation,
+          keyAttestationId
+        });
+      } else {
         // If the KA is not supported, only generate the cryptographic keys
-        await Promise.all(keyTags.map(generate));
-        return { keyTags, authDetails };
-      })
-    );
+        for (const keyTag of keyTags) {
+          await generate(keyTag);
+        }
+        // eslint-disable-next-line functional/immutable-data
+        authorizedCredentials.push({ keyTags, authDetails });
+      }
+    }
+
+    return authorizedCredentials;
   };
 
 export type ObtainCredentialsBatch = (args: {
