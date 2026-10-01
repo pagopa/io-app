@@ -1735,7 +1735,7 @@
           },
           "limitWarning": {
             "primaryAction": "Ho capito",
-            "subtitle": "Per ragioni di sicurezza, al prossimo accesso dovrai avere una connessione a internet per continuare con Documenti su IO. ",
+            "subtitle": "Per ragioni di sicurezza, al prossimo accesso dovrai avere una connessione a internet per accedere ai tuoi documenti digitali.",
             "title": "Ultimo accesso a IO offline disponibile"
           }
         },
