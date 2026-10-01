@@ -15,12 +15,11 @@ const POSTE_ID_IDP_ID = "https://posteid.poste.it";
 
 /**
  * Educational bottom sheet about the PosteID App2App flow, shown at most once
- * per hook lifetime when `idp` is PosteID and the login WebView has loaded.
+ * per hook lifetime when `idp` is PosteID.
  *
- * `onWebViewLoad` and `onWebViewError` must be wired to the WebView load and
- * (non-HTTP) error events. On Android a failed load emits `onLoad` right before
- * `onError`: presenting from an effect lets both updates settle, and a failure
- * dismisses the sheet if it was already presented.
+ * `presentOnce` should be wired to the login WebView `onLoad` event: it is a
+ * no-op for other IdPs and after the first presentation, so repeated loads
+ * (e.g. redirects within the IdP page) don't present the sheet again.
  */
 export const useOneIdentityPosteIDApp2AppEducational = (idp: SpidIdp) => {
   const presentedRef = useRef(false);
