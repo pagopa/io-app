@@ -35,17 +35,6 @@ const AuthErrorScreen = () => {
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
-  const authScreenByAuthMethod = useMemo(
-    () => ({
-      CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
-      SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
-      CIE_ID: isActiveSessionLogin
-        ? AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
-        : AUTHENTICATION_ROUTES.CIE_ID_LOGIN
-    }),
-    [isActiveSessionLogin]
-  );
-
   const route =
     useRoute<
       Route<
@@ -82,27 +71,25 @@ const AuthErrorScreen = () => {
       case "CIE":
         // CIE_PIN_SCREEN is still in the stack, below the card reader:
         // `navigate` pops back to it instead of pushing a new instance.
-        navigation.navigate(authScreenByAuthMethod.CIE);
+        navigation.navigate(AUTHENTICATION_ROUTES.CIE_PIN_SCREEN);
         break;
       case "CIE_ID":
         // CIE_ID_LOGIN reaches this screen via `replace`, so it's no
         // longer in the stack: it has to be recreated to retry, which also
         // re-triggers the Lollipop key generation on mount.
-        navigation.replace(authScreenByAuthMethod.CIE_ID);
+        navigation.replace(
+          isActiveSessionLogin
+            ? AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
+            : AUTHENTICATION_ROUTES.CIE_ID_LOGIN
+        );
         break;
       case "SPID":
         // Lets the user pick an IdP again from IDP_SELECTION: `navigate`
         // pops back to it.
-        navigation.navigate(authScreenByAuthMethod.SPID);
+        navigation.navigate(AUTHENTICATION_ROUTES.IDP_SELECTION);
         break;
     }
-  }, [
-    authMethod,
-    authScreenByAuthMethod,
-    isActiveSessionLogin,
-    dispatch,
-    navigation
-  ]);
+  }, [authMethod, isActiveSessionLogin, dispatch, navigation]);
 
   const onCancel = useCallback(() => {
     if (isActiveSessionLogin) {
