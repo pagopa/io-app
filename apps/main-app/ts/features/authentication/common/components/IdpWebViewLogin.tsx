@@ -183,10 +183,6 @@ export const IdpWebViewLogin = memo(
       [dispatch]
     );
 
-    const handleLoad = useCallback(() => {
-      presentOncePosteIdBottomSheet();
-    }, [presentOncePosteIdBottomSheet]);
-
     if (
       loginSourceState.status === "reserving-public-key" ||
       loginSourceState.status === "verifying-assertion-ref"
@@ -206,7 +202,7 @@ export const IdpWebViewLogin = memo(
           cacheEnabled={false}
           onError={handleError}
           onHttpError={handleError}
-          onLoad={handleLoad}
+          onLoad={presentOncePosteIdBottomSheet}
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
           originWhitelist={originSchemasWhiteList}
