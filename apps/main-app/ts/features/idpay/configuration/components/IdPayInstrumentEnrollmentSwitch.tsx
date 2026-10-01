@@ -11,7 +11,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
 import { CreditCardType, Wallet } from "../../../../types/pagopa";
-import { instrumentStatusLabels } from "../../common/labels";
+import { getInstrumentStatusLabel } from "../../common/labels";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import { instrumentStatusByIdWalletSelector } from "../machine/selectors";
 
@@ -52,7 +52,7 @@ const IdPayInstrumentEnrollmentSwitch = (
       () => undefined,
       status =>
         ({
-          text: instrumentStatusLabels[status],
+          text: getInstrumentStatusLabel(status),
           variant: "default"
         }) as Badge
     )
