@@ -52,6 +52,7 @@ export const CgnMerchantCategoriesSocialLinks = () => {
       <ContentWrapper>
         {cgnSocialLinks.map(socialLink => (
           <ListItemAction
+            accessibilityRole="link"
             icon={socialLink.iconName}
             key={socialLink.id}
             label={socialLink.label}
