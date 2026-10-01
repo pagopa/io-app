@@ -53,6 +53,20 @@ const CIE_ALERT_MESSAGES_CONFIG = Platform.select<
   default: undefined
 });
 
+const FAILURE_EVENTS = new Set<"Function not supported" | CEvent["event"]>([
+  "AUTHENTICATION_ERROR",
+  "CERTIFICATE_EXPIRED",
+  "CERTIFICATE_REVOKED",
+  "EXTENDED_APDU_NOT_SUPPORTED",
+  "Function not supported",
+  "ON_CARD_PIN_LOCKED",
+  "ON_NO_INTERNET_CONNECTION",
+  "ON_PIN_ERROR",
+  "ON_TAG_DISCOVERED_NOT_CIE",
+  "PIN Locked",
+  "TAG_ERROR_NFC_NOT_SUPPORTED"
+]);
+
 export type CieManagerState =
   | { failure: CEvent; status: "failure" }
   | { failure: string; status: "reading-failure" }
@@ -116,26 +130,35 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
     (event: CEvent) => {
       handleSendAssistanceLog(choosenTool, event.event);
 
-      // Reading starts
+      // Trigger a light haptic feedback and update the state to reflect
+      // the start of the reading when the tag is discovered
       if (event.event === "ON_TAG_DISCOVERED") {
         setState({ status: "reading" });
         triggerHaptic("impactLight");
         return;
       }
 
-      commonErrorHandling(event.event, undefined, () => {
-        // ON_TAG_LOST and "Transmission Error" are handled inline
-        // by the reading screen itself
-        if (
-          event.event === "ON_TAG_LOST" ||
-          event.event === "Transmission Error"
-        ) {
-          setState({ failure: event.event, status: "reading-failure" });
-          return;
-        }
+      // Handle recoverable errors by allowing
+      // the user to retry the reading process
+      if (
+        event.event === "ON_TAG_LOST" ||
+        event.event === "Transmission Error"
+      ) {
+        commonErrorHandling(event.event, undefined, () =>
+          setState({ failure: event.event, status: "reading-failure" })
+        );
+        return;
+      }
 
-        setState({ failure: event, status: "failure" });
-      });
+      // Halt the reading process and transition to a failure state.
+      // This delegates the rendering to the specific Failure components.
+      if (FAILURE_EVENTS.has(event.event)) {
+        commonErrorHandling(event.event, undefined, () =>
+          setState({ failure: event, status: "failure" })
+        );
+        return;
+      }
+      // Any other/unknown event is ignored
     },
     [choosenTool, commonErrorHandling]
   );
