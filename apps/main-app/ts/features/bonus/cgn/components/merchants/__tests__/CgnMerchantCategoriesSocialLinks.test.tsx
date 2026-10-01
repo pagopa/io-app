@@ -40,7 +40,7 @@ describe("CgnMerchantCategoriesSocialLinks", () => {
     const { getByRole } = render(<CgnMerchantCategoriesSocialLinks />);
 
     fireEvent.press(
-      getByRole("button", {
+      getByRole("link", {
         name: I18n.t(
           "bonus.cgn.merchantsList.categoriesList.socialLinks.instagram"
         )
