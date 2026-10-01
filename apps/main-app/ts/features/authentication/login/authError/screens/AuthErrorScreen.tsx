@@ -59,10 +59,6 @@ const AuthErrorScreen = () => {
     useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();
 
   const onRetry = useCallback(() => {
-    if (authMethod === "SPID") {
-      dispatch(setSpidLoginInLoadingState());
-    }
-
     if (isActiveSessionLogin) {
       dispatch(setRetryActiveSessionLogin());
     }
@@ -84,6 +80,7 @@ const AuthErrorScreen = () => {
         );
         break;
       case "SPID":
+        dispatch(setSpidLoginInLoadingState());
         // Lets the user pick an IdP again from IDP_SELECTION: `navigate`
         // pops back to it.
         navigation.navigate(AUTHENTICATION_ROUTES.IDP_SELECTION);
