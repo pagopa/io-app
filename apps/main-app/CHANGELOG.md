@@ -2,6 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-canary.8233](https://github.com/pagopa/io-app/compare/3.40.0-rc.8...3.40.0-canary.8233) (2026-10-01)
 ## [3.40.0-rc.8](https://github.com/pagopa/io-app/compare/3.40.0-rc.7...3.40.0-rc.8) (2026-09-30)
 
 ### Chores
