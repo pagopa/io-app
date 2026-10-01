@@ -8,6 +8,7 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as loginHooks from "../../../lollipop/hooks/useLollipopLoginSource";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../common/utils";
 import ActiveSessionCieIdLoginScreen from "../screens/cieId/ActiveSessionCieIdLoginScreen";
 import {
   activeSessionLoginFailure,
@@ -238,7 +239,7 @@ const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
   StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
     errorCodeOrMessage,
     authMethod: "CIE_ID",
-    authLevel: "L2"
+    authLevel: AUTH_LEVELS.L2
   });
 
 function renderComponent() {

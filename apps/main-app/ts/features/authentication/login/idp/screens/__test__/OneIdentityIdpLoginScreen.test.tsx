@@ -11,6 +11,7 @@ import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../../common/store/actions";
 import * as commonStoreSelector from "../../../../common/store/selectors";
+import { AUTH_LEVELS } from "../../../../common/utils";
 import { OneIdentityIdpLoginScreen } from "../OneIdentityIdpLoginScreen";
 
 jest.mock("react-native-webview", () => {
@@ -149,7 +150,7 @@ describe("OneIdentityIdpLoginScreen", () => {
       {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     );
   });
@@ -170,7 +171,7 @@ describe("OneIdentityIdpLoginScreen", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     );
   });
@@ -205,7 +206,7 @@ describe("OneIdentityIdpLoginScreen", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     );
   });
@@ -223,7 +224,7 @@ describe("OneIdentityIdpLoginScreen", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     );
   });

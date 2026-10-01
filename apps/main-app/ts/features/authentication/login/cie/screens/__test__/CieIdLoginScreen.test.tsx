@@ -8,6 +8,7 @@ import * as loginHooks from "../../../../../lollipop/hooks/useLollipopLoginSourc
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../../common/store/actions";
 import * as authSelectors from "../../../../common/store/selectors";
+import { AUTH_LEVELS } from "../../../../common/utils";
 import CieIdLoginScreen from "../CieIdLoginScreen";
 
 const API_PREFIX_URL = "http://example.com";
@@ -315,7 +316,7 @@ const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
   StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
     errorCodeOrMessage,
     authMethod: "CIE_ID",
-    authLevel: "L2"
+    authLevel: AUTH_LEVELS.L2
   });
 
 function renderComponent() {

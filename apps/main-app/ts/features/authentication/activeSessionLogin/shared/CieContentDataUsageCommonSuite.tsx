@@ -4,6 +4,7 @@ import { StackActions } from "@react-navigation/native";
 import { act, fireEvent, RenderAPI } from "@testing-library/react-native";
 
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../common/utils";
 
 // Configuration for the consent screen test suite
 export type ConsentSuiteConfig = {
@@ -60,7 +61,7 @@ export const runConsentScreenSuite = (cfg: ConsentSuiteConfig) => {
         StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
           errorCodeOrMessage: undefined,
           authMethod: "CIE",
-          authLevel: "L3"
+          authLevel: AUTH_LEVELS.L3
         })
       );
       expect(cfg.mockNavigation.navigate).not.toHaveBeenCalled();

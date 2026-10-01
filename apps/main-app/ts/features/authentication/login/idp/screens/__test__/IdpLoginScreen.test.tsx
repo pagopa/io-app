@@ -8,6 +8,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import * as useLollipopLoginSource from "../../../../../lollipop/hooks/useLollipopLoginSource";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as commonStoreSelector from "../../../../common/store/selectors";
+import { AUTH_LEVELS } from "../../../../common/utils";
 import * as requestinfo from "../../store/selectors";
 import { ErrorType } from "../../store/types";
 import IdpLoginScreen from "../IdpLoginScreen";
@@ -122,7 +123,7 @@ describe("IdpLoginScreen", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     );
   });

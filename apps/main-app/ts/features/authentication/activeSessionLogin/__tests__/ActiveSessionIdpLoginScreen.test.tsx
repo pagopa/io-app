@@ -7,6 +7,7 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as useLollipopLoginSource from "../../../lollipop/hooks/useLollipopLoginSource";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../common/utils";
 import ActiveSessionIdpLoginScreen from "../screens/spid/ActiveSessionIdpLoginScreen";
 import * as activeSessionSelectors from "../store/selectors";
 
@@ -109,7 +110,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     );
   });

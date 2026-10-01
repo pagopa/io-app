@@ -12,6 +12,7 @@ import {
   setRetryActiveSessionLogin
 } from "../../../activeSessionLogin/store/actions";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../../common/utils";
 import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
@@ -60,7 +61,7 @@ describe("AuthErrorScreen", () => {
       params: {
         errorCodeOrMessage: "25",
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     });
 
@@ -70,7 +71,7 @@ describe("AuthErrorScreen", () => {
       errorCodeOrMessage: "25",
       errorTitle: I18n.t("authentication.auth_errors.error_25.title"),
       authMethod: "SPID",
-      authLevel: "L2"
+      authLevel: AUTH_LEVELS.L2
     });
   });
 
@@ -80,7 +81,7 @@ describe("AuthErrorScreen", () => {
       params: {
         errorCodeOrMessage: "some_unmapped_raw_error",
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     });
 
@@ -90,7 +91,7 @@ describe("AuthErrorScreen", () => {
       errorCodeOrMessage: "some_unmapped_raw_error",
       errorTitle: I18n.t("authentication.auth_errors.generic.title"),
       authMethod: "SPID",
-      authLevel: "L2"
+      authLevel: AUTH_LEVELS.L2
     });
   });
 
@@ -100,7 +101,7 @@ describe("AuthErrorScreen", () => {
       params: {
         errorCodeOrMessage: 25,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
     });
     const component = renderComponent();
@@ -119,7 +120,11 @@ describe("AuthErrorScreen", () => {
       ({ authMethod }) => {
         mockIsActiveSessionLogin(false);
         mockUseRoute.mockReturnValue({
-          params: { errorCodeOrMessage: 25, authMethod, authLevel: "L2" }
+          params: {
+            errorCodeOrMessage: 25,
+            authMethod,
+            authLevel: AUTH_LEVELS.L2
+          }
         });
 
         const { getByTestId } = renderComponent();
@@ -140,7 +145,11 @@ describe("AuthErrorScreen", () => {
     it("should navigate to CIE_PIN_SCREEN for CIE", () => {
       mockIsActiveSessionLogin(false);
       mockUseRoute.mockReturnValue({
-        params: { errorCodeOrMessage: 25, authMethod: "CIE", authLevel: "L2" }
+        params: {
+          errorCodeOrMessage: 25,
+          authMethod: "CIE",
+          authLevel: AUTH_LEVELS.L2
+        }
       });
 
       const { getByTestId } = renderComponent();
@@ -158,7 +167,7 @@ describe("AuthErrorScreen", () => {
         params: {
           errorCodeOrMessage: 25,
           authMethod: "CIE_ID",
-          authLevel: "L2"
+          authLevel: AUTH_LEVELS.L2
         }
       });
 
@@ -177,7 +186,7 @@ describe("AuthErrorScreen", () => {
         params: {
           errorCodeOrMessage: 25,
           authMethod: "CIE_ID",
-          authLevel: "L2"
+          authLevel: AUTH_LEVELS.L2
         }
       });
 
@@ -193,7 +202,11 @@ describe("AuthErrorScreen", () => {
     it("should navigate to IDP_SELECTION for SPID, regardless of active session", () => {
       mockIsActiveSessionLogin(true);
       mockUseRoute.mockReturnValue({
-        params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
+        params: {
+          errorCodeOrMessage: 25,
+          authMethod: "SPID",
+          authLevel: AUTH_LEVELS.L2
+        }
       });
 
       const { getByTestId } = renderComponent();
@@ -211,7 +224,11 @@ describe("AuthErrorScreen", () => {
     it("should navigate back to LANDING for a normal login", () => {
       mockIsActiveSessionLogin(false);
       mockUseRoute.mockReturnValue({
-        params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
+        params: {
+          errorCodeOrMessage: 25,
+          authMethod: "SPID",
+          authLevel: AUTH_LEVELS.L2
+        }
       });
 
       const { getByTestId } = renderComponent();
@@ -225,7 +242,11 @@ describe("AuthErrorScreen", () => {
     it("should navigate to the Messages home for an active session login", () => {
       mockIsActiveSessionLogin(true);
       mockUseRoute.mockReturnValue({
-        params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
+        params: {
+          errorCodeOrMessage: 25,
+          authMethod: "SPID",
+          authLevel: AUTH_LEVELS.L2
+        }
       });
 
       const { getByTestId } = renderComponent();
@@ -243,7 +264,11 @@ describe("AuthErrorScreen", () => {
       const addEventListenerSpy = jest.spyOn(BackHandler, "addEventListener");
       mockIsActiveSessionLogin(false);
       mockUseRoute.mockReturnValue({
-        params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
+        params: {
+          errorCodeOrMessage: 25,
+          authMethod: "SPID",
+          authLevel: AUTH_LEVELS.L2
+        }
       });
 
       renderComponent();
