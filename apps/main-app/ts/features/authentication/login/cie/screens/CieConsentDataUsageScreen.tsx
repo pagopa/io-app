@@ -155,7 +155,7 @@ const CieConsentDataUsageScreen = () => {
   }
   if (!hasError) {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
