@@ -346,29 +346,34 @@ const renderListItemAction = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemAction · Primary variant">
       <ListItemAction
+        accessibilityRole="link"
         label={"Link interno oppure link ad una pagina esterna"}
         onPress={onButtonPress}
         variant="primary"
       />
       <ListItemAction
+        accessibilityRole="link"
         icon="website"
         label={"Link interno oppure link ad una pagina esterna"}
         onPress={onButtonPress}
         variant="primary"
       />
       <ListItemAction
+        accessibilityRole="link"
         icon="device"
         label={"Scarica l'app"}
         onPress={onButtonPress}
         variant="primary"
       />
       <ListItemAction
+        accessibilityRole="link"
         icon="security"
         label={"Informativa sulla privacy"}
         onPress={onButtonPress}
         variant="primary"
       />
       <ListItemAction
+        accessibilityRole="link"
         icon="chat"
         label={"Richiedi assistenza"}
         onPress={onButtonPress}
