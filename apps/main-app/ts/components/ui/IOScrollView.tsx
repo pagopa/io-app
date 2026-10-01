@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
  * @param {boolean} [debugMode=false] Enable debug mode. Only for testing
  *   purposes. Default is `false`
  */
+// oxlint-disable-next-line complexity
 export const IOScrollView = ({
   headerConfig,
   children,
@@ -333,7 +334,9 @@ export const IOScrollView = ({
         snapToOffsets={
           // If there is a refresh control, don't snap to offsets
           // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
-          RefreshControlComponent || snapOffset === undefined
+          RefreshControlComponent ||
+          snapOffset === undefined ||
+          snapOffset === 0
             ? undefined
             : [0, snapOffset]
         }
