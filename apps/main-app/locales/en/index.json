@@ -21,6 +21,7 @@
       },
       "inAppBrowserError": "There was a problem sending your request. Please try again.",
       "privacy": "For more information, please read **[the Privacy Policy]({{privacyUrl}})**",
+      "requiredData": "Required information",
       "subtitle": "IO will share with ",
       "subtitle2": " the information needed to authenticate you on ",
       "title": "To use the service, please allow us to share your data."
@@ -559,9 +560,15 @@
           "revoked": "Warning! This card has been revoked for {{reason}}"
         },
         "ownership": "Who can use the Card?",
+        "ownershipData": {
+          "fiscalCode": "Fiscal Code",
+          "name": "First name",
+          "surname": "Surname"
+        },
         "status": {
           "a11y": {
-            "cardStatus": "Card status: {{status}}"
+            "cardStatus": "Card status: {{status}}",
+            "eycaInfo": "More information about EYCA"
           },
           "badge": {
             "active": "Active",
@@ -1249,6 +1256,15 @@
               "secondaryAction": "I don't have a CIE",
               "title": "Electronic Identity Card (CIE)"
             },
+            "nfc": {
+              "content": {
+                "android": "On Android® devices, the NFC antenna used to read the CIE may be located in different spots on the back of the phone, depending on the model. For example, it might be at the top, in the center, or further down.\n\nPlace the CIE on a stable surface and rest your phone on the card, following the instructions in the app. If the scan doesn’t start, repeat the process at the other indicated positions.",
+                "ios": "On the iPhone®, the NFC antenna for reading the CIE is located at the top of the device, on the back.\n\nPlace the CIE on a stable surface and rest your phone on the card without moving it."
+              },
+              "primaryAction": "Got it",
+              "secondaryAction": "Need help?",
+              "title": "How does the CIE scan work?"
+            },
             "pin": {
               "content": "The CIE PIN is an 8-digit code that was provided to you in two separate instances:\n * You received the first 4 digits when you applied for the CIE\n * You received the last 4 digits along with the CIE.",
               "dialog": {
@@ -1324,6 +1340,7 @@
               "title": "Get your Electronic ID Card (CIE) ready"
             },
             "nfc": {
+              "buttonLink": "How does it work?",
               "cta": "Start reading CIE",
               "description": "You'll need to place the back of your phone on the card and hold it still so it can be scanned.",
               "title": "Place your CIE on a stable surface for scanning"
@@ -1718,7 +1735,7 @@
           },
           "limitWarning": {
             "primaryAction": "Got it",
-            "subtitle": "For security reasons, you'll need an internet connection the next time you log in to continue using Documenti su IO. ",
+            "subtitle": "For security reasons, you'll need an internet connection the next time you log in to access your digital documents.",
             "title": "Last access to IO offline available"
           }
         },
@@ -2571,6 +2588,7 @@
         },
         "error": {
           "banner": {
+            "label": "The receipt upload has failed.",
             "retryButton": "Try again"
           }
         },
@@ -3150,9 +3168,11 @@
       "retry": "An error has occurred. Please try again."
     },
     "badges": {
+      "beta": "Beta",
       "cancelled": "Canceled",
       "failed": "Failed",
       "onGoing": "In progress",
+      "pdf": "PDF",
       "reversal": "Reversal"
     },
     "buttons": {
@@ -3630,6 +3650,8 @@
         "errorBody": "Unable to load the details",
         "refund": {
           "amount": "Refund amount",
+          "cro": "CRO",
+          "date": "Refund date",
           "iban": "IBAN",
           "period": "Reference period",
           "rejectedAdvice": {
