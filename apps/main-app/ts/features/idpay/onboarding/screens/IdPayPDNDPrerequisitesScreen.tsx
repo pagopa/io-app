@@ -1,3 +1,5 @@
+import { CodeEnum } from "@io-app/api-types/generated/definitions/idpay/AutomatedCriteriaDTO";
+import { FamilyUnitCompositionEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeGeneralDTO";
 import { IOMarkdownLite, ModuleSummary, VSpacer } from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -16,6 +18,44 @@ import {
   selectInitiative
 } from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
+
+const getPDNDCriteriaCodeLabel = (code: CodeEnum): string => {
+  switch (code) {
+    case CodeEnum.BIRTHDAY:
+      return I18n.t("idpay.onboarding.PDNDPrerequisites.code.BIRTHDAY");
+    case CodeEnum.FAMILY_UNIT:
+      return I18n.t("idpay.onboarding.PDNDPrerequisites.code.FAMILY_UNIT");
+    case CodeEnum.ISEE:
+      return I18n.t("idpay.onboarding.PDNDPrerequisites.code.ISEE");
+    case CodeEnum.RESIDENCE:
+      return I18n.t("idpay.onboarding.PDNDPrerequisites.code.RESIDENCE");
+  }
+};
+
+const getFamilyUnitCompositionCopy = (
+  familyUnitComposition: FamilyUnitCompositionEnum
+): { description: string; title: string } => {
+  switch (familyUnitComposition) {
+    case FamilyUnitCompositionEnum.ANPR:
+      return {
+        title: I18n.t(
+          "idpay.onboarding.PDNDPrerequisites.familyUnitCode.ANPR.title"
+        ),
+        description: I18n.t(
+          "idpay.onboarding.PDNDPrerequisites.familyUnitCode.ANPR.description"
+        )
+      };
+    case FamilyUnitCompositionEnum.INPS:
+      return {
+        title: I18n.t(
+          "idpay.onboarding.PDNDPrerequisites.familyUnitCode.INPS.title"
+        ),
+        description: I18n.t(
+          "idpay.onboarding.PDNDPrerequisites.familyUnitCode.INPS.description"
+        )
+      };
+  }
+};
 
 const IdPayPDNDPrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -55,6 +95,10 @@ const IdPayPDNDPrerequisitesScreen = () => {
 
   const pdndCriteria = useSelector(pdndCriteriaSelector);
   const familyUnitCriteria = useSelector(familyUnitCompositionCriteriaSelector);
+  const familyUnitCopy =
+    familyUnitCriteria !== undefined
+      ? getFamilyUnitCompositionCopy(familyUnitCriteria)
+      : undefined;
 
   const initiativeId = pipe(
     initiative,
@@ -94,9 +138,7 @@ const IdPayPDNDPrerequisitesScreen = () => {
           {criteria.code && (
             <ModuleSummary
               description={getPDNDCriteriaDescription(criteria)}
-              label={I18n.t(
-                `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
-              )}
+              label={getPDNDCriteriaCodeLabel(criteria.code)}
               onPress={() => {
                 setAuthority(criteria.authority);
                 present();
@@ -106,21 +148,13 @@ const IdPayPDNDPrerequisitesScreen = () => {
           <VSpacer size={16} />
         </Fragment>
       ))}
-      {familyUnitCriteria && (
+      {familyUnitCopy && (
         <>
           <ModuleSummary
-            description={I18n.t(
-              `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.description`
-            )}
-            label={I18n.t(
-              `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.title`
-            )}
+            description={familyUnitCopy.description}
+            label={familyUnitCopy.title}
             onPress={() => {
-              setAuthority(
-                I18n.t(
-                  `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.description`
-                )
-              );
+              setAuthority(familyUnitCopy.description);
               present();
             }}
           />
