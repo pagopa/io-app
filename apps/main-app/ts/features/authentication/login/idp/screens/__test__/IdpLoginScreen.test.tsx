@@ -109,7 +109,7 @@ describe("IdpLoginScreen", () => {
     expect(getByTestId("idp-successful-authentication")).toBeTruthy();
   });
 
-  it("should replace locally with AuthErrorScreen when requestState is error, without touching MAIN", () => {
+  it("should replace with AuthErrorScreen when requestState is error", () => {
     jest.spyOn(requestinfo, "spidLoginRequestInfoSelector").mockReturnValue({
       requestState: pot.noneError(ErrorType.LOGIN_ERROR)
     });

@@ -56,7 +56,7 @@ describe("useCieIdWebViewLoginNavigation", () => {
     });
   });
 
-  it("navigateToAuthErrorScreen should locally dispatch a replace to AUTH_ERROR_SCREEN with the CIE_ID context parameters, without touching MAIN", () => {
+  it("navigateToAuthErrorScreen should dispatch a replace to AUTH_ERROR_SCREEN with the CIE_ID context parameters", () => {
     const { result } = renderHook(() =>
       useCieIdWebViewLoginNavigation({ authLevel })
     );

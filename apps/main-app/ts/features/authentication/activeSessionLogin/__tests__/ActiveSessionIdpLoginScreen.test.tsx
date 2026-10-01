@@ -95,7 +95,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
     expect(getByTestId("loading-indicator")).toBeTruthy();
   });
 
-  it("should replace locally with AuthErrorScreen when requestState is error, without touching MAIN", () => {
+  it("should replace with AuthErrorScreen when requestState is error", () => {
     const { getByTestId } = renderComponent();
 
     const webview = getByTestId("webview-active-session-idp-login-screen");

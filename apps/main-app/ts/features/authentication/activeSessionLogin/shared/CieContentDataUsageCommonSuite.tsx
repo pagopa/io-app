@@ -44,7 +44,7 @@ export const runConsentScreenSuite = (cfg: ConsentSuiteConfig) => {
       expect(cfg.onLoginUriChangedSpy).toHaveBeenCalled();
     });
 
-    it("replaces locally the consent webview with AuthErrorScreen on a WebView error, without touching MAIN", () => {
+    it("replaces the consent webview with AuthErrorScreen on a WebView error", () => {
       cfg.mockNavigation.dispatch.mockClear();
       cfg.mockNavigation.navigate.mockClear();
       cfg.mockNavigation.replace.mockClear();

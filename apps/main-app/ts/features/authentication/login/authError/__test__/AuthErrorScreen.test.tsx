@@ -137,7 +137,7 @@ describe("AuthErrorScreen", () => {
       }
     );
 
-    it("should navigate locally to CIE_PIN_SCREEN for CIE, without touching MAIN", () => {
+    it("should navigate to CIE_PIN_SCREEN for CIE", () => {
       mockIsActiveSessionLogin(false);
       mockUseRoute.mockReturnValue({
         params: { errorCodeOrMessage: 25, authMethod: "CIE", authLevel: "L2" }
@@ -152,7 +152,7 @@ describe("AuthErrorScreen", () => {
       expect(mockReplace).not.toHaveBeenCalled();
     });
 
-    it("should replace locally with CIE_ID_LOGIN for CIE_ID in a normal login", () => {
+    it("should replace with CIE_ID_LOGIN for CIE_ID in a normal login", () => {
       mockIsActiveSessionLogin(false);
       mockUseRoute.mockReturnValue({
         params: {
@@ -171,7 +171,7 @@ describe("AuthErrorScreen", () => {
       expect(mockNavigate).not.toHaveBeenCalled();
     });
 
-    it("should replace locally with CIE_ID_ACTIVE_SESSION_LOGIN for CIE_ID in an active session login", () => {
+    it("should replace with CIE_ID_ACTIVE_SESSION_LOGIN for CIE_ID in an active session login", () => {
       mockIsActiveSessionLogin(true);
       mockUseRoute.mockReturnValue({
         params: {
@@ -190,7 +190,7 @@ describe("AuthErrorScreen", () => {
       );
     });
 
-    it("should navigate locally to IDP_SELECTION for SPID, regardless of active session", () => {
+    it("should navigate to IDP_SELECTION for SPID, regardless of active session", () => {
       mockIsActiveSessionLogin(true);
       mockUseRoute.mockReturnValue({
         params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
@@ -208,7 +208,7 @@ describe("AuthErrorScreen", () => {
   });
 
   describe("onCancel", () => {
-    it("should navigate locally back to LANDING for a normal login", () => {
+    it("should navigate back to LANDING for a normal login", () => {
       mockIsActiveSessionLogin(false);
       mockUseRoute.mockReturnValue({
         params: { errorCodeOrMessage: 25, authMethod: "SPID", authLevel: "L2" }
