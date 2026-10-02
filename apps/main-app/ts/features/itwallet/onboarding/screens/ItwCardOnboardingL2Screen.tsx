@@ -1,4 +1,5 @@
 import {
+  Banner,
   Divider,
   IOButton,
   IOVisualCostants,
@@ -6,18 +7,35 @@ import {
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
+import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks";
-import { trackShowCredentialsList } from "../../analytics";
+import {
+  trackItwDiscoveryBanner,
+  trackItwDiscoveryBannerTap,
+  trackShowCredentialsList
+} from "../../analytics";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
+import {
+  itwIsL2FallbackSelector,
+  itwShouldRenderL3UpgradeBannerSelector
+} from "../../common/store/selectors";
 import { isL2Credential } from "../../common/utils/itwCredentialUtils.ts";
 import { makeItwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
 import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors/index.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
+
+const fallbackBannerTrackingProperties = {
+  banner_id: "itwL2FallbackUpgradeBanner",
+  banner_page: ITW_ROUTES.L2_ONBOARDING,
+  banner_landing: ITW_SCREENVIEW_EVENTS.ITW_INTRO
+};
 
 const ItwCardOnboardingL2Screen = () => {
   useFocusEffect(trackShowCredentialsList);
@@ -41,6 +59,27 @@ const ItwCardOnboardingL2Screen = () => {
 
 const ItwL2CredentialOnboardingSection = () => {
   const navigation = useIONavigation();
+  const isL2Fallback = useIOSelector(itwIsL2FallbackSelector);
+  const isUpgradeAvailable = useIOSelector(
+    itwShouldRenderL3UpgradeBannerSelector
+  );
+  const shouldRenderUpgradeBanner = isL2Fallback && isUpgradeAvailable;
+
+  useFocusEffect(
+    useCallback(() => {
+      if (shouldRenderUpgradeBanner) {
+        trackItwDiscoveryBanner(fallbackBannerTrackingProperties);
+      }
+    }, [shouldRenderUpgradeBanner])
+  );
+
+  const startItWalletActivation = useOfflineToastGuard(() => {
+    trackItwDiscoveryBannerTap(fallbackBannerTrackingProperties);
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: { level: "l3" }
+    });
+  });
 
   const catalogueCredentials = useIOSelector(
     itwAvailableCredentialsListSelector
@@ -56,6 +95,23 @@ const ItwL2CredentialOnboardingSection = () => {
   return (
     <View testID="restricted-mode-section-testID">
       <VStack space={24}>
+        {shouldRenderUpgradeBanner && (
+          <Banner
+            action={I18n.t(
+              "features.itWallet.onboarding.restrictedMode.banner.action"
+            )}
+            color="turquoise"
+            content={I18n.t(
+              "features.itWallet.onboarding.restrictedMode.banner.content"
+            )}
+            onPress={startItWalletActivation}
+            pictogramName="premiumCredentials"
+            testID="itwL2FallbackUpgradeBannerTestID"
+            title={I18n.t(
+              "features.itWallet.onboarding.restrictedMode.banner.title"
+            )}
+          />
+        )}
         <AsyncCredentialsCatalogue>
           <ItwOnboardingModuleCredentialsList
             credentialsToDisplay={notObtained}

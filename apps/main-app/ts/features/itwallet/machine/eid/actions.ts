@@ -21,6 +21,7 @@ import {
   itwSetAuthLevel,
   itwSetCredentialUpgradeFailed,
   itwSetIdentificationMode,
+  itwSetL2Fallback,
   itwSetWalletActivationFeedbackBannerData
 } from "../../common/store/actions/preferences";
 import {
@@ -333,6 +334,18 @@ export const storeAuthLevelAction = ({ context }: EidActionArgs) => {
   // Save the auth level in the preferences
   store.dispatch(itwSetAuthLevel(context.identification?.level));
   store.dispatch(itwSetIdentificationMode(context.identification?.mode));
+};
+
+/**
+ * Updates fallback provenance only after storing the eID, preserving it during
+ * L2 reissuance.
+ */
+export const storeL2FallbackAction = ({ context }: EidActionArgs) => {
+  if (context.mode !== "reissuance" || context.level === "l3") {
+    context.deps.store.dispatch(
+      itwSetL2Fallback(context.level === "l2-fallback")
+    );
+  }
 };
 
 export const storeWalletActivationFeedbackBannerDataAction = ({

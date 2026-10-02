@@ -5,6 +5,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { itwShowBanner } from "../../../common/store/actions/banners";
+import { itwSetL2Fallback } from "../../../common/store/actions/preferences";
 import {
   itwSetActivationExitSurvey,
   itwSetFeedbackBottomSheetVisible
@@ -12,6 +13,7 @@ import {
 import { testEidIssuanceDeps, testMachineStore } from "../../utils/testDeps";
 import {
   closeIssuanceAction,
+  storeL2FallbackAction,
   storeWalletActivationFeedbackBannerDataAction
 } from "../actions";
 import {
@@ -54,6 +56,41 @@ const buildArgs = ({
   } as unknown as EidActionArgs;
   return { args, dispatch };
 };
+
+describe("storeL2FallbackAction", () => {
+  test.each<{
+    expected: boolean;
+    level: EidIssuanceLevel;
+    mode: EidIssuanceMode;
+    name: string;
+  }>([
+    {
+      name: "fallback activation",
+      mode: "issuance",
+      level: "l2-fallback",
+      expected: true
+    },
+    {
+      name: "standard L2 activation",
+      mode: "issuance",
+      level: "l2",
+      expected: false
+    },
+    { name: "L3 activation", mode: "issuance", level: "l3", expected: false },
+    { name: "L3 upgrade", mode: "upgrade", level: "l3", expected: false },
+    { name: "L3 reissuance", mode: "reissuance", level: "l3", expected: false }
+  ])("records fallback provenance for $name", ({ mode, level, expected }) => {
+    const { args, dispatch } = buildArgs({ mode, level });
+    storeL2FallbackAction(args);
+    expect(dispatch).toHaveBeenCalledWith(itwSetL2Fallback(expected));
+  });
+
+  it("preserves fallback provenance during L2 reissuance", () => {
+    const { args, dispatch } = buildArgs({ mode: "reissuance", level: "l2" });
+    storeL2FallbackAction(args);
+    expect(dispatch).not.toHaveBeenCalled();
+  });
+});
 
 describe("closeIssuanceAction", () => {
   // SIW-5129: the reissuance survey is reserved to Documenti su IO (L2) reissuance

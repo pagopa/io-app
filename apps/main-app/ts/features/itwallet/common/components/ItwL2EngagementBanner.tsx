@@ -7,11 +7,13 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { itwIsL2FallbackSelector } from "../store/selectors";
 import { itwIsActivationDisabledSelector } from "../store/selectors/preferences";
 
 export const ItwL2EngagementBanner = () => {
   const navigation = useIONavigation();
   const shouldRender = useIOSelector(itwIsWalletEmptySelector);
+  const isL2Fallback = useIOSelector(itwIsL2FallbackSelector);
 
   const isItWalletActivationDisabled = useIOSelector(
     itwIsActivationDisabledSelector
@@ -19,9 +21,10 @@ export const ItwL2EngagementBanner = () => {
 
   const handleOnPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: isItWalletActivationDisabled
-        ? ITW_ROUTES.L3_ONBOARDING
-        : ITW_ROUTES.L2_ONBOARDING
+      screen:
+        isItWalletActivationDisabled && !isL2Fallback
+          ? ITW_ROUTES.L3_ONBOARDING
+          : ITW_ROUTES.L2_ONBOARDING
     });
   };
   const guardedHandleOnPress = useOfflineToastGuard(handleOnPress);

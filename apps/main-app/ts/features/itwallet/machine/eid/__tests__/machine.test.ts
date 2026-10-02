@@ -117,6 +117,7 @@ const trackWalletInstanceCreation = jest.fn();
 const trackWalletInstanceRevocation = jest.fn();
 const trackIdentificationMethodSelected = jest.fn();
 const storeAuthLevel = jest.fn();
+const storeL2Fallback = jest.fn();
 const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
@@ -183,6 +184,7 @@ describe("itwEidIssuanceMachine", () => {
       trackWalletInstanceRevocation,
       trackIdentificationMethodSelected,
       storeAuthLevel,
+      storeL2Fallback,
       trackItwIdAuthenticationCompleted,
       trackItwIdVerifiedDocument,
       storeWalletActivationFeedbackBannerData
@@ -1213,8 +1215,34 @@ describe("itwEidIssuanceMachine", () => {
 
     // entry fires on genuine transition into Success → storeWalletActivationFeedbackBannerData called
     expect(storeWalletActivationFeedbackBannerData).toHaveBeenCalledTimes(1);
+    expect(storeL2Fallback).toHaveBeenCalledTimes(1);
     // add-new-credential is not sent in this flow
     expect(navigateToCredentialCatalog).not.toHaveBeenCalled();
+  });
+
+  it("does not record fallback activation when eID storage fails", async () => {
+    storeEidCredentialActor.mockRejectedValue(new Error("Storage unavailable"));
+    const initialSnapshot = createActor(itwEidIssuanceMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "DisplayingPreview" },
+      context: {
+        mode: "issuance",
+        level: "l2-fallback",
+        eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid }
+      }
+    } as MachineSnapshot);
+    const actor = createActor(mockedMachine, {
+      snapshot,
+      input: { deps: T_DEPS }
+    });
+    actor.start();
+    actor.send({ type: "add-to-wallet" });
+    await waitForActor(actor, snap => snap.matches("Failure"));
+
+    expect(storeL2Fallback).not.toHaveBeenCalled();
+    actor.stop();
   });
 
   it("Should return to TOS acceptance if session expires when creating a Wallet Instance", async () => {
