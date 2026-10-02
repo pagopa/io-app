@@ -477,10 +477,7 @@ describe("useOneIdentityLoginSource", () => {
         error: new Error(
           "Mismatch between local and remote ID parameter content"
         ),
-        // unknownToString includes the stack trace for Error instances
-        expectedReason: expect.stringContaining(
-          "Error: Mismatch between local and remote ID parameter content"
-        )
+        expectedReason: "Mismatch between local and remote ID parameter content"
       },
       {
         name: "an unknown error",
