@@ -19,17 +19,18 @@ import { CredentialMetadata } from "../../common/utils/itwTypesUtils.ts";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import { selectHasResolvedCredentialOffer } from "../../machine/credential/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   hasCredentialsToUpgrade,
   isL3FeaturesEnabledSelector,
+  selectCredentialOfferUri,
   selectCredentialType,
   selectIdentification,
   selectIsLoading,
   selectIssuanceMode,
   selectUpgradeFailedCredentials
 } from "../../machine/eid/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 import {
   trackAddFirstCredential,
   trackBackToWallet,
@@ -42,10 +43,6 @@ export const ItwIssuanceEidResultScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
-  const hasResolvedCredentialOffer =
-    ItwCredentialIssuanceMachineContext.useSelector(
-      selectHasResolvedCredentialOffer
-    );
   const issuanceMode =
     ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
@@ -53,6 +50,9 @@ export const ItwIssuanceEidResultScreen = () => {
   );
   const credentialType =
     ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
+  const credentialOfferUri = ItwEidIssuanceMachineContext.useSelector(
+    selectCredentialOfferUri
+  );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3IssuanceFlow = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
@@ -103,8 +103,13 @@ export const ItwIssuanceEidResultScreen = () => {
     // When the EID issuance was triggered by a credential request, the credential
     // issuance must not start prematurely while the EID machine is still loading.
     if (credentialType && !isEidMachineLoading) {
-      if (hasResolvedCredentialOffer) {
-        credentialMachineRef.send({ type: "confirm-credential-offer" });
+      // Resuming from the offer screen (instead of the catalogue) keeps the
+      // credential attributed to the third-party channel it was requested from.
+      if (credentialOfferUri) {
+        navigation.replace(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
+          params: { itwCredentialOfferUri: credentialOfferUri }
+        });
         return;
       }
 
@@ -117,8 +122,9 @@ export const ItwIssuanceEidResultScreen = () => {
   }, [
     credentialType,
     credentialMachineRef,
-    hasResolvedCredentialOffer,
-    isEidMachineLoading
+    credentialOfferUri,
+    isEidMachineLoading,
+    navigation
   ]);
 
   // When the EID issuance is triggered by a credential request, this screen only

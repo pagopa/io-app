@@ -44,6 +44,8 @@ import {
 } from "../analytics";
 
 type Props = {
+  /** Credential offer URI to resume after the activation, if any. */
+  credentialOfferUri?: string;
   credentialType?: string;
 };
 
@@ -51,7 +53,10 @@ type Props = {
  * This is the component that shows the information about the activation of
  * IT-Wallet. Must be used only for L3 activations.
  */
-export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
+export const ItwDiscoveryInfoComponent = ({
+  credentialType,
+  credentialOfferUri
+}: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
@@ -66,9 +71,10 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
         type: "start",
         mode: isWalletValid ? "upgrade" : "issuance",
         level: "l3",
-        credentialType
+        credentialType,
+        credentialOfferUri
       });
-    }, [machineRef, isWalletValid, credentialType])
+    }, [machineRef, isWalletValid, credentialType, credentialOfferUri])
   );
 
   useHeaderSecondLevel({

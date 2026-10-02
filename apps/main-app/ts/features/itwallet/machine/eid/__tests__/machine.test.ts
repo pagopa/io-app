@@ -3091,3 +3091,72 @@ describe("itwEidIssuanceMachine itwVersion routing", () => {
     }
   );
 });
+
+describe("itwEidIssuanceMachine credential trigger", () => {
+  const T_CREDENTIAL_OFFER_URI =
+    "openid-credential-offer://?credential_offer_uri=https://issuer.example/offer";
+
+  const mockedMachine = itwEidIssuanceMachine.provide({
+    actions: {
+      onInit: assign(onInit),
+      storeIntegrityKeyTag,
+      storeWalletInstanceAttestation,
+      navigateToIdentificationScreen,
+      navigateToTosScreen,
+      trackIntroScreen
+    },
+    actors: {
+      getCieStatus: fromPromise(getCieStatus),
+      getWalletAttestation: fromPromise(getWalletAttestation),
+      createWalletInstance: fromPromise(createWalletInstance),
+      verifyTrustFederation: fromPromise(verifyTrustFederation)
+    },
+    guards: {
+      hasValidWalletInstanceAttestation
+    }
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    createWalletInstance.mockResolvedValue(T_INTEGRITY_KEY);
+  });
+
+  test.each([
+    {
+      name: "a credential offer",
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI
+    },
+    { name: "the catalogue", credentialOfferUri: undefined }
+  ])(
+    "keeps the credential trigger from $name on start and restart",
+    ({ credentialOfferUri }) => {
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
+
+      actor.send({
+        type: "start",
+        mode: "issuance",
+        level: "l3",
+        credentialType: "MDL",
+        credentialOfferUri
+      });
+      expect(actor.getSnapshot().context).toMatchObject({
+        credentialType: "MDL",
+        credentialOfferUri
+      });
+
+      actor.send({
+        type: "restart",
+        mode: "issuance",
+        level: "l2-fallback",
+        credentialType: "MDL",
+        credentialOfferUri
+      });
+      expect(actor.getSnapshot().context).toMatchObject({
+        level: "l2-fallback",
+        credentialType: "MDL",
+        credentialOfferUri
+      });
+    }
+  );
+});
