@@ -51,7 +51,7 @@
     "xml2js": "^0.5.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^9.9.0",
+    "@faker-js/faker": "^10.0.0",
     "@types/body-parser": "^1.19.2",
     "@types/cookie-parser": "^1.4.7",
     "@types/escape-html": "^1.0.4",
