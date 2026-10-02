@@ -46,7 +46,9 @@ export const BottomSheetHeader: FunctionComponent<Props> = ({
         <View
           accessibilityLabel={typeof title === "string" ? title : undefined}
           accessibilityRole={"header"}
-          accessible={true}
+          accessible={false}
+          importantForAccessibility="yes"
+          screenReaderFocusable={true}
           style={{ flex: 1 }}
         >
           <H4>{title}</H4>
