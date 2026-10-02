@@ -13,7 +13,7 @@ import { ButtonText } from "../typography/ButtonText";
 
 export type ListItemAction = Pick<
   ComponentProps<typeof Pressable>,
-  "accessibilityHint" | "accessibilityLabel"
+  "accessibilityHint" | "accessibilityLabel" | "accessibilityRole"
 > &
   WithTestID<{
     icon?: IOIcons;
@@ -29,6 +29,7 @@ export const ListItemAction = ({
   icon,
   accessibilityLabel,
   accessibilityHint,
+  accessibilityRole = "button",
   testID
 }: ListItemAction) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
@@ -60,7 +61,7 @@ export const ListItemAction = ({
     <Pressable
       accessibilityHint={accessibilityHint}
       accessibilityLabel={listItemAccessibilityLabel}
-      accessibilityRole="button"
+      accessibilityRole={accessibilityRole}
       accessible={true}
       onPress={handleOnPress}
       onPressIn={onPressIn}
