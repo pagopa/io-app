@@ -81,7 +81,7 @@ describe("WalletHomeScreen", () => {
       name: "fallback activation",
       isL2Fallback: true,
       isL3Enabled: true,
-      expectedScreen: ITW_ROUTES.L2_ONBOARDING
+      expectedScreen: ITW_ROUTES.L3_ONBOARDING
     },
     {
       name: "existing Documenti su IO wallet",

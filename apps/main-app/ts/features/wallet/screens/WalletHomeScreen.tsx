@@ -32,7 +32,6 @@ import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/acti
 import { itwSetFeedbackBottomSheetVisible } from "../../itwallet/common/store/actions/ui";
 import {
   isItwProximityEnabledSelector,
-  itwIsL2FallbackSelector,
   itwIsL3EnabledSelector
 } from "../../itwallet/common/store/selectors";
 import { itwFeedbackBottomSheetVisibleSelector } from "../../itwallet/common/store/selectors/ui";
@@ -70,7 +69,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     itwMixPanelCredentialDetailsSelector
   );
   const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
-  const isL2Fallback = useIOSelector(itwIsL2FallbackSelector);
   const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
 
   const shouldRenderEmptyState = useIOSelector(
@@ -107,12 +105,10 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
 
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: isItWalletEnabled
-        ? isL2Fallback
-          ? ITW_ROUTES.L2_ONBOARDING
-          : ITW_ROUTES.L3_ONBOARDING
+        ? ITW_ROUTES.L3_ONBOARDING
         : ITW_ROUTES.ONBOARDING
     });
-  }, [navigation, isItWalletEnabled, isL2Fallback]);
+  }, [navigation, isItWalletEnabled]);
   const guardedHandleAddToWalletButtonPress = useOfflineToastGuard(
     handleAddToWalletButtonPress
   );

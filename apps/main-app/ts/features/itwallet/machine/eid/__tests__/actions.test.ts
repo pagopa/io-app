@@ -10,9 +10,11 @@ import {
   itwSetActivationExitSurvey,
   itwSetFeedbackBottomSheetVisible
 } from "../../../common/store/actions/ui";
+import { ITW_ROUTES } from "../../../navigation/routes";
 import { testEidIssuanceDeps, testMachineStore } from "../../utils/testDeps";
 import {
   closeIssuanceAction,
+  navigateToCredentialCatalogAction,
   storeL2FallbackAction,
   storeWalletActivationFeedbackBannerDataAction
 } from "../actions";
@@ -56,6 +58,32 @@ const buildArgs = ({
   } as unknown as EidActionArgs;
   return { args, dispatch };
 };
+
+describe("navigateToCredentialCatalogAction", () => {
+  test.each<{ expected: string; level: EidIssuanceLevel; name: string }>([
+    {
+      name: "L2 fallback",
+      level: "l2-fallback",
+      expected: ITW_ROUTES.L3_ONBOARDING
+    },
+    { name: "IT-Wallet", level: "l3", expected: ITW_ROUTES.L3_ONBOARDING },
+    {
+      name: "legacy Documenti su IO",
+      level: "l2",
+      expected: ITW_ROUTES.ONBOARDING
+    }
+  ])(
+    "opens the correct catalogue after $name activation",
+    ({ level, expected }) => {
+      const { args } = buildArgs({ level, mode: "issuance" });
+      const replace = jest.spyOn(args.context.deps.navigation, "replace");
+      navigateToCredentialCatalogAction(args);
+      expect(replace).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+        screen: expected
+      });
+    }
+  );
+});
 
 describe("storeL2FallbackAction", () => {
   test.each<{

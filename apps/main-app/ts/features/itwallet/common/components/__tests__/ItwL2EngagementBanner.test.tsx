@@ -45,13 +45,13 @@ describe("ItwL2EngagementBanner", () => {
       name: "fallback with NFC",
       fallback: true,
       disabled: false,
-      expected: ITW_ROUTES.L2_ONBOARDING
+      expected: ITW_ROUTES.L3_ONBOARDING
     },
     {
       name: "fallback without NFC",
       fallback: true,
       disabled: true,
-      expected: ITW_ROUTES.L2_ONBOARDING
+      expected: ITW_ROUTES.L3_ONBOARDING
     },
     {
       name: "inactive wallet without NFC",
