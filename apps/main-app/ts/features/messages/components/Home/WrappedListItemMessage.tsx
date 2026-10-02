@@ -1,7 +1,7 @@
 import { TagEnum as PaymentTagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPayment";
 import { TagEnum as SENDTagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
 import I18n from "i18next";
-import { useCallback, useMemo, useRef } from "react";
+import { memo, useCallback, useMemo, useRef } from "react";
 import { AccessibilityInfo } from "react-native";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -36,183 +36,181 @@ import {
   minDelayBetweenNavigationMilliseconds
 } from "./homeUtils";
 
-type WrappedListItemMessage = {
+type LastNavigation = undefined | { date: Date; messageId: string };
+
+type WrappedListItemMessageProps = {
   index: number;
   message: UIMessage;
   source: "SEARCH" | MessageListCategory;
 };
 
-export const WrappedListItemMessage = ({
-  index,
-  message,
-  source
-}: WrappedListItemMessage) => {
-  const dispatch = useIODispatch();
-  const navigation = useIONavigation();
-  const store = useIOStore();
-  const lastNavigationDate = useRef<Date>(new Date(0));
+/** Keeps list layout/refresh updates out of unchanged rows while observing row state. */
+export const WrappedListItemMessage = memo(
+  ({ index, message, source }: WrappedListItemMessageProps) => {
+    const dispatch = useIODispatch();
+    const navigation = useIONavigation();
+    const store = useIOStore();
+    const lastNavigation = useRef<LastNavigation>(undefined);
 
-  const serviceId = message.serviceId;
-  const organizationFiscalCode = message.organizationFiscalCode;
+    const serviceId = message.serviceId;
+    const organizationFiscalCode = message.organizationFiscalCode;
 
-  const isPaymentMessageWithPaidNotice = useIOSelector(state =>
-    isPaymentMessageWithPaidNoticeSelector(state, message.category)
-  );
-  const isSelected = useIOSelector(state =>
-    isMessageScheduledForArchivingSelector(state, message.id)
-  );
+    const isPaymentMessageWithPaidNotice = useIOSelector(state =>
+      isPaymentMessageWithPaidNoticeSelector(state, message.category)
+    );
+    const isSelected = useIOSelector(state =>
+      isMessageScheduledForArchivingSelector(state, message.id)
+    );
 
-  const messageCategoryTag = message.category.tag;
-  const avatarDouble = messageCategoryTag === PaymentTagEnum.PAYMENT;
-  const serviceLogoUriSources = useMemo(
-    () => logoForService(serviceId, organizationFiscalCode),
-    [serviceId, organizationFiscalCode]
-  );
-  const organizationName =
-    message.organizationName || I18n.t("messages.errorLoading.senderInfo");
-  const serviceName =
-    message.serviceName || I18n.t("messages.errorLoading.serviceInfo");
-  const messageTitle = message.title || I18n.t("messages.errorLoading.noTitle");
-  const messageDate = convertDateToWordDistance(
-    message.createdAt,
-    I18n.t("messages.yesterday")
-  );
+    const messageCategoryTag = message.category.tag;
+    const avatarDouble = messageCategoryTag === PaymentTagEnum.PAYMENT;
+    const serviceLogoUriSources = useMemo(
+      () => logoForService(serviceId, organizationFiscalCode),
+      [serviceId, organizationFiscalCode]
+    );
+    const organizationName =
+      message.organizationName || I18n.t("messages.errorLoading.senderInfo");
+    const serviceName =
+      message.serviceName || I18n.t("messages.errorLoading.serviceInfo");
+    const messageTitle =
+      message.title || I18n.t("messages.errorLoading.noTitle");
+    const messageDate = convertDateToWordDistance(
+      message.createdAt,
+      I18n.t("messages.yesterday")
+    );
 
-  const isRead = message.isRead;
+    const isRead = message.isRead;
 
-  const tag: ListItemMessageProps["tag"] =
-    messageCategoryTag === SENDTagEnum.PN
-      ? {
-          variant: "legalMessage",
-          text: I18n.t("features.pn.details.badge.legalValue")
-        }
-      : isPaymentMessageWithPaidNotice
+    const tag: ListItemMessageProps["tag"] =
+      messageCategoryTag === SENDTagEnum.PN
         ? {
-            variant: "success",
-            text: I18n.t("messages.badge.paid")
+            variant: "legalMessage",
+            text: I18n.t("features.pn.details.badge.legalValue")
           }
-        : undefined;
+        : isPaymentMessageWithPaidNotice
+          ? {
+              variant: "success",
+              text: I18n.t("messages.badge.paid")
+            }
+          : undefined;
 
-  const accessibilityLabel = useMemo(
-    () => accessibilityLabelForMessageItem(message, source, isSelected),
-    [isSelected, message, source]
-  );
+    const accessibilityLabel = useMemo(
+      () => accessibilityLabelForMessageItem(message, source, isSelected),
+      [isSelected, message, source]
+    );
 
-  const toggleScheduledMessageArchivingCallback = useCallback(
-    (forceAccessibilityAnnounce: boolean) => {
+    const toggleScheduledMessageArchivingCallback = useCallback(
+      (forceAccessibilityAnnounce: boolean) => {
+        const state = store.getState();
+        if (
+          isInboxOrArchiveSource(source) &&
+          !isArchivingInProcessingModeSelector(state)
+        ) {
+          // When the onLongPress event is triggered, VoiceOver and TalkBack do
+          // not announce the accessibilityLabel of the ListItemMessage so we
+          // have to force the announcement.
+          // Unfortunately, programmatically requesting the announcement
+          // disables the automatic announcement on Android
+          // if the standard selection gesture (onPress) is used to select /
+          // deselect a message for archiving/unarchiving, so on Android we
+          // always have to force the announcement.
+          if (forceAccessibilityAnnounce) {
+            const isScreenReaderEnabled = isScreenReaderEnabledSelector(state);
+            if (isScreenReaderEnabled) {
+              const announcement = accessibilityLabelForMessageItem(
+                message,
+                source,
+                !isSelected
+              );
+              AccessibilityInfo.announceForAccessibility(announcement);
+            }
+          }
+          dispatch(
+            toggleScheduledMessageArchivingAction({
+              messageId: message.id,
+              fromInboxToArchive: isInboxSource(source)
+            })
+          );
+        }
+      },
+      [dispatch, isSelected, message, source, store]
+    );
+
+    const onPressCallback = useCallback(() => {
       const state = store.getState();
       if (
         isInboxOrArchiveSource(source) &&
-        !isArchivingInProcessingModeSelector(state)
+        isArchivingInSchedulingModeSelector(state)
       ) {
-        // When the onLongPress event is triggered, VoiceOver and TalkBack do
-        // not announce the accessibilityLabel of the ListItemMessage so we
-        // have to force the announcement (but we do it only if VoiceOver and
-        // TalkBack are enabled). Unfortunately, programmatically requesting
-        // the announcement disables the automatic announcement on Android
-        // if the standard selection gesture (onPress) is used to select /
-        // deselect a message for archiving/unarchiving, so on Android we
-        // always have to force the announcement.
-        if (forceAccessibilityAnnounce) {
-          const isScreenReaderEnabled = isScreenReaderEnabledSelector(state);
-          if (isScreenReaderEnabled) {
-            const announcement = accessibilityLabelForMessageItem(
-              message,
-              source,
-              !isSelected
-            );
-            AccessibilityInfo.announceForAccessibility(announcement);
+        toggleScheduledMessageArchivingCallback(isAndroid);
+      } else if (isSearchSource(source) || isArchivingDisabledSelector(state)) {
+        if (message.hasPrecondition) {
+          dispatch(
+            scheduledPreconditionStatusAction(
+              toScheduledPayload(message.id, message.category.tag)
+            )
+          );
+        } else {
+          const now = new Date();
+          const previous = lastNavigation.current;
+          if (
+            previous !== undefined &&
+            previous.messageId === message.id &&
+            previous.date.getTime() + minDelayBetweenNavigationMilliseconds >=
+              now.getTime()
+          ) {
+            // This prevents an unwanted double tap that triggers
+            // a dobule navigation towards the message details
+            return;
           }
-        }
-        dispatch(
-          toggleScheduledMessageArchivingAction({
-            messageId: message.id,
-            fromInboxToArchive: isInboxSource(source)
-          })
-        );
-      }
-    },
-    [dispatch, isSelected, message, source, store]
-  );
+          lastNavigation.current = { messageId: message.id, date: now };
 
-  const onPressCallback = useCallback(() => {
-    const state = store.getState();
-    if (
-      isInboxOrArchiveSource(source) &&
-      isArchivingInSchedulingModeSelector(state)
-    ) {
-      // The workaround to force the announcement of the accessibilityLabel
-      // when the onLongPress event is triggered disables the automatic
-      // announcement on Android for the standard selection gesture (onPress),
-      // so we must handle that case here
-      toggleScheduledMessageArchivingCallback(isAndroid);
-    } else if (isSearchSource(source) || isArchivingDisabledSelector(state)) {
-      if (message.hasPrecondition) {
-        dispatch(
-          scheduledPreconditionStatusAction(
-            toScheduledPayload(message.id, message.category.tag)
-          )
-        );
-      } else {
-        const now = new Date();
-        if (
-          lastNavigationDate.current.getTime() +
-            minDelayBetweenNavigationMilliseconds >=
-          now.getTime()
-        ) {
-          // This prevents an unwanted double tap that triggers
-          // a dobule navigation towards the message details
-          return;
-        }
-        lastNavigationDate.current = now;
-
-        if (isSearchSource(source)) {
-          trackMessageSearchSelection();
-        }
-
-        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
-          params: {
-            messageId: message.id,
-            fromNotification: false
+          if (isSearchSource(source)) {
+            trackMessageSearchSelection();
           }
-        });
-      }
-    }
-  }, [
-    dispatch,
-    message,
-    navigation,
-    source,
-    store,
-    toggleScheduledMessageArchivingCallback
-  ]);
 
-  return (
-    <ListItemMessage
-      accessibilityLabel={accessibilityLabel}
-      avatarDouble={avatarDouble}
-      formattedDate={messageDate}
-      isRead={isRead}
-      messageTitle={messageTitle}
-      // Accessibility label is not announced if the onLonPress
-      // event is triggered, so we have to force the announcement
-      onLongPress={() => toggleScheduledMessageArchivingCallback(true)}
-      onPress={onPressCallback}
-      organizationName={organizationName}
-      selected={isSelected}
-      serviceLogos={serviceLogoUriSources}
-      serviceName={serviceName}
-      tag={tag}
-      testID={`wrapped_message_list_item_${index}`}
-    />
-  );
-};
+          navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+            screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
+            params: {
+              messageId: message.id,
+              fromNotification: false
+            }
+          });
+        }
+      }
+    }, [
+      dispatch,
+      message,
+      navigation,
+      source,
+      store,
+      toggleScheduledMessageArchivingCallback
+    ]);
+
+    return (
+      <ListItemMessage
+        accessibilityLabel={accessibilityLabel}
+        avatarDouble={avatarDouble}
+        formattedDate={messageDate}
+        isRead={isRead}
+        messageTitle={messageTitle}
+        onLongPress={() => toggleScheduledMessageArchivingCallback(true)}
+        onPress={onPressCallback}
+        organizationName={organizationName}
+        selected={isSelected}
+        serviceLogos={serviceLogoUriSources}
+        serviceName={serviceName}
+        tag={tag}
+        testID={`wrapped_message_list_item_${index}`}
+      />
+    );
+  }
+);
 
 export const isInboxOrArchiveSource = (
-  source: WrappedListItemMessage["source"]
+  source: WrappedListItemMessageProps["source"]
 ) => source === "ARCHIVE" || isInboxSource(source);
-export const isInboxSource = (source: WrappedListItemMessage["source"]) =>
+export const isInboxSource = (source: WrappedListItemMessageProps["source"]) =>
   source === "INBOX";
-export const isSearchSource = (source: WrappedListItemMessage["source"]) =>
+export const isSearchSource = (source: WrappedListItemMessageProps["source"]) =>
   source === "SEARCH";

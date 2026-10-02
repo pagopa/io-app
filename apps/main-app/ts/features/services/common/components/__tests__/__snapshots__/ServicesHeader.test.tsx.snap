@@ -72,6 +72,7 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
               "width": "100%",
             }
           }
+          testID="avatar_image"
         />
       </View>
     </View>

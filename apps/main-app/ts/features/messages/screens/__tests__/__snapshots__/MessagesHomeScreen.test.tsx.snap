@@ -212,77 +212,8 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                           This is a mock for Toasts
                         </View>
                         <View
-                          testID="mock_tab_navigation_container"
-                        >
-                          This is a mock for TabNavigationContainer
-                        </View>
-                        <RNCViewPager
-                          layoutDirection="ltr"
-                          onMoveShouldSetResponderCapture={[Function]}
-                          onPageScroll={[Function]}
-                          onPageScrollStateChanged={[Function]}
-                          onPageSelected={[Function]}
-                          testID="mock_pager_view_container"
-                        >
-                          <View
-                            collapsable={false}
-                            style={
-                              {
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
-                              }
-                            }
-                          >
-                            <View
-                              style={
-                                [
-                                  undefined,
-                                  {
-                                    "bottom": 0,
-                                    "left": 0,
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
-                                  },
-                                ]
-                              }
-                            >
-                              Mock Inbox
-                            </View>
-                          </View>
-                          <View
-                            collapsable={false}
-                            style={
-                              {
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
-                              }
-                            }
-                          >
-                            <View
-                              style={
-                                [
-                                  undefined,
-                                  {
-                                    "bottom": 0,
-                                    "left": 0,
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
-                                  },
-                                ]
-                              }
-                            >
-                              Mock Archive
-                            </View>
-                          </View>
-                        </RNCViewPager>
+                          testID="mock_messages_list_container"
+                        />
                         <View
                           testID="mock_preconditions"
                         >
