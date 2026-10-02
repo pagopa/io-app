@@ -384,11 +384,160 @@ describe("itwProximityMachine", () => {
     expect(navigateToNfcActivationScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("close from Nfc.RequireActivation returns to Presentment", async () => {
+  test.each([
+    {
+      name: "native NFC startup failure",
+      pending: false,
+      event: {
+        type: "device-error",
+        error: new Error("NFC HCE Failed to start")
+      } as const
+    },
+    {
+      name: "native NFC session stopped before starting",
+      pending: false,
+      event: { type: "nfc-stopped" } as const
+    },
+    {
+      name: "native NFC startup failure before the bridge resolves",
+      pending: true,
+      event: {
+        type: "device-error",
+        error: new Error("NFC HCE Failed to start")
+      } as const
+    },
+    {
+      name: "native NFC session stopped before the bridge resolves",
+      pending: true,
+      event: { type: "nfc-stopped" } as const
+    }
+  ])(
+    "$name shows NFC instructions without closing proximity",
+    async ({ event, pending }) => {
+      checkNfcActivation.mockResolvedValue(true);
+      startEngagement.mockReturnValue(
+        pending ? new Promise(() => {}) : Promise.resolve()
+      );
+      const actor = createActor(mockedMachine, {
+        input: { deps: T_DEPS },
+        snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
+      });
+
+      actor.start();
+      actor.send({ type: "start-nfc-presentment" });
+
+      await waitFor(actor, snapshot =>
+        snapshot.matches({
+          Presentment: pending ? "Starting" : "AwaitingNfcStart"
+        })
+      );
+      actor.send(event);
+
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Nfc: "RequireActivation"
+      });
+      expect(navigateToNfcActivationScreen).toHaveBeenCalledTimes(1);
+      expect(navigateToFailureScreen).not.toHaveBeenCalled();
+      expect(closeProximity).not.toHaveBeenCalled();
+      actor.send({ type: "nfc-stopped" });
+      actor.send({
+        type: "device-error",
+        error: new Error("NFC startup failed")
+      });
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Nfc: "RequireActivation"
+      });
+
+      startEngagement.mockResolvedValue(undefined);
+      actor.send({ type: "continue" });
+      await waitFor(actor, snapshot =>
+        snapshot.matches({ Presentment: "AwaitingNfcStart" })
+      );
+      actor.send({ type: "nfc-started" });
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Presentment: "AwaitingConnection"
+      });
+      expect(actor.getSnapshot().context.failure).toBeUndefined();
+      expect(navigateToFailureScreen).not.toHaveBeenCalled();
+      expect(closeProximity).not.toHaveBeenCalled();
+      actor.stop();
+    }
+  );
+
+  test.each([
+    { name: "before the bridge resolves", pending: true },
+    { name: "after the bridge resolves", pending: false }
+  ])(
+    "native NFC starts $name and can be dismissed normally",
+    async ({ pending }) => {
+      checkNfcActivation.mockResolvedValue(true);
+      startEngagement.mockReturnValue(
+        pending ? new Promise(() => {}) : Promise.resolve()
+      );
+      const actor = createActor(mockedMachine, {
+        input: { deps: T_DEPS },
+        snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
+      });
+
+      actor.start();
+      actor.send({ type: "start-nfc-presentment" });
+      await waitFor(actor, snapshot =>
+        snapshot.matches({
+          Presentment: pending ? "Starting" : "AwaitingNfcStart"
+        })
+      );
+
+      actor.send({ type: "nfc-started" });
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Presentment: "AwaitingConnection"
+      });
+      actor.send({ type: "nfc-stopped" });
+      expect(closeProximity).toHaveBeenCalledTimes(1);
+      expect(navigateToNfcActivationScreen).not.toHaveBeenCalled();
+      actor.stop();
+    }
+  );
+
+  it("rejected NFC engagement shows instructions and preserves the startup error", async () => {
+    const error = new Error("NFC startup failed");
+    checkNfcActivation.mockResolvedValue(true);
+    startEngagement.mockRejectedValueOnce(error);
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
+    });
+
+    actor.start();
+    actor.send({ type: "start-nfc-presentment" });
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Nfc: "RequireActivation" })
+    );
+
+    expect(navigateToNfcActivationScreen).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().context.failure?.reason).toBe(error);
+    expect(navigateToFailureScreen).not.toHaveBeenCalled();
+    expect(closeProximity).not.toHaveBeenCalled();
+    actor.stop();
+  });
+
+  test.each([
+    { name: "NFC instructions", state: { Nfc: "RequireActivation" } },
+    {
+      name: "pending NFC permission",
+      state: { Presentment: "AwaitingNfcStart" }
+    }
+  ] as const)("close from $name restarts QR presentment", async ({ state }) => {
     startEngagement.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
       input: { deps: T_DEPS },
-      snapshot: makeSnapshot({ Nfc: "RequireActivation" })
+      snapshot: makeSnapshot(state, {
+        engagementMode: "nfc",
+        retrievalMethod: "nfc",
+        failure: {
+          type: ProximityFailureType.RELYING_PARTY_GENERIC,
+          reason: new Error("NFC startup failed")
+        }
+      })
     });
 
     actor.start();
@@ -397,6 +546,10 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Presentment: "Starting" })
     );
+    expect(actor.getSnapshot().context.engagementMode).toBe("qrcode");
+    expect(actor.getSnapshot().context.retrievalMethod).toBeUndefined();
+    expect(actor.getSnapshot().context.failure).toBeUndefined();
+    expect(navigateToPresentmentScreen).toHaveBeenCalledTimes(1);
   });
 
   it("continue from Nfc.RequireActivation moves to Presentment.Starting with NFC mode", async () => {

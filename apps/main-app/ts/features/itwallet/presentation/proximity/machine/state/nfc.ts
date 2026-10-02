@@ -2,7 +2,7 @@ import { assign } from "xstate";
 
 import { itwProximityMachineSetup } from "../setup";
 
-/** Resolves NFC activation when user selects NFC engagement. */
+/** Checks NFC reader availability before starting contactless engagement. */
 export const nfcState = itwProximityMachineSetup.createStateConfig({
   description: "NFC activation gate, entered only when the user opts in",
   initial: "CheckActivation",
@@ -31,8 +31,15 @@ export const nfcState = itwProximityMachineSetup.createStateConfig({
       entry: "navigateToNfcActivationScreen",
       on: {
         close: {
-          // Back to the QR engagement still in progress, without committing to NFC
-          target: "#itwProximityMachine.Presentment"
+          target: "#itwProximityMachine.Presentment",
+          actions: [
+            assign(() => ({
+              engagementMode: "qrcode" as const,
+              failure: undefined,
+              retrievalMethod: undefined
+            })),
+            "navigateToPresentmentScreen"
+          ]
         },
         continue: {
           target: "Completed"
@@ -49,7 +56,7 @@ export const nfcState = itwProximityMachineSetup.createStateConfig({
     // and startEngagement so the native session runs with the NFC configuration
     target: "#itwProximityMachine.Presentment",
     actions: [
-      assign({ engagementMode: "nfc" }),
+      assign({ engagementMode: "nfc", failure: undefined }),
       "navigateToNfcPresentmentScreen"
     ]
   }

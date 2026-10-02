@@ -106,7 +106,9 @@ export const ItwNfcActivationScreen = () => {
             "features.itWallet.presentation.proximity.nfc.activation.listItems.step2.label"
           ),
           value: I18n.t(
-            "features.itWallet.presentation.proximity.nfc.activation.listItems.step2.value"
+            Platform.OS === "ios"
+              ? "features.itWallet.presentation.proximity.nfc.activation.listItems.step2.value_ios"
+              : "features.itWallet.presentation.proximity.nfc.activation.listItems.step2.value"
           ),
           icon: "systemAppsAndroid"
         },
@@ -115,7 +117,9 @@ export const ItwNfcActivationScreen = () => {
             "features.itWallet.presentation.proximity.nfc.activation.listItems.step3.label"
           ),
           value: I18n.t(
-            "features.itWallet.presentation.proximity.nfc.activation.listItems.step3.value"
+            Platform.OS === "ios"
+              ? "features.itWallet.presentation.proximity.nfc.activation.listItems.step3.value_ios"
+              : "features.itWallet.presentation.proximity.nfc.activation.listItems.step3.value"
           ),
           icon: "systemToggleInstructions"
         }

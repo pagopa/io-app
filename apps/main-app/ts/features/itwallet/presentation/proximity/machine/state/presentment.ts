@@ -22,6 +22,16 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
     }
   },
   on: {
+    "nfc-stopped": {
+      guard: and([
+        "isNfcEngagement",
+        or([
+          stateIn("Presentment.Starting"),
+          stateIn("Presentment.AwaitingNfcStart")
+        ])
+      ]),
+      target: "#itwProximityMachine.Nfc.RequireActivation"
+    },
     "qr-code-string": {
       target: "Presentment.AwaitingConnection",
       actions: assign(({ event }) => ({
@@ -82,6 +92,17 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
     ],
     "device-error": [
       {
+        guard: and([
+          "isNfcEngagement",
+          or([
+            stateIn("Presentment.Starting"),
+            stateIn("Presentment.AwaitingNfcStart")
+          ])
+        ]),
+        actions: "setFailure",
+        target: "#itwProximityMachine.Nfc.RequireActivation"
+      },
+      {
         // Expected error during intentional session termination for NFC
         // retrieval — consumed without failure, matching device-disconnected.
         guard: and([
@@ -124,10 +145,22 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
           engagementMode: context.engagementMode,
           deps: context.deps
         }),
-        onDone: {
-          target: "AwaitingConnection"
-        },
+        onDone: [
+          {
+            // The iOS bridge resolves before the native permission prompt completes.
+            guard: "isNfcEngagement",
+            target: "AwaitingNfcStart"
+          },
+          {
+            target: "AwaitingConnection"
+          }
+        ],
         onError: [
+          {
+            guard: "isNfcEngagement",
+            actions: "setFailure",
+            target: "#itwProximityMachine.Nfc.RequireActivation"
+          },
           {
             guard: "isNfcRetrieval",
             actions: "setFailure",
@@ -139,8 +172,31 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
         ]
       },
       on: {
+        "nfc-started": {
+          guard: "isNfcEngagement",
+          target: "AwaitingConnection"
+        },
         retry: {
           target: "Retrying"
+        }
+      }
+    },
+    AwaitingNfcStart: {
+      description: "Wait for native NFC activation and permission approval",
+      on: {
+        "nfc-started": {
+          target: "AwaitingConnection"
+        },
+        close: {
+          target: "#itwProximityMachine.Presentment",
+          actions: [
+            assign(() => ({
+              engagementMode: "qrcode" as const,
+              failure: undefined,
+              retrievalMethod: undefined
+            })),
+            "navigateToPresentmentScreen"
+          ]
         }
       }
     },

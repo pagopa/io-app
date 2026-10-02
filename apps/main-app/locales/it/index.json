@@ -2170,11 +2170,13 @@
                 },
                 "step2": {
                   "label": "Step 2",
-                  "value": "Cerca la funzionalità \"NFC\""
+                  "value": "Cerca la funzionalità \"NFC\"",
+                  "value_ios": "Seleziona \"App\", poi \"IO\""
                 },
                 "step3": {
                   "label": "Step 3",
-                  "value": "Attiva la funzionalità"
+                  "value": "Attiva la funzionalità",
+                  "value_ios": "Consenti a IO di usare l’NFC"
                 },
                 "title": "Ecco come:"
               },
