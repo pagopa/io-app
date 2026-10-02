@@ -1,8 +1,6 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
-import CookieManager from "@react-native-cookies/cookies";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
-import { Platform } from "react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import URLParse from "url-parse";
@@ -22,7 +20,7 @@ import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/st
 import { lollipopSetEphemeralPublicKey } from "../../store/actions/lollipop";
 import { toBase64EncodedThumbprint } from "../../utils/crypto";
 import {
-  getRedirectsAndVerifySaml,
+  followNativeRedirectsAndVerifySaml,
   lollipopSamlVerify
 } from "../../utils/login";
 import { useOneIdentityLoginSource } from "../useOneIdentityLoginSource";
@@ -46,12 +44,8 @@ jest.mock("../..", () => ({
 
 jest.mock("../../utils/login", () => ({
   ...jest.requireActual("../../utils/login"),
-  getRedirectsAndVerifySaml: jest.fn(),
+  followNativeRedirectsAndVerifySaml: jest.fn(),
   lollipopSamlVerify: jest.fn()
-}));
-
-jest.mock("@react-native-cookies/cookies", () => ({
-  removeSessionCookies: jest.fn()
 }));
 
 jest.mock("../../../authentication/fastLogin/store/selectors", () => ({
@@ -400,7 +394,6 @@ describe("useOneIdentityLoginSource", () => {
       mockRetriableFetch.mockResolvedValue(
         successResponse(200, reserveResponse)
       );
-      jest.mocked(CookieManager.removeSessionCookies).mockResolvedValue(true);
     });
 
     it("should not follow the redirects natively when disabled", async () => {
@@ -411,11 +404,11 @@ describe("useOneIdentityLoginSource", () => {
           "one-identity-authorize"
         );
       });
-      expect(getRedirectsAndVerifySaml).not.toHaveBeenCalled();
+      expect(followNativeRedirectsAndVerifySaml).not.toHaveBeenCalled();
     });
 
     it("should follow the /authorize redirects natively and expose the verified IDP SSO URL", async () => {
-      jest.mocked(getRedirectsAndVerifySaml).mockResolvedValue(ssoUrl);
+      jest.mocked(followNativeRedirectsAndVerifySaml).mockResolvedValue(ssoUrl);
 
       const { result, onFailure } = setupTest({
         followRedirectsNatively: true
@@ -429,7 +422,7 @@ describe("useOneIdentityLoginSource", () => {
       });
 
       const [authorizeUrl, headers, publicKey] = jest.mocked(
-        getRedirectsAndVerifySaml
+        followNativeRedirectsAndVerifySaml
       ).mock.lastCall!;
       const parsedAuthorizeUrl = new URLParse(authorizeUrl, true);
 
@@ -449,7 +442,7 @@ describe("useOneIdentityLoginSource", () => {
 
     it("should expose the following-redirects status while the redirects are pending", async () => {
       jest
-        .mocked(getRedirectsAndVerifySaml)
+        .mocked(followNativeRedirectsAndVerifySaml)
         .mockReturnValue(new Promise(() => undefined));
 
       const { result } = setupTest({ followRedirectsNatively: true });
@@ -469,7 +462,7 @@ describe("useOneIdentityLoginSource", () => {
           code: "NativeRedirectError"
         } as unknown as LoginUtilsError,
         expectedReason:
-          "Native redirects failed with REDIRECTING_ERROR (HTTP 500)"
+          'NativeRedirectError {"error":"REDIRECTING_ERROR","statusCode":500}'
       },
       {
         name: "a native error without HTTP status",
@@ -477,24 +470,29 @@ describe("useOneIdentityLoginSource", () => {
           userInfo: { error: "REDIRECTING_ERROR" },
           code: "NativeRedirectError"
         } as unknown as LoginUtilsError,
-        expectedReason: "Native redirects failed with REDIRECTING_ERROR"
+        expectedReason: 'NativeRedirectError {"error":"REDIRECTING_ERROR"}'
       },
       {
         name: "a SAML verification error",
         error: new Error(
           "Mismatch between local and remote ID parameter content"
         ),
-        expectedReason: "Mismatch between local and remote ID parameter content"
+        // unknownToString includes the stack trace for Error instances
+        expectedReason: expect.stringContaining(
+          "Error: Mismatch between local and remote ID parameter content"
+        )
       },
       {
         name: "an unknown error",
         error: "unexpected",
-        expectedReason: "Native redirects failed with an unknown error"
+        expectedReason: "unexpected"
       }
     ])(
       "should fail with a descriptive reason on $name",
       async ({ error, expectedReason }) => {
-        jest.mocked(getRedirectsAndVerifySaml).mockRejectedValue(error);
+        jest
+          .mocked(followNativeRedirectsAndVerifySaml)
+          .mockRejectedValue(error);
 
         const { result, onFailure } = setupTest({
           followRedirectsNatively: true
@@ -510,45 +508,6 @@ describe("useOneIdentityLoginSource", () => {
       }
     );
 
-    it.each([
-      { platform: "android" as const, shouldRemoveCookies: true },
-      { platform: "ios" as const, shouldRemoveCookies: false }
-    ])(
-      "should remove session cookies before the redirects only when needed on $platform",
-      async ({ platform, shouldRemoveCookies }) => {
-        jest.replaceProperty(Platform, "OS", platform);
-        jest.mocked(getRedirectsAndVerifySaml).mockResolvedValue(ssoUrl);
-
-        const { result } = setupTest({ followRedirectsNatively: true });
-
-        await waitFor(() => {
-          expect(result.current.loginSourceState.status).toBe(
-            "assertion-ref-verified"
-          );
-        });
-        expect(CookieManager.removeSessionCookies).toHaveBeenCalledTimes(
-          shouldRemoveCookies ? 1 : 0
-        );
-      }
-    );
-
-    it("should fail without following the redirects when session cookies cannot be removed on android", async () => {
-      jest.replaceProperty(Platform, "OS", "android");
-      jest
-        .mocked(CookieManager.removeSessionCookies)
-        .mockRejectedValue(new Error("Unable to remove cookies"));
-
-      const { result, onFailure } = setupTest({
-        followRedirectsNatively: true
-      });
-
-      await waitFor(() => {
-        expect(onFailure).toHaveBeenCalledWith("Unable to remove cookies");
-      });
-      expect(result.current.loginSourceState.status).toBe("failure");
-      expect(getRedirectsAndVerifySaml).not.toHaveBeenCalled();
-    });
-
     it("should discard the result of a stale native redirects flow when generateLoginSource is called again", async () => {
       const staleSsoUrl =
         "https://idp.example.com/sso?SAMLRequest=stale-request";
@@ -556,7 +515,7 @@ describe("useOneIdentityLoginSource", () => {
       let resolveStaleRedirects: (url: string) => void = () => undefined;
 
       jest
-        .mocked(getRedirectsAndVerifySaml)
+        .mocked(followNativeRedirectsAndVerifySaml)
         .mockImplementationOnce(
           () =>
             new Promise<string>(resolve => {
@@ -568,7 +527,7 @@ describe("useOneIdentityLoginSource", () => {
       const { result } = setupTest({ followRedirectsNatively: true });
 
       await waitFor(() => {
-        expect(getRedirectsAndVerifySaml).toHaveBeenCalledTimes(1);
+        expect(followNativeRedirectsAndVerifySaml).toHaveBeenCalledTimes(1);
       });
 
       act(() => {
@@ -596,7 +555,7 @@ describe("useOneIdentityLoginSource", () => {
       // eslint-disable-next-line functional/no-let
       let rejectRedirects: (error: Error) => void = () => undefined;
 
-      jest.mocked(getRedirectsAndVerifySaml).mockImplementation(
+      jest.mocked(followNativeRedirectsAndVerifySaml).mockImplementation(
         () =>
           new Promise<string>((_, reject) => {
             rejectRedirects = reject;
@@ -608,7 +567,7 @@ describe("useOneIdentityLoginSource", () => {
       });
 
       await waitFor(() => {
-        expect(getRedirectsAndVerifySaml).toHaveBeenCalledTimes(1);
+        expect(followNativeRedirectsAndVerifySaml).toHaveBeenCalledTimes(1);
       });
 
       unmount();

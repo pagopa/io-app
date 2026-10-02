@@ -1,8 +1,6 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { isLoginUtilsError } from "@pagopa/io-react-native-login-utils";
-import CookieManager from "@react-native-cookies/cookies";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Platform } from "react-native";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
@@ -12,6 +10,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
+import { unknownToString } from "../../../utils/errors";
 import {
   isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
@@ -33,7 +32,7 @@ import { ReserveSchema } from "../types";
 import { toBase64EncodedThumbprint } from "../utils/crypto";
 import {
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-  getRedirectsAndVerifySaml,
+  followNativeRedirectsAndVerifySaml,
   lollipopSamlVerify
 } from "../utils/login";
 
@@ -80,13 +79,9 @@ type LoginSourceState =
  */
 const getNativeRedirectsFailureReason = (error: unknown): string => {
   if (isLoginUtilsError(error)) {
-    const { error: nativeError, statusCode } = error.userInfo;
-    const httpStatus = statusCode ? ` (HTTP ${statusCode})` : "";
-    return `Native redirects failed with ${nativeError}${httpStatus}`;
+    return `${error.code} ${unknownToString(error.userInfo)}`;
   }
-  return error instanceof Error
-    ? error.message
-    : "Native redirects failed with an unknown error";
+  return unknownToString(error);
 };
 
 /** Builds the request body for the `/reserve` endpoint. */
@@ -327,12 +322,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       setLoginSourceState({ status: "following-redirects" });
 
       try {
-        // Mirrors the legacy CIE flow: stale IDP session cookies on Android
-        // lead to an error page when the IDP URL is accessed again.
-        if (Platform.OS === "android") {
-          await CookieManager.removeSessionCookies();
-        }
-        const ssoUrl = await getRedirectsAndVerifySaml(
+        const lastRedirect = await followNativeRedirectsAndVerifySaml(
           authorizationUrl,
           buildAuthorizeHeaders(publicKey),
           publicKey
@@ -344,7 +334,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
         }
         setLoginSourceState({
           status: "assertion-ref-verified",
-          webviewSource: { uri: ssoUrl }
+          webviewSource: { uri: lastRedirect }
         });
       } catch (error) {
         if (controller.signal.aborted) {
@@ -353,11 +343,9 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
         const reason = getNativeRedirectsFailureReason(error);
         setLoginSourceState({ status: "failure", error: reason });
         onFailure(reason);
-      } finally {
-        if (abortControllerRef.current === controller) {
-          abortControllerRef.current = null;
-        }
       }
+
+      abortControllerRef.current = null;
       return;
     }
 

@@ -120,7 +120,7 @@ export const regenerateKeyGetRedirectsAndVerifySaml = async (
     hashedFiscalCode
   );
 
-  return getRedirectsAndVerifySaml(loginUri, headers, publicKey);
+  return followNativeRedirectsAndVerifySaml(loginUri, headers, publicKey);
 };
 
 /**
@@ -136,7 +136,7 @@ export const regenerateKeyGetRedirectsAndVerifySaml = async (
  * @throws {LoginUtilsError | Error} If the redirects fail, the `SAMLRequest` is
  *   missing or its verification fails.
  */
-export const getRedirectsAndVerifySaml = async (
+export const followNativeRedirectsAndVerifySaml = async (
   url: string,
   headers: Record<string, string | undefined>,
   publicKey: PublicKey
@@ -144,11 +144,10 @@ export const getRedirectsAndVerifySaml = async (
   // getRedirects throws LoginUtilsError or generic Error — let them propagate as-is
   const redirects = await getRedirects(url, headers, "SAMLRequest");
 
-  if (!redirects || redirects.length === 0) {
+  const lastRedirect = redirects?.at(-1);
+  if (!lastRedirect) {
     throw new Error("Missing Redirects");
   }
-
-  const lastRedirect = redirects[redirects.length - 1];
   const urlEncodedSamlRequest = new URLParse(lastRedirect, true).query
     .SAMLRequest;
   if (!urlEncodedSamlRequest) {
