@@ -4,7 +4,10 @@ import MockDate from "mockdate";
 import { applicationChangeState } from "../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { ItwStoredCredentialsMocks } from "../../../../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ItwStoredCredentialsMocks
+} from "../../../../../common/utils/itwMocksUtils";
 import {
   CredentialFormat,
   CredentialMetadata,
@@ -12,12 +15,103 @@ import {
 } from "../../../../../common/utils/itwTypesUtils";
 import {
   areAllPresentableCredentialsExpired,
+  isPresentableCredentialSelector,
   shouldShowExpiredProximityCredentialsBannerSelector
 } from "../credentials";
 
 describe("proximity selectors", () => {
   afterEach(() => {
     MockDate.reset();
+  });
+
+  describe("isPresentableCredentialSelector", () => {
+    const mdlMdoc: CredentialMetadata = {
+      ...ItwStoredCredentialsMocks.mdl,
+      credentialId: "mso_mdoc_mDL",
+      format: CredentialFormat.MDOC
+    };
+    const mdlSdJwt: CredentialMetadata = {
+      ...ItwStoredCredentialsMocks.mdl,
+      format: CredentialFormat.SD_JWT
+    };
+    const ehicMdoc: CredentialMetadata = {
+      ...ItwStoredCredentialsMocks.ts,
+      format: CredentialFormat.MDOC
+    };
+    const scenarios = [
+      {
+        name: "an allowed credential is stored as MDOC",
+        credentialType: CredentialType.DRIVING_LICENSE,
+        credentials: [mdlMdoc, ehicMdoc],
+        expected: true
+      },
+      {
+        name: "an allowed credential is stored in both formats",
+        credentialType: CredentialType.DRIVING_LICENSE,
+        credentials: [mdlSdJwt, mdlMdoc],
+        expected: true
+      },
+      {
+        name: "another allowed credential is stored as MDOC",
+        credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+        credentials: [
+          { ...ItwStoredCredentialsMocks.dc, format: CredentialFormat.MDOC }
+        ],
+        expected: true
+      },
+      {
+        name: "the European Health Insurance Card is stored as MDOC",
+        credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+        credentials: [ehicMdoc, mdlMdoc],
+        expected: false
+      },
+      {
+        name: "an allowed credential is stored only as SD-JWT",
+        credentialType: CredentialType.DRIVING_LICENSE,
+        credentials: [mdlSdJwt],
+        expected: false
+      },
+      {
+        name: "the wallet has no credentials",
+        credentialType: CredentialType.DRIVING_LICENSE,
+        credentials: [],
+        expected: false
+      },
+      {
+        name: "the requested credential type is not stored",
+        credentialType: CredentialType.PROOF_OF_AGE,
+        credentials: [mdlMdoc],
+        expected: false
+      }
+    ];
+
+    test.each(scenarios)(
+      "returns $expected when $name",
+      ({ credentialType, credentials, expected }) => {
+        const initialState = appReducer(
+          undefined,
+          applicationChangeState("active")
+        );
+        const state: GlobalState = _.merge({}, initialState, {
+          features: {
+            itWallet: {
+              credentials: {
+                credentials: Object.fromEntries(
+                  credentials.map(credential => [
+                    credential.credentialId,
+                    credential
+                  ])
+                )
+              }
+            }
+          }
+        });
+
+        expect(isPresentableCredentialSelector(credentialType)(state)).toBe(
+          expected
+        );
+      }
+    );
   });
 
   it("detects when all presentable credentials are expired", () => {

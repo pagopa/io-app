@@ -83,7 +83,6 @@ export const isItwPersistedDiscoveryBannerRenderableSelector = (
  * - The Wallet Instance is not in a failure status
  * - The eID is not expired or expiring
  * - The Wallet is empty
- * - Fiscal code is not whitelisted for IT-Wallet L3
  *
  * @param state The application global state
  * @returns True if the banner should be visible, false otherwise
@@ -94,8 +93,7 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
   !itwIsWalletInstanceStatusFailureSelector(state) &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpiring" &&
-  itwIsWalletEmptySelector(state) &&
-  !itwIsL3EnabledSelector(state);
+  itwIsWalletEmptySelector(state);
 
 /**
  * Selectors that returns if the wallet is available for offline access. It
