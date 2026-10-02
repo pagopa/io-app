@@ -244,12 +244,6 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                             onScroll={[Function]}
                             scrollEventThrottle={8}
                             snapToEnd={false}
-                            snapToOffsets={
-                              [
-                                0,
-                                0,
-                              ]
-                            }
                             testID="services-preference-screen"
                           >
                             <View>

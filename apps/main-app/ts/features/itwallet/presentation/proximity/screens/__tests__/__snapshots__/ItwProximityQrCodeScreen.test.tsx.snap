@@ -226,12 +226,6 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -2160,12 +2154,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -4331,12 +4319,6 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -6291,12 +6273,6 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
