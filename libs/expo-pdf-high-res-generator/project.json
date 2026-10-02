@@ -1,0 +1,14 @@
+{
+  "name": "@io-app/expo-pdf-high-res-generator",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/expo-pdf-high-res-generator",
+  "projectType": "library",
+  "targets": {
+    "tsc-noemit": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm --filter @io-app/expo-pdf-high-res-generator run tsc-noemit"
+      }
+    }
+  }
+}
