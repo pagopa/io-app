@@ -1,5 +1,3 @@
-import * as O from "fp-ts/lib/Option";
-
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
@@ -52,11 +50,11 @@ export const createActionsImplementation = (
   const navigateToInitiativeMonitoringScreen = (args: {
     context: Context.Context;
   }) => {
-    if (O.isNone(args.context.initiative)) {
+    if (!args.context.initiative) {
       throw new Error("Initiative is undefined");
     }
 
-    const initiativeId = args.context.initiative.value.initiativeId;
+    const initiativeId = args.context.initiative.initiativeId;
 
     navigation.replace(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,

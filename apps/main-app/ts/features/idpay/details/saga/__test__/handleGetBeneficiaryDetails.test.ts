@@ -1,6 +1,6 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { InitiativeDetailDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDetailDTO";
-import * as E from "fp-ts/lib/Either";
+import { ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
@@ -35,7 +35,7 @@ describe("idPayBeneficiaryDetailsGet", () => {
           }),
           idPayBeneficiaryDetailsGet.request({ initiativeId })
         )
-        .next(E.right({ status: 200, value: initiativeDetails }))
+        .next(ok({ status: 200, value: initiativeDetails }))
         .put(idPayBeneficiaryDetailsGet.success(initiativeDetails))
         .next()
         .isDone();
@@ -65,7 +65,7 @@ describe("idPayBeneficiaryDetailsGet", () => {
           idPayBeneficiaryDetailsGet.request({ initiativeId })
         )
         .next(
-          E.right({
+          ok({
             status: statusCode,
             value: { code: statusCode, message: "error" }
           })

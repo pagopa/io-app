@@ -7,8 +7,6 @@ import {
   _typeEnum as SelfCriteriaMultiTypeVariationEnum
 } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiTypeDTO";
 import { IOToast, RadioGroup, VSpacer } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
@@ -46,11 +44,7 @@ const IdPayMultiValuePrerequisitesScreen = () => {
   const initiative =
     IdPayOnboardingMachineContext.useSelector(selectInitiative);
 
-  const initiativeId = pipe(
-    initiative,
-    O.map(i => i.initiativeId),
-    O.getOrElse(() => "")
-  );
+  const initiativeId = initiative?.initiativeId ?? "";
 
   useOnFirstRender(() =>
     trackIDPayOnboardingMultiSelfDeclaration({

@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
 
@@ -33,11 +31,7 @@ const IdPayFailureScreen = () => {
   const initiative = useSelector(selectInitiative);
   const locale = getFullLocale();
 
-  const initiativeId = pipe(
-    initiative,
-    O.map(i => i.initiativeId),
-    O.toUndefined
-  );
+  const initiativeId = initiative?.initiativeId;
 
   const { bottomSheet, present } = useIDPayFailureSupportModal(
     serviceId,
@@ -250,14 +244,12 @@ const IdPayFailureScreen = () => {
     }
   };
 
-  const contentProps = pipe(
-    failureOption,
-    O.map(mapFailureToContentProps),
-    O.getOrElse(() => genericErrorProps)
-  );
+  const contentProps = failureOption
+    ? mapFailureToContentProps(failureOption)
+    : genericErrorProps;
 
   useEffect(() => {
-    if (O.some(failureOption) && O.isSome(failureOption)) {
+    if (failureOption !== undefined) {
       trackIDPayOnboardingFailure({
         initiativeId,
         reason: failureOption

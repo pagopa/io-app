@@ -1,7 +1,4 @@
 import { AuthPaymentResponseDTO } from "@io-app/api-types/generated/definitions/idpay/AuthPaymentResponseDTO";
-import * as E from "fp-ts/lib/Either";
-import { flow, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { assertEvent, assign, fromPromise, setup } from "xstate";
 
 import { IdPayTags } from "../../common/machine/tags";
@@ -36,14 +33,10 @@ export const idPayPaymentMachine = setup({
   },
   guards: {
     isSessionExpired: ({ context }) =>
-      pipe(
-        context.failure,
-        O.map(failure => failure === PaymentFailureEnum.SESSION_EXPIRED),
-        O.getOrElse(() => false)
-      ),
+      context.failure === PaymentFailureEnum.SESSION_EXPIRED,
     assertTransactionCode: ({ event }) => {
       assertEvent(event, "authorize-payment");
-      return pipe(event.trxCode, IDPayTransactionCode.decode, E.isRight);
+      return "right" in IDPayTransactionCode.decode(event.trxCode);
     }
   }
 }).createMachine({
@@ -74,7 +67,7 @@ export const idPayPaymentMachine = setup({
         },
         onDone: {
           actions: assign(({ event }) => ({
-            transactionData: O.some(event.output)
+            transactionData: event.output
           })),
           target: "AwaitingConfirmation"
         },
@@ -186,10 +179,10 @@ export const idPayPaymentMachine = setup({
   }
 });
 
-const decodeFailure = flow(PaymentFailure.decode, O.fromEither);
+const decodeFailure = (error: unknown) => {
+  const result = PaymentFailure.decode(error);
+  return "right" in result ? result.right : undefined;
+};
 
-const isBlockingFalure = flow(
-  decodeFailure,
-  O.map(failure => failure !== PaymentFailureEnum.PAYMENT_TOO_MANY_REQUESTS),
-  O.getOrElse(() => false)
-);
+const isBlockingFalure = (error: unknown) =>
+  decodeFailure(error) !== PaymentFailureEnum.PAYMENT_TOO_MANY_REQUESTS;

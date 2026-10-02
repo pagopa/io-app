@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect } from "react";
 
@@ -17,11 +15,7 @@ const IdPayLoadingScreen = () => {
 
   const initiative = useSelector(selectInitiative);
 
-  const initiativeId = pipe(
-    initiative,
-    O.map(i => i.initiativeId),
-    O.getOrElse(() => "")
-  );
+  const initiativeId = initiative?.initiativeId ?? "";
 
   useEffect(() => {
     if (!isLoading) {

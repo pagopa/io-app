@@ -1,5 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
+import { err, ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
@@ -34,7 +34,7 @@ describe("handleIdPayEnrollCode", () => {
           }),
           idPayEnrollCode.request({ initiativeId: tInitiativeId })
         )
-        .next(E.right({ status: 200 }))
+        .next(ok({ status: 200 }))
         .put(idPayEnrollCode.success())
         .next()
         .isDone();
@@ -60,7 +60,7 @@ describe("handleIdPayEnrollCode", () => {
           }),
           idPayEnrollCode.request({ initiativeId: tInitiativeId })
         )
-        .next(E.right({ status: 500 }))
+        .next(ok({ status: 500 }))
         .put(
           idPayEnrollCode.failure({
             ...getGenericError(new Error(`response status code 500`))
@@ -90,7 +90,7 @@ describe("handleIdPayEnrollCode", () => {
           }),
           idPayEnrollCode.request({ initiativeId: tInitiativeId })
         )
-        .next(E.left([]))
+        .next(err([]))
         .put(
           idPayEnrollCode.failure({
             ...getGenericError(new Error(readablePrivacyReport([])))

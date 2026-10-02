@@ -1,6 +1,6 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { WalletDTO } from "@io-app/api-types/generated/definitions/idpay/WalletDTO";
-import * as E from "fp-ts/lib/Either";
+import { ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
@@ -33,7 +33,7 @@ describe("handleGetIDPayWallet", () => {
       )
         .next()
         .call(withRefreshApiCall, getWallet(), idPayWalletGet.request())
-        .next(E.right({ status: 200, value: mockedWallet }))
+        .next(ok({ status: 200, value: mockedWallet }))
         .put(walletAddCards([]))
         .next()
         .select()
@@ -59,7 +59,7 @@ describe("handleGetIDPayWallet", () => {
         .next()
         .call(withRefreshApiCall, getWallet(), idPayWalletGet.request())
         .next(
-          E.right({
+          ok({
             status: statusCode,
             value: { code: statusCode, message: "error" }
           })
