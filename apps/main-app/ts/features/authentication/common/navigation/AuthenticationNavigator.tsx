@@ -236,6 +236,7 @@ const AuthenticationStackNavigator = () => {
         <Stack.Screen
           component={AuthErrorScreen}
           name={AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN}
+          options={{ gestureEnabled: false }}
         />
 
         <Stack.Screen

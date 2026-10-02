@@ -1,6 +1,6 @@
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -63,6 +63,8 @@ export const ItwIssuanceEidResultScreen = () => {
 
   const itw_flow = isItwL3 ? "L3" : "reissuing_eID";
 
+  const hasLostFocusRef = useRef(false);
+
   useEffect(() => {
     if (failedCredentials.length > 0) {
       failedCredentials.forEach(failedCredential => {
@@ -124,6 +126,26 @@ export const ItwIssuanceEidResultScreen = () => {
     isEidMachineLoading,
     navigation
   ]);
+
+  // When the EID issuance is triggered by a credential request, this screen only
+  // acts as a bridge that starts the credential issuance while showing a loading
+  // state. If the user aborts the credential flow and navigates back here, there
+  // would be no way out: bring them back to the wallet and stop the flow.
+  useEffect(() => {
+    const unsubscribeBlur = navigation.addListener("blur", () => {
+      hasLostFocusRef.current = true;
+    });
+    const unsubscribeFocus = navigation.addListener("focus", () => {
+      if (credentialType && hasLostFocusRef.current) {
+        machineRef.send({ type: "go-to-wallet" });
+      }
+    });
+
+    return () => {
+      unsubscribeBlur();
+      unsubscribeFocus();
+    };
+  }, [navigation, machineRef, credentialType]);
 
   if (credentialType) {
     return <ItwIssuanceEidCredentialTriggerContent />;

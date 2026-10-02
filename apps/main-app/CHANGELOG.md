@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-rc.9](https://github.com/pagopa/io-app/compare/3.40.0-rc.8...3.40.0-rc.9) (2026-10-01)
+
+### Bug Fixes
+
+* [[IOPID-4216](https://pagopa.atlassian.net/browse/IOPID-4216)] preserve login history navigating from AuthErrorScreen ([#8639](https://github.com/pagopa/io-app/issues/8639)) ([e035e6d](https://github.com/pagopa/io-app/commit/e035e6dfef004b36a3ff0ba5a14bb8767dedaba0))
+* [[IOPID-4236](https://pagopa.atlassian.net/browse/IOPID-4236)] Remove gap between header and CIE consent webview ([#8666](https://github.com/pagopa/io-app/issues/8666)) ([6fcac3c](https://github.com/pagopa/io-app/commit/6fcac3c8135cd8c46aee34e9cbd40ca900ea98af))
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Add dismissal dialog for wallet activation flow and handle navigation on focus/blur ([#8511](https://github.com/pagopa/io-app/issues/8511)) ([ad5cf76](https://github.com/pagopa/io-app/commit/ad5cf76cb3edfc26a8e46808d372f27a8e9f1f65))
+
+### Chores
+
+* Update translations from Lokalise ([#8669](https://github.com/pagopa/io-app/issues/8669)) ([84182ed](https://github.com/pagopa/io-app/commit/84182ed4f704cd0d6560aa47212dce45fb896dd6))
+## [3.40.0-rc.8](https://github.com/pagopa/io-app/compare/3.40.0-rc.7...3.40.0-rc.8) (2026-09-30)
+
+### Chores
+
+* [[IOPLT-2086](https://pagopa.atlassian.net/browse/IOPLT-2086)] Enforce static `i18n` keys and `I18n` import name ([#8615](https://github.com/pagopa/io-app/issues/8615)) ([7e5bf50](https://github.com/pagopa/io-app/commit/7e5bf504e260ef09ea98edee248c4543ef4dfef4)), references [#8611](https://github.com/pagopa/io-app/issues/8611) [#8609](https://github.com/pagopa/io-app/issues/8609) [#8614](https://github.com/pagopa/io-app/issues/8614) [#8610](https://github.com/pagopa/io-app/issues/8610) [#8613](https://github.com/pagopa/io-app/issues/8613) [#8607](https://github.com/pagopa/io-app/issues/8607) [#8598](https://github.com/pagopa/io-app/issues/8598)
+* [[IOPLT-2091](https://pagopa.atlassian.net/browse/IOPLT-2091)] Remove unused locales and enforce no unused keys ([#8616](https://github.com/pagopa/io-app/issues/8616)) ([498f003](https://github.com/pagopa/io-app/commit/498f003f5279e64472985e51db25186811f4737e))
+* [[IOPLT-2093](https://pagopa.atlassian.net/browse/IOPLT-2093)] Xcode 27 compatibility ([#8617](https://github.com/pagopa/io-app/issues/8617)) ([8c71f2d](https://github.com/pagopa/io-app/commit/8c71f2d50cc881de024f6979c87aa7431683c952))
 ## [3.40.0-rc.7](https://github.com/pagopa/io-app/compare/3.40.0-rc.6...3.40.0-rc.7) (2026-09-28)
 
 ### Bug Fixes

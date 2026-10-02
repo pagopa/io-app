@@ -1,4 +1,4 @@
-import { fireEvent, waitFor } from "@testing-library/react-native";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor } from "xstate";
@@ -23,6 +23,8 @@ import { ItwIssuanceEidResultScreen } from "../ItwIssuanceEidResultScreen";
 const mockSend = jest.fn();
 const mockCredentialSend = jest.fn();
 const mockReplace = jest.fn();
+const mockHasResolvedCredentialOffer = jest.fn();
+const mockAddListener = jest.fn();
 
 jest.mock("../../../../../navigation/params/AppParamsList", () => {
   const actual = jest.requireActual(
@@ -32,7 +34,8 @@ jest.mock("../../../../../navigation/params/AppParamsList", () => {
     ...actual,
     useIONavigation: () => ({
       ...actual.useIONavigation(),
-      replace: mockReplace
+      replace: mockReplace,
+      addListener: mockAddListener
     })
   };
 });
@@ -71,8 +74,19 @@ jest.mock("../../../machine/credential/provider", () => {
 });
 
 describe("ItwIssuanceEidResultScreen", () => {
+  // eslint-disable-next-line functional/no-let
+  let navigationListeners: Record<string, () => void> = {};
+
   beforeEach(() => {
     jest.clearAllMocks();
+    mockHasResolvedCredentialOffer.mockReturnValue(false);
+    navigationListeners = {};
+    mockAddListener.mockImplementation(
+      (event: string, callback: () => void) => {
+        navigationListeners = { ...navigationListeners, [event]: callback };
+        return jest.fn();
+      }
+    );
   });
 
   describe("IT-Wallet (L3) flow", () => {
@@ -370,6 +384,52 @@ describe("ItwIssuanceEidResultScreen", () => {
         })
       );
       expect(mockReplace).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("when the credential issuance flow is aborted", () => {
+    beforeEach(() => {
+      jest
+        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
+        .mockReturnValue(false);
+    });
+
+    it("navigates back to the wallet when the user returns to this screen", async () => {
+      renderComponent("l3", { credentialType: "education_degree" });
+
+      await waitFor(() => expect(navigationListeners.blur).toBeDefined());
+
+      act(() => {
+        navigationListeners.blur();
+        navigationListeners.focus();
+      });
+
+      expect(mockSend).toHaveBeenCalledWith({ type: "go-to-wallet" });
+    });
+
+    it("does not navigate to the wallet on the first focus", async () => {
+      renderComponent("l3", { credentialType: "education_degree" });
+
+      await waitFor(() => expect(navigationListeners.focus).toBeDefined());
+
+      act(() => {
+        navigationListeners.focus();
+      });
+
+      expect(mockSend).not.toHaveBeenCalledWith({ type: "go-to-wallet" });
+    });
+
+    it("does not navigate to the wallet when the flow is not credential driven", async () => {
+      renderComponent("l3");
+
+      await waitFor(() => expect(navigationListeners.blur).toBeDefined());
+
+      act(() => {
+        navigationListeners.blur();
+        navigationListeners.focus();
+      });
+
+      expect(mockSend).not.toHaveBeenCalledWith({ type: "go-to-wallet" });
     });
   });
 });
