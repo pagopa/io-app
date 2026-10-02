@@ -1770,11 +1770,6 @@
       },
       "onboarding": {
         "restrictedMode": {
-          "banner": {
-            "action": "Start",
-            "content": "Discover the advanced features and benefits of the only public IT-Wallet.",
-            "title": "Activate IT-Wallet and add the new documents"
-          },
           "description": "You can obtain a digital version of the following documents, which can only be used in person and do not include the advanced features of IT-Wallet",
           "title": "Documents with limited functionality"
         }
