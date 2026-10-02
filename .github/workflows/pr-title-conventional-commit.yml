@@ -13,6 +13,8 @@ permissions:
 
 jobs:
   lint:
+    # Renovate security PRs are automated and have no Jira issue or conventional title
+    if: github.event.pull_request.user.login != 'renovate-pagopa[bot]'
     runs-on: ubuntu-22.04
     env:
       VALID_TYPES: "feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert"
