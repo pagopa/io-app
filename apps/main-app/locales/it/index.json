@@ -1618,7 +1618,8 @@
         "emptyWallet": {
           "readyBanner": {
             "action": "Aggiungi documento",
-            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO."
+            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO.",
+            "title": "Aggiungi il tuo primo documento"
           },
           "readyBannerL2": {
             "content": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
