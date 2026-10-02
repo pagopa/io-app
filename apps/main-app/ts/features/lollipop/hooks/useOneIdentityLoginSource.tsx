@@ -81,7 +81,7 @@ const getNativeRedirectsFailureReason = (error: unknown): string => {
   if (isLoginUtilsError(error)) {
     return `${error.code} ${unknownToString(error.userInfo)}`;
   }
-  return error instanceof Error ? error.message : unknownToString(error);
+  return unknownToString(error);
 };
 
 /** Builds the request body for the `/reserve` endpoint. */
