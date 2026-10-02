@@ -1129,8 +1129,7 @@
               "4": "The new official digital documents are available exclusively on the IO app",
               "5": "Access public administration digital services in just a few taps"
             },
-            "title": "Your digital documents with IT-Wallet: secure, official and always with you",
-            "tos": "By clicking **Continue**, you acknowledge that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{tos_url}})."
+            "title": "Your digital documents with IT-Wallet: secure, official and always with you"
           },
           "legacy": {
             "content": "Add digital versions of your personal documents to the app’s Wallet! \n\nThey have the **same legal validity** as physical documents in specific contexts. \n\n ###### It’s quick and easy \n Continue to activate the new feature in less than 3 minutes: over **8 million** people are already using **Documenti su IO**!",
@@ -2212,8 +2211,7 @@
               "message": "You will not be able to complete the document verification process."
             },
             "subtitle": "They will be shared with **{{relyingParty}}** only for as long as necessary to access the requested services.",
-            "title": "Please allow this information to be verified before proceeding",
-            "tos": "Your data will be processed securely. By continuing, you acknowledge that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{privacyUrl}})."
+            "title": "Please allow this information to be verified before proceeding"
           },
           "sendDocumentsLoading": {
             "0": {

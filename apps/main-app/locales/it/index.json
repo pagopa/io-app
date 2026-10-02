@@ -1129,8 +1129,8 @@
               "4": "I nuovi documenti digitali ufficiali, solo sull’app IO",
               "5": "Accedi in pochi tocchi ai servizi digitali della PA"
             },
-            "title": "I tuoi documenti digitali con IT-Wallet: sicuri, ufficiali e sempre con te",
-            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso.]({{privacyUrl}})"
+            "privacyAndTos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
+            "title": "I tuoi documenti digitali con IT-Wallet: sicuri, ufficiali e sempre con te"
           },
           "legacy": {
             "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **8 Milioni** di persone stanno già usando i **Documenti su IO**!",
@@ -1529,6 +1529,7 @@
           "title": "Hai aggiornato il documento"
         },
         "credentialAuth": {
+          "privacyAndTos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
           "requiredClaims": "Dati richiesti",
           "subtitle": "Saranno condivisi con **{{organization}}** solo per il tempo necessario al rilascio della versione digitale del documento.",
           "title": "Dati necessari per {{credentialName}}",
@@ -2216,9 +2217,9 @@
             "alert": {
               "message": "Non potrai completare la verifica del documento."
             },
+            "privacyAndTos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d’uso]({{tosUrl}}).",
             "subtitle": "Saranno condivisi con **{{relyingParty}}** solo per il tempo necessario all’accesso ai servizi richiesti.",
-            "title": "Consenti la verifica di questi dati per procedere",
-            "tos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyUrl}})."
+            "title": "Consenti la verifica di questi dati per procedere"
           },
           "sendDocumentsLoading": {
             "0": {
