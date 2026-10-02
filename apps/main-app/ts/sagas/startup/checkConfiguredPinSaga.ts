@@ -20,7 +20,7 @@ export function* checkConfiguredPinSaga(): Generator<
   // it from the Keychain
   const pinCode = yield* call(getPin);
 
-  if (pinCode != null) {
+  if (pinCode !== undefined) {
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (!isFastLoginEnabled || isValidPinNumber(pinCode)) {
       return pinCode;
