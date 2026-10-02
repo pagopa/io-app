@@ -47,7 +47,7 @@
     "sha256": "^0.2.0",
     "ts-pattern": "^3.3.4",
     "ulid": "^2.3.0",
-    "uuid": "^9.0.1",
+    "uuid": "^11.0.0",
     "xml2js": "^0.5.0"
   },
   "devDependencies": {
