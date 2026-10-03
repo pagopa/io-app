@@ -15,9 +15,9 @@ export type Context = {
   /** Runtime dependencies injected via machine input */
   deps: ProximityMachineDeps;
   /**
-   * The engagement mode committed to for the current proximity session.
-   * Defaults to "qrcode"; promoted to "nfc" only after the NFC permission gate
-   * succeeds.
+   * The requested engagement mode, defaulting to "qrcode". NFC reader
+   * availability is checked before switching to "nfc"; native startup confirms
+   * contactless consent before entering AwaitingConnection.
    */
   engagementMode: ISO18013_5.EngagementMode;
   /** The failure of the proximity presentation machine */
