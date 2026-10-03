@@ -27,6 +27,7 @@ const testMachineNavigation = (
   getState: () => ({
     index: 0,
     key: "test",
+    preloadedRoutes: [],
     routeNames: [],
     routes: [],
     stale: false,

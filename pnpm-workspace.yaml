@@ -28,7 +28,9 @@ patchedDependencies:
   # Allows iOS screen recordings without a black overlay while still preventing screenshots.
   expo-screen-capture@~55.0.9: patches/expo-screen-capture-npm-55.0.9.patch
   # Applies an explicit header `minHeight` in `CardContainer` only when `headerTransparent` is enabled and a screen reader is active, improving Android accessibility by ensuring the header area is properly sized for TalkBack.
-  "@react-navigation/stack@6.4.1": "patches/@react-navigation__stack.patch"
+  "@react-navigation/stack@7.10.17": "patches/@react-navigation__stack.patch"
+  # Gate the dev-only `checkSerializable`/`checkDuplicateRouteNames` walk of the whole navigation state tree (run in `BaseNavigationContainer` after every navigation state change) behind an opt-in global flag (`global.__IO_NAV_SERIALIZABILITY_CHECK_ENABLED__`, wired from `Config.NAV_SERIALIZABILITY_CHECK` / `navSerializabilityCheckEnabled` in `ts/config.ts`). Off by default: this app's deeply nested navigator tree makes that walk noticeably slow in dev builds. Re-enable locally to debug non-serializable route params affecting state persistence/deep-linking.
+  "@react-navigation/core@7.21.11": "patches/@react-navigation__core@7.21.11.patch"
 
 allowBuilds:
   "@shopify/react-native-skia": true
