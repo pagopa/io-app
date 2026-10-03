@@ -7,21 +7,14 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { itwIsActivationDisabledSelector } from "../store/selectors/preferences";
 
 export const ItwL2EngagementBanner = () => {
   const navigation = useIONavigation();
   const shouldRender = useIOSelector(itwIsWalletEmptySelector);
 
-  const isItWalletActivationDisabled = useIOSelector(
-    itwIsActivationDisabledSelector
-  );
-
   const handleOnPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: isItWalletActivationDisabled
-        ? ITW_ROUTES.L3_ONBOARDING
-        : ITW_ROUTES.L2_ONBOARDING
+      screen: ITW_ROUTES.L3_ONBOARDING
     });
   };
   const guardedHandleOnPress = useOfflineToastGuard(handleOnPress);
