@@ -13,6 +13,10 @@ jest.mock("@react-navigation/native", () => ({
   })
 }));
 
+jest.mock("../../../../../../hooks/useDebugInfo", () => ({
+  useDebugInfo: jest.fn()
+}));
+
 describe(CieIdNotInstalledScreen, () => {
   const CieIdNotInstalledScreenWithStore = withStore(CieIdNotInstalledScreen);
 

@@ -1,7 +1,9 @@
+import { Route, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
@@ -10,6 +12,7 @@ import {
   setIdpSelectedActiveSessionLogin
 } from "../../../activeSessionLogin/store/actions";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import { CieIdWebViewLoginEvent } from "../../../common/components/CieIdWebViewLogin";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpSelected } from "../../../common/store/actions";
 import useNavigateToLoginMethod, {
@@ -22,11 +25,37 @@ import {
   trackCieIdErrorSpidSelected
 } from "../analytics";
 
+export type CieIdErrorScreenParams = {
+  /**
+   * The CieID WebView event that caused the error, shown only in debug mode.
+   * Missing when the screen is reached from the legacy login flow.
+   */
+  failure?: CieIdWebViewLoginEvent;
+};
+
 const CieIdErrorScreen = () => {
   const { isCieSupported } = useNavigateToLoginMethod();
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const { replace, navigate, popToTop } = useIONavigation();
+  const { params } =
+    useRoute<
+      Route<
+        typeof AUTHENTICATION_ROUTES.CIE_ID_ERROR,
+        CieIdErrorScreenParams | undefined
+      >
+    >();
+  const failure = params?.failure;
+
+  const debugInfo = useMemo(
+    () => ({
+      ...(failure && { failure }),
+      flow: isActiveSessionLogin ? "reauth" : "auth",
+      isCieSupported
+    }),
+    [failure, isActiveSessionLogin, isCieSupported]
+  );
+  useDebugInfo(debugInfo);
 
   useAvoidHardwareBackButton();
 

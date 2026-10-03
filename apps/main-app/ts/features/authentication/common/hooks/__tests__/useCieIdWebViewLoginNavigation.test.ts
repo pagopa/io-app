@@ -31,15 +31,24 @@ describe("useCieIdWebViewLoginNavigation", () => {
     jest.clearAllMocks();
   });
 
-  it("navigateToCieIdAuthenticationError should replace with CIE_ID_ERROR", () => {
+  it("navigateToCieIdAuthenticationError should replace with CIE_ID_ERROR and the failure param", () => {
     const { result } = renderHook(() =>
       useCieIdWebViewLoginNavigation({ authLevel })
     );
 
-    result.current.navigateToCieIdAuthenticationError();
+    result.current.navigateToCieIdAuthenticationError({
+      type: "ONE_IDENTITY_LOGIN_FAILURE",
+      payload: { reason: "some reason" }
+    });
 
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
+      params: {
+        failure: {
+          type: "ONE_IDENTITY_LOGIN_FAILURE",
+          payload: { reason: "some reason" }
+        }
+      }
     });
   });
 
