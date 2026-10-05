@@ -89,3 +89,4 @@ catalog:
 
 minimumReleaseAgeExclude:
   - "@pagopa/io-react-native-jwt@2.2.5"
+  - '@pagopa/io-react-native-iso18013@0.8.5'
