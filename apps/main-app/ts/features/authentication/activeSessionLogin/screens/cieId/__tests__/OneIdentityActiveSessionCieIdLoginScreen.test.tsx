@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import { ComponentProps } from "react";
 import { createStore } from "redux";
@@ -30,12 +31,14 @@ jest.mock("../../../../common/components/CieIdWebViewLogin", () => {
 });
 
 const mockReplace = jest.fn();
+const mockNavigationDispatch = jest.fn();
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
     useNavigation: () => ({
-      replace: mockReplace
+      replace: mockReplace,
+      dispatch: mockNavigationDispatch
     })
   };
 });
@@ -107,14 +110,10 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
     });
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage: "err-code",
-        authMethod: "CIE_ID",
-        authLevel: MOCK_AUTH_LEVEL_L2
-      }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction("err-code")
+    );
+    expect(mockReplace).not.toHaveBeenCalled();
   });
 
   it("should not dispatch activeSessionLoginFailure but still navigate to AuthErrorScreen when LOGIN_FAILURE code is ERROR_1004", () => {
@@ -127,14 +126,10 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
     });
 
     expect(mockDispatch).not.toHaveBeenCalledWith(activeSessionLoginFailure());
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
-        authMethod: "CIE_ID",
-        authLevel: MOCK_AUTH_LEVEL_L2
-      }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction(AUTH_ERRORS.ERROR_1004)
+    );
+    expect(mockReplace).not.toHaveBeenCalled();
   });
 
   it("should force logout and navigate to landing on WEBVIEW_HTTP_ERROR on the callback URL", () => {
@@ -148,6 +143,7 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
 
     expect(mockForceLogoutAndNavigateToLanding).toHaveBeenCalled();
     expect(mockReplace).not.toHaveBeenCalled();
+    expect(mockNavigationDispatch).not.toHaveBeenCalled();
   });
 
   it("should navigate to AuthErrorScreen on WEBVIEW_HTTP_ERROR outside the callback URL", () => {
@@ -160,14 +156,10 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
     });
 
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage: undefined,
-        authMethod: "CIE_ID",
-        authLevel: MOCK_AUTH_LEVEL_L2
-      }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction(undefined)
+    );
+    expect(mockReplace).not.toHaveBeenCalled();
   });
 
   it("should not navigate anywhere on WEBVIEW_HTTP_ERROR with 403 outside the callback URL", () => {
@@ -181,6 +173,7 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
 
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
     expect(mockReplace).not.toHaveBeenCalled();
+    expect(mockNavigationDispatch).not.toHaveBeenCalled();
   });
 
   it("should navigate to CIE_ID_INCORRECT_URL on NOT_ALLOWED_URL event", () => {
@@ -227,6 +220,13 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
     expect(mockPopToTop).toHaveBeenCalled();
   });
 });
+
+const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
+  StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+    errorCodeOrMessage,
+    authMethod: "CIE_ID",
+    authLevel: MOCK_AUTH_LEVEL_L2
+  });
 
 const renderComponent = (
   navigationOverrides: Partial<
