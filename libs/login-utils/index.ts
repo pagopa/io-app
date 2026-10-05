@@ -12,7 +12,8 @@ const ExpoLoginUtils =
   requireNativeModule<ExpoLoginUtilsModule>("ExpoLoginUtils");
 
 /**
- * Retrieves all redirects for the given URL with the specified headers and callback URL parameter.
+ * Retrieves all redirects for the given URL with the specified headers and
+ * callback URL parameter.
  */
 export const getRedirects = (
   url: string,

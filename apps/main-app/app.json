@@ -1,8 +1,5 @@
 {
   "name": "IO",
   "displayName": "IO",
-  "plugins": [
-    "expo-background-task",
-    "expo-web-browser"
-  ]
+  "plugins": ["expo-background-task", "expo-web-browser"]
 }
