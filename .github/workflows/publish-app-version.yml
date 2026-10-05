@@ -71,4 +71,4 @@ jobs:
             channel: "C03QJNMTL1E"
             unfurl_links: false
             unfurl_media: false
-            text: ":warning: Il workflow `${{ github.workflow }}` è fallito. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Vedi i dettagli>."
+            text: "Il workflow `${{ github.workflow }}` è fallito. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Vedi i dettagli>."
