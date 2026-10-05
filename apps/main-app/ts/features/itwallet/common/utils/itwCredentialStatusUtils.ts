@@ -141,7 +141,8 @@ export const getCredentialStatusMessageFromCatalog = ({
 
 /**
  * Extract the status message from the Issuer's EC for the provided error code.
- * This function is meant to be used for status assertions codes.
+ * This function is meant to be used for status assertion or issuance error
+ * codes.
  *
  * @param errorCode - The raw error code, e.g. `credential_suspended`
  * @param issuerConf - The Issuer's Entity Configuration to extract the message
@@ -152,11 +153,9 @@ export const getCredentialStatusMessageFromCatalog = ({
 export const getCredentialStatusMessageFromIssuerConf = ({
   errorCode,
   credentialId,
-  credentialType,
   issuerConf
 }: {
   credentialId: string;
-  credentialType: string;
   errorCode?: string;
   issuerConf?: IssuerConfiguration;
 }): CredentialStatusMessage | undefined => {
@@ -164,8 +163,11 @@ export const getCredentialStatusMessageFromIssuerConf = ({
     return undefined;
   }
 
-  // Some credentials only contain the errors in the SD-JWT configuration. To avoid inconsistencies
-  // we always use the SD-JWT credential configuration ID to extract the message.
+  const credentialType =
+    issuerConf.credential_configurations_supported[credentialId]?.scope;
+
+  // Some credentials only contain the error messages in the SD-JWT configuration. To avoid
+  // inconsistencies we always use the SD-JWT credential configuration ID to extract the message.
   const sdJwtConfig = Object.entries(
     issuerConf.credential_configurations_supported
   ).find(

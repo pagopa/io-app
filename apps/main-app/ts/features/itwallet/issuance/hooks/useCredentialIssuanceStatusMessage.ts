@@ -59,16 +59,15 @@ export const useCredentialIssuanceStatusMessage = (
   if (
     failure.type === CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION
   ) {
+    const { credentialId = "" } = failure.reason?.metadata ?? {};
+
     const parsed = statusAssertionFailure.safeParse(failure.reason?.reason);
     const errorCode = parsed.success ? parsed.data.error : undefined;
-
-    const message = failure.reason?.metadata
-      ? getCredentialStatusMessageFromIssuerConf({
-          errorCode,
-          issuerConf,
-          ...failure.reason.metadata
-        })
-      : undefined;
+    const message = getCredentialStatusMessageFromIssuerConf({
+      errorCode,
+      issuerConf,
+      credentialId
+    });
     return { message, errorCode };
   }
 
