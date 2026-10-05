@@ -30,6 +30,7 @@ import {
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
@@ -442,4 +443,11 @@ export const trackItwIdVerifiedDocumentAction = ({
   );
 
   trackItwIdVerifiedDocumentEvent(toItwIdMethod(context.identification));
+};
+
+/** Reloads the catalogue after revocation without delaying closure of the flow. */
+export const refreshCredentialsCatalogueAction = ({
+  context
+}: EidActionArgs) => {
+  context.deps.store.dispatch(itwFetchCredentialsCatalogue.request());
 };

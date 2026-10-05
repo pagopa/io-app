@@ -26,7 +26,6 @@ import {
   storeEidCredentialActor,
   StoreEidCredentialActorParams
 } from "../actors";
-import { InitialContext } from "../context";
 
 jest.mock("../../../common/utils/itwIoWallet", () => ({
   getIoWallet: jest.fn()
@@ -274,7 +273,7 @@ describe("refreshCredentialsCatalogueActor", () => {
       store.dispatch(itwFetchCredentialsCatalogue.success(catalogue));
     }
     const actor = createActor(refreshCredentialsCatalogueActor, {
-      input: { ...InitialContext, deps: testEidIssuanceDeps({ store }) }
+      input: { deps: testEidIssuanceDeps({ store }) }
     });
     const result = toPromise(actor);
     actor.start();
@@ -305,7 +304,7 @@ describe("refreshCredentialsCatalogueActor", () => {
       return unsubscribe;
     });
     const actor = createActor(refreshCredentialsCatalogueActor, {
-      input: { ...InitialContext, deps: testEidIssuanceDeps({ store }) }
+      input: { deps: testEidIssuanceDeps({ store }) }
     });
     actor.start();
     expect(unsubscribe).not.toHaveBeenCalled();
@@ -326,7 +325,7 @@ describe("refreshCredentialsCatalogueActor", () => {
         throw error;
       }
     });
-    const input = { ...InitialContext, deps: testEidIssuanceDeps({ store }) };
+    const input = { deps: testEidIssuanceDeps({ store }) };
 
     await expect(
       runActor(refreshCredentialsCatalogueActor, input)

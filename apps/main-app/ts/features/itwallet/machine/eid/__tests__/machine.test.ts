@@ -22,6 +22,7 @@ import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
 import { testEidIssuanceDeps } from "../../utils/testDeps";
 import {
   CreateWalletInstanceActorParams,
+  EidRefreshActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
   ObtainStatusListActorInput,
@@ -112,6 +113,7 @@ const closeIssuance = jest.fn();
 const handleSessionExpired = jest.fn();
 const resetWalletInstance = jest.fn();
 const refreshCredentialsCatalogue = jest.fn();
+const refreshCredentialsCatalogueActor = jest.fn();
 const storeCredentialUpgradeFailures = jest.fn();
 const trackIntroScreen = jest.fn();
 const trackWalletInstanceCreation = jest.fn();
@@ -189,6 +191,9 @@ describe("itwEidIssuanceMachine", () => {
       storeWalletActivationFeedbackBannerData
     },
     actors: {
+      refreshCredentialsCatalogue: fromPromise<void, EidRefreshActorParams>(
+        refreshCredentialsCatalogueActor
+      ),
       verifyTrustFederation: fromPromise<
         void,
         WithItwVersion<{ deps: EidIssuanceMachineDeps }>
@@ -249,6 +254,7 @@ describe("itwEidIssuanceMachine", () => {
     jest.useFakeTimers();
     obtainStatusList.mockResolvedValue(undefined);
     storeEidCredentialActor.mockResolvedValue(undefined);
+    refreshCredentialsCatalogueActor.mockResolvedValue(undefined);
   });
 
   it("Should fail if trust federation verification fails", async () => {
@@ -1181,6 +1187,54 @@ describe("itwEidIssuanceMachine", () => {
     // is never called in this path (it only fires on entry when credentialType is set)
     expect(storeWalletActivationFeedbackBannerData).not.toHaveBeenCalled();
   });
+
+  test.each([
+    { name: "success", fails: false },
+    { name: "failure", fails: true }
+  ])(
+    "waits for catalogue refresh $name before resuming mDL",
+    async ({ fails }) => {
+      const complete = jest.fn<void, []>();
+      const fail = jest.fn<void, [Error]>();
+      const refresh = new Promise<void>((resolve, reject) => {
+        complete.mockImplementation(resolve);
+        fail.mockImplementation(reject);
+      });
+      refreshCredentialsCatalogueActor.mockReturnValue(refresh);
+      const actor = createActor(mockedMachine, {
+        input: { deps: T_DEPS },
+        snapshot: mockedMachine.resolveState({
+          value: { Issuance: "DisplayingPreview" },
+          context: {
+            ...InitialContext,
+            deps: T_DEPS,
+            mode: "issuance",
+            level: "l2-fallback",
+            credentialType: "mDL",
+            eid: T_EID_REQUEST_OUTPUT.credential
+          }
+        })
+      });
+      actor.start();
+      actor.send({ type: "add-to-wallet" });
+
+      await waitForActor(actor, snapshot =>
+        snapshot.matches("RefreshingCredentialsCatalogue")
+      );
+      expect(selectIsLoading(actor.getSnapshot())).toBe(true);
+      expect(navigateToSuccessScreen).not.toHaveBeenCalled();
+
+      if (fails) {
+        fail(new Error("Catalogue unavailable"));
+      } else {
+        complete();
+      }
+      await waitForActor(actor, snapshot => snapshot.matches("Success"));
+      expect(selectIsLoading(actor.getSnapshot())).toBe(false);
+      expect(navigateToSuccessScreen).toHaveBeenCalledTimes(1);
+      actor.stop();
+    }
+  );
 
   it("Should store banner data on entering Success when EID activation was triggered by a credential request", async () => {
     storeEidCredentialActor.mockResolvedValue(undefined);

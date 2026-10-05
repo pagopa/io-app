@@ -1,6 +1,6 @@
 import { CieUtils } from "@pagopa/io-react-native-cie";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import { ActionArgs, fromPromise } from "xstate";
+import { fromPromise } from "xstate";
 
 import type {
   AuthenticationContext,
@@ -59,7 +59,6 @@ import {
   itwStoreWalletInstanceStatusList
 } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
-import { EidIssuanceEvents } from "./events";
 import { EidIssuanceMachineDeps } from "./input";
 
 export type CreateWalletInstanceActorParams = WithItwVersion<{
@@ -67,11 +66,9 @@ export type CreateWalletInstanceActorParams = WithItwVersion<{
   isRenewal: boolean;
 }>;
 
-export type EidRefreshActorParams = ActionArgs<
-  Context,
-  EidIssuanceEvents,
-  EidIssuanceEvents
->;
+export type EidRefreshActorParams = {
+  deps: EidIssuanceMachineDeps;
+};
 
 export type GetWalletAttestationActorParams = WithItwVersion<{
   deps: EidIssuanceMachineDeps;
@@ -512,44 +509,43 @@ export const storeEidCredentialActor = fromPromise<
   });
 });
 
-export const refreshCredentialsCatalogueActor = fromPromise(
-  async ({
-    input,
-    signal
-  }: {
-    input: EidRefreshActorParams["context"];
-    signal: AbortSignal;
-  }) => {
-    const { store } = input.deps;
+/**
+ * Waits for the catalogue fetch; locale translations are handled separately by
+ * their saga.
+ */
+export const refreshCredentialsCatalogueActor = fromPromise<
+  void,
+  EidRefreshActorParams
+>(({ input, signal }) => {
+  const { store } = input.deps;
 
-    return new Promise<void>((resolve, reject) => {
-      const unsubscribe = store.subscribe(() => {
-        const state = store.getState();
-        const isLoading = itwIsCredentialsCatalogueLoading(state);
-        const error = itwCredentialsCatalogueErrorSelector(state);
-        if (error) {
-          cleanup();
-          reject(getErrorFromNetworkError(error));
-          return;
-        }
-        if (!isLoading) {
-          cleanup();
-          resolve();
-        }
-      });
-
-      const cleanup = () => {
-        unsubscribe();
-        signal.removeEventListener("abort", cleanup);
-      };
-      signal.addEventListener("abort", cleanup, { once: true });
-
-      try {
-        store.dispatch(itwFetchCredentialsCatalogue.request());
-      } catch (error) {
+  return new Promise<void>((resolve, reject) => {
+    const unsubscribe = store.subscribe(() => {
+      const state = store.getState();
+      const isLoading = itwIsCredentialsCatalogueLoading(state);
+      const error = itwCredentialsCatalogueErrorSelector(state);
+      if (error) {
         cleanup();
-        reject(error);
+        reject(getErrorFromNetworkError(error));
+        return;
+      }
+      if (!isLoading) {
+        cleanup();
+        resolve();
       }
     });
-  }
-);
+
+    const cleanup = () => {
+      unsubscribe();
+      signal.removeEventListener("abort", cleanup);
+    };
+    signal.addEventListener("abort", cleanup, { once: true });
+
+    try {
+      store.dispatch(itwFetchCredentialsCatalogue.request());
+    } catch (error) {
+      cleanup();
+      reject(error);
+    }
+  });
+});

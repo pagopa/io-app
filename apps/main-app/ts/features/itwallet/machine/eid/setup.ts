@@ -31,6 +31,7 @@ import {
   navigateToWalletAction,
   navigateToWalletRevocationScreenAction,
   onInitAction,
+  refreshCredentialsCatalogueAction,
   resetWalletInstanceAction,
   storeAuthLevelAction,
   storeCredentialUpgradeFailuresAction,
@@ -122,6 +123,7 @@ export const itwEidIssuanceMachineSetup = setup({
     storeCredentialUpgradeFailures: storeCredentialUpgradeFailuresAction,
     handleSessionExpired: handleSessionExpiredAction,
     resetWalletInstance: resetWalletInstanceAction,
+    refreshCredentialsCatalogue: refreshCredentialsCatalogueAction,
 
     /** Analytics */
 

@@ -315,11 +315,13 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
       tags: [ItwTags.Loading],
       invoke: {
         src: "refreshCredentialsCatalogue",
-        input: ({ context }) => context,
+        input: ({ context }) => ({ deps: context.deps }),
         onDone: {
           target: "Success"
         },
         onError: {
+          description:
+            "A catalogue fetch failure does not invalidate the stored eID.",
           target: "Success"
         }
       }
