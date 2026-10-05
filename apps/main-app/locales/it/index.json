@@ -1529,7 +1529,6 @@
           "title": "Hai aggiornato il documento"
         },
         "credentialAuth": {
-          "privacyAndTos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
           "requiredClaims": "Dati richiesti",
           "subtitle": "Saranno condivisi con **{{organization}}** solo per il tempo necessario al rilascio della versione digitale del documento.",
           "title": "Dati necessari per {{credentialName}}",
@@ -2172,11 +2171,13 @@
                 },
                 "step2": {
                   "label": "Step 2",
-                  "value": "Cerca la funzionalità \"NFC\""
+                  "value": "Cerca la funzionalità \"NFC\"",
+                  "value_ios": "Seleziona \"App\", poi \"IO\""
                 },
                 "step3": {
                   "label": "Step 3",
-                  "value": "Attiva la funzionalità"
+                  "value": "Attiva la funzionalità",
+                  "value_ios": "Consenti a IO di usare l’NFC"
                 },
                 "title": "Ecco come:"
               },

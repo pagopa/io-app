@@ -30,6 +30,7 @@ jobs:
     runs-on: xcode-27-xlarge
     steps:
       - id: set-xcode-version
+        name: Select Xcode version
         run: sudo xcode-select -s '/Applications/Xcode_27.0.app/Contents/Developer'
         shell: bash
       - id: checkout
@@ -39,6 +40,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - uses: ./.github/actions/setup-pnpm
       - id: generate-api-models
+        name: Generate API models
         run: pnpm nx run @io-app/api-types:generate
       - id: setup-ruby
         uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
@@ -46,6 +48,7 @@ jobs:
           bundler-cache: true
           working-directory: apps/main-app
       - id: prepare-ios-build
+        name: Prepare iOS build
         run: |
           cd apps/main-app
           ./scripts/ios-release-build.sh
@@ -53,6 +56,7 @@ jobs:
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
       - id: add-ssh-deploy-key
+        name: Configure SSH deploy key
         run: |
           echo -e "Host github.com
             AddKeysToAgent yes
@@ -93,6 +97,7 @@ jobs:
           name: IO.ipa
           path: apps/main-app/ios/IO.ipa
       - id: upload-ipa-release
+        name: Upload IPA to GitHub release
         continue-on-error: true
         run: |
           cd apps/main-app
