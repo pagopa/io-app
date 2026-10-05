@@ -311,9 +311,21 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
     MrtdPoP: mrtdPoPState,
     Issuance: issuanceState,
     CredentialsUpgrade: credentialsUpgradeState,
+    RefreshingCredentialsCatalogue: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "refreshCredentialsCatalogue",
+        input: ({ context }) => context,
+        onDone: {
+          target: "Success"
+        },
+        onError: {
+          target: "Success"
+        }
+      }
+    },
     Success: {
       entry: [
-        "refreshCredentialsCatalogue",
         "navigateToSuccessScreen",
         "storeWalletActivationFeedbackBannerData"
       ],

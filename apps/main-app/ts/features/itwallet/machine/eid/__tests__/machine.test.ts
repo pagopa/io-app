@@ -44,6 +44,7 @@ import {
 import { IssuanceFailureType } from "../failure";
 import { EidIssuanceMachineDeps } from "../input";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
+import { selectIsLoading } from "../selectors";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -3090,4 +3091,21 @@ describe("itwEidIssuanceMachine itwVersion routing", () => {
       expect(actor.getSnapshot().context.itwVersion).toBe(expected);
     }
   );
+});
+
+describe("catalogue refresh loading", () => {
+  test.each([
+    {
+      name: "refreshing catalogue",
+      state: "RefreshingCredentialsCatalogue",
+      loading: true
+    },
+    { name: "refresh completed", state: "Success", loading: false }
+  ])("reports loading correctly when $name", ({ state, loading }) => {
+    const snapshot = itwEidIssuanceMachine.resolveState({
+      value: state,
+      context: { ...InitialContext, deps: T_DEPS }
+    });
+    expect(selectIsLoading(snapshot)).toBe(loading);
+  });
 });

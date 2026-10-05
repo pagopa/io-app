@@ -31,7 +31,6 @@ import {
   navigateToWalletAction,
   navigateToWalletRevocationScreenAction,
   onInitAction,
-  refreshCredentialsCatalogueAction,
   resetWalletInstanceAction,
   storeAuthLevelAction,
   storeCredentialUpgradeFailuresAction,
@@ -51,6 +50,7 @@ import {
   getWalletAttestationActor,
   initMrtdPoPChallengeActor,
   obtainStatusListActor,
+  refreshCredentialsCatalogueActor,
   requestAccessTokenActor,
   requestEidActor,
   revokeWalletInstanceActor,
@@ -122,7 +122,6 @@ export const itwEidIssuanceMachineSetup = setup({
     storeCredentialUpgradeFailures: storeCredentialUpgradeFailuresAction,
     handleSessionExpired: handleSessionExpiredAction,
     resetWalletInstance: resetWalletInstanceAction,
-    refreshCredentialsCatalogue: refreshCredentialsCatalogueAction,
 
     /** Analytics */
 
@@ -196,6 +195,7 @@ export const itwEidIssuanceMachineSetup = setup({
     trackIntroScreen: trackIntroScreenAction
   },
   actors: {
+    refreshCredentialsCatalogue: refreshCredentialsCatalogueActor,
     getCieStatus: getCieStatusActor,
     verifyTrustFederation: verifyTrustFederationActor,
 
