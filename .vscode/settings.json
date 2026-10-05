@@ -1,0 +1,28 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "[javascript]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[javascriptreact]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[typescript]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[json]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[jsonc]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[yaml]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[markdown]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[html]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "oxc.enable.oxlint": true,
+  "editor.inlayHints.enabled": "on",
+  "i18n-ally.localesPaths": ["apps/main-app/locales"],
+  "i18n-ally.pathMatcher": "{locale}/{namespace}.json",
+  "i18n-ally.annotations": true,
+  "i18n-ally.annotationInPlace": true,
+  "i18n-ally.extract.targetPickingStrategy": "most-similar",
+  "i18n-ally.namespace": true,
+  "i18n-ally.defaultNamespace": "index",
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.enabledFrameworks": ["i18next", "react-i18next"],
+  "i18n-ally.regex.usageMatchAppend": [
+    "I18n\\.t\\(\\s*['\"`]({key})['\"`]\\s*\\)"
+  ]
+}

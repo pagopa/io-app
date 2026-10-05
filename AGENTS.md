@@ -15,7 +15,7 @@ Package manager: `pnpm`
 - `pnpm nx tsc-noemit main-app` - TypeScript type-check (no emit)
 - `pnpm nx lint main-app` - Lint
 - `pnpm nx run main-app:lint-autofix` - Lint + autofix
-- `pnpm prettify` - Format code
+- `pnpm format` - Format code
 
 ## Feature Structure
 
@@ -39,7 +39,7 @@ Every feature lives under `apps/main-app/ts/features/<feature>/` and is self-con
 ## Guidelines
 
 - Never edit anything under `apps/main-app/definitions/`. Run `pnpm nx run main-app:generate` to update them.
-- Before marking any task complete, run `pnpm nx affected --target=lint,tsc-noemit` and `pnpm prettify`. Only finish once all three succeed with zero errors.
+- Before marking any task complete, run `pnpm nx affected --target=lint,tsc-noemit` and `pnpm format`. Only finish once all three succeed with zero errors.
 - Never use `fp-ts` in new code; always use native TypeScript equivalents.
 - Always import from `typed-redux-saga/macro`, not bare `redux-saga/effects`.
 - The `tsc-noemit` check must pass. Never add `@ts-ignore` without a comment explaining why.
@@ -103,15 +103,18 @@ Every feature lives under `apps/main-app/ts/features/<feature>/` and is self-con
 ## Pull requests
 
 Before pushing:
+
 1. Review the full diff. Keep only intentional, task-related changes. Remove anything unrelated.
 2. Ensure the code follows project standards and architectural boundaries.
 3. Run pnpm `tsc:noEmit`, `pnpm lint`, and all relevant tests. Fix all issues. Do not proceed if anything fails.
 4. Rebase your branch onto master. Resolve all conflicts. If conflicts are complex, stop and ask for guidance.
 
 Then push the branch to the remote and open the PR creation page in the browser with title and body pre-filled.
+
 ```
 gh pr create --web --title <title> --body <body>
 ```
+
 - Use title format `type: [ISSUE-ID] short description`, under 70 characters, using conventional commit types.
 - Always use `.github/PULL_REQUEST_TEMPLATE.md`. Clearly explain what changed and why. Do not open the PR if incomplete.
 - Provide clear steps to verify the changes, expected behavior, and relevant edge cases. Add "Steps to Reproduce" for bugs.

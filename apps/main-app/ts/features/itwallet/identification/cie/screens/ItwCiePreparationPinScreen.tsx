@@ -3,6 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
 
+import { GifImage } from "../../../../../components/GifImage";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { trackItwCiePinTutorialPin } from "../../analytics";
@@ -39,7 +40,20 @@ export const ItwCiePreparationPinScreen = () => {
       description={I18n.t(
         `features.itWallet.identification.cie.prepare.pin.description`
       )}
-      imageSrc={require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif")}
+      imageComponent={
+        <GifImage
+          accessibilityIgnoresInvertColors
+          pauseAccessibilityLabel={I18n.t(
+            "features.itWallet.identification.cie.prepare.animation.pause"
+          )}
+          playAccessibilityLabel={I18n.t(
+            "features.itWallet.identification.cie.prepare.animation.play"
+          )}
+          resizeMode="contain"
+          source={require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif")}
+          staticSource={require("../../../../../../img/features/itWallet/identification/itw_cie_pin_static.png")}
+        />
+      }
       title={I18n.t(`features.itWallet.identification.cie.prepare.pin.title`)}
     >
       <IOButton

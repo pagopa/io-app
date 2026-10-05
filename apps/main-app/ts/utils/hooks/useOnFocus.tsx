@@ -3,8 +3,11 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 
 /**
- * Call the action when the component isFocused() and dontExecuteBefore has passed since the last update.
+ * Call the action when the component isFocused() and dontExecuteBefore has
+ * passed since the last update.
+ *
  * TODO: rewrite this component following all the hooks rules
+ *
  * @param loadAction
  * @param dontExecuteBefore
  */

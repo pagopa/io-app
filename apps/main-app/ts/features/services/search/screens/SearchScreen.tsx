@@ -18,7 +18,7 @@ import {
 } from "@shopify/flash-list";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Platform, ViewStyle } from "react-native";
+import { Keyboard, Platform, ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -112,7 +112,10 @@ export const SearchScreen = () => {
     [dispatch, navigation]
   );
 
-  const handleCancel = useCallback(() => navigation.goBack(), [navigation]);
+  const handleCancel = useCallback(() => {
+    Keyboard.dismiss();
+    navigation.goBack();
+  }, [navigation]);
 
   const handleChangeText = (text: string) => {
     setQuery(text);

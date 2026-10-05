@@ -4,8 +4,9 @@
 type HighlightChunk = { highlighted: boolean; text: string };
 
 /**
- * Highlights search results client side that were made with ILIKE sql operator server side.
- * Tries to center the first match in the available space if esimatedTextLengthToDisplay provided
+ * Highlights search results client side that were made with ILIKE sql operator
+ * server side. Tries to center the first match in the available space if
+ * esimatedTextLengthToDisplay provided
  */
 export function highlightSearchText({
   text,
@@ -34,7 +35,7 @@ export function highlightSearchText({
         );
   const relevantTextLowerCase = relevantText.toLowerCase();
   const matchMap = new Array(relevantText.length).fill(false);
-  for (let textIndex = 0; textIndex < relevantText.length; ) {
+  for (let textIndex = 0; textIndex < relevantText.length;) {
     const matchStart = relevantTextLowerCase.indexOf(
       searchTextLowerCase,
       textIndex

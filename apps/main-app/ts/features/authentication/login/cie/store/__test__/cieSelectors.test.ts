@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
+import { AUTH_LEVELS } from "../../../../common/utils";
 import * as selectors from "../selectors";
 
 describe("CIE selectors", () => {
@@ -9,7 +10,7 @@ describe("CIE selectors", () => {
         cieLogin: {
           useUat: true,
           isCieIDTourGuideEnabled: false,
-          cieIDSelectedSecurityLevel: "SpidL2"
+          cieIDSelectedSecurityLevel: AUTH_LEVELS.L2
         }
       }
     },
@@ -29,7 +30,7 @@ describe("CIE selectors", () => {
 
   it("should return correct value for cieIDSelectedSecurityLevelSelector", () => {
     expect(selectors.cieIDSelectedSecurityLevelSelector(baseState)).toBe(
-      "SpidL2"
+      AUTH_LEVELS.L2
     );
   });
 

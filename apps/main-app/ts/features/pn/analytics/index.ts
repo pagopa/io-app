@@ -7,6 +7,7 @@ import {
   numberToYesNoOnThreshold
 } from "../../../utils/analytics";
 import { PaymentStatistics } from "../../messages/store/reducers/payments";
+import { SendFailureReason } from "../../messages/utils";
 import {
   SendOpeningSource,
   SendUserType
@@ -80,11 +81,15 @@ export const trackPNServiceStatusChangeError = (
     })
   );
 
-export function trackPNAttachmentDownloadFailure(category?: string) {
+export function trackPNAttachmentDownloadFailure(
+  category?: string,
+  reason?: SendFailureReason
+) {
   void mixpanelTrack(
     "PN_ATTACHMENT_DOWNLOAD_FAILURE",
     buildEventProperties("TECH", undefined, {
-      category
+      category,
+      reason
     })
   );
 }

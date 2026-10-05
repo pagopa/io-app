@@ -2,10 +2,11 @@
 const regexVersion = /([0-9.]+)(-rc.(\d+))?/gm;
 const regexCanaryVersion = /([0-9.]+)(-canary.(\d+))?/gm;
 /**
- * Return the version (without the rc).
- * eg: "1.4.0-rc.0" will return => "1.4.0"
+ * Return the version (without the rc), e.g. `"1.4.0-rc.0"` will return
+ * `"1.4.0"`.
+ *
  * @param rawVersion
- * @return {string}
+ * @returns {string}
  */
 module.exports.getVersion = function (rawVersion) {
   if (rawVersion.indexOf("canary") !== -1) {
@@ -15,10 +16,10 @@ module.exports.getVersion = function (rawVersion) {
 };
 
 /**
- * Return the rc number.
- * eg: "1.4.0-rc.0" will return => "0"
+ * Return the rc number, e.g. `"1.4.0-rc.0"` will return `"0"`.
+ *
  * @param rawVersion
- * @return {string}
+ * @returns {string}
  */
 function getRC(rawVersion) {
   if (rawVersion.indexOf("canary") !== -1) {
@@ -28,12 +29,13 @@ function getRC(rawVersion) {
 }
 
 /**
- * Return true if the version is rc.
- * eg: "1.4.0-rc.0" will return true
- * "1.4.0" will return false
+ * Return true if the version is rc, e.g.:
+ *
+ * - `"1.4.0-rc.0"` will return `true`
+ * - `"1.4.0"` will return `false`
  *
  * @param rawVersion
- * @return {boolean}
+ * @returns {boolean}
  */
 function isRc(rawVersion) {
   if (rawVersion.indexOf("canary") !== -1) {
@@ -43,14 +45,15 @@ function isRc(rawVersion) {
 }
 
 /**
- * Return the build number for ios. If the new version is RC, return the rc number,
- * else increase the previously used build number by one.
+ * Return the build number for ios. If the new version is RC, return the rc
+ * number, else increase the previously used build number by one, e.g.:
  *
- * eg: rawVersion: "1.4.0-rc.0" currentBuildVersion: "5" will return "0"
- * rawVersion: "1.4.0" currentBuildVersion: "5" will return "6"
+ * - `rawVersion: "1.4.0-rc.0"`, `currentBuildVersion: "5"` will return `"0"`
+ * - `rawVersion: "1.4.0"`, `currentBuildVersion: "5"` will return `6`
+ *
  * @param rawVersion
  * @param currentBuildVersion
- * @return {*}
+ * @returns {any}
  */
 module.exports.iosGetBuildVersion = function (rawVersion, currentBuildVersion) {
   return isRc(rawVersion)

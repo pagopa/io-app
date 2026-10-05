@@ -13,6 +13,7 @@ import { getMixPanelCredential } from "../../analytics/utils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwAuthSourceName } from "../hooks/useItwAuthSourceName";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
+import { itwIpzsItwalletPrivacyUrlSelector } from "../store/selectors/remoteConfig";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils.ts";
@@ -83,9 +84,11 @@ const ItwMetadataIssuanceListItem = ({
 /**
  * Renders additional issuance-related metadata, i.e. releaser and auth source.
  * They are not part of the claims list, thus they're rendered separately.
- * @param credential - the credential with the issuer configuration
- * @param isPreview - whether the component is rendered in preview mode which hides the info button.
- * @returns the list items with the metadata.
+ *
+ * @param credential - The credential with the issuer configuration
+ * @param isPreview - Whether the component is rendered in preview mode which
+ *   hides the info button.
+ * @returns The list items with the metadata.
  */
 export const ItwIssuanceMetadata = ({
   credential,
@@ -94,10 +97,12 @@ export const ItwIssuanceMetadata = ({
   const releaserName =
     credential.issuerConf.federation_entity.organization_name;
   const itwCredential = isItwCredential(credential);
-  const privacyUrl = useIOSelector(state =>
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const ipzsPrivacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const itwalletPrivacyUrl = useIOSelector(itwIpzsItwalletPrivacyUrlSelector);
+  const privacyUrl = isItwL3 ? itwalletPrivacyUrl : ipzsPrivacyUrl;
   const mixPanelCredential = getMixPanelCredential(
     credential.credentialType,
     isItwL3

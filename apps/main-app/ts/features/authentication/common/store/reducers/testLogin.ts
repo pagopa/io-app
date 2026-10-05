@@ -9,26 +9,26 @@ import {
   testLoginRequest
 } from "../actions";
 
-export type TestLoginFailedState = {
-  errorMessage: string;
-  kind: "failed";
-};
-
-export type TestLoginInitialState = {
-  kind: "idle";
-};
-
-export type TestLoginRequestedState = {
-  kind: "requested";
-};
-
 export type TestLoginState =
   | TestLoginFailedState
   | TestLoginInitialState
   | TestLoginRequestedState
   | TestLoginSuccessState;
 
-export type TestLoginSuccessState = {
+type TestLoginFailedState = {
+  errorMessage: string;
+  kind: "failed";
+};
+
+type TestLoginInitialState = {
+  kind: "idle";
+};
+
+type TestLoginRequestedState = {
+  kind: "requested";
+};
+
+type TestLoginSuccessState = {
   kind: "succedeed";
 };
 

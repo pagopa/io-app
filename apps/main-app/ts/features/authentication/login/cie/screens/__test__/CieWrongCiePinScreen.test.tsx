@@ -81,7 +81,7 @@ describe("CieWrongCiePinScreen", () => {
       expect(component.getByTestId(test.secondaryActionTestID)).toBeDefined();
     });
   });
-  it("it should render the default message, in case of unexpetect values", () => {
+  it("should render the default message, in case of unexpected values", () => {
     const component = renderComponent(
       useCaseThatShouldNotHappen.remainingCount
     );

@@ -1,23 +1,16 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector
 } from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import {
-  isL2Credential,
-  isNewCredential,
-  validCredentialStatuses
-} from "../../common/utils/itwCredentialUtils.ts";
+import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialsSelector
 } from "../../credentials/store/selectors";
-import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { mapPIDStatusToMixpanel } from "../utils";
 import {
@@ -29,9 +22,7 @@ import {
 } from "../utils/types";
 import { ItwBaseProperties } from "./propertyTypes";
 
-/**
- * Builds the base ITW properties for Mixpanel analytics.
- */
+/** Builds the base ITW properties for Mixpanel analytics. */
 export const buildItwBaseProperties = (
   state: GlobalState
 ): ItwBaseProperties => {
@@ -53,8 +44,11 @@ export const buildItwBaseProperties = (
 
 /**
  * Builds PID properties for Mixpanel analytics
- * IT-Wallet (L3) -> PID status is mapped to ITW_PID, while ITW_ID_V2 is not sent to preserve historical data.
- * Documenti su IO (L2) -> PID status is mapped to ITW_ID_V2, while ITW_PID shoul be "not_available".
+ *
+ * - IT-Wallet (L3) -> PID status is mapped to ITW_PID, while ITW_ID_V2 is not
+ *   sent to preserve historical data.
+ * - Documenti su IO (L2) -> PID status is mapped to ITW_ID_V2, while ITW_PID
+ *   shoul be "not_available".
  */
 export const buildPidProperties = (state: GlobalState) => {
   const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
@@ -72,9 +66,7 @@ export const buildPidProperties = (state: GlobalState) => {
   return isItwL3 ? v3Props : v2Props;
 };
 
-/**
- * IT-Wallet (L3) -> V2 properties are not sent to preserve historical data.
- */
+/** IT-Wallet (L3) -> V2 properties are not sent to preserve historical data. */
 export const buildCredentialProperties = (state: GlobalState) => {
   const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
 
@@ -118,9 +110,12 @@ export const buildCredentialProperties = (state: GlobalState) => {
 
 /**
  * Returns the Mixpanel status for a credential type, considering IT Wallet.
+ *
  * - If `isItwL3` is explicitly false, returns `"not_available"`.
- * - If `isItwL3` is true and the credential exists but is not an ITW credential, returns `"not_available"`.
- * - Otherwise, retrieves the credential from the store and maps it to Mixpanel status.
+ * - If `isItwL3` is true and the credential exists but is not an ITW credential,
+ *   returns `"not_available"`.
+ * - Otherwise, retrieves the credential from the store and maps it to Mixpanel
+ *   status.
  * - Returns `"not_available"` if the credential is missing.
  */
 const getMixpanelCredentialStatus = (
@@ -133,11 +128,9 @@ const getMixpanelCredentialStatus = (
   }
   const credential = itwCredentialsSelector(state)[type];
 
-  return pipe(
-    O.fromNullable(credential),
-    O.map(cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]),
-    O.getOrElse(() => "not_available" as ItwCredentialMixpanelStatus)
-  );
+  return credential
+    ? CREDENTIAL_STATUS_MAP[getCredentialStatus(credential)]
+    : ("not_available" as ItwCredentialMixpanelStatus);
 };
 
 export const computeItwStatus = (
@@ -166,20 +159,16 @@ export const computeItwStatus = (
 };
 
 /**
- * Builds the aggregate Mixpanel status for third-party credentials.
- * The property ignores PID and historical L2 credentials because it tracks only
- * credentials obtained through the third-party/catalogue channel.
+ * Builds the aggregate Mixpanel status for third-party credentials, i.e.
+ * credentials obtained through a third-party credential offer (deeplink/QR
+ * code), including Documenti su IO credential types. PID is excluded.
  */
 export const buildThirdPartyCredentialProperty = (
   state: GlobalState
 ): ItwThirdPartyCredentials => {
-  const catalogueByType = itwCredentialsCatalogueByTypesSelector(state);
-
   const thirdPartyCredentials = Object.values(
     itwCredentialsSelector(state)
-  ).filter(({ credentialType }) =>
-    isThirdPartyCredentialType(credentialType, catalogueByType)
-  );
+  ).filter(isThirdPartyCredential);
 
   if (thirdPartyCredentials.length === 0) {
     return "not_available";
@@ -192,16 +181,17 @@ export const buildThirdPartyCredentialProperty = (
     : "not_valid";
 };
 
+/**
+ * Builds the aggregate Mixpanel status for credentials obtained through the
+ * credentials catalogue/list, including Documenti su IO credentials. PID is
+ * excluded.
+ */
 export const buildWalletListCredentialProperty = (
   state: GlobalState
 ): ItwWalletListCredential => {
-  const catalogueByType = itwCredentialsCatalogueByTypesSelector(state);
-
   const walletListCredentials = Object.values(
     itwCredentialsSelector(state)
-  ).filter(({ credentialType }) =>
-    isWalletListCredentialType(credentialType, catalogueByType)
-  );
+  ).filter(isWalletListCredential);
 
   if (walletListCredentials.length === 0) {
     return "not_available";
@@ -213,18 +203,15 @@ export const buildWalletListCredentialProperty = (
     ? "valid"
     : "not_valid";
 };
-const isThirdPartyCredentialType = (
-  credentialType: string,
-  catalogueByType: ReturnType<typeof itwCredentialsCatalogueByTypesSelector>
-) =>
-  credentialType !== CredentialType.PID &&
-  !isL2Credential(credentialType) &&
-  (isNewCredential(credentialType) ||
-    catalogueByType?.[credentialType] !== undefined);
-const isWalletListCredentialType = (
-  credentialType: string,
-  catalogueByType: ReturnType<typeof itwCredentialsCatalogueByTypesSelector>
-) =>
-  credentialType !== CredentialType.PID &&
-  !isL2Credential(credentialType) &&
-  catalogueByType?.[credentialType] !== undefined;
+
+const isThirdPartyCredential = ({
+  credentialType,
+  origin
+}: CredentialMetadata) =>
+  credentialType !== CredentialType.PID && origin === "credentialOffer";
+
+const isWalletListCredential = ({
+  credentialType,
+  origin
+}: CredentialMetadata) =>
+  credentialType !== CredentialType.PID && origin === "catalogue";

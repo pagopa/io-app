@@ -2,7 +2,7 @@ name: Check locale changes
 on:
   pull_request:
     paths:
-      - 'apps/main-app/locales/**'
+      - "apps/main-app/locales/**"
 permissions:
   contents: read
 jobs:

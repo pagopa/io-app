@@ -7,7 +7,7 @@ import * as HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
+import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/testUtils";
 import PN_ROUTES from "../../../navigation/routes";
 import * as ANALYTICS from "../../analytics";
 import { setAarFlowState } from "../../store/actions";

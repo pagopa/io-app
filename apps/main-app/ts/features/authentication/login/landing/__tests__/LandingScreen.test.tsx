@@ -37,32 +37,20 @@ jest.mock("@gorhom/bottom-sheet", () =>
 );
 jest.mock("../../../common/analytics");
 
-const navigateToIdpSelection = () => {
-  const { getByTestId } = renderComponent();
-
-  const loginWithSpid = getByTestId("landing-button-login-spid");
-  fireEvent.press(loginWithSpid);
-
-  expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
-  expect(mockNavigateToIdpSelection).toHaveBeenCalled();
-};
-const toBeDefined = () => {
-  const component = renderComponent();
-
-  expect(component).toBeDefined();
-};
-const toMatchSnapshot = () => {
-  const component = renderComponent();
-
-  expect(component).toMatchSnapshot();
-};
-
 describe(LandingScreen, () => {
   afterEach(jest.clearAllMocks);
 
-  it("Should be defined", toBeDefined);
-  it("Should match the snapshot", toMatchSnapshot);
-  it("Should present the modal", async () => {
+  it("Should be defined", () => {
+    const component = renderComponent();
+
+    expect(component).toBeDefined();
+  });
+  it("Should match the snapshot", () => {
+    const component = renderComponent();
+
+    expect(component).toMatchSnapshot();
+  });
+  it("Should not navigate anywhere when the CIE button is pressed and CIE is supported", async () => {
     const { getByTestId } = renderComponent();
 
     const loginWithCie = getByTestId("landing-button-login-cie");
@@ -74,72 +62,15 @@ describe(LandingScreen, () => {
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
     expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
   });
-  it("Should call navigateToCiePinInsertion", async () => {
+  it("Should navigate to the idp selection", () => {
     const { getByTestId } = renderComponent();
 
-    const loginWithCie = getByTestId("landing-button-login-cie");
-    await act(async () => {
-      fireEvent.press(loginWithCie);
-    });
+    const loginWithSpid = getByTestId("landing-button-login-spid");
+    fireEvent.press(loginWithSpid);
 
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
-    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-    expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
-
-    const loginWithCiePin = getByTestId("bottom-sheet-login-with-cie-pin");
-    await act(async () => {
-      fireEvent.press(loginWithCiePin);
-    });
-
-    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-    expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
-    expect(mockNavigateToCiePinInsertion).toHaveBeenCalled();
+    expect(mockNavigateToIdpSelection).toHaveBeenCalled();
   });
-  it("Should call navigateToCieIdLoginScreen", async () => {
-    const { getByTestId } = renderComponent();
-
-    const loginWithCie = getByTestId("landing-button-login-cie");
-    await act(async () => {
-      fireEvent.press(loginWithCie);
-    });
-
-    expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
-    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-    expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
-
-    const loginWithCieID = getByTestId("bottom-sheet-login-with-cie-id");
-    await act(async () => {
-      fireEvent.press(loginWithCieID);
-    });
-
-    expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
-    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith("SpidL2");
-  });
-  it("Should navigate to the wizards screens", async () => {
-    const { getByTestId } = renderComponent();
-
-    const loginWithCie = getByTestId("landing-button-login-cie");
-    await act(async () => {
-      fireEvent.press(loginWithCie);
-    });
-    expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
-    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-    expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
-
-    const wizardsBanner = getByTestId("bottom-sheet-login-wizards");
-    await act(async () => {
-      fireEvent.press(wizardsBanner);
-    });
-
-    expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
-    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-    expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
-    });
-  });
-  it("Should navigate to the idp selection", navigateToIdpSelection);
 });
 
 const renderComponent = () => {

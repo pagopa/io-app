@@ -1,6 +1,4 @@
-/**
- * Action types and action creator related to the Profile.
- */
+/** Action types and action creator related to the Profile. */
 
 import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { Omit } from "@pagopa/ts-commons/lib/types";
@@ -68,11 +66,11 @@ export const loadBonusBeforeRemoveAccount = createStandardAction(
 )<void>();
 
 export enum RemoveAccountMotivationEnum {
-  "NEVER_USED" = "neverUsed",
-  "NOT_SAFE" = "notSafe",
-  "NOT_UTILS" = "notUtils",
-  "OTHERS" = "others",
-  "UNDEFINED" = "undefined"
+  NEVER_USED = "neverUsed",
+  NOT_SAFE = "notSafe",
+  NOT_UTILS = "notUtils",
+  OTHERS = "others",
+  UNDEFINED = "undefined"
 }
 
 export type RemoveAccountMotivationPayload = {

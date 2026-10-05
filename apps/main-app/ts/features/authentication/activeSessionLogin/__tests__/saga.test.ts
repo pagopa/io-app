@@ -5,6 +5,7 @@ import { getType } from "typesafe-actions";
 import { analyticsAuthenticationStarted } from "../../../../store/actions/analytics";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
+import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
 import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
 import {
@@ -35,6 +36,7 @@ const mockIdp = {
 };
 const mockOptIn = true;
 const mockState = { some: "state" } as any;
+const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 
 describe("handleActiveSessionLoginSaga", () => {
   it("should handle login success and dispatch consolidate + initialization", () =>
@@ -54,7 +56,7 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
         [
           select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
-          "SpidL2"
+          AUTH_LEVEL_L2
         ],
         [select(), mockState]
       ])
@@ -65,7 +67,7 @@ describe("handleActiveSessionLoginSaga", () => {
           token: mockToken,
           idp: mockIdp,
           fastLoginOptIn: mockOptIn,
-          cieIDSelectedSecurityLevel: "SpidL2"
+          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2
         })
       )
       .put(
@@ -92,7 +94,10 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(idpSelectedActiveSessionLoginSelector), undefined],
         [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
-        [select(cieIDSelectedSecurityLevelActiveSessionLoginSelector), "SpidL2"]
+        [
+          select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
+          AUTH_LEVEL_L2
+        ]
       ])
       .not.call.fn(updateLoginSessionProfileAndSuperProperties)
       .not.call.fn(updateLoginMethodProfileAndSuperProperties)
@@ -101,7 +106,7 @@ describe("handleActiveSessionLoginSaga", () => {
           token: mockToken,
           idp: mockIdp,
           fastLoginOptIn: mockOptIn,
-          cieIDSelectedSecurityLevel: "SpidL2"
+          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2
         })
       )
       .not.put(
@@ -128,7 +133,10 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(idpSelectedActiveSessionLoginSelector), mockIdp],
         [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
-        [select(cieIDSelectedSecurityLevelActiveSessionLoginSelector), "SpidL2"]
+        [
+          select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
+          AUTH_LEVEL_L2
+        ]
       ])
       .not.call.fn(updateLoginSessionProfileAndSuperProperties)
       .not.call.fn(updateLoginMethodProfileAndSuperProperties)
@@ -137,7 +145,7 @@ describe("handleActiveSessionLoginSaga", () => {
           token: mockToken,
           idp: mockIdp,
           fastLoginOptIn: mockOptIn,
-          cieIDSelectedSecurityLevel: "SpidL2"
+          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2
         })
       )
       .not.put(

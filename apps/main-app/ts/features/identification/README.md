@@ -16,21 +16,21 @@ As part of a codebase refactoring initiative, these files were grouped together 
 
 This feature module typically includes:
 
-* Identification-related UI screens (e.g., `IdentificationModal`, `IdentificationLockModal`).
-* State management logic specific to user identification (actions, reducers, selectors).
-* Utility functions and components used exclusively within the identification flows.
-* Sagas for handling asynchronous identification-related logic.
+- Identification-related UI screens (e.g., `IdentificationModal`, `IdentificationLockModal`).
+- State management logic specific to user identification (actions, reducers, selectors).
+- Utility functions and components used exclusively within the identification flows.
+- Sagas for handling asynchronous identification-related logic.
 
 ## Guideline
 
-* All **new** code **strictly** concerning user identification functionality (new screens, identification-specific logic, state management for identification, etc.) should reside directly within this `identification` feature module.
-* Avoid creating unnecessary subdirectories unless the codebase grows significantly and requires further organization.
+- All **new** code **strictly** concerning user identification functionality (new screens, identification-specific logic, state management for identification, etc.) should reside directly within this `identification` feature module.
+- Avoid creating unnecessary subdirectories unless the codebase grows significantly and requires further organization.
 
 ## Folder structure
 
 The current folder structure is as follows:
 
-``` bash
+```bash
 identification/
 ├── components/ # UI components specific to identification
 ├── screens/    # Screens for identification flows

@@ -1,9 +1,10 @@
 import { generate } from "@pagopa/io-react-native-crypto";
 
 import { Env } from "../environment";
-import { getWalletUnitAttestation } from "../itwAttestationUtils";
+import { getKeyAttestation } from "../itwAttestationUtils";
 import {
-  generateKeysWithWalletUnitAttestation,
+  generateBatchKeysWithKeyAttestation,
+  generateKeysWithKeyAttestation,
   requestCredential,
   shouldRefillBatch
 } from "../itwCredentialIssuanceUtils";
@@ -24,16 +25,16 @@ jest.mock("@pagopa/io-react-native-wallet", () => ({
   }))
 }));
 jest.mock("../itwAttestationUtils", () => ({
-  getWalletUnitAttestation: jest.fn()
+  getKeyAttestation: jest.fn()
 }));
 jest.mock("../itwIoWallet", () => ({ getIoWallet: jest.fn() }));
 
-describe("generateKeysWithWalletUnitAttestation", () => {
+describe("generateKeysWithKeyAttestation", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (getIoWallet as jest.Mock).mockImplementation(itwVersion => ({
-      WalletUnitAttestation: {
-        isSupported: itwVersion === "1.3.3"
+      KeyAttestation: {
+        isSupported: itwVersion === "1.4.6"
       }
     }));
   });
@@ -50,20 +51,29 @@ describe("generateKeysWithWalletUnitAttestation", () => {
     token_type: "DPoP"
   };
 
-  it("should generate a wallet unit attestation when supported, skipping direct key generation", async () => {
-    (getWalletUnitAttestation as jest.Mock).mockImplementation(() => "wua-jwt");
-
-    const result = await generateKeysWithWalletUnitAttestation(
-      mockAccessToken,
+  const mockAccessTokenWithTwoAuthorizationDetails: CredentialAccessToken = {
+    ...mockAccessToken,
+    authorization_details: [
+      ...mockAccessToken.authorization_details,
       {
-        env: {} as Env,
-        itwVersion: "1.3.3",
-        hardwareKeyTag: "hardware-key",
-        sessionToken: "session-token"
+        type: "openid_credential",
+        credential_configuration_id: "second-credential-config-id",
+        credential_identifiers: ["credential-id-2"]
       }
-    );
+    ]
+  };
+
+  it("should generate a key attestation when supported, skipping direct key generation", async () => {
+    (getKeyAttestation as jest.Mock).mockImplementation(() => "ka-jwt");
+
+    const result = await generateKeysWithKeyAttestation(mockAccessToken, {
+      env: {} as Env,
+      itwVersion: "1.4.6",
+      hardwareKeyTag: "hardware-key",
+      sessionToken: "session-token"
+    });
     expect(generate).not.toHaveBeenCalled();
-    expect(getWalletUnitAttestation).toHaveBeenCalledTimes(1);
+    expect(getKeyAttestation).toHaveBeenCalledTimes(1);
     expect(result).toEqual([
       {
         keyTag: expect.any(String),
@@ -72,24 +82,21 @@ describe("generateKeysWithWalletUnitAttestation", () => {
           credential_configuration_id: "credential-config-id",
           credential_identifiers: ["credential-id-1"]
         },
-        walletUnitAttestation: "wua-jwt",
-        walletUnitAttestationId: expect.any(String)
+        keyAttestation: "ka-jwt",
+        keyAttestationId: expect.any(String)
       }
     ]);
   });
 
-  it("should only generate keys when the wallet unit attestation is not supported", async () => {
-    const result = await generateKeysWithWalletUnitAttestation(
-      mockAccessToken,
-      {
-        env: {} as Env,
-        itwVersion: "1.0.0",
-        hardwareKeyTag: "hardware-key",
-        sessionToken: "session-token"
-      }
-    );
+  it("should only generate keys when the key attestation is not supported", async () => {
+    const result = await generateKeysWithKeyAttestation(mockAccessToken, {
+      env: {} as Env,
+      itwVersion: "1.0.0",
+      hardwareKeyTag: "hardware-key",
+      sessionToken: "session-token"
+    });
     expect(generate).toHaveBeenCalledTimes(1);
-    expect(getWalletUnitAttestation).not.toHaveBeenCalled();
+    expect(getKeyAttestation).not.toHaveBeenCalled();
     expect(result).toEqual([
       {
         keyTag: expect.any(String),
@@ -100,6 +107,50 @@ describe("generateKeysWithWalletUnitAttestation", () => {
         }
       }
     ]);
+  });
+
+  it("should generate key attestations sequentially", async () => {
+    (getKeyAttestation as jest.Mock).mockImplementation(async () => {
+      await Promise.resolve();
+      return "ka-jwt";
+    });
+
+    const resultPromise = generateKeysWithKeyAttestation(
+      mockAccessTokenWithTwoAuthorizationDetails,
+      {
+        env: {} as Env,
+        itwVersion: "1.4.6",
+        hardwareKeyTag: "hardware-key",
+        sessionToken: "session-token"
+      }
+    );
+
+    expect(getKeyAttestation).toHaveBeenCalledTimes(1);
+    const result = await resultPromise;
+    expect(getKeyAttestation).toHaveBeenCalledTimes(2);
+    expect(result).toHaveLength(2);
+  });
+
+  it("should generate batch keys sequentially", async () => {
+    (generate as jest.Mock).mockImplementation(async () => {
+      await Promise.resolve();
+    });
+
+    const resultPromise = generateBatchKeysWithKeyAttestation(
+      mockAccessTokenWithTwoAuthorizationDetails,
+      2,
+      {
+        env: {} as Env,
+        itwVersion: "1.0.0",
+        hardwareKeyTag: "hardware-key",
+        sessionToken: "session-token"
+      }
+    );
+
+    expect(generate).toHaveBeenCalledTimes(1);
+    const result = await resultPromise;
+    expect(generate).toHaveBeenCalledTimes(4);
+    expect(result).toHaveLength(2);
   });
 });
 
@@ -131,14 +182,12 @@ describe("requestCredential", () => {
   const buildResolvedCredentialOffer = (authorizationCodeGrant: {
     authorizationServer?: string;
     issuerState?: string;
-    scope: string;
   }): CredentialOfferResolved => ({
     offer: {
       credential_issuer: offerCredentialIssuer,
       credential_configuration_ids: [offerCredentialConfigurationId],
       grants: {
         authorization_code: {
-          scope: authorizationCodeGrant.scope,
           authorization_server: authorizationCodeGrant.authorizationServer,
           issuer_state: authorizationCodeGrant.issuerState
         }
@@ -186,13 +235,12 @@ describe("requestCredential", () => {
   it("uses the resolved credential offer issuer and configuration IDs", async () => {
     const result = await requestCredential({
       env,
-      itwVersion: "1.3.3",
+      itwVersion: "1.4.6",
       credentialType: "education_degree",
       walletInstanceAttestation: "wia",
       skipMdocIssuance: true,
       pid,
       resolvedCredentialOffer: buildResolvedCredentialOffer({
-        scope: "education_degree",
         authorizationServer: offerCredentialIssuer,
         issuerState: "issuer-state"
       })
@@ -220,31 +268,18 @@ describe("requestCredential", () => {
     {
       name: "credential offer with full grant details",
       resolvedCredentialOffer: buildResolvedCredentialOffer({
-        scope: "education_degree",
         authorizationServer: offerCredentialIssuer,
         issuerState: "issuer-state"
       }),
       expectedIssuer: offerCredentialIssuer,
       expectedAuthorizationServer: offerCredentialIssuer,
-      expectedScope: "education_degree",
       expectedIssuerState: "issuer-state"
-    },
-    {
-      name: "credential offer with scope only",
-      resolvedCredentialOffer: buildResolvedCredentialOffer({
-        scope: "education_degree"
-      }),
-      expectedIssuer: offerCredentialIssuer,
-      expectedAuthorizationServer: undefined,
-      expectedScope: "education_degree",
-      expectedIssuerState: undefined
     },
     {
       name: "catalogue flow without credential offer",
       resolvedCredentialOffer: undefined,
       expectedIssuer: defaultIssuer,
       expectedAuthorizationServer: undefined,
-      expectedScope: undefined,
       expectedIssuerState: undefined
     }
   ])(
@@ -253,12 +288,11 @@ describe("requestCredential", () => {
       resolvedCredentialOffer,
       expectedIssuer,
       expectedAuthorizationServer,
-      expectedScope,
       expectedIssuerState
     }) => {
       await requestCredential({
         env,
-        itwVersion: "1.3.3",
+        itwVersion: "1.4.6",
         credentialType: "education_degree",
         walletInstanceAttestation: "wia",
         skipMdocIssuance: true,
@@ -271,7 +305,6 @@ describe("requestCredential", () => {
       });
 
       const [, , , authorizationContext] = startUserAuthorization.mock.calls[0];
-      expect(authorizationContext.scope).toBe(expectedScope);
       expect(authorizationContext.issuerState).toBe(expectedIssuerState);
     }
   );
@@ -296,7 +329,7 @@ describe("requestCredential", () => {
     await expect(
       requestCredential({
         env,
-        itwVersion: "1.3.3",
+        itwVersion: "1.4.6",
         credentialType: "education_degree",
         walletInstanceAttestation: "wia",
         skipMdocIssuance: true,

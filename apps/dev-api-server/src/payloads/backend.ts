@@ -92,6 +92,18 @@ export const backendStatus: BackendStatus = {
           "https://www.fascicolosanitario.gov.it/portale/accedi-al-fascicolo"
       }
     },
+    oneIdentity: {
+      rolloutPercentage: 0,
+      allowedCieOrigins: [
+        "https://idserver.servizicie.interno.gov.it",
+        "https://oidc.idserver.servizicie.interno.gov.it",
+        "https://mtls.oidc.idserver.servizicie.interno.gov.it",
+        "https://mtls.idserver.servizicie.interno.gov.it",
+        "https://ios.idserver.servizicie.interno.gov.it",
+        "https://ios.oidc.idserver.servizicie.interno.gov.it",
+        "https://preproduzione.idserver.servizicie.interno.gov.it"
+      ]
+    },
     fims: {
       domain: `${serverUrl}/fims/provider/`,
       enabled: true,
@@ -114,7 +126,11 @@ export const backendStatus: BackendStatus = {
           service_name: "Carta della Cultura - Onboarding"
         }
       ],
-      iOSCookieDisabledServiceIds: ["01JV4M365CHAZN5C0FDR62DCVD"]
+      iOSCookieDisabledServiceIds: [
+        "01JV4M365CHAZN5C0FDR62DCVD",
+        "01KTXJ47AAJMZFRJPA4V4TX5D0",
+        "01KTXHQSA4GPSVDJQWC2NYCJK5"
+      ]
     },
     premiumMessages: {
       opt_in_out_enabled: true

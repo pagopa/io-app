@@ -1,10 +1,10 @@
-import i18n from "i18next";
+import I18n from "i18next";
 import { useEffect } from "react";
 
 import type { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import type { PnParamsList } from "../../navigation/params";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { useIOSelector } from "../../../../store/hooks";
 import PN_ROUTES from "../../navigation/routes";
@@ -70,7 +70,7 @@ export const SendAarCieCardReadingScreen = ({
       return (
         <LoadingScreenContent
           testID="LoadingScreenContent"
-          title={i18n.t("features.pn.aar.flow.validatingMandate.loadingText")}
+          title={I18n.t("features.pn.aar.flow.validatingMandate.loadingText")}
         />
       );
     default:

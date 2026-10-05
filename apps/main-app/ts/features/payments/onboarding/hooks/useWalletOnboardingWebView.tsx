@@ -43,8 +43,11 @@ type WalletOnboardingWebViewProps = {
 };
 
 /**
- * This hook handles the onboarding webview flow and returns a function to start the onboarding
- * @param onOnboardingOutcome callback called when the onboarding flow is completed
+ * This hook handles the onboarding webview flow and returns a function to start
+ * the onboarding
+ *
+ * @param onOnboardingOutcome Callback called when the onboarding flow is
+ *   completed
  */
 export const useWalletOnboardingWebView = ({
   onOnboardingOutcome

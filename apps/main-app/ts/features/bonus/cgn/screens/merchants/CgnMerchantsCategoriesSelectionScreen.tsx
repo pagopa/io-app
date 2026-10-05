@@ -45,17 +45,6 @@ type TabOption = {
   title: string;
 };
 
-const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
-  [CgnMerchantsHomeTabRoutes.CGN_CATEGORIES]: {
-    icon: "initiatives",
-    title: I18n.t("bonus.cgn.merchantsList.tabs.perInitiative")
-  },
-  [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: {
-    icon: "merchant",
-    title: I18n.t("bonus.cgn.merchantsList.tabs.perMerchant")
-  }
-};
-
 const isCategoryRow = (item: CgnMerchantsListItem): item is CategoryRow =>
   "categories" in item;
 
@@ -66,6 +55,17 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   const [selectedTab, setSelectedTab] = useState<
     keyof CgnMerchantsHomeTabParamsList
   >(CgnMerchantsHomeTabRoutes.CGN_CATEGORIES);
+
+  const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
+    [CgnMerchantsHomeTabRoutes.CGN_CATEGORIES]: {
+      icon: "initiatives",
+      title: I18n.t("bonus.cgn.merchantsList.tabs.perInitiative")
+    },
+    [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: {
+      icon: "merchant",
+      title: I18n.t("bonus.cgn.merchantsList.tabs.perMerchant")
+    }
+  };
 
   const categoriesScreen = CgnMerchantCategoriesListScreen();
   const merchantsScreen = CgnMerchantsListScreen();

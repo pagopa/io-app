@@ -7,6 +7,7 @@ import {
   itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderL2EngagementBannerSelector,
   itwShouldRenderL3UpgradeBannerSelector,
+  itwShouldRenderNewItWalletSelector,
   itwShouldRenderWalletDiscoveryBannerSelector,
   itwShouldRenderWalletReadyBannerSelector,
   itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
@@ -135,13 +136,26 @@ describe("itwShouldRenderWalletReadyBannerSelector", () => {
   });
 
   it.each`
-    eidStatus        | isWalletEmpty | expected
-    ${"valid"}       | ${true}       | ${true}
-    ${"jwtExpiring"} | ${true}       | ${false}
-    ${"jwtExpired"}  | ${true}       | ${false}
+    offlineAccessReason                       | lifecycleValid | walletInstanceFailure | eidStatus        | isWalletEmpty | isL3Enabled | expected
+    ${undefined}                              | ${true}        | ${false}              | ${"valid"}       | ${true}       | ${false}    | ${true}
+    ${undefined}                              | ${true}        | ${false}              | ${"valid"}       | ${true}       | ${true}     | ${true}
+    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}        | ${false}              | ${"valid"}       | ${true}       | ${false}    | ${false}
+    ${undefined}                              | ${false}       | ${false}              | ${"valid"}       | ${true}       | ${false}    | ${false}
+    ${undefined}                              | ${true}        | ${true}               | ${"valid"}       | ${true}       | ${false}    | ${false}
+    ${undefined}                              | ${true}        | ${false}              | ${"jwtExpiring"} | ${true}       | ${false}    | ${false}
+    ${undefined}                              | ${true}        | ${false}              | ${"jwtExpired"}  | ${true}       | ${false}    | ${false}
+    ${undefined}                              | ${true}        | ${false}              | ${"valid"}       | ${false}      | ${false}    | ${false}
   `(
-    "should return $expected when eidStatus is $eidStatus and isWalletEmpty is $isWalletEmpty",
-    ({ eidStatus, isWalletEmpty, expected }) => {
+    "should return $expected when offlineAccessReason=$offlineAccessReason, lifecycleValid=$lifecycleValid, walletInstanceFailure=$walletInstanceFailure, eidStatus=$eidStatus, isWalletEmpty=$isWalletEmpty, isL3Enabled=$isL3Enabled",
+    ({
+      offlineAccessReason,
+      lifecycleValid,
+      walletInstanceFailure,
+      eidStatus,
+      isWalletEmpty,
+      isL3Enabled,
+      expected
+    }) => {
       const state = {
         features: {
           itWallet: {
@@ -152,22 +166,28 @@ describe("itwShouldRenderWalletReadyBannerSelector", () => {
 
       jest
         .spyOn(ingressSelectors, "offlineAccessReasonSelector")
-        .mockReturnValue(undefined);
+        .mockReturnValue(offlineAccessReason);
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(true);
+        .mockReturnValue(lifecycleValid);
       jest
         .spyOn(
           walletInstanceSelectors,
           "itwIsWalletInstanceStatusFailureSelector"
         )
-        .mockReturnValue(false);
+        .mockReturnValue(walletInstanceFailure);
       jest
         .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
         .mockReturnValue(eidStatus);
       jest
         .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
         .mockReturnValue(isWalletEmpty);
+      jest
+        .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
+        .mockReturnValue(isL3Enabled);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
+        .mockReturnValue(false);
 
       expect(itwShouldRenderWalletReadyBannerSelector(state)).toBe(expected);
     }
@@ -555,6 +575,42 @@ describe("isItwProximityEnabledSelector", () => {
       expect(isItwProximityEnabledSelector({} as unknown as GlobalState)).toBe(
         expected
       );
+    }
+  );
+});
+
+describe("itwShouldRenderNewItWalletSelector", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it.each`
+    offlineAccessReason                       | isItWalletValid | isItWalletEnabled | expected
+    ${undefined}                              | ${false}        | ${false}          | ${false}
+    ${undefined}                              | ${false}        | ${true}           | ${false}
+    ${undefined}                              | ${true}         | ${false}          | ${false}
+    ${undefined}                              | ${true}         | ${true}           | ${true}
+    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}        | ${false}          | ${false}
+    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}        | ${true}           | ${false}
+    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}         | ${false}          | ${true}
+    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}         | ${true}           | ${true}
+  `(
+    "should return $expected when offlineAccessReasonSelector is $offlineAccessReason, itwLifecycleIsITWalletValidSelector is $isItWalletValid and isItwEnabledSelector is $isItWalletEnabled",
+    ({ offlineAccessReason, isItWalletValid, isItWalletEnabled, expected }) => {
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(offlineAccessReason);
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(isItWalletValid);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
+        .mockReturnValue(isItWalletEnabled);
+
+      expect(
+        itwShouldRenderNewItWalletSelector({} as unknown as GlobalState)
+      ).toEqual(expected);
     }
   );
 });

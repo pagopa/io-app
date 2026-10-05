@@ -1,11 +1,10 @@
 import { Errors, IoWallet } from "@pagopa/io-react-native-wallet";
 import { differenceInCalendarDays } from "date-fns";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 import { getClaimsFullLocale, getCredentialExpireDate } from "./itwClaimsUtils";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
 import {
+  CredentialFormat,
   CredentialMetadata,
   IssuerConfiguration,
   ItwCredentialStatus
@@ -15,21 +14,25 @@ const DEFAULT_EXPIRING_DAYS = 30;
 
 type GetCredentialStatusOptions = {
   /**
-   * Number of days before expiration required to mark a credential as "EXPIRING".
+   * Number of days before expiration required to mark a credential as
+   * "EXPIRING".
+   *
    * @default 30
    */
   expiringDays?: number;
 };
 
 /**
- * Get the overall status of the credential, taking into account the status assertion,
- * the physical document's expiration date and the JWT's expiration date.
- * Overlapping statuses are handled according to a specific order (see `IO-WALLET-DR-0018`).
+ * Get the overall status of the credential, taking into account the status
+ * assertion, the physical document's expiration date and the JWT's expiration
+ * date. Overlapping statuses are handled according to a specific order (see
+ * `IO-WALLET-DR-0018`).
  *
- * @param credential the stored credential
- * @param options see {@link GetCredentialStatusOptions}
+ * @param credential The stored credential
+ * @param options See {@link GetCredentialStatusOptions}
  * @returns ItwCredentialStatus
  */
+// oxlint-disable-next-line complexity
 export const getCredentialStatus = (
   credential: CredentialMetadata,
   options: GetCredentialStatusOptions = {}
@@ -42,25 +45,28 @@ export const getCredentialStatus = (
   const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);
 
   // Not all credentials have an expiration date
-  const documentExpireDays = pipe(
-    getCredentialExpireDate(parsedCredential),
-    O.fromNullable,
-    O.map(expireDate => differenceInCalendarDays(expireDate, now)),
-    O.getOrElse(() => NaN)
-  );
+  const documentExpirationDate = getCredentialExpireDate(parsedCredential);
+  const documentExpireDays = documentExpirationDate
+    ? differenceInCalendarDays(documentExpirationDate, now)
+    : NaN;
 
   const isIssuerAttestedExpired =
     validity?.type === "status_assertion" &&
     validity?.status === "invalid" &&
     validity.errorCode === "credential_expired";
 
-  if (isIssuerAttestedExpired || documentExpireDays <= 0) {
+  // The physical document is still valid on its expiration day (documentExpireDays === 0),
+  // it only becomes "expired" the day after.
+  if (isIssuerAttestedExpired || documentExpireDays < 0) {
     return "expired";
   }
 
   // Invalid must prevail over non-expired statuses
   if (validity?.status === "invalid") {
     return "invalid";
+  }
+  if (validity?.status === "suspended") {
+    return "suspended";
   }
 
   if (jwtExpireDays <= 0) {
@@ -94,12 +100,15 @@ export type CredentialStatusMessage = {
 };
 
 /**
- * Extract the status message from the catalog for the provided raw status.
- * This function is meant to be used for status list codes (e.g. `0x01`, `0x02`).
+ * Extract the status message from the catalog for the provided raw status. This
+ * function is meant to be used for status list codes (e.g. `0x01`, `0x02`).
+ *
  * @param ioWallet - The current IoWallet instance
  * @param rawStatus - The raw status, e.g. `0x01`
- * @param catalogMetadata - The credential metadata from the catalog, used to map the code to a l10n string
- * @param catalogTranslations - The catalog translations to resolve the l10n string
+ * @param catalogMetadata - The credential metadata from the catalog, used to
+ *   map the code to a l10n string
+ * @param catalogTranslations - The catalog translations to resolve the l10n
+ *   string
  * @returns The message for the provided status code, if found
  */
 export const getCredentialStatusMessageFromCatalog = ({
@@ -132,9 +141,12 @@ export const getCredentialStatusMessageFromCatalog = ({
 
 /**
  * Extract the status message from the Issuer's EC for the provided error code.
- * This function is meant to be used for status assertions codes.
+ * This function is meant to be used for status assertion or issuance error
+ * codes.
+ *
  * @param errorCode - The raw error code, e.g. `credential_suspended`
- * @param issuerConf - The Issuer's Entity Configuration to extract the message from
+ * @param issuerConf - The Issuer's Entity Configuration to extract the message
+ *   from
  * @param credentialId - The credential ID the code belongs to
  * @returns The message for the provided error code, if found
  */
@@ -143,20 +155,33 @@ export const getCredentialStatusMessageFromIssuerConf = ({
   credentialId,
   issuerConf
 }: {
-  credentialId?: string;
+  credentialId: string;
   errorCode?: string;
   issuerConf?: IssuerConfiguration;
 }): CredentialStatusMessage | undefined => {
-  if (!errorCode || !credentialId || !issuerConf) {
+  if (!errorCode || !issuerConf) {
     return undefined;
   }
+
+  const credentialType =
+    issuerConf.credential_configurations_supported[credentialId]?.scope;
+
+  // Some credentials only contain the error messages in the SD-JWT configuration. To avoid
+  // inconsistencies we always use the SD-JWT credential configuration ID to extract the message.
+  const sdJwtConfig = Object.entries(
+    issuerConf.credential_configurations_supported
+  ).find(
+    ([, config]) =>
+      config.scope === credentialType &&
+      config.format === CredentialFormat.SD_JWT
+  );
 
   try {
     const messagesByLocale = Errors.extractErrorMessageFromIssuerConf(
       errorCode,
       {
         issuerConf,
-        credentialType: credentialId // Legacy mismatch: the param `credentialType` was not renamed
+        credentialType: sdJwtConfig?.[0] ?? credentialId // Legacy mismatch: the param `credentialType` was not renamed
       }
     );
     return messagesByLocale?.[getClaimsFullLocale()];

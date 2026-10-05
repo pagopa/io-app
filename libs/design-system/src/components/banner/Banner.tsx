@@ -10,7 +10,7 @@ import {
 import Animated from "react-native-reanimated";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
-import { IOBannerBigSpacing, IOBannerRadius } from "../../core";
+import { IOBannerBigSpacing, IOBannerRadius, IOTypography } from "../../core";
 import { hexToRgba, IOColors } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
@@ -21,7 +21,7 @@ import {
   IOPictogramSizeScale,
   PictogramBleed
 } from "../pictograms";
-import { BodySmall, buttonTextFontSize, H6, IOText } from "../typography";
+import { BodySmall, H6, IOText } from "../typography";
 
 /* Styles */
 const sizePictogram: IOPictogramSizeScale = 80;
@@ -202,7 +202,7 @@ export const Banner = ({
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
               numberOfLines={1}
-              size={buttonTextFontSize}
+              size={IOTypography.buttonText.size}
               weight="Semibold"
             >
               {action}

@@ -49,6 +49,7 @@ const INITIAL_STATE: ReceiptTransactionState = {
   needsHomeListRefresh: false
 };
 
+// oxlint-disable-next-line complexity
 const reducer = (
   state: ReceiptTransactionState = INITIAL_STATE,
   action: Action

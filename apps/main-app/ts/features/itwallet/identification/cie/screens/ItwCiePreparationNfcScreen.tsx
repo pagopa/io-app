@@ -1,7 +1,9 @@
+import { IOButton } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
 
+import { GifImage } from "../../../../../components/GifImage";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
@@ -10,6 +12,7 @@ import {
 import { trackItwCiePinTutorialCie } from "../../analytics";
 import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
+import { useCieNfcInfoBottomSheet } from "../hooks/useCieNfcInfoBottomSheet";
 
 export const ItwCiePreparationNfcScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -34,6 +37,7 @@ export const ItwCiePreparationNfcScreen = () => {
     type: "card",
     showSecondaryAction: isL3FeaturesEnabled
   });
+  const nfcInfoBottomSheet = useCieNfcInfoBottomSheet();
 
   return (
     <ItwCiePreparationScreenContent
@@ -47,10 +51,31 @@ export const ItwCiePreparationNfcScreen = () => {
       description={I18n.t(
         `features.itWallet.identification.cie.prepare.nfc.description`
       )}
-      imageSrc={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif")}
+      imageComponent={
+        <GifImage
+          accessibilityIgnoresInvertColors
+          pauseAccessibilityLabel={I18n.t(
+            "features.itWallet.identification.cie.prepare.animation.pause"
+          )}
+          playAccessibilityLabel={I18n.t(
+            "features.itWallet.identification.cie.prepare.animation.play"
+          )}
+          resizeMode="contain"
+          source={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif")}
+          staticSource={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc_static.png")}
+        />
+      }
       title={I18n.t(`features.itWallet.identification.cie.prepare.nfc.title`)}
     >
+      <IOButton
+        label={I18n.t(
+          `features.itWallet.identification.cie.prepare.nfc.buttonLink`
+        )}
+        onPress={() => nfcInfoBottomSheet.present()}
+        variant="link"
+      />
       {infoBottomSheet.bottomSheet}
+      {nfcInfoBottomSheet.bottomSheet}
     </ItwCiePreparationScreenContent>
   );
 };

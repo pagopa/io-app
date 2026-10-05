@@ -1,7 +1,5 @@
 import { ContentWrapper, VStack } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
 import { View } from "react-native";
 
@@ -22,7 +20,7 @@ import { ItwPresentationPidDetail } from "../components/ItwPresentationPidDetail
 import { ItwPresentationPidDetailFooter } from "../components/ItwPresentationPidDetailFooter";
 
 export const ItwPresentationPidDetailScreen = () => {
-  const pidOption = useIOSelector(itwCredentialsEidSelector);
+  const pid = useIOSelector(itwCredentialsEidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const isItwDiscoveryInfoBannerVisible = useIOSelector(
@@ -56,5 +54,5 @@ export const ItwPresentationPidDetailScreen = () => {
     </ItwPresentationDetailsScreenBase>
   );
 
-  return pipe(pidOption, O.fold(constNull, getContent));
+  return pid ? getContent(pid) : null;
 };

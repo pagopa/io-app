@@ -118,6 +118,9 @@ PODS:
     - UMAppLoader
   - ExpoWebBrowser (55.0.20):
     - ExpoModulesCore
+  - ExpoUI (55.0.17):
+    - ExpoModulesCore
+    - React-RCTFabric
   - fast_float (8.0.0)
   - FBLazyVector (0.83.10)
   - fmt (12.1.0)
@@ -254,7 +257,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - pagopa-io-react-native-crypto (1.2.3):
+  - pagopa-io-react-native-crypto (1.2.5):
     - boost
     - DoubleConversion
     - fast_float
@@ -312,7 +315,7 @@ PODS:
     - SocketRocket
     - SwiftCBOR
     - Yoga
-  - pagopa-io-react-native-jwt (2.2.0):
+  - pagopa-io-react-native-jwt (2.2.5):
     - boost
     - DoubleConversion
     - fast_float
@@ -401,14 +404,14 @@ PODS:
     - ZendeskChatSDK
     - ZendeskMessagingAPISDK
     - ZendeskSupportSDK
-  - Pulsar (1.6.1):
+  - Pulsar (1.7.0):
     - boost
     - DoubleConversion
     - fast_float
     - fmt
     - glog
     - hermes-engine
-    - Pulsar-haptics (= 1.1.4)
+    - PulsarHaptics (= 1.4.0)
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -430,7 +433,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - Pulsar-haptics (1.1.4)
+  - PulsarHaptics (1.4.0)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -2615,8 +2618,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-randombytes (3.6.2):
-    - React-Core
   - react-native-safe-area-context (5.7.0):
     - boost
     - DoubleConversion
@@ -3377,8 +3378,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - ReactNativeExceptionHandler (2.10.8):
-    - React
+  - ReactNativeExceptionHandler (2.10.10):
+    - React-Core
   - RNCAsyncStorage (2.0.0):
     - boost
     - DoubleConversion
@@ -3409,8 +3410,6 @@ PODS:
     - Yoga
   - RNDeviceInfo (14.0.4):
     - React-Core
-  - RNFS (2.18.0):
-    - React
   - RNGestureHandler (2.31.0):
     - boost
     - DoubleConversion
@@ -3892,6 +3891,7 @@ DEPENDENCIES:
   - ExpoSharing (from `../../../node_modules/expo-sharing/ios`)
   - ExpoTaskManager (from `../../../node_modules/expo-task-manager/ios`)
   - ExpoWebBrowser (from `../../../node_modules/expo-web-browser/ios`)
+  - "ExpoUI (from `../../../node_modules/@expo/ui/ios`)"
   - fast_float (from `../../../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
   - FBLazyVector (from `../../../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../../../node_modules/react-native/third-party-podspecs/fmt.podspec`)
@@ -3960,7 +3960,6 @@ DEPENDENCIES:
   - react-native-pdf (from `../../../node_modules/react-native-pdf`)
   - react-native-quick-base64 (from `../../../node_modules/react-native-quick-base64`)
   - react-native-quick-crypto (from `../../../node_modules/react-native-quick-crypto`)
-  - react-native-randombytes (from `../../../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
   - "react-native-skia (from `../../../node_modules/@shopify/react-native-skia`)"
   - react-native-splash-screen (from `../../../node_modules/react-native-splash-screen`)
@@ -4003,7 +4002,6 @@ DEPENDENCIES:
   - ReactNativeExceptionHandler (from `../../../node_modules/react-native-exception-handler`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-async-storage/async-storage`)"
   - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
-  - RNFS (from `../../../node_modules/react-native-fs`)
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../../../node_modules/react-native-keychain`)
   - RNPermissions (from `../../../node_modules/react-native-permissions`)
@@ -4027,7 +4025,7 @@ SPEC REPOS:
     - Mixpanel-swift
     - MultiplatformBleAdapter
     - OpenSSL-Universal
-    - Pulsar-haptics
+    - PulsarHaptics
     - React-Codegen
     - SocketRocket
     - SwiftCBOR
@@ -4101,6 +4099,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-task-manager/ios"
   ExpoWebBrowser:
     :path: "../../../node_modules/expo-web-browser/ios"
+  ExpoUI:
+    :path: "../../../node_modules/@expo/ui/ios"
   fast_float:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/fast_float.podspec"
   FBLazyVector:
@@ -4236,8 +4236,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-quick-base64"
   react-native-quick-crypto:
     :path: "../../../node_modules/react-native-quick-crypto"
-  react-native-randombytes:
-    :path: "../../../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../../../node_modules/react-native-safe-area-context"
   react-native-skia:
@@ -4322,8 +4320,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@react-native-async-storage/async-storage"
   RNDeviceInfo:
     :path: "../../../node_modules/react-native-device-info"
-  RNFS:
-    :path: "../../../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../../../node_modules/react-native-gesture-handler"
   RNKeychain:
@@ -4378,6 +4374,7 @@ SPEC CHECKSUMS:
   ExpoSharing: 40cd8fd65209bc35adc710ff7e42dd35913d2a0f
   ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
   ExpoWebBrowser: 93992534927ba810f67e3171f6acf862c7098674
+  ExpoUI: 3d10642147c44f94a4557f1defe2efd3244349af
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 07433c4ab85da44d0b5ceac374ff4e1d57c7aa23
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
@@ -4395,13 +4392,13 @@ SPEC CHECKSUMS:
   MultiplatformBleAdapter: b1fddd0d499b96b607e00f0faa8e60648343dc1d
   OpenSSL-Universal: ecee7b138fa75a74ecf00d7ffd248fb584739b9e
   pagopa-io-react-native-cieid: 3969ed1784e0b9041baf892b461be3640315acd1
-  pagopa-io-react-native-crypto: eb62bb6767b44ea610ce169d855c89604b9e96d9
+  pagopa-io-react-native-crypto: afc8ee2585a7944dc115687eb2938009608f062a
   pagopa-io-react-native-integrity: 3e84754db0333a531db86f83f786f60a6da22337
-  pagopa-io-react-native-jwt: d268a7aa7a0c63e809386209e589224e0c0c04c0
+  pagopa-io-react-native-jwt: a5231b3f09cb69b54abd76dac34e1bddff596fe2
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
-  Pulsar: c743a993d501c276827f8fc83c9a26a916f111ef
-  Pulsar-haptics: f795eaf55d8d0290148fd97c747dcc6689c3d079
+  Pulsar: b74a2333a1f655d04a8bc144a7273cb7ffdf7122
+  PulsarHaptics: 62d13e9ef63535263f110a925e587d5d027dc683
   RCT-Folly: b29feb752b08042c62badaef7d453f3bb5e6ae23
   RCTDeprecation: f05668eea7b0e209e77e8ab1dc6a5e3b342f6f65
   RCTRequired: c1ddbcb9ab4d51c36bda2a96556d064cb8825357
@@ -4453,7 +4450,6 @@ SPEC CHECKSUMS:
   react-native-pdf: edc236298f13f1609e42d41e45b8b6ea88ed10f9
   react-native-quick-base64: 6568199bb2ac8e72ecdfdc73a230fbc5c1d3aac4
   react-native-quick-crypto: dac9db2adb0a61b4881909b6db7c51eaaada66a8
-  react-native-randombytes: 4eeddad82d1fd57adda1cd5beffe67d041c9d6de
   react-native-safe-area-context: befb5404eb8a16fdc07fa2bebab3568ecabcbb8a
   react-native-skia: 80db9e2f8f8b16f8f22b563f0a3874c14026c1e2
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
@@ -4493,10 +4489,9 @@ SPEC CHECKSUMS:
   ReactCodegen: f74348d34edd01ba2ed662c40e1beb94fca9aff3
   ReactCommon: d71e3b6d0134b09c1ec8e656f81daefae6902a97
   ReactNativeBottomSheet: 03b2317ce62b9f686e6caad94fe5124534791831
-  ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
+  ReactNativeExceptionHandler: a23922ca00122b050ae9412f960061791c232c47
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
-  RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 884f03ad24511911552480eb2058266db0b177ce
   RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
@@ -4523,6 +4518,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: ae9d470360e00f2e0694cad4b118a80af018e8ef
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: bfb19df6bab57164b05375f79cf7d9ecff7d1605
+PODFILE CHECKSUM: 73ed5be548709a6701157d889c9fd9063afa8bd7
 
 COCOAPODS: 1.15.2

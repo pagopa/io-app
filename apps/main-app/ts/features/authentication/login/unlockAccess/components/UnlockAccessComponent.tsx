@@ -14,18 +14,22 @@ import { absolutePortalLinksSelector } from "../../../../../store/reducers/backe
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { AUTH_LEVELS, AuthLevel } from "../../../common/utils";
 
 // A future development will allow different actions to
 // be performed if the authentication level is L3.
 // At the moment, this screen is not shown with level L3.
 // future development story: https://pagopa.atlassian.net/browse/IOPID-1228
 export type UnlockAccessProps = {
-  authLevel: "L2" | "L3";
+  authLevel: AuthLevel;
 };
 const UnlockAccessComponent = (props: UnlockAccessProps) => {
   const { authLevel } = props;
+
   const navigation = useIONavigation();
   const absolutePortalLinks = useIOSelector(absolutePortalLinksSelector);
+
+  const isL2 = authLevel === AUTH_LEVELS.L2;
 
   const ModalContent = () => (
     <View testID="modal-view-test">
@@ -69,7 +73,7 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
   });
 
   const onPressActionButton = () => {
-    if (authLevel === "L2") {
+    if (isL2) {
       navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
         screen: AUTHENTICATION_ROUTES.LANDING
       });
@@ -92,10 +96,9 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
           },
           secondary: {
             testID: "button-link-test",
-            label:
-              authLevel === "L2"
-                ? I18n.t("global.buttons.close")
-                : I18n.t("authentication.unlock.loginIO"),
+            label: isL2
+              ? I18n.t("global.buttons.close")
+              : I18n.t("authentication.unlock.loginIO"),
             onPress: onPressActionButton
           }
         }}
@@ -105,7 +108,7 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
           testID: "learn-more-link-test"
         }}
         description={
-          authLevel === "L2"
+          isL2
             ? I18n.t("authentication.unlock.subtitlel2")
             : I18n.t("authentication.unlock.subtitlel3")
         }

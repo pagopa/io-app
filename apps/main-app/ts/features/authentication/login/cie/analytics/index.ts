@@ -3,8 +3,8 @@ import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/p
 import { GlobalState } from "../../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { LoginType } from "../../../activeSessionLogin/screens/analytics";
+import { AuthLevel } from "../../../common/utils";
 import { IdpCIE, IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
-import { SpidLevel } from "../utils";
 
 export const trackCieIdNoWhitelistUrl = (
   url: string,
@@ -26,11 +26,6 @@ export const trackCieIdSecurityLevelMismatch = (flow: LoginType = "auth") => {
       flow
     })
   );
-};
-
-const SECURITY_LEVEL_MAP: Record<SpidLevel, "L2" | "L3"> = {
-  SpidL2: "L2",
-  SpidL3: "L3"
 };
 
 // Wizards screen view events
@@ -70,13 +65,13 @@ export const trackIdpActivationWizardScreen = async (
 };
 
 export function trackLoginCieWizardCieIdSelected(
-  spidLevel: SpidLevel,
+  authLevel: AuthLevel,
   flow: LoginType = "auth"
 ) {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_CIEID_SELECTED",
     buildEventProperties("UX", "action", {
-      security_level: SECURITY_LEVEL_MAP[spidLevel],
+      security_level: authLevel,
       flow
     })
   );
@@ -84,13 +79,13 @@ export function trackLoginCieWizardCieIdSelected(
 // Wizards action events
 export const trackWizardCieIdSelected = async (
   state: GlobalState,
-  spidLevel: SpidLevel,
+  authLevel: AuthLevel,
   flow: LoginType = "auth"
 ) => {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_CIEID_SELECTED",
     buildEventProperties("UX", "action", {
-      security_level: SECURITY_LEVEL_MAP[spidLevel],
+      security_level: authLevel,
       flow
     })
   );

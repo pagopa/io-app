@@ -1,5 +1,6 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -20,10 +21,10 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { trackSpidLoginError } from "../../../../../utils/analytics";
+import { trackLoginError } from "../../../../../utils/analytics";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -33,6 +34,7 @@ import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLo
 import { trackSpidLoginIntent } from "../../../activeSessionLogin/screens/analytics";
 import { remoteApiLoginUrlPrefixSelector } from "../../../activeSessionLogin/store/selectors";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
   idpLoginUrlChanged,
@@ -45,11 +47,12 @@ import {
   selectedIdentityProviderSelector
 } from "../../../common/store/selectors";
 import {
+  AUTH_LEVELS,
   getIdpLoginUri,
   getIntentFallbackUrl,
-  onLoginUriChanged
-} from "../../../common/utils/login";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
 import { usePosteIDApp2AppEducational } from "../hooks/usePosteIDApp2AppEducational";
 import { setSpidLoginRequestState } from "../store/actions";
 import { spidLoginRequestInfoSelector } from "../store/selectors";
@@ -71,14 +74,13 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A screen that allows the user to login with an IDP.
- * The IDP page is opened in a WebView
+ * A screen that allows the user to login with an IDP. The IDP page is opened in
+ * a WebView
  */
 const IdpLoginScreen = () => {
   const dispatch = useIODispatch();
-  // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
-  // ensuring the re-execution of the `useLollipopLoginSource` hook.
-  const { replace } = useIONavigation();
+  const { replace } =
+    useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();
   const selectedIdp = useIOSelector(selectedIdentityProviderSelector, _isEqual);
   const loggedOutWithIdpAuth = useIOSelector(
     loggedOutWithIdpAuthSelector,
@@ -116,7 +118,7 @@ const IdpLoginScreen = () => {
     remoteApiLoginUrlPrefixSelector
   );
   const loginUri = idpId
-    ? getIdpLoginUri(idpId, 2, remoteApiLoginUrlPrefix)
+    ? getIdpLoginUri(idpId, AUTH_LEVELS.L2, remoteApiLoginUrlPrefix)
     : undefined;
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
@@ -133,7 +135,7 @@ const IdpLoginScreen = () => {
 
   const handleLoadingError = useCallback(
     (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-      trackSpidLoginError(loggedOutWithIdpAuth?.idp.id, error);
+      trackLoginError(loggedOutWithIdpAuth?.idp.id, error);
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
@@ -221,9 +223,9 @@ const IdpLoginScreen = () => {
       const url = event.url;
       // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
       const idpIntent = getIntentFallbackUrl(url);
-      if (O.isSome(idpIntent)) {
+      if (idpIntent != null) {
         void trackSpidLoginIntent(loggedOutWithIdpAuth?.idp);
-        void Linking.openURL(idpIntent.value);
+        void Linking.openURL(idpIntent);
         return false;
       }
 
@@ -264,15 +266,12 @@ const IdpLoginScreen = () => {
   };
 
   const navigateToAuthErrorScreen = useCallback(() => {
-    // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
-    // ensuring the re-execution of the `useLollipopLoginSource` hook.
-    replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage,
-        authMethod: "SPID",
-        authLevel: "L2"
-      }
+    // `replace` drops the failed login webview, so it doesn't stay
+    // mounted behind the error screen.
+    replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+      errorCodeOrMessage,
+      authMethod: "SPID",
+      authLevel: AUTH_LEVELS.L2
     });
   }, [errorCodeOrMessage, replace]);
 

@@ -27,14 +27,16 @@ export enum RemoteFailureType {
 }
 
 /**
- * Type that contains the possible error types thrown when the requested Request Object is invalid.
+ * Type that contains the possible error types thrown when the requested Request
+ * Object is invalid.
  */
 type InvalidRequestObjectError =
   | RemotePresentation.Errors.DcqlError
   | RemotePresentation.Errors.InvalidRequestObjectError;
 
 /**
- * Error class used to wrap invalid credential types from the remote machine to the failure screen.
+ * Error class used to wrap invalid credential types from the remote machine to
+ * the failure screen.
  */
 export class InvalidCredentialsStatusError extends Error {
   constructor(public invalidCredentials: Array<string>) {
@@ -42,19 +44,21 @@ export class InvalidCredentialsStatusError extends Error {
   }
 }
 
-/**
- * Guard used to check if the error is of type `InvalidRequestObjectError`
- */
+/** Guard used to check if the error is of type `InvalidRequestObjectError` */
 const isRequestObjectInvalidError = (
   error: unknown
 ): error is InvalidRequestObjectError =>
   error instanceof RemotePresentation.Errors.InvalidRequestObjectError ||
   error instanceof RemotePresentation.Errors.DcqlError;
 
+/** Union type of failures with the reason properly typed. */
+export type RemoteFailure = TypedRemoteFailures[keyof TypedRemoteFailures];
+
 /**
- * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
+ * Type that maps known reasons with the corresponding failure, in order to
+ * avoid unknowns as much as possible.
  */
-export type ReasonTypeByFailure = {
+type ReasonTypeByFailure = {
   [RemoteFailureType.EID_EXPIRED]: string;
   [RemoteFailureType.INVALID_CREDENTIALS_STATUS]: {
     invalidCredentials: Array<string>;
@@ -70,18 +74,15 @@ export type ReasonTypeByFailure = {
   [RemoteFailureType.WALLET_INACTIVE]: string;
 };
 
-/**
- * Union type of failures with the reason properly typed.
- */
-export type RemoteFailure = TypedRemoteFailures[keyof TypedRemoteFailures];
-
 type TypedRemoteFailures = {
   [K in RemoteFailureType]: { reason: ReasonTypeByFailure[K]; type: K };
 };
 
 /**
- * Maps an event dispatched by the remote presentation machine to a failure object.
- * If the event contains an error, it is mapped to an unexpected failure.
+ * Maps an event dispatched by the remote presentation machine to a failure
+ * object. If the event contains an error, it is mapped to an unexpected
+ * failure.
+ *
  * @param event - The event to map
  * @returns A failure object which can be used to handle errors appropriately.
  */
