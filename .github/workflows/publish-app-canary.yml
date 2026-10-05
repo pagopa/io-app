@@ -3,6 +3,8 @@
 name: Publish app canary
 on:
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   run-static-checks:
     uses: ./.github/workflows/static-checks.yaml
