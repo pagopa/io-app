@@ -25,6 +25,7 @@ import {
   trackSpidLoginIntent
 } from "../../activeSessionLogin/screens/analytics";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
+import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { idpLoginUrlChanged } from "../store/actions";
 import {
   AUTH_LEVELS,
@@ -82,6 +83,11 @@ export const IdpWebViewLogin = memo(
         onFailure: handleFailure,
         minAuthLevel: AUTH_LEVELS.L2
       });
+
+    const {
+      bottomSheet: posteIdBottomSheet,
+      presentOnce: presentOncePosteIdBottomSheet
+    } = useOneIdentityPosteIDApp2AppEducational(idp);
 
     const handleError = useCallback(
       (event: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
@@ -197,6 +203,7 @@ export const IdpWebViewLogin = memo(
           cacheEnabled={false}
           onError={handleError}
           onHttpError={handleError}
+          onLoad={presentOncePosteIdBottomSheet}
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
           originWhitelist={originSchemasWhiteList}
@@ -206,6 +213,7 @@ export const IdpWebViewLogin = memo(
           testID="webview-idp-login-screen"
           textZoom={100}
         />
+        {posteIdBottomSheet}
       </View>
     );
   }

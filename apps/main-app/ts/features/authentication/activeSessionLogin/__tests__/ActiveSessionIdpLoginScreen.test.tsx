@@ -7,6 +7,7 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as useLollipopLoginSource from "../../../lollipop/hooks/useLollipopLoginSource";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../common/utils";
 import ActiveSessionIdpLoginScreen from "../screens/spid/ActiveSessionIdpLoginScreen";
 import * as activeSessionSelectors from "../store/selectors";
 
@@ -15,12 +16,14 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
-      navigate: mockNavigate
+      navigate: mockNavigate,
+      replace: mockReplace
     })
   };
 });
 
 const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
 
 jest.mock("../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
@@ -93,13 +96,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
     expect(getByTestId("loading-indicator")).toBeTruthy();
   });
 
-  it("should navigate to AuthErrorScreen when requestState is error", () => {
-    const mockReplace = jest.fn();
-    // eslint-disable-next-line functional/immutable-data
-    (require("@react-navigation/native") as any).useNavigation = () => ({
-      replace: mockReplace
-    });
-
+  it("should replace with AuthErrorScreen when requestState is error", () => {
     const { getByTestId } = renderComponent();
 
     const webview = getByTestId("webview-active-session-idp-login-screen");
@@ -107,11 +104,14 @@ describe("ActiveSessionIdpLoginScreen", () => {
       nativeEvent: { description: "error" }
     });
 
+    expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockReplace).toHaveBeenCalledWith(
-      AUTHENTICATION_ROUTES.MAIN,
-      expect.objectContaining({
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN
-      })
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: AUTH_LEVELS.L2
+      }
     );
   });
 });

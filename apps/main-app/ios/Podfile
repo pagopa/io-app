@@ -73,6 +73,12 @@ target 'IO' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |build_configuration|
+        build_configuration.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = min_ios_versions_supported[index_of_max]
+      end
+    end
   end
   # TODO: Remove when https://github.com/expo/expo/issues/44229 gets resolved.
   # Workaround for fmt compilation error with Xcode 26 / newer Apple Clang
@@ -80,9 +86,10 @@ target 'IO' do
     fmt_base_h = File.join(installer.sandbox.root, 'fmt', 'include', 'fmt', 'base.h')
     if File.exist?(fmt_base_h)
       content = File.read(fmt_base_h)
-      patched = content.sub(
+      workaround = "#elif defined(__apple_build_version__)\n#  define FMT_USE_CONSTEVAL 0  // consteval is broken in newer Apple clang too\n"
+      patched = content.include?(workaround) ? content : content.sub(
         '#elif defined(__cpp_consteval)',
-        "#elif defined(__apple_build_version__)\n#  define FMT_USE_CONSTEVAL 0  // consteval is broken in newer Apple clang too\n#elif defined(__cpp_consteval)"
+        "#{workaround}#elif defined(__cpp_consteval)"
       )
       if patched != content
         File.chmod(0644, fmt_base_h)
