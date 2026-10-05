@@ -78,8 +78,7 @@ export const bluetoothState = itwProximityMachineSetup.createStateConfig({
   onDone: [
     {
       guard: "isNfcEngagement",
-      target: "#itwProximityMachine.Presentment",
-      actions: "navigateToNfcPresentmentScreen"
+      target: "#itwProximityMachine.Presentment"
     },
     {
       target: "#itwProximityMachine.Presentment",

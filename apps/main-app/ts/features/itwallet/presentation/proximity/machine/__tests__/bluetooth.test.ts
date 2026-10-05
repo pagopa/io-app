@@ -94,8 +94,17 @@ describe("proximity Bluetooth interruption", () => {
         actor.start();
         actor.send({ type: "start" });
         await waitFor(actor, snapshot =>
-          snapshot.matches({ Presentment: "AwaitingConnection" })
+          snapshot.matches({
+            Presentment:
+              engagementMode === "nfc"
+                ? "AwaitingNfcStart"
+                : "AwaitingConnection"
+          })
         );
+        if (engagementMode === "nfc") {
+          expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
+          actor.send({ type: "nfc-started" });
+        }
         if (engagementMode === "qrcode") {
           emitQr("mdoc://interrupted-session");
           expect(actor.getSnapshot().context.qrCodeString).toBe(
@@ -121,8 +130,17 @@ describe("proximity Bluetooth interruption", () => {
 
         actor.send({ type: "continue" });
         await waitFor(actor, snapshot =>
-          snapshot.matches({ Presentment: "AwaitingConnection" })
+          snapshot.matches({
+            Presentment:
+              engagementMode === "nfc"
+                ? "AwaitingNfcStart"
+                : "AwaitingConnection"
+          })
         );
+        if (engagementMode === "nfc") {
+          expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
+          actor.send({ type: "nfc-started" });
+        }
         expect(startEngagement).toHaveBeenCalledTimes(2);
         expect(actor.getSnapshot().context.qrCodeString).toBeUndefined();
         expect(actor.getSnapshot().context.engagementMode).toBe(engagementMode);
@@ -144,6 +162,35 @@ describe("proximity Bluetooth interruption", () => {
       expect(ISO18013_5.close).toHaveBeenCalledTimes(2);
     }
   );
+
+  it("interrupts pending NFC startup without bypassing permission approval on recovery", async () => {
+    const actor = makeActor("nfc");
+    try {
+      actor.start();
+      actor.send({ type: "start" });
+      await waitFor(actor, snapshot =>
+        snapshot.matches({ Presentment: "AwaitingNfcStart" })
+      );
+      emitBluetooth(State.PoweredOff);
+      expect(
+        actor.getSnapshot().matches({ Bluetooth: "RequireActivation" })
+      ).toBe(true);
+      expectNativeCleanup();
+      actor.send({ type: "continue" });
+      await waitFor(actor, snapshot =>
+        snapshot.matches({ Presentment: "AwaitingNfcStart" })
+      );
+      expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
+      actor.send({ type: "nfc-started" });
+      expect(
+        actor.getSnapshot().matches({ Presentment: "AwaitingConnection" })
+      ).toBe(true);
+      expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
+    } finally {
+      actor.stop();
+    }
+    expectNativeCleanup();
+  });
 
   it("clears QR generation failure when Bluetooth is disabled during startup", async () => {
     startEngagement.mockRejectedValueOnce(new Error("engagement failed"));
