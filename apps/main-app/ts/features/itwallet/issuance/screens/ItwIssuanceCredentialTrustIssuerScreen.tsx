@@ -138,7 +138,7 @@ const ContentView = ({
     itwIpzsItwalletPrivacyUrlSelector
   );
   const ipzsPrivacyUrl = isItwL3
-    ? (ipzsItwalletPrivacyUrl ?? ipzsDocumentsPrivacyUrl)
+    ? ipzsItwalletPrivacyUrl
     : ipzsDocumentsPrivacyUrl;
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
