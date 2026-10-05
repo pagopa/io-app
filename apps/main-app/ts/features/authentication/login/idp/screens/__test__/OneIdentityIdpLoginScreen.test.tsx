@@ -11,6 +11,7 @@ import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../../common/store/actions";
 import * as commonStoreSelector from "../../../../common/store/selectors";
+import { AUTH_LEVELS } from "../../../../common/utils";
 import { OneIdentityIdpLoginScreen } from "../OneIdentityIdpLoginScreen";
 
 jest.mock("react-native-webview", () => {
@@ -144,14 +145,14 @@ describe("OneIdentityIdpLoginScreen", () => {
       })
     );
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
-    });
+    );
   });
 
   it("should navigate to AuthErrorScreen on a HTTP 403 error on the api URL prefix", () => {
@@ -165,14 +166,14 @@ describe("OneIdentityIdpLoginScreen", () => {
       }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
-    });
+    );
   });
 
   it("should not navigate to AuthErrorScreen on a HTTP 403 error outside the api URL prefix", () => {
@@ -200,14 +201,14 @@ describe("OneIdentityIdpLoginScreen", () => {
       }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
-    });
+    );
   });
 
   it("should navigate to AuthErrorScreen on a generic WebView error", () => {
@@ -218,14 +219,14 @@ describe("OneIdentityIdpLoginScreen", () => {
       nativeEvent: { url: "https://example.com/authorize" }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2
       }
-    });
+    );
   });
 });
 
