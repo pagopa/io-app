@@ -8,7 +8,10 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import { useIOSelector } from "../../../../store/hooks";
 import { trackItwPrivacyScreen } from "../../analytics";
 import { ItwFlow } from "../../analytics/utils/types";
-import { itwIpzsPrivacyUrlSelector } from "../../common/store/selectors/remoteConfig";
+import {
+  itwIpzsItwalletPrivacyUrlSelector,
+  itwIpzsPrivacyUrlSelector
+} from "../../common/store/selectors/remoteConfig";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
@@ -25,7 +28,9 @@ const ItwIpzsPrivacyScreen = () => {
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
-  const privacyUrl = useIOSelector(itwIpzsPrivacyUrlSelector);
+  const itwalletPrivacyUrl = useIOSelector(itwIpzsItwalletPrivacyUrlSelector);
+  const documentsPrivacyUrl = useIOSelector(itwIpzsPrivacyUrlSelector);
+  const privacyUrl = isL3 ? itwalletPrivacyUrl : documentsPrivacyUrl;
   const itwFlow: ItwFlow = isL3 ? "L3" : "L2";
 
   useFocusEffect(

@@ -52,6 +52,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ inputs.ref }}
       - id: free-up-disk-space
+        name: Free up runner disk space
         run: |
           echo "Before cleanup:"
           df -h
@@ -63,6 +64,7 @@ jobs:
           df -h
       - uses: ./.github/actions/setup-pnpm
       - id: generate-api-models
+        name: Generate API models
         run: pnpm nx run @io-app/api-types:generate
       - id: setup-ruby
         uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
@@ -70,6 +72,7 @@ jobs:
           bundler-cache: true
           working-directory: apps/main-app
       - id: build-release-android
+        name: Build and upload Android release
         run: |
           cd apps/main-app
           ./scripts/android-release.sh ./android/app
@@ -84,6 +87,7 @@ jobs:
           IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
           IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
       - id: download-universal-apk-from-store
+        name: Download universal APK from Play Store
         # We don't want to fail whole job if the universal APK is not downloaded from the play store
         continue-on-error: true
         run: |
@@ -111,6 +115,7 @@ jobs:
           name: ${{ inputs.bundle-artifact-name }}
           path: ${{ inputs.bundle-output-path }}
       - id: upload-android-assets-release
+        name: Upload Android assets to GitHub release
         continue-on-error: true
         run: |
           APP_VERSION=$(node -p -e "require('./apps/main-app/package.json').version")

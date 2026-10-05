@@ -1129,8 +1129,8 @@
               "4": "I nuovi documenti digitali ufficiali, solo sull’app IO",
               "5": "Accedi in pochi tocchi ai servizi digitali della PA"
             },
-            "title": "I tuoi documenti digitali con IT-Wallet: sicuri, ufficiali e sempre con te",
-            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso.]({{privacyUrl}})"
+            "privacyAndTos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
+            "title": "I tuoi documenti digitali con IT-Wallet: sicuri, ufficiali e sempre con te"
           },
           "legacy": {
             "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **8 Milioni** di persone stanno già usando i **Documenti su IO**!",
@@ -1538,6 +1538,11 @@
           "subtitle": "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce.",
           "title": "Aggiungi il documento al Portafoglio"
         },
+        "credentialIntroduction": {
+          "dismissalDialog": {
+            "body": "Se interrompi il documento non verrà aggiunto. Potrai aggiungerlo in un secondo momento."
+          }
+        },
         "credentialOffer": {
           "activation": {
             "primaryAction": "Attiva IT-Wallet",
@@ -1618,7 +1623,8 @@
         "emptyWallet": {
           "readyBanner": {
             "action": "Aggiungi documento",
-            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO."
+            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO.",
+            "title": "Aggiungi il tuo primo documento"
           },
           "readyBannerL2": {
             "content": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
@@ -1735,7 +1741,7 @@
           },
           "limitWarning": {
             "primaryAction": "Ho capito",
-            "subtitle": "Per ragioni di sicurezza, al prossimo accesso dovrai avere una connessione a internet per continuare con Documenti su IO. ",
+            "subtitle": "Per ragioni di sicurezza, al prossimo accesso dovrai avere una connessione a internet per accedere ai tuoi documenti digitali.",
             "title": "Ultimo accesso a IO offline disponibile"
           }
         },
@@ -2165,11 +2171,13 @@
                 },
                 "step2": {
                   "label": "Step 2",
-                  "value": "Cerca la funzionalità \"NFC\""
+                  "value": "Cerca la funzionalità \"NFC\"",
+                  "value_ios": "Seleziona \"App\", poi \"IO\""
                 },
                 "step3": {
                   "label": "Step 3",
-                  "value": "Attiva la funzionalità"
+                  "value": "Attiva la funzionalità",
+                  "value_ios": "Consenti a IO di usare l’NFC"
                 },
                 "title": "Ecco come:"
               },
@@ -2211,9 +2219,9 @@
             "alert": {
               "message": "Non potrai completare la verifica del documento."
             },
+            "privacyAndTos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d’uso]({{tosUrl}}).",
             "subtitle": "Saranno condivisi con **{{relyingParty}}** solo per il tempo necessario all’accesso ai servizi richiesti.",
-            "title": "Consenti la verifica di questi dati per procedere",
-            "tos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyUrl}})."
+            "title": "Consenti la verifica di questi dati per procedere"
           },
           "sendDocumentsLoading": {
             "0": {
