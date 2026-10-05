@@ -1,3 +1,4 @@
+import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
 
 import ROUTES from "../../../../../navigation/routes";
@@ -18,17 +19,24 @@ describe("ItwWalletReadyBanner", () => {
     expect(queryByTestId("itwWalletReadyBannerTestID")).toBeNull();
   });
 
-  test.each([true, false])(
-    "should match snapshot when ITW new interface active status is %p",
-    isActive => {
+  test.each`
+    isItWallet | titleKey                                                        | contentKey
+    ${true}    | ${"features.itWallet.issuance.emptyWallet.readyBanner.title"}   | ${"features.itWallet.issuance.emptyWallet.readyBanner.content"}
+    ${false}   | ${"features.itWallet.issuance.emptyWallet.readyBannerL2.title"} | ${"features.itWallet.issuance.emptyWallet.readyBannerL2.content"}
+  `(
+    "should render the expected banner when isItWallet is $isItWallet",
+    ({ isItWallet, titleKey, contentKey }) => {
       jest
         .spyOn(selectors, "itwShouldRenderWalletReadyBannerSelector")
         .mockReturnValue(true);
       jest
         .spyOn(selectors, "itwShouldRenderNewItWalletSelector")
-        .mockReturnValue(isActive);
+        .mockReturnValue(isItWallet);
 
       const component = renderComponent();
+
+      expect(component.getByText(I18n.t(titleKey))).toBeTruthy();
+      expect(component.getByText(I18n.t(contentKey))).toBeTruthy();
       expect(component).toMatchSnapshot();
     }
   );
