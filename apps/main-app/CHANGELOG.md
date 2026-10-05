@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-rc.10](https://github.com/pagopa/io-app/compare/3.40.0-rc.9...3.40.0-rc.10) (2026-10-02)
+
+### Features
+
+* [[IOPID-4224](https://pagopa.atlassian.net/browse/IOPID-4224)] Show PosteID bottom sheet on OneIdentity login ([#8647](https://github.com/pagopa/io-app/issues/8647)) ([9c08533](https://github.com/pagopa/io-app/commit/9c085334d85eca2741a116c90f06e904eaa29876))
+* **IT-Wallet:** [[SIW-5093](https://pagopa.atlassian.net/browse/SIW-5093)] Split Zendesk wallet tickets into IT-Wallet and Documenti su IO ([#8651](https://github.com/pagopa/io-app/issues/8651)) ([c146aad](https://github.com/pagopa/io-app/commit/c146aad098553ae78201a1b14e0cf53f752852b1))
+
+### Bug Fixes
+
+* [[IOPLT-2125](https://pagopa.atlassian.net/browse/IOPLT-2125)] Add missing `a11y` role to Zendesk link ([#8667](https://github.com/pagopa/io-app/issues/8667)) ([760dd6e](https://github.com/pagopa/io-app/commit/760dd6e9898349cc705c8d09cb0a17de0b7d641e))
+* **IT-Wallet:** [[SIW-5177](https://pagopa.atlassian.net/browse/SIW-5177)] Hide credential update disclaimer on PID reissuance ([#8672](https://github.com/pagopa/io-app/issues/8672)) ([6b72dad](https://github.com/pagopa/io-app/commit/6b72dadd45f11c500a2c7daab3b1d91599d8acd9))
+* **IT-Wallet:** [[SIW-5190](https://pagopa.atlassian.net/browse/SIW-5190)] Hide proximity CTA for the health insurance card ([#8674](https://github.com/pagopa/io-app/issues/8674)) ([9360896](https://github.com/pagopa/io-app/commit/9360896cd09f62dfcd0a47a575427aa3e8b3a241))
+
+### Chores
+
+* **IT-Wallet:** [[SIW-5179](https://pagopa.atlassian.net/browse/SIW-5179)] add wallet ready banner for ITW ([#8671](https://github.com/pagopa/io-app/issues/8671)) ([282d7ef](https://github.com/pagopa/io-app/commit/282d7ef22b918e3cb3be9ca5fca512d9a86dbe79)), references [/#diff-960caea753308e282a940be941517173c1af0256f85313bd6dd926c29f6e0a14L16-R16](https://github.com/pagopa/io-app/issues/diff-960caea753308e282a940be941517173c1af0256f85313bd6dd926c29f6e0a14L16-R16) [/#diff-960caea753308e282a940be941517173c1af0256f85313bd6dd926c29f6e0a14L29-R62](https://github.com/pagopa/io-app/issues/diff-960caea753308e282a940be941517173c1af0256f85313bd6dd926c29f6e0a14L29-R62) [/#diff-601b7eed4651e8495062a4586349efd5cb64b56fce6897c5924325d05e2fe26dL97-R96](https://github.com/pagopa/io-app/issues/diff-601b7eed4651e8495062a4586349efd5cb64b56fce6897c5924325d05e2fe26dL97-R96) [/#diff-601b7eed4651e8495062a4586349efd5cb64b56fce6897c5924325d05e2fe26dL86](https://github.com/pagopa/io-app/issues/diff-601b7eed4651e8495062a4586349efd5cb64b56fce6897c5924325d05e2fe26dL86)
+## [3.40.0-rc.9](https://github.com/pagopa/io-app/compare/3.40.0-rc.8...3.40.0-rc.9) (2026-10-01)
+
+### Bug Fixes
+
+* [[IOPID-4216](https://pagopa.atlassian.net/browse/IOPID-4216)] preserve login history navigating from AuthErrorScreen ([#8639](https://github.com/pagopa/io-app/issues/8639)) ([e035e6d](https://github.com/pagopa/io-app/commit/e035e6dfef004b36a3ff0ba5a14bb8767dedaba0))
+* [[IOPID-4236](https://pagopa.atlassian.net/browse/IOPID-4236)] Remove gap between header and CIE consent webview ([#8666](https://github.com/pagopa/io-app/issues/8666)) ([6fcac3c](https://github.com/pagopa/io-app/commit/6fcac3c8135cd8c46aee34e9cbd40ca900ea98af))
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Add dismissal dialog for wallet activation flow and handle navigation on focus/blur ([#8511](https://github.com/pagopa/io-app/issues/8511)) ([ad5cf76](https://github.com/pagopa/io-app/commit/ad5cf76cb3edfc26a8e46808d372f27a8e9f1f65))
+
+### Chores
+
+* Update translations from Lokalise ([#8669](https://github.com/pagopa/io-app/issues/8669)) ([84182ed](https://github.com/pagopa/io-app/commit/84182ed4f704cd0d6560aa47212dce45fb896dd6))
 ## [3.40.0-rc.8](https://github.com/pagopa/io-app/compare/3.40.0-rc.7...3.40.0-rc.8) (2026-09-30)
 
 ### Chores
