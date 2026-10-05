@@ -182,14 +182,12 @@ describe("requestCredential", () => {
   const buildResolvedCredentialOffer = (authorizationCodeGrant: {
     authorizationServer?: string;
     issuerState?: string;
-    scope: string;
   }): CredentialOfferResolved => ({
     offer: {
       credential_issuer: offerCredentialIssuer,
       credential_configuration_ids: [offerCredentialConfigurationId],
       grants: {
         authorization_code: {
-          scope: authorizationCodeGrant.scope,
           authorization_server: authorizationCodeGrant.authorizationServer,
           issuer_state: authorizationCodeGrant.issuerState
         }
@@ -243,7 +241,6 @@ describe("requestCredential", () => {
       skipMdocIssuance: true,
       pid,
       resolvedCredentialOffer: buildResolvedCredentialOffer({
-        scope: "education_degree",
         authorizationServer: offerCredentialIssuer,
         issuerState: "issuer-state"
       })
@@ -271,31 +268,18 @@ describe("requestCredential", () => {
     {
       name: "credential offer with full grant details",
       resolvedCredentialOffer: buildResolvedCredentialOffer({
-        scope: "education_degree",
         authorizationServer: offerCredentialIssuer,
         issuerState: "issuer-state"
       }),
       expectedIssuer: offerCredentialIssuer,
       expectedAuthorizationServer: offerCredentialIssuer,
-      expectedScope: "education_degree",
       expectedIssuerState: "issuer-state"
-    },
-    {
-      name: "credential offer with scope only",
-      resolvedCredentialOffer: buildResolvedCredentialOffer({
-        scope: "education_degree"
-      }),
-      expectedIssuer: offerCredentialIssuer,
-      expectedAuthorizationServer: undefined,
-      expectedScope: "education_degree",
-      expectedIssuerState: undefined
     },
     {
       name: "catalogue flow without credential offer",
       resolvedCredentialOffer: undefined,
       expectedIssuer: defaultIssuer,
       expectedAuthorizationServer: undefined,
-      expectedScope: undefined,
       expectedIssuerState: undefined
     }
   ])(
@@ -304,7 +288,6 @@ describe("requestCredential", () => {
       resolvedCredentialOffer,
       expectedIssuer,
       expectedAuthorizationServer,
-      expectedScope,
       expectedIssuerState
     }) => {
       await requestCredential({
@@ -322,7 +305,6 @@ describe("requestCredential", () => {
       });
 
       const [, , , authorizationContext] = startUserAuthorization.mock.calls[0];
-      expect(authorizationContext.scope).toBe(expectedScope);
       expect(authorizationContext.issuerState).toBe(expectedIssuerState);
     }
   );

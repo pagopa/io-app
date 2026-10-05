@@ -10,11 +10,12 @@
  * Parsed keys are cached per file by mtime (see `fileLiteralsCache`) so only
  * changed files are re-read/parsed; steady-state re-lints just walk + stat.
  *
- * Known limitation: under `eslint --cache` the locale file's cached result is
- * keyed on its own contents, but this rule depends on every source file. If a
- * `I18n.t` usage is removed without touching the locale file, the newly-unused
- * key is only reported once the locale file itself changes (or the cache is
- * cleared). Full `eslint .` and CI runs are unaffected.
+ * Caching: under `eslint --cache` the locale file's cached result is keyed on
+ * its own contents, but this rule depends on every source file, so a cached
+ * result can be stale. For this reason the app's `lint` script excludes the
+ * locale file from the cached run and checks it separately with `--no-cache`
+ * (`lint-locales`). Editors running ESLint with a cache may still show stale
+ * results until the locale file changes.
  */
 
 "use strict";

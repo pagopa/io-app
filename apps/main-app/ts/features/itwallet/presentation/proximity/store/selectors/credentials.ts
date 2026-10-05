@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import type { GlobalState } from "../../../../../../store/reducers/types";
 
 import { getCredentialStatus } from "../../../../common/utils/itwCredentialStatusUtils";
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   CredentialFormat,
   CredentialMetadata,
@@ -26,6 +27,14 @@ type PresentableCredentialsByDocType = Record<string, CredentialMetadata>;
 const itwCredentialsAsMdocSelector = makeSelectAllCredentials(
   CredentialFormat.MDOC
 );
+
+/**
+ * Array of credential types that should be excluded from presentable
+ * credentials.
+ */
+const excludedCredentialTypes: ReadonlyArray<string> = [
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+];
 
 /**
  * Returns the credentials object by doc type. Only MDOC credentials are
@@ -123,4 +132,5 @@ export const shouldShowExpiredProximityCredentialsBannerSelector =
  */
 export const isPresentableCredentialSelector =
   (credentialType: string) => (state: GlobalState) =>
+    !excludedCredentialTypes.includes(credentialType) &&
     itwCredentialsAsMdocSelector(state)[credentialType] !== undefined;
