@@ -574,7 +574,8 @@ const ExpiredDocumentAlert = ({ credential }: ExpiredDocumentAlertProps) => {
     }
   }, [credential.credentialType]);
 
-  // Hook reused for simplicity
+  // Hook reused for simplicity because it already handles the expired bottom sheet.
+  // TODO: [SIW-5214] Can be refactored to a more generic hook in the context of that task.
   const bottomSheet = useItwIssuerDynamicErrorBottomSheet({
     credential,
     localizedMessage: bottomSheetCopy,
