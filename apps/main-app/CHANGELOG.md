@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-canary.8233](https://github.com/pagopa/io-app/compare/3.40.0-rc.10...3.40.0-canary.8233) (2026-10-05)
+
+### Bug Fixes
+
+* [[SIW-4891](https://pagopa.atlassian.net/browse/SIW-4891)] Update IT-Wallet privacy and terms links and flow ([#8634](https://github.com/pagopa/io-app/issues/8634)) ([4a47b59](https://github.com/pagopa/io-app/commit/4a47b59a17d6e36a95f1b0cd2ecebb1b2557342f))
+
+### Chores
+
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] Notify publishing workflow failure on Slack ([#8677](https://github.com/pagopa/io-app/issues/8677)) ([e4db3fc](https://github.com/pagopa/io-app/commit/e4db3fc66116b59c7e377de4ba180f7780b58198))
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] Update permissions for release workflows ([#8678](https://github.com/pagopa/io-app/issues/8678)) ([a57cf97](https://github.com/pagopa/io-app/commit/a57cf976e9272af17567b6fa802d9dfd5585a0b1))
 ## [3.40.0-rc.10](https://github.com/pagopa/io-app/compare/3.40.0-rc.9...3.40.0-rc.10) (2026-10-02)
 
 ### Features
