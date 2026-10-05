@@ -1,5 +1,6 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -20,7 +21,7 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { trackLoginError } from "../../../../../utils/analytics";
@@ -33,6 +34,7 @@ import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLo
 import { trackSpidLoginIntent } from "../../../activeSessionLogin/screens/analytics";
 import { remoteApiLoginUrlPrefixSelector } from "../../../activeSessionLogin/store/selectors";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
   idpLoginUrlChanged,
@@ -77,9 +79,8 @@ const styles = StyleSheet.create({
  */
 const IdpLoginScreen = () => {
   const dispatch = useIODispatch();
-  // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
-  // ensuring the re-execution of the `useLollipopLoginSource` hook.
-  const { replace } = useIONavigation();
+  const { replace } =
+    useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();
   const selectedIdp = useIOSelector(selectedIdentityProviderSelector, _isEqual);
   const loggedOutWithIdpAuth = useIOSelector(
     loggedOutWithIdpAuthSelector,
@@ -265,15 +266,12 @@ const IdpLoginScreen = () => {
   };
 
   const navigateToAuthErrorScreen = useCallback(() => {
-    // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
-    // ensuring the re-execution of the `useLollipopLoginSource` hook.
-    replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage,
-        authMethod: "SPID",
-        authLevel: AUTH_LEVELS.L2
-      }
+    // `replace` drops the failed login webview, so it doesn't stay
+    // mounted behind the error screen.
+    replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+      errorCodeOrMessage,
+      authMethod: "SPID",
+      authLevel: AUTH_LEVELS.L2
     });
   }, [errorCodeOrMessage, replace]);
 
