@@ -139,13 +139,34 @@ describe("buildThirdPartyCredentialProperty", () => {
 
 describe("buildWalletListCredentialProperty", () => {
   it("returns not_available when no catalogue credential is present", () => {
-    const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE);
-    const state = getStateWithCredentials({
-      [credential.credentialId]: credential
-    });
+    const state = getStateWithCredentials({});
 
     expect(buildWalletListCredentialProperty(state)).toBe("not_available");
   });
+
+  // Credentials whose channel is unknown (e.g. stored without origin by older
+  // app versions) are attributed to the wallet list, never to the third-party channel
+  test.each([
+    { name: "valid", validity: undefined, expected: "valid" },
+    {
+      name: "not valid",
+      validity: { type: "status_assertion", status: "invalid" } as const,
+      expected: "not_valid"
+    }
+  ])(
+    "attributes a $name credential with unknown origin to the wallet list",
+    ({ validity, expected }) => {
+      const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
+        validity
+      });
+      const state = getStateWithCredentials({
+        [credential.credentialId]: credential
+      });
+
+      expect(buildWalletListCredentialProperty(state)).toBe(expected);
+      expect(buildThirdPartyCredentialProperty(state)).toBe("not_available");
+    }
+  );
 
   it("returns valid when at least one credential obtained via the catalogue is valid", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
