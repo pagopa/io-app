@@ -104,10 +104,7 @@ export const itwCredentialsCatalogueByTypesSelector = createSelector(
 export const itwIsCredentialsCatalogueLoading = (state: GlobalState) =>
   pot.isLoading(state.features.itWallet.credentialsCatalogue.catalogue);
 
-/**
- * Returns the latest catalogue fetch error, including failed refreshes of
- * cached data.
- */
+/** Returns the latest catalogue fetch error. */
 export const itwCredentialsCatalogueErrorSelector = (state: GlobalState) => {
   const catalogue = state.features.itWallet.credentialsCatalogue.catalogue;
   return "error" in catalogue ? catalogue.error : undefined;

@@ -510,8 +510,9 @@ export const storeEidCredentialActor = fromPromise<
 });
 
 /**
- * Waits for the catalogue fetch; locale translations are handled separately by
- * their saga.
+ * Refreshes the catalogue and waits for the fetch to finish before proceeding.
+ * Rejects if the fetch fails and releases the Redux subscription on completion
+ * or cancellation. Catalogue translations are fetched separately.
  */
 export const refreshCredentialsCatalogueActor = fromPromise<
   void,

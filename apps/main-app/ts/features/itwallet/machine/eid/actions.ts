@@ -445,7 +445,6 @@ export const trackItwIdVerifiedDocumentAction = ({
   trackItwIdVerifiedDocumentEvent(toItwIdMethod(context.identification));
 };
 
-/** Reloads the catalogue after revocation without delaying closure of the flow. */
 export const refreshCredentialsCatalogueAction = ({
   context
 }: EidActionArgs) => {
