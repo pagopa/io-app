@@ -47,7 +47,8 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
           type: "start",
           mode: event.mode,
           level: event.level,
-          credentialType: event.credentialType
+          credentialType: event.credentialType,
+          credentialOfferUri: event.credentialOfferUri
         }))
       ]
     }
@@ -61,6 +62,7 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
             mode: event.mode,
             level: event.level,
             credentialType: event.credentialType,
+            credentialOfferUri: event.credentialOfferUri,
             // Override the IT-Wallet version from the global store set on machine init.
             // This is necessary because a user might use a different IT-Wallet version outside this machine:
             // - User has 1.0 PID and is upgrading (1.0 -> 1.4)

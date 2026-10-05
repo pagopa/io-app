@@ -126,6 +126,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     expect(onDiscoveryParams).toHaveBeenCalledWith({
       animationEnabled: false,
       credentialType: T_CREDENTIAL_TYPE,
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI,
       level: "l3"
     });
   });
@@ -151,6 +152,30 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       });
     }
   );
+
+  it("forwards the credential offer to the eID reissuance so it can be resumed afterwards", () => {
+    jest
+      .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+      .mockReturnValue("jwtExpired");
+
+    const onModeSelectionParams = jest.fn();
+    const { getByText } = renderComponent(jest.fn(), onModeSelectionParams);
+
+    fireEvent.press(
+      getByText(
+        I18n.t("features.itWallet.issuance.confirmIdentity.primaryAction")
+      )
+    );
+
+    expect(machineSend).toHaveBeenCalledWith({ type: "close" });
+    expect(onModeSelectionParams).toHaveBeenCalledWith({
+      animationEnabled: false,
+      credentialType: T_CREDENTIAL_TYPE,
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI,
+      eidReissuing: true,
+      level: "l3"
+    });
+  });
 
   it("auto-confirms the offer when the credential is not in the wallet and there is no introduction content", () => {
     const { queryByText } = renderComponent(jest.fn());
@@ -209,7 +234,12 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
 const renderComponent = (
   onDiscoveryParams: (
     params: ItwParamsList[typeof ITW_ROUTES.DISCOVERY.INFO] | undefined
-  ) => void
+  ) => void,
+  onModeSelectionParams: (
+    params:
+      | ItwParamsList[typeof ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]
+      | undefined
+  ) => void = jest.fn()
 ) => {
   const sequenceOfActions: ReadonlyArray<Action> = [
     applicationChangeState("active"),
@@ -233,6 +263,12 @@ const renderComponent = (
           {({ route }) => {
             onDiscoveryParams(route.params);
             return <Text testID="DiscoveryInfoScreenTestID" />;
+          }}
+        </Stack.Screen>
+        <Stack.Screen name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}>
+          {({ route }) => {
+            onModeSelectionParams(route.params);
+            return <Text testID="ModeSelectionScreenTestID" />;
           }}
         </Stack.Screen>
       </Stack.Navigator>

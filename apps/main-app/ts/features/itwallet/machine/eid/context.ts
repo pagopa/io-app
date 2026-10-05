@@ -55,6 +55,13 @@ export type Context = {
   authenticationContext: AuthenticationContext | undefined;
   /** CIE capabilities and NFC status. */
   cieContext: CieContext | undefined;
+  /**
+   * The credential offer URI (deeplink/QR code) that triggered the eID issuance
+   * flow. When set, the credential issuance must resume from the credential
+   * offer instead of the catalogue, so the credential is attributed to the
+   * third-party channel.
+   */
+  credentialOfferUri: string | undefined;
   /** The credentials that need to be upgraded to the new format. */
   credentialsToUpgrade: ReadonlyArray<CredentialMetadata>;
   /** The credential type that triggered the eID issuance flow. */
@@ -176,6 +183,7 @@ export const InitialContext: Omit<Context, "deps"> = {
   credentialsToUpgrade: [],
   failedCredentials: undefined,
   credentialType: undefined,
+  credentialOfferUri: undefined,
   accessToken: undefined,
   walletInstanceStatusList: undefined
 };
