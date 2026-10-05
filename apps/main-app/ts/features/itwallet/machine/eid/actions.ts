@@ -144,16 +144,13 @@ export const navigateToNfcInstructionsScreenAction = ({
 export const navigateToWalletAction = ({ context }: EidActionArgs) => {
   const { toast, navigation } = context.deps;
   toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
-  navigation.reset({
-    index: 1,
-    routes: [
-      {
-        name: ROUTES.MAIN,
-        params: {
-          screen: ROUTES.WALLET_HOME
-        }
-      }
-    ]
+  // Navigate instead of resetting: the main navigator is already mounted at
+  // the bottom of the stack, so this pops the whole issuance flow and reuses
+  // it. A reset would assign it a new key, remounting the tab navigator and
+  // flashing a blank screen before the wallet appears.
+  navigation.navigate(ROUTES.MAIN, {
+    screen: ROUTES.WALLET_HOME,
+    params: {}
   });
 };
 
@@ -275,14 +272,18 @@ export const closeIssuanceAction = ({ context, event }: EidActionArgs) => {
   const isSurveyHidden = itwIsPidReissuingSurveyHiddenSelector(
     store.getState()
   );
-  // This survey is reserved to IT-Wallet (L3): "Documenti su IO" (L2/l2-fallback) reissuance must never trigger it.
-  const isReissuance = context.mode === "reissuance" && context.level === "l3";
+  const isReissuance = context.mode === "reissuance";
+  const isL3 = context.level === "l3";
 
   const surveyStep = event.type === "close" ? event.surveyStep : undefined;
 
-  if (isReissuance && !isSurveyHidden) {
-    store.dispatch(itwSetFeedbackBottomSheetVisible(true));
-  } else if (surveyStep) {
+  // The reissuance survey is reserved to "Documenti su IO" (L2) reissuance,
+  // while the activation exit survey is reserved to IT-Wallet (L3) activation.
+  if (isReissuance) {
+    if (!isL3 && !isSurveyHidden) {
+      store.dispatch(itwSetFeedbackBottomSheetVisible(true));
+    }
+  } else if (surveyStep && isL3) {
     store.dispatch(itwSetActivationExitSurvey({ step: surveyStep }));
   }
 

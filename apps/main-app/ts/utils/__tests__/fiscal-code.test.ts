@@ -2,7 +2,7 @@
  * @jest-environment ./jest/TimezoneEnvironment.js
  * @jest-environment-options {"timezone": "America/New_York"}
  */
-import i18next from "i18next";
+import I18n from "i18next";
 
 import { availableTranslations, setLocale } from "../../i18n";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../dates";
@@ -17,7 +17,7 @@ const EXPECTED_BIRTHDAY = "22/05/1977";
 const INVALID_DATE_KEY = "global.date.invalid";
 
 const invalidDateLabel = (locale: (typeof availableTranslations)[number]) =>
-  i18next.getFixedT(locale)(INVALID_DATE_KEY);
+  I18n.getFixedT(locale)(INVALID_DATE_KEY);
 
 describe("formatFiscalCodeBirthdayAsShortFormat", () => {
   it("runs in the pinned timezone", () => {

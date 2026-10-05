@@ -113,6 +113,7 @@ export const zendeskFciId = "14874226407825";
 export const zendeskItWalletFailureCode = "31775197295633";
 export const zendeskBonusAndInitiativeCategoryId = "8086481365265";
 export const zendeskItWalletSubcategoryId = "29326690756369";
+export const zendeskItWalletStatusId = "51228030915473";
 
 export const defaultZendeskPaymentCategory: ZendeskCategory = {
   value: "io_pagamenti_pagopa",
@@ -139,7 +140,25 @@ export const zendeskFCICategory: ZendeskCategory = {
     "de-DE": "Firma con IO"
   }
 };
+/**
+ * Category for IT-Wallet (L3) support tickets. In-app wallet flows pick between
+ * this and {@link zendeskDocumentiSuIoCategory} based on the user's wallet
+ * status, unless the flow itself determines it.
+ */
 export const zendeskItWalletCategory: ZendeskCategory = {
+  value: "it_wallet2",
+  description: {
+    "it-IT": "IT-Wallet",
+    "en-EN": "IT-Wallet",
+    "de-DE": "IT-Wallet"
+  }
+};
+/**
+ * Category for Documenti su IO support tickets. Keeps the legacy `it_wallet`
+ * value, so tickets from older app versions, which send `it_wallet` for every
+ * wallet ticket, land in this category.
+ */
+export const zendeskDocumentiSuIoCategory: ZendeskCategory = {
   value: "it_wallet",
   description: {
     "it-IT": "Documenti su IO",
