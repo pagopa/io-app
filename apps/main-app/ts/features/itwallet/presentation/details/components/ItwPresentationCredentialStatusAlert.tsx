@@ -1,10 +1,15 @@
-import { Alert, IOButton, IOToast, VStack } from "@io-app/design-system";
+import {
+  Alert,
+  IOButton,
+  IOMarkdown,
+  IOToast,
+  VStack
+} from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { memo, useCallback, useMemo } from "react";
 import { View } from "react-native";
 
-import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { format } from "../../../../../utils/dates.ts";
@@ -271,15 +276,7 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
 
   switch (alertType) {
     case CredentialAlertType.DOCUMENT_EXPIRED:
-      return (
-        <Alert
-          content={I18n.t(
-            "features.itWallet.presentation.alerts.expired.content"
-          )}
-          testID="itwExpiredBannerTestID"
-          variant="error"
-        />
-      );
+      return <ExpiredDocumentAlert credential={credential} />;
     case CredentialAlertType.DOCUMENT_EXPIRING:
       // Only render when the credential type has a dedicated expiring bottom
       // sheet, so the static-key lookup inside the alert is always defined.
@@ -546,6 +543,53 @@ const IssuerDynamicErrorAlert = ({
         action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
         content={localizedMessage.title}
         onPress={handleAlertPress}
+        variant="error"
+      />
+      {bottomSheet.bottomSheet}
+    </>
+  );
+};
+
+type ExpiredDocumentAlertProps = {
+  credential: CredentialMetadata;
+};
+
+const ExpiredDocumentAlert = ({ credential }: ExpiredDocumentAlertProps) => {
+  const bottomSheetCopy = useMemo(() => {
+    switch (credential.credentialType) {
+      case CredentialType.DRIVING_LICENSE:
+        return {
+          title: I18n.t(
+            "features.itWallet.presentation.bottomSheets.mDL.expired.title"
+          ),
+          description: I18n.t(
+            "features.itWallet.presentation.bottomSheets.mDL.expired.mainContent"
+          )
+        };
+      default:
+        return {
+          title: "1",
+          description: "2"
+        };
+    }
+  }, [credential.credentialType]);
+
+  // Hook reused for simplicity
+  const bottomSheet = useItwIssuerDynamicErrorBottomSheet({
+    credential,
+    localizedMessage: bottomSheetCopy,
+    status: "expired"
+  });
+
+  return (
+    <>
+      <Alert
+        action={I18n.t("features.itWallet.presentation.alerts.expired.action")}
+        content={I18n.t(
+          "features.itWallet.presentation.alerts.expired.content"
+        )}
+        onPress={bottomSheet.present}
+        testID="itwExpiredBannerTestID"
         variant="error"
       />
       {bottomSheet.bottomSheet}
