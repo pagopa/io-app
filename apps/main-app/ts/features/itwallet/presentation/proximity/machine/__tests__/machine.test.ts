@@ -20,6 +20,7 @@ import {
 import { ProximityDetails, VerifierRequest } from "../../utils/types";
 import { ProximityFailureType } from "../failure";
 import { ItwProximityMachine, itwProximityMachine } from "../machine";
+import { ItwPresentationTags } from "../tags";
 
 type MachineSnapshot = StateFrom<ItwProximityMachine>;
 
@@ -366,6 +367,7 @@ describe("itwProximityMachine", () => {
       snapshot.matches({ Nfc: "RequireActivation" })
     );
     expect(navigateToNfcActivationScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
   });
 
   it("NFC activation errors from start-nfc-presentment move to Nfc.RequireActivation", async () => {
@@ -453,11 +455,23 @@ describe("itwProximityMachine", () => {
       await waitFor(actor, snapshot =>
         snapshot.matches({ Presentment: "AwaitingNfcStart" })
       );
+      expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
+      actor.send(event);
+      expect(actor.getSnapshot().matches({ Nfc: "RequireActivation" })).toBe(
+        true
+      );
+      expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
+
+      actor.send({ type: "continue" });
+      await waitFor(actor, snapshot =>
+        snapshot.matches({ Presentment: "AwaitingNfcStart" })
+      );
       actor.send({ type: "nfc-started" });
       expect(actor.getSnapshot().value).toStrictEqual({
         Presentment: "AwaitingConnection"
       });
       expect(actor.getSnapshot().context.failure).toBeUndefined();
+      expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
       expect(navigateToFailureScreen).not.toHaveBeenCalled();
       expect(closeProximity).not.toHaveBeenCalled();
       actor.stop();
@@ -486,11 +500,21 @@ describe("itwProximityMachine", () => {
           Presentment: pending ? "Starting" : "AwaitingNfcStart"
         })
       );
+      expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
+      expect(actor.getSnapshot().hasTag(ItwPresentationTags.Loading)).toBe(
+        true
+      );
 
       actor.send({ type: "nfc-started" });
       expect(actor.getSnapshot().value).toStrictEqual({
         Presentment: "AwaitingConnection"
       });
+      expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
+      expect(actor.getSnapshot().hasTag(ItwPresentationTags.Loading)).toBe(
+        false
+      );
+      actor.send({ type: "nfc-started" });
+      expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
       actor.send({ type: "nfc-stopped" });
       expect(closeProximity).toHaveBeenCalledTimes(1);
       expect(navigateToNfcActivationScreen).not.toHaveBeenCalled();
@@ -514,6 +538,7 @@ describe("itwProximityMachine", () => {
     );
 
     expect(navigateToNfcActivationScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
     expect(actor.getSnapshot().context.failure?.reason).toBe(error);
     expect(navigateToFailureScreen).not.toHaveBeenCalled();
     expect(closeProximity).not.toHaveBeenCalled();
@@ -522,6 +547,10 @@ describe("itwProximityMachine", () => {
 
   test.each([
     { name: "NFC instructions", state: { Nfc: "RequireActivation" } },
+    {
+      name: "pending NFC bridge",
+      state: { Presentment: "Starting" }
+    },
     {
       name: "pending NFC permission",
       state: { Presentment: "AwaitingNfcStart" }
@@ -550,9 +579,12 @@ describe("itwProximityMachine", () => {
     expect(actor.getSnapshot().context.retrievalMethod).toBeUndefined();
     expect(actor.getSnapshot().context.failure).toBeUndefined();
     expect(navigateToPresentmentScreen).toHaveBeenCalledTimes(1);
+    actor.send({ type: "nfc-started" });
+    expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
+    actor.stop();
   });
 
-  it("continue from Nfc.RequireActivation moves to Presentment.Starting with NFC mode", async () => {
+  it("continue from Nfc.RequireActivation starts NFC without leaving instructions", async () => {
     startEngagement.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
       input: { deps: T_DEPS },
@@ -566,8 +598,30 @@ describe("itwProximityMachine", () => {
       snapshot.matches({ Presentment: "Starting" })
     );
     expect(actor.getSnapshot().context.engagementMode).toEqual("nfc");
-    expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
     expect(trackProximityStart).not.toHaveBeenCalled();
+  });
+
+  it("NFC retrieval restart waits for nfc-started before navigating", async () => {
+    startEngagement.mockResolvedValue(undefined);
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot(
+        { Presentment: "StoreConsent" },
+        { engagementMode: "nfc", retrievalMethod: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({ type: "continue" });
+
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "AwaitingNfcStart" })
+    );
+    expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
+    actor.send({ type: "nfc-started" });
+    expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
+    actor.stop();
   });
 
   it("handles the happy path in Presentment", async () => {

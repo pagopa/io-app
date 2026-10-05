@@ -17,7 +17,8 @@ export type Context = {
   /**
    * The requested engagement mode, defaulting to "qrcode". NFC reader
    * availability is checked before switching to "nfc"; native startup confirms
-   * contactless consent before entering AwaitingConnection.
+   * contactless consent before entering AwaitingConnection and navigating to
+   * NFC presentment.
    */
   engagementMode: ISO18013_5.EngagementMode;
   /** The failure of the proximity presentation machine */

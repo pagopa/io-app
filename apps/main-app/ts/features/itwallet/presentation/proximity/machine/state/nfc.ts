@@ -47,7 +47,7 @@ export const nfcState = itwProximityMachineSetup.createStateConfig({
       }
     },
     Completed: {
-      description: "NFC gate cleared",
+      description: "NFC reader availability gate cleared",
       type: "final"
     }
   },
@@ -55,9 +55,6 @@ export const nfcState = itwProximityMachineSetup.createStateConfig({
     // External transition to Presentment fully restarts proximityCommunicationLogic
     // and startEngagement so the native session runs with the NFC configuration
     target: "#itwProximityMachine.Presentment",
-    actions: [
-      assign({ engagementMode: "nfc", failure: undefined }),
-      "navigateToNfcPresentmentScreen"
-    ]
+    actions: assign({ engagementMode: "nfc", failure: undefined })
   }
 } as const);

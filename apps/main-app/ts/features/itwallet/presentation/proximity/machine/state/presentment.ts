@@ -22,6 +22,24 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
     }
   },
   on: {
+    close: {
+      guard: and([
+        "isNfcEngagement",
+        or([
+          stateIn("Presentment.Starting"),
+          stateIn("Presentment.AwaitingNfcStart")
+        ])
+      ]),
+      target: "#itwProximityMachine.Presentment",
+      actions: [
+        assign(() => ({
+          engagementMode: "qrcode" as const,
+          failure: undefined,
+          retrievalMethod: undefined
+        })),
+        "navigateToPresentmentScreen"
+      ]
+    },
     "nfc-stopped": {
       guard: and([
         "isNfcEngagement",
@@ -136,7 +154,7 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       description: "Start the native engagement session",
       tags: [ItwPresentationTags.Loading],
       always: {
-        guard: "isNfcRetrieval",
+        guard: and(["isNfcRetrieval", not("isNfcEngagement")]),
         actions: "navigateToNfcPresentmentScreen"
       },
       invoke: {
@@ -174,7 +192,8 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       on: {
         "nfc-started": {
           guard: "isNfcEngagement",
-          target: "AwaitingConnection"
+          target: "AwaitingConnection",
+          actions: "navigateToNfcPresentmentScreen"
         },
         retry: {
           target: "Retrying"
@@ -183,20 +202,11 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
     },
     AwaitingNfcStart: {
       description: "Wait for native NFC activation and permission approval",
+      tags: [ItwPresentationTags.Loading],
       on: {
         "nfc-started": {
-          target: "AwaitingConnection"
-        },
-        close: {
-          target: "#itwProximityMachine.Presentment",
-          actions: [
-            assign(() => ({
-              engagementMode: "qrcode" as const,
-              failure: undefined,
-              retrievalMethod: undefined
-            })),
-            "navigateToPresentmentScreen"
-          ]
+          target: "AwaitingConnection",
+          actions: "navigateToNfcPresentmentScreen"
         }
       }
     },
