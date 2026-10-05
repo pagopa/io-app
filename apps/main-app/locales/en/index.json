@@ -2155,7 +2155,7 @@
                 "action": "Turn on NFC",
                 "close": "Close",
                 "message": "Turn on NFC to allow verification of your digital documents",
-                "title": "NFC is required to continue"
+                "title": "Bluetooth is required to continue"
               },
               "listItems": {
                 "step1": {

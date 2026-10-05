@@ -86,6 +86,7 @@ const renderComponent = () => {
 const continueLabel = I18n.t(
   "features.itWallet.presentation.proximity.nfc.activation.actions.secondary"
 );
+const initialLanguage = I18n.language;
 
 describe("ItwNfcActivationScreen", () => {
   beforeEach(() => {
@@ -96,9 +97,62 @@ describe("ItwNfcActivationScreen", () => {
     jest.spyOn(Alert, "alert").mockImplementation();
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     jest.restoreAllMocks();
+    await I18n.changeLanguage(initialLanguage);
   });
+
+  test.each([
+    { name: "iOS in Italian", platform: "ios", language: "it" },
+    { name: "iOS in English", platform: "ios", language: "en" },
+    { name: "Android in Italian", platform: "android", language: "it" },
+    { name: "Android in English", platform: "android", language: "en" }
+  ] as const)(
+    "renders localized NFC instructions and alert on $name",
+    async ({ platform, language }) => {
+      jest.replaceProperty(Platform, "OS", platform);
+      await I18n.changeLanguage(language);
+      jest.mocked(checkNfcActivation).mockResolvedValue(false);
+      const component = await renderComponent();
+      const instructionKeys =
+        platform === "ios"
+          ? ([
+              "features.itWallet.presentation.proximity.nfc.activation.listItems.step2.value_ios",
+              "features.itWallet.presentation.proximity.nfc.activation.listItems.step3.value_ios"
+            ] as const)
+          : ([
+              "features.itWallet.presentation.proximity.nfc.activation.listItems.step2.value",
+              "features.itWallet.presentation.proximity.nfc.activation.listItems.step3.value"
+            ] as const);
+
+      instructionKeys.forEach(key => {
+        expect(I18n.exists(key)).toBe(true);
+        expect(component.getByText(I18n.t(key))).toBeTruthy();
+      });
+
+      await fireEventAsync.press(
+        component.getByText(
+          I18n.t(
+            "features.itWallet.presentation.proximity.nfc.activation.actions.secondary"
+          )
+        )
+      );
+      if (platform === "ios") {
+        const actor = observeMachine.mock.calls[0][0];
+        await act(async () => actor.send({ type: "nfc-stopped" }));
+      }
+
+      expect(Alert.alert).toHaveBeenCalledWith(
+        I18n.t(
+          "features.itWallet.presentation.proximity.nfc.activation.alert.title"
+        ),
+        I18n.t(
+          "features.itWallet.presentation.proximity.nfc.activation.alert.message"
+        ),
+        expect.any(Array)
+      );
+    }
+  );
 
   test.each([
     { name: "reader availability is true", available: true },

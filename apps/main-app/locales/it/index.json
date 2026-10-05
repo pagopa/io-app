@@ -2163,7 +2163,7 @@
                 "action": "Attiva NFC",
                 "close": "Chiudi",
                 "message": "Attiva l’NFC per permettere la verifica dei tuoi documenti digitali",
-                "title": "È richiesto l’utilizzo dell’NFC per continuare"
+                "title": "È richiesto l’utilizzo del Bluetooth per continuare"
               },
               "listItems": {
                 "step1": {
