@@ -1,6 +1,7 @@
 import { ActionArgs } from "xstate";
 
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
 import {
   testCredentialUpgradeDeps,
@@ -12,11 +13,19 @@ import { CredentialUpgradeEvents } from "../events";
 
 describe("itwCredentialUpgradeMachine actions", () => {
   describe("storeCredentialAction", () => {
-    it("should store the new credential removing the old one", () => {
+    const upgradedMdl = {
+      credential: "raw-jwt",
+      metadata: ItwStoredCredentialsMocks.L3.mdl
+    };
+
+    const runStoreCredentialAction = (
+      ownedCredentials: ReadonlyArray<CredentialMetadata>
+    ) => {
       const mockDispatch = jest.fn();
 
       storeCredentialAction({
         context: {
+          credentials: ownedCredentials,
           deps: testCredentialUpgradeDeps({
             store: testMachineStore({ dispatch: mockDispatch })
           })
@@ -25,13 +34,8 @@ describe("itwCredentialUpgradeMachine actions", () => {
           type: "xstate.done.actor.upgradeCredential",
           actorId: "upgradeCredential",
           output: {
-            credentialType: "MDL",
-            credentials: [
-              {
-                credential: "raw-jwt",
-                metadata: ItwStoredCredentialsMocks.L3.mdl
-              }
-            ]
+            credentialType: upgradedMdl.metadata.credentialType,
+            credentials: [upgradedMdl]
           }
         }
       } as unknown as ActionArgs<
@@ -40,12 +44,45 @@ describe("itwCredentialUpgradeMachine actions", () => {
         CredentialUpgradeEvents
       >);
 
+      return mockDispatch;
+    };
+
+    test.each([
+      { name: "catalogue", origin: "catalogue" as const },
+      { name: "credential offer", origin: "credentialOffer" as const },
+      { name: "unknown", origin: undefined }
+    ])(
+      "should replace the owned credential keeping its $name origin",
+      ({ origin }) => {
+        const mockDispatch = runStoreCredentialAction([
+          { ...ItwStoredCredentialsMocks.mdl, origin }
+        ]);
+
+        expect(mockDispatch).toHaveBeenCalledWith(
+          itwCredentialsReplaceByType(
+            [
+              {
+                ...upgradedMdl,
+                metadata: { ...upgradedMdl.metadata, origin }
+              }
+            ],
+            {}
+          )
+        );
+      }
+    );
+
+    it("should not take the origin from an owned credential of another type", () => {
+      const mockDispatch = runStoreCredentialAction([
+        { ...ItwStoredCredentialsMocks.ts, origin: "credentialOffer" }
+      ]);
+
       expect(mockDispatch).toHaveBeenCalledWith(
         itwCredentialsReplaceByType(
           [
             {
-              credential: "raw-jwt",
-              metadata: ItwStoredCredentialsMocks.L3.mdl
+              ...upgradedMdl,
+              metadata: { ...upgradedMdl.metadata, origin: undefined }
             }
           ],
           {}
