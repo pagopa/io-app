@@ -16,7 +16,8 @@ on:
           - patch
           - build
 permissions:
-  contents: read
+  contents: write
+  actions: read
 jobs:
   run-static-checks:
     uses: ./.github/workflows/static-checks.yaml
