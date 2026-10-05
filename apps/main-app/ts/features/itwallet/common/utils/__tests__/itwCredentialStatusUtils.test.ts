@@ -512,7 +512,6 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
       getCredentialStatusMessageFromIssuerConf({
         errorCode: ERROR_CODE,
         credentialId: CREDENTIAL_ID,
-        credentialType: CREDENTIAL_TYPE,
         issuerConf
       })
     ).toEqual(italianMessage);
@@ -523,7 +522,6 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
       name: "errorCode and issuerConf are missing",
       params: {
         credentialId: CREDENTIAL_ID,
-        credentialType: CREDENTIAL_TYPE,
         errorCode: undefined,
         issuerConf: undefined
       }
@@ -533,7 +531,6 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
       params: {
         errorCode: "credential_revoked",
         credentialId: CREDENTIAL_ID,
-        credentialType: CREDENTIAL_TYPE,
         issuerConf
       }
     },
@@ -542,7 +539,6 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
       params: {
         errorCode: ERROR_CODE,
         credentialId: CREDENTIAL_ID,
-        credentialType: CREDENTIAL_TYPE,
         issuerConf: buildIssuerConf([{ locale: "en-US", ...englishMessage }])
       }
     },
@@ -551,7 +547,6 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
       params: {
         errorCode: ERROR_CODE,
         credentialId: "unknown_credential",
-        credentialType: "unknown_credential",
         issuerConf
       }
     }
@@ -564,7 +559,6 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
       getCredentialStatusMessageFromIssuerConf({
         errorCode: ERROR_CODE,
         credentialId: "mso_mdoc_mDL",
-        credentialType: CREDENTIAL_TYPE,
         issuerConf
       })
     ).toEqual(italianMessage);
