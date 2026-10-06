@@ -5,9 +5,9 @@ export type Toast = {
   hapticFeedback?: HapticType;
   icon?: IOIcons;
   message: string;
-  variant?: ToastVariant;
+  variant: ToastVariant;
 };
 
 export type ToastOptions = Omit<Toast, "message">;
 
-export type ToastVariant = "error" | "info" | "neutral" | "success" | "warning";
+export type ToastVariant = "error" | "info" | "success" | "warning";

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', icon: 'checkTick' }) 1`] = `
+exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', icon: 'checkTick', variant: 'info' }) 1`] = `
 <View
   accessibilityLabel="Hello"
   accessibilityRole="alert"
@@ -16,8 +16,8 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         "padding": 16,
       },
       {
-        "backgroundColor": "#AAEEEF",
-        "borderColor": "rgba(0,59,61,0.5)",
+        "backgroundColor": "#E1F5FE",
+        "borderColor": "rgba(33,92,118,0.5)",
         "borderWidth": 1,
       },
     ]
@@ -30,7 +30,7 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
       [
         {},
         {
-          "color": "#003B3D",
+          "color": "#215C76",
           "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",
@@ -60,7 +60,7 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
     align="xMidYMid"
     bbHeight={24}
     bbWidth={24}
-    color="#003B3D"
+    color="#215C76"
     focusable={false}
     height={24}
     importantForAccessibility="no-hide-descendants"
@@ -212,55 +212,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 </View>
 `;
 
-exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', variant: 'neutral' }) 1`] = `
-<View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
-  style={
-    [
-      {
-        "alignItems": "center",
-        "borderCurve": "continuous",
-        "borderRadius": 8,
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-        "padding": 16,
-      },
-      {
-        "backgroundColor": "#AAEEEF",
-        "borderColor": "rgba(0,59,61,0.5)",
-        "borderWidth": 1,
-      },
-    ]
-  }
->
-  <Text
-    allowFontScaling={true}
-    maxFontSizeMultiplier={1.5}
-    style={
-      [
-        {},
-        {
-          "color": "#003B3D",
-          "fontFamily": "Titillio",
-          "fontSize": 16,
-          "fontStyle": "normal",
-          "fontWeight": "600",
-          "lineHeight": 20,
-        },
-        {
-          "flexShrink": 1,
-          "paddingVertical": 2,
-        },
-      ]
-    }
-  >
-    Hello
-  </Text>
-</View>
-`;
-
 exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', variant: 'success' }) 1`] = `
 <View
   accessibilityLabel="Hello"
@@ -359,7 +310,7 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 </View>
 `;
 
-exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', icon: 'checkTick' }) 1`] = `
+exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', icon: 'checkTick', variant: 'info' }) 1`] = `
 <View
   accessibilityLabel="Hello"
   accessibilityRole="alert"
@@ -375,8 +326,8 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         "padding": 16,
       },
       {
-        "backgroundColor": "#AAEEEF",
-        "borderColor": "rgba(0,59,61,0.5)",
+        "backgroundColor": "#E1F5FE",
+        "borderColor": "rgba(33,92,118,0.5)",
         "borderWidth": 1,
       },
     ]
@@ -389,7 +340,7 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
       [
         {},
         {
-          "color": "#003B3D",
+          "color": "#215C76",
           "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",
@@ -419,7 +370,7 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
     align="xMidYMid"
     bbHeight={24}
     bbWidth={24}
-    color="#003B3D"
+    color="#215C76"
     focusable={false}
     height={24}
     importantForAccessibility="no-hide-descendants"
@@ -553,55 +504,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         {},
         {
           "color": "#215C76",
-          "fontFamily": "Titillio",
-          "fontSize": 16,
-          "fontStyle": "normal",
-          "fontWeight": "600",
-          "lineHeight": 20,
-        },
-        {
-          "flexShrink": 1,
-          "paddingVertical": 2,
-        },
-      ]
-    }
-  >
-    Hello
-  </Text>
-</View>
-`;
-
-exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', variant: 'neutral' }) 1`] = `
-<View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
-  style={
-    [
-      {
-        "alignItems": "center",
-        "borderCurve": "continuous",
-        "borderRadius": 8,
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-        "padding": 16,
-      },
-      {
-        "backgroundColor": "#AAEEEF",
-        "borderColor": "rgba(0,59,61,0.5)",
-        "borderWidth": 1,
-      },
-    ]
-  }
->
-  <Text
-    allowFontScaling={true}
-    maxFontSizeMultiplier={1.5}
-    style={
-      [
-        {},
-        {
-          "color": "#003B3D",
           "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",

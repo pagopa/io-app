@@ -16,7 +16,7 @@ import {
   ItwPresentationCredentialAttachmentScreen
 } from "../ItwPresentationCredentialAttachmentScreen";
 
-const mockToastShow = jest.fn();
+const mockToastError = jest.fn();
 const pdfDataUri = "data:application/pdf;base64,JVBERi0xLjQ=";
 const mockFile = {
   delete: jest.fn(),
@@ -41,7 +41,7 @@ jest.mock("@io-app/design-system", () => ({
     "@io-app/design-system"
   ),
   useIOToast: () => ({
-    show: mockToastShow
+    error: mockToastError
   })
 }));
 
@@ -127,7 +127,7 @@ describe("ItwPresentationCredentialAttachmentScreen", () => {
     );
 
     await waitFor(() => {
-      expect(mockToastShow).toHaveBeenCalledWith(
+      expect(mockToastError).toHaveBeenCalledWith(
         I18n.t("messagePDFPreview.errors.sharing")
       );
       expect(mockFile.delete).toHaveBeenCalled();
