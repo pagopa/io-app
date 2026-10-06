@@ -9,6 +9,7 @@ import {
 } from "./enum";
 import {
   ItwProximityFailure,
+  ItwProximityFlowFailure,
   ItwProximityFlowProperties,
   ItwProximityGenericFailure,
   ItwProximityHttpFailure,
@@ -309,6 +310,7 @@ export const trackItwProximityQrCodeLoadingFailure = ({
 };
 
 export const trackItwProximityRPGenericFailure = ({
+  proximity_flow,
   proximity_sharing_status,
   reason,
   type
@@ -316,6 +318,7 @@ export const trackItwProximityRPGenericFailure = ({
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_GENERIC_ERROR,
     buildEventProperties("KO", "screen_view", {
+      proximity_flow,
       proximity_sharing_status,
       reason,
       type
@@ -324,33 +327,41 @@ export const trackItwProximityRPGenericFailure = ({
 };
 
 export const trackItwProximityTimeout = ({
+  proximity_flow,
   reason,
   type
-}: ItwProximityFailure) => {
+}: ItwProximityFlowFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_TIMEOUT,
-    buildEventProperties("KO", "screen_view", { reason, type })
+    buildEventProperties("KO", "screen_view", { proximity_flow, reason, type })
   );
 };
 
 export const trackItwProximityUnexpectedFailure = ({
   origin,
+  proximity_flow,
   reason,
   type
-}: ItwProximityFailure) => {
+}: ItwProximityFlowFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "screen_view", { origin, reason, type })
+    buildEventProperties("KO", "screen_view", {
+      origin,
+      proximity_flow,
+      reason,
+      type
+    })
   );
 };
 
 export const trackItwProximityRpNotTrusted = ({
+  proximity_flow,
   reason,
   type
-}: ItwProximityFailure) => {
+}: ItwProximityFlowFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_RP_NOT_TRUSTED,
-    buildEventProperties("KO", "screen_view", { reason, type })
+    buildEventProperties("KO", "screen_view", { proximity_flow, reason, type })
   );
 };
 
@@ -363,10 +374,12 @@ export const trackItwProximityRequestObjectFailure = ({
   );
 };
 
-export const trackItwProximityMandatoryCredentialMissing = () => {
+export const trackItwProximityMandatoryCredentialMissing = ({
+  proximity_flow
+}: ItwProximityFlowProperties) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING,
-    buildEventProperties("KO", "screen_view")
+    buildEventProperties("KO", "screen_view", { proximity_flow })
   );
 };
 
