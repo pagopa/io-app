@@ -93,7 +93,9 @@ jest.mock("expo-brightness", () => ({
 }));
 
 jest.mock("expo-web-browser", () => ({
-  openAuthSessionAsync: jest.fn().mockResolvedValue(Promise.resolve({ type: "opened" })),
+  openAuthSessionAsync: jest
+    .fn()
+    .mockResolvedValue(Promise.resolve({ type: "opened" }))
 }));
 
 jest.mock("expo-linear-gradient", () => ({
