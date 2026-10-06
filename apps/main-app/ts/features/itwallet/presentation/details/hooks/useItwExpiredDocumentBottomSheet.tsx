@@ -87,14 +87,16 @@ export const useItwExpiredDocumentBottomSheet = ({
             </View>
           </VStack>
         ) : (
-          <IOButton
-            fullWidth
-            label={I18n.t(
-              "features.itWallet.presentation.bottomSheets.generic.expired.cta"
-            )}
-            onPress={() => bottomSheet.dismiss()}
-            variant="solid"
-          />
+          <View style={{ marginBottom: 16 }}>
+            <IOButton
+              fullWidth
+              label={I18n.t(
+                "features.itWallet.presentation.bottomSheets.generic.expired.cta"
+              )}
+              onPress={() => bottomSheet.dismiss()}
+              variant="solid"
+            />
+          </View>
         )}
       </VStack>
     )
