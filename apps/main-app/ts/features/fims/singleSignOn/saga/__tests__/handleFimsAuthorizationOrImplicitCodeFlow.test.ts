@@ -66,7 +66,7 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
           LoginUtils.openAuthSessionAsync,
           "https://relyingParty.url/inAppBrowserLandingPage",
           "iossoapi",
-          true
+          { preferEphemeralSession: false }
         )
         .next()
         .call(handleFimsBackNavigation)
@@ -114,7 +114,7 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
           LoginUtils.openAuthSessionAsync,
           "https://relyingParty.url/inAppBrowserLandingPage",
           "iossoapi",
-          false
+          { preferEphemeralSession: true }
         )
         .next()
         .call(handleFimsBackNavigation)
@@ -261,7 +261,7 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
           LoginUtils.openAuthSessionAsync,
           "https://relyingParty.url/inAppBrowserLandingPage",
           "iossoapi",
-          true
+          { preferEphemeralSession: false }
         )
         .throw(inAppBrowserOpeningError)
         .call(handleInAppBrowserErrorIfNeeded, inAppBrowserOpeningError)

@@ -23,12 +23,6 @@ jest.mock("@react-native-cookies/cookies", () => ({
   removeSessionCookies: jest.fn(() => Promise.resolve(true))
 }));
 
-jest.mock("../../../../../../components/helpers/withLoadingSpinner", () => ({
-  withLoadingSpinner: (Component: any) => (props: any) => (
-    <Component {...props} />
-  )
-}));
-
 jest.mock("../../../../../../features/lollipop/utils/login", () => ({
   regenerateKeyGetRedirectsAndVerifySaml: jest.fn()
 }));
