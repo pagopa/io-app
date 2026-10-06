@@ -93,6 +93,13 @@ Every feature lives under `apps/main-app/ts/features/<feature>/` and is self-con
 - Never leave JSDoc blocks unmaintained; outdated documentation is considered a critical code smell.
 - Never add comments to self-explanatory code; if it needs a "novel" to explain, refactor the logic instead.
 
+## I18n
+
+Lokalise owns every locale value under `apps/main-app/locales/`; CI rejects value changes outside Lokalise `lok_*` PRs.
+
+- Add new keys only to the base locale `apps/main-app/locales/it/index.json`. Lokalise fills in the other languages.
+- Leave existing values untouched. When a copy change is requested, report each full dotted key path (e.g. `features.wallet.title`) with its locale and tell the user to edit it on Lokalise.
+
 ## Commits
 
 - Use conventional commits specification
