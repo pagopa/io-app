@@ -1,10 +1,16 @@
-import { Alert, IOButton, IOToast, VStack } from "@io-app/design-system";
+import {
+  Alert,
+  IOButton,
+  IOMarkdownLite,
+  IOToast,
+  VStack
+} from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { memo, useCallback, useMemo } from "react";
 import { View } from "react-native";
 
-import IOMarkdown from "../../../../../components/IOMarkdown";
+import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { format } from "../../../../../utils/dates.ts";
@@ -14,6 +20,7 @@ import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors
 import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
+import { itwShouldUpgradeCredentialSelector } from "../../../common/store/selectors";
 import { getCredentialExpireDays } from "../../../common/utils/itwClaimsUtils.ts";
 import { CredentialStatusMessage } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
@@ -228,6 +235,22 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const message = useCredentialStatusMessage(credential.credentialType);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const needsItwUpgrade = useIOSelector(
+    itwShouldUpgradeCredentialSelector(
+      credential.credentialType,
+      credential.jwt.issuedAt
+    )
+  );
+
+  const handleCredentialUpgrade = useOfflineToastGuard(() =>
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+      params: {
+        credentialType: credential.credentialType,
+        isUpgrade: true
+      }
+    })
+  );
 
   const trackCredentialAlertEvent = (action: CredentialAlertEvents): void => {
     if (!status) {
@@ -265,8 +288,20 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     isMdlSuspended: isMdlSuspendedIssuerError(credential)
   });
 
-  if (!alertType) {
-    return null;
+  if (needsItwUpgrade) {
+    return (
+      <Alert
+        action={I18n.t(
+          "features.itWallet.presentation.alerts.needsUpgrade.action"
+        )}
+        content={I18n.t(
+          "features.itWallet.presentation.alerts.needsUpgrade.content"
+        )}
+        onPress={handleCredentialUpgrade}
+        testID="itwUpgradeCredentialTestID"
+        variant="error"
+      />
+    );
   }
 
   switch (alertType) {
@@ -341,6 +376,8 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
       );
     case CredentialAlertType.MDL_SUSPENDED:
       return <MdlSuspendedAlert onTrack={trackCredentialAlertEvent} />;
+    default:
+      return null;
   }
 };
 
@@ -433,7 +470,7 @@ const DocumentExpiringAlert = ({
     title: bottomSheetCopy.title,
     component: (
       <VStack space={24}>
-        <IOMarkdown content={bottomSheetCopy.content} />
+        <IOMarkdownLite content={bottomSheetCopy.content} />
         {showCta && (
           <View style={{ marginBottom: 16 }}>
             <IOButton
@@ -476,7 +513,7 @@ const MdlSuspendedAlert = ({
     title: I18n.t("features.itWallet.presentation.alerts.mdl.suspended.title"),
     component: (
       <VStack space={24}>
-        <IOMarkdown
+        <IOMarkdownLite
           content={I18n.t(
             "features.itWallet.presentation.bottomSheets.mDL.suspended.content"
           )}
