@@ -40,6 +40,7 @@ import {
   trackItwCredentialBottomSheetAction,
   trackItwCredentialTapBanner
 } from "../analytics";
+import { useItwExpiredDocumentBottomSheet } from "../hooks/useItwExpiredDocumentBottomSheet.tsx";
 import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
 import { isMdlSuspendedIssuerError } from "../utils";
 
@@ -568,18 +569,20 @@ const ExpiredDocumentAlert = ({ credential }: ExpiredDocumentAlertProps) => {
         };
       default:
         return {
-          title: "1",
-          description: "2"
+          title: I18n.t(
+            "features.itWallet.presentation.bottomSheets.generic.expired.title"
+          ),
+          description: I18n.t(
+            "features.itWallet.presentation.bottomSheets.generic.expired.content"
+          )
         };
     }
   }, [credential.credentialType]);
 
-  // Hook reused for simplicity because it already handles the expired bottom sheet.
-  // TODO: [SIW-5214] Can be refactored to a more generic hook in the context of that task.
-  const bottomSheet = useItwIssuerDynamicErrorBottomSheet({
+  const bottomSheet = useItwExpiredDocumentBottomSheet({
+    actionsShown: credential.credentialType === CredentialType.DRIVING_LICENSE,
     credential,
-    localizedMessage: bottomSheetCopy,
-    status: "expired"
+    localizedMessage: bottomSheetCopy
   });
 
   return (
