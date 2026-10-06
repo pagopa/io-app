@@ -988,6 +988,14 @@
       "title": "Questo servizio non è più attivo su IO"
     },
     "itWallet": {
+      "modal": {
+        "credentialUpgrade": {
+          "title": "Aggiorna il documento",
+          "content": "Non è stato possibile aggiornare il documento automaticamente.\n\nPremi ‘Aggiorna il documento digitale’ per continuare a usarlo senza limitazioni.",
+          "primaryButton": "Aggiorna documento digitale",
+          "secondaryButton": "Non ora"
+        }
+      },
       "card": {
         "digital": "Versione digitale",
         "status": {
@@ -1529,7 +1537,6 @@
           "title": "Hai aggiornato il documento"
         },
         "credentialAuth": {
-          "privacyAndTos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
           "requiredClaims": "Dati richiesti",
           "subtitle": "Saranno condivisi con **{{organization}}** solo per il tempo necessario al rilascio della versione digitale del documento.",
           "title": "Dati necessari per {{credentialName}}",
@@ -1836,6 +1843,10 @@
               "jwtExpired": "La versione digitale del documento è scaduta il {{date}}.",
               "jwtExpiring": "Verifica la versione digitale del tuo documento entro il {{date}} per continuare a usarlo senza limitazioni."
             }
+          },
+          "needsUpgrade": {
+            "content": "Non è stato possibile aggiornare il documento automaticamente.\nAggiornalo ora per continuare a usarlo senza limitazioni.",
+            "action": "Aggiorna documento digitale"
           },
           "mdl": {
             "content": "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine.",
@@ -2172,11 +2183,13 @@
                 },
                 "step2": {
                   "label": "Step 2",
-                  "value": "Cerca la funzionalità \"NFC\""
+                  "value": "Cerca la funzionalità \"NFC\"",
+                  "value_ios": "Seleziona \"App\", poi \"IO\""
                 },
                 "step3": {
                   "label": "Step 3",
-                  "value": "Attiva la funzionalità"
+                  "value": "Attiva la funzionalità",
+                  "value_ios": "Consenti a IO di usare l’NFC"
                 },
                 "title": "Ecco come:"
               },

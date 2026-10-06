@@ -1,3 +1,4 @@
+import { State } from "react-native-ble-plx";
 import { and, assign, not, or, stateIn } from "xstate";
 
 import { ProximityFailureType } from "../failure";
@@ -22,6 +23,47 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
     }
   },
   on: {
+    "bluetooth-state-changed": {
+      guard: ({ event }) => event.state === State.PoweredOff,
+      target: "#itwProximityMachine.Bluetooth.RequireActivation",
+      actions: assign(() => ({
+        qrCodeString: undefined,
+        failure: undefined,
+        verifierRequest: undefined,
+        proximityDetails: undefined,
+        grantedConsentKey: undefined,
+        retrievalMethod: undefined,
+        sessionTerminated: false
+      }))
+    },
+    close: {
+      guard: and([
+        "isNfcEngagement",
+        or([
+          stateIn("Presentment.Starting"),
+          stateIn("Presentment.AwaitingNfcStart")
+        ])
+      ]),
+      target: "#itwProximityMachine.Presentment",
+      actions: [
+        assign(() => ({
+          engagementMode: "qrcode" as const,
+          failure: undefined,
+          retrievalMethod: undefined
+        })),
+        "navigateToPresentmentScreen"
+      ]
+    },
+    "nfc-stopped": {
+      guard: and([
+        "isNfcEngagement",
+        or([
+          stateIn("Presentment.Starting"),
+          stateIn("Presentment.AwaitingNfcStart")
+        ])
+      ]),
+      target: "#itwProximityMachine.Nfc.RequireActivation"
+    },
     "qr-code-string": {
       target: "Presentment.AwaitingConnection",
       actions: assign(({ event }) => ({
@@ -82,6 +124,17 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
     ],
     "device-error": [
       {
+        guard: and([
+          "isNfcEngagement",
+          or([
+            stateIn("Presentment.Starting"),
+            stateIn("Presentment.AwaitingNfcStart")
+          ])
+        ]),
+        actions: "setFailure",
+        target: "#itwProximityMachine.Nfc.RequireActivation"
+      },
+      {
         // Expected error during intentional session termination for NFC
         // retrieval — consumed without failure, matching device-disconnected.
         guard: and([
@@ -115,7 +168,7 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       description: "Start the native engagement session",
       tags: [ItwPresentationTags.Loading],
       always: {
-        guard: "isNfcRetrieval",
+        guard: and(["isNfcRetrieval", not("isNfcEngagement")]),
         actions: "navigateToNfcPresentmentScreen"
       },
       invoke: {
@@ -124,10 +177,22 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
           engagementMode: context.engagementMode,
           deps: context.deps
         }),
-        onDone: {
-          target: "AwaitingConnection"
-        },
+        onDone: [
+          {
+            // The iOS bridge resolves before the native permission prompt completes.
+            guard: "isNfcEngagement",
+            target: "AwaitingNfcStart"
+          },
+          {
+            target: "AwaitingConnection"
+          }
+        ],
         onError: [
+          {
+            guard: "isNfcEngagement",
+            actions: "setFailure",
+            target: "#itwProximityMachine.Nfc.RequireActivation"
+          },
           {
             guard: "isNfcRetrieval",
             actions: "setFailure",
@@ -139,8 +204,23 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
         ]
       },
       on: {
+        "nfc-started": {
+          guard: "isNfcEngagement",
+          target: "AwaitingConnection",
+          actions: "navigateToNfcPresentmentScreen"
+        },
         retry: {
           target: "Retrying"
+        }
+      }
+    },
+    AwaitingNfcStart: {
+      description: "Wait for native NFC activation and permission approval",
+      tags: [ItwPresentationTags.Loading],
+      on: {
+        "nfc-started": {
+          target: "AwaitingConnection",
+          actions: "navigateToNfcPresentmentScreen"
         }
       }
     },
