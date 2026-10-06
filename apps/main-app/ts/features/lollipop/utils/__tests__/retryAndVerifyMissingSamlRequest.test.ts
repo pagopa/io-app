@@ -1,5 +1,5 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { getRedirects } from "@pagopa/io-react-native-login-utils";
+import { getRedirects } from "@io-app/login-utils";
 
 import { AppDispatch } from "../../../../App";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
