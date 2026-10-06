@@ -1,5 +1,4 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { isLoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
@@ -78,9 +77,6 @@ type LoginSourceState =
  * error details when available.
  */
 const getNativeRedirectsFailureReason = (error: unknown): string => {
-  if (isLoginUtilsError(error)) {
-    return `${error.code} ${unknownToString(error.userInfo)}`;
-  }
   return unknownToString(error);
 };
 
