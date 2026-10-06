@@ -44,7 +44,10 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   };
 
   return (
-    <IOScrollViewWithLargeHeader title={{ label: "" }}>
+    <IOScrollViewWithLargeHeader
+      headerActionsProp={{ showHelp: true }}
+      title={{ label: "" }}
+    >
       <IdpsGrid
         footerComponent={<VSpacer size={24} />}
         headerComponent={undefined}
