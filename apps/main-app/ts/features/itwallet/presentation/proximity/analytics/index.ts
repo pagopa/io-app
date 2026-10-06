@@ -1,6 +1,5 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
-import { MixPanelCredential } from "../../../analytics/utils/types";
 import {
   ITW_PROXIMITY_ACTIONS_EVENTS,
   ITW_PROXIMITY_ERRORS_EVENTS,
@@ -57,14 +56,10 @@ export const trackItwProximityBluetoothNotActivated = () => {
 };
 
 /** Tracks the consent-management list screen for a credential. */
-export const trackItwConsentManagement = ({
-  credential
-}: {
-  credential: MixPanelCredential;
-}) => {
+export const trackItwConsentManagement = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_CONSENT_MANAGEMENT,
-    buildEventProperties("UX", "screen_view", { credential })
+    buildEventProperties("UX", "screen_view")
   );
 };
 
@@ -153,14 +148,10 @@ export const trackItwProximityShowQrCode = ({
 };
 
 /** Tracks access to consent management from credential details. */
-export const trackItwCredentialManageConsent = ({
-  credential
-}: {
-  credential: MixPanelCredential;
-}) => {
+export const trackItwCredentialManageConsent = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_CREDENTIAL_MANAGE_CONSENT,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action")
   );
 };
 
