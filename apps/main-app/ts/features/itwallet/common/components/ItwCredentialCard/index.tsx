@@ -68,7 +68,7 @@ export const ItwCredentialCard = memo(
       credentialStatus,
       credentialType
     );
-    const borderColorMap = useBorderColorByStatus();
+    const borderColorByStatus = useBorderColorByStatus();
     const cardConfig = useCredentialCardConfig(credentialType);
     const credentialName = useItwCredentialName(credentialType);
     const tagPropsByStatus = useTagPropsByStatus();
@@ -77,13 +77,21 @@ export const ItwCredentialCard = memo(
     const statusTagProps = useMemo<Tag | undefined>(() => {
       if (needsItwUpgrade) {
         return {
-          variant: "info",
+          variant: "error",
           text: I18n.t("features.itWallet.card.status.upgradePending")
         };
       }
 
       return tagPropsByStatus[status];
     }, [status, needsItwUpgrade, tagPropsByStatus]);
+
+    const borderColor = useMemo<string>(() => {
+      if (needsItwUpgrade) {
+        return IOColors["error-600"];
+      }
+
+      return borderColorByStatus[status];
+    }, [status, needsItwUpgrade, borderColorByStatus]);
 
     const appBackgroundColor = IOColors[theme["appBackground-primary"]];
 
@@ -146,9 +154,9 @@ export const ItwCredentialCard = memo(
           <View
             style={[
               styles.border,
-              status === "valid"
+              status === "valid" && !needsItwUpgrade
                 ? { borderColor: cardConfig.borderColor, borderWidth: 1 }
-                : { borderColor: borderColorMap[status], borderWidth: 2 }
+                : { borderColor, borderWidth: 2 }
             ]}
           />
         </View>
@@ -177,18 +185,26 @@ export const ItwCredentialCardLegacy = ({
   const theme = useThemeColorByCredentialType(credentialType);
   const credentialName = useItwCredentialName(credentialType);
   const tagPropsByStatus = useTagPropsByStatus();
-  const borderColorMap = useBorderColorByStatus();
+  const borderColorByStatus = useBorderColorByStatus();
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
     if (needsItwUpgrade) {
       return {
-        variant: "info",
+        variant: "error",
         text: I18n.t("features.itWallet.card.status.upgradePending")
       };
     }
 
     return tagPropsByStatus[status];
   }, [status, needsItwUpgrade, tagPropsByStatus]);
+
+  const borderColor = useMemo<string>(() => {
+    if (needsItwUpgrade) {
+      return IOColors["error-600"];
+    }
+
+    return borderColorByStatus[status];
+  }, [status, needsItwUpgrade, borderColorByStatus]);
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<
     StyleProps & { colorScheme: CardColorScheme }
@@ -269,7 +285,7 @@ export const ItwCredentialCardLegacy = ({
           style={[
             styles.border,
             {
-              borderColor: borderColorMap[status]
+              borderColor
             }
           ]}
         />
