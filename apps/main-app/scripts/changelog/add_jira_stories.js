@@ -17,9 +17,11 @@ async function replaceJiraStories(content) {
 }
 
 /**
- * replace the changelog content by removing the repetition of "closes [#idJiraStory](url)"
+ * Replace the changelog content by removing the repetition of "closes
+ * [#idJiraStory](url)"
+ *
  * @param content
- * @return {Promise<string>}
+ * @returns {Promise<string>}
  */
 async function cleanCloses(content) {
   const closesRegex = /,\s+closes(\s+\[((#\d+)|[A-Z0-9]+-\d+)\]\(.*\))+/gm;
@@ -44,11 +46,13 @@ async function addTasksUrls() {
 }
 
 /**
- * A custom method created to allows the replace in a string using an async function
+ * A custom method created to allows the replace in a string using an async
+ * function
+ *
  * @param str
  * @param regex
  * @param asyncFn
- * @return {Promise<*>}
+ * @returns {Promise<string>}
  */
 async function replaceAsync(str, regex, asyncFn) {
   const promises = [];

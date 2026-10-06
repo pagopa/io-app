@@ -4,6 +4,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { getClaimsFullLocale, getCredentialExpireDate } from "./itwClaimsUtils";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
 import {
+  CredentialFormat,
   CredentialMetadata,
   IssuerConfiguration,
   ItwCredentialStatus
@@ -13,19 +14,22 @@ const DEFAULT_EXPIRING_DAYS = 30;
 
 type GetCredentialStatusOptions = {
   /**
-   * Number of days before expiration required to mark a credential as "EXPIRING".
+   * Number of days before expiration required to mark a credential as
+   * "EXPIRING".
+   *
    * @default 30
    */
   expiringDays?: number;
 };
 
 /**
- * Get the overall status of the credential, taking into account the status assertion,
- * the physical document's expiration date and the JWT's expiration date.
- * Overlapping statuses are handled according to a specific order (see `IO-WALLET-DR-0018`).
+ * Get the overall status of the credential, taking into account the status
+ * assertion, the physical document's expiration date and the JWT's expiration
+ * date. Overlapping statuses are handled according to a specific order (see
+ * `IO-WALLET-DR-0018`).
  *
- * @param credential the stored credential
- * @param options see {@link GetCredentialStatusOptions}
+ * @param credential The stored credential
+ * @param options See {@link GetCredentialStatusOptions}
  * @returns ItwCredentialStatus
  */
 // oxlint-disable-next-line complexity
@@ -96,12 +100,15 @@ export type CredentialStatusMessage = {
 };
 
 /**
- * Extract the status message from the catalog for the provided raw status.
- * This function is meant to be used for status list codes (e.g. `0x01`, `0x02`).
+ * Extract the status message from the catalog for the provided raw status. This
+ * function is meant to be used for status list codes (e.g. `0x01`, `0x02`).
+ *
  * @param ioWallet - The current IoWallet instance
  * @param rawStatus - The raw status, e.g. `0x01`
- * @param catalogMetadata - The credential metadata from the catalog, used to map the code to a l10n string
- * @param catalogTranslations - The catalog translations to resolve the l10n string
+ * @param catalogMetadata - The credential metadata from the catalog, used to
+ *   map the code to a l10n string
+ * @param catalogTranslations - The catalog translations to resolve the l10n
+ *   string
  * @returns The message for the provided status code, if found
  */
 export const getCredentialStatusMessageFromCatalog = ({
@@ -134,9 +141,12 @@ export const getCredentialStatusMessageFromCatalog = ({
 
 /**
  * Extract the status message from the Issuer's EC for the provided error code.
- * This function is meant to be used for status assertions codes.
+ * This function is meant to be used for status assertion or issuance error
+ * codes.
+ *
  * @param errorCode - The raw error code, e.g. `credential_suspended`
- * @param issuerConf - The Issuer's Entity Configuration to extract the message from
+ * @param issuerConf - The Issuer's Entity Configuration to extract the message
+ *   from
  * @param credentialId - The credential ID the code belongs to
  * @returns The message for the provided error code, if found
  */
@@ -145,20 +155,33 @@ export const getCredentialStatusMessageFromIssuerConf = ({
   credentialId,
   issuerConf
 }: {
-  credentialId?: string;
+  credentialId: string;
   errorCode?: string;
   issuerConf?: IssuerConfiguration;
 }): CredentialStatusMessage | undefined => {
-  if (!errorCode || !credentialId || !issuerConf) {
+  if (!errorCode || !issuerConf) {
     return undefined;
   }
+
+  const credentialType =
+    issuerConf.credential_configurations_supported[credentialId]?.scope;
+
+  // Some credentials only contain the error messages in the SD-JWT configuration. To avoid
+  // inconsistencies we always use the SD-JWT credential configuration ID to extract the message.
+  const sdJwtConfig = Object.entries(
+    issuerConf.credential_configurations_supported
+  ).find(
+    ([, config]) =>
+      config.scope === credentialType &&
+      config.format === CredentialFormat.SD_JWT
+  );
 
   try {
     const messagesByLocale = Errors.extractErrorMessageFromIssuerConf(
       errorCode,
       {
         issuerConf,
-        credentialType: credentialId // Legacy mismatch: the param `credentialType` was not renamed
+        credentialType: sdJwtConfig?.[0] ?? credentialId // Legacy mismatch: the param `credentialType` was not renamed
       }
     );
     return messagesByLocale?.[getClaimsFullLocale()];

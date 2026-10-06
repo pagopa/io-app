@@ -1,6 +1,4 @@
-/**
- * Action types and action creator related to the Authentication.
- */
+/** Action types and action creator related to the Authentication. */
 
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import { PasswordLogin } from "@io-app/api-types/generated/definitions/session_manager/PasswordLogin";

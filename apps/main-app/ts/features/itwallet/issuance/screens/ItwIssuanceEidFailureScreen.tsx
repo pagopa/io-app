@@ -10,6 +10,10 @@ import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
+import {
+  zendeskDocumentiSuIoCategory,
+  zendeskItWalletCategory
+} from "../../../../utils/supportAssistance";
 import { openWebUrl } from "../../../../utils/url";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackItwKoStateAction } from "../../analytics";
@@ -93,6 +97,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const supportModal = useItwFailureSupportModal({
     failure,
     supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
+    // The wallet is not active yet: the category follows the level being issued
+    zendeskCategory: isL3Issuance
+      ? zendeskItWalletCategory
+      : zendeskDocumentiSuIoCategory,
     zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
     supportLink: failureLinkMapper[failure.type]
   });

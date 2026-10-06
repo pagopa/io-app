@@ -36,9 +36,7 @@ function debugReducer(
         )
       };
 
-    /**
-     * Debug data to be displayed in DebugInfoOverlay
-     */
+    /** Debug data to be displayed in DebugInfoOverlay */
     case getType(setDebugData):
       return {
         ...state,
@@ -80,8 +78,8 @@ export const isDebugModeEnabledSelector = (state: GlobalState) =>
   state.debug.isDebugModeEnabled;
 
 /**
- * Selector that returns the debug data without the undefined values
- * avoiding to display empty values in the DebugInfoOverlay
+ * Selector that returns the debug data without the undefined values avoiding to
+ * display empty values in the DebugInfoOverlay
  */
 export const debugDataSelector = createSelector(
   (state: GlobalState) => state.debug.debugData,

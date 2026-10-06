@@ -19,9 +19,10 @@ type IOContentWrapperProps = WithTestID<
 >;
 
 /**
-`ContentWrapper` is the main wrapper of the application. It automatically sets side margins,
-depending on the size value
-@param {IOContentWrapper} margin
+ * `ContentWrapper` is the main wrapper of the application. It automatically
+ * sets side margins, depending on the size value
+ *
+ * @param {IOContentWrapper} margin
  */
 export const ContentWrapper = ({
   margin = IOVisualCostants.appMarginDefault,

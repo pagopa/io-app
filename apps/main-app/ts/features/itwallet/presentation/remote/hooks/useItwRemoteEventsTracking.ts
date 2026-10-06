@@ -22,9 +22,7 @@ type Params = {
   failure: RemoteFailure;
 };
 
-/**
- * Track errors occurred during the remote presentation flow for analytics.
- */
+/** Track errors occurred during the remote presentation flow for analytics. */
 export const useItwRemoteEventsTracking = ({ failure }: Params) => {
   useEffect(() => {
     const serializedFailure = serializeFailureReason(failure);

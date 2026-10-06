@@ -6,9 +6,7 @@ const {
   caption: { colorToken, ...captionStyle }
 } = IOTypography;
 
-/**
- * `Caption` typographic style
- */
+/** `Caption` typographic style */
 export const Caption = ({
   color: customColor,
   ...props

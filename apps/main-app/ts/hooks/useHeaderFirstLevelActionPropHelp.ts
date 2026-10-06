@@ -5,7 +5,8 @@ import { useMemo } from "react";
 import { useStartSupportRequest } from "./useStartSupportRequest";
 
 /**
- * This hook returns a prop object to be applied to the headers (both first and second level)
+ * This hook returns a prop object to be applied to the headers (both first and
+ * second level)
  */
 export const useHeaderFirstLevelActionPropHelp = (): HeaderActionProps => {
   const startSupportRequest = useStartSupportRequest();

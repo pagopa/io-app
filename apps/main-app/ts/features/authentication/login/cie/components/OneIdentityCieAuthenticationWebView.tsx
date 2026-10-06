@@ -17,6 +17,7 @@ import { useIOSelector, useIOStore } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
 import { useOneIdentityLoginSource } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { cieLoginFlowSelector } from "../../../activeSessionLogin/store/selectors";
+import { oneIdentityCieNativeRedirectsEnabledSelector } from "../../../common/store/selectors/remoteConfig";
 import { AUTH_LEVELS, onLoginUriChanged } from "../../../common/utils";
 import { defaultUserAgent } from "../../../common/utils/cie";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
@@ -24,6 +25,7 @@ import { getCieIdpId } from "../utils";
 
 /**
  * Checks if a given URL is an authentication URL.
+ *
  * @param url The URL to check if it is an authentication URL.
  * @returns `true` if the URL is an authentication URL, `false` otherwise.
  */
@@ -35,8 +37,10 @@ const isAuthUrl = (url: string) =>
 
 /**
  * Checks if a given page title corresponds to an error page.
+ *
  * @param title The page title to check.
- * @returns `true` if the page title corresponds to an error page, `false` otherwise.
+ * @returns `true` if the page title corresponds to an error page, `false`
+ *   otherwise.
  */
 const isErrorPage = (title?: string): boolean => {
   if (!title) {
@@ -61,6 +65,9 @@ export const OneIdentityCieAuthenticationWebView = ({
   const navigation = useIONavigation();
 
   const useUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const followRedirectsNatively = useIOSelector(
+    oneIdentityCieNativeRedirectsEnabledSelector
+  );
 
   const [webViewState, setWebViewState] = useState<WebViewState>({
     status: "authenticating"
@@ -76,6 +83,7 @@ export const OneIdentityCieAuthenticationWebView = ({
     shouldBlockUrlNavigationWhileCheckingLollipop,
     generateLoginSource
   } = useOneIdentityLoginSource({
+    followRedirectsNatively,
     idpId: getCieIdpId(useUat),
     onFailure: handleFailure,
     minAuthLevel: AUTH_LEVELS.L3
@@ -92,12 +100,7 @@ export const OneIdentityCieAuthenticationWebView = ({
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
-      const reason = code
-        ? `login failed with code ${code}`
-        : message
-          ? `login failed with message ${message}`
-          : "login failed with no error code or message available";
-
+      const reason = `Login failed with code (${code}) and message (${message})`;
       handleFailure(reason);
     },
     [handleFailure]
@@ -163,6 +166,7 @@ export const OneIdentityCieAuthenticationWebView = ({
 
   if (
     loginSourceState.status === "reserving-public-key" ||
+    loginSourceState.status === "following-redirects" ||
     loginSourceState.status === "verifying-assertion-ref"
   ) {
     return (
@@ -198,8 +202,8 @@ export const OneIdentityCieAuthenticationWebView = ({
 
   return (
     /**
-     * The LoadingSpinnerOverlay is intentionally kept permanently active
-     * while retrieving the authentication URL.
+     * The LoadingSpinnerOverlay is intentionally kept permanently active while
+     * retrieving the authentication URL.
      */
     <LoadingSpinnerOverlay isLoading loadingOpacity={1} onCancel={handleCancel}>
       <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>

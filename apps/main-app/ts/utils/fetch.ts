@@ -1,6 +1,6 @@
 /**
- * This module exports an instance of fetch augmented with
- * timeout and retries with exponential backoff.
+ * This module exports an instance of fetch augmented with timeout and retries
+ * with exponential backoff.
  */
 
 import { calculateExponentialBackoffInterval } from "@pagopa/ts-commons/lib/backoff";
@@ -32,13 +32,12 @@ type FixedFetch = (
 ) => Promise<Response>;
 
 /**
- * Wrapper for the Fetch API configured by default with a short timeout and
- * an exponential backoff retrying strategy.
- * Suitable for calling the backend APIs that are supposed
- * to respond quickly.
+ * Wrapper for the Fetch API configured by default with a short timeout and an
+ * exponential backoff retrying strategy. Suitable for calling the backend APIs
+ * that are supposed to respond quickly.
  *
- * Note that the retry is applied only upon receiving error "429 Too Many Requests".
- * Timeout and max retries act as circuit breakers.
+ * Note that the retry is applied only upon receiving error "429 Too Many
+ * Requests". Timeout and max retries act as circuit breakers.
  */
 export function defaultRetryingFetch(
   timeout: Millisecond = fetchTimeout,
@@ -78,8 +77,8 @@ export function toRetriableFetch(
 }
 
 /**
- * Fetch with transient error handling.
- * Handle error that occurs once or at unpredictable intervals.
+ * Fetch with transient error handling. Handle error that occurs once or at
+ * unpredictable intervals.
  */
 function retryLogicForTransientResponseError(
   p: (r: Response) => boolean,
@@ -103,8 +102,8 @@ function retryLogicForTransientResponseError(
 }
 
 /**
- * This is a fetch with timeout for single request, constant backoff, and
- * the logic to handle 404s as transient errors.
+ * This is a fetch with timeout for single request, constant backoff, and the
+ * logic to handle 404s as transient errors.
  */
 export const constantPollingFetch = (
   shouldAbort: Promise<boolean>,

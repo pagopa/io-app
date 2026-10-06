@@ -141,7 +141,9 @@ const styles = StyleSheet.create({
 });
 
 /**
- * HeaderSecondLevel component is used to display the header on pages on the second level of navigation.
+ * HeaderSecondLevel component is used to display the header on pages on the
+ * second level of navigation.
+ *
  * @param {HeaderSecondLevel} props - The props of the component
  * @returns React Element
  */

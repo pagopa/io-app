@@ -31,7 +31,8 @@ import {
   selectCanRenderEidPreview,
   selectEid,
   selectIdentification,
-  selectIsLoading
+  selectIsLoading,
+  selectIssuanceMode
 } from "../../machine/eid/selectors";
 import {
   trackCredentialPreview,
@@ -66,7 +67,8 @@ type ContentViewProps = {
 
 /**
  * Renders the content of the screen if the PID is decoded.
- * @param eid - the decoded eID
+ *
+ * @param eid - The decoded eID
  */
 const ContentView = ({ eid }: ContentViewProps) => {
   const dispatch = useIODispatch();
@@ -78,9 +80,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   const isL3 = isL3FeaturesEnabled && isItwCredential(eid);
+  const isReissuance = mode === "reissuance";
   const mixPanelCredential = isL3 ? "ITW_PID" : "ITW_ID_V2";
 
   const theme = useIOTheme();
@@ -215,8 +219,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
               data={eid}
               releaserVisible={false}
             />
-            {isL3 && (
-              <BodySmall>
+            {isL3 && !isReissuance && (
+              <BodySmall testID="credentialUpgradeDisclaimerTestID">
                 {I18n.t("features.itWallet.issuance.eidPreview.bottomTextL3")}
               </BodySmall>
             )}

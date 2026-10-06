@@ -1,7 +1,5 @@
 /* globals jest, NativeModules */
-/**
- * Set up of the testing environment
- */
+/** Set up of the testing environment */
 
 import nodeFetch from "node-fetch";
 import { NativeModules } from "react-native";
