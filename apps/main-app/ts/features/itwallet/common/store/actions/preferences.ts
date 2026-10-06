@@ -48,6 +48,10 @@ export const itwClearWalletActivationFeedbackBannerData = createStandardAction(
   "ITW_CLEAR_WALLET_ACTIVATION_FEEDBACK_BANNER_DATA"
 )<void>();
 
+export const itwSetDiscoverMoreCEDEnabled = createStandardAction(
+  "ITW_SET_DISCOVER_MORE_CED_ENABLED"
+)<boolean>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwClearCredentialUpgradeFailed>
   | ActionType<typeof itwClearWalletActivationFeedbackBannerData>
@@ -55,6 +59,7 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
   | ActionType<typeof itwSetCredentialUpgradeFailed>
+  | ActionType<typeof itwSetDiscoverMoreCEDEnabled>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwSetIdentificationMode>
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
