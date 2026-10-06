@@ -164,7 +164,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         {shouldRenderUpgradeBanner && (
           <ItwDiscoveryBanner flow="wallet" style={{ marginHorizontal: 8 }} />
         )}
-        <ItwWalletReadyBanner />
 
         {cards.length > 0 && (
           <GuidedTour
@@ -182,6 +181,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             />
           </GuidedTour>
         )}
+
+        <ItwWalletReadyBanner />
       </View>
       {eidInfoBottomSheet.bottomSheet}
     </View>
