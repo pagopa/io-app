@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+All notable changes to this project will be documented in this file. This changelog is generated with Nx Release from Conventional Commits.
 
 ## [3.40.0-rc.11](https://github.com/pagopa/io-app/compare/3.40.0-rc.10...3.40.0-rc.11) (2026-10-05)
 
