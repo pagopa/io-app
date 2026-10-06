@@ -1917,7 +1917,7 @@
           "mDL": {
             "expired": {
               "title": "La tua Patente di guida risulta non valida",
-              "mainContent": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente perché questa è scaduta.\n\nRinnova il documento presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.",
+              "contentNew": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente perché questa è scaduta.\n\nRinnova il documento presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO.",
               "content": "###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO."
             },
             "expiring": {
