@@ -1852,9 +1852,6 @@
           "mdl": {
             "content": "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine.",
             "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano.",
-            "invalid": {
-              "cta": "Rimuovi documento dal Portafoglio"
-            },
             "suspended": {
               "action": "Scopri di più",
               "title": "La tua Patente di guida risulta non valida."
@@ -1884,12 +1881,6 @@
             "expiring": {
               "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio.",
               "title": "Carta europea della disabilità su IO: documento in scadenza"
-            }
-          },
-          "EuropeanHealthInsuranceCard": {
-            "expiring": {
-              "content": "La tua Tessera Sanitaria viene rinnovata in automatico e poi spedita al tuo indirizzo di residenza registrato presso l'Agenzia delle Entrate.\n\nSe l'hai già ricevuta, puoi eliminare questo documento dal Portafoglio e aggiungere la nuova versione digitale aggiornata.",
-              "title": "Tessera Sanitaria su IO: documento in scadenza"
             }
           },
           "eidInfo": {
