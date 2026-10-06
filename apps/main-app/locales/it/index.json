@@ -1856,6 +1856,18 @@
           }
         },
         "bottomSheets": {
+          "generic": {
+            "expired": {
+              "content": "Rimuovilo dal Portafoglio. Quando lo avrai rinnovato potrai aggiungere la versione digitale aggiornata.",
+              "cta": "Ho capito",
+              "title": "Il tuo documento è scaduto"
+            },
+            "expiring": {
+              "content": "Quando lo avrai rinnovato potrai aggiungere la versione digitale aggiornata al Portafoglio.",
+              "cta": "Ho capito",
+              "title": "Il tuo documento è in scadenza"
+            }
+          },
           "EuropeanDisabilityCard": {
             "expiring": {
               "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio.",
@@ -1904,6 +1916,9 @@
             "suspended": {
               "content": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente.\n\nIl tuo documento potrebbe ad esempio essere stato sospeso o ritirato in via temporanea. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.\n\nQuando la Patente fisica sarà di nuovo valida, il documento digitale si aggiornerà in automatico.\n\nRicorda: puoi continuare a usare la Patente digitale come documento di riconoscimento.",
               "cta": "Ho capito"
+            },
+            "invalid": {
+              "cta": "Rimuovi documento dal Portafoglio"
             }
           }
         },

@@ -153,7 +153,7 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
             <IOButton
               fullWidth
               label={I18n.t(
-                "features.itWallet.presentation.alerts.mdl.invalid.cta"
+                "features.itWallet.presentation.bottomSheets.mDL.invalid.cta"
               )}
               onPress={confirmAndRemoveCredential}
               variant="solid"

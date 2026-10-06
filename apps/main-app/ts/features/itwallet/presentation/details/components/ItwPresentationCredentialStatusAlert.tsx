@@ -550,11 +550,9 @@ const ExpiredDocumentAlert = ({ credential }: ExpiredDocumentAlertProps) => {
           title: I18n.t(
             "features.itWallet.presentation.bottomSheets.mDL.expired.title"
           ),
-          description: `${I18n.t(
+          description: I18n.t(
             "features.itWallet.presentation.bottomSheets.mDL.expired.mainContent"
-          )}\n\n${I18n.t(
-            "features.itWallet.presentation.bottomSheets.mDL.expired.content"
-          )}`
+          )
         };
       default:
         return {
