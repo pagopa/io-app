@@ -93,10 +93,9 @@ describe("proximity analytics", () => {
     },
     {
       name: "trackItwCredentialManageConsent",
-      track: () => trackItwCredentialManageConsent({ credential: "ITW_PG_V3" }),
+      track: () => trackItwCredentialManageConsent(),
       eventName: ITW_PROXIMITY_ACTIONS_EVENTS.ITW_CREDENTIAL_MANAGE_CONSENT,
       properties: {
-        credential: "ITW_PG_V3",
         event_category: "UX",
         event_type: "action",
         flow: undefined
@@ -104,10 +103,9 @@ describe("proximity analytics", () => {
     },
     {
       name: "trackItwConsentManagement",
-      track: () => trackItwConsentManagement({ credential: "ITW_PG_V3" }),
+      track: () => trackItwConsentManagement(),
       eventName: ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_CONSENT_MANAGEMENT,
       properties: {
-        credential: "ITW_PG_V3",
         event_category: "UX",
         event_type: "screen_view",
         flow: undefined
