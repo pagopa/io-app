@@ -76,9 +76,8 @@ type LoginSourceState =
  * Builds a failure reason for the native redirects flow, including the native
  * error details when available.
  */
-const getNativeRedirectsFailureReason = (error: unknown): string => {
-  return unknownToString(error);
-};
+const getNativeRedirectsFailureReason = (error: unknown): string => 
+  unknownToString(error);
 
 /** Builds the request body for the `/reserve` endpoint. */
 const buildReserveRequestBody = (
