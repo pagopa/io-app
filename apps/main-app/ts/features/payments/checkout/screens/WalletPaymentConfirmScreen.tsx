@@ -208,7 +208,7 @@ const WalletPaymentConfirmScreen = () => {
     O.getOrElse(() => "")
   );
 
-  const onLinkPress = (url: string) => openAuthSessionAsync(url, "https");
+  const onLinkPress = (url: string) => openAuthSessionAsync(url, "https://");
 
   return (
     <IOScrollView

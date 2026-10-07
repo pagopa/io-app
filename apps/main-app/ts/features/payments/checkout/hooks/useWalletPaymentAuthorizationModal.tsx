@@ -99,7 +99,7 @@ export const useWalletPaymentAuthorizationModal = ({
   const startInAppBrowserPaymentSession = useCallback(
     (url: string) => {
       dispatch(storePaymentsBrowserTypeAction("inapp_browser"));
-      return openAuthSessionAsync(url, WALLET_WEBVIEW_OUTCOME_SCHEMA);
+      return openAuthSessionAsync(url, `${WALLET_WEBVIEW_OUTCOME_SCHEMA}://`);
     },
     [dispatch]
   );

@@ -114,7 +114,7 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
     yield* call(
       openAuthSessionAsync,
       enrichedInAppBrowserRedirectUrl,
-      "iossoapi",
+      "iossoapi://",
       {
         preferEphemeralSession: ephemeralSessionOniOS
       }
