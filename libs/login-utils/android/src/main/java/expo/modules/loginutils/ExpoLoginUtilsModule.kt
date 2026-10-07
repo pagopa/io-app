@@ -133,14 +133,15 @@ class ExpoLoginUtilsModule : Module() {
       }
 
       if (responseCode in 300..399) {
-        var redirectUrl = connection.getHeaderField("Location")
-        if (redirectUrl.startsWith("/")) {
-          val previousUrl = URL(url)
-          val redirectScheme = previousUrl.protocol
-          val redirectHost = previousUrl.host
-          val port = previousUrl.port.toString()
-          redirectUrl =
-            redirectScheme + "://" + redirectHost + (if (port == "-1") "" else ":$port") + redirectUrl
+val location = connection.getHeaderField("Location")
+        if (location == null) {
+          promise.reject(
+            "NativeRedirectError",
+            generateErrorUserInfo(IoLoginError.Type.REDIRECTING_ERROR, responseCode)
+          )
+          return@syncCookies
+        }
+        val redirectUrl = URL(URL(url), location).toString()
         }
         urlArray.add(redirectUrl)
         if (getUrlParameter(redirectUrl).contains(callbackURLParameter)) {
