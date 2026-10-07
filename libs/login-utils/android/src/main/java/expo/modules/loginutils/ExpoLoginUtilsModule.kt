@@ -144,6 +144,13 @@ val location = connection.getHeaderField("Location")
         val redirectUrl = URL(URL(url), location).toString()
         }
         urlArray.add(redirectUrl)
+if (callbackURLParameter == null) {
+          promise.reject(
+            "NativeRedirectError",
+            generateErrorUserInfo(IoLoginError.Type.CONNECTION_REDIRECT_ERROR)
+          )
+          return@syncCookies
+        }
         if (getUrlParameter(redirectUrl).contains(callbackURLParameter)) {
           onComplete(urlArray)
           return@syncCookies
