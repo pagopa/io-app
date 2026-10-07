@@ -134,27 +134,6 @@ export function extractLoginErrorPayload(
     };
   }
 
-  if (isWebViewHttpErrorEvent(error)) {
-    const { description, statusCode, url } = error.nativeEvent;
-    return {
-      code: statusCode,
-      description,
-      domain: toUrlWithoutQueryParams(url)
-    };
-  }
-
-  if (isWebViewErrorEvent(error)) {
-    const { code, description, domain } = error.nativeEvent;
-    return { code, description, domain };
-  }
-
-  if (error.message !== undefined) {
-    return {
-      code: error.message,
-      description: error.message,
-      domain: error.message
-    };
-  }
 
   const unknownError = unknownToString(error);
   return { code: "unknown", description: unknownError, domain: "unknown" };
