@@ -2,6 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.41.0-rc.0](https://github.com/pagopa/io-app/compare/3.40.0-rc.14...3.41.0-rc.0) (2026-10-07)
 ## [3.40.0-rc.14](https://github.com/pagopa/io-app/compare/3.40.0-rc.13...3.40.0-rc.14) (2026-10-07)
 
 ### Features
