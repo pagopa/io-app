@@ -1,10 +1,12 @@
-import { Route, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
 import {
@@ -13,6 +15,7 @@ import {
 } from "../../../activeSessionLogin/store/actions";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import { CieIdWebViewLoginEvent } from "../../../common/components/CieIdWebViewLogin";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpSelected } from "../../../common/store/actions";
 import useNavigateToLoginMethod, {
@@ -33,19 +36,17 @@ export type CieIdErrorScreenParams = {
   failure?: CieIdWebViewLoginEvent;
 };
 
-const CieIdErrorScreen = () => {
+type CieIdErrorScreenProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  typeof AUTHENTICATION_ROUTES.CIE_ID_ERROR
+>;
+
+const CieIdErrorScreen = ({ route }: CieIdErrorScreenProps) => {
   const { isCieSupported } = useNavigateToLoginMethod();
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const { replace, navigate, popToTop } = useIONavigation();
-  const { params } =
-    useRoute<
-      Route<
-        typeof AUTHENTICATION_ROUTES.CIE_ID_ERROR,
-        CieIdErrorScreenParams | undefined
-      >
-    >();
-  const failure = params?.failure;
+  const failure = route.params?.failure;
 
   const debugInfo = useMemo(
     () => ({
