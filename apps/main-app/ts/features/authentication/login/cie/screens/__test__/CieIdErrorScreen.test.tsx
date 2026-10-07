@@ -1,12 +1,14 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import { ComponentProps } from "react";
 
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
-import CieIdErrorScreen from "../CieIdErrorScreen";
+import CieIdErrorScreen, { CieIdErrorScreenParams } from "../CieIdErrorScreen";
+
+type CieIdErrorScreenProps = ComponentProps<typeof CieIdErrorScreen>;
 
 const mockReplace = jest.fn();
 const mockNavigate = jest.fn();
-const mockUseRoute = jest.fn(() => ({ params: undefined as unknown }));
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -15,8 +17,7 @@ jest.mock("@react-navigation/native", () => {
     useNavigation: () => ({
       replace: mockReplace,
       navigate: mockNavigate
-    }),
-    useRoute: () => mockUseRoute()
+    })
   };
 });
 
@@ -50,7 +51,7 @@ describe("CieIdErrorScreen where device supports NFC", () => {
   it("Should be defined", testIsDefined);
   it("Should match the snapshot", testMatchSnapshot);
   it("Should navigate to CIE + PIN screen", () => {
-    const { getByTestId } = render(<CieIdErrorScreen />);
+    const { getByTestId } = renderScreen();
     const primaryAction = getByTestId("cie-id-error-primary-action");
 
     fireEvent.press(primaryAction);
@@ -76,7 +77,7 @@ describe("CieIdErrorScreen where device doesn't support NFC", () => {
   it("Should be defined", testIsDefined);
   it("Should match the snapshot", testMatchSnapshot);
   it("Should navigate to Idp Selection screen", () => {
-    const { getByTestId } = render(<CieIdErrorScreen />);
+    const { getByTestId } = renderScreen();
     const primaryAction = getByTestId("cie-id-error-primary-action");
 
     fireEvent.press(primaryAction);
@@ -122,28 +123,41 @@ describe("CieIdErrorScreen debug info", () => {
       expected: { flow: "auth", isCieSupported: true }
     }
   ])("Should set $name as debug data", ({ params, expected }) => {
-    mockUseRoute.mockReturnValue({ params });
-
-    render(<CieIdErrorScreen />);
+    renderScreen(params as CieIdErrorScreenParams | undefined);
 
     expect(mockUseDebugInfo).toHaveBeenLastCalledWith(expected);
   });
 });
 
+function renderScreen(params?: CieIdErrorScreenParams) {
+  const route: CieIdErrorScreenProps["route"] = {
+    key: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
+    name: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
+    params
+  };
+  return render(
+    <CieIdErrorScreen
+      // The screen reads navigation from useIONavigation, which is mocked above
+      navigation={{} as CieIdErrorScreenProps["navigation"]}
+      route={route}
+    />
+  );
+}
+
 function testIsDefined() {
-  const component = render(<CieIdErrorScreen />);
+  const component = renderScreen();
 
   expect(component).toBeDefined();
 }
 
 function testMatchSnapshot() {
-  const component = render(<CieIdErrorScreen />);
+  const component = renderScreen();
 
   expect(component).toMatchSnapshot();
 }
 
 function testReplace() {
-  const { getByTestId } = render(<CieIdErrorScreen />);
+  const { getByTestId } = renderScreen();
   const primaryAction = getByTestId("cie-id-error-secondary-action");
 
   fireEvent.press(primaryAction);
