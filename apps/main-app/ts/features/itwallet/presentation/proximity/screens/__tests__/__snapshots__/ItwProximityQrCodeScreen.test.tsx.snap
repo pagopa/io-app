@@ -704,6 +704,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}
@@ -2875,6 +2876,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}
@@ -4835,6 +4837,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}
@@ -7019,6 +7022,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}

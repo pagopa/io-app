@@ -68,9 +68,7 @@ describe("ItwConsentManagementScreen", () => {
   it("opens the selected consent detail", async () => {
     const { component } = await renderComponent({ [consentKey]: consent });
 
-    expect(analytics.trackItwConsentManagement).toHaveBeenCalledWith({
-      credential: "ITW_PG_V2"
-    });
+    expect(analytics.trackItwConsentManagement).toHaveBeenCalledWith();
 
     await fireEventAsync.press(
       component.getByLabelText(
