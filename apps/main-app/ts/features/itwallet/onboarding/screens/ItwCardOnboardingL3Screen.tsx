@@ -141,7 +141,14 @@ const ItwCredentialOnboardingSection = () => {
   const isUpgradeAvailable = useIOSelector(
     itwShouldRenderL3UpgradeBannerSelector
   );
-  const shouldRenderUpgradeBanner = isL2Fallback && isUpgradeAvailable;
+  const isItWalletActivationDisabled = useIOSelector(
+    itwIsActivationDisabledSelector
+  );
+  const catalogueCredentials = useIOSelector(
+    itwAvailableCredentialsListSelector
+  );
+  const shouldRenderUpgradeBanner =
+    !isItWalletActivationDisabled && isL2Fallback && isUpgradeAvailable;
 
   useFocusEffect(
     useCallback(() => {
@@ -158,13 +165,6 @@ const ItwCredentialOnboardingSection = () => {
       params: { level: "l3" }
     });
   });
-
-  const isItWalletActivationDisabled = useIOSelector(
-    itwIsActivationDisabledSelector
-  );
-  const catalogueCredentials = useIOSelector(
-    itwAvailableCredentialsListSelector
-  );
 
   // Show upcoming credentials only if env is "pre"
   const shouldShowUpcoming = env === "pre";

@@ -30,6 +30,20 @@ describe("ItwCardOnboardingL3Screen", () => {
     appReducer(undefined, applicationChangeState("active")),
     itwSetL2Fallback(true)
   );
+  const restrictedTypes = [
+    CredentialType.DRIVING_LICENSE,
+    CredentialType.EUROPEAN_DISABILITY_CARD,
+    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+  ];
+  const mockL2Catalogue = () =>
+    jest
+      .spyOn(catalogueSelectors, "itwAvailableCredentialsListSelector")
+      .mockReturnValue(
+        [...restrictedTypes, CredentialType.EDUCATION_DEGREE].map(type => ({
+          type,
+          name: type
+        }))
+      );
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -136,50 +150,60 @@ describe("ItwCardOnboardingL3Screen", () => {
     });
   });
 
-  test.each([
-    { name: "missing CIE/PIN", disabled: false },
-    { name: "unsupported NFC", disabled: true }
-  ])(
-    "shows the upgrade banner after the three L2 documents for $name fallback",
-    ({ disabled }) => {
-      jest
-        .spyOn(preferencesSelectors, "itwIsActivationDisabledSelector")
-        .mockReturnValue(disabled);
-      const restrictedTypes = [
-        CredentialType.DRIVING_LICENSE,
-        CredentialType.EUROPEAN_DISABILITY_CARD,
-        CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-      ];
-      jest
-        .spyOn(catalogueSelectors, "itwAvailableCredentialsListSelector")
-        .mockReturnValue(
-          [...restrictedTypes, CredentialType.EDUCATION_DEGREE].map(type => ({
-            type,
-            name: type
-          }))
-        );
-      const { getAllByTestId, getByTestId, getByText, queryByTestId } =
-        renderComponent({ page: 0 }, fallbackState);
+  it("shows the upgrade banner after the three L2 documents for a missing CIE/PIN fallback", () => {
+    mockL2Catalogue();
+    const {
+      getAllByTestId,
+      getByTestId,
+      getByText,
+      queryByTestId,
+      queryByText
+    } = renderComponent({ page: 0 }, fallbackState);
 
-      expect(
-        getAllByTestId(/ModuleTestID$|itwL2FallbackUpgradeBannerTestID/).map(
-          element => element.props.testID
-        )
-      ).toEqual([
-        ...restrictedTypes.map(type => `${type}ModuleTestID`),
-        "itwL2FallbackUpgradeBannerTestID"
-      ]);
-      expect(
-        getByText(I18n.t("features.itWallet.onboarding.fallbackBanner.title"))
-      ).toBeTruthy();
-      expect(queryByTestId("restricted-action-testID")).toBeNull();
-      fireEvent.press(getByTestId("itwL2FallbackUpgradeBannerTestID"));
-      expect(navigateMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.DISCOVERY.INFO,
-        params: { level: "l3" }
-      });
-    }
-  );
+    expect(
+      getAllByTestId(/ModuleTestID$|itwL2FallbackUpgradeBannerTestID/).map(
+        element => element.props.testID
+      )
+    ).toEqual([
+      ...restrictedTypes.map(type => `${type}ModuleTestID`),
+      "itwL2FallbackUpgradeBannerTestID"
+    ]);
+    expect(
+      getByText(I18n.t("features.itWallet.onboarding.fallbackBanner.title"))
+    ).toBeTruthy();
+    expect(
+      queryByText(I18n.t("features.wallet.onboarding.no-nfc-banner.content"))
+    ).toBeNull();
+    expect(queryByTestId("restricted-action-testID")).toBeNull();
+    fireEvent.press(getByTestId("itwL2FallbackUpgradeBannerTestID"));
+    expect(navigateMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: { level: "l3" }
+    });
+  });
+
+  it("never shows the upgrade banner together with the NFC alert when activation is disabled", () => {
+    jest
+      .spyOn(preferencesSelectors, "itwIsActivationDisabledSelector")
+      .mockReturnValue(true);
+    mockL2Catalogue();
+
+    const { queryByTestId, queryByText, getByText } = renderComponent(
+      { page: 0 },
+      fallbackState
+    );
+
+    expect(queryByTestId("itwL2FallbackUpgradeBannerTestID")).toBeNull();
+    expect(
+      queryByText(I18n.t("features.itWallet.onboarding.fallbackBanner.title"))
+    ).toBeNull();
+    expect(
+      getByText(I18n.t("features.wallet.onboarding.no-nfc-banner.content"))
+    ).toBeTruthy();
+    expect(
+      getByText(I18n.t("features.wallet.onboarding.no-nfc-banner.cta"))
+    ).toBeTruthy();
+  });
 
   test.each([
     { name: "other cards tab", page: 1, itwEnabled: true, l3Enabled: true },
