@@ -74,6 +74,7 @@ class RedirectDelegate: NSObject, URLSessionTaskDelegate {
             guard let newUrl = request.url?.absoluteString else {
                 let errorObject = generateErrorObject(error: "RedirectingErrorMissingURL", responseCode: nil, url: nil, parameters: nil)
                 promise.reject("NativeRedirectError", errorObject)
+                completionHandler(nil)
                 return
             }
             redirects.append(newUrl)
