@@ -103,6 +103,22 @@ exports[`ITW remote config persist shape should freeze ItwConfig [if this test f
         ],
       },
     ],
+    "proximity_nfc": [
+      {},
+      {
+        "min_app_version": [
+          {
+            "android": [
+              "string",
+            ],
+            "ios": [
+              "string",
+            ],
+          },
+          {},
+        ],
+      },
+    ],
     "showcase_url": "string",
     "wallet_activation_disabled": "boolean",
   },
