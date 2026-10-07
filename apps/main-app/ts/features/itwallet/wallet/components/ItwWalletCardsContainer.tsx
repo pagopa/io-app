@@ -147,7 +147,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   return (
     <View>
       <VStack space={16}>
-        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
         {!shouldHideEidAlert && (
           <ItwEidLifecycleAlert
             currentScreenName={currentScreenName}
@@ -181,7 +180,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           </GuidedTour>
         )}
 
-        <ItwWalletReadyBanner />
+        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
+
+        {!shouldRenderL2EngagementBanner && <ItwWalletReadyBanner />}
       </View>
       {eidInfoBottomSheet.bottomSheet}
     </View>

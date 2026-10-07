@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.40.0-rc.14](https://github.com/pagopa/io-app/compare/3.40.0-rc.13...3.40.0-rc.14) (2026-10-07)
+
+### Features
+
+* **IT-Wallet:** [[SIW-5185](https://pagopa.atlassian.net/browse/SIW-5185)] Improve the L2 fallback wallet experience ([#8675](https://github.com/pagopa/io-app/issues/8675)) ([3d06a61](https://github.com/pagopa/io-app/commit/3d06a6178fcf2fbcaaed2f0f165b4c7879750777))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-5206](https://pagopa.atlassian.net/browse/SIW-5206)] Display proximity CTA for expired credentials, refine some of the status messages ([#8696](https://github.com/pagopa/io-app/issues/8696)) ([ed47449](https://github.com/pagopa/io-app/commit/ed47449048c0da64bc80c5c4d474f93491c55b3c))
+
+### Chores
+
+* Update translations from Lokalise ([#8702](https://github.com/pagopa/io-app/issues/8702)) ([bca6333](https://github.com/pagopa/io-app/commit/bca633335089ea56744bbdf7b1ac6c4b2e0b18c1))
 ## [3.40.0-rc.13](https://github.com/pagopa/io-app/compare/3.40.0-rc.12...3.40.0-rc.13) (2026-10-06)
 
 ### Features

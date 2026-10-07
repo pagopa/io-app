@@ -662,7 +662,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR o avvicinalo a un lettore. Chi verifica dal vivo userà un’app ufficiale.
+                                  Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
@@ -4769,7 +4769,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR o avvicinalo a un lettore. Chi verifica dal vivo userà un’app ufficiale.
+                                  Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
@@ -6980,7 +6980,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR o avvicinalo a un lettore. Chi verifica dal vivo userà un’app ufficiale.
+                                  Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
