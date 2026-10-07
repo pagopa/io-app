@@ -1920,6 +1920,7 @@
           "actions": {
             "hideClaimValues": "Nascondi gli attributi del documento",
             "openIPatente": "Vai al saldo punti patente",
+            "discoverOpportunities": "Scopri le opportunità",
             "removeFromWallet": "Rimuovi dal Portafoglio",
             "requestAssistance": "Qualcosa non torna?",
             "updateDigitalCredential": "Aggiorna il documento digitale"
