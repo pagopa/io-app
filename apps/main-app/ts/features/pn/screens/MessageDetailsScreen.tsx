@@ -1,10 +1,8 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { HeaderSecondLevel } from "@io-app/design-system";
-import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
+import { RefObject, useCallback, useEffect, useRef } from "react";
 
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton";
 import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
 import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
@@ -12,42 +10,18 @@ import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { useIOStore } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import {
-  cancelPreviousAttachmentDownload,
-  cancelQueuedPaymentUpdates,
-  updatePaymentForMessage
-} from "../../messages/store/actions";
+import { trackOpenMessageFromSuccessData } from "../../messages/analytics";
+import { loadedMessageDataSelector } from "../../messages/store/reducers/messageGetStatus";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
-import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
-import {
-  trackSendAarFailure,
-  trackSendAarNotificationClosure
-} from "../aar/analytics";
-import { SendAarMessageDetailBottomSheetComponent } from "../aar/components/SendAarMessageDetailBottomSheetComponent";
-import { terminateAarFlow } from "../aar/store/actions";
-import { sendAarFlowStates } from "../aar/utils/stateUtils";
-import { trackPNUxSuccess } from "../analytics";
-import { MessageDetails } from "../components/MessageDetails";
+import { trackSendAarNotificationClosure } from "../aar/analytics";
+import { SendMessageDetailsScreenContent } from "../components/SendMessageDetailsScreenContent";
 import { PnParamsList } from "../navigation/params";
-import {
-  cancelPNPaymentStatusTracking,
-  startPNPaymentStatusTracking
-} from "../store/actions";
-import {
-  curriedSendMessageFromIdSelector,
-  sendUserSelectedPaymentRptIdSelector
-} from "../store/reducers";
-import {
-  doesSENDMessageIncludeF24,
-  isSENDMessageCancelled,
-  openingSourceIsAarMessage,
-  paymentsFromSendMessage
-} from "../utils";
+import { openingSourceIsAarMessage } from "../utils";
 
 export type MessageDetailsScreenRouteParams = {
   firstTimeOpening: boolean | undefined;
@@ -55,12 +29,13 @@ export type MessageDetailsScreenRouteParams = {
   serviceId: ServiceId;
 } & (
   | {
-      sendOpeningSource: Extract<SendOpeningSource, "aar">;
-      sendUserType: Extract<SendUserType, "mandatory" | "recipient">;
-    }
-  | {
+      fromPushNotification: boolean;
       sendOpeningSource: Extract<SendOpeningSource, "message">;
       sendUserType: Extract<SendUserType, "not_set">;
+    }
+  | {
+      sendOpeningSource: Extract<SendOpeningSource, "aar">;
+      sendUserType: Extract<SendUserType, "mandatory" | "recipient">;
     }
 );
 
@@ -115,33 +90,23 @@ const useCorrectHeader = (
 };
 
 export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
-  const dispatch = useIODispatch();
-  // Be aware that when this screen displays an AAR message, messageId and IUN have
-  // the same value. When displaying SEND's notifications via IO Messages, messageId
-  // and IUN have differente values
-  const {
-    messageId,
-    serviceId,
-    firstTimeOpening,
-    sendOpeningSource,
-    sendUserType
-  } = route.params;
+  const { messageId, sendOpeningSource, sendUserType } = route.params;
   const aarBottomSheetRef = useRef<() => void>(undefined);
-
-  const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
-  const sendMessageFromIdSelector = useMemo(
-    () => curriedSendMessageFromIdSelector(messageId),
-    [messageId]
-  );
-  const sendMessageOrUndefined = useIOSelector(sendMessageFromIdSelector);
-
   const isAarMessage = openingSourceIsAarMessage(sendOpeningSource);
-  const fiscalCodeOrUndefined = isAarMessage ? undefined : currentFiscalCode;
-  const payments = paymentsFromSendMessage(
-    fiscalCodeOrUndefined,
-    sendMessageOrUndefined
-  );
-  const paymentsCount = payments?.length ?? 0;
+  const fromPushNotification =
+    "fromPushNotification" in route.params
+      ? route.params.fromPushNotification
+      : undefined;
+  const store = useIOStore();
+
+  useEffect(() => {
+    const messageData = loadedMessageDataSelector(store.getState(), messageId);
+    // AAR messages are not opened from the inbox or from a notification
+    if (fromPushNotification !== undefined && messageData !== undefined) {
+      trackOpenMessageFromSuccessData(messageData, fromPushNotification);
+    }
+  }, [fromPushNotification, messageId, store]);
+
   const androidBackButtonCallback = useCallback(() => {
     if (isAarMessage) {
       trackSendAarNotificationClosure(sendUserType);
@@ -154,101 +119,10 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   useHardwareBackButtonWhenFocused(androidBackButtonCallback);
   useCorrectHeader(isAarMessage, aarBottomSheetRef, sendUserType);
 
-  // useEffect for payment tracking and resource dealloaction
-  useEffect(() => {
-    dispatch(
-      startPNPaymentStatusTracking({
-        openingSource: sendOpeningSource,
-        userType: sendUserType,
-        messageId
-      })
-    );
-    return () => {
-      dispatch(cancelPreviousAttachmentDownload());
-      dispatch(cancelQueuedPaymentUpdates({ messageId }));
-      dispatch(cancelPNPaymentStatusTracking({ messageId }));
-      if (isAarMessage) {
-        dispatch(
-          terminateAarFlow({
-            messageId,
-            currentFlowState: sendAarFlowStates.displayingNotificationData
-          })
-        );
-      }
-    };
-  }, [dispatch, isAarMessage, messageId, sendOpeningSource, sendUserType]);
-
-  // useEffect for analytics tracking
-  useOnFirstRender(() => {
-    if (sendMessageOrUndefined != null) {
-      const isCancelled = isSENDMessageCancelled(sendMessageOrUndefined);
-      const containsF24 = doesSENDMessageIncludeF24(sendMessageOrUndefined);
-
-      trackPNUxSuccess(
-        paymentsCount,
-        firstTimeOpening,
-        isCancelled,
-        containsF24,
-        sendOpeningSource,
-        sendUserType
-      );
-    } else if (isAarMessage) {
-      trackSendAarFailure(
-        "Show Notification",
-        "Screen rendering with undefined SEND message",
-        undefined
-      );
-    }
-  });
-
-  // useFocusEffect to track and update an user-selected payment
-  const store = useIOStore();
-  useFocusEffect(
-    useCallback(() => {
-      const globalState = store.getState();
-      const paymentToCheckRptId = sendUserSelectedPaymentRptIdSelector(
-        globalState,
-        sendMessageOrUndefined
-      );
-      if (paymentToCheckRptId) {
-        dispatch(
-          updatePaymentForMessage.request({
-            messageId,
-            paymentId: paymentToCheckRptId,
-            serviceId
-          })
-        );
-      }
-    }, [dispatch, messageId, sendMessageOrUndefined, serviceId, store])
-  );
-
-  if (sendMessageOrUndefined == null) {
-    return (
-      <OperationResultScreenContent
-        isHeaderVisible={isAarMessage}
-        pictogram="umbrella"
-        subtitle={I18n.t("features.pn.details.loadError.body")}
-        title={I18n.t("features.pn.details.loadError.title")}
-      />
-    );
-  }
-
   return (
-    <>
-      <MessageDetails
-        message={sendMessageOrUndefined}
-        messageId={messageId}
-        payments={payments}
-        sendOpeningSource={sendOpeningSource}
-        sendUserType={sendUserType}
-        serviceId={serviceId}
-      />
-      {isAarMessage && (
-        <SendAarMessageDetailBottomSheetComponent
-          aarBottomSheetRef={aarBottomSheetRef}
-          sendUserType={sendUserType}
-        />
-      )}
-    </>
+    <SendMessageDetailsScreenContent
+      {...route.params}
+      aarBottomSheetRef={isAarMessage ? aarBottomSheetRef : undefined}
+    />
   );
 };

@@ -6,8 +6,6 @@ import { PnStackNavigator } from "../../pn/navigation/navigator";
 import PN_ROUTES from "../../pn/navigation/routes";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageCalendarScreen } from "../screens/MessageCalendarScreen";
-import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
-import { MessageGreenPassScreen } from "../screens/MessageGreenPassScreen";
 import { MessageRouterScreen } from "../screens/MessageRouterScreen";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
@@ -32,21 +30,8 @@ export const MessagesStackNavigator = () => {
         />
 
         <Stack.Screen
-          component={MessageDetailsScreen}
-          name={MESSAGES_ROUTES.MESSAGE_DETAIL}
-        />
-
-        <Stack.Screen
           component={MessageAttachmentScreen}
           name={MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT}
-        />
-
-        <Stack.Screen
-          component={MessageGreenPassScreen}
-          name={MESSAGES_ROUTES.MESSAGE_GREEN_PASS}
-          options={{
-            animationEnabled: false
-          }}
         />
 
         {isPnEnabled && (

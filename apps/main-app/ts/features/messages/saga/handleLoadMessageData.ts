@@ -10,8 +10,9 @@ import * as E from "fp-ts/lib/Either";
 import { constUndefined, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
-import { ActionType, isActionOf } from "typesafe-actions";
+import { ActionType, isActionOf, PayloadAC } from "typesafe-actions";
 
+import { Action } from "../../../store/actions/types";
 import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
@@ -31,7 +32,8 @@ import {
   loadMessageDetails,
   loadThirdPartyMessage,
   RequestGetMessageDataActionType,
-  upsertMessageStatusAttributes
+  upsertMessageStatusAttributes,
+  UpsertMessageStatusAttributesPayload
 } from "../store/actions";
 import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
@@ -142,10 +144,11 @@ function* getMessageDetails(messageId: string) {
   ) {
     yield* put(loadMessageDetails.request({ id: messageId }));
 
-    const outputAction = yield* take([
+    const outputAction = yield* takeCorrectIdMessageRequest(
       loadMessageDetails.success,
-      loadMessageDetails.failure
-    ]);
+      loadMessageDetails.failure,
+      messageId
+    );
     if (isActionOf(loadMessageDetails.failure, outputAction)) {
       return undefined;
     }
@@ -165,10 +168,11 @@ function* getPaginatedMessage(messageId: string) {
   if (!pot.isSome(initialMessagePot) || pot.isError(initialMessagePot)) {
     yield* put(loadMessageById.request({ id: messageId }));
 
-    const outputAction = yield* take([
+    const outputAction = yield* takeCorrectIdMessageRequest(
       loadMessageById.success,
-      loadMessageById.failure
-    ]);
+      loadMessageById.failure,
+      messageId
+    );
     if (isActionOf(loadMessageById.failure, outputAction)) {
       return undefined;
     }
@@ -196,10 +200,11 @@ function* getThirdPartyDataMessage(
     })
   );
 
-  const outputAction = yield* take([
+  const outputAction = yield* takeCorrectIdMessageRequest(
     loadThirdPartyMessage.success,
-    loadThirdPartyMessage.failure
-  ]);
+    loadThirdPartyMessage.failure,
+    messageId
+  );
   if (isActionOf(loadThirdPartyMessage.failure, outputAction)) {
     return undefined;
   }
@@ -346,16 +351,46 @@ function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
       })
     );
 
-    const outputAction = yield* take([
-      upsertMessageStatusAttributes.success,
-      upsertMessageStatusAttributes.failure
-    ]);
+    // Other messages can be updated in the meantime, e.g. when archived
+    const isReadingUpdate = ({
+      message,
+      update
+    }: UpsertMessageStatusAttributesPayload) =>
+      message.id === paginatedMessage.id && update.tag === "reading";
+
+    const outputAction = yield* take(
+      (action: Action) =>
+        (isActionOf(upsertMessageStatusAttributes.success, action) &&
+          isReadingUpdate(action.payload)) ||
+        (isActionOf(upsertMessageStatusAttributes.failure, action) &&
+          isReadingUpdate(action.payload.payload))
+    );
     if (isActionOf(upsertMessageStatusAttributes.failure, outputAction)) {
       return undefined;
     }
   }
 
   return true;
+}
+
+/**
+ * Take the outcome of a request about the given message. Requests made while
+ * opening a previous message can still complete, so outcomes about other
+ * messages are skipped.
+ */
+function* takeCorrectIdMessageRequest<
+  S extends { id: string },
+  F extends { id: string }
+>(
+  success: PayloadAC<string, S>,
+  failure: PayloadAC<string, F>,
+  messageId: string
+) {
+  return yield* take(
+    (action: { type: string }) =>
+      (isActionOf(success, action) || isActionOf(failure, action)) &&
+      action.payload.id === messageId
+  );
 }
 
 const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (

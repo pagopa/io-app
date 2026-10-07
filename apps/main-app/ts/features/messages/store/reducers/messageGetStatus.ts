@@ -5,8 +5,9 @@ import { startApplicationInitialization } from "../../../../store/actions/applic
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
+  cancelGetMessageDataAction,
   getMessageDataAction,
-  reloadAllMessages,
+  RequestGetMessageDataActionType,
   resetGetMessageDataAction,
   SuccessGetMessageDataActionType
 } from "../actions";
@@ -37,10 +38,7 @@ type IdleState = {
 };
 
 type LoadingOrRetryState = {
-  data: {
-    fromPushNotification: boolean;
-    messageId: string;
-  };
+  data: RequestGetMessageDataActionType;
   status: "loading" | "retry";
 };
 
@@ -58,6 +56,9 @@ export const messageGetStatusReducer = (
   action: Action
 ): MessageGetStatus => {
   switch (action.type) {
+    case getType(cancelGetMessageDataAction):
+    case getType(resetGetMessageDataAction):
+      return INITIAL_STATE;
     case getType(getMessageDataAction.failure):
       return {
         status: action.payload.blockedFromPushNotificationOpt
@@ -78,9 +79,6 @@ export const messageGetStatusReducer = (
         status: "success",
         successData: action.payload
       };
-    case getType(reloadAllMessages.request):
-    case getType(resetGetMessageDataAction):
-      return INITIAL_STATE;
     case getType(startApplicationInitialization):
       const fastLoginSessionExpired =
         !!(action.payload && action.payload.handleSessionExpiration) &&
@@ -103,25 +101,37 @@ const isRetryStatus = (
   messageGetStatus: MessageGetStatus
 ): messageGetStatus is LoadingOrRetryState =>
   messageGetStatus.status === "retry";
-const isSuccessStatus = (
-  messageGetStatus: MessageGetStatus
-): messageGetStatus is SuccessState => messageGetStatus.status === "success";
 
-export const showSpinnerFromMessageGetStatusSelector = (state: GlobalState) =>
-  state.entities.messages.messageGetStatus.status !== "error";
+export const messageGetStatusSelector = (state: GlobalState) =>
+  state.entities.messages.messageGetStatus;
+
+/** Includes a load waiting to be retried after a session refresh. */
+export const isLoadingMessageDataSelector = (
+  state: GlobalState,
+  messageId: string
+) => {
+  const messageGetStatus = state.entities.messages.messageGetStatus;
+  return (
+    (isLoadingStatus(messageGetStatus) || isRetryStatus(messageGetStatus)) &&
+    messageGetStatus.data.messageId === messageId
+  );
+};
+
+export const loadedMessageDataSelector = (
+  state: GlobalState,
+  messageId: string
+) => {
+  const messageGetStatus = state.entities.messages.messageGetStatus;
+  return messageGetStatus.status === "success" &&
+    messageGetStatus.successData.messageId === messageId
+    ? messageGetStatus.successData
+    : undefined;
+};
 
 export const messageGetStatusErrorPhaseSelector = (state: GlobalState) =>
   state.entities.messages.messageGetStatus.status === "error"
     ? state.entities.messages.messageGetStatus.failurePhase
     : undefined;
-
-export const messageSuccessDataSelector = (state: GlobalState) =>
-  isSuccessStatus(state.entities.messages.messageGetStatus)
-    ? state.entities.messages.messageGetStatus.successData
-    : undefined;
-
-export const blockedFromPushNotificationSelector = (state: GlobalState) =>
-  state.entities.messages.messageGetStatus.status === "blocked";
 
 export const retryDataAfterFastLoginSessionExpirationSelector = (
   state: GlobalState

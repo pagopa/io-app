@@ -7,8 +7,6 @@ import {
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -22,6 +20,7 @@ import {
   trackPNOptInMessageOpened
 } from "../../pn/analytics";
 import { extractPNOptInMessageInfoIfAvailable } from "../../pn/utils";
+import { trackOpenMessageFromSuccessData } from "../analytics";
 import { MessageAttachmentsAlert } from "../components/MessageAttachment/MessageAttachmentsAlert";
 import { MessageDetailsAttachments } from "../components/MessageDetail/MessageDetailsAttachments";
 import { MessageDetailsBody } from "../components/MessageDetail/MessageDetailsBody";
@@ -32,16 +31,16 @@ import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetai
 import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
 import { StandardMessageSurveyBanner } from "../components/MessageSurveyBanner";
 import { useMessageDetailsFooterActions } from "../hooks/useMessageDetailsFooterActions";
-import { MessagesParamsList } from "../navigation/params";
+import { MessageContentParamsList } from "../navigation/params";
 import {
   cancelPaymentStatusTracking,
   cancelPreviousAttachmentDownload,
   cancelQueuedPaymentUpdates,
-  resetGetMessageDataAction,
   startPaymentStatusTracking,
   updatePaymentForMessage
 } from "../store/actions";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
+import { loadedMessageDataSelector } from "../store/reducers/messageGetStatus";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import {
@@ -61,29 +60,45 @@ const styles = StyleSheet.create({
 });
 
 export type MessageDetailsScreenRouteParams = {
+  fromPushNotification: boolean;
   messageId: string;
   serviceId: ServiceId;
 };
 
 type MessageDetailsScreenProps = IOStackNavigationRouteProps<
-  MessagesParamsList,
+  MessageContentParamsList,
   "MESSAGE_DETAIL"
 >;
 
-export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
-  const { messageId, serviceId } = props.route.params;
+export const MessageDetailsScreen = ({ route }: MessageDetailsScreenProps) => {
+  const { fromPushNotification, messageId, serviceId } = route.params;
+  const store = useIOStore();
 
+  useEffect(() => {
+    const messageData = loadedMessageDataSelector(store.getState(), messageId);
+    if (messageData !== undefined) {
+      trackOpenMessageFromSuccessData(messageData, fromPushNotification);
+    }
+  }, [fromPushNotification, messageId, store]);
+
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true
+  });
+
+  return <MessageDetailsContent messageId={messageId} serviceId={serviceId} />;
+};
+
+export const MessageDetailsContent = ({
+  messageId,
+  serviceId
+}: Omit<MessageDetailsScreenRouteParams, "fromPushNotification">) => {
   const dispatch = useIODispatch();
-  const message = pipe(
-    useIOSelector(state => getPaginatedMessageById(state, messageId)),
-    pot.toOption,
-    O.toUndefined
+  const message = useIOSelector(state =>
+    pot.toUndefined(getPaginatedMessageById(state, messageId))
   );
-
-  const messageDetails = pipe(
-    useIOSelector(state => messageDetailsByIdSelector(state, messageId)),
-    pot.toOption,
-    O.toUndefined
+  const messageDetails = useIOSelector(state =>
+    pot.toUndefined(messageDetailsByIdSelector(state, messageId))
   );
 
   const hasRemoteContent = messageDetails?.hasRemoteContent ?? false;
@@ -121,11 +136,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     serviceId
   });
 
-  useHeaderSecondLevel({
-    title: "",
-    supportRequest: true
-  });
-
   useEffect(() => {
     dispatch(startPaymentStatusTracking());
     if (isPNOptInMessage) {
@@ -136,7 +146,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
       dispatch(cancelPreviousAttachmentDownload());
       dispatch(cancelQueuedPaymentUpdates({ messageId }));
       dispatch(cancelPaymentStatusTracking());
-      dispatch(resetGetMessageDataAction());
     };
   }, [dispatch, messageId, isPNOptInMessage]);
 
@@ -162,6 +171,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   if (message === undefined || messageDetails === undefined) {
     return (
       <OperationResultScreenContent
+        isHeaderVisible
         pictogram={"umbrella"}
         subtitle={I18n.t("messageDetails.submitBugText")}
         title={I18n.t("global.genericError")}
