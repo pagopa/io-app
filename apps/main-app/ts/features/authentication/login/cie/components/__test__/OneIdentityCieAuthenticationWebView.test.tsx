@@ -269,7 +269,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
   });
 
   describe("debug info", () => {
-    it("should not set debug data while authenticating", () => {
+    it("should not set a failure as debug data while authenticating", () => {
       mockUseOneIdentityLoginSource();
 
       render(
@@ -278,7 +278,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
         />
       );
 
-      expect(mockUseDebugInfo).toHaveBeenLastCalledWith({});
+      expect(mockUseDebugInfo).toHaveBeenLastCalledWith({ failure: undefined });
     });
 
     it("should set the login source error as debug data when the login source fails", () => {

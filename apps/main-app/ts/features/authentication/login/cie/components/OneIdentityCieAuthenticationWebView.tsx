@@ -172,10 +172,8 @@ export const OneIdentityCieAuthenticationWebView = ({
         ? loginSourceState.error
         : undefined;
 
-  // Debug data is set only on failure: any key, even with an undefined value,
-  // would make the debug indicator appear during the regular flow
   const debugInfo = useMemo(
-    () => (failureReason !== undefined ? { failure: failureReason } : {}),
+    () => ({ failure: failureReason }),
     [failureReason]
   );
   useDebugInfo(debugInfo);
