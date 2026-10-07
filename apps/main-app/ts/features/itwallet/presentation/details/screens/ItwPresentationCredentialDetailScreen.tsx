@@ -61,6 +61,7 @@ import {
 } from "../components/ItwPresentationDetailsHeader";
 import {
   CredentialCtaProps,
+  CredentialDiscoverMoreProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
@@ -275,6 +276,16 @@ export const ItwPresentationCredentialDetail = ({
     mixPanelCredential
   ]);
 
+  const discoverMoreProps: CredentialDiscoverMoreProps | undefined =
+    credential.credentialType === CredentialType.EUROPEAN_DISABILITY_CARD
+      ? {
+          label: I18n.t(
+            "features.itWallet.presentation.credentialDetails.actions.discoverOpportunities"
+          ),
+          onPress: (): undefined => undefined
+        }
+      : undefined;
+
   if (status === "unknown") {
     return <ItwPresentationCredentialUnknownStatus credential={credential} />;
   }
@@ -303,6 +314,7 @@ export const ItwPresentationCredentialDetail = ({
     <ItwPresentationDetailsScreenBase
       credential={credential}
       ctaProps={ctaProps}
+      discoverMoreProps={discoverMoreProps}
       headerTransparent={isL3Credential}
     >
       {itwFeaturesEnabled ? (
