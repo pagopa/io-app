@@ -988,6 +988,14 @@
       "title": "Questo servizio non è più attivo su IO"
     },
     "itWallet": {
+      "modal": {
+        "credentialUpgrade": {
+          "title": "Aggiorna il documento",
+          "content": "Non è stato possibile aggiornare il documento automaticamente.\n\nPremi ‘Aggiorna il documento digitale’ per continuare a usarlo senza limitazioni.",
+          "primaryButton": "Aggiorna documento digitale",
+          "secondaryButton": "Non ora"
+        }
+      },
       "card": {
         "digital": "Versione digitale",
         "status": {
@@ -1822,6 +1830,7 @@
       "presentation": {
         "alerts": {
           "expired": {
+            "action": "Scopri di più",
             "content": "Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio"
           },
           "expiring": {
@@ -1836,12 +1845,13 @@
               "jwtExpiring": "Verifica la versione digitale del tuo documento entro il {{date}} per continuare a usarlo senza limitazioni."
             }
           },
+          "needsUpgrade": {
+            "content": "Non è stato possibile aggiornare il documento automaticamente.\nAggiornalo ora per continuare a usarlo senza limitazioni.",
+            "action": "Aggiorna documento digitale"
+          },
           "mdl": {
             "content": "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine.",
             "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano.",
-            "invalid": {
-              "cta": "Rimuovi documento dal Portafoglio"
-            },
             "suspended": {
               "action": "Scopri di più",
               "title": "La tua Patente di guida risulta non valida."
@@ -1855,16 +1865,22 @@
           }
         },
         "bottomSheets": {
+          "generic": {
+            "expired": {
+              "content": "Rimuovilo dal Portafoglio. Quando lo avrai rinnovato potrai aggiungere la versione digitale aggiornata.",
+              "cta": "Ho capito",
+              "title": "Il tuo documento è scaduto"
+            },
+            "expiring": {
+              "content": "Quando lo avrai rinnovato potrai aggiungere la versione digitale aggiornata al Portafoglio.",
+              "cta": "Ho capito",
+              "title": "Il tuo documento è in scadenza"
+            }
+          },
           "EuropeanDisabilityCard": {
             "expiring": {
               "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio.",
               "title": "Carta europea della disabilità su IO: documento in scadenza"
-            }
-          },
-          "EuropeanHealthInsuranceCard": {
-            "expiring": {
-              "content": "La tua Tessera Sanitaria viene rinnovata in automatico e poi spedita al tuo indirizzo di residenza registrato presso l'Agenzia delle Entrate.\n\nSe l'hai già ricevuta, puoi eliminare questo documento dal Portafoglio e aggiungere la nuova versione digitale aggiornata.",
-              "title": "Tessera Sanitaria su IO: documento in scadenza"
             }
           },
           "eidInfo": {
@@ -1891,6 +1907,8 @@
           },
           "mDL": {
             "expired": {
+              "title": "La tua Patente di guida risulta non valida",
+              "contentNew": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente perché questa è scaduta.\n\nRinnova il documento presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO.",
               "content": "###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO."
             },
             "expiring": {
@@ -1901,6 +1919,9 @@
             "suspended": {
               "content": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente.\n\nIl tuo documento potrebbe ad esempio essere stato sospeso o ritirato in via temporanea. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.\n\nQuando la Patente fisica sarà di nuovo valida, il documento digitale si aggiornerà in automatico.\n\nRicorda: puoi continuare a usare la Patente digitale come documento di riconoscimento.",
               "cta": "Ho capito"
+            },
+            "invalid": {
+              "cta": "Rimuovi documento dal Portafoglio"
             }
           }
         },

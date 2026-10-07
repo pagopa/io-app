@@ -18,6 +18,7 @@ import { useIOSelector, useIOStore } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
 import { useOneIdentityLoginSource } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { cieLoginFlowSelector } from "../../../activeSessionLogin/store/selectors";
+import { oneIdentityCieNativeRedirectsEnabledSelector } from "../../../common/store/selectors/remoteConfig";
 import { AUTH_LEVELS, onLoginUriChanged } from "../../../common/utils";
 import { defaultUserAgent } from "../../../common/utils/cie";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
@@ -65,6 +66,9 @@ export const OneIdentityCieAuthenticationWebView = ({
   const navigation = useIONavigation();
 
   const useUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const followRedirectsNatively = useIOSelector(
+    oneIdentityCieNativeRedirectsEnabledSelector
+  );
 
   const [webViewState, setWebViewState] = useState<WebViewState>({
     status: "authenticating"
@@ -80,6 +84,7 @@ export const OneIdentityCieAuthenticationWebView = ({
     shouldBlockUrlNavigationWhileCheckingLollipop,
     generateLoginSource
   } = useOneIdentityLoginSource({
+    followRedirectsNatively,
     idpId: getCieIdpId(useUat),
     onFailure: handleFailure,
     minAuthLevel: AUTH_LEVELS.L3
@@ -177,6 +182,7 @@ export const OneIdentityCieAuthenticationWebView = ({
 
   if (
     loginSourceState.status === "reserving-public-key" ||
+    loginSourceState.status === "following-redirects" ||
     loginSourceState.status === "verifying-assertion-ref"
   ) {
     return (

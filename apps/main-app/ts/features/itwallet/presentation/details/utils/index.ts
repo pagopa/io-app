@@ -74,9 +74,9 @@ export const getItwDisplayCredentialStatus = (
 };
 
 /**
- * Returns whether the stored status list/assertion reports a suspended driving
+ * Returns whether the stored status assertion reports a suspended driving
  * licence, a case with dedicated static copy that must not fall back to the
- * issuer-provided dynamic error.
+ * issuer-provided dynamic error (Documenti su IO only).
  */
 export const isMdlSuspendedIssuerError = ({
   credentialType,
@@ -86,10 +86,9 @@ export const isMdlSuspendedIssuerError = ({
     return false;
   }
   return (
-    (validity?.type === "status_list" && validity.status === "suspended") ||
-    (validity?.type === "status_assertion" &&
-      validity.status === "invalid" &&
-      validity?.errorCode === "credential_suspended")
+    validity?.type === "status_assertion" &&
+    validity.status === "invalid" &&
+    validity?.errorCode === "credential_suspended"
   );
 };
 
