@@ -158,8 +158,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
       {sectionHeader}
 
-      {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
-
       <View style={[styles.cardsWrapper, { gap: 16 }]}>
         {shouldRenderUpgradeBanner && (
           <ItwDiscoveryBanner flow="wallet" style={{ marginHorizontal: 8 }} />
@@ -182,7 +180,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           </GuidedTour>
         )}
 
-        <ItwWalletReadyBanner />
+        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
+
+        {!shouldRenderL2EngagementBanner && <ItwWalletReadyBanner />}
       </View>
       {eidInfoBottomSheet.bottomSheet}
     </View>

@@ -1,6 +1,5 @@
 import { Banner } from "@io-app/design-system";
 import I18n from "i18next";
-import { View } from "react-native";
 
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -23,18 +22,16 @@ export const ItwL2EngagementBanner = () => {
     return null;
   }
   return (
-    <View style={{ marginHorizontal: -8 }}>
-      <Banner
-        action={I18n.t("features.itWallet.engagementBanner.l2_banner.cta")}
-        color="neutral"
-        content={I18n.t(
-          "features.itWallet.engagementBanner.l2_banner.description"
-        )}
-        onPress={guardedHandleOnPress}
-        pictogramName="cardAdd"
-        testID="itwWalletL2BannerTestID"
-        title={I18n.t("features.itWallet.engagementBanner.l2_banner.title")}
-      />
-    </View>
+    <Banner
+      action={I18n.t("features.itWallet.engagementBanner.l2_banner.cta")}
+      color="neutral"
+      content={I18n.t(
+        "features.itWallet.engagementBanner.l2_banner.description"
+      )}
+      onPress={guardedHandleOnPress}
+      pictogramName="cardAdd"
+      testID="itwWalletL2BannerTestID"
+      title={I18n.t("features.itWallet.engagementBanner.l2_banner.title")}
+    />
   );
 };
