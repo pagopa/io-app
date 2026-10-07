@@ -163,8 +163,9 @@ val location = connection.getHeaderField("Location")
           null
         )
         return@syncCookies
+      } else {
+        onComplete(urlArray)
       }
-    }
   }
 
   private fun syncCookies(url: String, cookies: List<String>, onComplete: () -> Unit) {
