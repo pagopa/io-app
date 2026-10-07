@@ -60,13 +60,13 @@ export function* handleFimsGetConsentsList(
   // Check that the device has a supported InApp Browser
   // (e.g., on Android, you can disable all browsers and the
   // underlying CustomTabs implementation will not work)
-  const customTabsSupportingBrowsers = yield* call(
-    getCustomTabsSupportingBrowsersAsync
-  );
+const customTabsSupportingBrowsers =
+    Platform.OS === "android"
+      ? yield* call(getCustomTabsSupportingBrowsersAsync)
+      : undefined;
   if (
     Platform.OS === "android" &&
-    customTabsSupportingBrowsers.browserPackages.length === 0
-  ) {
+    customTabsSupportingBrowsers?.browserPackages.length === 0
     const debugMessage = `InApp Browser not supported`;
     yield* call(computeAndTrackAuthenticationError, debugMessage);
 
