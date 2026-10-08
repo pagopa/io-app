@@ -128,6 +128,9 @@ export const useWalletPaymentAuthorizationModal = ({
               handleAuthorizationResult(result.url);
               return;
             }
+            handleAuthorizationOutcome(
+               WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER
+             );
           })
           .catch(() => {
             handleAuthorizationOutcome(

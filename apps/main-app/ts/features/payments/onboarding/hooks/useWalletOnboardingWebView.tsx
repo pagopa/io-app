@@ -127,6 +127,10 @@ export const useWalletOnboardingWebView = ({
 
         if (result.type === "success") {
           handleOnboardingResult(result.url, isContextual);
+        } else {
+          onOnboardingOutcome({
+            outcome: WalletOnboardingOutcomeEnum.CANCELED_BY_USER
+          });
         }
       } catch {
         onOnboardingOutcome({

@@ -111,8 +111,8 @@ class ExpoLoginUtilsModule : Module() {
     val responseCode = connection.responseCode
     val serverHeaders = connection.headerFields
     if (BuildConfig.DEBUG) {
-      for ((key, values) in serverHeaders) {
-        debugLog(">>> $key: $values")
+      for ((key, _) in serverHeaders) {
+        debugLog(">>> $key")
       }
     }
     val setCookieHeader = serverHeaders["Set-Cookie"] ?: emptyList()
@@ -128,7 +128,7 @@ class ExpoLoginUtilsModule : Module() {
       }
 
       if (responseCode in 300..399) {
-val location = connection.getHeaderField("Location")
+        val location = connection.getHeaderField("Location")
         if (location == null) {
           promise.reject(
             "NativeRedirectError",
@@ -138,12 +138,11 @@ val location = connection.getHeaderField("Location")
           return@syncCookies
         }
         val redirectUrl = URL(URL(url), location).toString()
-        }
         urlArray.add(redirectUrl)
-if (callbackURLParameter == null) {
+        if (callbackURLParameter == null) {
           promise.reject(
             "NativeRedirectError",
-generateErrorUserInfo(IoLoginError.Type.CONNECTION_REDIRECT_ERROR), null
+            generateErrorUserInfo(IoLoginError.Type.CONNECTION_REDIRECT_ERROR), null
           )
           return@syncCookies
         }
@@ -169,24 +168,25 @@ generateErrorUserInfo(IoLoginError.Type.CONNECTION_REDIRECT_ERROR), null
       } else {
         onComplete(urlArray)
       }
-  }
-
-  private fun syncCookies(url: String, cookies: List<String>, onComplete: () -> Unit) {
-    val webkitCookieManager = android.webkit.CookieManager.getInstance()
-    webkitCookieManager.setAcceptCookie(true)
-
-    fun setNext(index: Int) {
-      if (index >= cookies.size) {
-        webkitCookieManager.flush()
-        onComplete()
-        return
-      }
-      val cookieString = cookies[index]
-      debugLog("$$$ Cookie string: $cookieString")
-      webkitCookieManager.setCookie(url, cookieString) { _ /*success true/false*/ ->
-        setNext(index + 1)
-      }
     }
-    setNext(0)
+
+    private fun syncCookies(url: String, cookies: List<String>, onComplete: () -> Unit) {
+      val webkitCookieManager = android.webkit.CookieManager.getInstance()
+      webkitCookieManager.setAcceptCookie(true)
+
+      fun setNext(index: Int) {
+        if (index >= cookies.size) {
+          webkitCookieManager.flush()
+          onComplete()
+          return
+        }
+        val cookieString = cookies[index]
+        debugLog("$$$ Cookie string: $cookieString")
+        webkitCookieManager.setCookie(url, cookieString) { _ /*success true/false*/ ->
+          setNext(index + 1)
+        }
+      }
+      setNext(0)
+    }
   }
 }
