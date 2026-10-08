@@ -1159,7 +1159,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -3331,7 +3331,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -5292,7 +5292,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -7477,7 +7477,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
