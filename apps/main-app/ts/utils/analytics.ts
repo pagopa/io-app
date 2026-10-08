@@ -134,7 +134,6 @@ export function extractLoginErrorPayload(
     };
   }
 
-
   const unknownError = unknownToString(error);
   return { code: "unknown", description: unknownError, domain: "unknown" };
 }

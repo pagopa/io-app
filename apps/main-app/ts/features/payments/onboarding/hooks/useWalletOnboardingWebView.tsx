@@ -118,7 +118,10 @@ export const useWalletOnboardingWebView = ({
       try {
         const result =
           Platform.OS === "ios"
-            ? await openAuthSessionAsync(url, `${ONBOARDING_CALLBACK_URL_SCHEMA}://`)
+            ? await openAuthSessionAsync(
+                url,
+                `${ONBOARDING_CALLBACK_URL_SCHEMA}://`
+              )
             : await startWebviewContextualOnboardingSession(url);
         if (typeof result === "string") {
           handleOnboardingResult(result, isContextual);
