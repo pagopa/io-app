@@ -1,10 +1,9 @@
 /* eslint-disable functional/immutable-data */
-import type { WebBrowserResultType } from "expo-web-browser";
 
 import { AmountEuroCents } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/AmountEuroCents";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
-import { openAuthSessionAsync } from "expo-web-browser";
+import { openAuthSessionAsync, WebBrowserResultType } from "expo-web-browser";
 import { Text } from "react-native";
 import { getType } from "typesafe-actions";
 
