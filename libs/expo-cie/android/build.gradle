@@ -1,0 +1,24 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'it.pagopa.io.app'
+version = '1.3.6'
+
+android {
+  namespace "expo.modules.cie"
+  defaultConfig {
+    versionCode 1
+    versionName '1.3.6'
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  implementation "it.pagopa.io.app.cie:cie:0.1.11"
+}
