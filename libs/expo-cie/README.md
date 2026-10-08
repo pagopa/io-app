@@ -65,7 +65,9 @@ The consuming Android app must declare NFC and internet access in its manifest. 
    <string>We need to use NFC</string>
    ```
 
-See Apple's [NFCReaderUsageDescription documentation](https://developer.apple.com/documentation/bundleresources/information-property-list/nfcreaderusagedescription). 3. Add the required ISO7816 identifiers to the app's `Info.plist`. The identifier order is significant:
+See Apple's [NFCReaderUsageDescription documentation](https://developer.apple.com/documentation/bundleresources/information-property-list/nfcreaderusagedescription).
+
+3. Add the required ISO7816 identifiers to the app's `Info.plist`. The identifier order is significant:
 
 ```xml
 <key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
@@ -86,10 +88,10 @@ List of available functions
 
 | Function                                                                                                             | Return             | Description                                                                    |
 | :------------------------------------------------------------------------------------------------------------------- | :----------------- | :----------------------------------------------------------------------------- |
-| `hasNFCFeature()`                                                                                                    | `Promise<boolean>` | (Android) Checks if the device supports NFC feature                            |
+| `hasNfcFeature()`                                                                                                    | `Promise<boolean>` | (Android) Checks if the device supports NFC feature                            |
 | `isNfcEnabled()`                                                                                                     | `Promise<boolean>` | (Android) Checks if the NFC is currently enabled                               |
 | `isCieAuthenticationSupported()`                                                                                     | `Promise<boolean>` | (Android) Checks if the device supports CIE autentication                      |
-| `openNfcSettings()`                                                                                                  | `Promise<void>`    | (Android) Opens NFC system settings page                                       |
+| `openNfcSettings()`                                                                                                  | `Promise<boolean>` | (Android) Opens NFC system settings page                                       |
 | `addListener(event: CieEvent, listener: CieEventHandlers)`                                                           | `() => void`       | Adds a NFC event listener and returns a function to unsubscribe from the event |
 | `removeListener(event: CieEvent)`                                                                                    | `void`             | Removes all listeners for the specified event                                  |
 | `removeAllListeners()`                                                                                               | `void`             | Removes all registered listeners                                               |
@@ -99,8 +101,9 @@ List of available functions
 | `startInternalAuthentication(challenge: string, resultEncoding?: ResultEncoding, timeout?: number)`                  | `Promise<void>`    | Start the CIE IAS/NIS Internal Authentication                                  |
 | `startMRTDReading(can: string, resultEncoding?: ResultEncoding, timeout?: number)`                                   | `Promise<void>`    | Start PACE MRTD reading (reads MRTD data using CAN)                            |
 | `startInternalAuthAndMRTDReading(can: string, challenge: string, resultEncoding?: ResultEncoding, timeout?: number)` | `Promise<void>`    | Start combined Internal Authentication + PACE MRTD reading                     |
-| `startReadingAttributes(timeout: number)`                                                                            | `Promise<void>`    | Start the CIE attributes reading process                                       |
+| `startReadingAttributes(timeout?: number)`                                                                           | `Promise<void>`    | Start the CIE attributes reading process                                       |
 | `startReading(pin: string, authenticationUrl: string, timeout: number)`                                              | `Promise<void>`    | Start the CIE reading process fro authentication                               |
+| `startReadingCertificate(pin: string, timeout?: number)`                                                             | `Promise<void>`    | Reads certificate data from the CIE card                                       |
 | `stopReading()`                                                                                                      | `Promise<void>`    | (Android) Stops all reading process                                            |
 | `setLogMode(mode: LogMode)`                                                                                          | `void`             | (iOS) Sets the log mode for the CIE SDK                                        |
 | `getLogsFilePath()`                                                                                                  | `Promise<string>`  | (iOS) Returns file path of CIE SDK logs                                        |
@@ -110,16 +113,16 @@ List of available functions
 
 The package is split into three modules:
 
-- [CieUtils](/src/utils): Provides functions to check the NFC status of the device.
-- [CieManager](/src/manager): Provides CIE read and authentication capabilities.
-- [CieLogger](/src/logger): Provides logging utils
+- [CieUtils](./src/utils): Provides functions to check the NFC status of the device.
+- [CieManager](./src/manager): Provides CIE read and authentication capabilities.
+- [CieLogger](./src/logger): Provides logging utils
 
 ### Check NFC Status
 
 **Note:** These methods are applicable only for Android devices, as iOS devices always have NFC available.
 
 ```typescript
-import { CieUtils } from "@pagopa/io-react-native-cie";
+import { CieUtils } from "@io-app/expo-cie";
 
 // Check if the device has NFC
 await CieUtils.hasNfcFeature();
@@ -134,16 +137,16 @@ await CieUtils.isCieAuthenticationSupported();
 **Note:** Logging is only supported on iOS. On Android, these methods will throw an error.
 
 ```typescript
-import { CieLogger } from "@pagopa/io-react-native-cie";
+import { CieLogger } from "@io-app/expo-cie";
 
-// Enable logging to local file
-CieLogger.setLogMode("localFile");
+// Enable logging to a local file
+CieLogger.setLogMode("FILE");
 
 // Enable logging to console
-CieLogger.setLogMode("console");
+CieLogger.setLogMode("CONSOLE");
 
 // Disable logging
-CieLogger.setLogMode("disabled");
+CieLogger.setLogMode("DISABLED");
 
 // Get logs file path
 const path = await CieLogger.getLogsFilePath();
@@ -159,7 +162,7 @@ const logs = await CieLogger.getLogs();
 Start the CIE Internal Authentication
 
 ```typescript
-import { CieManager } from "@pagopa/io-react-native-cie";
+import { CieManager } from "@io-app/expo-cie";
 
 CieManager.startInternalAuthentication("challenge")
   .then(() => console.log("Reading started"))
@@ -171,7 +174,7 @@ CieManager.startInternalAuthentication("challenge")
 Read CIE attributes (card type and base64-encoded data) with optional timeout (Android only)
 
 ```typescript
-import { CieManager } from "@pagopa/io-react-native-cie";
+import { CieManager } from "@io-app/expo-cie";
 
 CieManager.startReadingAttributes()
   .then(() => console.log("Reading started"))
@@ -194,32 +197,36 @@ The library uses an event-driven approach for NFC operations and read results. E
 
 #### Available events
 
-| Listener Type        | Description                                                                           |
-| -------------------- | ------------------------------------------------------------------------------------- |
-| `onEvent`            | NFC events emitted during the reading process which indicates the reading progression |
-| `onError`            | NFC error events emitted if the reading process fails                                 |
-| `onSuccess`          | Authentication success event                                                          |
-| `onAttributeSuccess` | Successful attribute reads                                                            |
+| Listener Type                          | Description                                                                           |
+| -------------------------------------- | ------------------------------------------------------------------------------------- |
+| `onEvent`                              | NFC events emitted during the reading process which indicates the reading progression |
+| `onError`                              | NFC error events emitted if the reading process fails                                 |
+| `onSuccess`                            | Authentication success event                                                          |
+| `onAttributesSuccess`                  | Successful attribute reads                                                            |
+| `onInternalAuthenticationSuccess`      | Successful internal authentication                                                    |
+| `onMRTDWithPaceSuccess`                | Successful MRTD read with PACE                                                        |
+| `onInternalAuthAndMRTDWithPaceSuccess` | Successful combined read                                                              |
+| `onCertificateSuccess`                 | Successful certificate read                                                           |
 
 #### Listening for events
 
-You can register an event listiner with CieManager.addListener and remove it with the returned unregister function or by using CieManager.removeListener
+You can register an event listener with `CieManager.addListener` and remove it with the returned unsubscribe function or by using `CieManager.removeListener`.
 
 ```typescript
-const unsubscribe = CieManager.addListener('onEvent', (event) => {
+const unsubscribe = CieManager.addListener("onEvent", event => {
   console.log(event);
 });
 
 // remove the listener with
-unsubscribe()
+unsubscribe();
 // or
-CieManager.removeListener("onEvent);
+CieManager.removeListener("onEvent");
 ```
 
 #### Example Usage
 
 ```typescript
-import { CieManager } from "@pagopa/io-react-native-cie";
+import { CieManager } from "@io-app/expo-cie";
 import { useEffect } from "react";
 
 // ...
@@ -461,14 +468,15 @@ type ResultEncoding = "hex" | "base64" | "base64url";
 Supported types of encoding for Internal Auth and Mrtd reponse payloads.
 
 ```typescript
-type LogMode = "localFile" | "console" | "disabled";
+type LogMode = "ENABLED" | "FILE" | "CONSOLE" | "DISABLED";
 ```
 
 Log mode for the CIE SDK:
 
-- `localFile`: Logs saved to device for later retrieval
-- `console`: Logs output to console for real-time monitoring
-- `disabled`: Disables all logging
+- `ENABLED`: Enables standard logging
+- `FILE`: Logs saved to device for later retrieval
+- `CONSOLE`: Logs output to console for real-time monitoring
+- `DISABLED`: Disables all logging
 
 ```typescript
 type CertificateData = {
@@ -496,7 +504,7 @@ Below is a comprehensive list of possible exceptions that may be thrown during i
 
 ## Contributing
 
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+See the [repository contributing guide](../../CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## License
 
