@@ -5473,7 +5473,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for reactivation ban
                                 [
                                   {},
                                   {
-                                    "color": "#031344",
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
