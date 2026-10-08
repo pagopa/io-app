@@ -11,12 +11,15 @@ import { View } from "react-native";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
+import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
+import { FIMS_ROUTES } from "../../../../fims/common/navigation";
+import { removeFIMSPrefixFromUrl } from "../../../../fims/singleSignOn/utils";
 import { identificationRequest } from "../../../../identification/store/actions";
 import { trackCredentialRenewStart } from "../../../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils";
@@ -47,6 +50,7 @@ import { ITW_PROXIMITY_ROUTES } from "../../proximity/navigation/routes";
 import { isPresentableCredentialSelector } from "../../proximity/store/selectors/credentials";
 import {
   trackCredentialDetail,
+  trackWalletCredentialOpportunities,
   trackWalletCredentialShowFAC_SIMILE,
   trackWalletCredentialShowTrustmark
 } from "../analytics";
@@ -159,6 +163,9 @@ const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
 type ItwPresentationCredentialDetailProps = {
   credential: CredentialMetadata;
 };
+
+const discoverMoreURL =
+  "iosso://https://api.ced.pagopa.it/api/ced-card/v1/fauth";
 
 /** Component that renders the credential detail content. */
 export const ItwPresentationCredentialDetail = ({
@@ -309,13 +316,32 @@ export const ItwPresentationCredentialDetail = ({
     status
   ]);
 
+  const startOpportunitiesFims = useOfflineToastGuard(() => {
+    navigation.navigate(FIMS_ROUTES.MAIN, {
+      screen: FIMS_ROUTES.CONSENTS,
+      params: {
+        ctaText: I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.discoverOpportunities"
+        ),
+        ctaUrl: removeFIMSPrefixFromUrl(discoverMoreURL),
+        source: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+        ephemeralSessionOniOS: false
+      }
+    });
+  });
+
+  const handleDiscoverMoreOpportunities = () => {
+    trackWalletCredentialOpportunities(mixPanelCredential);
+    startOpportunitiesFims();
+  };
+
   const discoverMoreProps: CredentialDiscoverMoreProps | undefined =
     credential.credentialType === CredentialType.EUROPEAN_DISABILITY_CARD
       ? {
           label: I18n.t(
             "features.itWallet.presentation.credentialDetails.actions.discoverOpportunities"
           ),
-          onPress: (): undefined => undefined
+          onPress: handleDiscoverMoreOpportunities
         }
       : undefined;
 
