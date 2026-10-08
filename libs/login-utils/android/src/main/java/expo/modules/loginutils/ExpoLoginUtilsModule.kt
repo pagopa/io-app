@@ -12,7 +12,7 @@ class ExpoLoginUtilsModule : Module() {
   override fun definition() = ModuleDefinition {
     Name("ExpoLoginUtils")
 
-    AsyncFunction("getRedirects") { url: String, headers: ReadableMap, callbackURLParameter: String?, promise: Promise ->
+    AsyncFunction("getRedirects") { url: String, headers: Map<String, Any?>, callbackURLParameter: String?, promise: Promise ->
       getRedirects(url, headers, callbackURLParameter, promise)
     }
   }
