@@ -4,7 +4,7 @@ import {
   type InternalAuthAndMrtdResponse,
   type NfcError,
   ResultEncoding
-} from "@pagopa/io-react-native-cie";
+} from "@io-app/expo-cie";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
