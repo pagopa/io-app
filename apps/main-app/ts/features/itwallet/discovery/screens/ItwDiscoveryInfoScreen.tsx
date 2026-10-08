@@ -46,9 +46,21 @@ export const ItwDiscoveryInfoScreen = ({
 
   const isNfcUnavailable = isItWalletActivationDisabled || !hasNfcFeature;
 
+  // Only a credential offer is resumed after the Documenti su IO activation,
+  // and only for L2 credentials, the sole ones Documenti su IO can issue
+  const docIOResumableCredentialOffer =
+    canContinueWithDocIO && credentialOfferUri
+      ? { credentialType, credentialOfferUri }
+      : {};
+
   if (level === "l3") {
     if (isNfcUnavailable && canContinueWithDocIO) {
-      return <ItwL2FallbackComponent credentialType={credentialType} />;
+      return (
+        <ItwL2FallbackComponent
+          credentialOfferUri={credentialOfferUri}
+          credentialType={credentialType}
+        />
+      );
     }
 
     if (isNfcUnavailable) {
@@ -66,9 +78,11 @@ export const ItwDiscoveryInfoScreen = ({
 
   if (level === "l2-fallback") {
     // Discovery screen for Documenti su IO coming from IT-Wallet
-    return <ItwDiscoveryInfoFallbackComponent />;
+    return (
+      <ItwDiscoveryInfoFallbackComponent {...docIOResumableCredentialOffer} />
+    );
   }
 
   // Discovery screen for Documenti su IO (L2)
-  return <ItwDiscoveryInfoLegacyComponent />;
+  return <ItwDiscoveryInfoLegacyComponent {...docIOResumableCredentialOffer} />;
 };
