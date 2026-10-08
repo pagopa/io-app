@@ -18,11 +18,16 @@ import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle"
 import { useIOSelector } from "../store/hooks";
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences";
 import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
+import { getListItemAccessibilityLabelCount } from "../utils/accessibility";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
+const MAIN_TAB_COUNT = 5;
+
+const getTabAccessibilityLabel = (label: string, index: number) =>
+  `${label}${getListItemAccessibilityLabelCount(MAIN_TAB_COUNT, index)}`;
 
 export const MainTabNavigator = () => {
   const theme = useIOTheme();
@@ -30,6 +35,11 @@ export const MainTabNavigator = () => {
 
   const startupLoaded = useIOSelector(isStartupLoaded);
   const typefacePreference = useIOSelector(fontPreferenceSelector);
+  const messagesLabel = I18n.t("global.navigator.messages");
+  const walletLabel = I18n.t("global.navigator.wallet");
+  const scanLabel = I18n.t("global.navigator.scan");
+  const paymentsLabel = I18n.t("global.navigator.payments");
+  const servicesLabel = I18n.t("global.navigator.services");
 
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
@@ -63,7 +73,11 @@ export const MainTabNavigator = () => {
           component={MessagesHomeScreen}
           name={MESSAGES_ROUTES.MESSAGES_HOME}
           options={{
-            title: I18n.t("global.navigator.messages"),
+            title: messagesLabel,
+            tabBarAccessibilityLabel: getTabAccessibilityLabel(
+              messagesLabel,
+              0
+            ),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
                 color={color}
@@ -78,7 +92,8 @@ export const MainTabNavigator = () => {
           component={WalletHomeScreen}
           name={ROUTES.WALLET_HOME}
           options={{
-            title: I18n.t("global.navigator.wallet"),
+            title: walletLabel,
+            tabBarAccessibilityLabel: getTabAccessibilityLabel(walletLabel, 1),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
                 color={color}
@@ -100,7 +115,8 @@ export const MainTabNavigator = () => {
           }}
           name={ROUTES.BARCODE_SCAN_TAB_EMPTY}
           options={{
-            title: I18n.t("global.navigator.scan"),
+            title: scanLabel,
+            tabBarAccessibilityLabel: getTabAccessibilityLabel(scanLabel, 2),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
                 color={color}
@@ -116,7 +132,11 @@ export const MainTabNavigator = () => {
           component={PaymentsHomeScreen}
           name={ROUTES.PAYMENTS_HOME}
           options={{
-            title: I18n.t("global.navigator.payments"),
+            title: paymentsLabel,
+            tabBarAccessibilityLabel: getTabAccessibilityLabel(
+              paymentsLabel,
+              3
+            ),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
                 color={color}
@@ -132,7 +152,11 @@ export const MainTabNavigator = () => {
           component={ServicesHomeScreen}
           name={SERVICES_ROUTES.SERVICES_HOME}
           options={{
-            title: I18n.t("global.navigator.services"),
+            title: servicesLabel,
+            tabBarAccessibilityLabel: getTabAccessibilityLabel(
+              servicesLabel,
+              4
+            ),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
                 color={color}
