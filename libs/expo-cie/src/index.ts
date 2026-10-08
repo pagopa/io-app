@@ -4,7 +4,8 @@ import * as CieUtils from "./utils";
 
 export { CieLogger, CieManager, CieUtils };
 
-export type { CieError, CieErrorCodes, CieErrorSchema } from "./errors";
+export { CieErrorSchema } from "./errors";
+export type { CieError, CieErrorCodes } from "./errors";
 
 export type { LogMode } from "./logger/types";
 
