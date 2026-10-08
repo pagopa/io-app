@@ -108,8 +108,6 @@ export const ItwBrandedBox = ({
     return [{ translateX }, { scale: lightScaleMultiplier }];
   });
 
-  // Element, not an inline component: a component defined in render gets a new
-  // type each render and React would remount the Skia subtree every time.
   const skiaLight = (
     <SkiaGroup
       opacity={lightSkiaOpacity}
