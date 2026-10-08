@@ -30,10 +30,6 @@ import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/se
 const QR_CODE_LOGO_SIZE = 52;
 const QR_CODE_FADE_DURATION = 200;
 
-/**
- * Module-level because QRCode memoizes its path on these props' identity:
- * inline values would regenerate the whole Skia path on every render.
- */
 const QR_CODE_SHAPE_OPTIONS: ShapeOptions = {
   shape: "circle",
   eyePatternShape: "rounded",
@@ -115,8 +111,6 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
     );
   }
 
-  // Fixed-size slot: the skeleton fades out underneath while the QR fades in,
-  // so the swap never shows an empty frame.
   return (
     <View style={styles.qrCodeSlot}>
       {qrCodeString ? (
