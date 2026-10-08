@@ -11,7 +11,7 @@ import {
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
   LinearTransition,
@@ -73,12 +73,15 @@ export const ItwProximityPresentmentScreen = ({
 
   const isFailure = !!failure;
 
-  useDebugInfo({
-    failure,
-    // isPermissionsRequired,
-    // isBluetoothRequired,
-    shouldShowExpiredCredentialsBanner
-  });
+  useDebugInfo(
+    useMemo(
+      () => ({
+        failure,
+        shouldShowExpiredCredentialsBanner
+      }),
+      [failure, shouldShowExpiredCredentialsBanner]
+    )
+  );
 
   // Auto-start machine on mount.
   useEffect(() => {
