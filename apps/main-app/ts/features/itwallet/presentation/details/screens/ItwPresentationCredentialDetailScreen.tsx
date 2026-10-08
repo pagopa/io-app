@@ -18,8 +18,7 @@ import {
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
-import { FIMS_ROUTES } from "../../../../fims/common/navigation";
-import { removeFIMSPrefixFromUrl } from "../../../../fims/singleSignOn/utils";
+import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { identificationRequest } from "../../../../identification/store/actions";
 import { trackCredentialRenewStart } from "../../../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils";
@@ -173,6 +172,8 @@ export const ItwPresentationCredentialDetail = ({
 }: ItwPresentationCredentialDetailProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const { startFIMSAuthenticationFlow } =
+    useFIMSRemoteServiceConfiguration("ced-opportunities");
 
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -316,19 +317,12 @@ export const ItwPresentationCredentialDetail = ({
     status
   ]);
 
-  const startOpportunitiesFims = useOfflineToastGuard(() => {
-    navigation.navigate(FIMS_ROUTES.MAIN, {
-      screen: FIMS_ROUTES.CONSENTS,
-      params: {
-        ctaText: I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.discoverOpportunities"
-        ),
-        ctaUrl: removeFIMSPrefixFromUrl(discoverMoreURL),
-        source: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-        ephemeralSessionOniOS: false
-      }
-    });
-  });
+  const discoverOpportunitiesLabel = I18n.t(
+    "features.itWallet.presentation.credentialDetails.actions.discoverOpportunities"
+  );
+  const startOpportunitiesFims = useOfflineToastGuard(() =>
+    startFIMSAuthenticationFlow(discoverOpportunitiesLabel, discoverMoreURL)
+  );
 
   const handleDiscoverMoreOpportunities = () => {
     trackWalletCredentialOpportunities(mixPanelCredential);
@@ -338,9 +332,7 @@ export const ItwPresentationCredentialDetail = ({
   const discoverMoreProps: CredentialDiscoverMoreProps | undefined =
     credential.credentialType === CredentialType.EUROPEAN_DISABILITY_CARD
       ? {
-          label: I18n.t(
-            "features.itWallet.presentation.credentialDetails.actions.discoverOpportunities"
-          ),
+          label: discoverOpportunitiesLabel,
           onPress: handleDiscoverMoreOpportunities
         }
       : undefined;

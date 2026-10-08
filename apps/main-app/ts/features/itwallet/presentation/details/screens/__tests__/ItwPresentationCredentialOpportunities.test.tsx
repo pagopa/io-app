@@ -3,7 +3,9 @@ import I18n from "i18next";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { backendStatusLoadSuccess } from "../../../../../../store/actions/backendStatus";
 import { appReducer } from "../../../../../../store/reducers";
+import { baseRawBackendStatus } from "../../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as connectivitySelectors from "../../../../../connectivity/store/selectors";
@@ -21,12 +23,17 @@ import * as proximitySelectors from "../../../proximity/store/selectors/credenti
 import { ItwPresentationCredentialDetail } from "../ItwPresentationCredentialDetailScreen";
 
 const mockNavigate = jest.fn();
+const mockGetState = jest.fn();
 const mockTrackOpportunities = jest.fn();
 const mockToastError = jest.fn();
+const serviceId = "01KTXJ47AAJMZFRJPA4V4TX5D0";
 
 jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
   ...jest.requireActual("../../../../../../navigation/params/AppParamsList"),
-  useIONavigation: () => ({ navigate: mockNavigate })
+  useIONavigation: () => ({
+    navigate: mockNavigate,
+    getState: mockGetState
+  })
 }));
 
 jest.mock("@io-app/design-system", () => ({
@@ -105,6 +112,10 @@ const opportunitiesLabel = () =>
 
 describe("credential opportunities CTA", () => {
   beforeEach(() => {
+    mockGetState.mockReturnValue({
+      index: 0,
+      routes: [{ name: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL }]
+    });
     jest
       .spyOn(connectivitySelectors, "isConnectedSelector")
       .mockReturnValue(true);
@@ -131,7 +142,7 @@ describe("credential opportunities CTA", () => {
   });
 
   test.each(walletScenarios)(
-    "tracks the $name click before starting FIMS without service metadata",
+    "tracks the $name click before starting FIMS with the CDN configuration",
     ({ credential, isL3, analyticsCredential }) => {
       const { getByText } = renderComponent(credential, isL3);
 
@@ -146,7 +157,11 @@ describe("credential opportunities CTA", () => {
           ctaText: opportunitiesLabel(),
           ctaUrl: "https://api.ced.pagopa.it/api/ced-card/v1/fauth",
           source: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-          ephemeralSessionOniOS: false
+          serviceId,
+          serviceName: undefined,
+          organizationName: undefined,
+          organizationFiscalCode: undefined,
+          ephemeralSessionOniOS: true
         }
       });
       expect(mockTrackOpportunities.mock.invocationCallOrder[0]).toBeLessThan(
@@ -191,6 +206,21 @@ describe("credential opportunities CTA", () => {
     expect(queryByText(opportunitiesLabel())).toBeNull();
   });
 
+  test("tracks the click without starting FIMS when the CDN configuration is missing", () => {
+    const { getByText } = renderComponent(
+      ItwStoredCredentialsMocks.dc,
+      false,
+      false
+    );
+
+    fireEvent.press(getByText(opportunitiesLabel()));
+
+    expect(mockTrackOpportunities).toHaveBeenCalledTimes(1);
+    expect(mockTrackOpportunities).toHaveBeenCalledWith("ITW_CED_V2");
+    expect(mockNavigate).not.toHaveBeenCalled();
+    expect(mockToastError).not.toHaveBeenCalled();
+  });
+
   test.each([
     { name: "driving license", credential: ItwStoredCredentialsMocks.mdl },
     { name: "health card", credential: ItwStoredCredentialsMocks.ts }
@@ -201,11 +231,30 @@ describe("credential opportunities CTA", () => {
   });
 });
 
-const renderComponent = (credential: CredentialMetadata, isL3 = false) => {
+const renderComponent = (
+  credential: CredentialMetadata,
+  isL3 = false,
+  hasServiceConfiguration = true
+) => {
   jest
     .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
     .mockReturnValue(isL3);
-  const initialState = appReducer(undefined, applicationChangeState("active"));
+  const initialState = appReducer(
+    appReducer(undefined, applicationChangeState("active")),
+    backendStatusLoadSuccess({
+      ...baseRawBackendStatus,
+      config: {
+        ...baseRawBackendStatus.config,
+        fims: {
+          ...baseRawBackendStatus.config.fims,
+          services: hasServiceConfiguration
+            ? [{ configuration_id: "ced-opportunities", service_id: serviceId }]
+            : [],
+          iOSCookieDisabledServiceIds: [serviceId]
+        }
+      }
+    })
+  );
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <ItwPresentationCredentialDetail credential={credential} />,
