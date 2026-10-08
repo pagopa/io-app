@@ -1,5 +1,4 @@
 /* eslint-disable functional/immutable-data */
-
 import { AmountEuroCents } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/AmountEuroCents";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";

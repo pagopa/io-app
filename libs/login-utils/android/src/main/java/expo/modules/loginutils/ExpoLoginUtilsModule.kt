@@ -169,24 +169,24 @@ class ExpoLoginUtilsModule : Module() {
         onComplete(urlArray)
       }
     }
+  }
 
-    private fun syncCookies(url: String, cookies: List<String>, onComplete: () -> Unit) {
-      val webkitCookieManager = android.webkit.CookieManager.getInstance()
-      webkitCookieManager.setAcceptCookie(true)
+  private fun syncCookies(url: String, cookies: List<String>, onComplete: () -> Unit) {
+    val webkitCookieManager = android.webkit.CookieManager.getInstance()
+    webkitCookieManager.setAcceptCookie(true)
 
-      fun setNext(index: Int) {
-        if (index >= cookies.size) {
-          webkitCookieManager.flush()
-          onComplete()
-          return
-        }
-        val cookieString = cookies[index]
-        debugLog("$$$ Cookie string: $cookieString")
-        webkitCookieManager.setCookie(url, cookieString) { _ /*success true/false*/ ->
-          setNext(index + 1)
-        }
+    fun setNext(index: Int) {
+      if (index >= cookies.size) {
+        webkitCookieManager.flush()
+        onComplete()
+        return
       }
-      setNext(0)
+      val cookieString = cookies[index]
+      debugLog("$$$ Cookie string: $cookieString")
+      webkitCookieManager.setCookie(url, cookieString) { _ /*success true/false*/ ->
+        setNext(index + 1)
+      }
     }
+    setNext(0)
   }
 }
