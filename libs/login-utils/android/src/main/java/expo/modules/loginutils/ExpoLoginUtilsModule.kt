@@ -52,9 +52,7 @@ class ExpoLoginUtilsModule : Module() {
 
     try {
       findRedirects(url, headers, urlArray,  callbackURLParameter, promise) { result ->
-        val urls = result.toTypedArray()
-        val resultArray: WritableArray = Arguments.fromArray(urls)
-        promise.resolve(resultArray)
+        promise.resolve(result)
       }
     } catch (e: IOException) {
       promise.reject(
