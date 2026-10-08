@@ -43,7 +43,7 @@ class ExpoLoginUtilsModule : Module() {
   @Throws(IOException::class)
   private fun getRedirects(
     url: String,
-    headers: ReadableMap,
+    headers: Map<String, Any?>,
     callbackURLParameter: String?,
     promise: Promise
   ) {
