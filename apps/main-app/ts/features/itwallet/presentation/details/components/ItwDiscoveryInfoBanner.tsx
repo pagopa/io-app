@@ -1,4 +1,4 @@
-import { Banner, IOToast } from "@io-app/design-system";
+import { Banner, useIOToast } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
@@ -17,6 +17,7 @@ const WHAT_IS_ITW_WALLET_ID =
 
 const ItwDiscoveryInfoBanner = () => {
   const dispatch = useIODispatch();
+  const toast = useIOToast();
 
   const trackBannerProperties = useMemo(
     () => ({
@@ -36,7 +37,7 @@ const ItwDiscoveryInfoBanner = () => {
   const handleOnPress = () => {
     trackItwBannerTap(trackBannerProperties);
     openWebUrl(WHAT_IS_ITW_WALLET_ID, () =>
-      IOToast.error(I18n.t("global.jserror.title"))
+      toast.error(I18n.t("global.jserror.title"))
     );
   };
 

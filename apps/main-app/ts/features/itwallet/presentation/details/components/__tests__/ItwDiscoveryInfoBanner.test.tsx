@@ -1,4 +1,3 @@
-import { IOToast } from "@io-app/design-system";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
@@ -19,14 +18,15 @@ import { ItwDiscoveryInfoBanner } from "../ItwDiscoveryInfoBanner";
 
 const cacUrl =
   "https://assistenza.ioapp.it/hc/it/articles/50661930290449-Cos-é-l-IT-Wallet-ID";
+const mockToastError = jest.fn();
 
 jest.mock("@io-app/design-system", () => ({
   ...jest.requireActual<typeof import("@io-app/design-system")>(
     "@io-app/design-system"
   ),
-  IOToast: {
-    error: jest.fn()
-  }
+  useIOToast: () => ({
+    error: mockToastError
+  })
 }));
 
 jest.mock("../../../../../../utils/url", () => ({
@@ -111,7 +111,7 @@ describe("ItwDiscoveryInfoBanner", () => {
     const [, onError] = jest.mocked(openWebUrl).mock.calls[0];
     onError?.();
 
-    expect(IOToast.error).toHaveBeenCalledWith(I18n.t("global.jserror.title"));
+    expect(mockToastError).toHaveBeenCalledWith(I18n.t("global.jserror.title"));
   });
 });
 
