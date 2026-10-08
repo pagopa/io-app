@@ -255,15 +255,15 @@ const useIOBarcodeFileReader = ({
       <ListItemNav
         accessibilityLabel={I18n.t("barcodeScan.upload.image")}
         icon="gallery"
+        label={I18n.t("barcodeScan.upload.image")}
         onPress={() => void handleImageUploadPressed()}
-        value={I18n.t("barcodeScan.upload.image")}
       />
       <Divider />
       <ListItemNav
         accessibilityLabel={I18n.t("barcodeScan.upload.file")}
         icon="docAttach"
+        label={I18n.t("barcodeScan.upload.file")}
         onPress={() => void handleFileUploadPressed()}
-        value={I18n.t("barcodeScan.upload.file")}
       />
       <VSpacer size={16} />
     </View>

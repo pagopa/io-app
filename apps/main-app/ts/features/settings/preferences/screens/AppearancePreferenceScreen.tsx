@@ -117,7 +117,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
   const typefaceOptions = [
     {
       id: "comfortable" as TypefaceChoice,
-      value: I18n.t(
+      label: I18n.t(
         "profile.preferences.list.appearance.typefaceStyle.comfortable.title"
       ),
       description: I18n.t(
@@ -126,7 +126,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
     },
     {
       id: "standard" as TypefaceChoice,
-      value: I18n.t(
+      label: I18n.t(
         "profile.preferences.list.appearance.typefaceStyle.standard.title"
       ),
       description: I18n.t(
@@ -139,7 +139,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
   const colorModeOptions = [
     {
       id: "auto" as ColorModeChoice,
-      value: I18n.t(
+      label: I18n.t(
         "profile.preferences.list.appearance.theme.automatic.title"
       ),
       description: I18n.t(
@@ -148,11 +148,11 @@ const AppearancePreferenceScreen = (): ReactElement => {
     },
     {
       id: "light" as ColorModeChoice,
-      value: I18n.t("profile.preferences.list.appearance.theme.light")
+      label: I18n.t("profile.preferences.list.appearance.theme.light")
     },
     {
       id: "dark" as ColorModeChoice,
-      value: I18n.t("profile.preferences.list.appearance.theme.dark")
+      label: I18n.t("profile.preferences.list.appearance.theme.dark")
     }
   ];
 

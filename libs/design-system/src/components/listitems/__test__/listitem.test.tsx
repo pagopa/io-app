@@ -41,8 +41,8 @@ describe("Test List Item Components", () => {
     const { toJSON } = render(
       <ListItemNav
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -51,8 +51,8 @@ describe("Test List Item Components", () => {
     const { toJSON } = render(
       <ListItemNavAlert
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -71,10 +71,10 @@ describe("Test List Item Components", () => {
   it("ListItemTransaction Snapshot", () => {
     const { toJSON } = render(
       <ListItemTransaction
+        description="subtitle"
         isLoading={true}
+        label="TITLE"
         onPress={onButtonPress}
-        subtitle="subtitle"
-        title="TITLE"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "€ 1.000,00"
@@ -135,8 +135,8 @@ describe("Test List Item Components - Experimental Enabled", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ListItemNav
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -145,8 +145,8 @@ describe("Test List Item Components - Experimental Enabled", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ListItemNavAlert
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -165,10 +165,10 @@ describe("Test List Item Components - Experimental Enabled", () => {
   it("ListItemTransaction Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ListItemTransaction
+        description="subtitle"
         isLoading={true}
+        label="TITLE"
         onPress={onButtonPress}
-        subtitle="subtitle"
-        title="TITLE"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "€ 1.000,00"

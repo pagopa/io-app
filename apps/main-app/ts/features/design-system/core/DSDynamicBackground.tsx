@@ -81,9 +81,9 @@ export const DSDynamicBackground = () => {
 
   const renderedOrganizationsURIs: Array<{
     id: string;
-    value: string;
+    label: string;
   }> = organizationsURIs.map(item => ({
-    value: item.name,
+    label: item.name,
     id: item.name
   }));
 

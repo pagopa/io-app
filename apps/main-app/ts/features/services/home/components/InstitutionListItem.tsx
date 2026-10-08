@@ -28,9 +28,9 @@ const InstitutionListItem = ({
       avatarProps={{
         logoUri: getLogoForInstitution(institution.fiscal_code)
       }}
+      label={institution.name}
       numberOfLines={2}
       onPress={() => onPress(institution)}
-      value={institution.name}
     />
   );
 };

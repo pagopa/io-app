@@ -40,7 +40,7 @@ export const useServicesHomeBottomSheet = () => {
   const navigationListItems: ReadonlyArray<ComponentProps<typeof ListItemNav>> =
     [
       {
-        value: I18n.t(
+        label: I18n.t(
           "services.home.bottomSheet.content.servicesPreferences.value"
         ),
         description: I18n.t(
@@ -50,7 +50,7 @@ export const useServicesHomeBottomSheet = () => {
         onPress: handleNavigateToServicesPreferencesScreen
       },
       {
-        value: I18n.t("services.home.bottomSheet.content.settings.value"),
+        label: I18n.t("services.home.bottomSheet.content.settings.value"),
         description: I18n.t(
           "services.home.bottomSheet.content.settings.description"
         ),
@@ -65,7 +65,7 @@ export const useServicesHomeBottomSheet = () => {
       <FlatList
         data={navigationListItems}
         ItemSeparatorComponent={() => <Divider />}
-        keyExtractor={(item, index) => `${item.value}-${index}`}
+        keyExtractor={(item, index) => `${item.label}-${index}`}
         ListFooterComponent={<VSpacer size={16} />}
         renderItem={({ item: { onPress, ...rest } }) => (
           <ListItemNav

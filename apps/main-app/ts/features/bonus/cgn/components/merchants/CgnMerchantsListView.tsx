@@ -30,8 +30,7 @@ export const CgnMerchantListViewRenderItem =
       <ContentWrapper>
         <ListItemNav
           accessibilityLabel={accessibilityLabel}
-          onPress={() => props.onItemPress(item.id)}
-          value={
+          label={
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
@@ -54,6 +53,7 @@ export const CgnMerchantListViewRenderItem =
               )}
             </View>
           }
+          onPress={() => props.onItemPress(item.id)}
         />
       </ContentWrapper>
     );

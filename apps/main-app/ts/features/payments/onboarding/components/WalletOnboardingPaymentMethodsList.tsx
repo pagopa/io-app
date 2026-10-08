@@ -39,7 +39,7 @@ const PaymentMethodItem = ({
     accessibilityLabel: paymentMethod.description,
     onPress,
     loading: isLoading,
-    value: paymentMethod.description
+    label: paymentMethod.description
   };
 
   return pipe(
