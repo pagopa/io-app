@@ -237,6 +237,7 @@ export const itwEidIssuanceMachineSetup = setup({
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
+    isL2FallbackFromL3: ({ context }) => context.l2FallbackOrigin !== undefined,
     isL3FeaturesEnabled: ({ context }) => context.level === "l3",
     requiresMrtdVerification: ({ context }) =>
       // MRTD PoP verification is required for SPID and CieID identification modes

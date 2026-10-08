@@ -13,6 +13,13 @@ export const selectIssuanceMode = (snapshot: MachineSnapshot) =>
 export const selectIssuanceLevel = (snapshot: MachineSnapshot) =>
   snapshot.context.level || "l2";
 
+/**
+ * Whether the user reached the Documenti su IO landing from the IT-Wallet (L3)
+ * identification and can still go back to it.
+ */
+export const selectCanGoBackToL3Identification = (snapshot: MachineSnapshot) =>
+  snapshot.can({ type: "back-to-l3-identification" });
+
 export const isL3FeaturesEnabledSelector = (snapshot: MachineSnapshot) =>
   snapshot.context.level === "l3";
 

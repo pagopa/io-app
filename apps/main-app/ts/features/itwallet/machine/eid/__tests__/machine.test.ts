@@ -396,6 +396,12 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance")
     );
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      mode: "issuance",
+      level: "l2-fallback",
+      itwVersion: "1.0.0",
+      l2FallbackOrigin: { credentialType: undefined }
+    });
 
     actor.send({ type: "accept-tos" });
 
@@ -1983,6 +1989,131 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "back" });
 
     expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
+  });
+
+  describe("L2 fallback from L3 identification", () => {
+    const T_L3_CREDENTIAL_TYPE = "education_degree";
+    const T_L2_CREDENTIAL_TYPE = "mDL";
+
+    const createL3IdentificationActor = () => {
+      const initialSnapshot: MachineSnapshot = createActor(
+        itwEidIssuanceMachine,
+        { input: { deps: T_DEPS } }
+      ).getSnapshot();
+
+      const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+        value: { UserIdentification: "Identification" },
+        context: {
+          mode: "issuance",
+          level: "l3",
+          itwVersion: "1.4.6",
+          credentialType: T_L3_CREDENTIAL_TYPE
+        }
+      } as MachineSnapshot);
+
+      const actor = createActor(mockedMachine, {
+        snapshot,
+        input: { deps: T_DEPS }
+      });
+      actor.start();
+      return actor;
+    };
+
+    it("Should keep the L3 origin when restarting as L2 fallback from the L3 identification", () => {
+      const actor = createL3IdentificationActor();
+
+      actor.send({
+        type: "restart",
+        mode: "issuance",
+        level: "l2-fallback",
+        credentialType: T_L2_CREDENTIAL_TYPE
+      });
+
+      expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+      expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+      expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+        mode: "issuance",
+        level: "l2-fallback",
+        itwVersion: "1.0.0",
+        credentialType: T_L2_CREDENTIAL_TYPE,
+        l2FallbackOrigin: { credentialType: T_L3_CREDENTIAL_TYPE }
+      });
+      expect(
+        actor.getSnapshot().can({ type: "back-to-l3-identification" })
+      ).toBe(true);
+    });
+
+    it("Should restore the L3 identification when going back from the L2 fallback ToS", () => {
+      const actor = createL3IdentificationActor();
+
+      actor.send({
+        type: "restart",
+        mode: "issuance",
+        level: "l2-fallback",
+        credentialType: T_L2_CREDENTIAL_TYPE
+      });
+      navigateToIdentificationScreen.mockClear();
+      actor.send({ type: "back-to-l3-identification" });
+
+      expect(actor.getSnapshot().value).toStrictEqual({
+        UserIdentification: "Identification"
+      });
+      expect(navigateToIdentificationScreen).toHaveBeenCalled();
+      expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+        mode: "issuance",
+        level: "l3",
+        itwVersion: "1.4.6",
+        credentialType: T_L3_CREDENTIAL_TYPE,
+        l2FallbackOrigin: undefined
+      });
+    });
+
+    it("Should ignore the generic back event in the L2 fallback ToS", () => {
+      const actor = createL3IdentificationActor();
+
+      actor.send({ type: "restart", mode: "issuance", level: "l2-fallback" });
+      // Sent by the navigator when the L3 screens are removed from the stack
+      actor.send({ type: "back" });
+
+      expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+      expect(actor.getSnapshot().context.level).toBe("l2-fallback");
+    });
+
+    it("Should not go back to the L3 identification once the L2 fallback ToS are accepted", () => {
+      verifyTrustFederation.mockImplementation(() => new Promise(_.noop));
+      const actor = createL3IdentificationActor();
+
+      actor.send({ type: "restart", mode: "issuance", level: "l2-fallback" });
+      actor.send({ type: "accept-tos" });
+
+      expect(actor.getSnapshot().context.l2FallbackOrigin).toBeUndefined();
+      expect(
+        actor.getSnapshot().can({ type: "back-to-l3-identification" })
+      ).toBe(false);
+    });
+
+    it("Should not go back to the L3 identification when the L2 fallback started from scratch", () => {
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
+
+      actor.send({ type: "start", mode: "issuance", level: "l2-fallback" });
+
+      expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+      expect(
+        actor.getSnapshot().can({ type: "back-to-l3-identification" })
+      ).toBe(false);
+    });
+
+    it("Should not go back to the L3 identification once the L2 fallback ToS are closed", () => {
+      const actor = createL3IdentificationActor();
+
+      actor.send({ type: "restart", mode: "issuance", level: "l2-fallback" });
+      actor.send({ type: "close" });
+
+      expect(actor.getSnapshot().value).toStrictEqual("Idle");
+      expect(closeIssuance).toHaveBeenCalledTimes(1);
+      expect(actor.getSnapshot().context.l2FallbackOrigin).toBeUndefined();
+    });
   });
 
   it("should cleanup integrity key tag and fail when obtaining Wallet Instance Attestation fails", async () => {

@@ -16,6 +16,7 @@ export type EidIssuanceEvents =
   | AddNewCredential
   | AddToWallet
   | Back
+  | BackToL3Identification
   | CieCanEntered
   | CiePinEntered
   | Close
@@ -60,6 +61,16 @@ type AddToWallet = {
 
 type Back = {
   type: "back";
+};
+
+/**
+ * Sent from the Documenti su IO landing to go back to the IT-Wallet (L3)
+ * identification mode selection. It is only accepted if the user reached the
+ * landing by restarting from the L3 identification because they do not have a
+ * CIE.
+ */
+type BackToL3Identification = {
+  type: "back-to-l3-identification";
 };
 
 type CieCanEntered = {

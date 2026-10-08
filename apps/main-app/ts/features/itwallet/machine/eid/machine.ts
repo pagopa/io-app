@@ -1,8 +1,7 @@
 import { and, assertEvent, assign, not, or, raise } from "xstate";
 
-import { CURRENT_ITW_SPECS_VERSION } from "../../common/utils/constants";
 import { ItwTags } from "../tags";
-import { InitialContext } from "./context";
+import { getIssuanceItwVersion, InitialContext } from "./context";
 import { IssuanceFailureType } from "./failure";
 import { itwEidIssuanceMachineSetup } from "./setup";
 import { credentialsUpgradeState } from "./state/credentialsUpgrade";
@@ -43,6 +42,14 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
     restart: {
       target: "#itwEidIssuanceMachine.Idle",
       actions: [
+        // Keep track of the L3 identification when the user without a CIE falls back to
+        // Documenti su IO, so that they can go back to it from the Documenti su IO landing.
+        assign(({ context, event }) => ({
+          l2FallbackOrigin:
+            context.level === "l3" && event.level === "l2-fallback"
+              ? { credentialType: context.credentialType }
+              : undefined
+        })),
         raise(({ event }) => ({
           type: "start",
           mode: event.mode,
@@ -62,13 +69,7 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
             level: event.level,
             credentialType: event.credentialType,
             // Override the IT-Wallet version from the global store set on machine init.
-            // This is necessary because a user might use a different IT-Wallet version outside this machine:
-            // - User has 1.0 PID and is upgrading (1.0 -> 1.4)
-            // - User is whitelisted but falls back to L2 (1.4 -> 1.0)
-            itwVersion:
-              event.mode === "upgrade" || event.level === "l3"
-                ? CURRENT_ITW_SPECS_VERSION
-                : "1.0.0"
+            itwVersion: getIssuanceItwVersion(event.mode, event.level)
           })),
           target: "EvaluatingIssuanceMode"
         },
@@ -98,13 +99,25 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
       on: {
         "accept-tos": [
           {
+            // Once the ToS are accepted the user can no longer go back to the L3 identification
+            actions: assign({ l2FallbackOrigin: undefined }),
             // Verify the trust federation
             target: "TrustFederationVerification"
           }
         ],
+        "back-to-l3-identification": {
+          guard: "isL2FallbackFromL3",
+          actions: assign(({ context }) => ({
+            level: "l3",
+            credentialType: context.l2FallbackOrigin?.credentialType,
+            itwVersion: getIssuanceItwVersion("issuance", "l3"),
+            l2FallbackOrigin: undefined
+          })),
+          target: "#itwEidIssuanceMachine.UserIdentification.Identification"
+        },
         close: {
           target: "#itwEidIssuanceMachine.Idle",
-          actions: "closeIssuance"
+          actions: [assign({ l2FallbackOrigin: undefined }), "closeIssuance"]
         }
       }
     },
