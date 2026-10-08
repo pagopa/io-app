@@ -39,18 +39,12 @@ export type FimsFlowHandlerScreenRouteParams = {
   /* This indicates if the in-app browser on iOS must
    * share the cookies. If true, a native popup will appear to the user. */
   ephemeralSessionOniOS: boolean;
-  /* A Relying Party is always associated with a service.
-   * This is the fiscal code of the service organization */
-  organizationFiscalCode: string | undefined;
-  /* A Relying Party is always associated with a service.
-   * This is the name of the service organization */
-  organizationName: string | undefined;
-  /* A Relying Party is always associated with a service.
-   * This is service id */
-  serviceId: ServiceId;
-  /* A Relying Party is always associated with a service.
-   * This is service name */
-  serviceName: string | undefined;
+  /* Optional service metadata used for initial tracking when known by the
+   * entry point. Authentication resolves the service from the consents response. */
+  organizationFiscalCode?: string;
+  organizationName?: string;
+  serviceId?: ServiceId;
+  serviceName?: string;
   /* This is the entry point from which the FIMS's flow
    * has been starded (e.g., the screen's route name) */
   source: string;

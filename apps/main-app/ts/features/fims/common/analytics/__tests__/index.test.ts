@@ -34,6 +34,34 @@ describe("trackAuthenticationStart", () => {
     jest.resetAllMocks();
     jest.clearAllMocks();
   });
+  it("tracks entry without service metadata", () => {
+    const mixpanelTrackMock = generateMixpanelTrackMock();
+    const source = "ITW_PRESENTATION_CREDENTIAL_DETAIL";
+
+    trackAuthenticationStart(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      referenceCtaLabel,
+      source,
+      false
+    );
+
+    expect(mixpanelTrackMock).toHaveBeenCalledTimes(1);
+    expect(mixpanelTrackMock).toHaveBeenCalledWith("FIMS_START", {
+      event_category: "UX",
+      event_type: "action",
+      flow: undefined,
+      service_id: undefined,
+      service_name: undefined,
+      organization_name: undefined,
+      organization_fiscal_code: undefined,
+      fims_label: referenceCtaLabel,
+      source,
+      ephemeralSessionOniOS: false
+    });
+  });
   organizationFiscalCodes.forEach(organizationFiscalCode =>
     organizationNames.forEach(organizationName =>
       serviceNames.forEach(serviceName =>
