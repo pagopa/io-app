@@ -1,3 +1,4 @@
+import { IOToast } from "@io-app/design-system";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
@@ -13,22 +14,19 @@ import {
   trackItwBannerVisualized
 } from "../../../../analytics";
 import { itwCloseBanner } from "../../../../common/store/actions/banners";
-import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ItwDiscoveryInfoBanner } from "../ItwDiscoveryInfoBanner";
 
-const showcaseUrl = "https://example.com/it-wallet";
-const mockToastInfo = jest.fn();
-const mockToastError = jest.fn();
+const cacUrl =
+  "https://assistenza.ioapp.it/hc/it/articles/50661930290449-Cos-é-l-IT-Wallet-ID";
 
 jest.mock("@io-app/design-system", () => ({
   ...jest.requireActual<typeof import("@io-app/design-system")>(
     "@io-app/design-system"
   ),
-  useIOToast: () => ({
-    info: mockToastInfo,
-    error: mockToastError
-  })
+  IOToast: {
+    error: jest.fn()
+  }
 }));
 
 jest.mock("../../../../../../utils/url", () => ({
@@ -46,13 +44,6 @@ jest.mock("../../../../analytics", () => ({
 describe("ItwDiscoveryInfoBanner", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    jest
-      .spyOn(remoteConfigSelectors, "itwShowcaseUrlSelector")
-      .mockReturnValue(showcaseUrl);
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
   });
 
   it("renders the IT-Wallet ID discovery copy", () => {
@@ -77,12 +68,12 @@ describe("ItwDiscoveryInfoBanner", () => {
       expect.objectContaining({
         banner_id: "itwWalletID",
         banner_page: "ITW_PRESENTATION_PID_DETAIL",
-        banner_landing: showcaseUrl
+        banner_landing: cacUrl
       })
     );
   });
 
-  it("tracks tap and opens the configured showcase URL", () => {
+  it("tracks tap and opens the CAC article URL", () => {
     const { getByTestId } = renderComponent();
 
     fireEvent.press(getByTestId("itwDiscoveryInfoBannerTestID"));
@@ -91,10 +82,10 @@ describe("ItwDiscoveryInfoBanner", () => {
       expect.objectContaining({
         banner_id: "itwWalletID",
         banner_page: "ITW_PRESENTATION_PID_DETAIL",
-        banner_landing: showcaseUrl
+        banner_landing: cacUrl
       })
     );
-    expect(openWebUrl).toHaveBeenCalledWith(showcaseUrl, expect.any(Function));
+    expect(openWebUrl).toHaveBeenCalledWith(cacUrl, expect.any(Function));
   });
 
   it("tracks close and persists the dismissal", () => {
@@ -106,13 +97,13 @@ describe("ItwDiscoveryInfoBanner", () => {
       expect.objectContaining({
         banner_id: "itwWalletID",
         banner_page: "ITW_PRESENTATION_PID_DETAIL",
-        banner_landing: showcaseUrl
+        banner_landing: cacUrl
       })
     );
     expect(store.getActions()).toContainEqual(itwCloseBanner("itw_pid_info"));
   });
 
-  it("shows an error toast when opening the showcase URL fails", () => {
+  it("shows an error toast when opening the CAC article URL fails", () => {
     const { getByTestId } = renderComponent();
 
     fireEvent.press(getByTestId("itwDiscoveryInfoBannerTestID"));
@@ -120,35 +111,7 @@ describe("ItwDiscoveryInfoBanner", () => {
     const [, onError] = jest.mocked(openWebUrl).mock.calls[0];
     onError?.();
 
-    expect(mockToastError).toHaveBeenCalledWith(I18n.t("global.jserror.title"));
-  });
-
-  it("shows an info toast without opening a URL or tracking when the showcase URL is missing", () => {
-    jest
-      .mocked(remoteConfigSelectors.itwShowcaseUrlSelector)
-      .mockReturnValue(undefined);
-    const { getByTestId } = renderComponent();
-
-    fireEvent.press(getByTestId("itwDiscoveryInfoBannerTestID"));
-
-    expect(mockToastInfo).toHaveBeenCalledWith(
-      I18n.t("features.itWallet.generic.featureUnavailable.title")
-    );
-    expect(openWebUrl).not.toHaveBeenCalled();
-    expect(trackItwBannerVisualized).not.toHaveBeenCalled();
-    expect(trackItwBannerTap).not.toHaveBeenCalled();
-  });
-
-  it("persists dismissal without tracking when the showcase URL is missing", () => {
-    jest
-      .mocked(remoteConfigSelectors.itwShowcaseUrlSelector)
-      .mockReturnValue(undefined);
-    const { getByLabelText, store } = renderComponent();
-
-    fireEvent.press(getByLabelText(I18n.t("global.buttons.close")));
-
-    expect(trackItwBannerClosure).not.toHaveBeenCalled();
-    expect(store.getActions()).toContainEqual(itwCloseBanner("itw_pid_info"));
+    expect(IOToast.error).toHaveBeenCalledWith(I18n.t("global.jserror.title"));
   });
 });
 
