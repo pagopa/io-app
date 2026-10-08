@@ -108,7 +108,9 @@ export const ItwBrandedBox = ({
     return [{ translateX }, { scale: lightScaleMultiplier }];
   });
 
-  const SkiaLight = () => (
+  // Element, not an inline component: a component defined in render gets a new
+  // type each render and React would remount the Skia subtree every time.
+  const skiaLight = (
     <SkiaGroup
       opacity={lightSkiaOpacity}
       origin={vec(size.width / 2, size.height / 2)}
@@ -181,7 +183,7 @@ export const ItwBrandedBox = ({
         }}
       >
         {/* Animated light effect */}
-        <SkiaLight />
+        {skiaLight}
 
         {/* Animated gradient border */}
         <ItwBrandedSkiaBorder

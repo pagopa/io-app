@@ -38,7 +38,7 @@ import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/t
 import { ItwProximityQrCodeImage } from "../components/ItwProximityQrCodeImage.tsx";
 import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner.tsx";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
-import { selectFailure, selectIsLoading } from "../machine/selectors.ts";
+import { selectFailure } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
 import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/selectors/credentials.ts";
 
@@ -62,7 +62,6 @@ export const ItwProximityPresentmentScreen = ({
   const safeAreaInsets = useSafeAreaInsets();
 
   const machineRef = ItwProximityMachineContext.useActorRef();
-  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
   const failure = ItwProximityMachineContext.useSelector(selectFailure);
 
   const shouldShowExpiredCredentialsBanner = useIOSelector(
@@ -75,7 +74,6 @@ export const ItwProximityPresentmentScreen = ({
   const isFailure = !!failure;
 
   useDebugInfo({
-    isLoading,
     failure,
     // isPermissionsRequired,
     // isBluetoothRequired,
@@ -89,7 +87,7 @@ export const ItwProximityPresentmentScreen = ({
     });
   }, [machineRef]);
 
-  useMaxBrightness();
+  useMaxBrightness({ useSmoothTransition: true });
 
   useLayoutEffect(() => {
     navigation.setOptions({

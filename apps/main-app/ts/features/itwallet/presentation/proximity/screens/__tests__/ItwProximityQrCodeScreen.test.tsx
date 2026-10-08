@@ -22,11 +22,15 @@ jest.mock("../../analytics", () => ({
   trackItwProximityQrCode: jest.fn()
 }));
 
+const mockQRCode = jest.fn();
 jest.mock("react-native-qrcode-skia", () => {
   const React = jest.requireActual("react");
   return {
     __esModule: true,
-    default: () => React.createElement("View", { testID: "qrcode" })
+    default: (props: unknown) => {
+      mockQRCode(props);
+      return React.createElement("View", { testID: "qrcode" });
+    }
   };
 });
 
@@ -66,22 +70,21 @@ describe("ItwProximityPresentmentScreen", () => {
     expect(component).toMatchSnapshot();
   });
 
-  it("should keep the same QR slot size while loading and when ready", () => {
-    const loading = renderComponent(
-      { machineState: "loading" },
-      { source: "WALLET_HOME" }
-    );
-    const ready = renderComponent(
-      {
-        machineState: "displayQrCode",
-        qrCodeString: "mock-qr-code-string"
-      },
-      { source: "WALLET_HOME" }
-    );
+  it("should pass stable shape and logo props so QRCode does not regenerate its path", () => {
+    const options = {
+      machineState: "displayQrCode",
+      qrCodeString: "mock-qr-code-string"
+    } as const;
+    renderComponent(options, { source: "WALLET_HOME" });
+    renderComponent(options, { source: "WALLET_HOME" });
 
-    expect(loading.getByTestId("itwProximityQrSlotTestID").props.style).toEqual(
-      ready.getByTestId("itwProximityQrSlotTestID").props.style
-    );
+    const [first, last] = [
+      mockQRCode.mock.calls[0][0],
+      mockQRCode.mock.calls.at(-1)[0]
+    ];
+    expect(mockQRCode.mock.calls.length).toBeGreaterThan(1);
+    expect(last.shapeOptions).toBe(first.shapeOptions);
+    expect(last.logo).toBe(first.logo);
   });
 
   it("should render error state when QR code generation fails", () => {
