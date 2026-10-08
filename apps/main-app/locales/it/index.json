@@ -1006,7 +1006,7 @@
         "dc": "Carta Europea della Disabilità",
         "ed": "Titoli accademici",
         "edat": "Frequenza scolastica",
-        "edip": "Diplomi",
+        "edip": "Titoli di studio scolastici",
         "ee": "Iscrizioni accademiche",
         "eid": "Identità Digitale",
         "mdl": "Patente di guida",
@@ -1529,20 +1529,19 @@
           "title": "Hai aggiornato il documento"
         },
         "credentialAuth": {
-          "privacyAndTos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
           "requiredClaims": "Dati richiesti",
           "subtitle": "Saranno condivisi con **{{organization}}** solo per il tempo necessario al rilascio della versione digitale del documento.",
           "title": "Dati necessari per {{credentialName}}",
           "tos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}})."
         },
-        "credentialNotFound": {
-          "subtitle": "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce.",
-          "title": "Aggiungi il documento al Portafoglio"
-        },
         "credentialIntroduction": {
           "dismissalDialog": {
             "body": "Se interrompi il documento non verrà aggiunto. Potrai aggiungerlo in un secondo momento."
           }
+        },
+        "credentialNotFound": {
+          "subtitle": "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce.",
+          "title": "Aggiungi il documento al Portafoglio"
         },
         "credentialOffer": {
           "activation": {
@@ -1624,7 +1623,7 @@
         "emptyWallet": {
           "readyBanner": {
             "action": "Aggiungi documento",
-            "content": "È tutto pronto: aggiungi un documento al tuo Portafoglio di IO.",
+            "content": "Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano!",
             "title": "Aggiungi il tuo primo documento"
           },
           "readyBannerL2": {
@@ -1704,6 +1703,14 @@
           "secondaryAction": "Non ora"
         }
       },
+      "modal": {
+        "credentialUpgrade": {
+          "content": "Non è stato possibile aggiornare il documento automaticamente.\n\nPremi ‘Aggiorna il documento digitale’ per continuare a usarlo senza limitazioni.",
+          "primaryButton": "Aggiorna documento digitale",
+          "secondaryButton": "Non ora",
+          "title": "Aggiorna il documento"
+        }
+      },
       "notMatchingIdentityScreen": {
         "alert": {
           "message": "Dovrai entrare di nuovo con SPID o CIE per usare l'app.",
@@ -1776,6 +1783,11 @@
         }
       },
       "onboarding": {
+        "fallbackBanner": {
+          "action": "Inizia",
+          "content": "Scopri le funzionalità evolute e i vantaggi dell’unico portafoglio IT-Wallet pubblico.",
+          "title": "Attiva IT-Wallet e aggiungi i nuovi documenti"
+        },
         "restrictedMode": {
           "description": "Puoi ottenere una versione digitale dei seguenti documenti utilizzabile solo dal vivo e senza le funzionalità evolute di IT-Wallet",
           "title": "Documenti con funzionalità ridotte"
@@ -1823,7 +1835,8 @@
       "presentation": {
         "alerts": {
           "expired": {
-            "content": "Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio"
+            "action": "Scopri di più",
+            "content": "Il tuo documento è scaduto."
           },
           "expiring": {
             "content": "Mancano {{days}} giorni alla scadenza del documento."
@@ -1840,14 +1853,15 @@
           "mdl": {
             "content": "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine.",
             "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano.",
-            "invalid": {
-              "cta": "Rimuovi documento dal Portafoglio"
-            },
             "suspended": {
               "action": "Scopri di più",
               "title": "La tua Patente di guida risulta non valida."
             },
             "title": "Lo sapevi?"
+          },
+          "needsUpgrade": {
+            "action": "Aggiorna documento digitale",
+            "content": "Non è stato possibile aggiornare il documento automaticamente.\nAggiornalo ora per continuare a usarlo senza limitazioni."
           },
           "statusAction": "Cosa posso fare?",
           "ts": {
@@ -1860,12 +1874,6 @@
             "expiring": {
               "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio.",
               "title": "Carta europea della disabilità su IO: documento in scadenza"
-            }
-          },
-          "EuropeanHealthInsuranceCard": {
-            "expiring": {
-              "content": "La tua Tessera Sanitaria viene rinnovata in automatico e poi spedita al tuo indirizzo di residenza registrato presso l'Agenzia delle Entrate.\n\nSe l'hai già ricevuta, puoi eliminare questo documento dal Portafoglio e aggiungere la nuova versione digitale aggiornata.",
-              "title": "Tessera Sanitaria su IO: documento in scadenza"
             }
           },
           "eidInfo": {
@@ -1890,17 +1898,34 @@
             "titleExpired": "Documenti su IO:\nverifica la tua identità",
             "triggerLabel": "Cos'è?"
           },
+          "generic": {
+            "expired": {
+              "content": "Rimuovilo dal Portafoglio. Quando lo avrai rinnovato potrai aggiungere la versione digitale aggiornata.",
+              "cta": "Ho capito",
+              "title": "Il tuo documento è scaduto"
+            },
+            "expiring": {
+              "content": "Quando lo avrai rinnovato potrai aggiungere la versione digitale aggiornata al Portafoglio.",
+              "cta": "Ho capito",
+              "title": "Il tuo documento è in scadenza"
+            }
+          },
           "mDL": {
             "expired": {
-              "content": "###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO."
+              "content": "###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO.",
+              "contentNew": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente perché questa è scaduta.\n\nRinnova il documento presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO.",
+              "title": "La tua Patente di guida risulta non valida"
             },
             "expiring": {
               "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
               "cta": "Scopri di più",
               "title": "Patente su IO: documento in scadenza"
             },
+            "invalid": {
+              "cta": "Rimuovi documento dal Portafoglio"
+            },
             "suspended": {
-              "content": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente.\n\nIl tuo documento potrebbe ad esempio essere stato sospeso o ritirato in via temporanea. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.\n\nQuando la Patente fisica sarà di nuovo valida, il documento digitale si aggiornerà in automatico.\n\nRicorda: puoi continuare a usare la Patente digitale come documento di riconoscimento.",
+              "content": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente.\n\nIl tuo documento potrebbe ad esempio essere stato sospeso o ritirato in via temporanea. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
               "cta": "Ho capito"
             }
           }
@@ -1956,7 +1981,7 @@
             "content": {
               "education_attendance": "La tua iscrizione scolastica digitale ha piena validità ufficiale.",
               "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
-              "education_diploma": "I tuoi Diplomi digitali hanno piena validità ufficiale.",
+              "education_diploma": "I tuoi Titoli di studio scolastici digitali hanno piena validità ufficiale.",
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
               "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
             },
@@ -2138,7 +2163,7 @@
               "content": "Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.",
               "title": "Come funziona la verifica?"
             },
-            "instruction": "Mostra il codice QR o avvicinalo a un lettore. Chi verifica dal vivo userà un’app ufficiale.",
+            "instruction": "Chi verifica dal vivo userà un’app ufficiale.",
             "invalidBanner": {
               "action": "Conferma identità",
               "content": "Conferma la tua identità per continuare a usare il tuo portafoglio IT-Wallet."
@@ -2172,11 +2197,13 @@
                 },
                 "step2": {
                   "label": "Step 2",
-                  "value": "Cerca la funzionalità \"NFC\""
+                  "value": "Cerca la funzionalità \"NFC\"",
+                  "value_ios": "Seleziona \"App\", poi \"IO\""
                 },
                 "step3": {
                   "label": "Step 3",
-                  "value": "Attiva la funzionalità"
+                  "value": "Attiva la funzionalità",
+                  "value_ios": "Consenti a IO di usare l’NFC"
                 },
                 "title": "Ecco come:"
               },

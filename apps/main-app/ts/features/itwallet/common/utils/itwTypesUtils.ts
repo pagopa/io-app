@@ -79,10 +79,10 @@ export type CredentialMetadata = {
   keyTags?: ReadonlyArray<string>;
   /**
    * How the credential was obtained: through the credentials catalogue/list, or
-   * through a third-party credential offer (deeplink/QR code). Undefined for
-   * credentials stored before this field was introduced, and for flows that are
-   * neither (e.g. PID, upgrade/reissuance). Used to attribute the credential to
-   * the correct aggregate analytics property.
+   * through a third-party credential offer (deeplink/QR code). Upgrade and
+   * reissuance keep the value of the credential they replace. Undefined for the
+   * PID and for credentials stored before this field was introduced. Used to
+   * attribute the credential to the correct aggregate analytics property.
    */
   origin?: "catalogue" | "credentialOffer";
   parsedCredential: ParsedCredential;

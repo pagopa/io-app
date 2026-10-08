@@ -16,9 +16,7 @@ import {
   useIONavigation
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { getMixPanelCredential } from "../../../analytics/utils";
 import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
@@ -47,17 +45,11 @@ export const ItwConsentManagementScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
   const isRevoking = useRef(false);
   const credentialName = useItwCredentialName(credentialType);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const consentsSelector = useMemo(
     () => itwProximityConsentsEntriesByCredentialTypeSelector(credentialType),
     [credentialType]
   );
   const entries = useIOSelector(consentsSelector);
-
-  const mixPanelCredential = useMemo(
-    () => getMixPanelCredential(credentialType, isItwL3),
-    [credentialType, isItwL3]
-  );
 
   useFocusEffect(
     useCallback(() => {
@@ -70,8 +62,8 @@ export const ItwConsentManagementScreen = ({ route }: Props) => {
         }
         return;
       }
-      trackItwConsentManagement({ credential: mixPanelCredential });
-    }, [credentialType, entries.length, mixPanelCredential, navigation])
+      trackItwConsentManagement();
+    }, [credentialType, entries.length, navigation])
   );
 
   const navigateToDetail = useCallback(

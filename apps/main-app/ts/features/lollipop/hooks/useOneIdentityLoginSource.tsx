@@ -1,4 +1,5 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { isLoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
@@ -9,6 +10,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
+import { unknownToString } from "../../../utils/errors";
 import {
   isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
@@ -30,6 +32,7 @@ import { ReserveSchema } from "../types";
 import { toBase64EncodedThumbprint } from "../utils/crypto";
 import {
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
+  followNativeRedirectsAndVerifySaml,
   lollipopSamlVerify
 } from "../utils/login";
 
@@ -47,6 +50,9 @@ const reserveEndpointPath = "/api/auth/v1/reserve";
  *
  * - `assertion-ref-verified`: the lollipop check succeeded; `webviewSource` is
  *   the IDP SSO URL, safe to (re)load without triggering another check.
+ * - `following-redirects`: the `/authorize` redirects are being followed natively
+ *   and the lollipop assertion-ref is being verified, outside the WebView (only
+ *   when `followRedirectsNatively` is enabled).
  * - `one-identity-authorize`: the initial `/authorize` WebView source is
  *   available to load, but has not gone through the lollipop SAMLRequest check
  *   yet.
@@ -63,8 +69,20 @@ type LoginSourceState =
       status: "assertion-ref-verified" | "one-identity-authorize";
       webviewSource: WebViewSourceUri;
     }
+  | { status: "following-redirects" }
   | { status: "reserving-public-key" }
   | { status: "verifying-assertion-ref"; url: string };
+
+/**
+ * Builds a failure reason for the native redirects flow, including the native
+ * error details when available.
+ */
+const getNativeRedirectsFailureReason = (error: unknown): string => {
+  if (isLoginUtilsError(error)) {
+    return `${error.code} ${unknownToString(error.userInfo)}`;
+  }
+  return unknownToString(error);
+};
 
 /** Builds the request body for the `/reserve` endpoint. */
 const buildReserveRequestBody = (
@@ -114,24 +132,37 @@ const buildAuthorizationUrl = (
 };
 
 /**
+ * Builds the `x-pagopa-lollipop-assertion-ref` header for the OneIdentity
+ * `/authorize` request, required so that OneIdentity can associate the incoming
+ * request with the lollipop session just reserved via `/reserve`.
+ */
+const buildAuthorizeHeaders = (publicKey: PublicKey) => ({
+  "x-pagopa-lollipop-assertion-ref": `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toBase64EncodedThumbprint(
+    publicKey
+  )}`
+});
+
+/**
  * Builds the WebView source for the OneIdentity `/authorize` request: the URL
- * (via `buildAuthorizationUrl`) plus the `x-pagopa-lollipop-assertion-ref`
- * header, required so that OneIdentity can associate the incoming request with
- * the lollipop session just reserved via `/reserve`.
+ * (via `buildAuthorizationUrl`) plus the headers from `buildAuthorizeHeaders`.
  */
 const buildWebviewSource = (
   uri: string,
   publicKey: PublicKey
 ): WebViewSourceUri => ({
   uri,
-  headers: {
-    "x-pagopa-lollipop-assertion-ref": `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toBase64EncodedThumbprint(
-      publicKey
-    )}`
-  }
+  headers: buildAuthorizeHeaders(publicKey)
 });
 
 export type UseOneIdentityLoginSource = (params: {
+  /**
+   * When `true`, the `/authorize` redirects up to the IDP `SAMLRequest` are
+   * followed natively via `getRedirects` (as in the legacy login flow) instead
+   * of inside the WebView, which then directly loads the verified IDP SSO URL.
+   * Intended for devices where the WebView fails to follow those redirects.
+   * Defaults to `false`.
+   */
+  followRedirectsNatively?: boolean;
   /** The ID of the identity provider the user selected to login with. */
   idpId: string;
   /**
@@ -159,6 +190,7 @@ export type UseOneIdentityLoginSource = (params: {
 };
 
 export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
+  followRedirectsNatively = false,
   idpId,
   onFailure,
   minAuthLevel = AUTH_LEVELS.L2
@@ -272,10 +304,9 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       signal: controller.signal
     });
     const result = await jsonFetchToSchema(reservePromise, ReserveSchema);
-    // Clear the abort controller reference as the request has completed.
-    abortControllerRef.current = null;
 
     if (result.isErr()) {
+      abortControllerRef.current = null;
       setLoginSourceState({ status: "failure", error: result.error });
       onFailure(result.error);
       return;
@@ -287,11 +318,44 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       minAuthLevel
     );
 
+    if (followRedirectsNatively) {
+      setLoginSourceState({ status: "following-redirects" });
+
+      try {
+        const lastRedirect = await followNativeRedirectsAndVerifySaml(
+          authorizationUrl,
+          buildAuthorizeHeaders(publicKey),
+          publicKey
+        );
+        // getRedirects cannot be aborted: discard the result of a flow that
+        // has been restarted or unmounted in the meantime.
+        if (controller.signal.aborted) {
+          return;
+        }
+        setLoginSourceState({
+          status: "assertion-ref-verified",
+          webviewSource: { uri: lastRedirect }
+        });
+      } catch (error) {
+        if (controller.signal.aborted) {
+          return;
+        }
+        const reason = getNativeRedirectsFailureReason(error);
+        setLoginSourceState({ status: "failure", error: reason });
+        onFailure(reason);
+      }
+
+      abortControllerRef.current = null;
+      return;
+    }
+
+    abortControllerRef.current = null;
     setLoginSourceState({
       status: "one-identity-authorize",
       webviewSource: buildWebviewSource(authorizationUrl, publicKey)
     });
   }, [
+    followRedirectsNatively,
     idpId,
     ephemeralKeyTag,
     mixpanelEnabled,
