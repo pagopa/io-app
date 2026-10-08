@@ -26,6 +26,7 @@ import ROUTES from "./routes";
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 const MAIN_TAB_COUNT = 5;
 
+// TODO: remove this development once we migrate to IOPLT-2051
 const getTabAccessibilityLabel = (label: string, index: number) =>
   `${label}${getListItemAccessibilityLabelCount(MAIN_TAB_COUNT, index)}`;
 
