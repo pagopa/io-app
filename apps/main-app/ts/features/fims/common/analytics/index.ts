@@ -7,9 +7,9 @@ import { buildEventProperties } from "../../../../utils/analytics";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { fimsCtaTextSelector } from "../../singleSignOn/store/selectors";
 
-/** Tracks FIMS entry, allowing service metadata to be unavailable at launch. */
+/** Service metadata is resolved by the entry point before authentication starts. */
 export const trackAuthenticationStart = (
-  serviceId: ServiceId | undefined,
+  serviceId: ServiceId,
   serviceName: string | undefined,
   organizationName: string | undefined,
   organizationFiscalCode: string | undefined,

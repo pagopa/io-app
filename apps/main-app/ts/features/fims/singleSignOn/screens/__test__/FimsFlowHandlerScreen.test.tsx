@@ -11,10 +11,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as ANALYTICS from "../../../common/analytics";
 import { FIMS_ROUTES } from "../../../common/navigation";
 import { fimsGetConsentsListAction } from "../../store/actions";
-import {
-  FimsFlowHandlerScreen,
-  FimsFlowHandlerScreenRouteParams
-} from "../FimsFlowHandlerScreen";
+import { FimsFlowHandlerScreen } from "../FimsFlowHandlerScreen";
 
 const ctaUrl = "https://relyingParty.url/login";
 const label = "A label";
@@ -24,16 +21,6 @@ const serviceId = "01JMFHJBNP8R55CJZX2G52Q1P2" as ServiceId;
 const serviceName = "Service name";
 const source = "MESSAGE_DETAIL";
 const ephemeralSessionOniOS = true;
-const defaultRouteParams: FimsFlowHandlerScreenRouteParams = {
-  ctaText: label,
-  ctaUrl,
-  organizationFiscalCode,
-  organizationName,
-  serviceId,
-  serviceName,
-  source,
-  ephemeralSessionOniOS
-};
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -73,41 +60,6 @@ describe("FimsFlowHandlerScreen", () => {
       })
     );
   });
-  it("starts authentication without service metadata", () => {
-    jest.spyOn(APPVERSION, "getAppVersion").mockReturnValue("2.0.0.0");
-    const spyOnTrackAuthenticationStart = jest.spyOn(
-      ANALYTICS,
-      "trackAuthenticationStart"
-    );
-    const routeParams: FimsFlowHandlerScreenRouteParams = {
-      ctaText: label,
-      ctaUrl,
-      source,
-      ephemeralSessionOniOS: false
-    };
-
-    renderComponent("1.0.0.0", routeParams);
-
-    expect(spyOnTrackAuthenticationStart).toHaveBeenCalledTimes(1);
-    expect(spyOnTrackAuthenticationStart).toHaveBeenCalledWith(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      label,
-      source,
-      false
-    );
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith(
-      fimsGetConsentsListAction.request({
-        ctaText: label,
-        ctaUrl,
-        ephemeralSessionOniOS: false
-      })
-    );
-  });
-
   it("should call 'trackAuthenticationError' upon first rendering if an app update is required", () => {
     jest.spyOn(APPVERSION, "getAppVersion").mockReturnValue("2.0.0.0");
     const spyOnTrackAuthenticationError = jest.spyOn(
@@ -127,10 +79,7 @@ describe("FimsFlowHandlerScreen", () => {
   });
 });
 
-const renderComponent = (
-  minAppVersion: string,
-  routeParams = defaultRouteParams
-) => {
+const renderComponent = (minAppVersion: string) => {
   const baseState = appReducer(undefined, applicationChangeState("active"));
   const testState = {
     ...baseState,
@@ -159,7 +108,16 @@ const renderComponent = (
   return renderScreenWithNavigationStoreContext(
     FimsFlowHandlerScreen,
     FIMS_ROUTES.CONSENTS,
-    routeParams,
+    {
+      ctaText: label,
+      ctaUrl,
+      organizationFiscalCode,
+      organizationName,
+      serviceId,
+      serviceName,
+      source,
+      ephemeralSessionOniOS
+    },
     store
   );
 };
