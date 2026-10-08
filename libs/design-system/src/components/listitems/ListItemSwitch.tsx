@@ -1,5 +1,10 @@
 import { ComponentProps, memo, useMemo } from "react";
-import { GestureResponderEvent, Platform, Switch, View } from "react-native";
+import {
+  GestureResponderEvent,
+  Platform,
+  Switch as RNSwitch,
+  View
+} from "react-native";
 
 import { useIOTheme } from "../../context";
 import {
@@ -13,7 +18,7 @@ import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer } from "../layout";
 import { LoadingSpinner } from "../loadingSpinner";
 import { IOLogoPaymentType, LogoPayment } from "../logos";
-import { NativeSwitch } from "../switch/NativeSwitch";
+import { Switch } from "../switch/Switch";
 import { BodySmall, H6, LabelMini } from "../typography";
 
 export type ListItemSwitchGraphicProps =
@@ -44,7 +49,7 @@ const ESTIMATED_SWITCH_HEIGHT = 32;
 
 export type ListItemSwitchProps = ListItemSwitchGraphicProps &
   PartialProps &
-  Pick<ComponentProps<typeof Switch>, "disabled" | "value">;
+  Pick<ComponentProps<typeof RNSwitch>, "disabled" | "value">;
 
 export const ListItemSwitch = memo(
   ({
@@ -155,7 +160,7 @@ export const ListItemSwitch = memo(
             )}
             {isLoading && <LoadingSpinner size={24} />}
             {canRenderSwitch && (
-              <NativeSwitch
+              <Switch
                 accessibilityLabel={label}
                 disabled={disabled}
                 onValueChange={onSwitchValueChange}

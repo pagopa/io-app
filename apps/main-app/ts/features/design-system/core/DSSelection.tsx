@@ -9,9 +9,9 @@ import {
   ListItemCheckbox,
   ListItemRadioWithAmount,
   ListItemSwitch,
-  NativeSwitch,
   RadioGroup,
   RadioItem,
+  Switch,
   useIOTheme,
   VStack
 } from "@io-app/design-system";
@@ -57,8 +57,8 @@ export const DSSelection = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Switch</H4>
           <VStack space={componentMargin}>
-            {/* Native Switch */}
-            <NativeSwitchShowroom />
+            {/* Switch */}
+            <SwitchShowroom />
             {/* ListItemSwitch */}
             <ListItemSwitchShowroom />
           </VStack>
@@ -309,21 +309,21 @@ const AnimatedMessageCheckboxShowroom = () => {
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <AnimatedMessageCheckbox checked={isEnabled} />
         <HSpacer size={24} />
-        <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
+        <Switch onValueChange={toggleSwitch} value={isEnabled} />
       </View>
     </DSComponentViewerBox>
   );
 };
 
 // SWITCH
-const NativeSwitchShowroom = () => {
+const SwitchShowroom = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <DSComponentViewerBox name="NativeSwitch">
+    <DSComponentViewerBox name="Switch">
       <View style={{ alignSelf: "flex-start" }}>
-        <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
+        <Switch onValueChange={toggleSwitch} value={isEnabled} />
       </View>
     </DSComponentViewerBox>
   );
