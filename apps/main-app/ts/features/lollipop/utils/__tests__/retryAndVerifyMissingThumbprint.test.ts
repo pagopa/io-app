@@ -12,7 +12,7 @@ jest.mock("../..", () => {
     handleRegenerateEphemeralKey: jest.fn().mockResolvedValue(undefined)
   };
 });
-jest.mock("@pagopa/io-react-native-login-utils", () => ({
+jest.mock("@io-app/login-utils", () => ({
   getRedirects: jest.fn().mockResolvedValue([url])
 }));
 

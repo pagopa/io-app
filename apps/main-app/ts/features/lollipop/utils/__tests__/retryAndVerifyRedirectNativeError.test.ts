@@ -1,5 +1,4 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 
 import { AppDispatch } from "../../../../App";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
@@ -21,7 +20,7 @@ jest.mock("../..", () => {
       .mockResolvedValue(jwkPublicKey as PublicKey)
   };
 });
-jest.mock("@pagopa/io-react-native-login-utils", () => ({
+jest.mock("@io-app/login-utils", () => ({
   getRedirects: jest.fn().mockRejectedValue({
     userInfo: {
       Error: "fake network error",
@@ -30,9 +29,7 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
       Parameter: undefined
     },
     code: "409"
-  }),
-  isLoginUtilsError: (e: unknown) =>
-    (e as LoginUtilsError).userInfo !== undefined
+  })
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {

@@ -69,6 +69,8 @@ PODS:
     - ExpoModulesCore
   - ExpoLogBox (55.0.12):
     - React-Core
+  - ExpoLoginUtils (1.0.0):
+    - ExpoModulesCore
   - ExpoModulesCore (55.0.25):
     - boost
     - DoubleConversion
@@ -117,6 +119,8 @@ PODS:
   - ExpoUI (55.0.17):
     - ExpoModulesCore
     - React-RCTFabric
+  - ExpoWebBrowser (55.0.20):
+    - ExpoModulesCore
   - fast_float (8.0.0)
   - FBLazyVector (0.83.10)
   - fmt (12.1.0)
@@ -319,34 +323,6 @@ PODS:
     - glog
     - hermes-engine
     - JOSESwift (~> 3.0)
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
-  - pagopa-io-react-native-login-utils (1.2.0):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -3892,21 +3868,22 @@ DEPENDENCIES:
   - EXApplication (from `../../../node_modules/expo-application/ios`)
   - EXConstants (from `../../../node_modules/expo-constants/ios`)
   - Expo (from `../../../node_modules/expo`)
-  - ExpoAsset (from `../../../node_modules/expo-asset/ios`)
+  - ExpoAsset (from `../../../node_modules/expo/node_modules/expo-asset/ios`)
   - ExpoBackgroundTask (from `../../../node_modules/expo-background-task/ios`)
   - ExpoBrightness (from `../../../node_modules/expo-brightness/ios`)
   - ExpoCalendar (from `../../../node_modules/expo-calendar/ios`)
   - ExpoClipboard (from `../../../node_modules/expo-clipboard/ios`)
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
   - ExpoDocumentPicker (from `../../../node_modules/expo-document-picker/ios`)
-  - "ExpoDomWebView (from `../../../node_modules/@expo/dom-webview/ios`)"
+  - "ExpoDomWebView (from `../../../node_modules/expo/node_modules/@expo/dom-webview/ios`)"
   - ExpoFileSystem (from `../../../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../../../node_modules/expo-font/ios`)
   - ExpoImagePicker (from `../../../node_modules/expo-image-picker/ios`)
-  - ExpoKeepAwake (from `../../../node_modules/expo-keep-awake/ios`)
+  - ExpoKeepAwake (from `../../../node_modules/expo/node_modules/expo-keep-awake/ios`)
   - ExpoLinearGradient (from `../../../node_modules/expo-linear-gradient/ios`)
   - ExpoLocalAuthentication (from `../../../node_modules/expo-local-authentication/ios`)
-  - "ExpoLogBox (from `../../../node_modules/@expo/log-box`)"
+  - "ExpoLogBox (from `../../../node_modules/expo/node_modules/@expo/log-box`)"
+  - ExpoLoginUtils (from `../../../libs/login-utils/ios`)
   - ExpoModulesCore (from `../../../node_modules/expo-modules-core`)
   - ExpoModulesJSI (from `../../../node_modules/expo-modules-core`)
   - ExpoNotifications (from `../../../node_modules/expo-notifications/ios`)
@@ -3914,6 +3891,7 @@ DEPENDENCIES:
   - ExpoSharing (from `../../../node_modules/expo-sharing/ios`)
   - ExpoTaskManager (from `../../../node_modules/expo-task-manager/ios`)
   - "ExpoUI (from `../../../node_modules/@expo/ui/ios`)"
+  - ExpoWebBrowser (from `../../../node_modules/expo-web-browser/ios`)
   - fast_float (from `../../../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
   - FBLazyVector (from `../../../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../../../node_modules/react-native/third-party-podspecs/fmt.podspec`)
@@ -3928,7 +3906,6 @@ DEPENDENCIES:
   - "pagopa-io-react-native-crypto (from `../../../node_modules/@pagopa/io-react-native-crypto`)"
   - "pagopa-io-react-native-integrity (from `../../../node_modules/@pagopa/io-react-native-integrity`)"
   - "pagopa-io-react-native-jwt (from `../../../node_modules/@pagopa/io-react-native-jwt`)"
-  - "pagopa-io-react-native-login-utils (from `../../../node_modules/@pagopa/io-react-native-login-utils`)"
   - "pagopa-io-react-native-secure-storage (from `../../../node_modules/@pagopa/io-react-native-secure-storage`)"
   - "pagopa-react-native-zendesk (from `../../../node_modules/@pagopa/io-react-native-zendesk`)"
   - Pulsar (from `../../../node_modules/react-native-pulsar`)
@@ -4077,7 +4054,7 @@ EXTERNAL SOURCES:
   Expo:
     :path: "../../../node_modules/expo"
   ExpoAsset:
-    :path: "../../../node_modules/expo-asset/ios"
+    :path: "../../../node_modules/expo/node_modules/expo-asset/ios"
   ExpoBackgroundTask:
     :path: "../../../node_modules/expo-background-task/ios"
   ExpoBrightness:
@@ -4091,7 +4068,7 @@ EXTERNAL SOURCES:
   ExpoDocumentPicker:
     :path: "../../../node_modules/expo-document-picker/ios"
   ExpoDomWebView:
-    :path: "../../../node_modules/@expo/dom-webview/ios"
+    :path: "../../../node_modules/expo/node_modules/@expo/dom-webview/ios"
   ExpoFileSystem:
     :path: "../../../node_modules/expo-file-system/ios"
   ExpoFont:
@@ -4099,13 +4076,15 @@ EXTERNAL SOURCES:
   ExpoImagePicker:
     :path: "../../../node_modules/expo-image-picker/ios"
   ExpoKeepAwake:
-    :path: "../../../node_modules/expo-keep-awake/ios"
+    :path: "../../../node_modules/expo/node_modules/expo-keep-awake/ios"
   ExpoLinearGradient:
     :path: "../../../node_modules/expo-linear-gradient/ios"
   ExpoLocalAuthentication:
     :path: "../../../node_modules/expo-local-authentication/ios"
   ExpoLogBox:
-    :path: "../../../node_modules/@expo/log-box"
+    :path: "../../../node_modules/expo/node_modules/@expo/log-box"
+  ExpoLoginUtils:
+    :path: "../../../libs/login-utils/ios"
   ExpoModulesCore:
     :path: "../../../node_modules/expo-modules-core"
   ExpoModulesJSI:
@@ -4120,6 +4099,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-task-manager/ios"
   ExpoUI:
     :path: "../../../node_modules/@expo/ui/ios"
+  ExpoWebBrowser:
+    :path: "../../../node_modules/expo-web-browser/ios"
   fast_float:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/fast_float.podspec"
   FBLazyVector:
@@ -4149,8 +4130,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@pagopa/io-react-native-integrity"
   pagopa-io-react-native-jwt:
     :path: "../../../node_modules/@pagopa/io-react-native-jwt"
-  pagopa-io-react-native-login-utils:
-    :path: "../../../node_modules/@pagopa/io-react-native-login-utils"
   pagopa-io-react-native-secure-storage:
     :path: "../../../node_modules/@pagopa/io-react-native-secure-storage"
   pagopa-react-native-zendesk:
@@ -4387,6 +4366,7 @@ SPEC CHECKSUMS:
   ExpoLinearGradient: caf2c659e6ea0c473ece8f6164eaeae05740664d
   ExpoLocalAuthentication: c4abaae8709b8b15727f2e8dd6d74c5ad38acb0c
   ExpoLogBox: a678d36477ab9544fe63e0b5328a0716539b6774
+  ExpoLoginUtils: 854c7e65baa0647ac8baa33625f0124538cea048
   ExpoModulesCore: cc07ebf5b947a239f1669cb5856d905cb2b093f7
   ExpoModulesJSI: 964334271fc77832736f66ee1785761cdc778dbe
   ExpoNotifications: 61c46aa5df088ff0ad41de0504a86a92333aec55
@@ -4394,11 +4374,12 @@ SPEC CHECKSUMS:
   ExpoSharing: 40cd8fd65209bc35adc710ff7e42dd35913d2a0f
   ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
   ExpoUI: 3d10642147c44f94a4557f1defe2efd3244349af
+  ExpoWebBrowser: 93992534927ba810f67e3171f6acf862c7098674
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 07433c4ab85da44d0b5ceac374ff4e1d57c7aa23
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
-  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  hermes-engine: 9c45a1dcb85eca692601d2f4fff763b820c8176d
+  glog: 0456694f3aaf09460b660ea327cfc11defbeea4c
+  hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 5344f279534758a68bb111c20df640c6afc67e70
@@ -4414,7 +4395,6 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-crypto: afc8ee2585a7944dc115687eb2938009608f062a
   pagopa-io-react-native-integrity: 3e84754db0333a531db86f83f786f60a6da22337
   pagopa-io-react-native-jwt: a5231b3f09cb69b54abd76dac34e1bddff596fe2
-  pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
   Pulsar: b74a2333a1f655d04a8bc144a7273cb7ffdf7122

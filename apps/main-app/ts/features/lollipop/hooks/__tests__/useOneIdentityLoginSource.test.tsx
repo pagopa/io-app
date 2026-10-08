@@ -1,5 +1,4 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
@@ -455,23 +454,6 @@ describe("useOneIdentityLoginSource", () => {
     });
 
     it.each([
-      {
-        name: "a native error with HTTP status",
-        error: {
-          userInfo: { error: "REDIRECTING_ERROR", statusCode: 500 },
-          code: "NativeRedirectError"
-        } as unknown as LoginUtilsError,
-        expectedReason:
-          'NativeRedirectError {"error":"REDIRECTING_ERROR","statusCode":500}'
-      },
-      {
-        name: "a native error without HTTP status",
-        error: {
-          userInfo: { error: "REDIRECTING_ERROR" },
-          code: "NativeRedirectError"
-        } as unknown as LoginUtilsError,
-        expectedReason: 'NativeRedirectError {"error":"REDIRECTING_ERROR"}'
-      },
       {
         name: "a SAML verification error",
         error: new Error(

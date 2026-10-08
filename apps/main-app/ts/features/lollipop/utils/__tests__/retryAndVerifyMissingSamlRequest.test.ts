@@ -1,5 +1,5 @@
+import { getRedirects } from "@io-app/login-utils";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { getRedirects } from "@pagopa/io-react-native-login-utils";
 
 import { AppDispatch } from "../../../../App";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
@@ -21,8 +21,8 @@ jest.mock("../..", () => {
       .mockResolvedValue(jwkPublicKey as PublicKey)
   };
 });
-jest.mock("@pagopa/io-react-native-login-utils", () => ({
-  getRedirects: jest.fn()
+jest.mock("@io-app/login-utils", () => ({
+  getRedirects: jest.fn().mockResolvedValue([undefined])
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
