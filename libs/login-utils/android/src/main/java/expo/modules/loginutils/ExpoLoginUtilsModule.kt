@@ -75,7 +75,7 @@ class ExpoLoginUtilsModule : Module() {
     try {
       val connection = URL(url).openConnection() as HttpURLConnection
       connection.instanceFollowRedirects = false
-      headers?.toHashMap()?.forEach { (key, value) ->
+      headers?.forEach { (key, value) ->
         connection.setRequestProperty(key, value.toString())
       }
       handleRedirects(connection, url, urlArray, callbackURLParameter, promise, onComplete)
