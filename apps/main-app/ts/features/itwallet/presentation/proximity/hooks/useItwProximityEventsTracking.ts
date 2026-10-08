@@ -17,7 +17,8 @@ import { ProximityFailure, ProximityFailureType } from "../machine/failure";
 import { ItwProximityMachineContext } from "../machine/provider";
 import {
   hasGivenConsentSelector,
-  selectIsNfcRetrieval
+  selectIsNfcRetrieval,
+  selectProximityFlow
 } from "../machine/selectors";
 
 type Params = {
@@ -32,16 +33,21 @@ export const useItwProximityEventsTracking = ({ failure }: Params) => {
   );
   const isNfcRetrieval =
     ItwProximityMachineContext.useSelector(selectIsNfcRetrieval);
+  const proximityFlow =
+    ItwProximityMachineContext.useSelector(selectProximityFlow);
   useEffect(() => {
     const serializedFailure = serializeFailureReason(failure);
     switch (failure.type) {
       case ProximityFailureType.MISSING_CREDENTIALS:
-        return trackItwProximityMandatoryCredentialMissing();
+        return trackItwProximityMandatoryCredentialMissing({
+          proximity_flow: proximityFlow
+        });
 
       case ProximityFailureType.RELYING_PARTY_GENERIC:
         trackItwProximityRPGenericFailure({
           reason: serializedFailure.reason,
           type: serializedFailure.type,
+          proximity_flow: proximityFlow,
           proximity_sharing_status: hasGivenConsent ? "post" : "pre"
         });
         if (isNfcRetrieval) {
@@ -50,20 +56,27 @@ export const useItwProximityEventsTracking = ({ failure }: Params) => {
         return;
 
       case ProximityFailureType.TIMEOUT:
-        trackItwProximityTimeout(serializedFailure);
+        trackItwProximityTimeout({
+          ...serializedFailure,
+          proximity_flow: proximityFlow
+        });
         if (isNfcRetrieval) {
           return trackItwProximityNfcSessionTimeout(serializedFailure);
         }
         return;
 
       case ProximityFailureType.UNEXPECTED:
-        return trackItwProximityUnexpectedFailure(
-          shouldSerializeReason(failure)
+        return trackItwProximityUnexpectedFailure({
+          ...(shouldSerializeReason(failure)
             ? { ...serializedFailure, origin: "ITW_PROXIMITY_EVENTS_TRACKING" }
-            : failure
-        );
+            : failure),
+          proximity_flow: proximityFlow
+        });
       case ProximityFailureType.UNTRUSTED_RP:
-        return trackItwProximityRpNotTrusted(serializedFailure);
+        return trackItwProximityRpNotTrusted({
+          ...serializedFailure,
+          proximity_flow: proximityFlow
+        });
     }
-  }, [failure, hasGivenConsent, isNfcRetrieval]);
+  }, [failure, hasGivenConsent, isNfcRetrieval, proximityFlow]);
 };
