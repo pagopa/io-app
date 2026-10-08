@@ -66,7 +66,7 @@ class ExpoLoginUtilsModule : Module() {
 
   private fun findRedirects(
     url: String,
-    headers: ReadableMap? = null,
+    headers: Map<String, Any?>? = null,
     urlArray: ArrayList<String>,
     callbackURLParameter: String?,
     promise: Promise,
