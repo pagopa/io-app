@@ -109,10 +109,9 @@ export const FimsFlowSuccessBody = ({
               const state = store.getState();
               computeAndTrackDataShareAccepted(serviceId, state);
               dispatch(
-                fimsAcceptConsentsAction(
-                  // eslint-disable-next-line no-underscore-dangle
-                  { acceptUrl: consents._links.consent.href }
-                )
+                fimsAcceptConsentsAction({
+                  acceptUrl: consents._links.consent.href
+                })
               );
             }
           },
@@ -150,7 +149,10 @@ export const FimsFlowSuccessBody = ({
           variant="link"
         />
         <VSpacer size={24} />
-        <ListItemHeader iconName="security" label="Dati richiesti" />
+        <ListItemHeader
+          iconName="security"
+          label={I18n.t("FIMS.consentsScreen.requiredData")}
+        />
         <FimsClaimsList claims={consents.user_metadata} />
         <VSpacer size={24} />
 

@@ -100,7 +100,6 @@ const MultiValuePrerequisiteItemScreenContent = ({
   const isSelfCriteriaMultiTypeDTO = (
     obj: SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO
   ): obj is SelfCriteriaMultiTypeDTO =>
-    // eslint-disable-next-line no-underscore-dangle
     obj._type === SelfCriteriaMultiTypeVariationEnum.multi_consent;
 
   const handleContinuePress = () => {

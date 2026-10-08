@@ -1,14 +1,17 @@
 import { Divider, ListItemHeader } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { View } from "react-native";
 import { Fragment } from "react/jsx-runtime";
 
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata";
+import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences";
+import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences";
 import {
   parseClaims,
   WellKnownClaim
@@ -20,12 +23,18 @@ type Props = {
 };
 
 export const ItwPresentationPidDetail = ({ credential }: Props) => {
-  const [claimsHidden, setClaimsHidden] = useState(false);
+  const claimsHidden = useIOSelector(itwIsClaimValueHiddenSelector);
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const { name: currentScreenName } = useRoute();
 
   const listItemHeaderLabel = I18n.t(
     "features.itWallet.presentation.itWalletId.listItemHeader"
+  );
+  const toggleValuesAccessibilityLabel = I18n.t(
+    claimsHidden
+      ? "features.itWallet.presentation.itWalletId.listItemHeaderShowValues"
+      : "features.itWallet.presentation.itWalletId.listItemHeaderHideValues"
   );
   const claims = useMemo(
     () =>
@@ -40,11 +49,12 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
       type: "iconButton",
       componentProps: {
         icon: claimsHidden ? "eyeHide" : "eyeShow",
-        accessibilityLabel: listItemHeaderLabel,
-        onPress: () => setClaimsHidden(state => !state)
+        accessibilityLabel: toggleValuesAccessibilityLabel,
+        onPress: () => dispatch(itwSetClaimValuesHidden(!claimsHidden)),
+        testID: "toggle-pid-claim-visibility"
       }
     }),
-    [claimsHidden, listItemHeaderLabel]
+    [claimsHidden, dispatch, toggleValuesAccessibilityLabel]
   );
 
   return (

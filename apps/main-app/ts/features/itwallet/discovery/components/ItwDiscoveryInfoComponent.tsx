@@ -11,9 +11,9 @@ import {
   IOColors,
   IOIcons,
   IOMarkdownLite,
+  IOToast,
   useIOTheme,
   useIOThemeContext,
-  useIOToast,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -30,8 +30,10 @@ import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../store/hooks.ts";
+import { ITW_PRIVACY_URL, ITW_TOS_URL } from "../../../../urls.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import { openWebUrl } from "../../../../utils/url";
 import { trackOpenItwTos } from "../../analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
@@ -60,7 +62,6 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const mixPanelCredentialDetails = useIOSelector(
     itwMixPanelCredentialDetailsSelector
   );
-  const toast = useIOToast();
 
   useOnFirstRender(
     useCallback(() => {
@@ -74,15 +75,11 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   );
 
   useHeaderSecondLevel({
-    supportRequest: true,
+    supportRequest: false,
     title: "",
     goBack: () => {
       trackItwIntroBack("L3");
       machineRef.send({ type: "close", surveyStep: "intro" });
-    },
-    onStartSupportRequest: () => {
-      toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
-      return false;
     }
   });
 
@@ -91,10 +88,10 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     machineRef.send({ type: "accept-tos" });
   }, [machineRef, mixPanelCredentialDetails]);
 
-  const handlePrivacyAndTermsPress = useCallback(() => {
+  const handlePrivacyAndTosLinkPress = useCallback((url: string) => {
     trackOpenItwTos();
-    machineRef.send({ type: "go-to-ipzs-privacy" });
-  }, [machineRef]);
+    openWebUrl(url, () => IOToast.error(I18n.t("global.jserror.title")));
+  }, []);
 
   const {
     present: presentItwDetailsBottomSheet,
@@ -239,10 +236,11 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
             </VStack>
             <VSpacer size={32} />
             <IOMarkdownLite
-              content={I18n.t("features.itWallet.discovery.screen.itw.tos", {
-                privacyUrl: "itw-privacy-and-terms"
-              })}
-              onLinkPress={handlePrivacyAndTermsPress}
+              content={I18n.t(
+                "features.itWallet.discovery.screen.itw.privacyAndTos",
+                { privacyUrl: ITW_PRIVACY_URL, tosUrl: ITW_TOS_URL }
+              )}
+              onLinkPress={handlePrivacyAndTosLinkPress}
               small
             />
           </ContentWrapper>
@@ -324,7 +322,8 @@ const styles = StyleSheet.create({
   feature: {
     alignItems: "center",
     paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingLeft: 8,
+    paddingRight: 16,
     borderWidth: 1,
     borderRadius: 8,
     borderCurve: "continuous"

@@ -62,7 +62,7 @@ export default defineConfig([
   ]),
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
-  // eslint-plugin-prettier, perfectionist.
+  // eslint-config-prettier, perfectionist.
   ...pagopaConfig,
 
   {
@@ -290,7 +290,28 @@ export default defineConfig([
               "accessibilityHint",
               "placeholder",
               "title",
-              "alt"
+              "alt",
+              // Text-bearing props
+              "actions",
+              "label",
+              "description",
+              "text",
+              "errorMessage",
+              "value",
+              "subtitle",
+              "content",
+              "message",
+              // Props whose object value nests text in `componentProps`
+              "endElement",
+              "startElement",
+              "topElement",
+              "headerAction",
+              "firstAction",
+              "secondaryAction",
+              "startAction",
+              "endAction",
+              "scrollViewAction",
+              "footerActionProps"
             ],
             exclude: []
           },
@@ -298,6 +319,28 @@ export default defineConfig([
           "jsx-components": {
             include: [],
             exclude: ["Trans"]
+          },
+
+          // Options replace the plugin defaults, so the default excludes are
+          // respelled here: patterns full-match with a leading dot allowed, so
+          // `t` is what exempts `I18n.t(...)` arguments.
+          callees: {
+            exclude: [
+              "i18n(ext)?",
+              "t",
+              "require",
+              "addEventListener",
+              "removeEventListener",
+              "postMessage",
+              "getElementById",
+              "dispatch",
+              "commit",
+              "includes",
+              "indexOf",
+              "endsWith",
+              "startsWith",
+              "format"
+            ]
           },
 
           words: {
@@ -348,7 +391,17 @@ export default defineConfig([
       ],
 
       // Disallow dynamically-built i18n keys so unused-key detection stays reliable
-      "@io-app/i18n-no-dynamic-keys": "warn",
+      "@io-app/i18n-no-dynamic-keys": "error",
+
+      // A single import name lets the i18n rules above, which match `I18n.t`, see every call
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            "ImportDeclaration[source.value='i18next'] > :matches(ImportDefaultSpecifier, ImportNamespaceSpecifier)[local.name!='I18n']",
+          message: 'Import i18next as `I18n`: import I18n from "i18next".'
+        }
+      ],
 
       // Remove this after the migration of fp-ts is being completed and replaced by neverthrow;
       "@io-app/no-fp-ts": "warn"
@@ -427,7 +480,8 @@ export default defineConfig([
       }
     },
     rules: {
-      "@io-app/i18n-no-unused-keys": "warn"
+      // Checked without cache by the `lint-locales` script
+      "@io-app/i18n-no-unused-keys": "error"
     }
   }
 ]);

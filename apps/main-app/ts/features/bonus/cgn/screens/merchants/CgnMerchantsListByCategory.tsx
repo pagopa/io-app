@@ -11,18 +11,12 @@ import {
   IOVisualCostants
 } from "@io-app/design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, RefreshControl, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
-import {
-  getValueOrElse,
-  isError,
-  isLoading
-} from "../../../../../common/model/RemoteValue";
+import { isError, isLoading } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -40,8 +34,8 @@ import {
   cgnOfflineMerchantsSelector,
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
-import { getCategorySpecs } from "../../utils/filters";
-import { mixAndSortMerchants } from "../../utils/merchants";
+import { getCategoryName, getCategorySpecs } from "../../utils/filters";
+import { useMixedSortedMerchants } from "../../utils/merchants";
 
 export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
   category: ProductCategoryEnum;
@@ -62,8 +56,8 @@ const CgnMerchantsListByCategory = () => {
   const offlineMerchants = useIOSelector(cgnOfflineMerchantsSelector);
 
   const categorySpecs = useMemo(
-    () => pipe(route.params.category, getCategorySpecs, O.toUndefined),
-    [route]
+    () => getCategorySpecs(route.params.category),
+    [route.params.category]
   );
 
   const { navigate } =
@@ -91,15 +85,9 @@ const CgnMerchantsListByCategory = () => {
 
   useEffect(initLoadingLists, [route, categoryFilter, dispatch]);
 
-  // Mixes online and offline merchants to render on the same list
-  // merchants are sorted by name
-  const merchantsAll = useMemo(
-    () =>
-      mixAndSortMerchants(
-        getValueOrElse(onlineMerchants, []),
-        getValueOrElse(offlineMerchants, [])
-      ),
-    [onlineMerchants, offlineMerchants]
+  const merchantsAll = useMixedSortedMerchants(
+    onlineMerchants,
+    offlineMerchants
   );
 
   const onItemPress = useCallback(
@@ -112,16 +100,9 @@ const CgnMerchantsListByCategory = () => {
   );
 
   useHeaderSecondLevel({
-    title: I18n.t(
-      pipe(
-        categorySpecs,
-        O.fromNullable,
-        O.fold(
-          () => "bonus.cgn.merchantsList.navigationTitle",
-          cs => cs.nameKey as any
-        )
-      )
-    ),
+    title: categorySpecs
+      ? getCategoryName(categorySpecs.type)
+      : I18n.t("bonus.cgn.merchantsList.navigationTitle"),
     enableDiscreteTransition: true,
     animatedRef: animatedFlatListRef,
     backgroundColor: categorySpecs?.colors,
@@ -196,12 +177,12 @@ const CgnMerchantsListByCategory = () => {
                 accessibilityLabel={I18n.t(
                   "bonus.cgn.merchantsList.a11yTitle",
                   {
-                    categoryName: I18n.t(categorySpecs.nameKey)
+                    categoryName: getCategoryName(categorySpecs.type)
                   }
                 )}
                 color={categorySpecs.textColor}
               >
-                {I18n.t(categorySpecs.nameKey)}
+                {getCategoryName(categorySpecs.type)}
               </H3>
             </View>
           </View>

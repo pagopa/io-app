@@ -1,7 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { LoginConfigState } from "../../reducers/loginConfig";
+import {
+  LoginConfigState,
+  ONE_IDENTITY_ENVS
+} from "../../reducers/loginConfig";
 import {
   isOneIdentityLoginEnabledSelector,
   oneIdentityEnvSelector,
@@ -30,7 +33,7 @@ describe("oneIdentityLocalFeatureFlagSelector", () => {
     value => {
       const state = makeState({
         oneIdentityLocalFeatureFlag: value,
-        oneIdentityEnv: "prod"
+        oneIdentityEnv: ONE_IDENTITY_ENVS.PROD
       });
       expect(oneIdentityLocalFeatureFlagSelector(state)).toBe(value);
     }
@@ -38,7 +41,7 @@ describe("oneIdentityLocalFeatureFlagSelector", () => {
 });
 
 describe("oneIdentityEnvSelector", () => {
-  it.each(["prod", "uat"] as const)(
+  it.each([ONE_IDENTITY_ENVS.PROD, ONE_IDENTITY_ENVS.UAT])(
     "should return %s as the OneIdentity environment",
     value => {
       const state = makeState({
@@ -88,7 +91,7 @@ describe("isOneIdentityLoginEnabledSelector", () => {
     "should return $expected when $name",
     ({ oneIdentityLocalFeatureFlag, rolloutPercentage, expected }) => {
       const state = makeState(
-        { oneIdentityLocalFeatureFlag, oneIdentityEnv: "prod" },
+        { oneIdentityLocalFeatureFlag, oneIdentityEnv: ONE_IDENTITY_ENVS.PROD },
         rolloutPercentage
       );
       expect(isOneIdentityLoginEnabledSelector(state)).toBe(expected);

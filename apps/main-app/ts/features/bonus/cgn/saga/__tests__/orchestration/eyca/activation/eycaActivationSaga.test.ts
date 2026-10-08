@@ -1,7 +1,10 @@
-import { left, right } from "fp-ts/lib/Either";
+import { err, ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 
-import { getGenericError } from "../../../../../../../../utils/errors";
+import {
+  getGenericError,
+  getNetworkError
+} from "../../../../../../../../utils/errors";
 import { cgnEycaActivation } from "../../../../../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../../../../../store/actions/eyca/details";
 import { getActivation } from "../../../../networking/eyca/activation/getActivation";
@@ -18,8 +21,8 @@ describe("eycaActivationWorker", () => {
   const startEycaActivation = jest.fn();
 
   it("should activate user's EYCA", () => {
-    const returnedStatus = right("COMPLETED");
-    const returnedActivation = right("PROCESSING");
+    const returnedStatus = ok("COMPLETED" as const);
+    const returnedActivation = ok("PROCESSING" as const);
 
     testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
       .next()
@@ -33,11 +36,13 @@ describe("eycaActivationWorker", () => {
       .next()
       .put(cgnEycaStatus.request())
       .next()
-      .call(navigateToCgnDetails);
+      .call(navigateToCgnDetails)
+      .next()
+      .isDone();
   });
 
   it("should activate user's EYCA without requesting the start activation", () => {
-    const returnedStatus = right("PROCESSING");
+    const returnedStatus = ok("PROCESSING" as const);
 
     testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
       .next()
@@ -49,12 +54,14 @@ describe("eycaActivationWorker", () => {
       .next()
       .put(cgnEycaStatus.request())
       .next()
-      .call(navigateToCgnDetails);
+      .call(navigateToCgnDetails)
+      .next()
+      .isDone();
   });
 
   it("Cannot Activate EYCA", () => {
-    const returnedStatus = right("COMPLETED");
-    const returnedActivation = right("INELIGIBLE");
+    const returnedStatus = ok("COMPLETED" as const);
+    const returnedActivation = ok("INELIGIBLE" as const);
 
     testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
       .next()
@@ -67,11 +74,12 @@ describe("eycaActivationWorker", () => {
       .put(cgnEycaActivation.success("INELIGIBLE"))
       .next()
       .call(navigateToCgnDetails)
-      .next();
+      .next()
+      .isDone();
   });
 
   it("cannot activate user's EYCA error on status check", () => {
-    const returnedStatus = left(
+    const returnedStatus = err(
       getGenericError(new Error(`response status 500`))
     );
 
@@ -91,7 +99,7 @@ describe("eycaActivationWorker", () => {
   });
 
   it("should dispatch a failure and not refresh details/navigate on a timeout status check", () => {
-    const returnedStatus = left({ kind: "timeout" } as const);
+    const returnedStatus = err({ kind: "timeout" } as const);
 
     testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
       .next()
@@ -105,10 +113,9 @@ describe("eycaActivationWorker", () => {
   });
 
   it("couldn't activate user's EYCA activation error", () => {
-    const returnedStatus = right("COMPLETED");
-    const returnedActivation = left(
-      getGenericError(new Error(`response status 500`))
-    );
+    const returnedStatus = ok("COMPLETED" as const);
+    const returnedActivationError = new Error(`response status 500`);
+    const returnedActivation = err(getNetworkError(returnedActivationError));
 
     testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
       .next()
@@ -118,10 +125,8 @@ describe("eycaActivationWorker", () => {
       .next(returnedStatus)
       .call(handleStartActivation, startEycaActivation)
       .next(returnedActivation)
-      .put(
-        cgnEycaActivation.failure(
-          getGenericError(new Error(`response status 500`))
-        )
-      );
+      .put(cgnEycaActivation.failure(getNetworkError(returnedActivationError)))
+      .next()
+      .isDone();
   });
 });

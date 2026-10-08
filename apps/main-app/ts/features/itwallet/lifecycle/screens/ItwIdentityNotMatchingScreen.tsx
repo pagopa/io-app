@@ -5,7 +5,6 @@ import {
   VStack
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { Alert } from "react-native";
 
@@ -46,7 +45,7 @@ export const ItwIdentityNotMatchingScreen = () => {
         },
         {
           text: I18n.t("global.buttons.cancel"),
-          onPress: constNull // Do nothing, just dismiss the alert
+          onPress: () => undefined // Do nothing, just dismiss the alert
         }
       ],
       { cancelable: false }

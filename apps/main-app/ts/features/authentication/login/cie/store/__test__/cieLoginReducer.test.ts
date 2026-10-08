@@ -1,5 +1,6 @@
 import { PersistedState } from "redux-persist";
 
+import { AUTH_LEVELS } from "../../../../common/utils";
 import {
   cieIDDisableTourGuide,
   cieIDSetSelectedSecurityLevel,
@@ -42,12 +43,12 @@ describe("cieLoginReducer", () => {
   });
 
   it("should set selected security level", () => {
-    const level = "SpidL2";
+    const authLevelL2 = AUTH_LEVELS.L2;
     const result = cieLoginReducer(
       cieLoginInitialState,
-      cieIDSetSelectedSecurityLevel(level)
+      cieIDSetSelectedSecurityLevel(authLevelL2)
     );
-    expect(result.cieIDSelectedSecurityLevel).toBe(level);
+    expect(result.cieIDSelectedSecurityLevel).toBe(authLevelL2);
   });
 });
 

@@ -1,22 +1,28 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import URLParse from "url-parse";
 
+import { apiUrlPrefix } from "../../../../config";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { SpidIdp } from "../../../../utils/idps";
 import { setOneIdentityEnv } from "../../../authentication/common/store/actions/loginConfig";
+import { ONE_IDENTITY_ENVS } from "../../../authentication/common/store/reducers/loginConfig";
+import { AUTH_LEVELS, AuthLevel } from "../../../authentication/common/utils";
 import {
   createRetriableFetch,
   FetchResponse
 } from "../../../authentication/common/utils/fetch";
 import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
-import { SpidLevel } from "../../../authentication/login/cie/utils";
 import { lollipopSetEphemeralPublicKey } from "../../store/actions/lollipop";
 import { toBase64EncodedThumbprint } from "../../utils/crypto";
-import { lollipopSamlVerify } from "../../utils/login";
+import {
+  followNativeRedirectsAndVerifySaml,
+  lollipopSamlVerify
+} from "../../utils/login";
 import { useOneIdentityLoginSource } from "../useOneIdentityLoginSource";
 
 jest.mock("../../../authentication/common/utils/fetch", () => {
@@ -26,7 +32,7 @@ jest.mock("../../../authentication/common/utils/fetch", () => {
     createRetriableFetch: jest.fn(() => mockFetch)
   };
 });
-const mockFetchReserve = createRetriableFetch() as jest.Mock;
+const mockRetriableFetch = createRetriableFetch() as jest.Mock;
 
 const mockPublicKey = { kty: "EC" } as unknown as PublicKey;
 const mockHandleRegenerateEphemeralKey = jest.fn();
@@ -38,6 +44,7 @@ jest.mock("../..", () => ({
 
 jest.mock("../../utils/login", () => ({
   ...jest.requireActual("../../utils/login"),
+  followNativeRedirectsAndVerifySaml: jest.fn(),
   lollipopSamlVerify: jest.fn()
 }));
 
@@ -47,8 +54,8 @@ jest.mock("../../../authentication/fastLogin/store/selectors", () => ({
 
 const mockIdp = { id: "idp-id", name: "idp-name" } as unknown as SpidIdp;
 const reserveResponse = {
+  authorization_endpoint: "https://one-identity.example.com/oidc/authorize",
   client_id: "client-id",
-  issuer: "https://one-identity.example.com/",
   nonce: "nonce-value",
   redirect_uri: "https://redirect.example.com/callback",
   state: "state-value"
@@ -64,7 +71,8 @@ const successResponse = (status: number, body: unknown): FetchResponse => ({
 });
 
 interface SetupOptions {
-  minAuthLevel?: SpidLevel;
+  followRedirectsNatively?: boolean;
+  minAuthLevel?: AuthLevel;
   store?: ReturnType<typeof createTestStore>;
 }
 
@@ -74,7 +82,8 @@ const createTestStore = () => {
 };
 
 const setupTest = ({
-  minAuthLevel = "SpidL2",
+  followRedirectsNatively,
+  minAuthLevel = AUTH_LEVELS.L2,
   store = createTestStore()
 }: SetupOptions = {}) => {
   const onFailure = jest.fn();
@@ -82,7 +91,8 @@ const setupTest = ({
   const utils = renderHook(
     () =>
       useOneIdentityLoginSource({
-        idp: mockIdp,
+        followRedirectsNatively,
+        idpId: mockIdp.id,
         onFailure,
         minAuthLevel
       }),
@@ -107,7 +117,7 @@ describe("useOneIdentityLoginSource", () => {
   });
 
   it("should call POST /reserve and build the OneIdentity /authorize on success", async () => {
-    mockFetchReserve.mockResolvedValue(successResponse(200, reserveResponse));
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
 
     const { result } = setupTest();
 
@@ -117,15 +127,19 @@ describe("useOneIdentityLoginSource", () => {
       );
     });
 
-    expect(mockFetchReserve).toHaveBeenCalledWith(
-      expect.stringContaining(
-        "/api/auth/v2/reserve?env=PROD&minAuthLevel=SpidL2"
-      ),
+    expect(mockRetriableFetch).toHaveBeenCalledWith(
+      `${apiUrlPrefix}/api/auth/v1/reserve`,
       expect.objectContaining({
         method: "POST",
         headers: expect.objectContaining({
-          "x-pagopa-login-type": "LEGACY",
-          "x-pagopa-lollipop-pub-key": "eyJrdHkiOiJFQyJ9"
+          "Content-Type": "application/json"
+        }),
+        body: JSON.stringify({
+          env: "PROD",
+          min_auth_level: "SpidL2",
+          lollipop_pub_key: "eyJrdHkiOiJFQyJ9",
+          lollipop_hash_algo: "sha256",
+          login_type: "LEGACY"
         })
       })
     );
@@ -137,14 +151,15 @@ describe("useOneIdentityLoginSource", () => {
     const authorizeUrl = new URLParse(webviewSource.uri, true);
 
     expect(authorizeUrl.origin).toBe("https://one-identity.example.com");
+    expect(authorizeUrl.pathname).toBe("/oidc/authorize");
     expect(authorizeUrl.query.client_id).toBe(reserveResponse.client_id);
-    expect(webviewSource.headers?.["assertion-ref"]).toContain(
-      toBase64EncodedThumbprint(mockPublicKey)
-    );
+    expect(
+      webviewSource.headers?.["x-pagopa-lollipop-assertion-ref"]
+    ).toContain(toBase64EncodedThumbprint(mockPublicKey));
   });
 
   it("should expose a failure loginSourceState on HTTP error", async () => {
-    mockFetchReserve.mockResolvedValue(successResponse(500, {}));
+    mockRetriableFetch.mockResolvedValue(successResponse(500, {}));
 
     const { result, onFailure } = setupTest();
 
@@ -152,6 +167,77 @@ describe("useOneIdentityLoginSource", () => {
       expect(result.current.loginSourceState.status).toBe("failure");
     });
     expect(onFailure).toHaveBeenCalled();
+  });
+
+  it("should trigger a new reserve request when generateLoginSource is called after a successful response", async () => {
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
+
+    const { result } = setupTest();
+
+    await waitFor(() => {
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(1);
+    });
+
+    act(() => {
+      void result.current.generateLoginSource();
+    });
+
+    expect(result.current.loginSourceState.status).toBe("reserving-public-key");
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(2);
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+  });
+
+  it("should abort a still pending reserve request when generateLoginSource is called before it resolves", async () => {
+    // eslint-disable-next-line functional/no-let
+    let resolveFirstFetch: (value: FetchResponse) => void = () => undefined;
+
+    mockRetriableFetch.mockImplementationOnce(
+      () =>
+        new Promise<FetchResponse>(resolve => {
+          resolveFirstFetch = resolve;
+        })
+    );
+
+    mockRetriableFetch.mockResolvedValueOnce(
+      successResponse(200, reserveResponse)
+    );
+
+    const { result } = setupTest();
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(1);
+    });
+
+    const [, fetchOptions] = mockRetriableFetch.mock.lastCall as [
+      string,
+      RequestInit
+    ];
+    const firstFetchSignal = fetchOptions.signal as AbortSignal;
+
+    expect(firstFetchSignal.aborted).toBe(false);
+
+    act(() => {
+      void result.current.generateLoginSource();
+    });
+
+    expect(firstFetchSignal.aborted).toBe(true);
+
+    resolveFirstFetch(successResponse(200, reserveResponse));
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(2);
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
   });
 
   it("should fail if ephemeral key generation fails", async () => {
@@ -166,49 +252,63 @@ describe("useOneIdentityLoginSource", () => {
       });
     });
 
-    expect(mockFetchReserve).not.toHaveBeenCalled();
+    expect(mockRetriableFetch).not.toHaveBeenCalled();
     expect(onFailure).toHaveBeenCalledWith(
       "Unable to generate ephemeral public key"
     );
   });
 
-  it("should send LV as login-type header when fast login is enabled", async () => {
+  it("should send LV as login_type in the reserve body when fast login is enabled", async () => {
     jest.mocked(isFastLoginEnabledSelector).mockReturnValue(true);
-    mockFetchReserve.mockResolvedValue(successResponse(200, reserveResponse));
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
 
     setupTest();
 
     await waitFor(() => {
-      expect(mockFetchReserve).toHaveBeenCalledWith(
-        expect.any(String),
+      expect(mockRetriableFetch).toHaveBeenCalledWith(
+        `${apiUrlPrefix}/api/auth/v1/reserve`,
         expect.objectContaining({
-          headers: expect.objectContaining({
-            "x-pagopa-login-type": "LV"
+          body: JSON.stringify({
+            env: "PROD",
+            min_auth_level: "SpidL2",
+            lollipop_pub_key: "eyJrdHkiOiJFQyJ9",
+            lollipop_hash_algo: "sha256",
+            login_type: "LV"
           })
         })
       );
     });
   });
 
-  it("should use the configured OneIdentity environment in the reserve URL", async () => {
-    mockFetchReserve.mockResolvedValue(successResponse(200, reserveResponse));
+  it("should use the configured OneIdentity environment in the reserve request body", async () => {
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
 
     const store = createTestStore();
-    store.dispatch(setOneIdentityEnv("uat"));
+    store.dispatch(setOneIdentityEnv(ONE_IDENTITY_ENVS.UAT));
 
     setupTest({ store });
 
     await waitFor(() => {
-      expect(mockFetchReserve).toHaveBeenCalledWith(
-        expect.stringContaining("env=UAT"),
-        expect.any(Object)
+      expect(mockRetriableFetch).toHaveBeenCalledWith(
+        `${apiUrlPrefix}/api/auth/v1/reserve`,
+        expect.objectContaining({
+          body: JSON.stringify({
+            env: "UAT",
+            min_auth_level: "SpidL2",
+            lollipop_pub_key: "eyJrdHkiOiJFQyJ9",
+            lollipop_hash_algo: "sha256",
+            login_type: "LEGACY"
+          })
+        })
       );
     });
   });
 
   describe("shouldBlockUrlNavigationWhileCheckingLollipop", () => {
     const setupReadyState = async () => {
-      mockFetchReserve.mockResolvedValue(successResponse(200, reserveResponse));
+      mockRetriableFetch.mockResolvedValue(
+        successResponse(200, reserveResponse)
+      );
 
       const { store, result, onFailure } = setupTest();
       store.dispatch(
@@ -284,6 +384,198 @@ describe("useOneIdentityLoginSource", () => {
       await waitFor(() => {
         expect(onFailure).toHaveBeenCalledWith("mismatch");
       });
+    });
+  });
+
+  describe("followRedirectsNatively", () => {
+    const ssoUrl = "https://idp.example.com/sso?SAMLRequest=encoded-request";
+
+    beforeEach(() => {
+      mockRetriableFetch.mockResolvedValue(
+        successResponse(200, reserveResponse)
+      );
+    });
+
+    it("should not follow the redirects natively when disabled", async () => {
+      const { result } = setupTest({ followRedirectsNatively: false });
+
+      await waitFor(() => {
+        expect(result.current.loginSourceState.status).toBe(
+          "one-identity-authorize"
+        );
+      });
+      expect(followNativeRedirectsAndVerifySaml).not.toHaveBeenCalled();
+    });
+
+    it("should follow the /authorize redirects natively and expose the verified IDP SSO URL", async () => {
+      jest.mocked(followNativeRedirectsAndVerifySaml).mockResolvedValue(ssoUrl);
+
+      const { result, onFailure } = setupTest({
+        followRedirectsNatively: true
+      });
+
+      await waitFor(() => {
+        expect(result.current.loginSourceState).toEqual({
+          status: "assertion-ref-verified",
+          webviewSource: { uri: ssoUrl }
+        });
+      });
+
+      const [authorizeUrl, headers, publicKey] = jest.mocked(
+        followNativeRedirectsAndVerifySaml
+      ).mock.lastCall!;
+      const parsedAuthorizeUrl = new URLParse(authorizeUrl, true);
+
+      expect(parsedAuthorizeUrl.origin).toBe(
+        "https://one-identity.example.com"
+      );
+      expect(parsedAuthorizeUrl.pathname).toBe("/oidc/authorize");
+      expect(parsedAuthorizeUrl.query.client_id).toBe(
+        reserveResponse.client_id
+      );
+      expect(headers["x-pagopa-lollipop-assertion-ref"]).toContain(
+        toBase64EncodedThumbprint(mockPublicKey)
+      );
+      expect(publicKey).toBe(mockPublicKey);
+      expect(onFailure).not.toHaveBeenCalled();
+    });
+
+    it("should expose the following-redirects status while the redirects are pending", async () => {
+      jest
+        .mocked(followNativeRedirectsAndVerifySaml)
+        .mockReturnValue(new Promise(() => undefined));
+
+      const { result } = setupTest({ followRedirectsNatively: true });
+
+      await waitFor(() => {
+        expect(result.current.loginSourceState.status).toBe(
+          "following-redirects"
+        );
+      });
+    });
+
+    it.each([
+      {
+        name: "a native error with HTTP status",
+        error: {
+          userInfo: { error: "REDIRECTING_ERROR", statusCode: 500 },
+          code: "NativeRedirectError"
+        } as unknown as LoginUtilsError,
+        expectedReason:
+          'NativeRedirectError {"error":"REDIRECTING_ERROR","statusCode":500}'
+      },
+      {
+        name: "a native error without HTTP status",
+        error: {
+          userInfo: { error: "REDIRECTING_ERROR" },
+          code: "NativeRedirectError"
+        } as unknown as LoginUtilsError,
+        expectedReason: 'NativeRedirectError {"error":"REDIRECTING_ERROR"}'
+      },
+      {
+        name: "a SAML verification error",
+        error: new Error(
+          "Mismatch between local and remote ID parameter content"
+        ),
+        // unknownToString includes the stack trace for Error instances
+        expectedReason: expect.stringContaining(
+          "Error: Mismatch between local and remote ID parameter content"
+        )
+      },
+      {
+        name: "an unknown error",
+        error: "unexpected",
+        expectedReason: "unexpected"
+      }
+    ])(
+      "should fail with a descriptive reason on $name",
+      async ({ error, expectedReason }) => {
+        jest
+          .mocked(followNativeRedirectsAndVerifySaml)
+          .mockRejectedValue(error);
+
+        const { result, onFailure } = setupTest({
+          followRedirectsNatively: true
+        });
+
+        await waitFor(() => {
+          expect(result.current.loginSourceState).toEqual({
+            status: "failure",
+            error: expectedReason
+          });
+        });
+        expect(onFailure).toHaveBeenCalledWith(expectedReason);
+      }
+    );
+
+    it("should discard the result of a stale native redirects flow when generateLoginSource is called again", async () => {
+      const staleSsoUrl =
+        "https://idp.example.com/sso?SAMLRequest=stale-request";
+      // eslint-disable-next-line functional/no-let
+      let resolveStaleRedirects: (url: string) => void = () => undefined;
+
+      jest
+        .mocked(followNativeRedirectsAndVerifySaml)
+        .mockImplementationOnce(
+          () =>
+            new Promise<string>(resolve => {
+              resolveStaleRedirects = resolve;
+            })
+        )
+        .mockResolvedValueOnce(ssoUrl);
+
+      const { result } = setupTest({ followRedirectsNatively: true });
+
+      await waitFor(() => {
+        expect(followNativeRedirectsAndVerifySaml).toHaveBeenCalledTimes(1);
+      });
+
+      act(() => {
+        void result.current.generateLoginSource();
+      });
+
+      await waitFor(() => {
+        expect(result.current.loginSourceState).toEqual({
+          status: "assertion-ref-verified",
+          webviewSource: { uri: ssoUrl }
+        });
+      });
+
+      await act(async () => {
+        resolveStaleRedirects(staleSsoUrl);
+      });
+
+      expect(result.current.loginSourceState).toEqual({
+        status: "assertion-ref-verified",
+        webviewSource: { uri: ssoUrl }
+      });
+    });
+
+    it("should not fail when the native redirects flow rejects after unmount", async () => {
+      // eslint-disable-next-line functional/no-let
+      let rejectRedirects: (error: Error) => void = () => undefined;
+
+      jest.mocked(followNativeRedirectsAndVerifySaml).mockImplementation(
+        () =>
+          new Promise<string>((_, reject) => {
+            rejectRedirects = reject;
+          })
+      );
+
+      const { unmount, onFailure } = setupTest({
+        followRedirectsNatively: true
+      });
+
+      await waitFor(() => {
+        expect(followNativeRedirectsAndVerifySaml).toHaveBeenCalledTimes(1);
+      });
+
+      unmount();
+      await act(async () => {
+        rejectRedirects(new Error("Missing Redirects"));
+      });
+
+      expect(onFailure).not.toHaveBeenCalled();
     });
   });
 });

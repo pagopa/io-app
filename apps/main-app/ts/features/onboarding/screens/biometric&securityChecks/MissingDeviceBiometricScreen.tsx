@@ -14,8 +14,8 @@ import { useOnboardingAbortAlert } from "../../hooks/useOnboardingAbortAlert";
 import { trackBiometricConfigurationEducationalScreen } from "./analytics";
 
 /**
- * A screen to show, if the fingerprint is supported by the device,
- * the instruction to enable the fingerprint/faceID usage
+ * A screen to show, if the fingerprint is supported by the device, the
+ * instruction to enable the fingerprint/faceID usage
  */
 const MissingDeviceBiometricScreen = () => {
   const dispatch = useIODispatch();

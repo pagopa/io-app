@@ -1,8 +1,11 @@
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialsConsumeInstance } from "../../../../credentials/store/actions";
-import { ITW_ROUTES } from "../../../../navigation/routes";
-import { createRemoteActionsImplementation } from "../actions";
+import {
+  testMachineStore,
+  testRemoteDeps
+} from "../../../../machine/utils/testDeps";
+import { consumePresentedBatchCredentialsAction } from "../actions";
 import { Context, InitialContext } from "../context";
 
 const baseCredential: CredentialMetadata = {
@@ -28,19 +31,20 @@ const pidCredential: CredentialMetadata = {
   keyTags: undefined
 };
 
-describe("createRemoteActionsImplementation - consumePresentedBatchCredentials", () => {
+describe("consumePresentedBatchCredentialsAction", () => {
   const dispatch = jest.fn();
 
-  const makeStore = (credentials: Record<string, CredentialMetadata>) => ({
-    getState: jest.fn().mockReturnValue({
-      features: {
-        itWallet: {
-          credentials: { credentials }
+  const makeStore = (credentials: Record<string, CredentialMetadata>) =>
+    testMachineStore({
+      getState: jest.fn().mockReturnValue({
+        features: {
+          itWallet: {
+            credentials: { credentials }
+          }
         }
-      }
-    }),
-    dispatch
-  });
+      }),
+      dispatch
+    });
 
   beforeEach(() => jest.clearAllMocks());
 
@@ -49,14 +53,10 @@ describe("createRemoteActionsImplementation - consumePresentedBatchCredentials",
       [baseCredential.credentialId]: baseCredential,
       [pidCredential.credentialId]: pidCredential
     });
-    const actions = createRemoteActionsImplementation(
-      {} as never,
-      store as never
-    );
-
-    actions.consumePresentedBatchCredentials({
+    consumePresentedBatchCredentialsAction({
       context: {
         ...InitialContext,
+        deps: testRemoteDeps({ store }),
         presentedKeyTags: ["key-tag-01", "pid-key-tag"]
       } as Context
     } as never);
@@ -71,14 +71,10 @@ describe("createRemoteActionsImplementation - consumePresentedBatchCredentials",
 
   it("does not dispatch when the presented credential is not in the batch allow-list (e.g. PID)", () => {
     const store = makeStore({ [pidCredential.credentialId]: pidCredential });
-    const actions = createRemoteActionsImplementation(
-      {} as never,
-      store as never
-    );
-
-    actions.consumePresentedBatchCredentials({
+    consumePresentedBatchCredentialsAction({
       context: {
         ...InitialContext,
+        deps: testRemoteDeps({ store }),
         presentedKeyTags: ["pid-key-tag"]
       } as Context
     } as never);
@@ -88,14 +84,10 @@ describe("createRemoteActionsImplementation - consumePresentedBatchCredentials",
 
   it("does not dispatch when no presented keyTag matches a stored credential", () => {
     const store = makeStore({ [baseCredential.credentialId]: baseCredential });
-    const actions = createRemoteActionsImplementation(
-      {} as never,
-      store as never
-    );
-
-    actions.consumePresentedBatchCredentials({
+    consumePresentedBatchCredentialsAction({
       context: {
         ...InitialContext,
+        deps: testRemoteDeps({ store }),
         presentedKeyTags: ["unknown-key-tag"]
       } as Context
     } as never);
@@ -105,32 +97,14 @@ describe("createRemoteActionsImplementation - consumePresentedBatchCredentials",
 
   it("does not dispatch when presentedKeyTags is empty", () => {
     const store = makeStore({ [baseCredential.credentialId]: baseCredential });
-    const actions = createRemoteActionsImplementation(
-      {} as never,
-      store as never
-    );
-
-    actions.consumePresentedBatchCredentials({
-      context: { ...InitialContext, presentedKeyTags: [] } as Context
+    consumePresentedBatchCredentialsAction({
+      context: {
+        ...InitialContext,
+        deps: testRemoteDeps({ store }),
+        presentedKeyTags: []
+      } as Context
     } as never);
 
     expect(dispatch).not.toHaveBeenCalled();
-  });
-});
-
-describe("createRemoteActionsImplementation - navigateToIdentificationModeScreen", () => {
-  it("navigates to the eID reissuance identification mode selection screen", () => {
-    const navigate = jest.fn();
-    const actions = createRemoteActionsImplementation(
-      { navigate } as never,
-      { getState: jest.fn(), dispatch: jest.fn() } as never
-    );
-
-    actions.navigateToIdentificationModeScreen();
-
-    expect(navigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-      params: { eidReissuing: true, level: "l3" }
-    });
   });
 });

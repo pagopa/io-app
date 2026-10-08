@@ -10,9 +10,7 @@ import {
   ItwL3UpgradeTrigger,
   ItwRemoteCredentialCombination,
   ItwRemoteDataShare,
-  ItwRemoteFailure,
-  ItwRemoteInvalidCredential,
-  ItwRemoteMissingCredential
+  ItwRemoteFailure
 } from "./utils/types";
 
 // Screen view events
@@ -52,7 +50,10 @@ export const trackItwRemotePresentationCompleted = (
 ) => {
   void mixpanelTrack(
     ITW_REMOTE_SCREENVIEW_EVENTS.ITW_REMOTE_UX_SUCCESS,
-    buildEventProperties("UX", "screen_view", { redirect_url, credential_type })
+    buildEventProperties("UX", "screen_view", {
+      redirect_url,
+      credential_type
+    })
   );
 };
 
@@ -104,29 +105,17 @@ export const trackItwRemoteRequestObjectFailure = ({
   );
 };
 
-export const trackItwRemoteMandatoryCredentialMissing = ({
-  missing_credential,
-  missing_credential_number
-}: ItwRemoteMissingCredential) => {
+export const trackItwRemoteMandatoryCredentialMissing = () => {
   void mixpanelTrack(
     ITW_REMOTE_ERRORS_EVENTS.ITW_REMOTE_MANDATORY_CREDENTIAL_MISSING,
-    buildEventProperties("KO", "screen_view", {
-      missing_credential,
-      missing_credential_number
-    })
+    buildEventProperties("KO", "screen_view")
   );
 };
 
-export const trackItwRemoteInvalidMandatoryCredential = ({
-  not_valid_credential,
-  not_valid_credential_number
-}: ItwRemoteInvalidCredential) => {
+export const trackItwRemoteInvalidMandatoryCredential = () => {
   void mixpanelTrack(
     ITW_REMOTE_ERRORS_EVENTS.ITW_REMOTE_MANDATORY_CREDENTIAL_NOT_VALID,
-    buildEventProperties("KO", "screen_view", {
-      not_valid_credential,
-      not_valid_credential_number
-    })
+    buildEventProperties("KO", "screen_view")
   );
 };
 
@@ -161,6 +150,24 @@ export const trackItwUpgradeL3Mandatory = (action: ItwL3UpgradeTrigger) => {
   void mixpanelTrack(
     ITW_REMOTE_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
     buildEventProperties("KO", "screen_view", { action })
+  );
+};
+
+export const trackItwUpgradeL3MandatoryConfirm = (
+  action: ItwL3UpgradeTrigger
+) => {
+  void mixpanelTrack(
+    ITW_REMOTE_ACTIONS_EVENTS.ITW_UPGRADE_L3_MANDATORY_CONFIRM,
+    buildEventProperties("KO", "action", { action })
+  );
+};
+
+export const trackItwUpgradeL3MandatoryCancel = (
+  action: ItwL3UpgradeTrigger
+) => {
+  void mixpanelTrack(
+    ITW_REMOTE_ACTIONS_EVENTS.ITW_UPGRADE_L3_MANDATORY_CANCEL,
+    buildEventProperties("KO", "action", { action })
   );
 };
 

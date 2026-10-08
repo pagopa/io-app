@@ -4,8 +4,10 @@ import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
+import { ONE_IDENTITY_ENVS } from "../../store/reducers/loginConfig";
 import {
   oneIdentityEnvSelector,
   oneIdentityLocalFeatureFlagSelector
@@ -22,7 +24,8 @@ describe("LoginConfigScreenContent", () => {
     expect(
       getByLabelText(/Abilita ambiente di UAT OneIdentity/i)
     ).toBeDisabled();
-    expect(getByLabelText(/Abilita endpoint di collaudo/i)).toBeDisabled();
+    expect(getByLabelText(/Abilita endpoint di preproduzione/i)).toBeDisabled();
+    expect(getByLabelText("Modalità debug")).toBeDisabled();
   });
 
   it("should render all controls as enabled when disabled is false", () => {
@@ -34,16 +37,17 @@ describe("LoginConfigScreenContent", () => {
     expect(
       getByLabelText(/Abilita ambiente di UAT OneIdentity/i)
     ).toBeEnabled();
-    expect(getByLabelText(/Abilita endpoint di collaudo/i)).toBeEnabled();
+    expect(getByLabelText(/Abilita endpoint di preproduzione/i)).toBeEnabled();
+    expect(getByLabelText("Modalità debug")).toBeEnabled();
   });
 
   it("should dispatch CIE UAT enable/disable actions when the checkbox is toggled", () => {
     const { store, getByLabelText } = renderComponent();
 
-    fireEvent.press(getByLabelText(/Abilita endpoint di collaudo/i));
+    fireEvent.press(getByLabelText(/Abilita endpoint di preproduzione/i));
     expect(isCieLoginUatEnabledSelector(store.getState())).toBe(true);
 
-    fireEvent.press(getByLabelText(/Abilita endpoint di collaudo/i));
+    fireEvent.press(getByLabelText(/Abilita endpoint di preproduzione/i));
     expect(isCieLoginUatEnabledSelector(store.getState())).toBe(false);
   });
 
@@ -51,7 +55,9 @@ describe("LoginConfigScreenContent", () => {
     const { store, getByLabelText } = renderComponent();
 
     fireEvent.press(getByLabelText(/Abilita ambiente di UAT OneIdentity/i));
-    expect(oneIdentityEnvSelector(store.getState())).toBe("uat");
+    expect(oneIdentityEnvSelector(store.getState())).toBe(
+      ONE_IDENTITY_ENVS.UAT
+    );
   });
 
   it("should dispatch the OneIdentity local feature flag action when a radio option is selected", () => {
@@ -67,6 +73,16 @@ describe("LoginConfigScreenContent", () => {
     expect(
       oneIdentityLocalFeatureFlagSelector(store.getState())
     ).toBeUndefined();
+  });
+
+  it("should dispatch the debug mode action when the switch is toggled", () => {
+    const { store, getByLabelText } = renderComponent();
+
+    fireEvent(getByLabelText("Modalità debug"), "onValueChange", true);
+    expect(isDebugModeEnabledSelector(store.getState())).toBe(true);
+
+    fireEvent(getByLabelText("Modalità debug"), "onValueChange", false);
+    expect(isDebugModeEnabledSelector(store.getState())).toBe(false);
   });
 });
 

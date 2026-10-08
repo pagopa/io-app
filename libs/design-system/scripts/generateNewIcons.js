@@ -3,14 +3,16 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 
 /**
-DRAFT for an AUTOMATIC process to generate new icon components 
-(`Icon....tsx`) from the SVG files exported from Figma.
-
-Prerequisites:
-- The icon must be exported from the 24 × 24 frame
-- The icon must be saved with the final name
-  - To learn more about naming conventions, please read the local README
-*/
+ * DRAFT for an AUTOMATIC process to generate new icon components
+ * (`Icon....tsx`) from the SVG files exported from Figma.
+ *
+ * Prerequisites:
+ *
+ * - The icon must be exported from the 24 × 24 frame
+ * - The icon must be saved with the final name
+ *
+ *   - To learn more about naming conventions, please read the local README
+ */
 
 // STEPS:
 
@@ -18,9 +20,10 @@ Prerequisites:
  * 1. Only process the newly added files
  *
  * Suggested path:
+ *
  * 1. Files that need to be processed must be in the `svg/originals` folder.
- * 2. Add a new file with the timestamp of the last process run.
- *    The file must be committed along with others.
+ * 2. Add a new file with the timestamp of the last process run. The file must be
+ *    committed along with others.
  * 3. Only files added after that timestamp value will be processed.
  * 4. After the process run, update the new file with the current timestamp.
  */
@@ -29,50 +32,53 @@ Prerequisites:
  * 2. Optimize SVG files with SVGO package (https://github.com/svg/svgo)
  *
  * Suggested path:
+ *
  * 1. Add `svgo` to the `package.json` to use it as an executable
  * 2. Configure it with the following parameters:
- *   - removeDimensions
- *   - removeRasterImages
- *   - removeScriptElement
- *   - removeViewBox (disabled)
+ *
+ *    - `removeDimensions`
+ *    - `removeRasterImages`
+ *    - `removeScriptElement`
+ *    - `removeViewBox` (disabled)
  * 3. Overwrite the original files
- * 4. Optionally save the old ones in a `tmp` folder, which may be useful
- *    for debugging purposes.
- *    - Consider adding a `--debug' flag to the
- *      command to enable this behavior.
+ * 4. Optionally save the old ones in a `tmp` folder, which may be useful for
+ *    debugging purposes.
+ *
+ *    - Consider adding a `--debug` flag to the command to enable this behavior.
  *    - Add the `tmp` folder to `.gitignore` to keep the folder clean
- *  5. Check the files after the optimizations
+ * 5. Check the files after the optimizations
  */
 
 /**
  * 3. Create the relative React component (with .tsx)
  *
  * Suggested path:
+ *
  * - For every new SVG file:
+ *
  *   1. Copy all the code contained in the `<svg>` tag
- *   2. Use the file `_IconTemplate.tsx` as component template
- *      - Replace `IconTemplate` with the original SVG name
- *      - Remove all the comments inserted in the component file
- *   3. Replace the `{SVGContent}` placeholder with the code copied
- *      in the step 1, replacing all the tags with the appropriate
- *      React ones. E.g: `path` becomes `Path` and so on…
+ *   2. Use the file `_IconTemplate.tsx` as component template, replacing
+ *      `IconTemplate` with the original SVG name and removing all the comments
+ *      inserted in the component file
+ *   3. Replace the `{SVGContent}` placeholder with the code copied in the step 1,
+ *      replacing all the tags with the appropriate React ones. E.g: `path`
+ *      becomes `Path` and so on…
  *   4. Replace all the color values, set in hexadecimal format, with the
- *      `currentColor` attribute.
- *      E.g: fill="#CCCCCC" -> fill="currentColor"
- *   5. Save a new file in the `svg` folder with the same filename
- *      of the relative SVG file and extension `.tsx`.
- *      E.g: svg/originals/IconProfile.svg -> svg/IconProfile.tsx
- *   6. Save the list of processed SVG files and corresponding generated
- *      React components to a separate file. Add it to the `.gitignore`
- *      to keep the folder clean.
+ *      `currentColor` attribute. E.g: `fill="#CCCCCC"` -> `fill="currentColor"`
+ *   5. Save a new file in the `svg` folder with the same filename of the relative
+ *      SVG file and extension `.tsx`. E.g: `svg/originals/IconProfile.svg` ->
+ *      `svg/IconProfile.tsx`
+ *   6. Save the list of processed SVG files and corresponding generated React
+ *      components to a separate file. Add it to the `.gitignore` to keep the
+ *      folder clean.
  */
 
 const path = require("path");
 const join = path.join;
 const { optimize } = require("svgo");
-const prettier = require("prettier");
 const fs = require("fs-extra");
 const { transform } = require("@svgr/core");
+const { formatComponent } = require("./formatComponent");
 
 const svgDir = join(__dirname, "../src/components/icons/svg/originals");
 const tsxDir = join(__dirname, "../src/components/icons/svg");
@@ -87,48 +93,52 @@ const convertTimestampToReadableFormat = timestamp =>
     timeZone: "Europe/Rome"
   });
 
-fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
-  if (err) {
-    console.log("Timestamp file not found.");
-    throw err;
-  }
+async function run() {
+  try {
+    const timestamp = fs.readFileSync(timestampFilePath, "utf8");
 
-  console.log(
-    "Last processed timestamp:",
-    convertTimestampToReadableFormat(timestamp)
-  );
-  console.log(`————————————————`);
+    console.log(
+      "Last processed timestamp:",
+      convertTimestampToReadableFormat(timestamp)
+    );
+    console.log(`————————————————`);
 
-  fs.readdir(svgDir, (err, files) => {
-    if (err) {
-      throw err;
-    }
+    const files = fs.readdirSync(svgDir);
 
-    files.forEach(file => {
+    for (const file of files) {
+      if (!file.endsWith(".svg")) {
+        continue;
+      }
+
       const filePath = join(svgDir, file);
-      const fileStats = fs.statSync(filePath);
 
-      /* Only process files with a more recent creation
+      /* Stat and read through the same descriptor: re-opening by name would
+      leave a window for the file to change between the two operations. */
+      const fd = fs.openSync(filePath, "r");
+      let fileStats;
+      let data;
+      try {
+        fileStats = fs.fstatSync(fd);
+        data = fs.readFileSync(fd, "utf8");
+      } finally {
+        fs.closeSync(fd);
+      }
+
+      /* Only process files with a creation/modification
       date later than the timestamp value */
       if (fileStats.mtime > new Date(timestamp)) {
-        if (!file.endsWith(".svg")) {
-          return;
-        }
-
         const excludedPrefixes = ["IconSystem", "IconBiom", "IconProduct"];
         if (excludedPrefixes.some(prefix => file.startsWith(prefix))) {
           console.log(`⚠️ Skipping excluded file: ${file}`);
-          return;
+          continue;
         }
-
-        const data = fs.readFileSync(filePath, "utf8");
 
         // Using SVGO to optimize the SVG
         const result = optimize(data, {
           path: filePath,
           js2svg: {
             pretty: true,
-            indent: 2,
+            indent: 2
           },
           plugins: [
             "removeDimensions",
@@ -137,23 +147,20 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
             "removeViewBox"
           ]
         });
+
         // Overwrite original SVG file with optimized code
         fs.writeFileSync(filePath, result.data);
 
         // Convert SVG to JSX using `svgr`
         const jsxCode = transform.sync(result.data, {
-          // Optimize SVG code using SVGO
           svgo: true,
           svgoConfig: {
             removeRasterImages: true,
             removeScriptElement: true,
             removeUselessDefs: true
           },
-          // Transform tags in Capital Case for React Native
           native: true,
-          // Remove `width` and `height` attrs
           dimensions: false,
-          /* Prettify the result */
           plugins: ["@svgr/plugin-jsx"]
         });
 
@@ -163,27 +170,57 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
           'fill="currentColor"'
         );
 
-        // Extract only the Path tags from the JSX code
-        const pathTagRegex = /<Path[^>]*\/>/g;
+        // Regex updated to support multiline tags and </Path> closing tags
+        const pathTagRegex = /<Path[\s\S]*?(?:\/>|<\/Path>)/g;
         const pathTags = jsxCodeWithoutHardcodedColors.match(pathTagRegex);
-        const jsxCodeWithPathOnly = pathTags.join("");
 
-        const template = fs.readFileSync(templateFilePath, "utf8");
-        const componentData = template
+        if (!pathTags) {
+          console.log(`⚠️ No Path tags found in ${file}`);
+          continue;
+        }
+
+        const jsxCodeWithPathOnly = pathTags.join("\n");
+
+        let template = fs.readFileSync(templateFilePath, "utf8");
+
+        // 1. Restore any commented-out import lines
+        template = template.replace(/\/\/\s*(import\s+.*)/g, "$1");
+
+        // 2. Remove remaining single-line comments safely
+        template = template.replace(/\/\/(?!.*import).*\n/g, "\n");
+
+        // 3. Inject icon name and path content
+        let componentData = template
           .replace(/IconTemplate/g, file.replace(".svg", ""))
-          .replace(/\/\/.*\n/g, "") // Remove lines starting with //
           .replace(`{/* SVGContent */}`, jsxCodeWithPathOnly);
+
+        // 4. Ensure Path is included in the react-native-svg import block if missing
+        if (
+          jsxCodeWithPathOnly.includes("<Path") &&
+          !/import\s+.*Path.*\s+from\s+['"]react-native-svg['"]/.test(
+            componentData
+          )
+        ) {
+          componentData = componentData.replace(
+            /import\s+\{([^}]+)\}\s+from\s+['"]react-native-svg['"]/,
+            (match, imports) =>
+              `import { ${imports.trim()}, Path } from "react-native-svg"`
+          );
+        }
 
         const fileWithTsxExtension = file.replace(".svg", ".tsx");
         const tsxFilePath = join(tsxDir, fileWithTsxExtension);
-        fs.writeFileSync(
-          tsxFilePath,
-          prettier.format(componentData, { parser: "typescript" })
+
+        const formattedData = await formatComponent(
+          fileWithTsxExtension,
+          componentData
         );
+
+        fs.writeFileSync(tsxFilePath, formattedData);
 
         console.log(`${file} → ${fileWithTsxExtension}`);
       }
-    });
+    }
 
     const newTimestamp = new Date();
     const convertedISOTimestamp = newTimestamp.toISOString();
@@ -194,5 +231,10 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
 
     console.log(`————————————————`);
     console.log("Updated timestamp:", readableUpdatedTimestamp);
-  });
-});
+  } catch (err) {
+    console.error("Error during execution:", err);
+    process.exit(1);
+  }
+}
+
+run();

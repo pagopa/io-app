@@ -7,25 +7,24 @@
  * complementary positioning modes:
  *
  * 1. Step transitions (JS thread): When the user advances to a new step,
- *    TourOverlay performs a one-shot measurement via measureInWindow,
- *    handles scroll-into-view if needed, and animates the cutout to the
- *    new position with fade-out/fade-in transitions.
- *
+ *    TourOverlay performs a one-shot measurement via measureInWindow, handles
+ *    scroll-into-view if needed, and animates the cutout to the new position
+ *    with fade-out/fade-in transitions.
  * 2. Continuous tracking (UI thread): Between step transitions, the active
  *    GuidedTour component runs a useFrameCallback that calls Reanimated's
- *    measure() on the UI thread every frame. If the target element moves
- *    (e.g. due to an offline banner, keyboard, or orientation change), the
- *    shared values update immediately and the Skia cutout + tooltip follow
- *    at 60fps with zero JS thread involvement.
+ *    measure() on the UI thread every frame. If the target element moves (e.g.
+ *    due to an offline banner, keyboard, or orientation change), the shared
+ *    values update immediately and the Skia cutout + tooltip follow at 60fps
+ *    with zero JS thread involvement.
  *
  * The isTracking shared value coordinates the two modes: it is set to false
  * during step transitions (so the frame callback does not interfere with
  * animations) and set to true once the transition completes.
  *
- * Navigation actions (next/back/skip) are dispatched to Redux only when
- * the animation reaches the point where the tooltip content should update,
- * keeping the displayed step indicator and controls in sync with the
- * visual transition.
+ * Navigation actions (next/back/skip) are dispatched to Redux only when the
+ * animation reaches the point where the tooltip content should update, keeping
+ * the displayed step indicator and controls in sync with the visual
+ * transition.
  */
 import {
   Canvas,
@@ -73,8 +72,8 @@ const SCROLL_SETTLE_MS = 400;
 const VISIBLE_MARGIN = 16;
 
 /**
- * Synchronous on Fabric via JSI. The callback fires inline,
- * so the return value is available immediately.
+ * Synchronous on Fabric via JSI. The callback fires inline, so the return value
+ * is available immediately.
  */
 const measureInWindow = (view: View): TourItemMeasurement | undefined => {
   const result: { value: TourItemMeasurement | undefined } = {
@@ -304,9 +303,9 @@ export const TourOverlay = () => {
   );
 
   /**
-   * Measures the target step, handles scroll-into-view, and animates
-   * the cutout. The `onCommit` callback fires at the exact point where
-   * the tooltip content should update (after fade-out and reposition).
+   * Measures the target step, handles scroll-into-view, and animates the
+   * cutout. The `onCommit` callback fires at the exact point where the tooltip
+   * content should update (after fade-out and reposition).
    */
   const navigateToStep = useCallback(
     async (targetIndex: number, onCommit: () => void) => {

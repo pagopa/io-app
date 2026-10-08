@@ -1,0 +1,6 @@
+{
+  "$schema": "../../node_modules/oxlint/configuration_schema.json",
+  "extends": ["../../apps/main-app/.oxlintrc.jsonc"],
+  // `extends` replaces `ignorePatterns` rather than merging it
+  "ignorePatterns": ["**/*.js", "**/*.cjs", "**/*.mjs", "lib/**"]
+}

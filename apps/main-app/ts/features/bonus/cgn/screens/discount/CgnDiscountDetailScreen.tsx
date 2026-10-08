@@ -40,6 +40,21 @@ import {
 import { cgnOtpDataSelector } from "../../store/reducers/otp";
 import { getCgnUserAgeRange } from "../../utils/dates";
 
+const getDiscountCodeCtaLabel = (
+  discountCodeType: DiscountCodeTypeEnum
+): string => {
+  switch (discountCodeType) {
+    case DiscountCodeTypeEnum.api:
+      return I18n.t("bonus.cgn.merchantDetail.discount.cta.api");
+    case DiscountCodeTypeEnum.bucket:
+      return I18n.t("bonus.cgn.merchantDetail.discount.cta.bucket");
+    case DiscountCodeTypeEnum.landingpage:
+      return I18n.t("bonus.cgn.merchantDetail.discount.cta.landingpage");
+    case DiscountCodeTypeEnum.static:
+      return I18n.t("bonus.cgn.merchantDetail.discount.cta.static");
+  }
+};
+
 const CgnDiscountDetailScreen = () => {
   const dispatch = useIODispatch();
   const navigation =
@@ -181,9 +196,7 @@ const CgnDiscountDetailScreen = () => {
 
   const renderActions = (): IOScrollViewActions | undefined => {
     const primary = merchantDetails?.discountCodeType && {
-      label: I18n.t(
-        `bonus.cgn.merchantDetail.discount.cta.${merchantDetails.discountCodeType}`
-      ),
+      label: getDiscountCodeCtaLabel(merchantDetails.discountCodeType),
       onPress: onPressDiscountCode,
       disabled: loading,
       loading,

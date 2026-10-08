@@ -170,6 +170,10 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_ANIMATED_PICTOGRAMS",
       title: "Animated pictograms"
     },
+    ANIMATED_NUMERIC_TEXT: {
+      route: "DS_ANIMATED_NUMERIC_TEXT",
+      title: "Animated numeric text (iOS)"
+    },
     ITW_BRAND_EXPLORATION: {
       route: "DS_ITW_BRAND_EXPLORATION",
       title: "ITWallet brand exploration"

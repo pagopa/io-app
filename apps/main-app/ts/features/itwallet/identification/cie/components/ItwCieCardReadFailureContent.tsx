@@ -1,5 +1,4 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Linking } from "react-native";
@@ -38,14 +37,13 @@ type ItwCieCardReadFailureContentProps = Extract<
   CieManagerState,
   { state: "failure" }
 > & {
-  /**
-   * Handles the retry action for some failure cases.
-   */
+  /** Handles the retry action for some failure cases. */
   onRetry: () => void;
 };
 
 /**
- * Renders the failure screen content based on the platforms and received failure
+ * Renders the failure screen content based on the platforms and received
+ * failure
  */
 export const ItwCieCardReadFailureContent = ({
   failure,
@@ -101,14 +99,14 @@ export const ItwCieCardReadFailureContent = ({
     trackItWalletCiePinForgotten(isL3 ? "L3" : "L2");
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/"
-    ).catch(constNull);
+    ).catch(() => null);
   }, [isL3]);
 
   const handlePukForgot = useCallback(() => {
     trackItWalletCiePukForgotten(isL3 ? "L3" : "L2");
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/recupero-puk/"
-    ).catch(constNull);
+    ).catch(() => null);
   }, [isL3]);
 
   if (isNfcError(failure)) {
@@ -254,6 +252,7 @@ type TrackErrorParams = {
   readProgress?: number;
 };
 
+// oxlint-disable-next-line complexity
 const trackError = ({
   failure,
   isL3,

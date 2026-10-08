@@ -6,8 +6,6 @@ import {
   IOButton,
   VStack
 } from "@io-app/design-system";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Fragment, memo, useEffect } from "react";
 import { View } from "react-native";
@@ -63,7 +61,7 @@ const ItwEidInfoBottomSheetContent = ({
   navigation,
   currentScreenName
 }: ItwEidInfoBottomSheetContentProps) => {
-  const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const eid = useIOSelector(itwCredentialsEidSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
@@ -128,13 +126,8 @@ const ItwEidInfoBottomSheetContent = ({
     );
   };
 
-  return pipe(
-    eidOption,
-    O.fold(
-      constNull, // This should never happen
-      credential => <Content credential={credential} />
-    )
-  );
+  // A missing eID should never happen when this bottom sheet is shown
+  return eid ? <Content credential={eid} /> : null;
 };
 
 const MemoizedItwEidInfoBottomSheetContent = memo(ItwEidInfoBottomSheetContent);

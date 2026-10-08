@@ -1,7 +1,7 @@
 import { ErrorActorEvent } from "xstate";
 
-export type Retry = {
+export type TrustmarkEvents = ErrorActorEvent | Retry;
+
+type Retry = {
   type: "retry";
 };
-
-export type TrustmarkEvents = ErrorActorEvent | Retry;

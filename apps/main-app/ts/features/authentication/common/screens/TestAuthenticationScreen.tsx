@@ -69,6 +69,7 @@ const ErrorView = (content: string) => (
 const SuccessfulView = () => (
   <View style={{ flex: 1 }} testID="successView">
     <VSpacer size={16} />
+    {/* eslint-disable-next-line i18next/no-literal-string -- developer-only screen */}
     <Alert content={"Success"} variant="success" />
     <VSpacer size={16} />
   </View>

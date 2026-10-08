@@ -3,7 +3,7 @@
 name: Publish nightly app build
 on:
   schedule:
-    - cron: '59 21 * * *'
+    - cron: "59 21 * * *"
 permissions:
   contents: write
   actions: read
@@ -92,3 +92,26 @@ jobs:
       environment: prod
       fastlane-lane: beta_testflight
       release-ipa-label: IO-iOS.ipa
+  notify-failure:
+    name: Notify failure on Slack
+    runs-on: ubuntu-24.04
+    environment: dev
+    if: failure() && needs.detect-changes.outputs.has_changes == 'true'
+    needs:
+      - detect-changes
+      - run-static-checks
+      - bump-app-version
+      - release-android
+      - release-ios
+    steps:
+      - id: send-slack-notification
+        uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
+        continue-on-error: true
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
+          payload: |
+            channel: "C03QJNMTL1E"
+            unfurl_links: false
+            unfurl_media: false
+            text: "Il workflow `${{ github.workflow }}` è fallito. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Vedi i dettagli>."

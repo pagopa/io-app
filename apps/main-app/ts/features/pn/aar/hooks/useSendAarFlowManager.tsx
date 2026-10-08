@@ -13,10 +13,6 @@ import {
   sendAarFlowStates
 } from "../utils/stateUtils";
 
-export type SendAarFlowHandlerType = {
-  qrCode: string;
-};
-
 type SendAarFlowManager = {
   currentFlowData: AarFlowState;
   goToNextState: () => void;
@@ -30,7 +26,9 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
 
   const handleTerminateFlow = useCallback(() => {
     dispatch(
-      terminateAarFlow({ messageId: maybeIunFromAarFlowState(currentFlowData) })
+      terminateAarFlow({
+        messageId: maybeIunFromAarFlowState(currentFlowData)
+      })
     );
     navigation.popToTop();
   }, [dispatch, navigation, currentFlowData]);

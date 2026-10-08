@@ -12,7 +12,7 @@ export type AddCredentialFailure = {
 };
 
 export type BackToWallet = {
-  credential: Extract<MixPanelCredential, "ITW_ID_V2">;
+  credential: Extract<MixPanelCredential, "ITW_ID_V2" | "ITW_PID">;
   exit_page: string;
 };
 

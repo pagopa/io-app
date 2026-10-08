@@ -152,6 +152,33 @@ describe("MessageDetailsScreen", () => {
     const { component } = renderComponent(store);
     expect(component.queryByTestId("due-date-alert")).toBeNull();
   });
+
+  it("places the sticky footer placeholder before the message footer", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      loadMessageById.success(toUIMessage(message_1)),
+      loadServiceDetail.success(service_1),
+      loadMessageDetails.success(toUIMessageDetails(messageWithValidPayment))
+    ];
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+    const store: Store<GlobalState> = createStore(appReducer, state as any);
+    const { component } = renderComponent(store);
+    const scrollView = component.getByTestId("MessageDetailsScrollView");
+    const expectedTestIDs = [
+      "ScrollViewWithStickyFooterActionsPlaceholder",
+      "show-more-data-action"
+    ];
+    const renderedTestIDs = scrollView
+      .findAll(node => expectedTestIDs.includes(node.props.testID))
+      .map(node => node.props.testID)
+      .filter((testID, index, testIDs) => testIDs.indexOf(testID) === index);
+
+    expect(renderedTestIDs).toEqual(expectedTestIDs);
+  });
 });
 
 const renderComponent = (store: Store<GlobalState>) => {

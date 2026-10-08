@@ -639,7 +639,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     ]
                                   }
                                 >
-                                  Avvia una verifica
+                                  Pronto per la verifica
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -662,7 +662,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR a chi verifica i tuoi documenti digitali
+                                  Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
@@ -713,6 +713,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}
@@ -738,7 +739,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                               oppure
                             </Text>
                             <View
-                              accessibilityLabel="Avvia verifica contactless"
+                              accessibilityLabel="Usa verifica contactless"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1026,7 +1027,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                       ]
                                     }
                                   >
-                                    Avvia verifica contactless
+                                    Usa verifica contactless
                                   </Text>
                                 </View>
                               </View>
@@ -1148,7 +1149,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona il QR Code? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
+                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
                                   accessibilityRole="button"
                                   accessible={true}
                                   style={
@@ -1167,7 +1168,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -1177,7 +1178,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                       ]
                                     }
                                   >
-                                    Come funziona il QR Code?
+                                    Come funziona la verifica?
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -2884,6 +2885,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}
@@ -2909,7 +2911,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                               oppure
                             </Text>
                             <View
-                              accessibilityLabel="Avvia verifica contactless"
+                              accessibilityLabel="Usa verifica contactless"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3197,7 +3199,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                       ]
                                     }
                                   >
-                                    Avvia verifica contactless
+                                    Usa verifica contactless
                                   </Text>
                                 </View>
                               </View>
@@ -3319,7 +3321,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona il QR Code? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
+                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
                                   accessibilityRole="button"
                                   accessible={true}
                                   style={
@@ -3338,7 +3340,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -3348,7 +3350,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                       ]
                                     }
                                   >
-                                    Come funziona il QR Code?
+                                    Come funziona la verifica?
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -4753,7 +4755,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     ]
                                   }
                                 >
-                                  Avvia una verifica
+                                  Pronto per la verifica
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -4776,7 +4778,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR a chi verifica i tuoi documenti digitali
+                                  Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
@@ -4895,6 +4897,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}
@@ -4920,7 +4923,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                               oppure
                             </Text>
                             <View
-                              accessibilityLabel="Avvia verifica contactless"
+                              accessibilityLabel="Usa verifica contactless"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -5208,7 +5211,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                       ]
                                     }
                                   >
-                                    Avvia verifica contactless
+                                    Usa verifica contactless
                                   </Text>
                                 </View>
                               </View>
@@ -5330,7 +5333,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona il QR Code? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
+                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
                                   accessibilityRole="button"
                                   accessible={true}
                                   style={
@@ -5349,7 +5352,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -5359,7 +5362,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                       ]
                                     }
                                   >
-                                    Come funziona il QR Code?
+                                    Come funziona la verifica?
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -7014,7 +7017,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     ]
                                   }
                                 >
-                                  Avvia una verifica
+                                  Pronto per la verifica
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -7037,7 +7040,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR a chi verifica i tuoi documenti digitali
+                                  Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
@@ -7088,6 +7091,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}
@@ -7113,7 +7117,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                               oppure
                             </Text>
                             <View
-                              accessibilityLabel="Avvia verifica contactless"
+                              accessibilityLabel="Usa verifica contactless"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -7401,7 +7405,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                       ]
                                     }
                                   >
-                                    Avvia verifica contactless
+                                    Usa verifica contactless
                                   </Text>
                                 </View>
                               </View>
@@ -7523,7 +7527,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona il QR Code? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
+                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
                                   accessibilityRole="button"
                                   accessible={true}
                                   style={
@@ -7542,7 +7546,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -7552,7 +7556,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                       ]
                                     }
                                   >
-                                    Come funziona il QR Code?
+                                    Come funziona la verifica?
                                   </Text>
                                   <Text
                                     allowFontScaling={true}

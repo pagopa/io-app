@@ -74,6 +74,7 @@ pnpm nx affected --target=lint,tsc-noemit
 ## Development workflow
 
 1. **Fork** the repository and create a feature branch from `master`:
+
    ```bash
    git checkout -b fix/ISSUE-ID-short-description
    # or
@@ -85,18 +86,22 @@ pnpm nx affected --target=lint,tsc-noemit
 3. **Write tests** for new behaviour: cover the happy path, failure cases, and relevant edge cases.
 
 4. **Run quality checks** from the repository root:
+
    ```bash
    pnpm nx affected --target=lint,tsc-noemit
-   pnpm prettify
+   pnpm format
    pnpm nx run main-app:test-dev
    ```
+
    All checks must pass with zero errors before opening a PR.
 
 5. **Rebase on `master`** to incorporate recent changes:
+
    ```bash
    git fetch origin
    git rebase origin/master
    ```
+
    Resolve any conflicts. If conflicts are complex, ask for guidance in your issue thread.
 
 6. **Push your branch** and [open a pull request](#pull-request-checklist).
@@ -160,16 +165,16 @@ This project uses the [Conventional Commits](https://www.conventionalcommits.org
 
 **Format:** `type(scope): short description`
 
-| Type | When to use |
-|------|-------------|
-| `feat` | A new feature |
-| `fix` | A bug fix |
+| Type       | When to use                                             |
+| ---------- | ------------------------------------------------------- |
+| `feat`     | A new feature                                           |
+| `fix`      | A bug fix                                               |
 | `refactor` | Code change that neither fixes a bug nor adds a feature |
-| `test` | Adding or updating tests |
-| `docs` | Documentation only changes |
-| `chore` | Maintenance tasks (dependency updates, build tooling) |
-| `perf` | Performance improvements |
-| `ci` | CI configuration changes |
+| `test`     | Adding or updating tests                                |
+| `docs`     | Documentation only changes                              |
+| `chore`    | Maintenance tasks (dependency updates, build tooling)   |
+| `perf`     | Performance improvements                                |
+| `ci`       | CI configuration changes                                |
 
 **Examples:**
 
@@ -195,7 +200,7 @@ Before requesting review, verify all of the following:
 - [ ] All tests pass: `pnpm nx run main-app:test-dev`.
 - [ ] TypeScript check passes: `pnpm nx affected --target=tsc-noemit`.
 - [ ] Lint passes: `pnpm nx affected --target=lint`.
-- [ ] Code is formatted: `pnpm prettify`.
+- [ ] Code is formatted: `pnpm format`.
 - [ ] `apps/main-app/definitions/` has not been manually edited (use `pnpm nx run main-app:generate`).
 - [ ] Keystore check is re-enabled if you ran Android on an emulator: `pnpm nx run main-app:lollipop_checks-uncomment`.
 - [ ] New public functions and components have JSDoc comments.

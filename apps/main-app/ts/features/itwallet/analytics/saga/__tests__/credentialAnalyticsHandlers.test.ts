@@ -1,4 +1,3 @@
-import * as O from "fp-ts/Option";
 import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
@@ -62,10 +61,10 @@ const mockedMdl: CredentialMetadata = {
 };
 
 const store: DeepPartial<GlobalState> = {
-  remoteConfig: O.none,
   features: {
     itWallet: {
-      issuance: { integrityKeyTag: O.some("key-tag") },
+      remoteConfig: {},
+      issuance: { integrityKeyTag: "key-tag" },
       credentials: {
         credentials: {}
       },

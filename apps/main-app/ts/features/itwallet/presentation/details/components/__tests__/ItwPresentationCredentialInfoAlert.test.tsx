@@ -27,7 +27,7 @@ const mockedMdl: CredentialMetadata = {
   spec_version: "1.0.0"
 };
 
-const mockedEhc: CredentialMetadata = {
+const mockedTs: CredentialMetadata = {
   ...mockedMdl,
   credentialType: "EuropeanHealthInsuranceCard",
   credentialId: "dc_sd_jwt_EuropeanHealthInsuranceCard"
@@ -115,21 +115,39 @@ describe("ItwPresentationCredentialInfoAlert", () => {
     });
   });
 
-  describe("EHC", () => {
-    it("renders the informational alert when the credential is valid", () => {
+  describe("TS (Tessera Sanitaria)", () => {
+    it("renders the informational banner when the credential is valid", () => {
       mockStatusSelector({ status: "valid" });
 
-      const { getByTestId } = renderComponent(mockedEhc);
+      const { getByText, getByTestId } = renderComponent(mockedTs);
 
-      expect(getByTestId("itwEhcBannerTestID")).not.toBeNull();
+      expect(getByTestId("itwTsBannerTestID")).not.toBeNull();
+      expect(
+        getByText(I18n.t("features.itWallet.presentation.alerts.ts.title"))
+      ).not.toBeNull();
+      expect(
+        getByText(I18n.t("features.itWallet.presentation.alerts.ts.content"))
+      ).not.toBeNull();
     });
 
     it("renders nothing when the credential status is not valid", () => {
       mockStatusSelector({ status: "expired" });
 
-      const { queryByTestId } = renderComponent(mockedEhc);
+      const { queryByTestId } = renderComponent(mockedTs);
 
-      expect(queryByTestId("itwEhcBannerTestID")).toBeNull();
+      expect(queryByTestId("itwTsBannerTestID")).toBeNull();
+    });
+
+    it("dispatches the close action when dismissed", () => {
+      mockStatusSelector({ status: "valid" });
+
+      const { getByLabelText, store } = renderComponent(mockedTs);
+
+      fireEvent.press(getByLabelText(I18n.t("global.buttons.close")));
+
+      expect(store.getActions()).toContainEqual(
+        itwCloseBanner("tsDetailsInfo")
+      );
     });
   });
 });

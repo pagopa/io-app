@@ -8,6 +8,10 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
+  ONE_IDENTITY_ENVS,
+  OneIdentityEnv
+} from "../../../../common/store/reducers/loginConfig";
+import {
   createRetriableFetch,
   FetchResponse
 } from "../../../../common/utils/fetch";
@@ -23,9 +27,10 @@ jest.mock("../../../../common/utils/fetch", () => {
   };
 });
 
-const mockFetchIdps = createRetriableFetch() as jest.Mock;
+const mockRetriableFetch = createRetriableFetch() as jest.Mock;
 
-const MOCK_URL = "https://example.com/idps.json";
+const MOCK_IDPS_URL = "https://example.com/idps.json";
+const MOCK_IDP_FRIENDLY_NAMES_URL = "https://example.com/idpFriendlyNames.json";
 
 const mockIdps: Idps = [
   {
@@ -35,6 +40,16 @@ const mockIdps: Idps = [
     active: true
   }
 ];
+
+const mockIdpFriendlyNames: Record<string, string> = {
+  "https://idp.oneid.pagopa.it": "Friendly Test IDP"
+};
+
+const mockFetchIdpsByUrl = (responses: Record<string, FetchResponse>) => {
+  mockRetriableFetch.mockImplementation((url: string) =>
+    Promise.resolve(responses[url])
+  );
+};
 
 const successResponse = (status: number, body: unknown): FetchResponse => ({
   type: "success",
@@ -51,14 +66,29 @@ const networkFailureResponse = (message: string): FetchResponse => ({
   message
 });
 
-const renderUseGetIdpsHook = () => {
+const renderUseGetIdpsHook = (
+  oneIdentityEnv: OneIdentityEnv = ONE_IDENTITY_ENVS.PROD
+) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const state = merge(undefined, globalState, {
+    features: {
+      loginFeatures: {
+        loginConfig: {
+          oneIdentityEnv
+        }
+      }
+    },
     remoteConfig: O.some({
       oneIdentity: {
         environments: {
-          prod: { idpsUrl: MOCK_URL },
-          uat: { idpsUrl: MOCK_URL }
+          prod: {
+            idpsUrl: MOCK_IDPS_URL,
+            idpFriendlyNamesUrl: MOCK_IDP_FRIENDLY_NAMES_URL
+          },
+          uat: {
+            idpsUrl: MOCK_IDPS_URL,
+            idpFriendlyNamesUrl: MOCK_IDP_FRIENDLY_NAMES_URL
+          }
         }
       }
     })
@@ -77,15 +107,38 @@ describe("useGetIdps", () => {
   });
 
   it("should initialize in loading state", () => {
-    mockFetchIdps.mockReturnValue(new Promise(() => {}));
+    mockRetriableFetch.mockReturnValue(new Promise(() => {}));
 
     const { result } = renderUseGetIdpsHook();
 
     expect(result.current.state).toEqual({ status: "loading" });
   });
 
-  it("should return a 'success' state when the fetch succeeds and the payload matches the schema", async () => {
-    mockFetchIdps.mockResolvedValue(successResponse(200, mockIdps));
+  it("should return a 'success' state with friendly names merged when both fetches succeed and comply with their schemas", async () => {
+    mockFetchIdpsByUrl({
+      [MOCK_IDPS_URL]: successResponse(200, mockIdps),
+      [MOCK_IDP_FRIENDLY_NAMES_URL]: successResponse(200, mockIdpFriendlyNames)
+    });
+
+    const { result } = renderUseGetIdpsHook();
+
+    await waitFor(() => {
+      expect(result.current.state.status).toBe("success");
+    });
+
+    expect(result.current.state).toEqual({
+      status: "success",
+      data: [{ ...mockIdps[0], friendlyName: "Friendly Test IDP" }]
+    });
+  });
+
+  it("should fall back to the idp's original friendlyName when it has no matching entry in idpFriendlyNames", async () => {
+    mockFetchIdpsByUrl({
+      [MOCK_IDPS_URL]: successResponse(200, mockIdps),
+      [MOCK_IDP_FRIENDLY_NAMES_URL]: successResponse(200, {
+        "https://another-idp.oneid.pagopa.it": "Another IDP"
+      })
+    });
 
     const { result } = renderUseGetIdpsHook();
 
@@ -100,7 +153,7 @@ describe("useGetIdps", () => {
   });
 
   it("should return a 'failure' state when the HTTP response status is not ok", async () => {
-    mockFetchIdps.mockResolvedValue(successResponse(500, {}));
+    mockRetriableFetch.mockResolvedValue(successResponse(500, {}));
 
     const { result } = renderUseGetIdpsHook();
 
@@ -115,7 +168,10 @@ describe("useGetIdps", () => {
   });
 
   it("should return a 'failure' state when the fetch fails with a network error", async () => {
-    mockFetchIdps.mockResolvedValue(networkFailureResponse("Network Error"));
+    mockFetchIdpsByUrl({
+      [MOCK_IDPS_URL]: networkFailureResponse("Network Error"),
+      [MOCK_IDP_FRIENDLY_NAMES_URL]: successResponse(200, mockIdpFriendlyNames)
+    });
 
     const { result } = renderUseGetIdpsHook();
 
@@ -129,9 +185,12 @@ describe("useGetIdps", () => {
     });
   });
 
-  it("should return a 'failure' state when the payload does NOT comply with IdpsSchema", async () => {
+  it("should return a 'failure' state when the idps payload does NOT comply with IdpsSchema", async () => {
     const INVALID_PAYLOAD = { something: "completely-wrong" };
-    mockFetchIdps.mockResolvedValue(successResponse(200, INVALID_PAYLOAD));
+    mockFetchIdpsByUrl({
+      [MOCK_IDPS_URL]: successResponse(200, INVALID_PAYLOAD),
+      [MOCK_IDP_FRIENDLY_NAMES_URL]: successResponse(200, mockIdpFriendlyNames)
+    });
 
     const { result } = renderUseGetIdpsHook();
 
@@ -143,5 +202,46 @@ describe("useGetIdps", () => {
       status: "failure",
       error: expect.stringContaining("Invalid input")
     });
+  });
+
+  it("should return a 'success' state with the original friendlyName as a fallback when the idpFriendlyNames payload does NOT comply with IdpFriendlyNamesSchema", async () => {
+    mockFetchIdpsByUrl({
+      [MOCK_IDPS_URL]: successResponse(200, mockIdps),
+      [MOCK_IDP_FRIENDLY_NAMES_URL]: successResponse(200, [
+        "not",
+        "a",
+        "record"
+      ])
+    });
+
+    const { result } = renderUseGetIdpsHook();
+
+    await waitFor(() => {
+      expect(result.current.state.status).toBe("success");
+    });
+
+    expect(result.current.state).toEqual({
+      status: "success",
+      data: mockIdps
+    });
+  });
+
+  it("should return a 'success' state with the original friendlyName as a fallback when the idpFriendlyNames fetch fails with a network error", async () => {
+    mockFetchIdpsByUrl({
+      [MOCK_IDPS_URL]: successResponse(200, mockIdps),
+      [MOCK_IDP_FRIENDLY_NAMES_URL]: networkFailureResponse("Network Error")
+    });
+
+    const { result } = renderUseGetIdpsHook();
+
+    await waitFor(() => {
+      expect(result.current.state.status).toBe("success");
+    });
+
+    expect(result.current.state).toEqual({
+      status: "success",
+      data: mockIdps
+    });
+    expect(mockRetriableFetch).toHaveBeenCalledTimes(2);
   });
 });

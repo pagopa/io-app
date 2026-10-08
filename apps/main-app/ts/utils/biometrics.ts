@@ -6,11 +6,13 @@ import { isDebugBiometricIdentificationEnabled } from "../config";
 import { mixpanelTrack } from "../mixpanel";
 
 /**
- * Retrieve biometric settings from the base system. This function wraps the basic
- * method "supportedAuthenticationTypesAsync" of expo-local-authentication library and simplifies the possible returned values in
- * function of its usage.
+ * Retrieve biometric settings from the base system. This function wraps the
+ * basic method "supportedAuthenticationTypesAsync" of expo-local-authentication
+ * library and simplifies the possible returned values in function of its
+ * usage.
  *
- * More info about library can be found here: https://github.com/expo/expo/tree/main/packages/expo-local-authentication
+ * More info about library can be found here:
+ * https://github.com/expo/expo/tree/main/packages/expo-local-authentication
  */
 
 const biometricErrors = [
@@ -21,22 +23,25 @@ const biometricErrors = [
   "UNAVAILABLE"
 ] as const;
 
-export type BiometricsErrorType = (typeof biometricErrors)[number];
-
 export type BiometricsType = BiometricsErrorType | BiometricsValidType;
 
 export type BiometricsValidType =
   // happy path
   "BIOMETRICS" | "FACE_ID" | "TOUCH_ID";
 
+type BiometricsErrorType = (typeof biometricErrors)[number];
+
 /**
- * Retrieve biometric settings from the base system. This function wraps the basic
- * method "supportedAuthenticationTypesAsync" of expo-local-authentication library and simplifies the possible returned values in
- * function of its usage.
+ * Retrieve biometric settings from the base system. This function wraps the
+ * basic method "supportedAuthenticationTypesAsync" of expo-local-authentication
+ * library and simplifies the possible returned values in function of its
+ * usage.
  *
- * More info about library can be found here: https://github.com/expo/expo/tree/main/packages/expo-local-authentication
+ * More info about library can be found here:
+ * https://github.com/expo/expo/tree/main/packages/expo-local-authentication
  *
- * @param shouldTrackError - If true, tracks BIOMETRIC_ERROR event on Mixpanel when biometrics are unavailable. Default: true
+ * @param shouldTrackError - If true, tracks BIOMETRIC_ERROR event on Mixpanel
+ *   when biometrics are unavailable. Default: true
  */
 export const getBiometricsType = (
   shouldTrackError = true
@@ -82,7 +87,7 @@ const biometricAuthenticationFailureHandler = (
 ) => {
   void mixpanelTrack("BIOMETRIC_ERROR", { error });
   if (isDebugBiometricIdentificationEnabled) {
-    Alert.alert("identification.biometric.title", `KO: ${error}`);
+    Alert.alert(I18n.t("identification.biometric.title"), `KO: ${error}`);
   }
   onError(error as LocalAuthentication.LocalAuthenticationError);
   if (Platform.OS === "android") {

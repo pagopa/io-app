@@ -22,9 +22,7 @@ const MIXPANEL_EID_CREDENTIALS: ReadonlySet<MixPanelCredential> = new Set([
   "ITW_PID"
 ]);
 
-/**
- * Handles analytics updates when an ITW credential is removed.
- */
+/** Handles analytics updates when an ITW credential is removed. */
 export function* handleCredentialRemovedAnalytics(
   action: ActionType<typeof itwCredentialsRemove>
 ): SagaIterator {
@@ -38,10 +36,9 @@ export function* handleCredentialRemovedAnalytics(
   }
 
   /**
-   * During ITW upgrade, eID (ID_V2) is removed from the store
-   * but must NOT be marked as deleted in analytics.
-   * In case of wallet revocation, all analytics properties are
-   * already reset by updatePropertiesWalletRevoked.
+   * During ITW upgrade, eID (ID_V2) is removed from the store but must NOT be
+   * marked as deleted in analytics. In case of wallet revocation, all analytics
+   * properties are already reset by updatePropertiesWalletRevoked.
    */
   if (MIXPANEL_EID_CREDENTIALS.has(credential)) {
     return;
@@ -51,17 +48,13 @@ export function* handleCredentialRemovedAnalytics(
   updateThirdPartyCredentialProperty(state);
 }
 
-/**
- * Handles aggregate analytics updates when catalogue metadata is refreshed.
- */
+/** Handles aggregate analytics updates when catalogue metadata is refreshed. */
 export function* handleCredentialsCatalogueLoadedAnalytics(): SagaIterator {
   const state: GlobalState = yield* select();
   updateThirdPartyCredentialProperty(state);
 }
 
-/**
- * Handles analytics updates when an ITW credential is stored.
- */
+/** Handles analytics updates when an ITW credential is stored. */
 export function* handleCredentialStoredAnalytics(
   action: ActionType<typeof itwCredentialsStore>
 ): SagaIterator {

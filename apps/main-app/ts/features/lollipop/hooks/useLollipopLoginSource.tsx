@@ -14,7 +14,7 @@ import {
   isActiveSessionLoginSelector
 } from "../../authentication/activeSessionLogin/store/selectors";
 import { selectedIdentityProviderSelector } from "../../authentication/common/store/selectors";
-import { getLoginHeaders } from "../../authentication/common/utils/login";
+import { getLoginHeaders } from "../../authentication/common/utils";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../authentication/login/cie/utils";
 import {
@@ -85,8 +85,8 @@ export const useLollipopLoginSource = (
     }
 
     /**
-     * We generate a new key pair for every new login/relogin/retry we
-     * need to garantee the public key uniqueness on every login request.
+     * We generate a new key pair for every new login/relogin/retry we need to
+     * garantee the public key uniqueness on every login request.
      * https://pagopa.atlassian.net/browse/LLK-37
      */
     const regeneratedPublickKey = await handleRegenerateEphemeralKey(

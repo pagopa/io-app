@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 
 import {
   itwAvailableCredentialsListSelector,
@@ -10,6 +10,7 @@ import {
   itwCredentialTypeFromDocTypeSelector
 } from "..";
 import { type GlobalState } from "../../../../../../store/reducers/types";
+import { pidScopes } from "../../../../common/utils/constants";
 import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
 
 const mockCatalogue = {
@@ -40,12 +41,18 @@ const buildState = (
     catalogue: pot.Pot<DigitalCredentialsCatalogue, unknown>;
     isEnabledForCredentialsList: boolean;
     preferredLanguage: string;
+    remoteConfig: {
+      hidden_credentials?: ReadonlyArray<string>;
+      new_credentials?: ReadonlyArray<string>;
+      pinned_credentials?: ReadonlyArray<string>;
+    };
     translations: pot.Pot<Record<string, Record<string, string>>, unknown>;
   }> = {}
 ) =>
   ({
     features: {
       itWallet: {
+        remoteConfig: overrides.remoteConfig ?? {},
         credentialsCatalogue: {
           isEnabledForCredentialsList:
             overrides.isEnabledForCredentialsList ?? false,
@@ -66,32 +73,28 @@ const buildState = (
         overrides.preferredLanguage !== undefined
           ? overrides.preferredLanguage
           : "it"
-    },
-    remoteConfig: O.none
+    }
   }) as unknown as GlobalState;
 
 describe("itwCredentialsCatalogueSelector", () => {
-  it("should map the legacy 'PersonIdentificationData' credential type to 'pid'", () => {
-    const state = buildState({
-      catalogue: pot.some({
-        credentials: [
-          {
-            credential_type: "PersonIdentificationData",
-            name: "Legacy PID"
-          },
-          {
-            credential_type: "other",
-            name: "Other Credential"
-          }
-        ]
-      } as DigitalCredentialsCatalogue)
-    });
+  it.each(pidScopes)(
+    "should map the PID scope '%s' to credential type 'pid'",
+    scope => {
+      const state = buildState({
+        catalogue: pot.some({
+          credentials: [
+            { credential_type: scope, name: "PID" },
+            { credential_type: "other", name: "Other Credential" }
+          ]
+        } as DigitalCredentialsCatalogue)
+      });
 
-    expect(itwCredentialsCatalogueSelector(state)?.credentials).toEqual([
-      { credential_type: "pid", name: "Legacy PID" },
-      { credential_type: "other", name: "Other Credential" }
-    ]);
-  });
+      expect(itwCredentialsCatalogueSelector(state)?.credentials).toEqual([
+        { credential_type: "pid", name: "PID" },
+        { credential_type: "other", name: "Other Credential" }
+      ]);
+    }
+  );
 });
 
 describe("itwCredentialsCatalogueByTypesSelector", () => {
@@ -251,27 +254,125 @@ describe("itwAvailableCredentialsListSelector", () => {
     });
 
     expect(itwAvailableCredentialsListSelector(state)).toEqual([
-      { name: "Patente di guida", type: "mDL" },
       {
-        name: "Carta Europea della Disabilità",
+        name: I18n.t("features.itWallet.credentialName.mdl"),
+        type: "mDL"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.dc"),
         type: "EuropeanDisabilityCard"
       },
       {
-        name: "Tessera Sanitaria - Tessera europea di assicurazione malattia",
+        name: I18n.t("features.itWallet.credentialName.ts"),
         type: "EuropeanHealthInsuranceCard"
       },
-      { name: "Età certificata", type: "proof_of_age" },
-      { name: "Titoli accademici", type: "education_degree" },
       {
-        name: "Iscrizioni accademiche",
+        name: I18n.t("features.itWallet.credentialName.av"),
+        type: "proof_of_age"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.ed"),
+        type: "education_degree"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.ee"),
         type: "education_enrollment"
       },
-      { name: "Attestato di residenza", type: "residency" },
-      { name: "Diplomi", type: "education_diploma" },
       {
-        name: "Frequenza scolastica",
+        name: I18n.t("features.itWallet.credentialName.res"),
+        type: "residency"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.edip"),
+        type: "education_diploma"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.edat"),
         type: "education_attendance"
       }
+    ]);
+  });
+
+  it("should filter and order hardcoded credentials using remote config", () => {
+    const state = buildState({
+      catalogue: pot.some(mockCatalogue),
+      remoteConfig: {
+        new_credentials: [
+          "EuropeanHealthInsuranceCard",
+          "proof_of_age",
+          "residency"
+        ],
+        pinned_credentials: [
+          "mDL",
+          "EuropeanHealthInsuranceCard",
+          "education_degree"
+        ],
+        hidden_credentials: [
+          "proof_of_age",
+          "education_degree",
+          "EuropeanDisabilityCard"
+        ]
+      }
+    });
+
+    expect(
+      itwAvailableCredentialsListSelector(state).map(({ type }) => type)
+    ).toEqual([
+      "EuropeanHealthInsuranceCard",
+      "residency",
+      "mDL",
+      "education_enrollment",
+      "education_diploma",
+      "education_attendance"
+    ]);
+  });
+
+  it("should filter and order catalogue credentials using remote config", () => {
+    const state = buildState({
+      isEnabledForCredentialsList: true,
+      catalogue: pot.some({
+        ...mockCatalogue,
+        credentials: [
+          ...mockCatalogue.credentials,
+          { credential_type: pidScopes[0], name: "PID" },
+          { credential_type: "cred3", name: "Credential 3" },
+          { credential_type: "cred4", name: "Credential 4" }
+        ] as DigitalCredentialsCatalogue["credentials"]
+      }),
+      remoteConfig: {
+        new_credentials: ["cred2", "cred3", "unknown"],
+        pinned_credentials: ["cred1", "cred2", "cred3"],
+        hidden_credentials: ["cred3"]
+      }
+    });
+
+    expect(itwAvailableCredentialsListSelector(state)).toEqual([
+      { type: "cred2", name: "Credential 2" },
+      { type: "cred1", name: "Credential 1" },
+      { type: "cred4", name: "Credential 4" }
+    ]);
+  });
+
+  it("should filter hardcoded credentials while the enabled catalogue is unavailable", () => {
+    const state = buildState({
+      isEnabledForCredentialsList: true,
+      remoteConfig: {
+        new_credentials: ["residency"],
+        hidden_credentials: ["mDL"]
+      }
+    });
+
+    expect(
+      itwAvailableCredentialsListSelector(state).map(({ type }) => type)
+    ).toEqual([
+      "residency",
+      "EuropeanDisabilityCard",
+      "EuropeanHealthInsuranceCard",
+      "proof_of_age",
+      "education_degree",
+      "education_enrollment",
+      "education_diploma",
+      "education_attendance"
     ]);
   });
 });

@@ -23,7 +23,12 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIONewTypeface, useIOTheme } from "../../context";
-import { IOColors, IOSpacingScale, IOVisualCostants } from "../../core";
+import {
+  IOColors,
+  IOSpacingScale,
+  IOTypography,
+  IOVisualCostants
+} from "../../core";
 import {
   IOFontSize,
   IOMaxFontSizeMultiplier,
@@ -31,11 +36,7 @@ import {
 } from "../../utils/fonts";
 import { WithTestID } from "../../utils/types";
 import { Icon, IOIconSizeScale } from "../icons";
-import {
-  buttonTextFontSize,
-  buttonTextLineHeight,
-  IOText
-} from "../typography";
+import { IOText } from "../typography";
 
 /* Component visual attributes */
 const inputPaddingHorizontal: IOSpacingScale = 12;
@@ -302,9 +303,9 @@ export const SearchInput = ({
             accessible={false}
             color={theme["interactiveElem-default"]}
             importantForAccessibility="no-hide-descendants"
-            lineHeight={buttonTextLineHeight}
+            lineHeight={IOTypography.buttonText.lineHeight}
             numberOfLines={1}
-            size={buttonTextFontSize}
+            size={IOTypography.buttonText.size}
             weight={"Semibold"}
           >
             {cancelButtonLabel}

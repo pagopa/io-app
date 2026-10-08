@@ -24,8 +24,8 @@ const extractQuery = (query: Query) =>
   );
 
 /**
- *  Returns the list of transactions and operations of an initiative of a
- *  citizen sorted by date (newest->oldest)
+ * Returns the list of transactions and operations of an initiative of a citizen
+ * sorted by date (newest->oldest)
  */
 addIdPayHandler("get", "/timeline/:initiativeId", (req, res) =>
   pipe(
@@ -49,9 +49,7 @@ addIdPayHandler("get", "/timeline/:initiativeId", (req, res) =>
   )
 );
 
-/**
- * Returns the detail of a transaction
- */
+/** Returns the detail of a transaction */
 addIdPayHandler("get", "/timeline/:initiativeId/:operationId", (req, res) =>
   pipe(
     sequenceT(O.Monad)(

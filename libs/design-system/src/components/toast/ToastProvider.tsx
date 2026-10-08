@@ -18,20 +18,18 @@ import { Toast } from "./types";
 import { IOToastRef, useIOToast } from "./useIOToast";
 
 /**
- * The maximum number of toasts that can be displayed at the same time
- * If the number of the toasts exceeds this number, the oldest one will be removed
+ * The maximum number of toasts that can be displayed at the same time If the
+ * number of the toasts exceeds this number, the oldest one will be removed
  */
 export const MAX_TOAST_STACK_SIZE = 3;
 
-/**
- * The time in milliseconds that a toast notification will be displayed
- */
+/** The time in milliseconds that a toast notification will be displayed */
 export const TOAST_DURATION_TIME = 5000;
 
 /**
- * This is the time in milliseconds between two toast notifications.
- * This will throttle the toast notifications to avoid displaying too many of them at the same time
- * and causing visual glitches.
+ * This is the time in milliseconds between two toast notifications. This will
+ * throttle the toast notifications to avoid displaying too many of them at the
+ * same time and causing visual glitches.
  */
 export const TOAST_THROTTLE_TIME = 500;
 
@@ -40,7 +38,8 @@ type ToastNotificationStackItemProps = Pick<Dismissable, "onDismiss"> &
   ToastNotificationStackItem;
 
 /**
- * A toast notification item that can be swiped to the right to dismiss it, with enter and exit animations
+ * A toast notification item that can be swiped to the right to dismiss it, with
+ * enter and exit animations
  */
 const ToastNotificationStackItem = ({
   onDismiss,

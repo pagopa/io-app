@@ -7,6 +7,7 @@ import {
   useIOExperimentalDesign
 } from "@io-app/design-system";
 import Color from "color";
+import I18n from "i18next";
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -17,6 +18,7 @@ import { useCredentialCardConfig } from "../../../common/components/ItwCredentia
 import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentialDetailCard.tsx";
 import { useItwAuthSourceName } from "../../../common/hooks/useItwAuthSourceName.ts";
 import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName.ts";
+import { itwShouldUpgradeCredentialSelector } from "../../../common/store/selectors";
 import { useTagPropsByStatus } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
@@ -43,6 +45,12 @@ const ItwPresentationDetailsHeader = ({
   // Credential's header card is always in light mode
   const { color } = useCredentialCardConfig(credential.credentialType, "light");
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const needsItwUpgrade = useIOSelector(
+    itwShouldUpgradeCredentialSelector(
+      credential.credentialType,
+      credential.jwt.issuedAt
+    )
+  );
   const { status: credentialRawStatus } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -55,8 +63,18 @@ const ItwPresentationDetailsHeader = ({
     rawStatus,
     credential.credentialType
   );
+
   const tagPropsByStatus = useTagPropsByStatus();
-  const statusTagProps = tagPropsByStatus[displayStatus];
+  const statusTagProps = useMemo<Tag | undefined>(() => {
+    if (needsItwUpgrade) {
+      return {
+        variant: "error",
+        text: I18n.t("features.itWallet.card.status.upgradePending")
+      };
+    }
+
+    return tagPropsByStatus[displayStatus];
+  }, [displayStatus, needsItwUpgrade, tagPropsByStatus]);
 
   const authSourceName = useItwAuthSourceName(credential.credentialType);
   const credentialName = useItwCredentialName(credential.credentialType);
@@ -100,7 +118,8 @@ const ItwPresentationDetailsHeader = ({
 };
 
 /**
- * @deprecated Legacy header component for presentation details, to be used until the new design is enabled for all users.
+ * @deprecated Legacy header component for presentation details, to be used
+ *   until the new design is enabled for all users.
  */
 const ItwPresentationDetailsHeaderLegacy = ({
   credential
@@ -171,9 +190,7 @@ const styles = StyleSheet.create({
 
 const MemoizedItwPresentationDetailsHeader = memo(ItwPresentationDetailsHeader);
 
-/**
- * @deprecated
- */
+/** @deprecated */
 const MemoizedItwPresentationDetailsHeaderLegacy = memo(
   ItwPresentationDetailsHeaderLegacy
 );

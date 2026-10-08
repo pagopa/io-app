@@ -1,6 +1,8 @@
 /**
  * A screen to guide the user to proper read the CIE
+ *
  * TODO: isolate cie event listener as saga
+ *
  * TODO: when 100% is reached, the animation end
  */
 import {
@@ -32,10 +34,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import {
-  IOStackNavigationProp,
-  IOStackNavigationRouteProps
-} from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
@@ -45,13 +44,7 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
-import {
-  accessibityTimeout,
-  analyticActions,
-  getTextForState,
-  WAIT_TIMEOUT_NAVIGATION,
-  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
-} from "../../../activeSessionLogin/shared/utils";
+import { getTextForState } from "../../../activeSessionLogin/shared/utils";
 import {
   trackLoginCieCardReaderScreen,
   trackLoginCieCardReadingError,
@@ -59,6 +52,12 @@ import {
 } from "../../../common/analytics/cieAnalytics";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import {
+  accessibityTimeout,
+  cieErrorMessagesMap,
+  WAIT_TIMEOUT_NAVIGATION,
+  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
+} from "../../../common/utils/constants";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../components/CieCardReadingAnimation";
@@ -69,11 +68,6 @@ import {
 } from "../store/actions";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieUatEndpoint } from "../utils/endpoints";
-
-export type CieCardReaderNavigationProps = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "CIE_CARD_READER_SCREEN"
->;
 
 export type CieCardReaderScreenNavigationParams = {
   authorizationUri: string;
@@ -201,7 +195,7 @@ const CieCardReaderScreen = () => {
   const setError = useCallback(
     ({ eventReason, errorDescription, navigation: nav }: SetErrorParameter) => {
       const cieDescription =
-        errorDescription ?? analyticActions.get(eventReason) ?? "";
+        errorDescription ?? cieErrorMessagesMap[eventReason] ?? "";
       dispatchAnalyticEvent({
         reason: eventReason,
         cieDescription,

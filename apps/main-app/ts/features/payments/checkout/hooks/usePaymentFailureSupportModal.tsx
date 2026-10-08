@@ -162,7 +162,6 @@ const usePaymentFailureSupportModal = ({
   );
 
   const handleCopyAllToClipboard = () => {
-    // prettier-ignore
     const data = `${I18n.t("wallet.payment.support.errorCode")}: ${faultCodeDetail}
     ${I18n.t("wallet.payment.support.noticeNumber")}: ${paymentNoticeNumber}
     ${I18n.t("wallet.payment.support.entityCode")}: ${organizationFiscalCode}`;

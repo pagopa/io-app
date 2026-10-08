@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import { act, fireEvent } from "@testing-library/react-native";
 import { EmitterSubscription, Linking } from "react-native";
 import { createStore } from "redux";
@@ -7,6 +8,7 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as loginHooks from "../../../lollipop/hooks/useLollipopLoginSource";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../common/utils";
 import ActiveSessionCieIdLoginScreen from "../screens/cieId/ActiveSessionCieIdLoginScreen";
 import {
   activeSessionLoginFailure,
@@ -15,10 +17,9 @@ import {
 } from "../store/actions";
 
 const API_PREFIX_URL = "http://example.com";
-const SPID_LEVEL = "SpidL2";
-const IS_UAT = false;
 
 const mockReplace = jest.fn();
+const mockNavigationDispatch = jest.fn();
 const mockDispatch = jest.fn();
 const mockPopToTop = jest.fn();
 
@@ -30,13 +31,8 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () => ({
       replace: mockReplace,
+      dispatch: mockNavigationDispatch,
       popToTop: mockPopToTop
-    }),
-    useRoute: () => ({
-      params: {
-        spidLevel: SPID_LEVEL,
-        isUat: IS_UAT
-      }
     })
   };
 });
@@ -124,12 +120,15 @@ describe("ActiveSessionCieIdLoginScreen", () => {
     });
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: expect.objectContaining({
-        errorCodeOrMessage: "invalid_cf"
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction("invalid_cf")
+    );
+    expect(mockReplace).not.toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.MAIN,
+      expect.objectContaining({
+        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN
       })
-    });
+    );
   });
 
   it("should dispatch setFinishedActiveSessionLoginFlow on goBack", () => {
@@ -205,12 +204,15 @@ describe("ActiveSessionCieIdLoginScreen", () => {
 
     renderComponent();
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: expect.objectContaining({
-        errorCodeOrMessage: message
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction(message)
+    );
+    expect(mockReplace).not.toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.MAIN,
+      expect.objectContaining({
+        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN
       })
-    });
+    );
   });
 
   it("should block URL navigation if shouldBlockUrlNavigationWhileCheckingLollipop returns true", () => {
@@ -233,6 +235,13 @@ describe("ActiveSessionCieIdLoginScreen", () => {
   });
 });
 
+const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
+  StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+    errorCodeOrMessage,
+    authMethod: "CIE_ID",
+    authLevel: AUTH_LEVELS.L2
+  });
+
 function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
@@ -240,7 +249,7 @@ function renderComponent() {
   return renderScreenWithNavigationStoreContext(
     ActiveSessionCieIdLoginScreen,
     AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN,
-    { spidLevel: SPID_LEVEL, isUat: IS_UAT },
+    {},
     store
   );
 }

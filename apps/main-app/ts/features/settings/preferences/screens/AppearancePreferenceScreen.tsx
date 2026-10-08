@@ -58,8 +58,9 @@ export const updateNavigationBarColor = (theme?: ColorModeChoice) => {
 
 /**
  * Display the appearance related settings
+ *
+ * @class
  * @param props
- * @constructor
  */
 const AppearancePreferenceScreen = (): ReactElement => {
   const store = useIOStore();
@@ -185,7 +186,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
             endElement={{
               type: "badge",
               componentProps: {
-                text: "Beta",
+                text: I18n.t("global.badges.beta"),
                 variant: "highlight"
               }
             }}

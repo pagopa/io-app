@@ -11,9 +11,9 @@ function replaceVersionCode(_, version, p1, __) {
 }
 
 /**
- * Prepare the package.json file for a new fix|release|breaking cycle.
- * In order to use the automatic functionality of commit-and-tag-version, just remove the -rc.x suffix to initiate
- * a new cycle.
+ * Prepare the package.json file for a new fix|release|breaking cycle. In order
+ * to use the automatic functionality of commit-and-tag-version, just remove the
+ * -rc.x suffix to initiate a new cycle.
  */
 const replaceCanaryVersion = () => {
   // read package.json as JSON
@@ -21,10 +21,7 @@ const replaceCanaryVersion = () => {
 
   const versionSplit = package.version.split("-");
 
-  const normalizedVersion = parseInt(
-    process.argv[2].slice(5),
-    10
-  );
+  const normalizedVersion = parseInt(process.argv[2].slice(5), 10);
 
   // replace the version, removing the rc part
   package.version = `${versionSplit[0]}-canary.${isNaN(normalizedVersion) ? 0 : normalizedVersion}`;
@@ -34,11 +31,7 @@ const replaceCanaryVersion = () => {
   const updatedGradleContents = contents.replace(
     versionCodeRegex,
     (substr, ...args) =>
-      replaceVersionCode(
-        substr,
-        `${parseInt(process.argv[2], 10)}`,
-        ...args
-      )
+      replaceVersionCode(substr, `${parseInt(process.argv[2], 10)}`, ...args)
   );
   fs.writeFileSync(packagePath, JSON.stringify(package, undefined, 2));
   fs.writeFileSync(gradlePath, updatedGradleContents);

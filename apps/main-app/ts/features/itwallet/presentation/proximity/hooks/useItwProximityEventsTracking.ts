@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 
-import { isDefined } from "../../../../../utils/guards";
 import {
   serializeFailureReason,
   shouldSerializeReason
 } from "../../../common/utils/itwStoreUtils";
 import {
-  trackItwProximityGenericFailure,
   trackItwProximityMandatoryCredentialMissing,
   trackItwProximityNfcSessionError,
   trackItwProximityNfcSessionTimeout,
@@ -19,51 +17,38 @@ import { ProximityFailure, ProximityFailureType } from "../machine/failure";
 import { ItwProximityMachineContext } from "../machine/provider";
 import {
   hasGivenConsentSelector,
-  selectIsNfcRetrieval
+  selectIsNfcRetrieval,
+  selectProximityFlow
 } from "../machine/selectors";
 
 type Params = {
   failure: ProximityFailure;
-  getCredentialTypeFromDocType: (
-    docType: string | undefined
-  ) => string | undefined;
 };
 
-/**
- * Track errors occurred during the proximity presentation flow for analytics.
- */
+/** Track errors occurred during the proximity presentation flow for analytics. */
 
-export const useItwProximityEventsTracking = ({
-  failure,
-  getCredentialTypeFromDocType
-}: Params) => {
+export const useItwProximityEventsTracking = ({ failure }: Params) => {
   const hasGivenConsent = ItwProximityMachineContext.useSelector(
     hasGivenConsentSelector
   );
   const isNfcRetrieval =
     ItwProximityMachineContext.useSelector(selectIsNfcRetrieval);
+  const proximityFlow =
+    ItwProximityMachineContext.useSelector(selectProximityFlow);
   useEffect(() => {
     const serializedFailure = serializeFailureReason(failure);
     switch (failure.type) {
-      case ProximityFailureType.MISSING_CREDENTIALS: {
-        const missingCredentials = failure.reason.credentialsDocType
-          .map(getCredentialTypeFromDocType)
-          .filter(isDefined);
-
+      case ProximityFailureType.MISSING_CREDENTIALS:
         return trackItwProximityMandatoryCredentialMissing({
-          missing_credential: missingCredentials.join(" - "),
-          missing_credential_number: missingCredentials.length
+          proximity_flow: proximityFlow
         });
-      }
 
       case ProximityFailureType.RELYING_PARTY_GENERIC:
         trackItwProximityRPGenericFailure({
           reason: serializedFailure.reason,
           type: serializedFailure.type,
+          proximity_flow: proximityFlow,
           proximity_sharing_status: hasGivenConsent ? "post" : "pre"
-        });
-        trackItwProximityGenericFailure({
-          reason: serializedFailure.reason
         });
         if (isNfcRetrieval) {
           return trackItwProximityNfcSessionError(serializedFailure);
@@ -71,21 +56,27 @@ export const useItwProximityEventsTracking = ({
         return;
 
       case ProximityFailureType.TIMEOUT:
-        trackItwProximityTimeout(serializedFailure);
+        trackItwProximityTimeout({
+          ...serializedFailure,
+          proximity_flow: proximityFlow
+        });
         if (isNfcRetrieval) {
           return trackItwProximityNfcSessionTimeout(serializedFailure);
         }
         return;
 
       case ProximityFailureType.UNEXPECTED:
-        return trackItwProximityUnexpectedFailure(
-          shouldSerializeReason(failure)
+        return trackItwProximityUnexpectedFailure({
+          ...(shouldSerializeReason(failure)
             ? { ...serializedFailure, origin: "ITW_PROXIMITY_EVENTS_TRACKING" }
-            : failure
-        );
+            : failure),
+          proximity_flow: proximityFlow
+        });
       case ProximityFailureType.UNTRUSTED_RP:
-        return trackItwProximityRpNotTrusted(serializedFailure);
+        return trackItwProximityRpNotTrusted({
+          ...serializedFailure,
+          proximity_flow: proximityFlow
+        });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [failure, hasGivenConsent, isNfcRetrieval]);
+  }, [failure, hasGivenConsent, isNfcRetrieval, proximityFlow]);
 };

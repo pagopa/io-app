@@ -35,6 +35,7 @@ import wiaReducer, {
 import bannersReducer, { ItwBannersState } from "./banners";
 import environmentReducer, { ItwEnvironmentState } from "./environment";
 import preferencesReducer, { ItwPreferencesState } from "./preferences";
+import remoteConfigReducer, { ItwRemoteConfigState } from "./remoteConfig";
 import securePreferencesReducer, {
   ItwSecurePreferencesState
 } from "./securePreferences";
@@ -49,6 +50,7 @@ export type ItWalletState = {
   issuance: ItwIssuanceState & PersistPartial;
   preferences: ItwPreferencesState;
   proximity: ItwProximityState & PersistPartial;
+  remoteConfig: ItwRemoteConfigState & PersistPartial;
   securePreferences: ItwSecurePreferencesState & PersistPartial;
   ui: ItwUiState;
   walletInstance: ItwWalletInstanceState & PersistPartial;
@@ -57,17 +59,18 @@ export type ItWalletState = {
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
 
 const itwReducer = combineReducers({
+  banners: bannersReducer,
+  credentials: itwCredentialsReducer,
+  credentialsCatalogue: itwCredentialsCatalogueReducer,
   environment: environmentReducer,
   identification: identificationReducer,
   issuance: issuanceReducer,
-  credentials: itwCredentialsReducer,
-  walletInstance: wiaReducer,
   preferences: preferencesReducer,
-  securePreferences: securePreferencesReducer,
-  credentialsCatalogue: itwCredentialsCatalogueReducer,
   proximity: itwProximityReducer,
-  banners: bannersReducer,
-  ui: uiReducer
+  remoteConfig: remoteConfigReducer,
+  securePreferences: securePreferencesReducer,
+  ui: uiReducer,
+  walletInstance: wiaReducer
 });
 
 const CURRENT_REDUX_ITW_STORE_VERSION = 19;

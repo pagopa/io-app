@@ -23,11 +23,10 @@ import RootContainer from "./RootContainer";
 
 export type AppDispatch = typeof store.dispatch;
 // Infer the `RootState` and `AppDispatch` types from the store itself export
-export type RootState = ReturnType<typeof store.getState>;
-
 /**
  * Main component of the application
- * @constructor
+ *
+ * @class
  */
 const App = (): JSX.Element => (
   <GestureHandlerRootView style={{ flex: 1 }}>

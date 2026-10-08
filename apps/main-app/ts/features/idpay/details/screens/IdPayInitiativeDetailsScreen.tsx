@@ -465,7 +465,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       headerAction={{
         icon: "info",
         onPress: navigateToBeneficiaryDetails,
-        accessibilityLabel: "info"
+        accessibilityLabel: I18n.t("global.buttons.info")
       }}
       logoUris={[{ uri: logoURL }]}
       name={initiativeName || ""}

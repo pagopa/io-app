@@ -1,3 +1,4 @@
+import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor, StateFrom } from "xstate";
 
@@ -6,6 +7,8 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import * as remoteConfig from "../../../../common/store/selectors/remoteConfig";
+import { testProximityDeps } from "../../../../machine/utils/testDeps";
 import { trackItwProximityQrCode } from "../../analytics";
 import { ProximityFailureType } from "../../machine/failure";
 import { itwProximityMachine } from "../../machine/machine";
@@ -39,13 +42,19 @@ const mockShouldShowExpiredProximityCredentialsBannerSelector = jest.fn(
 );
 jest.mock("../../store/selectors/credentials", () => ({
   shouldShowExpiredProximityCredentialsBannerSelector: () =>
-    mockShouldShowExpiredProximityCredentialsBannerSelector()
+    mockShouldShowExpiredProximityCredentialsBannerSelector(),
+  itwPresentableCredentialsByDocTypeSelector: () => ({})
 }));
 
 describe("ItwProximityPresentmentScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest
+      .spyOn(remoteConfig, "isItwProximityNfcMinAppVersionSupportedSelector")
+      .mockReturnValue(true);
   });
+
+  afterEach(() => jest.restoreAllMocks());
 
   it("should render loading skeleton when machine is loading", () => {
     expect(
@@ -157,6 +166,50 @@ describe("ItwProximityPresentmentScreen", () => {
       });
     });
   });
+
+  const nfcScenarios = [
+    { name: "enabled", enabled: true },
+    { name: "disabled", enabled: false }
+  ];
+
+  it.each(nfcScenarios)(
+    "renders the NFC section only when the feature flag is enabled ($name)",
+    ({ enabled }) => {
+      jest
+        .mocked(remoteConfig.isItwProximityNfcMinAppVersionSupportedSelector)
+        .mockReturnValue(enabled);
+      const component = renderComponent(
+        {
+          machineState: "displayQrCode",
+          qrCodeString: "mock-qr-code-string"
+        },
+        { source: "WALLET_HOME" }
+      );
+
+      expect(component.queryByTestId("itwNfcSectionTestID") !== null).toBe(
+        enabled
+      );
+      expect(
+        component.queryByRole("button", {
+          name: I18n.t(
+            "features.itWallet.presentation.proximity.engagement.nfc.action"
+          )
+        }) !== null
+      ).toBe(enabled);
+      expect(
+        component.queryByText(
+          I18n.t("features.itWallet.presentation.proximity.engagement.nfc.or")
+        ) !== null
+      ).toBe(enabled);
+      expect(
+        component.getByLabelText(
+          I18n.t(
+            "features.itWallet.presentation.proximity.engagement.qrCode.accessibilityLabel"
+          )
+        )
+      ).toBeTruthy();
+    }
+  );
 });
 
 type RenderOptions =
@@ -169,7 +222,10 @@ const renderComponent = (
   routeParams: ItwProximityPresentmentScreenNavigationParams
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+  const store = createStore(appReducer, initialState as any);
+  const initialSnapshot = createActor(itwProximityMachine, {
+    input: { deps: testProximityDeps({ store }) }
+  }).getSnapshot();
 
   const snapshot = buildSnapshot(initialSnapshot, options);
 
@@ -200,7 +256,7 @@ const renderComponent = (
     ),
     ITW_PROXIMITY_ROUTES.PRESENTMENT,
     {},
-    createStore(appReducer, initialState as any)
+    store
   );
 };
 

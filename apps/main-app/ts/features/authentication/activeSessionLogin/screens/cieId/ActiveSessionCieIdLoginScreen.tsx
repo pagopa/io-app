@@ -1,5 +1,5 @@
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Linking, Platform, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,17 +16,19 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { trackLoginFailure } from "../../../common/analytics";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { onLoginUriChanged } from "../../../common/utils/login";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
-import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
 import {
-  CieIdLoginProps,
+  AUTH_LEVELS,
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
+import {
   defaultUserAgent,
   WHITELISTED_DOMAINS
-} from "../../../login/cie/shared/utils";
+} from "../../../common/utils/cie";
+import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
+import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import {
   getCieIdEnvironment,
   getCieIDLoginUri,
@@ -46,21 +48,27 @@ import {
   setFinishedActiveSessionLoginFlow
 } from "../../store/actions";
 import {
+  cieIDSelectedSecurityLevelActiveSessionLoginSelector,
   // activeSessionUserLoggedSelector,
   remoteApiLoginUrlPrefixSelector
 } from "../../store/selectors";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
 
-const ActiveSessionCieIdLoginWebView = ({
-  spidLevel,
-  isUat
-}: CieIdLoginProps) => {
+const ActiveSessionCieIdLoginScreen = () => {
   const navigation = useIONavigation();
   const webView = useRef<WebView>(null);
   const dispatch = useIODispatch();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(null);
   const isLoginUrlWithTokenRef = useRef<boolean>(false);
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
+  const isUat = useIOSelector(isCieLoginUatEnabledSelector);
+  // cieIDSelectedSecurityLevel is always set before this screen is reached
+  // (navigateToCieIdLoginScreen dispatches it synchronously before navigating);
+  // the fallback only satisfies the type, since the reducer marks it optional.
+  // L2 matches navigateToCieIdLoginScreen's own default for the same value
+  const spidLevel =
+    useIOSelector(cieIDSelectedSecurityLevelActiveSessionLoginSelector) ??
+    AUTH_LEVELS.L2;
   const acsUrl = `${apiLoginUrlPrefix}${ACS_PATH}`;
   const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
   const [isLoadingWebView, setIsLoadingWebView] = useState(true);
@@ -125,20 +133,19 @@ const ActiveSessionCieIdLoginWebView = ({
         ...(message ? { "error message": message } : {}),
         flow: "reauth"
       });
-      // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
-      // because on `navigation.replace` this screen will be unmounted and a further navigation to this screen
-      // will mount it again and the `useLollipopLoginSource` hook will be re-executed.
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        params: {
+      // `replace` drops the failed login screen, so retrying mounts a new
+      // one, with a new Lollipop key, instead of popping back to it.
+      // Dispatched as an action because `navigation` is typed on the root
+      // params list.
+      navigation.dispatch(
+        StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
           errorCodeOrMessage: code || message,
           authMethod: "CIE_ID",
-          authLevel: "L2",
-          params: { spidLevel, isUat }
-        }
-      });
+          authLevel: AUTH_LEVELS.L2
+        })
+      );
     },
-    [dispatch, navigation, spidLevel, isUat]
+    [dispatch, navigation]
   );
 
   useEffect(() => {
@@ -304,17 +311,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 16
   }
 });
-
-const ActiveSessionCieIdLoginScreen = () => {
-  const route =
-    useRoute<
-      RouteProp<
-        AuthenticationParamsList,
-        typeof AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
-      >
-    >();
-
-  return <ActiveSessionCieIdLoginWebView {...route.params} />;
-};
 
 export default ActiveSessionCieIdLoginScreen;

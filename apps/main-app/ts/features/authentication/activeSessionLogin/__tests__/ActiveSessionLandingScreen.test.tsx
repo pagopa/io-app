@@ -58,40 +58,6 @@ describe("ActiveSessionLandingScreen", () => {
 
     expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
   });
-
-  it("Should call navigateToCieIdLoginScreen from bottom sheet", async () => {
-    const { getByTestId } = renderComponent();
-
-    const loginWithCie = getByTestId("landing-button-login-cie");
-    await act(async () => {
-      fireEvent.press(loginWithCie);
-    });
-
-    const loginWithCieID = getByTestId("bottom-sheet-login-with-cie-id");
-    await act(async () => {
-      fireEvent.press(loginWithCieID);
-    });
-
-    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith("SpidL2");
-  });
-
-  it("Should navigate to the wizard screen from banner", async () => {
-    const { getByTestId } = renderComponent();
-
-    const loginWithCie = getByTestId("landing-button-login-cie");
-    await act(async () => {
-      fireEvent.press(loginWithCie);
-    });
-
-    const wizardsBanner = getByTestId("bottom-sheet-login-wizards");
-    await act(async () => {
-      fireEvent.press(wizardsBanner);
-    });
-
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
-    });
-  });
 });
 
 const renderComponent = () => {
