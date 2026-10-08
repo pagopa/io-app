@@ -132,7 +132,8 @@ val location = connection.getHeaderField("Location")
         if (location == null) {
           promise.reject(
             "NativeRedirectError",
-            generateErrorUserInfo(IoLoginError.Type.REDIRECTING_ERROR, responseCode)
+            generateErrorUserInfo(IoLoginError.Type.REDIRECTING_ERROR, responseCode),
+            null
           )
           return@syncCookies
         }
