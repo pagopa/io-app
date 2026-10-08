@@ -9,10 +9,11 @@ import { type LogMode } from "./types";
  *
  * @example
  *   ```typescript
- *   CieManager.setLogMode("console");
+ *   CieLogger.setLogMode("CONSOLE");
  *   ```;
  *
- * @param mode - The log mode to set ('console', 'localFile', or 'disabled').
+ * @param mode - The log mode to set ("ENABLED", "FILE", "CONSOLE", or
+ *   "DISABLED").
  */
 const setLogMode = (mode: LogMode) => {
   ExpoCieNative.setLogMode(mode);
