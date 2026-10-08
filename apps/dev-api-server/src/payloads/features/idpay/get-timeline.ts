@@ -15,7 +15,8 @@ export const getTimelineResponse = (
     initiativeTimeline[initiativeId],
     O.fromNullable,
     O.map(timeline => {
-      const totalElements = timeline.length;
+      // 10 is the maximum number of elements for timeline by api definition
+      const totalElements = Math.min(timeline.length, 10);
       const totalPages = Math.ceil(totalElements / pageSize);
 
       // It should start from 0, but pageNo is 1-based, so we need to subtract 1 but backend change it on prod

@@ -2,6 +2,8 @@ import { VoucherStatusEnum } from "@io-app/api-types/generated/definitions/idpay
 
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { NetworkError } from "../../../../utils/errors";
+import { getNetworkErrorFailureReason } from "../../../../utils/failureReason";
 
 type DefaultOnboardingEventProperties = {
   initiativeId?: string;
@@ -212,6 +214,23 @@ export const trackIDPayDetailCodeGenerateNew = (
     "IDPAY_CODE_EXPIRED_GENERATE_NEW",
     buildEventProperties("UX", "action", {
       ...props
+    })
+  );
+};
+
+export const trackIDPayDetailTimelineError = ({
+  error,
+  ...props
+}: {
+  error: NetworkError;
+  initiative_id: string;
+  initiative_name?: string;
+}) => {
+  mixpanelTrack(
+    "IDPAY_DETAIL_TIMELINE_ERROR",
+    buildEventProperties("KO", "error", {
+      ...props,
+      reason: getNetworkErrorFailureReason(error)
     })
   );
 };
