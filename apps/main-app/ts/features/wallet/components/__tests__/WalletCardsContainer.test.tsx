@@ -275,12 +275,16 @@ describe("ItwWalletCardsContainer", () => {
     expect(queryByTestId("itwWalletReadyBannerTestID")).not.toBeNull();
   });
 
-  it("should render the L2 engagement banner", () => {
+  it("should render the L2 engagement banner and hide the wallet ready banner", () => {
     jest
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(true);
 
     jest
+      .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
+      .mockReturnValue(true);
+
+    const l2BannerSpy = jest
       .spyOn(itwSelectors, "itwShouldRenderL2EngagementBannerSelector")
       .mockReturnValue(true);
 
@@ -291,6 +295,9 @@ describe("ItwWalletCardsContainer", () => {
     const { queryByTestId } = renderComponent(<ItwWalletCardsContainer />);
 
     expect(queryByTestId("itwWalletL2BannerTestID")).not.toBeNull();
+    expect(queryByTestId("itwWalletReadyBannerTestID")).toBeNull();
+
+    l2BannerSpy.mockRestore();
   });
 
   it("should render credential cards", () => {
