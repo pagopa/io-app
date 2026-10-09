@@ -11,6 +11,7 @@ import {
   authorizePath,
   ioRedirectPath,
   loginLolliPopRedirect,
+  oneIdentityCieIdpIds,
   redirectUrl
 } from "../../payloads/login";
 import {
@@ -18,7 +19,10 @@ import {
   getAppOs,
   getAppVersion
 } from "../../persistence/appInfo";
-import { getLoginSessionToken } from "../../persistence/sessionInfo";
+import {
+  getAuthenticationProvider,
+  getLoginSessionToken
+} from "../../persistence/sessionInfo";
 import app from "../../server";
 import { addApiAuthV1Prefix } from "../../utils/strings";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM } from "../public";
@@ -364,6 +368,54 @@ describe("OneIdentity login session", () => {
 
     expect(reserveResponse.status).toBe(400);
     expect((await getSession()).status).toBe(401);
+  });
+});
+
+describe("OneIdentity authentication provider", () => {
+  const validAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM}-thumbprint`;
+  const spidIdp = "https://posteid.poste.it";
+  const [cieIdp, cieUatIdp] = oneIdentityCieIdpIds;
+
+  const authorize = (idp?: string, assertionRef?: string) => {
+    const authorizeRequest = request
+      .get(authorizePath)
+      .query(idp ? { idp } : {});
+    return assertionRef
+      ? authorizeRequest.set(lollipopAssertionRefHeader, assertionRef)
+      : authorizeRequest;
+  };
+
+  // Each scenario runs after a login with the other provider, so that a
+  // value left by a previous login would make it fail.
+  it.each([
+    { name: "CIE", idp: cieIdp, previousIdp: spidIdp, expected: "cie" },
+    {
+      name: "pre-production CIE",
+      idp: cieUatIdp,
+      previousIdp: spidIdp,
+      expected: "cie"
+    },
+    { name: "SPID", idp: spidIdp, previousIdp: cieIdp, expected: "spid" },
+    { name: "missing", idp: undefined, previousIdp: cieIdp, expected: "spid" }
+  ])(
+    "should be $expected when the idp is $name",
+    async ({ idp, previousIdp, expected }) => {
+      await authorize(previousIdp, validAssertionRef);
+
+      const response = await authorize(idp, validAssertionRef);
+
+      expect(response.status).toBe(302);
+      expect(getAuthenticationProvider()).toBe(expected);
+    }
+  );
+
+  it("should not change when /authorize rejects the request", async () => {
+    await authorize(cieIdp, validAssertionRef);
+
+    const response = await authorize(spidIdp);
+
+    expect(response.status).toBe(400);
+    expect(getAuthenticationProvider()).toBe("cie");
   });
 });
 

@@ -2,6 +2,7 @@ import { fakerIT as faker } from "@faker-js/faker";
 import { Request } from "express";
 
 import { ioDevServerConfig } from "../config";
+import { oneIdentityCieIdpIds } from "../payloads/login";
 import { AuthenticationProvider } from "../payloads/profile";
 import { createOrRefreshSessionTokens } from "../payloads/session";
 import { isFeatureFlagWithMinVersionEnabled } from "../routers/features/featureFlagUtils";
@@ -78,6 +79,18 @@ export const setSessionAuthenticationProvider = (req: Request) => {
   loginSessionTokenInfo.authenticationProvider = idpId as
     | AuthenticationProvider
     | undefined;
+};
+
+/**
+ * Sets the authentication provider from the `idp` of the OneIdentity
+ * `/authorize` query, where anything but a CIE identity provider is SPID.
+ */
+export const setSessionAuthenticationProviderFromIdp = (idp: unknown) => {
+  // eslint-disable-next-line functional/immutable-data
+  loginSessionTokenInfo.authenticationProvider =
+    typeof idp === "string" && oneIdentityCieIdpIds.includes(idp)
+      ? "cie"
+      : "spid";
 };
 
 export const isSessionTokenValid = (requestOrUndefined?: Request) => {

@@ -39,6 +39,7 @@ import {
   createOrRefreshEverySessionToken,
   getLoginSessionToken,
   setSessionAuthenticationProvider,
+  setSessionAuthenticationProviderFromIdp,
   setSessionLoginType,
   setSessionLoginTypeFromReserve
 } from "../persistence/sessionInfo";
@@ -148,6 +149,7 @@ addHandler(publicRouter, "get", authorizePath, (req, res) => {
     return;
   }
   setAppInfo(req);
+  setSessionAuthenticationProviderFromIdp(req.query.idp);
 
   const thumbprint = lollipopAssertionRefHeaderValue.slice(
     assertionRefPrefix.length
