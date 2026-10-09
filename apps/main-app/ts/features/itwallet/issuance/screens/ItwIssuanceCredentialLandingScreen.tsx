@@ -194,16 +194,9 @@ export const ItwIssuanceCredentialLandingScreen = ({
             `features.itWallet.issuance.credentialAlreadyUpdated.action`
           ),
           onPress: () =>
-            navigation.reset({
-              index: 1,
-              routes: [
-                {
-                  name: ROUTES.MAIN,
-                  params: {
-                    screen: ROUTES.WALLET_HOME
-                  }
-                }
-              ]
+            navigation.popTo(ROUTES.MAIN, {
+              screen: ROUTES.WALLET_HOME,
+              params: {}
             })
         }}
         pictogram="success"
