@@ -224,7 +224,6 @@ export const trackIDPayDetailTimelineError = ({
 }: {
   error: NetworkError;
   initiative_id: string;
-  initiative_name?: string;
 }) => {
   mixpanelTrack(
     "IDPAY_DETAIL_TIMELINE_ERROR",
