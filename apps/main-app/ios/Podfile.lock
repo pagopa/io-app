@@ -47,6 +47,8 @@ PODS:
     - ExpoModulesCore
   - ExpoCalendar (55.0.17):
     - ExpoModulesCore
+  - ExpoCieSdk (1.0.0):
+    - ExpoModulesCore
   - ExpoClipboard (55.0.15):
     - ExpoModulesCore
   - ExpoDevice (55.0.17):
@@ -3896,6 +3898,7 @@ DEPENDENCIES:
   - ExpoBackgroundTask (from `../../../node_modules/expo-background-task/ios`)
   - ExpoBrightness (from `../../../node_modules/expo-brightness/ios`)
   - ExpoCalendar (from `../../../node_modules/expo-calendar/ios`)
+  - ExpoCieSdk (from `../../../libs/expo-cie-sdk/ios`)
   - ExpoClipboard (from `../../../node_modules/expo-clipboard/ios`)
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
   - ExpoDocumentPicker (from `../../../node_modules/expo-document-picker/ios`)
@@ -4084,6 +4087,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-brightness/ios"
   ExpoCalendar:
     :path: "../../../node_modules/expo-calendar/ios"
+  ExpoCieSdk:
+    :path: "../../../libs/expo-cie-sdk/ios"
   ExpoClipboard:
     :path: "../../../node_modules/expo-clipboard/ios"
   ExpoDevice:
@@ -4376,6 +4381,7 @@ SPEC CHECKSUMS:
   ExpoBackgroundTask: 2c988fa88705c72b07f0e60d5661d566df611980
   ExpoBrightness: 6080760e05eb3dcd9765024472d4c78a50f3b201
   ExpoCalendar: a3a1a208327305361637b6127390e7b61c62bba5
+  ExpoCieSdk: f637d1f371ee258886cb3d5972580a844f483043
   ExpoClipboard: 0e4b587fc6b5c5996b4ad4e5804d509e90aa6c75
   ExpoDevice: b8a65afe42c3c5934eb6983870672fe785b39dea
   ExpoDocumentPicker: 8f1356ab2ac5b67aeaafc4c14b3719ceb480c099

@@ -378,6 +378,9 @@ importers:
       '@io-app/design-system':
         specifier: workspace:@pagopa/io-app-design-system@*
         version: link:../../libs/design-system
+      '@io-app/expo-cie-sdk':
+        specifier: workspace:*
+        version: link:../../libs/expo-cie-sdk
       '@io-app/expo-nfc-antenna-info':
         specifier: workspace:*
         version: link:../../libs/expo-nfc-antenna-info
@@ -417,9 +420,6 @@ importers:
       '@pagopa/io-react-native-zendesk':
         specifier: ^0.3.30
         version: 0.3.30(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
-      '@pagopa/react-native-cie':
-        specifier: ^1.5.0
-        version: 1.5.0
       '@pagopa/ts-commons':
         specifier: ^10.15.0
         version: 10.15.0(supports-color@8.1.1)
@@ -1071,6 +1071,21 @@ importers:
       svgo:
         specifier: ^3.3.5
         version: 3.3.5
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  libs/expo-cie-sdk:
+    devDependencies:
+      '@types/jest':
+        specifier: 'catalog:'
+        version: 30.0.0
+      expo-modules-core:
+        specifier: ^55.0.25
+        version: 55.0.25(react-native-worklets@0.8.3(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+      react-native:
+        specifier: 'catalog:'
+        version: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -3748,9 +3763,6 @@ packages:
     peerDependencies:
       fp-ts: ^2.16.5
       io-ts: ^2.2.21
-
-  '@pagopa/react-native-cie@1.5.0':
-    resolution: {integrity: sha512-bY4LyYGVANhYHliOLGaXQgtAfBgPy1VyQ8uOM2PGx37QrCAI3ICKFm/Lmi+mwBWf6vCc9iX8Pzg0Gm7/dd5CcA==}
 
   '@pagopa/ts-commons@10.15.0':
     resolution: {integrity: sha512-MTmD0geIN9L9vnEYjPTE7v6Bu+IRTFMre+3K4LWYjy1AaRmYcpSrc9HTZgyCRW8uLCvw1BmDKcKtSiETM817kw==}
@@ -17410,8 +17422,6 @@ snapshots:
       - chokidar
       - encoding
       - supports-color
-
-  '@pagopa/react-native-cie@1.5.0': {}
 
   '@pagopa/ts-commons@10.15.0(supports-color@7.2.0)':
     dependencies:
