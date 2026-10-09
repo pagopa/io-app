@@ -1,0 +1,11 @@
+framework module iociesdkios {
+  umbrella header "iociesdkios.h"
+  export *
+
+  module * { export * }
+}
+
+module iociesdkios.Swift {
+  header "iociesdkios-Swift.h"
+  requires objc
+}
