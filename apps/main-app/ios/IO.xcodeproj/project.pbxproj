@@ -31,8 +31,6 @@
 		A626A6B92ED9B0260084EC6E /* PdfHighResGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A626A6B82ED9B0260084EC6E /* PdfHighResGenerator.m */; };
 		B551AC412DA55A0E00A4E30F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B551AC402DA55A0E00A4E30F /* AppDelegate.swift */; };
 		B572E1E42DC12161009BA244 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		B57C5DCD2D8B12A500173EF4 /* AppReviewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = B57C5DCC2D8B129A00173EF4 /* AppReviewModule.m */; };
-		B57C5DCF2D8B12DC00173EF4 /* AppReviewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57C5DCE2D8B12D200173EF4 /* AppReviewModule.swift */; };
 		B7B71EAAE496484488FE3751 /* Titillio-Extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 59423B676D254801BFAA4C5E /* Titillio-Extrabold.otf */; };
 		B851B29045D067562CDFD92D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D8E6D4B7FD8B878BBDC56E /* ExpoModulesProvider.swift */; };
 		D2245B924B42442CAF4944D5 /* Titillio-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D688263BB87C4DFBA007CD92 /* Titillio-SemiboldItalic.otf */; };
@@ -102,8 +100,6 @@
 		B551AC402DA55A0E00A4E30F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B57593872B70FFA400674515 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B57593882B70FFA400674515 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = IO/de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B57C5DCC2D8B129A00173EF4 /* AppReviewModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppReviewModule.m; sourceTree = "<group>"; };
-		B57C5DCE2D8B12D200173EF4 /* AppReviewModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewModule.swift; sourceTree = "<group>"; };
 		B58BBAC865EA4651B828C92B /* Titillio-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-Bold.otf"; path = "../assets/fonts/Titillio/Titillio-Bold.otf"; sourceTree = "<group>"; };
 		C9E629838F224B4F9823D692 /* Titillio-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-Thin.otf"; path = "../assets/fonts/Titillio/Titillio-Thin.otf"; sourceTree = "<group>"; };
 		D688263BB87C4DFBA007CD92 /* Titillio-SemiboldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-SemiboldItalic.otf"; path = "../assets/fonts/Titillio/Titillio-SemiboldItalic.otf"; sourceTree = "<group>"; };
@@ -221,8 +217,6 @@
 			children = (
 				A626A6B82ED9B0260084EC6E /* PdfHighResGenerator.m */,
 				A626A6B52ED9AED00084EC6E /* PdfHighResGenerator.swift */,
-				B57C5DCE2D8B12D200173EF4 /* AppReviewModule.swift */,
-				B57C5DCC2D8B129A00173EF4 /* AppReviewModule.m */,
 				194A5D2A1F027F5A0078620E /* Podfile */,
 				13B07FAE1A68108700A75B9A /* IO */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -574,8 +568,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A626A6B92ED9B0260084EC6E /* PdfHighResGenerator.m in Sources */,
-				B57C5DCD2D8B12A500173EF4 /* AppReviewModule.m in Sources */,
-				B57C5DCF2D8B12DC00173EF4 /* AppReviewModule.swift in Sources */,
 				A626A6B62ED9AED30084EC6E /* PdfHighResGenerator.swift in Sources */,
 				B551AC412DA55A0E00A4E30F /* AppDelegate.swift in Sources */,
 				B851B29045D067562CDFD92D /* ExpoModulesProvider.swift in Sources */,
