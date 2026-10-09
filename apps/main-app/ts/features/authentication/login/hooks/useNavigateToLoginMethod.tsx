@@ -1,4 +1,4 @@
-import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
+import { isCieIdAvailable } from "@io-app/expo-cieid";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback } from "react";
 

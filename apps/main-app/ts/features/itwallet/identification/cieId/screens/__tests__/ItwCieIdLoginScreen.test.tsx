@@ -3,7 +3,7 @@ import {
   CieIdErrorResult,
   isCieIdAvailable,
   openCieIdApp
-} from "@pagopa/io-react-native-cieid";
+} from "@io-app/expo-cieid";
 import { fireEvent, renderHook, waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import { Linking } from "react-native";
@@ -23,11 +23,6 @@ import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { testEidIssuanceDeps } from "../../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import ItwCieIdLoginScreen from "../../../cieId/screens/ItwCieIdLoginScreen";
-
-jest.mock("@pagopa/io-react-native-cieid", () => ({
-  isCieIdAvailable: jest.fn(),
-  openCieIdApp: jest.fn()
-}));
 
 jest.mock("react-native-webview", () => {
   const { View } = require("react-native");
@@ -65,7 +60,7 @@ describe("ItwCieIdLoginScreen", () => {
   ) => {
     jest.mocked(isCieIdAvailable).mockReturnValue(true);
     jest.mocked(openCieIdApp).mockImplementation((_url, callback) => {
-      callback({ id: "ERROR", code, message, userInfo: null });
+      callback({ id: "ERROR", code, message });
     });
     mockIsAndroid = true;
     mockIsIOS = false;
@@ -130,8 +125,7 @@ describe("ItwCieIdLoginScreen", () => {
       callback({
         id: "ERROR",
         code: "CIEID_OPERATION_CANCEL",
-        message: "USER_CANCELLED",
-        userInfo: null
+        message: "USER_CANCELLED"
       });
     });
     mockIsAndroid = true;
