@@ -1,4 +1,5 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
+import URLParse from "url-parse";
 
 import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
@@ -158,9 +159,24 @@ export function trackLoginInfoTap() {
   );
 }
 
+export function trackLoginOIConfigurationError(
+  url: string,
+  flow: LoginType = "auth"
+) {
+  const { host, pathname, query } = new URLParse(url, true);
+  void mixpanelTrack(
+    "LOGIN_OI_CONFIGURATION_ERROR",
+    buildEventProperties("KO", undefined, {
+      flow,
+      reason: { host, pathname, query }
+    })
+  );
+}
+
 export function trackLoginUserExit() {
   void mixpanelTrack("LOGIN_USER_EXIT", buildEventProperties("UX", "exit"));
 }
+
 export function trackLogoutFailure(
   reason?: Error | string,
   flow: LoginType = "auth"

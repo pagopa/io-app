@@ -2,6 +2,7 @@ import { fireEvent, render } from "@testing-library/react-native";
 
 import { withStore } from "../../../../../utils/jest/withStore";
 import * as useOneIdentityLoginSourceModule from "../../../../lollipop/hooks/useOneIdentityLoginSource";
+import * as analytics from "../../analytics";
 import * as useCieIdAppModule from "../../hooks/useCieIdApp";
 import { CieIdWebViewLogin as CieIdWebViewLoginComponent } from "../CieIdWebViewLogin";
 
@@ -52,6 +53,34 @@ describe("CieIdWebViewLogin", () => {
       startCieIdApp: mockStartCieIdApp
     });
   });
+
+  it.each([
+    { name: "initial login", flow: "auth" as const },
+    { name: "reauthentication", flow: "reauth" as const }
+  ])(
+    "should track One Identity configuration error when is error page ($name)",
+    ({ flow }) => {
+      mockUseOneIdentityLoginSource();
+      const spyTrackLoginOIConfigurationError = jest
+        .spyOn(analytics, "trackLoginOIConfigurationError")
+        .mockImplementation();
+      const errorUrl =
+        "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR";
+      const { getByTestId } = render(
+        <CieIdWebViewLogin flow={flow} isUat={false} onEvent={onEvent} />
+      );
+      const webview = getByTestId("cie-id-webview");
+
+      expect(
+        fireEvent(webview, "onShouldStartLoadWithRequest", { url: errorUrl })
+      ).toBe(true);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledTimes(1);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledWith(
+        errorUrl,
+        flow
+      );
+    }
+  );
 
   describe("conditional rendering", () => {
     it.each(["reserving-public-key", "verifying-assertion-ref"] as const)(

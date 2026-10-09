@@ -5,6 +5,7 @@ import * as IOHooks from "../../../../../store/hooks";
 import * as analyticsUtils from "../../../../../utils/analytics";
 import { SpidIdp } from "../../../../../utils/idps";
 import * as useOneIdentityLoginSourceModule from "../../../../lollipop/hooks/useOneIdentityLoginSource";
+import * as analytics from "../../analytics";
 import * as usePosteIDEducationalModule from "../../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { IdpWebViewLogin } from "../IdpWebViewLogin";
 
@@ -66,6 +67,34 @@ describe("IdpWebViewLogin", () => {
 
     mockShouldBlockUrlNavigationWhileCheckingLollipop.mockReturnValue(false);
   });
+
+  it.each([
+    { name: "auth", flow: "auth" as const },
+    { name: "reauth", flow: "reauth" as const }
+  ])(
+    "should track One Identity configuration error when is error page ($name)",
+    ({ flow }) => {
+      mockUseOneIdentityLoginSource();
+      const spyTrackLoginOIConfigurationError = jest
+        .spyOn(analytics, "trackLoginOIConfigurationError")
+        .mockImplementation();
+      const errorUrl =
+        "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR";
+      const { getByTestId } = render(
+        <IdpWebViewLogin flow={flow} idp={mockIdp} onEvent={onEvent} />
+      );
+      const webview = getByTestId("webview-idp-login-screen");
+
+      expect(
+        fireEvent(webview, "onShouldStartLoadWithRequest", { url: errorUrl })
+      ).toBe(true);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledTimes(1);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledWith(
+        errorUrl,
+        flow
+      );
+    }
+  );
 
   describe("conditional rendering", () => {
     it.each(["reserving-public-key", "verifying-assertion-ref"] as const)(

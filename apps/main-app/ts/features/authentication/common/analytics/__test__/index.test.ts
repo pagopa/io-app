@@ -19,6 +19,7 @@ import {
   trackCiePinLoginSelected,
   trackLoginEnded,
   trackLoginFlowStarting,
+  trackLoginOIConfigurationError,
   trackLoginUserExit,
   trackMethodInfo,
   trackSessionTokenFragmentFailure,
@@ -36,6 +37,31 @@ describe("analytics/index.ts", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  it.each([
+    { name: "auth", flow: "auth" as const },
+    { name: "reauth", flow: "reauth" as const }
+  ])("tracks the OneIdentity configuration error for $name", ({ flow }) => {
+    trackLoginOIConfigurationError(
+      "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR",
+      flow
+    );
+
+    expect(mixpanelTrackSpyOn).toHaveBeenCalledTimes(1);
+    expect(mixpanelTrackSpyOn).toHaveBeenCalledWith(
+      "LOGIN_OI_CONFIGURATION_ERROR",
+      {
+        event_category: "KO",
+        event_type: undefined,
+        flow,
+        reason: {
+          host: "dev.oneid.pagopa.it",
+          pathname: "/login/error",
+          query: { error_code: "GENERIC_HTML_ERROR" }
+        }
+      }
+    );
   });
 
   it("tracks login flow starting", () => {
