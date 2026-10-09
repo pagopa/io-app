@@ -39,7 +39,8 @@ import {
   createOrRefreshEverySessionToken,
   getLoginSessionToken,
   setSessionAuthenticationProvider,
-  setSessionLoginType
+  setSessionLoginType,
+  setSessionLoginTypeFromReserve
 } from "../persistence/sessionInfo";
 import { readFileAsJSON, sendFileFromRootPath } from "../utils/file";
 import { getSamlRequest } from "../utils/login";
@@ -117,6 +118,7 @@ addHandler(
       DEFAULT_LOLLIPOP_HASH_ALGORITHM
     );
     setLollipopInfoEphemeral(thumbprint, decodedLollipopPublicKey);
+    setSessionLoginTypeFromReserve(req.body.login_type);
 
     const state = uuidv4();
     const nonce = uuidv4();
@@ -145,6 +147,7 @@ addHandler(publicRouter, "get", authorizePath, (req, res) => {
     res.sendStatus(400);
     return;
   }
+  setAppInfo(req);
 
   const thumbprint = lollipopAssertionRefHeaderValue.slice(
     assertionRefPrefix.length

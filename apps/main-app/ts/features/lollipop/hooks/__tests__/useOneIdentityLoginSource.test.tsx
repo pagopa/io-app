@@ -52,6 +52,25 @@ jest.mock("../../../authentication/fastLogin/store/selectors", () => ({
   isFastLoginEnabledSelector: jest.fn(() => false)
 }));
 
+const mockAppVersion = "1.2.3";
+// eslint-disable-next-line functional/no-let
+let mockIsLocalEnv = false;
+
+// A getter defined through `defineProperty` is needed to change the value per
+// test: one declared next to the spread would be evaluated only once.
+jest.mock("../../../../utils/environment", () =>
+  Object.defineProperty(
+    { ...jest.requireActual("../../../../utils/environment") },
+    "isLocalEnv",
+    { get: () => mockIsLocalEnv }
+  )
+);
+
+jest.mock("../../../../utils/appVersion", () => ({
+  ...jest.requireActual("../../../../utils/appVersion"),
+  getAppVersion: () => mockAppVersion
+}));
+
 const mockIdp = { id: "idp-id", name: "idp-name" } as unknown as SpidIdp;
 const reserveResponse = {
   authorization_endpoint: "https://one-identity.example.com/oidc/authorize",
@@ -110,6 +129,7 @@ describe("useOneIdentityLoginSource", () => {
 
     jest.mocked(isFastLoginEnabledSelector).mockReturnValue(false);
     mockHandleRegenerateEphemeralKey.mockResolvedValue(mockPublicKey);
+    mockIsLocalEnv = false;
   });
 
   afterEach(() => {
@@ -156,6 +176,73 @@ describe("useOneIdentityLoginSource", () => {
     expect(
       webviewSource.headers?.["x-pagopa-lollipop-assertion-ref"]
     ).toContain(toBase64EncodedThumbprint(mockPublicKey));
+  });
+
+  describe("x-pagopa-app-version /authorize header", () => {
+    const appVersionHeader = "x-pagopa-app-version";
+
+    it.each([
+      {
+        name: "should be sent to the WebView in local env",
+        followRedirectsNatively: false,
+        isLocalEnv: true,
+        expectedAppVersion: mockAppVersion
+      },
+      {
+        name: "should not be sent to the WebView outside local env",
+        followRedirectsNatively: false,
+        isLocalEnv: false,
+        expectedAppVersion: undefined
+      },
+      {
+        name: "should be sent to the native redirects in local env",
+        followRedirectsNatively: true,
+        isLocalEnv: true,
+        expectedAppVersion: mockAppVersion
+      },
+      {
+        name: "should not be sent to the native redirects outside local env",
+        followRedirectsNatively: true,
+        isLocalEnv: false,
+        expectedAppVersion: undefined
+      }
+    ])(
+      "$name",
+      async ({ followRedirectsNatively, isLocalEnv, expectedAppVersion }) => {
+        mockIsLocalEnv = isLocalEnv;
+        mockRetriableFetch.mockResolvedValue(
+          successResponse(200, reserveResponse)
+        );
+        jest
+          .mocked(followNativeRedirectsAndVerifySaml)
+          .mockResolvedValue("https://idp.example.com/sso?SAMLRequest=abc");
+
+        const { result } = setupTest({ followRedirectsNatively });
+
+        await waitFor(() => {
+          expect(result.current.loginSourceState.status).toBe(
+            followRedirectsNatively
+              ? "assertion-ref-verified"
+              : "one-identity-authorize"
+          );
+        });
+
+        const headers: Record<string, string | undefined> | undefined =
+          followRedirectsNatively
+            ? jest.mocked(followNativeRedirectsAndVerifySaml).mock.lastCall?.[1]
+            : (
+                result.current.loginSourceState as {
+                  webviewSource: { headers?: Record<string, string> };
+                }
+              ).webviewSource.headers;
+
+        expect(headers).toBeDefined();
+        expect(headers?.[appVersionHeader]).toBe(expectedAppVersion);
+        expect(headers?.["x-pagopa-lollipop-assertion-ref"]).toContain(
+          toBase64EncodedThumbprint(mockPublicKey)
+        );
+      }
+    );
   });
 
   it("should expose a failure loginSourceState on HTTP error", async () => {

@@ -5,6 +5,7 @@ import supertest from "supertest";
 import * as zlib from "zlib";
 
 import { ioDevServerConfig } from "../../config";
+import { backendStatus } from "../../payloads/backend";
 import {
   AppUrlLoginScheme,
   authorizePath,
@@ -12,6 +13,11 @@ import {
   loginLolliPopRedirect,
   redirectUrl
 } from "../../payloads/login";
+import {
+  clearAppInfo,
+  getAppOs,
+  getAppVersion
+} from "../../persistence/appInfo";
 import { getLoginSessionToken } from "../../persistence/sessionInfo";
 import app from "../../server";
 import { addApiAuthV1Prefix } from "../../utils/strings";
@@ -240,6 +246,125 @@ describe("OneIdentity authorize", () => {
       expect(response.status).toBe(400);
     }
   );
+});
+
+describe("OneIdentity login session", () => {
+  const appVersion = "2.0.0";
+  const appVersionHeader = "x-pagopa-app-version";
+  const webViewUserAgent =
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15";
+  const expiredSessionTTLinMS = 0;
+
+  /** Enables the fast login for the app version sent to `/authorize`. */
+  const enableFastLogin = (sessionTTLinMS: number) => {
+    jest.replaceProperty(backendStatus.config, "fastLogin", {
+      ...backendStatus.config.fastLogin,
+      min_app_version: { android: "1.0.0", ios: "1.0.0" }
+    });
+    jest.replaceProperty(ioDevServerConfig.features, "fastLogin", {
+      sessionTTLinMS
+    });
+  };
+
+  /** Goes through `/reserve`, `/authorize` and the authorized IdP login. */
+  const loginWithOneIdentity = async (
+    reserveBody: Record<string, string>,
+    authorizeHeaders: Record<string, string>
+  ) => {
+    const { assertionRef, encodedPublicKey } = await generateLollipopKey();
+    await request
+      .post(addApiAuthV1Prefix("/reserve"))
+      .send({ ...reserveBody, lollipop_pub_key: encodedPublicKey });
+    await request
+      .get(authorizePath)
+      .set({ ...authorizeHeaders, [lollipopAssertionRefHeader]: assertionRef });
+    await request.get(`${loginLolliPopRedirect}?authorized=1`);
+  };
+
+  const getSession = () =>
+    request
+      .get(addApiAuthV1Prefix("/session"))
+      .set("Authorization", `Bearer ${getLoginSessionToken()}`);
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it.each([
+    {
+      name: "should expire an LV session once its TTL is over",
+      loginType: "LV",
+      sessionTTLinMS: expiredSessionTTLinMS,
+      expectedStatus: 401
+    },
+    {
+      name: "should keep an LV session valid within its TTL",
+      loginType: "LV",
+      sessionTTLinMS: ioDevServerConfig.features.fastLogin?.sessionTTLinMS ?? 0,
+      expectedStatus: 200
+    },
+    {
+      name: "should never expire a LEGACY session, even after an LV one",
+      loginType: "LEGACY",
+      sessionTTLinMS: expiredSessionTTLinMS,
+      expectedStatus: 200
+    },
+    {
+      name: "should never expire a session reserved without a login type",
+      loginType: undefined,
+      sessionTTLinMS: expiredSessionTTLinMS,
+      expectedStatus: 200
+    }
+  ])("$name", async ({ loginType, sessionTTLinMS, expectedStatus }) => {
+    enableFastLogin(sessionTTLinMS);
+
+    await loginWithOneIdentity(loginType ? { login_type: loginType } : {}, {
+      [appVersionHeader]: appVersion,
+      "User-Agent": webViewUserAgent
+    });
+
+    const response = await getSession();
+    expect(response.status).toBe(expectedStatus);
+  });
+
+  it("should store the app info sent to /authorize", async () => {
+    clearAppInfo();
+
+    await loginWithOneIdentity(
+      {},
+      { [appVersionHeader]: appVersion, "User-Agent": webViewUserAgent }
+    );
+
+    expect(getAppVersion()).toBe(appVersion);
+    expect(getAppOs()).toBe("ios");
+  });
+
+  it("should not store the app info when /authorize rejects the request", async () => {
+    clearAppInfo();
+
+    const response = await request
+      .get(authorizePath)
+      .set({ [appVersionHeader]: appVersion, "User-Agent": webViewUserAgent });
+
+    expect(response.status).toBe(400);
+    expect(getAppVersion()).toBeUndefined();
+    expect(getAppOs()).toBeUndefined();
+  });
+
+  it("should not change the login type when /reserve rejects the request", async () => {
+    enableFastLogin(expiredSessionTTLinMS);
+    await loginWithOneIdentity(
+      { login_type: "LV" },
+      { [appVersionHeader]: appVersion, "User-Agent": webViewUserAgent }
+    );
+
+    const reserveResponse = await request
+      .post(addApiAuthV1Prefix("/reserve"))
+      .send({ login_type: "LEGACY" });
+
+    expect(reserveResponse.status).toBe(400);
+    expect((await getSession()).status).toBe(401);
+  });
 });
 
 it("Pay webview route should always response 200", async () => {

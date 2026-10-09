@@ -60,6 +60,18 @@ export const setSessionLoginType = (req: Request) => {
     | undefined;
 };
 
+/**
+ * Sets the login type from the `login_type` of the OneIdentity `/reserve` body,
+ * where anything but `LV` (i.e. `LEGACY`) is a standard login.
+ */
+export const setSessionLoginTypeFromReserve = (loginType: unknown) => {
+  // eslint-disable-next-line functional/immutable-data
+  loginSessionTokenInfo.loginType =
+    loginType === LoginEnum.fastLogin
+      ? LoginEnum.fastLogin
+      : LoginEnum.standard;
+};
+
 export const setSessionAuthenticationProvider = (req: Request) => {
   const idpId = req.get("x-pagopa-idp-id") === "cie" ? "cie" : "spid";
   // eslint-disable-next-line functional/immutable-data
