@@ -18,6 +18,7 @@ import IconArrowLeft from "./svg/IconArrowLeft";
 import IconArrowRight from "./svg/IconArrowRight";
 import IconArrowTop from "./svg/IconArrowTop";
 import IconAttachment from "./svg/IconAttachment";
+import IconAttachmentPDF from "./svg/IconAttachmentPDF";
 import IconBackAndroid from "./svg/IconBackAndroid";
 import IconBackiOS from "./svg/IconBackiOS";
 import IconBarcode from "./svg/IconBarcode";
@@ -72,8 +73,6 @@ import IconDocGiacenza from "./svg/IconDocGiacenza";
 import IconDocPaymentCode from "./svg/IconDocPaymentCode";
 import IconDocPaymentTitle from "./svg/IconDocPaymentTitle";
 import IconDocumentAdd from "./svg/IconDocumentAdd";
-import IconDocumentAttachment from "./svg/IconDocumentAttachment";
-import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
 import IconDotMenu from "./svg/IconDotMenu";
 import IconEdit from "./svg/IconEdit";
 import IconEmail from "./svg/IconEmail";
@@ -153,6 +152,7 @@ import IconNoticePlain from "./svg/IconNoticePlain";
 import IconNotification from "./svg/IconNotification";
 import IconOk from "./svg/IconOk";
 import IconOption from "./svg/IconOption";
+import IconPaperclip from "./svg/IconPaperclip";
 import IconPEC from "./svg/IconPEC";
 import IconPhone from "./svg/IconPhone";
 import IconPinOff from "./svg/IconPinOff";
@@ -270,13 +270,13 @@ export const IOIcons = {
   docGiacenza: IconDocGiacenza,
   docPaymentTitle: IconDocPaymentTitle,
   docPaymentCode: IconDocPaymentCode,
-  docAttach: IconDocumentAttachment,
-  docAttachPDF: IconDocumentAttachmentPDF,
+  attachment: IconAttachment,
+  attachmentPDF: IconAttachmentPDF,
   folder: IconFolder,
   receiptOn: IconReceiptOn,
   receiptOff: IconReceiptOff,
   notes: IconNotes,
-  attachment: IconAttachment,
+  paperclip: IconPaperclip,
   print: IconPrint,
   add: IconAdd,
   addSmall: IconAddSmall,

@@ -138,7 +138,7 @@ export const CiePlaygrounds = () => {
           <>
             <Divider />
             <ListItemNav
-              icon="docAttach"
+              icon="attachment"
               onPress={() => void obtainLogs()}
               value="View logs"
             />
