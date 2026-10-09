@@ -1,11 +1,15 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
+import {
+  decodeFailureReason,
+  FailureReason,
+  FailureReasonError
+} from "../../../../utils/failureReason";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
@@ -16,7 +20,7 @@ import { idpayTimelinePageGet } from "../store/actions";
  * page
  *
  * @param getTimeline BE API call
- * @param bpdToken Auth token
+ * @param bearerToken Auth token
  * @param language Preferred language
  * @param action Action to handle
  */
@@ -26,10 +30,11 @@ export function* handleGetTimelinePage(
   language: PreferredLanguageEnum,
   action: ActionType<(typeof idpayTimelinePageGet)["request"]>
 ) {
+  const { initiativeId } = action.payload;
   const getTimelineRequest = getTimeline({
     bearerAuth: bearerToken,
     "Accept-Language": language,
-    initiativeId: action.payload.initiativeId,
+    initiativeId,
     page: action.payload.page || 0,
     size: action.payload.pageSize
   });
@@ -41,37 +46,49 @@ export function* handleGetTimelinePage(
       action
     )) as unknown as SagaCallReturnType<typeof getTimeline>;
 
-    yield pipe(
-      getTimelineResult,
-      E.fold(
-        error => {
-          put(
-            idpayTimelinePageGet.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            })
-          );
-        },
-        response => {
-          if (response.status === 200) {
-            return put(
-              idpayTimelinePageGet.success({
-                timeline: response.value,
-                page: response.value.pageNo ?? 1
-              })
-            );
-          } else {
-            return put(
-              idpayTimelinePageGet.failure({
-                ...getGenericError(
-                  new Error(`response status code ${response.status}`)
-                )
-              })
-            );
-          }
-        }
-      )
+    if (E.isLeft(getTimelineResult)) {
+      yield* put(
+        idpayTimelinePageGet.failure({
+          initiativeId,
+          error: getGenericError(
+            new FailureReasonError(
+              FailureReason.DECODE_ERROR,
+              readablePrivacyReport(getTimelineResult.left)
+            )
+          )
+        })
+      );
+      return;
+    }
+
+    const response = getTimelineResult.right;
+    if (response.status !== 200) {
+      yield* put(
+        idpayTimelinePageGet.failure({
+          initiativeId,
+          error: getGenericError(
+            new FailureReasonError(
+              decodeFailureReason({
+                kind: "http_status",
+                status: response.status
+              }),
+              `response status code ${response.status}`
+            )
+          )
+        })
+      );
+      return;
+    }
+
+    yield* put(
+      idpayTimelinePageGet.success({
+        timeline: response.value,
+        page: response.value.pageNo ?? 1
+      })
     );
   } catch (e) {
-    yield* put(idpayTimelinePageGet.failure({ ...getNetworkError(e) }));
+    yield* put(
+      idpayTimelinePageGet.failure({ initiativeId, error: getNetworkError(e) })
+    );
   }
 }

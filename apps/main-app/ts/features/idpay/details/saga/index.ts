@@ -1,6 +1,6 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { SagaIterator } from "redux-saga";
-import { takeLatest } from "typed-redux-saga/macro";
+import { takeEvery, takeLatest } from "typed-redux-saga/macro";
 
 import { IDPayClient } from "../../common/api/client";
 import {
@@ -13,6 +13,7 @@ import { handleGetBeneficiaryDetails } from "./handleGetBeneficiaryDetails";
 import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
 import { handleGetOnboardingStatus } from "./handleGetOnboardingStatus";
 import { handleGetTimelinePage } from "./handleGetTimelinePage";
+import { handleTimelinePageFailure } from "./handleTimelinePageFailure";
 
 /**
  * Handle IDPAY initiative requests
@@ -41,6 +42,8 @@ export function* watchIDPayInitiativeDetailsSaga(
     bearerToken,
     preferredLanguage
   );
+
+  yield* takeEvery(idpayTimelinePageGet.failure, handleTimelinePageFailure);
 
   yield* takeLatest(
     idPayBeneficiaryDetailsGet.request,
