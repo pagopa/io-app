@@ -209,6 +209,18 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
+      case OnboardingFailureEnum.ONBOARDING_USER_BONUS_ALREADY_USED:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.USER_BONUS_ALREADY_USED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.USER_BONUS_ALREADY_USED.subtitle"
+          ),
+          action: defaultBackAction,
+          secondaryAction: accessDeniedAction
+        };
       case OnboardingFailureEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
         return {
           pictogram: "accessDenied",
