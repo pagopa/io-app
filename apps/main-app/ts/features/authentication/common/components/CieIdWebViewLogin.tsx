@@ -172,7 +172,8 @@ export const CieIdWebViewLogin = memo(
 
     if (
       loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "verifying-assertion-ref"
+      loginSourceState.status === "verifying-assertion-ref" ||
+      loginSourceState.status === "following-redirects"
     ) {
       return <LoadingOverlay onCancel={handleCancel} />;
     }

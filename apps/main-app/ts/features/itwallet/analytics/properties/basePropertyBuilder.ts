@@ -183,8 +183,9 @@ export const buildThirdPartyCredentialProperty = (
 
 /**
  * Builds the aggregate Mixpanel status for credentials obtained through the
- * credentials catalogue/list, including Documenti su IO credentials. PID is
- * excluded.
+ * credentials catalogue/list, including Documenti su IO credentials.
+ * Credentials with an unknown channel are attributed here, since the credential
+ * offer is the only channel that is always tracked. PID is excluded.
  */
 export const buildWalletListCredentialProperty = (
   state: GlobalState
@@ -214,4 +215,4 @@ const isWalletListCredential = ({
   credentialType,
   origin
 }: CredentialMetadata) =>
-  credentialType !== CredentialType.PID && origin === "catalogue";
+  credentialType !== CredentialType.PID && origin !== "credentialOffer";

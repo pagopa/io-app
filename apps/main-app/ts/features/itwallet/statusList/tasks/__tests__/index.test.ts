@@ -52,7 +52,6 @@ if (!taskExecutor) {
 }
 
 const ROOT_CERTIFICATE = getEnv("prod").X509_CERT_ROOT;
-
 const taskBody = {
   data: {},
   error: null,

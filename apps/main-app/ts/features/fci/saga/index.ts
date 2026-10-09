@@ -3,8 +3,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { CommonActions, StackActions } from "@react-navigation/native";
+import { Directory, File } from "expo-file-system";
 import I18n from "i18next";
-import RNFS from "react-native-fs";
 import { SagaIterator } from "redux-saga";
 import {
   call,
@@ -30,6 +30,7 @@ import {
   identificationSuccess
 } from "../../identification/store/actions";
 import { KeyInfo } from "../../lollipop/utils/crypto";
+import { toFileUri } from "../../messages/utils/attachments";
 import { createFciClient } from "../api/backendFci";
 import { FCI_ROUTES } from "../navigation/routes";
 import {
@@ -181,9 +182,12 @@ export function* watchFciSaga(
   yield* takeLatest(identificationPinReset, watchIdentificationPinResetSaga);
 }
 
-/** Clears cached file for the fci document preview and reset the state to empty. */
+/** Clears cached file for the fci document preview */
 function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
-  yield* deletePath(action.payload.path);
+  const dir = new Directory(toFileUri(action.payload.path));
+  if (dir.exists) {
+    yield* call([dir, dir.delete]);
+  }
 }
 
 /** Clears cached file for the fci document preview and reset the state to empty. */
@@ -202,9 +206,10 @@ function* clearFciDownloadPreview(
 }
 
 function* deletePath(path: string) {
-  yield RNFS.exists(path).then(exists =>
-    exists ? RNFS.unlink(path) : Promise.resolve()
-  );
+  const file = new File(toFileUri(path));
+  if (file.exists) {
+    yield* call([file, file.delete]);
+  }
 }
 
 function* standardFciFlowStartSaga(): SagaIterator {

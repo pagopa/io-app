@@ -6,11 +6,14 @@ export type ItwProximityFailure = {
   type: string;
 };
 
+export type ItwProximityFlowFailure = ItwProximityFailure &
+  ItwProximityFlowProperties;
+
 export type ItwProximityFlowProperties = {
   proximity_flow: ProximityFlow;
 };
 
-export type ItwProximityGenericFailure = ItwProximityFailure & {
+export type ItwProximityGenericFailure = ItwProximityFlowFailure & {
   proximity_sharing_status: "post" | "pre";
 };
 
