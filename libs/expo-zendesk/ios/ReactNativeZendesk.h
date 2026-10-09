@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <React/RCTBridgeModule.h>
+
+typedef void (^ZendeskCompletionBlock)(void);
+typedef void (^ZendeskNumberCompletionBlock)(NSNumber * _Nullable result, NSError * _Nullable error);
 
 @interface ReactNativeZendesk : NSObject
 - (void)initialize:(NSDictionary *)options;
@@ -14,10 +16,10 @@
 - (void)resetTags;
 - (void)resetLog;
 - (void)dismiss;
-- (void)openTicket:(RCTResponseSenderBlock)onClose;
-- (void)showTickets:(RCTResponseSenderBlock)onClose;
-- (void)hasOpenedTickets:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject;
-- (void)getTotalNewResponses:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject;
+- (void)openTicket:(ZendeskCompletionBlock)onClose;
+- (void)showTickets:(ZendeskCompletionBlock)onClose;
+- (void)hasOpenedTickets:(ZendeskNumberCompletionBlock)completion;
+- (void)getTotalNewResponses:(ZendeskNumberCompletionBlock)completion;
 - (void)setNotificationToken:(NSData *)deviceToken;
 - (void)setUserIdentity:(NSDictionary *)user;
 @end

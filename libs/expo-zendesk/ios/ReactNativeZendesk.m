@@ -12,7 +12,7 @@
 #import <ZendeskCoreSDK/ZendeskCoreSDK.h>
 
 @interface NavigationControllerWithCompletion : UINavigationController
-@property (nonatomic, copy, nullable) RCTResponseSenderBlock completion;
+@property (nonatomic, copy, nullable) ZendeskCompletionBlock completion;
 @end
 
 @implementation ReactNativeZendesk
@@ -49,12 +49,12 @@
     }
 }
 
-- (void)openTicket:(RCTResponseSenderBlock)onClose {
+- (void)openTicket:(ZendeskCompletionBlock)onClose {
     [self executeOnMainThread:^{
         [self openTicketFunction:onClose];
     }];
 }
-- (void)showTickets:(RCTResponseSenderBlock)onClose {
+- (void)showTickets:(ZendeskCompletionBlock)onClose {
     [self executeOnMainThread:^{
         [self showTicketsFunction:onClose];
     }];
@@ -177,24 +177,24 @@ UIViewController *currentController;
   });
 }
 
-- (void)hasOpenedTickets:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject
+- (void)hasOpenedTickets:(ZendeskNumberCompletionBlock)completion
 {
     ZDKRequestProvider *provider = [ZDKRequestProvider new];
     [provider getAllRequestsWithCallback:^(ZDKRequestsWithCommentingAgents *requestsWithCommentingAgents, NSError *error) {
         if(error != nil){
-            reject(@"event_failure", @"no response", nil);
+            completion(nil, error);
             return;
         }
         NSNumber *ticketsCount = [NSNumber numberWithInt:[requestsWithCommentingAgents requests].count];
-        resolve(ticketsCount);
+        completion(ticketsCount, nil);
     }];
 }
-- (void)getTotalNewResponses:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject
+- (void)getTotalNewResponses:(ZendeskNumberCompletionBlock)completion
 {
     ZDKRequestProvider * provider = [ZDKRequestProvider new];
         [provider getUpdatesForDeviceWithCallback:^(ZDKRequestUpdates * _Nullable requestUpdates) {
             NSNumber *totalUpdates = [NSNumber numberWithInt:requestUpdates.totalUpdates];
-            resolve(totalUpdates);
+            completion(totalUpdates, nil);
         }];
 }
 - (UIColor *)colorFromHexString:(NSString *)hexString {
@@ -235,7 +235,7 @@ UIViewController *currentController;
     UINavigationController *navControl = [[UINavigationController alloc] initWithRootViewController: controller];
     [topController presentViewController:navControl animated:YES completion:nil];
 }
-- (void) openTicketFunction:(RCTResponseSenderBlock)onClose {
+- (void) openTicketFunction:(ZendeskCompletionBlock)onClose {
     [self initGlobals];
     if(logId != nil){
         [self addTicketCustomFieldFunction:logId  withValue:mutableLog];
@@ -256,7 +256,7 @@ UIViewController *currentController;
     
     [topController presentViewController:navControl animated:YES completion:nil];
   }
-- (void) showTicketsFunction:(RCTResponseSenderBlock)onClose {
+- (void) showTicketsFunction:(ZendeskCompletionBlock)onClose {
     ZDKRequestListUiConfiguration * config = [ZDKRequestListUiConfiguration new];
     config.allowRequestCreation = false;
     UIViewController *showTicketsController = [ZDKRequestUi buildRequestListWith:@[config]];
@@ -287,7 +287,7 @@ UIViewController *currentController;
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     if (self.completion) {
-        self.completion(@[[NSNull null]]);
+        self.completion();
         self.completion = nil;
     }
 }

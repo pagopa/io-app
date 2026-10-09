@@ -16,16 +16,28 @@ public class ExpoZendeskModule: Module {
     let resetLog: AnyDefinition = Function("resetLog") { self.zendesk.resetLog() }
     let dismiss: AnyDefinition = Function("dismiss") { self.zendesk.dismiss() }
     let openTicket: AnyDefinition = AsyncFunction("openTicket") { (promise: Promise) in
-      self.zendesk.openTicket { _ in promise.resolve(nil) }
+      self.zendesk.openTicket { promise.resolve(nil) }
     }
     let showTickets: AnyDefinition = AsyncFunction("showTickets") { (promise: Promise) in
-      self.zendesk.showTickets { _ in promise.resolve(nil) }
+      self.zendesk.showTickets { promise.resolve(nil) }
     }
     let hasOpenedTickets: AnyDefinition = AsyncFunction("hasOpenedTickets") { (promise: Promise) in
-      self.zendesk.hasOpenedTickets(promise.resolver, rejecter: promise.legacyRejecter)
+      self.zendesk.hasOpenedTickets { result, error in
+        if let error {
+          promise.reject(error)
+        } else {
+          promise.resolve(result)
+        }
+      }
     }
     let getTotalNewResponses: AnyDefinition = AsyncFunction("getTotalNewResponses") { (promise: Promise) in
-      self.zendesk.getTotalNewResponses(promise.resolver, rejecter: promise.legacyRejecter)
+      self.zendesk.getTotalNewResponses { result, error in
+        if let error {
+          promise.reject(error)
+        } else {
+          promise.resolve(result)
+        }
+      }
     }
     let setNotificationToken: AnyDefinition = Function("setNotificationToken") { (token: String) in
       self.zendesk.setNotificationToken(Data(base64Encoded: token) ?? Data(token.utf8))
