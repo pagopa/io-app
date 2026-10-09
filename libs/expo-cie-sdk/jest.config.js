@@ -5,7 +5,7 @@ module.exports = {
   transform: {
     "\\.[jt]sx?$": [
       "babel-jest",
-      { configFile: "./apps/main-app/babel.config.js" }
+      { configFile: "../../apps/main-app/babel.config.js" }
     ]
   },
   coverageDirectory: "../../coverage/libs/expo-cie-sdk"
