@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+  implementation 'androidx.appcompat:appcompat:1.7.1'
   api group: 'com.zendesk', name: 'chat', version: '3.6.0'
   api group: 'com.zendesk', name: 'answerbot', version: '3.3.2'
   api group: 'com.zendesk', name: 'messaging', version: '5.6.0'

@@ -1,6 +1,8 @@
 package expo.modules.zendesk
 
 import android.app.Activity
+import com.zendesk.service.ErrorResponse
+import com.zendesk.service.ZendeskCallback
 import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
@@ -9,15 +11,13 @@ import zendesk.core.AnonymousIdentity
 import zendesk.core.Identity
 import zendesk.core.JwtIdentity
 import zendesk.core.Zendesk
-import zendesk.service.ErrorResponse
-import zendesk.service.ZendeskCallback
 import zendesk.support.CustomField
 import zendesk.support.Request
-import zendesk.support.RequestActivity
-import zendesk.support.RequestListActivity
 import zendesk.support.RequestProvider
 import zendesk.support.RequestUpdates
 import zendesk.support.Support
+import zendesk.support.request.RequestActivity
+import zendesk.support.requestlist.RequestListActivity
 import java.util.ArrayList
 
 class ZendeskModule : Module() {
@@ -32,7 +32,8 @@ class ZendeskModule : Module() {
 
     Function("init") { options: Map<String, String> ->
       val appId = options.getValue("appId")
-      Zendesk.INSTANCE.init(appContext.reactContext, options.getValue("url"), appId, options.getValue("clientId"))
+      val context = requireNotNull(appContext.reactContext) { "Zendesk requires an active React context." }
+      Zendesk.INSTANCE.init(context, options.getValue("url"), appId, options.getValue("clientId"))
       Support.INSTANCE.init(Zendesk.INSTANCE)
       AnswerBot.INSTANCE.init(Zendesk.INSTANCE, Support.INSTANCE)
       logId = options["logId"]
@@ -98,7 +99,7 @@ class ZendeskModule : Module() {
     }
     Function("dismiss") { appContext.currentActivity?.finishActivity(REQUEST_CODE) }
     Function("setNotificationToken") { token: String ->
-      zendesk.chat.Chat.INSTANCE.providers().pushNotificationsProvider()?.registerPushToken(token)
+      zendesk.chat.Chat.INSTANCE.providers()?.pushNotificationsProvider()?.registerPushToken(token)
     }
     OnActivityResult { _, payload ->
       if (payload.requestCode == REQUEST_CODE) {
@@ -111,10 +112,12 @@ class ZendeskModule : Module() {
   private fun requireActivity(): Activity =
     requireNotNull(appContext.currentActivity) { "Zendesk UI requires an active Activity." }
 
-  private fun requestProvider(): RequestProvider = Support.INSTANCE.provider().requestProvider()
+  private fun requestProvider(): RequestProvider =
+    requireNotNull(Support.INSTANCE.provider()) { "Zendesk Support is not initialized." }.requestProvider()
 
   private fun initChat(key: String) {
-    zendesk.chat.Chat.INSTANCE.init(appContext.reactContext, key)
+    val context = requireNotNull(appContext.reactContext) { "Zendesk requires an active React context." }
+    zendesk.chat.Chat.INSTANCE.init(context, key)
   }
 
   private companion object {
