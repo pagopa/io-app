@@ -96,7 +96,11 @@ const InnerNavigator = memo(() => {
           credentialIssuanceMachineRef.send({ type: "back" });
         }
       }}
-      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
+      screenOptions={{
+        gestureEnabled: isGestureEnabled,
+        headerMode: "screen",
+        freezeOnBlur: true
+      }}
     >
       <Stack.Screen
         component={WalletCardOnboardingScreen}

@@ -33,7 +33,7 @@ const InnerNavigator = () => {
           itwRemoteMachineRef.send({ type: "back" });
         }
       }}
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
+      screenOptions={{ gestureEnabled: isGestureEnabled, freezeOnBlur: true }}
     >
       <Stack.Screen
         component={ItwRemoteRequestValidationScreen}

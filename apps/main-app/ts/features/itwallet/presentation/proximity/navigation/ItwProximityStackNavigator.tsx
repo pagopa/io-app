@@ -30,7 +30,11 @@ export const ItwProximityStackNavigator = () => (
 const InnerNavigator = () => (
   <Stack.Navigator
     initialRouteName={ITW_PROXIMITY_ROUTES.PRESENTMENT}
-    screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
+    screenOptions={{
+      gestureEnabled: isGestureEnabled,
+      headerMode: "screen",
+      freezeOnBlur: true
+    }}
   >
     <Stack.Screen
       component={ItwBluetoothPermissionsScreen}
