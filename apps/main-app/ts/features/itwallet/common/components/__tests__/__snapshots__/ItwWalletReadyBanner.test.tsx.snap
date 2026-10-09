@@ -456,7 +456,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                   [
                                     {},
                                     {
-                                      "color": "#031344",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
@@ -1218,7 +1218,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                   [
                                     {},
                                     {
-                                      "color": "#031344",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
