@@ -43,15 +43,10 @@ const styles = StyleSheet.create({
 });
 
 /**
- * An animated checkbox. This can be used to implement a standard
- * {@link CheckBox} or other composite components.
+ * Animated radio input, used by {@link RadioButtonLabel} and the
+ * `ListItemRadio*` components.
  */
-export const AnimatedRadio = ({
-  size,
-  checked,
-  onPress,
-  disabled
-}: OwnProps) => {
+export const Radio = ({ size, checked, onPress, disabled }: OwnProps) => {
   const theme = useIOTheme();
   const isChecked = checked ?? false;
 
@@ -99,7 +94,7 @@ export const AnimatedRadio = ({
       disabled={disabled}
       onPress={onPress}
       style={radioButtonWrapperSizeStyle}
-      testID="AnimatedRadioInput"
+      testID="RadioInput"
     >
       <View
         style={[styles.radioBorder, radioButtonSizeStyle, { borderColor }]}
