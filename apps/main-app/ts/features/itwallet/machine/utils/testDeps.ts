@@ -36,6 +36,7 @@ const testMachineNavigation = (
   goBack: noop,
   navigate: noop,
   pop: noop,
+  popTo: noop,
   popToTop: noop,
   replace: noop,
   reset: noop,

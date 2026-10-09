@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { ActionArgs } from "xstate";
 
+import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -15,6 +16,7 @@ import { testEidIssuanceDeps, testMachineStore } from "../../utils/testDeps";
 import {
   closeIssuanceAction,
   navigateToCredentialCatalogAction,
+  navigateToWalletAction,
   storeL2FallbackAction,
   storeWalletActivationFeedbackBannerDataAction
 } from "../actions";
@@ -83,6 +85,25 @@ describe("navigateToCredentialCatalogAction", () => {
       });
     }
   );
+});
+
+// React Navigation v7 `navigate` pushes a second main navigator instead of popping back to it
+describe("wallet return navigation", () => {
+  test.each([
+    { name: "navigateToWalletAction", action: navigateToWalletAction },
+    { name: "closeIssuanceAction", action: closeIssuanceAction }
+  ])("$name pops back to the existing wallet", ({ action }) => {
+    const { args } = buildArgs({ level: "l3", mode: "issuance" });
+    const { navigation } = args.context.deps;
+    const popTo = jest.spyOn(navigation, "popTo");
+    const navigate = jest.spyOn(navigation, "navigate");
+    action(args);
+    expect(popTo).toHaveBeenCalledWith(
+      ROUTES.MAIN,
+      expect.objectContaining({ screen: ROUTES.WALLET_HOME })
+    );
+    expect(navigate).not.toHaveBeenCalled();
+  });
 });
 
 describe("storeL2FallbackAction", () => {

@@ -143,13 +143,10 @@ export const navigateToNfcInstructionsScreenAction = ({
 };
 
 export const navigateToWalletAction = ({ context }: EidActionArgs) => {
-  const { toast, navigation } = context.deps;
-  toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
-  // Navigate instead of resetting: the main navigator is already mounted at
-  // the bottom of the stack, so this pops the whole issuance flow and reuses
-  // it. A reset would assign it a new key, remounting the tab navigator and
-  // flashing a blank screen before the wallet appears.
-  navigation.navigate(ROUTES.MAIN, {
+  context.deps.toast.success(
+    I18n.t("features.itWallet.issuance.credentialResult.toast")
+  );
+  context.deps.navigation.popTo(ROUTES.MAIN, {
     screen: ROUTES.WALLET_HOME,
     params: {}
   });
@@ -288,7 +285,7 @@ export const closeIssuanceAction = ({ context, event }: EidActionArgs) => {
     store.dispatch(itwSetActivationExitSurvey({ step: surveyStep }));
   }
 
-  navigation.navigate(ROUTES.MAIN, {
+  navigation.popTo(ROUTES.MAIN, {
     screen: ROUTES.WALLET_HOME,
     params: {}
   });

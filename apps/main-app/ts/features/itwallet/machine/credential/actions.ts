@@ -158,7 +158,7 @@ export const closeIssuanceAction = ({
     );
   }
 
-  navigation.navigate(ROUTES.MAIN, {
+  navigation.popTo(ROUTES.MAIN, {
     screen: ROUTES.WALLET_HOME,
     params: {}
   });
