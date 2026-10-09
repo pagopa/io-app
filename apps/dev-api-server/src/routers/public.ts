@@ -14,7 +14,9 @@ import { WALLET_PAYMENT_PATH } from "../features/payments/utils/payment";
 import { backendInfo } from "../payloads/backend";
 import {
   AppUrlLoginScheme,
+  authorizePath,
   errorRedirectUrl,
+  ioRedirectPath,
   loginLolliPopRedirect,
   redirectUrl
 } from "../payloads/login";
@@ -41,7 +43,7 @@ import {
 } from "../persistence/sessionInfo";
 import { readFileAsJSON, sendFileFromRootPath } from "../utils/file";
 import { getSamlRequest } from "../utils/login";
-import { addApiAuthV1Prefix } from "../utils/strings";
+import { addApiAuthV1Prefix, uuidv4 } from "../utils/strings";
 import { resetCgn } from "./features/cgn";
 import { isFeatureFlagWithMinVersionEnabled } from "./features/featureFlagUtils";
 import { resetProfile } from "./profile";
@@ -51,6 +53,7 @@ export const publicRouter = Router();
 
 export const DEFAULT_LOLLIPOP_HASH_ALGORITHM = "sha256";
 const DEFAULT_HEADER_LOLLIPOP_PUB_KEY = "x-pagopa-lollipop-pub-key";
+const DEFAULT_HEADER_LOLLIPOP_ASSERTION_REF = "x-pagopa-lollipop-assertion-ref";
 
 addHandler(
   publicRouter,
@@ -94,6 +97,65 @@ addHandler(
     handleLollipopLoginRedirect(res, samlRequest, thumbprint);
   }
 );
+
+addHandler(
+  publicRouter,
+  "post",
+  addApiAuthV1Prefix("/reserve"),
+  async (req, res) => {
+    const encodedLollipopPublicKey = req.body.lollipop_pub_key;
+    const jwkPK = parseJwkOrError(encodedLollipopPublicKey);
+
+    if (E.isLeft(jwkPK) || !JwkPublicKey.is(jwkPK.right)) {
+      res.sendStatus(400);
+      return;
+    }
+
+    const decodedLollipopPublicKey = jwkPK.right;
+    const thumbprint = await calculateJwkThumbprint(
+      decodedLollipopPublicKey,
+      DEFAULT_LOLLIPOP_HASH_ALGORITHM
+    );
+    setLollipopInfoEphemeral(thumbprint, decodedLollipopPublicKey);
+
+    const state = uuidv4();
+    const nonce = uuidv4();
+    const clientId = uuidv4();
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    res.json({
+      client_id: clientId,
+      redirect_uri: `${baseUrl}${ioRedirectPath}`,
+      authorization_endpoint: `${baseUrl}${authorizePath}`,
+      state,
+      nonce
+    });
+  }
+);
+
+addHandler(publicRouter, "get", authorizePath, (req, res) => {
+  const lollipopAssertionRefHeaderValue = req.get(
+    DEFAULT_HEADER_LOLLIPOP_ASSERTION_REF
+  );
+  const assertionRefPrefix = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM}-`;
+
+  if (
+    !lollipopAssertionRefHeaderValue ||
+    !lollipopAssertionRefHeaderValue.startsWith(assertionRefPrefix)
+  ) {
+    res.sendStatus(400);
+    return;
+  }
+
+  const thumbprint = lollipopAssertionRefHeaderValue.slice(
+    assertionRefPrefix.length
+  );
+  const samlRequest = getSamlRequest(
+    DEFAULT_LOLLIPOP_HASH_ALGORITHM,
+    thumbprint
+  );
+
+  handleLollipopLoginRedirect(res, samlRequest, thumbprint);
+});
 
 addHandler(publicRouter, "get", "/idp-login", (req, res) => {
   const urlLoginScheme = isFeatureFlagWithMinVersionEnabled("nativeLogin")
