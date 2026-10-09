@@ -4085,10 +4085,6 @@
       "title": "Cos'è un messaggio dinamico?"
     },
     "contactsBottomSheet": {
-      "actions": {
-        "call": "Fai una chiamata",
-        "email": "Scrivi un'email"
-      },
       "body": "Se non ti è chiaro il contenuto del messaggio, contatta l’ente che te lo ha inviato.",
       "title": "Assistenza"
     },
@@ -4752,6 +4748,17 @@
     "title": "Inoltro dei messaggi via email"
   },
   "services": {
+    "contacts": {
+      "a11y": {
+        "website": "Visita il sito dell'ente"
+      },
+      "downloadApp": "Scarica l'app",
+      "email": "Invia un'email",
+      "pec": "Invia una PEC",
+      "phone": "Chiama",
+      "support": "Chiedi assistenza",
+      "website": "Visita il sito"
+    },
     "details": {
       "failure": {
         "back": "Indietro",
@@ -4761,19 +4768,12 @@
       },
       "metadata": {
         "a11y": {
-          "copyToClipboard": "Copia negli appunti",
-          "website": "Visita il sito dell'ente"
+          "copyToClipboard": "Copia negli appunti"
         },
         "address": "Indirizzo",
-        "downloadApp": "Scarica l'app",
-        "email": "Invia un'email",
         "fiscalCode": "Codice fiscale ente",
-        "pec": "Invia una PEC",
-        "phone": "Contatta l'ente",
         "serviceId": "ID servizio",
-        "support": "Richiedi assistenza",
-        "title": "Contatti ed informazioni",
-        "website": "Visita il sito"
+        "title": "Contatti ed informazioni"
       },
       "preferences": {
         "inbox": "Contattarti in app",
