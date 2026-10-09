@@ -77,7 +77,7 @@ export const CiePlaygrounds = () => {
     },
     {
       value: "Start CIE Auth",
-      icon: "cieLetter",
+      icon: "cie",
       onPress: () => navigation.navigate(CIE_PLAYGROUNDS_ROUTES.AUTHENTICATION)
     },
     {

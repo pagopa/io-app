@@ -52,9 +52,9 @@ import IconChevronLeft from "./svg/IconChevronLeft";
 import IconChevronRight from "./svg/IconChevronRight";
 import IconChevronRightListItem from "./svg/IconChevronRightListItem";
 import IconChevronTop from "./svg/IconChevronTop";
+import IconCie from "./svg/IconCie";
 import IconCieCard from "./svg/IconCieCard";
 import IconCieID from "./svg/IconCieID";
-import IconCieLetter from "./svg/IconCieLetter";
 import IconCloseLarge from "./svg/IconCloseLarge";
 import IconCloseMedium from "./svg/IconCloseMedium";
 import IconCloseSmall from "./svg/IconCloseSmall";
@@ -218,7 +218,7 @@ export const IOIcons = {
   spid: IconSpid,
   cieID: IconCieID,
   cieCard: IconCieCard,
-  cieLetter: IconCieLetter,
+  cie: IconCie,
   qrCode: IconQrCode,
   bell: IconBell,
   website: IconWebsite,

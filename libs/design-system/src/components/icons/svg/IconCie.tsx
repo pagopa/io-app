@@ -1,7 +1,7 @@
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../types";
 
-const IconCieLetter = ({ size, style, ...props }: SVGIconProps) => (
+const IconCie = ({ size, style, ...props }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       fill="currentColor"
@@ -12,4 +12,4 @@ const IconCieLetter = ({ size, style, ...props }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconCieLetter;
+export default IconCie;
