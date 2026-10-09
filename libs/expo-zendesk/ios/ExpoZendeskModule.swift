@@ -4,34 +4,57 @@ public class ExpoZendeskModule: Module {
   private let zendesk = ReactNativeZendesk()
 
   public func definition() -> ModuleDefinition {
-    Name("ExpoZendesk")
-
-    Function("init") { (options: [String: Any]) in self.zendesk.initialize(options) }
-    Function("initChat") { (key: String) in self.zendesk.initChat(key) }
-    Function("setPrimaryColor") { (color: String) in self.zendesk.setPrimaryColor(color) }
-    Function("showHelpCenter") { (options: [String: Any]) in self.zendesk.showHelpCenter(options) }
-    Function("addTicketCustomField") { (key: String, value: String) in self.zendesk.addTicketCustomField(key, withValue: value) }
-    Function("appendLog") { (log: String) in self.zendesk.appendLog(log) }
-    Function("addTicketTag") { (tag: String) in self.zendesk.addTicketTag(tag) }
-    Function("resetCustomFields") { self.zendesk.resetCustomFields() }
-    Function("resetTags") { self.zendesk.resetTags() }
-    Function("resetLog") { self.zendesk.resetLog() }
-    Function("dismiss") { self.zendesk.dismiss() }
-    AsyncFunction("openTicket") { (promise: Promise) in
+    let initialize: AnyDefinition = Function("init") { (options: [String: Any]) in self.zendesk.initialize(options) }
+    let initChat: AnyDefinition = Function("initChat") { (key: String) in self.zendesk.initChat(key) }
+    let setPrimaryColor: AnyDefinition = Function("setPrimaryColor") { (color: String) in self.zendesk.setPrimaryColor(color) }
+    let showHelpCenter: AnyDefinition = Function("showHelpCenter") { (options: [String: Any]) in self.zendesk.showHelpCenter(options) }
+    let addTicketCustomField: AnyDefinition = Function("addTicketCustomField") { (key: String, value: String) in self.zendesk.addTicketCustomField(key, withValue: value) }
+    let appendLog: AnyDefinition = Function("appendLog") { (log: String) in self.zendesk.appendLog(log) }
+    let addTicketTag: AnyDefinition = Function("addTicketTag") { (tag: String) in self.zendesk.addTicketTag(tag) }
+    let resetCustomFields: AnyDefinition = Function("resetCustomFields") { self.zendesk.resetCustomFields() }
+    let resetTags: AnyDefinition = Function("resetTags") { self.zendesk.resetTags() }
+    let resetLog: AnyDefinition = Function("resetLog") { self.zendesk.resetLog() }
+    let dismiss: AnyDefinition = Function("dismiss") { self.zendesk.dismiss() }
+    let openTicket: AnyDefinition = AsyncFunction("openTicket") { (promise: Promise) in
       self.zendesk.openTicket { _ in promise.resolve(nil) }
     }
-    AsyncFunction("showTickets") { (promise: Promise) in
+    let showTickets: AnyDefinition = AsyncFunction("showTickets") { (promise: Promise) in
       self.zendesk.showTickets { _ in promise.resolve(nil) }
     }
-    AsyncFunction("hasOpenedTickets") { (promise: Promise) in
-      self.zendesk.hasOpenedTickets(promise.resolve, rejecter: promise.reject)
+    let hasOpenedTickets: AnyDefinition = AsyncFunction("hasOpenedTickets") { (promise: Promise) in
+      self.zendesk.hasOpenedTickets(promise.resolver, rejecter: promise.legacyRejecter)
     }
-    AsyncFunction("getTotalNewResponses") { (promise: Promise) in
-      self.zendesk.getTotalNewResponses(promise.resolve, rejecter: promise.reject)
+    let getTotalNewResponses: AnyDefinition = AsyncFunction("getTotalNewResponses") { (promise: Promise) in
+      self.zendesk.getTotalNewResponses(promise.resolver, rejecter: promise.legacyRejecter)
     }
-    Function("setNotificationToken") { (token: Data) in self.zendesk.setNotificationToken(token) }
-    Function("setUserIdentity") { (identity: [String: Any]) in self.zendesk.setUserIdentity(identity) }
-    Function("setVisitorInfo") { (_: [String: Any]) in }
-    Function("resetUserIdentity") { }
+    let setNotificationToken: AnyDefinition = Function("setNotificationToken") { (token: String) in
+      self.zendesk.setNotificationToken(Data(base64Encoded: token) ?? Data(token.utf8))
+    }
+    let setUserIdentity: AnyDefinition = Function("setUserIdentity") { (identity: [String: Any]) in self.zendesk.setUserIdentity(identity) }
+    let setVisitorInfo: AnyDefinition = Function("setVisitorInfo") { (_: [String: Any]) in }
+    let resetUserIdentity: AnyDefinition = Function("resetUserIdentity") { }
+
+    return ModuleDefinitionBuilder.buildBlock(
+      Name("ExpoZendesk"),
+      initialize,
+      initChat,
+      setPrimaryColor,
+      showHelpCenter,
+      addTicketCustomField,
+      appendLog,
+      addTicketTag,
+      resetCustomFields,
+      resetTags,
+      resetLog,
+      dismiss,
+      openTicket,
+      showTickets,
+      hasOpenedTickets,
+      getTotalNewResponses,
+      setNotificationToken,
+      setUserIdentity,
+      setVisitorInfo,
+      resetUserIdentity
+    )
   }
 }
