@@ -47,15 +47,10 @@ const styles = StyleSheet.create({
 });
 
 /**
- * An animated checkbox. This can be used to implement a standard
- * {@link CheckBox} or other composite components.
+ * Animated checkbox input, used by {@link CheckboxLabel} and
+ * {@link ListItemCheckbox}.
  */
-export const AnimatedCheckbox = ({
-  size,
-  checked,
-  onPress,
-  disabled
-}: OwnProps) => {
+export const Checkbox = ({ size, checked, onPress, disabled }: OwnProps) => {
   const theme = useIOTheme();
   const { dynamicFontScale } = useIOFontDynamicScale();
   const isChecked = checked ?? false;
@@ -104,7 +99,7 @@ export const AnimatedCheckbox = ({
       disabled={disabled}
       onPress={onPress}
       style={checkboxWrapperSizeStyle}
-      testID="AnimatedCheckboxInput"
+      testID="CheckboxInput"
     >
       <View
         style={[styles.checkboxBorder, checkboxSizeStyle, { borderColor }]}

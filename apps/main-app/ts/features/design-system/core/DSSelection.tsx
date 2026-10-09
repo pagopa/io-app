@@ -1,5 +1,4 @@
 import {
-  AnimatedMessageCheckbox,
   BodySmall,
   CheckboxLabel,
   Divider,
@@ -9,6 +8,7 @@ import {
   ListItemCheckbox,
   ListItemRadioWithAmount,
   ListItemSwitch,
+  MessageCheckbox,
   RadioGroup,
   RadioItem,
   Switch,
@@ -41,10 +41,10 @@ export const DSSelection = () => {
           </VStack>
         </VStack>
 
-        {/* AnimatedMessageCheckbox */}
+        {/* MessageCheckbox */}
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Checkbox (Messages)</H4>
-          <AnimatedMessageCheckboxShowroom />
+          <MessageCheckboxShowroom />
         </VStack>
 
         {/* RadioListItem */}
@@ -300,14 +300,14 @@ const RadioListItemsShowroom = () => {
   );
 };
 
-const AnimatedMessageCheckboxShowroom = () => {
+const MessageCheckboxShowroom = () => {
   const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <DSComponentViewerBox name="AnimatedMessageCheckbox">
+    <DSComponentViewerBox name="MessageCheckbox">
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <AnimatedMessageCheckbox checked={isEnabled} />
+        <MessageCheckbox checked={isEnabled} />
         <HSpacer size={24} />
         <Switch onValueChange={toggleSwitch} value={isEnabled} />
       </View>
