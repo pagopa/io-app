@@ -9,12 +9,12 @@ import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks";
 import { trackShowCredentialsList } from "../../analytics";
 import { isL2Credential } from "../../common/utils/itwCredentialUtils.ts";
 import { makeItwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
 import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors/index.ts";
+import { useItwNavigation } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
@@ -40,7 +40,7 @@ const ItwCardOnboardingL2Screen = () => {
 };
 
 const ItwL2CredentialOnboardingSection = () => {
-  const navigation = useIONavigation();
+  const navigation = useItwNavigation();
 
   const catalogueCredentials = useIOSelector(
     itwAvailableCredentialsListSelector
@@ -68,10 +68,7 @@ const ItwL2CredentialOnboardingSection = () => {
           label={I18n.t("features.wallet.onboarding.cta.addBonus")}
           numberOfLines={2}
           onPress={() => {
-            navigation.replace(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.L3_ONBOARDING,
-              params: { page: 1 }
-            });
+            navigation.replace(ITW_ROUTES.L3_ONBOARDING, { page: 1 });
           }}
           testID="add-bonus-action-testID"
           variant="link"

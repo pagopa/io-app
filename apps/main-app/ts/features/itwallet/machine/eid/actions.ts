@@ -169,9 +169,18 @@ export const navigateToWalletAction = ({ context }: EidActionArgs) => {
 export const navigateToCredentialCatalogAction = ({
   context
 }: EidActionArgs) => {
-  context.deps.navigation.replace(ITW_ROUTES.MAIN, {
-    screen:
-      context.level === "l2" ? ITW_ROUTES.ONBOARDING : ITW_ROUTES.L3_ONBOARDING
+  // Resets only the nested ITW stack, keeping the navigator and its machines mounted
+  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+    state: {
+      routes: [
+        {
+          name:
+            context.level === "l2"
+              ? ITW_ROUTES.ONBOARDING
+              : ITW_ROUTES.L3_ONBOARDING
+        }
+      ]
+    }
   });
 };
 

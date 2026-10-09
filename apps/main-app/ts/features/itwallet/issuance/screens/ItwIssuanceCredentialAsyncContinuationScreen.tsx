@@ -1,11 +1,11 @@
 import I18n from "i18next";
 
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialSelector } from "../../credentials/store/selectors";
+import { useItwNavigation } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 /**
@@ -14,7 +14,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
  */
 export const ItwIssuanceCredentialAsyncContinuationScreen = () => {
   const credentialType = CredentialType.DRIVING_LICENSE;
-  const navigation = useIONavigation();
+  const navigation = useItwNavigation();
   const credential = useIOSelector(itwCredentialSelector(credentialType));
 
   const isCredentialValid =
@@ -28,9 +28,8 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = () => {
             `features.itWallet.issuance.credentialAlreadyAdded.primaryAction`
           ),
           onPress: () =>
-            navigation.replace(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-              params: { credentialType }
+            navigation.replace(ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL, {
+              credentialType
             })
         }}
         pictogram="itWallet"
@@ -54,10 +53,7 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = () => {
         label: I18n.t(
           "features.itWallet.issuance.mdlMessageExpired.primaryAction"
         ),
-        onPress: () =>
-          navigation.replace(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ONBOARDING
-          })
+        onPress: () => navigation.replace(ITW_ROUTES.ONBOARDING)
       }}
       pictogram="ended"
       secondaryAction={{

@@ -109,8 +109,11 @@ export const navigateToWalletAction = ({
 export const navigateToEidVerificationExpiredScreenAction = ({
   context
 }: CredentialIssuanceActionArgs) => {
-  context.deps.navigation.replace(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
+  // Resets only the nested ITW stack, keeping the navigator and its machines mounted
+  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+    state: {
+      routes: [{ name: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED }]
+    }
   });
 };
 

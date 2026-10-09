@@ -1,13 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
 
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import {
-  IOStackNavigationProp,
-  IOStackNavigationRouteProps
-} from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -26,7 +22,10 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
+import {
+  ItwParamsList,
+  useItwNavigation
+} from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
   trackItwAlreadyHasCredential,
@@ -52,7 +51,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
 }: ItwIssuanceCredentialLandingScreenProps) => {
   const { credentialType } = route.params;
 
-  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const navigation = useItwNavigation();
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isWhitelisted = useIOSelector(itwIsL3EnabledSelector);

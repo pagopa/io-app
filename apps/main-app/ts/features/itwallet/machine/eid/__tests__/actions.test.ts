@@ -85,10 +85,10 @@ describe("navigateToCredentialCatalogAction", () => {
     "opens the correct catalogue after $name activation",
     ({ level, expected }) => {
       const { args } = buildArgs({ level, mode: "issuance" });
-      const replace = jest.spyOn(args.context.deps.navigation, "replace");
+      const navigate = jest.spyOn(args.context.deps.navigation, "navigate");
       navigateToCredentialCatalogAction(args);
-      expect(replace).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-        screen: expected
+      expect(navigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+        state: { routes: [{ name: expected }] }
       });
     }
   );

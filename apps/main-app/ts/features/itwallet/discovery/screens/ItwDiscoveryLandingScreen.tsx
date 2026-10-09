@@ -1,9 +1,7 @@
-import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect } from "react";
 
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   isStartupLoaded,
@@ -14,12 +12,12 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { useItwNavigation } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 /** Landing screen to route deeplink based on the ITW activation status */
 export const ItwDiscoveryLandingScreen = () => {
-  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const navigation = useItwNavigation();
   const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
   const isItWalletActive = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isWhitelisted = useIOSelector(itwIsL3EnabledSelector);
