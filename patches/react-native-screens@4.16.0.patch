@@ -1,0 +1,38 @@
+diff --git a/android/src/main/java/com/swmansion/rnscreens/ScreenContainer.kt b/android/src/main/java/com/swmansion/rnscreens/ScreenContainer.kt
+index 422b21bc60a713b142871aa6a109f11007f5e2aa..ecfee407fbb576877e4c7ee9ba21dccf24aac6d7 100644
+--- a/android/src/main/java/com/swmansion/rnscreens/ScreenContainer.kt
++++ b/android/src/main/java/com/swmansion/rnscreens/ScreenContainer.kt
+@@ -360,14 +360,31 @@ open class ScreenContainer(
+     }
+ 
+     fun performUpdates() {
+-        if (!needsUpdate || !isAttached || fragmentManager == null || fragmentManager?.isDestroyed == true) {
++        val fm = fragmentManager
++        if (!needsUpdate || !isAttached || fm == null || fm.isDestroyed) {
++            return
++        }
++        // A synchronous Fabric mount flush (e.g. Reanimated handling an image load event raised
++        // while this FragmentManager attaches a screen's views) can re-enter here mid-transaction.
++        // A nested `commitNow` would throw, so retry once the running transaction has completed.
++        if (!fragmentManagersInTransaction.add(fm)) {
++            post { performUpdates() }
+             return
+         }
+         needsUpdate = false
+-        onUpdate()
++        try {
++            onUpdate()
++        } finally {
++            fragmentManagersInTransaction.remove(fm)
++        }
+         notifyContainerUpdate()
+     }
+ 
++    private companion object {
++        // Only accessed on the UI thread
++        val fragmentManagersInTransaction = HashSet<FragmentManager>()
++    }
++
+     open fun onUpdate() {
+         createTransaction().let {
+             // detach screens that are no longer active
