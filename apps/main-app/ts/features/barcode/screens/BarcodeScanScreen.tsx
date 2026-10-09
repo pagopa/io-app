@@ -248,15 +248,15 @@ const BarcodeScanScreen = () => {
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
         icon="productPagoPA"
         iconColor="blueItalia-500"
+        label={I18n.t("barcodeScan.manual.notice")}
         onPress={handlePagoPACodeInput}
-        value={I18n.t("barcodeScan.manual.notice")}
       />
       <Divider />
       <ListItemNav
         accessibilityLabel={I18n.t("barcodeScan.manual.authorize")}
         icon="gallery"
+        label={I18n.t("barcodeScan.manual.authorize")}
         onPress={handleIdPayPaymentCodeInput}
-        value={I18n.t("barcodeScan.manual.authorize")}
       />
       <VSpacer size={16} />
     </View>

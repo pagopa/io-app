@@ -40,11 +40,11 @@ type ListItemRadioLoadingProps =
 
 type Props = WithTestID<{
   description?: ReactNode | string;
+  label: string;
   loadingProps?: ListItemRadioLoadingProps;
   onValueChange?: (newValue: boolean) => void;
   selected: boolean;
   startImage?: ListItemRadioGraphicProps;
-  value: string;
 }>;
 
 const DISABLED_OPACITY = 0.5;
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
  * @param props
  */
 export const ListItemRadio = ({
-  value,
+  label,
   description,
   startImage,
   selected,
@@ -224,7 +224,7 @@ export const ListItemRadio = ({
                 </View>
               )}
               <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
-                {value}
+                {label}
               </H6>
             </View>
             <HSpacer size={8} />

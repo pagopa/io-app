@@ -41,11 +41,11 @@ type WrapperProps = {
 const radioButtons: ReadonlyArray<RadioItem<OtpID>> = [
   {
     id: OTP_LENGTH_8,
-    value: `OTP length ${OTP_LENGTH_8}`
+    label: `OTP length ${OTP_LENGTH_8}`
   },
   {
     id: OTP_LENGTH_6,
-    value: `OTP length ${OTP_LENGTH_6}`
+    label: `OTP length ${OTP_LENGTH_6}`
   }
 ];
 

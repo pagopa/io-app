@@ -255,19 +255,19 @@ const RemoveAccountDetails = () => {
     useMemo(
       () => [
         {
-          value: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
+          label: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
           id: RemoveAccountMotivationEnum.NOT_UTILS
         },
         {
-          value: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
+          label: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
           id: RemoveAccountMotivationEnum.NOT_SAFE
         },
         {
-          value: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
+          label: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
           id: RemoveAccountMotivationEnum.NEVER_USED
         },
         {
-          value: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
+          label: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
           id: RemoveAccountMotivationEnum.OTHERS
         }
       ],

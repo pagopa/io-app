@@ -106,10 +106,10 @@ const ItwRemotePresentationDetails = () => {
                 : undefined
             }
             icon="security"
-            onValueChange={() => sendCredentialsToMachine(credentials)}
-            value={I18n.t(
+            label={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.optionalClaims"
             )}
+            onValueChange={() => sendCredentialsToMachine(credentials)}
           />
           <RequestedCredentialsBlock credentials={credentials} />
           <VSpacer size={16} />

@@ -132,6 +132,7 @@ export const FavouriteServicesScreen = () => {
         >
           <ListItemNav
             description={item.institution.name}
+            label={item.name}
             onPress={() => {
               analytics.trackServiceSelected({
                 organization_name: item.institution.name,
@@ -146,7 +147,6 @@ export const FavouriteServicesScreen = () => {
                 }
               });
             }}
-            value={item.name}
           />
         </ListItemSwipeAction>
       </View>

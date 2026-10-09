@@ -530,29 +530,29 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                               [
                                 {
                                   "description": "Rivedi le tue informazioni",
+                                  "label": "I tuoi dati",
                                   "onPress": [Function],
                                   "testID": "profileDataButton",
-                                  "value": "I tuoi dati",
                                 },
                                 {
                                   "description": "Gestisci le preferenze dell'applicazione",
+                                  "label": "Preferenze",
                                   "onPress": [Function],
-                                  "value": "Preferenze",
                                 },
                                 {
                                   "description": "Gestisci accesso biometrico e codice di sblocco",
+                                  "label": "Sicurezza e accesso",
                                   "onPress": [Function],
-                                  "value": "Sicurezza e accesso",
                                 },
                                 {
                                   "description": "I tuoi diritti e obblighi nell’uso di IO",
+                                  "label": "Privacy e Condizioni d'uso",
                                   "onPress": [Function],
-                                  "value": "Privacy e Condizioni d'uso",
                                 },
                                 {
                                   "description": "Per saperne di più sull'app IO",
+                                  "label": "Informazioni su IO",
                                   "onPress": [Function],
-                                  "value": "Informazioni su IO",
                                 },
                               ]
                             }

@@ -69,6 +69,7 @@ const ZendeskChooseCategory = (props: Props) => {
     item: category
   }: ListRenderItemInfo<ZendeskCategory>) => (
     <ListItemNav
+      label={category.description[locale]}
       onPress={() => {
         selectedCategory(category);
         // Set category as custom field
@@ -84,7 +85,6 @@ const ZendeskChooseCategory = (props: Props) => {
         }
       }}
       testID={category.value}
-      value={category.description[locale]}
     />
   );
 
