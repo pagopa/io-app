@@ -95,7 +95,6 @@ import IconFilterOniOS from "./svg/IconFilterOniOS";
 import IconFingerprint from "./svg/IconFingerprint";
 import IconFiscalCodeIndividual from "./svg/IconFiscalCodeIndividual";
 import IconFolder from "./svg/IconFolder";
-import IconFornitori from "./svg/IconFornitori";
 import IconForward from "./svg/IconForward";
 import IconGallery from "./svg/IconGallery";
 import IconHealthCard from "./svg/IconHealthCard";
@@ -110,6 +109,7 @@ import IconInboxEmpty from "./svg/IconInboxEmpty";
 import IconInboxFilled from "./svg/IconInboxFilled";
 import IconInfo from "./svg/IconInfo";
 import IconInfoFilled from "./svg/IconInfoFilled";
+import IconInfrastructure from "./svg/IconInfrastructure";
 import IconInitiatives from "./svg/IconInitiatives";
 import IconInstagram from "./svg/IconInstagram";
 import IconInstitution from "./svg/IconInstitution";
@@ -239,7 +239,7 @@ export const IOIcons = {
   unlocked: IconLockOff,
   initiatives: IconInitiatives,
   analytics: IconAnalytics,
-  fornitori: IconFornitori,
+  infrastructure: IconInfrastructure,
   eyeShow: IconEyeShow,
   eyeHide: IconEyeHide,
   pinOff: IconPinOff,
