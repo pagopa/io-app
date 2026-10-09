@@ -4,10 +4,7 @@ import {
   ListItemInfoCopy,
   VSpacer
 } from "@io-app/design-system";
-import {
-  addTicketCustomField,
-  resetCustomFields
-} from "@pagopa/io-react-native-zendesk";
+import { addTicketCustomField, resetCustomFields } from "@io-app/expo-zendesk";
 import I18n from "i18next";
 import { JSX } from "react";
 

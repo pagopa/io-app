@@ -8,7 +8,7 @@ import {
   addTicketCustomField,
   appendLog,
   resetCustomFields
-} from "@pagopa/io-react-native-zendesk";
+} from "@io-app/expo-zendesk";
 import I18n from "i18next";
 import { JSX, useState } from "react";
 
