@@ -11,10 +11,18 @@ export const storeCredentialAction = ({
   event
 }: ActionArgs<Context, CredentialUpgradeEvents, CredentialUpgradeEvents>) => {
   assertEvent(event, "xstate.done.actor.upgradeCredential");
-  const { credentials, keyAttestations } = event.output;
+  const { credentialType, credentials, keyAttestations } = event.output;
   const { store } = context.deps;
+  // The upgraded credentials replace the owned ones, so they must keep the
+  // channel the original credential was obtained from, for analytics attribution.
+  const { origin } =
+    context.credentials.find(c => c.credentialType === credentialType) ?? {};
+  const credentialsWithOrigin = credentials.map(bundle => ({
+    ...bundle,
+    metadata: { ...bundle.metadata, origin }
+  }));
   // Removes old credentials and stores the new ones atomically
-  store.dispatch(itwCredentialsReplaceByType(credentials, {}));
+  store.dispatch(itwCredentialsReplaceByType(credentialsWithOrigin, {}));
   // Stores Key Attestations separately
   store.dispatch(itwKeyAttestationsStore(keyAttestations));
 };

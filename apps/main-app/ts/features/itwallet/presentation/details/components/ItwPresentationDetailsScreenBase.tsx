@@ -1,5 +1,3 @@
-import { useIOToast } from "@io-app/design-system";
-import I18n from "i18next";
 import { ReactNode } from "react";
 import Animated, {
   useAnimatedRef,
@@ -16,7 +14,6 @@ import { useIOSelector } from "../../../../../store/hooks.ts";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { useHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 export type CredentialCtaProps = ButtonBlockProps;
 
@@ -35,23 +32,11 @@ const ItwPresentationDetailsScreenBase = ({
   ctaProps,
   headerTransparent = false
 }: ItwPresentationDetailsScreenBaseProps) => {
-  const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
-  const toast = useIOToast();
   const scrollTranslationY = useSharedValue(0);
 
   const headerProps = useHeaderPropsByCredentialType(credential.credentialType);
-
-  // Support requests for ITW credentials are temporarily disabled until
-  // final release.
-  const onStartSupportRequest = () => {
-    if (itwFeaturesEnabled) {
-      toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
-      return false;
-    }
-    return true;
-  };
 
   useHeaderSecondLevel({
     scrollValues: {
@@ -59,7 +44,6 @@ const ItwPresentationDetailsScreenBase = ({
       contentOffsetY: scrollTranslationY
     },
     supportRequest: true,
-    onStartSupportRequest,
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef,
     transparent: headerTransparent && !screenReaderEnabled,

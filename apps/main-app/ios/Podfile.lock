@@ -111,6 +111,8 @@ PODS:
     - ExpoModulesCore
   - ExpoSharing (55.0.22):
     - ExpoModulesCore
+  - ExpoStoreReview (55.0.18):
+    - ExpoModulesCore
   - ExpoTaskManager (55.0.16):
     - ExpoModulesCore
     - UMAppLoader
@@ -182,7 +184,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - IoReactNativeIso18013 (0.8.4):
+  - IoReactNativeIso18013 (0.8.5):
     - boost
     - DoubleConversion
     - fast_float
@@ -311,7 +313,7 @@ PODS:
     - SocketRocket
     - SwiftCBOR
     - Yoga
-  - pagopa-io-react-native-jwt (2.2.0):
+  - pagopa-io-react-native-jwt (2.2.5):
     - boost
     - DoubleConversion
     - fast_float
@@ -3402,8 +3404,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - ReactNativeExceptionHandler (2.10.8):
-    - React
+  - ReactNativeExceptionHandler (2.10.10):
+    - React-Core
   - RNCAsyncStorage (2.0.0):
     - boost
     - DoubleConversion
@@ -3434,8 +3436,6 @@ PODS:
     - Yoga
   - RNDeviceInfo (14.0.4):
     - React-Core
-  - RNFS (2.18.0):
-    - React
   - RNGestureHandler (2.31.0):
     - boost
     - DoubleConversion
@@ -3914,6 +3914,7 @@ DEPENDENCIES:
   - ExpoNotifications (from `../../../node_modules/expo-notifications/ios`)
   - ExpoScreenCapture (from `../../../node_modules/expo-screen-capture/ios`)
   - ExpoSharing (from `../../../node_modules/expo-sharing/ios`)
+  - ExpoStoreReview (from `../../../node_modules/expo-store-review/ios`)
   - ExpoTaskManager (from `../../../node_modules/expo-task-manager/ios`)
   - "ExpoUI (from `../../../node_modules/@expo/ui/ios`)"
   - fast_float (from `../../../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
@@ -4027,7 +4028,6 @@ DEPENDENCIES:
   - ReactNativeExceptionHandler (from `../../../node_modules/react-native-exception-handler`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-async-storage/async-storage`)"
   - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
-  - RNFS (from `../../../node_modules/react-native-fs`)
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../../../node_modules/react-native-keychain`)
   - RNPermissions (from `../../../node_modules/react-native-permissions`)
@@ -4119,6 +4119,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-screen-capture/ios"
   ExpoSharing:
     :path: "../../../node_modules/expo-sharing/ios"
+  ExpoStoreReview:
+    :path: "../../../node_modules/expo-store-review/ios"
   ExpoTaskManager:
     :path: "../../../node_modules/expo-task-manager/ios"
   ExpoUI:
@@ -4344,8 +4346,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@react-native-async-storage/async-storage"
   RNDeviceInfo:
     :path: "../../../node_modules/react-native-device-info"
-  RNFS:
-    :path: "../../../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../../../node_modules/react-native-gesture-handler"
   RNKeychain:
@@ -4397,16 +4397,17 @@ SPEC CHECKSUMS:
   ExpoNotifications: 61c46aa5df088ff0ad41de0504a86a92333aec55
   ExpoScreenCapture: aefcd749919380ee0b4d59bb60c1a150aac201c6
   ExpoSharing: 40cd8fd65209bc35adc710ff7e42dd35913d2a0f
+  ExpoStoreReview: 660b3f001bc09d41a3f3c277b1e0f10337bf9ea8
   ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
   ExpoUI: 3d10642147c44f94a4557f1defe2efd3244349af
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 07433c4ab85da44d0b5ceac374ff4e1d57c7aa23
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
-  glog: 0456694f3aaf09460b660ea327cfc11defbeea4c
-  hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
+  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
+  hermes-engine: 9c45a1dcb85eca692601d2f4fff763b820c8176d
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
-  IoReactNativeIso18013: 730061a6443f611f163c38ec49b6dc5a4aae3f81
+  IoReactNativeIso18013: 5344f279534758a68bb111c20df640c6afc67e70
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
   IOWalletProximity: c55c362307fcfd757044d930e49bc3a1cc562aa2
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
@@ -4418,7 +4419,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-cieid: 3969ed1784e0b9041baf892b461be3640315acd1
   pagopa-io-react-native-crypto: afc8ee2585a7944dc115687eb2938009608f062a
   pagopa-io-react-native-integrity: 3e84754db0333a531db86f83f786f60a6da22337
-  pagopa-io-react-native-jwt: d268a7aa7a0c63e809386209e589224e0c0c04c0
+  pagopa-io-react-native-jwt: a5231b3f09cb69b54abd76dac34e1bddff596fe2
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
@@ -4514,10 +4515,9 @@ SPEC CHECKSUMS:
   ReactCodegen: f74348d34edd01ba2ed662c40e1beb94fca9aff3
   ReactCommon: d71e3b6d0134b09c1ec8e656f81daefae6902a97
   ReactNativeBottomSheet: 03b2317ce62b9f686e6caad94fe5124534791831
-  ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
+  ReactNativeExceptionHandler: a23922ca00122b050ae9412f960061791c232c47
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
-  RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 884f03ad24511911552480eb2058266db0b177ce
   RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
@@ -4544,6 +4544,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: ae9d470360e00f2e0694cad4b118a80af018e8ef
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: bfb19df6bab57164b05375f79cf7d9ecff7d1605
+PODFILE CHECKSUM: 73ed5be548709a6701157d889c9fd9063afa8bd7
 
 COCOAPODS: 1.15.2

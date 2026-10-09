@@ -1,10 +1,16 @@
-import { Alert, IOButton, IOToast, VStack } from "@io-app/design-system";
+import {
+  Alert,
+  IOButton,
+  IOMarkdownLite,
+  IOToast,
+  VStack
+} from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { memo, useCallback, useMemo } from "react";
 import { View } from "react-native";
 
-import IOMarkdown from "../../../../../components/IOMarkdown";
+import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { format } from "../../../../../utils/dates.ts";
@@ -14,6 +20,7 @@ import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors
 import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
+import { itwShouldUpgradeCredentialSelector } from "../../../common/store/selectors";
 import { getCredentialExpireDays } from "../../../common/utils/itwClaimsUtils.ts";
 import { CredentialStatusMessage } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
@@ -35,25 +42,13 @@ import {
   trackItwCredentialBottomSheetAction,
   trackItwCredentialTapBanner
 } from "../analytics";
+import { useItwExpiredDocumentBottomSheet } from "../hooks/useItwExpiredDocumentBottomSheet.tsx";
 import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
 import { isMdlSuspendedIssuerError } from "../utils";
 
 type Props = {
   credential: CredentialMetadata;
 };
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
-const excludedCredentialTypes = [
-  CredentialType.PID,
-  CredentialType.PROOF_OF_AGE,
-  CredentialType.EDUCATION_DEGREE,
-  CredentialType.EDUCATION_ENROLLMENT,
-  CredentialType.RESIDENCY,
-  CredentialType.EDUCATION_DIPLOMA,
-  CredentialType.EDUCATION_ATTENDANCE
-] as const;
-
-type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
 
 const LICENSE_RENEWAL_URL = "https://www.mit.gov.it/rinnovo-patente";
 
@@ -190,6 +185,7 @@ export const deriveCredentialAlertType = (
   }
 
   // 4. If the credential status is "expiring", show the Document Expiring alert
+  // Credentials without an expiry date do not have this status, so the alert type resolves to undefined and it is not shown
   if (credentialStatus === "expiring") {
     return CredentialAlertType.DOCUMENT_EXPIRING;
   }
@@ -228,6 +224,22 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const message = useCredentialStatusMessage(credential.credentialType);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const needsItwUpgrade = useIOSelector(
+    itwShouldUpgradeCredentialSelector(
+      credential.credentialType,
+      credential.jwt.issuedAt
+    )
+  );
+
+  const handleCredentialUpgrade = useOfflineToastGuard(() =>
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+      params: {
+        credentialType: credential.credentialType,
+        isUpgrade: true
+      }
+    })
+  );
 
   const trackCredentialAlertEvent = (action: CredentialAlertEvents): void => {
     if (!status) {
@@ -265,34 +277,32 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     isMdlSuspended: isMdlSuspendedIssuerError(credential)
   });
 
-  if (!alertType) {
-    return null;
+  if (needsItwUpgrade) {
+    return (
+      <Alert
+        action={I18n.t(
+          "features.itWallet.presentation.alerts.needsUpgrade.action"
+        )}
+        content={I18n.t(
+          "features.itWallet.presentation.alerts.needsUpgrade.content"
+        )}
+        onPress={handleCredentialUpgrade}
+        testID="itwUpgradeCredentialTestID"
+        variant="error"
+      />
+    );
   }
 
   switch (alertType) {
     case CredentialAlertType.DOCUMENT_EXPIRED:
-      return (
-        <Alert
-          content={I18n.t(
-            "features.itWallet.presentation.alerts.expired.content"
-          )}
-          testID="itwExpiredBannerTestID"
-          variant="error"
-        />
-      );
+      return <ExpiredDocumentAlert credential={credential} />;
     case CredentialAlertType.DOCUMENT_EXPIRING:
-      // Only render when the credential type has a dedicated expiring bottom
-      // sheet, so the static-key lookup inside the alert is always defined.
-      return credential.credentialType === CredentialType.DRIVING_LICENSE ||
-        credential.credentialType ===
-          CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD ||
-        credential.credentialType ===
-          CredentialType.EUROPEAN_DISABILITY_CARD ? (
-        <DocumentExpiringAlert
+      return (
+        <ExpiringDocumentAlert
           credential={credential}
           onTrack={trackCredentialAlertEvent}
         />
-      ) : null;
+      );
     case CredentialAlertType.EID_LIFECYCLE:
       return (
         <ItwEidLifecycleAlert
@@ -341,6 +351,8 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
       );
     case CredentialAlertType.MDL_SUSPENDED:
       return <MdlSuspendedAlert onTrack={trackCredentialAlertEvent} />;
+    default:
+      return null;
   }
 };
 
@@ -379,19 +391,15 @@ const JwtVerificationAlert = ({
   );
 };
 
-const DocumentExpiringAlert = ({
+const ExpiringDocumentAlert = ({
   credential,
   onTrack
 }: CredentialStatusAlertProps) => {
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
-  const showCta = credential.credentialType === CredentialType.DRIVING_LICENSE;
-  const credentialType = credential.credentialType as Exclude<
-    CredentialType,
-    ExcludedCredentialTypes
-  >;
+  const isMdl = credential.credentialType === CredentialType.DRIVING_LICENSE;
 
   const bottomSheetCopy = useMemo(() => {
-    switch (credentialType) {
+    switch (credential.credentialType) {
       case CredentialType.DRIVING_LICENSE:
         return {
           title: I18n.t(
@@ -410,19 +418,19 @@ const DocumentExpiringAlert = ({
             "features.itWallet.presentation.bottomSheets.EuropeanDisabilityCard.expiring.content"
           )
         };
-      case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
+      default:
         return {
           title: I18n.t(
-            "features.itWallet.presentation.bottomSheets.EuropeanHealthInsuranceCard.expiring.title"
+            "features.itWallet.presentation.bottomSheets.generic.expiring.title"
           ),
           content: I18n.t(
-            "features.itWallet.presentation.bottomSheets.EuropeanHealthInsuranceCard.expiring.content"
+            "features.itWallet.presentation.bottomSheets.generic.expiring.content"
           )
         };
     }
-  }, [credentialType]);
+  }, [credential.credentialType]);
 
-  const handleCtaPress = useCallback(() => {
+  const handleMdlCtaPress = useCallback(() => {
     onTrack("press_cta");
     openWebUrl(LICENSE_RENEWAL_URL, () =>
       IOToast.error(I18n.t("genericError"))
@@ -433,19 +441,28 @@ const DocumentExpiringAlert = ({
     title: bottomSheetCopy.title,
     component: (
       <VStack space={24}>
-        <IOMarkdown content={bottomSheetCopy.content} />
-        {showCta && (
-          <View style={{ marginBottom: 16 }}>
+        <IOMarkdownLite content={bottomSheetCopy.content} />
+        <View style={{ marginBottom: 16 }}>
+          {isMdl ? (
             <IOButton
               fullWidth
               label={I18n.t(
                 "features.itWallet.presentation.bottomSheets.mDL.expiring.cta"
               )}
-              onPress={handleCtaPress}
+              onPress={handleMdlCtaPress}
               variant="outline"
             />
-          </View>
-        )}
+          ) : (
+            <IOButton
+              fullWidth
+              label={I18n.t(
+                "features.itWallet.presentation.bottomSheets.generic.expiring.cta"
+              )}
+              onPress={() => bottomSheet.dismiss()}
+              variant="solid"
+            />
+          )}
+        </View>
       </VStack>
     )
   });
@@ -476,7 +493,7 @@ const MdlSuspendedAlert = ({
     title: I18n.t("features.itWallet.presentation.alerts.mdl.suspended.title"),
     component: (
       <VStack space={24}>
-        <IOMarkdown
+        <IOMarkdownLite
           content={I18n.t(
             "features.itWallet.presentation.bottomSheets.mDL.suspended.content"
           )}
@@ -546,6 +563,56 @@ const IssuerDynamicErrorAlert = ({
         action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
         content={localizedMessage.title}
         onPress={handleAlertPress}
+        variant="error"
+      />
+      {bottomSheet.bottomSheet}
+    </>
+  );
+};
+
+type ExpiredDocumentAlertProps = {
+  credential: CredentialMetadata;
+};
+
+const ExpiredDocumentAlert = ({ credential }: ExpiredDocumentAlertProps) => {
+  const bottomSheetCopy = useMemo(() => {
+    switch (credential.credentialType) {
+      case CredentialType.DRIVING_LICENSE:
+        return {
+          title: I18n.t(
+            "features.itWallet.presentation.bottomSheets.mDL.expired.title"
+          ),
+          description: I18n.t(
+            "features.itWallet.presentation.bottomSheets.mDL.expired.contentNew"
+          )
+        };
+      default:
+        return {
+          title: I18n.t(
+            "features.itWallet.presentation.bottomSheets.generic.expired.title"
+          ),
+          description: I18n.t(
+            "features.itWallet.presentation.bottomSheets.generic.expired.content"
+          )
+        };
+    }
+  }, [credential.credentialType]);
+
+  const bottomSheet = useItwExpiredDocumentBottomSheet({
+    actionsShown: credential.credentialType === CredentialType.DRIVING_LICENSE,
+    credential,
+    localizedMessage: bottomSheetCopy
+  });
+
+  return (
+    <>
+      <Alert
+        action={I18n.t("features.itWallet.presentation.alerts.expired.action")}
+        content={I18n.t(
+          "features.itWallet.presentation.alerts.expired.content"
+        )}
+        onPress={bottomSheet.present}
+        testID="itwExpiredBannerTestID"
         variant="error"
       />
       {bottomSheet.bottomSheet}

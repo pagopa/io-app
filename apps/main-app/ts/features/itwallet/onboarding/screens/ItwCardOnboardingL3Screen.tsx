@@ -1,6 +1,7 @@
 import {
   Alert,
   Badge,
+  Banner,
   ContentWrapper,
   Divider,
   H6,
@@ -20,6 +21,7 @@ import { useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
@@ -34,12 +36,19 @@ import {
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes.ts";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes.ts";
 import {
+  trackItwDiscoveryBanner,
+  trackItwDiscoveryBannerTap,
   trackShowCredentialsList,
   trackStartAddNewCredential
 } from "../../analytics";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 import { PoweredByItWalletText } from "../../common/components/PoweredByItWalletText.tsx";
 import { selectItwEnv } from "../../common/store/selectors/environment.ts";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/index.ts";
+import {
+  itwIsL2FallbackSelector,
+  itwIsL3EnabledSelector,
+  itwShouldRenderL3UpgradeBannerSelector
+} from "../../common/store/selectors/index.ts";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/preferences.ts";
 import {
   isL2Credential,
@@ -57,6 +66,12 @@ import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalog
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
 
 const MAX_INDEX = 1;
+
+const fallbackBannerTrackingProperties = {
+  banner_id: "itwL2FallbackUpgradeBanner",
+  banner_page: ITW_ROUTES.L3_ONBOARDING,
+  banner_landing: ITW_SCREENVIEW_EVENTS.ITW_INTRO
+};
 
 const NFC_NOT_SUPPORTED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
@@ -122,28 +137,53 @@ const ItwCredentialOnboardingSection = () => {
   const env = useIOSelector(selectItwEnv);
   const isWalletEnabled = useIOSelector(itwLifecycleIsValidSelector);
   const isITWalletEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
-
+  const isL2Fallback = useIOSelector(itwIsL2FallbackSelector);
+  const isUpgradeAvailable = useIOSelector(
+    itwShouldRenderL3UpgradeBannerSelector
+  );
   const isItWalletActivationDisabled = useIOSelector(
     itwIsActivationDisabledSelector
   );
   const catalogueCredentials = useIOSelector(
     itwAvailableCredentialsListSelector
   );
+  const shouldRenderUpgradeBanner =
+    !isItWalletActivationDisabled && isL2Fallback && isUpgradeAvailable;
+
+  useFocusEffect(
+    useCallback(() => {
+      if (shouldRenderUpgradeBanner) {
+        trackItwDiscoveryBanner(fallbackBannerTrackingProperties);
+      }
+    }, [shouldRenderUpgradeBanner])
+  );
+
+  const startItWalletActivation = useOfflineToastGuard(() => {
+    trackItwDiscoveryBannerTap(fallbackBannerTrackingProperties);
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: { level: "l3" }
+    });
+  });
 
   // Show upcoming credentials only if env is "pre"
   const shouldShowUpcoming = env === "pre";
+  const shouldShowL2Credentials = isItWalletActivationDisabled || isL2Fallback;
   const shouldShowRestrictedAction =
-    isWalletEnabled && !isITWalletEnabled && !isItWalletActivationDisabled;
+    isWalletEnabled &&
+    !isITWalletEnabled &&
+    !isItWalletActivationDisabled &&
+    !isL2Fallback;
 
   const credentialsToDisplay = useMemo(() => {
-    if (isItWalletActivationDisabled) {
+    if (shouldShowL2Credentials) {
       return catalogueCredentials.filter(c => isL2Credential(c.type));
     }
     if (shouldShowUpcoming) {
       return catalogueCredentials;
     }
     return catalogueCredentials.filter(c => !isUpcomingCredential(c.type));
-  }, [catalogueCredentials, shouldShowUpcoming, isItWalletActivationDisabled]);
+  }, [catalogueCredentials, shouldShowUpcoming, shouldShowL2Credentials]);
 
   const { notObtained } = useIOSelector(
     makeItwCredentialsByPresenceSelector(credentialsToDisplay)
@@ -155,14 +195,14 @@ const ItwCredentialOnboardingSection = () => {
         <H6 color={theme["textBody-tertiary"]} role="heading">
           {I18n.t("features.wallet.onboarding.sections.itw")}
         </H6>
-        {!isItWalletActivationDisabled && <PoweredByItWalletText />}
+        {!shouldShowL2Credentials && <PoweredByItWalletText />}
       </View>
       <VStack space={24}>
         {/* Available credentials for issuance */}
         <AsyncCredentialsCatalogue>
           <ItwOnboardingModuleCredentialsList
             credentialsToDisplay={notObtained}
-            isL2Credential={isItWalletActivationDisabled}
+            isL2Credential={shouldShowL2Credentials}
           />
         </AsyncCredentialsCatalogue>
 
@@ -175,7 +215,6 @@ const ItwCredentialOnboardingSection = () => {
           />
         )}
 
-        {/* Documenti su IO fallback action */}
         {shouldShowRestrictedAction ? (
           <>
             <Divider />
@@ -195,6 +234,22 @@ const ItwCredentialOnboardingSection = () => {
             />
           </>
         ) : null}
+
+        {shouldRenderUpgradeBanner && (
+          <Banner
+            action={I18n.t(
+              "features.itWallet.onboarding.fallbackBanner.action"
+            )}
+            color="turquoise"
+            content={I18n.t(
+              "features.itWallet.onboarding.fallbackBanner.content"
+            )}
+            onPress={startItWalletActivation}
+            pictogramName="premiumCredentials"
+            testID="itwL2FallbackUpgradeBannerTestID"
+            title={I18n.t("features.itWallet.onboarding.fallbackBanner.title")}
+          />
+        )}
       </VStack>
     </View>
   );

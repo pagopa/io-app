@@ -46,6 +46,15 @@ export const itwIsL3EnabledSelector = (state: GlobalState) =>
   isItwMinAppVersionSupportedSelector(state);
 
 /**
+ * Identifies an active Documenti su IO wallet obtained through an IT-Wallet
+ * fallback.
+ */
+export const itwIsL2FallbackSelector = (state: GlobalState) =>
+  itwLifecycleIsValidSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
+  state.features.itWallet.preferences.isL2Fallback === true;
+
+/**
  * Returns if the discovery banner should be rendered. The banner is rendered
  * if:
  *
@@ -83,7 +92,6 @@ export const isItwPersistedDiscoveryBannerRenderableSelector = (
  * - The Wallet Instance is not in a failure status
  * - The eID is not expired or expiring
  * - The Wallet is empty
- * - Fiscal code is not whitelisted for IT-Wallet L3
  *
  * @param state The application global state
  * @returns True if the banner should be visible, false otherwise
@@ -94,8 +102,7 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
   !itwIsWalletInstanceStatusFailureSelector(state) &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpiring" &&
-  itwIsWalletEmptySelector(state) &&
-  !itwIsL3EnabledSelector(state);
+  itwIsWalletEmptySelector(state);
 
 /**
  * Selectors that returns if the wallet is available for offline access. It
@@ -258,6 +265,7 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
  * - The wallet is active but not an IT Wallet instance
  * - The banner was not dismissed by the user
  * - The activation is not disabled
+ * - The user did not activate Documenti su IO through a fallback
  */
 export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
@@ -265,7 +273,8 @@ export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   itwIsWalletDiscoveryBannerVisibleSelector(state) &&
-  !itwIsActivationDisabledSelector(state);
+  !itwIsActivationDisabledSelector(state) &&
+  !itwIsL2FallbackSelector(state);
 
 /**
  * Returns whether the l2 restricted mode banner should be rendered.
@@ -285,12 +294,16 @@ export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
   !itwLifecycleIsValidSelector(state) &&
   itwIsActivationDisabledSelector(state);
 
+/**
+ * Offers restricted documents after fallback activation or when NFC is
+ * unsupported.
+ */
 export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
   offlineAccessReasonSelector(state) === undefined &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   itwLifecycleIsValidSelector(state) &&
-  itwIsActivationDisabledSelector(state);
+  (itwIsActivationDisabledSelector(state) || itwIsL2FallbackSelector(state));
 
 /**
  * Returns whether the IT Wallet proximity presentation feature is enabled: the
