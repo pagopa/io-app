@@ -137,6 +137,7 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
         </Animated.View>
       ) : (
         <Animated.View
+          key="skeleton"
           exiting={FadeOut.duration(QR_CODE_FADE_DURATION)}
           style={StyleSheet.absoluteFill}
         >
