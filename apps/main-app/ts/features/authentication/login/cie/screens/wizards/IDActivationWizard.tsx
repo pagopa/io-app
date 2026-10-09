@@ -76,7 +76,7 @@ const IDActivationWizard = () => {
           variant="primary"
         />
         <ListItemAction
-          icon="cie"
+          icon="cieID"
           label={I18n.t(
             "authentication.wizards.id_activation_wizard.list_items.activate_cie.title"
           )}
