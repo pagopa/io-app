@@ -1,0 +1,14 @@
+{
+  "name": "@io-app/expo-cie-sdk",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/expo-cie-sdk",
+  "projectType": "library",
+  "targets": {
+    "tsc-noemit": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm --filter @io-app/expo-cie-sdk run tsc-noemit"
+      }
+    }
+  }
+}

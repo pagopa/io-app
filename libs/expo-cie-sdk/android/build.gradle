@@ -1,0 +1,33 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'io.pagopa.io.app'
+version = '1.0.0'
+
+android {
+  namespace 'it.ipzs.cieidsdk'
+  defaultConfig {
+    versionCode 1
+    versionName '1.0.0'
+    buildConfigField 'String', 'BASE_URL_IDP', '"https://idserver.servizicie.interno.gov.it/idp/"'
+  }
+  buildFeatures {
+    buildConfig true
+  }
+}
+
+def okhttpVersion = rootProject.ext.has('okhttpVersion') ? rootProject.ext.okhttpVersion : '4.0.1'
+def retrofitVersion = '2.6.0'
+
+dependencies {
+  implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+  implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+  implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
+  implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+  implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+  implementation 'com.squareup.okio:okio:2.4.3'
+  implementation 'io.reactivex.rxjava2:rxjava:2.2.18'
+  implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+}
