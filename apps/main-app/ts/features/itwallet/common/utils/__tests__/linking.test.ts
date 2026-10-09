@@ -29,8 +29,8 @@ describe("parseItwDeepLink", () => {
     ],
     [
       "remote request validation",
-      "https://continua.io.pagopa.it/itw/auth/request-validation",
-      "itw/auth/request-validation"
+      "https://continua.io.pagopa.it/itw/auth",
+      "itw/auth"
     ]
   ])("parses supported %s route", (_, url, path) => {
     expect(parseItwDeepLink(url)).toEqual({
