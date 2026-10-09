@@ -4008,16 +4008,20 @@
       },
       "initiativeOnboardedStatus": {
         "ON_EVALUATION": {
+          "bottomSheet": {
+            "content": "Abbiamo inviato la tua richiesta per {{initiativeName}} all'ente, che sta verificando i tuoi dati e i requisiti per ottenere il bonus.\nPotrebbe volerci un po' di tempo.\n\n\n###### ***Cosa succede ora?***\n\nNon devi fare nulla. Riceverai un messaggio su IO con l’esito della richiesta.\n\n\n###### ***Hai attivato le notifiche?***\n\nSe non l’hai già fatto, attiva le notifiche push per non perderti i messaggi.\n[Leggi come fare](https:\/\/assistenza.ioapp.it\/hc\/it\/articles\/39312288127377-Come-attivare-le-notifiche-push-su-IO)",
+            "title": "Verifica in corso"
+          },
           "label": "Verifica in corso"
         },
         "ON_WAITING_LIST": {
-          "accessibilityInfoLabel": "Pulsante informazioni",
           "bottomSheet": {
             "content": "La tua richiesta per {{initiativeName}} è stata inserita **in lista d’attesa**, poiché al momento non ci sono fondi disponibili.\n\n\n###### ***Cosa succede ora?***\n\nNon devi fare nulla: la tua richiesta rimane valida. Riceverai un messaggio con l’esito se si renderanno disponibili nuove risorse.\n\n\n###### ***Hai attivato le notifiche?***\n\nSe non l’hai già fatto, attiva le notifiche push per non perderti i messaggi.\n[Leggi come fare](https:\/\/assistenza.ioapp.it\/hc\/it\/articles\/39312288127377-Come-attivare-le-notifiche-push-su-IO)",
             "title": "Sei in lista d'attesa"
           },
           "label": "In lista d'attesa"
         },
+        "accessibilityInfoLabel": "Pulsante informazioni",
         "header": "Le mie richieste"
       },
       "initiativePairing": {
