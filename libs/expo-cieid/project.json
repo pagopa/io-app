@@ -1,0 +1,26 @@
+{
+  "name": "@io-app/expo-cieid",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/expo-cieid",
+  "projectType": "library",
+  "targets": {
+    "tsc-noemit": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm --filter @io-app/expo-cieid run tsc-noemit"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/expo-cieid/jest.config.cjs"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/expo-cieid/**/*.ts"]
+      }
+    }
+  }
+}
