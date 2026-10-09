@@ -69,9 +69,9 @@ import IconCreditCardFilled from "./svg/IconCreditCardFilled";
 import IconCreditCardOff from "./svg/IconCreditCardOff";
 import IconDevice from "./svg/IconDevice";
 import IconDeviceVibration from "./svg/IconDeviceVibration";
+import IconDocCode from "./svg/IconDocCode";
 import IconDocGiacenza from "./svg/IconDocGiacenza";
-import IconDocPaymentCode from "./svg/IconDocPaymentCode";
-import IconDocPaymentTitle from "./svg/IconDocPaymentTitle";
+import IconDocTitle from "./svg/IconDocTitle";
 import IconDocumentAdd from "./svg/IconDocumentAdd";
 import IconDotMenu from "./svg/IconDotMenu";
 import IconEdit from "./svg/IconEdit";
@@ -268,8 +268,8 @@ export const IOIcons = {
   key: IconKey,
   documentAdd: IconDocumentAdd,
   docGiacenza: IconDocGiacenza,
-  docPaymentTitle: IconDocPaymentTitle,
-  docPaymentCode: IconDocPaymentCode,
+  docTitle: IconDocTitle,
+  docCode: IconDocCode,
   attachment: IconAttachment,
   attachmentPDF: IconAttachmentPDF,
   folder: IconFolder,
