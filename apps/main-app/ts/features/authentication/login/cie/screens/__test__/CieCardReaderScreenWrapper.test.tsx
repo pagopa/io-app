@@ -13,24 +13,6 @@ jest
 
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter");
 
-jest.mock("@pagopa/react-native-cie", () => ({
-  __esModule: true,
-  default: {
-    start: jest.fn().mockResolvedValue(undefined),
-    startListeningNFC: jest.fn().mockResolvedValue(undefined),
-    stopListeningNFC: jest.fn().mockResolvedValue(undefined),
-    removeAllListeners: jest.fn(),
-    onEvent: jest.fn(),
-    onError: jest.fn(),
-    onSuccess: jest.fn(),
-    setPin: jest.fn().mockResolvedValue(undefined),
-    setAuthenticationUrl: jest.fn(),
-    enableLog: jest.fn(),
-    setCustomIdpUrl: jest.fn()
-  },
-  Event: {}
-}));
-
 // Mock a React Navigation route
 jest.mock("@react-navigation/native", () => {
   const actual = jest.requireActual("@react-navigation/native");

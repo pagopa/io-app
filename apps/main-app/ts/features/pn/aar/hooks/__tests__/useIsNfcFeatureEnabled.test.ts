@@ -1,4 +1,4 @@
-import cieSdk from "@pagopa/react-native-cie";
+import cieSdk from "@io-app/expo-cie-sdk";
 import { act, renderHook } from "@testing-library/react-native";
 import { Platform } from "react-native";
 

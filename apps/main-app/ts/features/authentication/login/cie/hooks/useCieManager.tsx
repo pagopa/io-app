@@ -1,5 +1,5 @@
 import { triggerHaptic } from "@io-app/design-system";
-import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
+import cieManager, { Event as CEvent } from "@io-app/expo-cie-sdk";
 import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";

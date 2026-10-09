@@ -1,4 +1,4 @@
-import { Event as CEvent } from "@pagopa/react-native-cie";
+import { Event as CEvent } from "@io-app/expo-cie-sdk";
 
 import CieExpiredOrInvalidScreen from "../screens/CieExpiredOrInvalidScreen";
 import CieExtendedApduNotSupportedScreen from "../screens/CieExtendedApduNotSupportedScreen";

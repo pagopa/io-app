@@ -1,4 +1,4 @@
-import cieManager from "@pagopa/react-native-cie";
+import cieManager from "@io-app/expo-cie-sdk";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 
@@ -11,14 +11,6 @@ import {
   stopCieManager,
   watchCieAuthenticationSaga
 } from "../cie";
-
-jest.mock("@pagopa/react-native-cie", () => ({
-  stopListeningNFC: jest.fn(),
-  isCIEAuthenticationSupported: jest.fn(),
-  hasApiLevelSupport: jest.fn(),
-  hasNFCFeature: jest.fn(),
-  isNFCEnabled: jest.fn()
-}));
 
 jest.mock("../../../../../../utils/timer", () => ({
   startTimer: jest.fn(() => Promise.resolve())

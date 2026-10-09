@@ -1,4 +1,4 @@
-import cieSdk from "@pagopa/react-native-cie";
+import cieSdk from "@io-app/expo-cie-sdk";
 import { Platform } from "react-native";
 
 const realIsNfcEnabled = () => cieSdk.isNFCEnabled();

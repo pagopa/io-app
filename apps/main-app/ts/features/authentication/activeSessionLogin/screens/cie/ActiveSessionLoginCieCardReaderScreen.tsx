@@ -16,7 +16,7 @@ import {
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
-import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
+import cieManager, { Event as CEvent } from "@io-app/expo-cie-sdk";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
