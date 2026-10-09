@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.41.0-rc.1](https://github.com/pagopa/io-app/compare/3.41.0-rc.0...3.41.0-rc.1) (2026-10-08)
+
+### Bug Fixes
+
+* [[IOPLT-2165](https://pagopa.atlassian.net/browse/IOPLT-2165)] Use default heading color for `Banner` title ([#8710](https://github.com/pagopa/io-app/issues/8710)) ([7a7b061](https://github.com/pagopa/io-app/commit/7a7b0619a6847faece52df4ec4a376f976ebf42b))
 ## [3.41.0-rc.0](https://github.com/pagopa/io-app/compare/3.40.0-rc.14...3.41.0-rc.0) (2026-10-07)
 ## [3.40.0-rc.14](https://github.com/pagopa/io-app/compare/3.40.0-rc.13...3.40.0-rc.14) (2026-10-07)
 
