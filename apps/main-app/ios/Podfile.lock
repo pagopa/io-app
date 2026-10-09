@@ -47,6 +47,9 @@ PODS:
     - ExpoModulesCore
   - ExpoCalendar (55.0.17):
     - ExpoModulesCore
+  - ExpoCie (1.3.6):
+    - CieSDK (~> 0.1.21)
+    - ExpoModulesCore
   - ExpoClipboard (55.0.15):
     - ExpoModulesCore
   - ExpoDevice (55.0.17):
@@ -124,35 +127,6 @@ PODS:
   - hermes-engine (0.14.1):
     - hermes-engine/Pre-built (= 0.14.1)
   - hermes-engine/Pre-built (0.14.1)
-  - IoReactNativeCie (1.3.6):
-    - boost
-    - CieSDK (~> 0.1.21)
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
   - IoReactNativeHttpClient (1.2.0):
     - Alamofire (~> 5.11)
     - boost
@@ -3896,6 +3870,7 @@ DEPENDENCIES:
   - ExpoBackgroundTask (from `../../../node_modules/expo-background-task/ios`)
   - ExpoBrightness (from `../../../node_modules/expo-brightness/ios`)
   - ExpoCalendar (from `../../../node_modules/expo-calendar/ios`)
+  - ExpoCie (from `../../../libs/expo-cie`)
   - ExpoClipboard (from `../../../node_modules/expo-clipboard/ios`)
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
   - ExpoDocumentPicker (from `../../../node_modules/expo-document-picker/ios`)
@@ -3919,7 +3894,6 @@ DEPENDENCIES:
   - fmt (from `../../../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../../../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../../../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
-  - "IoReactNativeCie (from `../../../node_modules/@pagopa/io-react-native-cie`)"
   - "IoReactNativeHttpClient (from `../../../node_modules/@pagopa/io-react-native-http-client`)"
   - "IoReactNativeIso18013 (from `../../../node_modules/@pagopa/io-react-native-iso18013`)"
   - jail-monkey (from `../../../node_modules/jail-monkey`)
@@ -4084,6 +4058,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-brightness/ios"
   ExpoCalendar:
     :path: "../../../node_modules/expo-calendar/ios"
+  ExpoCie:
+    :path: "../../../libs/expo-cie"
   ExpoClipboard:
     :path: "../../../node_modules/expo-clipboard/ios"
   ExpoDevice:
@@ -4131,8 +4107,6 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../../../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-v0.14.1
-  IoReactNativeCie:
-    :path: "../../../node_modules/@pagopa/io-react-native-cie"
   IoReactNativeHttpClient:
     :path: "../../../node_modules/@pagopa/io-react-native-http-client"
   IoReactNativeIso18013:
@@ -4376,6 +4350,7 @@ SPEC CHECKSUMS:
   ExpoBackgroundTask: 2c988fa88705c72b07f0e60d5661d566df611980
   ExpoBrightness: 6080760e05eb3dcd9765024472d4c78a50f3b201
   ExpoCalendar: a3a1a208327305361637b6127390e7b61c62bba5
+  ExpoCie: 2a5e17385f304e06571bc64c30800e6f758db7ee
   ExpoClipboard: 0e4b587fc6b5c5996b4ad4e5804d509e90aa6c75
   ExpoDevice: b8a65afe42c3c5934eb6983870672fe785b39dea
   ExpoDocumentPicker: 8f1356ab2ac5b67aeaafc4c14b3719ceb480c099
@@ -4399,7 +4374,6 @@ SPEC CHECKSUMS:
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 9c45a1dcb85eca692601d2f4fff763b820c8176d
-  IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 5344f279534758a68bb111c20df640c6afc67e70
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc

@@ -1,4 +1,4 @@
-import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
+import { InternalAuthAndMrtdResponse } from "@io-app/expo-cie";
 import { DoneActorEvent, ErrorActorEvent } from "xstate";
 
 import type { IssuanceFailure } from "./failure";
