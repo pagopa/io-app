@@ -2,7 +2,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { ComponentType, memo } from "react";
 
 import { useIOSelector } from "../../../store/hooks";
-import { isGestureEnabled } from "../../../utils/navigation";
+import {
+  isBackNavigationAction,
+  isGestureEnabled
+} from "../../../utils/navigation";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwDiscoveryInfoFallbackComponent } from "../discovery/components/ItwDiscoveryInfoFallbackComponent.tsx";
@@ -88,9 +91,10 @@ const InnerNavigator = memo(() => {
     <Stack.Navigator
       initialRouteName={ITW_ROUTES.OFFLINE.WALLET}
       screenListeners={{
-        beforeRemove: () => {
-          // Read more on https://reactnavigation.org/docs/preventing-going-back/
-          // Whenever we have a back navigation action we send a "back" event to the machine.
+        beforeRemove: ({ data }) => {
+          if (!isBackNavigationAction(data.action)) {
+            return;
+          }
           // Since the back event is accepted only by specific states, we can safely send a back event to each machine
           eidIssuanceMachineRef.send({ type: "back" });
           credentialIssuanceMachineRef.send({ type: "back" });

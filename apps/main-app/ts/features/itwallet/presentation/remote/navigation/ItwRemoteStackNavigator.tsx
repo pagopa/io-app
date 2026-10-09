@@ -1,6 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { isGestureEnabled } from "../../../../../utils/navigation.ts";
+import {
+  isBackNavigationAction,
+  isGestureEnabled
+} from "../../../../../utils/navigation.ts";
 import {
   ItwRemoteMachineContext,
   ItwRemoteMachineProvider
@@ -29,8 +32,10 @@ const InnerNavigator = () => {
     <Stack.Navigator
       initialRouteName={ITW_REMOTE_ROUTES.REQUEST_VALIDATION}
       screenListeners={{
-        beforeRemove: () => {
-          itwRemoteMachineRef.send({ type: "back" });
+        beforeRemove: ({ data }) => {
+          if (isBackNavigationAction(data.action)) {
+            itwRemoteMachineRef.send({ type: "back" });
+          }
         }
       }}
       screenOptions={{ gestureEnabled: isGestureEnabled, freezeOnBlur: true }}
