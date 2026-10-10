@@ -22,6 +22,7 @@ import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
+  selectCredentialOfferUri,
   selectCredentialType,
   selectIsLoading,
   selectIssuanceLevel,
@@ -42,6 +43,11 @@ export type ItwIdentificationModeSelectionScreenProps =
 
 export type ItwIdentificationNavigationParams = {
   animationEnabled?: boolean;
+  /**
+   * Credential offer URI to resume after the eID reissuance, when the flow was
+   * started from a credential offer (deeplink/QR code).
+   */
+  credentialOfferUri?: string;
   credentialType?: string;
   eidReissuing?: boolean;
   level?: EidIssuanceLevel;
@@ -61,6 +67,9 @@ export const ItwIdentificationModeSelectionScreen = ({
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
   const credentialType =
     ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
+  const credentialOfferUri = ItwEidIssuanceMachineContext.useSelector(
+    selectCredentialOfferUri
+  );
 
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
@@ -120,7 +129,8 @@ export const ItwIdentificationModeSelectionScreen = ({
           type: "start",
           mode: "reissuance",
           level: params.level || "l2",
-          credentialType: params.credentialType
+          credentialType: params.credentialType,
+          credentialOfferUri: params.credentialOfferUri
         });
       }
     }, [machineRef, params, mode])
@@ -136,14 +146,14 @@ export const ItwIdentificationModeSelectionScreen = ({
     trackItwUserWithoutCie();
 
     if (!isL2Active) {
+      // Only resume credential issuance if Documenti su IO supports it.
+      const canResumeCredential = isL2Credential(credentialType);
       machineRef.send({
         type: "restart",
         mode: "issuance",
         level: "l2-fallback",
-        // Only resume credential issuance if Documenti su IO supports it.
-        credentialType: isL2Credential(credentialType)
-          ? credentialType
-          : undefined
+        credentialType: canResumeCredential ? credentialType : undefined,
+        credentialOfferUri: canResumeCredential ? credentialOfferUri : undefined
       });
     } else {
       machineRef.send({
@@ -152,7 +162,7 @@ export const ItwIdentificationModeSelectionScreen = ({
         routeName
       });
     }
-  }, [machineRef, routeName, credentialType, isL2Active]);
+  }, [machineRef, routeName, credentialType, credentialOfferUri, isL2Active]);
 
   const dismissalDialog = useItwDismissalDialog({
     customLabels: { body: "" },

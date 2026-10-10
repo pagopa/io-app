@@ -22,8 +22,8 @@ import { ItwIssuanceEidResultScreen } from "../ItwIssuanceEidResultScreen";
 
 const mockSend = jest.fn();
 const mockCredentialSend = jest.fn();
-const mockHasResolvedCredentialOffer = jest.fn();
 const mockAddListener = jest.fn();
+const mockNavigate = jest.fn();
 
 jest.mock("../../../../../navigation/params/AppParamsList", () => {
   const actual = jest.requireActual(
@@ -33,7 +33,8 @@ jest.mock("../../../../../navigation/params/AppParamsList", () => {
     ...actual,
     useIONavigation: () => ({
       ...actual.useIONavigation(),
-      addListener: mockAddListener
+      addListener: mockAddListener,
+      navigate: mockNavigate
     })
   };
 });
@@ -66,8 +67,7 @@ jest.mock("../../../machine/credential/provider", () => {
     ...actual,
     ItwCredentialIssuanceMachineContext: {
       ...actual.ItwCredentialIssuanceMachineContext,
-      useActorRef: () => ({ send: mockCredentialSend }),
-      useSelector: () => mockHasResolvedCredentialOffer()
+      useActorRef: () => ({ send: mockCredentialSend })
     }
   };
 });
@@ -78,7 +78,6 @@ describe("ItwIssuanceEidResultScreen", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockHasResolvedCredentialOffer.mockReturnValue(false);
     navigationListeners = {};
     mockAddListener.mockImplementation(
       (event: string, callback: () => void) => {
@@ -347,25 +346,42 @@ describe("ItwIssuanceEidResultScreen", () => {
     ).toBeNull();
   });
 
-  describe("credential offer flow", () => {
-    it("resumes the resolved credential offer after eID issuance completes", async () => {
-      mockHasResolvedCredentialOffer.mockReturnValue(true);
+  describe("credential-triggered flow", () => {
+    beforeEach(() => {
       jest
         .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
         .mockReturnValue(false);
+    });
 
+    it("resumes the credential offer when the eID issuance was triggered by a credential offer", async () => {
+      renderComponent("l3", {
+        credentialType: "education_degree",
+        credentialOfferUri: "openid-credential-offer://?credential_offer=abc"
+      });
+
+      await waitFor(() =>
+        expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
+          params: {
+            itwCredentialOfferUri:
+              "openid-credential-offer://?credential_offer=abc"
+          }
+        })
+      );
+      expect(mockCredentialSend).not.toHaveBeenCalled();
+    });
+
+    it("starts the catalogue issuance when the eID issuance was triggered by a catalogue credential", async () => {
       renderComponent("l3", { credentialType: "education_degree" });
 
       await waitFor(() =>
         expect(mockCredentialSend).toHaveBeenCalledWith({
-          type: "confirm-credential-offer"
+          type: "select-credential",
+          mode: "issuance",
+          credentialType: "education_degree"
         })
       );
-      expect(mockCredentialSend).not.toHaveBeenCalledWith({
-        type: "select-credential",
-        mode: "issuance",
-        credentialType: "education_degree"
-      });
+      expect(mockNavigate).not.toHaveBeenCalled();
     });
   });
 
@@ -376,18 +392,30 @@ describe("ItwIssuanceEidResultScreen", () => {
         .mockReturnValue(false);
     });
 
-    it("navigates back to the wallet when the user returns to this screen", async () => {
-      renderComponent("l3", { credentialType: "education_degree" });
+    test.each([
+      { name: "the catalogue", credentialOfferUri: undefined },
+      {
+        name: "a credential offer",
+        credentialOfferUri: "openid-credential-offer://?credential_offer=abc"
+      }
+    ])(
+      "navigates back to the wallet when the user returns to this screen from $name",
+      async ({ credentialOfferUri }) => {
+        renderComponent("l3", {
+          credentialType: "education_degree",
+          credentialOfferUri
+        });
 
-      await waitFor(() => expect(navigationListeners.blur).toBeDefined());
+        await waitFor(() => expect(navigationListeners.blur).toBeDefined());
 
-      act(() => {
-        navigationListeners.blur();
-        navigationListeners.focus();
-      });
+        act(() => {
+          navigationListeners.blur();
+          navigationListeners.focus();
+        });
 
-      expect(mockSend).toHaveBeenCalledWith({ type: "go-to-wallet" });
-    });
+        expect(mockSend).toHaveBeenCalledWith({ type: "go-to-wallet" });
+      }
+    );
 
     it("does not navigate to the wallet on the first focus", async () => {
       renderComponent("l3", { credentialType: "education_degree" });

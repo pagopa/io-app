@@ -20,6 +20,12 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
 import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
 
+type Props = {
+  /** Credential offer URI to resume after the activation, if any. */
+  credentialOfferUri?: string;
+  credentialType?: string;
+};
+
 /**
  * This is the component that shows the information about the discovery process
  * about the activation of the DIW. It uses a markdown component to render the
@@ -27,7 +33,10 @@ import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
  *
  * @deprecated Superseded by the new `ItwDiscoveryInfoFallbackComponent`
  */
-export const ItwDiscoveryInfoLegacyComponent = () => {
+export const ItwDiscoveryInfoLegacyComponent = ({
+  credentialType,
+  credentialOfferUri
+}: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
@@ -41,9 +50,11 @@ export const ItwDiscoveryInfoLegacyComponent = () => {
       machineRef.send({
         type: "start",
         mode: "issuance",
-        level: "l2"
+        level: "l2",
+        credentialType,
+        credentialOfferUri
       });
-    }, [machineRef])
+    }, [machineRef, credentialType, credentialOfferUri])
   );
 
   const dismissalDialog = useItwDismissalDialog({
