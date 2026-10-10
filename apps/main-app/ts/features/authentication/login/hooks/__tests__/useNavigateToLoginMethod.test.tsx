@@ -1,5 +1,5 @@
 import { IOButton } from "@io-app/design-system";
-import * as rnCieId from "@pagopa/io-react-native-cieid";
+import * as rnCieId from "@io-app/expo-cieid";
 import { fireEvent, render } from "@testing-library/react-native";
 import { View } from "react-native";
 
