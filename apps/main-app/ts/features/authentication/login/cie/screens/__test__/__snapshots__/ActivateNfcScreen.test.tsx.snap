@@ -365,12 +365,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
