@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "strict": true, "noEmit": true, "types": ["jest"] },
+  "include": ["index.ts", "types.ts", "__tests__/**/*.ts"]
+}

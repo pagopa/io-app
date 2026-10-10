@@ -340,6 +340,30 @@ jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()
 }));
 
+jest.mock("@io-app/expo-cie-sdk", () => ({
+  __esModule: true,
+  default: {
+    setPin: jest.fn().mockResolvedValue(undefined),
+    setAuthenticationUrl: jest.fn(),
+    setCustomIdpUrl: jest.fn(),
+    enableLog: jest.fn(),
+    setAlertMessage: jest.fn(),
+    start: jest.fn().mockResolvedValue(undefined),
+    startListeningNFC: jest.fn().mockResolvedValue(undefined),
+    stopListeningNFC: jest.fn().mockResolvedValue(undefined),
+    isNFCEnabled: jest.fn().mockResolvedValue(true),
+    hasNFCFeature: jest.fn().mockResolvedValue(true),
+    hasApiLevelSupport: jest.fn().mockResolvedValue(true),
+    isCIEAuthenticationSupported: jest.fn().mockResolvedValue(true),
+    openNFCSettings: jest.fn().mockResolvedValue(undefined),
+    launchCieID: jest.fn().mockResolvedValue(undefined),
+    onEvent: jest.fn(),
+    onError: jest.fn(),
+    onSuccess: jest.fn(),
+    removeAllListeners: jest.fn()
+  }
+}));
+
 jest.mock("react-native-keyboard-controller", () =>
   require("react-native-keyboard-controller/jest")
 );

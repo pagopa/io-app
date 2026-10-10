@@ -1,4 +1,4 @@
-import { Event as CEvent } from "@pagopa/react-native-cie";
+import { Event as CEvent } from "@io-app/expo-cie-sdk";
 import { render, screen } from "@testing-library/react-native";
 
 import { OneIdentityCieCardReaderFailure } from "../OneIdentityCieCardReaderFailure";

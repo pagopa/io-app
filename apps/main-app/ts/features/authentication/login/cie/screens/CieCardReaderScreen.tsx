@@ -16,7 +16,7 @@ import {
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
-import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
+import cieManager, { Event as CEvent } from "@io-app/expo-cie-sdk";
 import {
   RouteProp,
   useFocusEffect,

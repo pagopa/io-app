@@ -1,4 +1,4 @@
-import { Event as CEvent } from "@pagopa/react-native-cie";
+import { Event as CEvent } from "@io-app/expo-cie-sdk";
 /** Action types and action creator related to authentication by CIE */
 import {
   ActionType,

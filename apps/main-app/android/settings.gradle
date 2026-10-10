@@ -18,5 +18,3 @@ includeBuild('../../../node_modules/@react-native/gradle-plugin')
 expoAutolinking.useExpoModules()
 expoAutolinking.useExpoVersionCatalog()
 includeBuild(expoAutolinking.reactNativeGradlePlugin)
-include ':react-native-cie'
-project(':react-native-cie').projectDir = new File(rootProject.projectDir, '../../../node_modules/@pagopa/react-native-cie/android')

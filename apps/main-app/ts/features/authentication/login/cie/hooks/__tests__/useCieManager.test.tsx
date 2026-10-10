@@ -1,4 +1,4 @@
-import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
+import cieManager, { Event as CEvent } from "@io-app/expo-cie-sdk";
 import { act, renderHook } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
@@ -9,23 +9,6 @@ import { setStartActiveSessionLogin } from "../../../../activeSessionLogin/store
 import { trackLoginCieCardReadingError } from "../../../../common/analytics/cieAnalytics";
 import { cieAuthenticationError } from "../../store/actions";
 import { useCieManager } from "../useCieManager";
-
-jest.mock("@pagopa/react-native-cie", () => ({
-  __esModule: true,
-  default: {
-    removeAllListeners: jest.fn(),
-    onEvent: jest.fn(),
-    onError: jest.fn(),
-    onSuccess: jest.fn(),
-    enableLog: jest.fn(),
-    setCustomIdpUrl: jest.fn(),
-    setAuthenticationUrl: jest.fn(),
-    setPin: jest.fn(async () => undefined),
-    start: jest.fn(async () => undefined),
-    startListeningNFC: jest.fn(async () => undefined),
-    stopListeningNFC: jest.fn(async () => undefined)
-  }
-}));
 
 jest.mock("../../../../common/analytics/cieAnalytics", () => ({
   trackLoginCieCardReadingError: jest.fn(),
