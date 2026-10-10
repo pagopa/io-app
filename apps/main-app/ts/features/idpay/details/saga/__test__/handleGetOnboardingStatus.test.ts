@@ -3,7 +3,7 @@ import {
   OnboardingStatusDTO,
   StatusEnum as OnboardingStatusEnum
 } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
-import * as E from "fp-ts/lib/Either";
+import { ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
@@ -39,7 +39,7 @@ describe("idPayOnboardingStatusGet", () => {
           }),
           idPayOnboardingStatusGet.request({ initiativeId })
         )
-        .next(E.right({ status: 200, value: onboardingStatusData }))
+        .next(ok({ status: 200, value: onboardingStatusData }))
         .put(idPayOnboardingStatusGet.success(onboardingStatusData))
         .next()
         .isDone();
@@ -69,7 +69,7 @@ describe("idPayOnboardingStatusGet", () => {
           idPayOnboardingStatusGet.request({ initiativeId })
         )
         .next(
-          E.right({
+          ok({
             status: statusCode,
             value: { code: statusCode, message: "error" }
           })

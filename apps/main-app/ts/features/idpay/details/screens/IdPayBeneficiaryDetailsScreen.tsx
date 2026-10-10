@@ -1,9 +1,6 @@
 import { VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { sequenceS } from "fp-ts/lib/Apply";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -45,25 +42,19 @@ const IdPayBeneficiaryDetailsScreen = () => {
   const beneficiaryDetailsPot = useIOSelector(idPayBeneficiaryDetailsSelector);
   const initiativeDetailsPot = useIOSelector(idpayInitiativeDetailsSelector);
 
-  const content = pipe(
-    sequenceS(O.Monad)({
-      initiativeDetails: pipe(initiativeDetailsPot, pot.toOption),
-      beneficiaryDetails: pipe(beneficiaryDetailsPot, pot.toOption)
-    }),
-    O.fold(
-      () => <IdPayBeneficiaryDetailsContent isLoading={true} />,
-      props => <IdPayBeneficiaryDetailsContent {...props} />
-    )
-  );
+  const initiativeDetails = pot.toUndefined(initiativeDetailsPot);
+  const beneficiaryDetails = pot.toUndefined(beneficiaryDetailsPot);
+  const content =
+    initiativeDetails === undefined || beneficiaryDetails === undefined ? (
+      <IdPayBeneficiaryDetailsContent isLoading={true} />
+    ) : (
+      <IdPayBeneficiaryDetailsContent
+        beneficiaryDetails={beneficiaryDetails}
+        initiativeDetails={initiativeDetails}
+      />
+    );
 
-  const headerTitle = pipe(
-    initiativeDetailsPot,
-    pot.toOption,
-    O.fold(
-      () => initiativeName,
-      details => details.initiativeName
-    )
-  );
+  const headerTitle = initiativeDetails?.initiativeName ?? initiativeName;
 
   useHeaderSecondLevel({
     title: headerTitle || "",

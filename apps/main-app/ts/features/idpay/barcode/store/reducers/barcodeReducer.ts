@@ -1,6 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
 import { Action } from "../../../../../store/actions/types";
@@ -25,11 +23,9 @@ const barcodeReducer = (
     case getType(idPayGenerateBarcode.request):
       return {
         ...state,
-        [action.payload.initiativeId]: pipe(
-          state[action.payload.initiativeId],
-          O.fromNullable,
-          O.fold(() => pot.noneLoading, pot.toLoading)
-        )
+        [action.payload.initiativeId]: state[action.payload.initiativeId]
+          ? pot.toLoading(state[action.payload.initiativeId])
+          : pot.noneLoading
       };
     case getType(idPayGenerateBarcode.success):
       return {

@@ -1,6 +1,5 @@
 import { InstrumentDTO } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 
@@ -35,7 +34,7 @@ const selectEnrolledIban = createSelector(
   selectInitiativeDetails,
   ibanListSelector,
   (initiativeOption, ibanList) => {
-    const initiative = O.toUndefined(initiativeOption);
+    const initiative = initiativeOption;
     if (initiative?.iban === undefined) {
       return undefined;
     }

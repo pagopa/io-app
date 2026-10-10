@@ -1,25 +1,9 @@
 import { RefundDetailDTO } from "@io-app/api-types/generated/definitions/idpay/RefundDetailDTO";
 import { format } from "date-fns";
-import { sequenceS } from "fp-ts/lib/Apply";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 const getRefundPeriodDateString = (refund: RefundDetailDTO) =>
-  pipe(
-    sequenceS(O.Monad)({
-      startDate: pipe(
-        refund.startDate,
-        O.fromNullable,
-        O.map(date => format(date, "DD/MM/YY"))
-      ),
-      endDate: pipe(
-        refund.endDate,
-        O.fromNullable,
-        O.map(date => format(date, "DD/MM/YY"))
-      )
-    }),
-    O.map(({ startDate, endDate }) => `${startDate} - ${endDate}`),
-    O.getOrElse(() => "-")
-  );
+  refund.startDate && refund.endDate
+    ? `${format(refund.startDate, "DD/MM/YY")} - ${format(refund.endDate, "DD/MM/YY")}`
+    : "-";
 
 export { getRefundPeriodDateString };

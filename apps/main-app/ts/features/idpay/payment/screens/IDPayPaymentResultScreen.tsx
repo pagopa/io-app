@@ -1,6 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useMemo } from "react";
 
@@ -32,23 +30,18 @@ const IDPayPaymentResultScreen = () => {
   const isCancelled = useSelector(isCancelledSelector);
   const data_entry = useSelector(dataEntrySelector);
 
-  const isGenericPaymentError = pipe(
-    failureOption,
-    O.map(failure => failure === PaymentFailureEnum.PAYMENT_GENERIC_ERROR),
-    O.getOrElse(() => false)
-  );
+  const isGenericPaymentError =
+    failureOption === PaymentFailureEnum.PAYMENT_GENERIC_ERROR;
 
   const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
-  const initiative = pipe(
-    initiativeDataPot,
-    pot.toOption,
-    O.map(details => ({
-      initiativeId: details.initiativeId,
-      serviceId: details.serviceId,
-      initiativeName: details.initiativeName
-    })),
-    O.toUndefined
-  );
+  const initiativeDetails = pot.toUndefined(initiativeDataPot);
+  const initiative = initiativeDetails
+    ? {
+        initiativeId: initiativeDetails.initiativeId,
+        serviceId: initiativeDetails.serviceId,
+        initiativeName: initiativeDetails.initiativeName
+      }
+    : undefined;
 
   const { bottomSheet, present } = useIDPayFailureSupportModal(
     initiative?.serviceId ?? "",
@@ -74,30 +67,30 @@ const IDPayPaymentResultScreen = () => {
   );
 
   useOnFirstRender(() => {
-    if (!isCancelled && !O.isSome(failureOption)) {
+    if (!isCancelled && failureOption === undefined) {
       trackIDPayDetailAuthorizationUXSuccess({
         initiativeName: initiative?.initiativeName,
         initiativeId: initiative?.initiativeId,
         data_entry
       });
     }
-    if (O.isSome(failureOption)) {
+    if (failureOption !== undefined) {
       trackIDPayDetailAuthorizationError({
         initiativeName: initiative?.initiativeName,
         initiativeId: initiative?.initiativeId,
         data_entry,
-        reason: failureOption.value
+        reason: failureOption
       });
     }
   });
 
-  if (O.isSome(failureOption)) {
+  if (failureOption !== undefined) {
     return (
       <>
         <OperationResultScreenContent
           action={defaultCloseAction}
           secondaryAction={isGenericPaymentError ? secondaryAction : undefined}
-          {...mapFailureToContentProps(failureOption.value)}
+          {...mapFailureToContentProps(failureOption)}
           testID="paymentFailureScreenTestID"
         />
         {bottomSheet}
