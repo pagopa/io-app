@@ -1,4 +1,5 @@
 import { GlobalState } from "../../../../store/reducers/types";
+import { itwShouldUpgradeCredentialSelector } from "../../common/store/selectors";
 import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector
@@ -165,21 +166,8 @@ export const computeItwStatus = (
  */
 export const buildThirdPartyCredentialProperty = (
   state: GlobalState
-): ItwThirdPartyCredentials => {
-  const thirdPartyCredentials = Object.values(
-    itwCredentialsSelector(state)
-  ).filter(isThirdPartyCredential);
-
-  if (thirdPartyCredentials.length === 0) {
-    return "not_available";
-  }
-
-  return thirdPartyCredentials.some(credential =>
-    validCredentialStatuses.includes(getCredentialStatus(credential))
-  )
-    ? "valid"
-    : "not_valid";
-};
+): ItwThirdPartyCredentials =>
+  buildAggregateCredentialProperty(state, isThirdPartyCredential);
 
 /**
  * Builds the aggregate Mixpanel status for credentials obtained through the
@@ -189,20 +177,34 @@ export const buildThirdPartyCredentialProperty = (
  */
 export const buildWalletListCredentialProperty = (
   state: GlobalState
-): ItwWalletListCredential => {
-  const walletListCredentials = Object.values(
-    itwCredentialsSelector(state)
-  ).filter(isWalletListCredential);
+): ItwWalletListCredential =>
+  buildAggregateCredentialProperty(state, isWalletListCredential);
 
-  if (walletListCredentials.length === 0) {
+/**
+ * A credential that still needs the IT-Wallet upgrade (e.g. its reissuance
+ * failed during the upgrade) is not usable, so it does not count as valid even
+ * if its own status is valid.
+ */
+const buildAggregateCredentialProperty = (
+  state: GlobalState,
+  belongsToProperty: (credential: CredentialMetadata) => boolean
+): ItwThirdPartyCredentials & ItwWalletListCredential => {
+  const credentials = Object.values(itwCredentialsSelector(state)).filter(
+    belongsToProperty
+  );
+
+  if (credentials.length === 0) {
     return "not_available";
   }
 
-  return walletListCredentials.some(credential =>
-    validCredentialStatuses.includes(getCredentialStatus(credential))
-  )
-    ? "valid"
-    : "not_valid";
+  const isUsable = (credential: CredentialMetadata) =>
+    validCredentialStatuses.includes(getCredentialStatus(credential)) &&
+    !itwShouldUpgradeCredentialSelector(
+      credential.credentialType,
+      credential.jwt.issuedAt
+    )(state);
+
+  return credentials.some(isUsable) ? "valid" : "not_valid";
 };
 
 const isThirdPartyCredential = ({
