@@ -1,21 +1,21 @@
 /**
- * This is an updater for the utility "commit-and-tag-version" that increase the
- * versionName value for publiccode.yml file. Replace:
+ * Synchronize the version and release date in publiccode.yml during app
+ * versioning:
  *
  * - The line `softwareVersion: $VERSION` with the new generated version
  * - The line `releaseDate: '$DATE'` with the today date
  */
 
 const softwareVersionRegex = /(softwareVersion: )(.+)/m;
-const releaseDateRegex = /(releaseDate: ')(.+)(')/gm;
+const releaseDateRegex = /(releaseDate: ["'])(.+)(["'])/gm;
 
 module.exports.readVersion = function (contents) {
   // return the 2nd group of the regex (the version)
   return softwareVersionRegex.exec(contents)[2];
 };
 
-function replaceReleaseDate(_, version, p1, p2, p3) {
-  return [p1, version, p3].join("");
+function replaceReleaseDate(_, version, prefix, suffix) {
+  return [prefix, version, suffix].join("");
 }
 
 function replaceVersionName(_, version, p1) {
