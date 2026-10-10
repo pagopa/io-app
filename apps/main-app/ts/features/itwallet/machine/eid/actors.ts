@@ -12,6 +12,7 @@ import type {
 } from "./context";
 
 import { assert } from "../../../../utils/assert";
+import { getErrorFromNetworkError } from "../../../../utils/errors";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
@@ -35,6 +36,11 @@ import {
 import * as mrtdUtils from "../../common/utils/mrtd";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { CredentialsVault } from "../../credentials/utils/vault";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
+import {
+  itwCredentialsCatalogueErrorSelector,
+  itwIsCredentialsCatalogueLoading
+} from "../../credentialsCatalogue/store/selectors";
 import {
   trackWalletInstanceRenewalFailure,
   trackWalletInstanceRenewalSuccess
@@ -59,6 +65,10 @@ export type CreateWalletInstanceActorParams = WithItwVersion<{
   deps: EidIssuanceMachineDeps;
   isRenewal: boolean;
 }>;
+
+export type EidRefreshActorParams = {
+  deps: EidIssuanceMachineDeps;
+};
 
 export type GetWalletAttestationActorParams = WithItwVersion<{
   deps: EidIssuanceMachineDeps;
@@ -120,7 +130,6 @@ export type ValidateMrtdPoPChallengeActorParams = WithItwVersion<{
   mrtdContext: MrtdPoPContext | undefined;
   walletInstanceAttestation: string | undefined;
 }>;
-
 export type WithItwVersion<T = { [K: string]: any }> = T & {
   itwVersion: ItwVersion;
 };
@@ -497,5 +506,47 @@ export const storeEidCredentialActor = fromPromise<
         onError: reject
       })
     );
+  });
+});
+
+/**
+ * Refreshes the catalogue and waits for the fetch to finish before proceeding.
+ * Rejects if the fetch fails and releases the Redux subscription on completion
+ * or cancellation. Catalogue translations are fetched separately.
+ */
+export const refreshCredentialsCatalogueActor = fromPromise<
+  void,
+  EidRefreshActorParams
+>(({ input, signal }) => {
+  const { store } = input.deps;
+
+  return new Promise<void>((resolve, reject) => {
+    const unsubscribe = store.subscribe(() => {
+      const state = store.getState();
+      const isLoading = itwIsCredentialsCatalogueLoading(state);
+      const error = itwCredentialsCatalogueErrorSelector(state);
+      if (error) {
+        cleanup();
+        reject(getErrorFromNetworkError(error));
+        return;
+      }
+      if (!isLoading) {
+        cleanup();
+        resolve();
+      }
+    });
+
+    const cleanup = () => {
+      unsubscribe();
+      signal.removeEventListener("abort", cleanup);
+    };
+    signal.addEventListener("abort", cleanup, { once: true });
+
+    try {
+      store.dispatch(itwFetchCredentialsCatalogue.request());
+    } catch (error) {
+      cleanup();
+      reject(error);
+    }
   });
 });

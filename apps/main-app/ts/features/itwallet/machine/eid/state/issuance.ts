@@ -161,7 +161,7 @@ export const issuanceState = itwEidIssuanceMachineSetup.createStateConfig({
       target: "#itwEidIssuanceMachine.CredentialsUpgrade"
     },
     {
-      target: "#itwEidIssuanceMachine.Success"
+      target: "#itwEidIssuanceMachine.RefreshingCredentialsCatalogue"
     }
   ]
 } as const);

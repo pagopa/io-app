@@ -302,9 +302,23 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
     MrtdPoP: mrtdPoPState,
     Issuance: issuanceState,
     CredentialsUpgrade: credentialsUpgradeState,
+    RefreshingCredentialsCatalogue: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "refreshCredentialsCatalogue",
+        input: ({ context }) => ({ deps: context.deps }),
+        onDone: {
+          target: "Success"
+        },
+        onError: {
+          description:
+            "A catalogue fetch failure does not invalidate the stored eID.",
+          target: "Success"
+        }
+      }
+    },
     Success: {
       entry: [
-        "refreshCredentialsCatalogue",
         "navigateToSuccessScreen",
         "storeWalletActivationFeedbackBannerData"
       ],

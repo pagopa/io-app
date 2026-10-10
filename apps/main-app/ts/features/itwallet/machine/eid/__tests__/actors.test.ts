@@ -1,9 +1,14 @@
 import { CredentialStatus } from "@pagopa/io-react-native-wallet";
-import { AnyActorLogic, createActor } from "xstate";
+import { createStore } from "redux";
+import { AnyActorLogic, createActor, toPromise } from "xstate";
 
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { getNetworkError } from "../../../../../utils/errors";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
+import { itwFetchCredentialsCatalogue } from "../../../credentialsCatalogue/store/actions";
 import {
   getCredentialStatusFromStatusList,
   getKeysForStatusListToken
@@ -17,6 +22,7 @@ import { testEidIssuanceDeps, testMachineStore } from "../../utils/testDeps";
 import {
   obtainStatusListActor,
   ObtainStatusListActorOutput,
+  refreshCredentialsCatalogueActor,
   storeEidCredentialActor,
   StoreEidCredentialActorParams
 } from "../actors";
@@ -245,5 +251,85 @@ describe("eID issuance actors", () => {
 
     await expect(runActor(storeEidCredentialActor, input)).rejects.toBe(error);
     expect(dispatch).not.toHaveBeenCalled();
+  });
+});
+
+describe("refreshCredentialsCatalogueActor", () => {
+  const catalogue = {
+    taxonomy_uri: "",
+    exp: 1700000000,
+    iat: 1600000000,
+    credentials: []
+  };
+
+  test.each([
+    { name: "successful fetch", fails: false, cached: false },
+    { name: "failed fetch", fails: true, cached: false },
+    { name: "failed refresh with cached catalogue", fails: true, cached: true }
+  ])("settles correctly after $name", async ({ fails, cached }) => {
+    const store = createStore(appReducer);
+    store.dispatch(applicationChangeState("active"));
+    if (cached) {
+      store.dispatch(itwFetchCredentialsCatalogue.success(catalogue));
+    }
+    const actor = createActor(refreshCredentialsCatalogueActor, {
+      input: { deps: testEidIssuanceDeps({ store }) }
+    });
+    const result = toPromise(actor);
+    actor.start();
+    store.dispatch(applicationChangeState("active"));
+    expect(actor.getSnapshot().status).toBe("active");
+
+    if (fails) {
+      const error = new Error("Catalogue unavailable");
+      store.dispatch(
+        itwFetchCredentialsCatalogue.failure(getNetworkError(error))
+      );
+      await expect(result).rejects.toBe(error);
+    } else {
+      store.dispatch(itwFetchCredentialsCatalogue.success(catalogue));
+      await expect(result).resolves.toBeUndefined();
+    }
+  });
+
+  it("unsubscribes when stopped while the refresh is pending", () => {
+    const store = createStore(appReducer);
+    store.dispatch(applicationChangeState("active"));
+    const subscribe = store.subscribe.bind(store);
+    const unsubscribe = jest.fn();
+    const listener = jest.fn();
+    jest.spyOn(store, "subscribe").mockImplementation(callback => {
+      listener.mockImplementation(callback);
+      unsubscribe.mockImplementation(subscribe(listener));
+      return unsubscribe;
+    });
+    const actor = createActor(refreshCredentialsCatalogueActor, {
+      input: { deps: testEidIssuanceDeps({ store }) }
+    });
+    actor.start();
+    expect(unsubscribe).not.toHaveBeenCalled();
+
+    actor.stop();
+    expect(unsubscribe).toHaveBeenCalledTimes(1);
+    listener.mockClear();
+    store.dispatch(itwFetchCredentialsCatalogue.success(catalogue));
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it("unsubscribes when dispatch throws", async () => {
+    const error = new Error("Dispatch failed");
+    const unsubscribe = jest.fn();
+    const store = testMachineStore({
+      subscribe: () => unsubscribe,
+      dispatch: () => {
+        throw error;
+      }
+    });
+    const input = { deps: testEidIssuanceDeps({ store }) };
+
+    await expect(
+      runActor(refreshCredentialsCatalogueActor, input)
+    ).rejects.toBe(error);
+    expect(unsubscribe).toHaveBeenCalledTimes(1);
   });
 });
