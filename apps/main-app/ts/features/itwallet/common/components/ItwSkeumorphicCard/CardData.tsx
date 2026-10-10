@@ -1,5 +1,6 @@
 /* eslint-disable dot-notation */
 /* eslint-disable @typescript-eslint/dot-notation */
+import { hexToRgba } from "@io-app/design-system";
 import { ElementType, Fragment, memo } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -17,6 +18,9 @@ type DataComponentProps = {
   claims: ParsedCredential;
   valuesHidden: boolean;
 };
+
+// Standard symbol printed on the physical Disability Card; it is not localized.
+const ACCOMPANYING_PERSON_MARK = "A";
 
 /**
  * Mapping of new claims to old claims for MDL. Some of them have been renamed
@@ -223,6 +227,18 @@ const DcFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
 
   return (
     <View style={styles.container} testID="dcFrontDataTestID">
+      {claims["constant_attendance_allowance"]?.value === true &&
+        !valuesHidden && (
+          <CardClaimContainer
+            accessibilityElementsHidden
+            dimensions={{ width: "5.5%", aspectRatio: 1 }}
+            importantForAccessibility="no-hide-descendants"
+            position={{ right: "2.75%", top: "33%" }}
+            style={styles.accompanyingPersonMark}
+          >
+            <ClaimLabel>{ACCOMPANYING_PERSON_MARK}</ClaimLabel>
+          </CardClaimContainer>
+        )}
       <CardClaim
         claim={claims["portrait"]}
         dimensions={{
@@ -307,6 +323,12 @@ const CardData = ({ credential, side, valuesHidden }: CardDataProps) => {
 };
 
 const styles = StyleSheet.create({
+  accompanyingPersonMark: {
+    borderRadius: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: hexToRgba("#EAF2F9", 0.5)
+  },
   container: {
     position: "absolute",
     width: "100%",

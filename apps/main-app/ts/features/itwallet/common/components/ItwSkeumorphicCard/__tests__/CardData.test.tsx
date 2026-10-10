@@ -16,6 +16,48 @@ jest.mock("@shopify/react-native-skia", () => ({
 }));
 
 describe("CardData", () => {
+  const accompanyingPersonScenarios = [
+    { name: "entitled holder", value: true, expectedMark: true },
+    { name: "holder without entitlement", value: false, expectedMark: false },
+    {
+      name: "hidden entitlement",
+      value: true,
+      valuesHidden: true,
+      expectedMark: false
+    },
+    { name: "missing entitlement", value: undefined, expectedMark: false },
+    { name: "invalid entitlement", value: "true", expectedMark: false },
+    { name: "card back", value: true, side: "back", expectedMark: false }
+  ] as const;
+
+  test.each(accompanyingPersonScenarios)(
+    "shows the accompanying person mark for $name",
+    scenario => {
+      const credential = ItwStoredCredentialsMocks.dc;
+      const component = render(
+        <CardData
+          credential={{
+            ...credential,
+            parsedCredential: {
+              ...credential.parsedCredential,
+              constant_attendance_allowance: {
+                ...credential.parsedCredential.constant_attendance_allowance,
+                value: scenario.value
+              }
+            }
+          }}
+          side={"side" in scenario ? scenario.side : "front"}
+          valuesHidden={"valuesHidden" in scenario && scenario.valuesHidden}
+        />
+      );
+      expect(
+        component.queryByText("A", {
+          includeHiddenElements: true
+        }) !== null
+      ).toBe(scenario.expectedMark);
+    }
+  );
+
   it("should match snapshot for MDL front data", () => {
     const component = render(
       <CardData

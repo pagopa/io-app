@@ -1,7 +1,28 @@
 import { render } from "@testing-library/react-native";
 import { Text } from "react-native";
 
-import { CardClaim, CardClaimRenderer } from "../CardClaim";
+import { CardClaim, CardClaimContainer, CardClaimRenderer } from "../CardClaim";
+
+describe("CardClaimContainer", () => {
+  it("keeps claim placement and dimensions when applying custom visual styles", () => {
+    const component = render(
+      <CardClaimContainer
+        dimensions={{ width: "5.5%", aspectRatio: 1 }}
+        position={{ right: "2.75%", top: "33%" }}
+        style={{ borderRadius: "50%", width: "100%", top: "0%" }}
+        testID="claimContainer"
+      />
+    );
+
+    expect(component.getByTestId("claimContainer")).toHaveStyle({
+      borderRadius: "50%",
+      width: "5.5%",
+      aspectRatio: 1,
+      right: "2.75%",
+      top: "33%"
+    });
+  });
+});
 
 describe("CardClaim", () => {
   it("should return null if claim is not decoded correctly", () => {

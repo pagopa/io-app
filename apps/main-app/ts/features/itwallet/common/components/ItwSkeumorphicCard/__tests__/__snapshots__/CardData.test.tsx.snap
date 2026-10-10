@@ -17,6 +17,7 @@ exports[`CardData should match snapshot for DC back data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "right": "6%",
           "top": "10%",
@@ -166,6 +167,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "bottom": "1.%",
           "left": "2.55%",
@@ -192,6 +194,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "right": "3.5%",
           "top": "44.5%",
@@ -225,6 +228,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "right": "3.5%",
           "top": "55.9%",
@@ -258,6 +262,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "right": "3.5%",
           "top": "67.3%",
@@ -291,6 +296,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "right": "3.5%",
           "top": "78.7%",
@@ -324,6 +330,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "right": "3.5%",
           "top": "90.1%",
@@ -371,6 +378,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "41.5%",
           "top": "6.8%",
@@ -404,6 +412,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "55%",
           "top": "6.8%",
@@ -437,6 +446,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "41.5%",
           "top": "30.3%",
@@ -470,6 +480,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "55%",
           "top": "30.3%",
@@ -503,6 +514,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "68.5%",
           "top": "30.3%",
@@ -536,6 +548,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "bottom": "6.5%",
           "left": "8%",
@@ -583,6 +596,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "4%",
           "top": "30%",
@@ -609,6 +623,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "34%",
           "top": "11.6%",
@@ -642,6 +657,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "34%",
           "top": "18.5%",
@@ -675,6 +691,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "34%",
           "top": "25.4%",
@@ -708,6 +725,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "51%",
           "top": "25.4%",
@@ -741,6 +759,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "34%",
           "top": "32.300000000000004%",
@@ -774,6 +793,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "57.5%",
           "top": "32.300000000000004%",
@@ -807,6 +827,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "34%",
           "top": "39.2%",
@@ -840,6 +861,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "left": "34%",
           "top": "46.1%",
@@ -873,6 +895,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         {
           "position": "absolute",
         },
+        undefined,
         {
           "bottom": "17.9%",
           "left": "8%",
