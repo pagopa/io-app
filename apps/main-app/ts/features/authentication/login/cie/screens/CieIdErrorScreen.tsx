@@ -1,8 +1,12 @@
 import I18n from "i18next";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
 import {
@@ -10,6 +14,8 @@ import {
   setIdpSelectedActiveSessionLogin
 } from "../../../activeSessionLogin/store/actions";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import { CieIdWebViewLoginEvent } from "../../../common/components/CieIdWebViewLogin";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpSelected } from "../../../common/store/actions";
 import useNavigateToLoginMethod, {
@@ -22,11 +28,35 @@ import {
   trackCieIdErrorSpidSelected
 } from "../analytics";
 
-const CieIdErrorScreen = () => {
+export type CieIdErrorScreenParams = {
+  /**
+   * The CieID WebView event that caused the error, shown only in debug mode.
+   * Missing when the screen is reached from the legacy login flow.
+   */
+  failure?: CieIdWebViewLoginEvent;
+};
+
+type CieIdErrorScreenProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  typeof AUTHENTICATION_ROUTES.CIE_ID_ERROR
+>;
+
+const CieIdErrorScreen = ({ route }: CieIdErrorScreenProps) => {
   const { isCieSupported } = useNavigateToLoginMethod();
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const { replace, navigate, popToTop } = useIONavigation();
+  const failure = route.params?.failure;
+
+  const debugInfo = useMemo(
+    () => ({
+      ...(failure && { failure }),
+      flow: isActiveSessionLogin ? "reauth" : "auth",
+      isCieSupported
+    }),
+    [failure, isActiveSessionLogin, isCieSupported]
+  );
+  useDebugInfo(debugInfo);
 
   useAvoidHardwareBackButton();
 

@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
@@ -12,6 +12,7 @@ import {
 
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
@@ -163,6 +164,19 @@ export const OneIdentityCieAuthenticationWebView = ({
   const handleCancel = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
+
+  const failureReason =
+    webViewState.status === "failure"
+      ? webViewState.reason
+      : loginSourceState.status === "failure"
+        ? loginSourceState.error
+        : undefined;
+
+  const debugInfo = useMemo(
+    () => ({ failure: failureReason }),
+    [failureReason]
+  );
+  useDebugInfo(debugInfo);
 
   if (
     loginSourceState.status === "reserving-public-key" ||
