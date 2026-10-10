@@ -774,7 +774,7 @@ describe("itwProximityMachine", () => {
   });
 
   test.each(["qrcode", "nfc"] as const)(
-    "tracks %s proximity start when verifier connects",
+    "does not track %s proximity start before a document request",
     engagementMode => {
       const actor = createActor(mockedMachine, {
         input: { deps: T_DEPS },
@@ -787,9 +787,137 @@ describe("itwProximityMachine", () => {
       actor.start();
       actor.send({ type: "device-connected" });
 
-      expect(trackProximityStart).toHaveBeenCalledTimes(1);
+      expect(trackProximityStart).not.toHaveBeenCalled();
     }
   );
+
+  test.each([
+    {
+      name: "pure NFC",
+      engagementMode: "nfc",
+      retrievalMethod: "nfc",
+      connected: false
+    },
+    {
+      name: "NFC after connection",
+      engagementMode: "nfc",
+      retrievalMethod: "nfc",
+      connected: true
+    },
+    {
+      name: "NFC engagement with BLE retrieval",
+      engagementMode: "nfc",
+      retrievalMethod: "ble",
+      connected: true
+    },
+    {
+      name: "QR engagement with BLE retrieval",
+      engagementMode: "qrcode",
+      retrievalMethod: "ble",
+      connected: true
+    }
+  ] as const)(
+    "tracks start for $name",
+    async ({ engagementMode, retrievalMethod, connected }) => {
+      const actor = createActor(mockedMachine, {
+        input: { deps: T_DEPS },
+        snapshot: makeSnapshot(
+          { Presentment: "AwaitingConnection" },
+          { engagementMode }
+        )
+      });
+
+      actor.start();
+      if (connected) {
+        actor.send({ type: "device-connected" });
+        actor.send({ type: "device-connected" });
+      }
+      expect(trackProximityStart).not.toHaveBeenCalled();
+      actor.send({
+        type: "device-document-request-received",
+        proximityDetails: T_PROXIMITY_DETAILS,
+        verifierRequest: T_VERIFIER_REQUEST,
+        retrievalMethod
+      });
+
+      await waitFor(actor, snapshot =>
+        snapshot.matches({ Presentment: "ClaimsDisclosure" })
+      );
+      expect(trackProximityStart).toHaveBeenCalledTimes(1);
+      actor.stop();
+    }
+  );
+
+  it("tracks pure NFC once across duplicate requests and the consent restart", async () => {
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot(
+        { Presentment: "AwaitingConnection" },
+        { engagementMode: "nfc" }
+      )
+    });
+    const request = {
+      type: "device-document-request-received",
+      proximityDetails: T_PROXIMITY_DETAILS,
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "nfc"
+    } as const;
+
+    actor.start();
+    actor.send(request);
+    actor.send(request);
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "ClaimsDisclosure" })
+    );
+    actor.send(request);
+    actor.send({ type: "holder-consent" });
+    actor.send({ type: "continue" });
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "AwaitingNfcStart" })
+    );
+    actor.send({ type: "nfc-started" });
+    actor.send(request);
+
+    expect(
+      actor.getSnapshot().matches({ Presentment: "SendingDocuments" })
+    ).toBe(true);
+    expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    actor.stop();
+  });
+
+  it("allows tracking a new presentation after closing the previous one", () => {
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot("Success", {
+        engagementMode: "nfc",
+        retrievalMethod: "nfc",
+        proximityStartTracked: true
+      })
+    });
+
+    actor.start();
+    expect(actor.getSnapshot().context.proximityStartTracked).toBe(true);
+    actor.send({ type: "close" });
+    expect(actor.getSnapshot().context.proximityStartTracked).toBe(false);
+
+    const nextActor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot(
+        { Presentment: "Connecting" },
+        actor.getSnapshot().context
+      )
+    });
+    nextActor.start();
+    nextActor.send({
+      type: "device-document-request-received",
+      proximityDetails: T_PROXIMITY_DETAILS,
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "ble"
+    });
+    expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    actor.stop();
+    nextActor.stop();
+  });
 
   it("close from Presentment.AwaitingConnection calls closeProximity", () => {
     const actor = createActor(mockedMachine, {

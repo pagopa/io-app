@@ -35,6 +35,8 @@ export type Context = {
    * grouped by credential type
    */
   proximityDetails?: ProximityDetails;
+  /** Preserved across NFC consent restarts to track each presentation only once. */
+  proximityStartTracked: boolean;
   /** The string used to generate the QR Code */
   qrCodeString?: string;
   /**
@@ -55,6 +57,7 @@ export type Context = {
 export const InitialContext: Omit<Context, "deps"> = {
   credentials: undefined,
   engagementMode: "qrcode",
+  proximityStartTracked: false,
   failure: undefined,
   proximityDetails: undefined,
   sessionTerminated: false,
