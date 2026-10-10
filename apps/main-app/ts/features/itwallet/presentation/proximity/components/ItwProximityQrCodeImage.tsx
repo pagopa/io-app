@@ -11,8 +11,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import QRCode from "react-native-qrcode-skia";
-import Animated, { FadeIn } from "react-native-reanimated";
+import QRCode, { ShapeOptions } from "react-native-qrcode-skia";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
@@ -28,6 +28,17 @@ import { selectFailure, selectQRCodeString } from "../machine/selectors";
 import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/selectors/credentials";
 
 const QR_CODE_LOGO_SIZE = 52;
+const QR_CODE_FADE_DURATION = 200;
+
+const QR_CODE_SHAPE_OPTIONS: ShapeOptions = {
+  shape: "circle",
+  eyePatternShape: "rounded",
+  eyePatternGap: 0,
+  gap: 0
+};
+const QR_CODE_LOGO = (
+  <ItwIcon height={QR_CODE_LOGO_SIZE} width={QR_CODE_LOGO_SIZE} />
+);
 
 /**
  * For the QR Code size, we start from the window width and subtract the
@@ -102,35 +113,38 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
     );
   }
 
-  if (!qrCodeString) {
-    return <IOSkeleton radius={16} shape="square" size={QR_CODE_SIZE} />;
-  }
-
   return (
-    <Animated.View
-      accessibilityLabel={I18n.t(
-        "features.itWallet.presentation.proximity.engagement.qrCode.accessibilityLabel"
+    <View style={styles.qrCodeSlot}>
+      {qrCodeString ? (
+        <Animated.View
+          accessibilityLabel={I18n.t(
+            "features.itWallet.presentation.proximity.engagement.qrCode.accessibilityLabel"
+          )}
+          accessibilityRole="image"
+          accessible={true}
+          entering={FadeIn.duration(QR_CODE_FADE_DURATION)}
+        >
+          <QRCode
+            color={theme["textBody-default"]}
+            errorCorrectionLevel="H"
+            logo={QR_CODE_LOGO}
+            logoAreaBorderRadius={8}
+            logoAreaSize={88}
+            shapeOptions={QR_CODE_SHAPE_OPTIONS}
+            size={QR_CODE_SIZE}
+            value={qrCodeString}
+          />
+        </Animated.View>
+      ) : (
+        <Animated.View
+          exiting={FadeOut.duration(QR_CODE_FADE_DURATION)}
+          key="skeleton"
+          style={StyleSheet.absoluteFill}
+        >
+          <IOSkeleton radius={16} shape="square" size={QR_CODE_SIZE} />
+        </Animated.View>
       )}
-      accessibilityRole="image"
-      accessible={true}
-      entering={FadeIn.duration(200)}
-    >
-      <QRCode
-        color={theme["textBody-default"]}
-        errorCorrectionLevel="H"
-        logo={<ItwIcon height={QR_CODE_LOGO_SIZE} width={QR_CODE_LOGO_SIZE} />}
-        logoAreaBorderRadius={8}
-        logoAreaSize={88}
-        shapeOptions={{
-          shape: "circle",
-          eyePatternShape: "rounded",
-          eyePatternGap: 0,
-          gap: 0
-        }}
-        size={QR_CODE_SIZE}
-        value={qrCodeString}
-      />
-    </Animated.View>
+    </View>
   );
 };
 
@@ -149,6 +163,10 @@ const StatusBox = ({ iconName, description, action }: StatusBoxProps) => (
 );
 
 const styles = StyleSheet.create({
+  qrCodeSlot: {
+    width: QR_CODE_SIZE,
+    height: QR_CODE_SIZE
+  },
   statusBox: {
     backgroundColor: IOColors["grey-50"],
     alignItems: "center",

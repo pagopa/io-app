@@ -666,32 +666,41 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                 </Text>
                               </View>
                               <View
-                                accessibilityLabel="Immagine del codice QR da mostrare a chi verifica i documenti digitali"
-                                accessibilityRole="image"
-                                accessible={true}
-                                collapsable={false}
-                                entering={
-                                  FadeIn {
-                                    "build": [Function],
-                                    "durationV": 200,
-                                    "randomizeDelay": false,
-                                    "reduceMotionV": "system",
-                                  }
-                                }
-                                jestAnimatedProps={
+                                style={
                                   {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {},
+                                    "height": 670,
+                                    "width": 670,
                                   }
                                 }
                               >
                                 <View
-                                  testID="qrcode"
-                                />
+                                  accessibilityLabel="Immagine del codice QR da mostrare a chi verifica i documenti digitali"
+                                  accessibilityRole="image"
+                                  accessible={true}
+                                  collapsable={false}
+                                  entering={
+                                    FadeIn {
+                                      "build": [Function],
+                                      "durationV": 200,
+                                      "randomizeDelay": false,
+                                      "reduceMotionV": "system",
+                                    }
+                                  }
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                >
+                                  <View
+                                    testID="qrcode"
+                                  />
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -2083,7 +2092,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={3}
+                handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -4773,59 +4782,110 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                 </Text>
                               </View>
                               <View
-                                collapsable={false}
-                                jestAnimatedProps={
-                                  {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {},
-                                  }
-                                }
-                                jestInlineStyle={
-                                  [
-                                    {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 16,
-                                      "height": 670,
-                                      "width": 670,
-                                    },
-                                    {
-                                      "animationDuration": "1250ms",
-                                      "animationIterationCount": "infinite",
-                                      "animationName": {
-                                        "0%, 100%": {
-                                          "opacity": 0.75,
-                                        },
-                                        "50%": {
-                                          "opacity": 0.35,
-                                        },
-                                      },
-                                      "animationTimingFunction": CubicBezierEasing {
-                                        "x1": 0.37,
-                                        "x2": 0.63,
-                                        "y1": 0,
-                                        "y2": 1,
-                                      },
-                                    },
-                                  ]
-                                }
                                 style={
-                                  [
-                                    {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 16,
-                                      "height": 670,
-                                      "width": 670,
-                                    },
-                                    {},
-                                  ]
+                                  {
+                                    "height": 670,
+                                    "width": 670,
+                                  }
                                 }
-                              />
+                              >
+                                <View
+                                  collapsable={false}
+                                  exiting={
+                                    FadeOut {
+                                      "build": [Function],
+                                      "durationV": 200,
+                                      "randomizeDelay": false,
+                                      "reduceMotionV": "system",
+                                    }
+                                  }
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    {
+                                      "bottom": 0,
+                                      "left": 0,
+                                      "position": "absolute",
+                                      "right": 0,
+                                      "top": 0,
+                                    }
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "bottom": 0,
+                                        "left": 0,
+                                        "position": "absolute",
+                                        "right": 0,
+                                        "top": 0,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "backgroundColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 16,
+                                          "height": 670,
+                                          "width": 670,
+                                        },
+                                        {
+                                          "animationDuration": "1250ms",
+                                          "animationIterationCount": "infinite",
+                                          "animationName": {
+                                            "0%, 100%": {
+                                              "opacity": 0.75,
+                                            },
+                                            "50%": {
+                                              "opacity": 0.35,
+                                            },
+                                          },
+                                          "animationTimingFunction": CubicBezierEasing {
+                                            "x1": 0.37,
+                                            "x2": 0.63,
+                                            "y1": 0,
+                                            "y2": 1,
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 16,
+                                          "height": 670,
+                                          "width": 670,
+                                        },
+                                        {},
+                                      ]
+                                    }
+                                  />
+                                </View>
+                              </View>
                             </View>
                           </View>
                           <View
@@ -6216,7 +6276,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={6}
+                handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -6984,32 +7044,41 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                 </Text>
                               </View>
                               <View
-                                accessibilityLabel="Immagine del codice QR da mostrare a chi verifica i documenti digitali"
-                                accessibilityRole="image"
-                                accessible={true}
-                                collapsable={false}
-                                entering={
-                                  FadeIn {
-                                    "build": [Function],
-                                    "durationV": 200,
-                                    "randomizeDelay": false,
-                                    "reduceMotionV": "system",
-                                  }
-                                }
-                                jestAnimatedProps={
+                                style={
                                   {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {},
+                                    "height": 670,
+                                    "width": 670,
                                   }
                                 }
                               >
                                 <View
-                                  testID="qrcode"
-                                />
+                                  accessibilityLabel="Immagine del codice QR da mostrare a chi verifica i documenti digitali"
+                                  accessibilityRole="image"
+                                  accessible={true}
+                                  collapsable={false}
+                                  entering={
+                                    FadeIn {
+                                      "build": [Function],
+                                      "durationV": 200,
+                                      "randomizeDelay": false,
+                                      "reduceMotionV": "system",
+                                    }
+                                  }
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                >
+                                  <View
+                                    testID="qrcode"
+                                  />
+                                </View>
                               </View>
                             </View>
                           </View>
