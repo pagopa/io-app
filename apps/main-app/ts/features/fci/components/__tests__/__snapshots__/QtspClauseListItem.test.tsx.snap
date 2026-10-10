@@ -478,7 +478,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               "opacity": 1,
                             }
                           }
-                          testID="AnimatedCheckbox"
+                          testID="Checkbox"
                         >
                           <View
                             style={
@@ -537,7 +537,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                     "width": 36,
                                   }
                                 }
-                                testID="AnimatedCheckboxInput"
+                                testID="CheckboxInput"
                               >
                                 <View
                                   style={

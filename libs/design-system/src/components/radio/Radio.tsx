@@ -16,9 +16,9 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOSelectionTickVisualParams, IOSpringValues } from "../../core";
+import { IOSpringValues } from "../../core/IOAnimations";
 import { IOColors } from "../../core/IOColors";
-import { useIOFontDynamicScale } from "../../utils/accessibility";
+import { IOSelectionTickVisualParams } from "../../core/IOStyles";
 import { AnimatedTick } from "../common/AnimatedTick";
 
 type OwnProps = Pick<PressableProps, "disabled" | "onPress"> & Props;
@@ -28,18 +28,14 @@ type Props = {
   size: number;
 };
 
-const checkBoxRadius = 5;
-
 const styles = StyleSheet.create({
-  checkboxBorder: {
-    borderWidth: IOSelectionTickVisualParams.borderWidth,
-    borderCurve: "continuous",
+  radioBorder: {
     position: "absolute",
     left: 0,
-    top: 0
+    top: 0,
+    borderWidth: IOSelectionTickVisualParams.borderWidth
   },
-  checkBoxSquare: {
-    borderCurve: "continuous",
+  radioCircle: {
     position: "absolute",
     left: 0,
     top: 0
@@ -47,38 +43,32 @@ const styles = StyleSheet.create({
 });
 
 /**
- * An animated checkbox. This can be used to implement a standard
- * {@link CheckBox} or other composite components.
+ * Animated radio input, used by {@link RadioButtonLabel} and the
+ * `ListItemRadio*` components.
  */
-export const AnimatedCheckbox = ({
-  size,
-  checked,
-  onPress,
-  disabled
-}: OwnProps) => {
+export const Radio = ({ size, checked, onPress, disabled }: OwnProps) => {
   const theme = useIOTheme();
-  const { dynamicFontScale } = useIOFontDynamicScale();
   const isChecked = checked ?? false;
 
   const borderColor = IOColors[theme["selection-border-off"]];
   const backgroundColor = IOColors[theme["selection-background-on"]];
 
-  const squareAnimationProgress = useSharedValue(checked ? 1 : 0);
+  const circleAnimationProgress = useSharedValue(checked ? 1 : 0);
   const tickAnimationProgress = useSharedValue(checked ? 1 : 0);
 
-  const checkboxSizeStyle: ViewStyle = {
+  const radioButtonSizeStyle: ViewStyle = {
     width: size,
     height: size,
-    borderRadius: checkBoxRadius * dynamicFontScale
+    borderRadius: size / 2
   };
 
-  const checkboxWrapperSizeStyle: ViewStyle = {
+  const radioButtonWrapperSizeStyle: ViewStyle = {
     width: size,
     height: size
   };
 
   useEffect(() => {
-    squareAnimationProgress.value = withSpring(
+    circleAnimationProgress.value = withSpring(
       checked ? 1 : 0,
       IOSpringValues.selection
     );
@@ -86,11 +76,11 @@ export const AnimatedCheckbox = ({
       duration: 400,
       easing: Easing.elastic(1)
     });
-  }, [checked, squareAnimationProgress, tickAnimationProgress]);
+  }, [checked, circleAnimationProgress, tickAnimationProgress]);
 
   const animatedCheckboxSquare = useAnimatedStyle(() => {
-    const scale = interpolate(squareAnimationProgress.value, [0, 1], [0.5, 1]);
-    const opacity = squareAnimationProgress.value;
+    const scale = interpolate(circleAnimationProgress.value, [0, 1], [0.5, 1]);
+    const opacity = circleAnimationProgress.value;
 
     return {
       opacity,
@@ -103,22 +93,22 @@ export const AnimatedCheckbox = ({
       accessible={false}
       disabled={disabled}
       onPress={onPress}
-      style={checkboxWrapperSizeStyle}
-      testID="AnimatedCheckboxInput"
+      style={radioButtonWrapperSizeStyle}
+      testID="RadioInput"
     >
       <View
-        style={[styles.checkboxBorder, checkboxSizeStyle, { borderColor }]}
+        style={[styles.radioBorder, radioButtonSizeStyle, { borderColor }]}
       />
       <Animated.View
         style={[
-          styles.checkBoxSquare,
-          checkboxSizeStyle,
+          styles.radioCircle,
+          radioButtonSizeStyle,
           { backgroundColor },
           animatedCheckboxSquare
         ]}
       />
       {isChecked && (
-        <View style={{ zIndex: 1 }}>
+        <View>
           <AnimatedTick
             progress={tickAnimationProgress}
             size={size}

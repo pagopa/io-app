@@ -288,7 +288,7 @@ export const LandingScreen = () => {
           <IOButton
             color={isCieUatEnabled ? "danger" : "primary"}
             fullWidth
-            icon="cieLetter"
+            icon="cie"
             label={I18n.t("authentication.landing.loginCie")}
             onPress={navigateToCiePinScreen}
             testID="landing-button-login-cie"

@@ -39,7 +39,7 @@ const generateMessageSectionData = (
           accessibilityLabel: I18n.t(
             "messageDetails.showMoreDataBottomSheet.messageIdAccessibility"
           ),
-          icon: "docPaymentTitle",
+          icon: "docTitle",
           label: I18n.t("messageDetails.showMoreDataBottomSheet.messageId"),
           value: messageId
         }
@@ -52,7 +52,7 @@ const generateMessageSectionData = (
           accessibilityLabel: I18n.t(
             "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
           ),
-          icon: "docPaymentCode",
+          icon: "docCode",
           label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
           value: formatPaymentNoticeNumber(noticeNumber),
           valueToCopy: noticeNumber

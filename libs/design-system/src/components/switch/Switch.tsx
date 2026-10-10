@@ -1,10 +1,10 @@
-import { Switch, SwitchProps } from "react-native";
+import { Switch as RNSwitch, SwitchProps as RNSwitchProps } from "react-native";
 
 import { useIOTheme } from "../../context";
 import { IOColors } from "../../core/IOColors";
 
 type OwnProps = Pick<
-  SwitchProps,
+  RNSwitchProps,
   | "accessibilityElementsHidden"
   | "accessibilityLabel"
   | "accessible"
@@ -15,7 +15,7 @@ type OwnProps = Pick<
   | "value"
 >;
 
-export const NativeSwitch = ({
+export const Switch = ({
   onValueChange,
   value,
   ...accessibility
@@ -28,7 +28,7 @@ export const NativeSwitch = ({
   };
 
   return (
-    <Switch
+    <RNSwitch
       {...accessibility}
       accessibilityRole="switch"
       accessibilityState={{ checked: value, disabled: accessibility.disabled }}

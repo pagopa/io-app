@@ -261,7 +261,7 @@ const useIOBarcodeFileReader = ({
       <Divider />
       <ListItemNav
         accessibilityLabel={I18n.t("barcodeScan.upload.file")}
-        icon="docAttach"
+        icon="attachment"
         onPress={() => void handleFileUploadPressed()}
         value={I18n.t("barcodeScan.upload.file")}
       />

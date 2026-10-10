@@ -186,7 +186,7 @@ Essential atomic components:
     - [`RadioGroup`](./src/components/radio/RadioGroup.tsx)
   - [Switch](./src/components/switch/)
     - [`ListItemSwitch`](./src/components/listitems/ListItemSwitch.tsx)
-    - [`NativeSwitch`](./src/components/switch/NativeSwitch.tsx)
+    - [`Switch`](./src/components/switch/Switch.tsx)
 - [**Accordion**](./src/components/accordion/)
   - [`AccordionItem`](./src/components/accordion/AccordionItem.tsx)
 - [**Alert**](./src/components/alert/)

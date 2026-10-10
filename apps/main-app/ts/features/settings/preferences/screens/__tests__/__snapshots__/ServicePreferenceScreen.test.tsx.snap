@@ -570,7 +570,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                                 "width": 36,
                                               }
                                             }
-                                            testID="AnimatedRadioInput"
+                                            testID="RadioInput"
                                           >
                                             <View
                                               style={
@@ -962,7 +962,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                                 "width": 36,
                                               }
                                             }
-                                            testID="AnimatedRadioInput"
+                                            testID="RadioInput"
                                           >
                                             <View
                                               style={

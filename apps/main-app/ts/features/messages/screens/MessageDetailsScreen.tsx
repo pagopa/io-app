@@ -192,7 +192,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
                   accessibilityLabel={I18n.t(
                     "messageDetails.accessibilityAttachmentIcon"
                   )}
-                  name="attachment"
+                  name="paperclip"
                   size={16}
                   testID="attachment-tag"
                 />

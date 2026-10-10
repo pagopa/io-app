@@ -346,7 +346,7 @@ const WalletPaymentDetailContent = ({
           </>
         )}
         <ListItemInfoCopy
-          icon="docPaymentCode"
+          icon="docCode"
           label={I18n.t("payment.noticeCode")}
           onPress={() => handleOnCopy(formattedPaymentNoticeNumber)}
           testID="payment-notice-copy-button"

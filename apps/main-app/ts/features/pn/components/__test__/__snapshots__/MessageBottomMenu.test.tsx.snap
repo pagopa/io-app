@@ -393,7 +393,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -810,7 +810,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -1227,7 +1227,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -1252,7 +1252,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -1669,7 +1669,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -2086,7 +2086,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -2503,7 +2503,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -2528,7 +2528,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -2945,7 +2945,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -3362,7 +3362,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -3779,7 +3779,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -3804,7 +3804,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false,
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -4221,7 +4221,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -4638,7 +4638,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -5055,7 +5055,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -5080,7 +5080,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -5497,7 +5497,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -5522,7 +5522,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  55, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -5550,7 +5550,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  44, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -5970,7 +5970,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -5995,7 +5995,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  55, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -6023,7 +6023,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  44, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -6443,7 +6443,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -6468,7 +6468,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -6493,7 +6493,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  55, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -6521,7 +6521,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  44, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -6941,7 +6941,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -7358,7 +7358,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -7775,7 +7775,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -7800,7 +7800,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled true, 
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -8217,7 +8217,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -8634,7 +8634,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -9051,7 +9051,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -9076,7 +9076,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -9493,7 +9493,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -9910,7 +9910,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -10327,7 +10327,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -10352,7 +10352,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -10769,7 +10769,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -11186,7 +11186,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -11603,7 +11603,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -11628,7 +11628,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled undefi
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -12045,7 +12045,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -12070,7 +12070,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -12115,7 +12115,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -12552,7 +12552,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -12577,7 +12577,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -12622,7 +12622,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -13059,7 +13059,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -13084,7 +13084,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -13109,7 +13109,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -13154,7 +13154,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -13591,7 +13591,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -13616,7 +13616,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -13661,7 +13661,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -14098,7 +14098,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -14123,7 +14123,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -14168,7 +14168,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -14605,7 +14605,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -14630,7 +14630,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -14655,7 +14655,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -14700,7 +14700,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -15137,7 +15137,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -15162,7 +15162,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -15207,7 +15207,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -15644,7 +15644,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -15669,7 +15669,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -15714,7 +15714,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -16151,7 +16151,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -16176,7 +16176,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -16201,7 +16201,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -16246,7 +16246,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled false,
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -16683,7 +16683,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -17100,7 +17100,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -17517,7 +17517,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -17542,7 +17542,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -17959,7 +17959,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -17984,7 +17984,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  55, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -18012,7 +18012,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  44, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -18432,7 +18432,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -18457,7 +18457,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  55, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -18485,7 +18485,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  44, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -18905,7 +18905,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -18930,7 +18930,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -18955,7 +18955,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  55, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -18983,7 +18983,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice avviso: 9999  8888  7777  6666  44, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -19403,7 +19403,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -19820,7 +19820,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -20237,7 +20237,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -20262,7 +20262,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled true, 
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -20679,7 +20679,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -20704,7 +20704,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -20749,7 +20749,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -21186,7 +21186,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -21211,7 +21211,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -21256,7 +21256,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -21693,7 +21693,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -21718,7 +21718,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -21743,7 +21743,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -21788,7 +21788,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -22225,7 +22225,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -22250,7 +22250,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -22295,7 +22295,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -22732,7 +22732,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -22757,7 +22757,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -22802,7 +22802,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -23239,7 +23239,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -23264,7 +23264,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -23289,7 +23289,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -23334,7 +23334,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -23771,7 +23771,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -23796,7 +23796,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -23841,7 +23841,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -24278,7 +24278,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -24303,7 +24303,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -24348,7 +24348,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -24785,7 +24785,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -24810,7 +24810,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -24835,7 +24835,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  00, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -24880,7 +24880,7 @@ exports[`MessageBottomMenu Should match snapshot (payments 2, isCancelled undefi
                               Codice avviso: 1111  2222  3333  4444  01, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -25317,7 +25317,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -25734,7 +25734,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -26151,7 +26151,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -26176,7 +26176,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -26593,7 +26593,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -27010,7 +27010,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -27427,7 +27427,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -27452,7 +27452,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -27869,7 +27869,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -28286,7 +28286,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -28703,7 +28703,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -28728,7 +28728,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -29145,7 +29145,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -29562,7 +29562,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -29979,7 +29979,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -30004,7 +30004,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -30421,7 +30421,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -30446,7 +30446,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice avviso: 9999  8888  7777  6666  55, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -30474,7 +30474,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice avviso: 9999  8888  7777  6666  44, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -30894,7 +30894,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -30919,7 +30919,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice avviso: 9999  8888  7777  6666  55, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -30947,7 +30947,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice avviso: 9999  8888  7777  6666  44, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -31367,7 +31367,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -31392,7 +31392,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -31417,7 +31417,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice avviso: 9999  8888  7777  6666  55, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -31445,7 +31445,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice avviso: 9999  8888  7777  6666  44, copia
                             </View>
                             <View>
-                              docPaymentCode
+                              docCode
                             </View>
                             <View>
                               Codice Avviso
@@ -31865,7 +31865,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -32282,7 +32282,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -32699,7 +32699,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -32724,7 +32724,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -33141,7 +33141,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -33558,7 +33558,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -33975,7 +33975,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -34000,7 +34000,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -34417,7 +34417,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -34834,7 +34834,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -35251,7 +35251,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -35276,7 +35276,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
@@ -35693,7 +35693,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -36110,7 +36110,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -36527,7 +36527,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               Codice IUN : randomIUN, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               Codice IUN
@@ -36552,7 +36552,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
-                              docPaymentTitle
+                              docTitle
                             </View>
                             <View>
                               ID messaggio
