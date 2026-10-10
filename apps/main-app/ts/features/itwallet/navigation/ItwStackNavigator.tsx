@@ -1,4 +1,7 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets
+} from "@react-navigation/stack";
 import { ComponentType, memo } from "react";
 
 import { useIOSelector } from "../../../store/hooks";
@@ -315,7 +318,7 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL}
         options={{
           gestureEnabled: false,
-          presentation: "transparentModal"
+          ...TransitionPresets.ModalSlideFromBottomIOS
         }}
       />
       <Stack.Screen
