@@ -27,8 +27,11 @@ jobs:
       - id: check-formatting
         run: pnpm format:check
       - id: run-affected-checks
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'lok_')
         run: pnpm validate
+      - id: run-lokalise-checks
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'lok_')
+        run: pnpm nx affected --targets=lint,tsc-noemit --configuration=ci --nx-bail
       - id: run-all-checks
         if: github.event_name != 'pull_request'
         run: pnpm validate-all
