@@ -11,6 +11,7 @@ import {
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
   itwSetCredentialUpgradeFailed,
+  itwSetDiscoverMoreCEDEnabled,
   itwSetFiscalCodeWhitelisted,
   itwSetIdentificationMode,
   itwSetL2Fallback,
@@ -28,6 +29,8 @@ export type ItwPreferencesState = {
   credentialUpgradeFailed?: ReadonlyArray<CredentialMetadata["credentialType"]>;
   // Indicates the identification mode used for the user
   identificationMode?: IdentificationContext["mode"];
+  // Indicates whether the CED discover more feature is enabled
+  isDiscoverMoreCEDEnabled?: boolean;
   // Indicates whether the fiscal code is whitelisted for L3 features
   isFiscalCodeWhitelisted?: boolean;
   // Indicates whether the IT-Wallet activation should be disabled
@@ -111,6 +114,13 @@ const reducer = (
         ...state,
         credentialUpgradeFailed: action.payload
       };
+
+    case getType(itwSetDiscoverMoreCEDEnabled): {
+      return {
+        ...state,
+        isDiscoverMoreCEDEnabled: action.payload
+      };
+    }
 
     case getType(itwSetFiscalCodeWhitelisted): {
       return {

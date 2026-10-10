@@ -7,6 +7,7 @@ import { buildEventProperties } from "../../../../utils/analytics";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { fimsCtaTextSelector } from "../../singleSignOn/store/selectors";
 
+/** Service metadata is resolved by the entry point before authentication starts. */
 export const trackAuthenticationStart = (
   serviceId: ServiceId,
   serviceName: string | undefined,
