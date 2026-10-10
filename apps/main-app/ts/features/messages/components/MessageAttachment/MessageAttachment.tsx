@@ -82,7 +82,7 @@ const MessageAttachmentFooter = ({
             downloadPath
           )
             .then(_ => {
-              IOToast.show(
+              IOToast.info(
                 I18n.t("messagePDFPreview.savedAtLocation", {
                   name
                 })
@@ -100,7 +100,7 @@ const MessageAttachmentFooter = ({
         onPress: () => {
           onShare(isPN, attachmentCategory);
           share(toFileUri(downloadPath), undefined, false)().catch(_ => {
-            IOToast.show(I18n.t("messagePDFPreview.errors.sharing"));
+            IOToast.error(I18n.t("messagePDFPreview.errors.sharing"));
           });
         }
       }}
