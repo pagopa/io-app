@@ -10,6 +10,8 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
+import { getAppVersion } from "../../../utils/appVersion";
+import { isLocalEnv } from "../../../utils/environment";
 import { unknownToString } from "../../../utils/errors";
 import {
   isActiveSessionFastLoginEnabledSelector,
@@ -132,14 +134,20 @@ const buildAuthorizationUrl = (
 };
 
 /**
- * Builds the `x-pagopa-lollipop-assertion-ref` header for the OneIdentity
- * `/authorize` request, required so that OneIdentity can associate the incoming
- * request with the lollipop session just reserved via `/reserve`.
+ * Builds the headers for the OneIdentity `/authorize` request:
+ *
+ * - `x-pagopa-lollipop-assertion-ref`, required so that OneIdentity can associate
+ *   the incoming request with the lollipop session just reserved via
+ *   `/reserve`.
+ * - `x-pagopa-app-version`, sent only in local env: the dev server needs it to
+ *   evaluate the feature flags bound to a minimum app version (e.g. fast
+ *   login).
  */
 const buildAuthorizeHeaders = (publicKey: PublicKey) => ({
   "x-pagopa-lollipop-assertion-ref": `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toBase64EncodedThumbprint(
     publicKey
-  )}`
+  )}`,
+  ...(isLocalEnv && { "x-pagopa-app-version": getAppVersion() })
 });
 
 /**
