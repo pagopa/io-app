@@ -228,3 +228,20 @@ export const isValidCallbackUrl = (url: string) => {
 
   return validUrls.includes(url);
 };
+
+/** The path used to identify OneIdentity error page. */
+const ONE_IDENTITY_ERROR_PATH = "/login/error";
+
+/**
+ * Checks whether the given URL corresponds to a OneIdentity error page.
+ *
+ * @param url - The URL to check.
+ * @returns `true` if the URL corresponds to a OneIdentity error page, `false`
+ *   otherwise.
+ */
+export const isOneIdentityErrorUrl = (url?: string): url is string => {
+  if (!url) {
+    return false;
+  }
+  return url.includes(ONE_IDENTITY_ERROR_PATH);
+};

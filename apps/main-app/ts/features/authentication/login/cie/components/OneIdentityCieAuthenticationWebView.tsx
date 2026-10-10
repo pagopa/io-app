@@ -17,8 +17,13 @@ import { useIOSelector, useIOStore } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
 import { useOneIdentityLoginSource } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { cieLoginFlowSelector } from "../../../activeSessionLogin/store/selectors";
+import { trackLoginOIConfigurationError } from "../../../common/analytics";
 import { oneIdentityCieNativeRedirectsEnabledSelector } from "../../../common/store/selectors/remoteConfig";
-import { AUTH_LEVELS, onLoginUriChanged } from "../../../common/utils";
+import {
+  AUTH_LEVELS,
+  isOneIdentityErrorUrl,
+  onLoginUriChanged
+} from "../../../common/utils";
 import { defaultUserAgent } from "../../../common/utils/cie";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieIdpId } from "../utils";
@@ -110,6 +115,11 @@ export const OneIdentityCieAuthenticationWebView = ({
     (event: WebViewNavigation): boolean => {
       const url = event.url;
 
+      const loginFlow = cieLoginFlowSelector(store.getState());
+      if (isOneIdentityErrorUrl(url)) {
+        trackLoginOIConfigurationError(url, loginFlow);
+      }
+
       if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
         return false;
       }
@@ -120,7 +130,6 @@ export const OneIdentityCieAuthenticationWebView = ({
         return false;
       }
 
-      const loginFlow = cieLoginFlowSelector(store.getState());
       // At this stage of the login flow, we only monitor the URL for potential errors.
       // The success callback is intentionally ignored (no-op), as a success URL
       // is not expected to be handled here.

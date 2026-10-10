@@ -10,7 +10,8 @@ import {
 
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
-import { onLoginUriChanged } from "../utils";
+import { trackLoginOIConfigurationError } from "../../common/analytics";
+import { isOneIdentityErrorUrl, onLoginUriChanged } from "../utils";
 import { defaultUserAgent, originSchemasWhiteList } from "../utils/cie";
 
 export type CieWebViewLoginEvent =
@@ -56,6 +57,10 @@ export const CieWebViewLogin = memo(
 
     const handleOnShouldStartLoadWithRequest = useCallback(
       (event: WebViewNavigation): boolean => {
+        if (isOneIdentityErrorUrl(event.url)) {
+          trackLoginOIConfigurationError(event.url, flow);
+        }
+
         const bearerTokenFoundInUrl = onLoginUriChanged(
           handleLoginFailure,
           handleLoginSuccess,

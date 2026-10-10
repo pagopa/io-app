@@ -1,24 +1,25 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { isLoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
 import { handleRegenerateEphemeralKey } from "..";
 import { apiUrlPrefix } from "../../../config";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
-import { unknownToString } from "../../../utils/errors";
 import {
+  cieLoginFlowSelector,
   isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
 } from "../../authentication/activeSessionLogin/store/selectors";
+import { trackLoginOIConfigurationError } from "../../authentication/common/analytics";
 import { oneIdentityEnvSelector } from "../../authentication/common/store/selectors/loginConfig";
 import {
   AUTH_LEVELS,
   AuthLevel,
+  isOneIdentityErrorUrl,
   SPID_AUTH_LEVEL_MAP
 } from "../../authentication/common/utils";
 import { createRetriableFetch } from "../../authentication/common/utils/fetch";
@@ -72,17 +73,6 @@ type LoginSourceState =
   | { status: "following-redirects" }
   | { status: "reserving-public-key" }
   | { status: "verifying-assertion-ref"; url: string };
-
-/**
- * Builds a failure reason for the native redirects flow, including the native
- * error details when available.
- */
-const getNativeRedirectsFailureReason = (error: unknown): string => {
-  if (isLoginUtilsError(error)) {
-    return `${error.code} ${unknownToString(error.userInfo)}`;
-  }
-  return unknownToString(error);
-};
 
 /** Builds the request body for the `/reserve` endpoint. */
 const buildReserveRequestBody = (
@@ -201,6 +191,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     status: "reserving-public-key"
   });
 
+  const store = useIOStore();
   const dispatch = useIODispatch();
   const ephemeralKeyTag = useIOSelector(ephemeralKeyTagSelector);
   const maybeEphemeralPublicKey = useIOSelector(ephemeralPublicKeySelector);
@@ -321,31 +312,36 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     if (followRedirectsNatively) {
       setLoginSourceState({ status: "following-redirects" });
 
-      try {
-        const lastRedirect = await followNativeRedirectsAndVerifySaml(
-          authorizationUrl,
-          buildAuthorizeHeaders(publicKey),
-          publicKey
-        );
-        // getRedirects cannot be aborted: discard the result of a flow that
-        // has been restarted or unmounted in the meantime.
-        if (controller.signal.aborted) {
-          return;
+      const redirectResult = await followNativeRedirectsAndVerifySaml(
+        authorizationUrl,
+        buildAuthorizeHeaders(publicKey),
+        publicKey
+      );
+      // getRedirects cannot be aborted: discard the result of a flow that
+      // has been restarted or unmounted in the meantime.
+      if (controller.signal.aborted) {
+        return;
+      }
+
+      if (redirectResult.isErr()) {
+        const { reason, url } = redirectResult.error;
+
+        if (isOneIdentityErrorUrl(url)) {
+          const loginFlow = cieLoginFlowSelector(store.getState());
+          trackLoginOIConfigurationError(url, loginFlow);
         }
-        setLoginSourceState({
-          status: "assertion-ref-verified",
-          webviewSource: { uri: lastRedirect }
-        });
-      } catch (error) {
-        if (controller.signal.aborted) {
-          return;
-        }
-        const reason = getNativeRedirectsFailureReason(error);
+
+        abortControllerRef.current = null;
         setLoginSourceState({ status: "failure", error: reason });
         onFailure(reason);
+        return;
       }
 
       abortControllerRef.current = null;
+      setLoginSourceState({
+        status: "assertion-ref-verified",
+        webviewSource: { uri: redirectResult.value }
+      });
       return;
     }
 
@@ -366,7 +362,8 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     isActiveSessionFastLogin,
     isFastLogin,
     hashedFiscalCode,
-    onFailure
+    onFailure,
+    store
   ]);
 
   useEffect(() => {
