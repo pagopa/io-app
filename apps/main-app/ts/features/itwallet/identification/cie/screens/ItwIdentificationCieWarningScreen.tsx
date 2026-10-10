@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { useLayoutEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Linking } from "react-native";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
@@ -120,7 +120,7 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
     };
   }, [type, isCieRequired]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isCieRequired) {
       trackItwUserWithoutL3Requirements({
         screen_name: routeName,

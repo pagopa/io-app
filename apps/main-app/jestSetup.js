@@ -284,6 +284,10 @@ jest
   .spyOn(AccessibilityInfo, "isBoldTextEnabled")
   .mockImplementation(() => Promise.resolve(false));
 
+jest
+  .spyOn(AccessibilityInfo, "isScreenReaderEnabled")
+  .mockImplementation(() => Promise.resolve(false));
+
 /** NefInfo's `fetch` method mock */
 jest.mock("@react-native-community/netinfo", () => ({
   fetch: jest.fn().mockResolvedValue({ isConnected: true })

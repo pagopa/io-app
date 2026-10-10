@@ -309,8 +309,11 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
         "storeWalletActivationFeedbackBannerData"
       ],
       on: {
+        // The ITW navigator stays mounted, so the machine must return to Idle with
+        // store-derived context refreshed to accept a new `start`
         "add-new-credential": {
-          actions: ["navigateToCredentialCatalog"]
+          target: "Idle",
+          actions: ["navigateToCredentialCatalog", "onInit"]
         },
         "go-to-wallet": {
           actions: "navigateToWallet"

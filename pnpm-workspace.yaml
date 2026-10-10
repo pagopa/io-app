@@ -28,7 +28,11 @@ patchedDependencies:
   # Allows iOS screen recordings without a black overlay while still preventing screenshots.
   expo-screen-capture@~55.0.9: patches/expo-screen-capture-npm-55.0.9.patch
   # Applies an explicit header `minHeight` in `CardContainer` only when `headerTransparent` is enabled and a screen reader is active, improving Android accessibility by ensuring the header area is properly sized for TalkBack.
-  "@react-navigation/stack@6.4.1": "patches/@react-navigation__stack.patch"
+  "@react-navigation/stack@7.10.17": "patches/@react-navigation__stack.patch"
+  # Gate the dev-only `checkSerializable`/`checkDuplicateRouteNames` walk of the whole navigation state tree (run in `BaseNavigationContainer` after every state change) behind `global.__IO_NAV_SERIALIZABILITY_CHECK_ENABLED__`. Off by default because this app's deeply nested navigator tree makes that walk noticeably slow in dev builds. Set the global to `true` before mounting `NavigationContainer` to debug non-serializable route params affecting state persistence or deep-linking.
+  "@react-navigation/core@7.21.12": "patches/@react-navigation__core@7.21.12.patch"
+  # Defers an Android `ScreenContainer` update that re-enters a FragmentManager mid-transaction instead of crashing with "FragmentManager is already executing transactions". Reanimated flushes Fabric mount items synchronously on UI-thread events (e.g. a cached image's load event fired while a screen's views attach), which can apply another Screen's `activityState` change inside the running `commitNow`. See software-mansion/react-native-reanimated#10316.
+  react-native-screens@4.16.0: patches/react-native-screens@4.16.0.patch
 
 allowBuilds:
   "@shopify/react-native-skia": true
