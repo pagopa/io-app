@@ -13,6 +13,7 @@ import { StyleSheet } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton.ts";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
@@ -20,11 +21,15 @@ import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { trackOpenItwTos } from "../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation.ts";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
-import { selectIsLoading } from "../../machine/eid/selectors.ts";
+import {
+  selectCanGoBackToL3Identification,
+  selectIsLoading
+} from "../../machine/eid/selectors.ts";
 import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
 
 /**
@@ -34,6 +39,9 @@ import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
 export const ItwDiscoveryInfoFallbackComponent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+  const canGoBackToL3Identification = ItwEidIssuanceMachineContext.useSelector(
+    selectCanGoBackToL3Identification
+  );
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const { tos_url } = useIOSelector(tosConfigSelector);
   const mixPanelCredentialDetails = useIOSelector(
@@ -71,16 +79,38 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
     dismissalContext: {
       screen_name: ITW_SCREENVIEW_EVENTS.ITW_INTRO,
       itw_flow: "L2"
-    }
+    },
+    // Going back to the L3 identification replaces the dismissal dialog
+    enabled: !canGoBackToL3Identification
   });
+
+  // The dismissal dialog disables gestures only while enabled, but a swipe back
+  // would bypass the machine in both cases.
+  useItwDisableGestureNavigation();
+
+  const handleGoBack = useCallback(() => {
+    trackItwIntroBack("L2");
+    if (canGoBackToL3Identification) {
+      machineRef.send({ type: "back-to-l3-identification" });
+    } else {
+      dismissalDialog.show();
+    }
+  }, [canGoBackToL3Identification, dismissalDialog, machineRef]);
+
+  useHardwareBackButton(
+    useCallback(() => {
+      if (!canGoBackToL3Identification) {
+        return false;
+      }
+      handleGoBack();
+      return true;
+    }, [canGoBackToL3Identification, handleGoBack])
+  );
 
   useHeaderSecondLevel({
     supportRequest: true,
     title: "",
-    goBack: () => {
-      trackItwIntroBack("L2");
-      dismissalDialog.show();
-    }
+    goBack: handleGoBack
   });
 
   const handleContinuePress = useCallback(() => {
