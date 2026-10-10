@@ -1,0 +1,27 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'io.pagopa.io.app'
+version = '1.0.0'
+
+android {
+  namespace 'expo.modules.zendesk'
+  defaultConfig {
+    versionCode 1
+    versionName '1.0.0'
+  }
+}
+
+repositories {
+  maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
+}
+
+dependencies {
+  implementation 'androidx.appcompat:appcompat:1.7.1'
+  api group: 'com.zendesk', name: 'chat', version: '3.6.0'
+  api group: 'com.zendesk', name: 'answerbot', version: '3.3.2'
+  api group: 'com.zendesk', name: 'messaging', version: '5.6.0'
+  api group: 'com.zendesk', name: 'support', version: '5.4.0'
+}
