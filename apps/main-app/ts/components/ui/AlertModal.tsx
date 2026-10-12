@@ -1,9 +1,4 @@
-import {
-  Body,
-  hexToRgba,
-  IOColors,
-  IOVisualCostants
-} from "@io-app/design-system";
+import { Body, hexToRgba, IOColors, IODimensions } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
@@ -17,8 +12,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "auto",
     width: "auto",
-    padding: IOVisualCostants.appMarginDefault,
-    marginHorizontal: IOVisualCostants.appMarginDefault,
+    padding: IODimensions.padding.screen.default,
+    marginHorizontal: IODimensions.padding.screen.default,
     borderCurve: "continuous",
     borderRadius: 16
   }

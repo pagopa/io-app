@@ -2,9 +2,9 @@ import {
   H3,
   IOButton,
   IOButtonProps,
+  IODimensions,
   IOMarkdownLite,
   IOPictograms,
-  IOVisualCostants,
   Pictogram,
   VSpacer,
   WithTestID
@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "center",
     alignContent: "center",
-    padding: IOVisualCostants.appMarginDefault
+    paddingHorizontal: IODimensions.padding.screen.centred,
+    paddingVertical: IODimensions.padding.screen.default
   },
   wrapperAndroid: {
     flexGrow: 1,
