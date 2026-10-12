@@ -7,7 +7,6 @@ import {
   IODimensions,
   IOSkeleton,
   IOToast,
-  IOVisualCostants,
   ListItemAction,
   ListItemHeader,
   ListItemInfo,
@@ -100,9 +99,7 @@ const CgnMerchantDetailScreen = () => {
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
     if (titleHeight === 0) {
-      setTitleHeight(
-        height - safeAreaInsets.top - IOVisualCostants.headerHeight
-      );
+      setTitleHeight(height - safeAreaInsets.top - IODimensions.height.header);
     }
   };
 

@@ -3,7 +3,7 @@ import {
   HStack,
   IOButton,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   Pictogram
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -134,7 +134,7 @@ const AndroidContent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: IOVisualCostants.headerHeight
+    paddingTop: IODimensions.height.header
   },
   title: {
     flex: 1,

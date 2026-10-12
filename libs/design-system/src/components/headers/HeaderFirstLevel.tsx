@@ -18,7 +18,7 @@ import { useIOTheme } from "../../context";
 import {
   alertEdgeToEdgeInsetTransitionConfig,
   IOColors,
-  IOVisualCostants
+  IODimensions
 } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons";
@@ -45,8 +45,8 @@ type Variant = "contrast" | "primary";
 
 const styles = StyleSheet.create({
   headerInner: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    height: IOVisualCostants.headerHeight,
+    paddingHorizontal: IODimensions.padding.screen.default,
+    height: IODimensions.height.header,
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
