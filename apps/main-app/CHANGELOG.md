@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.41.0-canary.8235](https://github.com/pagopa/io-app/compare/3.41.0-rc.2...3.41.0-canary.8235) (2026-10-12)
+
+### Bug Fixes
+
+* adjust initial route name ([3e8cfc9](https://github.com/pagopa/io-app/commit/3e8cfc9dd96f0f14e29ca57bd75755a3f8ee6a94))
+* center tab navigator icon and text ([b7bf0b5](https://github.com/pagopa/io-app/commit/b7bf0b5b41d9b05cf728551f409476fe3ef0dcfc))
+* **IT-Wallet:** add pop: true to support back events ([634c3d6](https://github.com/pagopa/io-app/commit/634c3d650339ac8a66b2d76e6cde01c662156c10))
+* **IT-Wallet:** duplicate credential detail after consent management ([45be900](https://github.com/pagopa/io-app/commit/45be900a7ec73c3c41e26f3dc018b90b787cf665))
+* **IT-Wallet:** prevent remounting tab navigator on reset ([9743b9b](https://github.com/pagopa/io-app/commit/9743b9b65c08ec75eb30a565a92dc304ef15fb94))
+* **IT-Wallet:** proximity double navigation ([b58c142](https://github.com/pagopa/io-app/commit/b58c142384f300bbb018afc8ac6a30a642f97681))
+* **IT-Wallet:** replace navigate with popTo for close actions ([31cd4e1](https://github.com/pagopa/io-app/commit/31cd4e1d56d9205296edfdf1c99c02c76cc3bb8c))
+* lock file deps ([803bc90](https://github.com/pagopa/io-app/commit/803bc906887c4bc6766d7917c1bf46a21346cdb3))
+* patch react-nativescreens ([b8182dc](https://github.com/pagopa/io-app/commit/b8182dcec07cce6e71377c02340a498b9d9df835))
+
+### Chores
+
+* headerBackTitleVisible to headerBackButtonDisplayMode ([35a2e96](https://github.com/pagopa/io-app/commit/35a2e96493bfa95f17b52f4138ae9581fb22fbfd))
+* **IT-Wallet:** introduce useItwNavigation and avodi remount ITW navigator with replaces ([0d7e489](https://github.com/pagopa/io-app/commit/0d7e4893fc650864da463d702afd9417cc304988))
+* **IT-Wallet:** skip beforeRemove for non POP or GO_BACK actions ([f4bd912](https://github.com/pagopa/io-app/commit/f4bd912181e8e1901c0f151f36b1cb74bef6cb2a))
+* **IT-Wallet:** slide from bottom for the skeu card modal ([67cc74d](https://github.com/pagopa/io-app/commit/67cc74d41115212c7337a20156842ef90d323538))
+* solved tsc ([665f98c](https://github.com/pagopa/io-app/commit/665f98ce16fdc1cc1eb3287b2840a7facb3136cf))
+* update RN deps to v7 ([2a0f200](https://github.com/pagopa/io-app/commit/2a0f200005c28204b4564d190361f8e2b1295018))
+* update RN patches ([0789638](https://github.com/pagopa/io-app/commit/0789638d5244e63ff9ef0bd57b52fe19a58d730d))
+* update snapshots ([1d1bf74](https://github.com/pagopa/io-app/commit/1d1bf742b931059fb4a844e7bdb52675c7763e88))
 ## [3.41.0-rc.2](https://github.com/pagopa/io-app/compare/3.41.0-rc.1...3.41.0-rc.2) (2026-10-09)
 
 ### Features
