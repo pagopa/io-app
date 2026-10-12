@@ -10,6 +10,7 @@ import {
   CredentialMetadata,
   ParsedCredential
 } from "../../utils/itwTypesUtils";
+import { ACCOMPANYING_PERSON_BACKGROUND_COLOR } from "../ItwCredentialCard/config";
 import { CardClaim, CardClaimContainer, CardClaimRenderer } from "./CardClaim";
 import { ClaimLabel } from "./ClaimLabel";
 import { CardSide } from "./types";
@@ -327,7 +328,7 @@ const styles = StyleSheet.create({
     borderRadius: "50%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: hexToRgba("#EAF2F9", 0.5)
+    backgroundColor: hexToRgba(ACCOMPANYING_PERSON_BACKGROUND_COLOR, 0.5)
   },
   container: {
     position: "absolute",

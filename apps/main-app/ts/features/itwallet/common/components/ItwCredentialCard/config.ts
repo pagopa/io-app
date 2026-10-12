@@ -12,6 +12,12 @@ import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItWalletThemes } from "../../utils/theme";
 
 /**
+ * Fixed artwork color from the physical Disability Card, independent of the app
+ * theme.
+ */
+export const ACCOMPANYING_PERSON_BACKGROUND_COLOR = "#EAF2F9";
+
+/**
  * Colors from which random configurations will be generated, based on the
  * provided seed.
  */
