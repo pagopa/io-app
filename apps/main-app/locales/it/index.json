@@ -3116,8 +3116,15 @@
         "otherMethods": {
           "error": {
             "banner": {
-              "cta": "Prova di nuovo",
-              "label": "Non siamo riusciti a caricare alcuni elementi della lista."
+              "label": "Non siamo riusciti a caricare alcuni elementi della lista.",
+              "bonus": {
+                "cta": "Vai ai servizi",
+                "label": "Non è stato possibile caricare alcuni bonus. Puoi accedere al servizio dalla sezione Servizi."
+              },
+              "paymentMethods": {
+                "cta": "Prova di nuovo",
+                "label": "Non è stato possibile caricare i metodi di pagamento."
+              }
             }
           }
         },
