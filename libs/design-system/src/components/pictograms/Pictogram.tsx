@@ -3,6 +3,7 @@ import { ColorValue } from "react-native";
 
 import { useIOTheme } from "../../context";
 import { IOColors, IOThemeDark, IOThemeLight } from "../../core/IOColors";
+import { IODimensions } from "../../core/tokens";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import PictogramAccessDenied from "./svg/PictogramAccessDenied";
 import PictogramActivate from "./svg/PictogramActivate";
@@ -202,7 +203,8 @@ export const IOPictograms = {
 
 export type IOPictograms = keyof typeof IOPictograms;
 
-export type IOPictogramSizeScale = 48 | 64 | 72 | 80 | 120 | 180;
+export type IOPictogramSizeScale =
+  (typeof IODimensions.size.pictogram.scale)[number];
 
 export type IOPictogramsProps = {
   allowFontScaling?: boolean;
