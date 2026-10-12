@@ -388,9 +388,9 @@ exports[`variant: genericError MessageRouterScreenErrorComponent matches snapsho
                         edges={
                           {
                             "bottom": "additive",
-                            "left": "additive",
-                            "right": "additive",
-                            "top": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
                           }
                         }
                         style={
@@ -1453,9 +1453,9 @@ exports[`variant: messageNotFound MessageRouterScreenErrorComponent matches snap
                         edges={
                           {
                             "bottom": "additive",
-                            "left": "additive",
-                            "right": "additive",
-                            "top": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
                           }
                         }
                         style={
@@ -2243,9 +2243,9 @@ exports[`variant: thirdPartyError MessageRouterScreenErrorComponent matches snap
                         edges={
                           {
                             "bottom": "additive",
-                            "left": "additive",
-                            "right": "additive",
-                            "top": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
                           }
                         }
                         style={

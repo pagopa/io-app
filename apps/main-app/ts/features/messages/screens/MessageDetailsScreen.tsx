@@ -174,6 +174,7 @@ export const MessageDetailsContent = ({
         isHeaderVisible
         pictogram={"umbrella"}
         subtitle={I18n.t("messageDetails.submitBugText")}
+        testID="message-details-error"
         title={I18n.t("global.genericError")}
       />
     );

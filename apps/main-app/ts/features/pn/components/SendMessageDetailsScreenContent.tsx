@@ -140,6 +140,7 @@ export const SendMessageDetailsScreenContent = ({
         isHeaderVisible
         pictogram="umbrella"
         subtitle={I18n.t("features.pn.details.loadError.body")}
+        testID="send-message-details-error"
         title={I18n.t("features.pn.details.loadError.title")}
       />
     );

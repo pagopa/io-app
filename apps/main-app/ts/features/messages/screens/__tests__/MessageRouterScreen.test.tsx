@@ -1,287 +1,269 @@
-import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { act, fireEvent } from "@testing-library/react-native";
-import { AnyAction, createStore, Dispatch } from "redux";
+import { Action, createStore, Store } from "redux";
 
+import * as HEADER_SECOND_LEVEL from "../../../../hooks/useHeaderSecondLevel";
 import ROUTES from "../../../../navigation/routes";
-import { applicationChangeState } from "../../../../store/actions/application";
-import * as IOHooks from "../../../../store/hooks";
+import {
+  applicationChangeState,
+  startApplicationInitialization
+} from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import PN_ROUTES from "../../../pn/navigation/routes";
+import { successGetMessageDataFor } from "../../__mocks__/messageData";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import {
   cancelGetMessageDataAction,
-  getMessageDataAction,
-  resetGetMessageDataAction
+  getMessageDataAction
 } from "../../store/actions";
 import { MessageRouterScreen } from "../MessageRouterScreen";
 
-const mockReplace = jest.fn();
 const mockNavigate = jest.fn();
 const mockGoBack = jest.fn();
 
 jest.mock("../../components/MessageRouter/MessageRouterScreenErrorComponent");
 jest.mock("../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => ({
-    replace: mockReplace,
     navigate: mockNavigate,
     goBack: mockGoBack
   })
 }));
 
-const MESSAGE_ID = "01HGRNT85KP8TC5APFQWAA3HJK";
+const mockMessageContentNavigator = jest.fn();
+jest.mock("../../navigation/MessageContentNavigator", () => ({
+  MessageContentNavigator: (props: Record<string, unknown>) => {
+    const { View } = jest.requireActual("react-native");
+    mockMessageContentNavigator(props);
+    return <View testID="mock-message-content-navigator" />;
+  }
+}));
 
-const successBase = {
-  messageId: MESSAGE_ID,
-  serviceId: "s1" as ServiceId,
-  serviceName: "serName",
-  organizationName: "orgName",
-  organizationFiscalCode: "orgFisCod",
-  firstTimeOpening: true,
-  containsAttachments: false,
-  containsPayment: undefined,
-  hasRemoteContent: false,
-  hasFIMSCTA: false,
-  createdAt: new Date(),
-  fciMessageType: "not_set" as const,
-  fciResult: "not_set" as const
-};
+const MESSAGE_ID = "01HGRNT85KP8TC5APFQWAA3HJK";
+const OTHER_MESSAGE_ID = "01HGRNT85KP8TC5APFQWAA3HJZ";
 
 describe("MessageRouterScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
-  it("renders the loading component when isLoading is true", () => {
-    const { getByTestId, toJSON } = renderScreen(MESSAGE_ID, false, "loading");
-    const loadingComponent = getByTestId("routerScreen-loading");
-    expect(loadingComponent).toBeTruthy();
-    expect(mockReplace).not.toHaveBeenCalled();
-    expect(mockNavigate).not.toHaveBeenCalled();
-    expect(toJSON()).toMatchSnapshot();
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
-  it("renders the error component when not loading", () => {
-    const { getByTestId, toJSON } = renderScreen(MESSAGE_ID, false, "error");
-    const errorComponent = getByTestId("mock-msgRouterErrorComponent");
-    expect(errorComponent).toBeTruthy();
-    expect(toJSON()).toMatchSnapshot();
-  });
-
-  it("dispatches getMessageDataAction.request on first render", () => {
-    const { mockedDispatch } = renderScreen(MESSAGE_ID, false, "idle");
-    expect(mockedDispatch).toHaveBeenCalledWith(
-      getMessageDataAction.request({
-        messageId: MESSAGE_ID,
-        fromPushNotification: false
-      })
-    );
-  });
-
-  [true, false].forEach(fromPushNotification => {
-    describe(`on second render when messageSuccessDataOrUndefined is non-null and fromPushNotification is ${fromPushNotification}`, () => {
-      it("navigates to message detail for a regular message", () => {
-        const { store } = renderScreen(
-          MESSAGE_ID,
-          fromPushNotification,
-          "idle"
-        );
-        act(() => {
-          store.dispatch(
-            getMessageDataAction.success({
-              ...successBase,
-              isLegacyGreenPass: false,
-              isPNMessage: false
-            })
-          );
-        });
-        expect(mockReplace).toHaveBeenCalledWith(
-          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-          {
-            screen: MESSAGES_ROUTES.MESSAGE_DETAIL,
-            params: { messageId: MESSAGE_ID, serviceId: "s1" }
-          }
-        );
-      });
-
-      it("navigates to green pass screen for a legacy green pass message", () => {
-        const { store } = renderScreen(
-          MESSAGE_ID,
-          fromPushNotification,
-          "idle"
-        );
-        act(() => {
-          store.dispatch(
-            getMessageDataAction.success({
-              ...successBase,
-              isLegacyGreenPass: true,
-              isPNMessage: false
-            })
-          );
-        });
-        expect(mockReplace).toHaveBeenCalledWith(
-          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-          { screen: MESSAGES_ROUTES.MESSAGE_GREEN_PASS }
-        );
-      });
-
-      [true, false].forEach(isfirstTimeOpening => {
-        it(`navigates to PN message details for a PN message when firstTimeOpening is ${isfirstTimeOpening}`, () => {
-          const { store } = renderScreen(
-            MESSAGE_ID,
-            fromPushNotification,
-            "idle"
-          );
-          act(() => {
-            store.dispatch(
-              getMessageDataAction.success({
-                ...successBase,
-                isLegacyGreenPass: false,
-                isPNMessage: true,
-                firstTimeOpening: isfirstTimeOpening
-              })
-            );
-          });
-          expect(mockReplace).toHaveBeenCalledWith(
-            MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-            {
-              screen: PN_ROUTES.MAIN,
-              params: {
-                screen: PN_ROUTES.MESSAGE_DETAILS,
-                params: {
-                  messageId: MESSAGE_ID,
-                  serviceId: "s1",
-                  firstTimeOpening: isfirstTimeOpening,
-                  sendOpeningSource: "message",
-                  sendUserType: "not_set"
-                }
-              }
-            }
-          );
-        });
-      });
-    });
-  });
-  it("navigates to messages home on second render when shouldNavigateBackAfterPushNotificationInteraction is truthy", () => {
-    const { store } = renderScreen(MESSAGE_ID, true, "idle");
-    act(() => {
-      store.dispatch(
-        getMessageDataAction.failure({
-          blockedFromPushNotificationOpt: true,
-          phase: "preconditions"
+  it.each([false, true])(
+    "should request the message data on mount (fromNotification %s)",
+    fromNotification => {
+      const { dispatchSpy } = renderScreen(fromNotification);
+      expect(dispatchSpy).toHaveBeenCalledWith(
+        getMessageDataAction.request({
+          messageId: MESSAGE_ID,
+          fromPushNotification: fromNotification
         })
       );
-    });
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MAIN, {
-      screen: MESSAGES_ROUTES.MESSAGES_HOME
-    });
-  });
+    }
+  );
 
-  it("does nothing on second render when both messageSuccessDataOrUndefined and shouldNavigateBackAfterPushNotificationInteraction are falsy", () => {
-    // Start with success data so that resetting it triggers a re-render
-    // (messageSuccessDataOrUndefined changes from truthy to undefined),
-    // exercising the "do nothing" branch while keeping both conditions falsy.
-    const { store } = renderScreen(MESSAGE_ID, false, "success");
+  type SkeletonScenario = {
+    name: string;
+    previousOutcome?: Action;
+    update?: Action;
+  };
+  const skeletonScenarios: ReadonlyArray<SkeletonScenario> = [
+    {
+      name: "while loading"
+    },
+    {
+      name: "while waiting for a retry after a session expiration",
+      update: startApplicationInitialization({ handleSessionExpiration: true })
+    },
+    {
+      name: "when the store holds the outcome of a previous message",
+      previousOutcome: getMessageDataAction.success(
+        successGetMessageDataFor(OTHER_MESSAGE_ID)
+      )
+    }
+  ];
+
+  it.each(skeletonScenarios)(
+    "should show the skeleton with the header $name",
+    ({ previousOutcome, update }) => {
+      const spiedUseHeaderSecondLevel = jest.spyOn(
+        HEADER_SECOND_LEVEL,
+        "useHeaderSecondLevel"
+      );
+      const { getByTestId, queryByTestId, store } = renderScreen(
+        false,
+        previousOutcome
+      );
+      if (update) {
+        act(() => {
+          store.dispatch(update);
+        });
+      }
+
+      expect(getByTestId("message-details-skeleton")).toBeTruthy();
+      expect(queryByTestId("mock-message-content-navigator")).toBeNull();
+      expect(queryByTestId("mock-msgRouterErrorComponent")).toBeNull();
+      expect(spiedUseHeaderSecondLevel).toHaveBeenLastCalledWith({
+        title: "",
+        supportRequest: true,
+        headerShown: true
+      });
+      expect(mockNavigate).not.toHaveBeenCalled();
+    }
+  );
+
+  it.each([false, true])(
+    "should show the loaded message with the header of its content (fromNotification %s)",
+    fromNotification => {
+      const spiedUseHeaderSecondLevel = jest.spyOn(
+        HEADER_SECOND_LEVEL,
+        "useHeaderSecondLevel"
+      );
+      const { getByTestId, queryByTestId, store } =
+        renderScreen(fromNotification);
+      const successData = successGetMessageDataFor(MESSAGE_ID);
+
+      act(() => {
+        store.dispatch(getMessageDataAction.success(successData));
+      });
+
+      expect(getByTestId("mock-message-content-navigator")).toBeTruthy();
+      expect(queryByTestId("message-details-skeleton")).toBeNull();
+      expect(mockMessageContentNavigator).toHaveBeenLastCalledWith({
+        fromPushNotification: fromNotification,
+        message: successData
+      });
+      expect(spiedUseHeaderSecondLevel).toHaveBeenLastCalledWith({
+        title: "",
+        supportRequest: true,
+        headerShown: false
+      });
+      expect(mockNavigate).not.toHaveBeenCalled();
+    }
+  );
+
+  it("should show the error with the header when the loading fails", () => {
+    const spiedUseHeaderSecondLevel = jest.spyOn(
+      HEADER_SECOND_LEVEL,
+      "useHeaderSecondLevel"
+    );
+    const { getByTestId, queryByTestId, store } = renderScreen(false);
+
     act(() => {
-      store.dispatch(resetGetMessageDataAction());
+      store.dispatch(getMessageDataAction.failure({ phase: "messageDetails" }));
     });
-    expect(mockReplace).not.toHaveBeenCalled();
-    expect(mockNavigate).not.toHaveBeenCalled();
+
+    expect(getByTestId("mock-msgRouterErrorComponent")).toBeTruthy();
+    expect(queryByTestId("message-details-skeleton")).toBeNull();
+    expect(spiedUseHeaderSecondLevel).toHaveBeenLastCalledWith({
+      title: "",
+      supportRequest: true,
+      headerShown: true
+    });
   });
 
-  it("dispatches cancel action and navigates back when cancel is triggered", () => {
-    const { getByTestId, mockedDispatch } = renderScreen(
-      MESSAGE_ID,
-      false,
-      "error"
-    );
-    const cancelButton = getByTestId("messageRouterError-cancel-button");
-    fireEvent.press(cancelButton);
-    expect(mockedDispatch).toHaveBeenCalledWith(cancelGetMessageDataAction());
-    expect(mockGoBack).toHaveBeenCalled();
+  it("should go back without cancelling anything when cancel is pressed on the error", () => {
+    const { dispatchSpy, getByTestId, store } = renderScreen(false);
+    act(() => {
+      store.dispatch(getMessageDataAction.failure({ phase: "messageDetails" }));
+    });
+    dispatchSpy.mockClear();
+
+    fireEvent.press(getByTestId("messageRouterError-cancel-button"));
+
+    expect(mockGoBack).toHaveBeenCalledTimes(1);
+    expect(dispatchSpy).not.toHaveBeenCalledWith(cancelGetMessageDataAction());
   });
-  it("dispatches the getMessageData action when retry is triggered", () => {
-    const { getByTestId, mockedDispatch } = renderScreen(
-      MESSAGE_ID,
-      false,
-      "error"
-    );
-    const retryButton = getByTestId("messageRouterError-retry-button");
-    fireEvent.press(retryButton);
-    expect(mockedDispatch).toHaveBeenCalledWith(
+
+  it("should request the message data again when retry is pressed on the error", () => {
+    const { dispatchSpy, getByTestId, queryByTestId, store } =
+      renderScreen(true);
+    act(() => {
+      store.dispatch(getMessageDataAction.failure({ phase: "messageDetails" }));
+    });
+    dispatchSpy.mockClear();
+
+    fireEvent.press(getByTestId("messageRouterError-retry-button"));
+
+    expect(dispatchSpy).toHaveBeenCalledWith(
       getMessageDataAction.request({
         messageId: MESSAGE_ID,
-        fromPushNotification: false
+        fromPushNotification: true
       })
     );
     expect(mockGoBack).not.toHaveBeenCalled();
+    expect(getByTestId("message-details-skeleton")).toBeTruthy();
+    expect(queryByTestId("mock-msgRouterErrorComponent")).toBeNull();
+  });
+
+  it("should navigate to the messages home when the message is blocked from a push notification", () => {
+    const { getByTestId, store } = renderScreen(true);
+
+    act(() => {
+      store.dispatch(
+        getMessageDataAction.failure({
+          phase: "preconditions",
+          blockedFromPushNotificationOpt: true
+        })
+      );
+    });
+
+    expect(mockNavigate).toHaveBeenCalledTimes(1);
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
+    expect(getByTestId("message-details-skeleton")).toBeTruthy();
+  });
+
+  it("should not navigate to the messages home for a blocked outcome of a previous request", () => {
+    renderScreen(
+      true,
+      getMessageDataAction.failure({
+        phase: "preconditions",
+        blockedFromPushNotificationOpt: true
+      })
+    );
+
+    expect(mockNavigate).not.toHaveBeenCalled();
+  });
+
+  it("should cancel the loading when closed before the message is loaded", () => {
+    const { dispatchSpy, unmount } = renderScreen(false);
+    dispatchSpy.mockClear();
+
+    unmount();
+
+    expect(dispatchSpy).toHaveBeenCalledWith(cancelGetMessageDataAction());
+  });
+
+  it("should not cancel anything when closed after the message is loaded", () => {
+    const { dispatchSpy, store, unmount } = renderScreen(false);
+    act(() => {
+      store.dispatch(
+        getMessageDataAction.success(successGetMessageDataFor(MESSAGE_ID))
+      );
+    });
+    dispatchSpy.mockClear();
+
+    unmount();
+
+    expect(dispatchSpy).not.toHaveBeenCalledWith(cancelGetMessageDataAction());
   });
 });
 
-type TestStatus = "blocked" | "error" | "idle" | "loading" | "success";
-
-const renderScreen = (
-  messageId: string,
-  fromPushNotification: boolean,
-  status: TestStatus
-) => {
-  const globalState = globalStateFromStatus(
-    status,
-    messageId,
-    fromPushNotification
-  );
-  const store = createStore(appReducer, globalState as any);
-
-  const mockedDispatch = jest.fn();
-  jest
-    .spyOn(IOHooks, "useIODispatch")
-    .mockImplementation(() => mockedDispatch as Dispatch<AnyAction>);
+const renderScreen = (fromNotification: boolean, previousOutcome?: Action) => {
+  const activeState = appReducer(undefined, applicationChangeState("active"));
+  const globalState = previousOutcome
+    ? appReducer(activeState, previousOutcome)
+    : activeState;
+  const store: Store<GlobalState> = createStore(appReducer, globalState as any);
+  const dispatchSpy = jest.spyOn(store, "dispatch");
 
   const renderResult = renderScreenWithNavigationStoreContext(
     MessageRouterScreen,
     MESSAGES_ROUTES.MESSAGE_ROUTER,
-    { messageId, fromNotification: fromPushNotification },
+    { messageId: MESSAGE_ID, fromNotification },
     store
   );
-  return { ...renderResult, mockedDispatch, store };
-};
-
-const globalStateFromStatus = (
-  status: TestStatus,
-  messageId: string,
-  fromPushNotification: boolean
-) => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-  switch (status) {
-    case "blocked":
-      return appReducer(
-        globalState,
-        getMessageDataAction.failure({
-          blockedFromPushNotificationOpt: true,
-          phase: "preconditions"
-        })
-      );
-    case "error":
-      return appReducer(
-        globalState,
-        getMessageDataAction.failure({ phase: "messageDetails" })
-      );
-    case "loading":
-      return appReducer(
-        globalState,
-        getMessageDataAction.request({ messageId, fromPushNotification })
-      );
-    case "success":
-      return appReducer(
-        globalState,
-        getMessageDataAction.success({
-          ...successBase,
-          messageId,
-          isLegacyGreenPass: false,
-          isPNMessage: false
-        })
-      );
-    default:
-      return globalState;
-  }
+  return { ...renderResult, dispatchSpy, store };
 };

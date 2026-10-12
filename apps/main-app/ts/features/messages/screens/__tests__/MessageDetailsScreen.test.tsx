@@ -1,5 +1,6 @@
 import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
 import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
+import { act } from "@testing-library/react-native";
 import { Action, createStore, Store } from "redux";
 
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -12,17 +13,21 @@ import {
   messageWithExpiredPayment,
   messageWithValidPayment
 } from "../../../messages/__mocks__/message";
+import { successGetMessageDataFor } from "../../../messages/__mocks__/messageData";
 import { service_1 } from "../../../messages/__mocks__/messages";
 import {
+  getMessageDataAction,
   loadMessageById,
   loadMessageDetails,
-  loadThirdPartyMessage
+  loadThirdPartyMessage,
+  resetGetMessageDataAction
 } from "../../../messages/store/actions";
 import {
   toUIMessage,
   toUIMessageDetails
 } from "../../../messages/store/reducers/transformers";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import * as ANALYTICS from "../../analytics";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
@@ -53,6 +58,10 @@ const thirdPartyMessage: ThirdPartyMessageWithContent = {
 };
 
 describe("MessageDetailsScreen", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it("should display the attachment tag if there are attachments", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
@@ -131,7 +140,7 @@ describe("MessageDetailsScreen", () => {
     const store: Store<GlobalState> = createStore(appReducer, state as any);
 
     const { component } = renderComponent(store);
-    expect(component.queryByTestId("due-date-alert")).toBeDefined();
+    expect(component.queryByTestId("due-date-alert")).not.toBeNull();
   });
 
   it("should NOT display the alert banner if the message's due date is NOT expiring", () => {
@@ -179,9 +188,120 @@ describe("MessageDetailsScreen", () => {
 
     expect(renderedTestIDs).toEqual(expectedTestIDs);
   });
+
+  describe("open message tracking", () => {
+    const loadedStateSequence = (
+      ...extraActions: ReadonlyArray<Action>
+    ): ReadonlyArray<Action> => [
+      applicationChangeState("active"),
+      loadMessageById.success(toUIMessage(message_1)),
+      loadServiceDetail.success(service_1),
+      loadMessageDetails.success(toUIMessageDetails(messageWithValidPayment)),
+      ...extraActions
+    ];
+
+    it.each([false, true])(
+      "should track the opening with the loaded data (fromPushNotification %s)",
+      fromPushNotification => {
+        const spiedTrackOpenMessage = jest
+          .spyOn(ANALYTICS, "trackOpenMessageFromSuccessData")
+          .mockImplementation();
+        const successData = successGetMessageDataFor(message_1.id);
+        const store = storeFromSequence(
+          loadedStateSequence(getMessageDataAction.success(successData))
+        );
+
+        renderComponent(store, fromPushNotification);
+
+        expect(spiedTrackOpenMessage).toHaveBeenCalledTimes(1);
+        expect(spiedTrackOpenMessage).toHaveBeenCalledWith(
+          successData,
+          fromPushNotification
+        );
+      }
+    );
+
+    type NotTrackedScenario = {
+      extraActions: ReadonlyArray<Action>;
+      name: string;
+    };
+    const notTrackedScenarios: ReadonlyArray<NotTrackedScenario> = [
+      { name: "no message data has been loaded", extraActions: [] },
+      {
+        name: "the data of another message has been loaded",
+        extraActions: [
+          getMessageDataAction.success(
+            successGetMessageDataFor("anotherMessageId")
+          )
+        ]
+      },
+      {
+        name: "the message data is still loading",
+        extraActions: [
+          getMessageDataAction.request({
+            messageId: message_1.id,
+            fromPushNotification: false
+          })
+        ]
+      }
+    ];
+
+    it.each(notTrackedScenarios)(
+      "should not track the opening when $name",
+      ({ extraActions }) => {
+        const spiedTrackOpenMessage = jest
+          .spyOn(ANALYTICS, "trackOpenMessageFromSuccessData")
+          .mockImplementation();
+        const store = storeFromSequence(loadedStateSequence(...extraActions));
+
+        renderComponent(store);
+
+        expect(spiedTrackOpenMessage).not.toHaveBeenCalled();
+      }
+    );
+  });
+
+  it("should keep the loaded message data when closed", () => {
+    const store = storeFromSequence([
+      applicationChangeState("active"),
+      loadMessageById.success(toUIMessage(message_1)),
+      loadServiceDetail.success(service_1),
+      loadMessageDetails.success(toUIMessageDetails(messageWithValidPayment)),
+      getMessageDataAction.success(successGetMessageDataFor(message_1.id))
+    ]);
+    const dispatchSpy = jest.spyOn(store, "dispatch");
+    const { component } = renderComponent(store);
+
+    act(component.unmount);
+
+    expect(dispatchSpy).not.toHaveBeenCalledWith(resetGetMessageDataAction());
+    expect(store.getState().entities.messages.messageGetStatus.status).toBe(
+      "success"
+    );
+  });
+
+  it("should show the error with the header when the message is not available", () => {
+    const store = storeFromSequence([applicationChangeState("active")]);
+
+    const { component } = renderComponent(store);
+
+    expect(component.getByTestId("message-details-error")).toBeTruthy();
+    expect(component.toJSON()).toMatchSnapshot();
+  });
 });
 
-const renderComponent = (store: Store<GlobalState>) => {
+const storeFromSequence = (
+  sequenceOfActions: ReadonlyArray<Action>
+): Store<GlobalState> =>
+  createStore(
+    appReducer,
+    reproduceSequence({} as GlobalState, appReducer, sequenceOfActions) as any
+  );
+
+const renderComponent = (
+  store: Store<GlobalState>,
+  fromPushNotification = false
+) => {
   const { id, sender_service_id } = message_1;
 
   return {
@@ -189,6 +309,7 @@ const renderComponent = (store: Store<GlobalState>) => {
       MessageDetailsScreen,
       MESSAGES_ROUTES.MESSAGE_DETAIL,
       {
+        fromPushNotification,
         messageId: id,
         serviceId: sender_service_id
       },

@@ -44,6 +44,7 @@ export const MessageDetailsSkeleton = () => {
               accessibilityHint={I18n.t("messageDetails.pleaseWait")}
               accessibilityLabel={I18n.t("messageDetails.loadingText")}
               accessible={true}
+              testID="message-details-skeleton-loading"
             >
               <View
                 accessibilityElementsHidden={true}
