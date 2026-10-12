@@ -58,9 +58,6 @@ export const MessageRouterScreen = ({ route }: MessageRouterScreenProps) => {
       return (
         <MessageContentNavigator
           fromPushNotification={fromNotification}
-          // Another message can be opened in this screen, and its kind decides
-          // the initial route of the navigator
-          key={status.successData.messageId}
           message={status.successData}
         />
       );
