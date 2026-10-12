@@ -3,6 +3,11 @@
 name: Publish app canary
 on:
   workflow_dispatch:
+    inputs:
+      description:
+        description: Description of the branch or development included in this canary
+        required: true
+        type: string
 permissions:
   contents: write
   actions: read
@@ -102,7 +107,9 @@ jobs:
             channel: "C03QJNMTL1E"
             unfurl_links: false
             unfurl_media: false
-            text: "È disponibile la nuova versione `${{ needs.prepare-canary-release.outputs.canaryVersion }}` della canary dell'app."
+            text: ${{ toJSON(format('È disponibile la nuova versione `{0}` della canary dell''app.
+
+            {1}', needs.prepare-canary-release.outputs.canaryVersion, inputs.description)) }}
   notify-failure:
     name: Notify failure on Slack
     runs-on: ubuntu-24.04
