@@ -26,6 +26,7 @@ const mockTrackItwAlreadyHasCredential = jest.fn();
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
   useNavigation: () => ({
+    addListener: jest.fn(),
     replace: mockReplace,
     navigate: mockNavigate,
     popToTop: mockPopToTop,

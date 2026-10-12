@@ -284,9 +284,10 @@ jest
   .spyOn(AccessibilityInfo, "isBoldTextEnabled")
   .mockImplementation(() => Promise.resolve(false));
 
-jest
-  .spyOn(AccessibilityInfo, "isScreenReaderEnabled")
-  .mockImplementation(() => Promise.resolve(false));
+// Plain function (not a jest mock) so it survives `resetAllMocks` and
+// `restoreAllMocks`: the patched stack `CardContainer` calls it on every mount.
+// eslint-disable-next-line functional/immutable-data
+AccessibilityInfo.isScreenReaderEnabled = () => Promise.resolve(false);
 
 /** NefInfo's `fetch` method mock */
 jest.mock("@react-native-community/netinfo", () => ({
