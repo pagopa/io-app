@@ -5,8 +5,8 @@
  */
 
 import {
+  IODimensions,
   IOSpacingScale,
-  IOVisualCostants,
   ModuleIDP,
   VSpacer,
   VStack
@@ -40,7 +40,7 @@ const GRID_GUTTER: IOSpacingScale = 8;
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    paddingHorizontal: IODimensions.padding.screen.default
   }
 });
 

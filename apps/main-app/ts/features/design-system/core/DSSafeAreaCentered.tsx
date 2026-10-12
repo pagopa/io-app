@@ -3,7 +3,7 @@ import {
   H4,
   hexToRgba,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   VStack
 } from "@io-app/design-system";
 import { Platform, ScrollView, Text, View } from "react-native";
@@ -39,7 +39,7 @@ export const DSSafeAreaCentered = () => {
       >
         <VStack
           space={24}
-          style={{ padding: IOVisualCostants.appMarginDefault }}
+          style={{ padding: IODimensions.padding.screen.default }}
         >
           <H4>Start</H4>
           <Body>Single text</Body>
@@ -53,7 +53,7 @@ export const DSSafeAreaCentered = () => {
           position: "absolute",
           width: "100%",
           paddingBottom: insets.bottom,
-          paddingHorizontal: IOVisualCostants.appMarginDefault,
+          paddingHorizontal: IODimensions.padding.screen.default,
           backgroundColor: hexToRgba(IOColors["blueIO-500"], 0.5)
         }}
       >

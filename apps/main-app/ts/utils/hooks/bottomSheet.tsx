@@ -10,7 +10,7 @@ import {
 import {
   IOBottomSheetHeaderRadius,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -115,7 +115,7 @@ export const useIOBottomSheetModal = ({
     <BottomSheetScrollView
       overScrollMode={"never"}
       style={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
     >
       {component}

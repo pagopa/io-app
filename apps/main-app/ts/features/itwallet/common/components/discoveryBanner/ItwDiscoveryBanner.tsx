@@ -1,4 +1,4 @@
-import { Banner, IOVisualCostants } from "@io-app/design-system";
+import { Banner, IODimensions } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { createRef, useMemo } from "react";
@@ -111,7 +111,7 @@ export const ItwDiscoveryBannerLegacy = ({
 
 const styles = StyleSheet.create({
   margins: {
-    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginHorizontal: IODimensions.padding.screen.default,
     marginVertical: 16
   }
 });

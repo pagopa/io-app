@@ -8,7 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { IOVisualCostants } from "../../core";
+import { IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { throttle } from "../../utils/throttle";
 import { Dismissable } from "../templates";
@@ -117,7 +117,7 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
       <SafeAreaView pointerEvents="box-none" style={styles.container}>
         <View
           pointerEvents="box-none"
-          style={{ padding: IOVisualCostants.appMarginDefault }}
+          style={{ padding: IODimensions.padding.screen.default }}
         >
           {toasts.map(toast => (
             <ToastNotificationStackItem

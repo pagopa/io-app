@@ -1,11 +1,11 @@
 import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { IOSpacingScale, IOVisualCostants } from "../../../core";
+import { IODimensions, IODimensionScale } from "../../../core";
 
 /* Extra bottom margin for iPhone bottom handle because
    ButtonLink doesn't have a fixed height */
-const extraSafeAreaMargin: IOSpacingScale = 8;
+const extraSafeAreaMargin: IODimensionScale = 8;
 
 export const useBottomMargins = (
   withSecondaryAction = false,
@@ -21,7 +21,7 @@ export const useBottomMargins = (
      from sticking to the bottom. */
   const bottomMargin =
     !needSafeAreaMargin || excludeSafeAreaMargins
-      ? IOVisualCostants.appMarginDefault
+      ? IODimensions.padding.screen.default
       : insets.bottom + edgeToEdgeMargin;
 
   /* When the secondary action is visible, add extra margin

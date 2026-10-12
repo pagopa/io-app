@@ -4,8 +4,8 @@ import {
   ContentWrapper,
   Divider,
   H6,
+  IODimensions,
   IOSpacingScale,
-  IOVisualCostants,
   Pictogram,
   SearchInput,
   SearchInputRef,
@@ -153,7 +153,7 @@ export function CgnMerchantSearchScreen() {
 
 const styles = StyleSheet.create({
   emptyListContainer: {
-    marginHorizontal: IOVisualCostants.appMarginDefault
+    marginHorizontal: IODimensions.padding.screen.default
   }
 });
 

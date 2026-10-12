@@ -2,8 +2,8 @@ import {
   ContentWrapper,
   Divider,
   IOButton,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
   VSpacer
@@ -417,7 +417,7 @@ const ZendeskAskPermissions = () => {
 
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
         data={items}
         ItemSeparatorComponent={() => <Divider />}

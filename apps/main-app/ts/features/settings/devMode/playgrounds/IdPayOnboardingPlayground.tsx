@@ -4,7 +4,7 @@ import {
   BodySmall,
   H4,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   PressableListItemBase,
   TextInput,
   VSpacer
@@ -48,7 +48,7 @@ const IdPayOnboardingPlayground = () => {
   return (
     <ScrollView
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        paddingHorizontal: IODimensions.padding.screen.default,
         flexGrow: 1
       }}
     >

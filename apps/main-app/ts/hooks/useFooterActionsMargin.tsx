@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@io-app/design-system";
+import { IODimensions } from "@io-app/design-system";
 import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -41,7 +41,7 @@ export const useFooterActionsMargin = (
      from sticking to the bottom. */
   const bottomMargin =
     !needSafeAreaMargin || excludeSafeAreaMargins
-      ? IOVisualCostants.appMarginDefault
+      ? IODimensions.padding.screen.default
       : insets.bottom + edgeToEdgeMargin;
 
   return {

@@ -2,8 +2,8 @@ import {
   ContentWrapper,
   IconButton,
   IOColors,
+  IODimensions,
   IOSpringValues,
-  IOVisualCostants,
   triggerHaptic,
   useIOThemeContext
 } from "@io-app/design-system";
@@ -225,7 +225,7 @@ const ListItemSwipeAction = ({
     () => ({
       flex: 1,
       backgroundColor: IOColors[theme["appBackground-primary"]],
-      marginHorizontal: IOVisualCostants.appMarginDefault * -1
+      marginHorizontal: IODimensions.padding.screen.default * -1
     }),
     [theme]
   );

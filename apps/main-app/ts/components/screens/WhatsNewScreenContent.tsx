@@ -3,8 +3,8 @@ import {
   H3,
   IOButton,
   IOButtonProps,
+  IODimensions,
   IOPictograms,
-  IOVisualCostants,
   Pictogram,
   VStack,
   WithTestID
@@ -107,7 +107,7 @@ export const WhatsNewScreenContent = ({
 
 const styles = StyleSheet.create({
   mainStack: {
-    padding: IOVisualCostants.appMarginDefault
+    padding: IODimensions.padding.screen.default
   },
   container: {
     flexGrow: 1,

@@ -25,9 +25,9 @@ import Animated, {
 import { useIONewTypeface, useIOTheme } from "../../context";
 import {
   IOColors,
+  IODimensions,
   IOSpacingScale,
-  IOTypography,
-  IOVisualCostants
+  IOTypography
 } from "../../core";
 import {
   IOFontSize,
@@ -125,7 +125,7 @@ export const SearchInput = ({
        - `SearchInput` entire width
        - `Cancel` button */
   const inputWidth: number =
-    Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
+    Dimensions.get("window").width - IODimensions.padding.screen.default * 2;
 
   const [cancelButtonWidth, setCancelButtonWidth] =
     useState<LayoutRectangle["width"]>(0);
@@ -171,7 +171,7 @@ export const SearchInput = ({
           translateX: interpolate(
             showCancelButton,
             [0, 1],
-            [cancelButtonWidth + IOVisualCostants.appMarginDefault, 0],
+            [cancelButtonWidth + IODimensions.padding.screen.default, 0],
             Extrapolation.CLAMP
           )
         }

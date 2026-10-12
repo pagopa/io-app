@@ -7,6 +7,7 @@ import {
   hexToRgba,
   HStack,
   IOColors,
+  IODimensions,
   IOVisualCostants,
   RadioGroup,
   useIOTheme,
@@ -148,7 +149,7 @@ export const DSDynamicBackground = () => {
         style={{
           zIndex: 10,
           marginTop: headerHeight + insets.top,
-          marginHorizontal: IOVisualCostants.appMarginDefault
+          marginHorizontal: IODimensions.padding.screen.default
         }}
       >
         <VStack space={24}>
@@ -203,8 +204,8 @@ export const DSDynamicBackground = () => {
           style={{
             height: scrollGradientHeight,
             position: "absolute",
-            left: -IOVisualCostants.appMarginDefault,
-            right: -IOVisualCostants.appMarginDefault,
+            left: -IODimensions.padding.screen.default,
+            right: -IODimensions.padding.screen.default,
             bottom: -scrollGradientHeight
           }}
         />

@@ -1,8 +1,8 @@
 import {
   hexToRgba,
   IOColors,
+  IODimensions,
   IOSpacingScale,
-  IOVisualCostants,
   useIOTheme
 } from "@io-app/design-system";
 import { LinearGradient } from "expo-linear-gradient";
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill
   },
   buttonContainer: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     width: "100%",
     flexShrink: 0
   },
@@ -166,7 +166,7 @@ export const IOListView = <T,>({
               ? safeBottomAreaHeight
               : bottomMargin + contentEndMargin,
           paddingHorizontal: includeContentMargins
-            ? IOVisualCostants.appMarginDefault
+            ? IODimensions.padding.screen.default
             : 0,
           ...(contentContainerStyle || {})
         },

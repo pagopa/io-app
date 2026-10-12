@@ -1,9 +1,4 @@
-import {
-  Divider,
-  IOButton,
-  IOVisualCostants,
-  VStack
-} from "@io-app/design-system";
+import { Divider, IOButton, IODimensions, VStack } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
@@ -84,7 +79,7 @@ const ItwL2CredentialOnboardingSection = () => {
 const styles = StyleSheet.create({
   wrapper: {
     paddingVertical: 16,
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     gap: 16
   }
 });

@@ -1,6 +1,7 @@
 import {
   Avatar,
   H6,
+  IODimensions,
   IOSkeleton,
   IOSpacingScale,
   IOVisualCostants,
@@ -22,7 +23,7 @@ export type FeaturedInstitutionCardProps = WithTestID<{
 }>;
 
 export const CARD_WIDTH =
-  Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
+  Dimensions.get("window").width - IODimensions.padding.screen.default * 2;
 
 const cardPaddingHorizontal: IOSpacingScale = 12;
 const cardBorderRadius = 8;

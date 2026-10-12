@@ -16,9 +16,9 @@ import {
   footerBoxShadow,
   hexToRgba,
   IOColors,
+  IODimensions,
   IOSpacer,
-  IOSpacing,
-  IOVisualCostants
+  IOSpacing
 } from "../../core";
 import { WithTestID } from "../../utils/types";
 import {
@@ -104,7 +104,7 @@ const spaceBetweenActionAndLink: IOSpacer = 16;
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     width: "100%",
     flexShrink: 0
   },

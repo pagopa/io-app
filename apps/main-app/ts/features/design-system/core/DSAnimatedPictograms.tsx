@@ -2,8 +2,8 @@ import {
   ContentWrapper,
   hexToRgba,
   IOColors,
+  IODimensions,
   IOPictogramSizeScale,
-  IOVisualCostants,
   RadioGroup,
   useIOTheme
 } from "@io-app/design-system";
@@ -68,7 +68,7 @@ export const DSAnimatedPictograms = () => {
 
   const pictogramAreaHeight =
     pictogramSize +
-    IOVisualCostants.appMarginDefault * 2 -
+    IODimensions.padding.screen.default * 2 -
     scrollGradientHeight;
 
   return (
@@ -83,7 +83,7 @@ export const DSAnimatedPictograms = () => {
           alignItems: "center"
         }}
       >
-        <View style={{ marginVertical: IOVisualCostants.appMarginDefault }}>
+        <View style={{ marginVertical: IODimensions.padding.screen.default }}>
           <AnimatedPictogram
             key={getCurrentPictogram()?.name || pictogramsRefs[0].name}
             name={getCurrentPictogram()?.name || pictogramsRefs[0].name}
@@ -99,8 +99,8 @@ export const DSAnimatedPictograms = () => {
           style={{
             height: scrollGradientHeight,
             position: "absolute",
-            left: -IOVisualCostants.appMarginDefault,
-            right: -IOVisualCostants.appMarginDefault,
+            left: -IODimensions.padding.screen.default,
+            right: -IODimensions.padding.screen.default,
             bottom: -scrollGradientHeight
           }}
         />

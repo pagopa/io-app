@@ -1,4 +1,4 @@
-import { IOSpacing, IOVisualCostants } from "@io-app/design-system";
+import { IODimensions, IOSpacing } from "@io-app/design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type EndScreenSpacingValues = {
@@ -27,7 +27,7 @@ export const useScreenEndMargin = (): EndScreenSpacingValues => {
 
   /* We use this fallback value to ensure that the spacing
      is is consistent across all axes. */
-  const fallbackSafeAreaMargin = IOVisualCostants.appMarginDefault;
+  const fallbackSafeAreaMargin = IODimensions.padding.screen.default;
 
   /* End content margin. If the devices don't have safe area
      boundaries, we calculate the difference to get the same spacing

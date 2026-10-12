@@ -1,6 +1,5 @@
 import {
   Badge,
-  IOVisualCostants,
   ListItemHeader,
   ModuleCredential,
   VStack
@@ -8,7 +7,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -54,15 +53,16 @@ const WalletCardOnboardingScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       headerActionsProp={{ showHelp: true }}
+      includeContentMargins
       title={{
         label: I18n.t("features.wallet.onboarding.title")
       }}
     >
-      <View style={styles.wrapper}>
+      <VStack space={16} style={{ paddingVertical: 16 }}>
         <ItwDiscoveryBannerOnboarding />
         {isItwSectionVisible ? <ItwCredentialOnboardingSection /> : null}
         <OtherCardsOnboardingSection showTitle={isItwSectionVisible} />
-      </View>
+      </VStack>
     </IOScrollViewWithLargeHeader>
   );
 };
@@ -160,13 +160,5 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    paddingVertical: 16,
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    gap: 16
-  }
-});
 
 export { WalletCardOnboardingScreen };

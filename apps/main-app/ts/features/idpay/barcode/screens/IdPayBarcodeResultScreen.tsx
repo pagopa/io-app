@@ -3,9 +3,9 @@ import {
   Body,
   H3,
   IOColors,
+  IODimensions,
   IOText,
   IOTypography,
-  IOVisualCostants,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -283,7 +283,7 @@ const LoadingScreen = () => (
 const styles = StyleSheet.create({
   loadingWrapper: {
     flex: 1,
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     justifyContent: "center",
     alignItems: "center"
   },

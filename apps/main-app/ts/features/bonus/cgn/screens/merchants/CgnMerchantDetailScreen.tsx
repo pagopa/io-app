@@ -4,6 +4,7 @@ import {
   ContentWrapper,
   Divider,
   H1,
+  IODimensions,
   IOSkeleton,
   IOToast,
   IOVisualCostants,
@@ -66,7 +67,7 @@ const CgnMerchantDetailScreen = () => {
   const paddingBottom: number = useMemo(
     () =>
       safeAreaInsets.bottom === 0
-        ? IOVisualCostants.appMarginDefault
+        ? IODimensions.padding.screen.default
         : safeAreaInsets.bottom,
     [safeAreaInsets]
   );

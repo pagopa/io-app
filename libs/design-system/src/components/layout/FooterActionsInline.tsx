@@ -5,10 +5,10 @@ import { useIOTheme, useIOThemeContext } from "../../context";
 import {
   footerBoxShadow,
   IOColors,
+  IODimensions,
   IOSpacer,
   IOSpacing,
-  IOSpacingScale,
-  IOVisualCostants
+  IOSpacingScale
 } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { IOButton, IOButtonBlockSpecificProps } from "../buttons";
@@ -45,7 +45,7 @@ type IOButtonBlockProps = Omit<
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     width: "100%",
     flexShrink: 0
   },

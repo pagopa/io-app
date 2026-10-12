@@ -4,9 +4,9 @@ import {
   IOButton,
   IOButtonLinkSpecificProps,
   IOColors,
+  IODimensions,
   IOSpacer,
   IOSpacingScale,
-  IOVisualCostants,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill
   },
   buttonContainer: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     width: "100%",
     flexShrink: 0
   },
@@ -310,7 +310,7 @@ export const IOScrollView = ({
                 ? safeBottomAreaHeight
                 : bottomMargin + contentEndMargin,
             paddingHorizontal: includeContentMargins
-              ? IOVisualCostants.appMarginDefault
+              ? IODimensions.padding.screen.default
               : 0,
             ...contentContainerStyle
           },
