@@ -98,7 +98,6 @@ const componentGap = {
   listItem: {
     leading: system.gap.leading,
     action: 16,
-    logo: 8,
     description: system.gap.description
   },
   /* Leading graphic → content, content → trailing element (chevron, badge…) */

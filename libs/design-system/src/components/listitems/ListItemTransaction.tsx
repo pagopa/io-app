@@ -2,13 +2,7 @@ import { isValidElement, ReactNode } from "react";
 import { ImageURISource, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import {
-  IOColors,
-  IOListItemLogoMargin,
-  IOListItemStyles,
-  IOListItemVisualParams,
-  IOVisualCostants
-} from "../../core";
+import { IOColors, IODimensions, IOListItemStyles } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { isImageUri } from "../../utils/url";
 import { Avatar } from "../avatar/Avatar";
@@ -110,7 +104,7 @@ const ListItemTransactionContent = ({
     <>
       <HStack
         allowScaleSpacing
-        space={IOListItemLogoMargin}
+        space={IODimensions.gap.listItem.leading}
         style={{ alignItems: "center", flexShrink: 1 }}
       >
         {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
@@ -150,7 +144,7 @@ const ListItemTransactionContent = ({
             allowFontScaling
             color={interactiveColor}
             name="chevronRightListItem"
-            size={IOListItemVisualParams.chevronSize}
+            size={IODimensions.size.icon.chevron}
           />
         )}
       </HStack>
@@ -232,7 +226,7 @@ export const ListItemTransaction = ({
         <View
           style={[
             IOListItemStyles.listItemInner,
-            { columnGap: IOListItemVisualParams.iconMargin }
+            { columnGap: IODimensions.gap.listItem.leading }
           ]}
         >
           <ListItemTransactionContent {...contentProps} />
@@ -252,18 +246,18 @@ const ListItemTransactionSkeleton = ({
     style={IOListItemStyles.listItem}
   >
     <View style={IOListItemStyles.listItemInner}>
-      <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
+      <View style={{ marginRight: IODimensions.gap.listItem.leading }}>
         <IOSkeleton
-          radius={IOVisualCostants.avatarRadiusSizeSmall}
+          radius={IODimensions.radius.avatar.small}
           shape="square"
-          size={IOVisualCostants.avatarSizeSmall}
+          size={IODimensions.size.avatar.small}
         />
       </View>
       <VStack space={4} style={{ flexGrow: 1 }}>
         <IOSkeleton height={16} radius={8} shape="rectangle" width={62} />
         <IOSkeleton height={16} radius={8} shape="rectangle" width={107} />
       </VStack>
-      <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
+      <View style={{ marginLeft: IODimensions.gap.listItem.leading }}>
         <IOSkeleton height={24} radius={8} shape="rectangle" width={70} />
       </View>
     </View>

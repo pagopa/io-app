@@ -3,14 +3,7 @@ import { GestureResponderEvent, Image, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import {
-  IOColors,
-  IOListItemStyles,
-  IOListItemVisualParams,
-  IOSelectionListItemVisualParams,
-  IOSpacer,
-  IOVisualCostants
-} from "../../core";
+import { IOColors, IODimensions, IOListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -192,11 +185,11 @@ export const ListItemNav = ({
                 allowFontScaling
                 color={defaultIconColor}
                 name={icon}
-                size={IOListItemVisualParams.iconSize}
+                size={IODimensions.size.icon.listItem}
               />
               <HSpacer
                 allowScaleSpacing
-                size={IOVisualCostants.iconMargin as IOSpacer}
+                size={IODimensions.gap.listItem.leading}
               />
             </>
           )}
@@ -206,15 +199,13 @@ export const ListItemNav = ({
                 accessibilityIgnoresInvertColors
                 source={{ uri: paymentLogoUri }}
                 style={{
-                  width:
-                    IOSelectionListItemVisualParams.iconSize * dynamicFontScale,
-                  height:
-                    IOSelectionListItemVisualParams.iconSize * dynamicFontScale
+                  width: IODimensions.size.icon.listItem * dynamicFontScale,
+                  height: IODimensions.size.icon.listItem * dynamicFontScale
                 }}
               />
               <HSpacer
                 allowScaleSpacing
-                size={IOVisualCostants.iconMargin as IOSpacer}
+                size={IODimensions.gap.listItem.leading}
               />
             </>
           )}
@@ -223,7 +214,7 @@ export const ListItemNav = ({
               <Avatar size="small" {...avatar} />
               <HSpacer
                 allowScaleSpacing
-                size={IOVisualCostants.iconMargin as IOSpacer}
+                size={IODimensions.gap.listItem.leading}
               />
             </>
           )}
@@ -237,7 +228,7 @@ export const ListItemNav = ({
               allowFontScaling
               color={interactiveColor}
               name="chevronRightListItem"
-              size={IOListItemVisualParams.chevronSize}
+              size={IODimensions.size.icon.chevron}
             />
           )}
         </Animated.View>

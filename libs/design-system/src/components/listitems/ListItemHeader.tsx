@@ -2,13 +2,7 @@ import { ComponentProps, useCallback, useMemo } from "react";
 import { View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import {
-  IOListItemStyles,
-  IOListItemVisualParams,
-  IOSelectionListItemVisualParams,
-  IOSpacingScale,
-  IOVisualCostants
-} from "../../core";
+import { IODimensions, IOListItemStyles } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -53,8 +47,6 @@ type IconProps =
       iconName: IOIcons;
     }
   | { iconColor?: never; iconName?: never };
-
-const iconMargin: IOSpacingScale = IOVisualCostants.iconMargin;
 
 export const ListItemHeader = ({
   label,
@@ -108,27 +100,29 @@ export const ListItemHeader = ({
           <View
             style={{
               marginRight:
-                iconMargin * dynamicFontScale * spacingScaleMultiplier
+                IODimensions.gap.listItem.leading *
+                dynamicFontScale *
+                spacingScaleMultiplier
             }}
           >
             <Icon
               allowFontScaling
               color={iconColor ?? theme["icon-decorative"]}
               name={iconName}
-              size={IOListItemVisualParams.iconSize}
+              size={IODimensions.size.icon.listItem}
             />
           </View>
         )}
         <View style={{ flex: 1 }}>{itemInfoTextComponent}</View>
         {endElement && (
-          <View style={{ marginLeft: IOListItemVisualParams.actionMargin }}>
+          <View style={{ marginLeft: IODimensions.gap.listItem.action }}>
             {listItemAction()}
           </View>
         )}
       </View>
       {description && (
         <View>
-          <VSpacer size={IOSelectionListItemVisualParams.descriptionMargin} />
+          <VSpacer size={IODimensions.gap.listItem.description} />
           <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
             {description}
           </BodySmall>

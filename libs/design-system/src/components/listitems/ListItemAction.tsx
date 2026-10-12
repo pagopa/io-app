@@ -3,7 +3,7 @@ import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IOListItemStyles, IOListItemVisualParams } from "../../core";
+import { IOColors, IODimensions, IOListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -79,7 +79,7 @@ export const ListItemAction = ({
             IOListItemStyles.listItemInner,
             {
               columnGap:
-                IOListItemVisualParams.iconMargin *
+                IODimensions.gap.listItem.leading *
                 dynamicFontScale *
                 spacingScaleMultiplier
             },
@@ -91,7 +91,7 @@ export const ListItemAction = ({
               allowFontScaling
               color={IOColors[mapForegroundColor[variant]]}
               name={icon}
-              size={IOListItemVisualParams.iconSize}
+              size={IODimensions.size.icon.listItem}
             />
           )}
           <View style={{ flexGrow: 1, flexShrink: 1 }}>

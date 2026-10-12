@@ -2,7 +2,7 @@ import { ComponentProps, PropsWithChildren, useCallback } from "react";
 import { GestureResponderEvent, Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { IOListItemStyles, IOListItemVisualParams } from "../../core";
+import { IODimensions, IOListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
@@ -55,7 +55,7 @@ export const PressableListItemBase = ({
         <Animated.View
           style={[
             IOListItemStyles.listItemInner,
-            { columnGap: IOListItemVisualParams.iconMargin },
+            { columnGap: IODimensions.gap.listItem.leading },
             scaleAnimatedStyle
           ]}
         >

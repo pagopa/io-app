@@ -3,7 +3,7 @@ import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOListItemStyles, IOListItemVisualParams } from "../../core";
+import { IODimensions, IOListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -93,7 +93,7 @@ export const ListItemInfoCopy = ({
             IOListItemStyles.listItemInner,
             {
               columnGap:
-                IOListItemVisualParams.iconMargin *
+                IODimensions.gap.listItem.leading *
                 dynamicFontScale *
                 spacingScaleMultiplier
             },
@@ -105,7 +105,7 @@ export const ListItemInfoCopy = ({
               allowFontScaling
               color={theme["icon-decorative"]}
               name={icon}
-              size={IOListItemVisualParams.iconSize}
+              size={IODimensions.size.icon.listItem}
             />
           )}
           <View style={{ flex: 1 }}>{listItemInfoCopyContent}</View>
@@ -113,7 +113,7 @@ export const ListItemInfoCopy = ({
             allowFontScaling
             color={foregroundColor}
             name="copy"
-            size={IOListItemVisualParams.chevronSize}
+            size={IODimensions.size.icon.chevron}
           />
         </Animated.View>
       </Animated.View>
