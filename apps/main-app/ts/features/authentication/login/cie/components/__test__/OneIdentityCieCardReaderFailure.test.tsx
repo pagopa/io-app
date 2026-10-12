@@ -1,4 +1,5 @@
-import { Event as CEvent } from "@pagopa/react-native-cie";
+import type { NfcError } from "@io-app/expo-cie";
+
 import { render, screen } from "@testing-library/react-native";
 
 import { OneIdentityCieCardReaderFailure } from "../OneIdentityCieCardReaderFailure";
@@ -65,62 +66,47 @@ jest.mock("../CieWrongPin", () => ({
 }));
 
 describe("OneIdentityCieCardReaderFailure", () => {
-  it.each<[CEvent["event"], string]>([
-    [
-      "Function not supported" as unknown as CEvent["event"],
-      "CieWrongCardScreen"
-    ],
-    ["ON_TAG_DISCOVERED_NOT_CIE", "CieWrongCardScreen"],
-    ["TAG_ERROR_NFC_NOT_SUPPORTED", "CieWrongCardScreen"],
+  it.each<[NfcError["name"], string]>([
+    ["NOT_A_CIE", "CieWrongCardScreen"],
     ["AUTHENTICATION_ERROR", "CieUnexpectedErrorScreen"],
-    ["ON_NO_INTERNET_CONNECTION", "CieUnexpectedErrorScreen"],
+    ["NO_INTERNET_CONNECTION", "CieUnexpectedErrorScreen"],
+    ["GENERIC_ERROR", "CieUnexpectedErrorScreen"],
     ["CERTIFICATE_EXPIRED", "CieExpiredOrInvalidScreen"],
     ["CERTIFICATE_REVOKED", "CieExpiredOrInvalidScreen"],
-    ["EXTENDED_APDU_NOT_SUPPORTED", "CieExtendedApduNotSupportedScreen"]
+    ["APDU_ERROR", "CieExtendedApduNotSupportedScreen"]
   ])(
     "should render the expected screen when failure.event is %s",
     (event, expectedTestId) => {
       render(
         <OneIdentityCieCardReaderFailure
-          failure={{ event, attemptsLeft: 0 } as unknown as CEvent}
+          failure={{ name: event } as NfcError}
         />
       );
       expect(screen.getByTestId(expectedTestId)).toBeTruthy();
     }
   );
 
-  it("should render CieWrongPin with remainingCount 0 when the card pin is locked", () => {
+  it("should render CieWrongPin with remainingCount 0 when the card pin is blocked", () => {
     render(
-      <OneIdentityCieCardReaderFailure
-        failure={
-          { event: "ON_CARD_PIN_LOCKED", attemptsLeft: 3 } as unknown as CEvent
-        }
-      />
+      <OneIdentityCieCardReaderFailure failure={{ name: "CARD_BLOCKED" }} />
     );
     const wrongPinElement = screen.getByTestId("CieWrongPin");
     expect(wrongPinElement.props.remainingCount).toBe(0);
   });
 
-  it.each<CEvent["event"]>(["ON_PIN_ERROR", "PIN Locked"])(
-    "should render CieWrongPin with the failure's attemptsLeft when failure.event is %s",
-    event => {
-      render(
-        <OneIdentityCieCardReaderFailure
-          failure={{ event, attemptsLeft: 2 } as unknown as CEvent}
-        />
-      );
-      const wrongPinElement = screen.getByTestId("CieWrongPin");
-      expect(wrongPinElement.props.remainingCount).toBe(2);
-    }
-  );
+  it("should render CieWrongPin with the failure's attemptsLeft when the PIN is wrong", () => {
+    render(
+      <OneIdentityCieCardReaderFailure
+        failure={{ name: "WRONG_PIN", attemptsLeft: 2 }}
+      />
+    );
+    const wrongPinElement = screen.getByTestId("CieWrongPin");
+    expect(wrongPinElement.props.remainingCount).toBe(2);
+  });
 
   it("should render nothing for an unhandled failure event", () => {
     const { toJSON } = render(
-      <OneIdentityCieCardReaderFailure
-        failure={
-          { event: "Transmission Error", attemptsLeft: 0 } as unknown as CEvent
-        }
-      />
+      <OneIdentityCieCardReaderFailure failure={{ name: "TAG_LOST" }} />
     );
     expect(toJSON()).toBeNull();
   });

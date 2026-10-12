@@ -16,7 +16,7 @@ import {
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
-import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
+import { CieManager, NfcError, NfcEvent } from "@io-app/expo-cie";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -34,7 +34,6 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { isDevEnv } from "../../../../../utils/environment";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   assistanceToolRemoteConfig,
@@ -71,31 +70,26 @@ export type ActiveSessionCieCardReaderScreenNavigationParams = {
   loginType: ReauthLoginType;
 };
 
-const CIE_ALERT_MESSAGES_CONFIG = Platform.select<
-  Parameters<typeof cieManager.start>[0]
->({
-  ios: {
-    readingInstructions: I18n.t(
-      "authentication.cie.card.iosAlert.readingInstructions"
-    ),
-    moreTags: I18n.t("authentication.cie.card.iosAlert.moreTags"),
-    readingInProgress: I18n.t(
-      "authentication.cie.card.iosAlert.readingInProgress"
-    ),
-    readingSuccess: I18n.t("authentication.cie.card.iosAlert.readingSuccess"),
-    invalidCard: I18n.t("authentication.cie.card.iosAlert.invalidCard"),
-    tagLost: I18n.t("authentication.cie.card.iosAlert.tagLost"),
-    cardLocked: I18n.t("authentication.cie.card.iosAlert.cardLocked"),
-    wrongPin1AttemptLeft: I18n.t(
-      "authentication.cie.card.iosAlert.wrongPin1AttemptLeft"
-    ),
-    wrongPin2AttemptLeft: I18n.t(
-      "authentication.cie.card.iosAlert.wrongPin2AttemptLeft"
-    ),
-    genericError: I18n.t("authentication.cie.card.iosAlert.genericError")
-  },
-  default: undefined
-});
+const CIE_ALERT_MESSAGES = {
+  readingInstructions: I18n.t(
+    "authentication.cie.card.iosAlert.readingInstructions"
+  ),
+  moreTags: I18n.t("authentication.cie.card.iosAlert.moreTags"),
+  readingInProgress: I18n.t(
+    "authentication.cie.card.iosAlert.readingInProgress"
+  ),
+  readingSuccess: I18n.t("authentication.cie.card.iosAlert.readingSuccess"),
+  invalidCard: I18n.t("authentication.cie.card.iosAlert.invalidCard"),
+  tagLost: I18n.t("authentication.cie.card.iosAlert.tagLost"),
+  cardLocked: I18n.t("authentication.cie.card.iosAlert.cardLocked"),
+  wrongPin1AttemptLeft: I18n.t(
+    "authentication.cie.card.iosAlert.wrongPin1AttemptLeft"
+  ),
+  wrongPin2AttemptLeft: I18n.t(
+    "authentication.cie.card.iosAlert.wrongPin2AttemptLeft"
+  ),
+  genericError: I18n.t("authentication.cie.card.iosAlert.genericError")
+};
 
 const getPictogramName = (state: ReadingState): IOPictograms => {
   switch (state) {
@@ -232,46 +226,25 @@ const ActiveSessionLoginCieCardReaderScreen = ({
   );
 
   const handleCieEvent = useCallback(
-    async (event: CEvent) => {
-      handleSendAssistanceLog(choosenTool, event.event);
-      switch (event.event) {
-        // "Function not supported" seems to be TAG_ERROR_NFC_NOT_SUPPORTED
-        // for the iOS SDK
-        case "Function not supported" as unknown:
-        case "ON_TAG_DISCOVERED_NOT_CIE":
-        case "TAG_ERROR_NFC_NOT_SUPPORTED":
+    (event: NfcEvent) => {
+      handleSendAssistanceLog(choosenTool, event.name);
+      if (event.name === "ON_TAG_DISCOVERED") {
+        if (readingStateRef.current !== ReadingState.reading) {
+          setReadingState(ReadingState.reading);
+          triggerHaptic("impactLight");
+        }
+      }
+    },
+    [choosenTool]
+  );
+
+  const handleCieError = useCallback(
+    (error: NfcError) => {
+      handleSendAssistanceLog(choosenTool, error.message ?? error.name);
+      switch (error.name) {
+        case "APDU_ERROR":
           setError({
-            eventReason: event.event,
-            navigation: () =>
-              navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-                screen: AUTHENTICATION_ROUTES.CIE_WRONG_CARD_SCREEN
-              })
-          });
-          break;
-        case "AUTHENTICATION_ERROR":
-        case "ON_NO_INTERNET_CONNECTION":
-          setError({
-            eventReason: event.event,
-            navigation: () =>
-              navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-                screen: AUTHENTICATION_ROUTES.CIE_UNEXPECTED_ERROR
-              })
-          });
-          break;
-        // CIE is Expired or Revoked
-        case "CERTIFICATE_EXPIRED":
-        case "CERTIFICATE_REVOKED":
-          setError({
-            eventReason: event.event,
-            navigation: () =>
-              navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-                screen: AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN
-              })
-          });
-          break;
-        case "EXTENDED_APDU_NOT_SUPPORTED":
-          setError({
-            eventReason: event.event,
+            eventReason: error.name,
             navigation: () =>
               navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
                 screen:
@@ -279,65 +252,87 @@ const ActiveSessionLoginCieCardReaderScreen = ({
               })
           });
           break;
-        // The card is temporarily locked. Unlock is available by CieID app
-        case "ON_CARD_PIN_LOCKED":
-        case "ON_PIN_ERROR":
-        case "PIN Locked":
+        case "AUTHENTICATION_ERROR":
+        case "NO_INTERNET_CONNECTION":
           setError({
-            eventReason: event.event,
+            eventReason: error.name,
+            navigation: () =>
+              navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen: AUTHENTICATION_ROUTES.CIE_UNEXPECTED_ERROR
+              })
+          });
+          break;
+        case "CANCELLED_BY_USER":
+        case "GENERIC_ERROR":
+        case "WRONG_CAN":
+          setError({ eventReason: "GENERIC", errorDescription: error.message });
+          break;
+        // The card is temporarily locked. Unlock is available by CieID app
+        case "CARD_BLOCKED":
+        case "WRONG_PIN":
+          setError({
+            eventReason: error.name,
             navigation: () =>
               navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
                 screen: AUTHENTICATION_ROUTES.CIE_WRONG_PIN_SCREEN,
                 params: {
                   remainingCount:
-                    event.event === "ON_CARD_PIN_LOCKED"
-                      ? 0
-                      : event.attemptsLeft
+                    error.name === "WRONG_PIN" ? error.attemptsLeft : 0
                 }
               })
           });
           break;
-        // Reading starts
-        case "ON_TAG_DISCOVERED":
-          if (readingStateRef.current !== ReadingState.reading) {
-            setReadingState(ReadingState.reading);
-            triggerHaptic("impactLight");
-          }
+        // CIE is Expired or Revoked
+        case "CERTIFICATE_EXPIRED":
+        case "CERTIFICATE_REVOKED":
+          setError({
+            eventReason: error.name,
+            navigation: () =>
+              navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen: AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN
+              })
+          });
           break;
-        case "ON_TAG_LOST":
-        case "Transmission Error":
-          setError({ eventReason: event.event });
+        case "NOT_A_CIE":
+          setError({
+            eventReason: error.name,
+            navigation: () =>
+              navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen: AUTHENTICATION_ROUTES.CIE_WRONG_CARD_SCREEN
+              })
+          });
           break;
-        default:
+        case "TAG_LOST":
+          setError({
+            eventReason: error.name,
+            errorDescription: error.message
+          });
           break;
       }
     },
     [choosenTool, navigation, setError]
   );
 
-  const handleCieError = useCallback(
-    (error: Error) => {
-      handleSendAssistanceLog(choosenTool, error.message);
-      setError({ eventReason: "GENERIC", errorDescription: error.message });
-    },
-    [choosenTool, setError]
-  );
-
   const startCie = useCallback(
     async (useUat: boolean) => {
-      cieManager.removeAllListeners();
-      cieManager.onEvent(event => void handleCieEvent(event));
-      cieManager.onError(handleCieError);
-      cieManager.onSuccess(handleCieSuccess);
-
-      cieManager.enableLog(isDevEnv);
-      cieManager.setCustomIdpUrl(useUat ? getCieUatEndpoint() : null);
-      cieManager.setAuthenticationUrl(authorizationUri);
+      CieManager.removeAllListeners();
+      CieManager.addListener("onEvent", handleCieEvent);
+      CieManager.addListener("onError", handleCieError);
+      CieManager.addListener("onSuccess", handleCieSuccess);
+      if (Platform.OS === "ios") {
+        Object.entries(CIE_ALERT_MESSAGES).forEach(([key, value]) => {
+          CieManager.setAlertMessage(
+            key as keyof typeof CIE_ALERT_MESSAGES,
+            value
+          );
+        });
+      }
+      CieManager.setCustomIdpUrl(
+        useUat ? (getCieUatEndpoint() ?? undefined) : undefined
+      );
 
       try {
-        await cieManager.setPin(ciePin);
-        await cieManager.start(CIE_ALERT_MESSAGES_CONFIG);
-        await cieManager.startListeningNFC();
+        await CieManager.startReading(ciePin, authorizationUri);
         setReadingState(ReadingState.waiting_card);
       } catch {
         trackLoginCieCardReadingError(loginType);
@@ -363,10 +358,10 @@ const ActiveSessionLoginCieCardReaderScreen = ({
 
     // Cleanup on unmount
     return () => {
-      void cieManager.stopListeningNFC().catch(() => {
+      void CieManager.stopReading().catch(() => {
         // Ignore errors on stop listening NFC
       });
-      cieManager.removeAllListeners();
+      CieManager.removeAllListeners();
     };
   }, [isCieUatEnabled, startCie]);
 
