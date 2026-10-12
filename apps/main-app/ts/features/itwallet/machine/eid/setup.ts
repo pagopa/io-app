@@ -36,6 +36,7 @@ import {
   storeAuthLevelAction,
   storeCredentialUpgradeFailuresAction,
   storeIntegrityKeyTagAction,
+  storeL2FallbackAction,
   storeWalletActivationFeedbackBannerDataAction,
   storeWalletInstanceAttestationAction,
   trackIdentificationMethodSelectedAction,
@@ -117,6 +118,7 @@ export const itwEidIssuanceMachineSetup = setup({
     cleanupIntegrityKeyTag: cleanupIntegrityKeyTagAction,
     storeWalletInstanceAttestation: storeWalletInstanceAttestationAction,
     storeAuthLevel: storeAuthLevelAction,
+    storeL2Fallback: storeL2FallbackAction,
     storeWalletActivationFeedbackBannerData:
       storeWalletActivationFeedbackBannerDataAction,
     storeCredentialUpgradeFailures: storeCredentialUpgradeFailuresAction,
