@@ -1,10 +1,9 @@
 import { AppStateStatus } from "react-native";
+// oxlint-disable-next-line no-restricted-imports -- type-only: `typed-redux-saga/macro` has no equivalent
 import { ActionPattern } from "redux-saga/effects";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-/**
- * Action types and action creator related to the Application.
- */
+/** Action types and action creator related to the Application. */
 type ApplicationInitializationPayload = void | {
   handleSessionExpiration?: boolean;
   isActiveLoginSuccess?: boolean;

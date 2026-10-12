@@ -52,7 +52,6 @@ export const ListItemNavAlert = ({
     accessibilityLabel ??
     `${componentValueToAccessibility}; ${componentDescriptionToAccessibility}`;
 
-  // TODO: Remove this when legacy look is deprecated https://pagopa.atlassian.net/browse/IOPLT-153
   const listItemNavAlertContent = (
     <>
       {/* Let developer using a custom component (e.g: skeleton) */}

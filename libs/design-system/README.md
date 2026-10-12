@@ -82,7 +82,7 @@ pnpm nx lint io-app-design-system
 pnpm nx test io-app-design-system
 
 # Format
-pnpm prettify
+pnpm format
 ```
 
 # Usage

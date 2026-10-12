@@ -1,6 +1,6 @@
 import { HeaderSecondLevel } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useCallback, useEffect, useLayoutEffect } from "react";
 import { Alert } from "react-native";
 
@@ -47,11 +47,11 @@ export const SendAarActivateNfcScreen = ({
   const handleClose = useCallback(() => {
     trackSendAarMandateCieReadingClosureAlert("NFC_ACTIVATION");
     Alert.alert(
-      i18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.title"),
-      i18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.message"),
+      I18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.title"),
+      I18n.t("features.pn.aar.flow.androidNfcActivation.alertOnClose.message"),
       [
         {
-          text: i18n.t(
+          text: I18n.t(
             "features.pn.aar.flow.androidNfcActivation.alertOnClose.confirm"
           ),
           style: "destructive",
@@ -61,7 +61,7 @@ export const SendAarActivateNfcScreen = ({
           }
         },
         {
-          text: i18n.t(
+          text: I18n.t(
             "features.pn.aar.flow.androidNfcActivation.alertOnClose.cancel"
           ),
           onPress: () => {
@@ -79,7 +79,7 @@ export const SendAarActivateNfcScreen = ({
           firstAction={{
             icon: "closeLarge",
             onPress: handleClose,
-            accessibilityLabel: i18n.t("global.buttons.close"),
+            accessibilityLabel: I18n.t("global.buttons.close"),
             testID: "closeActionID"
           }}
           ignoreSafeAreaMargin={false}

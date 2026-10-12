@@ -13,17 +13,17 @@ const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
 ];
 
 /**
- * Determines which credential status should be displayed in the UI
- * based on the current eID status and offline conditions.
+ * Determines which credential status should be displayed in the UI based on the
+ * current eID status and offline conditions.
  *
- * Logic summary:
- * - Excluded statuses ("expired", "expiring", "invalid", "unknown") are never overridden.
- * - Expiring eID + online → the eID keeps its own status, every other credential is masked.
- * - Expired eID + expired credential → display as "invalid" (both show "NON VALIDO").
- * - Expired eID alone → keep credential's actual status (only PID shows "NON VALIDO").
- * - Offline:
- *   - Show "jwtExpired" only if eID is valid.
- *   - Otherwise, show "valid".
+ * Logic summary: - Excluded statuses ("expired", "expiring", "invalid",
+ * "unknown") are never overridden. - Expiring eID + online → the eID keeps its
+ * own status, every other credential is masked. - Expired eID + expired
+ * credential → display as "invalid" (both show "NON VALIDO"). - Expired eID
+ * alone → keep credential's actual status (only PID shows "NON VALIDO"). -
+ * Offline: - Show "jwtExpired" only if eID is valid. - Otherwise, show
+ * "valid".
+ *
  * - Online + valid eID → show actual credential status.
  *
  * @param credentialStatus The actual credential status
@@ -74,9 +74,9 @@ export const getItwDisplayCredentialStatus = (
 };
 
 /**
- * Returns whether the stored status list/assertion reports a suspended driving
+ * Returns whether the stored status assertion reports a suspended driving
  * licence, a case with dedicated static copy that must not fall back to the
- * issuer-provided dynamic error.
+ * issuer-provided dynamic error (Documenti su IO only).
  */
 export const isMdlSuspendedIssuerError = ({
   credentialType,
@@ -86,10 +86,9 @@ export const isMdlSuspendedIssuerError = ({
     return false;
   }
   return (
-    (validity?.type === "status_list" && validity.status === "suspended") ||
-    (validity?.type === "status_assertion" &&
-      validity.status === "invalid" &&
-      validity?.errorCode === "credential_suspended")
+    validity?.type === "status_assertion" &&
+    validity.status === "invalid" &&
+    validity?.errorCode === "credential_suspended"
   );
 };
 
@@ -108,7 +107,7 @@ export const shouldShowMdlUpdateDigitalCredential = (
   // Legacy status assertion
   if (credential.validity?.type === "status_assertion") {
     return (
-      status == "invalid" &&
+      status === "invalid" &&
       credential.validity.status === "invalid" &&
       credential.validity.errorCode === "credential_invalid"
     );

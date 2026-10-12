@@ -3,7 +3,8 @@ import { Platform } from "react-native";
 import { getCieUatEndpoint } from "../endpoints";
 
 describe("getCieUatEndpoint", () => {
-  const BASE_URL = "https://collaudo.idserver.servizicie.interno.gov.it/idp/";
+  const BASE_URL =
+    "https://preproduzione.idserver.servizicie.interno.gov.it/idp/";
 
   const SCENARIOS = [
     { os: "ios" as const, expected: `${BASE_URL}Authn/SSL/Login2` },

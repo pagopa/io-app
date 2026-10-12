@@ -5,6 +5,7 @@ import * as IOHooks from "../../../../../store/hooks";
 import * as analyticsUtils from "../../../../../utils/analytics";
 import { SpidIdp } from "../../../../../utils/idps";
 import * as useOneIdentityLoginSourceModule from "../../../../lollipop/hooks/useOneIdentityLoginSource";
+import * as usePosteIDEducationalModule from "../../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { IdpWebViewLogin } from "../IdpWebViewLogin";
 
 jest.mock("react-native-webview", () => {
@@ -16,6 +17,14 @@ jest.mock("react-native-webview", () => {
     ))
   };
 });
+
+jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
+  useIOBottomSheetModal: jest.fn(() => ({
+    present: jest.fn(),
+    dismiss: jest.fn(),
+    bottomSheet: <></>
+  }))
+}));
 
 const mockIdp = {
   id: "idp-id",
@@ -266,5 +275,58 @@ describe("IdpWebViewLogin", () => {
 
       expect(mockDispatch).toHaveBeenCalledTimes(2);
     });
+  });
+
+  describe("PosteID educational bottom sheet", () => {
+    const mockPresentOnce = jest.fn();
+
+    beforeEach(() => {
+      mockUseOneIdentityLoginSource();
+      jest
+        .spyOn(
+          usePosteIDEducationalModule,
+          "useOneIdentityPosteIDApp2AppEducational"
+        )
+        .mockReturnValue({
+          bottomSheet: <></>,
+          presentOnce: mockPresentOnce
+        });
+    });
+
+    it("should present the bottom sheet when the WebView loads", () => {
+      const { getByTestId } = render(
+        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+      );
+
+      expect(mockPresentOnce).not.toHaveBeenCalled();
+
+      fireEvent(getByTestId("webview-idp-login-screen"), "onLoad");
+
+      expect(mockPresentOnce).toHaveBeenCalledTimes(1);
+    });
+
+    it.each([
+      {
+        name: "onError",
+        nativeEvent: { url: "https://example.com/error" }
+      },
+      {
+        name: "onHttpError",
+        nativeEvent: { url: "https://example.com/error", statusCode: 403 }
+      }
+    ])(
+      "should not present the bottom sheet on $name",
+      ({ name, nativeEvent }) => {
+        const { getByTestId } = render(
+          <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        );
+
+        fireEvent(getByTestId("webview-idp-login-screen"), name, {
+          nativeEvent
+        });
+
+        expect(mockPresentOnce).not.toHaveBeenCalled();
+      }
+    );
   });
 });

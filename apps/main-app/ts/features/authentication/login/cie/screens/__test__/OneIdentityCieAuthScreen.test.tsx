@@ -86,7 +86,7 @@ describe("OneIdentityCieAuthScreen", () => {
     mockOneIdentityCieCardReader.mockImplementation(
       ({ onAuthorizationUrlReceived }) => {
         onAuthorizationUrlReceived("https://example.com/authz");
-        return null;
+        return <></>;
       }
     );
 

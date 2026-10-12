@@ -1,18 +1,17 @@
 /**
- * This is an updater for the utility "commit-and-tag-version" that allows to update the values
- * CFBundleShortVersionString and CFBundleVersion.
+ * This is an updater for the utility "commit-and-tag-version" that allows to
+ * update the values CFBundleShortVersionString and CFBundleVersion, e.g.:
  *
- * eg.
- * 1.4.0-rc.0 -> CFBundleShortVersionString = 1.4.0 CFBundleVersion = 0
- * 1.4.0-rc.1 -> CFBundleShortVersionString = 1.4.0 CFBundleVersion = 1
- * 1.4.0 -> CFBundleShortVersionString = 1.4.0 CFBundleVersion = 2
- * 1.4.1-rc.0 -> CFBundleShortVersionString = 1.4.1 CFBundleVersion = 0
- * 1.4.1 -> CFBundleShortVersionString = 1.4.1 CFBundleVersion = 1
- * 1.4.2 -> CFBundleShortVersionString = 1.4.2 CFBundleVersion = 0
+ * - `1.4.0-rc.0` -> `CFBundleShortVersionString = 1.4.0 CFBundleVersion = 0`
+ * - `1.4.0-rc.1` -> `CFBundleShortVersionString = 1.4.0 CFBundleVersion = 1`
+ * - `1.4.0` -> `CFBundleShortVersionString = 1.4.0 CFBundleVersion = 2`
+ * - `1.4.1-rc.0` -> `CFBundleShortVersionString = 1.4.1 CFBundleVersion = 0`
+ * - `1.4.1` -> `CFBundleShortVersionString = 1.4.1 CFBundleVersion = 1`
+ * - `1.4.2` -> `CFBundleShortVersionString = 1.4.2 CFBundleVersion = 0`
  *
- * For iOS apps, build numbers (CFBundleVersion) must be unique within each release train,
- * but they do not need to be unique across different release trains.
- *
+ * For iOS apps, build numbers (CFBundleVersion) must be unique within each
+ * release train, but they do not need to be unique across different release
+ * trains.
  */
 
 const plist = require("plist");

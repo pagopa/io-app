@@ -1,7 +1,10 @@
 import { itwProximityMachineSetup } from "../setup";
 import { ItwPresentationTags } from "../tags";
 
-/** Resolves Bluetooth permission and activation prerequisites before presentation. */
+/**
+ * Resolves Bluetooth permission and activation prerequisites before
+ * presentation.
+ */
 export const bluetoothState = itwProximityMachineSetup.createStateConfig({
   tags: [ItwPresentationTags.Loading],
   description: "Bluetooth permission and activation gate",
@@ -72,8 +75,14 @@ export const bluetoothState = itwProximityMachineSetup.createStateConfig({
       type: "final"
     }
   },
-  onDone: {
-    target: "#itwProximityMachine.Presentment",
-    actions: "navigateToPresentmentScreen"
-  }
+  onDone: [
+    {
+      guard: "isNfcEngagement",
+      target: "#itwProximityMachine.Presentment"
+    },
+    {
+      target: "#itwProximityMachine.Presentment",
+      actions: "navigateToPresentmentScreen"
+    }
+  ]
 } as const);

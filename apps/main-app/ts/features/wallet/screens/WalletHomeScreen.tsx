@@ -130,9 +130,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     }
   });
 
-  /**
-   * Return to the top of the screen when the tab item is pressed
-   */
+  /** Return to the top of the screen when the tab item is pressed */
   useTabItemPressWhenScreenActive(
     useCallback(() => {
       scrollViewContentRef.current?.scrollTo({ y: 0, animated: true });
@@ -141,8 +139,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
 
   /**
-   * Fetch the wallet data and enable the loading state on first render
-   * ! Note: to add new content to refresh, add an action dispatch to the `walletUpdate` action handler saga
+   * Fetch the wallet data and enable the loading state on first render ! Note:
+   * to add new content to refresh, add an action dispatch to the `walletUpdate`
+   * action handler saga
    */
   useOnFirstRender(() => {
     dispatch(walletToggleLoadingState(true));
@@ -156,7 +155,8 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
 
   /**
-   * Handles the "New element added" toast display once the user returns to this screen
+   * Handles the "New element added" toast display once the user returns to this
+   * screen
    */
   useFocusEffect(
     useCallback(() => {
@@ -167,9 +167,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     }, [isNewElementAdded])
   );
 
-  /**
-   * Handles the EID feedback bottom sheet display
-   */
+  /** Handles the EID feedback bottom sheet display */
   useFocusEffect(
     useCallback(() => {
       if (isRequiredEidFeedback) {

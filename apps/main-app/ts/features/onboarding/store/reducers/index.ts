@@ -1,5 +1,6 @@
 /**
  * A reducer for the Onboarding.
+ *
  * @flow
  */
 import { getType } from "typesafe-actions";

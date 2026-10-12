@@ -10,6 +10,7 @@ import { paymentsStartOnboardingAction } from "../store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding
+ *
  * @param startOnboarding
  * @param action
  */

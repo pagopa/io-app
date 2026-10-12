@@ -11,9 +11,7 @@ import {
 } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch } from "../../../../store/hooks";
 
-/**
- * Allows the user to select one of the device available Calendars
- */
+/** Allows the user to select one of the device available Calendars */
 const CalendarsPreferencesScreen = () => {
   const dispatch = useIODispatch();
   const [isLoading, setIsLoading] = useState(true);

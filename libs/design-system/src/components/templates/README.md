@@ -13,7 +13,7 @@ import { ForceScrollDownView } from "@pagopa/io-app-design-system";
 
 const SpecialPage = () => (
   <ForceScrollDownView buttonAccessibilityLabel="Scroll to bottom">
-    { /* [Screen content] */}
+    {/* [Screen content] */}
   </ForceScrollDownView>
 );
 ```

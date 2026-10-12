@@ -1,9 +1,9 @@
-import { Banner, IOToast } from "@io-app/design-system";
+import { Banner, useIOToast } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
-import { useIODispatch } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { openWebUrl } from "../../../../../utils/url";
 import {
   trackItwBannerClosure,
@@ -11,37 +11,51 @@ import {
   trackItwBannerVisualized
 } from "../../../analytics";
 import { itwCloseBanner } from "../../../common/store/actions/banners";
-
-const WHAT_IS_ITW_WALLET_ID =
-  "https://assistenza.ioapp.it/hc/it/articles/50661930290449-Cos-é-l-IT-Wallet-ID";
+import { itwShowcaseUrlSelector } from "../../../common/store/selectors/remoteConfig.ts";
 
 const ItwDiscoveryInfoBanner = () => {
   const dispatch = useIODispatch();
 
+  const toast = useIOToast();
+  const showcaseUrl = useIOSelector(itwShowcaseUrlSelector);
+
   const trackBannerProperties = useMemo(
-    () => ({
-      banner_id: "itwWalletID",
-      banner_page: "ITW_PRESENTATION_PID_DETAIL",
-      banner_landing: WHAT_IS_ITW_WALLET_ID
-    }),
-    []
+    () =>
+      showcaseUrl
+        ? {
+            banner_id: "itwWalletID",
+            banner_page: "ITW_PRESENTATION_PID_DETAIL",
+            banner_landing: showcaseUrl
+          }
+        : undefined,
+    [showcaseUrl]
   );
 
   useFocusEffect(
     useCallback(() => {
-      trackItwBannerVisualized(trackBannerProperties);
+      if (trackBannerProperties) {
+        trackItwBannerVisualized(trackBannerProperties);
+      }
     }, [trackBannerProperties])
   );
 
   const handleOnPress = () => {
-    trackItwBannerTap(trackBannerProperties);
-    openWebUrl(WHAT_IS_ITW_WALLET_ID, () =>
-      IOToast.error(I18n.t("global.jserror.title"))
-    );
+    if (!showcaseUrl) {
+      toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
+      return;
+    }
+    if (trackBannerProperties) {
+      trackItwBannerTap(trackBannerProperties);
+    }
+    openWebUrl(showcaseUrl, () => {
+      toast.error(I18n.t("global.jserror.title"));
+    });
   };
 
   const handleOnClose = () => {
-    trackItwBannerClosure(trackBannerProperties);
+    if (trackBannerProperties) {
+      trackItwBannerClosure(trackBannerProperties);
+    }
     dispatch(itwCloseBanner("itw_pid_info"));
   };
 

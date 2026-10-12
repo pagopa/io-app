@@ -1,4 +1,5 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { getRedirects } from "@pagopa/io-react-native-login-utils";
 
 import { AppDispatch } from "../../../../App";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
@@ -21,11 +22,24 @@ jest.mock("../..", () => {
   };
 });
 jest.mock("@pagopa/io-react-native-login-utils", () => ({
-  getRedirects: jest.fn().mockResolvedValue([undefined])
+  getRedirects: jest.fn()
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
-  it("should reject because SAMLRequest is missing", async () => {
+  it.each([
+    {
+      name: "no redirects are returned",
+      redirects: [],
+      expectedError: "Missing Redirects"
+    },
+    {
+      name: "the last redirect has no SAMLRequest",
+      redirects: ["https://idp.example.com/sso"],
+      expectedError: "Missing SAMLRequest"
+    }
+  ])("should reject when $name", async ({ redirects, expectedError }) => {
+    jest.mocked(getRedirects).mockResolvedValue(redirects);
+
     await expect(
       regenerateKeyGetRedirectsAndVerifySaml(
         "loginUri",
@@ -34,6 +48,6 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
         false,
         dispatch
       )
-    ).rejects.toEqual(new Error("Missing SAMLRequest"));
+    ).rejects.toEqual(new Error(expectedError));
   });
 });

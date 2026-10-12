@@ -10,16 +10,14 @@ type GetAuthSourceContactsMarkdownParams = Readonly<{
 }>;
 
 /**
- * Removes Markdown syntax characters from interpolated values and replaces
- * line breaks/tabs with spaces so values remain inline text.
- * URL punctuation is preserved.
+ * Removes Markdown syntax characters from interpolated values and replaces line
+ * breaks/tabs with spaces so values remain inline text. URL punctuation is
+ * preserved.
  */
 const sanitizeMarkdownString = (value: string): string =>
   value.replace(/[\r\n\t]+/g, " ").replace(/[\\`*_[\]{}()#!|~<>]/g, "");
 
-/**
- * Sort contacts so that those linking to a website are displayed at the top.
- */
+/** Sort contacts so that those linking to a website are displayed at the top. */
 const sortContactsByUrl = (contacts: ReadonlyArray<AuthSourceContact>) =>
   [...contacts].sort((first, second) => {
     if (first.type === "url" && second.type !== "url") {
@@ -33,8 +31,8 @@ const sortContactsByUrl = (contacts: ReadonlyArray<AuthSourceContact>) =>
 
 /**
  * Formats the Authentic Source's contacts as a Markdown list ready to be
- * consumed by `IOMarkdown`. This is deliberately pure so that each contact
- * type and its ordering can be tested without rendering React components.
+ * consumed by `IOMarkdown`. This is deliberately pure so that each contact type
+ * and its ordering can be tested without rendering React components.
  */
 export const getAuthSourceContactsMarkdown = ({
   authSource,

@@ -8,7 +8,12 @@ import { createActor } from "xstate";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import {
+  zendeskDocumentiSuIoCategory,
+  zendeskItWalletCategory
+} from "../../../../../utils/supportAssistance";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as supportModal from "../../../common/hooks/useItwFailureSupportModal";
 import { type EidIssuanceLevel } from "../../../machine/eid/context";
 import {
   IssuanceFailure,
@@ -142,6 +147,39 @@ describe("ItwIssuanceEidFailureScreen", () => {
         level
       );
       expect(component.toJSON()).toMatchSnapshot();
+    }
+  );
+
+  test.each([
+    {
+      name: "Documenti su IO",
+      level: "l2",
+      expectedCategory: zendeskDocumentiSuIoCategory
+    },
+    {
+      name: "IT-Wallet",
+      level: "l3",
+      expectedCategory: zendeskItWalletCategory
+    }
+  ] as const)(
+    "uses the $expectedCategory.value Zendesk category for $name issuance",
+    ({ level, expectedCategory }) => {
+      const supportModalSpy = jest.spyOn(
+        supportModal,
+        "useItwFailureSupportModal"
+      );
+
+      renderComponent(
+        {
+          type: IssuanceFailureType.UNEXPECTED,
+          reason: "Unexpected failure"
+        },
+        level
+      );
+
+      expect(supportModalSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ zendeskCategory: expectedCategory })
+      );
     }
   );
 });

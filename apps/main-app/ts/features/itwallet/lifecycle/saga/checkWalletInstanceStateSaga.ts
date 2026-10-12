@@ -33,23 +33,24 @@ import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
 /**
- * The only Status List status that keeps the wallet instance alive.
- * Any other status revokes it, consistently with how credentials treat their own status list.
+ * The only Status List status that keeps the wallet instance alive. Any other
+ * status revokes it, consistently with how credentials treat their own status
+ * list.
  */
 const VALID_STATUS = "valid";
 
 /**
- * Unlike the status assertion, the Status List carries no revocation reason.
- * A revoked entry always means the Wallet Provider revoked the instance, hence this reason
- * is assumed to show the user the same message as the status assertion flow.
+ * Unlike the status assertion, the Status List carries no revocation reason. A
+ * revoked entry always means the Wallet Provider revoked the instance, hence
+ * this reason is assumed to show the user the same message as the status
+ * assertion flow.
  */
 const STATUS_LIST_REVOCATION_REASON: WalletInstanceRevocationReason =
   "CERTIFICATE_REVOKED_BY_ISSUER";
 
 /**
- * Saga responsible for checking wallet instance inconsistency.
- * If an eID is present but the integrity key tag is missing,
- * the wallet instance is reset.
+ * Saga responsible for checking wallet instance inconsistency. If an eID is
+ * present but the integrity key tag is missing, the wallet instance is reset.
  */
 export function* checkWalletInstanceInconsistencySaga(): Generator<
   ReduxSagaEffect,
@@ -67,9 +68,7 @@ export function* checkWalletInstanceInconsistencySaga(): Generator<
   return true;
 }
 
-/**
- * Checks a valid wallet instance from its cached Status List while offline.
- */
+/** Checks a valid wallet instance from its cached Status List while offline. */
 export function* checkWalletInstanceStateOfflineSaga(): Generator<
   ReduxSagaEffect,
   void
@@ -96,8 +95,8 @@ export function* checkWalletInstanceStateOfflineSaga(): Generator<
 }
 
 /**
- * Saga responsible to check whether the wallet instance has not been revoked
- * or deleted. When this happens, the wallet is reset on the users's device.
+ * Saga responsible to check whether the wallet instance has not been revoked or
+ * deleted. When this happens, the wallet is reset on the users's device.
  *
  * Online checks always use the Wallet Provider's status endpoint.
  */
@@ -123,8 +122,9 @@ export function* checkWalletInstanceStateSaga(): Generator<
 /**
  * [1.3.3+] Reads the wallet instance status from a fresh cached Status List.
  *
- * A non-valid entry resets the wallet, exactly as a revoked status assertion does.
- * Missing or stale cached data is ignored because no network request is allowed offline.
+ * A non-valid entry resets the wallet, exactly as a revoked status assertion
+ * does. Missing or stale cached data is ignored because no network request is
+ * allowed offline.
  */
 export function* getStatusListStatusOrResetWalletInstance(
   { idx, uri }: NonNullable<ItwWalletInstanceState["statusList"]>,

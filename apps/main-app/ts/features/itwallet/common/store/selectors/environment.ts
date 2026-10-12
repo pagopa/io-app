@@ -26,10 +26,11 @@ export const selectItwCieIdEnvironment = (
 ): CieIdEnvironment => (selectItwEnv(state) === "pre" ? "coll" : "production");
 
 /**
- * Select the IT-Wallet specification version depending on the user configuration.
+ * Select the IT-Wallet specification version depending on the user
+ * configuration.
  *
- * The version is derived from the whitelist status and the optional presence of a PID,
- * and it is used for every API call to the IT-Wallet ecosystem actors.
+ * The version is derived from the whitelist status and the optional presence of
+ * a PID, and it is used for every API call to the IT-Wallet ecosystem actors.
  */
 export const selectItwSpecsVersion = createSelector(
   itwIsL3EnabledSelector,

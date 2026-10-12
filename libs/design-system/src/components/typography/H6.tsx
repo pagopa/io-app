@@ -6,9 +6,7 @@ const {
   h6: { colorToken, legacySize, ...h6Style }
 } = IOTypography;
 
-/**
- * `H6` typographic style
- */
+/** `H6` typographic style */
 export const H6 = ({ color: customColor, ...props }: TypographicStyleProps) => {
   const theme = useIOTheme();
   const { newTypefaceEnabled } = useIONewTypeface();

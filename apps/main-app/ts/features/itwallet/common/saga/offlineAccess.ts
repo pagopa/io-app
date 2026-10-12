@@ -32,9 +32,9 @@ import {
 } from "../store/actions/securePreferences";
 
 /**
- * Waits for offline access before proceeding.
- * Returns immediately when an offline reason is already available;
- * otherwise waits for `setOfflineAccessReason`.
+ * Waits for offline access before proceeding. Returns immediately when an
+ * offline reason is already available; otherwise waits for
+ * `setOfflineAccessReason`.
  *
  * @returns A generator that yields until offline access is active.
  */
@@ -52,17 +52,17 @@ export function* waitForOfflineAccess() {
 }
 
 /**
- * Starts offline access bookkeeping and checks the valid Wallet Instance against
- * its cached Status List after device-offline access begins.
+ * Starts offline access bookkeeping and checks the valid Wallet Instance
+ * against its cached Status List after device-offline access begins.
  */
 export function* watchItwOfflineSaga() {
   /**
    * Handles the offline access counter reset by listening for the wallet
    * instance status store success actions.
    *
-   * The offline access counter is reset when the wallet instance status is updated
-   * successfully, indicating that the user has returned online and the wallet instance
-   * status is refreshed.
+   * The offline access counter is reset when the wallet instance status is
+   * updated successfully, indicating that the user has returned online and the
+   * wallet instance status is refreshed.
    */
   yield* takeLatest(
     getType(itwUpdateWalletInstanceStatus.success),
@@ -86,8 +86,8 @@ export function* watchItwOfflineSaga() {
 }
 
 /**
- * Watches for changes in the application state and resets the offline access reason
- * if the app goes to the background for a certain amount of time.
+ * Watches for changes in the application state and resets the offline access
+ * reason if the app goes to the background for a certain amount of time.
  */
 function* watchOfflineWalletBackgroundActivity() {
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;

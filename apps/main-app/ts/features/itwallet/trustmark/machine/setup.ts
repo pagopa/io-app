@@ -21,13 +21,14 @@ import {
 } from "./guards";
 import { Input } from "./input";
 
-/**
- * Amount in seconds to wait before retrying
- */
+/** Amount in seconds to wait before retrying */
 const MAX_BACKOFF_TIME_SECONDS = 180;
 const backoffTimeAmounts = [1, 10, 60, MAX_BACKOFF_TIME_SECONDS];
 
-/** Keeps trustmark renewal actors and provider-injected side effects fully typed. */
+/**
+ * Keeps trustmark renewal actors and provider-injected side effects fully
+ * typed.
+ */
 export const itwTrustmarkMachineSetup = setup({
   types: {
     context: {} as Context,

@@ -22,8 +22,8 @@ const abortError = (): Error => new Error("The operation was aborted");
 
 /**
  * A fetch mock that never settles on its own: it only rejects with an
- * abort-like error once the given `RequestInit`'s `signal` is aborted
- * (either because of the timeout or a manual abort).
+ * abort-like error once the given `RequestInit`'s `signal` is aborted (either
+ * because of the timeout or a manual abort).
  */
 const neverSettlingFetch = (): jest.Mock =>
   jest.fn(

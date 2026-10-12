@@ -120,14 +120,34 @@ export const regenerateKeyGetRedirectsAndVerifySaml = async (
     hashedFiscalCode
   );
 
-  // getRedirects throws LoginUtilsError or generic Error — let them propagate as-is
-  const redirects = await getRedirects(loginUri, headers, "SAMLRequest");
+  return followNativeRedirectsAndVerifySaml(loginUri, headers, publicKey);
+};
 
-  if (!redirects || redirects.length === 0) {
+/**
+ * Natively follows the HTTP redirects starting from `url` until the one
+ * carrying the `SAMLRequest` query parameter, then verifies that the SAML
+ * request ID matches the thumbprint of `publicKey`. Cookies set along the
+ * redirects are synced into the WebView cookie store by the native module.
+ *
+ * @param url The URL to start following the redirects from.
+ * @param headers Headers sent with the first request only.
+ * @param publicKey The lollipop public key the SAML request must be bound to.
+ * @returns The verified `SAMLRequest` redirect URL (the IdP SSO URL).
+ * @throws {LoginUtilsError | Error} If the redirects fail, the `SAMLRequest` is
+ *   missing or its verification fails.
+ */
+export const followNativeRedirectsAndVerifySaml = async (
+  url: string,
+  headers: Record<string, string | undefined>,
+  publicKey: PublicKey
+): Promise<string> => {
+  // getRedirects throws LoginUtilsError or generic Error — let them propagate as-is
+  const redirects = await getRedirects(url, headers, "SAMLRequest");
+
+  const lastRedirect = redirects?.at(-1);
+  if (!lastRedirect) {
     throw new Error("Missing Redirects");
   }
-
-  const lastRedirect = redirects[redirects.length - 1];
   const urlEncodedSamlRequest = new URLParse(lastRedirect, true).query
     .SAMLRequest;
   if (!urlEncodedSamlRequest) {

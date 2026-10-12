@@ -11,8 +11,9 @@ import { useIOSelector } from "../store/hooks";
 import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
 
 /**
- * @param useManualBottomsheetOpening if true the caller must use the methods exported by
- * useIOBottomSheetModal whitout automation on bottomsheet opening.
+ * @param useManualBottomsheetOpening If true the caller must use the methods
+ *   exported by useIOBottomSheetModal whitout automation on bottomsheet
+ *   opening.
  */
 
 export const useSecuritySuggestionsBottomSheet = (
