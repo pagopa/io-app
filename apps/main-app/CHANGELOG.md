@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.41.0-rc.2](https://github.com/pagopa/io-app/compare/3.41.0-rc.1...3.41.0-rc.2) (2026-10-09)
+
+### Features
+
+* [[IOCOM-3347](https://pagopa.atlassian.net/browse/IOCOM-3347)] more possible entries in messages' detail contacts bottomSheet  ([#8657](https://github.com/pagopa/io-app/issues/8657)) ([38a9bf0](https://github.com/pagopa/io-app/commit/38a9bf0e774bc9543cc05b57768be75bdd37bb9a))
+
+### Bug Fixes
+
+* [[IOPID-4120](https://pagopa.atlassian.net/browse/IOPID-4120)] Make status and active fields optional in IDP schema ([#8718](https://github.com/pagopa/io-app/issues/8718)) ([11f7b0a](https://github.com/pagopa/io-app/commit/11f7b0a399ef07a88281784b27e3bbe628149ec7))
+* **IT-Wallet:** [[SIW-5277](https://pagopa.atlassian.net/browse/SIW-5277)] Restore link for same-device remote presentation ([#8704](https://github.com/pagopa/io-app/issues/8704)) ([8d20640](https://github.com/pagopa/io-app/commit/8d2064025c79ac431d38946d7d88db4d961a8a95))
 ## [3.41.0-rc.1](https://github.com/pagopa/io-app/compare/3.41.0-rc.0...3.41.0-rc.1) (2026-10-08)
 
 ### Bug Fixes
