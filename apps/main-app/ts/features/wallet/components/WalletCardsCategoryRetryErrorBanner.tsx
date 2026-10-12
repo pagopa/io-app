@@ -6,7 +6,9 @@ import { View } from "react-native";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { cdcStatusSelector } from "../../bonus/cdc/wallet/store/selectors";
+import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../../bonus/cgn/store/reducers/details";
+import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { idPayWalletInitiativeListSelector } from "../../idpay/wallet/store/reducers";
 import { usePaymentsBackoffRetry } from "../../payments/common/hooks/usePaymentsBackoffRetry";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
@@ -31,21 +33,33 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
 
   const isCdcError = pot.isError(useIOSelector(cdcStatusSelector));
   const isBonusError = isIdPayError || isCgnError || isCdcError;
+  const shouldGoToServices =
+    isCdcError || (isPaymentMethodsError && (isIdPayError || isCgnError));
 
   const { canRetryRequest } = usePaymentsBackoffRetry(
     WALLET_OTHER_CARDS_CATEGORY_BACKOFF
   );
 
-  const handleOnRetry = () => {
-    if (canRetryRequest()) {
-      if (isPaymentMethodsError) {
-        dispatch(getPaymentsWalletUserMethods.request());
-      }
+  const handleOnAction = () => {
+    if (shouldGoToServices) {
+      navigation.navigate(SERVICES_ROUTES.SERVICES_HOME);
+      return;
+    }
+
+    if (!canRetryRequest()) {
+      return;
+    }
+
+    if (isPaymentMethodsError) {
+      dispatch(getPaymentsWalletUserMethods.request());
+    }
+    if (isCgnError) {
+      dispatch(cgnDetails.request());
+    }
+    if (isIdPayError) {
+      dispatch(idPayWalletGet.request());
     }
   };
-
-  const handleOnGoToServices = () =>
-    navigation.navigate(SERVICES_ROUTES.SERVICES_HOME);
 
   return (
     (isPaymentMethodsError || isBonusError) && (
@@ -55,17 +69,21 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
       >
         <BannerErrorState
           actionText={I18n.t(
-            isBonusError
+            shouldGoToServices
               ? "features.wallet.home.otherMethods.error.banner.bonus.cta"
-              : "features.wallet.home.otherMethods.error.banner.paymentMethods.cta"
+              : isPaymentMethodsError
+                ? "features.wallet.home.otherMethods.error.banner.paymentMethods.cta"
+                : "features.wallet.home.otherMethods.error.banner.cta"
           )}
           icon="warningFilled"
           label={I18n.t(
-            isBonusError
+            shouldGoToServices
               ? "features.wallet.home.otherMethods.error.banner.bonus.label"
-              : "features.wallet.home.otherMethods.error.banner.paymentMethods.label"
+              : isPaymentMethodsError
+                ? "features.wallet.home.otherMethods.error.banner.paymentMethods.label"
+                : "features.wallet.home.otherMethods.error.banner.label"
           )}
-          onPress={isBonusError ? handleOnGoToServices : handleOnRetry}
+          onPress={handleOnAction}
           testID="walletCardsCategoryRetryErrorBannerActionTestID"
         />
       </View>
