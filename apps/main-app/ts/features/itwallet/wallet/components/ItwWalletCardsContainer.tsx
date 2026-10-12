@@ -147,7 +147,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   return (
     <View>
       <VStack space={16}>
-        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
         {!shouldHideEidAlert && (
           <ItwEidLifecycleAlert
             currentScreenName={currentScreenName}
@@ -163,7 +162,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         {shouldRenderUpgradeBanner && (
           <ItwDiscoveryBanner flow="wallet" style={{ marginHorizontal: 8 }} />
         )}
-        <ItwWalletReadyBanner />
 
         {cards.length > 0 && (
           <GuidedTour
@@ -181,6 +179,10 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             />
           </GuidedTour>
         )}
+
+        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
+
+        {!shouldRenderL2EngagementBanner && <ItwWalletReadyBanner />}
       </View>
       {eidInfoBottomSheet.bottomSheet}
     </View>

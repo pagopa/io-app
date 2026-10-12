@@ -21,6 +21,7 @@ import {
   itwSetAuthLevel,
   itwSetCredentialUpgradeFailed,
   itwSetIdentificationMode,
+  itwSetL2Fallback,
   itwSetWalletActivationFeedbackBannerData
 } from "../../common/store/actions/preferences";
 import {
@@ -144,29 +145,26 @@ export const navigateToNfcInstructionsScreenAction = ({
 export const navigateToWalletAction = ({ context }: EidActionArgs) => {
   const { toast, navigation } = context.deps;
   toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
-  navigation.reset({
-    index: 1,
-    routes: [
-      {
-        name: ROUTES.MAIN,
-        params: {
-          screen: ROUTES.WALLET_HOME
-        }
-      }
-    ]
+  // Navigate instead of resetting: the main navigator is already mounted at
+  // the bottom of the stack, so this pops the whole issuance flow and reuses
+  // it. A reset would assign it a new key, remounting the tab navigator and
+  // flashing a blank screen before the wallet appears.
+  navigation.navigate(ROUTES.MAIN, {
+    screen: ROUTES.WALLET_HOME,
+    params: {}
   });
 };
 
+/**
+ * Fallback activations share the IT-Wallet catalogue; legacy L2 keeps its
+ * original catalogue.
+ */
 export const navigateToCredentialCatalogAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.replace(ITW_ROUTES.MAIN, {
     screen:
-      context.level === "l3"
-        ? ITW_ROUTES.L3_ONBOARDING
-        : context.level === "l2-fallback"
-          ? ITW_ROUTES.L2_ONBOARDING
-          : ITW_ROUTES.ONBOARDING
+      context.level === "l2" ? ITW_ROUTES.ONBOARDING : ITW_ROUTES.L3_ONBOARDING
   });
 };
 
@@ -336,6 +334,18 @@ export const storeAuthLevelAction = ({ context }: EidActionArgs) => {
   // Save the auth level in the preferences
   store.dispatch(itwSetAuthLevel(context.identification?.level));
   store.dispatch(itwSetIdentificationMode(context.identification?.mode));
+};
+
+/**
+ * Updates fallback provenance only after storing the eID, preserving it during
+ * L2 reissuance.
+ */
+export const storeL2FallbackAction = ({ context }: EidActionArgs) => {
+  if (context.mode !== "reissuance" || context.level === "l3") {
+    context.deps.store.dispatch(
+      itwSetL2Fallback(context.level === "l2-fallback")
+    );
+  }
 };
 
 export const storeWalletActivationFeedbackBannerDataAction = ({

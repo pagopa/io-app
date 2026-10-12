@@ -21,6 +21,7 @@
       },
       "inAppBrowserError": "There was a problem sending your request. Please try again.",
       "privacy": "For more information, please read **[the Privacy Policy]({{privacyUrl}})**",
+      "requiredData": "Required information",
       "subtitle": "IO will share with ",
       "subtitle2": " the information needed to authenticate you on ",
       "title": "To use the service, please allow us to share your data."
@@ -559,9 +560,15 @@
           "revoked": "Warning! This card has been revoked for {{reason}}"
         },
         "ownership": "Who can use the Card?",
+        "ownershipData": {
+          "fiscalCode": "Fiscal Code",
+          "name": "First name",
+          "surname": "Surname"
+        },
         "status": {
           "a11y": {
-            "cardStatus": "Card status: {{status}}"
+            "cardStatus": "Card status: {{status}}",
+            "eycaInfo": "More information about EYCA"
           },
           "badge": {
             "active": "Active",
@@ -999,7 +1006,7 @@
         "dc": "European Disability Card",
         "ed": "Academic degrees",
         "edat": "School attendance certificate",
-        "edip": "Diplomas",
+        "edip": "Educational qualifications",
         "ee": "Academic enrollments",
         "eid": "Digital Identity",
         "mdl": "Driver's License",
@@ -1122,8 +1129,8 @@
               "4": "The new official digital documents are available exclusively on the IO app",
               "5": "Access public administration digital services in just a few taps"
             },
-            "title": "Your digital documents with IT-Wallet: secure, official and always with you",
-            "tos": "By clicking **Continue**, you acknowledge that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{tos_url}})."
+            "privacyAndTos": "By clicking **Continue**, you acknowledge that you have read and understood the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of Use]({{tosUrl}}).",
+            "title": "Your digital documents with IT-Wallet: secure, official and always with you"
           },
           "legacy": {
             "content": "Add digital versions of your personal documents to the app’s Wallet! \n\nThey have the **same legal validity** as physical documents in specific contexts. \n\n ###### It’s quick and easy \n Continue to activate the new feature in less than 3 minutes: over **8 million** people are already using **Documenti su IO**!",
@@ -1249,6 +1256,15 @@
               "secondaryAction": "I don't have a CIE",
               "title": "Electronic Identity Card (CIE)"
             },
+            "nfc": {
+              "content": {
+                "android": "On Android® devices, the NFC antenna used to read the CIE may be located in different spots on the back of the phone, depending on the model. For example, it might be at the top, in the center, or further down.\n\nPlace the CIE on a stable surface and rest your phone on the card, following the instructions in the app. If the scan doesn’t start, repeat the process at the other indicated positions.",
+                "ios": "On the iPhone®, the NFC antenna for reading the CIE is located at the top of the device, on the back.\n\nPlace the CIE on a stable surface and rest your phone on the card without moving it."
+              },
+              "primaryAction": "Got it",
+              "secondaryAction": "Need help?",
+              "title": "How does the CIE scan work?"
+            },
             "pin": {
               "content": "The CIE PIN is an 8-digit code that was provided to you in two separate instances:\n * You received the first 4 digits when you applied for the CIE\n * You received the last 4 digits along with the CIE.",
               "dialog": {
@@ -1324,6 +1340,7 @@
               "title": "Get your Electronic ID Card (CIE) ready"
             },
             "nfc": {
+              "buttonLink": "How does it work?",
               "cta": "Start reading CIE",
               "description": "You'll need to place the back of your phone on the card and hold it still so it can be scanned.",
               "title": "Place your CIE on a stable surface for scanning"
@@ -1517,6 +1534,11 @@
           "title": "Information required for {{credentialName}}",
           "tos": "Your data will be processed securely. By clicking **Continue**, you confirm that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{privacyUrl}})."
         },
+        "credentialIntroduction": {
+          "dismissalDialog": {
+            "body": "If you stop now, the document will not be added. You can add it later."
+          }
+        },
         "credentialNotFound": {
           "subtitle": "To use Documenti su IO, first add them to your Wallet. It's quick and easy.",
           "title": "Add the document to Wallet"
@@ -1601,7 +1623,8 @@
         "emptyWallet": {
           "readyBanner": {
             "action": "Add document",
-            "content": "Everything is ready: add a document to your IO Wallet."
+            "content": "It only takes a few seconds to have your personal documents always at your fingertips!",
+            "title": "Add your first document"
           },
           "readyBannerL2": {
             "content": "You can now add your first document to the IO Wallet.",
@@ -1680,6 +1703,14 @@
           "secondaryAction": "Not now"
         }
       },
+      "modal": {
+        "credentialUpgrade": {
+          "content": "The document could not be updated automatically.\n\nClick “Update the digital document” to continue using it without restrictions.",
+          "primaryButton": "Update digital document",
+          "secondaryButton": "Not now",
+          "title": "Update the document"
+        }
+      },
       "notMatchingIdentityScreen": {
         "alert": {
           "message": "You'll need to log in again with SPID or CIE to use the app.",
@@ -1718,7 +1749,7 @@
           },
           "limitWarning": {
             "primaryAction": "Got it",
-            "subtitle": "For security reasons, you'll need an internet connection the next time you log in to continue using Documenti su IO. ",
+            "subtitle": "For security reasons, you'll need an internet connection the next time you log in to access your digital documents.",
             "title": "Last access to IO offline available"
           }
         },
@@ -1752,6 +1783,11 @@
         }
       },
       "onboarding": {
+        "fallbackBanner": {
+          "action": "Start",
+          "content": "Discover the advanced features and benefits of the public IT-Wallet.",
+          "title": "Activate IT-Wallet and add new documents"
+        },
         "restrictedMode": {
           "description": "You can obtain a digital version of the following documents, which can only be used in person and do not include the advanced features of IT-Wallet",
           "title": "Documents with limited functionality"
@@ -1799,7 +1835,8 @@
       "presentation": {
         "alerts": {
           "expired": {
-            "content": "The document is no longer valid. If you already have a new, valid document, you can update the digital version in your Wallet."
+            "action": "Learn more",
+            "content": "Your document has expired."
           },
           "expiring": {
             "content": "{{days}} day left until your document expires."
@@ -1816,14 +1853,15 @@
           "mdl": {
             "content": "You can use your driver's license on IO only in Italy, exclusively to prove your eligibility to drive in the event of a traffic stop by law enforcement.",
             "contentL3": "Your driver's license on IO has the same legal validity as the physical document, but only within Italy.",
-            "invalid": {
-              "cta": "Remove document from Wallet"
-            },
             "suspended": {
               "action": "Learn more",
               "title": "Your driver's license is not valid."
             },
             "title": "Did you know that?"
+          },
+          "needsUpgrade": {
+            "action": "Update digital document",
+            "content": "We were unable to update the document automatically.\nUpdate it now to continue using it without restrictions."
           },
           "statusAction": "What can I do?",
           "ts": {
@@ -1836,12 +1874,6 @@
             "expiring": {
               "content": "You can request a renewal of your European Disability Card (EDC) by contacting the issuing authority.\n\nCheck the procedures and required documents on the official INPS website, or by contacting your local ASL, as the renewal process may vary depending on the type of disability and the regulations in your area.",
               "title": "European Disability Charter on IO: document about to expire"
-            }
-          },
-          "EuropeanHealthInsuranceCard": {
-            "expiring": {
-              "content": "Your Health Insurance Card is automatically renewed and then mailed to your residential address on file with the Agenzia delle Entrate.\n\nIf you have already received it, you can remove this document from your Wallet and add the new, updated digital version.",
-              "title": "Health Insurance Card on IO: about to expire"
             }
           },
           "eidInfo": {
@@ -1866,17 +1898,34 @@
             "titleExpired": "Documenti su IO:\nverify your identity",
             "triggerLabel": "What is it?"
           },
+          "generic": {
+            "expired": {
+              "content": "Remove it from your Wallet. Once you've renewed it, you can add the updated digital version.",
+              "cta": "Got it",
+              "title": "Your document has expired"
+            },
+            "expiring": {
+              "content": "Once you've renewed it, you can add the updated digital version to your Wallet.",
+              "cta": "Got it",
+              "title": "Your document is about to expire"
+            }
+          },
           "mDL": {
             "expired": {
-              "content": "###### What documents do I need to prepare?\n\nYour driver’s license (about to expire or already expired), a form of identification, your fiscal code, and a recent photo (ID-sized).\n\n###### Have you already renewed your license?\n\nIf you’ve already renewed your physical driver’s license, update your digital document to access it on IO as well."
+              "content": "###### What documents do I need to prepare?\n\nYour driver’s license (about to expire or already expired), a form of identification, your fiscal code, and a recent photo (ID-sized).\n\n###### Have you already renewed your license?\n\nIf you’ve already renewed your physical driver’s license, update your digital document to access it on IO as well.",
+              "contentNew": "At this time, you cannot drive the categories of vehicles associated with your driver’s license because it has expired.\n\nRenew your license at the offices of the Motorizzazione Civile or an authorized agency in your area.\n\n###### What documents do I need to bring?\n\nYour driver’s license (about to expire or already expired), a form of identification, your tax ID number, and a recent photo (passport-sized).\n\n###### Have you already renewed your license?\n\nIf you’ve already renewed your physical driver’s license, update your digital license to access it on IO as well.",
+              "title": "Your driver's license is invalid."
             },
             "expiring": {
               "content": "Renew your driver’s license at the offices of the Motorizzazione Civile or an authorized institution in your area.\n\nYou must undergo a medical examination with an authorized doctor and pay the relevant payment slips.\n\n###### What documents do I need to bring?\n\nYour driver’s license (about to expire or already expired), a valid ID, your fiscal code, and a recent passport-sized photo.",
               "cta": "Learn more",
               "title": "Driver's License on IO: about to expire"
             },
+            "invalid": {
+              "cta": "Remove document from Wallet"
+            },
             "suspended": {
-              "content": "At the moment, you are not allowed to drive the types of vehicles that are on your driving licence.\n\nFor example, your licence may have been suspended or temporarily withdrawn. Please contact the Motorizzazione Civile for more information.\n\nWhen your driving licence is valid again, the digital licence will be updated automatically.\n\nPlease note: you can continue to use your digital driving licence as a form of identification.",
+              "content": "At this time, you are not authorized to drive the vehicle categories associated with your driver's license.\n\nFor example, your license may have been suspended or temporarily revoked. Contact the Motorizzazione Civile for more details.",
               "cta": "Got it"
             }
           }
@@ -1932,7 +1981,7 @@
             "content": {
               "education_attendance": "Your digital school enrollment is fully valid and official.",
               "education_degree": "Your digital academic credentials are fully recognized.",
-              "education_diploma": "Your digital diplomas are fully valid and officially recognized.",
+              "education_diploma": "Your digital educational qualifications are fully valid and officially recognized.",
               "education_enrollment": "Your digital academic records are fully valid and officially recognized.",
               "residency": "Your digital certificate of residence is fully valid for official purposes."
             },
@@ -2114,7 +2163,7 @@
               "content": "It allows you to have the digital documents you've added to your Wallet verified.",
               "title": "How the verification works?"
             },
-            "instruction": "Show the QR code or hold it up to a scanner. Those verifying in person will use an official app.",
+            "instruction": "Those who verify in person will use an official app.",
             "invalidBanner": {
               "action": "Verify your identity",
               "content": "Verify your identity to continue using your IT-Wallet."
@@ -2148,11 +2197,13 @@
                 },
                 "step2": {
                   "label": "Step 2",
-                  "value": "Search for the \"NFC\" feature"
+                  "value": "Search for the \"NFC\" feature",
+                  "value_ios": "Select \"Apps,\" then \"Me\""
                 },
                 "step3": {
                   "label": "Step 3",
-                  "value": "Enable the feature"
+                  "value": "Enable the feature",
+                  "value_ios": "Allow IO to use NFC"
                 },
                 "title": "Here's how:"
               },
@@ -2194,9 +2245,9 @@
             "alert": {
               "message": "You will not be able to complete the document verification process."
             },
+            "privacyAndTos": "Your data will be processed securely. By continuing, you acknowledge that you have read and understood the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of Use]({{tosUrl}}).",
             "subtitle": "They will be shared with **{{relyingParty}}** only for as long as necessary to access the requested services.",
-            "title": "Please allow this information to be verified before proceeding",
-            "tos": "Your data will be processed securely. By continuing, you acknowledge that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{privacyUrl}})."
+            "title": "Please allow this information to be verified before proceeding"
           },
           "sendDocumentsLoading": {
             "0": {
@@ -2571,6 +2622,7 @@
         },
         "error": {
           "banner": {
+            "label": "The receipt upload has failed.",
             "retryButton": "Try again"
           }
         },
@@ -3150,9 +3202,11 @@
       "retry": "An error has occurred. Please try again."
     },
     "badges": {
+      "beta": "Beta",
       "cancelled": "Canceled",
       "failed": "Failed",
       "onGoing": "In progress",
+      "pdf": "PDF",
       "reversal": "Reversal"
     },
     "buttons": {
@@ -3630,6 +3684,8 @@
         "errorBody": "Unable to load the details",
         "refund": {
           "amount": "Refund amount",
+          "cro": "CRO",
+          "date": "Refund date",
           "iban": "IBAN",
           "period": "Reference period",
           "rejectedAdvice": {
@@ -4029,10 +4085,6 @@
       "title": "What is a dynamic message?"
     },
     "contactsBottomSheet": {
-      "actions": {
-        "call": "Make a call",
-        "email": "Write an email"
-      },
       "body": "If you are unsure about the content of the message, please contact the institution that sent it to you.",
       "title": "Support"
     },
@@ -4696,6 +4748,17 @@
     "title": "Forwarding messages via email"
   },
   "services": {
+    "contacts": {
+      "a11y": {
+        "website": "Visit the institution's website"
+      },
+      "downloadApp": "Download the app",
+      "email": "Send an email",
+      "pec": "Send a certified email (PEC)",
+      "website": "Visit the website"
+    },
+    "contextualHelpContent": "**In the Services section, you can view the list of agencies that offer their services on IO, as well as the list of services associated with each institution.** Services are divided into local services—where you can select institution of interest based on the geographic area where you live—national services—that is, central government institution offering services to all Italian citizens—and finally, all services, where you can find the complete list of all services available on IO (both local and national).   \nWe invite you to use this section to explore the services made available by IO, set up your list of local services, and view the details of individual services. Whenever a new local or national service is added to IO, you’ll receive a notification so you can immediately check what it is and whether it’s useful to you.\n",
+    "contextualHelpTitle": "What you can do in your Services",
     "details": {
       "failure": {
         "back": "Back",
@@ -4705,19 +4768,12 @@
       },
       "metadata": {
         "a11y": {
-          "copyToClipboard": "Copy to clipboard",
-          "website": "Visit the institution's website"
+          "copyToClipboard": "Copy to clipboard"
         },
         "address": "Address",
-        "downloadApp": "Download the app",
-        "email": "Send an email",
         "fiscalCode": "Institution fiscal code",
-        "pec": "Send a certified email (PEC)",
-        "phone": "Contact the institution",
         "serviceId": "Service ID",
-        "support": "Get support",
-        "title": "Contact information",
-        "website": "Visit the website"
+        "title": "Contact information"
       },
       "preferences": {
         "inbox": "Contact you in the app",

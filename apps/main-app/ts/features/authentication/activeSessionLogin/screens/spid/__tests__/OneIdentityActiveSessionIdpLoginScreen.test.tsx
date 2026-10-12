@@ -141,14 +141,14 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2
       }
-    });
+    );
   });
 
   it("should not dispatch activeSessionLoginFailure but still navigate to AuthErrorScreen when the failed login URL is the ERROR_1004 case", () => {
@@ -161,14 +161,14 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
 
     expect(mockDispatch).not.toHaveBeenCalledWith(activeSessionLoginFailure());
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2
       }
-    });
+    );
   });
 
   it("should force logout and navigate to landing on a HTTP error on the callback URL", () => {
@@ -195,14 +195,14 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     });
 
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2
       }
-    });
+    );
   });
 
   it("should not navigate to AuthErrorScreen on a HTTP 403 error on a non-callback URL", () => {
@@ -225,14 +225,14 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       nativeEvent: { url: "https://example.com/some-path", statusCode: 500 }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2
       }
-    });
+    );
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
   });
 
@@ -244,14 +244,14 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       nativeEvent: { url: "https://example.com/authorize" }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2
       }
-    });
+    );
   });
 });
 

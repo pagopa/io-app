@@ -117,6 +117,7 @@ const trackWalletInstanceCreation = jest.fn();
 const trackWalletInstanceRevocation = jest.fn();
 const trackIdentificationMethodSelected = jest.fn();
 const storeAuthLevel = jest.fn();
+const storeL2Fallback = jest.fn();
 const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
@@ -183,6 +184,7 @@ describe("itwEidIssuanceMachine", () => {
       trackWalletInstanceRevocation,
       trackIdentificationMethodSelected,
       storeAuthLevel,
+      storeL2Fallback,
       trackItwIdAuthenticationCompleted,
       trackItwIdVerifiedDocument,
       storeWalletActivationFeedbackBannerData
@@ -373,6 +375,12 @@ describe("itwEidIssuanceMachine", () => {
     });
 
     // Wallet instance creation and attestation obtainment success
+
+    // Accept the mandatory IPZS privacy policy
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance")
+    );
+    actor.send({ type: "accept-ipzs-privacy" });
 
     // Navigate to identification mode selection
     await waitFor(() =>
@@ -1109,7 +1117,7 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
-  it("Should skip IPZS privacy when privacy and ToS have been confirmed from discovery", async () => {
+  it("Should require IPZS privacy acceptance in the L3 flow", async () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
@@ -1139,22 +1147,14 @@ describe("itwEidIssuanceMachine", () => {
     );
     await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
 
+    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
+    expect(navigateToIpzsPrivacyScreen).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "accept-ipzs-privacy" });
+
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: "Identification"
     });
-    expect(navigateToIpzsPrivacyScreen).not.toHaveBeenCalled();
-    expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
-  });
-
-  it("Should navigate to IPZS privacy from ToS acceptance without changing state", () => {
-    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
-    actor.start();
-
-    actor.send({ type: "start", mode: "issuance", level: "l3" });
-    actor.send({ type: "go-to-ipzs-privacy" });
-
-    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
-    expect(navigateToIpzsPrivacyScreen).toHaveBeenCalledTimes(1);
   });
 
   it("Should allow the user to add a new credential once eID issuance is complete", () => {
@@ -1213,8 +1213,34 @@ describe("itwEidIssuanceMachine", () => {
 
     // entry fires on genuine transition into Success → storeWalletActivationFeedbackBannerData called
     expect(storeWalletActivationFeedbackBannerData).toHaveBeenCalledTimes(1);
+    expect(storeL2Fallback).toHaveBeenCalledTimes(1);
     // add-new-credential is not sent in this flow
     expect(navigateToCredentialCatalog).not.toHaveBeenCalled();
+  });
+
+  it("does not record fallback activation when eID storage fails", async () => {
+    storeEidCredentialActor.mockRejectedValue(new Error("Storage unavailable"));
+    const initialSnapshot = createActor(itwEidIssuanceMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "DisplayingPreview" },
+      context: {
+        mode: "issuance",
+        level: "l2-fallback",
+        eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid }
+      }
+    } as MachineSnapshot);
+    const actor = createActor(mockedMachine, {
+      snapshot,
+      input: { deps: T_DEPS }
+    });
+    actor.start();
+    actor.send({ type: "add-to-wallet" });
+    await waitForActor(actor, snap => snap.matches("Failure"));
+
+    expect(storeL2Fallback).not.toHaveBeenCalled();
+    actor.stop();
   });
 
   it("Should return to TOS acceptance if session expires when creating a Wallet Instance", async () => {
