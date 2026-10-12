@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 
 import {
   itwAvailableCredentialsListSelector,
@@ -253,25 +254,40 @@ describe("itwAvailableCredentialsListSelector", () => {
     });
 
     expect(itwAvailableCredentialsListSelector(state)).toEqual([
-      { name: "Patente di guida", type: "mDL" },
       {
-        name: "Carta Europea della Disabilità",
+        name: I18n.t("features.itWallet.credentialName.mdl"),
+        type: "mDL"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.dc"),
         type: "EuropeanDisabilityCard"
       },
       {
-        name: "Tessera Sanitaria - Tessera europea di assicurazione malattia",
+        name: I18n.t("features.itWallet.credentialName.ts"),
         type: "EuropeanHealthInsuranceCard"
       },
-      { name: "Età certificata", type: "proof_of_age" },
-      { name: "Titoli accademici", type: "education_degree" },
       {
-        name: "Iscrizioni accademiche",
+        name: I18n.t("features.itWallet.credentialName.av"),
+        type: "proof_of_age"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.ed"),
+        type: "education_degree"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.ee"),
         type: "education_enrollment"
       },
-      { name: "Attestato di residenza", type: "residency" },
-      { name: "Diplomi", type: "education_diploma" },
       {
-        name: "Frequenza scolastica",
+        name: I18n.t("features.itWallet.credentialName.res"),
+        type: "residency"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.edip"),
+        type: "education_diploma"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.edat"),
         type: "education_attendance"
       }
     ]);

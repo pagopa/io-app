@@ -13,6 +13,7 @@ import {
   itwSetCredentialUpgradeFailed,
   itwSetFiscalCodeWhitelisted,
   itwSetIdentificationMode,
+  itwSetL2Fallback,
   itwSetPidReissuingSurveyHidden,
   itwSetWalletActivationFeedbackBannerData,
   ItwWalletActivationFeedbackBannerData
@@ -32,6 +33,11 @@ export type ItwPreferencesState = {
   // Indicates whether the IT-Wallet activation should be disabled
   // because the user's device does not support NFC
   isItwActivationDisabled?: boolean;
+  /**
+   * Keeps the restricted experience through reissuance; replaced on activation
+   * or upgrade.
+   */
+  isL2Fallback?: boolean;
   // Indicates whether the bottom sheet survey is visible when the user quits
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
@@ -72,16 +78,19 @@ const reducer = (
       // - claimValuesHidden
       // - isFiscalCodeWhitelisted: avoids to have the value undefined after a wallet reset
       // - isItwActivationDisabled: should persist across wallet resets
+      // - isL2Fallback: preserves the restricted experience during reissuance
       const {
         claimValuesHidden,
         isFiscalCodeWhitelisted,
-        isItwActivationDisabled
+        isItwActivationDisabled,
+        isL2Fallback
       } = state;
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
         isFiscalCodeWhitelisted,
-        isItwActivationDisabled
+        isItwActivationDisabled,
+        isL2Fallback
       };
 
     case getType(itwSetAuthLevel): {
@@ -116,6 +125,9 @@ const reducer = (
         identificationMode: action.payload
       };
     }
+
+    case getType(itwSetL2Fallback):
+      return { ...state, isL2Fallback: action.payload };
 
     case getType(itwSetPidReissuingSurveyHidden): {
       return {
