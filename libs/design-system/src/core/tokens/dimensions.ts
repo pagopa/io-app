@@ -35,7 +35,7 @@ type Named<T> = { [key: string]: Named<T> | T };
 
 /* Values accepted by the `<Spacer>` and `<Stack>` components */
 const gapScale = [
-  0, 4, 8, 12, 16, 24, 32, 40, 48
+  0, 4, 6, 8, 12, 16, 24, 32, 40, 48
 ] as const satisfies IODimensionSubset;
 export type IOSpace = (typeof gapScale)[number];
 
@@ -54,7 +54,7 @@ const pictogramSize = [48, 64, 80, 120, 180] as const;
 
 const system = {
   gap: {
-    /* Default gap shared by all components to ensure consistent alignment */
+    /* Between the leading graphic (icon, logo, avatar) and the content */
     leading: 12,
     /* Between a label and its description */
     description: 4
@@ -96,7 +96,7 @@ const system = {
 /* Figma: `Dimensions/Gap/*` */
 const componentGap = {
   listItem: {
-    icon: system.gap.leading,
+    leading: system.gap.leading,
     action: 16,
     logo: 8,
     description: system.gap.description
@@ -105,11 +105,12 @@ const componentGap = {
   module: { leading: system.gap.leading, trailing: 8 },
   /* `control`: between the label and the checkbox, radio or switch */
   selection: {
-    icon: system.gap.leading,
+    leading: system.gap.leading,
     control: 8,
     action: 8,
     description: system.gap.description
-  }
+  },
+  tag: { leading: 6 }
 } as const satisfies Named<IOSpace>;
 
 /* Figma: `Dimensions/Paddings/*` */
@@ -149,7 +150,8 @@ const componentStroke = {
 const componentIconSize = {
   listItem: system.size.icon.leading,
   module: { leading: system.size.icon.leading },
-  selection: system.size.icon.leading
+  selection: system.size.icon.leading,
+  tag: 16
 } as const satisfies Named<IOIconSize>;
 
 /* Component sizes, independent of every scale: values are not type-checked */
