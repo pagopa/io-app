@@ -6,9 +6,8 @@ import {
   H2,
   H6,
   HStack,
-  IOAppMargin,
   IOColors,
-  IOSpacer,
+  IODimensions,
   useIOTheme,
   VStack
 } from "@io-app/design-system";
@@ -44,7 +43,7 @@ const Grid = () => {
       </ContentWrapper>
 
       <VStack space={16}>
-        {IOAppMargin.map((value, i) => (
+        {IODimensions.padding.screen.scale.map((value, i) => (
           <View
             key={`${value}-${i}`}
             style={{
@@ -86,7 +85,7 @@ const Spacing = () => (
 
         {/* Vertical */}
         <VStack space={16}>
-          {IOSpacer.map((spacerEntry, i) => (
+          {IODimensions.gap.scale.map((spacerEntry, i) => (
             <DSSpacerViewerBox
               key={`${spacerEntry}-${i}-vertical`}
               orientation="vertical"
@@ -102,7 +101,7 @@ const Spacing = () => (
 
         {/* Horizontal */}
         <HStack space={8}>
-          {IOSpacer.map((spacerEntry, i) => (
+          {IODimensions.gap.scale.map((spacerEntry, i) => (
             <DSSpacerViewerBox
               key={`${spacerEntry}-${i}-horizontal`}
               orientation="horizontal"
