@@ -157,24 +157,42 @@ const PlainTextClaimItem = ({
  * @param claim - The value of the claim
  * @param status - The status of the claim, used to show an expiration badge
  * @param hidden - A flag to hide the claim value
+ * @param isCopyable - A flag to enable the copy of the claim value
+ * @param credentialType - The type of the credential, used for analytics
+ *   tracking
  */
 const DateClaimItem = ({
   label,
   claim,
   status,
-  hidden
+  hidden,
+  isCopyable,
+  credentialType
 }: {
   claim: SimpleDate;
+  credentialType?: string;
   hidden?: boolean;
+  isCopyable?: boolean;
   label: string;
   status?: ItwCredentialStatus;
 }) => {
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   // Remove the timezone offset to display the date in its original format
   const realValue = claim.toString("DD/MM/YYYY");
   const displayValue = hidden ? HIDDEN_CLAIM_TEXT : realValue;
   const accessibilityStateText = hidden
     ? getHiddenClaimAccessibilityText()
     : realValue;
+
+  const handleLongPress = () => {
+    clipboardSetStringWithFeedback(realValue);
+    if (credentialType) {
+      trackCopyListItem({
+        credential: getMixPanelCredential(credentialType, isItwL3),
+        item_copied: label
+      });
+    }
+  };
 
   // Localized description of the claim's validity status. It is used to build the
   // visible badge (when shown) and also to inform screen reader users of the "valid"
@@ -241,6 +259,7 @@ const DateClaimItem = ({
       endElement={endElement}
       key={`${label}-${displayValue}`}
       label={label}
+      onLongPress={isCopyable && !hidden ? handleLongPress : undefined}
       value={displayValue}
     />
   );
@@ -476,7 +495,9 @@ export const ItwCredentialClaim = ({
           return (
             <DateClaimItem
               claim={parsed.value}
+              credentialType={credentialType}
               hidden={hidden}
+              isCopyable={!isPreview}
               label={claim.label}
               status={
                 !isPreview && isExpirationDateClaim(claim)
@@ -504,7 +525,9 @@ export const ItwCredentialClaim = ({
           return (
             <PlainTextClaimItem
               claim={extractFiscalCode(parsed.value) ?? parsed.value}
+              credentialType={credentialType}
               hidden={hidden}
+              isCopyable={!isPreview}
               label={claim.label}
             />
           );
@@ -520,7 +543,9 @@ export const ItwCredentialClaim = ({
           return (
             <PlainTextClaimItem
               claim={parsed.value.join(", ")}
+              credentialType={credentialType}
               hidden={hidden}
+              isCopyable={!isPreview}
               label={claim.label}
             />
           );
