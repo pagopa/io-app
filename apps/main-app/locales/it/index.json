@@ -3116,6 +3116,7 @@
         "otherMethods": {
           "error": {
             "banner": {
+              "cta": "Prova di nuovo",
               "label": "Non siamo riusciti a caricare alcuni elementi della lista.",
               "bonus": {
                 "cta": "Vai ai servizi",
