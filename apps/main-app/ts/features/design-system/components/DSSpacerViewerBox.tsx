@@ -1,19 +1,19 @@
 import {
   HSpacer,
   IOColors,
-  IOSpacer,
+  IOSpace,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
 import { Text, View } from "react-native";
 
 type DSSpacerLabelProps = {
-  value: IOSpacer;
+  value: IOSpace;
 };
 
 type DSSpacerViewerBoxProps = {
   orientation?: "horizontal" | "vertical";
-  size: IOSpacer;
+  size: IOSpace;
 };
 
 const DSSpacerLabel = ({ value }: DSSpacerLabelProps) => {

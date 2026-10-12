@@ -13,7 +13,7 @@ import {
   HSpacer,
   IODimensions,
   IOPictogramsBleed,
-  IOSpacer,
+  IOSpace,
   IOText,
   IOToast,
   Nullable,
@@ -450,8 +450,8 @@ export const headerNodeToReactNative = (
   onPress: (url: string) => void,
   render: Renderer,
   screenReaderEnabled: boolean,
-  marginStart: IOSpacer | undefined = undefined,
-  marginEnd: IOSpacer | undefined = undefined
+  marginStart: IOSpace | undefined = undefined,
+  marginEnd: IOSpace | undefined = undefined
 ) => {
   const Heading = headingsMap[header.depth];
 
