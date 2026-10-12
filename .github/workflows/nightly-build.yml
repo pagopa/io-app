@@ -96,7 +96,7 @@ jobs:
     name: Notify failure on Slack
     runs-on: ubuntu-24.04
     environment: dev
-    if: failure()
+    if: failure() && needs.detect-changes.outputs.has_changes == 'true'
     needs:
       - detect-changes
       - run-static-checks
