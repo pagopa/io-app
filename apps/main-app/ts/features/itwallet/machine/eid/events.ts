@@ -16,7 +16,6 @@ export type EidIssuanceEvents =
   | AddNewCredential
   | AddToWallet
   | Back
-  | BackToL3Identification
   | CieCanEntered
   | CiePinEntered
   | Close
@@ -63,16 +62,6 @@ type Back = {
   type: "back";
 };
 
-/**
- * Sent from the Documenti su IO landing to go back to the IT-Wallet (L3)
- * identification mode selection. It is only accepted if the user reached the
- * landing by restarting from the L3 identification because they do not have a
- * CIE.
- */
-type BackToL3Identification = {
-  type: "back-to-l3-identification";
-};
-
 type CieCanEntered = {
   can: string;
   type: "cie-can-entered";
@@ -83,6 +72,11 @@ type CiePinEntered = {
   type: "cie-pin-entered";
 };
 
+/**
+ * Closes the issuance. On the Documenti su IO landing reached by restarting
+ * from the IT-Wallet (L3) identification because the user does not have a CIE,
+ * it goes back to the L3 identification mode selection instead.
+ */
 type Close = {
   /**
    * Step at which the user exited, used to show the Qualtrics survey in

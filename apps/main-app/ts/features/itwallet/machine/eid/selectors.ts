@@ -18,7 +18,8 @@ export const selectIssuanceLevel = (snapshot: MachineSnapshot) =>
  * identification and can still go back to it.
  */
 export const selectCanGoBackToL3Identification = (snapshot: MachineSnapshot) =>
-  snapshot.can({ type: "back-to-l3-identification" });
+  snapshot.matches("TosAcceptance") &&
+  snapshot.context.l2FallbackOrigin !== undefined;
 
 export const isL3FeaturesEnabledSelector = (snapshot: MachineSnapshot) =>
   snapshot.context.level === "l3";

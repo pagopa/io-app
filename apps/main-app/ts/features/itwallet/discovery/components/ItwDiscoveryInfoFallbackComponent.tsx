@@ -91,7 +91,8 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
   const handleGoBack = useCallback(() => {
     trackItwIntroBack("L2");
     if (canGoBackToL3Identification) {
-      machineRef.send({ type: "back-to-l3-identification" });
+      // Goes back to the L3 identification instead of closing the issuance
+      machineRef.send({ type: "close" });
     } else {
       dismissalDialog.show();
     }

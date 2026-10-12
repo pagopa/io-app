@@ -44,6 +44,7 @@ import {
 import { IssuanceFailureType } from "../failure";
 import { EidIssuanceMachineDeps } from "../input";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
+import { selectCanGoBackToL3Identification } from "../selectors";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -2038,12 +2039,10 @@ describe("itwEidIssuanceMachine", () => {
         credentialType: T_L2_CREDENTIAL_TYPE,
         l2FallbackOrigin: { credentialType: T_L3_CREDENTIAL_TYPE }
       });
-      expect(
-        actor.getSnapshot().can({ type: "back-to-l3-identification" })
-      ).toBe(true);
+      expect(selectCanGoBackToL3Identification(actor.getSnapshot())).toBe(true);
     });
 
-    it("Should restore the L3 identification when going back from the L2 fallback ToS", () => {
+    it("Should restore the L3 identification when closing the L2 fallback ToS reached from the L3 identification", () => {
       const actor = createL3IdentificationActor();
 
       actor.send({
@@ -2053,12 +2052,13 @@ describe("itwEidIssuanceMachine", () => {
         credentialType: T_L2_CREDENTIAL_TYPE
       });
       navigateToIdentificationScreen.mockClear();
-      actor.send({ type: "back-to-l3-identification" });
+      actor.send({ type: "close" });
 
       expect(actor.getSnapshot().value).toStrictEqual({
         UserIdentification: "Identification"
       });
       expect(navigateToIdentificationScreen).toHaveBeenCalled();
+      expect(closeIssuance).not.toHaveBeenCalled();
       expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
         mode: "issuance",
         level: "l3",
@@ -2087,9 +2087,9 @@ describe("itwEidIssuanceMachine", () => {
       actor.send({ type: "accept-tos" });
 
       expect(actor.getSnapshot().context.l2FallbackOrigin).toBeUndefined();
-      expect(
-        actor.getSnapshot().can({ type: "back-to-l3-identification" })
-      ).toBe(false);
+      expect(selectCanGoBackToL3Identification(actor.getSnapshot())).toBe(
+        false
+      );
     });
 
     it("Should not go back to the L3 identification when the L2 fallback started from scratch", () => {
@@ -2099,20 +2099,20 @@ describe("itwEidIssuanceMachine", () => {
       actor.send({ type: "start", mode: "issuance", level: "l2-fallback" });
 
       expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
-      expect(
-        actor.getSnapshot().can({ type: "back-to-l3-identification" })
-      ).toBe(false);
+      expect(selectCanGoBackToL3Identification(actor.getSnapshot())).toBe(
+        false
+      );
     });
 
-    it("Should not go back to the L3 identification once the L2 fallback ToS are closed", () => {
-      const actor = createL3IdentificationActor();
+    it("Should close the issuance when the L2 fallback ToS started from scratch are closed", () => {
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
 
-      actor.send({ type: "restart", mode: "issuance", level: "l2-fallback" });
+      actor.send({ type: "start", mode: "issuance", level: "l2-fallback" });
       actor.send({ type: "close" });
 
       expect(actor.getSnapshot().value).toStrictEqual("Idle");
       expect(closeIssuance).toHaveBeenCalledTimes(1);
-      expect(actor.getSnapshot().context.l2FallbackOrigin).toBeUndefined();
     });
   });
 

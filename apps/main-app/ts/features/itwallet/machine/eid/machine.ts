@@ -105,20 +105,23 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
             target: "TrustFederationVerification"
           }
         ],
-        "back-to-l3-identification": {
-          guard: "isL2FallbackFromL3",
-          actions: assign(({ context }) => ({
-            level: "l3",
-            credentialType: context.l2FallbackOrigin?.credentialType,
-            itwVersion: getIssuanceItwVersion("issuance", "l3"),
-            l2FallbackOrigin: undefined
-          })),
-          target: "#itwEidIssuanceMachine.UserIdentification.Identification"
-        },
-        close: {
-          target: "#itwEidIssuanceMachine.Idle",
-          actions: [assign({ l2FallbackOrigin: undefined }), "closeIssuance"]
-        }
+        close: [
+          {
+            // The user tapped "Non ho la CIE" during L3 identification: go back there
+            guard: "isL2FallbackFromL3",
+            actions: assign(({ context }) => ({
+              level: "l3",
+              credentialType: context.l2FallbackOrigin?.credentialType,
+              itwVersion: getIssuanceItwVersion("issuance", "l3"),
+              l2FallbackOrigin: undefined
+            })),
+            target: "#itwEidIssuanceMachine.UserIdentification.Identification"
+          },
+          {
+            target: "#itwEidIssuanceMachine.Idle",
+            actions: [assign({ l2FallbackOrigin: undefined }), "closeIssuance"]
+          }
+        ]
       }
     },
     TrustFederationVerification: {

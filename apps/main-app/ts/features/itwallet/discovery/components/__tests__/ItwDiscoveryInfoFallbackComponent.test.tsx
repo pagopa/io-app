@@ -56,9 +56,7 @@ describe("ItwDiscoveryInfoFallbackComponent", () => {
     it("goes back to the L3 identification from the header", () => {
       pressHeaderBack(renderComponent());
 
-      expect(mockSend).toHaveBeenCalledWith({
-        type: "back-to-l3-identification"
-      });
+      expect(mockSend).toHaveBeenCalledWith({ type: "close" });
       expect(spyAlert).not.toHaveBeenCalled();
     });
 
@@ -66,9 +64,7 @@ describe("ItwDiscoveryInfoFallbackComponent", () => {
       renderComponent();
 
       expect(pressHardwareBack()).toBe(true);
-      expect(mockSend).toHaveBeenCalledWith({
-        type: "back-to-l3-identification"
-      });
+      expect(mockSend).toHaveBeenCalledWith({ type: "close" });
       expect(spyAlert).not.toHaveBeenCalled();
     });
   });
@@ -84,9 +80,7 @@ describe("ItwDiscoveryInfoFallbackComponent", () => {
         I18n.t("features.itWallet.discovery.screen.diw.dismissalDialog.body"),
         expect.any(Array)
       );
-      expect(mockSend).not.toHaveBeenCalledWith({
-        type: "back-to-l3-identification"
-      });
+      expect(mockSend).not.toHaveBeenCalledWith({ type: "close" });
     });
 
     it("asks for confirmation with the hardware back button", () => {
@@ -94,9 +88,7 @@ describe("ItwDiscoveryInfoFallbackComponent", () => {
 
       expect(pressHardwareBack()).toBe(true);
       expect(spyAlert).toHaveBeenCalledTimes(1);
-      expect(mockSend).not.toHaveBeenCalledWith({
-        type: "back-to-l3-identification"
-      });
+      expect(mockSend).not.toHaveBeenCalledWith({ type: "close" });
     });
   });
 });
