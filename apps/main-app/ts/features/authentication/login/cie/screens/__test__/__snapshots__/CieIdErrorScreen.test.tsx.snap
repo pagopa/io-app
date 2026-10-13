@@ -26,7 +26,8 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
           "alignItems": "stretch",
           "flexGrow": 1,
           "justifyContent": "center",
-          "padding": 24,
+          "paddingHorizontal": 32,
+          "paddingVertical": 24,
         },
         false,
       ]
@@ -703,7 +704,8 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
           "alignItems": "stretch",
           "flexGrow": 1,
           "justifyContent": "center",
-          "padding": 24,
+          "paddingHorizontal": 32,
+          "paddingVertical": 24,
         },
         false,
       ]

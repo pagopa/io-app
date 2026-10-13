@@ -224,7 +224,8 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]

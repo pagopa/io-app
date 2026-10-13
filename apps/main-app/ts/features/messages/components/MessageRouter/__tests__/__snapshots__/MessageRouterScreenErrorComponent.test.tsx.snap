@@ -409,7 +409,8 @@ exports[`variant: genericError MessageRouterScreenErrorComponent matches snapsho
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -1474,7 +1475,8 @@ exports[`variant: messageNotFound MessageRouterScreenErrorComponent matches snap
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -2264,7 +2266,8 @@ exports[`variant: thirdPartyError MessageRouterScreenErrorComponent matches snap
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]

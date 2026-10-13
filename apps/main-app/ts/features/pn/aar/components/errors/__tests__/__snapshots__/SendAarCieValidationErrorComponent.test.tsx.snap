@@ -366,7 +366,8 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -1479,7 +1480,8 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -2270,7 +2272,8 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -3295,7 +3298,8 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]

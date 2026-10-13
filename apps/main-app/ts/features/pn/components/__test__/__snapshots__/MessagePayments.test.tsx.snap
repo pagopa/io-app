@@ -822,7 +822,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -841,7 +840,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -1109,7 +1107,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -1128,7 +1125,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -1396,7 +1392,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -1415,7 +1410,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -1683,7 +1677,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -1702,7 +1695,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -1970,7 +1962,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -1989,7 +1980,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -2257,7 +2247,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -2276,7 +2265,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -2544,7 +2532,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -2563,7 +2550,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -3238,7 +3224,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -3257,7 +3242,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -3525,7 +3509,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -3544,7 +3527,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -3812,7 +3794,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -3831,7 +3812,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -4099,7 +4079,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -4118,7 +4097,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -4386,7 +4364,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -4405,7 +4382,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -4673,7 +4649,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -4692,7 +4667,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -4960,7 +4934,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -4979,7 +4952,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -5998,7 +5970,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -6017,7 +5988,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -6236,7 +6206,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -6255,7 +6224,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -6522,7 +6490,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -6541,7 +6508,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -6808,7 +6774,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -6827,7 +6792,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -7094,7 +7058,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -7113,7 +7076,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -7780,7 +7742,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -7799,7 +7760,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -8018,7 +7978,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -8037,7 +7996,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -8304,7 +8262,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -8323,7 +8280,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -8590,7 +8546,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -8609,7 +8564,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -8876,7 +8830,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -8895,7 +8848,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -9562,7 +9514,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -9581,7 +9532,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -9800,7 +9750,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -9819,7 +9768,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -10086,7 +10034,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -10105,7 +10052,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -10372,7 +10318,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -10391,7 +10336,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -10658,7 +10602,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -10677,7 +10620,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -11585,7 +11527,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -11604,7 +11545,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -11823,7 +11763,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -11842,7 +11781,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -12109,7 +12047,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -12128,7 +12065,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -12395,7 +12331,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -12414,7 +12349,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -12681,7 +12615,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -12700,7 +12633,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -13608,7 +13540,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -13627,7 +13558,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -14246,7 +14176,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -14265,7 +14194,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {

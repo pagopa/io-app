@@ -366,7 +366,8 @@ exports[`SendAarErrorComponent - Full Test Suite should match snapshot and call 
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]

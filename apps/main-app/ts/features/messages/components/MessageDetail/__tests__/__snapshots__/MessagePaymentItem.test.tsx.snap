@@ -998,7 +998,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -1017,7 +1016,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -1610,7 +1608,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -1629,7 +1626,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
@@ -2201,7 +2197,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                               ]
                             }
                             style={
@@ -2220,7 +2215,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 {
                                   "borderColor": "#E8EBF1",
                                 },
-                                false,
                                 {
                                   "transform": [
                                     {
