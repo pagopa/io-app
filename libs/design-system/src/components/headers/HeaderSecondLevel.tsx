@@ -40,6 +40,7 @@ import {
   IOSpringValues,
   IOThemeDark,
   IOThemeLight,
+  IOTypography,
   IOVisualCostants
 } from "../../core";
 import { WithTestID } from "../../utils/types";
@@ -343,7 +344,7 @@ export const HeaderSecondLevel = ({
           <AnimatedIOText
             accessible={false}
             numberOfLines={1}
-            size={14}
+            size={IOTypography.bodySmall.size}
             style={[
               { color: titleColor, textAlign: "center" },
               titleAnimatedStyle

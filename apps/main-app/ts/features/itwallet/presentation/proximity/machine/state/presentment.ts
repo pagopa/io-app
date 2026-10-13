@@ -1,3 +1,4 @@
+import { State } from "react-native-ble-plx";
 import { and, assign, not, or, stateIn } from "xstate";
 
 import { ProximityFailureType } from "../failure";
@@ -22,6 +23,19 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
     }
   },
   on: {
+    "bluetooth-state-changed": {
+      guard: ({ event }) => event.state === State.PoweredOff,
+      target: "#itwProximityMachine.Bluetooth.RequireActivation",
+      actions: assign(() => ({
+        qrCodeString: undefined,
+        failure: undefined,
+        verifierRequest: undefined,
+        proximityDetails: undefined,
+        grantedConsentKey: undefined,
+        retrievalMethod: undefined,
+        sessionTerminated: false
+      }))
+    },
     close: {
       guard: and([
         "isNfcEngagement",
@@ -215,6 +229,7 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       tags: [ItwPresentationTags.Presenting],
       on: {
         "start-nfc-presentment": {
+          guard: "isNfcPresentmentSupported",
           target: "#itwProximityMachine.Nfc"
         },
         "nfc-stopped": {

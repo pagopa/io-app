@@ -3,9 +3,9 @@ import { z } from "zod";
 /** Schema of a single IDP returned by the OneIdentity IDPs list endpoint */
 export const IdpSchema = z.object({
   entityID: z.string(),
-  status: z.string(),
+  status: z.string().optional(),
   friendlyName: z.string(),
-  active: z.boolean()
+  active: z.boolean().optional()
 });
 
 export type Idp = z.infer<typeof IdpSchema>;

@@ -8,6 +8,7 @@ import {
   waitFor
 } from "xstate";
 
+import * as remoteConfig from "../../../../common/store/selectors/remoteConfig";
 import {
   CredentialMetadata,
   WalletInstanceAttestations
@@ -155,8 +156,15 @@ describe("itwProximityMachine", () => {
     } as Partial<MachineSnapshot>) as MachineSnapshot;
   };
 
+  beforeEach(() => {
+    jest
+      .spyOn(remoteConfig, "isItwProximityNfcMinAppVersionSupportedSelector")
+      .mockReturnValue(true);
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     jest.useRealTimers();
   });
 
@@ -351,6 +359,35 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Nfc: "CheckActivation" })
     );
+  });
+
+  it("ignores start-nfc-presentment when the NFC minimum app version is not supported", () => {
+    const state = T_DEPS.store.getState();
+    jest.spyOn(T_DEPS.store, "getState").mockReturnValue(state);
+    jest
+      .mocked(remoteConfig.isItwProximityNfcMinAppVersionSupportedSelector)
+      .mockReturnValue(false);
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
+    });
+
+    actor.start();
+    actor.send({ type: "start-nfc-presentment" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "AwaitingConnection"
+    });
+    expect(actor.getSnapshot().context.engagementMode).toBe("qrcode");
+    expect(
+      remoteConfig.isItwProximityNfcMinAppVersionSupportedSelector
+    ).toHaveBeenCalledWith(state);
+    expect(checkNfcActivation).not.toHaveBeenCalled();
+    expect(startEngagement).not.toHaveBeenCalled();
+    expect(navigateToNfcActivationScreen).not.toHaveBeenCalled();
+    expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
+
+    actor.stop();
   });
 
   it("inactive NFC from start-nfc-presentment moves to Nfc.RequireActivation", async () => {
