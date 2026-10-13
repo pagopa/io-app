@@ -41,7 +41,7 @@ export const useFooterActionsMargin = (
      from sticking to the bottom. */
   const bottomMargin =
     !needSafeAreaMargin || excludeSafeAreaMargins
-      ? IODimensions.padding.footer.edgeToEdge
+      ? IODimensions.padding.footer.bottom
       : insets.bottom + androidInsetMargin;
 
   return {

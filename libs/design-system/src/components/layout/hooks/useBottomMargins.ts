@@ -20,7 +20,7 @@ export const useBottomMargins = (
      from sticking to the bottom. */
   const bottomMargin =
     !needSafeAreaMargin || excludeSafeAreaMargins
-      ? IODimensions.padding.footer.edgeToEdge
+      ? IODimensions.padding.footer.bottom
       : insets.bottom + androidInsetMargin;
 
   /* When the secondary action is visible, add extra margin

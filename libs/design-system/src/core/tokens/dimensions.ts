@@ -167,8 +167,8 @@ const componentPadding = {
     vertical: 16,
     /* Below a link action, above the iPhone home indicator: the link has no fixed height */
     homeIndicator: 8,
-    /* Android edge-to-edge: the bottom inset alone leaves the actions too close to the edge */
-    edgeToEdge: 8
+    /* Replaced by the safe area inset, when there is one */
+    bottom: system.padding.screen.default
   },
   listItem: {
     default: { horizontal: system.padding.screen.default, vertical: 12 },
