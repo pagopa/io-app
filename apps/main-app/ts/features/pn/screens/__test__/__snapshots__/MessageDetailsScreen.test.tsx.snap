@@ -399,7 +399,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             <View
                               style={
                                 {
-                                  "width": 32,
+                                  "width": 24,
                                 }
                               }
                             />
@@ -1065,7 +1065,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             <View
                               style={
                                 {
-                                  "width": 32,
+                                  "width": 24,
                                 }
                               }
                             />
@@ -1731,7 +1731,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             <View
                               style={
                                 {
-                                  "width": 32,
+                                  "width": 24,
                                 }
                               }
                             />
@@ -12726,7 +12726,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                             <View
                               style={
                                 {
-                                  "width": 32,
+                                  "width": 24,
                                 }
                               }
                             />
@@ -13485,7 +13485,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                             <View
                               style={
                                 {
-                                  "width": 32,
+                                  "width": 24,
                                 }
                               }
                             />
@@ -14244,7 +14244,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                             <View
                               style={
                                 {
-                                  "width": 32,
+                                  "width": 24,
                                 }
                               }
                             />

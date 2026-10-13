@@ -970,7 +970,7 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                             <View
                               style={
                                 {
-                                  "width": 32,
+                                  "width": 24,
                                 }
                               }
                             />

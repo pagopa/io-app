@@ -1320,7 +1320,7 @@ continuare
                             <View
                               style={
                                 {
-                                  "width": 32,
+                                  "width": 24,
                                 }
                               }
                             />
