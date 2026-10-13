@@ -1,25 +1,15 @@
+import { ListItemInfo } from "@io-app/design-system";
 import { fireEvent, render } from "@testing-library/react-native";
 
-import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { withStore } from "../../../../../utils/jest/withStore";
-import { trackCopyListItem } from "../../../analytics";
 import { HIDDEN_CLAIM_TEXT } from "../../utils/constants";
 import { ItwCredentialClaim as ItwCredentialClaimComponent } from "../ItwCredentialClaim";
-
-jest.mock("../../../../../utils/clipboard", () => ({
-  clipboardSetStringWithFeedback: jest.fn()
-}));
-
-jest.mock("../../../analytics", () => ({
-  ...jest.requireActual("../../../analytics"),
-  trackCopyListItem: jest.fn()
-}));
 
 const ItwCredentialClaim = withStore(ItwCredentialClaimComponent);
 
 const LABEL = "Claim label";
 
-const copyableScenarios = [
+const longPressableScenarios = [
   { name: "string", value: "Mario", expected: "Mario" },
   {
     name: "url",
@@ -36,71 +26,56 @@ const copyableScenarios = [
 ];
 
 describe("ItwCredentialClaim", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  test.each(copyableScenarios)(
-    "copies the $name claim value on long press",
+  test.each(longPressableScenarios)(
+    "invokes onLongPress with the $name claim label and value",
     ({ value, expected }) => {
+      const onLongPress = jest.fn();
       const { getByText } = render(
         <ItwCredentialClaim
           claim={{ id: "claim", label: LABEL, value }}
-          credentialType="MDL"
+          onLongPress={onLongPress}
         />
       );
 
       fireEvent(getByText(expected), "onLongPress");
 
-      expect(clipboardSetStringWithFeedback).toHaveBeenCalledWith(expected);
-      expect(trackCopyListItem).toHaveBeenCalledWith(
-        expect.objectContaining({ item_copied: LABEL })
-      );
+      expect(onLongPress).toHaveBeenCalledWith(LABEL, expected);
     }
   );
 
-  test.each(copyableScenarios)(
-    "does not copy the $name claim value in preview mode",
-    ({ value, expected }) => {
-      const { getByText } = render(
-        <ItwCredentialClaim
-          claim={{ id: "claim", label: LABEL, value }}
-          isPreview
-        />
-      );
-
-      fireEvent(getByText(expected), "onLongPress");
-
-      expect(clipboardSetStringWithFeedback).not.toHaveBeenCalled();
-    }
-  );
-
-  test.each(copyableScenarios)(
-    "does not copy the $name claim value when hidden",
+  test.each(longPressableScenarios)(
+    "does not enable the long press when the $name claim value is hidden",
     ({ value }) => {
-      const { getByText } = render(
+      // `fireEvent` would reach the `onLongPress` prop of `ItwCredentialClaim`
+      // itself, so the rendered list item is inspected instead
+      const { getByText, UNSAFE_getByType } = render(
         <ItwCredentialClaim
           claim={{ id: "claim", label: LABEL, value }}
           hidden
+          onLongPress={jest.fn()}
         />
       );
 
-      fireEvent(getByText(HIDDEN_CLAIM_TEXT), "onLongPress");
-
-      expect(clipboardSetStringWithFeedback).not.toHaveBeenCalled();
+      expect(getByText(HIDDEN_CLAIM_TEXT)).toBeTruthy();
+      expect(UNSAFE_getByType(ListItemInfo).props.onLongPress).toBeUndefined();
     }
   );
 
-  it("does not track the copy when the credential type is unknown", () => {
+  it("forwards onLongPress to nested object claims", () => {
+    const onLongPress = jest.fn();
     const { getByText } = render(
       <ItwCredentialClaim
-        claim={{ id: "claim", label: LABEL, value: "Mario" }}
+        claim={{
+          id: "claim",
+          label: LABEL,
+          value: { nested: { name: "Nested", value: "Mario" } }
+        }}
+        onLongPress={onLongPress}
       />
     );
 
     fireEvent(getByText("Mario"), "onLongPress");
 
-    expect(clipboardSetStringWithFeedback).toHaveBeenCalledWith("Mario");
-    expect(trackCopyListItem).not.toHaveBeenCalled();
+    expect(onLongPress).toHaveBeenCalledWith("Nested", "Mario");
   });
 });

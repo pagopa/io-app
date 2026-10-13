@@ -3,12 +3,7 @@ import I18n from "i18next";
 import { Fragment, useMemo } from "react";
 import { Image } from "react-native";
 
-import { useIOSelector } from "../../../../store/hooks";
-import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { trackCopyListItem } from "../../analytics";
-import { getMixPanelCredential } from "../../analytics/utils/index.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import {
   ClaimDisplayFormat,
@@ -23,6 +18,12 @@ import {
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwCredentialMultiClaim } from "./ItwCredentialMultiClaim.tsx";
+
+/**
+ * Callback invoked when a claim value is long pressed. It receives the claim
+ * label and its displayed (unhidden) value.
+ */
+export type ItwClaimLongPressHandler = (label: string, value: string) => void;
 
 /**
  * Helper function to get the accessibility text for hidden claims.
@@ -103,47 +104,35 @@ const BoolClaimItem = ({
  *
  * @param label - The label of the claim
  * @param claim - The claim value
- * @param isCopyable - A flag to enable the copy of the claim value
- * @param credentialType - The type of the credential, used for analytics
- *   tracking
- * @param hidden - A flag to hide the claim value
+ * @param hidden - A flag to hide the claim value. Long press is disabled when
+ *   hidden
+ * @param onLongPress - Callback invoked when the claim value is long pressed
  */
 const PlainTextClaimItem = ({
   label,
   claim,
-  isCopyable,
-  credentialType,
-  hidden
+  hidden,
+  onLongPress
 }: {
   claim: string;
-  credentialType?: string;
   hidden?: boolean;
-  isCopyable?: boolean;
   label: string;
+  onLongPress?: ItwClaimLongPressHandler;
 }) => {
   const safeValue = getSafeText(claim);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const displayValue = hidden ? HIDDEN_CLAIM_TEXT : safeValue;
   const accessibilityStateText = hidden
     ? getHiddenClaimAccessibilityText()
     : safeValue;
-
-  const handleLongPress = () => {
-    clipboardSetStringWithFeedback(safeValue);
-    if (credentialType) {
-      trackCopyListItem({
-        credential: getMixPanelCredential(credentialType, isItwL3),
-        item_copied: label
-      });
-    }
-  };
 
   return (
     <ListItemInfo
       accessibilityLabel={`${label} ${accessibilityStateText}`}
       label={label}
       numberOfLines={4}
-      onLongPress={isCopyable && !hidden ? handleLongPress : undefined}
+      onLongPress={
+        onLongPress && !hidden ? () => onLongPress(label, safeValue) : undefined
+      }
       value={displayValue}
     />
   );
@@ -156,43 +145,29 @@ const PlainTextClaimItem = ({
  * @param label - The label of the claim
  * @param claim - The value of the claim
  * @param status - The status of the claim, used to show an expiration badge
- * @param hidden - A flag to hide the claim value
- * @param isCopyable - A flag to enable the copy of the claim value
- * @param credentialType - The type of the credential, used for analytics
- *   tracking
+ * @param hidden - A flag to hide the claim value. Long press is disabled when
+ *   hidden
+ * @param onLongPress - Callback invoked when the claim value is long pressed
  */
 const DateClaimItem = ({
   label,
   claim,
   status,
   hidden,
-  isCopyable,
-  credentialType
+  onLongPress
 }: {
   claim: SimpleDate;
-  credentialType?: string;
   hidden?: boolean;
-  isCopyable?: boolean;
   label: string;
+  onLongPress?: ItwClaimLongPressHandler;
   status?: ItwCredentialStatus;
 }) => {
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   // Remove the timezone offset to display the date in its original format
   const realValue = claim.toString("DD/MM/YYYY");
   const displayValue = hidden ? HIDDEN_CLAIM_TEXT : realValue;
   const accessibilityStateText = hidden
     ? getHiddenClaimAccessibilityText()
     : realValue;
-
-  const handleLongPress = () => {
-    clipboardSetStringWithFeedback(realValue);
-    if (credentialType) {
-      trackCopyListItem({
-        credential: getMixPanelCredential(credentialType, isItwL3),
-        item_copied: label
-      });
-    }
-  };
 
   // Localized description of the claim's validity status. It is used to build the
   // visible badge (when shown) and also to inform screen reader users of the "valid"
@@ -259,7 +234,9 @@ const DateClaimItem = ({
       endElement={endElement}
       key={`${label}-${displayValue}`}
       label={label}
-      onLongPress={isCopyable && !hidden ? handleLongPress : undefined}
+      onLongPress={
+        onLongPress && !hidden ? () => onLongPress(label, realValue) : undefined
+      }
       value={displayValue}
     />
   );
@@ -464,21 +441,25 @@ const DrivingPrivilegesClaimItem = ({
  *   preview mode
  * @param credentialStatus - The status of the credential, used for expiration
  *   date claims
- * @param credentialType - The type of the credential, used for analytics
- *   tracking
+ * @param credentialType - The type of the credential, forwarded to nested
+ *   claims for analytics tracking
+ * @param onLongPress - Callback invoked when a text or date claim value is long
+ *   pressed. It is never invoked for hidden claims
  */
 export const ItwCredentialClaim = ({
   claim,
   hidden,
   isPreview,
   credentialStatus,
-  credentialType
+  credentialType,
+  onLongPress
 }: {
   claim: ClaimDisplayFormat;
   credentialStatus?: ItwCredentialStatus;
   credentialType?: string;
   hidden?: boolean;
   isPreview?: boolean;
+  onLongPress?: ItwClaimLongPressHandler;
 }) =>
   parseClaimValue(claim.value).match(
     parsed => {
@@ -495,10 +476,9 @@ export const ItwCredentialClaim = ({
           return (
             <DateClaimItem
               claim={parsed.value}
-              credentialType={credentialType}
               hidden={hidden}
-              isCopyable={!isPreview}
               label={claim.label}
+              onLongPress={onLongPress}
               status={
                 !isPreview && isExpirationDateClaim(claim)
                   ? credentialStatus
@@ -525,10 +505,9 @@ export const ItwCredentialClaim = ({
           return (
             <PlainTextClaimItem
               claim={extractFiscalCode(parsed.value) ?? parsed.value}
-              credentialType={credentialType}
               hidden={hidden}
-              isCopyable={!isPreview}
               label={claim.label}
+              onLongPress={onLongPress}
             />
           );
         case "image":
@@ -543,10 +522,9 @@ export const ItwCredentialClaim = ({
           return (
             <PlainTextClaimItem
               claim={parsed.value.join(", ")}
-              credentialType={credentialType}
               hidden={hidden}
-              isCopyable={!isPreview}
               label={claim.label}
+              onLongPress={onLongPress}
             />
           );
         case "nestedArray":
@@ -558,6 +536,7 @@ export const ItwCredentialClaim = ({
               hidden={hidden}
               isPreview={isPreview}
               nestedClaims={parsed.value.map(item => parseClaims(item))}
+              onLongPress={onLongPress}
             />
           );
         case "nestedObject":
@@ -572,6 +551,7 @@ export const ItwCredentialClaim = ({
                     credentialType={credentialType}
                     hidden={hidden}
                     isPreview={isPreview}
+                    onLongPress={onLongPress}
                   />
                 </Fragment>
               ))}
@@ -592,10 +572,9 @@ export const ItwCredentialClaim = ({
           return (
             <PlainTextClaimItem
               claim={parsed.value}
-              credentialType={credentialType}
               hidden={hidden}
-              isCopyable={!isPreview}
               label={claim.label}
+              onLongPress={onLongPress}
             />
           );
       }
