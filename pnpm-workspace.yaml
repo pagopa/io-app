@@ -11,8 +11,6 @@ overrides:
 patchedDependencies:
   # Migrates barcode rendering from ART to SVG and replaces JCenter.
   react-native-barcode-builder@2.0.0: patches/react-native-barcode-builder@2.0.0.patch
-  # Removes IP and MAC address APIs so the app manifest can remove ACCESS_WIFI_STATE permission which is not required by the app.
-  react-native-device-info@14.0.4: patches/react-native-device-info@14.0.4.patch
   # Adds Android props that deny WebView camera and microphone access despite app permissions.
   react-native-webview@13.16.0: patches/react-native-webview@13.16.0.patch
   # Makes iOS PDF annotations read-only, matching Android behaviour.

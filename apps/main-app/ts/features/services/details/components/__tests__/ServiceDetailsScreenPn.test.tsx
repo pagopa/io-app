@@ -65,10 +65,12 @@ const servicePreferenceWihInboxDisabled: ServicePreferenceResponse = {
   }
 };
 
-jest.mock("react-native-device-info", () => ({
-  getReadableVersion: jest.fn().mockReturnValue("2.35.0.1"),
-  getVersion: jest.fn().mockReturnValue("2.35.0.1"),
+jest.mock("@io-app/expo-device-internal", () => ({
   isDisplayZoomed: jest.fn().mockReturnValue(false)
+}));
+jest.mock("expo-application", () => ({
+  nativeApplicationVersion: "2.35.0.1",
+  nativeBuildVersion: "1"
 }));
 
 describe("ServiceDetailsScreenPn", () => {

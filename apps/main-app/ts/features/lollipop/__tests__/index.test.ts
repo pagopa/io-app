@@ -8,9 +8,9 @@ import {
   toSignatureComponents
 } from "..";
 
-jest.mock("react-native-device-info", () => ({
-  getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
-  getVersion: jest.fn().mockReturnValue("1.2.3.4")
+jest.mock("expo-application", () => ({
+  nativeApplicationVersion: "1.2.3.4",
+  nativeBuildVersion: "4"
 }));
 
 jest.mock("../../../utils/environment", () => ({
