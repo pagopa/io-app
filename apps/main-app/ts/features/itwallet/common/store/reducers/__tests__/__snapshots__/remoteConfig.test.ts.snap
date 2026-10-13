@@ -63,6 +63,7 @@ exports[`ITW remote config persist shape should freeze ItwConfig [if this test f
         "service_organization_name": "string",
       },
     ],
+    "ipzs_itwallet_privacy_url": "string",
     "ipzs_privacy_url": "string",
     "itw_l3": [
       {},
@@ -87,6 +88,22 @@ exports[`ITW remote config persist shape should freeze ItwConfig [if this test f
       "string",
     ],
     "proximity": [
+      {},
+      {
+        "min_app_version": [
+          {
+            "android": [
+              "string",
+            ],
+            "ios": [
+              "string",
+            ],
+          },
+          {},
+        ],
+      },
+    ],
+    "proximity_nfc": [
       {},
       {
         "min_app_version": [

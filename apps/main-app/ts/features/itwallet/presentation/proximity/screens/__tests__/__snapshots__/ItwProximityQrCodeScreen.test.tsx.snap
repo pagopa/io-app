@@ -656,7 +656,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR o avvicinalo a un lettore. Chi verifica dal vivo userà un’app ufficiale.
+                                  Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
@@ -698,6 +698,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}
@@ -1152,7 +1153,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -2863,6 +2864,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}
@@ -3317,7 +3319,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -4749,7 +4751,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR o avvicinalo a un lettore. Chi verifica dal vivo userà un’app ufficiale.
+                                  Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
@@ -4817,6 +4819,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}
@@ -5271,7 +5274,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -6953,7 +6956,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR o avvicinalo a un lettore. Chi verifica dal vivo userà un’app ufficiale.
+                                  Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
@@ -6995,6 +6998,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                 "marginTop": 32,
                               }
                             }
+                            testID="itwNfcSectionTestID"
                           >
                             <Text
                               allowFontScaling={true}
@@ -7449,7 +7453,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                       [
                                         {},
                                         {
-                                          "color": "#031344",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",

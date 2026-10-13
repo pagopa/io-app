@@ -47,6 +47,7 @@ import { FciDownloadPreviewDirectoryPath } from "../networking/handleDownloadDoc
 // Mock expo-file-system
 const mockFileDelete = jest.fn();
 const mockFileExists = true;
+const mockDirectoryDelete = jest.fn();
 jest.mock("expo-file-system", () => ({
   File: jest.fn().mockImplementation(() => ({
     exists: mockFileExists,
@@ -54,7 +55,11 @@ jest.mock("expo-file-system", () => ({
     uri: ""
   })),
   Paths: { cache: { uri: "file:///cache/" } },
-  Directory: jest.fn()
+  Directory: jest.fn().mockImplementation(() => ({
+    exists: true,
+    delete: mockDirectoryDelete,
+    uri: ""
+  }))
 }));
 
 // Ensure testable is defined in test environment
@@ -198,16 +203,21 @@ describe("FCI Saga Tests", () => {
   describe("clearFciDownloadPreview", () => {
     const testPath = "/test/path/document.pdf";
 
-    it("should delete file, cancel download and navigate back when path is provided", () => {
+    it("should delete file, cancel download and navigate back when path is provided", async () => {
+      jest.clearAllMocks();
       const action = fciDownloadPreviewClear({ path: testPath });
+      const { File } = require("expo-file-system");
 
-      return expectSaga(clearFciDownloadPreview, action)
+      await expectSaga(clearFciDownloadPreview, action)
         .put(fciDownloadPreview.cancel())
         .call(
           NavigationService.dispatchNavigationAction,
           CommonActions.goBack()
         )
         .run();
+
+      expect(File).toHaveBeenCalledWith(`file://${testPath}`);
+      expect(mockFileDelete).toHaveBeenCalled();
     });
 
     it("should cancel download and navigate back when path is not provided", () => {
@@ -416,14 +426,33 @@ describe("FCI Saga Tests", () => {
   describe("clearAllFciFiles", () => {
     const testPath = FciDownloadPreviewDirectoryPath;
 
-    it("should delete the specified path", async () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should delete the fci directory using an absolute file URI", async () => {
       const action = fciClearAllFiles({ path: testPath });
-      const { File } = require("expo-file-system");
+      const { Directory, File } = require("expo-file-system");
 
       await expectSaga(clearAllFciFiles, action).run();
 
-      expect(File).toHaveBeenCalledWith(testPath);
-      expect(mockFileDelete).toHaveBeenCalled();
+      expect(Directory).toHaveBeenCalledWith(`file://${testPath}`);
+      expect(mockDirectoryDelete).toHaveBeenCalled();
+      expect(File).not.toHaveBeenCalled();
+    });
+
+    it("should not delete anything when the fci directory does not exist", async () => {
+      const { Directory } = require("expo-file-system");
+      Directory.mockImplementationOnce(() => ({
+        exists: false,
+        delete: mockDirectoryDelete,
+        uri: ""
+      }));
+      const action = fciClearAllFiles({ path: testPath });
+
+      await expectSaga(clearAllFciFiles, action).run();
+
+      expect(mockDirectoryDelete).not.toHaveBeenCalled();
     });
   });
 

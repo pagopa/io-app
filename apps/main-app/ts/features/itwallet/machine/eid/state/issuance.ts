@@ -140,7 +140,7 @@ export const issuanceState = itwEidIssuanceMachineSetup.createStateConfig({
         }),
         onDone: {
           target: "Completed",
-          actions: ["trackWalletInstanceCreation"]
+          actions: ["storeL2Fallback", "trackWalletInstanceCreation"]
         },
         onError: {
           target: "#itwEidIssuanceMachine.Failure",
