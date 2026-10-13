@@ -157,7 +157,6 @@ Essential atomic components:
 - [**TextInput**](./src/components/textInput/)
 - [**List Items**](./src/components/listitems/)
   - [`ListItemAction`](./src/components/listitems/ListItemAction.tsx)
-  - [`ListItemAmount`](./src/components/listitems/ListItemAmount.tsx)
   - [`ListItemHeader`](./src/components/listitems/ListItemHeader.tsx)
   - [`ListItemInfo`](./src/components/listitems/ListItemInfo.tsx)
   - [`ListItemInfoCopy`](./src/components/listitems/ListItemInfoCopy.tsx)
