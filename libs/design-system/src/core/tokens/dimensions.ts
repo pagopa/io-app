@@ -49,6 +49,7 @@ export type IORadius = (typeof radiusScale)[number];
 const iconSize = [16, 20, 24, 32, 48] as const;
 type IOIconSize = (typeof iconSize)[number];
 const pictogramSize = [48, 64, 80, 120, 180] as const;
+type IOPictogramSize = (typeof pictogramSize)[number];
 
 /* SYSTEM */
 
@@ -101,6 +102,9 @@ const system = {
 
 /* Figma: `Dimensions/Gap/*` */
 const componentGap = {
+  alert: { leading: system.gap.leading, action: 8 },
+  banner: { leading: 8, description: system.gap.description, action: 12 },
+  featureInfo: { leading: 24, action: 4 },
   listItem: {
     leading: system.gap.leading,
     action: 16,
@@ -160,11 +164,18 @@ const componentStroke = {
 } as const satisfies Named<IODimensionScale>;
 
 const componentIconSize = {
+  banner: system.size.icon.leading,
+  featureInfo: system.size.icon.leading,
   listItem: system.size.icon.leading,
   module: { leading: system.size.icon.leading },
   selection: system.size.icon.leading,
   tag: 16
 } as const satisfies Named<IOIconSize>;
+
+const componentPictogramSize = {
+  banner: 80,
+  featureInfo: 48
+} as const satisfies Named<IOPictogramSize>;
 
 /* Component sizes, independent of every scale: values are not type-checked */
 const componentSize = {
@@ -181,6 +192,7 @@ const componentHeight = {
 } as const;
 
 const offset = {
+  banner: { close: 8 },
   scrollDown: {
     right: system.padding.screen.default,
     bottom: system.padding.screen.default
@@ -202,7 +214,7 @@ export const IODimensions = {
   stroke: { ...system.stroke, ...componentStroke },
   size: {
     icon: { scale: iconSize, ...system.size.icon, ...componentIconSize },
-    pictogram: { scale: pictogramSize },
+    pictogram: { scale: pictogramSize, ...componentPictogramSize },
     ...componentSize
   },
   height: componentHeight,
