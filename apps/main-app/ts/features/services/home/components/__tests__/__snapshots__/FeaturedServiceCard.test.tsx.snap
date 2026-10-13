@@ -467,7 +467,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                       "backgroundColor": "#FFFFFF",
                                       "borderRadius": 12,
                                       "height": 66,
-                                      "padding": 9,
+                                      "padding": 8,
                                       "width": 66,
                                     },
                                   ]
@@ -482,7 +482,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                         "overflow": "hidden",
                                       },
                                       {
-                                        "borderRadius": 3,
+                                        "borderRadius": 4,
                                       },
                                     ]
                                   }
@@ -1031,7 +1031,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                       "backgroundColor": "#FFFFFF",
                                       "borderRadius": 12,
                                       "height": 66,
-                                      "padding": 9,
+                                      "padding": 8,
                                       "width": 66,
                                     },
                                   ]
@@ -1046,7 +1046,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                         "overflow": "hidden",
                                       },
                                       {
-                                        "borderRadius": 3,
+                                        "borderRadius": 4,
                                       },
                                     ]
                                   }

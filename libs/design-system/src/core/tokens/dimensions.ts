@@ -142,6 +142,12 @@ const componentGap = {
 const componentPadding = {
   accordion: 16,
   alert: { default: 16, fullWidth: system.padding.screen.default },
+  /* Space around the logo or the placeholder icon */
+  avatar: {
+    xsmall: { logo: 4, placeholder: 6 },
+    small: { logo: 6, placeholder: 12 },
+    medium: { logo: 8, placeholder: 16 }
+  },
   badge: { horizontal: 8, vertical: 4 },
   banner: 16,
   footer: { vertical: 16 },
@@ -160,7 +166,7 @@ const componentRadius = {
   banner: system.radius.default,
   button: system.radius.default,
   module: system.radius.default,
-  avatar: { small: system.radius.default, medium: 12 },
+  avatar: { xsmall: 6, small: 8, medium: 12 },
   bottomSheet: 24,
   badge: 24,
   selection: { control: 6 },
@@ -190,7 +196,7 @@ const componentPictogramSize = {
 
 /* Component sizes, independent of every scale: values are not type-checked */
 const componentSize = {
-  avatar: { small: 44, medium: 66 },
+  avatar: { xsmall: 30, small: 44, medium: 66 },
   iconButton: { small: 24, default: 48, large: 56 },
   iconContained: 44,
   /* Checkbox and radio control */
