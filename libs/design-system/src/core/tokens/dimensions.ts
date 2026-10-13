@@ -13,7 +13,9 @@ property as the Figma `Dimensions/*` variables:
   `radius.scale`)
 - `system`: values shared across components (`radius.default`)
 - component values (`radius.tag`): a reference to `system` is an alias, as a
-  Figma variable bound to another one; a literal is a detached value
+  Figma variable bound to another one; a literal is a detached value. Keyed by
+  component name: removing a component removes its keys too, since nothing
+  flags unused tokens
 Sizes (icons, pictograms, avatars…) are independent ramps, not bound to the scale.
 `size` is square (width = height); single-axis values go in `height`.
 

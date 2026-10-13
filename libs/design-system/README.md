@@ -115,9 +115,9 @@ The library is made up of several parts:
 Essential core visual attributes of the design language. It includes:
 
 - **`IOColors`**: Defines the main color palette, themes (light/dark) and other color-related utilities
-- **`IOSpacing`**: Defines the main spacing scale and various component spacing attributes
+- **`IODimensions`**: Defines every dimension token (spacing, padding, radius, stroke, sizes): scales, system and component values
+  - Component tokens are keyed by component name: when you remove a component, remove its keys too, since nothing flags unused tokens
 - **`IOStyles`**: Defines common styles shared across components
-- **`IOShapes`**: Defines visual shape-related attributes, such as radius
 - **`IOTypography`**: Defines the visual attributes of each typographic style
 - **`IOAnimations`**: Defines common animation attributes used for interactive elements (used by the [`reanimated`](https://docs.swmansion.com/react-native-reanimated/) library)
 - **`IOTransitions`**: Defines reusable custom enter/exit transitions (used by the [`reanimated`](https://docs.swmansion.com/react-native-reanimated/) library)
