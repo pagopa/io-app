@@ -1,10 +1,10 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import { useNavigation } from "@react-navigation/native";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch, useIOStore } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { OneIdentityActiveSessionLoginCieAuthorizationWebView } from "../../../activeSessionLogin/screens/cie/OneIdentityActiveSessionLoginCieAuthorizationWebView";
@@ -35,7 +35,14 @@ type OneIdentityCieAuthorizationWebViewProps = {
 export const OneIdentityCieAuthorizationWebView = ({
   authorizationUrl
 }: OneIdentityCieAuthorizationWebViewProps) => {
-  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const store = useIOStore();
+  // The flag is read once at mount and deliberately not subscribed to the store.
+  // On login success `consolidateActiveSessionLoginData` resets
+  // `isActiveSessionLogin` to false: a reactive selector would swap this
+  // component for the standard login one.
+  const [isActiveSessionLogin] = useState(() =>
+    isActiveSessionLoginSelector(store.getState())
+  );
 
   if (isActiveSessionLogin) {
     return (
