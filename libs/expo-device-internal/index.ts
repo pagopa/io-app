@@ -1,12 +1,12 @@
 import { requireNativeModule } from "expo-modules-core";
 
-interface DeviceIdentityModuleType {
+interface DeviceInternalModuleType {
   getUniqueIdSync: () => string;
   isDisplayZoomed: () => boolean;
 }
 
-const DeviceIdentityModule =
-  requireNativeModule<DeviceIdentityModuleType>("DeviceIdentity");
+const DeviceInternalModule =
+  requireNativeModule<DeviceInternalModuleType>("DeviceInternal");
 
 /**
  * Preserves react-native-device-info's identity: Android's ANDROID_ID, or the
@@ -17,7 +17,7 @@ const DeviceIdentityModule =
  *   iOS/Android build containing this module; Expo Go is not supported.
  */
 export const getUniqueIdSync = (): string =>
-  DeviceIdentityModule.getUniqueIdSync();
+  DeviceInternalModule.getUniqueIdSync();
 
 export const isDisplayZoomed = (): boolean =>
-  DeviceIdentityModule.isDisplayZoomed();
+  DeviceInternalModule.isDisplayZoomed();
