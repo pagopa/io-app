@@ -31,8 +31,11 @@ export const isScreenLockSet = (): Promise<boolean> =>
 
 export const getDeviceAppVersion = (): string =>
   Platform.select({
-    ios: `${Application.nativeApplicationVersion ?? ""}.${Application.nativeBuildVersion ?? ""}`,
-    default: Application.nativeApplicationVersion ?? ""
+    ios:
+      Application.nativeApplicationVersion && Application.nativeBuildVersion
+        ? `${Application.nativeApplicationVersion}.${Application.nativeBuildVersion}`
+        : "unknown",
+    default: Application.nativeApplicationVersion || "unknown"
   });
 
 export const isTablet = (): boolean =>
