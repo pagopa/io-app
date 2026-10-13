@@ -6,6 +6,7 @@ import {
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
+import { trackOpenMessageFromSuccessData } from "../analytics";
 import { MessageDetailsSkeleton } from "../components/MessageDetail/MessageDetailsSkeleton";
 import { MessageRouterScreenErrorComponent } from "../components/MessageRouter/MessageRouterScreenErrorComponent";
 import { useLoadMessageData } from "../hooks/useLoadMessageData";
@@ -45,6 +46,14 @@ export const MessageRouterScreen = ({ route }: MessageRouterScreenProps) => {
     }
   }, [isBlocked, navigation]);
 
+  const successData =
+    status.status === "success" ? status.successData : undefined;
+  useEffect(() => {
+    if (successData !== undefined) {
+      trackOpenMessageFromSuccessData(successData, fromNotification);
+    }
+  }, [fromNotification, successData]);
+
   switch (status.status) {
     case "error":
       return (
@@ -55,12 +64,7 @@ export const MessageRouterScreen = ({ route }: MessageRouterScreenProps) => {
         />
       );
     case "success":
-      return (
-        <MessageContentNavigator
-          fromPushNotification={fromNotification}
-          message={status.successData}
-        />
-      );
+      return <MessageContentNavigator message={status.successData} />;
     default:
       return <MessageDetailsSkeleton />;
   }

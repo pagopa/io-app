@@ -20,7 +20,6 @@ import {
   trackPNOptInMessageOpened
 } from "../../pn/analytics";
 import { extractPNOptInMessageInfoIfAvailable } from "../../pn/utils";
-import { trackOpenMessageFromSuccessData } from "../analytics";
 import { MessageAttachmentsAlert } from "../components/MessageAttachment/MessageAttachmentsAlert";
 import { MessageDetailsAttachments } from "../components/MessageDetail/MessageDetailsAttachments";
 import { MessageDetailsBody } from "../components/MessageDetail/MessageDetailsBody";
@@ -40,7 +39,6 @@ import {
   updatePaymentForMessage
 } from "../store/actions";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
-import { loadedMessageDataSelector } from "../store/reducers/messageGetStatus";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import {
@@ -60,7 +58,6 @@ const styles = StyleSheet.create({
 });
 
 export type MessageDetailsScreenRouteParams = {
-  fromPushNotification: boolean;
   messageId: string;
   serviceId: ServiceId;
 };
@@ -71,15 +68,7 @@ type MessageDetailsScreenProps = IOStackNavigationRouteProps<
 >;
 
 export const MessageDetailsScreen = ({ route }: MessageDetailsScreenProps) => {
-  const { fromPushNotification, messageId, serviceId } = route.params;
-  const store = useIOStore();
-
-  useEffect(() => {
-    const messageData = loadedMessageDataSelector(store.getState(), messageId);
-    if (messageData !== undefined) {
-      trackOpenMessageFromSuccessData(messageData, fromPushNotification);
-    }
-  }, [fromPushNotification, messageId, store]);
+  const { messageId, serviceId } = route.params;
 
   useHeaderSecondLevel({
     title: "",
@@ -92,7 +81,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsScreenProps) => {
 export const MessageDetailsContent = ({
   messageId,
   serviceId
-}: Omit<MessageDetailsScreenRouteParams, "fromPushNotification">) => {
+}: MessageDetailsScreenRouteParams) => {
   const dispatch = useIODispatch();
   const message = useIOSelector(state =>
     pot.toUndefined(getPaginatedMessageById(state, messageId))

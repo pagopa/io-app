@@ -38,8 +38,6 @@ export const useLoadMessageData = (
     requestMessageData();
     setLastRequest({ messageId, fromPushNotification });
     return () => {
-      // Another message may have been opened in the meantime, and its loading
-      // must not be cancelled
       if (isLoadingMessageDataSelector(store.getState(), messageId)) {
         dispatch(cancelGetMessageDataAction());
       }

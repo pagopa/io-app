@@ -21,7 +21,6 @@ const contentRouteName = (message: SuccessGetMessageDataActionType) => {
 };
 
 type MessageContentNavigatorProps = {
-  fromPushNotification: boolean;
   message: SuccessGetMessageDataActionType;
 };
 
@@ -32,7 +31,6 @@ type MessageContentNavigatorProps = {
  * the loading placeholder looks like a change of content in the same screen.
  */
 export const MessageContentNavigator = ({
-  fromPushNotification,
   message
 }: MessageContentNavigatorProps) => (
   <Stack.Navigator
@@ -45,7 +43,6 @@ export const MessageContentNavigator = ({
     <Stack.Screen
       component={MessageDetailsScreen}
       initialParams={{
-        fromPushNotification,
         messageId: message.messageId,
         serviceId: message.serviceId
       }}
@@ -53,17 +50,12 @@ export const MessageContentNavigator = ({
     />
     <Stack.Screen
       component={MessageGreenPassScreen}
-      initialParams={{
-        fromPushNotification,
-        messageId: message.messageId
-      }}
       name={MESSAGES_ROUTES.MESSAGE_GREEN_PASS}
     />
     <Stack.Screen
       component={SendMessageDetailsScreen}
       initialParams={{
         firstTimeOpening: message.firstTimeOpening,
-        fromPushNotification,
         messageId: message.messageId,
         sendOpeningSource: "message",
         sendUserType: "not_set",

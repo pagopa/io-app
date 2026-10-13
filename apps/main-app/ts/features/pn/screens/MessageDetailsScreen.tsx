@@ -1,7 +1,7 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { HeaderSecondLevel } from "@io-app/design-system";
 import I18n from "i18next";
-import { RefObject, useCallback, useEffect, useRef } from "react";
+import { RefObject, useCallback, useRef } from "react";
 
 import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton";
 import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
@@ -10,10 +10,7 @@ import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { trackOpenMessageFromSuccessData } from "../../messages/analytics";
-import { loadedMessageDataSelector } from "../../messages/store/reducers/messageGetStatus";
 import {
   SendOpeningSource,
   SendUserType
@@ -29,13 +26,12 @@ export type MessageDetailsScreenRouteParams = {
   serviceId: ServiceId;
 } & (
   | {
-      fromPushNotification: boolean;
-      sendOpeningSource: Extract<SendOpeningSource, "message">;
-      sendUserType: Extract<SendUserType, "not_set">;
-    }
-  | {
       sendOpeningSource: Extract<SendOpeningSource, "aar">;
       sendUserType: Extract<SendUserType, "mandatory" | "recipient">;
+    }
+  | {
+      sendOpeningSource: Extract<SendOpeningSource, "message">;
+      sendUserType: Extract<SendUserType, "not_set">;
     }
 );
 
@@ -90,22 +86,9 @@ const useCorrectHeader = (
 };
 
 export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
-  const { messageId, sendOpeningSource, sendUserType } = route.params;
+  const { sendOpeningSource, sendUserType } = route.params;
   const aarBottomSheetRef = useRef<() => void>(undefined);
   const isAarMessage = openingSourceIsAarMessage(sendOpeningSource);
-  const fromPushNotification =
-    "fromPushNotification" in route.params
-      ? route.params.fromPushNotification
-      : undefined;
-  const store = useIOStore();
-
-  useEffect(() => {
-    const messageData = loadedMessageDataSelector(store.getState(), messageId);
-    // AAR messages are not opened from the inbox or from a notification
-    if (fromPushNotification !== undefined && messageData !== undefined) {
-      trackOpenMessageFromSuccessData(messageData, fromPushNotification);
-    }
-  }, [fromPushNotification, messageId, store]);
 
   const androidBackButtonCallback = useCallback(() => {
     if (isAarMessage) {

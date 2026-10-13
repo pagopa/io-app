@@ -51,7 +51,6 @@ const { id: messageId, sender_service_id: serviceId } = message_1;
 
 const inboxParams: MessageDetailsScreenRouteParams = {
   firstTimeOpening: true,
-  fromPushNotification: false,
   messageId,
   sendOpeningSource: "message",
   sendUserType: "not_set",

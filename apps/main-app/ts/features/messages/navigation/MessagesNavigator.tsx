@@ -13,6 +13,7 @@ import { MESSAGES_ROUTES } from "./routes";
 
 const Stack = createStackNavigator<MessagesParamsList>();
 
+// message router defines a default header to avoid UI jump during screen changes
 const messageRouterOptions = {
   header: () => <MessageRouterHeader />
 };

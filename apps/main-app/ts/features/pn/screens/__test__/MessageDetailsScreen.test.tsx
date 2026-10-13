@@ -12,16 +12,12 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { message_1 } from "../../../messages/__mocks__/message";
-import { successGetMessageDataFor } from "../../../messages/__mocks__/messageData";
 import { service_1 } from "../../../messages/__mocks__/messages";
-import * as MESSAGES_ANALYTICS from "../../../messages/analytics";
 import {
-  getMessageDataAction,
   loadMessageById,
   loadMessageDetails,
   loadThirdPartyMessage
 } from "../../../messages/store/actions";
-import { loadedMessageDataSelector } from "../../../messages/store/reducers/messageGetStatus";
 import {
   toUIMessage,
   toUIMessageDetails
@@ -264,7 +260,6 @@ describe("MessageDetailsScreen", () => {
         const state = {
           entities: {
             messages: {
-              messageGetStatus: { status: "idle" },
               thirdPartyById: {}
             }
           },
@@ -421,77 +416,6 @@ describe("MessageDetailsScreen", () => {
     });
   });
 
-  describe("open message tracking", () => {
-    const loadedStateFor = (messageId: string) => {
-      const baseState = appReducer(undefined, applicationChangeState("active"));
-      return appReducer(
-        baseState,
-        getMessageDataAction.success(
-          successGetMessageDataFor(messageId, {
-            serviceId: message_1.sender_service_id,
-            hasRemoteContent: true,
-            isPNMessage: true
-          })
-        )
-      );
-    };
-
-    it.each([false, true])(
-      "should track the opening of a message opened from IO with the loaded data (fromPushNotification %s)",
-      fromPushNotification => {
-        const spiedTrackOpenMessage = jest
-          .spyOn(MESSAGES_ANALYTICS, "trackOpenMessageFromSuccessData")
-          .mockImplementation();
-        const state = loadedStateFor(message_1.id);
-        const store: Store<GlobalState> =
-          configureMockStore<GlobalState>()(state);
-
-        renderComponent(
-          store,
-          false,
-          "message",
-          "not_set",
-          fromPushNotification
-        );
-
-        expect(spiedTrackOpenMessage).toHaveBeenCalledTimes(1);
-        expect(spiedTrackOpenMessage).toHaveBeenCalledWith(
-          loadedMessageDataSelector(state, message_1.id),
-          fromPushNotification
-        );
-      }
-    );
-
-    it("should not track the opening when the data of another message has been loaded", () => {
-      const spiedTrackOpenMessage = jest
-        .spyOn(MESSAGES_ANALYTICS, "trackOpenMessageFromSuccessData")
-        .mockImplementation();
-      const store: Store<GlobalState> = configureMockStore<GlobalState>()(
-        loadedStateFor("anotherMessageId")
-      );
-
-      renderComponent(store, false, "message", "not_set", false);
-
-      expect(spiedTrackOpenMessage).not.toHaveBeenCalled();
-    });
-
-    it.each(["mandatory", "recipient"] as const)(
-      "should not track the opening of an AAR message (user type %s)",
-      sendUserType => {
-        const spiedTrackOpenMessage = jest
-          .spyOn(MESSAGES_ANALYTICS, "trackOpenMessageFromSuccessData")
-          .mockImplementation();
-        const store: Store<GlobalState> = configureMockStore<GlobalState>()(
-          loadedStateFor(message_1.id)
-        );
-
-        renderComponent(store, false, "aar", sendUserType);
-
-        expect(spiedTrackOpenMessage).not.toHaveBeenCalled();
-      }
-    );
-  });
-
   it("should attach the correct flow state to terminateAarFlow on page unmount", () => {
     const baseState = appReducer(undefined, applicationChangeState("active"));
     const mockStore = configureMockStore<GlobalState>();
@@ -525,8 +449,7 @@ const renderComponent = (
   store: Store<GlobalState>,
   firstTimeOpening: boolean,
   sendOpeningSource: SendOpeningSource,
-  sendUserType: SendUserType,
-  fromPushNotification = false
+  sendUserType: SendUserType
 ) => {
   const { id, sender_service_id } = message_1;
 
@@ -539,8 +462,7 @@ const renderComponent = (
         messageId: id,
         serviceId: sender_service_id,
         sendOpeningSource,
-        sendUserType,
-        ...(sendOpeningSource === "aar" ? {} : { fromPushNotification })
+        sendUserType
       },
       store
     )

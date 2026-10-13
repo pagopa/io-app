@@ -34,14 +34,9 @@ import {
 import { MessageDetails } from "./MessageDetails";
 
 type SendMessageDetailsScreenContentProps = MessageDetailsScreenRouteParams & {
-  /** Set only for AAR messages, which ask for confirmation before closing. */
   aarBottomSheetRef?: RefObject<(() => void) | undefined>;
 };
 
-/**
- * Content of a SEND message, opened either from the IO inbox or by scanning an
- * AAR. The screen showing it is in charge of the header.
- */
 export const SendMessageDetailsScreenContent = ({
   aarBottomSheetRef,
   firstTimeOpening,

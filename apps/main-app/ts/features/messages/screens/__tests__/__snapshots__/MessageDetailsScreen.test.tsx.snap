@@ -148,7 +148,7 @@ exports[`MessageDetailsScreen should show the error with the header when the mes
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={12}
+                handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}

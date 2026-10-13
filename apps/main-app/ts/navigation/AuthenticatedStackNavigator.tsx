@@ -123,8 +123,6 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         component={MessagesStackNavigator}
         name={MESSAGES_ROUTES.MESSAGES_NAVIGATOR}
-        // The swipe-back must be enabled when the screen is mounted, otherwise
-        // the screen does not follow the finger once it is enabled
         options={({ route }) => ({
           ...hideHeaderOptions,
           gestureEnabled:

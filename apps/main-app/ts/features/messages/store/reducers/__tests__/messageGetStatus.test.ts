@@ -12,13 +12,11 @@ import {
   loadMessageById,
   LoadMessageByIdFailureKind,
   reloadAllMessages,
-  resetGetMessageDataAction,
-  SuccessGetMessageDataActionType
+  resetGetMessageDataAction
 } from "../../actions";
 import {
   INITIAL_STATE,
   isLoadingMessageDataSelector,
-  loadedMessageDataSelector,
   messageGetStatusErrorPhaseSelector,
   MessageGetStatusFailurePhaseType,
   messageGetStatusReducer,
@@ -256,79 +254,6 @@ describe("isLoadingMessageDataSelector", () => {
 
   it.each(scenarios)("$name", ({ state, expected }) => {
     expect(isLoadingMessageDataSelector(state(), MESSAGE_ID)).toBe(expected);
-  });
-});
-
-describe("loadedMessageDataSelector", () => {
-  const MESSAGE_ID = "m1";
-  const successData = successGetMessageDataFor(MESSAGE_ID);
-
-  type Scenario = {
-    expected: SuccessGetMessageDataActionType | undefined;
-    name: string;
-    state: () => GlobalState;
-  };
-
-  const scenarios: ReadonlyArray<Scenario> = [
-    {
-      name: "returns undefined for the initial state",
-      state: () => appReducer(undefined, applicationChangeState("active")),
-      expected: undefined
-    },
-    {
-      name: "returns undefined while the message is loading",
-      state: () =>
-        appReducer(
-          undefined,
-          getMessageDataAction.request({
-            messageId: MESSAGE_ID,
-            fromPushNotification: false
-          })
-        ),
-      expected: undefined
-    },
-    {
-      name: "returns undefined for a blocked failure",
-      state: () =>
-        appReducer(
-          undefined,
-          getMessageDataAction.failure({
-            phase: "preconditions",
-            blockedFromPushNotificationOpt: true
-          })
-        ),
-      expected: undefined
-    },
-    {
-      name: "returns undefined for a failure",
-      state: () =>
-        appReducer(
-          undefined,
-          getMessageDataAction.failure({ phase: "messageDetails" })
-        ),
-      expected: undefined
-    },
-    {
-      name: "returns undefined when another message has been loaded",
-      state: () =>
-        appReducer(
-          undefined,
-          getMessageDataAction.success(successGetMessageDataFor("m2"))
-        ),
-      expected: undefined
-    },
-    {
-      name: "returns the loaded data of the message",
-      state: () =>
-        appReducer(undefined, getMessageDataAction.success(successData)),
-      expected: successData
-    }
-  ];
-
-  it.each(scenarios)("$name", ({ state, expected }) => {
-    expect(loadedMessageDataSelector(state(), MESSAGE_ID)).toStrictEqual(
-      expected
-    );
   });
 });
 

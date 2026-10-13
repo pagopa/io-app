@@ -6,13 +6,12 @@ import { MessageDetailsScreenRouteParams as SendMessageDetailsScreenRouteParams 
 import { MessageAttachmentScreenRouteParams } from "../screens/MessageAttachmentScreen";
 import { MessageCalendarScreenRouteParams } from "../screens/MessageCalendarScreen";
 import { MessageDetailsScreenRouteParams } from "../screens/MessageDetailsScreen";
-import { MessageGreenPassScreenRouteParams } from "../screens/MessageGreenPassScreen";
 import { MessageRouterScreenRouteParams } from "../screens/MessageRouterScreen";
 import { MESSAGES_ROUTES } from "./routes";
 
 export type MessageContentParamsList = {
   [MESSAGES_ROUTES.MESSAGE_DETAIL]: MessageDetailsScreenRouteParams;
-  [MESSAGES_ROUTES.MESSAGE_GREEN_PASS]: MessageGreenPassScreenRouteParams;
+  [MESSAGES_ROUTES.MESSAGE_GREEN_PASS]: undefined;
   [PN_ROUTES.MESSAGE_DETAILS]: SendMessageDetailsScreenRouteParams;
 };
 

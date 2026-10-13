@@ -27,7 +27,6 @@ import {
   toUIMessageDetails
 } from "../../../messages/store/reducers/transformers";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import * as ANALYTICS from "../../analytics";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
@@ -189,78 +188,6 @@ describe("MessageDetailsScreen", () => {
     expect(renderedTestIDs).toEqual(expectedTestIDs);
   });
 
-  describe("open message tracking", () => {
-    const loadedStateSequence = (
-      ...extraActions: ReadonlyArray<Action>
-    ): ReadonlyArray<Action> => [
-      applicationChangeState("active"),
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(messageWithValidPayment)),
-      ...extraActions
-    ];
-
-    it.each([false, true])(
-      "should track the opening with the loaded data (fromPushNotification %s)",
-      fromPushNotification => {
-        const spiedTrackOpenMessage = jest
-          .spyOn(ANALYTICS, "trackOpenMessageFromSuccessData")
-          .mockImplementation();
-        const successData = successGetMessageDataFor(message_1.id);
-        const store = storeFromSequence(
-          loadedStateSequence(getMessageDataAction.success(successData))
-        );
-
-        renderComponent(store, fromPushNotification);
-
-        expect(spiedTrackOpenMessage).toHaveBeenCalledTimes(1);
-        expect(spiedTrackOpenMessage).toHaveBeenCalledWith(
-          successData,
-          fromPushNotification
-        );
-      }
-    );
-
-    type NotTrackedScenario = {
-      extraActions: ReadonlyArray<Action>;
-      name: string;
-    };
-    const notTrackedScenarios: ReadonlyArray<NotTrackedScenario> = [
-      { name: "no message data has been loaded", extraActions: [] },
-      {
-        name: "the data of another message has been loaded",
-        extraActions: [
-          getMessageDataAction.success(
-            successGetMessageDataFor("anotherMessageId")
-          )
-        ]
-      },
-      {
-        name: "the message data is still loading",
-        extraActions: [
-          getMessageDataAction.request({
-            messageId: message_1.id,
-            fromPushNotification: false
-          })
-        ]
-      }
-    ];
-
-    it.each(notTrackedScenarios)(
-      "should not track the opening when $name",
-      ({ extraActions }) => {
-        const spiedTrackOpenMessage = jest
-          .spyOn(ANALYTICS, "trackOpenMessageFromSuccessData")
-          .mockImplementation();
-        const store = storeFromSequence(loadedStateSequence(...extraActions));
-
-        renderComponent(store);
-
-        expect(spiedTrackOpenMessage).not.toHaveBeenCalled();
-      }
-    );
-  });
-
   it("should keep the loaded message data when closed", () => {
     const store = storeFromSequence([
       applicationChangeState("active"),
@@ -298,10 +225,7 @@ const storeFromSequence = (
     reproduceSequence({} as GlobalState, appReducer, sequenceOfActions) as any
   );
 
-const renderComponent = (
-  store: Store<GlobalState>,
-  fromPushNotification = false
-) => {
+const renderComponent = (store: Store<GlobalState>) => {
   const { id, sender_service_id } = message_1;
 
   return {
@@ -309,7 +233,6 @@ const renderComponent = (
       MessageDetailsScreen,
       MESSAGES_ROUTES.MESSAGE_DETAIL,
       {
-        fromPushNotification,
         messageId: id,
         serviceId: sender_service_id
       },

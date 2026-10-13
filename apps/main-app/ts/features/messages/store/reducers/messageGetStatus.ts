@@ -105,7 +105,6 @@ const isRetryStatus = (
 export const messageGetStatusSelector = (state: GlobalState) =>
   state.entities.messages.messageGetStatus;
 
-/** Includes a load waiting to be retried after a session refresh. */
 export const isLoadingMessageDataSelector = (
   state: GlobalState,
   messageId: string
@@ -115,17 +114,6 @@ export const isLoadingMessageDataSelector = (
     (isLoadingStatus(messageGetStatus) || isRetryStatus(messageGetStatus)) &&
     messageGetStatus.data.messageId === messageId
   );
-};
-
-export const loadedMessageDataSelector = (
-  state: GlobalState,
-  messageId: string
-) => {
-  const messageGetStatus = state.entities.messages.messageGetStatus;
-  return messageGetStatus.status === "success" &&
-    messageGetStatus.successData.messageId === messageId
-    ? messageGetStatus.successData
-    : undefined;
 };
 
 export const messageGetStatusErrorPhaseSelector = (state: GlobalState) =>

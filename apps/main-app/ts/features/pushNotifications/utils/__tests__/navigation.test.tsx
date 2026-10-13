@@ -101,7 +101,7 @@ describe("navigateToMessageRouterAction", () => {
 
     expect(NavigationService.getCurrentRoute()).toMatchObject({
       name: MESSAGES_ROUTES.MESSAGE_DETAIL,
-      params: { fromPushNotification: true, messageId: MESSAGE_ID }
+      params: { messageId: MESSAGE_ID }
     });
     expect(messagesNavigatorRouteNames()).toEqual([
       MESSAGES_ROUTES.MESSAGE_ROUTER
@@ -118,7 +118,7 @@ describe("navigateToMessageRouterAction", () => {
 
       expect(NavigationService.getCurrentRoute()).toMatchObject({
         name: MESSAGES_ROUTES.MESSAGE_DETAIL,
-        params: { fromPushNotification: true, messageId: nextMessageId }
+        params: { messageId: nextMessageId }
       });
       expect(messagesNavigatorRouteNames()).toEqual([
         MESSAGES_ROUTES.MESSAGE_ROUTER

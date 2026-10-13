@@ -11,6 +11,7 @@ import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { successGetMessageDataFor } from "../../__mocks__/messageData";
+import * as ANALYTICS from "../../analytics";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import {
   cancelGetMessageDataAction,
@@ -130,7 +131,6 @@ describe("MessageRouterScreen", () => {
       expect(getByTestId("mock-message-content-navigator")).toBeTruthy();
       expect(queryByTestId("message-details-skeleton")).toBeNull();
       expect(mockMessageContentNavigator).toHaveBeenLastCalledWith({
-        fromPushNotification: fromNotification,
         message: successData
       });
       expect(spiedUseHeaderSecondLevel).toHaveBeenLastCalledWith({
@@ -141,6 +141,95 @@ describe("MessageRouterScreen", () => {
       expect(mockNavigate).not.toHaveBeenCalled();
     }
   );
+
+  it.each([false, true])(
+    "should track the opening once the message is loaded (fromNotification %s)",
+    fromNotification => {
+      const spiedTrackOpenMessage = jest
+        .spyOn(ANALYTICS, "trackOpenMessageFromSuccessData")
+        .mockImplementation();
+      const { store } = renderScreen(fromNotification);
+      expect(spiedTrackOpenMessage).toHaveBeenCalledTimes(0);
+      const successData = successGetMessageDataFor(MESSAGE_ID);
+
+      act(() => {
+        store.dispatch(getMessageDataAction.success(successData));
+      });
+      act(() => {
+        store.dispatch(applicationChangeState("background"));
+      });
+
+      expect(spiedTrackOpenMessage).toHaveBeenCalledTimes(1);
+      expect(spiedTrackOpenMessage).toHaveBeenCalledWith(
+        successData,
+        fromNotification
+      );
+    }
+  );
+
+  type NotTrackedScenario = {
+    name: string;
+    outcome?: Action;
+    previousOutcome?: Action;
+  };
+  const notTrackedScenarios: ReadonlyArray<NotTrackedScenario> = [
+    { name: "while loading" },
+    {
+      name: "when the loading fails",
+      outcome: getMessageDataAction.failure({ phase: "messageDetails" })
+    },
+    {
+      name: "when the message is blocked from a push notification",
+      outcome: getMessageDataAction.failure({
+        phase: "preconditions",
+        blockedFromPushNotificationOpt: true
+      })
+    },
+    {
+      name: "for the outcome of a previous request",
+      previousOutcome: getMessageDataAction.success(
+        successGetMessageDataFor(MESSAGE_ID)
+      )
+    }
+  ];
+
+  it.each(notTrackedScenarios)(
+    "should not track the opening $name",
+    ({ outcome, previousOutcome }) => {
+      const spiedTrackOpenMessage = jest
+        .spyOn(ANALYTICS, "trackOpenMessageFromSuccessData")
+        .mockImplementation();
+      const { store } = renderScreen(true, previousOutcome);
+
+      if (outcome) {
+        act(() => {
+          store.dispatch(outcome);
+        });
+      }
+
+      expect(spiedTrackOpenMessage).toHaveBeenCalledTimes(0);
+    }
+  );
+
+  it("should track the opening once when the message is loaded after a retry", () => {
+    const spiedTrackOpenMessage = jest
+      .spyOn(ANALYTICS, "trackOpenMessageFromSuccessData")
+      .mockImplementation();
+    const { getByTestId, store } = renderScreen(false);
+    act(() => {
+      store.dispatch(getMessageDataAction.failure({ phase: "messageDetails" }));
+    });
+    fireEvent.press(getByTestId("messageRouterError-retry-button"));
+    expect(spiedTrackOpenMessage).toHaveBeenCalledTimes(0);
+    const successData = successGetMessageDataFor(MESSAGE_ID);
+
+    act(() => {
+      store.dispatch(getMessageDataAction.success(successData));
+    });
+
+    expect(spiedTrackOpenMessage).toHaveBeenCalledTimes(1);
+    expect(spiedTrackOpenMessage).toHaveBeenCalledWith(successData, false);
+  });
 
   it("should show the error with the header when the loading fails", () => {
     const spiedUseHeaderSecondLevel = jest.spyOn(
