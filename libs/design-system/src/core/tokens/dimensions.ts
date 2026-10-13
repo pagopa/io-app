@@ -95,7 +95,9 @@ const system = {
     pictogram: {
       /* Pictogram leading a result or empty-state screen */
       screen: 120
-    }
+    },
+    /* Minimum touch area of an interactive element (Material 48dp, above Apple's 44pt) */
+    touchTarget: 48
   },
   stroke: { default: 1, focused: 2 }
 } as const satisfies {
@@ -105,6 +107,7 @@ const system = {
   size: {
     icon: Record<string, IOIconSize>;
     pictogram: Record<string, IOPictogramSize>;
+    touchTarget: number;
   };
   stroke: Record<string, IODimensionScale>;
 };
@@ -116,6 +119,8 @@ const componentGap = {
   accordion: { leading: system.gap.leading, trailing: system.gap.trailing },
   alert: { leading: system.gap.leading, action: 8 },
   banner: { leading: 8, description: system.gap.description, action: 12 },
+  /* `icon`: between the icon and the label, on either side */
+  button: { icon: 8 },
   featureInfo: { leading: 24, action: 4 },
   /* `title`: between the side actions and the centred title */
   header: { title: 16, actions: 16 },
@@ -154,6 +159,8 @@ const componentPadding = {
   },
   badge: { horizontal: 8, vertical: 4 },
   banner: 16,
+  /* Horizontal only: the height is fixed */
+  button: { default: 24, fullWidth: 16 },
   footer: { vertical: 16 },
   listItem: {
     default: { horizontal: system.padding.screen.default, vertical: 12 },
@@ -179,6 +186,7 @@ const componentRadius = {
 
 /* Figma: `Dimensions/Stroke/*` */
 const componentStroke = {
+  button: { outline: 2 },
   selection: { control: 2 }
 } as const satisfies Named<IODimensionScale>;
 
@@ -186,6 +194,7 @@ const componentIconSize = {
   accordion: system.size.icon.leading,
   alert: system.size.icon.leading,
   banner: system.size.icon.leading,
+  button: { default: 20, link: 24 },
   featureInfo: system.size.icon.leading,
   listItem: system.size.icon.leading,
   module: { leading: system.size.icon.leading },
@@ -239,6 +248,7 @@ export const IODimensions = {
       ...system.size.pictogram,
       ...componentPictogramSize
     },
+    touchTarget: system.size.touchTarget,
     ...componentSize
   },
   height: componentHeight,

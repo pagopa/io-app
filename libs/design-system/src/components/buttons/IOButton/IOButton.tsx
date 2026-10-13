@@ -8,8 +8,7 @@ import {
   StyleSheet,
   TextProps,
   TextStyle,
-  View,
-  ViewStyle
+  View
 } from "react-native";
 import Animated, {
   LayoutAnimationConfig,
@@ -20,6 +19,7 @@ import {
   enterTransitionInnerContent,
   enterTransitionInnerContentSmall,
   exitTransitionInnerContent,
+  IODimensions,
   IOTypography
 } from "../../../core";
 import { triggerHaptic } from "../../../functions";
@@ -91,7 +91,53 @@ type IOButtonSpecificProps =
       variant?: "link";
     };
 
-// oxlint-disable-next-line complexity -- multi-variant button that predates complexity enforcement; refactor tracked separately
+// ---------------------------------------
+// VISUAL ATTRIBUTES
+// ---------------------------------------
+const btnPadding = IODimensions.padding.button;
+
+const btnIconSizeMap: Record<IOButtonVariant, IOIconSizeScale> = {
+  solid: IODimensions.size.icon.button.default,
+  outline: IODimensions.size.icon.button.default,
+  link: IODimensions.size.icon.button.link
+};
+
+const btnBorderWidthMap: Record<IOButtonVariant, number> = {
+  solid: 0,
+  outline: IODimensions.stroke.button.outline,
+  link: 0
+};
+
+const btnPaddingHorizontalMap: Record<
+  IOButtonVariant,
+  Record<keyof typeof btnPadding, number>
+> = {
+  solid: btnPadding,
+  outline: btnPadding,
+  link: { default: 0, fullWidth: 0 }
+};
+
+/* The link has no fixed height: its label sets it */
+const btnHeightMap: Record<IOButtonVariant, number | undefined> = {
+  solid: IODimensions.height.button,
+  outline: IODimensions.height.button,
+  link: undefined
+};
+
+/* Extends the link label to the minimum touch area */
+const btnLinkHitSlopVertical =
+  (IODimensions.size.touchTarget - IOTypography.buttonText.lineHeight) / 2;
+const btnHitSlopMap: Record<IOButtonVariant, PressableProps["hitSlop"]> = {
+  solid: undefined,
+  outline: undefined,
+  link: {
+    top: btnLinkHitSlopVertical,
+    right: btnPadding.default,
+    bottom: btnLinkHitSlopVertical,
+    left: btnPadding.default
+  }
+};
+
 export const IOButton = ({
   variant = "solid",
   color = "primary",
@@ -122,51 +168,20 @@ export const IOButton = ({
   // ---------------------------------------
   // VISUAL ATTRIBUTES
   // ---------------------------------------
-  const btnIconSizeMap: Record<IOButtonVariant, IOIconSizeScale> = {
-    solid: 20,
-    outline: 20,
-    link: 24
-  };
-
-  const btnBorderWidthMap: Record<IOButtonVariant, ViewStyle["borderWidth"]> = {
-    solid: 0,
-    outline: 2,
-    link: 0
-  };
-
-  const btnPaddingHorizontalMap: Record<
-    string,
-    ViewStyle["paddingHorizontal"]
-  > = {
-    default: 24,
-    fullWidth: 16,
-    link: 0
-  };
-
-  const btnLinkHitSlop: PressableProps["hitSlop"] = {
-    top: 14,
-    right: 24,
-    bottom: 14,
-    left: 24
-  };
-
+  const btnWidth = fullWidth ? "fullWidth" : "default";
   const btnIconSize = btnIconSizeMap[variant];
   const btnBorderWidth = btnBorderWidthMap[variant];
-  const btnBorderRadius = 8;
-  const btnSizeDefault = 48;
+  const btnPaddingHorizontal = btnPaddingHorizontalMap[variant][btnWidth];
+  const btnBorderRadius = IODimensions.radius.button;
 
-  const ICON_MARGIN = 8;
   const DISABLED_OPACITY = 0.5;
 
-  // Background color
-  const backgroundColor: ColorValue = disabled
-    ? mapColorStates[color].background.disabled
-    : mapColorStates[color].background.default;
-
+  const colorState = disabled ? "disabled" : "default";
+  const backgroundColor: ColorValue =
+    mapColorStates[color].background[colorState];
   // Label & Icons colors
-  const foregroundColor: ColorValue = disabled
-    ? mapColorStates[color]?.foreground?.disabled
-    : mapColorStates[color]?.foreground?.default;
+  const foregroundColor: ColorValue =
+    mapColorStates[color].foreground[colorState];
 
   // ---------------------------------------
   // BUTTON INNER LOGIC
@@ -219,7 +234,7 @@ export const IOButton = ({
           entering={isMounted.current ? enterTransitionInnerContent : undefined}
           style={[
             styles.buttonInner,
-            { columnGap: ICON_MARGIN },
+            { columnGap: IODimensions.gap.button.icon },
             iconPosition === "end" && { flexDirection: "row-reverse" }
           ]}
         >
@@ -277,17 +292,17 @@ export const IOButton = ({
       }}
       accessible={true}
       disabled={disabled}
-      hitSlop={isLinkButton ? btnLinkHitSlop : undefined}
+      hitSlop={btnHitSlopMap[variant]}
       onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       ref={ref}
       style={
         isLinkButton
-          ? { alignSelf: "flex-start" }
+          ? styles.pressableLink
           : fullWidth
-            ? { flexShrink: 0, alignSelf: "stretch" }
-            : { flexShrink: 1, alignSelf: "auto" }
+            ? styles.pressableFullWidth
+            : styles.pressableDefault
       }
       testID={testID}
     >
@@ -299,14 +314,10 @@ export const IOButton = ({
           !disabled && !reducedMotion && scaleAnimatedStyle,
           !disabled && buttonAnimatedStyle,
           {
-            paddingHorizontal: isLinkButton
-              ? btnPaddingHorizontalMap.link
-              : fullWidth
-                ? btnPaddingHorizontalMap.fullWidth
-                : btnPaddingHorizontalMap.default
+            paddingHorizontal: btnPaddingHorizontal
           },
           {
-            height: isLinkButton ? undefined : btnSizeDefault,
+            height: btnHeightMap[variant],
             backgroundColor,
             borderWidth: btnBorderWidth,
             borderRadius: btnBorderRadius,
@@ -326,6 +337,9 @@ export const IOButton = ({
 };
 
 const styles = StyleSheet.create({
+  pressableDefault: { flexShrink: 1, alignSelf: "auto" },
+  pressableFullWidth: { flexShrink: 0, alignSelf: "stretch" },
+  pressableLink: { alignSelf: "flex-start" },
   button: {
     flexDirection: "row",
     alignItems: "center",
