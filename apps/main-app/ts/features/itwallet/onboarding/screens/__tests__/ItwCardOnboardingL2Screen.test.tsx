@@ -7,14 +7,24 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { itwSetL2Fallback } from "../../../common/store/actions/preferences";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ItwCredentialsCatalogueMock
+} from "../../../common/utils/itwMocksUtils";
 import * as credentialsSelectors from "../../../credentials/store/selectors/index";
+import { itwFetchCredentialsCatalogue } from "../../../credentialsCatalogue/store/actions";
 import * as catalogueSelectors from "../../../credentialsCatalogue/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCardOnboardingL2Screen } from "../ItwCardOnboardingL2Screen";
+
+// The list of obtainable credentials is built from the catalogue
+const initialState = appReducer(
+  appReducer(undefined, applicationChangeState("active")),
+  itwFetchCredentialsCatalogue.success(ItwCredentialsCatalogueMock)
+);
 
 describe("ItwCardOnboardingL2Screen", () => {
   const replaceMock = jest.fn();
@@ -57,10 +67,7 @@ describe("ItwCardOnboardingL2Screen", () => {
   });
 
   it("does not show the fallback upgrade banner on the reduced screen", () => {
-    const state = appReducer(
-      appReducer(undefined, applicationChangeState("active")),
-      itwSetL2Fallback(true)
-    );
+    const state = appReducer(initialState, itwSetL2Fallback(true));
 
     const { queryByTestId } = renderComponent(state);
     expect(queryByTestId("itwL2FallbackUpgradeBannerTestID")).toBeNull();
@@ -107,9 +114,7 @@ describe("ItwCardOnboardingL2Screen", () => {
   });
 });
 
-const renderComponent = (
-  globalState = appReducer(undefined, applicationChangeState("active"))
-) => {
+const renderComponent = (globalState = initialState) => {
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 

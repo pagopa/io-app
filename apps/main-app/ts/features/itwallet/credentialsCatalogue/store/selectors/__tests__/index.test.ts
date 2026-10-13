@@ -1,10 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import I18n from "i18next";
 
 import {
   itwAvailableCredentialsListSelector,
   itwCatalogueTranslationsByLocaleSelector,
   itwCredentialIntroContentSelector,
+  itwCredentialNameResolverSelector,
   itwCredentialsCatalogueByTypesSelector,
   itwCredentialsCatalogueSelector,
   itwCredentialTypeFromDocTypeSelector
@@ -12,6 +12,8 @@ import {
 import { type GlobalState } from "../../../../../../store/reducers/types";
 import { pidScopes } from "../../../../common/utils/constants";
 import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
+import { getCredentialNameFromType } from "../../../../common/utils/itwCredentialUtils";
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 
 const mockCatalogue = {
   taxonomy_uri: "",
@@ -39,7 +41,6 @@ const mockCatalogue = {
 const buildState = (
   overrides: Partial<{
     catalogue: pot.Pot<DigitalCredentialsCatalogue, unknown>;
-    isEnabledForCredentialsList: boolean;
     preferredLanguage: string;
     remoteConfig: {
       hidden_credentials?: ReadonlyArray<string>;
@@ -54,8 +55,6 @@ const buildState = (
       itWallet: {
         remoteConfig: overrides.remoteConfig ?? {},
         credentialsCatalogue: {
-          isEnabledForCredentialsList:
-            overrides.isEnabledForCredentialsList ?? false,
           catalogue: overrides.catalogue ?? pot.none,
           translations: overrides.translations ?? pot.none
         },
@@ -206,10 +205,38 @@ describe("itwCredentialTypeFromDocTypeSelector", () => {
   });
 });
 
+describe("itwCredentialNameResolverSelector", () => {
+  const translations = pot.some({ it: { "cred2.name": "Credenziale 2" } });
+
+  test.each([
+    {
+      name: "the translated name of a catalogue credential",
+      credentialType: "cred2",
+      state: buildState({ catalogue: pot.some(mockCatalogue), translations }),
+      expected: "Credenziale 2"
+    },
+    {
+      name: "the hardcoded name of a credential missing from the catalogue",
+      credentialType: CredentialType.DRIVING_LICENSE,
+      state: buildState({ catalogue: pot.some(mockCatalogue), translations }),
+      expected: getCredentialNameFromType(CredentialType.DRIVING_LICENSE)
+    },
+    {
+      name: "the hardcoded name when the catalogue is unavailable",
+      credentialType: CredentialType.DRIVING_LICENSE,
+      state: buildState({ translations }),
+      expected: getCredentialNameFromType(CredentialType.DRIVING_LICENSE)
+    }
+  ])("should resolve $name", ({ credentialType, state, expected }) => {
+    expect(itwCredentialNameResolverSelector(state)(credentialType)).toBe(
+      expected
+    );
+  });
+});
+
 describe("itwAvailableCredentialsListSelector", () => {
-  it("should return the list of credentials from the catalogue when it is enabled", () => {
+  it("should return the list of credentials from the catalogue", () => {
     const state = buildState({
-      isEnabledForCredentialsList: true,
       catalogue: pot.some(mockCatalogue)
     });
 
@@ -221,7 +248,6 @@ describe("itwAvailableCredentialsListSelector", () => {
 
   it("should resolve name_l10n_id from translations when available", () => {
     const state = buildState({
-      isEnabledForCredentialsList: true,
       catalogue: pot.some(mockCatalogue),
       translations: pot.some({ it: { "cred2.name": "Credenziale 2" } }),
       preferredLanguage: "it"
@@ -235,7 +261,6 @@ describe("itwAvailableCredentialsListSelector", () => {
 
   it("should fall back to static name when l10n_id is missing from translations", () => {
     const state = buildState({
-      isEnabledForCredentialsList: true,
       catalogue: pot.some(mockCatalogue),
       translations: pot.some({ it: {} }),
       preferredLanguage: "it"
@@ -247,89 +272,8 @@ describe("itwAvailableCredentialsListSelector", () => {
     ]);
   });
 
-  it("should return the list of hardcoded credentials when the catalogue is not enabled", () => {
-    const state = buildState({
-      isEnabledForCredentialsList: false,
-      catalogue: pot.some(mockCatalogue)
-    });
-
-    expect(itwAvailableCredentialsListSelector(state)).toEqual([
-      {
-        name: I18n.t("features.itWallet.credentialName.mdl"),
-        type: "mDL"
-      },
-      {
-        name: I18n.t("features.itWallet.credentialName.dc"),
-        type: "EuropeanDisabilityCard"
-      },
-      {
-        name: I18n.t("features.itWallet.credentialName.ts"),
-        type: "EuropeanHealthInsuranceCard"
-      },
-      {
-        name: I18n.t("features.itWallet.credentialName.av"),
-        type: "proof_of_age"
-      },
-      {
-        name: I18n.t("features.itWallet.credentialName.ed"),
-        type: "education_degree"
-      },
-      {
-        name: I18n.t("features.itWallet.credentialName.ee"),
-        type: "education_enrollment"
-      },
-      {
-        name: I18n.t("features.itWallet.credentialName.res"),
-        type: "residency"
-      },
-      {
-        name: I18n.t("features.itWallet.credentialName.edip"),
-        type: "education_diploma"
-      },
-      {
-        name: I18n.t("features.itWallet.credentialName.edat"),
-        type: "education_attendance"
-      }
-    ]);
-  });
-
-  it("should filter and order hardcoded credentials using remote config", () => {
-    const state = buildState({
-      catalogue: pot.some(mockCatalogue),
-      remoteConfig: {
-        new_credentials: [
-          "EuropeanHealthInsuranceCard",
-          "proof_of_age",
-          "residency"
-        ],
-        pinned_credentials: [
-          "mDL",
-          "EuropeanHealthInsuranceCard",
-          "education_degree"
-        ],
-        hidden_credentials: [
-          "proof_of_age",
-          "education_degree",
-          "EuropeanDisabilityCard"
-        ]
-      }
-    });
-
-    expect(
-      itwAvailableCredentialsListSelector(state).map(({ type }) => type)
-    ).toEqual([
-      "EuropeanHealthInsuranceCard",
-      "residency",
-      "mDL",
-      "education_enrollment",
-      "education_diploma",
-      "education_attendance"
-    ]);
-  });
-
   it("should filter and order catalogue credentials using remote config", () => {
     const state = buildState({
-      isEnabledForCredentialsList: true,
       catalogue: pot.some({
         ...mockCatalogue,
         credentials: [
@@ -353,34 +297,21 @@ describe("itwAvailableCredentialsListSelector", () => {
     ]);
   });
 
-  it("should filter hardcoded credentials while the enabled catalogue is unavailable", () => {
+  it("should return an empty list when the catalogue is unavailable", () => {
     const state = buildState({
-      isEnabledForCredentialsList: true,
       remoteConfig: {
         new_credentials: ["residency"],
-        hidden_credentials: ["mDL"]
+        pinned_credentials: ["mDL"]
       }
     });
 
-    expect(
-      itwAvailableCredentialsListSelector(state).map(({ type }) => type)
-    ).toEqual([
-      "residency",
-      "EuropeanDisabilityCard",
-      "EuropeanHealthInsuranceCard",
-      "proof_of_age",
-      "education_degree",
-      "education_enrollment",
-      "education_diploma",
-      "education_attendance"
-    ]);
+    expect(itwAvailableCredentialsListSelector(state)).toEqual([]);
   });
 });
 
 describe("itwCredentialIntroContentSelector", () => {
   it("should extracted the translated user_information_l10n_id", () => {
     const state = buildState({
-      isEnabledForCredentialsList: false,
       catalogue: pot.some(mockCatalogue),
       translations: pot.some({
         it: { "as-1.userinfo": "New credential 2026" }
@@ -393,7 +324,6 @@ describe("itwCredentialIntroContentSelector", () => {
 
   it("should extract user_information as is", () => {
     const state = buildState({
-      isEnabledForCredentialsList: false,
       catalogue: pot.some({
         credentials: [
           {
@@ -414,7 +344,6 @@ describe("itwCredentialIntroContentSelector", () => {
 
   it("should return undefined when no user information is present", () => {
     const state = buildState({
-      isEnabledForCredentialsList: false,
       catalogue: pot.some(mockCatalogue)
     });
     expect(itwCredentialIntroContentSelector("cred2")(state)).toEqual(

@@ -14,7 +14,11 @@ import * as envSelectors from "../../../common/store/selectors/environment";
 import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import * as remoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { EnvType } from "../../../common/utils/environment";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ItwCredentialsCatalogueMock
+} from "../../../common/utils/itwMocksUtils";
+import { itwFetchCredentialsCatalogue } from "../../../credentialsCatalogue/store/actions";
 import * as catalogueSelectors from "../../../credentialsCatalogue/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
@@ -23,13 +27,16 @@ import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCardOnboardingL3Screen } from "../ItwCardOnboardingL3Screen";
 
+// The list of obtainable credentials is built from the catalogue
+const initialState = appReducer(
+  appReducer(undefined, applicationChangeState("active")),
+  itwFetchCredentialsCatalogue.success(ItwCredentialsCatalogueMock)
+);
+
 describe("ItwCardOnboardingL3Screen", () => {
   const replaceMock = jest.fn();
   const navigateMock = jest.fn();
-  const fallbackState = appReducer(
-    appReducer(undefined, applicationChangeState("active")),
-    itwSetL2Fallback(true)
-  );
+  const fallbackState = appReducer(initialState, itwSetL2Fallback(true));
   const restrictedTypes = [
     CredentialType.DRIVING_LICENSE,
     CredentialType.EUROPEAN_DISABILITY_CARD,
@@ -295,7 +302,7 @@ describe("ItwCardOnboardingL3Screen", () => {
 
 const renderComponent = (
   params?: undefined | { page?: number },
-  globalState = appReducer(undefined, applicationChangeState("active"))
+  globalState = initialState
 ) => {
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
