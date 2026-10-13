@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.41.0-rc.3](https://github.com/pagopa/io-app/compare/3.41.0-rc.2...3.41.0-rc.3) (2026-10-12)
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-5205](https://pagopa.atlassian.net/browse/SIW-5205)] Track failed upgrade credentials as invalid ([#8683](https://github.com/pagopa/io-app/issues/8683)) ([55feda5](https://github.com/pagopa/io-app/commit/55feda5fb9e2a967d9b7cc4a100d2d456fc030c0))
 ## [3.41.0-rc.2](https://github.com/pagopa/io-app/compare/3.41.0-rc.1...3.41.0-rc.2) (2026-10-09)
 
 ### Features
