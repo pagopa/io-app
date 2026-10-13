@@ -2198,7 +2198,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                               </View>
                             </View>
                             <View
-                              accessibilityLabel="Versione ."
+                              accessibilityLabel="Versione unknown"
                               accessibilityState={
                                 {
                                   "busy": undefined,
@@ -2259,7 +2259,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     ]
                                   }
                                 >
-                                  Versione .
+                                  Versione unknown
                                 </Text>
                               </View>
                             </View>

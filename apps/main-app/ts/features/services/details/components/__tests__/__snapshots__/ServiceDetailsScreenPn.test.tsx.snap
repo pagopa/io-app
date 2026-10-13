@@ -3483,7 +3483,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                           }
                         >
                           <View
-                            accessibilityLabel="Attiva il servizio"
+                            accessibilityLabel="Aggiorna l'app"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -3692,7 +3692,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                     ]
                                   }
                                 >
-                                  Attiva il servizio
+                                  Aggiorna l'app
                                 </Text>
                               </View>
                             </View>

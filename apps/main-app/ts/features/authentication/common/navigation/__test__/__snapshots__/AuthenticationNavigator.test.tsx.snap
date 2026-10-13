@@ -3526,7 +3526,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     }
                                   />
                                   <View
-                                    accessibilityLabel="Versione ."
+                                    accessibilityLabel="Versione unknown"
                                     accessibilityState={
                                       {
                                         "busy": undefined,
@@ -3587,7 +3587,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           ]
                                         }
                                       >
-                                        Versione .
+                                        Versione unknown
                                       </Text>
                                     </View>
                                   </View>
