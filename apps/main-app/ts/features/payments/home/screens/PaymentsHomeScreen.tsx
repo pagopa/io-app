@@ -160,7 +160,6 @@ const PaymentsHomeScreen = () => {
           : undefined
       }
       animatedRef={scrollViewContentRef}
-      excludeSafeAreaMargins={true}
       includeContentMargins={false}
       refreshControlProps={{
         refreshing: isRefreshing,
