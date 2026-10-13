@@ -59,7 +59,9 @@ const system = {
     /* Between a label and its description */
     description: 4,
     /* Between a caption icon and its small text */
-    caption: 4
+    caption: 4,
+    /* Between a top element (e.g. badge) and the content below */
+    topElement: 4
   },
   padding: {
     screen: {
@@ -103,10 +105,15 @@ const componentGap = {
     leading: system.gap.leading,
     action: 16,
     description: system.gap.description,
-    caption: system.gap.caption
+    caption: system.gap.caption,
+    topElement: system.gap.topElement
   },
   /* Leading graphic → content, content → trailing element (chevron, badge…) */
-  module: { leading: system.gap.leading, trailing: 8 },
+  module: {
+    leading: system.gap.leading,
+    trailing: 8,
+    topElement: system.gap.topElement
+  },
   /* `control`: between the label and the checkbox, radio or switch */
   selection: {
     leading: system.gap.leading,
@@ -129,7 +136,7 @@ const componentPadding = {
     default: { horizontal: system.padding.screen.default, vertical: 12 },
     messages: { horizontal: system.padding.screen.messages, vertical: 12 }
   },
-  module: { horizontal: 16, vertical: 16, verticalLoose: 24 },
+  module: { horizontal: 16, vertical: 16 },
   tag: { horizontal: 8, vertical: 6 }
 } as const satisfies Named<IODimensionScale>;
 

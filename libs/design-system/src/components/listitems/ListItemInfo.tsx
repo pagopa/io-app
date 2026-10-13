@@ -145,7 +145,7 @@ const ListItemInfoContent = ({
           {topElement?.type === "badge" && (
             <View style={{ alignSelf: "flex-start" }}>
               <Badge {...topElement.componentProps} />
-              <VSpacer size={4} />
+              <VSpacer size={IODimensions.gap.listItem.topElement} />
             </View>
           )}
 

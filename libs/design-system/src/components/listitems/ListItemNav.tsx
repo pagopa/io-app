@@ -103,7 +103,7 @@ export const ListItemNav = ({
               <View style={{ alignSelf: "flex-start" }}>
                 <Badge {...topElement.badgeProps} />
               </View>
-              <VSpacer size={8} />
+              <VSpacer size={IODimensions.gap.listItem.topElement} />
             </>
           )}
           {topElement.dateValue && (
@@ -113,14 +113,14 @@ export const ListItemNav = ({
                   allowFontScaling
                   color="grey-300"
                   name="calendar"
-                  size={16}
+                  size={IODimensions.size.icon.caption}
                 />
-                <HSpacer size={4} />
+                <HSpacer size={IODimensions.gap.listItem.caption} />
                 <Caption color={theme["textBody-tertiary"]}>
                   {topElement.dateValue}
                 </Caption>
               </View>
-              <VSpacer size={4} />
+              <VSpacer size={IODimensions.gap.listItem.topElement} />
             </>
           )}
         </>
