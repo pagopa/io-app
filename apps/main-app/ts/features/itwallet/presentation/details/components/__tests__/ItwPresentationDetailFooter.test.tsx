@@ -75,8 +75,7 @@ jest.mock("../../analytics", () => ({
 
 jest.mock("../../../proximity/analytics", () => ({
   ...jest.requireActual("../../../proximity/analytics"),
-  trackItwCredentialManageConsent: (properties: unknown) =>
-    mockTrackItwCredentialManageConsent(properties)
+  trackItwCredentialManageConsent: () => mockTrackItwCredentialManageConsent()
 }));
 
 describe("ItwPresentationDetailsFooter", () => {
@@ -172,9 +171,7 @@ describe("ItwPresentationDetailsFooter", () => {
 
     fireEvent.press(getByTestId("manageConsentsActionTestID"));
 
-    expect(mockTrackItwCredentialManageConsent).toHaveBeenCalledWith({
-      credential: "ITW_PG_V2"
-    });
+    expect(mockTrackItwCredentialManageConsent).toHaveBeenCalledWith();
   });
 
   it("should render iPatente action", () => {

@@ -456,7 +456,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                   [
                                     {},
                                     {
-                                      "color": "#031344",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
@@ -1199,7 +1199,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                             }
                           >
                             <View
-                              accessibilityLabel="Aggiungi il tuo primo documento È tutto pronto: aggiungi un documento al tuo Portafoglio di IO. Aggiungi documento"
+                              accessibilityLabel="Aggiungi il tuo primo documento Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano! Aggiungi documento"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -1218,7 +1218,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                   [
                                     {},
                                     {
-                                      "color": "#031344",
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
@@ -1248,7 +1248,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                   ]
                                 }
                               >
-                                È tutto pronto: aggiungi un documento al tuo Portafoglio di IO.
+                                Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano!
                               </Text>
                               <View
                                 accessibilityElementsHidden={true}
