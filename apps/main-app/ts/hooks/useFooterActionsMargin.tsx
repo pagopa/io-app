@@ -33,7 +33,7 @@ export const useFooterActionsMargin = (
   This margin is a temporary workaround to be removed when
   this issue is fixed:
   https://github.com/AppAndFlow/react-native-safe-area-context/issues/603 */
-  const edgeToEdgeMargin = Platform.OS === "ios" ? 0 : 8;
+  const androidInsetMargin = Platform.OS === "ios" ? 0 : 8;
 
   /* Check if the iPhone bottom handle is present.
      If not, or if you don't need safe area insets,
@@ -41,8 +41,8 @@ export const useFooterActionsMargin = (
      from sticking to the bottom. */
   const bottomMargin =
     !needSafeAreaMargin || excludeSafeAreaMargins
-      ? IODimensions.padding.screen.default
-      : insets.bottom + edgeToEdgeMargin;
+      ? IODimensions.padding.footer.edgeToEdge
+      : insets.bottom + androidInsetMargin;
 
   return {
     bottomMargin,

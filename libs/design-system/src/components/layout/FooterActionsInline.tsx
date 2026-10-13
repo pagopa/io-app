@@ -2,14 +2,7 @@ import { PropsWithChildren } from "react";
 import { ColorValue, LayoutChangeEvent, StyleSheet, View } from "react-native";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
-import {
-  footerBoxShadow,
-  IOColors,
-  IODimensions,
-  IOSpacer,
-  IOSpacing,
-  IOSpacingScale
-} from "../../core";
+import { footerBoxShadow, IOColors, IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { IOButton, IOButtonBlockSpecificProps } from "../buttons";
 import { useBottomMargins } from "./hooks/useBottomMargins";
@@ -67,11 +60,7 @@ export const FooterActionsInline = ({
 
   const { bottomMargin } = useBottomMargins(false, excludeSafeAreaMargins);
 
-  /* Margin between `solid` and `outline` variant */
-  const spaceBetweenActions: IOSpacer = 16;
-  /* Top padding applied above the actions */
-  const topSpacingValue: IOSpacingScale = 16;
-  const topSpacing = fixed ? topSpacingValue : 0;
+  const topSpacing = fixed ? IODimensions.padding.footer.vertical : 0;
 
   /* Background color should be app main background
      (both light and dark themes) */
@@ -82,7 +71,7 @@ export const FooterActionsInline = ({
     /* Height of the safe bottom area, applied to the ScrollView:
        Actions + Screen end margin */
     const safeBottomAreaHeight =
-      bottomMargin + height + IOSpacing.screenEndMargin;
+      bottomMargin + height + IODimensions.padding.screen.end;
     onMeasure?.({ safeBottomAreaHeight });
   };
 
@@ -100,7 +89,7 @@ export const FooterActionsInline = ({
               backgroundColor: HEADER_BG_COLOR,
               boxShadow: [footerBoxShadow]
             }
-          : { marginTop: IOSpacing.screenEndMargin },
+          : { marginTop: IODimensions.padding.screen.end },
         /* Apply bottom border only on dark theme, only if fixed */
         themeType === "dark" &&
           fixed && {
@@ -118,7 +107,7 @@ export const FooterActionsInline = ({
         <View
           style={{
             flexDirection: "row",
-            gap: spaceBetweenActions
+            gap: IODimensions.gap.footer.actions
           }}
         >
           <View style={styles.buttonWrapper}>

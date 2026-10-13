@@ -122,6 +122,8 @@ const componentGap = {
   /* `icon`: between the icon and the label, on either side */
   button: { icon: 8 },
   featureInfo: { leading: 24, action: 4 },
+  /* `actions`: between block buttons, stacked or inline; `link`: before the link button */
+  footer: { actions: 16, link: 16 },
   /* `title`: between the side actions and the centred title */
   header: { title: 16, actions: 16 },
   listItem: {
@@ -161,7 +163,13 @@ const componentPadding = {
   banner: 16,
   /* Horizontal only: the height is fixed */
   button: { default: 24, fullWidth: 16 },
-  footer: { vertical: 16 },
+  footer: {
+    vertical: 16,
+    /* Below a link action, above the iPhone home indicator: the link has no fixed height */
+    homeIndicator: 8,
+    /* Android edge-to-edge: the bottom inset alone leaves the actions too close to the edge */
+    edgeToEdge: 8
+  },
   listItem: {
     default: { horizontal: system.padding.screen.default, vertical: 12 },
     messages: { horizontal: system.padding.screen.messages, vertical: 12 }

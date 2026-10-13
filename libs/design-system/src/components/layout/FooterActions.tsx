@@ -11,15 +11,7 @@ import {
 import Animated, { AnimatedStyle } from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import {
-  buttonSolidHeight,
-  footerBoxShadow,
-  hexToRgba,
-  IOColors,
-  IODimensions,
-  IOSpacer,
-  IOSpacing
-} from "../../core";
+import { footerBoxShadow, hexToRgba, IOColors, IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import {
   IOButton,
@@ -97,11 +89,6 @@ type IOButtonBlockProps = Omit<
 
 type IOButtonLinkProps = Omit<IOButtonLinkSpecificProps, "variant">;
 
-/* Margin between `solid` and `variant` variant */
-const spaceBetweenActions: IOSpacer = 16;
-/* Margin between `solid` and `link` variant */
-const spaceBetweenActionAndLink: IOSpacer = 16;
-
 const styles = StyleSheet.create({
   buttonContainer: {
     paddingHorizontal: IODimensions.padding.screen.default,
@@ -148,7 +135,7 @@ export const FooterActions = ({
      the half of the primary action button. It avoids
      glitchy behavior underneath.  */
   const safeBackgroundBlockHeight =
-    bottomMargin + actionBlockHeight - buttonSolidHeight / 2;
+    bottomMargin + actionBlockHeight - IODimensions.height.button / 2;
 
   const getActionBlockMeasurements = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
@@ -156,7 +143,7 @@ export const FooterActions = ({
     /* Height of the safe bottom area, applied to the ScrollView:
        Actions + Content end margin */
     const safeBottomAreaHeight =
-      bottomMargin + height + IOSpacing.screenEndMargin;
+      bottomMargin + height + IODimensions.padding.screen.end;
     onMeasure?.({ actionBlockHeight: height, safeBottomAreaHeight });
   };
 
@@ -169,7 +156,7 @@ export const FooterActions = ({
         },
         fixed
           ? { position: "absolute", bottom: 0 }
-          : { marginTop: IOSpacing.screenEndMargin },
+          : { marginTop: IODimensions.padding.screen.end },
         debugMode && {
           backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
         },
@@ -236,7 +223,7 @@ const renderActions = (
       {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
       {type === "TwoButtons" && secondaryAction && (
         <View style={{ alignSelf: "center", marginBottom: extraBottomMargin }}>
-          <VSpacer size={spaceBetweenActionAndLink} />
+          <VSpacer size={IODimensions.gap.footer.link} />
           <IOButton variant="link" {...secondaryAction} />
         </View>
       )}
@@ -245,7 +232,7 @@ const renderActions = (
           {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
           {secondaryAction && (
             <>
-              <VSpacer size={spaceBetweenActions} />
+              <VSpacer size={IODimensions.gap.footer.actions} />
               <IOButton fullWidth variant="outline" {...secondaryAction} />
             </>
           )}
@@ -254,7 +241,7 @@ const renderActions = (
             <View
               style={{ alignSelf: "center", marginBottom: extraBottomMargin }}
             >
-              <VSpacer size={spaceBetweenActionAndLink} />
+              <VSpacer size={IODimensions.gap.footer.link} />
               <IOButton variant="link" {...tertiaryAction} />
             </View>
           )}
