@@ -254,11 +254,26 @@ const ListItemTransactionSkeleton = ({
         />
       </View>
       <VStack space={4} style={{ flexGrow: 1 }}>
-        <IOSkeleton height={16} radius={8} shape="rectangle" width={62} />
-        <IOSkeleton height={16} radius={8} shape="rectangle" width={107} />
+        <IOSkeleton
+          height={16}
+          radius={IODimensions.radius.default}
+          shape="rectangle"
+          width={62}
+        />
+        <IOSkeleton
+          height={16}
+          radius={IODimensions.radius.default}
+          shape="rectangle"
+          width={107}
+        />
       </VStack>
       <View style={{ marginLeft: IODimensions.gap.listItem.leading }}>
-        <IOSkeleton height={24} radius={8} shape="rectangle" width={70} />
+        <IOSkeleton
+          height={24}
+          radius={IODimensions.radius.default}
+          shape="rectangle"
+          width={70}
+        />
       </View>
     </View>
   </View>

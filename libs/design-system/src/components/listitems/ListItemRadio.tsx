@@ -98,8 +98,18 @@ export const ListItemRadio = ({
 
   const SkeletonDescriptionLines = () => (
     <VStack space={8}>
-      <IOSkeleton height={8} radius={8} shape="rectangle" width="100%" />
-      <IOSkeleton height={8} radius={8} shape="rectangle" width="100%" />
+      <IOSkeleton
+        height={8}
+        radius={IODimensions.radius.default}
+        shape="rectangle"
+        width="100%"
+      />
+      <IOSkeleton
+        height={8}
+        radius={IODimensions.radius.default}
+        shape="rectangle"
+        width="100%"
+      />
     </VStack>
   );
 
@@ -110,7 +120,7 @@ export const ListItemRadio = ({
       }}
     >
       <IOSkeleton
-        radius={8}
+        radius={IODimensions.radius.default}
         shape="square"
         size={IODimensions.size.icon.selection}
       />
@@ -137,7 +147,12 @@ export const ListItemRadio = ({
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             {loadingProps?.skeletonIcon && <SkeletonIcon />}
-            <IOSkeleton height={16} radius={8} shape="rectangle" width={180} />
+            <IOSkeleton
+              height={16}
+              radius={IODimensions.radius.default}
+              shape="rectangle"
+              width={180}
+            />
           </View>
           <HSpacer size={IODimensions.gap.selection.control} />
           <View pointerEvents="none" style={disabledStyle}>
