@@ -7,13 +7,7 @@ import {
 } from "react-native";
 
 import { useIOThemeContext } from "../../context";
-import {
-  hexToRgba,
-  IOBadgeHSpacing,
-  IOBadgeRadius,
-  IOBadgeVSpacing,
-  IOColors
-} from "../../core";
+import { hexToRgba, IOColors, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { IOText } from "../typography";
@@ -50,9 +44,9 @@ const styles = StyleSheet.create({
     })
   },
   badgeStaticStyle: {
-    borderRadius: IOBadgeRadius,
-    paddingHorizontal: IOBadgeHSpacing,
-    paddingVertical: IOBadgeVSpacing
+    borderRadius: IODimensions.radius.badge,
+    paddingHorizontal: IODimensions.padding.badge.horizontal,
+    paddingVertical: IODimensions.padding.badge.vertical
   }
 });
 
@@ -190,9 +184,9 @@ export const Badge = ({
   const { background, foreground } = variantMap[variant];
 
   const dynamicStyle: ViewStyle = {
-    borderRadius: IOBadgeRadius * dynamicFontScale,
-    paddingHorizontal: IOBadgeHSpacing * dynamicFontScale,
-    paddingVertical: IOBadgeVSpacing * dynamicFontScale
+    borderRadius: IODimensions.radius.badge * dynamicFontScale,
+    paddingHorizontal: IODimensions.padding.badge.horizontal * dynamicFontScale,
+    paddingVertical: IODimensions.padding.badge.vertical * dynamicFontScale
   };
 
   return (
