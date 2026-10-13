@@ -107,7 +107,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
             text: I18n.t("appFeedback.alert.continue"),
             style: "default",
             onPress: () => {
-              requestAppReview();
+              void requestAppReview();
               setTopic(undefined);
               dispatch(appReviewPositiveFeedback());
             }
@@ -115,7 +115,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
         ]
       );
     } else {
-      requestAppReview();
+      void requestAppReview();
       setTopic(undefined);
     }
   }, [appFeedbackEnabled, canAskFeedback, dispatch, present, topic]);
