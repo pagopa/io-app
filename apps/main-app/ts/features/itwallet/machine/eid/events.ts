@@ -23,7 +23,6 @@ export type EidIssuanceEvents =
   | ErrorActorEvent
   | ExternalErrorEvent
   | GoToCieWarning
-  | GoToIpzsPrivacy
   | GoToWallet
   | MrtdChallengedSigned
   | MrtdPoPVerificationCompleted
@@ -98,10 +97,6 @@ type GoToCieWarning = {
   routeName: string;
   type: "go-to-cie-warning";
   warning: CieWarningType;
-};
-
-type GoToIpzsPrivacy = {
-  type: "go-to-ipzs-privacy";
 };
 
 type GoToWallet = {
