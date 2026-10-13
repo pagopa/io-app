@@ -57,6 +57,8 @@ const system = {
   gap: {
     /* Between the leading graphic (icon, logo, avatar) and the content */
     leading: 12,
+    /* Between the content and a trailing element on the same row (chevron, badge, control) */
+    trailing: 8,
     /* Between a label and its description */
     description: 4,
     /* Between a caption icon and its small text */
@@ -109,6 +111,7 @@ const system = {
 
 /* Figma: `Dimensions/Gap/*` */
 const componentGap = {
+  accordion: { leading: system.gap.leading, trailing: system.gap.trailing },
   alert: { leading: system.gap.leading, action: 8 },
   banner: { leading: 8, description: system.gap.description, action: 12 },
   featureInfo: { leading: 24, action: 4 },
@@ -119,16 +122,15 @@ const componentGap = {
     caption: system.gap.caption,
     topElement: system.gap.topElement
   },
-  /* Leading graphic → content, content → trailing element (chevron, badge…) */
   module: {
     leading: system.gap.leading,
-    trailing: 8,
+    trailing: system.gap.trailing,
     topElement: system.gap.topElement
   },
   /* `control`: between the label and the checkbox, radio or switch */
   selection: {
     leading: system.gap.leading,
-    control: 8,
+    control: system.gap.trailing,
     action: 8,
     description: system.gap.description,
     caption: system.gap.caption
@@ -171,6 +173,7 @@ const componentStroke = {
 } as const satisfies Named<IODimensionScale>;
 
 const componentIconSize = {
+  accordion: system.size.icon.leading,
   banner: system.size.icon.leading,
   featureInfo: system.size.icon.leading,
   listItem: system.size.icon.leading,
