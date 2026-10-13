@@ -8,7 +8,6 @@ import {
   HStack,
   IOColors,
   IODimensions,
-  IOVisualCostants,
   RadioGroup,
   useIOTheme,
   VStack
@@ -173,7 +172,7 @@ export const DSDynamicBackground = () => {
 
           <View
             style={{
-              borderRadius: IOVisualCostants.avatarRadiusSizeMedium,
+              borderRadius: IODimensions.radius.avatar.medium,
               borderCurve: "continuous",
               backgroundColor: IOColors[theme["appBackground-primary"]],
               borderWidth: 1,

@@ -162,6 +162,15 @@ const renderListItemNav = () => (
         }}
         value={"Value"}
       />
+      <Divider />
+      <ListItemNav
+        description="This is a list item nav with date"
+        onPress={onButtonPress}
+        topElement={{
+          dateValue: "12 ottobre 2026"
+        }}
+        value={"Value"}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNav, without chevron">
       <ListItemNav
