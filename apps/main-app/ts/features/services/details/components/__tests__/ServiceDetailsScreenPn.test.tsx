@@ -68,11 +68,10 @@ const servicePreferenceWihInboxDisabled: ServicePreferenceResponse = {
 jest.mock("@io-app/expo-device-internal", () => ({
   isDisplayZoomed: jest.fn().mockReturnValue(false)
 }));
-jest.mock("expo-application", () => ({
-  nativeApplicationVersion: "2.35.0.1",
-  nativeBuildVersion: "1"
-}));
 
+jest
+  .spyOn(require("../../../../../utils/device"), "getDeviceAppVersion")
+  .mockReturnValue("2.35.0.1");
 describe("ServiceDetailsScreenPn", () => {
   afterEach(() => {
     jest.clearAllMocks();

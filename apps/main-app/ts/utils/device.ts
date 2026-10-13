@@ -10,7 +10,6 @@ import {
   getEnrolledLevelAsync,
   SecurityLevel
 } from "expo-local-authentication";
-import { constFalse } from "fp-ts/lib/function";
 import { PixelRatio, Platform } from "react-native";
 
 export const getDeviceId = (): string => getUniqueIdSync();
@@ -27,7 +26,7 @@ export const getFreeDiskStorage = (): number => Paths.availableDiskSpace;
 export const isScreenLockSet = (): Promise<boolean> =>
   getEnrolledLevelAsync()
     .then(level => level !== SecurityLevel.NONE)
-    .catch(constFalse);
+    .catch(() => false);
 
 export const getDeviceAppVersion = (): string =>
   Platform.select({
