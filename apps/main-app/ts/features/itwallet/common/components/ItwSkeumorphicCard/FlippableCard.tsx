@@ -31,7 +31,7 @@ const FlippableCard = ({
         styles.card,
         styles.front,
         {
-          transform: [{ rotateY: isFlipped ? "180deg" : "0deg" }],
+          transform: [{ rotateX: isFlipped ? "180deg" : "0deg" }],
           transitionProperty: "transform",
           transitionDuration: duration
         }
@@ -44,7 +44,7 @@ const FlippableCard = ({
         styles.card,
         styles.back,
         {
-          transform: [{ rotateY: isFlipped ? "360deg" : "180deg" }],
+          transform: [{ rotateX: isFlipped ? "360deg" : "180deg" }],
           transitionProperty: "transform",
           transitionDuration: duration
         }
