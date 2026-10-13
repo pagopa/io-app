@@ -4085,10 +4085,6 @@
       "title": "What is a dynamic message?"
     },
     "contactsBottomSheet": {
-      "actions": {
-        "call": "Make a call",
-        "email": "Write an email"
-      },
       "body": "If you are unsure about the content of the message, please contact the institution that sent it to you.",
       "title": "Support"
     },
@@ -4752,6 +4748,17 @@
     "title": "Forwarding messages via email"
   },
   "services": {
+    "contacts": {
+      "a11y": {
+        "website": "Visit the institution's website"
+      },
+      "downloadApp": "Download the app",
+      "email": "Send an email",
+      "pec": "Send a certified email (PEC)",
+      "website": "Visit the website"
+    },
+    "contextualHelpContent": "**In the Services section, you can view the list of agencies that offer their services on IO, as well as the list of services associated with each institution.** Services are divided into local services—where you can select institution of interest based on the geographic area where you live—national services—that is, central government institution offering services to all Italian citizens—and finally, all services, where you can find the complete list of all services available on IO (both local and national).   \nWe invite you to use this section to explore the services made available by IO, set up your list of local services, and view the details of individual services. Whenever a new local or national service is added to IO, you’ll receive a notification so you can immediately check what it is and whether it’s useful to you.\n",
+    "contextualHelpTitle": "What you can do in your Services",
     "details": {
       "failure": {
         "back": "Back",
@@ -4761,19 +4768,12 @@
       },
       "metadata": {
         "a11y": {
-          "copyToClipboard": "Copy to clipboard",
-          "website": "Visit the institution's website"
+          "copyToClipboard": "Copy to clipboard"
         },
         "address": "Address",
-        "downloadApp": "Download the app",
-        "email": "Send an email",
         "fiscalCode": "Institution fiscal code",
-        "pec": "Send a certified email (PEC)",
-        "phone": "Contact the institution",
         "serviceId": "Service ID",
-        "support": "Get support",
-        "title": "Contact information",
-        "website": "Visit the website"
+        "title": "Contact information"
       },
       "preferences": {
         "inbox": "Contact you in the app",
