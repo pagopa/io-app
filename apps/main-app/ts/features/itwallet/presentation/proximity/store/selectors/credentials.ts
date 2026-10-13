@@ -37,6 +37,21 @@ const excludedCredentialTypes: ReadonlyArray<string> = [
 ];
 
 /**
+ * Returns presentable MDOC credentials keyed by credential type, excluding
+ * those listed in `excludedCredentialTypes`.
+ */
+export const itwPresentableCredentialsSelector = createSelector(
+  itwCredentialsAsMdocSelector,
+  (credentials): Record<string, CredentialMetadata> =>
+    Object.fromEntries(
+      Object.entries(credentials).filter(
+        ([, { credentialType }]) =>
+          !excludedCredentialTypes.includes(credentialType)
+      )
+    )
+);
+
+/**
  * Returns the credentials object by doc type. Only MDOC credentials are
  * returned.
  *
@@ -44,7 +59,7 @@ const excludedCredentialTypes: ReadonlyArray<string> = [
  * @returns The credentials object by doc type.
  */
 export const itwPresentableCredentialsByDocTypeSelector = createSelector(
-  itwCredentialsAsMdocSelector,
+  itwPresentableCredentialsSelector,
   (credentials): Record<string, CredentialMetadata> =>
     Object.values(credentials).reduce<Record<string, CredentialMetadata>>(
       (acc, credential) => {
@@ -132,5 +147,4 @@ export const shouldShowExpiredProximityCredentialsBannerSelector =
  */
 export const isPresentableCredentialSelector =
   (credentialType: string) => (state: GlobalState) =>
-    !excludedCredentialTypes.includes(credentialType) &&
-    itwCredentialsAsMdocSelector(state)[credentialType] !== undefined;
+    itwPresentableCredentialsSelector(state)[credentialType] !== undefined;

@@ -91,6 +91,14 @@ jest.mock("expo-brightness", () => ({
   getBrightnessAsync: jest.fn().mockResolvedValue(0),
   setBrightnessAsync: jest.fn().mockResolvedValue(undefined)
 }));
+jest.mock("@io-app/expo-navigation-bar-manager", () => ({
+  setNavigationBarColor: jest.fn().mockResolvedValue(true)
+}));
+
+jest.mock("expo-store-review", () => ({
+  isAvailableAsync: jest.fn().mockResolvedValue(true),
+  requestReview: jest.fn().mockResolvedValue(undefined)
+}));
 
 jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
@@ -207,11 +215,6 @@ jest.mock("react-native", () => {
 
   // eslint-disable-next-line functional/immutable-data
   RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
-
-  // eslint-disable-next-line functional/immutable-data
-  RN.NativeModules.AppReviewModule = {
-    requestReview: jest.fn()
-  };
 
   return RN;
 });
