@@ -6,7 +6,7 @@
 
 import {
   IODimensions,
-  IOSpacingScale,
+  IODimensionScale,
   ModuleIDP,
   VSpacer,
   VStack
@@ -36,7 +36,7 @@ type IdpsGridProps = {
   testID?: string;
 };
 
-const GRID_GUTTER: IOSpacingScale = 8;
+const GRID_GUTTER: IODimensionScale = 8;
 
 const styles = StyleSheet.create({
   contentContainer: {
