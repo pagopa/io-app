@@ -67,9 +67,16 @@ export const WhatsNewScreenContent = ({
         {pictogram && (
           <View style={styles.centeredItems}>
             {enableAnimatedPictogram ? (
-              <AnimatedPictogram loop={loop} name={pictogram} size={120} />
+              <AnimatedPictogram
+                loop={loop}
+                name={pictogram}
+                size={IODimensions.size.pictogram.screen}
+              />
             ) : (
-              <Pictogram name={pictogram} size={120} />
+              <Pictogram
+                name={pictogram}
+                size={IODimensions.size.pictogram.screen}
+              />
             )}
           </View>
         )}

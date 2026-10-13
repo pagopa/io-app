@@ -8,6 +8,7 @@ import {
   IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
   IOColors,
+  IODimensions,
   IOPictograms,
   IOSpringValues,
   Pictogram,
@@ -189,7 +190,10 @@ const ContentIos = (props: CieCardReadContentProps) => (
           <Title title={props.title} />
           <Subtitle subtitle={props.subtitle} />
         </View>
-        <Pictogram name={props.pictogram} size={120} />
+        <Pictogram
+          name={props.pictogram}
+          size={IODimensions.size.pictogram.screen}
+        />
       </HStack>
     </VStack>
     <Actions

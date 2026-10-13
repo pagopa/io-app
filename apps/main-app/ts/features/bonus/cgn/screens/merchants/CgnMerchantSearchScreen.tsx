@@ -161,7 +161,7 @@ function EmptyListNoResults() {
   return (
     <View style={styles.emptyListContainer}>
       <View style={{ alignItems: "center" }}>
-        <Pictogram name="umbrella" size={120} />
+        <Pictogram name="umbrella" size={IODimensions.size.pictogram.screen} />
         <VSpacer size={24} />
       </View>
       <H6 style={{ textAlign: "center" }}>
@@ -183,7 +183,10 @@ function EmptyListShortQuery({
   return (
     <View style={styles.emptyListContainer}>
       <View style={{ alignItems: "center" }}>
-        <Pictogram name="searchLens" size={120} />
+        <Pictogram
+          name="searchLens"
+          size={IODimensions.size.pictogram.screen}
+        />
         <VSpacer size={24} />
       </View>
       <H6 style={{ textAlign: "center" }}>

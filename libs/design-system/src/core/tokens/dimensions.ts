@@ -87,6 +87,10 @@ const system = {
       leading: 24,
       /* Small icon preceding a caption (e.g. date, suggestion) */
       caption: 16
+    },
+    pictogram: {
+      /* Pictogram leading a result or empty-state screen */
+      screen: 120
     }
   },
   stroke: { default: 1, focused: 2 }
@@ -94,7 +98,10 @@ const system = {
   gap: Record<string, IOSpace>;
   padding: { screen: Record<string, IOScreenPadding> };
   radius: Record<string, IORadius>;
-  size: { icon: Record<string, IOIconSize> };
+  size: {
+    icon: Record<string, IOIconSize>;
+    pictogram: Record<string, IOPictogramSize>;
+  };
   stroke: Record<string, IODimensionScale>;
 };
 
@@ -214,7 +221,11 @@ export const IODimensions = {
   stroke: { ...system.stroke, ...componentStroke },
   size: {
     icon: { scale: iconSize, ...system.size.icon, ...componentIconSize },
-    pictogram: { scale: pictogramSize, ...componentPictogramSize },
+    pictogram: {
+      scale: pictogramSize,
+      ...system.size.pictogram,
+      ...componentPictogramSize
+    },
     ...componentSize
   },
   height: componentHeight,

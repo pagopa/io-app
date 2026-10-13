@@ -64,7 +64,12 @@ const IOsContent = () => {
       <View style={[styles.container, { marginTop: insets.top }]}>
         <HStack>
           <H4 style={styles.title}>{title} </H4>
-          {isSuccess ? <Pictogram name="success" size={120} /> : null}
+          {isSuccess ? (
+            <Pictogram
+              name="success"
+              size={IODimensions.size.pictogram.screen}
+            />
+          ) : null}
         </HStack>
       </View>
     </IOScrollView>

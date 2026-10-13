@@ -1,4 +1,10 @@
-import { BodySmall, H3, useIOTheme, VSpacer } from "@io-app/design-system";
+import {
+  BodySmall,
+  H3,
+  IODimensions,
+  useIOTheme,
+  VSpacer
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 import {
@@ -31,7 +37,10 @@ export const PreconditionsFeedback = ({
 
   return (
     <View style={styles.container}>
-      <AnimatedPictogram name={pictogram} size={120} />
+      <AnimatedPictogram
+        name={pictogram}
+        size={IODimensions.size.pictogram.screen}
+      />
       <VSpacer size={24} />
       <H3
         color={theme["textHeading-secondary"]}
