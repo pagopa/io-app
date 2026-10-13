@@ -236,6 +236,7 @@ const themeKeys = [
   "stepper-default",
   "icon-default",
   "icon-decorative",
+  "featured-default",
   // Inputs
   "textInputBorder-default",
   "textInputLabel-default",
@@ -310,6 +311,7 @@ export const IOThemeLight: IOTheme = {
   "icon-default": "grey-650",
   "stepper-default": "grey-200",
   "icon-decorative": "grey-300",
+  "featured-default": "hanPurple-500",
   // Inputs
   "textInputBorder-default": "grey-200",
   "textInputLabel-default": "grey-700",
@@ -378,6 +380,7 @@ export const IOThemeDark: IOTheme = {
   "cardBorder-default": "grey-850",
   "icon-default": "grey-450",
   "icon-decorative": "grey-650",
+  "featured-default": "hanPurple-250",
   "stepper-default": "grey-700",
   // Inputs
   "textInputBorder-default": "grey-850",
