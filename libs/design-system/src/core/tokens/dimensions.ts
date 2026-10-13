@@ -202,7 +202,6 @@ const componentPictogramSize = {
 const componentSize = {
   avatar: { xsmall: 30, small: 44, medium: 66 },
   iconButton: { small: 24, default: 48, large: 56 },
-  iconContained: 44,
   /* Checkbox and radio control */
   selection: { control: 24 }
 } as const;
