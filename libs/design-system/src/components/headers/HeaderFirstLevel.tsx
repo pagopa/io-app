@@ -147,7 +147,10 @@ export const HeaderFirstLevel = ({
             {title}
           </H2>
         </View>
-        <HStack space={16} style={{ flexShrink: 0 }}>
+        <HStack
+          space={IODimensions.gap.header.actions}
+          style={{ flexShrink: 0 }}
+        >
           {actions.map(action => (
             <IconButton
               key={`header-first-level-action-${action.icon}`}

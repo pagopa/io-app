@@ -117,6 +117,8 @@ const componentGap = {
   alert: { leading: system.gap.leading, action: 8 },
   banner: { leading: 8, description: system.gap.description, action: 12 },
   featureInfo: { leading: 24, action: 4 },
+  /* `title`: between the side actions and the centred title */
+  header: { title: 16, actions: 16 },
   listItem: {
     leading: system.gap.leading,
     action: 16,
