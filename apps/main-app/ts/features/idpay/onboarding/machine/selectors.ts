@@ -99,18 +99,6 @@ export const informativeCriteriaSelector = createSelector(
     )
 );
 
-export const familyUnitCompositionCriteriaSelector = createSelector(
-  selectRequiredCriteria,
-  requiredCriteria =>
-    pipe(
-      requiredCriteria,
-      O.fold(
-        () => undefined,
-        some => some.general?.familyUnitComposition
-      )
-    )
-);
-
 export const textRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
@@ -122,22 +110,18 @@ export const stepperCountSelector = createSelector(
   boolRequiredCriteriaSelector,
   textRequiredCriteriaSelector,
   pdndCriteriaSelector,
-  familyUnitCompositionCriteriaSelector,
   informativeCriteriaSelector,
   (
     multiCriteria,
     boolCriteria,
     textCriteria,
     pdndCriteria,
-    familyCriteria,
     informativeCriteria
   ) =>
     (boolCriteria.length > 0 ? 1 : 0) +
     multiCriteria.length +
     textCriteria.length +
-    (pdndCriteria.length > 0 || familyCriteria || informativeCriteria.length > 0
-      ? 1
-      : 0)
+    (pdndCriteria.length > 0 || informativeCriteria.length > 0 ? 1 : 0)
 );
 
 export const getMultiSelfDeclarationListFromContext = (

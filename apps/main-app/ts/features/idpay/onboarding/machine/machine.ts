@@ -69,10 +69,8 @@ export const idPayOnboardingMachine = setup({
       pipe(
         context.requiredCriteria,
         O.map(
-          ({ beneficiaryRule, general }) =>
+          ({ beneficiaryRule }) =>
             (beneficiaryRule?.automatedCriteria?.length || 0) > 0 ||
-            // since familyUnitComposition can also display Family Unit criteria if it's ANPR
-            general?.familyUnitComposition !== undefined ||
             getInformativeSelfDeclarationListFromContext(context).length > 0
         ),
         O.getOrElse(() => false)
