@@ -57,7 +57,9 @@ const system = {
     /* Between the leading graphic (icon, logo, avatar) and the content */
     leading: 12,
     /* Between a label and its description */
-    description: 4
+    description: 4,
+    /* Between a caption icon and its small text */
+    caption: 4
   },
   padding: {
     screen: {
@@ -79,7 +81,9 @@ const system = {
       /* The same navigation chevron everywhere */
       chevron: 24,
       /* Leading graphic of a row, aligned across list items and modules */
-      leading: 24
+      leading: 24,
+      /* Small icon preceding a caption (e.g. date, suggestion) */
+      caption: 16
     }
   },
   stroke: { default: 1, focused: 2 }
@@ -98,7 +102,8 @@ const componentGap = {
   listItem: {
     leading: system.gap.leading,
     action: 16,
-    description: system.gap.description
+    description: system.gap.description,
+    caption: system.gap.caption
   },
   /* Leading graphic → content, content → trailing element (chevron, badge…) */
   module: { leading: system.gap.leading, trailing: 8 },
@@ -107,7 +112,8 @@ const componentGap = {
     leading: system.gap.leading,
     control: 8,
     action: 8,
-    description: system.gap.description
+    description: system.gap.description,
+    caption: system.gap.caption
   },
   tag: { leading: 6 }
 } as const satisfies Named<IOSpace>;

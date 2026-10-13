@@ -2,10 +2,7 @@ import { ComponentProps, memo, useMemo } from "react";
 import { GestureResponderEvent, Platform, Switch, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import {
-  IOSelectionListItemStyles,
-  IOSelectionListItemVisualParams
-} from "../../core";
+import { IODimensions, IOSelectionListItemStyles } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -99,7 +96,7 @@ export const ListItemSwitch = memo(
               flexDirection: "row",
               alignItems: icon ? "flex-start" : "center",
               columnGap:
-                IOSelectionListItemVisualParams.iconMargin *
+                IODimensions.gap.selection.leading *
                 dynamicFontScale *
                 spacingScaleMultiplier
             }}
@@ -117,13 +114,13 @@ export const ListItemSwitch = memo(
                 allowFontScaling
                 color={theme["icon-decorative"]}
                 name={icon}
-                size={IOSelectionListItemVisualParams.iconSize}
+                size={IODimensions.size.icon.selection}
               />
             )}
             {paymentLogo && (
               <LogoPayment
                 name={paymentLogo}
-                size={IOSelectionListItemVisualParams.iconSize}
+                size={IODimensions.size.icon.selection}
               />
             )}
 
@@ -138,7 +135,7 @@ export const ListItemSwitch = memo(
               {label}
             </H6>
           </View>
-          <HSpacer size={8} />
+          <HSpacer size={IODimensions.gap.selection.control} />
           <View
             style={{
               justifyContent: "center",
@@ -167,7 +164,7 @@ export const ListItemSwitch = memo(
         </View>
         {description && (
           <>
-            <VSpacer size={IOSelectionListItemVisualParams.descriptionMargin} />
+            <VSpacer size={IODimensions.gap.selection.description} />
             <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
               {description}
             </BodySmall>
@@ -175,7 +172,7 @@ export const ListItemSwitch = memo(
         )}
         {action && (
           <>
-            <VSpacer size={IOSelectionListItemVisualParams.actionMargin} />
+            <VSpacer size={IODimensions.gap.selection.action} />
             <LabelMini asLink onPress={action.onPress}>
               {action.label}
             </LabelMini>
