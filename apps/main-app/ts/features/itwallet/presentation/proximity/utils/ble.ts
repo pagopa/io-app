@@ -34,6 +34,10 @@ const getBleManager = () => {
   return bleManager;
 };
 
+/** Observes adapter changes, including its current state, until removed. */
+export const subscribeBluetoothState = (listener: (state: State) => void) =>
+  getBleManager().onStateChange(listener, true);
+
 /**
  * Checks and requests necessary Bluetooth permissions based on the platform and
  * OS version.
