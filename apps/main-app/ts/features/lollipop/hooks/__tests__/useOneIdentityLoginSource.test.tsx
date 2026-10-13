@@ -63,6 +63,7 @@ jest.mock("../../../authentication/fastLogin/store/selectors", () => ({
 
 const mockIdp = { id: "idp-id", name: "idp-name" } as unknown as SpidIdp;
 const reserveResponse = {
+  acr_values: "https://www.spid.gov.it/SpidL2",
   authorization_endpoint: "https://one-identity.example.com/oidc/authorize",
   client_id: "client-id",
   nonce: "nonce-value",
@@ -162,6 +163,8 @@ describe("useOneIdentityLoginSource", () => {
     expect(authorizeUrl.origin).toBe("https://one-identity.example.com");
     expect(authorizeUrl.pathname).toBe("/oidc/authorize");
     expect(authorizeUrl.query.client_id).toBe(reserveResponse.client_id);
+    expect(authorizeUrl.query.acr_values).toBe(reserveResponse.acr_values);
+    expect(authorizeUrl.query.minAuthLevel).toBeUndefined();
     expect(
       webviewSource.headers?.["x-pagopa-lollipop-assertion-ref"]
     ).toContain(toBase64EncodedThumbprint(mockPublicKey));
@@ -554,6 +557,9 @@ describe("useOneIdentityLoginSource", () => {
       expect(parsedAuthorizeUrl.pathname).toBe("/oidc/authorize");
       expect(parsedAuthorizeUrl.query.client_id).toBe(
         reserveResponse.client_id
+      );
+      expect(parsedAuthorizeUrl.query.acr_values).toBe(
+        reserveResponse.acr_values
       );
       expect(headers["x-pagopa-lollipop-assertion-ref"]).toContain(
         toBase64EncodedThumbprint(mockPublicKey)

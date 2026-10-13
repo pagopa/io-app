@@ -29,7 +29,7 @@ import {
   ephemeralKeyTagSelector,
   ephemeralPublicKeySelector
 } from "../store/reducers/lollipop";
-import { ReserveSchema } from "../types";
+import { Reserve, ReserveSchema } from "../types";
 import { toBase64EncodedThumbprint } from "../utils/crypto";
 import {
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
@@ -95,18 +95,16 @@ const buildReserveRequestBody = (
 
 /** Builds the OneIdentity `/authorize` URL to open in the login WebView. */
 const buildAuthorizationUrl = (
-  reserveResponse: {
-    authorization_endpoint: string;
-    client_id: string;
-    nonce: string;
-    redirect_uri: string;
-    state: string;
-  },
-  idp: string,
-  minAuthLevel: AuthLevel
-): string => {
-  const { authorization_endpoint, client_id, nonce, redirect_uri, state } =
-    reserveResponse;
+  {
+    acr_values,
+    authorization_endpoint,
+    client_id,
+    nonce,
+    redirect_uri,
+    state
+  }: Reserve,
+  idp: string
+) => {
   const authorizationUrl = new URLParse(authorization_endpoint, true);
   authorizationUrl.set("query", {
     idp,
@@ -116,7 +114,7 @@ const buildAuthorizationUrl = (
     state,
     nonce,
     response_type: "code",
-    minAuthLevel: SPID_AUTH_LEVEL_MAP[minAuthLevel]
+    acr_values
   });
   return authorizationUrl.toString();
 };
@@ -303,11 +301,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       return;
     }
 
-    const authorizationUrl = buildAuthorizationUrl(
-      result.value,
-      idpId,
-      minAuthLevel
-    );
+    const authorizationUrl = buildAuthorizationUrl(result.value, idpId);
 
     if (followRedirectsNatively) {
       setLoginSourceState({ status: "following-redirects" });
