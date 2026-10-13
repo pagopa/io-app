@@ -119,12 +119,7 @@ export const MessageDetailsFooter = ({
       }}
     >
       <VSpacer size={16} />
-      {(serviceMetadata?.email || serviceMetadata?.phone) && (
-        <ContactsListItem
-          email={serviceMetadata.email}
-          phone={serviceMetadata.phone}
-        />
-      )}
+      {serviceMetadata && <ContactsListItem {...serviceMetadata} />}
       <ShowMoreListItem sections={showMoreSectionData} />
     </ContentWrapper>
   );

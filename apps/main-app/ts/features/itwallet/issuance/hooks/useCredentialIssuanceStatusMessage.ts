@@ -59,7 +59,7 @@ export const useCredentialIssuanceStatusMessage = (
   if (
     failure.type === CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION
   ) {
-    const { credentialId } = failure.reason?.metadata ?? {};
+    const { credentialId = "" } = failure.reason?.metadata ?? {};
 
     const parsed = statusAssertionFailure.safeParse(failure.reason?.reason);
     const errorCode = parsed.success ? parsed.data.error : undefined;
