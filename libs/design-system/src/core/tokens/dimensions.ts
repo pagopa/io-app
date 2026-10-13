@@ -174,6 +174,7 @@ const componentStroke = {
 
 const componentIconSize = {
   accordion: system.size.icon.leading,
+  alert: system.size.icon.leading,
   banner: system.size.icon.leading,
   featureInfo: system.size.icon.leading,
   listItem: system.size.icon.leading,
