@@ -33,8 +33,7 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
 
   const isCdcError = pot.isError(useIOSelector(cdcStatusSelector));
   const isBonusError = isIdPayError || isCgnError || isCdcError;
-  const shouldGoToServices =
-    isCdcError || (isPaymentMethodsError && (isIdPayError || isCgnError));
+  const shouldGoToServices = isCdcError;
 
   const { canRetryRequest } = usePaymentsBackoffRetry(
     WALLET_OTHER_CARDS_CATEGORY_BACKOFF
