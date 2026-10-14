@@ -6,9 +6,9 @@ import { useIOTheme } from "../../context";
 import { IODimensions, IOListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
-import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Icon } from "../icons";
+import { HSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
 
 export type ListItemNavAlert = Pick<
@@ -42,7 +42,6 @@ export const ListItemNavAlert = ({
     },
     [onPress]
   );
-  const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
 
   const componentValueToAccessibility = typeof value === "string" ? value : "";
   const componentDescriptionToAccessibility =
@@ -95,26 +94,24 @@ export const ListItemNavAlert = ({
         style={[IOListItemStyles.listItem, backgroundAnimatedStyle]}
       >
         <Animated.View
-          style={[
-            IOListItemStyles.listItemInner,
-            {
-              columnGap:
-                IODimensions.gap.listItem.default.leading *
-                dynamicFontScale *
-                spacingScaleMultiplier
-            },
-            scaleAnimatedStyle
-          ]}
+          style={[IOListItemStyles.listItemInner, scaleAnimatedStyle]}
         >
           {!withoutIcon && (
-            <Icon
-              allowFontScaling
-              color={theme.errorIcon}
-              name="errorFilled"
-              size={IODimensions.size.icon.listItem}
-            />
+            <>
+              <Icon
+                allowFontScaling
+                color={theme.errorIcon}
+                name="errorFilled"
+                size={IODimensions.size.icon.listItem}
+              />
+              <HSpacer
+                allowScaleSpacing
+                size={IODimensions.gap.listItem.default.leading}
+              />
+            </>
           )}
           <View style={{ flex: 1 }}>{listItemNavAlertContent}</View>
+          {/* No gap: the chevron glyph is drawn against the right edge of its box */}
           <Icon
             allowFontScaling
             color={iconColor}
