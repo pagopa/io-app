@@ -94,7 +94,9 @@ const system = {
     },
     pictogram: {
       /* Pictogram leading a result or empty-state screen */
-      screen: 120
+      screen: 120,
+      /* Pictogram leading an empty or error state inside a section or bottom sheet */
+      inline: 80
     },
     /* Minimum touch area of an interactive element (Material 48dp, above Apple's 44pt) */
     touchTarget: 48
