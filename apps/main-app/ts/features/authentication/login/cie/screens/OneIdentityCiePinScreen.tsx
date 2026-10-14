@@ -60,6 +60,7 @@ export const OneIdentityCiePinScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
+  const loginFlow = cieLoginFlowSelector(store.getState());
   const useUat = useIOSelector(isCieLoginUatEnabledSelector);
 
   const [pin, setPin] = useState("");
@@ -67,10 +68,9 @@ export const OneIdentityCiePinScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      const loginFlow = cieLoginFlowSelector(store.getState());
       trackLoginCiePinScreen(loginFlow);
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
-    }, [store])
+    }, [loginFlow])
   );
 
   useHeaderSecondLevel({
@@ -89,7 +89,7 @@ export const OneIdentityCiePinScreen = () => {
 
       navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
         screen: AUTHENTICATION_ROUTES.CIE_AUTH_SCREEN,
-        params: { pin: value }
+        params: { pin: value, flow: loginFlow }
       });
     }
   };
