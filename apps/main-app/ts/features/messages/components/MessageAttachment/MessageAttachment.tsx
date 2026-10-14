@@ -4,8 +4,6 @@ import {
   FooterActionsInline,
   IOToast
 } from "@io-app/design-system";
-import * as B from "fp-ts/lib/boolean";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
 import ReactNativeBlobUtil from "react-native-blob-util";
@@ -116,51 +114,42 @@ const onPDFError = (
   isPN: boolean,
   serviceId?: ServiceId,
   attachmentCategory?: string
-) =>
-  pipe(
-    isPN,
-    B.fold(
-      () => {
-        trackThirdPartyMessageAttachmentCorruptedFile(messageId, serviceId);
-        IOToast.error(I18n.t("messageDetails.attachments.corruptedFile"));
-      },
-      () => trackPNAttachmentOpeningSuccess("error", attachmentCategory)
-    )
-  );
+) => {
+  if (isPN) {
+    trackPNAttachmentOpeningSuccess("error", attachmentCategory);
+  } else {
+    trackThirdPartyMessageAttachmentCorruptedFile(messageId, serviceId);
+    IOToast.error(I18n.t("messageDetails.attachments.corruptedFile"));
+  }
+};
 
-const onLoadComplete = (isPN: boolean, attachmentCategory?: string) =>
-  pipe(
-    isPN,
-    B.fold(
-      () => trackThirdPartyMessageAttachmentPreviewSuccess(),
-      () => trackPNAttachmentOpeningSuccess("displayer", attachmentCategory)
-    )
-  );
+const onLoadComplete = (isPN: boolean, attachmentCategory?: string) => {
+  if (isPN) {
+    trackPNAttachmentOpeningSuccess("displayer", attachmentCategory);
+  } else {
+    trackThirdPartyMessageAttachmentPreviewSuccess();
+  }
+};
 
-const onShare = (isPN: boolean, attachmentCategory?: string) =>
-  pipe(
-    isPN,
-    B.fold(
-      () => trackThirdPartyMessageAttachmentUserAction("share"),
-      () =>
-        pipe(
-          isIos,
-          B.fold(
-            () => trackPNAttachmentShare(attachmentCategory),
-            () => trackPNAttachmentSaveShare(attachmentCategory)
-          )
-        )
-    )
-  );
+const onShare = (isPN: boolean, attachmentCategory?: string) => {
+  if (isPN) {
+    if (isIos) {
+      trackPNAttachmentSaveShare(attachmentCategory);
+    } else {
+      trackPNAttachmentShare(attachmentCategory);
+    }
+  } else {
+    trackThirdPartyMessageAttachmentUserAction("share");
+  }
+};
 
-const onDownload = (isPN: boolean, attachmentCategory?: string) =>
-  pipe(
-    isPN,
-    B.fold(
-      () => trackThirdPartyMessageAttachmentUserAction("download"),
-      () => trackPNAttachmentSave(attachmentCategory)
-    )
-  );
+const onDownload = (isPN: boolean, attachmentCategory?: string) => {
+  if (isPN) {
+    trackPNAttachmentSave(attachmentCategory);
+  } else {
+    trackThirdPartyMessageAttachmentUserAction("download");
+  }
+};
 
 export type MessageAttachmentProps = {
   attachmentId: string;
