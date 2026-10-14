@@ -1,3 +1,5 @@
+import { Platform } from "react-native";
+
 import { GlobalState } from "../../../../../../store/reducers/types";
 import * as appVersion from "../../../../../../utils/appVersion";
 import {
@@ -5,10 +7,12 @@ import {
   isItwFeedbackBannerEnabledSelector,
   isItwMinAppVersionSupportedSelector,
   isItwProximityMinAppVersionSupportedSelector,
+  isItwProximityNfcMinAppVersionSupportedSelector,
   itwDisabledCredentialsSelector,
   itwDisabledIdentificationMethodsSelector,
   itwHiddenCredentialsSelector,
   itwIPatenteCtaConfigSelector,
+  itwIpzsItwalletPrivacyUrlSelector,
   itwIpzsPrivacyUrlSelector,
   itwIsActivationDisabledSelector,
   itwIsIPatenteCtaEnabledSelector,
@@ -79,6 +83,113 @@ describe.each([
     }
   );
 });
+
+describe.each(["ios", "android"] as const)(
+  "isItwProximityNfcMinAppVersionSupportedSelector on %s",
+  platform => {
+    beforeEach(() => {
+      jest.replaceProperty(Platform, "OS", platform);
+      jest.spyOn(appVersion, "getAppVersion").mockReturnValue("2.0.0.0");
+    });
+
+    afterEach(() => jest.restoreAllMocks());
+
+    const supportedConfig = {
+      min_app_version: minAppVersion("1.0.0.0")
+    };
+    const equalVersionConfig = {
+      min_app_version: minAppVersion("2.0.0.0")
+    };
+    const unsupportedConfig = {
+      min_app_version: minAppVersion("3.0.0.0")
+    };
+    const platformSpecificConfig = {
+      min_app_version: { ios: "1.0.0.0", android: "3.0.0.0" }
+    };
+    const scenarios = [
+      { name: "empty config", remoteConfig: {}, expected: false },
+      {
+        name: "missing proximity config",
+        remoteConfig: { proximity_nfc: supportedConfig },
+        expected: false
+      },
+      {
+        name: "missing proximity minimum version",
+        remoteConfig: { proximity: {}, proximity_nfc: supportedConfig },
+        expected: false
+      },
+      {
+        name: "unsupported proximity version",
+        remoteConfig: {
+          proximity: unsupportedConfig,
+          proximity_nfc: supportedConfig
+        },
+        expected: false
+      },
+      {
+        name: "missing NFC config",
+        remoteConfig: { proximity: supportedConfig },
+        expected: false
+      },
+      {
+        name: "missing NFC minimum version",
+        remoteConfig: { proximity: supportedConfig, proximity_nfc: {} },
+        expected: false
+      },
+      {
+        name: "unsupported NFC version",
+        remoteConfig: {
+          proximity: supportedConfig,
+          proximity_nfc: unsupportedConfig
+        },
+        expected: false
+      },
+      {
+        name: "equal app version",
+        remoteConfig: {
+          proximity: equalVersionConfig,
+          proximity_nfc: equalVersionConfig
+        },
+        expected: true
+      },
+      {
+        name: "newer app version",
+        remoteConfig: {
+          proximity: supportedConfig,
+          proximity_nfc: supportedConfig
+        },
+        expected: true
+      },
+      {
+        name: "platform-specific proximity version",
+        remoteConfig: {
+          proximity: platformSpecificConfig,
+          proximity_nfc: supportedConfig
+        },
+        expected: platform === "ios"
+      },
+      {
+        name: "platform-specific NFC version",
+        remoteConfig: {
+          proximity: supportedConfig,
+          proximity_nfc: platformSpecificConfig
+        },
+        expected: platform === "ios"
+      }
+    ];
+
+    it.each(scenarios)(
+      "returns $expected for $name",
+      ({ remoteConfig, expected }) => {
+        expect(
+          isItwProximityNfcMinAppVersionSupportedSelector(
+            makeState(remoteConfig)
+          )
+        ).toBe(expected);
+      }
+    );
+  }
+);
 
 describe.each([
   [
@@ -175,6 +286,22 @@ describe("itwIpzsPrivacyUrlSelector", () => {
 
     expect(
       itwIpzsPrivacyUrlSelector(makeState({ ipzs_privacy_url: url }))
+    ).toBe(url);
+  });
+});
+
+describe("itwIpzsItwalletPrivacyUrlSelector", () => {
+  it("returns undefined when config is missing", () => {
+    expect(itwIpzsItwalletPrivacyUrlSelector(makeState({}))).toBeUndefined();
+  });
+
+  it("returns configured value", () => {
+    const url = "https://example.com/itwallet-privacy";
+
+    expect(
+      itwIpzsItwalletPrivacyUrlSelector(
+        makeState({ ipzs_itwallet_privacy_url: url })
+      )
     ).toBe(url);
   });
 });
