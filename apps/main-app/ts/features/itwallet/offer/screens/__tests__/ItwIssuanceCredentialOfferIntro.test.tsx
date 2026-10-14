@@ -165,6 +165,35 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     });
   });
 
+  it.each([
+    {
+      name: "the credential name from the catalogue",
+      catalogueName: "Laurea dal catalogo",
+      expectedTitle: "Laurea dal catalogo"
+    },
+    {
+      name: "the fallback title when the catalogue cannot resolve the name",
+      catalogueName: undefined,
+      expectedTitle: I18n.t(
+        "features.itWallet.issuance.credentialOffer.intro.fallbackTitle"
+      )
+    }
+  ])("shows $name as title", ({ catalogueName, expectedTitle }) => {
+    jest
+      .spyOn(catalogSelectors, "itwCredentialIntroContentSelector")
+      .mockReturnValue(() => "Introduction content");
+    jest
+      .spyOn(catalogSelectors, "itwCredentialNameResolverSelector")
+      .mockReturnValue(
+        (_type: string | undefined, withDefault = "") =>
+          catalogueName ?? withDefault
+      );
+
+    const { queryByText } = renderComponent(jest.fn());
+
+    expect(queryByText(expectedTitle)).not.toBeNull();
+  });
+
   it("blocks the flow when the offered credential is already in the wallet and valid", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialSelector")

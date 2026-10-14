@@ -166,11 +166,15 @@ export const itwCredentialNameResolverSelector = createSelector(
   (isCatalogueEnabled, catalogue, translations, withL3Design) =>
     (credentialType: string | undefined, withDefault = ""): string => {
       if (isCatalogueEnabled && credentialType && catalogue && translations) {
-        const catalogueMeta = catalogue[credentialType];
+        // The type may be missing from the catalogue (e.g. a credential
+        // requested by a Relying Party that is not obtainable in IO)
+        const catalogueMeta = catalogue[credentialType] as
+          | DigitalCredentialMetadata
+          | undefined;
         const resolvedName =
-          (catalogueMeta.name_l10n_id &&
+          (catalogueMeta?.name_l10n_id &&
             translations[catalogueMeta.name_l10n_id]) ||
-          catalogueMeta.name;
+          catalogueMeta?.name;
         if (resolvedName) {
           return resolvedName;
         }

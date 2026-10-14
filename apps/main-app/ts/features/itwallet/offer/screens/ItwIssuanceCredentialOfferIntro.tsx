@@ -28,12 +28,14 @@ import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialSelector
 } from "../../credentials/store/selectors";
-import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
+import {
+  itwCredentialIntroContentSelector,
+  itwCredentialNameResolverSelector
+} from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
@@ -91,6 +93,9 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const credentialName = useItwCredentialName(credentialType);
+  const resolveCredentialName = useIOSelector(
+    itwCredentialNameResolverSelector
+  );
 
   // The offer cannot proceed without an active wallet or with an eID that
   // needs to be renewed: both require the user to complete another flow first.
@@ -261,7 +266,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const fallbackTitle = I18n.t(
     "features.itWallet.issuance.credentialOffer.intro.fallbackTitle"
   );
-  const title = getCredentialNameFromType(credentialType, false, fallbackTitle);
+  const title = resolveCredentialName(credentialType, fallbackTitle);
 
   return (
     <IOScrollView
