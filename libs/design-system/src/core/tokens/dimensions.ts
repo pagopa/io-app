@@ -158,6 +158,8 @@ const componentGap = {
     description: system.gap.description,
     caption: system.gap.caption
   },
+  /* `icon`: between the icon and the label; `items`: between tabs */
+  tab: { icon: 4, items: 8 },
   tag: { leading: 6 },
   textInput: { leading: 8, trailing: system.gap.trailing },
   toast: { trailing: 16 }
@@ -189,6 +191,7 @@ const componentPadding = {
     messages: { horizontal: system.padding.screen.messages, vertical: 12 }
   },
   module: { horizontal: 16, vertical: 16 },
+  tab: { horizontal: 16, vertical: 8 },
   tag: { horizontal: 8, vertical: 6 },
   /* `floatingLabel`: above the typed text, room for the raised label (see `offset.textInput`) */
   textInput: { horizontal: 12, vertical: 8, floatingLabel: 16 },
@@ -206,6 +209,8 @@ const componentRadius = {
   bottomSheet: 24,
   badge: 24,
   selection: { control: 6 },
+  /* Pill: above half the tab height */
+  tab: 24,
   tag: 6,
   textInput: system.radius.default,
   toast: system.radius.default
@@ -230,6 +235,7 @@ const componentIconSize = {
   listItem: system.size.icon.leading,
   module: { leading: system.size.icon.leading },
   selection: system.size.icon.leading,
+  tab: 16,
   tag: 16,
   textInput: system.size.icon.leading,
   toast: 24

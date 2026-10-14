@@ -79,7 +79,7 @@ const TabNavigation = ({
         {
           flexGrow: 1,
           justifyContent: itemsJustify[tabAlignment],
-          gap: 8
+          gap: IODimensions.gap.tab.items
         }
       ]}
       horizontal={true}
