@@ -1,10 +1,11 @@
 /*
 DIMENSION TOKENS
-Every value is a `dimension` token as defined by the W3C Design Tokens
-Community Group format (Format Module 2025.10):
+The model follows the `dimension` type of the W3C Design Tokens Community
+Group format (Format Module 2025.10):
 https://www.w3.org/community/reports/design-tokens/CG-FINAL-format-20251028/
 Values are unitless dp, as React Native expects: the DTCG
-`{ value, unit: "px" }` form maps to them 1:1.
+`{ value, unit: "px" }` form maps to them 1:1. The object is not conformant
+yet: no `$value`/`$type`, `system` references are resolved, ramps are arrays.
 
 Three tiers (Material 3 naming: reference → system → component), merged by
 property as the Figma `Dimensions/*` variables:
@@ -12,10 +13,10 @@ property as the Figma `Dimensions/*` variables:
   take, and its per-property subsets (`gap.scale`, `padding.screen.scale`,
   `radius.scale`)
 - `system`: values shared across components (`radius.default`)
-- component values (`radius.tag`): a reference to `system` is an alias, as a
-  Figma variable bound to another one; a literal is a detached value. Keyed by
-  component name: removing a component removes its keys too, since nothing
-  flags unused tokens
+- component values (`radius.tag`): a reference to a `system` value follows a
+  design choice shared with other components; a direct value is a deliberate
+  exception. Keyed by component name: removing a component removes its keys
+  too, since nothing flags unused tokens
 Sizes (icons, pictograms, avatars…) are independent ramps, not bound to the scale.
 `size` is square (width = height); single-axis values go in `height`.
 
