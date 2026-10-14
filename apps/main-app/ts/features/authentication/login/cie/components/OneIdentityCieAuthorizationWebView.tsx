@@ -1,14 +1,13 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import { useNavigation } from "@react-navigation/native";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOStore } from "../../../../../store/hooks";
+import { useIODispatch } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { OneIdentityActiveSessionLoginCieAuthorizationWebView } from "../../../activeSessionLogin/screens/cie/OneIdentityActiveSessionLoginCieAuthorizationWebView";
-import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import {
   trackLoginCieConsentDataUsageScreen,
   trackLoginCieDataSharingError
@@ -20,11 +19,13 @@ import {
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
-import { AUTH_LEVELS } from "../../../common/utils";
+import { AUTH_LEVELS, LOGIN_TYPES } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
+import { LoginType } from "../../../common/utils/index";
 
 type OneIdentityCieAuthorizationWebViewProps = {
   authorizationUrl: string;
+  flow: LoginType;
 };
 
 /**
@@ -33,18 +34,12 @@ type OneIdentityCieAuthorizationWebViewProps = {
  * content component.
  */
 export const OneIdentityCieAuthorizationWebView = ({
-  authorizationUrl
+  authorizationUrl,
+  flow
 }: OneIdentityCieAuthorizationWebViewProps) => {
-  const store = useIOStore();
-  // The flag is read once at mount and deliberately not subscribed to the store.
-  // On login success `consolidateActiveSessionLoginData` resets
-  // `isActiveSessionLogin` to false: a reactive selector would swap this
-  // component for the standard login one.
-  const [isActiveSessionLogin] = useState(() =>
-    isActiveSessionLoginSelector(store.getState())
-  );
-
-  if (isActiveSessionLogin) {
+  // If the login flow is not the standard auth,
+  // render the active session login web view.
+  if (flow !== LOGIN_TYPES.AUTH) {
     return (
       <OneIdentityActiveSessionLoginCieAuthorizationWebView
         authorizationUrl={authorizationUrl}

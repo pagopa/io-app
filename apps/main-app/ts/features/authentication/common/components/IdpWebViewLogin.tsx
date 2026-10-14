@@ -20,16 +20,15 @@ import {
 } from "../../../../utils/supportAssistance";
 import { getUrlBasepath } from "../../../../utils/url";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
-import {
-  LoginType,
-  trackSpidLoginIntent
-} from "../../activeSessionLogin/screens/analytics";
+import { trackSpidLoginIntent } from "../../activeSessionLogin/screens/analytics";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
 import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { idpLoginUrlChanged } from "../store/actions";
 import {
   AUTH_LEVELS,
   getIntentFallbackUrl,
+  LOGIN_TYPES,
+  LoginType,
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../utils";
@@ -60,7 +59,7 @@ export type WebViewLoginEvent =
   | { payload: { url: string }; type: "WEBVIEW_ERROR" };
 
 export const IdpWebViewLogin = memo(
-  ({ idp, flow = "auth", onEvent }: IdpWebViewLoginProps) => {
+  ({ idp, flow = LOGIN_TYPES.AUTH, onEvent }: IdpWebViewLoginProps) => {
     const dispatch = useIODispatch();
 
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
@@ -83,6 +82,7 @@ export const IdpWebViewLogin = memo(
 
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
+        flow,
         idpId: idp.id,
         onFailure: handleFailure,
         minAuthLevel: AUTH_LEVELS.L2

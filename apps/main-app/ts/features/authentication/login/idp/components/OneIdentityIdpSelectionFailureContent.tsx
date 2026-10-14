@@ -10,13 +10,14 @@ import { trackLoginReauthEngagementCieSelected } from "../../../activeSessionLog
 import { trackCieLoginSelected } from "../../../common/analytics";
 import { useCieLoginMethodSelection } from "../../../common/hooks/useCieLoginMethodSelection";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { LOGIN_TYPES, LoginType } from "../../../common/utils";
 
 type OneIdentityIdpSelectionFailureContentProps = {
-  isActiveSessionLogin: boolean;
+  flow: LoginType;
 };
 
 export const OneIdentityIdpSelectionFailureContent = ({
-  isActiveSessionLogin
+  flow
 }: OneIdentityIdpSelectionFailureContentProps) => {
   const navigation = useIONavigation();
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
@@ -25,9 +26,7 @@ export const OneIdentityIdpSelectionFailureContent = ({
     bottomSheet,
     dismiss: dismissBottomSheet,
     handleCieLoginRequested
-  } = useCieLoginMethodSelection({
-    flow: isActiveSessionLogin ? "reauth" : "auth"
-  });
+  } = useCieLoginMethodSelection({ flow });
 
   useFocusEffect(
     useCallback(() => {
@@ -38,13 +37,13 @@ export const OneIdentityIdpSelectionFailureContent = ({
   );
 
   const navigateToCiePinScreen = useCallback(() => {
-    if (isActiveSessionLogin) {
+    if (flow === LOGIN_TYPES.REAUTH) {
       void trackLoginReauthEngagementCieSelected();
     } else {
       void trackCieLoginSelected();
     }
     handleCieLoginRequested();
-  }, [isActiveSessionLogin, handleCieLoginRequested]);
+  }, [flow, handleCieLoginRequested]);
 
   const navigateToLandingScreen = useCallback(() => {
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {

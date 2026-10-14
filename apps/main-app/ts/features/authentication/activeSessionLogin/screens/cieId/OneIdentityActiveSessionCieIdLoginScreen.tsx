@@ -12,7 +12,11 @@ import {
 import { useCieIdWebViewLoginNavigation } from "../../../common/hooks/useCieIdWebViewLoginNavigation";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { AUTH_LEVELS, isValidCallbackUrl } from "../../../common/utils";
+import {
+  AUTH_LEVELS,
+  isValidCallbackUrl,
+  LOGIN_TYPES
+} from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
@@ -60,10 +64,10 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
         dispatch(activeSessionLoginFailure());
       }
 
-      trackLoginFailure({ reason, idp: "cieid", flow: "reauth" });
+      trackLoginFailure({ reason, idp: "cieid", flow: LOGIN_TYPES.REAUTH });
       trackLoginSpidError(errorCodeOrMessage, {
         idp: IdpCIE_ID.id,
-        flow: "reauth",
+        flow: LOGIN_TYPES.REAUTH,
         "error message": message
       });
       navigateToAuthErrorScreen(errorCodeOrMessage);
@@ -138,6 +142,10 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
   });
 
   return (
-    <CieIdWebViewLogin flow="reauth" isUat={isUat} onEvent={handleEvent} />
+    <CieIdWebViewLogin
+      flow={LOGIN_TYPES.REAUTH}
+      isUat={isUat}
+      onEvent={handleEvent}
+    />
   );
 };

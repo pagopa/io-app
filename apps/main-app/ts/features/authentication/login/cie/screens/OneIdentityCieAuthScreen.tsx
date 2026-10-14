@@ -2,11 +2,13 @@ import { useCallback, useState } from "react";
 
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
+import { LoginType } from "../../../common/utils/index";
 import { OneIdentityCieAuthenticationWebView } from "../components/OneIdentityCieAuthenticationWebView";
 import { OneIdentityCieAuthorizationWebView } from "../components/OneIdentityCieAuthorizationWebView";
 import { OneIdentityCieCardReader } from "../components/OneIdentityCieCardReader";
 
 export type OneIdentityCieAuthRouteParams = {
+  flow: LoginType;
   pin: string;
 };
 
@@ -23,7 +25,7 @@ type OneIdentityCieAuthScreenProps = IOStackNavigationRouteProps<
 export const OneIdentityCieAuthScreen = ({
   route
 }: OneIdentityCieAuthScreenProps) => {
-  const { pin } = route.params;
+  const { flow, pin } = route.params;
 
   const [authState, setAuthState] = useState<AuthState>({
     status: "01_authentication_url_retrieval"
@@ -50,6 +52,7 @@ export const OneIdentityCieAuthScreen = ({
   if (authState.status === "01_authentication_url_retrieval") {
     return (
       <OneIdentityCieAuthenticationWebView
+        flow={flow}
         onAuthenticationUrlReceived={handleAuthenticationUrlReceived}
       />
     );
@@ -60,6 +63,7 @@ export const OneIdentityCieAuthScreen = ({
     return (
       <OneIdentityCieCardReader
         authenticationUrl={authState.authenticationUrl}
+        flow={flow}
         onAuthorizationUrlReceived={handleAuthorizationUrlReceived}
         pin={pin}
       />
@@ -70,6 +74,7 @@ export const OneIdentityCieAuthScreen = ({
   return (
     <OneIdentityCieAuthorizationWebView
       authorizationUrl={authState.authorizationUrl}
+      flow={flow}
     />
   );
 };
