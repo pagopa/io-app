@@ -80,9 +80,15 @@ const system = {
       centred: 32,
       /* Space left below the last element of a scrollable screen */
       end: 32
-    }
+    },
+    /* Inner space of a card surface (payment, CGN, featured service…) */
+    card: 16
   },
-  radius: { default: 8 },
+  radius: {
+    default: 8,
+    /* Card surfaces */
+    card: 8
+  },
   size: {
     icon: {
       /* The same navigation chevron everywhere */
@@ -104,7 +110,7 @@ const system = {
   stroke: { default: 1, focused: 2 }
 } as const satisfies {
   gap: Record<string, IOSpace>;
-  padding: { screen: Record<string, IOScreenPadding> };
+  padding: { card: IODimensionScale; screen: Record<string, IOScreenPadding> };
   radius: Record<string, IORadius>;
   size: {
     icon: Record<string, IOIconSize>;
@@ -267,6 +273,7 @@ export const IODimensions = {
   gap: { scale: gapScale, ...system.gap, ...componentGap },
   padding: {
     screen: { scale: screenPadding, ...system.padding.screen },
+    card: system.padding.card,
     ...componentPadding
   },
   radius: { scale: radiusScale, ...system.radius, ...componentRadius },

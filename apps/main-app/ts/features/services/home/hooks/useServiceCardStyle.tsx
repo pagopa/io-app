@@ -33,7 +33,7 @@ export const useServiceCardStyle = (): ServiceCardStyleProps => {
   return {
     default: {
       card: {
-        borderRadius: IODimensions.radius.default,
+        borderRadius: IODimensions.radius.card,
         borderCurve: "continuous",
         borderWidth: IODimensions.stroke.default,
         borderColor: IOColors[theme["cardBorder-default"]],

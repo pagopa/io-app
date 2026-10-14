@@ -1,5 +1,6 @@
 import {
   IOColors,
+  IODimensions,
   IOSkeleton,
   useIOThemeContext,
   VStack
@@ -62,13 +63,13 @@ const borderColor = "#0000001F";
 const styleSheet = StyleSheet.create({
   card: {
     aspectRatio: 16 / 10,
-    borderRadius: 8,
-    borderWidth: 1,
+    borderRadius: IODimensions.radius.card,
+    borderWidth: IODimensions.stroke.default,
     borderColor,
     paddingTop: 4
   },
   wrapper: {
-    padding: 16,
+    padding: IODimensions.padding.card,
     flex: 1,
     justifyContent: "space-between"
   },

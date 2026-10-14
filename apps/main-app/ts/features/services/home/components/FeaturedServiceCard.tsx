@@ -28,7 +28,6 @@ export type FeaturedServiceCardProps = WithTestID<{
 
 export const CARD_WIDTH = 210;
 
-const cardPadding: IODimensionScale = 16;
 /* Space between the `Avatar` and the content below */
 const cardSafeInnerSpace: IODimensionScale = 16;
 
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     width: CARD_WIDTH,
-    padding: cardPadding,
+    padding: IODimensions.padding.card,
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "space-between"
