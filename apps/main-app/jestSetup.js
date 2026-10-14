@@ -119,6 +119,10 @@ jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
 }));
 
+jest.mock("@io-app/expo-pdf-high-res-generator", () => ({
+  generatePdfHighResImages: jest.fn().mockResolvedValue([])
+}));
+
 jest.mock("@io-app/expo-nfc-antenna-info", () => ({
   getNfcAntennaInfo: jest.fn(),
   isHceSupported: jest.fn()
