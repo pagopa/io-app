@@ -83,7 +83,9 @@ const ItwMetadataIssuanceListItem = ({
 
 /**
  * Renders additional issuance-related metadata, i.e. releaser and auth source.
- * They are not part of the claims list, thus they're rendered separately.
+ * They are not part of the claims list, thus they're rendered separately. The
+ * releaser is hidden for IT-Wallet credentials other than the PID, since IPZS
+ * already provides it among the credential claims.
  *
  * @param credential - The credential with the issuer configuration
  * @param isPreview - Whether the component is rendered in preview mode which
@@ -115,6 +117,8 @@ export const ItwIssuanceMetadata = ({
 
   const releasedByPid =
     itwCredential && credential.credentialType === CredentialType.PID;
+
+  const showReleaser = !!releaserName && (!itwCredential || releasedByPid);
 
   const releaserNameBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
     useMemo(
@@ -167,8 +171,8 @@ export const ItwIssuanceMetadata = ({
           value={authSource}
         />
       )}
-      {authSource && releaserName && <Divider />}
-      {releaserName && (
+      {authSource && showReleaser && <Divider />}
+      {showReleaser && (
         <ItwMetadataIssuanceListItem
           bottomSheet={releaserNameBottomSheet}
           isPreview={isPreview}
