@@ -39,7 +39,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
@@ -153,7 +152,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
@@ -202,7 +200,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
@@ -251,7 +248,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
@@ -300,7 +296,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
@@ -349,7 +344,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
@@ -398,7 +392,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
@@ -512,7 +505,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
@@ -561,7 +553,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
@@ -610,7 +601,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
@@ -659,7 +649,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
@@ -708,7 +697,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         },
         {
           "flexShrink": 1,
-          "paddingVertical": 2,
         },
       ]
     }
