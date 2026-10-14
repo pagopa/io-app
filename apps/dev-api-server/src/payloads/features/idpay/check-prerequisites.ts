@@ -208,6 +208,27 @@ const checkPrerequisites: {
       selfDeclarationCriteria: [...selfDeclarationMulti, ...selfDeclarationBool]
     }
   },
+  [IDPayInitiativeID.OK_BONUS_DECODER]: {
+    beneficiaryRule: {
+      automatedCriteria: [],
+      selfDeclarationCriteria: [
+        {
+          _type: SelfCriteriaInformativeTypeEnum.informative,
+          code: SelfCriteriaInformativeCodeEnum.ADE,
+          description: "Canone TV",
+          organization: "Agenzia delle Entrate",
+          value: "Descrizione estesa del requisito informativo"
+        },
+        {
+          _type: SelfCriteriaInformativeTypeEnum.informative,
+          code: SelfCriteriaInformativeCodeEnum.ANPR,
+          description: "Famiglia anagrafica Test",
+          organization: "Anagrafe Nazionale della Popolazione Residente",
+          value: "Descrizione estesa del requisito informativo"
+        }
+      ]
+    }
+  } as OnboardingInitiativeDTO,
   [IDPayInitiativeID.OK_BONUS_ELETTRODOMESTICI]: {
     beneficiaryRule: {
       automatedCriteria: familyUnityOnlyAutomatedCriteria,

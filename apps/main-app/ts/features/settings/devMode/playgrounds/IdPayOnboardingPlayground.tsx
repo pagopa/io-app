@@ -115,6 +115,10 @@ const testServices: ReadonlyArray<TestService> = [
     label: "Bonus Elettrodomestici"
   },
   {
+    serviceId: "TESTSRV22",
+    label: "Bonus Decoder"
+  },
+  {
     serviceId: "TESTSRV08",
     label: "KO - Generico",
     willFail: true

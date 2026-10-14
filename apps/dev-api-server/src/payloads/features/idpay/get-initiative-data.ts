@@ -67,6 +67,12 @@ const initiativeData: {
     initiativeName: "Bonus Elettrodomestici"
   },
 
+  [IDPayServiceID.OK_BONUS_DECODER]: {
+    ...createRandomInitiativeDataDTO(),
+    initiativeId: initiativeIdToString(IDPayInitiativeID.OK_BONUS_DECODER),
+    initiativeName: "Bonus Decoder"
+  },
+
   [IDPayServiceID.KO_STATUS_NOT_ELIGIBLE]: {
     ...createRandomInitiativeDataDTO(),
     initiativeId: initiativeIdToString(
