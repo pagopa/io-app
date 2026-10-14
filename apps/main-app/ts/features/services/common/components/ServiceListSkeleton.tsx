@@ -51,7 +51,9 @@ const ServiceListItemSkeleton = ({
   <View style={IOListItemStyles.listItem}>
     <View style={IOListItemStyles.listItemInner}>
       {avatarShown && (
-        <View style={{ marginRight: IODimensions.gap.listItem.leading }}>
+        <View
+          style={{ marginRight: IODimensions.gap.listItem.default.leading }}
+        >
           <IOSkeleton
             radius={IODimensions.radius.avatar.small}
             shape="square"

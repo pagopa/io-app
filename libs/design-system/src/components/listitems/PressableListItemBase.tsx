@@ -55,7 +55,7 @@ export const PressableListItemBase = ({
         <Animated.View
           style={[
             IOListItemStyles.listItemInner,
-            { columnGap: IODimensions.gap.listItem.leading },
+            { columnGap: IODimensions.gap.listItem.default.leading },
             scaleAnimatedStyle
           ]}
         >

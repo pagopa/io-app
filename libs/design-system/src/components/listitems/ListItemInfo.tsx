@@ -145,7 +145,7 @@ const ListItemInfoContent = ({
           {topElement?.type === "badge" && (
             <View style={{ alignSelf: "flex-start" }}>
               <Badge {...topElement.componentProps} />
-              <VSpacer size={IODimensions.gap.listItem.topElement} />
+              <VSpacer size={IODimensions.gap.listItem.default.topElement} />
             </View>
           )}
 
@@ -303,7 +303,7 @@ export const ListItemInfo = ({
               IOListItemStyles.listItemInner,
               {
                 columnGap:
-                  IODimensions.gap.listItem.leading *
+                  IODimensions.gap.listItem.default.leading *
                   dynamicFontScale *
                   spacingScaleMultiplier
               },
@@ -332,7 +332,7 @@ export const ListItemInfo = ({
           IOListItemStyles.listItemInner,
           {
             columnGap:
-              IODimensions.gap.listItem.leading *
+              IODimensions.gap.listItem.default.leading *
               dynamicFontScale *
               spacingScaleMultiplier
           }

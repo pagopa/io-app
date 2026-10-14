@@ -103,7 +103,7 @@ export const ListItemNav = ({
               <View style={{ alignSelf: "flex-start" }}>
                 <Badge {...topElement.badgeProps} />
               </View>
-              <VSpacer size={IODimensions.gap.listItem.topElement} />
+              <VSpacer size={IODimensions.gap.listItem.default.topElement} />
             </>
           )}
           {topElement.dateValue && (
@@ -115,12 +115,12 @@ export const ListItemNav = ({
                   name="calendar"
                   size={IODimensions.size.icon.caption}
                 />
-                <HSpacer size={IODimensions.gap.listItem.caption} />
+                <HSpacer size={IODimensions.gap.listItem.default.caption} />
                 <Caption color={theme["textBody-tertiary"]}>
                   {topElement.dateValue}
                 </Caption>
               </View>
-              <VSpacer size={IODimensions.gap.listItem.topElement} />
+              <VSpacer size={IODimensions.gap.listItem.default.topElement} />
             </>
           )}
         </>
@@ -189,7 +189,7 @@ export const ListItemNav = ({
               />
               <HSpacer
                 allowScaleSpacing
-                size={IODimensions.gap.listItem.leading}
+                size={IODimensions.gap.listItem.default.leading}
               />
             </>
           )}
@@ -205,7 +205,7 @@ export const ListItemNav = ({
               />
               <HSpacer
                 allowScaleSpacing
-                size={IODimensions.gap.listItem.leading}
+                size={IODimensions.gap.listItem.default.leading}
               />
             </>
           )}
@@ -214,7 +214,7 @@ export const ListItemNav = ({
               <Avatar size="small" {...avatar} />
               <HSpacer
                 allowScaleSpacing
-                size={IODimensions.gap.listItem.leading}
+                size={IODimensions.gap.listItem.default.leading}
               />
             </>
           )}

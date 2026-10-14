@@ -1,8 +1,4 @@
-import {
-  IOListItemVisualParams,
-  IOSkeleton,
-  VSpacer
-} from "@io-app/design-system";
+import { IODimensions, IOSkeleton, VSpacer } from "@io-app/design-system";
 import { View } from "react-native";
 
 export const WalletPaymentMethodItemSkeleton = () => (
@@ -13,10 +9,15 @@ export const WalletPaymentMethodItemSkeleton = () => (
         <IOSkeleton
           radius={8}
           shape="square"
-          size={IOListItemVisualParams.iconSize}
+          size={IODimensions.size.icon.listItem}
         />
       </View>
-      <View style={{ flex: 1, paddingLeft: IOListItemVisualParams.iconMargin }}>
+      <View
+        style={{
+          flex: 1,
+          paddingLeft: IODimensions.gap.listItem.default.leading
+        }}
+      >
         <IOSkeleton height={24} radius={8} shape="rectangle" width={"100%"} />
       </View>
     </View>

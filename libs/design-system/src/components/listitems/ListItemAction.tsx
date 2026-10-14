@@ -79,7 +79,7 @@ export const ListItemAction = ({
             IOListItemStyles.listItemInner,
             {
               columnGap:
-                IODimensions.gap.listItem.leading *
+                IODimensions.gap.listItem.default.leading *
                 dynamicFontScale *
                 spacingScaleMultiplier
             },

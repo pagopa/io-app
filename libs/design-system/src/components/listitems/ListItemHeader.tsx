@@ -100,7 +100,7 @@ export const ListItemHeader = ({
           <View
             style={{
               marginRight:
-                IODimensions.gap.listItem.leading *
+                IODimensions.gap.listItem.default.leading *
                 dynamicFontScale *
                 spacingScaleMultiplier
             }}
@@ -115,14 +115,16 @@ export const ListItemHeader = ({
         )}
         <View style={{ flex: 1 }}>{itemInfoTextComponent}</View>
         {endElement && (
-          <View style={{ marginLeft: IODimensions.gap.listItem.action }}>
+          <View
+            style={{ marginLeft: IODimensions.gap.listItem.default.action }}
+          >
             {listItemAction()}
           </View>
         )}
       </View>
       {description && (
         <View>
-          <VSpacer size={IODimensions.gap.listItem.description} />
+          <VSpacer size={IODimensions.gap.listItem.default.description} />
           <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
             {description}
           </BodySmall>

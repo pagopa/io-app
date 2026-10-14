@@ -98,7 +98,7 @@ export const ListItemSearchInstitution = memo(
           >
             <HStack
               allowScaleSpacing
-              space={IODimensions.gap.listItem.leading}
+              space={IODimensions.gap.listItem.default.leading}
               style={{ flex: 1, alignItems: "center" }}
             >
               <AvatarSearch {...avatar} />

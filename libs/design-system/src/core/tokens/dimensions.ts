@@ -129,11 +129,15 @@ const componentGap = {
   /* `title`: between the side actions and the centred title */
   header: { title: 16, actions: 16 },
   listItem: {
-    leading: system.gap.leading,
-    action: 16,
-    description: system.gap.description,
-    caption: system.gap.caption,
-    topElement: system.gap.topElement
+    default: {
+      leading: system.gap.leading,
+      action: 16,
+      description: system.gap.description,
+      caption: system.gap.caption,
+      topElement: system.gap.topElement
+    },
+    /* `trailing`: before the date and the unread dot; `tag`: above and between tags */
+    messages: { leading: 8, trailing: system.gap.trailing, tag: 8 }
   },
   module: {
     leading: system.gap.leading,

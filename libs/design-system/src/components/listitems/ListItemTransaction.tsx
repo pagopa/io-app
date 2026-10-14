@@ -104,7 +104,7 @@ const ListItemTransactionContent = ({
     <>
       <HStack
         allowScaleSpacing
-        space={IODimensions.gap.listItem.leading}
+        space={IODimensions.gap.listItem.default.leading}
         style={{ alignItems: "center", flexShrink: 1 }}
       >
         {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
@@ -226,7 +226,7 @@ export const ListItemTransaction = ({
         <View
           style={[
             IOListItemStyles.listItemInner,
-            { columnGap: IODimensions.gap.listItem.leading }
+            { columnGap: IODimensions.gap.listItem.default.leading }
           ]}
         >
           <ListItemTransactionContent {...contentProps} />
@@ -246,7 +246,7 @@ const ListItemTransactionSkeleton = ({
     style={IOListItemStyles.listItem}
   >
     <View style={IOListItemStyles.listItemInner}>
-      <View style={{ marginRight: IODimensions.gap.listItem.leading }}>
+      <View style={{ marginRight: IODimensions.gap.listItem.default.leading }}>
         <IOSkeleton
           radius={IODimensions.radius.avatar.small}
           shape="square"
@@ -267,7 +267,7 @@ const ListItemTransactionSkeleton = ({
           width={107}
         />
       </VStack>
-      <View style={{ marginLeft: IODimensions.gap.listItem.leading }}>
+      <View style={{ marginLeft: IODimensions.gap.listItem.default.leading }}>
         <IOSkeleton
           height={24}
           radius={IODimensions.radius.default}
