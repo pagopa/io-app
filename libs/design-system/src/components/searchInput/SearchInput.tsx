@@ -26,7 +26,7 @@ import { useIONewTypeface, useIOTheme } from "../../context";
 import {
   IOColors,
   IODimensions,
-  IOSpacingScale,
+  IODimensionScale,
   IOTypography
 } from "../../core";
 import {
@@ -39,15 +39,15 @@ import { Icon, IOIconSizeScale } from "../icons";
 import { IOText } from "../typography";
 
 /* Component visual attributes */
-const inputPaddingHorizontal: IOSpacingScale = 12;
-const inputPaddingVertical: IOSpacingScale = 8;
-const inputPaddingClearButton: IOSpacingScale = 8;
+const inputPaddingHorizontal: IODimensionScale = 12;
+const inputPaddingVertical: IODimensionScale = 8;
+const inputPaddingClearButton: IODimensionScale = 8;
 const inputRadius = 8;
-const iconMargin: IOSpacingScale = 8;
+const iconMargin: IODimensionScale = 8;
 const iconSize: IOIconSizeScale = 16;
 const iconCloseSize: IOIconSizeScale = 24;
 const inputFontSizePlaceholder: IOFontSize = 14;
-const cancelButtonMargin: IOSpacingScale = 16;
+const cancelButtonMargin: IODimensionScale = 16;
 const inputTransitionDuration = 250;
 
 export type SearchInputRef = {
