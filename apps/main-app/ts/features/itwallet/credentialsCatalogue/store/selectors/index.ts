@@ -15,7 +15,12 @@ import {
   DigitalCredentialMetadata,
   DigitalCredentialsCatalogue
 } from "../../../common/utils/itwCredentialsCatalogueUtils";
-import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
+import {
+  getCredentialNameFromType,
+  l2Credentials,
+  newCredentials,
+  upcomingCredentials
+} from "../../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
@@ -23,6 +28,19 @@ export type CredentialsListEntry = {
   name: string;
   type: string;
 };
+
+/**
+ * Hardcoded list of all obtainable credentials, used as a fallback when the
+ * credentials catalogue is not available.
+ */
+const hardcodedCredentialsList: ReadonlyArray<CredentialsListEntry> = [
+  ...l2Credentials,
+  ...newCredentials,
+  ...upcomingCredentials
+].map(type => ({
+  type,
+  name: getCredentialNameFromType(type)
+}));
 
 /**
  * Select the last fetched credentials catalogue. **Note:** the catalogue may be
@@ -177,7 +195,7 @@ export const itwCredentialTypeFromDocTypeSelector = createSelector(
 
 /**
  * Select the list of all obtainable credentials that are available in the
- * catalogue. The list is empty until the catalogue is fetched.
+ * catalogue, or the hardcoded list when the catalogue is not available.
  *
  * Credentials are ordered and filtered according to remote config:
  *
@@ -202,17 +220,22 @@ export const itwAvailableCredentialsListSelector = createSelector(
     remoteNewCredentials,
     hiddenCredentials
   ): ReadonlyArray<CredentialsListEntry> => {
-    const entries: ReadonlyArray<CredentialsListEntry> = (
-      catalogue?.credentials ?? []
-    )
-      .map(credential => ({
+    const selectCredentials = () => {
+      if (!catalogue) {
+        return hardcodedCredentialsList;
+      }
+
+      return catalogue.credentials.map(credential => ({
         name: resolveName(
           credential.credential_type,
           credential.name ?? credential.credential_type
         ),
         type: credential.credential_type
-      }))
-      .filter(
+      }));
+    };
+
+    const entries: ReadonlyArray<CredentialsListEntry> =
+      selectCredentials().filter(
         ({ type }) =>
           type !== CredentialType.PID && !hiddenCredentials.includes(type)
       );

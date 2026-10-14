@@ -297,15 +297,53 @@ describe("itwAvailableCredentialsListSelector", () => {
     ]);
   });
 
-  it("should return an empty list when the catalogue is unavailable", () => {
+  it("should return the list of hardcoded credentials when the catalogue is unavailable", () => {
+    expect(itwAvailableCredentialsListSelector(buildState())).toEqual(
+      [
+        CredentialType.DRIVING_LICENSE,
+        CredentialType.EUROPEAN_DISABILITY_CARD,
+        CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+        CredentialType.PROOF_OF_AGE,
+        CredentialType.EDUCATION_DEGREE,
+        CredentialType.EDUCATION_ENROLLMENT,
+        CredentialType.RESIDENCY,
+        CredentialType.EDUCATION_DIPLOMA,
+        CredentialType.EDUCATION_ATTENDANCE
+      ].map(type => ({ type, name: getCredentialNameFromType(type) }))
+    );
+  });
+
+  it("should filter and order hardcoded credentials using remote config when the catalogue is unavailable", () => {
     const state = buildState({
       remoteConfig: {
-        new_credentials: ["residency"],
-        pinned_credentials: ["mDL"]
+        new_credentials: [
+          "EuropeanHealthInsuranceCard",
+          "proof_of_age",
+          "residency"
+        ],
+        pinned_credentials: [
+          "mDL",
+          "EuropeanHealthInsuranceCard",
+          "education_degree"
+        ],
+        hidden_credentials: [
+          "proof_of_age",
+          "education_degree",
+          "EuropeanDisabilityCard"
+        ]
       }
     });
 
-    expect(itwAvailableCredentialsListSelector(state)).toEqual([]);
+    expect(
+      itwAvailableCredentialsListSelector(state).map(({ type }) => type)
+    ).toEqual([
+      "EuropeanHealthInsuranceCard",
+      "residency",
+      "mDL",
+      "education_enrollment",
+      "education_diploma",
+      "education_attendance"
+    ]);
   });
 });
 
