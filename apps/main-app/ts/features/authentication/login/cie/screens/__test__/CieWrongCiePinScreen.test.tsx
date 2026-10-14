@@ -5,7 +5,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import CieWrongCiePinScreen from "../../screens/CieWrongCiePinScreen";
+import CieWrongCiePinScreen from "../CieWrongCiePinScreen";
 
 const closeLabel = I18n.t("global.buttons.close");
 const retryLabel = I18n.t("global.buttons.retry");
