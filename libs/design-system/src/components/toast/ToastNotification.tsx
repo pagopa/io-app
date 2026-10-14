@@ -92,8 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   content: {
-    flexShrink: 1,
-    paddingVertical: 2
+    flexShrink: 1
   }
 });
 

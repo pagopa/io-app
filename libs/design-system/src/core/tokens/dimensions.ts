@@ -162,7 +162,8 @@ const componentGap = {
   tab: { icon: 4, items: 8 },
   tag: { leading: 6 },
   textInput: { leading: 8, trailing: system.gap.trailing },
-  toast: { trailing: 16 }
+  /* `stack`: between stacked toasts */
+  toast: { trailing: 16, stack: 8 }
 } as const satisfies Named<IOSpace>;
 
 /* Figma: `Dimensions/Paddings/*` */
