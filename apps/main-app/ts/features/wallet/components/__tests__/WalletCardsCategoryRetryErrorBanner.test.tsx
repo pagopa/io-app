@@ -14,6 +14,7 @@ import { cgnDetails } from "../../../bonus/cgn/store/actions/details";
 import * as cgnSelectors from "../../../bonus/cgn/store/reducers/details";
 import { idPayWalletGet } from "../../../idpay/wallet/store/actions";
 import * as idPayWalletSelectors from "../../../idpay/wallet/store/reducers";
+import { getPaymentsWalletUserMethods } from "../../../payments/wallet/store/actions";
 import * as paymentsWalletSelectors from "../../../payments/wallet/store/selectors";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { WalletCardsCategoryRetryErrorBanner } from "../WalletCardsCategoryRetryErrorBanner";
@@ -140,6 +141,33 @@ describe("WalletCardsCategoryRetryErrorBanner", () => {
       );
     }
   );
+
+  it.each([
+    ["CGN", { isPaymentMethodsError: true, isCgnError: true }],
+    ["IDPay", { isPaymentMethodsError: true, isIdPayError: true }]
+  ])("should retry payment methods and %s when both fail", (_, errors) => {
+    mockErrorSelectors(errors);
+    const navigate = jest.fn();
+    jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
+      navigate
+    } as unknown as ReturnType<typeof appParamsList.useIONavigation>);
+
+    const { getByTestId, store } = renderComponent();
+
+    fireEvent.press(
+      getByTestId("walletCardsCategoryRetryErrorBannerActionTestID")
+    );
+
+    const dispatchedActionTypes = store.getActions().map(action => action.type);
+    expect(navigate).not.toHaveBeenCalled();
+    expect(dispatchedActionTypes).toEqual(
+      expect.arrayContaining([
+        getPaymentsWalletUserMethods.request().type,
+        ...(errors.isCgnError ? [cgnDetails.request().type] : []),
+        ...(errors.isIdPayError ? [idPayWalletGet.request().type] : [])
+      ])
+    );
+  });
 });
 
 const mockErrorSelectors = ({
