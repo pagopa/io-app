@@ -11,8 +11,6 @@ import {
 } from "@io-app/design-system";
 import { CommonActions } from "@react-navigation/native";
 import { format } from "date-fns";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
 import NavigationService from "../../../../navigation/NavigationService";
@@ -52,11 +50,8 @@ const IdPayTimelineRefundDetailsComponent = (props: Props) => {
     );
   };
 
-  const rejectedAlertComponent = pipe(
-    refund.operationType,
-    O.of,
-    O.filter(type => type === OperationTypeEnum.REJECTED_REFUND),
-    O.map(() => (
+  const rejectedAlertComponent =
+    refund.operationType === OperationTypeEnum.REJECTED_REFUND ? (
       <>
         <Alert
           action={I18n.t(
@@ -70,16 +65,11 @@ const IdPayTimelineRefundDetailsComponent = (props: Props) => {
         />
         <VSpacer size={16} />
       </>
-    )),
-    O.toNullable
-  );
+    ) : null;
 
-  const formattedAmount = pipe(
-    refund.amountCents,
-    O.fromNullable,
-    O.map(amount => formatNumberCentsToAmount(amount, true)),
-    O.getOrElse(() => "-")
-  );
+  const formattedAmount = refund.amountCents
+    ? formatNumberCentsToAmount(refund.amountCents, true)
+    : "-";
 
   return (
     <>

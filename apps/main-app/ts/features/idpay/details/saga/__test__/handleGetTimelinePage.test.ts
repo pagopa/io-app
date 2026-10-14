@@ -5,7 +5,7 @@ import {
   OperationTypeEnum,
   StatusEnum
 } from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
-import * as E from "fp-ts/lib/Either";
+import { ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
@@ -57,7 +57,7 @@ describe("idpayTimelinePageGet", () => {
           getTimeline({ initiativeId, page: 1, size: 10 }),
           idpayTimelinePageGet.request({ initiativeId, page: 1, pageSize: 10 })
         )
-        .next(E.right({ status: 200, value: mockResponseSuccess }))
+        .next(ok({ status: 200, value: mockResponseSuccess }))
         .put(
           idpayTimelinePageGet.success({
             timeline: mockResponseSuccess,
@@ -90,7 +90,7 @@ describe("idpayTimelinePageGet", () => {
           idpayTimelinePageGet.request({ initiativeId, page: 1, pageSize: 10 })
         )
         .next(
-          E.right({
+          ok({
             status: statusCode,
             value: { code: statusCode, message: "error" }
           })

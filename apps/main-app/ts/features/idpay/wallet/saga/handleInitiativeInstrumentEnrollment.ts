@@ -1,8 +1,7 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { IOToast } from "@io-app/design-system";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -33,40 +32,55 @@ export function* handleInitiativeInstrumentEnrollment(
       action
     )) as unknown as SagaCallReturnType<typeof enrollInstrument>;
 
+    const result = (
+      "isOk" in updateInstrumentStatusResult
+        ? updateInstrumentStatusResult
+        : "right" in updateInstrumentStatusResult
+          ? ok(updateInstrumentStatusResult.right)
+          : err(updateInstrumentStatusResult.left)
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof enrollInstrument>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
     yield* put(
-      pipe(
-        updateInstrumentStatusResult,
-        E.fold(
-          error => {
-            IOToast.error(
-              I18n.t("idpay.wallet.initiativePairing.errorToasts.enrollment")
-            );
-            return idpayInitiativesInstrumentEnroll.failure({
-              initiativeId: action.payload.initiativeId,
-              error: {
-                ...getGenericError(new Error(readablePrivacyReport(error)))
-              }
-            });
-          },
-          response => {
-            if (response.status === 200) {
-              // handled success
-              return idpayInitiativesInstrumentEnroll.success({
-                initiativeId: action.payload.initiativeId
-              });
-            }
-            // not handled error codes
-            IOToast.show(
-              I18n.t("idpay.wallet.initiativePairing.errorToasts.enrollment")
-            );
-            return idpayInitiativesInstrumentEnroll.failure({
-              initiativeId: action.payload.initiativeId,
-              error: {
-                ...getGenericError(new Error(`res status:${response.value}`))
-              }
+      result.match(
+        response => {
+          if (response.status === 200) {
+            return idpayInitiativesInstrumentEnroll.success({
+              initiativeId: action.payload.initiativeId
             });
           }
-        )
+          IOToast.show(
+            I18n.t("idpay.wallet.initiativePairing.errorToasts.enrollment")
+          );
+          return idpayInitiativesInstrumentEnroll.failure({
+            initiativeId: action.payload.initiativeId,
+            error: {
+              ...getGenericError(new Error(`res status:${response.value}`))
+            }
+          });
+        },
+        error => {
+          IOToast.error(
+            I18n.t("idpay.wallet.initiativePairing.errorToasts.enrollment")
+          );
+          return idpayInitiativesInstrumentEnroll.failure({
+            initiativeId: action.payload.initiativeId,
+            error: {
+              ...getGenericError(
+                new Error(
+                  readablePrivacyReport(
+                    error as Parameters<typeof readablePrivacyReport>[0]
+                  )
+                )
+              )
+            }
+          });
+        }
       )
     );
   } catch (e) {

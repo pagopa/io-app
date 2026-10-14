@@ -1,7 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { createActorContext } from "@xstate/react";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ReactNode } from "react";
 
@@ -50,11 +48,10 @@ export const IDPayConfigurationMachineProvider = ({ children }: Props) => {
   const bpdToken = useIOSelector(bpdTokenSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
 
-  const language = pipe(
-    useIOSelector(preferredLanguageSelector),
-    O.map(fromLocaleToPreferredLanguage),
-    O.getOrElse(() => PreferredLanguageEnum.it_IT)
-  );
+  const preferredLanguage = useIOSelector(preferredLanguageSelector);
+  const language = O.isSome(preferredLanguage)
+    ? fromLocaleToPreferredLanguage(preferredLanguage.value)
+    : PreferredLanguageEnum.it_IT;
 
   if (!bpdToken) {
     throw new Error("BDP token is undefined");
@@ -79,7 +76,7 @@ export const IDPayConfigurationMachineProvider = ({ children }: Props) => {
   const getPaymentManagerSession = async () => {
     try {
       const response = await paymentManagerClient.getSession(walletToken);
-      if (E.isRight(response) && response.right.status === 200) {
+      if ("right" in response && response.right.status === 200) {
         return O.some(response.right.value.data.sessionToken);
       }
       return O.none;

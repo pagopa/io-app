@@ -5,9 +5,7 @@ import { IbanPutDTO } from "@io-app/api-types/generated/definitions/idpay/IbanPu
 import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { InstrumentDTO } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import { TypeEnum } from "@io-app/api-types/generated/definitions/pagopa/Wallet";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
+import { err, ok } from "neverthrow";
 import { fromCallback, fromPromise } from "xstate";
 
 import { PaymentManagerClient } from "../../../../api/pagopa";
@@ -32,21 +30,20 @@ export const createActorsImplementation = (
       "Accept-Language": language
     });
 
-    const data: Promise<InitiativeDTO> = pipe(
-      response,
-      E.fold(
-        () => Promise.reject(InitiativeFailureType.INITIATIVE_ERROR),
-        ({ status, value }) => {
-          switch (status) {
-            case 200:
-              return Promise.resolve(value);
-            case 401:
-              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
-            default:
-              return Promise.reject(InitiativeFailureType.GENERIC);
-          }
+    const data: Promise<InitiativeDTO> = (
+      "right" in response ? ok(response.right) : err(response.left)
+    ).match(
+      ({ status, value }) => {
+        switch (status) {
+          case 200:
+            return Promise.resolve(value);
+          case 401:
+            return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+          default:
+            return Promise.reject(InitiativeFailureType.GENERIC);
         }
-      )
+      },
+      () => Promise.reject(InitiativeFailureType.INITIATIVE_ERROR)
     );
 
     return data;
@@ -58,30 +55,27 @@ export const createActorsImplementation = (
       "Accept-Language": language
     });
 
-    const data: Promise<IbanListDTO> = pipe(
-      response,
-      E.fold(
-        () => Promise.reject(InitiativeFailureType.IBAN_LIST_LOAD_FAILURE),
-        ({ status, value }) => {
-          switch (status) {
-            case 200:
-              // Every time we enroll an iban to an initiative, BE register it as a new iban
-              // so we need to filter the list to avoid duplicates
-              // This workaround will be removed when BE will fix the issue
-              const uniqueIbanList = value.ibanList.filter(
-                (iban, index, self) =>
-                  index === self.findIndex(t => t.iban === iban.iban)
-              );
-              return Promise.resolve({ ibanList: uniqueIbanList });
-            case 401:
-              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
-            default:
-              return Promise.reject(
-                InitiativeFailureType.IBAN_LIST_LOAD_FAILURE
-              );
-          }
+    const data: Promise<IbanListDTO> = (
+      "right" in response ? ok(response.right) : err(response.left)
+    ).match(
+      ({ status, value }) => {
+        switch (status) {
+          case 200:
+            // Every time we enroll an iban to an initiative, BE register it as a new iban
+            // so we need to filter the list to avoid duplicates
+            // This workaround will be removed when BE will fix the issue
+            const uniqueIbanList = value.ibanList.filter(
+              (iban, index, self) =>
+                index === self.findIndex(t => t.iban === iban.iban)
+            );
+            return Promise.resolve({ ibanList: uniqueIbanList });
+          case 401:
+            return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+          default:
+            return Promise.reject(InitiativeFailureType.IBAN_LIST_LOAD_FAILURE);
         }
-      )
+      },
+      () => Promise.reject(InitiativeFailureType.IBAN_LIST_LOAD_FAILURE)
     );
 
     return data;
@@ -101,23 +95,18 @@ export const createActorsImplementation = (
           description: input.iban.description
         }
       });
-      return pipe(
-        res,
-        E.fold(
-          () => Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE),
-          ({ status }) => {
-            switch (status) {
-              case 200:
-                return Promise.resolve(undefined);
-              case 401:
-                return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
-              default:
-                return Promise.reject(
-                  InitiativeFailureType.IBAN_ENROLL_FAILURE
-                );
-            }
+      return ("right" in res ? ok(res.right) : err(res.left)).match(
+        ({ status }) => {
+          switch (status) {
+            case 200:
+              return Promise.resolve(undefined);
+            case 401:
+              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+            default:
+              return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
           }
-        )
+        },
+        () => Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE)
       );
     } catch {
       return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
@@ -129,36 +118,28 @@ export const createActorsImplementation = (
       paymentManagerClient.getWalletsV2
     )();
 
-    const data: Promise<ReadonlyArray<Wallet>> = pipe(
-      response,
-      E.fold(
-        () =>
-          Promise.reject(InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE),
-        ({ status, value }) => {
-          switch (status) {
-            case 200:
-              const wallet = pipe(
-                value.data,
-                O.fromNullable,
-                O.map(_ =>
-                  _.map(convertWalletV2toWalletV1).filter(
-                    el => el.type === TypeEnum.CREDIT_CARD
-                  )
-                ),
-                O.getOrElse(() => [] as ReadonlyArray<Wallet>)
-              );
+    const data: Promise<ReadonlyArray<Wallet>> = (
+      "right" in response ? ok(response.right) : err(response.left)
+    ).match(
+      ({ status, value }) => {
+        switch (status) {
+          case 200:
+            const wallet =
+              value.data
+                ?.map(convertWalletV2toWalletV1)
+                .filter(el => el.type === TypeEnum.CREDIT_CARD) ?? [];
 
-              return Promise.resolve(wallet);
+            return Promise.resolve(wallet);
 
-            case 401:
-              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
-            default:
-              return Promise.reject(
-                InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
-              );
-          }
+          case 401:
+            return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+          default:
+            return Promise.reject(
+              InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
+            );
         }
-      )
+      },
+      () => Promise.reject(InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE)
     );
 
     return data;
@@ -174,24 +155,22 @@ export const createActorsImplementation = (
       "Accept-Language": language
     });
 
-    const data: Promise<ReadonlyArray<InstrumentDTO>> = pipe(
-      response,
-      E.fold(
-        () =>
-          Promise.reject(InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE),
-        ({ status, value }) => {
-          switch (status) {
-            case 200:
-              return Promise.resolve(value.instrumentList);
-            case 401:
-              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
-            default:
-              return Promise.reject(
-                InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
-              );
-          }
+    const data: Promise<ReadonlyArray<InstrumentDTO>> = (
+      "right" in response ? ok(response.right) : err(response.left)
+    ).match(
+      ({ status, value }) => {
+        switch (status) {
+          case 200:
+            return Promise.resolve(value.instrumentList);
+          case 401:
+            return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+          default:
+            return Promise.reject(
+              InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
+            );
         }
-      )
+      },
+      () => Promise.reject(InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE)
     );
 
     return data;
@@ -209,23 +188,22 @@ export const createActorsImplementation = (
       idWallet
     });
 
-    const data: Promise<undefined> = pipe(
-      response,
-      E.fold(
-        () => Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE),
-        ({ status }) => {
-          switch (status) {
-            case 200:
-              return Promise.resolve(undefined);
-            case 401:
-              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
-            default:
-              return Promise.reject(
-                InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE
-              );
-          }
+    const data: Promise<undefined> = (
+      "right" in response ? ok(response.right) : err(response.left)
+    ).match(
+      ({ status }) => {
+        switch (status) {
+          case 200:
+            return Promise.resolve(undefined);
+          case 401:
+            return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+          default:
+            return Promise.reject(
+              InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE
+            );
         }
-      )
+      },
+      () => Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE)
     );
 
     return data;
@@ -246,23 +224,22 @@ export const createActorsImplementation = (
       instrumentId
     });
 
-    const data: Promise<undefined> = pipe(
-      response,
-      E.fold(
-        () => Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE),
-        ({ status }) => {
-          switch (status) {
-            case 200:
-              return Promise.resolve(undefined);
-            case 401:
-              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
-            default:
-              return Promise.reject(
-                InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
-              );
-          }
+    const data: Promise<undefined> = (
+      "right" in response ? ok(response.right) : err(response.left)
+    ).match(
+      ({ status }) => {
+        switch (status) {
+          case 200:
+            return Promise.resolve(undefined);
+          case 401:
+            return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+          default:
+            return Promise.reject(
+              InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
+            );
         }
-      )
+      },
+      () => Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE)
     );
 
     return data;

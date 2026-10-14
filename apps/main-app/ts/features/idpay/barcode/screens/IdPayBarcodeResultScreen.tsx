@@ -11,8 +11,6 @@ import {
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -85,24 +83,18 @@ const IdPayBarcodeResultScreen = () => {
   if (pot.isLoading(barcodePot)) {
     return <LoadingScreen />;
   }
-  return pipe(
-    barcodePot,
-    pot.toOption,
-    O.fold(
-      () => (
-        <FailureContent
-          initiativeId={initiativeId}
-          initiativeName={initiativeName}
-        />
-      ),
-      barcode => (
-        <SuccessContent
-          barcode={barcode}
-          initiativeId={initiativeId}
-          initiativeName={initiativeName}
-        />
-      )
-    )
+  const barcode = pot.getOrElse(barcodePot, undefined);
+  return barcode ? (
+    <SuccessContent
+      barcode={barcode}
+      initiativeId={initiativeId}
+      initiativeName={initiativeName}
+    />
+  ) : (
+    <FailureContent
+      initiativeId={initiativeId}
+      initiativeName={initiativeName}
+    />
   );
 };
 

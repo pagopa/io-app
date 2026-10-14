@@ -1,6 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -38,26 +37,43 @@ export function* handleGetBeneficiaryDetails(
       action
     )) as unknown as SagaCallReturnType<typeof getInitiativeBeneficiaryDetail>;
 
-    yield pipe(
-      getInitiativeBeneficiaryResult,
-      E.fold(
-        error =>
-          put(
-            idPayBeneficiaryDetailsGet.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            })
-          ),
-        response =>
-          put(
-            response.status === 200
-              ? idPayBeneficiaryDetailsGet.success(response.value)
-              : idPayBeneficiaryDetailsGet.failure({
-                  ...getGenericError(
-                    new Error(`response status code ${response.status}`)
-                  )
-                })
-          )
-      )
+    const result = (
+      "isOk" in getInitiativeBeneficiaryResult
+        ? getInitiativeBeneficiaryResult
+        : "right" in getInitiativeBeneficiaryResult
+          ? ok(getInitiativeBeneficiaryResult.right)
+          : err(getInitiativeBeneficiaryResult.left)
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof getInitiativeBeneficiaryDetail>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
+    yield result.match(
+      response =>
+        put(
+          response.status === 200
+            ? idPayBeneficiaryDetailsGet.success(response.value)
+            : idPayBeneficiaryDetailsGet.failure({
+                ...getGenericError(
+                  new Error(`response status code ${response.status}`)
+                )
+              })
+        ),
+      error =>
+        put(
+          idPayBeneficiaryDetailsGet.failure({
+            ...getGenericError(
+              new Error(
+                readablePrivacyReport(
+                  error as Parameters<typeof readablePrivacyReport>[0]
+                )
+              )
+            )
+          })
+        )
     );
   } catch (e) {
     yield* put(idPayBeneficiaryDetailsGet.failure({ ...getNetworkError(e) }));

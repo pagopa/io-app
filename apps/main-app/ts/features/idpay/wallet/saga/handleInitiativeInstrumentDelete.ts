@@ -1,7 +1,6 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { err, ok, Result } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -32,36 +31,51 @@ export function* handleInitiativeInstrumentDelete(
       action
     )) as unknown as SagaCallReturnType<typeof deleteInstrument>;
 
+    const result = (
+      "isOk" in updateInstrumentStatusResult
+        ? updateInstrumentStatusResult
+        : "right" in updateInstrumentStatusResult
+          ? ok(updateInstrumentStatusResult.right)
+          : err(updateInstrumentStatusResult.left)
+    ) as Result<
+      Extract<
+        SagaCallReturnType<typeof deleteInstrument>,
+        { right: unknown }
+      >["right"],
+      unknown
+    >;
+
     yield* put(
-      pipe(
-        updateInstrumentStatusResult,
-        E.fold(
-          error => {
-            I18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
-            return idpayInitiativesInstrumentDelete.failure({
-              initiativeId: action.payload.initiativeId,
-              error: {
-                ...getGenericError(new Error(readablePrivacyReport(error)))
-              }
-            });
-          },
-          response => {
-            if (response.status === 200) {
-              // handled success
-              return idpayInitiativesInstrumentDelete.success({
-                initiativeId: action.payload.initiativeId
-              });
-            }
-            // not handled error codes
-            I18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
-            return idpayInitiativesInstrumentDelete.failure({
-              initiativeId: action.payload.initiativeId,
-              error: {
-                ...getGenericError(new Error(`res status:${response.value}`))
-              }
+      result.match(
+        response => {
+          if (response.status === 200) {
+            return idpayInitiativesInstrumentDelete.success({
+              initiativeId: action.payload.initiativeId
             });
           }
-        )
+          I18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
+          return idpayInitiativesInstrumentDelete.failure({
+            initiativeId: action.payload.initiativeId,
+            error: {
+              ...getGenericError(new Error(`res status:${response.value}`))
+            }
+          });
+        },
+        error => {
+          I18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
+          return idpayInitiativesInstrumentDelete.failure({
+            initiativeId: action.payload.initiativeId,
+            error: {
+              ...getGenericError(
+                new Error(
+                  readablePrivacyReport(
+                    error as Parameters<typeof readablePrivacyReport>[0]
+                  )
+                )
+              )
+            }
+          });
+        }
       )
     );
   } catch (e) {
