@@ -143,31 +143,43 @@ describe("WalletCardsCategoryRetryErrorBanner", () => {
   );
 
   it.each([
-    ["CGN", { isPaymentMethodsError: true, isCgnError: true }],
-    ["IDPay", { isPaymentMethodsError: true, isIdPayError: true }]
-  ])("should retry payment methods and %s when both fail", (_, errors) => {
-    mockErrorSelectors(errors);
-    const navigate = jest.fn();
-    jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
-      navigate
-    } as unknown as ReturnType<typeof appParamsList.useIONavigation>);
-
-    const { getByTestId, store } = renderComponent();
-
-    fireEvent.press(
-      getByTestId("walletCardsCategoryRetryErrorBannerActionTestID")
-    );
-
-    const dispatchedActionTypes = store.getActions().map(action => action.type);
-    expect(navigate).not.toHaveBeenCalled();
-    expect(dispatchedActionTypes).toEqual(
-      expect.arrayContaining([
+    [
+      "CGN",
+      { isPaymentMethodsError: true, isCgnError: true },
+      [getPaymentsWalletUserMethods.request().type, cgnDetails.request().type]
+    ],
+    [
+      "IDPay",
+      { isPaymentMethodsError: true, isIdPayError: true },
+      [
         getPaymentsWalletUserMethods.request().type,
-        ...(errors.isCgnError ? [cgnDetails.request().type] : []),
-        ...(errors.isIdPayError ? [idPayWalletGet.request().type] : [])
-      ])
-    );
-  });
+        idPayWalletGet.request().type
+      ]
+    ]
+  ])(
+    "should retry payment methods and %s when both fail",
+    (_, errors, expectedActionTypes: ReadonlyArray<string>) => {
+      mockErrorSelectors(errors);
+      const navigate = jest.fn();
+      jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
+        navigate
+      } as unknown as ReturnType<typeof appParamsList.useIONavigation>);
+
+      const { getByTestId, store } = renderComponent();
+
+      fireEvent.press(
+        getByTestId("walletCardsCategoryRetryErrorBannerActionTestID")
+      );
+
+      const dispatchedActionTypes = store
+        .getActions()
+        .map(action => action.type);
+      expect(navigate).not.toHaveBeenCalled();
+      expect(dispatchedActionTypes).toEqual(
+        expect.arrayContaining(expectedActionTypes)
+      );
+    }
+  );
 });
 
 const mockErrorSelectors = ({
