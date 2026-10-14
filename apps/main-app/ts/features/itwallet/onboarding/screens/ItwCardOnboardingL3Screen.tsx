@@ -6,7 +6,7 @@ import {
   Divider,
   H6,
   IOButton,
-  IOListItemVisualParams,
+  IODimensions,
   ListItemHeader,
   ModuleCredential,
   TabItem,
@@ -337,9 +337,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: IOListItemVisualParams.paddingVertical,
-    paddingHorizontal: IOListItemVisualParams.paddingHorizontal,
-    marginHorizontal: -IOListItemVisualParams.paddingHorizontal
+    paddingVertical: IODimensions.padding.listItem.default.vertical,
+    paddingHorizontal: IODimensions.padding.listItem.default.horizontal,
+    marginHorizontal: -IODimensions.padding.listItem.default.horizontal
   }
 });
 
