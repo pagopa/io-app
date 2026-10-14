@@ -12,6 +12,7 @@ import ReactNativeBlobUtil from "react-native-blob-util";
 
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
+import { isTestEnv } from "../../../../utils/environment";
 import { isIos } from "../../../../utils/platform";
 import { share } from "../../../../utils/share";
 import {
@@ -53,6 +54,7 @@ const MessageAttachmentFooter = ({
       actions={{
         type: "SingleButton",
         primary: {
+          testID: "message-attachment-save-or-share-button",
           label: I18n.t("messagePDFPreview.singleBtn"),
           accessibilityLabel: I18n.t(
             "messagePDFPreview.singleBtnAccessibility"
@@ -67,6 +69,7 @@ const MessageAttachmentFooter = ({
   ) : (
     <FooterActionsInline
       endAction={{
+        testID: "message-attachment-save-button",
         color: "primary",
         label: I18n.t("messagePDFPreview.save"),
         accessibilityLabel: I18n.t("messagePDFPreview.saveAccessibility"),
@@ -94,6 +97,7 @@ const MessageAttachmentFooter = ({
         }
       }}
       startAction={{
+        testID: "message-attachment-share-button",
         color: "primary",
         label: I18n.t("messagePDFPreview.share"),
         accessibilityLabel: I18n.t("messagePDFPreview.shareAccessibility"),
@@ -190,6 +194,7 @@ export const MessageAttachment = ({
       <OperationResultScreenContent
         pictogram={"umbrella"}
         subtitle={I18n.t("messageDetails.submitBugText")}
+        testID="message-attachment-generic-error"
         title={I18n.t("global.genericError")}
       />
     );
@@ -204,6 +209,7 @@ export const MessageAttachment = ({
         <OperationResultScreenContent
           pictogram={"umbrella"}
           subtitle={I18n.t("messagePDFPreview.errors.previewing.body")}
+          testID="message-attachment-preview-error"
           title={I18n.t("messagePDFPreview.errors.previewing.title")}
         />
       ) : (
@@ -223,3 +229,5 @@ export const MessageAttachment = ({
     </>
   );
 };
+
+export const testable = isTestEnv ? { MessageAttachmentFooter } : undefined;
