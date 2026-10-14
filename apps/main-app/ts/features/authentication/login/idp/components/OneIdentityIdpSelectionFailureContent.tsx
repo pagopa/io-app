@@ -37,10 +37,10 @@ export const OneIdentityIdpSelectionFailureContent = ({
   );
 
   const navigateToCiePinScreen = useCallback(() => {
-    if (flow === LOGIN_TYPES.REAUTH) {
-      void trackLoginReauthEngagementCieSelected();
-    } else {
+    if (flow === LOGIN_TYPES.AUTH) {
       void trackCieLoginSelected();
+    } else {
+      void trackLoginReauthEngagementCieSelected();
     }
     handleCieLoginRequested();
   }, [flow, handleCieLoginRequested]);
