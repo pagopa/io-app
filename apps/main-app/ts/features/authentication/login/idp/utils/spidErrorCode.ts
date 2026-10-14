@@ -1,7 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
-const spidErrorCodeTable = new Map<string, string>([
+const spidErrorCodeMap = new Map<string, string>([
   ["1", "Autenticazione corretta"],
   ["2", "Indisponibilità sistema"],
   ["3", "Errore di sistema"],
@@ -65,8 +62,4 @@ const spidErrorCodeTable = new Map<string, string>([
 ]);
 
 export const getSpidErrorCodeDescription = (errorCode: string) =>
-  pipe(
-    spidErrorCodeTable.get(errorCode),
-    O.fromNullable,
-    O.getOrElse(() => "N/A")
-  );
+  spidErrorCodeMap.get(errorCode) ?? "N/A";

@@ -1,8 +1,7 @@
-import { IOButton, VStack } from "@io-app/design-system";
+import { IOButton, IOMarkdown, VStack } from "@io-app/design-system";
 import I18n from "i18next";
 import { View } from "react-native";
 
-import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
@@ -154,7 +153,7 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
             <IOButton
               fullWidth
               label={I18n.t(
-                "features.itWallet.presentation.alerts.mdl.invalid.cta"
+                "features.itWallet.presentation.bottomSheets.mDL.invalid.cta"
               )}
               onPress={confirmAndRemoveCredential}
               variant="solid"
