@@ -3,9 +3,9 @@ import {
   Badge,
   BodySmall,
   H4,
+  IODimensions,
+  IODimensionScale,
   IOSkeleton,
-  IOSpacingScale,
-  IOVisualCostants,
   TestID,
   VSpacer
 } from "@io-app/design-system";
@@ -28,19 +28,15 @@ export type FeaturedServiceCardProps = WithTestID<{
 
 export const CARD_WIDTH = 210;
 
-const cardPadding: IOSpacingScale = 16;
-const cardBorderRadius = 8;
+const cardPadding: IODimensionScale = 16;
 /* Space between the `Avatar` and the content below */
-const cardSafeInnerSpace: IOSpacingScale = 16;
+const cardSafeInnerSpace: IODimensionScale = 16;
 
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     width: CARD_WIDTH,
     padding: cardPadding,
-    borderRadius: cardBorderRadius,
-    borderCurve: "continuous",
-    borderWidth: 1,
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "space-between"
@@ -132,9 +128,9 @@ const FeaturedServiceCardSkeleton = ({ testID }: TestID) => {
       <View style={styles.cardHeader}>
         <IOSkeleton
           color={skeletonColor}
-          radius={IOVisualCostants.avatarRadiusSizeMedium}
+          radius={IODimensions.radius.avatar.medium}
           shape="square"
-          size={IOVisualCostants.avatarSizeMedium}
+          size={IODimensions.size.avatar.medium}
         />
       </View>
       <View style={styles.cardTitle}>
