@@ -90,7 +90,7 @@ const attachment = {
 describe("MessageAttachment", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(IOToast, "show").mockImplementation(jest.fn());
+    jest.spyOn(IOToast, "info").mockImplementation(jest.fn());
     jest.spyOn(IOToast, "error").mockImplementation(jest.fn());
     jest.replaceProperty(platform, "isIos", false);
   });
@@ -245,7 +245,7 @@ describe("MessageAttachment", () => {
 describe("MessageAttachmentFooter", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(IOToast, "show").mockImplementation(jest.fn());
+    jest.spyOn(IOToast, "info").mockImplementation(jest.fn());
     jest.spyOn(IOToast, "error").mockImplementation(jest.fn());
   });
 
@@ -348,7 +348,7 @@ describe("MessageAttachmentFooter", () => {
         fireEvent.press(getByTestId(testIDs.saveButton));
 
         expectTracking();
-        await waitFor(() => expect(IOToast.show).toHaveBeenCalled());
+        await waitFor(() => expect(IOToast.info).toHaveBeenCalled());
       }
     );
 
@@ -371,7 +371,7 @@ describe("MessageAttachmentFooter", () => {
         downloadPath
       );
       await waitFor(() =>
-        expect(IOToast.show).toHaveBeenCalledWith(
+        expect(IOToast.info).toHaveBeenCalledWith(
           I18n.t("messagePDFPreview.savedAtLocation", { name: "receipt" })
         )
       );
@@ -389,7 +389,7 @@ describe("MessageAttachmentFooter", () => {
           I18n.t("messagePDFPreview.errors.saving")
         )
       );
-      expect(IOToast.show).not.toHaveBeenCalled();
+      expect(IOToast.info).not.toHaveBeenCalled();
     });
 
     test.each([
