@@ -116,7 +116,6 @@ Essential core visual attributes of the design language. It includes:
 
 - **`IOColors`**: Defines the main color palette, themes (light/dark) and other color-related utilities
 - **`IODimensions`**: Defines every dimension token (spacing, padding, radius, stroke, sizes): scales, system and component values
-  - Component tokens are keyed by component name: when you remove a component, remove its keys too, since nothing flags unused tokens
 - **`IOStyles`**: Defines common styles shared across components
 - **`IOTypography`**: Defines the visual attributes of each typographic style
 - **`IOAnimations`**: Defines common animation attributes used for interactive elements (used by the [`reanimated`](https://docs.swmansion.com/react-native-reanimated/) library)
