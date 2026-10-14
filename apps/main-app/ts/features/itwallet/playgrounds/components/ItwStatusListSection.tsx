@@ -179,7 +179,7 @@ const BackgroundTaskSection = () => {
   const triggerTaskWorker = useCallback(async () => {
     try {
       await BackgroundTask.triggerTaskWorkerForTestingAsync();
-      toast.show("Background task worker triggered");
+      toast.info("Background task worker triggered");
     } catch (error) {
       toast.error(`Background task test failed: ${getAlertMessage(error)}`);
     }
