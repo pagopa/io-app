@@ -195,7 +195,8 @@ const componentPadding = {
   tag: { horizontal: 8, vertical: 6 },
   /* `floatingLabel`: above the typed text, room for the raised label (see `offset.textInput`) */
   textInput: { horizontal: 12, vertical: 8, floatingLabel: 16 },
-  toast: 16
+  toast: 16,
+  tooltip: 16
 } as const satisfies Named<IODimensionScale>;
 
 /* Figma: `Dimensions/Radius/*` */
@@ -213,7 +214,8 @@ const componentRadius = {
   tab: 24,
   tag: 6,
   textInput: system.radius.default,
-  toast: system.radius.default
+  toast: system.radius.default,
+  tooltip: system.radius.default
 } as const satisfies Named<IORadius>;
 
 /* Figma: `Dimensions/Stroke/*` */
@@ -267,7 +269,8 @@ const offset = {
     bottom: system.padding.screen.default
   },
   /* `floatingLabel`: how far the label rises; tune with `padding.textInput.floatingLabel` */
-  textInput: { floatingLabel: 12 }
+  textInput: { floatingLabel: 12 },
+  tooltip: { close: 8 }
 } as const satisfies Named<IODimensionScale>;
 
 /**
