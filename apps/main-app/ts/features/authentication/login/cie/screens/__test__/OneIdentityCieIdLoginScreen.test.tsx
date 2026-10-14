@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
@@ -27,12 +28,14 @@ jest.mock("react-native-webview", () => {
 });
 
 const mockReplace = jest.fn();
+const mockNavigationDispatch = jest.fn();
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
     useNavigation: () => ({
       replace: mockReplace,
+      dispatch: mockNavigationDispatch,
       navigate: jest.fn()
     })
   };
@@ -122,14 +125,10 @@ describe("OneIdentityCieIdLoginScreen", () => {
       })
     );
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage: "err-code",
-        authMethod: "CIE_ID",
-        authLevel: AUTH_LEVELS.L2
-      }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction("err-code")
+    );
+    expect(mockReplace).not.toHaveBeenCalled();
   });
 
   it("should navigate to CIE_ID_INCORRECT_URL when the CieID app returns an untrusted URL", () => {
@@ -158,6 +157,13 @@ describe("OneIdentityCieIdLoginScreen", () => {
     });
   });
 });
+
+const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
+  StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+    errorCodeOrMessage,
+    authMethod: "CIE_ID",
+    authLevel: AUTH_LEVELS.L2
+  });
 
 const renderComponent = () => {
   const initialState = appReducer(undefined, applicationChangeState("active"));

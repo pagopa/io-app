@@ -21,10 +21,12 @@ type Dismissable = WithTestID<{
 }>;
 
 /**
- * Component that allows for a dismissable gesture, both left and right.
- * When the threshold is reached, the `onDismiss` callback is called.
+ * Component that allows for a dismissable gesture, both left and right. When
+ * the threshold is reached, the `onDismiss` callback is called.
+ *
  * @param onDismiss Callback to be called when the threshold is reached.
- * @param dismissThreshold Threshold to be reached to call the `onDismiss` callback.
+ * @param dismissThreshold Threshold to be reached to call the `onDismiss`
+ *   callback.
  * @param children Children to be rendered inside the component.
  * @returns A dismissable component.
  */

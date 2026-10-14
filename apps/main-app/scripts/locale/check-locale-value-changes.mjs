@@ -4,14 +4,16 @@
 /**
  * Guards locale files against manual value changes.
  *
- * Business rule
- * -------------
- * Locale files under `apps/main-app/locales/**` are the source of truth that gets
- * synced with Lokalise. Contributors are allowed to:
- *   - add a brand new key
- *   - delete an unused key
- * but they are NOT allowed to change the *value* of an already existing key by hand.
- * Translations (i.e. value changes) may only land through the automated
+ * ## Business rule
+ *
+ * Locale files under `apps/main-app/locales/**` are the source of truth that
+ * gets synced with Lokalise. Contributors are allowed to:
+ *
+ * - Add a brand new key
+ * - Delete an unused key
+ *
+ * They are NOT allowed to change the _value_ of an already existing key by
+ * hand. Translations (i.e. value changes) may only land through the automated
  * `lokalise/lokalise-pull-action`, which opens PRs from a `lok_*` branch.
  *
  * This script compares the base revision of each tracked locale file with the
@@ -19,17 +21,18 @@
  * revisions has changed. Values are compared as raw JSON source text, so a
  * rewrite that only re-escapes a value (e.g. `\/` → `/`) is reported too.
  *
- * Comparing against the *tip* of the base branch (not the merge base) is
+ * Comparing against the _tip_ of the base branch (not the merge base) is
  * intentional: it also forces branches to stay aligned with translations that
  * landed on the base branch through Lokalise after the branch forked.
  *
- * Usage
- * -----
- *   node apps/main-app/scripts/locale/check-locale-value-changes.mjs [--base <git-ref>]
+ * ## Usage
  *
- * The base ref defaults to the `BASE_REF` env variable, then to `origin/master`.
- * Exit codes: 0 on success, 1 when at least one forbidden value change is
- * detected, 2 when the base ref cannot be resolved.
+ * Run this file with `node` from the repository root, optionally passing
+ * `--base <git-ref>`.
+ *
+ * The base ref defaults to the `BASE_REF` env variable, then to
+ * `origin/master`. Exit codes: 0 on success, 1 when at least one forbidden
+ * value change is detected, 2 when the base ref cannot be resolved.
  */
 
 import { execFileSync } from "node:child_process";
@@ -42,6 +45,7 @@ const RAW_SOURCE = Symbol("rawSource");
 
 /**
  * Reads a CLI flag value (e.g. `--base origin/master`).
+ *
  * @param {string} flag
  * @returns {string | undefined}
  */
@@ -54,6 +58,7 @@ const baseRef = readFlag("--base") ?? process.env.BASE_REF ?? "origin/master";
 
 /**
  * Runs a git command and returns its trimmed stdout.
+ *
  * @param {ReadonlyArray<string>} args
  * @returns {string}
  */
@@ -66,6 +71,7 @@ function git(args) {
 
 /**
  * `JSON.parse` reviver that wraps every primitive with its raw source text.
+ *
  * @param {string} _key
  * @param {unknown} value
  * @param {{ source?: string }} [context] Only passed by Node.js >= 21.
@@ -80,6 +86,7 @@ function keepSource(_key, value, context) {
 /**
  * Parses JSON keeping the raw source text of each leaf (e.g. `"a\/b"` rather
  * than `"a/b"`), so formatting-only rewrites of a value stay visible.
+ *
  * @param {string} content
  * @returns {unknown}
  */
@@ -90,6 +97,7 @@ function parseWithSource(content) {
 /**
  * Flattens the output of `parseWithSource` into a map of `dot.path` -> raw
  * source text of the leaf. Arrays are indexed (`key.0`, `key.1`).
+ *
  * @param {unknown} value
  * @param {string} prefix
  * @param {Map<string, string | undefined>} out
@@ -119,15 +127,26 @@ function flatten(value, prefix = "", out = new Map()) {
 /**
  * Detects keys whose raw value text changed between two revisions of the same
  * file. Added and removed keys are intentionally ignored.
+ *
  * @param {string} baseContent
  * @param {string} headContent
- * @returns {Array<{ key: string; from: string | undefined; to: string | undefined }>}
+ * @returns {{
+ *   key: string;
+ *   from: string | undefined;
+ *   to: string | undefined;
+ * }[]}
  */
 function findChangedValues(baseContent, headContent) {
   const base = flatten(parseWithSource(baseContent));
   const head = flatten(parseWithSource(headContent));
 
-  /** @type {Array<{ key: string; from: string | undefined; to: string | undefined }>} */
+  /**
+   * @type {{
+   *   key: string;
+   *   from: string | undefined;
+   *   to: string | undefined;
+   * }[]}
+   */
   const changes = [];
   for (const [key, baseValue] of base) {
     const headValue = head.get(key);
@@ -170,7 +189,12 @@ function main() {
     return;
   }
 
-  /** @type {Array<{ file: string; changes: Array<{ key: string; from: string; to: string }> }>} */
+  /**
+   * @type {{
+   *   file: string;
+   *   changes: { key: string; from: string; to: string }[];
+   * }[]}
+   */
   const violations = [];
 
   for (const file of changedFiles) {

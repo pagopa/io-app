@@ -7,7 +7,15 @@ pre-commit:
       glob: "*.{ts,tsx,js,mjs,cjs,json,jsonc,yml,yaml,md,html}"
       stage_fixed: true
 
-    - name: lint staged files
+    # Runs from the repo root: oxlint picks each file's nearest .oxlintrc.jsonc,
+    # with the root-only options (typeAware, ...) from the root config
+    - name: oxlint staged files
+      run: pnpm oxlint --fix {staged_files}
+      glob: "*.{ts,tsx}"
+      stage_fixed: true
+
+    # Runs after oxlint: covers the rules oxlint does not run yet
+    - name: eslint staged files
       run: pnpm eslint --fix {staged_files}
       glob: "*.{ts,tsx}"
       stage_fixed: true
@@ -16,7 +24,7 @@ pre-push:
   parallel: true
   jobs:
     - name: validate affected projects
-      run: pnpm nx affected --targets=lint,tsc-noemit --base=origin/master --head=HEAD --nx-bail
+      run: pnpm nx affected --targets=lint,oxlint,tsc-noemit --base=origin/master --head=HEAD --nx-bail
 
     - name: check pushed files formatting
       run: pnpm oxfmt --check --no-error-on-unmatched-pattern {push_files}

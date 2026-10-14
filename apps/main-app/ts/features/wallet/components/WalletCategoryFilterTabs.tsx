@@ -18,9 +18,10 @@ import {
 import { walletCardCategoryFilters } from "../types";
 
 /**
- * Renders filter tabs to categorize cards on the wallet home screen.
- * The tabs allow users to filter between different wallet categories like ITW, payments and bonus cards.
- * Automatically hides when only one category is available to avoid unnecessary UI clutter.
+ * Renders filter tabs to categorize cards on the wallet home screen. The tabs
+ * allow users to filter between different wallet categories like ITW, payments
+ * and bonus cards. Automatically hides when only one category is available to
+ * avoid unnecessary UI clutter.
  */
 const WalletCategoryFilterTabs = () => {
   const dispatch = useIODispatch();

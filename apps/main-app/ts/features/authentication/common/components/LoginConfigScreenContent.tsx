@@ -13,7 +13,6 @@ import { useCallback, useMemo } from "react";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
-import { CieEntityIds } from "../../login/cie/components/CieRequestAuthenticationOverlay";
 import {
   cieLoginDisableUat,
   cieLoginEnableUat
@@ -144,11 +143,11 @@ export const LoginConfigScreenContent = ({
       <VSpacer size={24} />
       <ListItemHeader label="Environment CIE" />
       <ListItemCheckbox
-        description="Questa opzione serve agli sviluppatori per testare la login con CIE."
+        description="Questa opzione serve agli sviluppatori per testare la login con OneIdentity in ambiente di UAT e la CIE in ambiente di preproduzione (L3)."
         disabled={disabled}
         onValueChange={handleCieEnv}
         selected={useCieUat}
-        value={`Abilita endpoint di collaudo (${CieEntityIds.DEV})`}
+        value="Abilita endpoint di preproduzione"
       />
       <VSpacer size={24} />
     </>

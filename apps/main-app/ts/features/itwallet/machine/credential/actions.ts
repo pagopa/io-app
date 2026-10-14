@@ -19,6 +19,7 @@ import { itwSetCredentialExitSurvey } from "../../common/store/actions/ui";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
+import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
@@ -39,9 +40,7 @@ type CredentialIssuanceActionArgs = ActionArgs<
   CredentialIssuanceEvents
 >;
 
-/**
- * Initializes the credential issuance machine from the Redux store.
- */
+/** Initializes the credential issuance machine from the Redux store. */
 export const onInitAction = assign<
   Context,
   CredentialIssuanceEvents,
@@ -183,12 +182,7 @@ export const storeCredentialAction = ({
   assert(context.credentialType, "credentialType is undefined");
   assert(context.credentials, "credentials is undefined");
   const { store } = context.deps;
-  // A credential offer (deeplink/QR code) is the only alternative entry point to the
-  // catalogue/list for issuing a credential, so its presence in the context is what
-  // distinguishes the two flows for analytics purposes.
-  const origin: CredentialMetadata["origin"] = context.resolvedCredentialOffer
-    ? "credentialOffer"
-    : "catalogue";
+  const origin = resolveCredentialOrigin(context);
   const credentials = context.credentials.map(bundle => ({
     ...bundle,
     metadata: { ...bundle.metadata, origin }
@@ -201,6 +195,31 @@ export const storeCredentialAction = ({
   if (context.keyAttestations) {
     store.dispatch(itwKeyAttestationsStore(context.keyAttestations));
   }
+};
+
+/**
+ * Resolves how the credential was obtained, for analytics attribution.
+ *
+ * A credential offer (deeplink/QR code) is the only alternative entry point to
+ * the catalogue/list, so its presence in the context marks the third-party
+ * channel. Upgrade and reissuance only renew a credential the user already
+ * owns, so they keep the channel it was originally obtained from.
+ */
+const resolveCredentialOrigin = (
+  context: Context
+): CredentialMetadata["origin"] => {
+  if (context.resolvedCredentialOffer) {
+    return "credentialOffer";
+  }
+
+  if (context.mode !== "issuance" && context.credentialType) {
+    const storedCredential = itwCredentialSelector(context.credentialType)(
+      context.deps.store.getState()
+    );
+    return storedCredential?.origin ?? "catalogue";
+  }
+
+  return "catalogue";
 };
 
 export const trackStartAddCredentialAction = ({

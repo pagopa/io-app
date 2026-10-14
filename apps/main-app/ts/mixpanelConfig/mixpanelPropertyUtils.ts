@@ -117,15 +117,13 @@ export const cdcStatusHandler = (state: GlobalState): number => {
 };
 
 /**
- * Returns the authentication security level of the current session,
- * regardless of the identity provider used
+ * Returns the authentication security level of the current session, regardless
+ * of the identity provider used
  */
 export const authSecurityLevelHandler = (state: GlobalState): string =>
   spidLevelFromSessionInfoSelector(state) ?? "not set";
 
-/**
- * Returns the identifier of the identity provider (IdP) used to login
- */
+/** Returns the identifier of the identity provider (IdP) used to login */
 export const loginMethodHandler = (state: GlobalState): string => {
   const idpSelected = idpSelector(state);
   return O.isSome(idpSelected) ? idpSelected.value.id : "not set";

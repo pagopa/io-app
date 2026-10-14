@@ -1,9 +1,9 @@
 /**
  * Custom ESLint rule: delegate-effects
  *
- * Enforces `yield*` (delegation) over `yield` when calling effects
- * imported from "typed-redux-saga/macro". Using plain `yield` returns `any`,
- * losing type safety, while `yield*` preserves the return type.
+ * Enforces `yield*` (delegation) over `yield` when calling effects imported
+ * from "typed-redux-saga/macro". Using plain `yield` returns `any`, losing type
+ * safety, while `yield*` preserves the return type.
  *
  * Replaces @jambit/eslint-plugin-typed-redux-saga/delegate-effects.
  */

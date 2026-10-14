@@ -56,10 +56,11 @@ export const setLoggedOutUserWithDifferentCF = createStandardAction(
  * Action to trigger logout before session corruption.
  *
  * This action is dispatched when the session needs to be corrupted but we still
- * have a valid token to perform the logout API call. It initiates a logout request
- * to the backend and then proceeds to corrupt the session.
+ * have a valid token to perform the logout API call. It initiates a logout
+ * request to the backend and then proceeds to corrupt the session.
  *
  * Flow:
+ *
  * 1. Dispatch this action with valid token
  * 2. Perform logout API call to backend
  * 3. Clean up crypto keys and reset mixpanel

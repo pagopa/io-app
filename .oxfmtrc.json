@@ -3,6 +3,7 @@
   "trailingComma": "none",
   "arrowParens": "avoid",
   "printWidth": 80,
+  "jsdoc": true,
   "sortPackageJson": false,
   "ignorePatterns": [
     "apps/dev-api-server/assets/**",

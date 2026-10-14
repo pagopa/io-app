@@ -94,9 +94,7 @@ const reducer = (
   }
 };
 
-/**
- * Filters out all consents that involve any of the specified credential types.
- */
+/** Filters out all consents that involve any of the specified credential types. */
 const filterConsentsByCredentialTypes = (
   consents: Record<string, StoredConsentData>,
   credentialTypes: ReadonlySet<string>
@@ -110,9 +108,7 @@ const filterConsentsByCredentialTypes = (
     )
   );
 
-/**
- * Filters out all consents given to the specified RP ID.
- */
+/** Filters out all consents given to the specified RP ID. */
 const filterConsentsByRpId = (
   consents: Record<string, StoredConsentData>,
   rpId: string

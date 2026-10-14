@@ -79,7 +79,7 @@ describe("index", () => {
       expect(outputState.notifications).toEqual(notificationsState);
     });
 
-    /** === === === === === === === === ===
+    /* === === === === === === === === ===
      *  LOGIN CONFIG RESET
      *  === === === === === === === === === * */
     const loginConfigState: LoginConfigState = {

@@ -29,12 +29,12 @@ jest.mock("../../../../../utils/supportAssistance", () => ({
 }));
 
 jest.mock("../../../../lollipop/saga", () => ({
-  // eslint-disable-next-line object-shorthand, require-yield
-  deleteCurrentLollipopKeyAndGenerateNewKeyTag: function* () {
+  // oxlint-disable-next-line require-yield
+  *deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
     return;
   },
-  // eslint-disable-next-line object-shorthand, require-yield
-  getKeyInfo: function* () {
+  // oxlint-disable-next-line require-yield
+  *getKeyInfo() {
     return;
   }
 }));

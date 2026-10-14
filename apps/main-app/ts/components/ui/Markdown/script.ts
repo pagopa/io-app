@@ -1,6 +1,4 @@
-/**
- * This file contains all the JS scripts used by the Markdown component.
- */
+/** This file contains all the JS scripts used by the Markdown component. */
 
 // Javascript to detect link click and generate window LINK_MESSAGE
 export const NOTIFY_LINK_CLICK_SCRIPT = `

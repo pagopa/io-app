@@ -28,8 +28,8 @@ import { selectIsLoading } from "../../machine/eid/selectors.ts";
 import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
 
 /**
- * This is the component that shows the information about about the activation of
- * Documenti su IO after an user chooses to not use IT-WAllet
+ * This is the component that shows the information about about the activation
+ * of Documenti su IO after an user chooses to not use IT-WAllet
  */
 export const ItwDiscoveryInfoFallbackComponent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();

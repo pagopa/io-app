@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import i18n from "i18next";
+import I18n from "i18next";
 
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as analytics from "../../analytics";
@@ -48,17 +48,17 @@ describe("CieIdAuthUrlError", () => {
     const { getByText } = render(<CieIdAuthUrlError />);
 
     expect(
-      getByText(i18n.t("authentication.cieidUrlErrorScreen.title"))
+      getByText(I18n.t("authentication.cieidUrlErrorScreen.title"))
     ).toBeTruthy();
     expect(
-      getByText(i18n.t("authentication.cieidUrlErrorScreen.description"))
+      getByText(I18n.t("authentication.cieidUrlErrorScreen.description"))
     ).toBeTruthy();
   });
 
   it("Should call navigate to AUTHENTICATION_LANDING when close button is pressed", () => {
     const { getByText } = render(<CieIdAuthUrlError />);
 
-    const closeButton = getByText(i18n.t("global.buttons.close"));
+    const closeButton = getByText(I18n.t("global.buttons.close"));
     fireEvent.press(closeButton);
 
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {

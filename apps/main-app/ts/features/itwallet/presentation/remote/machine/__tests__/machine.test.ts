@@ -233,9 +233,7 @@ describe("itwRemoteMachine", () => {
   });
 
   it("should complete the presentation without errors", async () => {
-    /**
-     * Mocks
-     */
+    /** Mocks */
     const rpConf = {
       subject: T_CLIENT_ID
     } as RelyingPartyConfiguration;
@@ -270,9 +268,7 @@ describe("itwRemoteMachine", () => {
       presentedKeyTags: T_PRESENTED_KEY_TAGS
     });
 
-    /**
-     * Start the presentation
-     */
+    /** Start the presentation */
     const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
 
@@ -290,15 +286,11 @@ describe("itwRemoteMachine", () => {
       flowType: T_FLOW_TYPE
     });
 
-    /**
-     * Ensure the Wallet Attestation is not requested again if valid
-     */
+    /** Ensure the Wallet Attestation is not requested again if valid */
     expect(hasValidWalletInstanceAttestation).toHaveBeenCalledTimes(1);
     expect(getWalletAttestation).not.toHaveBeenCalled();
 
-    /**
-     * Evaluate the Relying Party Trust
-     */
+    /** Evaluate the Relying Party Trust */
     await waitFor(actor, snapshot =>
       snapshot.matches("EvaluatingRelyingPartyTrust")
     );
@@ -313,9 +305,7 @@ describe("itwRemoteMachine", () => {
       rpConf
     });
 
-    /**
-     * Get the RequestObject from the RP
-     */
+    /** Get the RequestObject from the RP */
     await waitFor(actor, snapshot => snapshot.matches("GettingRequestObject"));
     expect(getRequestObject).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
@@ -329,9 +319,7 @@ describe("itwRemoteMachine", () => {
       rpConf
     });
 
-    /**
-     * Get the presentation details from the RP
-     */
+    /** Get the presentation details from the RP */
     await waitFor(actor, snapshot =>
       snapshot.matches("GettingPresentationDetails")
     );
@@ -350,7 +338,8 @@ describe("itwRemoteMachine", () => {
     });
 
     /**
-     * The user selects optional credentials and gives consent to share the credentials with the RP
+     * The user selects optional credentials and gives consent to share the
+     * credentials with the RP
      */
     await waitFor(actor, snapshot => snapshot.matches("ClaimsDisclosure"));
     expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
@@ -375,9 +364,7 @@ describe("itwRemoteMachine", () => {
     });
     actor.send({ type: "holder-consent" });
 
-    /**
-     * The Wallet sends the Authorization Response to the RP
-     */
+    /** The Wallet sends the Authorization Response to the RP */
     await waitFor(actor, snapshot =>
       snapshot.matches("SendingAuthorizationResponse")
     );
@@ -402,17 +389,16 @@ describe("itwRemoteMachine", () => {
     await waitFor(actor, snapshot => snapshot.matches("Success"));
 
     /**
-     * Once the presentation succeeds, the presented keyTags are stored in context and the
-     * consumption of any batch-issued credential's presented copy is triggered
+     * Once the presentation succeeds, the presented keyTags are stored in
+     * context and the consumption of any batch-issued credential's presented
+     * copy is triggered
      */
     expect(actor.getSnapshot().context.presentedKeyTags).toStrictEqual(
       T_PRESENTED_KEY_TAGS
     );
     expect(consumePresentedBatchCredentials).toHaveBeenCalledTimes(1);
 
-    /**
-     * The user closes the presentation flow
-     */
+    /** The user closes the presentation flow */
     actor.send({ type: "close" });
     expect(closePresentation).toHaveBeenCalledTimes(1);
   });

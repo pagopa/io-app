@@ -1,6 +1,4 @@
-/**
- * A screens to express the preferences related to email forwarding.
- */
+/** A screens to express the preferences related to email forwarding. */
 import { ListItemSwitch, useIOToast } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";

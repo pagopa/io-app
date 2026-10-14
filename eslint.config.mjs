@@ -62,7 +62,7 @@ export default defineConfig([
   ]),
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
-  // eslint-plugin-prettier, perfectionist.
+  // eslint-config-prettier, perfectionist.
   ...pagopaConfig,
 
   {
@@ -115,12 +115,6 @@ export default defineConfig([
       // This affects analytics helpers, navigation param lists, and any other
       // type used as a generic record argument throughout the codebase.
       "@typescript-eslint/consistent-type-definitions": "off",
-
-      // Formatting is owned by oxfmt, not prettier. @pagopa/eslint-config bundles
-      // eslint-plugin-prettier, whose rule enforces prettier defaults (trailing
-      // commas, arrow parens) that directly conflict with .oxfmtrc.json — leaving
-      // it on makes eslint --fix revert every oxfmt-formatted file.
-      "prettier/prettier": "off",
 
       // Auto-fix corrupts multi-line property values (see comment below)
       "perfectionist/sort-objects": "off",
@@ -397,7 +391,17 @@ export default defineConfig([
       ],
 
       // Disallow dynamically-built i18n keys so unused-key detection stays reliable
-      "@io-app/i18n-no-dynamic-keys": "warn",
+      "@io-app/i18n-no-dynamic-keys": "error",
+
+      // A single import name lets the i18n rules above, which match `I18n.t`, see every call
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            "ImportDeclaration[source.value='i18next'] > :matches(ImportDefaultSpecifier, ImportNamespaceSpecifier)[local.name!='I18n']",
+          message: 'Import i18next as `I18n`: import I18n from "i18next".'
+        }
+      ],
 
       // Remove this after the migration of fp-ts is being completed and replaced by neverthrow;
       "@io-app/no-fp-ts": "warn"
@@ -476,7 +480,8 @@ export default defineConfig([
       }
     },
     rules: {
-      "@io-app/i18n-no-unused-keys": "warn"
+      // Checked without cache by the `lint-locales` script
+      "@io-app/i18n-no-unused-keys": "error"
     }
   }
 ]);

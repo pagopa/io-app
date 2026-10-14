@@ -11,7 +11,7 @@
   "[yaml]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
   "[markdown]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
   "[html]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
-  "oxc.enable.oxlint": false,
+  "oxc.enable.oxlint": true,
   "editor.inlayHints.enabled": "on",
   "i18n-ally.localesPaths": ["apps/main-app/locales"],
   "i18n-ally.pathMatcher": "{locale}/{namespace}.json",

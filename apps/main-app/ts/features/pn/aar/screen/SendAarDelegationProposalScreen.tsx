@@ -1,7 +1,7 @@
 import { useIOToast } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
@@ -32,7 +32,7 @@ export const SendAarDelegationProposalScreen = () => {
   const { info, hideAll } = useIOToast();
 
   useOnFirstRender(() => {
-    info(i18n.t("features.pn.aar.flow.delegated.notAdressee.infoAlert"));
+    info(I18n.t("features.pn.aar.flow.delegated.notAdressee.infoAlert"));
   });
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const SendAarDelegationProposalScreen = () => {
         <LoadingScreenContent
           headerVisible={false}
           testID="delegationLoading"
-          title={i18n.t(
+          title={I18n.t(
             "features.pn.aar.flow.delegated.createMandate.loadingText"
           )}
         />
@@ -130,7 +130,7 @@ const DelegationProposalContent = ({
     <>
       <OperationResultScreenContent
         action={{
-          label: i18n.t(
+          label: I18n.t(
             "features.pn.aar.flow.delegated.notAdressee.primaryAction"
           ),
           onPress: handleContinuePress,
@@ -138,16 +138,16 @@ const DelegationProposalContent = ({
         }}
         pictogram="identityCheck"
         secondaryAction={{
-          label: i18n.t("global.buttons.close"),
+          label: I18n.t("global.buttons.close"),
           onPress: handleClose,
           testID: "close-button"
         }}
-        subtitle={i18n.t(
+        subtitle={I18n.t(
           "features.pn.aar.flow.delegated.notAdressee.subtitle",
           { name: denomination }
         )}
         testID="delegationProposal"
-        title={i18n.t("features.pn.aar.flow.delegated.notAdressee.title", {
+        title={I18n.t("features.pn.aar.flow.delegated.notAdressee.title", {
           name: denomination
         })}
       />

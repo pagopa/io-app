@@ -25,6 +25,7 @@ const NfcAntennaInfoModule =
 
 /**
  * Retrieves NFC antenna information on Android devices with API level 34+.
+ *
  * @throws If invoked on a platform other than Android.
  */
 export const getNfcAntennaInfo = (): Promise<NfcAntennaInfoResult> => {
@@ -38,6 +39,7 @@ export const getNfcAntennaInfo = (): Promise<NfcAntennaInfoResult> => {
 
 /**
  * Checks if Host Card Emulation (HCE) is supported on the device.
+ *
  * @throws If invoked on a platform other than Android.
  */
 export const isHceSupported = (): Promise<boolean> => {

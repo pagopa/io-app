@@ -1,7 +1,7 @@
 /**
- * Bridge between `zod` schemas and `neverthrow`, so that parsing failures travel through the
- * same `Result` type used by the rest of the IT-Wallet feature instead of a schema-specific
- * success flag.
+ * Bridge between `zod` schemas and `neverthrow`, so that parsing failures
+ * travel through the same `Result` type used by the rest of the IT-Wallet
+ * feature instead of a schema-specific success flag.
  */
 
 import { err, ok, Result } from "neverthrow";
