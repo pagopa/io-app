@@ -197,7 +197,7 @@ export const Badge = ({
         allowFontScaling ? dynamicStyle : styles.badgeStaticStyle,
         outline
           ? {
-              borderWidth: 1,
+              borderWidth: IODimensions.stroke.default,
               borderColor: IOColors[foreground]
             }
           : {

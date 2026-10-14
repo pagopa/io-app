@@ -162,6 +162,8 @@ const componentGap = {
     description: system.gap.description,
     caption: system.gap.caption
   },
+  /* `items`: between the step bars */
+  stepper: { items: 4 },
   /* `icon`: between the icon and the label; `items`: between tabs */
   tab: { icon: 4, items: 8 },
   tag: { leading: 6 },
@@ -234,6 +236,8 @@ const componentStroke = {
     focused: system.stroke.focused
   },
   selection: { control: 2 },
+  /* Thickness of each step bar */
+  stepper: 2,
   textInput: {
     default: system.stroke.default,
     focused: system.stroke.focused
