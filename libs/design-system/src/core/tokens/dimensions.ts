@@ -149,6 +149,7 @@ const componentGap = {
     caption: system.gap.caption
   },
   tag: { leading: 6 },
+  textInput: { leading: 8, trailing: system.gap.trailing },
   toast: { trailing: 16 }
 } as const satisfies Named<IOSpace>;
 
@@ -179,6 +180,8 @@ const componentPadding = {
   },
   module: { horizontal: 16, vertical: 16 },
   tag: { horizontal: 8, vertical: 6 },
+  /* `floatingLabel`: above the typed text, room for the raised label (see `offset.textInput`) */
+  textInput: { horizontal: 12, vertical: 8, floatingLabel: 16 },
   toast: 16
 } as const satisfies Named<IODimensionScale>;
 
@@ -194,13 +197,18 @@ const componentRadius = {
   badge: 24,
   selection: { control: 6 },
   tag: 6,
+  textInput: system.radius.default,
   toast: system.radius.default
 } as const satisfies Named<IORadius>;
 
 /* Figma: `Dimensions/Stroke/*` */
 const componentStroke = {
   button: { outline: 2 },
-  selection: { control: 2 }
+  selection: { control: 2 },
+  textInput: {
+    default: system.stroke.default,
+    focused: system.stroke.focused
+  }
 } as const satisfies Named<IODimensionScale>;
 
 const componentIconSize = {
@@ -213,6 +221,7 @@ const componentIconSize = {
   module: { leading: system.size.icon.leading },
   selection: system.size.icon.leading,
   tag: 16,
+  textInput: system.size.icon.leading,
   toast: 24
 } as const satisfies Named<IOIconSize>;
 
@@ -231,7 +240,8 @@ const componentSize = {
 
 const componentHeight = {
   button: 48,
-  header: 56
+  header: 56,
+  textInput: 60
 } as const;
 
 const offset = {
@@ -239,7 +249,9 @@ const offset = {
   scrollDown: {
     right: system.padding.screen.default,
     bottom: system.padding.screen.default
-  }
+  },
+  /* `floatingLabel`: how far the label rises; tune with `padding.textInput.floatingLabel` */
+  textInput: { floatingLabel: 12 }
 } as const satisfies Named<IODimensionScale>;
 
 /**
