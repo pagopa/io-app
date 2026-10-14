@@ -2,7 +2,6 @@ import {
   H6,
   IOColors,
   IODimensions,
-  IODimensionScale,
   useIOThemeContext
 } from "@io-app/design-system";
 import { LinearGradient } from "expo-linear-gradient";
@@ -18,8 +17,6 @@ import {
 import Animated, { AnimatedStyle } from "react-native-reanimated";
 
 import { useItWalletTheme } from "../utils/theme";
-
-const cardSpacing: IODimensionScale = 16;
 
 // Border width offset to ensure the header gradient fits within the border curves.
 const CARD_BORDER = IODimensions.stroke.default;
@@ -124,7 +121,7 @@ const styles = StyleSheet.create({
     borderCurve: "continuous"
   },
   header: {
-    padding: cardSpacing,
+    padding: IODimensions.padding.card,
     borderTopLeftRadius: IODimensions.radius.accordion - CARD_BORDER,
     borderTopRightRadius: IODimensions.radius.accordion - CARD_BORDER,
     overflow: "hidden",
