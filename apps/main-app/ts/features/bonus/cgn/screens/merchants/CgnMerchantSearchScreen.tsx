@@ -5,7 +5,7 @@ import {
   Divider,
   H6,
   IODimensions,
-  IOSpacingScale,
+  IODimensionScale,
   Pictogram,
   SearchInput,
   SearchInputRef,
@@ -39,7 +39,7 @@ import {
   cgnSearchMerchantsSelector
 } from "../../store/reducers/merchants";
 
-const INPUT_PADDING: IOSpacingScale = 16;
+const INPUT_PADDING: IODimensionScale = 16;
 const MIN_SEARCH_TEXT_LENGTH = 3;
 const SEARCH_DELAY = 300;
 
