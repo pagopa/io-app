@@ -24,7 +24,9 @@ run("pnpm", [
   "--git-tag=false"
 ]);
 
-const version = require(path.join(projectRoot, "package.json")).version;
+const version = JSON.parse(
+  fs.readFileSync(path.join(projectRoot, "package.json"), "utf8")
+).version;
 const versionUpdates = [
   ["ios/IO/Info.plist", require("./plist_updater.js")],
   ["ios/IO.xcodeproj/project.pbxproj", require("./pbxproj_updater.js")],

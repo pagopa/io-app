@@ -1,4 +1,5 @@
 const { execFileSync } = require("child_process");
+const fs = require("fs");
 const path = require("path");
 
 const projectRoot = path.resolve(__dirname, "..");
@@ -34,7 +35,9 @@ const fromRef =
 
 run("pnpm", ["nx", "release", "version", "--group=design-system"]);
 
-const version = require(path.join(projectRoot, "package.json")).version;
+const version = JSON.parse(
+  fs.readFileSync(path.join(projectRoot, "package.json"), "utf8")
+).version;
 run("pnpm", [
   "nx",
   "release",
