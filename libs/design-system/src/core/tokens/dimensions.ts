@@ -129,6 +129,8 @@ const componentGap = {
   banner: { leading: 8, description: system.gap.description, action: 12 },
   /* `icon`: between the icon and the label, on either side */
   button: { icon: 8 },
+  /* `items`: between the dots */
+  codeInput: { items: 16 },
   featureInfo: { leading: 24, action: 4 },
   /* `actions`: between block buttons, stacked or inline; `link`: before the link button */
   footer: { actions: 16, link: 16 },
@@ -150,6 +152,8 @@ const componentGap = {
     trailing: system.gap.trailing,
     topElement: system.gap.topElement
   },
+  /* `items`: between the boxes; `error`: above the error message */
+  otpInput: { items: 8, error: 4 },
   /* `control`: between the label and the checkbox, radio or switch */
   selection: {
     leading: system.gap.leading,
@@ -210,6 +214,7 @@ const componentRadius = {
   avatar: { xsmall: 6, small: 8, medium: 12 },
   bottomSheet: 24,
   badge: 24,
+  otpInput: system.radius.default,
   selection: { control: 6 },
   /* Pill: above half the tab height */
   tab: 24,
@@ -222,6 +227,12 @@ const componentRadius = {
 /* Figma: `Dimensions/Stroke/*` */
 const componentStroke = {
   button: { outline: 2 },
+  /* Empty and filled dots alike, so both keep the same size */
+  codeInput: { dot: 2 },
+  otpInput: {
+    default: system.stroke.default,
+    focused: system.stroke.focused
+  },
   selection: { control: 2 },
   textInput: {
     default: system.stroke.default,
@@ -252,6 +263,7 @@ const componentPictogramSize = {
 /* Component sizes, independent of every scale: values are not type-checked */
 const componentSize = {
   avatar: { xsmall: 30, small: 44, medium: 66 },
+  codeInput: { dot: 16 },
   iconButton: { small: 24, default: 48, large: 56 },
   /* Checkbox and radio control */
   selection: { control: 24 }
