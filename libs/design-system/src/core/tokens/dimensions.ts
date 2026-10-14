@@ -146,7 +146,8 @@ const componentGap = {
     description: system.gap.description,
     caption: system.gap.caption
   },
-  tag: { leading: 6 }
+  tag: { leading: 6 },
+  toast: { trailing: 16 }
 } as const satisfies Named<IOSpace>;
 
 /* Figma: `Dimensions/Paddings/*` */
@@ -175,7 +176,8 @@ const componentPadding = {
     messages: { horizontal: system.padding.screen.messages, vertical: 12 }
   },
   module: { horizontal: 16, vertical: 16 },
-  tag: { horizontal: 8, vertical: 6 }
+  tag: { horizontal: 8, vertical: 6 },
+  toast: 16
 } as const satisfies Named<IODimensionScale>;
 
 /* Figma: `Dimensions/Radius/*` */
@@ -189,7 +191,8 @@ const componentRadius = {
   bottomSheet: 24,
   badge: 24,
   selection: { control: 6 },
-  tag: 6
+  tag: 6,
+  toast: system.radius.default
 } as const satisfies Named<IORadius>;
 
 /* Figma: `Dimensions/Stroke/*` */
@@ -207,7 +210,8 @@ const componentIconSize = {
   listItem: system.size.icon.leading,
   module: { leading: system.size.icon.leading },
   selection: system.size.icon.leading,
-  tag: 16
+  tag: 16,
+  toast: 24
 } as const satisfies Named<IOIconSize>;
 
 const componentPictogramSize = {
