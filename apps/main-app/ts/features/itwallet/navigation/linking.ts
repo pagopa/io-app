@@ -88,12 +88,12 @@ export const itwLinkingOptions: PathConfigMap<AppParamsList> = {
     path: "itw/auth",
     screens: {
       /**
-       * Handles https://continua.io.pagopa.it/itw/auth/request-validation
+       * Handles https://continua.io.pagopa.it/itw/auth
        *
        * Opens the remote request validation screen
        */
       [ITW_REMOTE_ROUTES.REQUEST_VALIDATION]: {
-        path: "request-validation"
+        path: ""
       }
     }
   }

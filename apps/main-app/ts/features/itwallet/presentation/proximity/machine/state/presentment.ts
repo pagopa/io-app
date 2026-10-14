@@ -229,6 +229,7 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       tags: [ItwPresentationTags.Presenting],
       on: {
         "start-nfc-presentment": {
+          guard: "isNfcPresentmentSupported",
           target: "#itwProximityMachine.Nfc"
         },
         "nfc-stopped": {
