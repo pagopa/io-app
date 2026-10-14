@@ -880,7 +880,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -1137,7 +1137,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -1421,7 +1421,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -1705,7 +1705,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -1989,7 +1989,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -2273,7 +2273,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -2557,7 +2557,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >

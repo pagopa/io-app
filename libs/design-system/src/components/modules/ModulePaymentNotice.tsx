@@ -101,7 +101,7 @@ const ModulePaymentNoticeContent = ({
   const theme = useIOTheme();
 
   return (
-    <HStack space={IODimensions.gap.listItem.default.leading}>
+    <HStack space={IODimensions.gap.module.trailing}>
       <View style={{ flexGrow: 1, flexShrink: 1 }}>
         {title && (
           <BodySmall
