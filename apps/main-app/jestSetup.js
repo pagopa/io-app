@@ -91,6 +91,10 @@ jest.mock("expo-brightness", () => ({
   getBrightnessAsync: jest.fn().mockResolvedValue(0),
   setBrightnessAsync: jest.fn().mockResolvedValue(undefined)
 }));
+jest.mock("@io-app/expo-navigation-bar-manager", () => ({
+  setNavigationBarColor: jest.fn().mockResolvedValue(true)
+}));
+
 jest.mock("expo-store-review", () => ({
   isAvailableAsync: jest.fn().mockResolvedValue(true),
   requestReview: jest.fn().mockResolvedValue(undefined)
@@ -98,6 +102,10 @@ jest.mock("expo-store-review", () => ({
 
 jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
+}));
+
+jest.mock("@io-app/expo-pdf-high-res-generator", () => ({
+  generatePdfHighResImages: jest.fn().mockResolvedValue([])
 }));
 
 jest.mock("@io-app/expo-nfc-antenna-info", () => ({
