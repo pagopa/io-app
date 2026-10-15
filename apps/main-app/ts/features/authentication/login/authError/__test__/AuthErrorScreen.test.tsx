@@ -55,7 +55,7 @@ describe("AuthErrorScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("should forward the backend error code to useDebugInfo for a mapped error", () => {
+  it("should forward the backend error code and its SPID description to useDebugInfo for a mapped error", () => {
     mockIsActiveSessionLogin(false);
     mockUseRoute.mockReturnValue({
       params: {
@@ -70,6 +70,7 @@ describe("AuthErrorScreen", () => {
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
       type: "LOGIN_FAILURE",
       code: "25",
+      message: "Processo di autenticazione annullato dall’utente",
       authMethod: "SPID",
       authLevel: AUTH_LEVELS.L2
     });
@@ -120,6 +121,48 @@ describe("AuthErrorScreen", () => {
       code: -1009,
       message: "The Internet connection appears to be offline.",
       url: "https://example.com/authorize",
+      authMethod: "CIE",
+      authLevel: AUTH_LEVELS.L3
+    });
+  });
+
+  it("should forward the SPID IdP to useDebugInfo", () => {
+    mockIsActiveSessionLogin(false);
+    mockUseRoute.mockReturnValue({
+      params: {
+        errorCodeOrMessage: "some_unmapped_raw_error",
+        authMethod: "SPID",
+        authLevel: AUTH_LEVELS.L2,
+        idp: "posteid"
+      }
+    });
+
+    renderComponent();
+
+    expect(mockUseDebugInfo).toHaveBeenCalledWith({
+      type: "LOGIN_FAILURE",
+      code: "some_unmapped_raw_error",
+      authMethod: "SPID",
+      authLevel: AUTH_LEVELS.L2,
+      idp: "posteid"
+    });
+  });
+
+  it("should not add the SPID description to useDebugInfo for a non-SPID login", () => {
+    mockIsActiveSessionLogin(false);
+    mockUseRoute.mockReturnValue({
+      params: {
+        errorCodeOrMessage: "22",
+        authMethod: "CIE",
+        authLevel: AUTH_LEVELS.L3
+      }
+    });
+
+    renderComponent();
+
+    expect(mockUseDebugInfo).toHaveBeenCalledWith({
+      type: "LOGIN_FAILURE",
+      code: "22",
       authMethod: "CIE",
       authLevel: AUTH_LEVELS.L3
     });

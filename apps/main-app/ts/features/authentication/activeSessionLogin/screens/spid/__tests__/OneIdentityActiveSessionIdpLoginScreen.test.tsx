@@ -147,7 +147,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
-        authLevel: MOCK_AUTH_LEVEL_L2
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        idp: mockIdp.id
       }
     );
   });
@@ -167,7 +168,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       {
         errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
         authMethod: "SPID",
-        authLevel: MOCK_AUTH_LEVEL_L2
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        idp: mockIdp.id
       }
     );
   });
@@ -201,7 +203,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent }
+        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent },
+        idp: mockIdp.id
       }
     );
   });
@@ -234,7 +237,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent }
+        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent },
+        idp: mockIdp.id
       }
     );
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
@@ -266,7 +270,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failure: { type: "ONE_IDENTITY_LOGIN_FAILURE", payload: { error } }
+        failure: { type: "ONE_IDENTITY_LOGIN_FAILURE", payload: { error } },
+        idp: mockIdp.id
       }
     );
   });
@@ -288,7 +293,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failure: { type: "WEBVIEW_ERROR", payload: nativeEvent }
+        failure: { type: "WEBVIEW_ERROR", payload: nativeEvent },
+        idp: mockIdp.id
       }
     );
   });

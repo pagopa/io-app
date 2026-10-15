@@ -22,6 +22,7 @@ import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
 } from "../../idp/store/actions";
+import { findSpidErrorCodeDescription } from "../../idp/utils/spidErrorCode";
 
 /**
  * Login failures that carry no backend error code to show: WebView errors and
@@ -51,6 +52,8 @@ export type AuthErrorScreenProps = {
    * from the backend (e.g. the connection dropped).
    */
   failure?: AuthErrorFailure;
+  /** The SPID IdP the user logged in with, shown only in debug mode. */
+  idp?: string;
 };
 export type AuthMethod = "CIE" | "CIE_ID" | "SPID";
 
@@ -67,23 +70,31 @@ const AuthErrorScreen = () => {
         AuthErrorScreenProps
       >
     >();
-  const { errorCodeOrMessage, authMethod, authLevel, failure } = route.params;
+  const { errorCodeOrMessage, authMethod, authLevel, failure, idp } =
+    route.params;
 
-  const debugInfo = useMemo(
-    () => ({
+  const debugInfo = useMemo(() => {
+    // SPID error codes come with an official description, which tells what
+    // went wrong when the screen only shows the generic error
+    const spidErrorDescription =
+      authMethod === "SPID" && !failure && errorCodeOrMessage
+        ? findSpidErrorCodeDescription(errorCodeOrMessage)
+        : undefined;
+
+    return {
       ...getLoginFailureDebugInfo(
         // Without a WebView failure the error comes from the backend, which
         // provides either an error code or, when missing, an error message.
         failure ?? {
           type: "LOGIN_FAILURE",
-          payload: { code: errorCodeOrMessage }
+          payload: { code: errorCodeOrMessage, message: spidErrorDescription }
         }
       ),
       authMethod,
-      authLevel
-    }),
-    [errorCodeOrMessage, authMethod, authLevel, failure]
-  );
+      authLevel,
+      ...(idp && { idp })
+    };
+  }, [errorCodeOrMessage, authMethod, authLevel, failure, idp]);
   useDebugInfo(debugInfo);
 
   const navigation =

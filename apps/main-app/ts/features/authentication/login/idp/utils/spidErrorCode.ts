@@ -61,5 +61,13 @@ const spidErrorCodeMap = new Map<string, string>([
   ["1002", "Utente con identità bloccata da ioapp.it"]
 ]);
 
+/**
+ * Retrieves the official AgID description of a SPID error code, or `undefined`
+ * when the code is not a SPID one.
+ */
+export const findSpidErrorCodeDescription = (
+  errorCode: string
+): string | undefined => spidErrorCodeMap.get(errorCode);
+
 export const getSpidErrorCodeDescription = (errorCode: string) =>
-  spidErrorCodeMap.get(errorCode) ?? "N/A";
+  findSpidErrorCodeDescription(errorCode) ?? "N/A";

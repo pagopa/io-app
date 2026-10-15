@@ -150,7 +150,8 @@ describe("OneIdentityIdpLoginScreen", () => {
       {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
-        authLevel: AUTH_LEVELS.L2
+        authLevel: AUTH_LEVELS.L2,
+        idp: mockIdp.id
       }
     );
   });
@@ -171,7 +172,8 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent }
+        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent },
+        idp: mockIdp.id
       }
     );
   });
@@ -206,7 +208,8 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent }
+        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent },
+        idp: mockIdp.id
       }
     );
   });
@@ -237,7 +240,8 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failure: { type: "ONE_IDENTITY_LOGIN_FAILURE", payload: { error } }
+        failure: { type: "ONE_IDENTITY_LOGIN_FAILURE", payload: { error } },
+        idp: mockIdp.id
       }
     );
   });
@@ -259,7 +263,8 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failure: { type: "WEBVIEW_ERROR", payload: nativeEvent }
+        failure: { type: "WEBVIEW_ERROR", payload: nativeEvent },
+        idp: mockIdp.id
       }
     );
   });

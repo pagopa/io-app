@@ -86,10 +86,11 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
         errorCodeOrMessage,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failure
+        failure,
+        idp: idp.id
       });
     },
-    [navigation]
+    [navigation, idp.id]
   );
 
   const handleLoginFailure = useCallback(
