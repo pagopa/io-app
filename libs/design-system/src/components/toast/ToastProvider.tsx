@@ -49,7 +49,7 @@ const ToastNotificationStackItem = ({
     entering={SlideInUp.springify().damping(16).mass(0.9).stiffness(90)}
     exiting={SlideOutUp.duration(700).easing(Easing.inOut(Easing.exp))}
     layout={SequencedTransition.duration(500).delay(50)}
-    style={{ paddingBottom: IODimensions.gap.toast.stack }}
+    style={{ paddingBottom: IODimensions.gap.toast.items }}
   >
     <Dismissable onDismiss={onDismiss}>
       <ToastNotification {...toast} />
