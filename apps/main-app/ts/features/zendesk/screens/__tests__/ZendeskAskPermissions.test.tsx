@@ -88,6 +88,41 @@ describe("the ZendeskAskPermissions screen", () => {
     expect(component.getByTestId("appVersionsHistory")).toBeDefined();
   });
 
+  test.each([
+    {
+      name: "not active",
+      walletStatus: itwZendeskSelectors.ItwZendeskWalletStatus.NOT_ACTIVE,
+      expectedLabel: "Non attivo"
+    },
+    {
+      name: "Documenti su IO",
+      walletStatus: itwZendeskSelectors.ItwZendeskWalletStatus.DOCUMENTI_SU_IO,
+      expectedLabel: "Documenti su IO"
+    },
+    {
+      name: "IT-Wallet",
+      walletStatus: itwZendeskSelectors.ItwZendeskWalletStatus.IT_WALLET,
+      expectedLabel: "IT-Wallet"
+    }
+  ])(
+    "should render the walletStatus item when the wallet is $name",
+    ({ walletStatus, expectedLabel }) => {
+      jest
+        .spyOn(itwZendeskSelectors, "itwZendeskWalletStatusSelector")
+        .mockReturnValue(walletStatus);
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      act(() => {
+        store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+      });
+      const component: RenderAPI = renderComponent(store, false);
+      expect(component.getByTestId("walletStatus")).toBeDefined();
+      expect(component.getByText(expectedLabel)).toBeDefined();
+    }
+  );
+
   it("should render the paymentIssues item if assistanceForPayment prop is true", () => {
     const store: Store<GlobalState> = createStore(
       appReducer,

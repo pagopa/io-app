@@ -4991,6 +4991,12 @@
       "title": "Ci dai il tuo consenso?",
       "toast": {
         "emailClientNotFound": "Per ricevere assistenza scrivici a: {{emailAddress}}"
+      },
+      "walletStatus": "Documenti digitali",
+      "walletStatusValue": {
+        "documentiSuIo": "Documenti su IO",
+        "itWallet": "IT-Wallet",
+        "notActive": "Non attivo"
       }
     },
     "chooseCategory": {
