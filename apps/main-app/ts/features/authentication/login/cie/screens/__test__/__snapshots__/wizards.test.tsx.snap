@@ -198,7 +198,7 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -229,7 +229,7 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -816,7 +816,7 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -847,7 +847,7 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -1157,7 +1157,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -1188,7 +1188,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -1401,7 +1401,7 @@ Mettile insieme e inseriscile in quest’ordine.
                   {
                     "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
-                    "borderRadius": 8,
+                    "borderRadius": 0,
                     "borderWidth": 0,
                     "height": undefined,
                   },
@@ -1432,7 +1432,7 @@ Mettile insieme e inseriscile in quest’ordine.
                   {
                     "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
-                    "borderRadius": 8,
+                    "borderRadius": 0,
                     "borderWidth": 0,
                     "height": undefined,
                   },
@@ -2027,7 +2027,7 @@ Mettile insieme e inseriscile in quest’ordine.
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -2058,7 +2058,7 @@ Mettile insieme e inseriscile in quest’ordine.
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -3951,7 +3951,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -3982,7 +3982,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
