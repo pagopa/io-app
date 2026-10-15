@@ -1,7 +1,7 @@
 import { act, fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 
-import * as analytics from "../../../../../../utils/analytics";
+import * as utilsAnalytics from "../../../../../../utils/analytics";
 import { withStore } from "../../../../../../utils/jest/withStore";
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { LOGIN_TYPES } from "../../../../common/utils";
@@ -423,7 +423,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     ])(
       "should set the debug info and keep the analytics reason on $name",
       ({ event, nativeEvent, expectedDebugInfo, expectedReason }) => {
-        jest.spyOn(analytics, "trackLoginError").mockImplementation();
+        jest.spyOn(utilsAnalytics, "trackLoginError").mockImplementation();
         mockUseOneIdentityLoginSource();
 
         const { getByTestId } = render(
@@ -438,7 +438,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
         });
 
         expect(mockUseDebugInfo).toHaveBeenLastCalledWith(expectedDebugInfo);
-        expect(analytics.trackLoginError).toHaveBeenCalledWith(
+        expect(utilsAnalytics.trackLoginError).toHaveBeenCalledWith(
           "cie",
           new Error(expectedReason)
         );
