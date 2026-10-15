@@ -64,6 +64,29 @@ describe("analytics/index.ts", () => {
     );
   });
 
+  it("tracks the raw URL when the OneIdentity configuration error URL is not parsable", () => {
+    const url = {
+      toString: () => {
+        throw new Error("Invalid URL");
+      }
+    } as unknown as string;
+
+    trackLoginOIConfigurationError(url);
+
+    expect(mixpanelTrackSpyOn).toHaveBeenCalledWith(
+      "LOGIN_OI_CONFIGURATION_ERROR",
+      {
+        event_category: "KO",
+        event_type: undefined,
+        flow: "auth",
+        reason: {
+          url,
+          error: expect.stringContaining("Invalid URL")
+        }
+      }
+    );
+  });
+
   it("tracks login flow starting", () => {
     trackLoginFlowStarting();
 

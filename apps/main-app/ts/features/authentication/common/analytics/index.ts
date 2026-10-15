@@ -1,10 +1,10 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
-import URLParse from "url-parse";
 
 import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties, FlowType } from "../../../../utils/analytics";
+import { safeUrlParse } from "../../../../utils/url";
 import { LoginSessionDuration } from "../../fastLogin/analytics/optinAnalytics";
 import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
 import { AuthLevel } from "../utils";
@@ -163,13 +163,14 @@ export function trackLoginOIConfigurationError(
   url: string,
   flow: LoginType = "auth"
 ) {
-  const { host, pathname, query } = new URLParse(url, true);
+  const reason = safeUrlParse(url).match(
+    ({ host, pathname, query }) => ({ host, pathname, query }),
+    error => ({ url, error })
+  );
+
   void mixpanelTrack(
     "LOGIN_OI_CONFIGURATION_ERROR",
-    buildEventProperties("KO", undefined, {
-      flow,
-      reason: { host, pathname, query }
-    })
+    buildEventProperties("KO", undefined, { flow, reason })
   );
 }
 
