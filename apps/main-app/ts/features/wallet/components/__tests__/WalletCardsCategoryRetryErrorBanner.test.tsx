@@ -79,20 +79,13 @@ describe("WalletCardsCategoryRetryErrorBanner", () => {
       navigate
     } as unknown as ReturnType<typeof appParamsList.useIONavigation>);
 
-    const { getByTestId, getByText, queryByText } = renderComponent();
+    const { getByTestId, getByText } = renderComponent();
 
     expect(
       getByText(
         I18n.t("features.wallet.home.otherMethods.error.banner.bonus.label")
       )
     ).toBeTruthy();
-    expect(
-      queryByText(
-        I18n.t(
-          "features.wallet.home.otherMethods.error.banner.paymentMethods.label"
-        )
-      )
-    ).toBeNull();
 
     fireEvent.press(
       getByTestId("walletCardsCategoryRetryErrorBannerActionTestID")

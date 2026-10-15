@@ -70,17 +70,13 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
           actionText={I18n.t(
             shouldGoToServices
               ? "features.wallet.home.otherMethods.error.banner.bonus.cta"
-              : isPaymentMethodsError
-                ? "features.wallet.home.otherMethods.error.banner.paymentMethods.cta"
-                : "features.wallet.home.otherMethods.error.banner.cta"
+              : "features.wallet.home.otherMethods.error.banner.cta"
           )}
           icon="warningFilled"
           label={I18n.t(
             shouldGoToServices
               ? "features.wallet.home.otherMethods.error.banner.bonus.label"
-              : isPaymentMethodsError
-                ? "features.wallet.home.otherMethods.error.banner.paymentMethods.label"
-                : "features.wallet.home.otherMethods.error.banner.label"
+              : "features.wallet.home.otherMethods.error.banner.label"
           )}
           onPress={handleOnAction}
           testID="walletCardsCategoryRetryErrorBannerActionTestID"
