@@ -27,6 +27,18 @@ const scenarios: Array<{
     expected: { type: "LOGIN_FAILURE", code: undefined }
   },
   {
+    name: "an error page recognized by its title",
+    failure: {
+      type: "ERROR_PAGE",
+      payload: { title: "Errore", url: "https://example.com/error" }
+    },
+    expected: {
+      type: "ERROR_PAGE",
+      message: "Errore",
+      url: "https://example.com/error"
+    }
+  },
+  {
     name: "a network error",
     failure: {
       type: "WEBVIEW_ERROR",

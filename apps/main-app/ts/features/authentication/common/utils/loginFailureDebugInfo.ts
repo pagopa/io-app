@@ -3,6 +3,11 @@ import { OneIdentityLoginSourceError } from "../../../lollipop/hooks/useOneIdent
 /** A failed login, as reported by the login WebViews. */
 export type LoginFailure =
   | {
+      /** A page the WebView loaded, recognized as an error page by its title. */
+      payload: { title: string; url: string };
+      type: "ERROR_PAGE";
+    }
+  | {
       payload: { code: number; description: string; url: string };
       type: "WEBVIEW_ERROR";
     }
@@ -46,6 +51,10 @@ export const getLoginFailureDebugInfo = (
   switch (failure.type) {
     case "CANCEL":
       return { type: failure.type };
+    case "ERROR_PAGE": {
+      const { title, url } = failure.payload;
+      return { type: failure.type, message: title, url };
+    }
     case "LOGIN_FAILURE": {
       const { code, message } = failure.payload;
       return { type: failure.type, code, ...(message && { message }) };

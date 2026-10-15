@@ -1,6 +1,7 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 
+import * as analytics from "../../../../../../utils/analytics";
 import { withStore } from "../../../../../../utils/jest/withStore";
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { LOGIN_TYPES } from "../../../../common/utils";
@@ -283,7 +284,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
   });
 
   describe("debug info", () => {
-    it("should not set a failure as debug data while authenticating", () => {
+    it("should not set any debug data while authenticating", () => {
       mockUseOneIdentityLoginSource();
 
       render(
@@ -293,7 +294,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
         />
       );
 
-      expect(mockUseDebugInfo).toHaveBeenLastCalledWith({ failure: undefined });
+      expect(mockUseDebugInfo).toHaveBeenLastCalledWith({});
     });
 
     it("should set the login source error as debug data when the login source fails", () => {
@@ -312,7 +313,8 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       );
 
       expect(mockUseDebugInfo).toHaveBeenLastCalledWith({
-        failure: "some error"
+        type: "key-generation",
+        message: "some error"
       });
     });
 
@@ -325,24 +327,41 @@ describe("OneIdentityCieAuthenticationWebView", () => {
           code: -1009,
           description: "The Internet connection appears to be offline."
         },
-        expectedFailure:
+        expectedDebugInfo: {
+          type: "WEBVIEW_ERROR",
+          code: -1009,
+          message: "The Internet connection appears to be offline.",
+          url: "https://example.com/error"
+        },
+        expectedReason:
           "WebView error -1009 (The Internet connection appears to be offline.) on https://example.com/error"
       },
       {
         name: "an HTTP error",
         event: "onHttpError",
         nativeEvent: { url: "https://example.com/error", statusCode: 500 },
-        expectedFailure: "HTTP error 500 on https://example.com/error"
+        expectedDebugInfo: {
+          type: "WEBVIEW_HTTP_ERROR",
+          code: 500,
+          url: "https://example.com/error"
+        },
+        expectedReason: "HTTP error 500 on https://example.com/error"
       },
       {
         name: "an error page",
         event: "onLoadEnd",
-        nativeEvent: { title: "Errore" },
-        expectedFailure: "Errore"
+        nativeEvent: { title: "Errore", url: "https://example.com/error" },
+        expectedDebugInfo: {
+          type: "ERROR_PAGE",
+          message: "Errore",
+          url: "https://example.com/error"
+        },
+        expectedReason: "Errore"
       }
     ])(
-      "should set the failure reason as debug data on $name",
-      ({ event, nativeEvent, expectedFailure }) => {
+      "should set the failure details as debug data and track the reason on $name",
+      ({ event, nativeEvent, expectedDebugInfo, expectedReason }) => {
+        jest.spyOn(analytics, "trackLoginError").mockImplementation();
         mockUseOneIdentityLoginSource();
 
         const { getByTestId } = render(
@@ -356,13 +375,15 @@ describe("OneIdentityCieAuthenticationWebView", () => {
           nativeEvent
         });
 
-        expect(mockUseDebugInfo).toHaveBeenLastCalledWith({
-          failure: expectedFailure
-        });
+        expect(mockUseDebugInfo).toHaveBeenLastCalledWith(expectedDebugInfo);
+        expect(analytics.trackLoginError).toHaveBeenCalledWith(
+          "cie",
+          new Error(expectedReason)
+        );
       }
     );
 
-    it("should set the failure reason as debug data on a failed login URL", () => {
+    it("should set the backend error code as debug data on a failed login URL", () => {
       mockUseOneIdentityLoginSource();
 
       const { getByTestId } = render(
@@ -381,7 +402,9 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       );
 
       expect(mockUseDebugInfo).toHaveBeenLastCalledWith({
-        failure: expect.stringContaining("(19)")
+        type: "LOGIN_FAILURE",
+        code: "19",
+        message: "annullato"
       });
     });
   });
