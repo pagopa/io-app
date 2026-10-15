@@ -1,4 +1,4 @@
-import { GestureResponderEvent, Pressable } from "react-native";
+import { GestureResponderEvent, Platform, Pressable } from "react-native";
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -8,7 +8,7 @@ import Animated, {
 import { useIOTheme } from "../../context";
 import { IOIconButtonStyles } from "../../core";
 import { hexToRgba, IOColors } from "../../core/IOColors";
-import { useScaleAnimation } from "../../hooks";
+import { useKeyboardFocus, useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import { AnimatedIcon, IOIcons } from "../icons";
 
@@ -42,6 +42,7 @@ export const IconButtonSolid = ({
   accessibilityHint,
   testID
 }: IconButtonSolid) => {
+  const { onFocus, onBlur, focusStyle } = useKeyboardFocus(disabled);
   const theme = useIOTheme();
   const { progress, onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("exaggerated");
@@ -93,12 +94,18 @@ export const IconButtonSolid = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={"button"}
       accessibilityState={{ disabled }}
-      accessible={true}
+      accessible={Platform.OS !== "android" || !disabled}
       disabled={disabled}
+      focusable={disabled ? false : undefined}
+      importantForAccessibility={
+        Platform.OS === "android" && disabled ? "yes" : undefined
+      }
+      onBlur={onBlur}
+      onFocus={onFocus}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      style={{ alignSelf: "flex-start" }}
+      style={{ alignSelf: "flex-start", ...focusStyle }}
       testID={testID}
     >
       <Animated.View
