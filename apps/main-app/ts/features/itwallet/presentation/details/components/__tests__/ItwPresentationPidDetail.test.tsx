@@ -5,7 +5,12 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
-import { ItwStoredCredentialsMocks } from "../../../../common/utils/itwMocksUtils.ts";
+import {
+  ITW_ISSUER_AUTHORITY_CLAIM_MOCK_LABEL,
+  ItwStoredCredentialsMocks,
+  withIssuerAuthorityClaimMock
+} from "../../../../common/utils/itwMocksUtils.ts";
+import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils.ts";
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwPresentationPidDetail } from "../ItwPresentationPidDetail.tsx";
 
@@ -27,9 +32,23 @@ describe("ItwPresentationPidDetail", () => {
       store.getState().features.itWallet.preferences.claimValuesHidden
     ).toBe(true);
   });
+
+  it("should not render the issuer_authority claim, already shown by the issuance metadata", () => {
+    const { component } = renderComponentWithStore(
+      false,
+      withIssuerAuthorityClaimMock(ItwStoredCredentialsMocks.eid)
+    );
+
+    expect(
+      component.queryByText(ITW_ISSUER_AUTHORITY_CLAIM_MOCK_LABEL)
+    ).toBeNull();
+  });
 });
 
-function renderComponentWithStore(claimValuesHidden: boolean) {
+function renderComponentWithStore(
+  claimValuesHidden: boolean,
+  credential: CredentialMetadata = ItwStoredCredentialsMocks.eid
+) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const state: GlobalState = {
     ...globalState,
@@ -50,7 +69,7 @@ function renderComponentWithStore(claimValuesHidden: boolean) {
     () => (
       <ItwPresentationPidDetail
         credential={{
-          ...ItwStoredCredentialsMocks.eid,
+          ...credential,
           jwt: { expiration: "2100-01-01T00:00:00Z" }
         }}
       />

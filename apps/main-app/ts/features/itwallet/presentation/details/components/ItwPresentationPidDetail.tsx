@@ -39,7 +39,11 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
   const claims = useMemo(
     () =>
       parseClaims(credential.parsedCredential, {
-        exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
+        exclude: [
+          WellKnownClaim.unique_id,
+          WellKnownClaim.content,
+          WellKnownClaim.issuer_authority
+        ]
       }),
     [credential.parsedCredential]
   );

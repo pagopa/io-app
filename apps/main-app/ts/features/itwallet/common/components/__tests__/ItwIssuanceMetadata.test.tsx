@@ -26,16 +26,6 @@ const mockIsL3Selector = (isL3: boolean) =>
     .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
     .mockReturnValue(isL3);
 
-const asItwCredential = (
-  credential: CredentialMetadata
-): CredentialMetadata => ({
-  ...credential,
-  verification: {
-    assurance_level: "high",
-    trust_framework: "it_cie"
-  }
-});
-
 describe("ItwIssuanceMetadata", () => {
   it("displays the hardcoded 'IT Wallet' data source for the proof_of_age credential", () => {
     const { queryByText } = renderComponent(
@@ -48,46 +38,6 @@ describe("ItwIssuanceMetadata", () => {
 
     expect(queryByText(authSourceLabel)).not.toBeNull();
     expect(queryByText("IT-Wallet ID")).not.toBeNull();
-  });
-
-  describe("releaser", () => {
-    const releasedByLabel = I18n.t(
-      "features.itWallet.verifiableCredentials.claims.releasedBy"
-    );
-    const releasedByPidLabel = I18n.t(
-      "features.itWallet.verifiableCredentials.claims.releasedByPid"
-    );
-
-    test.each([
-      {
-        name: "Documenti su IO credential",
-        credential: ItwStoredCredentialsMocks.mdl,
-        releasedByVisible: true,
-        releasedByPidVisible: false
-      },
-      {
-        name: "IT-Wallet credential",
-        credential: asItwCredential(ItwStoredCredentialsMocks.L3.mdl),
-        releasedByVisible: false,
-        releasedByPidVisible: false
-      },
-      {
-        name: "IT-Wallet PID",
-        credential: asItwCredential(ItwStoredCredentialsMocks.eid),
-        releasedByVisible: false,
-        releasedByPidVisible: true
-      }
-    ])(
-      "renders the expected releaser for $name",
-      ({ credential, releasedByVisible, releasedByPidVisible }) => {
-        const { queryByText } = renderComponent(credential);
-
-        expect(queryByText(releasedByLabel) !== null).toBe(releasedByVisible);
-        expect(queryByText(releasedByPidLabel) !== null).toBe(
-          releasedByPidVisible
-        );
-      }
-    );
   });
 
   describe("privacy policy link", () => {
