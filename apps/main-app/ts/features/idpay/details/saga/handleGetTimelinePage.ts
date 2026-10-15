@@ -1,5 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
-import * as E from "fp-ts/lib/Either";
+import { err, ok } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -46,43 +46,44 @@ export function* handleGetTimelinePage(
       action
     )) as unknown as SagaCallReturnType<typeof getTimeline>;
 
-    if (E.isLeft(getTimelineResult)) {
-      yield* put(
-        idpayTimelinePageGet.failure(
-          getGenericError(
-            new FailureReasonError(
-              FailureReason.DECODE_ERROR,
-              readablePrivacyReport(getTimelineResult.left)
+    const result =
+      "right" in getTimelineResult
+        ? ok(getTimelineResult.right)
+        : err(getTimelineResult.left);
+
+    yield result.match(
+      response =>
+        response.status === 200
+          ? put(
+              idpayTimelinePageGet.success({
+                timeline: response.value,
+                page: response.value.pageNo ?? 1
+              })
+            )
+          : put(
+              idpayTimelinePageGet.failure(
+                getGenericError(
+                  new FailureReasonError(
+                    decodeFailureReason({
+                      kind: "http_status",
+                      status: response.status
+                    }),
+                    `response status code ${response.status}`
+                  )
+                )
+              )
+            ),
+      decodeErrors =>
+        put(
+          idpayTimelinePageGet.failure(
+            getGenericError(
+              new FailureReasonError(
+                FailureReason.DECODE_ERROR,
+                readablePrivacyReport(decodeErrors)
+              )
             )
           )
         )
-      );
-      return;
-    }
-
-    const response = getTimelineResult.right;
-    if (response.status !== 200) {
-      yield* put(
-        idpayTimelinePageGet.failure(
-          getGenericError(
-            new FailureReasonError(
-              decodeFailureReason({
-                kind: "http_status",
-                status: response.status
-              }),
-              `response status code ${response.status}`
-            )
-          )
-        )
-      );
-      return;
-    }
-
-    yield* put(
-      idpayTimelinePageGet.success({
-        timeline: response.value,
-        page: response.value.pageNo ?? 1
-      })
     );
   } catch (e) {
     yield* put(idpayTimelinePageGet.failure(getNetworkError(e)));
