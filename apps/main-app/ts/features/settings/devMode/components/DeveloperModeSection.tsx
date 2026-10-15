@@ -107,7 +107,7 @@ const DeveloperActionsSection = () => {
           style: "destructive",
           onPress: () => {
             dispatch(clearCache());
-            IOToast.show(I18n.t("profile.main.cache.cleared"));
+            IOToast.info(I18n.t("profile.main.cache.cleared"));
           }
         }
       ],

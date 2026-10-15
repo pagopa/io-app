@@ -7,7 +7,7 @@ export const useIOToast = () => {
   const { addToast, removeToast, removeAllToasts } = useContext(ToastContext);
 
   const show = useCallback(
-    (message: string, options?: ToastOptions) => {
+    (message: string, options: ToastOptions) => {
       addToast({ message, ...options });
     },
     [addToast]
@@ -76,7 +76,7 @@ export type IOToast = ReturnType<typeof useIOToast>;
 export const IOToastRef = createRef<IOToast>() as RefObject<IOToast>;
 
 export const IOToast: IOToast = {
-  show: (message: string, options?: ToastOptions) =>
+  show: (message: string, options: ToastOptions) =>
     IOToastRef.current?.show(message, options),
   error: (message: string) => IOToastRef.current?.error(message),
   warning: (message: string) => IOToastRef.current?.warning(message),

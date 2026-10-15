@@ -3725,16 +3725,6 @@
           "ISEE": "ISEE",
           "RESIDENCE": "Residenza"
         },
-        "familyUnitCode": {
-          "ANPR": {
-            "description": "Ministero dell’Interno",
-            "title": "Famiglia anagrafica"
-          },
-          "INPS": {
-            "description": "INPS",
-            "title": "INPS"
-          }
-        },
         "operator": {
           "BTW_CLOSED": "Compreso tra {{value}} e {{value2}}",
           "BTW_OPEN": "Compreso tra {{value}} e {{value2}}",
@@ -3833,6 +3823,10 @@
           "UNSATISFIED_REQUIREMENTS": {
             "subtitle": "I controlli di verifica hanno già dato esito negativo.\nSe pensi ci sia un errore, contatta l’ente promotore.",
             "title": "Non hai i requisiti per aderire a questa iniziativa"
+          },
+          "USER_BONUS_ALREADY_USED": {
+            "subtitle": "Dai controlli effettuati risulta che lo hai già usato in un’altra occasione",
+            "title": "Hai già usato in passato questo bonus"
           },
           "USER_NOT_IN_WHITELIST": {
             "subtitle": "Il tuo Codice Fiscale non è incluso nella lista di chi ha diritto ai fondi previsti dall’iniziativa. Per maggiori informazioni, contatta l’ente promotore.",
@@ -4008,16 +4002,20 @@
       },
       "initiativeOnboardedStatus": {
         "ON_EVALUATION": {
+          "bottomSheet": {
+            "content": "Abbiamo inviato la tua richiesta per {{initiativeName}} all'ente, che sta verificando i tuoi dati e i requisiti per ottenere il bonus.\nPotrebbe volerci un po' di tempo.\n\n\n###### ***Cosa succede ora?***\n\nNon devi fare nulla. Riceverai un messaggio su IO con l’esito della richiesta.\n\n\n###### ***Hai attivato le notifiche?***\n\nSe non l’hai già fatto, attiva le notifiche push per non perderti i messaggi.\n[Leggi come fare](https:\/\/assistenza.ioapp.it\/hc\/it\/articles\/39312288127377-Come-attivare-le-notifiche-push-su-IO)",
+            "title": "Verifica in corso"
+          },
           "label": "Verifica in corso"
         },
         "ON_WAITING_LIST": {
-          "accessibilityInfoLabel": "Pulsante informazioni",
           "bottomSheet": {
             "content": "La tua richiesta per {{initiativeName}} è stata inserita **in lista d’attesa**, poiché al momento non ci sono fondi disponibili.\n\n\n###### ***Cosa succede ora?***\n\nNon devi fare nulla: la tua richiesta rimane valida. Riceverai un messaggio con l’esito se si renderanno disponibili nuove risorse.\n\n\n###### ***Hai attivato le notifiche?***\n\nSe non l’hai già fatto, attiva le notifiche push per non perderti i messaggi.\n[Leggi come fare](https:\/\/assistenza.ioapp.it\/hc\/it\/articles\/39312288127377-Come-attivare-le-notifiche-push-su-IO)",
             "title": "Sei in lista d'attesa"
           },
           "label": "In lista d'attesa"
         },
+        "accessibilityInfoLabel": "Pulsante informazioni",
         "header": "Le mie richieste"
       },
       "initiativePairing": {
