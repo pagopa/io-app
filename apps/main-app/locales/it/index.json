@@ -4992,11 +4992,11 @@
       "toast": {
         "emailClientNotFound": "Per ricevere assistenza scrivici a: {{emailAddress}}"
       },
-      "walletStatus": "Documenti digitali",
+      "walletStatus": "Funzionalità documenti digitali",
       "walletStatusValue": {
-        "documentiSuIo": "Documenti su IO",
-        "itWallet": "IT-Wallet",
-        "notActive": "Non attivo"
+        "documentiSuIo": "Attiva (Documenti su IO)",
+        "itWallet": "Attiva (IT-Wallet)",
+        "notActive": "Non attiva"
       }
     },
     "chooseCategory": {
