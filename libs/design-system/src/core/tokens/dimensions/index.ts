@@ -7,18 +7,18 @@ Values are unitless dp, as React Native expects: the DTCG
 `{ value, unit: "px" }` form maps to them 1:1. The object is not conformant
 yet: no `$value`/`$type`, `system` references are resolved, ramps are arrays.
 
-Three tiers (Material 3 naming: reference → system → component), merged by
-property as the Figma `Dimensions/*` variables:
-- scales: `IODimensionScale`, every value a spacing, radius or stroke can
+Three tiers:
+- Scales: `IODimensionScale`, every value a spacing, radius or stroke can
   take, and its per-property subsets (`gap.scale`, `padding.screen.scale`,
   `radius.scale`)
-- `system`: values shared across components (`radius.default`)
-- component values (`radius.tag`): a reference to a `system` value follows a
+- System: values shared across components (`radius.default`)
+- Component values (`radius.tag`): a reference to a `system` value follows a
   design choice shared with other components; a direct value is a deliberate
   exception. Keyed by component name: removing a component removes its keys
   too, since nothing flags unused tokens
+
 Sizes (icons, pictograms, avatars…) are independent ramps, not bound to the scale.
-`size` is square (width = height); single-axis values go in `height`.
+`size` is square; single-axis values go in `height`/`width`.
 
 Group shape: every group is an object. If the property has a ramp, the ramp is
 its `scale` array; named entries bound to that ramp sit next to it
@@ -123,7 +123,6 @@ const system = {
 
 /* COMPONENT */
 
-/* Figma: `Dimensions/Gap/*` */
 const componentGap = {
   accordion: { leading: system.gap.leading, trailing: system.gap.trailing },
   alert: { leading: system.gap.leading, action: 8 },
@@ -173,7 +172,6 @@ const componentGap = {
   toast: { trailing: 16, items: 8 }
 } as const satisfies Named<IOSpace>;
 
-/* Figma: `Dimensions/Paddings/*` */
 const componentPadding = {
   accordion: 16,
   alert: { default: 16, fullWidth: system.padding.screen.default },
@@ -207,7 +205,6 @@ const componentPadding = {
   tooltip: 16
 } as const satisfies Named<IODimensionScale>;
 
-/* Figma: `Dimensions/Radius/*` */
 const componentRadius = {
   accordion: system.radius.default,
   alert: system.radius.default,
@@ -227,7 +224,6 @@ const componentRadius = {
   tooltip: system.radius.default
 } as const satisfies Named<IORadius>;
 
-/* Figma: `Dimensions/Stroke/*` */
 const componentStroke = {
   button: { outline: 2 },
   /* Empty and filled dots alike, so both keep the same size */
