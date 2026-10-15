@@ -1898,6 +1898,18 @@
             "titleExpired": "Documenti su IO:\nverifica la tua identità",
             "triggerLabel": "Cos'è?"
           },
+          "eidInvalid": {
+            "alert": {
+              "action": {
+                "detail": "Scopri di più",
+                "wallet": "Rivedi i dati"
+              },
+              "content": "Abbiamo rilevato modifiche ai tuoi dati anagrafici."
+            },
+            "content": "Al momento il tuo IT-Wallet ID risulta non valido. Puoi aggiornarlo direttamente dall'app se:\n\n* hai cambiato nome e/o cognome\n* il tuo codice fiscale è cambiato\n* ci sono state rettifiche ai tuoi dati anagrafici.\n\nNon puoi invece aggiornare IT-Wallet ID dall'app se:\n\n* non hai più la cittadinanza italiana\n* hai trasferito la tua residenza all'estero\n* sei irreperibile all'anagrafe\n* non hai rinnovato il tuo permesso di soggiorno o dimora abituale.\n\n**Ricorda: se IT-Wallet ID non è valido puoi continuare a usare temporaneamente i documenti digitali che hai già nel Portafoglio ma non puoi aggiungerne di nuovi.**",
+            "cta": "Aggiorna IT-Wallet ID",
+            "title": "Abbiamo rilevato modifiche ai tuoi dati anagrafici"
+          },
           "generic": {
             "expired": {
               "content": "Rimuovilo dal Portafoglio. Quando lo avrai rinnovato potrai aggiungere la versione digitale aggiornata.",
