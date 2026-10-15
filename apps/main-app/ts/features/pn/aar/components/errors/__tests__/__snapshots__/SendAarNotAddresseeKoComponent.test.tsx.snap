@@ -935,7 +935,7 @@ exports[`SendAarTosComponent should match snapshot 1`] = `
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -966,7 +966,7 @@ exports[`SendAarTosComponent should match snapshot 1`] = `
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },

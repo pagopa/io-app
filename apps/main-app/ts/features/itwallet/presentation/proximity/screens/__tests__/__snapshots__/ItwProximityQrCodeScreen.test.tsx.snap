@@ -809,7 +809,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -840,7 +840,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -2727,7 +2727,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -2758,7 +2758,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -2984,7 +2984,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -3015,7 +3015,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -4948,7 +4948,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -4979,7 +4979,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -7136,7 +7136,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -7167,7 +7167,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },

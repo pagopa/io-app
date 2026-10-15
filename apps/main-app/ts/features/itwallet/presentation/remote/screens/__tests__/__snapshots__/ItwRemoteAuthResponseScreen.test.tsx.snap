@@ -932,7 +932,7 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -963,7 +963,7 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },

@@ -320,7 +320,7 @@ export const IOButton = ({
             height: btnHeightMap[variant],
             backgroundColor,
             borderWidth: btnBorderWidth,
-            borderRadius: btnBorderRadius,
+            borderRadius: isLinkButton ? 0 : btnBorderRadius,
             borderColor: foregroundColor
           },
           disabled

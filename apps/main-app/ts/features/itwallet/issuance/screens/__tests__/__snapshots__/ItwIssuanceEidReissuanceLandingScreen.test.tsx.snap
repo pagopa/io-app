@@ -1286,7 +1286,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -1317,7 +1317,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -2377,7 +2377,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -2408,7 +2408,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -3395,7 +3395,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -3426,7 +3426,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -4806,7 +4806,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -4837,7 +4837,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
