@@ -86,7 +86,7 @@ export const itwIsCredentialsCatalogueStale = (state: GlobalState) => {
 
 /**
  * Return a dictionary that maps each credential type to its metadata in the
- * catalogue.
+ * catalogue. Credential types not included in the catalogue have no entry.
  */
 export const itwCredentialsCatalogueByTypesSelector = createSelector(
   itwCredentialsCatalogueSelector,
@@ -96,7 +96,7 @@ export const itwCredentialsCatalogueByTypesSelector = createSelector(
         ...acc,
         [credential.credential_type]: credential
       }),
-      {} as Record<string, DigitalCredentialMetadata>
+      {} as Partial<Record<string, DigitalCredentialMetadata>>
     )
 );
 
@@ -156,9 +156,9 @@ export const itwCredentialNameResolverSelector = createSelector(
   ],
   (catalogue, translations, withL3Design) =>
     (credentialType: string | undefined, withDefault = ""): string => {
-      // The catalogue may not include every credential type stored in the wallet
-      const catalogueMeta: DigitalCredentialMetadata | undefined =
-        credentialType ? catalogue?.[credentialType] : undefined;
+      const catalogueMeta = credentialType
+        ? catalogue?.[credentialType]
+        : undefined;
       if (catalogueMeta && translations) {
         const resolvedName =
           (catalogueMeta.name_l10n_id &&
