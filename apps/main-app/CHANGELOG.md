@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.41.0-rc.5](https://github.com/pagopa/io-app/compare/3.41.0-rc.4...3.41.0-rc.5) (2026-10-14)
+
+### Features
+
+* [[IEL-589](https://pagopa.atlassian.net/browse/IEL-589)] Adaptation to the new PARI APIs ([#8595](https://github.com/pagopa/io-app/issues/8595)) ([ae9acab](https://github.com/pagopa/io-app/commit/ae9acab9a29dbe58dfbb87712788c95e47f11742))
+* **IT-Wallet:** [[SIW-4906](https://pagopa.atlassian.net/browse/SIW-4906)] ITW banner CAC link ([#8711](https://github.com/pagopa/io-app/issues/8711)) ([6bdc722](https://github.com/pagopa/io-app/commit/6bdc7227216d63f940e89dbad46f483db5112b07))
+
+### Bug Fixes
+
+* [[IOPID-4253](https://pagopa.atlassian.net/browse/IOPID-4253)] Forward livello3 to CieID only on iOS ([#8735](https://github.com/pagopa/io-app/issues/8735)) ([93c7aec](https://github.com/pagopa/io-app/commit/93c7aec8d45ab482c079d5130f8d40c212edcc70))
+* [[IOPID-4258](https://pagopa.atlassian.net/browse/IOPID-4258)] Prevent redirect to Landing during OneId Active Session Login ([#8736](https://github.com/pagopa/io-app/issues/8736)) ([97f1985](https://github.com/pagopa/io-app/commit/97f1985abc889e9426989d0655d85a8a49f6390b))
+
+### Chores
+
+* [[IOCOM-3367](https://pagopa.atlassian.net/browse/IOCOM-3367)] addition of s-bartolini to CODEOWNERS ([#8739](https://github.com/pagopa/io-app/issues/8739)) ([019fe75](https://github.com/pagopa/io-app/commit/019fe75f5784da70217b540907769e3d0d6c0b5a))
 ## [3.41.0-rc.4](https://github.com/pagopa/io-app/compare/3.41.0-rc.3...3.41.0-rc.4) (2026-10-13)
 
 ### Features

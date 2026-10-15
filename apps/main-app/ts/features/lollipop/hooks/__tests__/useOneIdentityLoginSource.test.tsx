@@ -11,11 +11,16 @@ import { appReducer } from "../../../../store/reducers";
 import { SpidIdp } from "../../../../utils/idps";
 import { setOneIdentityEnv } from "../../../authentication/common/store/actions/loginConfig";
 import { ONE_IDENTITY_ENVS } from "../../../authentication/common/store/reducers/loginConfig";
-import { AUTH_LEVELS, AuthLevel } from "../../../authentication/common/utils";
+import {
+  AUTH_LEVELS,
+  AuthLevel,
+  LOGIN_TYPES
+} from "../../../authentication/common/utils";
 import {
   createRetriableFetch,
   FetchResponse
 } from "../../../authentication/common/utils/fetch";
+import { LoginType } from "../../../authentication/common/utils/index";
 import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
 import { lollipopSetEphemeralPublicKey } from "../../store/actions/lollipop";
 import { toBase64EncodedThumbprint } from "../../utils/crypto";
@@ -72,6 +77,7 @@ const successResponse = (status: number, body: unknown): FetchResponse => ({
 });
 
 interface SetupOptions {
+  flow?: LoginType;
   followRedirectsNatively?: boolean;
   minAuthLevel?: AuthLevel;
   store?: ReturnType<typeof createTestStore>;
@@ -83,6 +89,7 @@ const createTestStore = () => {
 };
 
 const setupTest = ({
+  flow = LOGIN_TYPES.AUTH,
   followRedirectsNatively,
   minAuthLevel = AUTH_LEVELS.L2,
   store = createTestStore()
@@ -92,6 +99,7 @@ const setupTest = ({
   const utils = renderHook(
     () =>
       useOneIdentityLoginSource({
+        flow,
         followRedirectsNatively,
         idpId: mockIdp.id,
         onFailure,
