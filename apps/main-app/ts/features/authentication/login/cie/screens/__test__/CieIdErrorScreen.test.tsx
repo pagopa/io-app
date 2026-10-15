@@ -1,11 +1,13 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import { ComponentProps } from "react";
 
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import CieIdErrorScreen, { CieIdErrorScreenParams } from "../CieIdErrorScreen";
 
-type CieIdErrorScreenProps = ComponentProps<typeof CieIdErrorScreen>;
+const mockUseDebugInfo = jest.fn();
+jest.mock("../../../../../../hooks/useDebugInfo", () => ({
+  useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
+}));
 
 const mockReplace = jest.fn();
 const mockNavigate = jest.fn();
@@ -20,11 +22,6 @@ jest.mock("@react-navigation/native", () => {
     })
   };
 });
-
-const mockUseDebugInfo = jest.fn();
-jest.mock("../../../../../../hooks/useDebugInfo", () => ({
-  useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
-}));
 // const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
@@ -101,44 +98,38 @@ describe("CieIdErrorScreen debug info", () => {
 
   it.each([
     {
-      name: "the failure when provided by the OneIdentity flow",
-      params: {
-        failure: {
-          type: "ONE_IDENTITY_LOGIN_FAILURE",
-          payload: {
-            error: { type: "key-generation", message: "some reason" }
-          }
-        }
-      },
+      name: "the received debug info",
+      params: { debugInfo: { message: "some reason", code: 500 } },
       expected: {
-        type: "key-generation",
         message: "some reason",
+        code: 500,
         flow: "auth",
         isCieSupported: true
       }
     },
     {
-      name: "no failure when reached from the legacy flow",
+      name: "only the flow when reached from the legacy flow",
       params: undefined,
       expected: { flow: "auth", isCieSupported: true }
     }
   ])("Should set $name as debug data", ({ params, expected }) => {
-    renderScreen(params as CieIdErrorScreenParams | undefined);
+    renderScreen(params);
 
     expect(mockUseDebugInfo).toHaveBeenLastCalledWith(expected);
   });
 });
 
 function renderScreen(params?: CieIdErrorScreenParams) {
-  const route: CieIdErrorScreenProps["route"] = {
+  type Props = Parameters<typeof CieIdErrorScreen>[0];
+  const route: Props["route"] = {
     key: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
     name: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
     params
   };
   return render(
     <CieIdErrorScreen
-      // The screen reads navigation from useIONavigation, which is mocked above
-      navigation={{} as CieIdErrorScreenProps["navigation"]}
+      // The screen reads navigation from useIONavigation, mocked above
+      navigation={{} as Props["navigation"]}
       route={route}
     />
   );

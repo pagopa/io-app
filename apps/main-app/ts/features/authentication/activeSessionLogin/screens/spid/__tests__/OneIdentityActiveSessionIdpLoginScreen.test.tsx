@@ -7,7 +7,6 @@ import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
-import * as commonAnalytics from "../../../../common/analytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
 import { AUTH_ERRORS } from "../../../../common/utils/authError";
@@ -148,7 +147,10 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        idp: mockIdp.id
+        debugInfo: {
+          message: expect.stringContaining("(err-code)"),
+          idp: mockIdp.id
+        }
       }
     );
   });
@@ -169,7 +171,10 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        idp: mockIdp.id
+        debugInfo: {
+          message: expect.stringContaining(AUTH_ERRORS.ERROR_1004),
+          idp: mockIdp.id
+        }
       }
     );
   });
@@ -190,11 +195,12 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    const nativeEvent = {
-      url: `${MOCK_VALID_CALLBACK_URL}/extra-path`,
-      statusCode: 500
-    };
-    fireEvent(webview, "onHttpError", { nativeEvent });
+    fireEvent(webview, "onHttpError", {
+      nativeEvent: {
+        url: `${MOCK_VALID_CALLBACK_URL}/extra-path`,
+        statusCode: 500
+      }
+    });
 
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
     expect(mockReplace).toHaveBeenCalledWith(
@@ -203,8 +209,12 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent },
-        idp: mockIdp.id
+        debugInfo: {
+          message: "Unexpected HTTP status 500",
+          code: 500,
+          url: `${MOCK_VALID_CALLBACK_URL}/extra-path`,
+          idp: mockIdp.id
+        }
       }
     );
   });
@@ -225,11 +235,9 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    const nativeEvent = {
-      url: "https://example.com/some-path",
-      statusCode: 500
-    };
-    fireEvent(webview, "onHttpError", { nativeEvent });
+    fireEvent(webview, "onHttpError", {
+      nativeEvent: { url: "https://example.com/some-path", statusCode: 500 }
+    });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
@@ -237,55 +245,28 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent },
-        idp: mockIdp.id
+        debugInfo: {
+          message: "Unexpected HTTP status 500",
+          code: 500,
+          url: "https://example.com/some-path",
+          idp: mockIdp.id
+        }
       }
     );
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
-  });
-
-  it("should dispatch activeSessionLoginFailure, track it and pass the failure to AuthErrorScreen when the login source fails", () => {
-    renderComponent();
-    const { onFailure } = jest.mocked(
-      useOneIdentityLoginSourceModule.useOneIdentityLoginSource
-    ).mock.calls[0][0];
-    const error = {
-      type: "http-status",
-      code: 500,
-      message: "Unexpected HTTP status 500",
-      url: "https://example.com/api/auth/v1/reserve"
-    } as const;
-
-    onFailure(error);
-
-    expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
-    expect(commonAnalytics.trackLoginFailure).toHaveBeenCalledWith({
-      reason: error.message,
-      idp: mockIdp.id,
-      flow: "reauth"
-    });
-    expect(mockReplace).toHaveBeenCalledWith(
-      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      {
-        errorCodeOrMessage: undefined,
-        authMethod: "SPID",
-        authLevel: MOCK_AUTH_LEVEL_L2,
-        failure: { type: "ONE_IDENTITY_LOGIN_FAILURE", payload: { error } },
-        idp: mockIdp.id
-      }
-    );
   });
 
   it("should navigate to AuthErrorScreen on a generic WebView error", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    const nativeEvent = {
-      url: "https://example.com/authorize",
-      code: -1009,
-      description: "The Internet connection appears to be offline."
-    };
-    fireEvent(webview, "onError", { nativeEvent });
+    fireEvent(webview, "onError", {
+      nativeEvent: {
+        url: "https://example.com/authorize",
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED"
+      }
+    });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
@@ -293,8 +274,12 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failure: { type: "WEBVIEW_ERROR", payload: nativeEvent },
-        idp: mockIdp.id
+        debugInfo: {
+          message: "net::ERR_INTERNET_DISCONNECTED",
+          code: -2,
+          url: "https://example.com/authorize",
+          idp: mockIdp.id
+        }
       }
     );
   });

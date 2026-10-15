@@ -6,7 +6,6 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
-import { OneIdentityLoginSourceError } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import {
   setFinishedActiveSessionLoginFlow,
@@ -17,43 +16,18 @@ import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { AuthLevel } from "../../../common/utils";
-import { getLoginFailureDebugInfo } from "../../../common/utils/loginFailureDebugInfo";
+import { LoginErrorDebugInfo } from "../../../common/utils/loginErrorDebugInfo";
 import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
 } from "../../idp/store/actions";
-import { findSpidErrorCodeDescription } from "../../idp/utils/spidErrorCode";
-
-/**
- * Login failures that carry no backend error code to show: WebView errors and
- * failures before reaching the IDP page.
- */
-export type AuthErrorFailure =
-  | {
-      payload: { code: number; description: string; url: string };
-      type: "WEBVIEW_ERROR";
-    }
-  | {
-      payload: { error: OneIdentityLoginSourceError };
-      type: "ONE_IDENTITY_LOGIN_FAILURE";
-    }
-  | {
-      payload: { statusCode: number; url: string };
-      type: "WEBVIEW_HTTP_ERROR";
-    };
 
 export type AuthErrorScreenProps = {
   authLevel: AuthLevel;
   authMethod: AuthMethod;
+  /** What went wrong, shown only in debug mode. */
+  debugInfo?: LoginErrorDebugInfo;
   errorCodeOrMessage?: string;
-  /**
-   * The WebView error that caused the failure, shown only in debug mode. Set
-   * only when there is no `errorCodeOrMessage`, i.e. the error doesn't come
-   * from the backend (e.g. the connection dropped).
-   */
-  failure?: AuthErrorFailure;
-  /** The SPID IdP the user logged in with, shown only in debug mode. */
-  idp?: string;
 };
 export type AuthMethod = "CIE" | "CIE_ID" | "SPID";
 
@@ -70,32 +44,13 @@ const AuthErrorScreen = () => {
         AuthErrorScreenProps
       >
     >();
-  const { errorCodeOrMessage, authMethod, authLevel, failure, idp } =
-    route.params;
+  const { errorCodeOrMessage, authMethod, authLevel, debugInfo } = route.params;
 
-  const debugInfo = useMemo(() => {
-    // SPID error codes come with an official description, which tells what
-    // went wrong when the screen only shows the generic error
-    const spidErrorDescription =
-      authMethod === "SPID" && !failure && errorCodeOrMessage
-        ? findSpidErrorCodeDescription(errorCodeOrMessage)
-        : undefined;
-
-    return {
-      ...getLoginFailureDebugInfo(
-        // Without a WebView failure the error comes from the backend, which
-        // provides either an error code or, when missing, an error message.
-        failure ?? {
-          type: "LOGIN_FAILURE",
-          payload: { code: errorCodeOrMessage, message: spidErrorDescription }
-        }
-      ),
-      authMethod,
-      authLevel,
-      ...(idp && { idp })
-    };
-  }, [errorCodeOrMessage, authMethod, authLevel, failure, idp]);
-  useDebugInfo(debugInfo);
+  const screenDebugInfo = useMemo(
+    () => ({ errorCodeOrMessage, authMethod, authLevel, ...debugInfo }),
+    [errorCodeOrMessage, authMethod, authLevel, debugInfo]
+  );
+  useDebugInfo(screenDebugInfo);
 
   const navigation =
     useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();

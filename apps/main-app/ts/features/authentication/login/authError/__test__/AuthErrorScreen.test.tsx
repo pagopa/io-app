@@ -55,7 +55,7 @@ describe("AuthErrorScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("should forward the backend error code and its SPID description to useDebugInfo for a mapped error", () => {
+  it("should forward the raw error code to useDebugInfo for a mapped error", () => {
     mockIsActiveSessionLogin(false);
     mockUseRoute.mockReturnValue({
       params: {
@@ -68,15 +68,13 @@ describe("AuthErrorScreen", () => {
     renderComponent();
 
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      type: "LOGIN_FAILURE",
-      code: "25",
-      message: "Processo di autenticazione annullato dall’utente",
+      errorCodeOrMessage: "25",
       authMethod: "SPID",
       authLevel: AUTH_LEVELS.L2
     });
   });
 
-  it("should forward the raw backend error to useDebugInfo for an unmapped error", () => {
+  it("should forward the raw error code to useDebugInfo for an unmapped error", () => {
     mockIsActiveSessionLogin(false);
     mockUseRoute.mockReturnValue({
       params: {
@@ -89,82 +87,30 @@ describe("AuthErrorScreen", () => {
     renderComponent();
 
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      type: "LOGIN_FAILURE",
-      code: "some_unmapped_raw_error",
+      errorCodeOrMessage: "some_unmapped_raw_error",
       authMethod: "SPID",
       authLevel: AUTH_LEVELS.L2
     });
   });
 
-  it("should forward the flattened WebView failure to useDebugInfo when the error doesn't come from the backend", () => {
+  it("should add the received debug info to useDebugInfo", () => {
     mockIsActiveSessionLogin(false);
-    const failure = {
-      type: "WEBVIEW_ERROR",
-      payload: {
-        url: "https://example.com/authorize",
-        code: -1009,
-        description: "The Internet connection appears to be offline."
-      }
+    const debugInfo = {
+      message: "net::ERR_INTERNET_DISCONNECTED",
+      code: -2,
+      url: "https://example.com/authorize"
     };
     mockUseRoute.mockReturnValue({
-      params: {
-        authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3,
-        failure
-      }
+      params: { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, debugInfo }
     });
 
     renderComponent();
 
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      type: "WEBVIEW_ERROR",
-      code: -1009,
-      message: "The Internet connection appears to be offline.",
-      url: "https://example.com/authorize",
+      errorCodeOrMessage: undefined,
       authMethod: "CIE",
-      authLevel: AUTH_LEVELS.L3
-    });
-  });
-
-  it("should forward the SPID IdP to useDebugInfo", () => {
-    mockIsActiveSessionLogin(false);
-    mockUseRoute.mockReturnValue({
-      params: {
-        errorCodeOrMessage: "some_unmapped_raw_error",
-        authMethod: "SPID",
-        authLevel: AUTH_LEVELS.L2,
-        idp: "posteid"
-      }
-    });
-
-    renderComponent();
-
-    expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      type: "LOGIN_FAILURE",
-      code: "some_unmapped_raw_error",
-      authMethod: "SPID",
-      authLevel: AUTH_LEVELS.L2,
-      idp: "posteid"
-    });
-  });
-
-  it("should not add the SPID description to useDebugInfo for a non-SPID login", () => {
-    mockIsActiveSessionLogin(false);
-    mockUseRoute.mockReturnValue({
-      params: {
-        errorCodeOrMessage: "22",
-        authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3
-      }
-    });
-
-    renderComponent();
-
-    expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      type: "LOGIN_FAILURE",
-      code: "22",
-      authMethod: "CIE",
-      authLevel: AUTH_LEVELS.L3
+      authLevel: AUTH_LEVELS.L3,
+      ...debugInfo
     });
   });
 

@@ -174,19 +174,15 @@ describe("useOneIdentityLoginSource", () => {
 
     const { result, onFailure } = setupTest();
 
-    const expectedError = {
-      type: "http-status",
-      code: 500,
-      message: "Unexpected HTTP status 500",
-      url: `${apiUrlPrefix}/api/auth/v1/reserve`
-    };
     await waitFor(() => {
-      expect(result.current.loginSourceState).toEqual({
-        status: "failure",
-        error: expectedError
-      });
+      expect(result.current.loginSourceState.status).toBe("failure");
     });
-    expect(onFailure).toHaveBeenCalledWith(expectedError);
+    // The reason sent to analytics stays the plain error, while the debug
+    // info tells which request failed
+    expect(onFailure).toHaveBeenCalledWith("Unexpected HTTP status 500", {
+      message: "Reserve request failed: Unexpected HTTP status 500",
+      url: `${apiUrlPrefix}/api/auth/v1/reserve`
+    });
   });
 
   it("should trigger a new reserve request when generateLoginSource is called after a successful response", async () => {
@@ -268,18 +264,14 @@ describe("useOneIdentityLoginSource", () => {
     await waitFor(() => {
       expect(result.current.loginSourceState).toEqual({
         status: "failure",
-        error: {
-          type: "key-generation",
-          message: "Unable to generate ephemeral public key"
-        }
+        error: "Unable to generate ephemeral public key"
       });
     });
 
     expect(mockRetriableFetch).not.toHaveBeenCalled();
-    expect(onFailure).toHaveBeenCalledWith({
-      type: "key-generation",
-      message: "Unable to generate ephemeral public key"
-    });
+    expect(onFailure).toHaveBeenCalledWith(
+      "Unable to generate ephemeral public key"
+    );
   });
 
   it("should send LV as login_type in the reserve body when fast login is enabled", async () => {
@@ -406,9 +398,8 @@ describe("useOneIdentityLoginSource", () => {
 
       expect(blocked).toBe(true);
       await waitFor(() => {
-        expect(onFailure).toHaveBeenCalledWith({
-          type: "saml-verification",
-          message: "mismatch",
+        expect(onFailure).toHaveBeenCalledWith("mismatch", {
+          message: "SAML verification failed: mismatch",
           url
         });
       });
@@ -492,12 +483,8 @@ describe("useOneIdentityLoginSource", () => {
           userInfo: { error: "REDIRECTING_ERROR", statusCode: 500 },
           code: "NativeRedirectError"
         } as unknown as LoginUtilsError,
-        expectedError: {
-          type: "native-redirects",
-          code: "NativeRedirectError",
-          message:
-            'NativeRedirectError {"error":"REDIRECTING_ERROR","statusCode":500}'
-        }
+        expectedReason:
+          'NativeRedirectError {"error":"REDIRECTING_ERROR","statusCode":500}'
       },
       {
         name: "a native error without HTTP status",
@@ -505,33 +492,26 @@ describe("useOneIdentityLoginSource", () => {
           userInfo: { error: "REDIRECTING_ERROR" },
           code: "NativeRedirectError"
         } as unknown as LoginUtilsError,
-        expectedError: {
-          type: "native-redirects",
-          code: "NativeRedirectError",
-          message: 'NativeRedirectError {"error":"REDIRECTING_ERROR"}'
-        }
+        expectedReason: 'NativeRedirectError {"error":"REDIRECTING_ERROR"}'
       },
       {
         name: "a SAML verification error",
         error: new Error(
           "Mismatch between local and remote ID parameter content"
         ),
-        expectedError: {
-          type: "native-redirects",
-          // unknownToString includes the stack trace for Error instances
-          message: expect.stringContaining(
-            "Error: Mismatch between local and remote ID parameter content"
-          )
-        }
+        // unknownToString includes the stack trace for Error instances
+        expectedReason: expect.stringContaining(
+          "Error: Mismatch between local and remote ID parameter content"
+        )
       },
       {
         name: "an unknown error",
         error: "unexpected",
-        expectedError: { type: "native-redirects", message: "unexpected" }
+        expectedReason: "unexpected"
       }
     ])(
       "should fail with a descriptive reason on $name",
-      async ({ error, expectedError }) => {
+      async ({ error, expectedReason }) => {
         jest
           .mocked(followNativeRedirectsAndVerifySaml)
           .mockRejectedValue(error);
@@ -543,10 +523,10 @@ describe("useOneIdentityLoginSource", () => {
         await waitFor(() => {
           expect(result.current.loginSourceState).toEqual({
             status: "failure",
-            error: expectedError
+            error: expectedReason
           });
         });
-        expect(onFailure).toHaveBeenCalledWith(expectedError);
+        expect(onFailure).toHaveBeenCalledWith(expectedReason);
       }
     );
 

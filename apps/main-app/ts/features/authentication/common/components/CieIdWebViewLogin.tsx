@@ -8,10 +8,7 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 
 import { useIOStore } from "../../../../store/hooks";
-import {
-  OneIdentityLoginSourceError,
-  useOneIdentityLoginSource
-} from "../../../lollipop/hooks/useOneIdentityLoginSource";
+import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
 import { getCieIdpId, isAuthenticationUrl } from "../../login/cie/utils";
 import { useCieIdApp } from "../hooks/useCieIdApp";
@@ -23,24 +20,31 @@ import {
   originSchemasWhiteList
 } from "../utils/cie";
 import { LoginType } from "../utils/index";
+import {
+  getWebViewErrorDebugInfo,
+  LoginErrorDebugInfo
+} from "../utils/loginErrorDebugInfo";
 
 export type CieIdWebViewLoginEvent =
-  | {
-      /** `code` and `description` come from the native WebView error. */
-      payload: { code: number; description: string; url: string };
-      type: "WEBVIEW_ERROR";
-    }
   | {
       payload: { code?: string; message?: string; reason: string };
       type: "LOGIN_FAILURE";
     }
   | {
-      payload: { error: OneIdentityLoginSourceError };
-      type: "ONE_IDENTITY_LOGIN_FAILURE";
+      payload: {
+        debugInfo: LoginErrorDebugInfo;
+        statusCode: number;
+        url: string;
+      };
+      type: "WEBVIEW_HTTP_ERROR";
     }
   | {
-      payload: { statusCode: number; url: string };
-      type: "WEBVIEW_HTTP_ERROR";
+      payload: { debugInfo: LoginErrorDebugInfo; url: string };
+      type: "WEBVIEW_ERROR";
+    }
+  | {
+      payload: { debugInfo?: LoginErrorDebugInfo; reason: string };
+      type: "ONE_IDENTITY_LOGIN_FAILURE";
     }
   | { payload: { token: string }; type: "LOGIN_SUCCESS" }
   | { payload: { url: string }; type: "NOT_ALLOWED_URL" }
@@ -101,10 +105,10 @@ export const CieIdWebViewLogin = memo(
     });
 
     const handleFailure = useCallback(
-      (error: OneIdentityLoginSourceError) => {
+      (reason: string, debugInfo?: LoginErrorDebugInfo) => {
         onEvent({
           type: "ONE_IDENTITY_LOGIN_FAILURE",
-          payload: { error }
+          payload: { reason, debugInfo }
         });
       },
       [onEvent]
@@ -160,7 +164,8 @@ export const CieIdWebViewLogin = memo(
             type: "WEBVIEW_HTTP_ERROR",
             payload: {
               url: nativeEvent.url,
-              statusCode: nativeEvent.statusCode
+              statusCode: nativeEvent.statusCode,
+              debugInfo: getWebViewErrorDebugInfo(event)
             }
           });
           return;
@@ -170,8 +175,7 @@ export const CieIdWebViewLogin = memo(
           type: "WEBVIEW_ERROR",
           payload: {
             url: nativeEvent.url,
-            code: nativeEvent.code,
-            description: nativeEvent.description
+            debugInfo: getWebViewErrorDebugInfo(event)
           }
         });
       },

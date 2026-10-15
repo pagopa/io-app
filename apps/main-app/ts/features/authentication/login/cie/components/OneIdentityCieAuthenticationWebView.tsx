@@ -16,18 +16,15 @@ import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
-import {
-  OneIdentityLoginSourceError,
-  useOneIdentityLoginSource
-} from "../../../../lollipop/hooks/useOneIdentityLoginSource";
+import { useOneIdentityLoginSource } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { oneIdentityCieNativeRedirectsEnabledSelector } from "../../../common/store/selectors/remoteConfig";
 import { AUTH_LEVELS, onLoginUriChanged } from "../../../common/utils";
 import { defaultUserAgent } from "../../../common/utils/cie";
 import { LoginType } from "../../../common/utils/index";
 import {
-  getLoginFailureDebugInfo,
-  LoginFailure
-} from "../../../common/utils/loginFailureDebugInfo";
+  getWebViewErrorDebugInfo,
+  LoginErrorDebugInfo
+} from "../../../common/utils/loginErrorDebugInfo";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieIdpId } from "../utils";
 
@@ -50,7 +47,7 @@ const isAuthUrl = (url: string) =>
  * @returns `true` if the page title corresponds to an error page, `false`
  *   otherwise.
  */
-const isErrorPage = (title?: string): title is string => {
+const isErrorPage = (title?: string): boolean => {
   if (!title) {
     return false;
   }
@@ -64,7 +61,7 @@ export type OneIdentityCieAuthenticationWebViewProps = {
 };
 
 type WebViewState =
-  | { failure: LoginFailure; status: "failure" }
+  | { debugInfo?: LoginErrorDebugInfo; reason: string; status: "failure" }
   | { status: "authenticating" };
 
 export const OneIdentityCieAuthenticationWebView = ({
@@ -82,22 +79,12 @@ export const OneIdentityCieAuthenticationWebView = ({
     status: "authenticating"
   });
 
-  /**
-   * @param reason The failure description sent to analytics.
-   * @param failure The failure details shown in debug mode.
-   */
-  const handleFailure = useCallback((reason: string, failure: LoginFailure) => {
-    setWebViewState({ status: "failure", failure });
-    trackLoginError("cie", new Error(reason));
-  }, []);
-
-  const handleLoginSourceFailure = useCallback(
-    (error: OneIdentityLoginSourceError) =>
-      handleFailure(error.message, {
-        type: "ONE_IDENTITY_LOGIN_FAILURE",
-        payload: { error }
-      }),
-    [handleFailure]
+  const handleFailure = useCallback(
+    (reason: string, debugInfo?: LoginErrorDebugInfo) => {
+      setWebViewState({ status: "failure", reason, debugInfo });
+      trackLoginError("cie", new Error(reason));
+    },
+    []
   );
 
   const {
@@ -108,15 +95,15 @@ export const OneIdentityCieAuthenticationWebView = ({
     flow,
     followRedirectsNatively,
     idpId: getCieIdpId(useUat),
-    onFailure: handleLoginSourceFailure,
+    onFailure: handleFailure,
     minAuthLevel: AUTH_LEVELS.L3
   });
 
   const handleLoadEnd = (event: WebViewErrorEvent | WebViewNavigationEvent) => {
-    const { title, url } = event.nativeEvent;
+    const title = event.nativeEvent.title;
 
     if (isErrorPage(title)) {
-      handleFailure(title, { type: "ERROR_PAGE", payload: { title, url } });
+      handleFailure(title);
       return;
     }
   };
@@ -124,10 +111,7 @@ export const OneIdentityCieAuthenticationWebView = ({
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
       const reason = `Login failed with code (${code}) and message (${message})`;
-      handleFailure(reason, {
-        type: "LOGIN_FAILURE",
-        payload: { code, message }
-      });
+      handleFailure(reason);
     },
     [handleFailure]
   );
@@ -169,23 +153,13 @@ export const OneIdentityCieAuthenticationWebView = ({
   const handleError = useCallback(
     (event: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
       trackLoginError("cie", event);
-      const { nativeEvent } = event;
-      const { url } = nativeEvent;
+      const nativeEvent = event.nativeEvent;
+      const reason =
+        "statusCode" in nativeEvent
+          ? `HTTP error ${nativeEvent.statusCode} on ${nativeEvent.url}`
+          : `WebView error on ${nativeEvent.url}`;
 
-      if ("statusCode" in nativeEvent) {
-        const { statusCode } = nativeEvent;
-        handleFailure(`HTTP error ${statusCode} on ${url}`, {
-          type: "WEBVIEW_HTTP_ERROR",
-          payload: { statusCode, url }
-        });
-        return;
-      }
-
-      const { code, description } = nativeEvent;
-      handleFailure(`WebView error ${code} (${description}) on ${url}`, {
-        type: "WEBVIEW_ERROR",
-        payload: { code, description, url }
-      });
+      handleFailure(reason, getWebViewErrorDebugInfo(event));
     },
     [handleFailure]
   );
@@ -199,15 +173,14 @@ export const OneIdentityCieAuthenticationWebView = ({
     navigation.goBack();
   }, [navigation]);
 
+  // Set only on failure, so the debug indicator doesn't show up while
+  // authenticating
   const debugInfo = useMemo(() => {
     if (webViewState.status === "failure") {
-      return getLoginFailureDebugInfo(webViewState.failure);
+      return webViewState.debugInfo ?? { message: webViewState.reason };
     }
     if (loginSourceState.status === "failure") {
-      return getLoginFailureDebugInfo({
-        type: "ONE_IDENTITY_LOGIN_FAILURE",
-        payload: { error: loginSourceState.error }
-      });
+      return { message: loginSourceState.error };
     }
     return {};
   }, [webViewState, loginSourceState]);

@@ -77,10 +77,7 @@ describe("CieIdWebViewLogin", () => {
 
     it("should render nothing when status is failure", () => {
       mockUseOneIdentityLoginSource({
-        loginSourceState: {
-          status: "failure",
-          error: { type: "key-generation", message: "some error" }
-        }
+        loginSourceState: { status: "failure", error: "some error" }
       });
 
       const { queryByTestId } = render(
@@ -113,23 +110,21 @@ describe("CieIdWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
     });
 
-    it("should call onEvent with ONE_IDENTITY_LOGIN_FAILURE when the login source fails", () => {
+    it("should call onEvent with ONE_IDENTITY_LOGIN_FAILURE and the debug info when the login source fails", () => {
       render(<CieIdWebViewLogin isUat={false} onEvent={onEvent} />);
       const { onFailure } = jest.mocked(
         useOneIdentityLoginSourceModule.useOneIdentityLoginSource
       ).mock.calls[0][0];
-      const error = {
-        type: "http-status",
-        code: 500,
-        message: "Unexpected HTTP status 500",
+      const debugInfo = {
+        message: "Reserve request failed: Unexpected HTTP status 500",
         url: "https://example.com/api/auth/v1/reserve"
-      } as const;
+      };
 
-      onFailure(error);
+      onFailure("Unexpected HTTP status 500", debugInfo);
 
       expect(onEvent).toHaveBeenCalledWith({
         type: "ONE_IDENTITY_LOGIN_FAILURE",
-        payload: { error }
+        payload: { reason: "Unexpected HTTP status 500", debugInfo }
       });
     });
 
@@ -141,8 +136,8 @@ describe("CieIdWebViewLogin", () => {
       const webview = getByTestId("cie-id-webview");
       const nativeEvent = {
         url: "https://example.com/error",
-        code: -1009,
-        description: "The Internet connection appears to be offline."
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED"
       };
       fireEvent(webview, "onError", { nativeEvent });
 
@@ -150,8 +145,11 @@ describe("CieIdWebViewLogin", () => {
         type: "WEBVIEW_ERROR",
         payload: {
           url: nativeEvent.url,
-          code: nativeEvent.code,
-          description: nativeEvent.description
+          debugInfo: {
+            message: nativeEvent.description,
+            code: nativeEvent.code,
+            url: nativeEvent.url
+          }
         }
       });
     });
@@ -170,7 +168,15 @@ describe("CieIdWebViewLogin", () => {
 
       expect(onEvent).toHaveBeenCalledWith({
         type: "WEBVIEW_HTTP_ERROR",
-        payload: { url: nativeEvent.url, statusCode: nativeEvent.statusCode }
+        payload: {
+          url: nativeEvent.url,
+          statusCode: nativeEvent.statusCode,
+          debugInfo: {
+            message: `Unexpected HTTP status ${nativeEvent.statusCode}`,
+            code: nativeEvent.statusCode,
+            url: nativeEvent.url
+          }
+        }
       });
     });
   });

@@ -1,7 +1,4 @@
-import {
-  findSpidErrorCodeDescription,
-  getSpidErrorCodeDescription
-} from "../spidErrorCode";
+import { getSpidErrorCodeDescription } from "../spidErrorCode";
 
 describe("getSpidErrorCodeDescription", () => {
   it.each([
@@ -24,16 +21,4 @@ describe("getSpidErrorCodeDescription", () => {
       expect(getSpidErrorCodeDescription(errorCode)).toBe("N/A");
     }
   );
-});
-
-describe("findSpidErrorCodeDescription", () => {
-  it("should return the official description of a SPID error code", () => {
-    expect(findSpidErrorCodeDescription("25")).toBe(
-      "Processo di autenticazione annullato dall’utente"
-    );
-  });
-
-  it("should return undefined for a code that is not a SPID one", () => {
-    expect(findSpidErrorCodeDescription("not-a-spid-code")).toBeUndefined();
-  });
 });

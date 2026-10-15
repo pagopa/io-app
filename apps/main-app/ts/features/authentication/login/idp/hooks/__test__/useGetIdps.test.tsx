@@ -163,11 +163,7 @@ describe("useGetIdps", () => {
 
     expect(result.current.state).toEqual({
       status: "failure",
-      error: {
-        type: "http-status",
-        code: 500,
-        message: "Unexpected HTTP status 500"
-      },
+      error: "Unexpected HTTP status 500",
       url: MOCK_IDPS_URL
     });
   });
@@ -186,7 +182,7 @@ describe("useGetIdps", () => {
 
     expect(result.current.state).toEqual({
       status: "failure",
-      error: { type: "network-error", message: "Network Error" },
+      error: "Network Error",
       url: MOCK_IDPS_URL
     });
   });
@@ -206,10 +202,7 @@ describe("useGetIdps", () => {
 
     expect(result.current.state).toEqual({
       status: "failure",
-      error: {
-        type: "invalid-schema",
-        message: expect.stringContaining("Invalid input")
-      },
+      error: expect.stringContaining("Invalid input"),
       url: MOCK_IDPS_URL
     });
   });

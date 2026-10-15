@@ -18,6 +18,7 @@ import {
   LOGIN_TYPES
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
+import { CANCELLED_LOGIN_DEBUG_INFO } from "../../../common/utils/loginErrorDebugInfo";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
 import {
@@ -70,7 +71,7 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
         flow: LOGIN_TYPES.REAUTH,
         "error message": message
       });
-      navigateToAuthErrorScreen(errorCodeOrMessage);
+      navigateToAuthErrorScreen(errorCodeOrMessage, { message: reason });
     },
     [dispatch, navigateToAuthErrorScreen]
   );
@@ -85,10 +86,8 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
   const handleEvent = useCallback(
     (event: CieIdWebViewLoginEvent) => {
       switch (event.type) {
-        case "CANCEL":
-        case "ONE_IDENTITY_LOGIN_FAILURE":
-        case "WEBVIEW_ERROR": {
-          navigateToCieIdAuthenticationError(event);
+        case "CANCEL": {
+          navigateToCieIdAuthenticationError(CANCELLED_LOGIN_DEBUG_INFO);
           break;
         }
         case "LOGIN_FAILURE": {
@@ -106,6 +105,15 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
           navigateToCieIdAuthUrlError(url);
           break;
         }
+        case "ONE_IDENTITY_LOGIN_FAILURE": {
+          const { debugInfo, reason } = event.payload;
+          navigateToCieIdAuthenticationError(debugInfo ?? { message: reason });
+          break;
+        }
+        case "WEBVIEW_ERROR": {
+          navigateToCieIdAuthenticationError(event.payload.debugInfo);
+          break;
+        }
         case "WEBVIEW_HTTP_ERROR": {
           const { url, statusCode } = event.payload;
 
@@ -113,7 +121,7 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
           } else if (statusCode !== 403) {
-            navigateToAuthErrorScreen(undefined, event);
+            navigateToAuthErrorScreen(undefined, event.payload.debugInfo);
           }
           break;
         }

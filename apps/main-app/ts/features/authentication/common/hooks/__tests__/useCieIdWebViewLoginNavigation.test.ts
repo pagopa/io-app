@@ -31,28 +31,18 @@ describe("useCieIdWebViewLoginNavigation", () => {
     jest.clearAllMocks();
   });
 
-  it("navigateToCieIdAuthenticationError should replace with CIE_ID_ERROR and the failure param", () => {
+  it("navigateToCieIdAuthenticationError should replace with CIE_ID_ERROR and the debug info", () => {
     const { result } = renderHook(() =>
       useCieIdWebViewLoginNavigation({ authLevel })
     );
 
     result.current.navigateToCieIdAuthenticationError({
-      type: "ONE_IDENTITY_LOGIN_FAILURE",
-      payload: {
-        error: { type: "key-generation", message: "some reason" }
-      }
+      message: "some reason"
     });
 
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
-      params: {
-        failure: {
-          type: "ONE_IDENTITY_LOGIN_FAILURE",
-          payload: {
-            error: { type: "key-generation", message: "some reason" }
-          }
-        }
-      }
+      params: { debugInfo: { message: "some reason" } }
     });
   });
 
@@ -74,36 +64,18 @@ describe("useCieIdWebViewLoginNavigation", () => {
       useCieIdWebViewLoginNavigation({ authLevel })
     );
 
-    result.current.navigateToAuthErrorScreen("err-code");
+    result.current.navigateToAuthErrorScreen("err-code", {
+      message: "some reason"
+    });
 
     expect(mockDispatch).toHaveBeenCalledWith(
       StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
         errorCodeOrMessage: "err-code",
         authMethod: "CIE_ID",
-        authLevel
+        authLevel,
+        debugInfo: { message: "some reason" }
       })
     );
     expect(mockReplace).not.toHaveBeenCalled();
-  });
-
-  it("navigateToAuthErrorScreen should forward the WebView failure when there is no error code", () => {
-    const { result } = renderHook(() =>
-      useCieIdWebViewLoginNavigation({ authLevel })
-    );
-    const failure = {
-      type: "WEBVIEW_HTTP_ERROR",
-      payload: { url: "https://other.example.com", statusCode: 500 }
-    } as const;
-
-    result.current.navigateToAuthErrorScreen(undefined, failure);
-
-    expect(mockDispatch).toHaveBeenCalledWith(
-      StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-        errorCodeOrMessage: undefined,
-        authMethod: "CIE_ID",
-        authLevel,
-        failure
-      })
-    );
   });
 });

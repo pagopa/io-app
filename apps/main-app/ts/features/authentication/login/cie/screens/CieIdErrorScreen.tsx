@@ -17,10 +17,7 @@ import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpSelected } from "../../../common/store/actions";
-import {
-  getLoginFailureDebugInfo,
-  LoginFailure
-} from "../../../common/utils/loginFailureDebugInfo";
+import { LoginErrorDebugInfo } from "../../../common/utils/loginErrorDebugInfo";
 import useNavigateToLoginMethod, {
   IdpCIE
 } from "../../hooks/useNavigateToLoginMethod";
@@ -33,10 +30,10 @@ import {
 
 export type CieIdErrorScreenParams = {
   /**
-   * The CieID WebView event that caused the error, shown only in debug mode.
-   * Missing when the screen is reached from the legacy login flow.
+   * What went wrong, shown only in debug mode. Missing when the screen is
+   * reached from the legacy login flow.
    */
-  failure?: LoginFailure;
+  debugInfo?: LoginErrorDebugInfo;
 };
 
 type CieIdErrorScreenProps = IOStackNavigationRouteProps<
@@ -49,17 +46,17 @@ const CieIdErrorScreen = ({ route }: CieIdErrorScreenProps) => {
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const { replace, navigate, popToTop } = useIONavigation();
-  const failure = route.params?.failure;
+  const debugInfo = route.params?.debugInfo;
 
-  const debugInfo = useMemo(
+  const screenDebugInfo = useMemo(
     () => ({
-      ...(failure && getLoginFailureDebugInfo(failure)),
+      ...debugInfo,
       flow: isActiveSessionLogin ? "reauth" : "auth",
       isCieSupported
     }),
-    [failure, isActiveSessionLogin, isCieSupported]
+    [debugInfo, isActiveSessionLogin, isCieSupported]
   );
-  useDebugInfo(debugInfo);
+  useDebugInfo(screenDebugInfo);
 
   useAvoidHardwareBackButton();
 

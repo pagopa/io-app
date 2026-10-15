@@ -22,7 +22,7 @@ import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { AUTH_LEVELS, LOGIN_TYPES } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { LoginType } from "../../../common/utils/index";
-import { AuthErrorFailure } from "../../authError/screens/AuthErrorScreen";
+import { LoginErrorDebugInfo } from "../../../common/utils/loginErrorDebugInfo";
 
 type OneIdentityCieAuthorizationWebViewProps = {
   authorizationUrl: string;
@@ -85,12 +85,12 @@ const OneIdentityCieAuthorizationWebViewContent = ({
   });
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage?: string, failure?: AuthErrorFailure) =>
+    (errorCodeOrMessage: string | undefined, debugInfo: LoginErrorDebugInfo) =>
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
         errorCodeOrMessage,
         authMethod: "CIE",
         authLevel: AUTH_LEVELS.L3,
-        failure
+        debugInfo
       }),
     [navigation]
   );
@@ -101,8 +101,12 @@ const OneIdentityCieAuthorizationWebViewContent = ({
       {
         code,
         message,
-        failure
-      }: { code?: string; failure?: AuthErrorFailure; message?: string } = {}
+        debugInfo = { message: reason }
+      }: {
+        code?: string;
+        debugInfo?: LoginErrorDebugInfo;
+        message?: string;
+      } = {}
     ) => {
       if (code === AUTH_ERRORS.ERROR_22) {
         trackLoginCieDataSharingError();
@@ -115,7 +119,7 @@ const OneIdentityCieAuthorizationWebViewContent = ({
         })
       );
       const errorCodeOrMessage = code ?? message;
-      navigateToAuthErrorScreen(errorCodeOrMessage, failure);
+      navigateToAuthErrorScreen(errorCodeOrMessage, debugInfo);
     },
     [dispatch, navigateToAuthErrorScreen]
   );
@@ -141,17 +145,15 @@ const OneIdentityCieAuthorizationWebViewContent = ({
           break;
         }
         case "WEBVIEW_ERROR": {
-          const { url } = event.payload;
-          handleLoginFailure(`WebView error for URL ${url}`, {
-            failure: event
-          });
+          const { url, debugInfo } = event.payload;
+          handleLoginFailure(`WebView error for URL ${url}`, { debugInfo });
           break;
         }
         case "WEBVIEW_HTTP_ERROR": {
-          const { statusCode, url } = event.payload;
+          const { statusCode, url, debugInfo } = event.payload;
           handleLoginFailure(
             `WebView HTTP error ${statusCode} for URL ${url}`,
-            { failure: event }
+            { debugInfo }
           );
           break;
         }

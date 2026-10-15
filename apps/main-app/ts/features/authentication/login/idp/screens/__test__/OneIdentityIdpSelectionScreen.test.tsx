@@ -86,15 +86,11 @@ describe("OneIdentityIdpSelectionScreen", () => {
     ).toBeTruthy();
   });
 
-  it("should forward the error and URL to useDebugInfo when the fetch fails", () => {
+  it("should forward the error message and URL to useDebugInfo when the fetch fails", () => {
     mockUseGetIdps.mockReturnValue({
       state: {
         status: "failure",
-        error: {
-          type: "http-status",
-          code: 500,
-          message: "Unexpected HTTP status 500"
-        },
+        error: "IDP_LIST_FETCH_ERROR",
         url: "https://example.com/idps.json"
       }
     });
@@ -102,9 +98,7 @@ describe("OneIdentityIdpSelectionScreen", () => {
     renderComponent();
 
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      type: "http-status",
-      code: 500,
-      message: "Unexpected HTTP status 500",
+      message: "IDP_LIST_FETCH_ERROR",
       url: "https://example.com/idps.json"
     });
   });

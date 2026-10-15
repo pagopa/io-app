@@ -151,7 +151,10 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        idp: mockIdp.id
+        debugInfo: {
+          message: expect.stringContaining("(err-code)"),
+          idp: mockIdp.id
+        }
       }
     );
   });
@@ -160,11 +163,12 @@ describe("OneIdentityIdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    const nativeEvent = {
-      url: `${apiUrlPrefix}/some-path`,
-      statusCode: 403
-    };
-    fireEvent(webview, "onHttpError", { nativeEvent });
+    fireEvent(webview, "onHttpError", {
+      nativeEvent: {
+        url: `${apiUrlPrefix}/some-path`,
+        statusCode: 403
+      }
+    });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
@@ -172,8 +176,12 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent },
-        idp: mockIdp.id
+        debugInfo: {
+          message: "Unexpected HTTP status 403",
+          code: 403,
+          url: `${apiUrlPrefix}/some-path`,
+          idp: mockIdp.id
+        }
       }
     );
   });
@@ -196,11 +204,12 @@ describe("OneIdentityIdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    const nativeEvent = {
-      url: `${apiUrlPrefix}/some-path`,
-      statusCode: 500
-    };
-    fireEvent(webview, "onHttpError", { nativeEvent });
+    fireEvent(webview, "onHttpError", {
+      nativeEvent: {
+        url: `${apiUrlPrefix}/some-path`,
+        statusCode: 500
+      }
+    });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
@@ -208,29 +217,31 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent },
-        idp: mockIdp.id
+        debugInfo: {
+          message: "Unexpected HTTP status 500",
+          code: 500,
+          url: `${apiUrlPrefix}/some-path`,
+          idp: mockIdp.id
+        }
       }
     );
   });
 
-  it("should dispatch loginFailure and pass the failure to AuthErrorScreen when the login source fails", () => {
+  it("should keep the analytics reason and pass the debug info to AuthErrorScreen when the login source fails", () => {
     renderComponent();
     const { onFailure } = jest.mocked(
       useOneIdentityLoginSourceModule.useOneIdentityLoginSource
     ).mock.calls[0][0];
-    const error = {
-      type: "http-status",
-      code: 500,
-      message: "Unexpected HTTP status 500",
+    const debugInfo = {
+      message: "Reserve request failed: Unexpected HTTP status 500",
       url: "https://example.com/api/auth/v1/reserve"
-    } as const;
+    };
 
-    onFailure(error);
+    onFailure("Unexpected HTTP status 500", debugInfo);
 
     expect(mockDispatch).toHaveBeenCalledWith(
       loginFailure({
-        error: new Error(error.message),
+        error: new Error("Unexpected HTTP status 500"),
         idp: mockIdp.id as keyof IdpData
       })
     );
@@ -240,8 +251,7 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failure: { type: "ONE_IDENTITY_LOGIN_FAILURE", payload: { error } },
-        idp: mockIdp.id
+        debugInfo: { ...debugInfo, idp: mockIdp.id }
       }
     );
   });
@@ -250,12 +260,13 @@ describe("OneIdentityIdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    const nativeEvent = {
-      url: "https://example.com/authorize",
-      code: -1009,
-      description: "The Internet connection appears to be offline."
-    };
-    fireEvent(webview, "onError", { nativeEvent });
+    fireEvent(webview, "onError", {
+      nativeEvent: {
+        url: "https://example.com/authorize",
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED"
+      }
+    });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
@@ -263,8 +274,12 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failure: { type: "WEBVIEW_ERROR", payload: nativeEvent },
-        idp: mockIdp.id
+        debugInfo: {
+          message: "net::ERR_INTERNET_DISCONNECTED",
+          code: -2,
+          url: "https://example.com/authorize",
+          idp: mockIdp.id
+        }
       }
     );
   });

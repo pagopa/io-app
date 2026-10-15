@@ -24,7 +24,7 @@ import {
   LOGIN_TYPES
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
-import { AuthErrorFailure } from "../../../login/authError/screens/AuthErrorScreen";
+import { LoginErrorDebugInfo } from "../../../common/utils/loginErrorDebugInfo";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
@@ -79,15 +79,17 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage?: string, failure?: AuthErrorFailure) => {
+    (
+      errorCodeOrMessage: string | undefined,
+      debugInfo: LoginErrorDebugInfo
+    ) => {
       // `replace` drops the failed login webview, so it doesn't stay
       // mounted behind the error screen.
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
         errorCodeOrMessage,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failure,
-        idp: idp.id
+        debugInfo: { ...debugInfo, idp: idp.id }
       });
     },
     [navigation, idp.id]
@@ -96,11 +98,9 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
   const handleLoginFailure = useCallback(
     (
       reason: string,
-      {
-        code,
-        message,
-        failure
-      }: { code?: string; failure?: AuthErrorFailure; message?: string } = {}
+      code?: string,
+      message?: string,
+      debugInfo: LoginErrorDebugInfo = { message: reason }
     ) => {
       if (code !== AUTH_ERRORS.ERROR_1004) {
         dispatch(activeSessionLoginFailure());
@@ -110,7 +110,7 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
         idp: idp.id as keyof IdpData,
         flow: LOGIN_TYPES.REAUTH
       });
-      navigateToAuthErrorScreen(code || message, failure);
+      navigateToAuthErrorScreen(code || message, debugInfo);
     },
     [dispatch, idp.id, navigateToAuthErrorScreen]
   );
@@ -126,8 +126,8 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
     (event: WebViewLoginEvent) => {
       switch (event.type) {
         case "LOGIN_FAILURE": {
-          const { code, message, reason } = event.payload;
-          handleLoginFailure(reason, { code, message });
+          const { code, message, reason, debugInfo } = event.payload;
+          handleLoginFailure(reason, code, message, debugInfo);
           break;
         }
         case "LOGIN_SUCCESS": {
@@ -135,12 +135,8 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
           handleLoginSuccess(token);
           break;
         }
-        case "ONE_IDENTITY_LOGIN_FAILURE": {
-          handleLoginFailure(event.payload.error.message, { failure: event });
-          break;
-        }
         case "WEBVIEW_ERROR": {
-          navigateToAuthErrorScreen(undefined, event);
+          navigateToAuthErrorScreen(undefined, event.payload.debugInfo);
           break;
         }
         case "WEBVIEW_HTTP_ERROR": {
@@ -150,7 +146,7 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
           } else if (statusCode !== 403) {
-            navigateToAuthErrorScreen(undefined, event);
+            navigateToAuthErrorScreen(undefined, event.payload.debugInfo);
           }
           break;
         }

@@ -12,20 +12,27 @@ import { LoadingScreenContent } from "../../../../components/screens/LoadingScre
 import { LOGIN_TYPES, onLoginUriChanged } from "../utils";
 import { defaultUserAgent, originSchemasWhiteList } from "../utils/cie";
 import { LoginType } from "../utils/index";
+import {
+  getWebViewErrorDebugInfo,
+  LoginErrorDebugInfo
+} from "../utils/loginErrorDebugInfo";
 
 export type CieWebViewLoginEvent =
-  | {
-      /** `code` and `description` come from the native WebView error. */
-      payload: { code: number; description: string; url: string };
-      type: "WEBVIEW_ERROR";
-    }
   | {
       payload: { code?: string; message?: string; reason: string };
       type: "LOGIN_FAILURE";
     }
   | {
-      payload: { statusCode: number; url: string };
+      payload: {
+        debugInfo: LoginErrorDebugInfo;
+        statusCode: number;
+        url: string;
+      };
       type: "WEBVIEW_HTTP_ERROR";
+    }
+  | {
+      payload: { debugInfo: LoginErrorDebugInfo; url: string };
+      type: "WEBVIEW_ERROR";
     }
   | { payload: { token: string }; type: "LOGIN_SUCCESS" };
 
@@ -82,7 +89,8 @@ export const CieWebViewLogin = memo(
             type: "WEBVIEW_HTTP_ERROR",
             payload: {
               url: nativeEvent.url,
-              statusCode: nativeEvent.statusCode
+              statusCode: nativeEvent.statusCode,
+              debugInfo: getWebViewErrorDebugInfo(event)
             }
           });
           return;
@@ -92,8 +100,7 @@ export const CieWebViewLogin = memo(
           type: "WEBVIEW_ERROR",
           payload: {
             url: nativeEvent.url,
-            code: nativeEvent.code,
-            description: nativeEvent.description
+            debugInfo: getWebViewErrorDebugInfo(event)
           }
         });
       },

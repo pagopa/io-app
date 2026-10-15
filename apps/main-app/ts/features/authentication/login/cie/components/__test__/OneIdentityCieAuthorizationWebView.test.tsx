@@ -13,10 +13,7 @@ import {
 } from "../../../../activeSessionLogin/store/actions";
 import * as commonAnalytics from "../../../../common/analytics";
 import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
-import {
-  CieWebViewLogin,
-  CieWebViewLoginEvent
-} from "../../../../common/components/CieWebViewLogin";
+import { CieWebViewLogin } from "../../../../common/components/CieWebViewLogin";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as commonUtils from "../../../../common/utils";
 import { AUTH_LEVELS, LOGIN_TYPES } from "../../../../common/utils";
@@ -129,7 +126,8 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
       {
         errorCodeOrMessage: "19",
         authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3
+        authLevel: AUTH_LEVELS.L3,
+        debugInfo: { message: "user aborted" }
       }
     );
   });
@@ -149,7 +147,8 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
       {
         errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
         authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3
+        authLevel: AUTH_LEVELS.L3,
+        debugInfo: { message: "fiscalCodeMismatch" }
       }
     );
   });
@@ -176,15 +175,15 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
     renderComponent();
     const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
 
-    const failure: CieWebViewLoginEvent = {
-      type: "WEBVIEW_ERROR",
-      payload: {
-        url: "https://idserver.example.com/broken",
-        code: -1009,
-        description: "The Internet connection appears to be offline."
-      }
+    const debugInfo = {
+      message: "net::ERR_INTERNET_DISCONNECTED",
+      code: -2,
+      url: "https://idserver.example.com/broken"
     };
-    onEvent(failure);
+    onEvent({
+      type: "WEBVIEW_ERROR",
+      payload: { url: "https://idserver.example.com/broken", debugInfo }
+    });
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
     expect(mockReplace).toHaveBeenCalledWith(
@@ -193,7 +192,7 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
         errorCodeOrMessage: undefined,
         authMethod: "CIE",
         authLevel: AUTH_LEVELS.L3,
-        failure
+        debugInfo
       }
     );
   });
@@ -207,7 +206,12 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
       type: "WEBVIEW_HTTP_ERROR",
       payload: {
         url: "https://api.example.com/api/auth/v2/callback",
-        statusCode: 500
+        statusCode: 500,
+        debugInfo: {
+          message: "Unexpected HTTP status 500",
+          code: 500,
+          url: "https://x"
+        }
       }
     });
 
@@ -224,7 +228,15 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
 
     onEvent({
       type: "WEBVIEW_HTTP_ERROR",
-      payload: { url: "https://idserver.example.com/broken", statusCode: 403 }
+      payload: {
+        url: "https://idserver.example.com/broken",
+        statusCode: 403,
+        debugInfo: {
+          message: "Unexpected HTTP status 403",
+          code: 403,
+          url: "https://x"
+        }
+      }
     });
 
     expect(mockDispatch).not.toHaveBeenCalled();
@@ -235,11 +247,18 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
     renderComponent();
     const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
 
-    const failure: CieWebViewLoginEvent = {
+    onEvent({
       type: "WEBVIEW_HTTP_ERROR",
-      payload: { url: "https://idserver.example.com/broken", statusCode: 500 }
-    };
-    onEvent(failure);
+      payload: {
+        url: "https://idserver.example.com/broken",
+        statusCode: 500,
+        debugInfo: {
+          message: "Unexpected HTTP status 500",
+          code: 500,
+          url: "https://x"
+        }
+      }
+    });
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
     expect(mockReplace).toHaveBeenCalledWith(
@@ -248,7 +267,11 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
         errorCodeOrMessage: undefined,
         authMethod: "CIE",
         authLevel: AUTH_LEVELS.L3,
-        failure
+        debugInfo: {
+          message: "Unexpected HTTP status 500",
+          code: 500,
+          url: "https://x"
+        }
       }
     );
   });
@@ -273,13 +296,10 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
 describe("OneIdentityCieAuthorizationWebView", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-
     jest.spyOn(IOHooks, "useIODispatch").mockReturnValue(jest.fn());
-    // Not an active session login: the standard login content is rendered
-    jest.spyOn(IOHooks, "useIOSelector").mockReturnValue(false);
   });
 
-  it("should pass the WebView failure to AUTH_ERROR_SCREEN when the connection drops after the card has been read", () => {
+  it("should pass the WebView error details to AUTH_ERROR_SCREEN when the connection drops after the card has been read", () => {
     render(
       <OneIdentityCieAuthorizationWebView
         authorizationUrl="https://idserver.example.com/authorize"
@@ -287,16 +307,16 @@ describe("OneIdentityCieAuthorizationWebView", () => {
       />
     );
     const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
-
-    const failure: CieWebViewLoginEvent = {
-      type: "WEBVIEW_ERROR",
-      payload: {
-        url: "https://idserver.example.com/authorize",
-        code: -1009,
-        description: "The Internet connection appears to be offline."
-      }
+    const debugInfo = {
+      message: "net::ERR_INTERNET_DISCONNECTED",
+      code: -2,
+      url: "https://idserver.example.com/authorize"
     };
-    onEvent(failure);
+
+    onEvent({
+      type: "WEBVIEW_ERROR",
+      payload: { url: "https://idserver.example.com/authorize", debugInfo }
+    });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
@@ -304,7 +324,7 @@ describe("OneIdentityCieAuthorizationWebView", () => {
         errorCodeOrMessage: undefined,
         authMethod: "CIE",
         authLevel: AUTH_LEVELS.L3,
-        failure
+        debugInfo
       }
     );
   });

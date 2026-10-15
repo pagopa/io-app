@@ -6,10 +6,7 @@ import {
   oneIdentityIdpsUrlSelector
 } from "../../../common/store/selectors/remoteConfig";
 import { createRetriableFetch } from "../../../common/utils/fetch";
-import {
-  JsonFetchError,
-  jsonFetchToSchema
-} from "../../../common/utils/jsonFetchToSchema";
+import { jsonFetchToSchema } from "../../../common/utils/jsonFetchToSchema";
 import { IdpFriendlyNamesSchema, Idps, IdpsSchema } from "../types/idps";
 
 const fetch = createRetriableFetch();
@@ -17,7 +14,7 @@ const fetch = createRetriableFetch();
 export type IdpsState =
   | { data: Idps; status: "success" }
   | {
-      error: JsonFetchError;
+      error: string;
       status: "failure";
       /** The IdP list URL, read from the remote config, that failed to load. */
       url: string;

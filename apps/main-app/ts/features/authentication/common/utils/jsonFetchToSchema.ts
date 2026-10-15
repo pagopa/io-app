@@ -2,21 +2,7 @@ import { err, ok, Result } from "neverthrow";
 import { z } from "zod";
 
 import { unknownToString } from "../../../../utils/errors";
-import { FetchFailureReason, FetchResponse, isFailureResponse } from "./fetch";
-
-/**
- * Why `jsonFetchToSchema` failed: either the transport-level reason from the
- * fetch, or a problem with the response itself.
- */
-export type JsonFetchError = {
-  /**
-   * The HTTP status code, set when `type` is `"http-status"` or
-   * `"retryable-status"`.
-   */
-  code?: number;
-  message: string;
-  type: "http-status" | "invalid-json" | "invalid-schema" | FetchFailureReason;
-};
+import { FetchResponse, isFailureResponse } from "./fetch";
 
 /**
  * Parses an unknown value against a Zod schema and lifts the outcome into a
@@ -24,17 +10,15 @@ export type JsonFetchError = {
  *
  * @param schema - The Zod schema describing the expected shape of the data.
  * @param value - The unknown value to validate.
- * @returns An `Ok` containing the safely parsed data, or an `Err` containing
- *   the prettified validation error.
+ * @returns An `Ok` containing the safely parsed data, or an `Err` containing a
+ *   prettified validation error string.
  */
 const parseWithSchema = <S extends z.ZodType>(
   schema: S,
   value: unknown
-): Result<z.output<S>, JsonFetchError> => {
+): Result<z.output<S>, string> => {
   const result = schema.safeParse(value);
-  return result.success
-    ? ok(result.data)
-    : err({ type: "invalid-schema", message: z.prettifyError(result.error) });
+  return result.success ? ok(result.data) : err(z.prettifyError(result.error));
 };
 
 /**
@@ -48,35 +32,25 @@ const parseWithSchema = <S extends z.ZodType>(
  * @param requestPromise - A promise resolving to a custom `FetchResponse`.
  * @param schema - The Zod schema used to validate the extracted JSON body.
  * @returns A Promise resolving to an `Ok` with the strictly typed data, or an
- *   `Err` with the failure type and a descriptive message.
+ *   `Err` with a descriptive error message.
  */
 export const jsonFetchToSchema = async <TSchema extends z.ZodType>(
   requestPromise: Promise<FetchResponse>,
   schema: TSchema
-): Promise<Result<z.infer<TSchema>, JsonFetchError>> => {
+): Promise<Result<z.infer<TSchema>, string>> => {
   const responseResult = await requestPromise;
   if (isFailureResponse(responseResult)) {
-    const { reason, message, response } = responseResult;
-    return err({
-      type: reason,
-      message,
-      ...(response && { code: response.status })
-    });
+    return err(responseResult.message);
   }
 
-  const { ok: isOk, status } = responseResult.response;
-  if (!isOk) {
-    return err({
-      type: "http-status",
-      code: status,
-      message: `Unexpected HTTP status ${status}`
-    });
+  if (!responseResult.response.ok) {
+    return err(`Unexpected HTTP status ${responseResult.response.status}`);
   }
 
   try {
     const json = await responseResult.response.json();
     return parseWithSchema(schema, json);
   } catch (error) {
-    return err({ type: "invalid-json", message: unknownToString(error) });
+    return err(unknownToString(error));
   }
 };

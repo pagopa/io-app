@@ -21,10 +21,8 @@ import {
 } from "../../authentication/common/utils";
 import { createRetriableFetch } from "../../authentication/common/utils/fetch";
 import { LoginType } from "../../authentication/common/utils/index";
-import {
-  JsonFetchError,
-  jsonFetchToSchema
-} from "../../authentication/common/utils/jsonFetchToSchema";
+import { jsonFetchToSchema } from "../../authentication/common/utils/jsonFetchToSchema";
+import { LoginErrorDebugInfo } from "../../authentication/common/utils/loginErrorDebugInfo";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import {
   ephemeralKeyTagSelector,
@@ -47,27 +45,6 @@ const fetch = createRetriableFetch();
 const reserveEndpointPath = "/api/auth/v1/reserve";
 
 /**
- * Why the login source could not be generated, i.e. why the login failed before
- * reaching the IDP page.
- */
-export type OneIdentityLoginSourceError = {
-  /**
-   * The HTTP status code of the `/reserve` request, or the native error code of
-   * the native redirects.
-   */
-  code?: number | string;
-  /** Human-readable reason, also used as the failure reason for analytics. */
-  message: string;
-  type:
-    | "key-generation"
-    | "native-redirects"
-    | "saml-verification"
-    | JsonFetchError["type"];
-  /** The URL whose request or verification failed, when there is one. */
-  url?: string;
-};
-
-/**
  * State of the OneIdentity login source flow. At any given moment the flow is
  * in exactly one of the following statuses:
  *
@@ -87,7 +64,7 @@ export type OneIdentityLoginSourceError = {
  *   verification failed.
  */
 type LoginSourceState =
-  | { error: OneIdentityLoginSourceError; status: "failure" }
+  | { error: string; status: "failure" }
   | {
       status: "assertion-ref-verified" | "one-identity-authorize";
       webviewSource: WebViewSourceUri;
@@ -97,20 +74,14 @@ type LoginSourceState =
   | { status: "verifying-assertion-ref"; url: string };
 
 /**
- * Builds the failure for the native redirects flow, including the native error
- * details when available.
+ * Builds a failure reason for the native redirects flow, including the native
+ * error details when available.
  */
-const getNativeRedirectsFailure = (
-  error: unknown
-): OneIdentityLoginSourceError => {
+const getNativeRedirectsFailureReason = (error: unknown): string => {
   if (isLoginUtilsError(error)) {
-    return {
-      type: "native-redirects",
-      code: error.code,
-      message: `${error.code} ${unknownToString(error.userInfo)}`
-    };
+    return `${error.code} ${unknownToString(error.userInfo)}`;
   }
-  return { type: "native-redirects", message: unknownToString(error) };
+  return unknownToString(error);
 };
 
 /** Builds the request body for the `/reserve` endpoint. */
@@ -200,7 +171,15 @@ export type UseOneIdentityLoginSource = (params: {
    */
   minAuthLevel?: AuthLevel;
   /** Handler called upon a failure during the login flow. */
-  onFailure: (error: OneIdentityLoginSourceError) => void;
+  onFailure: (
+    /** The failure reason, also sent to analytics. */
+    reason: string,
+    /**
+     * What went wrong, shown only in debug mode. Missing when `reason` alone
+     * explains it.
+     */
+    debugInfo?: LoginErrorDebugInfo
+  ) => void;
 }) => {
   /**
    * Handler that restarts the login flow by generating a new login source. It
@@ -277,14 +256,15 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
             });
           },
           reason => {
-            const error: OneIdentityLoginSourceError = {
-              type: "saml-verification",
-              message: reason,
-              url
-            };
-            setLoginSourceState({ status: "failure", error });
+            setLoginSourceState({
+              status: "failure",
+              error: reason
+            });
             trackLollipopIdpLoginFailure(reason);
-            onFailure(error);
+            onFailure(reason, {
+              message: `SAML verification failed: ${reason}`,
+              url
+            });
           }
         );
         return true;
@@ -311,12 +291,11 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     );
 
     if (!publicKey) {
-      const error: OneIdentityLoginSourceError = {
-        type: "key-generation",
-        message: "Unable to generate ephemeral public key"
-      };
-      setLoginSourceState({ status: "failure", error });
-      onFailure(error);
+      setLoginSourceState({
+        status: "failure",
+        error: "Unable to generate ephemeral public key"
+      });
+      onFailure("Unable to generate ephemeral public key");
       return;
     }
 
@@ -340,12 +319,11 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
     if (result.isErr()) {
       abortControllerRef.current = null;
-      const error: OneIdentityLoginSourceError = {
-        ...result.error,
+      setLoginSourceState({ status: "failure", error: result.error });
+      onFailure(result.error, {
+        message: `Reserve request failed: ${result.error}`,
         url: reserveUrl
-      };
-      setLoginSourceState({ status: "failure", error });
-      onFailure(error);
+      });
       return;
     }
 
@@ -373,9 +351,9 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
         if (controller.signal.aborted) {
           return;
         }
-        const failure = getNativeRedirectsFailure(error);
-        setLoginSourceState({ status: "failure", error: failure });
-        onFailure(failure);
+        const reason = getNativeRedirectsFailureReason(error);
+        setLoginSourceState({ status: "failure", error: reason });
+        onFailure(reason);
       }
 
       abortControllerRef.current = null;

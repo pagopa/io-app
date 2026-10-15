@@ -19,10 +19,7 @@ import {
   handleSendAssistanceLog
 } from "../../../../utils/supportAssistance";
 import { getUrlBasepath } from "../../../../utils/url";
-import {
-  OneIdentityLoginSourceError,
-  useOneIdentityLoginSource
-} from "../../../lollipop/hooks/useOneIdentityLoginSource";
+import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { trackSpidLoginIntent } from "../../activeSessionLogin/screens/analytics";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
 import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
@@ -35,6 +32,10 @@ import {
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../utils";
+import {
+  getWebViewErrorDebugInfo,
+  LoginErrorDebugInfo
+} from "../utils/loginErrorDebugInfo";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent.
 const defaultUserAgent =
@@ -51,21 +52,26 @@ export type IdpWebViewLoginProps = {
 
 export type WebViewLoginEvent =
   | {
-      /** `code` and `description` come from the native WebView error. */
-      payload: { code: number; description: string; url: string };
-      type: "WEBVIEW_ERROR";
-    }
-  | {
-      payload: { code?: string; message?: string; reason: string };
+      payload: {
+        code?: string;
+        /** Set when the failure happened before reaching the IDP page. */
+        debugInfo?: LoginErrorDebugInfo;
+        message?: string;
+        reason: string;
+      };
       type: "LOGIN_FAILURE";
     }
   | {
-      payload: { error: OneIdentityLoginSourceError };
-      type: "ONE_IDENTITY_LOGIN_FAILURE";
+      payload: {
+        debugInfo: LoginErrorDebugInfo;
+        statusCode: number;
+        url: string;
+      };
+      type: "WEBVIEW_HTTP_ERROR";
     }
   | {
-      payload: { statusCode: number; url: string };
-      type: "WEBVIEW_HTTP_ERROR";
+      payload: { debugInfo: LoginErrorDebugInfo; url: string };
+      type: "WEBVIEW_ERROR";
     }
   | { payload: { token: string }; type: "LOGIN_SUCCESS" };
 
@@ -82,10 +88,10 @@ export const IdpWebViewLogin = memo(
     const lastTrackedUrl = useRef<string | undefined>(undefined);
 
     const handleFailure = useCallback(
-      (error: OneIdentityLoginSourceError) => {
+      (reason: string, debugInfo?: LoginErrorDebugInfo) => {
         onEvent({
-          type: "ONE_IDENTITY_LOGIN_FAILURE",
-          payload: { error }
+          type: "LOGIN_FAILURE",
+          payload: { reason, debugInfo }
         });
       },
       [onEvent]
@@ -114,7 +120,8 @@ export const IdpWebViewLogin = memo(
             type: "WEBVIEW_HTTP_ERROR",
             payload: {
               url: nativeEvent.url,
-              statusCode: nativeEvent.statusCode
+              statusCode: nativeEvent.statusCode,
+              debugInfo: getWebViewErrorDebugInfo(event)
             }
           });
           return;
@@ -124,8 +131,7 @@ export const IdpWebViewLogin = memo(
           type: "WEBVIEW_ERROR",
           payload: {
             url: nativeEvent.url,
-            code: nativeEvent.code,
-            description: nativeEvent.description
+            debugInfo: getWebViewErrorDebugInfo(event)
           }
         });
       },
