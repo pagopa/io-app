@@ -3121,10 +3121,6 @@
               "bonus": {
                 "cta": "Vai ai servizi",
                 "label": "Non siamo riusciti a caricare alcuni elementi. Puoi accedere a bonus e iniziative anche dalla sezione Servizi."
-              },
-              "paymentMethods": {
-                "cta": "Prova di nuovo",
-                "label": "Non è stato possibile caricare i metodi di pagamento."
               }
             }
           }
