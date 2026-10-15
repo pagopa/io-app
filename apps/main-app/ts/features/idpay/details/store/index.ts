@@ -94,7 +94,7 @@ const reducer = (
     case getType(idpayTimelinePageGet.failure):
       return {
         ...state,
-        timeline: pot.toError(state.timeline, action.payload.error)
+        timeline: pot.toError(state.timeline, action.payload)
       };
     // TIMELINE ACTIONS
     case getType(idpayTimelinePageGet.request):

@@ -201,12 +201,7 @@ describe("test idpay timeline reducer and selectors", () => {
         initiativeId: "6364fd4570fc881452fdaa2d"
       })
     );
-    store.dispatch(
-      idpayTimelinePageGet.failure({
-        initiativeId: "6364fd4570fc881452fdaa2d",
-        error: mockFailure
-      })
-    );
+    store.dispatch(idpayTimelinePageGet.failure(mockFailure));
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
       pot.noneError(mockFailure)
@@ -285,12 +280,7 @@ describe("test idpay timeline pagination reducer and selectors", () => {
         page: 2
       })
     );
-    store.dispatch(
-      idpayTimelinePageGet.failure({
-        initiativeId: "6364fd4570fc881452fdaa2d",
-        error: mockFailure
-      })
-    );
+    store.dispatch(idpayTimelinePageGet.failure(mockFailure));
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
       pot.noneError(mockFailure)

@@ -227,7 +227,7 @@ export const trackIDPayDetailTimelineError = ({
 }) => {
   mixpanelTrack(
     "IDPAY_DETAIL_TIMELINE_ERROR",
-    buildEventProperties("KO", "error", {
+    buildEventProperties("KO", "screen_view", {
       ...props,
       reason: getNetworkErrorFailureReason(error)
     })

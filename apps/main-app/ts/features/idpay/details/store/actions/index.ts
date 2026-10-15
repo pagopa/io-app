@@ -14,11 +14,6 @@ export const idpayInitiativeGet = createAsyncAction(
   "IDPAY_INITIATIVE_DETAILS_FAILURE"
 )<IdPayInitiativeGetPayloadType, InitiativeDTO, NetworkError>();
 
-type IdPayTimelinePageGetFailurePayloadType = {
-  error: NetworkError;
-  initiativeId: string;
-};
-
 type IdpayTimelinePageGetPayloadType = {
   initiativeId: string;
   page?: number;
@@ -37,7 +32,7 @@ export const idpayTimelinePageGet = createAsyncAction(
 )<
   IdpayTimelinePageGetPayloadType,
   IdPayTimelinePageGetSuccessPayloadType,
-  IdPayTimelinePageGetFailurePayloadType
+  NetworkError
 >();
 
 type IdPayBeneficiaryDetailsGetPayloadType = {

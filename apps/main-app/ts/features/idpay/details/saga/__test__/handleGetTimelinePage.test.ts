@@ -91,14 +91,11 @@ describe("handleGetTimelinePage", () => {
       .next(E.left(validationErrors))
       .put(
         idpayTimelinePageGet.failure({
-          initiativeId,
-          error: {
-            kind: "generic",
-            value: new FailureReasonError(
-              FailureReason.DECODE_ERROR,
-              readablePrivacyReport(validationErrors)
-            )
-          }
+          kind: "generic",
+          value: new FailureReasonError(
+            FailureReason.DECODE_ERROR,
+            readablePrivacyReport(validationErrors)
+          )
         })
       )
       .next()
@@ -118,14 +115,11 @@ describe("handleGetTimelinePage", () => {
         .next(E.right({ status, value: { code: status, message: "error" } }))
         .put(
           idpayTimelinePageGet.failure({
-            initiativeId,
-            error: {
-              kind: "generic",
-              value: new FailureReasonError(
-                reason,
-                `response status code ${status}`
-              )
-            }
+            kind: "generic",
+            value: new FailureReasonError(
+              reason,
+              `response status code ${status}`
+            )
           })
         )
         .next()
@@ -138,12 +132,7 @@ describe("handleGetTimelinePage", () => {
   )} with a timeout when the request exceeds the retries`, () => {
     startSaga()
       .throw(new Error("max-retries"))
-      .put(
-        idpayTimelinePageGet.failure({
-          initiativeId,
-          error: { kind: "timeout" }
-        })
-      )
+      .put(idpayTimelinePageGet.failure({ kind: "timeout" }))
       .next()
       .isDone();
   });

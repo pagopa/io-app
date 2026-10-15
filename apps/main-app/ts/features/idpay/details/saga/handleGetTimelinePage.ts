@@ -48,15 +48,14 @@ export function* handleGetTimelinePage(
 
     if (E.isLeft(getTimelineResult)) {
       yield* put(
-        idpayTimelinePageGet.failure({
-          initiativeId,
-          error: getGenericError(
+        idpayTimelinePageGet.failure(
+          getGenericError(
             new FailureReasonError(
               FailureReason.DECODE_ERROR,
               readablePrivacyReport(getTimelineResult.left)
             )
           )
-        })
+        )
       );
       return;
     }
@@ -64,9 +63,8 @@ export function* handleGetTimelinePage(
     const response = getTimelineResult.right;
     if (response.status !== 200) {
       yield* put(
-        idpayTimelinePageGet.failure({
-          initiativeId,
-          error: getGenericError(
+        idpayTimelinePageGet.failure(
+          getGenericError(
             new FailureReasonError(
               decodeFailureReason({
                 kind: "http_status",
@@ -75,7 +73,7 @@ export function* handleGetTimelinePage(
               `response status code ${response.status}`
             )
           )
-        })
+        )
       );
       return;
     }
@@ -87,8 +85,6 @@ export function* handleGetTimelinePage(
       })
     );
   } catch (e) {
-    yield* put(
-      idpayTimelinePageGet.failure({ initiativeId, error: getNetworkError(e) })
-    );
+    yield* put(idpayTimelinePageGet.failure(getNetworkError(e)));
   }
 }
