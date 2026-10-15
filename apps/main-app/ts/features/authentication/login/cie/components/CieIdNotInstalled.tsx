@@ -1,10 +1,8 @@
 import { useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
-import { useMemo } from "react";
 import { Platform } from "react-native";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { openWebUrl } from "../../../../../utils/url";
@@ -25,15 +23,6 @@ const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
   const { popToTop } = useIONavigation();
   const { error } = useIOToast();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-
-  const debugInfo = useMemo(
-    () => ({
-      isUat,
-      flow: isActiveSessionLogin ? "reauth" : "auth"
-    }),
-    [isUat, isActiveSessionLogin]
-  );
-  useDebugInfo(debugInfo);
 
   return (
     <OperationResultScreenContent
