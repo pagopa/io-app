@@ -108,7 +108,7 @@ export const ItwBrandedBox = ({
     return [{ translateX }, { scale: lightScaleMultiplier }];
   });
 
-  const SkiaLight = () => (
+  const skiaLight = (
     <SkiaGroup
       opacity={lightSkiaOpacity}
       origin={vec(size.width / 2, size.height / 2)}
@@ -181,7 +181,7 @@ export const ItwBrandedBox = ({
         }}
       >
         {/* Animated light effect */}
-        <SkiaLight />
+        {skiaLight}
 
         {/* Animated gradient border */}
         <ItwBrandedSkiaBorder

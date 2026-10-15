@@ -11,7 +11,7 @@ import {
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
   LinearTransition,
@@ -38,7 +38,7 @@ import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/t
 import { ItwProximityQrCodeImage } from "../components/ItwProximityQrCodeImage.tsx";
 import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner.tsx";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
-import { selectFailure, selectIsLoading } from "../machine/selectors.ts";
+import { selectFailure } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
 import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/selectors/credentials.ts";
 
@@ -62,7 +62,6 @@ export const ItwProximityPresentmentScreen = ({
   const safeAreaInsets = useSafeAreaInsets();
 
   const machineRef = ItwProximityMachineContext.useActorRef();
-  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
   const failure = ItwProximityMachineContext.useSelector(selectFailure);
 
   const shouldShowExpiredCredentialsBanner = useIOSelector(
@@ -74,13 +73,15 @@ export const ItwProximityPresentmentScreen = ({
 
   const isFailure = !!failure;
 
-  useDebugInfo({
-    isLoading,
-    failure,
-    // isPermissionsRequired,
-    // isBluetoothRequired,
-    shouldShowExpiredCredentialsBanner
-  });
+  useDebugInfo(
+    useMemo(
+      () => ({
+        failure,
+        shouldShowExpiredCredentialsBanner
+      }),
+      [failure, shouldShowExpiredCredentialsBanner]
+    )
+  );
 
   // Auto-start machine on mount.
   useEffect(() => {
