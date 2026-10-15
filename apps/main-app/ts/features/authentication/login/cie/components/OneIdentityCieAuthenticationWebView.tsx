@@ -13,13 +13,13 @@ import {
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useIOSelector, useIOStore } from "../../../../../store/hooks";
+import { useIOSelector } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
 import { useOneIdentityLoginSource } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
-import { cieLoginFlowSelector } from "../../../activeSessionLogin/store/selectors";
 import { oneIdentityCieNativeRedirectsEnabledSelector } from "../../../common/store/selectors/remoteConfig";
 import { AUTH_LEVELS, onLoginUriChanged } from "../../../common/utils";
 import { defaultUserAgent } from "../../../common/utils/cie";
+import { LoginType } from "../../../common/utils/index";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieIdpId } from "../utils";
 
@@ -51,6 +51,7 @@ const isErrorPage = (title?: string): boolean => {
 };
 
 export type OneIdentityCieAuthenticationWebViewProps = {
+  flow: LoginType;
   onAuthenticationUrlReceived: (url: string) => void;
 };
 
@@ -59,9 +60,9 @@ type WebViewState =
   | { status: "authenticating" };
 
 export const OneIdentityCieAuthenticationWebView = ({
+  flow,
   onAuthenticationUrlReceived
 }: OneIdentityCieAuthenticationWebViewProps) => {
-  const store = useIOStore();
   const navigation = useIONavigation();
 
   const useUat = useIOSelector(isCieLoginUatEnabledSelector);
@@ -83,6 +84,7 @@ export const OneIdentityCieAuthenticationWebView = ({
     shouldBlockUrlNavigationWhileCheckingLollipop,
     generateLoginSource
   } = useOneIdentityLoginSource({
+    flow,
     followRedirectsNatively,
     idpId: getCieIdpId(useUat),
     onFailure: handleFailure,
@@ -120,7 +122,6 @@ export const OneIdentityCieAuthenticationWebView = ({
         return false;
       }
 
-      const loginFlow = cieLoginFlowSelector(store.getState());
       // At this stage of the login flow, we only monitor the URL for potential errors.
       // The success callback is intentionally ignored (no-op), as a success URL
       // is not expected to be handled here.
@@ -128,7 +129,7 @@ export const OneIdentityCieAuthenticationWebView = ({
         handleLoginFailure,
         () => null,
         "cie",
-        loginFlow
+        flow
       )(event);
 
       return !bearerTokenFoundInUrl;
@@ -137,7 +138,7 @@ export const OneIdentityCieAuthenticationWebView = ({
       handleLoginFailure,
       onAuthenticationUrlReceived,
       shouldBlockUrlNavigationWhileCheckingLollipop,
-      store
+      flow
     ]
   );
 

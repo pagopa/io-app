@@ -46,7 +46,7 @@ export const ListItemRadioWithAmount = ({
   };
   const theme = useIOTheme();
 
-  const suggestColor: IOColors = "hanPurple-500";
+  const suggestColor: IOColors = theme["featured-default"];
 
   const defaultAccessibilityLabel = `${label} ${formattedAmountString} ${
     suggestReason ?? ""

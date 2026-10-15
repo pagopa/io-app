@@ -111,7 +111,7 @@ export const ListItemNav = ({
               <View style={{ alignSelf: "flex-start", flexDirection: "row" }}>
                 <Icon
                   allowFontScaling
-                  color="grey-300"
+                  color={theme["icon-decorative"]}
                   name="calendar"
                   size={IODimensions.size.icon.caption}
                 />

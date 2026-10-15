@@ -14,10 +14,6 @@ type ColorVariant = {
 };
 
 const toastColorVariants: Record<ToastVariant, ColorVariant> = {
-  neutral: {
-    background: "turquoise-150",
-    stroke: "turquoise-850"
-  },
   error: {
     background: "error-100",
     stroke: "error-850"
@@ -38,7 +34,7 @@ const toastColorVariants: Record<ToastVariant, ColorVariant> = {
 
 type Props = Pick<Toast, "icon" | "message" | "variant">;
 
-const ToastNotification = ({ message, variant = "neutral", icon }: Props) => {
+const ToastNotification = ({ message, variant, icon }: Props) => {
   const colors = toastColorVariants[variant];
   const { themeType } = useIOThemeContext();
 

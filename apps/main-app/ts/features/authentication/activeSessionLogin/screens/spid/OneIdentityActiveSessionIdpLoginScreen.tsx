@@ -18,7 +18,11 @@ import {
 } from "../../../common/components/IdpWebViewLogin";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { AUTH_LEVELS, isValidCallbackUrl } from "../../../common/utils";
+import {
+  AUTH_LEVELS,
+  isValidCallbackUrl,
+  LOGIN_TYPES
+} from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
 import {
   activeSessionLoginFailure,
@@ -94,7 +98,7 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
       trackLoginFailure({
         reason,
         idp: idp.id as keyof IdpData,
-        flow: "reauth"
+        flow: LOGIN_TYPES.REAUTH
       });
       navigateToAuthErrorScreen(code || message);
     },
@@ -148,6 +152,11 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
     ]
   );
 
-  // TODO: Remove flow to keep IdpWebViewLogin agnostic
-  return <IdpWebViewLogin flow="reauth" idp={idp} onEvent={handleEvent} />;
+  return (
+    <IdpWebViewLogin
+      flow={LOGIN_TYPES.REAUTH}
+      idp={idp}
+      onEvent={handleEvent}
+    />
+  );
 };
