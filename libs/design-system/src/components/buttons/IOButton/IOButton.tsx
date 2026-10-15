@@ -108,6 +108,13 @@ const btnBorderWidthMap: Record<IOButtonVariant, number> = {
   link: 0
 };
 
+/* A radius on the link would crop its icon */
+const btnBorderRadiusMap: Record<IOButtonVariant, number> = {
+  solid: IODimensions.radius.button,
+  outline: IODimensions.radius.button,
+  link: 0
+};
+
 const btnPaddingHorizontalMap: Record<
   IOButtonVariant,
   Record<keyof typeof btnPadding, number>
@@ -172,7 +179,7 @@ export const IOButton = ({
   const btnIconSize = btnIconSizeMap[variant];
   const btnBorderWidth = btnBorderWidthMap[variant];
   const btnPaddingHorizontal = btnPaddingHorizontalMap[variant][btnWidth];
-  const btnBorderRadius = IODimensions.radius.button;
+  const btnBorderRadius = btnBorderRadiusMap[variant];
 
   const DISABLED_OPACITY = 0.5;
 
@@ -320,7 +327,7 @@ export const IOButton = ({
             height: btnHeightMap[variant],
             backgroundColor,
             borderWidth: btnBorderWidth,
-            borderRadius: isLinkButton ? 0 : btnBorderRadius,
+            borderRadius: btnBorderRadius,
             borderColor: foregroundColor
           },
           disabled
