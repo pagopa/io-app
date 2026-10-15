@@ -19,7 +19,7 @@ import {
 } from "../../../../common/components/CieWebViewLogin";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as commonUtils from "../../../../common/utils";
-import { AUTH_LEVELS } from "../../../../common/utils";
+import { AUTH_LEVELS, LOGIN_TYPES } from "../../../../common/utils";
 import { AUTH_ERRORS } from "../../../../common/utils/authError";
 import { OneIdentityCieAuthorizationWebView } from "../OneIdentityCieAuthorizationWebView";
 
@@ -281,7 +281,10 @@ describe("OneIdentityCieAuthorizationWebView", () => {
 
   it("should pass the WebView failure to AUTH_ERROR_SCREEN when the connection drops after the card has been read", () => {
     render(
-      <OneIdentityCieAuthorizationWebView authorizationUrl="https://idserver.example.com/authorize" />
+      <OneIdentityCieAuthorizationWebView
+        authorizationUrl="https://idserver.example.com/authorize"
+        flow={LOGIN_TYPES.AUTH}
+      />
     );
     const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
 

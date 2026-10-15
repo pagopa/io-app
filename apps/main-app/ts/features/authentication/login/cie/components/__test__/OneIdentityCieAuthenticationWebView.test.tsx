@@ -285,6 +285,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -299,6 +300,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -339,6 +341,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
         const { getByTestId } = render(
           <OneIdentityCieAuthenticationWebView
+            flow={LOGIN_TYPES.AUTH}
             onAuthenticationUrlReceived={onAuthenticationUrlReceived}
           />
         );
@@ -358,6 +361,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
