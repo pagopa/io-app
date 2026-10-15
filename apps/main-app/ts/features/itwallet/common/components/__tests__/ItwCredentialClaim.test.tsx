@@ -3,6 +3,7 @@ import { fireEvent, render } from "@testing-library/react-native";
 
 import { withStore } from "../../../../../utils/jest/withStore";
 import { HIDDEN_CLAIM_TEXT } from "../../utils/constants";
+import { getSafeText } from "../../utils/itwClaimsUtils";
 import { ItwCredentialClaim as ItwCredentialClaimComponent } from "../ItwCredentialClaim";
 
 const ItwCredentialClaim = withStore(ItwCredentialClaimComponent);
@@ -60,6 +61,21 @@ describe("ItwCredentialClaim", () => {
       expect(UNSAFE_getByType(ListItemInfo).props.onLongPress).toBeUndefined();
     }
   );
+
+  it("invokes onLongPress with the full value when the displayed text is truncated", () => {
+    const longValue = "A".repeat(200);
+    const onLongPress = jest.fn();
+    const { getByText } = render(
+      <ItwCredentialClaim
+        claim={{ id: "claim", label: LABEL, value: longValue }}
+        onLongPress={onLongPress}
+      />
+    );
+
+    fireEvent(getByText(getSafeText(longValue)), "onLongPress");
+
+    expect(onLongPress).toHaveBeenCalledWith(LABEL, longValue);
+  });
 
   it("forwards onLongPress to nested object claims", () => {
     const onLongPress = jest.fn();

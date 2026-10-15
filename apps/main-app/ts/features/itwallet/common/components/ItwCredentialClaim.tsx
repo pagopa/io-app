@@ -21,7 +21,7 @@ import { ItwCredentialMultiClaim } from "./ItwCredentialMultiClaim.tsx";
 
 /**
  * Callback invoked when a claim value is long pressed. It receives the claim
- * label and its displayed (unhidden) value.
+ * label and its full (unhidden and untruncated) value.
  */
 export type ItwClaimLongPressHandler = (label: string, value: string) => void;
 
@@ -131,7 +131,7 @@ const PlainTextClaimItem = ({
       label={label}
       numberOfLines={4}
       onLongPress={
-        onLongPress && !hidden ? () => onLongPress(label, safeValue) : undefined
+        onLongPress && !hidden ? () => onLongPress(label, claim) : undefined
       }
       value={displayValue}
     />
