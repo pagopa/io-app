@@ -27,6 +27,7 @@ import { trackLoginSpidIdpSelected } from "../../../common/analytics/spidAnalyti
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpSelected } from "../../../common/store/actions";
+import { LOGIN_TYPES } from "../../../common/utils";
 import IdpsGrid, { IdpsGridSkeleton } from "../components/IdpsGrid";
 import { OneIdentityIdpSelectionFailureContent } from "../components/OneIdentityIdpSelectionFailureContent";
 import { useGetIdps } from "../hooks/useGetIdps";
@@ -45,11 +46,13 @@ export const OneIdentityIdpSelectionScreen = ({
   const store = useIOStore();
   const toast = useIOToast();
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
-  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const isActiveSessionLogin = isActiveSessionLoginSelector(store.getState());
 
   const { state } = useGetIdps();
 
-  const loginFlow = isActiveSessionLogin ? "reauth" : "auth";
+  const loginFlow = isActiveSessionLogin
+    ? LOGIN_TYPES.REAUTH
+    : LOGIN_TYPES.AUTH;
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
 
   const shuffledIdps = useMemo(() => {
@@ -125,11 +128,7 @@ export const OneIdentityIdpSelectionScreen = ({
   const ListEmptyComponent = useCallback(() => <IdpsGridSkeleton />, []);
 
   if (state.status === "failure") {
-    return (
-      <OneIdentityIdpSelectionFailureContent
-        isActiveSessionLogin={isActiveSessionLogin}
-      />
-    );
+    return <OneIdentityIdpSelectionFailureContent flow={loginFlow} />;
   }
 
   return (

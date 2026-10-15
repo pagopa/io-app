@@ -19,7 +19,7 @@ import { AuthenticationParamsList } from "../../../common/navigation/params/Auth
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
-import { AUTH_LEVELS, AuthLevel } from "../../../common/utils";
+import { AUTH_LEVELS, AuthLevel, LOGIN_TYPES } from "../../../common/utils";
 import {
   cieIDSelectedSecurityLevelSelector,
   isCieLoginUatEnabledSelector
@@ -97,7 +97,7 @@ const OneIdentityCieIdLoginScreenContent = ({
 
       trackLoginSpidError(errorCodeOrMessage, {
         idp: IdpCIE_ID.id,
-        flow: "auth",
+        flow: LOGIN_TYPES.AUTH,
         "error message": message
       });
 
@@ -164,5 +164,5 @@ const OneIdentityCieIdLoginScreenContent = ({
     ]
   );
 
-  return <CieIdWebViewLogin flow="auth" isUat={isUat} onEvent={handleEvent} />;
+  return <CieIdWebViewLogin isUat={isUat} onEvent={handleEvent} />;
 };
