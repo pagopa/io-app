@@ -16,16 +16,36 @@ import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { AuthLevel } from "../../../common/utils";
-import { getAuthErrorDetails } from "../../../common/utils/authError";
+import { getLoginFailureDebugInfo } from "../../../common/utils/loginFailureDebugInfo";
 import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
 } from "../../idp/store/actions";
 
+/**
+ * Login WebView errors that don't come from the backend, so they carry no error
+ * code to show.
+ */
+export type AuthErrorFailure =
+  | {
+      payload: { code: number; description: string; url: string };
+      type: "WEBVIEW_ERROR";
+    }
+  | {
+      payload: { statusCode: number; url: string };
+      type: "WEBVIEW_HTTP_ERROR";
+    };
+
 export type AuthErrorScreenProps = {
   authLevel: AuthLevel;
   authMethod: AuthMethod;
   errorCodeOrMessage?: string;
+  /**
+   * The WebView error that caused the failure, shown only in debug mode. Set
+   * only when there is no `errorCodeOrMessage`, i.e. the error doesn't come
+   * from the backend (e.g. the connection dropped).
+   */
+  failure?: AuthErrorFailure;
 };
 export type AuthMethod = "CIE" | "CIE_ID" | "SPID";
 
@@ -42,17 +62,23 @@ const AuthErrorScreen = () => {
         AuthErrorScreenProps
       >
     >();
-  const { errorCodeOrMessage, authMethod, authLevel } = route.params;
+  const { errorCodeOrMessage, authMethod, authLevel, failure } = route.params;
 
-  const debugInfo = useMemo(() => {
-    const { title } = getAuthErrorDetails(errorCodeOrMessage);
-    return {
-      errorCodeOrMessage,
-      errorTitle: title,
+  const debugInfo = useMemo(
+    () => ({
+      ...getLoginFailureDebugInfo(
+        // Without a WebView failure the error comes from the backend, which
+        // provides either an error code or, when missing, an error message.
+        failure ?? {
+          type: "LOGIN_FAILURE",
+          payload: { code: errorCodeOrMessage }
+        }
+      ),
       authMethod,
       authLevel
-    };
-  }, [errorCodeOrMessage, authMethod, authLevel]);
+    }),
+    [errorCodeOrMessage, authMethod, authLevel, failure]
+  );
   useDebugInfo(debugInfo);
 
   const navigation =

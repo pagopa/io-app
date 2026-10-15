@@ -150,14 +150,15 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const cieIdLoginMock = getByTestId("cie-id-webview-login-mock");
 
-    fireEvent(cieIdLoginMock, "event", {
+    const failure = {
       type: "WEBVIEW_HTTP_ERROR",
       payload: { url: "https://other.example.com", statusCode: 500 }
-    });
+    };
+    fireEvent(cieIdLoginMock, "event", failure);
 
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
     expect(mockNavigationDispatch).toHaveBeenCalledWith(
-      authErrorReplaceAction(undefined)
+      authErrorReplaceAction(undefined, failure)
     );
     expect(mockReplace).not.toHaveBeenCalled();
   });
@@ -222,11 +223,15 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
   });
 });
 
-const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
+const authErrorReplaceAction = (
+  errorCodeOrMessage?: string,
+  failure?: unknown
+) =>
   StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
     errorCodeOrMessage,
     authMethod: "CIE_ID",
-    authLevel: MOCK_AUTH_LEVEL_L2
+    authLevel: MOCK_AUTH_LEVEL_L2,
+    failure
   });
 
 const renderComponent = (

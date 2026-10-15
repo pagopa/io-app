@@ -6,7 +6,10 @@ import * as IOHooks from "../../../../../../store/hooks";
 import { MESSAGES_ROUTES } from "../../../../../messages/navigation/routes";
 import * as commonAnalytics from "../../../../common/analytics";
 import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
-import { CieWebViewLogin } from "../../../../common/components/CieWebViewLogin";
+import {
+  CieWebViewLogin,
+  CieWebViewLoginEvent
+} from "../../../../common/components/CieWebViewLogin";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as commonUtils from "../../../../common/utils";
 import { AUTH_LEVELS } from "../../../../common/utils";
@@ -172,10 +175,15 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
     renderComponent();
     const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
 
-    onEvent({
+    const failure: CieWebViewLoginEvent = {
       type: "WEBVIEW_ERROR",
-      payload: { url: "https://idserver.example.com/broken" }
-    });
+      payload: {
+        url: "https://idserver.example.com/broken",
+        code: -1009,
+        description: "The Internet connection appears to be offline."
+      }
+    };
+    onEvent(failure);
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
     expect(mockReplace).toHaveBeenCalledWith(
@@ -183,7 +191,8 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3
+        authLevel: AUTH_LEVELS.L3,
+        failure
       }
     );
   });
@@ -225,10 +234,11 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
     renderComponent();
     const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
 
-    onEvent({
+    const failure: CieWebViewLoginEvent = {
       type: "WEBVIEW_HTTP_ERROR",
       payload: { url: "https://idserver.example.com/broken", statusCode: 500 }
-    });
+    };
+    onEvent(failure);
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
     expect(mockReplace).toHaveBeenCalledWith(
@@ -236,7 +246,8 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3
+        authLevel: AUTH_LEVELS.L3,
+        failure
       }
     );
   });

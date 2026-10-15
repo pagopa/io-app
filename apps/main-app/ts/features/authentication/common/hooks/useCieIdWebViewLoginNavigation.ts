@@ -3,8 +3,9 @@ import { useCallback } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { AuthLevel } from "../../common/utils";
-import { CieIdWebViewLoginEvent } from "../components/CieIdWebViewLogin";
+import { AuthErrorFailure } from "../../login/authError/screens/AuthErrorScreen";
 import { AUTHENTICATION_ROUTES } from "../navigation/routes";
+import { LoginFailure } from "../utils/loginFailureDebugInfo";
 
 type UseCieIdWebViewLoginNavigationProps = {
   authLevel: AuthLevel;
@@ -16,7 +17,7 @@ export const useCieIdWebViewLoginNavigation = ({
   const navigation = useIONavigation();
 
   const navigateToCieIdAuthenticationError = useCallback(
-    (failure?: CieIdWebViewLoginEvent) => {
+    (failure?: LoginFailure) => {
       navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
         screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
         params: { failure }
@@ -36,7 +37,7 @@ export const useCieIdWebViewLoginNavigation = ({
   );
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage?: string) => {
+    (errorCodeOrMessage?: string, failure?: AuthErrorFailure) => {
       // `replace` drops the failed login screen, so retrying mounts a new
       // one, with a new Lollipop key, instead of popping back to it.
       // Dispatched as an action because `navigation` is typed on the root
@@ -45,7 +46,8 @@ export const useCieIdWebViewLoginNavigation = ({
         StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
           errorCodeOrMessage,
           authMethod: "CIE_ID",
-          authLevel
+          authLevel,
+          failure
         })
       );
     },

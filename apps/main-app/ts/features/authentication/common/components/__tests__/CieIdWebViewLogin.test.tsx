@@ -116,12 +116,20 @@ describe("CieIdWebViewLogin", () => {
       );
 
       const webview = getByTestId("cie-id-webview");
-      const nativeEvent = { url: "https://example.com/error" };
+      const nativeEvent = {
+        url: "https://example.com/error",
+        code: -1009,
+        description: "The Internet connection appears to be offline."
+      };
       fireEvent(webview, "onError", { nativeEvent });
 
       expect(onEvent).toHaveBeenCalledWith({
         type: "WEBVIEW_ERROR",
-        payload: { url: nativeEvent.url }
+        payload: {
+          url: nativeEvent.url,
+          code: nativeEvent.code,
+          description: nativeEvent.description
+        }
       });
     });
 

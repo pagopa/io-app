@@ -312,8 +312,13 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       {
         name: "a WebView error",
         event: "onError",
-        nativeEvent: { url: "https://example.com/error" },
-        expectedFailure: "WebView error on https://example.com/error"
+        nativeEvent: {
+          url: "https://example.com/error",
+          code: -1009,
+          description: "The Internet connection appears to be offline."
+        },
+        expectedFailure:
+          "WebView error -1009 (The Internet connection appears to be offline.) on https://example.com/error"
       },
       {
         name: "an HTTP error",

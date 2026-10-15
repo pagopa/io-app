@@ -150,7 +150,7 @@ export const OneIdentityCieAuthenticationWebView = ({
       const reason =
         "statusCode" in nativeEvent
           ? `HTTP error ${nativeEvent.statusCode} on ${nativeEvent.url}`
-          : `WebView error on ${nativeEvent.url}`;
+          : `WebView error ${nativeEvent.code} (${nativeEvent.description}) on ${nativeEvent.url}`;
 
       handleFailure(reason);
     },

@@ -187,12 +187,11 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    fireEvent(webview, "onHttpError", {
-      nativeEvent: {
-        url: `${MOCK_VALID_CALLBACK_URL}/extra-path`,
-        statusCode: 500
-      }
-    });
+    const nativeEvent = {
+      url: `${MOCK_VALID_CALLBACK_URL}/extra-path`,
+      statusCode: 500
+    };
+    fireEvent(webview, "onHttpError", { nativeEvent });
 
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
     expect(mockReplace).toHaveBeenCalledWith(
@@ -200,7 +199,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: MOCK_AUTH_LEVEL_L2
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent }
       }
     );
   });
@@ -221,16 +221,19 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    fireEvent(webview, "onHttpError", {
-      nativeEvent: { url: "https://example.com/some-path", statusCode: 500 }
-    });
+    const nativeEvent = {
+      url: "https://example.com/some-path",
+      statusCode: 500
+    };
+    fireEvent(webview, "onHttpError", { nativeEvent });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: MOCK_AUTH_LEVEL_L2
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent }
       }
     );
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
@@ -240,16 +243,20 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    fireEvent(webview, "onError", {
-      nativeEvent: { url: "https://example.com/authorize" }
-    });
+    const nativeEvent = {
+      url: "https://example.com/authorize",
+      code: -1009,
+      description: "The Internet connection appears to be offline."
+    };
+    fireEvent(webview, "onError", { nativeEvent });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: MOCK_AUTH_LEVEL_L2
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failure: { type: "WEBVIEW_ERROR", payload: nativeEvent }
       }
     );
   });

@@ -22,6 +22,7 @@ import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { AUTH_LEVELS, LOGIN_TYPES } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { LoginType } from "../../../common/utils/index";
+import { AuthErrorFailure } from "../../authError/screens/AuthErrorScreen";
 
 type OneIdentityCieAuthorizationWebViewProps = {
   authorizationUrl: string;
@@ -84,17 +85,25 @@ const OneIdentityCieAuthorizationWebViewContent = ({
   });
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage?: string) =>
+    (errorCodeOrMessage?: string, failure?: AuthErrorFailure) =>
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
         errorCodeOrMessage,
         authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3
+        authLevel: AUTH_LEVELS.L3,
+        failure
       }),
     [navigation]
   );
 
   const handleLoginFailure = useCallback(
-    (reason: string, code?: string, message?: string) => {
+    (
+      reason: string,
+      {
+        code,
+        message,
+        failure
+      }: { code?: string; failure?: AuthErrorFailure; message?: string } = {}
+    ) => {
       if (code === AUTH_ERRORS.ERROR_22) {
         trackLoginCieDataSharingError();
       }
@@ -106,7 +115,7 @@ const OneIdentityCieAuthorizationWebViewContent = ({
         })
       );
       const errorCodeOrMessage = code ?? message;
-      navigateToAuthErrorScreen(errorCodeOrMessage);
+      navigateToAuthErrorScreen(errorCodeOrMessage, failure);
     },
     [dispatch, navigateToAuthErrorScreen]
   );
@@ -123,7 +132,7 @@ const OneIdentityCieAuthorizationWebViewContent = ({
       switch (event.type) {
         case "LOGIN_FAILURE": {
           const { code, message, reason } = event.payload;
-          handleLoginFailure(reason, code, message);
+          handleLoginFailure(reason, { code, message });
           break;
         }
         case "LOGIN_SUCCESS": {
@@ -133,12 +142,17 @@ const OneIdentityCieAuthorizationWebViewContent = ({
         }
         case "WEBVIEW_ERROR": {
           const { url } = event.payload;
-          handleLoginFailure(`WebView error for URL ${url}`);
+          handleLoginFailure(`WebView error for URL ${url}`, {
+            failure: event
+          });
           break;
         }
         case "WEBVIEW_HTTP_ERROR": {
           const { statusCode, url } = event.payload;
-          handleLoginFailure(`WebView HTTP error ${statusCode} for URL ${url}`);
+          handleLoginFailure(
+            `WebView HTTP error ${statusCode} for URL ${url}`,
+            { failure: event }
+          );
           break;
         }
         default:

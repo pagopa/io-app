@@ -109,10 +109,8 @@ describe("CieIdErrorScreen debug info", () => {
         }
       },
       expected: {
-        failure: {
-          type: "ONE_IDENTITY_LOGIN_FAILURE",
-          payload: { reason: "some reason" }
-        },
+        type: "ONE_IDENTITY_LOGIN_FAILURE",
+        message: "some reason",
         flow: "auth",
         isCieSupported: true
       }

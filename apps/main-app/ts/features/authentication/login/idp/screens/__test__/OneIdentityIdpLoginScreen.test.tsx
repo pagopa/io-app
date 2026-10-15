@@ -159,19 +159,19 @@ describe("OneIdentityIdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    fireEvent(webview, "onHttpError", {
-      nativeEvent: {
-        url: `${apiUrlPrefix}/some-path`,
-        statusCode: 403
-      }
-    });
+    const nativeEvent = {
+      url: `${apiUrlPrefix}/some-path`,
+      statusCode: 403
+    };
+    fireEvent(webview, "onHttpError", { nativeEvent });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: AUTH_LEVELS.L2
+        authLevel: AUTH_LEVELS.L2,
+        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent }
       }
     );
   });
@@ -194,19 +194,19 @@ describe("OneIdentityIdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    fireEvent(webview, "onHttpError", {
-      nativeEvent: {
-        url: `${apiUrlPrefix}/some-path`,
-        statusCode: 500
-      }
-    });
+    const nativeEvent = {
+      url: `${apiUrlPrefix}/some-path`,
+      statusCode: 500
+    };
+    fireEvent(webview, "onHttpError", { nativeEvent });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: AUTH_LEVELS.L2
+        authLevel: AUTH_LEVELS.L2,
+        failure: { type: "WEBVIEW_HTTP_ERROR", payload: nativeEvent }
       }
     );
   });
@@ -215,16 +215,20 @@ describe("OneIdentityIdpLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
-    fireEvent(webview, "onError", {
-      nativeEvent: { url: "https://example.com/authorize" }
-    });
+    const nativeEvent = {
+      url: "https://example.com/authorize",
+      code: -1009,
+      description: "The Internet connection appears to be offline."
+    };
+    fireEvent(webview, "onError", { nativeEvent });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: AUTH_LEVELS.L2
+        authLevel: AUTH_LEVELS.L2,
+        failure: { type: "WEBVIEW_ERROR", payload: nativeEvent }
       }
     );
   });

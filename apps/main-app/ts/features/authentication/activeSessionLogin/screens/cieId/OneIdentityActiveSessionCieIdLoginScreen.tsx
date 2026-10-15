@@ -113,7 +113,7 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
           } else if (statusCode !== 403) {
-            navigateToAuthErrorScreen();
+            navigateToAuthErrorScreen(undefined, event);
           }
           break;
         }

@@ -81,4 +81,25 @@ describe("useCieIdWebViewLoginNavigation", () => {
     );
     expect(mockReplace).not.toHaveBeenCalled();
   });
+
+  it("navigateToAuthErrorScreen should forward the WebView failure when there is no error code", () => {
+    const { result } = renderHook(() =>
+      useCieIdWebViewLoginNavigation({ authLevel })
+    );
+    const failure = {
+      type: "WEBVIEW_HTTP_ERROR",
+      payload: { url: "https://other.example.com", statusCode: 500 }
+    } as const;
+
+    result.current.navigateToAuthErrorScreen(undefined, failure);
+
+    expect(mockDispatch).toHaveBeenCalledWith(
+      StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+        errorCodeOrMessage: undefined,
+        authMethod: "CIE_ID",
+        authLevel,
+        failure
+      })
+    );
+  });
 });

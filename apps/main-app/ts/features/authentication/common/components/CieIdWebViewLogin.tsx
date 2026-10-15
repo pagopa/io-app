@@ -23,6 +23,11 @@ import { LoginType } from "../utils/index";
 
 export type CieIdWebViewLoginEvent =
   | {
+      /** `code` and `description` come from the native WebView error. */
+      payload: { code: number; description: string; url: string };
+      type: "WEBVIEW_ERROR";
+    }
+  | {
       payload: { code?: string; message?: string; reason: string };
       type: "LOGIN_FAILURE";
     }
@@ -36,7 +41,6 @@ export type CieIdWebViewLoginEvent =
     }
   | { payload: { token: string }; type: "LOGIN_SUCCESS" }
   | { payload: { url: string }; type: "NOT_ALLOWED_URL" }
-  | { payload: { url: string }; type: "WEBVIEW_ERROR" }
   | { type: "CANCEL" };
 
 export type CieIdWebViewLoginProps = {
@@ -161,7 +165,11 @@ export const CieIdWebViewLogin = memo(
 
         onEvent({
           type: "WEBVIEW_ERROR",
-          payload: { url: nativeEvent.url }
+          payload: {
+            url: nativeEvent.url,
+            code: nativeEvent.code,
+            description: nativeEvent.description
+          }
         });
       },
       [onEvent]

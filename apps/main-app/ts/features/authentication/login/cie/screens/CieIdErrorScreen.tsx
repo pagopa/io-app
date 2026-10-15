@@ -14,10 +14,13 @@ import {
   setIdpSelectedActiveSessionLogin
 } from "../../../activeSessionLogin/store/actions";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
-import { CieIdWebViewLoginEvent } from "../../../common/components/CieIdWebViewLogin";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpSelected } from "../../../common/store/actions";
+import {
+  getLoginFailureDebugInfo,
+  LoginFailure
+} from "../../../common/utils/loginFailureDebugInfo";
 import useNavigateToLoginMethod, {
   IdpCIE
 } from "../../hooks/useNavigateToLoginMethod";
@@ -33,7 +36,7 @@ export type CieIdErrorScreenParams = {
    * The CieID WebView event that caused the error, shown only in debug mode.
    * Missing when the screen is reached from the legacy login flow.
    */
-  failure?: CieIdWebViewLoginEvent;
+  failure?: LoginFailure;
 };
 
 type CieIdErrorScreenProps = IOStackNavigationRouteProps<
@@ -50,7 +53,7 @@ const CieIdErrorScreen = ({ route }: CieIdErrorScreenProps) => {
 
   const debugInfo = useMemo(
     () => ({
-      ...(failure && { failure }),
+      ...(failure && getLoginFailureDebugInfo(failure)),
       flow: isActiveSessionLogin ? "reauth" : "auth",
       isCieSupported
     }),

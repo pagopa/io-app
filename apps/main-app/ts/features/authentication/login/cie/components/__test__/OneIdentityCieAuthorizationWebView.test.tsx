@@ -13,11 +13,15 @@ import {
 } from "../../../../activeSessionLogin/store/actions";
 import * as commonAnalytics from "../../../../common/analytics";
 import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
-import { CieWebViewLogin } from "../../../../common/components/CieWebViewLogin";
+import {
+  CieWebViewLogin,
+  CieWebViewLoginEvent
+} from "../../../../common/components/CieWebViewLogin";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as commonUtils from "../../../../common/utils";
 import { AUTH_LEVELS } from "../../../../common/utils";
 import { AUTH_ERRORS } from "../../../../common/utils/authError";
+import { OneIdentityCieAuthorizationWebView } from "../OneIdentityCieAuthorizationWebView";
 
 jest.mock("../../../../common/components/CieWebViewLogin", () => ({
   CieWebViewLogin: jest.fn(() => null)
@@ -172,10 +176,15 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
     renderComponent();
     const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
 
-    onEvent({
+    const failure: CieWebViewLoginEvent = {
       type: "WEBVIEW_ERROR",
-      payload: { url: "https://idserver.example.com/broken" }
-    });
+      payload: {
+        url: "https://idserver.example.com/broken",
+        code: -1009,
+        description: "The Internet connection appears to be offline."
+      }
+    };
+    onEvent(failure);
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
     expect(mockReplace).toHaveBeenCalledWith(
@@ -183,7 +192,8 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3
+        authLevel: AUTH_LEVELS.L3,
+        failure
       }
     );
   });
@@ -225,10 +235,11 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
     renderComponent();
     const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
 
-    onEvent({
+    const failure: CieWebViewLoginEvent = {
       type: "WEBVIEW_HTTP_ERROR",
       payload: { url: "https://idserver.example.com/broken", statusCode: 500 }
-    });
+    };
+    onEvent(failure);
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
     expect(mockReplace).toHaveBeenCalledWith(
@@ -236,7 +247,8 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3
+        authLevel: AUTH_LEVELS.L3,
+        failure
       }
     );
   });
@@ -255,5 +267,42 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
     expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MAIN, {
       screen: MESSAGES_ROUTES.MESSAGES_HOME
     });
+  });
+});
+
+describe("OneIdentityCieAuthorizationWebView", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    jest.spyOn(IOHooks, "useIODispatch").mockReturnValue(jest.fn());
+    // Not an active session login: the standard login content is rendered
+    jest.spyOn(IOHooks, "useIOSelector").mockReturnValue(false);
+  });
+
+  it("should pass the WebView failure to AUTH_ERROR_SCREEN when the connection drops after the card has been read", () => {
+    render(
+      <OneIdentityCieAuthorizationWebView authorizationUrl="https://idserver.example.com/authorize" />
+    );
+    const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
+
+    const failure: CieWebViewLoginEvent = {
+      type: "WEBVIEW_ERROR",
+      payload: {
+        url: "https://idserver.example.com/authorize",
+        code: -1009,
+        description: "The Internet connection appears to be offline."
+      }
+    };
+    onEvent(failure);
+
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
+        errorCodeOrMessage: undefined,
+        authMethod: "CIE",
+        authLevel: AUTH_LEVELS.L3,
+        failure
+      }
+    );
   });
 });

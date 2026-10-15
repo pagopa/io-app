@@ -48,6 +48,11 @@ export type IdpWebViewLoginProps = {
 
 export type WebViewLoginEvent =
   | {
+      /** `code` and `description` come from the native WebView error. */
+      payload: { code: number; description: string; url: string };
+      type: "WEBVIEW_ERROR";
+    }
+  | {
       payload: { code?: string; message?: string; reason: string };
       type: "LOGIN_FAILURE";
     }
@@ -55,8 +60,7 @@ export type WebViewLoginEvent =
       payload: { statusCode: number; url: string };
       type: "WEBVIEW_HTTP_ERROR";
     }
-  | { payload: { token: string }; type: "LOGIN_SUCCESS" }
-  | { payload: { url: string }; type: "WEBVIEW_ERROR" };
+  | { payload: { token: string }; type: "LOGIN_SUCCESS" };
 
 export const IdpWebViewLogin = memo(
   ({ idp, flow = LOGIN_TYPES.AUTH, onEvent }: IdpWebViewLoginProps) => {
@@ -111,7 +115,11 @@ export const IdpWebViewLogin = memo(
 
         onEvent({
           type: "WEBVIEW_ERROR",
-          payload: { url: nativeEvent.url }
+          payload: {
+            url: nativeEvent.url,
+            code: nativeEvent.code,
+            description: nativeEvent.description
+          }
         });
       },
       [idp.id, onEvent]

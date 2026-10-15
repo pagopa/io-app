@@ -25,6 +25,7 @@ import {
   loggedOutWithIdpAuthSelector
 } from "../../../common/store/selectors";
 import { AUTH_LEVELS } from "../../../common/utils";
+import { AuthErrorFailure } from "../../authError/screens/AuthErrorScreen";
 
 export const OneIdentityIdpLoginScreen = () => {
   const loggedInAuth = useIOSelector(loggedInAuthSelector);
@@ -70,13 +71,14 @@ const OneIdentityIdpLoginScreenContent = ({
     useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage?: string) => {
+    (errorCodeOrMessage?: string, failure?: AuthErrorFailure) => {
       // `replace` drops the failed login webview, so it doesn't stay
       // mounted behind the error screen.
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
         errorCodeOrMessage,
         authMethod: "SPID",
-        authLevel: AUTH_LEVELS.L2
+        authLevel: AUTH_LEVELS.L2,
+        failure
       });
     },
     [navigation]
@@ -116,7 +118,7 @@ const OneIdentityIdpLoginScreenContent = ({
           break;
         }
         case "WEBVIEW_ERROR": {
-          navigateToAuthErrorScreen();
+          navigateToAuthErrorScreen(undefined, event);
           break;
         }
         case "WEBVIEW_HTTP_ERROR": {
@@ -125,7 +127,7 @@ const OneIdentityIdpLoginScreenContent = ({
           if (!url.includes(apiUrlPrefix) && statusCode === 403) {
             break;
           }
-          navigateToAuthErrorScreen();
+          navigateToAuthErrorScreen(undefined, event);
           break;
         }
         default:

@@ -55,7 +55,7 @@ describe("AuthErrorScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("should forward the raw error code and the translated title to useDebugInfo for a mapped error", () => {
+  it("should forward the backend error code to useDebugInfo for a mapped error", () => {
     mockIsActiveSessionLogin(false);
     mockUseRoute.mockReturnValue({
       params: {
@@ -68,14 +68,14 @@ describe("AuthErrorScreen", () => {
     renderComponent();
 
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      errorCodeOrMessage: "25",
-      errorTitle: I18n.t("authentication.auth_errors.error_25.title"),
+      type: "LOGIN_FAILURE",
+      code: "25",
       authMethod: "SPID",
       authLevel: AUTH_LEVELS.L2
     });
   });
 
-  it("should forward the raw error code and the generic title to useDebugInfo for an unmapped error", () => {
+  it("should forward the raw backend error to useDebugInfo for an unmapped error", () => {
     mockIsActiveSessionLogin(false);
     mockUseRoute.mockReturnValue({
       params: {
@@ -88,10 +88,40 @@ describe("AuthErrorScreen", () => {
     renderComponent();
 
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      errorCodeOrMessage: "some_unmapped_raw_error",
-      errorTitle: I18n.t("authentication.auth_errors.generic.title"),
+      type: "LOGIN_FAILURE",
+      code: "some_unmapped_raw_error",
       authMethod: "SPID",
       authLevel: AUTH_LEVELS.L2
+    });
+  });
+
+  it("should forward the flattened WebView failure to useDebugInfo when the error doesn't come from the backend", () => {
+    mockIsActiveSessionLogin(false);
+    const failure = {
+      type: "WEBVIEW_ERROR",
+      payload: {
+        url: "https://example.com/authorize",
+        code: -1009,
+        description: "The Internet connection appears to be offline."
+      }
+    };
+    mockUseRoute.mockReturnValue({
+      params: {
+        authMethod: "CIE",
+        authLevel: AUTH_LEVELS.L3,
+        failure
+      }
+    });
+
+    renderComponent();
+
+    expect(mockUseDebugInfo).toHaveBeenCalledWith({
+      type: "WEBVIEW_ERROR",
+      code: -1009,
+      message: "The Internet connection appears to be offline.",
+      url: "https://example.com/authorize",
+      authMethod: "CIE",
+      authLevel: AUTH_LEVELS.L3
     });
   });
 

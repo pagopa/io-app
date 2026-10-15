@@ -24,6 +24,7 @@ import {
   LOGIN_TYPES
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
+import { AuthErrorFailure } from "../../../login/authError/screens/AuthErrorScreen";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
@@ -63,17 +64,25 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
   }, [dispatch, navigation]);
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage?: string) =>
+    (errorCodeOrMessage?: string, failure?: AuthErrorFailure) =>
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
         errorCodeOrMessage,
         authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3
+        authLevel: AUTH_LEVELS.L3,
+        failure
       }),
     [navigation]
   );
 
   const handleLoginFailure = useCallback(
-    (reason: string, code?: string, message?: string) => {
+    (
+      reason: string,
+      {
+        code,
+        message,
+        failure
+      }: { code?: string; failure?: AuthErrorFailure; message?: string } = {}
+    ) => {
       const errorCodeOrMessage = code ?? message;
 
       if (code !== AUTH_ERRORS.ERROR_1004) {
@@ -85,7 +94,7 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
       }
 
       trackLoginFailure({ reason, idp: "cie", flow: LOGIN_TYPES.REAUTH });
-      navigateToAuthErrorScreen(errorCodeOrMessage);
+      navigateToAuthErrorScreen(errorCodeOrMessage, failure);
     },
     [dispatch, navigateToAuthErrorScreen]
   );
@@ -102,7 +111,7 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
       switch (event.type) {
         case "LOGIN_FAILURE": {
           const { code, message, reason } = event.payload;
-          handleLoginFailure(reason, code, message);
+          handleLoginFailure(reason, { code, message });
           break;
         }
         case "LOGIN_SUCCESS": {
@@ -112,7 +121,9 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
         }
         case "WEBVIEW_ERROR": {
           const { url } = event.payload;
-          handleLoginFailure(`WebView error for URL ${url}`);
+          handleLoginFailure(`WebView error for URL ${url}`, {
+            failure: event
+          });
           break;
         }
         case "WEBVIEW_HTTP_ERROR": {
@@ -123,7 +134,8 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
             forceLogoutAndNavigateToLanding();
           } else if (statusCode !== 403) {
             handleLoginFailure(
-              `WebView HTTP error ${statusCode} for URL ${url}`
+              `WebView HTTP error ${statusCode} for URL ${url}`,
+              { failure: event }
             );
           }
           break;
