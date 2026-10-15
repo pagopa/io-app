@@ -2,6 +2,51 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.41.0-rc.5](https://github.com/pagopa/io-app/compare/3.41.0-rc.4...3.41.0-rc.5) (2026-10-14)
+
+### Features
+
+* [[IEL-589](https://pagopa.atlassian.net/browse/IEL-589)] Adaptation to the new PARI APIs ([#8595](https://github.com/pagopa/io-app/issues/8595)) ([ae9acab](https://github.com/pagopa/io-app/commit/ae9acab9a29dbe58dfbb87712788c95e47f11742))
+* **IT-Wallet:** [[SIW-4906](https://pagopa.atlassian.net/browse/SIW-4906)] ITW banner CAC link ([#8711](https://github.com/pagopa/io-app/issues/8711)) ([6bdc722](https://github.com/pagopa/io-app/commit/6bdc7227216d63f940e89dbad46f483db5112b07))
+
+### Bug Fixes
+
+* [[IOPID-4253](https://pagopa.atlassian.net/browse/IOPID-4253)] Forward livello3 to CieID only on iOS ([#8735](https://github.com/pagopa/io-app/issues/8735)) ([93c7aec](https://github.com/pagopa/io-app/commit/93c7aec8d45ab482c079d5130f8d40c212edcc70))
+* [[IOPID-4258](https://pagopa.atlassian.net/browse/IOPID-4258)] Prevent redirect to Landing during OneId Active Session Login ([#8736](https://github.com/pagopa/io-app/issues/8736)) ([97f1985](https://github.com/pagopa/io-app/commit/97f1985abc889e9426989d0655d85a8a49f6390b))
+
+### Chores
+
+* [[IOCOM-3367](https://pagopa.atlassian.net/browse/IOCOM-3367)] addition of s-bartolini to CODEOWNERS ([#8739](https://github.com/pagopa/io-app/issues/8739)) ([019fe75](https://github.com/pagopa/io-app/commit/019fe75f5784da70217b540907769e3d0d6c0b5a))
+## [3.41.0-rc.4](https://github.com/pagopa/io-app/compare/3.41.0-rc.3...3.41.0-rc.4) (2026-10-13)
+
+### Features
+
+* [[IOPID-4240](https://pagopa.atlassian.net/browse/IOPID-4240)] Use `acr_values` from reserve for OneIdentity authorize ([#8729](https://github.com/pagopa/io-app/issues/8729)) ([22d855f](https://github.com/pagopa/io-app/commit/22d855fdee912cf1b310483ed50999b42f2f3cf6))
+
+### Bug Fixes
+
+* [[IOPID-4251](https://pagopa.atlassian.net/browse/IOPID-4251)] Add custom user agent to fix PosteID rapid access ([#8726](https://github.com/pagopa/io-app/issues/8726)) ([ec00a46](https://github.com/pagopa/io-app/commit/ec00a46a54f96d514bc6200c75a69d9114d5f0d8))
+* [[IOPLT-2181](https://pagopa.atlassian.net/browse/IOPLT-2181)] Add dark mode support to missing elements ([#8727](https://github.com/pagopa/io-app/issues/8727)) ([19f24f8](https://github.com/pagopa/io-app/commit/19f24f867d25e2a1e72897cc850c7b37478bbee9))
+
+### Chores
+
+* [[IOPLT-2166](https://pagopa.atlassian.net/browse/IOPLT-2166)] Adjust tab bar a11y announce ([#8712](https://github.com/pagopa/io-app/issues/8712)) ([705cf7f](https://github.com/pagopa/io-app/commit/705cf7fd630cf0a32bb42ffcb57802bc8970080b))
+* [[IOPLT-2182](https://pagopa.atlassian.net/browse/IOPLT-2182)] Add Device Hub support from CLI ([#8728](https://github.com/pagopa/io-app/issues/8728)) ([9ed16f4](https://github.com/pagopa/io-app/commit/9ed16f402ac901a6ed91428b4dea455fb73a3837))
+## [3.41.0-rc.3](https://github.com/pagopa/io-app/compare/3.41.0-rc.2...3.41.0-rc.3) (2026-10-12)
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-5205](https://pagopa.atlassian.net/browse/SIW-5205)] Track failed upgrade credentials as invalid ([#8683](https://github.com/pagopa/io-app/issues/8683)) ([55feda5](https://github.com/pagopa/io-app/commit/55feda5fb9e2a967d9b7cc4a100d2d456fc030c0))
+## [3.41.0-rc.2](https://github.com/pagopa/io-app/compare/3.41.0-rc.1...3.41.0-rc.2) (2026-10-09)
+
+### Features
+
+* [[IOCOM-3347](https://pagopa.atlassian.net/browse/IOCOM-3347)] more possible entries in messages' detail contacts bottomSheet  ([#8657](https://github.com/pagopa/io-app/issues/8657)) ([38a9bf0](https://github.com/pagopa/io-app/commit/38a9bf0e774bc9543cc05b57768be75bdd37bb9a))
+
+### Bug Fixes
+
+* [[IOPID-4120](https://pagopa.atlassian.net/browse/IOPID-4120)] Make status and active fields optional in IDP schema ([#8718](https://github.com/pagopa/io-app/issues/8718)) ([11f7b0a](https://github.com/pagopa/io-app/commit/11f7b0a399ef07a88281784b27e3bbe628149ec7))
+* **IT-Wallet:** [[SIW-5277](https://pagopa.atlassian.net/browse/SIW-5277)] Restore link for same-device remote presentation ([#8704](https://github.com/pagopa/io-app/issues/8704)) ([8d20640](https://github.com/pagopa/io-app/commit/8d2064025c79ac431d38946d7d88db4d961a8a95))
 ## [3.41.0-rc.1](https://github.com/pagopa/io-app/compare/3.41.0-rc.0...3.41.0-rc.1) (2026-10-08)
 
 ### Bug Fixes
