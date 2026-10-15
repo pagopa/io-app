@@ -1,5 +1,3 @@
-import { CreatedMessageWithContentAndAttachments } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndAttachments";
-import { IOToast } from "@io-app/design-system";
 import * as Calendar from "expo-calendar";
 import * as E from "fp-ts/lib/Either";
 import { identity, pipe } from "fp-ts/lib/function";
@@ -7,9 +5,6 @@ import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "i18next";
 import { Platform } from "react-native";
-
-import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
-import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
 
 /** Utility functions to interact with the device calendars */
 
@@ -85,35 +80,6 @@ export function convertLocalCalendarName(calendarTitle: string) {
 }
 
 /**
- * Return a TaskEither where left is an error and right is a boolean -> true ===
- * the is in calendar
- *
- * @param eventId
- */
-export const legacyIsEventInCalendar = (
-  eventId: string
-): TE.TaskEither<Error, boolean> => {
-  const authTask = TE.tryCatch(
-    () => checkAndRequestPermission(),
-    message => new Error(String(message))
-  );
-  const findTask = TE.tryCatch(
-    () => Calendar.getEventAsync(eventId),
-    E.toError
-  );
-  return pipe(
-    authTask,
-    TE.chain(
-      TE.fromPredicate(
-        auth => auth.authorized,
-        () => new Error("Not authorized")
-      )
-    ),
-    TE.chain(() => findTask),
-    TE.map(ev => ev !== null)
-  );
-};
-/**
  * Check if an event for endDate with that title already exists in the calendar.
  * Return the event id if it is found
  */
@@ -148,57 +114,6 @@ export const searchEventInCalendar = async (
       () => O.none
     )
     .catch(() => O.none);
-};
-
-export const saveCalendarEvent = (
-  calendar: Calendar.Calendar,
-  message: CreatedMessageWithContentAndAttachments,
-  dueDate: Date,
-  title: string,
-  onAddCalendarEvent?: (calendarEvent: AddCalendarEventPayload) => void
-) => {
-  const dueDateIsoString = dueDate.toISOString();
-  Calendar.createEventAsync(title, {
-    calendarId: calendar.id,
-    startDate: dueDateIsoString,
-    endDate: dueDateIsoString,
-    allDay: true,
-    alarms: []
-  })
-    .then(eventId => {
-      IOToast.success(
-        I18n.t("messages.cta.reminderAddSuccess", {
-          title,
-          calendarTitle: convertLocalCalendarName(calendar.title)
-        })
-      );
-      const messageId = message.id;
-      if (onAddCalendarEvent) {
-        onAddCalendarEvent({
-          messageId,
-          eventId
-        });
-      }
-    })
-    .catch(_ => IOToast.error(I18n.t("messages.cta.reminderAddFailure")));
-};
-
-export const removeCalendarEventFromDeviceCalendar = (
-  calendarEvent: CalendarEvent | undefined,
-  onRemoveEvent?: (calendarEvent: CalendarEvent) => void
-) => {
-  if (calendarEvent) {
-    Calendar.deleteEventAsync(calendarEvent.eventId)
-      .then(_ => {
-        IOToast.success(I18n.t("messages.cta.reminderRemoveSuccess"));
-        if (onRemoveEvent) {
-          onRemoveEvent(calendarEvent);
-        }
-      })
-      .catch(_ => IOToast.error(I18n.t("messages.cta.reminderRemoveFailure")));
-  } else {
-    IOToast.error(I18n.t("messages.cta.reminderRemoveFailure"));
-  }
 };
 
 /**
@@ -238,8 +153,8 @@ export const saveEventToDeviceCalendarTask = (
 ) =>
   TE.tryCatch(
     () =>
-      Calendar.createEventAsync(title, {
-        calendarId,
+      Calendar.createEventAsync(calendarId, {
+        title,
         startDate: dueDate.toISOString(),
         endDate: dueDate.toISOString(),
         allDay: true,
@@ -255,8 +170,11 @@ export const removeEventFromDeviceCalendarTask = (eventId: string) =>
     TE.map(_ => eventId)
   );
 
-/** Find the device calendars */
+/**
+ * Find the device calendars that can host events. Without the entity type, iOS
+ * also returns Reminders lists, which reject event creation.
+ */
 export const findDeviceCalendarsTask = TE.tryCatch(
-  () => Calendar.getCalendarsAsync(),
+  () => Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT),
   E.toError
 );
