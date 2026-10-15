@@ -45,11 +45,9 @@ export const DSSpacerViewerBox = ({
           >
             <VSpacer size={size} />
           </View>
-          {size && (
-            <View style={{ flexDirection: "row", marginTop: 4 }}>
-              <DSSpacerLabel value={size} />
-            </View>
-          )}
+          <View style={{ flexDirection: "row", marginTop: 4 }}>
+            <DSSpacerLabel value={size} />
+          </View>
         </View>
       ) : (
         <View style={{ flexDirection: "row" }}>
@@ -61,11 +59,9 @@ export const DSSpacerViewerBox = ({
           >
             <HSpacer size={size} />
           </View>
-          {size && (
-            <View style={{ flexDirection: "column", marginLeft: 4 }}>
-              <DSSpacerLabel value={size} />
-            </View>
-          )}
+          <View style={{ flexDirection: "column", marginLeft: 4 }}>
+            <DSSpacerLabel value={size} />
+          </View>
         </View>
       )}
     </>
