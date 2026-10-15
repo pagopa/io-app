@@ -81,6 +81,12 @@ const successResponse = (status: number, body: unknown): FetchResponse => ({
   } as unknown as Response
 });
 
+const abortedResponse: FetchResponse = {
+  type: "failure",
+  reason: "aborted",
+  message: "The request was aborted"
+};
+
 interface SetupOptions {
   flow?: LoginType;
   followRedirectsNatively?: boolean;
@@ -254,6 +260,68 @@ describe("useOneIdentityLoginSource", () => {
         "one-identity-authorize"
       );
     });
+  });
+
+  it("should not fail when the reserve request is aborted by unmount", async () => {
+    // eslint-disable-next-line functional/no-let
+    let resolveFetch: (value: FetchResponse) => void = () => undefined;
+
+    mockRetriableFetch.mockImplementationOnce(
+      () =>
+        new Promise<FetchResponse>(resolve => {
+          resolveFetch = resolve;
+        })
+    );
+
+    const { unmount, onFailure } = setupTest();
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(1);
+    });
+
+    unmount();
+    await act(async () => {
+      resolveFetch(abortedResponse);
+    });
+
+    expect(onFailure).not.toHaveBeenCalled();
+  });
+
+  it("should not fail when a stale reserve request resolves as aborted after retry", async () => {
+    // eslint-disable-next-line functional/no-let
+    let resolveStaleFetch: (value: FetchResponse) => void = () => undefined;
+
+    mockRetriableFetch
+      .mockImplementationOnce(
+        () =>
+          new Promise<FetchResponse>(resolve => {
+            resolveStaleFetch = resolve;
+          })
+      )
+      .mockResolvedValueOnce(successResponse(200, reserveResponse));
+
+    const { result, onFailure } = setupTest();
+
+    await waitFor(() => {
+      expect(mockRetriableFetch).toHaveBeenCalledTimes(1);
+    });
+
+    await act(async () => result.current.generateLoginSource());
+
+    await waitFor(() => {
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+
+    await act(async () => {
+      resolveStaleFetch(abortedResponse);
+    });
+
+    expect(onFailure).not.toHaveBeenCalled();
+    expect(result.current.loginSourceState.status).toBe(
+      "one-identity-authorize"
+    );
   });
 
   it("should fail if ephemeral key generation fails", async () => {
