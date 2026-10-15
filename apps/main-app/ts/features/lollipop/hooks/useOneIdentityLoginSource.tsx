@@ -11,11 +11,7 @@ import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences"
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { getAppVersion } from "../../../utils/appVersion";
 import { isLocalEnv } from "../../../utils/environment";
-import { unknownToString } from "../../../utils/errors";
-import {
-  isActiveSessionFastLoginEnabledSelector,
-  isActiveSessionLoginSelector
-} from "../../authentication/activeSessionLogin/store/selectors";
+import { isActiveSessionFastLoginEnabledSelector } from "../../authentication/activeSessionLogin/store/selectors";
 import { trackLoginOIConfigurationError } from "../../authentication/common/analytics";
 import { oneIdentityEnvSelector } from "../../authentication/common/store/selectors/loginConfig";
 import {

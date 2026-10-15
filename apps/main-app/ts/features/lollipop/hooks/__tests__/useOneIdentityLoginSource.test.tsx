@@ -237,7 +237,7 @@ describe("useOneIdentityLoginSource", () => {
         );
         jest
           .mocked(followNativeRedirectsAndVerifySaml)
-          .mockResolvedValue("https://idp.example.com/sso?SAMLRequest=abc");
+          .mockResolvedValue(ok("https://idp.example.com/sso?SAMLRequest=abc"));
 
         const { result } = setupTest({ followRedirectsNatively });
 
