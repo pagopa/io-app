@@ -6,14 +6,22 @@ import {
   oneIdentityIdpsUrlSelector
 } from "../../../common/store/selectors/remoteConfig";
 import { createRetriableFetch } from "../../../common/utils/fetch";
-import { jsonFetchToSchema } from "../../../common/utils/jsonFetchToSchema";
+import {
+  JsonFetchError,
+  jsonFetchToSchema
+} from "../../../common/utils/jsonFetchToSchema";
 import { IdpFriendlyNamesSchema, Idps, IdpsSchema } from "../types/idps";
 
 const fetch = createRetriableFetch();
 
 export type IdpsState =
   | { data: Idps; status: "success" }
-  | { error: string; status: "failure" }
+  | {
+      error: JsonFetchError;
+      status: "failure";
+      /** The IdP list URL, read from the remote config, that failed to load. */
+      url: string;
+    }
   | { status: "loading" };
 
 export type UseGetIdps = () => {
@@ -47,7 +55,11 @@ export const useGetIdps: UseGetIdps = () => {
       ]);
 
       if (idpsResult.isErr()) {
-        return setState({ status: "failure", error: idpsResult.error });
+        return setState({
+          status: "failure",
+          error: idpsResult.error,
+          url: idpsUrl
+        });
       }
 
       const idpFriendlyNamesMap = idpFriendlyNamesResult.isOk()

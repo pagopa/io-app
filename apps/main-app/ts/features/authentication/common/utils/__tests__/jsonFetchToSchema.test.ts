@@ -25,7 +25,7 @@ describe("jsonFetchToSchema", () => {
     );
   });
 
-  it("should return the failure message when the request fails at the transport level", async () => {
+  it("should return the transport-level reason and message when the request fails", async () => {
     const requestPromise = Promise.resolve<FetchResponse>({
       type: "failure",
       reason: "network-error",
@@ -33,22 +33,26 @@ describe("jsonFetchToSchema", () => {
     });
 
     await expect(jsonFetchToSchema(requestPromise, schema)).resolves.toEqual(
-      err("Network Error")
+      err({ type: "network-error", message: "Network Error" })
     );
   });
 
-  it("should return a message when the HTTP response status is not ok", async () => {
+  it("should return the HTTP status when the response status is not ok", async () => {
     const requestPromise = Promise.resolve<FetchResponse>({
       type: "success",
       response: jsonResponse(500, ["a", "b"])
     });
 
     await expect(jsonFetchToSchema(requestPromise, schema)).resolves.toEqual(
-      err("Unexpected HTTP status 500")
+      err({
+        type: "http-status",
+        code: 500,
+        message: "Unexpected HTTP status 500"
+      })
     );
   });
 
-  it("should return a message when the body cannot be parsed as JSON", async () => {
+  it("should return an invalid-json error when the body cannot be parsed as JSON", async () => {
     const response = {
       ok: true,
       status: 200,
@@ -61,18 +65,41 @@ describe("jsonFetchToSchema", () => {
     });
 
     await expect(jsonFetchToSchema(requestPromise, schema)).resolves.toEqual(
-      err(expect.stringContaining("Invalid JSON"))
+      err({
+        type: "invalid-json",
+        message: expect.stringContaining("Invalid JSON")
+      })
     );
   });
 
-  it("should return a prettified message when the body does not match the schema", async () => {
+  it("should return an invalid-schema error with a prettified message when the body does not match the schema", async () => {
     const requestPromise = Promise.resolve<FetchResponse>({
       type: "success",
       response: jsonResponse(200, { something: "wrong" })
     });
 
     await expect(jsonFetchToSchema(requestPromise, schema)).resolves.toEqual(
-      err(expect.stringContaining("Invalid input"))
+      err({
+        type: "invalid-schema",
+        message: expect.stringContaining("Invalid input")
+      })
+    );
+  });
+
+  it("should return the status of the last response when the retryable status persists", async () => {
+    const requestPromise = Promise.resolve<FetchResponse>({
+      type: "failure",
+      reason: "retryable-status",
+      message: "Received retryable status code 429",
+      response: jsonResponse(429, {})
+    });
+
+    await expect(jsonFetchToSchema(requestPromise, schema)).resolves.toEqual(
+      err({
+        type: "retryable-status",
+        code: 429,
+        message: "Received retryable status code 429"
+      })
     );
   });
 });

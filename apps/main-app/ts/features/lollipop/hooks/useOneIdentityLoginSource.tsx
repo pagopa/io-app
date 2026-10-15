@@ -307,8 +307,8 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
     if (result.isErr()) {
       abortControllerRef.current = null;
-      setLoginSourceState({ status: "failure", error: result.error });
-      onFailure(result.error);
+      setLoginSourceState({ status: "failure", error: result.error.message });
+      onFailure(result.error.message);
       return;
     }
 
