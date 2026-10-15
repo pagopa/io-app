@@ -45,6 +45,12 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import {
+  trackItwUpgradeL3Mandatory,
+  trackItwUpgradeL3MandatoryCancel,
+  trackItwUpgradeL3MandatoryConfirm
+} from "../../presentation/remote/analytics";
+import { ItwL3UpgradeTrigger } from "../../presentation/remote/analytics/utils/types";
 
 const introHeroUri = Image.resolveAssetSource(introHeroSource).uri;
 
@@ -151,6 +157,14 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     }
   }, [shouldSkipIntro, handleContinue]);
 
+  useFocusEffect(
+    useCallback(() => {
+      if (isResolved && !isWalletValid) {
+        trackItwUpgradeL3Mandatory(ItwL3UpgradeTrigger.ADD_CREDENTIAL);
+      }
+    }, [isResolved, isWalletValid])
+  );
+
   if (!isResolved || shouldSkipIntro) {
     return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
@@ -163,6 +177,9 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
             "features.itWallet.issuance.credentialOffer.activation.primaryAction"
           ),
           onPress: () => {
+            trackItwUpgradeL3MandatoryConfirm(
+              ItwL3UpgradeTrigger.ADD_CREDENTIAL
+            );
             machineRef.send({ type: "close" });
             navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
               animationEnabled: false,
@@ -175,6 +192,9 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
         secondaryAction={{
           label: I18n.t("global.buttons.cancel"),
           onPress: () => {
+            trackItwUpgradeL3MandatoryCancel(
+              ItwL3UpgradeTrigger.ADD_CREDENTIAL
+            );
             machineRef.send({ type: "close" });
             navigation.popToTop();
           }

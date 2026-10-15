@@ -24,10 +24,22 @@ import {
 } from "../../../machine/credential/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import {
+  trackItwUpgradeL3Mandatory,
+  trackItwUpgradeL3MandatoryCancel,
+  trackItwUpgradeL3MandatoryConfirm
+} from "../../../presentation/remote/analytics";
+import { ItwL3UpgradeTrigger } from "../../../presentation/remote/analytics/utils/types";
 import { ItwIssuanceCredentialOfferIntroScreen } from "../ItwIssuanceCredentialOfferIntro";
 
 jest.mock("../../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
+}));
+
+jest.mock("../../../presentation/remote/analytics", () => ({
+  trackItwUpgradeL3Mandatory: jest.fn(),
+  trackItwUpgradeL3MandatoryCancel: jest.fn(),
+  trackItwUpgradeL3MandatoryConfirm: jest.fn()
 }));
 
 const T_CREDENTIAL_OFFER_URI =
@@ -113,6 +125,10 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     expect(machineSend).not.toHaveBeenCalledWith({
       type: "confirm-credential-offer"
     });
+    expect(trackItwUpgradeL3Mandatory).toHaveBeenCalledTimes(1);
+    expect(trackItwUpgradeL3Mandatory).toHaveBeenCalledWith(
+      ItwL3UpgradeTrigger.ADD_CREDENTIAL
+    );
 
     fireEvent.press(
       getByText(
@@ -122,6 +138,10 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       )
     );
 
+    expect(trackItwUpgradeL3MandatoryConfirm).toHaveBeenCalledWith(
+      ItwL3UpgradeTrigger.ADD_CREDENTIAL
+    );
+    expect(trackItwUpgradeL3MandatoryCancel).not.toHaveBeenCalled();
     expect(machineSend).toHaveBeenCalledWith({ type: "close" });
     expect(onDiscoveryParams).toHaveBeenCalledWith({
       animationEnabled: false,
@@ -129,6 +149,53 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       level: "l3"
     });
   });
+
+  it("tracks cancellation of the wallet activation required to add a credential", () => {
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(false);
+
+    const { getByText } = renderComponent(jest.fn());
+
+    fireEvent.press(getByText(I18n.t("global.buttons.cancel")));
+
+    expect(trackItwUpgradeL3MandatoryCancel).toHaveBeenCalledWith(
+      ItwL3UpgradeTrigger.ADD_CREDENTIAL
+    );
+    expect(trackItwUpgradeL3MandatoryConfirm).not.toHaveBeenCalled();
+    expect(machineSend).toHaveBeenCalledWith({ type: "close" });
+  });
+
+  it.each([
+    { name: "offer", unresolvedSelector: selectResolvedCredentialOffer },
+    { name: "credential type", unresolvedSelector: selectCredentialType }
+  ])(
+    "does not track activation while the $name is unresolved",
+    ({ unresolvedSelector }) => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(false);
+      const useSelectorMock = jest.spyOn(
+        ItwCredentialIssuanceMachineContext,
+        "useSelector"
+      );
+      const resolvedImplementation = useSelectorMock.getMockImplementation();
+      useSelectorMock.mockImplementation(selector =>
+        selector === unresolvedSelector
+          ? undefined
+          : resolvedImplementation?.(selector)
+      );
+
+      const { queryByText } = renderComponent(jest.fn());
+
+      expect(
+        queryByText(
+          I18n.t("features.itWallet.issuance.credentialOffer.activation.title")
+        )
+      ).toBeNull();
+      expect(trackItwUpgradeL3Mandatory).not.toHaveBeenCalled();
+    }
+  );
 
   it.each(["jwtExpired", "jwtExpiring"])(
     "asks to confirm the identity when the eID is %s",
@@ -149,6 +216,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       expect(machineSend).not.toHaveBeenCalledWith({
         type: "confirm-credential-offer"
       });
+      expect(trackItwUpgradeL3Mandatory).not.toHaveBeenCalled();
     }
   );
 
@@ -163,6 +231,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     expect(machineSend).toHaveBeenCalledWith({
       type: "confirm-credential-offer"
     });
+    expect(trackItwUpgradeL3Mandatory).not.toHaveBeenCalled();
   });
 
   it.each([
@@ -212,6 +281,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     expect(machineSend).not.toHaveBeenCalledWith({
       type: "confirm-credential-offer"
     });
+    expect(trackItwUpgradeL3Mandatory).not.toHaveBeenCalled();
   });
 
   it("continues the flow when the stored credential is no longer valid", () => {
