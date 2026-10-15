@@ -3725,16 +3725,6 @@
           "ISEE": "ISEE",
           "RESIDENCE": "Residenza"
         },
-        "familyUnitCode": {
-          "ANPR": {
-            "description": "Ministero dell’Interno",
-            "title": "Famiglia anagrafica"
-          },
-          "INPS": {
-            "description": "INPS",
-            "title": "INPS"
-          }
-        },
         "operator": {
           "BTW_CLOSED": "Compreso tra {{value}} e {{value2}}",
           "BTW_OPEN": "Compreso tra {{value}} e {{value2}}",
@@ -3833,6 +3823,10 @@
           "UNSATISFIED_REQUIREMENTS": {
             "subtitle": "I controlli di verifica hanno già dato esito negativo.\nSe pensi ci sia un errore, contatta l’ente promotore.",
             "title": "Non hai i requisiti per aderire a questa iniziativa"
+          },
+          "USER_BONUS_ALREADY_USED": {
+            "subtitle": "Dai controlli effettuati risulta che lo hai già usato in un’altra occasione",
+            "title": "Hai già usato in passato questo bonus"
           },
           "USER_NOT_IN_WHITELIST": {
             "subtitle": "Il tuo Codice Fiscale non è incluso nella lista di chi ha diritto ai fondi previsti dall’iniziativa. Per maggiori informazioni, contatta l’ente promotore.",
@@ -4085,10 +4079,6 @@
       "title": "Cos'è un messaggio dinamico?"
     },
     "contactsBottomSheet": {
-      "actions": {
-        "call": "Fai una chiamata",
-        "email": "Scrivi un'email"
-      },
       "body": "Se non ti è chiaro il contenuto del messaggio, contatta l’ente che te lo ha inviato.",
       "title": "Assistenza"
     },
@@ -4752,6 +4742,17 @@
     "title": "Inoltro dei messaggi via email"
   },
   "services": {
+    "contacts": {
+      "a11y": {
+        "website": "Visita il sito dell'ente"
+      },
+      "downloadApp": "Scarica l'app",
+      "email": "Invia un'email",
+      "pec": "Invia una PEC",
+      "phone": "Chiama",
+      "support": "Chiedi assistenza",
+      "website": "Visita il sito"
+    },
     "details": {
       "failure": {
         "back": "Indietro",
@@ -4761,19 +4762,12 @@
       },
       "metadata": {
         "a11y": {
-          "copyToClipboard": "Copia negli appunti",
-          "website": "Visita il sito dell'ente"
+          "copyToClipboard": "Copia negli appunti"
         },
         "address": "Indirizzo",
-        "downloadApp": "Scarica l'app",
-        "email": "Invia un'email",
         "fiscalCode": "Codice fiscale ente",
-        "pec": "Invia una PEC",
-        "phone": "Contatta l'ente",
         "serviceId": "ID servizio",
-        "support": "Richiedi assistenza",
-        "title": "Contatti ed informazioni",
-        "website": "Visita il sito"
+        "title": "Contatti ed informazioni"
       },
       "preferences": {
         "inbox": "Contattarti in app",
