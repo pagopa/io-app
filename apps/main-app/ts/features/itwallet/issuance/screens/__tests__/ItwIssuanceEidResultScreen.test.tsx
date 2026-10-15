@@ -1,4 +1,4 @@
-import { fireEvent, waitFor } from "@testing-library/react-native";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor } from "xstate";
@@ -23,6 +23,20 @@ import { ItwIssuanceEidResultScreen } from "../ItwIssuanceEidResultScreen";
 const mockSend = jest.fn();
 const mockCredentialSend = jest.fn();
 const mockHasResolvedCredentialOffer = jest.fn();
+const mockAddListener = jest.fn();
+
+jest.mock("../../../../../navigation/params/AppParamsList", () => {
+  const actual = jest.requireActual(
+    "../../../../../navigation/params/AppParamsList"
+  );
+  return {
+    ...actual,
+    useIONavigation: () => ({
+      ...actual.useIONavigation(),
+      addListener: mockAddListener
+    })
+  };
+});
 
 jest.mock("../../analytics", () => ({
   trackAddFirstCredential: jest.fn(),
@@ -59,9 +73,19 @@ jest.mock("../../../machine/credential/provider", () => {
 });
 
 describe("ItwIssuanceEidResultScreen", () => {
+  // eslint-disable-next-line functional/no-let
+  let navigationListeners: Record<string, () => void> = {};
+
   beforeEach(() => {
     jest.clearAllMocks();
     mockHasResolvedCredentialOffer.mockReturnValue(false);
+    navigationListeners = {};
+    mockAddListener.mockImplementation(
+      (event: string, callback: () => void) => {
+        navigationListeners = { ...navigationListeners, [event]: callback };
+        return jest.fn();
+      }
+    );
   });
 
   describe("IT-Wallet (L3) flow", () => {
@@ -299,6 +323,30 @@ describe("ItwIssuanceEidResultScreen", () => {
     });
   });
 
+  // SIW-5129: the reissuance survey is reserved to Documenti su IO (L2) reissuance
+  describe("reissuance flow", () => {
+    it("renders the reissuance survey banner for Documenti su IO (L2)", () => {
+      const { getByTestId } = renderComponent("l2", { mode: "reissuance" });
+      expect(getByTestId("itwFeedbackBannerTestID")).toBeTruthy();
+    });
+
+    it("does not render the reissuance survey banner for IT-Wallet (L3)", () => {
+      const { queryByTestId } = renderComponent("l3", { mode: "reissuance" });
+      expect(queryByTestId("itwFeedbackBannerTestID")).toBeNull();
+    });
+  });
+
+  // SIW-4993: IT-Wallet surveys must never leak into the Documenti su IO fallback flow
+  it("does not render any survey banner for the Documenti su IO fallback issuance", () => {
+    const { queryByTestId } = renderComponent("l2-fallback", {
+      mode: "issuance"
+    });
+    expect(queryByTestId("itwFeedbackBannerTestID")).toBeNull();
+    expect(
+      queryByTestId("itwActivationSuccessFeedbackBannerTestID")
+    ).toBeNull();
+  });
+
   describe("credential offer flow", () => {
     it("resumes the resolved credential offer after eID issuance completes", async () => {
       mockHasResolvedCredentialOffer.mockReturnValue(true);
@@ -318,6 +366,52 @@ describe("ItwIssuanceEidResultScreen", () => {
         mode: "issuance",
         credentialType: "education_degree"
       });
+    });
+  });
+
+  describe("when the credential issuance flow is aborted", () => {
+    beforeEach(() => {
+      jest
+        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
+        .mockReturnValue(false);
+    });
+
+    it("navigates back to the wallet when the user returns to this screen", async () => {
+      renderComponent("l3", { credentialType: "education_degree" });
+
+      await waitFor(() => expect(navigationListeners.blur).toBeDefined());
+
+      act(() => {
+        navigationListeners.blur();
+        navigationListeners.focus();
+      });
+
+      expect(mockSend).toHaveBeenCalledWith({ type: "go-to-wallet" });
+    });
+
+    it("does not navigate to the wallet on the first focus", async () => {
+      renderComponent("l3", { credentialType: "education_degree" });
+
+      await waitFor(() => expect(navigationListeners.focus).toBeDefined());
+
+      act(() => {
+        navigationListeners.focus();
+      });
+
+      expect(mockSend).not.toHaveBeenCalledWith({ type: "go-to-wallet" });
+    });
+
+    it("does not navigate to the wallet when the flow is not credential driven", async () => {
+      renderComponent("l3");
+
+      await waitFor(() => expect(navigationListeners.blur).toBeDefined());
+
+      act(() => {
+        navigationListeners.blur();
+        navigationListeners.focus();
+      });
+
+      expect(mockSend).not.toHaveBeenCalledWith({ type: "go-to-wallet" });
     });
   });
 });

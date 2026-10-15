@@ -54,6 +54,7 @@ import {
   isSessionCorruptedSelector,
   isSessionExpiredSelector
 } from "../../../common/store/selectors";
+import { LOGIN_TYPES } from "../../../common/utils";
 import { isCieLoginUatEnabledSelector } from "../../cie/store/selectors";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
@@ -63,8 +64,9 @@ const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
 
 /**
- * A screen where the user can choose to login with SPID or get more informations.
- * It includes a carousel with highlights on the app functionalities
+ * A screen where the user can choose to login with SPID or get more
+ * informations. It includes a carousel with highlights on the app
+ * functionalities
  */
 export const LandingScreen = () => {
   const { error } = useIOToast();
@@ -79,7 +81,7 @@ export const LandingScreen = () => {
     bottomSheet,
     dismiss: dismissBottomSheet,
     handleCieLoginRequested
-  } = useCieLoginMethodSelection({ flow: "auth" });
+  } = useCieLoginMethodSelection({ flow: LOGIN_TYPES.AUTH });
 
   const { presentInfoBottomsheet, infoBottomsheetComponent } =
     useInfoBottomsheetComponent();
@@ -234,18 +236,18 @@ export const LandingScreen = () => {
       );
     };
 
-    const sessionIssueLocalizationKey = isSessionExpired
-      ? "session_expired"
-      : "session_corrupted";
-
     return (
       <SafeAreaView style={{ flex: 1 }} testID="LandingScreen">
         {isSessionExpired || isSessionCorrupted ? (
           <LandingSessionExpiredComponent
             buttonLink={{
-              label: I18n.t(
-                `authentication.landing.${sessionIssueLocalizationKey}.linkButtonLabel`
-              ),
+              label: isSessionExpired
+                ? I18n.t(
+                    "authentication.landing.session_expired.linkButtonLabel"
+                  )
+                : I18n.t(
+                    "authentication.landing.session_corrupted.linkButtonLabel"
+                  ),
               color: "primary",
               icon: "instruction",
               onPress: () => {
@@ -261,14 +263,18 @@ export const LandingScreen = () => {
                 });
               }
             }}
-            content={I18n.t(
-              `authentication.landing.${sessionIssueLocalizationKey}.body`
-            )}
+            content={
+              isSessionExpired
+                ? I18n.t("authentication.landing.session_expired.body")
+                : I18n.t("authentication.landing.session_corrupted.body")
+            }
             pictogramName={"identityCheck"}
             ref={accessibilityFirstFocuseViewRef}
-            title={I18n.t(
-              `authentication.landing.${sessionIssueLocalizationKey}.title`
-            )}
+            title={
+              isSessionExpired
+                ? I18n.t("authentication.landing.session_expired.title")
+                : I18n.t("authentication.landing.session_corrupted.title")
+            }
           />
         ) : (
           <Carousel

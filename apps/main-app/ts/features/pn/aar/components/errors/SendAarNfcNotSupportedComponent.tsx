@@ -1,5 +1,5 @@
 import { FeatureInfo, VSpacer } from "@io-app/design-system";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useEffect } from "react";
 
 import { IOScrollViewCentredContent } from "../../../../../components/ui/IOScrollViewCentredContent";
@@ -27,7 +27,7 @@ export const SendAarNfcNotSupportedComponent = () => {
     trackSendAarNotificationOpeningNfcNotSupported();
   }, []);
 
-  const featureInfoText = i18n.t(
+  const featureInfoText = I18n.t(
     "features.pn.aar.flow.delegated.nfcNotSupported.featureInfoText",
     { returnObjects: true }
   );
@@ -43,13 +43,13 @@ export const SendAarNfcNotSupportedComponent = () => {
             trackSendAarNotificationOpeningNfcNotSupportedInfo();
             openWebUrl(helpCenterUrl);
           },
-          label: i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.cta")
+          label: I18n.t("features.pn.aar.flow.delegated.nfcNotSupported.cta")
         }
       }}
       contentContainerStyle={{
         paddingHorizontal: 32
       }}
-      description={i18n.t(
+      description={I18n.t(
         "features.pn.aar.flow.delegated.nfcNotSupported.body"
       )}
       headerConfig={{
@@ -61,14 +61,14 @@ export const SendAarNfcNotSupportedComponent = () => {
             trackSendAarNotificationOpeningNfcNotSupportedClosure();
             terminateFlow();
           },
-          accessibilityLabel: i18n.t(
+          accessibilityLabel: I18n.t(
             "global.accessibility.contextualHelp.close"
           ),
           testID: "close-x"
         }
       }}
       pictogram="updateOS"
-      title={i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.title")}
+      title={I18n.t("features.pn.aar.flow.delegated.nfcNotSupported.title")}
     >
       <VSpacer size={24} />
       <FeatureInfo body={featureInfoText[0]} iconName="contactless" />

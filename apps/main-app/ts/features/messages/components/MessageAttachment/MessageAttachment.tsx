@@ -28,7 +28,8 @@ import {
 import { downloadedMessageAttachmentSelector } from "../../store/reducers/downloads";
 import {
   attachmentContentType,
-  attachmentDisplayName
+  attachmentDisplayName,
+  toFileUri
 } from "../../utils/attachments";
 import { PdfViewer } from "./PdfViewer";
 
@@ -81,7 +82,7 @@ const MessageAttachmentFooter = ({
             downloadPath
           )
             .then(_ => {
-              IOToast.show(
+              IOToast.info(
                 I18n.t("messagePDFPreview.savedAtLocation", {
                   name
                 })
@@ -98,8 +99,8 @@ const MessageAttachmentFooter = ({
         accessibilityLabel: I18n.t("messagePDFPreview.shareAccessibility"),
         onPress: () => {
           onShare(isPN, attachmentCategory);
-          share(`file://${downloadPath}`, undefined, false)().catch(_ => {
-            IOToast.show(I18n.t("messagePDFPreview.errors.sharing"));
+          share(toFileUri(downloadPath), undefined, false)().catch(_ => {
+            IOToast.error(I18n.t("messagePDFPreview.errors.sharing"));
           });
         }
       }}

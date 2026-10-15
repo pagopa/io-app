@@ -1,18 +1,11 @@
+import { generatePdfHighResImages } from "@io-app/expo-pdf-high-res-generator";
 import * as TE from "fp-ts/lib/TaskEither";
-import { NativeModules } from "react-native";
 
 import { BarcodeFailure } from "../types/failure";
 
-interface PdfHighResGeneratorType {
-  generate(filePath: string, scale: number): Promise<Array<string>>;
-}
-
-const PdfHighResGenerator =
-  NativeModules.PdfHighResGenerator as PdfHighResGeneratorType;
-
 /**
- * Creates a TaskEither that generates all the images from a PDF document
- * using the Native Module for High Resolution rendering (Scale 3.0).
+ * Creates a TaskEither that generates all the images from a PDF document using
+ * the Native Module for High Resolution rendering (Scale 3.0).
  */
 export const imageGenerationTask = (
   pdfUri: string
@@ -20,10 +13,7 @@ export const imageGenerationTask = (
   TE.tryCatch(
     async () => {
       // Scale 3 => ~216DPI (Ideal for dense QR codes)
-      const paths: Array<string> = await PdfHighResGenerator.generate(
-        pdfUri,
-        3
-      );
+      const paths = await generatePdfHighResImages(pdfUri, 3);
       return paths.map(path => ({ uri: path }));
     },
     error => ({ reason: `UNEXPECTED${error}` }) as BarcodeFailure

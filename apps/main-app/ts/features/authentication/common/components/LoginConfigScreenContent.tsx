@@ -1,14 +1,18 @@
+/* eslint-disable i18next/no-literal-string -- developer-only screen, strings are never translated */
 import {
   ListItemCheckbox,
   ListItemHeader,
+  ListItemSwitch,
   RadioGroup,
   RadioItem,
   VSpacer
 } from "@io-app/design-system";
+import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
+import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { CieEntityIds } from "../../login/cie/components/CieRequestAuthenticationOverlay";
+import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
   cieLoginDisableUat,
   cieLoginEnableUat
@@ -64,6 +68,7 @@ export const LoginConfigScreenContent = ({
     oneIdentityLocalFeatureFlagSelector
   );
   const oneIdentityEnv = useIOSelector(oneIdentityEnvSelector);
+  const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
 
   const radioGroupItems = useMemo(
     () =>
@@ -103,8 +108,22 @@ export const LoginConfigScreenContent = ({
     [dispatch]
   );
 
+  const handleDebugMode = useCallback(
+    (enabled: boolean) => {
+      dispatch(setDebugModeEnabled(enabled));
+    },
+    [dispatch]
+  );
+
   return (
     <>
+      <ListItemSwitch
+        disabled={disabled}
+        label={I18n.t("profile.main.debugMode")}
+        onSwitchValueChange={handleDebugMode}
+        testID="debugModeSwitch"
+        value={isDebugModeEnabled}
+      />
       <ListItemHeader label="Login flow" />
       <RadioGroup<OneIdentityLocalFeatureFlag>
         items={radioGroupItems}
@@ -124,12 +143,13 @@ export const LoginConfigScreenContent = ({
       <VSpacer size={24} />
       <ListItemHeader label="Environment CIE" />
       <ListItemCheckbox
-        description="Questa opzione serve agli sviluppatori per testare la login con CIE."
+        description="Questa opzione serve agli sviluppatori per testare la login con OneIdentity in ambiente di UAT e la CIE in ambiente di preproduzione (L3)."
         disabled={disabled}
         onValueChange={handleCieEnv}
         selected={useCieUat}
-        value={`Abilita endpoint di collaudo (${CieEntityIds.DEV})`}
+        value="Abilita endpoint di preproduzione"
       />
+      <VSpacer size={24} />
     </>
   );
 };

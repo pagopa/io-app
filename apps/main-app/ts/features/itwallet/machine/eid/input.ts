@@ -9,8 +9,6 @@ export type EidIssuanceMachineDeps = {
 };
 
 export type Input = {
-  /**
-   * Runtime dependencies injected by the machine provider
-   */
+  /** Runtime dependencies injected by the machine provider */
   deps: EidIssuanceMachineDeps;
 };

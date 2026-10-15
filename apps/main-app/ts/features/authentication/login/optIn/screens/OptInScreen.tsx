@@ -38,7 +38,6 @@ import {
   trackLoginSessionOptInInfo
 } from "../../../fastLogin/analytics/optinAnalytics";
 import { setFastLoginOptIn } from "../../../fastLogin/store/actions/optInActions";
-import { CieIdLoginProps } from "../../cie/shared/utils";
 
 export enum Identifier {
   CIE = "CIE",
@@ -47,14 +46,9 @@ export enum Identifier {
   TEST = "TEST"
 }
 
-export type ChosenIdentifier =
-  | {
-      identifier: Identifier.CIE_ID;
-      params: CieIdLoginProps;
-    }
-  | {
-      identifier: Identifier.CIE | Identifier.SPID | Identifier.TEST;
-    };
+export type ChosenIdentifier = {
+  identifier: Identifier;
+};
 
 const OptInScreen = () => {
   useHeaderSecondLevel({
@@ -93,16 +87,9 @@ const OptInScreen = () => {
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
   const getNavigationParams =
-    (): NavigatorScreenParams<AuthenticationParamsList> => {
-      if (params.identifier === "CIE_ID") {
-        return {
-          screen: authScreensMap[params.identifier],
-          params: params.params
-        };
-      }
-
-      return { screen: authScreensMap[params.identifier] };
-    };
+    (): NavigatorScreenParams<AuthenticationParamsList> => ({
+      screen: authScreensMap[params.identifier]
+    });
 
   const navigateToIdpPage = (isLV: boolean) => {
     if (isLV) {

@@ -33,6 +33,7 @@ type Params = {
 };
 /**
  * Maps the eID issuance level to the corresponding ItwFlow value.
+ *
  * @param issuanceLevel - The eID issuance level.
  * @returns The corresponding ItwFlow value.
  */
@@ -48,9 +49,7 @@ const mapIssuanceLevelToFlow = (issuanceLevel?: EidIssuanceLevel): ItwFlow => {
       return "not_available";
   }
 };
-/**
- * Track errors occurred during the eID issuance process for analytics.
- */
+/** Track errors occurred during the eID issuance process for analytics. */
 export const useEidEventsTracking = ({
   failure,
   identification,

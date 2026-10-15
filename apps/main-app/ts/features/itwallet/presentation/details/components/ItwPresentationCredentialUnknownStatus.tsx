@@ -23,7 +23,8 @@ type Props = {
  * Rendered when it is not possible to determine the status of a credential,
  * i.e. the API call to fetch the status assertion from the issuer failed.
  *
- * The screen allows the user to retry the status assertion once, or reissue the credential.
+ * The screen allows the user to retry the status assertion once, or reissue the
+ * credential.
  */
 export const ItwPresentationCredentialUnknownStatus = ({
   credential

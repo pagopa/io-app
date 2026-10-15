@@ -56,8 +56,9 @@ const renderBadge = (state: AvailableBonusItemState) => {
 };
 
 /**
- * Component to show the listItem for available bonuses list,
- * clicking the item user navigates to the request of the related bonus
+ * Component to show the listItem for available bonuses list, clicking the item
+ * user navigates to the request of the related bonus
+ *
  * @param props
  */
 export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {

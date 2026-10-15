@@ -27,6 +27,7 @@ import { handleWalletPaymentGetUserWallets } from "./networking/handleWalletPaym
 
 /**
  * Handle the pagoPA payments requests
+ *
  * @param bearerToken
  */
 export function* watchPaymentsCheckoutSaga(

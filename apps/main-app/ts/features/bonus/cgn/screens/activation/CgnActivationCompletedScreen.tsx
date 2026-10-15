@@ -6,8 +6,8 @@ import { useIODispatch } from "../../../../../store/hooks";
 import { cgnActivationComplete } from "../../store/actions/activation";
 
 /**
- * Screen which is displayed when a user requested a CGN activation
- * and it has been correctly activated
+ * Screen which is displayed when a user requested a CGN activation and it has
+ * been correctly activated
  */
 const CgnActivationCompletedScreen = () => {
   const dispatch = useIODispatch();

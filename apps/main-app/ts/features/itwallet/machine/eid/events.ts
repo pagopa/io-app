@@ -23,7 +23,6 @@ export type EidIssuanceEvents =
   | ErrorActorEvent
   | ExternalErrorEvent
   | GoToCieWarning
-  | GoToIpzsPrivacy
   | GoToWallet
   | MrtdChallengedSigned
   | MrtdPoPVerificationCompleted
@@ -74,7 +73,10 @@ type CiePinEntered = {
 };
 
 type Close = {
-  /** Step at which the user exited, used to show the Qualtrics survey in WALLET_HOME. */
+  /**
+   * Step at which the user exited, used to show the Qualtrics survey in
+   * WALLET_HOME.
+   */
   surveyStep?: EidActivationExitStep;
   type: "close";
 };
@@ -95,10 +97,6 @@ type GoToCieWarning = {
   routeName: string;
   type: "go-to-cie-warning";
   warning: CieWarningType;
-};
-
-type GoToIpzsPrivacy = {
-  type: "go-to-ipzs-privacy";
 };
 
 type GoToWallet = {
@@ -158,9 +156,12 @@ type SimulateFailure = {
 
 /**
  * This event is used to either start the issuance process or restart it.
- * - "start" is used to start the issuance process from the beginning, going from the initial state (Idle) to the next state.
- * - "restart" is used to restart the issuance process, **going back** to the initial state (Idle) from any other state
- *    and starting the issuance process from the beginning.
+ *
+ * - "start" is used to start the issuance process from the beginning, going from
+ *   the initial state (Idle) to the next state.
+ * - "restart" is used to restart the issuance process, **going back** to the
+ *   initial state (Idle) from any other state and starting the issuance process
+ *   from the beginning.
  */
 type Start = {
   credentialType?: string;

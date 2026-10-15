@@ -9,11 +9,12 @@ import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignature
 import { drawSignatureField, parsePdfAsBase64 } from "../utils/signatureFields";
 
 /**
- * Handle the FCI signature box drawing.
- * The saga checks for a cached document and if it is present it uses it to draw the signature box
- * Otherwise it parses the document and then draws the signature box
- * @param action the action to handle
- * @returns a SagaIterator
+ * Handle the FCI signature box drawing. The saga checks for a cached document
+ * and if it is present it uses it to draw the signature box Otherwise it parses
+ * the document and then draws the signature box
+ *
+ * @param action The action to handle
+ * @returns A SagaIterator
  */
 export function* handleDrawSignatureBox(
   action: ActionType<typeof fciDocumentSignatureFields.request>

@@ -10,9 +10,7 @@ import {
   WalletTypeEnum,
   WalletV2
 } from "@io-app/api-types/generated/definitions/pagopa/WalletV2";
-/**
- * this router handles all requests about wallets
- */
+/** This router handles all requests about wallets */
 import { Router } from "express";
 import { takeRight } from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
@@ -99,8 +97,8 @@ addHandler(
 );
 
 /**
- * invoked by the client when want to know if a payment ends successfully
- * see https://docs.google.com/presentation/d/11rEttb7lJYlRqgFpl4QopyjFmjt2Q0K8uis6JhAQaCw/edit#slide=id.g854399c4e5_0_137
+ * Invoked by the client when want to know if a payment ends successfully see
+ * https://docs.google.com/presentation/d/11rEttb7lJYlRqgFpl4QopyjFmjt2Q0K8uis6JhAQaCw/edit#slide=id.g854399c4e5_0_137
  */
 addHandler(
   walletRouter,
@@ -244,7 +242,8 @@ addHandler(
 );
 
 /**
- *  @deprecated this API is not longer used by the app from when 3DS2 has been introduced
+ * @deprecated this API is not longer used by the app from when 3DS2 has been
+ *   introduced
  */
 addHandler(
   walletRouter,

@@ -1,6 +1,7 @@
 /**
- * A screen where the user can choose to login with SPID or get more informations.
- * It includes a carousel with highlights on the app functionalities
+ * A screen where the user can choose to login with SPID or get more
+ * informations. It includes a carousel with highlights on the app
+ * functionalities
  */
 import {
   ContentWrapper,
@@ -23,6 +24,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useCieLoginMethodSelection } from "../../common/hooks/useCieLoginMethodSelection";
+import { LOGIN_TYPES } from "../../common/utils";
 import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
 import useNavigateToLoginMethod from "../../login/hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../../login/landing/components/LandingSessionExpiredComponent";
@@ -49,7 +51,7 @@ export const ActiveSessionLandingScreen = () => {
     bottomSheet,
     dismiss: dismissBottomSheet,
     handleCieLoginRequested
-  } = useCieLoginMethodSelection({ flow: "reauth" });
+  } = useCieLoginMethodSelection({ flow: LOGIN_TYPES.REAUTH });
 
   useOnFirstRender(() => {
     void trackLoginReauthEngagement();

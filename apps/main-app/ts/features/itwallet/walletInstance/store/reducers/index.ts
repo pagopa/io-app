@@ -28,33 +28,29 @@ import {
 } from "../actions";
 
 export type ItwWalletInstanceState = {
-  /**
-   * The new Wallet Attestation in multiple formats
-   */
+  /** The new Wallet Attestation in multiple formats */
   attestation: undefined | WalletInstanceAttestations;
   /**
-   * Indicates whether the user has an already active wallet instance
-   * but the actual local wallet is not active.
+   * Indicates whether the user has an already active wallet instance but the
+   * actual local wallet is not active.
    */
   isRemotelyActive: boolean | undefined;
   /**
-   * Record of Key Attestations keyed by ID. They are not stored on
-   * credentials to avoid duplication (one KA might contain multiple keys)
-   * and to avoid bloating the stored credential unnecessarily.
+   * Record of Key Attestations keyed by ID. They are not stored on credentials
+   * to avoid duplication (one KA might contain multiple keys) and to avoid
+   * bloating the stored credential unnecessarily.
    */
   keyAttestations: Record<string, string>;
   /**
-   * Whether a wallet instance renewal has already failed.
-   * Used to prevent re-entering the recovery block on subsequent actor retries.
+   * Whether a wallet instance renewal has already failed. Used to prevent
+   * re-entering the recovery block on subsequent actor retries.
    */
   renewalError: boolean;
-  /**
-   * The Wallet Instance status fetched from the Wallet Provider backend
-   */
+  /** The Wallet Instance status fetched from the Wallet Provider backend */
   status: pot.Pot<WalletInstanceStatus, NetworkError>;
   /**
-   * [1.3.3+] The Status List entry for the wallet instance, if available.
-   * This is used to check the validity of the wallet instance.
+   * [1.3.3+] The Status List entry for the wallet instance, if available. This
+   * is used to check the validity of the wallet instance.
    */
   statusList: undefined | { idx: number; uri: string };
 };
@@ -70,7 +66,7 @@ export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
 
 type MigrationState = PersistedState & Record<string, any>;
 
-const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 6;
+const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 7;
 
 export const migrations: MigrationManifest = {
   // Convert status into a pot for better async handling
@@ -100,7 +96,7 @@ export const migrations: MigrationManifest = {
     ...state,
     isRemotelyActive: undefined
   }),
-  // Add statusList
+  // Reset isRemotelyActive after changing its semantics
   "5": (state: MigrationState) => ({
     ...state,
     isRemotelyActive: undefined
@@ -110,6 +106,11 @@ export const migrations: MigrationManifest = {
     ...state,
     keyAttestations: state.walletUnitAttestations ?? {},
     walletUnitAttestations: undefined
+  }),
+  // Add statusList
+  "7": (state: MigrationState) => ({
+    ...state,
+    statusList: undefined
   })
 };
 

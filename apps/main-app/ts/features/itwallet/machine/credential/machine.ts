@@ -52,8 +52,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
               offer: event.output.offer,
               grantDetails: event.output.grantDetails
             },
-            credentialType:
-              event.output.grantDetails.authorizationCodeGrant.scope
+            credentialType: event.output.credentialType,
+            issuerConf: event.output.issuerConf
           }))
         },
         onError: {
@@ -67,7 +67,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
           actions: assign({
             credentialOfferUri: undefined,
             resolvedCredentialOffer: undefined,
-            credentialType: undefined
+            credentialType: undefined,
+            issuerConf: undefined
           })
         }
       }
@@ -83,7 +84,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
           actions: assign({
             credentialOfferUri: undefined,
             resolvedCredentialOffer: undefined,
-            credentialType: undefined
+            credentialType: undefined,
+            issuerConf: undefined
           })
         }
       }
@@ -213,7 +215,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           resolvedCredentialOffer: context.resolvedCredentialOffer,
           skipMdocIssuance: !context.isItWalletValid, // Do not request mDoc credentials for non IT-Wallet instances
-          deps: context.deps
+          deps: context.deps,
+          issuerConf: context.issuerConf
         }),
         onDone: {
           target: "DisplayingTrustIssuer",

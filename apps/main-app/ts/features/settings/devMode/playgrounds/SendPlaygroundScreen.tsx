@@ -111,7 +111,9 @@ export const SendPlaygroundScreen = () => {
         label={I18n.t("features.pn.lollipopPlayground.uatLabel")}
         onSwitchValueChange={enabled =>
           dispatch(
-            preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled: enabled })
+            preferencesPnTestEnvironmentSetEnabled({
+              isPnTestEnabled: enabled
+            })
           )
         }
         value={sendUATEnvironmentEnabled}

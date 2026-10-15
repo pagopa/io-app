@@ -102,15 +102,6 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
             target: "TrustFederationVerification"
           }
         ],
-        "go-to-ipzs-privacy": {
-          actions: "navigateToIpzsPrivacyScreen"
-        },
-        "accept-ipzs-privacy": [
-          {
-            // The IPZS privacy can be opened from the Discovery screen in the L3 flow.
-            target: "TrustFederationVerification"
-          }
-        ],
         close: {
           target: "#itwEidIssuanceMachine.Idle",
           actions: "closeIssuance"
@@ -142,7 +133,7 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
           },
           {
             // When reissuing, fallback to L2 or L3, if both integrity key tag and wallet instance attestation are valid,
-            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
+            guard: or(["isReissuance", "isL2Fallback"]),
             target: "UserIdentification.Identification"
           },
           {
@@ -161,7 +152,7 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
       after: {
         5000: [
           {
-            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
+            guard: or(["isReissuance", "isL2Fallback"]),
             actions: "navigateToIdentificationScreen"
           },
           {
@@ -252,7 +243,7 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
         }),
         onDone: [
           {
-            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
+            guard: or(["isReissuance", "isL2Fallback"]),
             actions: [
               assign(({ event }) => ({
                 walletInstanceAttestation: event.output

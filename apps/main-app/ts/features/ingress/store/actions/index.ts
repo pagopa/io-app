@@ -4,7 +4,7 @@ import { OfflineAccessReasonEnum } from "../reducer";
 
 export const setIsBlockingScreen = createStandardAction(
   "SET_IS_BLOCKING_SCREEN"
-)();
+)<boolean>();
 
 export const setOfflineAccessReason = createStandardAction(
   "SET_OFFLINE_ACCESS_REASON"

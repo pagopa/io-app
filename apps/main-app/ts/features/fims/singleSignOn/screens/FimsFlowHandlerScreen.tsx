@@ -23,6 +23,7 @@ import {
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction
 } from "../store/actions/";
+import { FimsFlowStateTags } from "../store/reducers";
 import {
   fimsAuthenticationFailedSelector,
   fimsConsentsDataSelector,
@@ -159,11 +160,23 @@ export const FimsFlowHandlerScreen = (
         ? I18n.t(`FIMS.loadingScreen.subtitle`)
         : undefined;
 
+    const titleByLoadingState: Record<FimsFlowStateTags, string> = {
+      abort: I18n.t("FIMS.loadingScreen.abort.title"),
+      consents: I18n.t("FIMS.loadingScreen.consents.title"),
+      fastLogin_forced_restart: I18n.t(
+        "FIMS.loadingScreen.fastLogin_forced_restart.title"
+      ),
+      idle: I18n.t("FIMS.loadingScreen.idle.title"),
+      "in-app-browser-loading": I18n.t(
+        "FIMS.loadingScreen.in-app-browser-loading.title"
+      )
+    };
+
     return (
       <LoadingScreenContent
         headerVisible
         subtitle={subtitle}
-        title={I18n.t(`FIMS.loadingScreen.${loadingState}.title`)}
+        title={titleByLoadingState[loadingState]}
       />
     );
   }

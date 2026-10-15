@@ -16,12 +16,12 @@ import { IOColors, IOTheme } from "./IOColors";
 export type IOTypographicStyle = IOTypographicAttributes & IOTypographicColor;
 
 /**
- * Visual attributes of a typographic style. The keys mirror the `IOText`
- * props, so an entry can be spread straight into the component.
+ * Visual attributes of a typographic style. The keys mirror the `IOText` props,
+ * so an entry can be spread straight into the component.
  */
 type IOTypographicAttributes = {
   /**
-   * iOS Dynamic Type ramp the style maps to. Absent on the styles that have
+   * The iOS Dynamic Type ramp the style maps to. Absent on the styles that have
    * never declared one.
    */
   dynamicTypeRamp?: TextProps["dynamicTypeRamp"];
@@ -30,9 +30,7 @@ type IOTypographicAttributes = {
    * resolved by `IOText` through `useIONewTypeface`.
    */
   font?: IOFontFamily;
-  /**
-   * Size applied while the legacy typeface is enabled. Only `H6` declares one.
-   */
+  /** Size applied while the legacy typeface is enabled. Only `H6` declares one. */
   legacySize?: IOFontSize;
   lineHeight?: TextStyle["lineHeight"];
   size: IOFontSize;

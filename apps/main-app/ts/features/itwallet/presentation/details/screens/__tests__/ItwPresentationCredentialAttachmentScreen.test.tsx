@@ -1,7 +1,7 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
+import { File, Paths } from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import I18n from "i18next";
-import RNFS from "react-native-fs";
 import { createStore } from "redux";
 
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
@@ -16,21 +16,22 @@ import {
   ItwPresentationCredentialAttachmentScreen
 } from "../ItwPresentationCredentialAttachmentScreen";
 
-const mockToastShow = jest.fn();
-const mockCachesDirectoryPath = "/tmp/io-cache";
+const mockToastError = jest.fn();
 const pdfDataUri = "data:application/pdf;base64,JVBERi0xLjQ=";
+const mockFile = {
+  delete: jest.fn(),
+  exists: true,
+  uri: "file:///tmp/io-cache/attachment.pdf",
+  write: jest.fn()
+};
 
 jest.mock("expo-sharing", () => ({
   shareAsync: jest.fn()
 }));
 
-jest.mock("react-native-fs", () => ({
-  get CachesDirectoryPath() {
-    return mockCachesDirectoryPath;
-  },
-  exists: jest.fn(),
-  unlink: jest.fn(),
-  writeFile: jest.fn()
+jest.mock("expo-file-system", () => ({
+  File: jest.fn(() => mockFile),
+  Paths: { cache: { uri: "file:///tmp/io-cache/" } }
 }));
 
 jest.mock("react-native-pdf", () => jest.fn(() => null));
@@ -40,15 +41,13 @@ jest.mock("@io-app/design-system", () => ({
     "@io-app/design-system"
   ),
   useIOToast: () => ({
-    show: mockToastShow
+    error: mockToastError
   })
 }));
 
 describe("ItwPresentationCredentialAttachmentScreen", () => {
   beforeEach(() => {
-    jest.mocked(RNFS.writeFile).mockResolvedValue(undefined);
-    jest.mocked(RNFS.exists).mockResolvedValue(true);
-    jest.mocked(RNFS.unlink).mockResolvedValue(undefined);
+    jest.mocked(File).mockReturnValue(mockFile as unknown as File);
     jest.mocked(Sharing.shareAsync).mockResolvedValue(undefined);
   });
 
@@ -69,21 +68,15 @@ describe("ItwPresentationCredentialAttachmentScreen", () => {
     );
 
     await waitFor(() => {
-      expect(RNFS.writeFile).toHaveBeenCalledWith(
-        `${mockCachesDirectoryPath}/HealthCard.pdf`,
-        "JVBERi0xLjQ=",
-        "base64"
+      expect(File).toHaveBeenCalledWith(Paths.cache, "HealthCard.pdf");
+      expect(mockFile.write).toHaveBeenCalledWith(
+        Uint8Array.from("%PDF-1.4", character => character.charCodeAt(0))
       );
-      expect(Sharing.shareAsync).toHaveBeenCalledWith(
-        `file://${mockCachesDirectoryPath}/HealthCard.pdf`,
-        {
-          mimeType: "application/pdf",
-          dialogTitle: "HealthCard.pdf"
-        }
-      );
-      expect(RNFS.unlink).toHaveBeenCalledWith(
-        `${mockCachesDirectoryPath}/HealthCard.pdf`
-      );
+      expect(Sharing.shareAsync).toHaveBeenCalledWith(mockFile.uri, {
+        mimeType: "application/pdf",
+        dialogTitle: "HealthCard.pdf"
+      });
+      expect(mockFile.delete).toHaveBeenCalled();
     });
   });
 
@@ -100,18 +93,11 @@ describe("ItwPresentationCredentialAttachmentScreen", () => {
     );
 
     await waitFor(() => {
-      expect(RNFS.writeFile).toHaveBeenCalledWith(
-        `${mockCachesDirectoryPath}/attachment.pdf`,
-        "JVBERi0xLjQ=",
-        "base64"
-      );
-      expect(Sharing.shareAsync).toHaveBeenCalledWith(
-        `file://${mockCachesDirectoryPath}/attachment.pdf`,
-        {
-          mimeType: "application/pdf",
-          dialogTitle: "attachment.pdf"
-        }
-      );
+      expect(File).toHaveBeenCalledWith(Paths.cache, "attachment.pdf");
+      expect(Sharing.shareAsync).toHaveBeenCalledWith(mockFile.uri, {
+        mimeType: "application/pdf",
+        dialogTitle: "attachment.pdf"
+      });
     });
   });
 
@@ -141,12 +127,10 @@ describe("ItwPresentationCredentialAttachmentScreen", () => {
     );
 
     await waitFor(() => {
-      expect(mockToastShow).toHaveBeenCalledWith(
+      expect(mockToastError).toHaveBeenCalledWith(
         I18n.t("messagePDFPreview.errors.sharing")
       );
-      expect(RNFS.unlink).toHaveBeenCalledWith(
-        `${mockCachesDirectoryPath}/attachment.pdf`
-      );
+      expect(mockFile.delete).toHaveBeenCalled();
     });
   });
 });

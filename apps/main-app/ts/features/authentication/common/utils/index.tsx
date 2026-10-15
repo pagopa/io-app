@@ -3,16 +3,23 @@ import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
-import { spidRelayState } from "../../../../config";
+import { apiUrlPrefix, spidRelayState } from "../../../../config";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
-import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import {
   trackSessionTokenFragmentFailure,
   trackSessionTokenSource
 } from "../analytics";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
+
+export const LOGIN_TYPES = {
+  AUTH: "auth",
+  FCI_AUTH: "FCI_auth",
+  REAUTH: "reauth"
+} as const;
+export type LoginType = (typeof LOGIN_TYPES)[keyof typeof LOGIN_TYPES];
+export type ReauthLoginType = Exclude<LoginType, typeof LOGIN_TYPES.AUTH>;
 
 export const AUTH_LEVELS = { L2: "L2", L3: "L3" } as const;
 export type AuthLevel = (typeof AUTH_LEVELS)[keyof typeof AUTH_LEVELS];
@@ -37,8 +44,9 @@ type LoginSuccess = {
 };
 
 /**
- * return string if the given input is a valid intent and it has the fallback url
- * more info https://developer.chrome.com/docs/multidevice/android/intents/
+ * Return string if the given input is a valid intent and it has the fallback
+ * url more info https://developer.chrome.com/docs/multidevice/android/intents/
+ *
  * @param intentUrl
  */
 export const getIntentFallbackUrl = (intentUrl: string): string | undefined => {
@@ -57,6 +65,7 @@ export const getIntentFallbackUrl = (intentUrl: string): string | undefined => {
 
 /**
  * Extracts the session token from the URL hash fragment
+ *
  * @param urlParse
  */
 const getTokenFromUrlParse = (urlParse: URLParse): string | undefined => {
@@ -124,7 +133,7 @@ export const extractLoginResult = (
   return undefined;
 };
 
-/** for a given idp id get the relative login uri */
+/** For a given idp id get the relative login uri */
 export const getIdpLoginUri = (
   idpId: string,
   authLevel: AuthLevel,
@@ -133,8 +142,8 @@ export const getIdpLoginUri = (
   `${apiLoginUrlPrefix}/api/auth/v1/login?authLevel=${SPID_AUTH_LEVEL_MAP[authLevel]}&entityID=${idpId}&RelayState=${spidRelayState}`;
 
 /**
- * Extract the login result from the given url.
- * Return true if the url contains login pattern & token
+ * Extract the login result from the given url. Return true if the url contains
+ * login pattern & token
  */
 export const onLoginUriChanged =
   (
@@ -164,22 +173,27 @@ export const onLoginUriChanged =
 /**
  * Generates the headers required for login.
  *
+ * @remarks
+ *   - The `x-pagopa-current-user` header is included only if `hashedFiscalCode`
+ *     is provided.
+ *   - The `x-pagopa-login-type` header is included only if `isFastLogin` is true.
+ *   - The `x-pagopa-idp-id` and `x-pagopa-app-version` headers are used only in
+ *     local/dev environments.
+ *   - The function relies on `isLocalEnv` and `getAppVersion()` from the
+ *     surrounding scope.
+ *   - The `x-pagopa-current-user` header contains the fiscal code hashed using
+ *     the sha256 algorithm. It is used by the backend to verify, during an
+ *     active session login, that the user is logging in with the same fiscal
+ *     code. If a different fiscal code is used, error 1004
+ *     (AUTH_ERRORS.ERROR_1004) will be triggered.
  * @param publicKey - The public key used for authentication, encoded in base64.
  * @param hashAlgorithm - The hash algorithm used for the public key.
  * @param isFastLogin - Indicates if fast login (LV) is enabled.
- * @param idpId - (Optional) The identity provider ID, used in local/dev environments.
- * @param hashedFiscalCode - (Optional) The hashed fiscal code of the current user, used for active session verification.
- *
+ * @param idpId - (Optional) The identity provider ID, used in local/dev
+ *   environments.
+ * @param hashedFiscalCode - (Optional) The hashed fiscal code of the current
+ *   user, used for active session verification.
  * @returns An object containing the necessary headers for the login request.
- *
- * @remarks
- * - The `x-pagopa-current-user` header is included only if `hashedFiscalCode` is provided.
- * - The `x-pagopa-login-type` header is included only if `isFastLogin` is true.
- * - The `x-pagopa-idp-id` and `x-pagopa-app-version` headers are used only in local/dev environments.
- * - The function relies on `isLocalEnv` and `getAppVersion()` from the surrounding scope.
- * - The `x-pagopa-current-user` header contains the fiscal code hashed using the sha256 algorithm.
- * It is used by the backend to verify, during an active session login, that the user is logging in with the same fiscal code.
- * If a different fiscal code is used, error 1004 (AUTH_ERRORS.ERROR_1004) will be triggered.
  */
 export const getLoginHeaders = (
   publicKey: PublicKey,
@@ -208,4 +222,16 @@ export const originSchemasWhiteList = [
   ...(isDevEnv ? ["http://*"] : [])
 ];
 
-export const CALLBACK_PATH = "/api/auth/v2/callback";
+/**
+ * Checks whether `url` is an exact match of one of the OIDC callback endpoints
+ * (`v1` or `v2`) exposed by the backend at `apiUrlPrefix`. Both versions are
+ * accepted.
+ */
+export const isValidCallbackUrl = (url: string) => {
+  const validUrls = [
+    `${apiUrlPrefix}/api/auth/v1/callback`,
+    `${apiUrlPrefix}/api/auth/v2/callback`
+  ];
+
+  return validUrls.includes(url);
+};

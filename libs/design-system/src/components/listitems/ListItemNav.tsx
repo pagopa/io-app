@@ -58,9 +58,7 @@ type ListItemNavPartialProps = WithTestID<
     description?: ReactNode | string;
     hideChevron?: boolean;
     loading?: boolean;
-    /**
-     * The maximum number of lines to display for the value.
-     */
+    /** The maximum number of lines to display for the value. */
     numberOfLines?: number;
     onPress: (event: GestureResponderEvent) => void;
     topElement?: ListItemTopElementProps;
@@ -120,7 +118,7 @@ export const ListItemNav = ({
               <View style={{ alignSelf: "flex-start", flexDirection: "row" }}>
                 <Icon
                   allowFontScaling
-                  color="grey-300"
+                  color={theme["icon-decorative"]}
                   name="calendar"
                   size={16}
                 />

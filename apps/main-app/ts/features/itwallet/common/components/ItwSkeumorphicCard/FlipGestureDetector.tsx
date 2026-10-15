@@ -19,7 +19,8 @@ type FlipsGestureDetectorProps = {
 };
 
 /**
- * This component wraps the children in a GestureDetector that flips the card when the user flicks left or right.
+ * This component wraps the children in a GestureDetector that flips the card
+ * when the user flicks left or right.
  */
 export const FlipGestureDetector = ({
   isFlipped,

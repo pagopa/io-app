@@ -16,12 +16,15 @@ import {
   useIONavigation
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { getMixPanelCredential } from "../../../analytics/utils";
 import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { trackItwConsentManagement } from "../analytics";
+import {
+  trackItwConsentManagement,
+  trackItwRevokeConsent,
+  trackItwRevokeConsentOperationBlock,
+  trackItwRevokeConsentOperationBlockAction
+} from "../analytics";
 import { ItwConsentManagementListItem } from "../components/ItwConsentManagementListItem";
 import { itwRevokeProximityConsentsByCredentialType } from "../store/actions";
 import { itwProximityConsentsEntriesByCredentialTypeSelector } from "../store/selectors/consents";
@@ -42,17 +45,11 @@ export const ItwConsentManagementScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
   const isRevoking = useRef(false);
   const credentialName = useItwCredentialName(credentialType);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const consentsSelector = useMemo(
     () => itwProximityConsentsEntriesByCredentialTypeSelector(credentialType),
     [credentialType]
   );
   const entries = useIOSelector(consentsSelector);
-
-  const mixPanelCredential = useMemo(
-    () => getMixPanelCredential(credentialType, isItwL3),
-    [credentialType, isItwL3]
-  );
 
   useFocusEffect(
     useCallback(() => {
@@ -65,8 +62,8 @@ export const ItwConsentManagementScreen = ({ route }: Props) => {
         }
         return;
       }
-      trackItwConsentManagement({ credential: mixPanelCredential });
-    }, [credentialType, entries.length, mixPanelCredential, navigation])
+      trackItwConsentManagement();
+    }, [credentialType, entries.length, navigation])
   );
 
   const navigateToDetail = useCallback(
@@ -79,6 +76,7 @@ export const ItwConsentManagementScreen = ({ route }: Props) => {
   );
 
   const showRevokeAllAlert = () => {
+    trackItwRevokeConsentOperationBlock();
     Alert.alert(
       I18n.t(
         "features.itWallet.presentation.proximity.consentManagement.revokeAll.alert.title"
@@ -90,6 +88,7 @@ export const ItwConsentManagementScreen = ({ route }: Props) => {
         {
           onPress: () => {
             isRevoking.current = true;
+            trackItwRevokeConsentOperationBlockAction("confirm");
             dispatch(
               itwRevokeProximityConsentsByCredentialType(credentialType)
             );
@@ -108,6 +107,7 @@ export const ItwConsentManagementScreen = ({ route }: Props) => {
           )
         },
         {
+          onPress: () => trackItwRevokeConsentOperationBlockAction("cancel"),
           style: "cancel",
           text: I18n.t(
             "features.itWallet.presentation.proximity.consentManagement.alert.cancel"
@@ -158,7 +158,10 @@ export const ItwConsentManagementScreen = ({ route }: Props) => {
               label={I18n.t(
                 "features.itWallet.presentation.proximity.consentManagement.revokeAll.action"
               )}
-              onPress={showRevokeAllAlert}
+              onPress={() => {
+                trackItwRevokeConsent();
+                showRevokeAllAlert();
+              }}
               testID="revoke-all-consents-action"
               variant="danger"
             />

@@ -67,14 +67,12 @@ type ProfileNavListItem = Pick<
 
 const ListItem = memo(ListItemNav);
 
-/**
- * A screen to show all the options related to the user profile
- */
+/** A screen to show all the options related to the user profile */
 const ProfileMainScreenFC = () => {
   const { hideModal } = useContext(LightModalContext);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const { show, error } = useIOToast();
+  const { info, error } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const appFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
   const surveyUrl = useIOSelector(appFeedbackUriConfigSelector("general"));
@@ -141,7 +139,7 @@ const ProfileMainScreenFC = () => {
     if (tapsOnAppVersion === consecutiveTapRequired) {
       dispatch(setDebugModeEnabled(true));
       setTapsOnAppVersion(0);
-      show(I18n.t("profile.main.developerModeOn"));
+      info(I18n.t("profile.main.developerModeOn"));
     } else {
       idResetTap.current = setInterval(
         resetAppTapCounter,
@@ -153,7 +151,7 @@ const ProfileMainScreenFC = () => {
     isDebugModeEnabled,
     resetAppTapCounter,
     dispatch,
-    show,
+    info,
     tapsOnAppVersion
   ]);
 

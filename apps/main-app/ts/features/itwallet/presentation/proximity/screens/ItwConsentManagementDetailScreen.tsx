@@ -124,7 +124,6 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
       "features.itWallet.presentation.proximity.consentManagement.alert.cancel"
     );
 
-    trackItwRevokeConsent();
     trackItwRevokeConsentOperationBlock();
     Alert.alert(
       I18n.t(
@@ -168,7 +167,10 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
           label: I18n.t(
             "features.itWallet.presentation.proximity.consentManagement.detail.revokeAction"
           ),
-          onPress: showRevokeAlert,
+          onPress: () => {
+            trackItwRevokeConsent();
+            showRevokeAlert();
+          },
           testID: "revoke-consent-action"
         }
       }}

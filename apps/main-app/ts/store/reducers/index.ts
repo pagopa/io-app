@@ -1,7 +1,4 @@
-/* eslint-disable no-underscore-dangle */
-/**
- * Aggregates all defined reducers
- */
+/** Aggregates all defined reducers */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, Reducer } from "redux";
 import {
@@ -28,7 +25,6 @@ import authenticationReducer, {
   INITIAL_STATE as authenticationInitialState,
   AuthenticationState
 } from "../../features/authentication/common/store/reducers";
-import { loginConfigInitialState } from "../../features/authentication/common/store/reducers/loginConfig";
 import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
@@ -111,13 +107,11 @@ export const identificationPersistConfig: PersistConfig = {
 };
 
 /**
- * Here we combine all the reducers.
- * We use the best practice of separating UI state from the DATA state.
- * UI state is mostly used to check what to show hide in the screens (ex.
- * errors/spinners).
- * DATA state is where we store real data fetched from the API (ex.
- * profile/messages).
- * More at
+ * Here we combine all the reducers. We use the best practice of separating UI
+ * state from the DATA state. UI state is mostly used to check what to show hide
+ * in the screens (ex. errors/spinners). DATA state is where we store real data
+ * fetched from the API (ex. profile/messages). More at
+ *
  * @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
 export const appReducer: Reducer<GlobalState, Action> = combineReducers<
@@ -266,11 +260,11 @@ export function createRootReducer(
                   isCieIDTourGuideEnabled:
                     state.features.loginFeatures.cieLogin
                       .isCieIDTourGuideEnabled,
+                  useUat: state.features.loginFeatures.cieLogin.useUat,
                   _persist: state.features.loginFeatures.cieLogin._persist
                 },
                 loginConfig: {
-                  ...loginConfigInitialState,
-                  _persist: state.features.loginFeatures.loginConfig._persist
+                  ...state.features.loginFeatures.loginConfig
                 },
                 activeSessionLogin: {
                   ...activeSessionLoginInitialState,
@@ -289,9 +283,10 @@ export function createRootReducer(
                 _persist: state.features.appearanceSettings._persist
               },
               /**
-               * IT Wallet state persists across sessions and is explicitly reset on session changes
-               * via the itwLifecycleStoresReset action to ensure proper cleanup.
-               * We can avoid to replicate the _persist property because itWallet already is a persisted
+               * IT Wallet state persists across sessions and is explicitly
+               * reset on session changes via the itwLifecycleStoresReset action
+               * to ensure proper cleanup. We can avoid to replicate the
+               * _persist property because itWallet already is a persisted
                * reducer.
                */
               itWallet: {
@@ -334,6 +329,10 @@ export function createRootReducer(
                 .isFingerprintEnabled
                 ? true
                 : undefined
+            },
+            debug: {
+              ...state.debug,
+              debugData: {}
             },
             lollipop: {
               ...initialLollipopState,

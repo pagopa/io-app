@@ -2,6 +2,7 @@ import { ActionArgs, assign } from "xstate";
 
 import { assert } from "../../../../../utils/assert";
 import {
+  trackItwProximityPresentationCompleted,
   trackItwProximityQrCodeLoadingFailure,
   trackItwProximityStart
 } from "../analytics";
@@ -16,9 +17,7 @@ import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 
-/**
- * Initializes the proximity machine from the Redux store.
- */
+/** Initializes the proximity machine from the Redux store. */
 export const onInitAction = assign<
   Context,
   ProximityEvents,
@@ -149,6 +148,14 @@ export const trackProximityStartAction = ({
   context
 }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
   trackItwProximityStart({
+    proximity_flow: context.engagementMode === "nfc" ? "nfc" : "qr_code"
+  });
+};
+
+export const trackProximitySuccessAction = ({
+  context
+}: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+  trackItwProximityPresentationCompleted({
     proximity_flow: context.engagementMode === "nfc" ? "nfc" : "qr_code"
   });
 };

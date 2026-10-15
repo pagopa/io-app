@@ -37,6 +37,7 @@ export const INITIAL_STATE: LoggedOutWithoutIdp = {
   reason: "NOT_LOGGED_IN"
 };
 
+// oxlint-disable-next-line complexity
 const authenticationReducer = (
   state: AuthenticationState = INITIAL_STATE,
   action: Action

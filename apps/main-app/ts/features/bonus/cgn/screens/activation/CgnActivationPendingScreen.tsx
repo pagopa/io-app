@@ -6,8 +6,8 @@ import { useIODispatch } from "../../../../../store/hooks";
 import { cgnActivationCancel } from "../../store/actions/activation";
 
 /**
- * Screen which is displayed when a user requested a CGN activation
- * and the server has already another request pending for the user
+ * Screen which is displayed when a user requested a CGN activation and the
+ * server has already another request pending for the user
  */
 const CgnActivationPendingScreen = () => {
   const dispatch = useIODispatch();

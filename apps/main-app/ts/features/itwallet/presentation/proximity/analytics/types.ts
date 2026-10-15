@@ -6,21 +6,19 @@ export type ItwProximityFailure = {
   type: string;
 };
 
+export type ItwProximityFlowFailure = ItwProximityFailure &
+  ItwProximityFlowProperties;
+
 export type ItwProximityFlowProperties = {
   proximity_flow: ProximityFlow;
 };
 
-export type ItwProximityGenericFailure = ItwProximityFailure & {
+export type ItwProximityGenericFailure = ItwProximityFlowFailure & {
   proximity_sharing_status: "post" | "pre";
 };
 
 export type ItwProximityHttpFailure = {
   reason: unknown;
-};
-
-export type ItwProximityMandatoryCredentialMissing = {
-  missing_credential: string;
-  missing_credential_number: number;
 };
 
 export type ItwProximityQrCode = {

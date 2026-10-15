@@ -4,6 +4,8 @@ import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { ONE_IDENTITY_ENVS, OneIdentityEnv } from "../../reducers/loginConfig";
 import {
+  oneIdentityAllowedCieOriginsSelector,
+  oneIdentityCieNativeRedirectsEnabledSelector,
   oneIdentityIdpFriendlyNamesUrlSelector,
   oneIdentityIdpsUrlSelector,
   oneIdentityRolloutPercentageSelector,
@@ -41,6 +43,60 @@ describe("oneIdentityRolloutPercentageSelector", () => {
       oneIdentityRolloutPercentageSelector(makeState({ rolloutPercentage: 75 }))
     ).toBe(75);
   });
+});
+
+describe("oneIdentityAllowedCieOriginsSelector", () => {
+  it("should return an empty array when remoteConfig is none", () => {
+    expect(oneIdentityAllowedCieOriginsSelector(makeState())).toEqual([]);
+  });
+
+  it("should return an empty array when allowedCieOrigins is absent", () => {
+    expect(oneIdentityAllowedCieOriginsSelector(makeState({}))).toEqual([]);
+  });
+
+  it("should return the remote allowedCieOrigins when present", () => {
+    const allowedCieOrigins = ["https://example.com", "https://example.org"];
+
+    expect(
+      oneIdentityAllowedCieOriginsSelector(makeState({ allowedCieOrigins }))
+    ).toEqual(allowedCieOrigins);
+  });
+
+  it("should return the same empty array reference across calls when the field is missing", () => {
+    expect(oneIdentityAllowedCieOriginsSelector(makeState())).toBe(
+      oneIdentityAllowedCieOriginsSelector(makeState({}))
+    );
+  });
+});
+
+describe("oneIdentityCieNativeRedirectsEnabledSelector", () => {
+  const scenarios = [
+    { name: "remoteConfig is none", statePayload: undefined, expected: false },
+    {
+      name: "cieNativeRedirectsEnabled is absent",
+      statePayload: {},
+      expected: false
+    },
+    {
+      name: "cieNativeRedirectsEnabled is false",
+      statePayload: { cieNativeRedirectsEnabled: false },
+      expected: false
+    },
+    {
+      name: "cieNativeRedirectsEnabled is true",
+      statePayload: { cieNativeRedirectsEnabled: true },
+      expected: true
+    }
+  ];
+
+  it.each(scenarios)(
+    "should return $expected when $name",
+    ({ statePayload, expected }) => {
+      expect(
+        oneIdentityCieNativeRedirectsEnabledSelector(makeState(statePayload))
+      ).toBe(expected);
+    }
+  );
 });
 
 describe("oneIdentityIdpsUrlSelector", () => {

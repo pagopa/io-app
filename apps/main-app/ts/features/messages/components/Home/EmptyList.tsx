@@ -73,11 +73,15 @@ export const EmptyList = ({ category }: EmptyListProps) => {
           title: I18n.t("messages.loadingErrorTitle")
         };
       case "noData":
-        const categoryKey = category === "ARCHIVE" ? "archive" : "inbox";
+        const isArchive = category === "ARCHIVE";
         return {
           pictogram: "empty",
-          subtitle: I18n.t(`messages.${categoryKey}.emptyMessage.subtitle`),
-          title: I18n.t(`messages.${categoryKey}.emptyMessage.title`)
+          subtitle: isArchive
+            ? I18n.t("messages.archive.emptyMessage.subtitle")
+            : I18n.t("messages.inbox.emptyMessage.subtitle"),
+          title: isArchive
+            ? I18n.t("messages.archive.emptyMessage.title")
+            : I18n.t("messages.inbox.emptyMessage.title")
         };
       default:
         return undefined;

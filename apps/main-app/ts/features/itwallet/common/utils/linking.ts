@@ -10,14 +10,10 @@ import { parseCredentialOfferLink } from "../../offer/utils";
 
 const itwLinkPrefixes = [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX];
 
-/**
- * Parsed ITW deep link data used by the deferred-link saga.
- */
+/** Parsed ITW deep link data used by the deferred-link saga. */
 export type ItwDeepLink = { path: string };
 
-/**
- * Parses a stored URL into a supported ITW navigation path.
- */
+/** Parses a stored URL into a supported ITW navigation path. */
 export const parseItwDeepLink = (url: string): ItwDeepLink | undefined => {
   const path = extractItwPath(
     parseCredentialOfferLink(url)?.internalRoute ?? url

@@ -12,7 +12,7 @@ import {
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { trackSpidLoginError } from "../../../../utils/analytics";
+import { trackLoginError } from "../../../../utils/analytics";
 import { SpidIdp } from "../../../../utils/idps";
 import {
   assistanceToolRemoteConfig,
@@ -20,18 +20,22 @@ import {
 } from "../../../../utils/supportAssistance";
 import { getUrlBasepath } from "../../../../utils/url";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
-import {
-  LoginType,
-  trackSpidLoginIntent
-} from "../../activeSessionLogin/screens/analytics";
+import { trackSpidLoginIntent } from "../../activeSessionLogin/screens/analytics";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
+import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { idpLoginUrlChanged } from "../store/actions";
 import {
   AUTH_LEVELS,
   getIntentFallbackUrl,
+  LOGIN_TYPES,
+  LoginType,
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../utils";
+
+// To ensure the server recognizes the client as a valid mobile device, we use a custom user agent.
+const defaultUserAgent =
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X; Linux; Android 10) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
 
 export type IdpWebViewLoginProps = {
   /** The login flow this WebView is part of; defaults to a first-time login. */
@@ -55,7 +59,7 @@ export type WebViewLoginEvent =
   | { payload: { url: string }; type: "WEBVIEW_ERROR" };
 
 export const IdpWebViewLogin = memo(
-  ({ idp, flow = "auth", onEvent }: IdpWebViewLoginProps) => {
+  ({ idp, flow = LOGIN_TYPES.AUTH, onEvent }: IdpWebViewLoginProps) => {
     const dispatch = useIODispatch();
 
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
@@ -78,14 +82,20 @@ export const IdpWebViewLogin = memo(
 
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
-        idp,
+        flow,
+        idpId: idp.id,
         onFailure: handleFailure,
         minAuthLevel: AUTH_LEVELS.L2
       });
 
+    const {
+      bottomSheet: posteIdBottomSheet,
+      presentOnce: presentOncePosteIdBottomSheet
+    } = useOneIdentityPosteIDApp2AppEducational(idp);
+
     const handleError = useCallback(
       (event: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-        trackSpidLoginError(idp.id, event);
+        trackLoginError(idp.id, event);
 
         const { nativeEvent } = event;
         if ("statusCode" in nativeEvent) {
@@ -179,7 +189,8 @@ export const IdpWebViewLogin = memo(
 
     if (
       loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "verifying-assertion-ref"
+      loginSourceState.status === "verifying-assertion-ref" ||
+      loginSourceState.status === "following-redirects"
     ) {
       return <IdpWebViewLoginLoading />;
     }
@@ -196,6 +207,7 @@ export const IdpWebViewLogin = memo(
           cacheEnabled={false}
           onError={handleError}
           onHttpError={handleError}
+          onLoad={presentOncePosteIdBottomSheet}
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
           originWhitelist={originSchemasWhiteList}
@@ -204,7 +216,9 @@ export const IdpWebViewLogin = memo(
           startInLoadingState={true}
           testID="webview-idp-login-screen"
           textZoom={100}
+          userAgent={defaultUserAgent}
         />
+        {posteIdBottomSheet}
       </View>
     );
   }

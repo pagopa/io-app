@@ -1,5 +1,5 @@
 import { Route, useRoute } from "@react-navigation/native";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useCallback } from "react";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
@@ -41,13 +41,13 @@ const CieIdAuthUrlError = () => {
   return (
     <OperationResultScreenContent
       action={{
-        label: i18n.t("global.buttons.close"),
-        accessibilityLabel: i18n.t("global.buttons.close"),
+        label: I18n.t("global.buttons.close"),
+        accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: handleClose
       }}
       pictogram="attention"
-      subtitle={i18n.t("authentication.cieidUrlErrorScreen.description")}
-      title={i18n.t("authentication.cieidUrlErrorScreen.title")}
+      subtitle={I18n.t("authentication.cieidUrlErrorScreen.description")}
+      title={I18n.t("authentication.cieidUrlErrorScreen.title")}
     />
   );
 };

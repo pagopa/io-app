@@ -1,4 +1,5 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
+import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
@@ -7,25 +8,29 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SpidIdp } from "../../../../../utils/idps";
 import { trackLoginFailure } from "../../../common/analytics";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import {
   IdpWebViewLogin,
   WebViewLoginEvent
 } from "../../../common/components/IdpWebViewLogin";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { AUTH_LEVELS, CALLBACK_PATH } from "../../../common/utils";
+import {
+  AUTH_LEVELS,
+  isValidCallbackUrl,
+  LOGIN_TYPES
+} from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
 } from "../../store/actions";
 import {
   activeSessionUserLoggedSelector,
-  idpSelectedActiveSessionLoginSelector,
-  remoteApiLoginUrlPrefixSelector
+  idpSelectedActiveSessionLoginSelector
 } from "../../store/selectors";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
 
@@ -67,26 +72,19 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
   idp
 }: OneIdentityActiveSessionIdpLoginScreenContentProps) => {
   const dispatch = useIODispatch();
-  const navigation = useIONavigation();
-
-  const remoteApiLoginUrlPrefix = useIOSelector(
-    remoteApiLoginUrlPrefixSelector
-  );
-  const callbackUrl = `${remoteApiLoginUrlPrefix}${CALLBACK_PATH}`;
+  const navigation =
+    useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();
 
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
   const navigateToAuthErrorScreen = useCallback(
     (errorCodeOrMessage?: string) => {
-      // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
-      // ensuring the re-execution of the `useLollipopLoginSource` hook.
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        params: {
-          errorCodeOrMessage,
-          authMethod: "SPID",
-          authLevel: AUTH_LEVELS.L2
-        }
+      // `replace` drops the failed login webview, so it doesn't stay
+      // mounted behind the error screen.
+      navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+        errorCodeOrMessage,
+        authMethod: "SPID",
+        authLevel: AUTH_LEVELS.L2
       });
     },
     [navigation]
@@ -100,7 +98,7 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
       trackLoginFailure({
         reason,
         idp: idp.id as keyof IdpData,
-        flow: "reauth"
+        flow: LOGIN_TYPES.REAUTH
       });
       navigateToAuthErrorScreen(code || message);
     },
@@ -134,14 +132,11 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
         case "WEBVIEW_HTTP_ERROR": {
           const { url, statusCode } = event.payload;
 
-          if (url.includes(callbackUrl)) {
+          if (isValidCallbackUrl(url)) {
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
-            break;
-          }
-          if (statusCode !== 403) {
+          } else if (statusCode !== 403) {
             navigateToAuthErrorScreen();
-            break;
           }
           break;
         }
@@ -150,7 +145,6 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
       }
     },
     [
-      callbackUrl,
       forceLogoutAndNavigateToLanding,
       handleLoginFailure,
       handleLoginSuccess,
@@ -158,6 +152,11 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
     ]
   );
 
-  // TODO: Remove flow to keep IdpWebViewLogin agnostic
-  return <IdpWebViewLogin flow="reauth" idp={idp} onEvent={handleEvent} />;
+  return (
+    <IdpWebViewLogin
+      flow={LOGIN_TYPES.REAUTH}
+      idp={idp}
+      onEvent={handleEvent}
+    />
+  );
 };

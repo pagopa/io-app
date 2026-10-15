@@ -25,6 +25,7 @@ export const itwProximityMachine = itwProximityMachineSetup.createMachine({
     Presentment: presentmentState,
     Success: {
       description: "Documents successfully sent to the verifier",
+      entry: "trackProximitySuccess",
       always: {
         // NFC retrieval renders success inline on its own screen, no navigation needed
         guard: not("isNfcRetrieval"),

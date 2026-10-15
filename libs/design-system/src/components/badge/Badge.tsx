@@ -56,9 +56,7 @@ const styles = StyleSheet.create({
   }
 });
 
-/**
- * Official badge component
- */
+/** Official badge component */
 export const Badge = ({
   text,
   outline = false,
@@ -180,10 +178,14 @@ export const Badge = ({
     }
   };
 
-  // prettier-ignore
-  const variantMap = themeType === "light"
-    ? (outline ? mapOutlineVariantsLightMode : mapVariantsLightMode)
-    : (outline ? mapOutlineVariantsDarkMode : mapVariantsDarkMode);
+  const variantMap =
+    themeType === "light"
+      ? outline
+        ? mapOutlineVariantsLightMode
+        : mapVariantsLightMode
+      : outline
+        ? mapOutlineVariantsDarkMode
+        : mapVariantsDarkMode;
 
   const { background, foreground } = variantMap[variant];
 

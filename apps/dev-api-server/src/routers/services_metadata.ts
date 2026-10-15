@@ -5,7 +5,8 @@ import { ZendeskSubcategoriesErrors } from "@io-app/api-types/generated/definiti
 import { CoBadgeServices } from "@io-app/api-types/generated/definitions/pagopa/cobadge/configuration/CoBadgeServices";
 import { PrivativeServices } from "@io-app/api-types/generated/definitions/pagopa/privative/configuration/PrivativeServices";
 /**
- * this router serves all data and assets provided by io-services-metadata https://github.com/pagopa/io-services-metadata
+ * This router serves all data and assets provided by io-services-metadata
+ * https://github.com/pagopa/io-services-metadata
  */
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Router } from "express";
