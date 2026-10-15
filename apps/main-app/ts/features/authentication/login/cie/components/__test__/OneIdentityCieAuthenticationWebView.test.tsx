@@ -116,7 +116,10 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
     it("should render the failure screen when loginSourceState is 'failure'", () => {
       mockUseOneIdentityLoginSource({
-        loginSourceState: { status: "failure", error: "some error" }
+        loginSourceState: {
+          status: "failure",
+          error: { type: "key-generation", message: "some error" }
+        }
       });
 
       const { getByText, queryByTestId } = render(
@@ -295,7 +298,10 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
     it("should set the login source error as debug data when the login source fails", () => {
       mockUseOneIdentityLoginSource({
-        loginSourceState: { status: "failure", error: "some error" }
+        loginSourceState: {
+          status: "failure",
+          error: { type: "key-generation", message: "some error" }
+        }
       });
 
       render(
@@ -383,7 +389,10 @@ describe("OneIdentityCieAuthenticationWebView", () => {
   describe("retry / cancel", () => {
     it("should reset to the authenticating state and call generateLoginSource when retry is pressed", () => {
       mockUseOneIdentityLoginSource({
-        loginSourceState: { status: "failure", error: "some error" }
+        loginSourceState: {
+          status: "failure",
+          error: { type: "key-generation", message: "some error" }
+        }
       });
 
       const { getByText } = render(
@@ -400,7 +409,10 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
     it("should navigate back when cancel is pressed from the failure screen", () => {
       mockUseOneIdentityLoginSource({
-        loginSourceState: { status: "failure", error: "some error" }
+        loginSourceState: {
+          status: "failure",
+          error: { type: "key-generation", message: "some error" }
+        }
       });
 
       const { getByText } = render(

@@ -211,6 +211,37 @@ describe("OneIdentityIdpLoginScreen", () => {
     );
   });
 
+  it("should dispatch loginFailure and pass the failure to AuthErrorScreen when the login source fails", () => {
+    renderComponent();
+    const { onFailure } = jest.mocked(
+      useOneIdentityLoginSourceModule.useOneIdentityLoginSource
+    ).mock.calls[0][0];
+    const error = {
+      type: "http-status",
+      code: 500,
+      message: "Unexpected HTTP status 500",
+      url: "https://example.com/api/auth/v1/reserve"
+    } as const;
+
+    onFailure(error);
+
+    expect(mockDispatch).toHaveBeenCalledWith(
+      loginFailure({
+        error: new Error(error.message),
+        idp: mockIdp.id as keyof IdpData
+      })
+    );
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: AUTH_LEVELS.L2,
+        failure: { type: "ONE_IDENTITY_LOGIN_FAILURE", payload: { error } }
+      }
+    );
+  });
+
   it("should navigate to AuthErrorScreen on a generic WebView error", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");

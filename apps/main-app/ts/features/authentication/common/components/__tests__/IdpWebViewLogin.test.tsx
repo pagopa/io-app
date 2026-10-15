@@ -91,7 +91,10 @@ describe("IdpWebViewLogin", () => {
 
     it("should render nothing when status is failure", () => {
       mockUseOneIdentityLoginSource({
-        loginSourceState: { status: "failure", error: "some error" }
+        loginSourceState: {
+          status: "failure",
+          error: { type: "key-generation", message: "some error" }
+        }
       });
 
       const { queryByTestId } = render(
@@ -122,6 +125,26 @@ describe("IdpWebViewLogin", () => {
   describe("onError / onHttpError", () => {
     beforeEach(() => {
       mockUseOneIdentityLoginSource();
+    });
+
+    it("should call onEvent with ONE_IDENTITY_LOGIN_FAILURE when the login source fails", () => {
+      render(<IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />);
+      const { onFailure } = jest.mocked(
+        useOneIdentityLoginSourceModule.useOneIdentityLoginSource
+      ).mock.calls[0][0];
+      const error = {
+        type: "http-status",
+        code: 500,
+        message: "Unexpected HTTP status 500",
+        url: "https://example.com/api/auth/v1/reserve"
+      } as const;
+
+      onFailure(error);
+
+      expect(onEvent).toHaveBeenCalledWith({
+        type: "ONE_IDENTITY_LOGIN_FAILURE",
+        payload: { error }
+      });
     });
 
     it("should call onEvent with WEBVIEW_ERROR and track the error when there is a WebViewErrorEvent", () => {

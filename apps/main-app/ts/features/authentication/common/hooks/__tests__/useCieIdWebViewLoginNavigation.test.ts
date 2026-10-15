@@ -38,7 +38,9 @@ describe("useCieIdWebViewLoginNavigation", () => {
 
     result.current.navigateToCieIdAuthenticationError({
       type: "ONE_IDENTITY_LOGIN_FAILURE",
-      payload: { reason: "some reason" }
+      payload: {
+        error: { type: "key-generation", message: "some reason" }
+      }
     });
 
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
@@ -46,7 +48,9 @@ describe("useCieIdWebViewLoginNavigation", () => {
       params: {
         failure: {
           type: "ONE_IDENTITY_LOGIN_FAILURE",
-          payload: { reason: "some reason" }
+          payload: {
+            error: { type: "key-generation", message: "some reason" }
+          }
         }
       }
     });

@@ -105,11 +105,13 @@ describe("CieIdErrorScreen debug info", () => {
       params: {
         failure: {
           type: "ONE_IDENTITY_LOGIN_FAILURE",
-          payload: { reason: "some reason" }
+          payload: {
+            error: { type: "key-generation", message: "some reason" }
+          }
         }
       },
       expected: {
-        type: "ONE_IDENTITY_LOGIN_FAILURE",
+        type: "key-generation",
         message: "some reason",
         flow: "auth",
         isCieSupported: true

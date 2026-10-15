@@ -19,7 +19,10 @@ import {
   handleSendAssistanceLog
 } from "../../../../utils/supportAssistance";
 import { getUrlBasepath } from "../../../../utils/url";
-import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
+import {
+  OneIdentityLoginSourceError,
+  useOneIdentityLoginSource
+} from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { trackSpidLoginIntent } from "../../activeSessionLogin/screens/analytics";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
 import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
@@ -57,6 +60,10 @@ export type WebViewLoginEvent =
       type: "LOGIN_FAILURE";
     }
   | {
+      payload: { error: OneIdentityLoginSourceError };
+      type: "ONE_IDENTITY_LOGIN_FAILURE";
+    }
+  | {
       payload: { statusCode: number; url: string };
       type: "WEBVIEW_HTTP_ERROR";
     }
@@ -75,10 +82,10 @@ export const IdpWebViewLogin = memo(
     const lastTrackedUrl = useRef<string | undefined>(undefined);
 
     const handleFailure = useCallback(
-      (reason: string) => {
+      (error: OneIdentityLoginSourceError) => {
         onEvent({
-          type: "LOGIN_FAILURE",
-          payload: { reason }
+          type: "ONE_IDENTITY_LOGIN_FAILURE",
+          payload: { error }
         });
       },
       [onEvent]

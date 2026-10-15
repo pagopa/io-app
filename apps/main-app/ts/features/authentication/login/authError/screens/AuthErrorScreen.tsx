@@ -6,6 +6,7 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
+import { OneIdentityLoginSourceError } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import {
   setFinishedActiveSessionLoginFlow,
@@ -23,13 +24,17 @@ import {
 } from "../../idp/store/actions";
 
 /**
- * Login WebView errors that don't come from the backend, so they carry no error
- * code to show.
+ * Login failures that carry no backend error code to show: WebView errors and
+ * failures before reaching the IDP page.
  */
 export type AuthErrorFailure =
   | {
       payload: { code: number; description: string; url: string };
       type: "WEBVIEW_ERROR";
+    }
+  | {
+      payload: { error: OneIdentityLoginSourceError };
+      type: "ONE_IDENTITY_LOGIN_FAILURE";
     }
   | {
       payload: { statusCode: number; url: string };

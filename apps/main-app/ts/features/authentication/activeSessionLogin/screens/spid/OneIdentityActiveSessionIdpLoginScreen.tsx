@@ -93,7 +93,14 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
   );
 
   const handleLoginFailure = useCallback(
-    (reason: string, code?: string, message?: string) => {
+    (
+      reason: string,
+      {
+        code,
+        message,
+        failure
+      }: { code?: string; failure?: AuthErrorFailure; message?: string } = {}
+    ) => {
       if (code !== AUTH_ERRORS.ERROR_1004) {
         dispatch(activeSessionLoginFailure());
       }
@@ -102,7 +109,7 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
         idp: idp.id as keyof IdpData,
         flow: LOGIN_TYPES.REAUTH
       });
-      navigateToAuthErrorScreen(code || message);
+      navigateToAuthErrorScreen(code || message, failure);
     },
     [dispatch, idp.id, navigateToAuthErrorScreen]
   );
@@ -119,12 +126,16 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
       switch (event.type) {
         case "LOGIN_FAILURE": {
           const { code, message, reason } = event.payload;
-          handleLoginFailure(reason, code, message);
+          handleLoginFailure(reason, { code, message });
           break;
         }
         case "LOGIN_SUCCESS": {
           const { token } = event.payload;
           handleLoginSuccess(token);
+          break;
+        }
+        case "ONE_IDENTITY_LOGIN_FAILURE": {
+          handleLoginFailure(event.payload.error.message, { failure: event });
           break;
         }
         case "WEBVIEW_ERROR": {

@@ -8,7 +8,10 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 
 import { useIOStore } from "../../../../store/hooks";
-import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
+import {
+  OneIdentityLoginSourceError,
+  useOneIdentityLoginSource
+} from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
 import { getCieIdpId, isAuthenticationUrl } from "../../login/cie/utils";
 import { useCieIdApp } from "../hooks/useCieIdApp";
@@ -32,7 +35,7 @@ export type CieIdWebViewLoginEvent =
       type: "LOGIN_FAILURE";
     }
   | {
-      payload: { reason: string };
+      payload: { error: OneIdentityLoginSourceError };
       type: "ONE_IDENTITY_LOGIN_FAILURE";
     }
   | {
@@ -98,10 +101,10 @@ export const CieIdWebViewLogin = memo(
     });
 
     const handleFailure = useCallback(
-      (reason: string) => {
+      (error: OneIdentityLoginSourceError) => {
         onEvent({
           type: "ONE_IDENTITY_LOGIN_FAILURE",
-          payload: { reason }
+          payload: { error }
         });
       },
       [onEvent]

@@ -56,12 +56,24 @@ const scenarios: Array<{
     }
   },
   {
-    name: "a OneIdentity failure",
+    name: "a failure before reaching the IDP page",
     failure: {
       type: "ONE_IDENTITY_LOGIN_FAILURE",
-      payload: { reason: "some reason" }
+      payload: {
+        error: {
+          type: "http-status",
+          code: 500,
+          message: "Unexpected HTTP status 500",
+          url: "https://example.com/api/auth/v1/reserve"
+        }
+      }
     },
-    expected: { type: "ONE_IDENTITY_LOGIN_FAILURE", message: "some reason" }
+    expected: {
+      type: "http-status",
+      code: 500,
+      message: "Unexpected HTTP status 500",
+      url: "https://example.com/api/auth/v1/reserve"
+    }
   },
   {
     name: "a cancelled login",

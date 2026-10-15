@@ -1,3 +1,5 @@
+import { OneIdentityLoginSourceError } from "../../../lollipop/hooks/useOneIdentityLoginSource";
+
 /** A failed login, as reported by the login WebViews. */
 export type LoginFailure =
   | {
@@ -9,7 +11,7 @@ export type LoginFailure =
       type: "LOGIN_FAILURE";
     }
   | {
-      payload: { reason: string };
+      payload: { error: OneIdentityLoginSourceError };
       type: "ONE_IDENTITY_LOGIN_FAILURE";
     }
   | {
@@ -25,7 +27,11 @@ export type LoginFailureDebugInfo = {
    */
   code?: number | string;
   message?: string;
-  type: LoginFailure["type"];
+  /**
+   * The kind of failure. For a failure before reaching the IDP page, it's the
+   * type of the OneIdentity login source error.
+   */
+  type: LoginFailure["type"] | OneIdentityLoginSourceError["type"];
   url?: string;
 };
 
@@ -45,7 +51,7 @@ export const getLoginFailureDebugInfo = (
       return { type: failure.type, code, ...(message && { message }) };
     }
     case "ONE_IDENTITY_LOGIN_FAILURE":
-      return { type: failure.type, message: failure.payload.reason };
+      return { ...failure.payload.error };
     case "WEBVIEW_ERROR": {
       const { code, description, url } = failure.payload;
       return { type: failure.type, code, message: description, url };

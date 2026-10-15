@@ -7,6 +7,7 @@ import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
+import * as commonAnalytics from "../../../../common/analytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
 import { AUTH_ERRORS } from "../../../../common/utils/authError";
@@ -237,6 +238,37 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       }
     );
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
+  });
+
+  it("should dispatch activeSessionLoginFailure, track it and pass the failure to AuthErrorScreen when the login source fails", () => {
+    renderComponent();
+    const { onFailure } = jest.mocked(
+      useOneIdentityLoginSourceModule.useOneIdentityLoginSource
+    ).mock.calls[0][0];
+    const error = {
+      type: "http-status",
+      code: 500,
+      message: "Unexpected HTTP status 500",
+      url: "https://example.com/api/auth/v1/reserve"
+    } as const;
+
+    onFailure(error);
+
+    expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
+    expect(commonAnalytics.trackLoginFailure).toHaveBeenCalledWith({
+      reason: error.message,
+      idp: mockIdp.id,
+      flow: "reauth"
+    });
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failure: { type: "ONE_IDENTITY_LOGIN_FAILURE", payload: { error } }
+      }
+    );
   });
 
   it("should navigate to AuthErrorScreen on a generic WebView error", () => {

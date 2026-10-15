@@ -16,7 +16,10 @@ import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
-import { useOneIdentityLoginSource } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
+import {
+  OneIdentityLoginSourceError,
+  useOneIdentityLoginSource
+} from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { oneIdentityCieNativeRedirectsEnabledSelector } from "../../../common/store/selectors/remoteConfig";
 import { AUTH_LEVELS, onLoginUriChanged } from "../../../common/utils";
 import { defaultUserAgent } from "../../../common/utils/cie";
@@ -80,6 +83,11 @@ export const OneIdentityCieAuthenticationWebView = ({
     trackLoginError("cie", new Error(reason));
   }, []);
 
+  const handleLoginSourceFailure = useCallback(
+    (error: OneIdentityLoginSourceError) => handleFailure(error.message),
+    [handleFailure]
+  );
+
   const {
     loginSourceState,
     shouldBlockUrlNavigationWhileCheckingLollipop,
@@ -88,7 +96,7 @@ export const OneIdentityCieAuthenticationWebView = ({
     flow,
     followRedirectsNatively,
     idpId: getCieIdpId(useUat),
-    onFailure: handleFailure,
+    onFailure: handleLoginSourceFailure,
     minAuthLevel: AUTH_LEVELS.L3
   });
 
@@ -170,7 +178,7 @@ export const OneIdentityCieAuthenticationWebView = ({
     webViewState.status === "failure"
       ? webViewState.reason
       : loginSourceState.status === "failure"
-        ? loginSourceState.error
+        ? loginSourceState.error.message
         : undefined;
 
   const debugInfo = useMemo(
