@@ -6,29 +6,28 @@ import URLParse from "url-parse";
 
 import { handleRegenerateEphemeralKey } from "..";
 import { apiUrlPrefix } from "../../../config";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { unknownToString } from "../../../utils/errors";
-import {
-  isActiveSessionFastLoginEnabledSelector,
-  isActiveSessionLoginSelector
-} from "../../authentication/activeSessionLogin/store/selectors";
+import { isActiveSessionFastLoginEnabledSelector } from "../../authentication/activeSessionLogin/store/selectors";
 import { oneIdentityEnvSelector } from "../../authentication/common/store/selectors/loginConfig";
 import {
   AUTH_LEVELS,
   AuthLevel,
+  LOGIN_TYPES,
   SPID_AUTH_LEVEL_MAP
 } from "../../authentication/common/utils";
 import { createRetriableFetch } from "../../authentication/common/utils/fetch";
+import { LoginType } from "../../authentication/common/utils/index";
 import { jsonFetchToSchema } from "../../authentication/common/utils/jsonFetchToSchema";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import {
   ephemeralKeyTagSelector,
   ephemeralPublicKeySelector
 } from "../store/reducers/lollipop";
-import { ReserveSchema } from "../types";
+import { Reserve, ReserveSchema } from "../types";
 import { toBase64EncodedThumbprint } from "../utils/crypto";
 import {
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
@@ -105,18 +104,16 @@ const buildReserveRequestBody = (
 
 /** Builds the OneIdentity `/authorize` URL to open in the login WebView. */
 const buildAuthorizationUrl = (
-  reserveResponse: {
-    authorization_endpoint: string;
-    client_id: string;
-    nonce: string;
-    redirect_uri: string;
-    state: string;
-  },
-  idp: string,
-  minAuthLevel: AuthLevel
-): string => {
-  const { authorization_endpoint, client_id, nonce, redirect_uri, state } =
-    reserveResponse;
+  {
+    acr_values,
+    authorization_endpoint,
+    client_id,
+    nonce,
+    redirect_uri,
+    state
+  }: Reserve,
+  idp: string
+) => {
   const authorizationUrl = new URLParse(authorization_endpoint, true);
   authorizationUrl.set("query", {
     idp,
@@ -126,7 +123,7 @@ const buildAuthorizationUrl = (
     state,
     nonce,
     response_type: "code",
-    minAuthLevel: SPID_AUTH_LEVEL_MAP[minAuthLevel]
+    acr_values
   });
   return authorizationUrl.toString();
 };
@@ -155,6 +152,8 @@ const buildWebviewSource = (
 });
 
 export type UseOneIdentityLoginSource = (params: {
+  /** The login flow this source is generated for. */
+  flow: LoginType;
   /**
    * When `true`, the `/authorize` redirects up to the IDP `SAMLRequest` are
    * followed natively via `getRedirects` (as in the legacy login flow) instead
@@ -191,6 +190,7 @@ export type UseOneIdentityLoginSource = (params: {
 
 export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   followRedirectsNatively = false,
+  flow,
   idpId,
   onFailure,
   minAuthLevel = AUTH_LEVELS.L2
@@ -205,12 +205,12 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   const ephemeralKeyTag = useIOSelector(ephemeralKeyTagSelector);
   const maybeEphemeralPublicKey = useIOSelector(ephemeralPublicKeySelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
-  const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
-  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-  const hashedFiscalCode = useIOSelector(hashedProfileFiscalCodeSelector);
-  const isActiveSessionFastLogin = useIOSelector(
-    isActiveSessionFastLoginEnabledSelector
-  );
+  const store = useIOStore();
+  const hashedFiscalCode = hashedProfileFiscalCodeSelector(store.getState());
+  const isFastLogin =
+    flow === LOGIN_TYPES.AUTH
+      ? isFastLoginEnabledSelector(store.getState())
+      : isActiveSessionFastLoginEnabledSelector(store.getState());
   const oneIdentityEnv = useIOSelector(oneIdentityEnvSelector);
 
   const shouldBlockUrlNavigationWhileCheckingLollipop = useCallback(
@@ -293,8 +293,8 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       minAuthLevel,
       publicKey,
       DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-      isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-      isActiveSessionLogin ? hashedFiscalCode : undefined
+      isFastLogin,
+      hashedFiscalCode
     );
 
     const reservePromise = fetch(reserveUrl, {
@@ -312,11 +312,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       return;
     }
 
-    const authorizationUrl = buildAuthorizationUrl(
-      result.value,
-      idpId,
-      minAuthLevel
-    );
+    const authorizationUrl = buildAuthorizationUrl(result.value, idpId);
 
     if (followRedirectsNatively) {
       setLoginSourceState({ status: "following-redirects" });
@@ -362,8 +358,6 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     dispatch,
     oneIdentityEnv,
     minAuthLevel,
-    isActiveSessionLogin,
-    isActiveSessionFastLogin,
     isFastLogin,
     hashedFiscalCode,
     onFailure

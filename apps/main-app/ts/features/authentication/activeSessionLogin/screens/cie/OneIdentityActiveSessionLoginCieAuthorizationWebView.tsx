@@ -18,7 +18,11 @@ import {
 } from "../../../common/components/CieWebViewLogin";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { AUTH_LEVELS, isValidCallbackUrl } from "../../../common/utils";
+import {
+  AUTH_LEVELS,
+  isValidCallbackUrl,
+  LOGIN_TYPES
+} from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
 import {
   activeSessionLoginFailure,
@@ -48,7 +52,7 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
   useHeaderSecondLevel({ title: "", goBack: handleGoBack });
 
   useOnFirstRender(() => {
-    trackLoginCieConsentDataUsageScreen("reauth");
+    trackLoginCieConsentDataUsageScreen(LOGIN_TYPES.REAUTH);
   });
 
   const forceLogoutAndNavigateToLanding = useCallback(() => {
@@ -77,10 +81,10 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
       }
 
       if (code === AUTH_ERRORS.ERROR_22) {
-        trackLoginCieDataSharingError("reauth");
+        trackLoginCieDataSharingError(LOGIN_TYPES.REAUTH);
       }
 
-      trackLoginFailure({ reason, idp: "cie", flow: "reauth" });
+      trackLoginFailure({ reason, idp: "cie", flow: LOGIN_TYPES.REAUTH });
       navigateToAuthErrorScreen(errorCodeOrMessage);
     },
     [dispatch, navigateToAuthErrorScreen]
@@ -133,7 +137,7 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
 
   return (
     <CieWebViewLogin
-      flow="reauth"
+      flow={LOGIN_TYPES.REAUTH}
       onEvent={handleEvent}
       url={authorizationUrl}
     />
