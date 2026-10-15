@@ -30,25 +30,21 @@ export const IdPayInitiativeWaitingList = () => {
     undefined | UserOnboardingStatusDTO
   >();
 
+  const bottomSheetContent = getBottomSheetContent(
+    selectedInitiative?.status ?? InitiativeOnboardingStatus.ON_WAITING_LIST,
+    selectedInitiative?.initiativeName
+  );
+
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: (
       <>
         {/* TODO: Use `IOMarkdown` with custom headers,
         such as the ones used in Messages */}
-        <IOMarkdown
-          content={I18n.t(
-            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.bottomSheet.content",
-            {
-              initiativeName: selectedInitiative?.initiativeName
-            }
-          )}
-        />
+        <IOMarkdown content={bottomSheetContent.content} />
         {isAndroid && <VSpacer size={24} />}
       </>
     ),
-    title: I18n.t(
-      "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.bottomSheet.title"
-    )
+    title: bottomSheetContent.title
   });
 
   useOnFirstRender(
@@ -79,7 +75,8 @@ export const IdPayInitiativeWaitingList = () => {
   const handleOpenWaitingListBottomSheet = (item: UserOnboardingStatusDTO) => {
     setSelectedInitiative(item);
     trackIDPayOnWaitingListInfoButtonTap({
-      initiativeId: item.initiativeId
+      initiativeId: item.initiativeId,
+      status: item.status
     });
     present();
   };
@@ -92,21 +89,17 @@ export const IdPayInitiativeWaitingList = () => {
         ListHeaderComponent={renderListHeaderComponent}
         renderItem={({ item }) => (
           <ListItemInfo
-            endElement={
-              item.status !== InitiativeOnboardingStatus.ON_WAITING_LIST
-                ? undefined
-                : {
-                    type: "iconButton",
-                    componentProps: {
-                      icon: "info",
-                      color: "primary",
-                      accessibilityLabel: I18n.t(
-                        "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.accessibilityInfoLabel"
-                      ),
-                      onPress: () => handleOpenWaitingListBottomSheet(item)
-                    }
-                  }
-            }
+            endElement={{
+              type: "iconButton",
+              componentProps: {
+                icon: "info",
+                color: "primary",
+                accessibilityLabel: I18n.t(
+                  "idpay.wallet.initiativeOnboardedStatus.accessibilityInfoLabel"
+                ),
+                onPress: () => handleOpenWaitingListBottomSheet(item)
+              }
+            }}
             icon="hourglass"
             topElement={getInitiativeStatusBadge(item.status)}
             value={item.initiativeName}
@@ -116,6 +109,34 @@ export const IdPayInitiativeWaitingList = () => {
       {bottomSheet}
     </>
   );
+};
+
+const getBottomSheetContent = (
+  status: InitiativeOnboardingStatus,
+  initiativeName?: string
+) => {
+  switch (status) {
+    case InitiativeOnboardingStatus.ON_EVALUATION:
+      return {
+        title: I18n.t(
+          "idpay.wallet.initiativeOnboardedStatus.ON_EVALUATION.bottomSheet.title"
+        ),
+        content: I18n.t(
+          "idpay.wallet.initiativeOnboardedStatus.ON_EVALUATION.bottomSheet.content",
+          { initiativeName }
+        )
+      };
+    case InitiativeOnboardingStatus.ON_WAITING_LIST:
+      return {
+        title: I18n.t(
+          "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.bottomSheet.title"
+        ),
+        content: I18n.t(
+          "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.bottomSheet.content",
+          { initiativeName }
+        )
+      };
+  }
 };
 
 const getInitiativeStatusBadge = (
