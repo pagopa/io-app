@@ -3,8 +3,8 @@ import I18n from "i18next";
 
 import { withStore } from "../../../../../../utils/jest/withStore";
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
-import * as activeSessionSelectors from "../../../../activeSessionLogin/store/selectors";
 import * as analytics from "../../../../common/analytics";
+import { LOGIN_TYPES } from "../../../../common/utils";
 import { OneIdentityCieAuthenticationWebView as OneIdentityCieAuthenticationWebViewComponent } from "../OneIdentityCieAuthenticationWebView";
 
 const mockGoBack = jest.fn();
@@ -72,9 +72,6 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     "should track One Identity configuration error when is error page ($name)",
     ({ flow }) => {
       mockUseOneIdentityLoginSource();
-      const spyCieLoginFlowSelector = jest
-        .spyOn(activeSessionSelectors, "cieLoginFlowSelector")
-        .mockReturnValue(flow);
       const spyTrackLoginOIConfigurationError = jest
         .spyOn(analytics, "trackLoginOIConfigurationError")
         .mockImplementation();
@@ -82,6 +79,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
         "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR";
       const { getByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={flow}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -96,7 +94,6 @@ describe("OneIdentityCieAuthenticationWebView", () => {
         flow
       );
       expect(onAuthenticationUrlReceived).not.toHaveBeenCalled();
-      spyCieLoginFlowSelector.mockRestore();
     }
   );
 
@@ -120,6 +117,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
         const { queryByTestId } = render(
           <OneIdentityCieAuthenticationWebView
+            flow={LOGIN_TYPES.AUTH}
             onAuthenticationUrlReceived={onAuthenticationUrlReceived}
           />
         );
@@ -136,6 +134,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -151,6 +150,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByText, queryByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -172,6 +172,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should render the failure screen when the page title matches an error page", () => {
       const { getByTestId, getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -189,6 +190,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should not fail when the page title does not match an error page", () => {
       const { getByTestId, queryByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -212,6 +214,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should render the failure screen on a WebView error", () => {
       const { getByTestId, getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -229,6 +232,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should render the failure screen on an HTTP error", () => {
       const { getByTestId, getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -254,6 +258,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -269,6 +274,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should call onAuthenticationUrlReceived when the URL is an authentication URL", () => {
       const { getByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -285,6 +291,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should render the failure screen on a failed login URL", () => {
       const { getByTestId, getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -309,6 +316,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -325,6 +333,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -341,6 +350,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );

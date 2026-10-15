@@ -1,6 +1,6 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-import { LoginType } from "../../features/authentication/activeSessionLogin/screens/analytics";
+import { LoginType } from "../../features/authentication/common/utils/index";
 
 export const analyticsAuthenticationStarted = createStandardAction(
   "ANALYTICS_AUTHENTICATION_STARTED"

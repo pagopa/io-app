@@ -3725,16 +3725,6 @@
           "ISEE": "ISEE",
           "RESIDENCE": "Residence"
         },
-        "familyUnitCode": {
-          "ANPR": {
-            "description": "Ministry of the Interior",
-            "title": "Household unit"
-          },
-          "INPS": {
-            "description": "INPS",
-            "title": "INPS"
-          }
-        },
         "operator": {
           "BTW_CLOSED": "Between {{value}} and {{value2}}",
           "BTW_OPEN": "Between {{value}} and {{value2}}",

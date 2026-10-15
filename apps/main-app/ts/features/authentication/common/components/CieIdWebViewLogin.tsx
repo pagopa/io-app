@@ -9,7 +9,6 @@ import {
 
 import { useIOStore } from "../../../../store/hooks";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
-import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import { trackLoginOIConfigurationError } from "../../common/analytics";
 import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
 import { getCieIdpId, isAuthenticationUrl } from "../../login/cie/utils";
@@ -18,6 +17,7 @@ import { oneIdentityAllowedCieOriginsSelector } from "../store/selectors/remoteC
 import {
   AUTH_LEVELS,
   isOneIdentityErrorUrl,
+  LOGIN_TYPES,
   onLoginUriChanged
 } from "../utils";
 import {
@@ -25,6 +25,7 @@ import {
   isAllowedUrl,
   originSchemasWhiteList
 } from "../utils/cie";
+import { LoginType } from "../utils/index";
 
 export type CieIdWebViewLoginEvent =
   | {
@@ -54,7 +55,7 @@ export type CieIdWebViewLoginProps = {
 };
 
 export const CieIdWebViewLogin = memo(
-  ({ flow = "auth", isUat, onEvent }: CieIdWebViewLoginProps) => {
+  ({ flow = LOGIN_TYPES.AUTH, isUat, onEvent }: CieIdWebViewLoginProps) => {
     const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(
       null
     );
@@ -110,6 +111,7 @@ export const CieIdWebViewLogin = memo(
 
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
+        flow,
         idpId: getCieIdpId(isUat),
         onFailure: handleFailure,
         minAuthLevel: AUTH_LEVELS.L2

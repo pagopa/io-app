@@ -9,20 +9,18 @@ import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
-import {
-  cieLoginFlowSelector,
-  isActiveSessionFastLoginEnabledSelector,
-  isActiveSessionLoginSelector
-} from "../../authentication/activeSessionLogin/store/selectors";
+import { isActiveSessionFastLoginEnabledSelector } from "../../authentication/activeSessionLogin/store/selectors";
 import { trackLoginOIConfigurationError } from "../../authentication/common/analytics";
 import { oneIdentityEnvSelector } from "../../authentication/common/store/selectors/loginConfig";
 import {
   AUTH_LEVELS,
   AuthLevel,
   isOneIdentityErrorUrl,
+  LOGIN_TYPES,
   SPID_AUTH_LEVEL_MAP
 } from "../../authentication/common/utils";
 import { createRetriableFetch } from "../../authentication/common/utils/fetch";
+import { LoginType } from "../../authentication/common/utils/index";
 import { jsonFetchToSchema } from "../../authentication/common/utils/jsonFetchToSchema";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import {
@@ -143,6 +141,8 @@ const buildWebviewSource = (
 });
 
 export type UseOneIdentityLoginSource = (params: {
+  /** The login flow this source is generated for. */
+  flow: LoginType;
   /**
    * When `true`, the `/authorize` redirects up to the IDP `SAMLRequest` are
    * followed natively via `getRedirects` (as in the legacy login flow) instead
@@ -179,6 +179,7 @@ export type UseOneIdentityLoginSource = (params: {
 
 export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   followRedirectsNatively = false,
+  flow,
   idpId,
   onFailure,
   minAuthLevel = AUTH_LEVELS.L2
@@ -189,17 +190,16 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     status: "reserving-public-key"
   });
 
-  const store = useIOStore();
   const dispatch = useIODispatch();
   const ephemeralKeyTag = useIOSelector(ephemeralKeyTagSelector);
   const maybeEphemeralPublicKey = useIOSelector(ephemeralPublicKeySelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
-  const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
-  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-  const hashedFiscalCode = useIOSelector(hashedProfileFiscalCodeSelector);
-  const isActiveSessionFastLogin = useIOSelector(
-    isActiveSessionFastLoginEnabledSelector
-  );
+  const store = useIOStore();
+  const hashedFiscalCode = hashedProfileFiscalCodeSelector(store.getState());
+  const isFastLogin =
+    flow === LOGIN_TYPES.AUTH
+      ? isFastLoginEnabledSelector(store.getState())
+      : isActiveSessionFastLoginEnabledSelector(store.getState());
   const oneIdentityEnv = useIOSelector(oneIdentityEnvSelector);
 
   const shouldBlockUrlNavigationWhileCheckingLollipop = useCallback(
@@ -282,8 +282,8 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       minAuthLevel,
       publicKey,
       DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-      isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-      isActiveSessionLogin ? hashedFiscalCode : undefined
+      isFastLogin,
+      hashedFiscalCode
     );
 
     const reservePromise = fetch(reserveUrl, {
@@ -321,8 +321,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
         const { reason, url } = redirectResult.error;
 
         if (isOneIdentityErrorUrl(url)) {
-          const loginFlow = cieLoginFlowSelector(store.getState());
-          trackLoginOIConfigurationError(url, loginFlow);
+          trackLoginOIConfigurationError(url, flow);
         }
 
         abortControllerRef.current = null;
@@ -352,12 +351,10 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     dispatch,
     oneIdentityEnv,
     minAuthLevel,
-    isActiveSessionLogin,
-    isActiveSessionFastLogin,
     isFastLogin,
     hashedFiscalCode,
     onFailure,
-    store
+    flow
   ]);
 
   useEffect(() => {

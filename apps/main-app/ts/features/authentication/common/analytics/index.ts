@@ -5,10 +5,10 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties, FlowType } from "../../../../utils/analytics";
-import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import { LoginSessionDuration } from "../../fastLogin/analytics/optinAnalytics";
 import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
 import { AuthLevel } from "../utils";
+import { LoginType } from "../utils/index";
 
 export async function loginCieWizardSelected(flow: LoginType = "auth") {
   mixpanelTrack(

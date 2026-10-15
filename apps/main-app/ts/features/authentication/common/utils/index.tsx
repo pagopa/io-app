@@ -7,12 +7,19 @@ import { apiUrlPrefix, spidRelayState } from "../../../../config";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
-import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import {
   trackSessionTokenFragmentFailure,
   trackSessionTokenSource
 } from "../analytics";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
+
+export const LOGIN_TYPES = {
+  AUTH: "auth",
+  FCI_AUTH: "FCI_auth",
+  REAUTH: "reauth"
+} as const;
+export type LoginType = (typeof LOGIN_TYPES)[keyof typeof LOGIN_TYPES];
+export type ReauthLoginType = Exclude<LoginType, typeof LOGIN_TYPES.AUTH>;
 
 export const AUTH_LEVELS = { L2: "L2", L3: "L3" } as const;
 export type AuthLevel = (typeof AUTH_LEVELS)[keyof typeof AUTH_LEVELS];

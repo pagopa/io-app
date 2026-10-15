@@ -135,6 +135,5 @@ const OneIdentityIdpLoginScreenContent = ({
     [handleLoginFailure, handleLoginSuccess, navigateToAuthErrorScreen]
   );
 
-  // TODO: Remove flow to keep IdpWebViewLogin agnostic
-  return <IdpWebViewLogin flow="auth" idp={idp} onEvent={handleEvent} />;
+  return <IdpWebViewLogin idp={idp} onEvent={handleEvent} />;
 };

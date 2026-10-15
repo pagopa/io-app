@@ -115,6 +115,10 @@ const testServices: ReadonlyArray<TestService> = [
     label: "Bonus Elettrodomestici"
   },
   {
+    serviceId: "TESTSRV22",
+    label: "Bonus Decoder"
+  },
+  {
     serviceId: "TESTSRV08",
     label: "KO - Generico",
     willFail: true
@@ -177,6 +181,11 @@ const testServices: ReadonlyArray<TestService> = [
   {
     serviceId: "TESTSRV20",
     label: "KO - Troppe richieste",
+    willFail: true
+  },
+  {
+    serviceId: "TESTSRV21",
+    label: "KO - Bonus già utilizzato",
     willFail: true
   }
 ];

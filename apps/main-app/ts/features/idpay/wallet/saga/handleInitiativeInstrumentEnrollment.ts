@@ -56,7 +56,7 @@ export function* handleInitiativeInstrumentEnrollment(
               });
             }
             // not handled error codes
-            IOToast.show(
+            IOToast.error(
               I18n.t("idpay.wallet.initiativePairing.errorToasts.enrollment")
             );
             return idpayInitiativesInstrumentEnroll.failure({
