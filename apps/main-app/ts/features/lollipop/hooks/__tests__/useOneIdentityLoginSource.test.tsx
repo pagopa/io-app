@@ -11,11 +11,16 @@ import { appReducer } from "../../../../store/reducers";
 import { SpidIdp } from "../../../../utils/idps";
 import { setOneIdentityEnv } from "../../../authentication/common/store/actions/loginConfig";
 import { ONE_IDENTITY_ENVS } from "../../../authentication/common/store/reducers/loginConfig";
-import { AUTH_LEVELS, AuthLevel } from "../../../authentication/common/utils";
+import {
+  AUTH_LEVELS,
+  AuthLevel,
+  LOGIN_TYPES
+} from "../../../authentication/common/utils";
 import {
   createRetriableFetch,
   FetchResponse
 } from "../../../authentication/common/utils/fetch";
+import { LoginType } from "../../../authentication/common/utils/index";
 import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
 import { lollipopSetEphemeralPublicKey } from "../../store/actions/lollipop";
 import { toBase64EncodedThumbprint } from "../../utils/crypto";
@@ -54,6 +59,7 @@ jest.mock("../../../authentication/fastLogin/store/selectors", () => ({
 
 const mockIdp = { id: "idp-id", name: "idp-name" } as unknown as SpidIdp;
 const reserveResponse = {
+  acr_values: "https://www.spid.gov.it/SpidL2",
   authorization_endpoint: "https://one-identity.example.com/oidc/authorize",
   client_id: "client-id",
   nonce: "nonce-value",
@@ -71,6 +77,7 @@ const successResponse = (status: number, body: unknown): FetchResponse => ({
 });
 
 interface SetupOptions {
+  flow?: LoginType;
   followRedirectsNatively?: boolean;
   minAuthLevel?: AuthLevel;
   store?: ReturnType<typeof createTestStore>;
@@ -82,6 +89,7 @@ const createTestStore = () => {
 };
 
 const setupTest = ({
+  flow = LOGIN_TYPES.AUTH,
   followRedirectsNatively,
   minAuthLevel = AUTH_LEVELS.L2,
   store = createTestStore()
@@ -91,6 +99,7 @@ const setupTest = ({
   const utils = renderHook(
     () =>
       useOneIdentityLoginSource({
+        flow,
         followRedirectsNatively,
         idpId: mockIdp.id,
         onFailure,
@@ -153,6 +162,8 @@ describe("useOneIdentityLoginSource", () => {
     expect(authorizeUrl.origin).toBe("https://one-identity.example.com");
     expect(authorizeUrl.pathname).toBe("/oidc/authorize");
     expect(authorizeUrl.query.client_id).toBe(reserveResponse.client_id);
+    expect(authorizeUrl.query.acr_values).toBe(reserveResponse.acr_values);
+    expect(authorizeUrl.query.minAuthLevel).toBeUndefined();
     expect(
       webviewSource.headers?.["x-pagopa-lollipop-assertion-ref"]
     ).toContain(toBase64EncodedThumbprint(mockPublicKey));
@@ -432,6 +443,9 @@ describe("useOneIdentityLoginSource", () => {
       expect(parsedAuthorizeUrl.pathname).toBe("/oidc/authorize");
       expect(parsedAuthorizeUrl.query.client_id).toBe(
         reserveResponse.client_id
+      );
+      expect(parsedAuthorizeUrl.query.acr_values).toBe(
+        reserveResponse.acr_values
       );
       expect(headers["x-pagopa-lollipop-assertion-ref"]).toContain(
         toBase64EncodedThumbprint(mockPublicKey)
