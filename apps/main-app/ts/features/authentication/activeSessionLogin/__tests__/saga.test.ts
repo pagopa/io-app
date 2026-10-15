@@ -1,9 +1,10 @@
 import { expectSaga, testSaga } from "redux-saga-test-plan";
-import { fork, race, select, take } from "typed-redux-saga/macro";
+import { call, fork, race, select, take } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 
 import { analyticsAuthenticationStarted } from "../../../../store/actions/analytics";
 import { startApplicationInitialization } from "../../../../store/actions/application";
+import { updateLoginFlowSuperProperty } from "../../common/analytics";
 import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
 import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
 import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
@@ -58,10 +59,12 @@ describe("handleActiveSessionLoginSaga", () => {
           select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
           AUTH_LEVEL_L2
         ],
-        [select(), mockState]
+        [select(), mockState],
+        [call(updateLoginFlowSuperProperty, mockState), undefined]
       ])
       .call(updateLoginSessionProfileAndSuperProperties, mockState, "365")
       .call(updateLoginMethodProfileAndSuperProperties, mockState, mockIdp.id)
+      .call(updateLoginFlowSuperProperty, mockState)
       .put(
         consolidateActiveSessionLoginData({
           token: mockToken,
@@ -101,6 +104,7 @@ describe("handleActiveSessionLoginSaga", () => {
       ])
       .not.call.fn(updateLoginSessionProfileAndSuperProperties)
       .not.call.fn(updateLoginMethodProfileAndSuperProperties)
+      .not.call.fn(updateLoginFlowSuperProperty)
       .not.put(
         consolidateActiveSessionLoginData({
           token: mockToken,
@@ -140,6 +144,7 @@ describe("handleActiveSessionLoginSaga", () => {
       ])
       .not.call.fn(updateLoginSessionProfileAndSuperProperties)
       .not.call.fn(updateLoginMethodProfileAndSuperProperties)
+      .not.call.fn(updateLoginFlowSuperProperty)
       .not.put(
         consolidateActiveSessionLoginData({
           token: mockToken,

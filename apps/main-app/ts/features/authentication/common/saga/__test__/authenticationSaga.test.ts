@@ -9,6 +9,7 @@ import {
 } from "../../../../../store/actions/analytics";
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
+import { GlobalState } from "../../../../../store/reducers/types";
 import * as selectors from "../../../fastLogin/store/selectors";
 import {
   stopCieManager,
@@ -21,7 +22,8 @@ import {
 import {
   trackCieIDLoginSuccess,
   trackCieLoginSuccess,
-  trackSpidLoginSuccess
+  trackSpidLoginSuccess,
+  updateLoginFlowSuperProperty
 } from "../../analytics";
 import { loginSuccess } from "../../store/actions";
 import * as storeSelectors from "../../store/selectors";
@@ -29,6 +31,7 @@ import { authenticationSaga } from "../authenticationSaga";
 import { watchTestLoginRequestSaga } from "../testLoginSaga";
 
 const aSessionToken = "mock-session-token";
+const aState = { some: "state" } as unknown as GlobalState;
 
 jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
@@ -38,7 +41,8 @@ jest.mock("../../analytics", () => ({
   trackCieLoginSuccess: jest.fn(),
   trackCieIDLoginSuccess: jest.fn(),
   trackSpidLoginSuccess: jest.fn(),
-  trackLoginFlowStarting: jest.fn()
+  trackLoginFlowStarting: jest.fn(),
+  updateLoginFlowSuperProperty: jest.fn()
 }));
 
 describe("authenticationSaga", () => {
@@ -66,6 +70,10 @@ describe("authenticationSaga", () => {
       .next()
       .next(false) // fastloginSelector
       .next({ _tag: "some" }) // idpSelector
+      .select()
+      .next(aState)
+      .call(updateLoginFlowSuperProperty, aState)
+      .next()
       .put(analyticsAuthenticationCompleted("auth"))
       .next()
       .returns(aSessionToken);
@@ -118,6 +126,11 @@ describe("authenticationSaga 2", () => {
           profileUrl: "https://fake.url"
         })
       )
+      .select()
+      .next(aState)
+      .call(updateLoginFlowSuperProperty, aState)
+      .next()
+      .put(analyticsAuthenticationCompleted("auth"))
       .next()
       .returns(aSessionToken);
 

@@ -1,5 +1,7 @@
 import * as MIXPANEL from "../../../../../mixpanel";
 import * as PROFILEPROPERTIES from "../../../../../mixpanelConfig/profileProperties";
+import * as SUPERPROPERTIES from "../../../../../mixpanelConfig/superProperties";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   trackToSWebViewError,
   trackToSWebViewErrorRetry
@@ -8,6 +10,7 @@ import {
   IdpCIE,
   IdpCIE_ID
 } from "../../../login/hooks/useNavigateToLoginMethod";
+import * as LOGIN_CONFIG_SELECTORS from "../../store/selectors/loginConfig";
 import { AUTH_LEVELS } from "../../utils";
 import {
   loginCieWizardSelected,
@@ -27,7 +30,8 @@ import {
   trackSpidLoginIdpSelection,
   trackSpidLoginSelected,
   trackSpidLoginSuccess,
-  trackTosUserExit
+  trackTosUserExit,
+  updateLoginFlowSuperProperty
 } from "../index";
 
 describe("analytics/index.ts", () => {
@@ -358,4 +362,27 @@ describe("analytics/index.ts", () => {
       }
     );
   });
+
+  it.each([
+    { name: "OneIdentity enabled", enabled: true },
+    { name: "OneIdentity disabled", enabled: false }
+  ])(
+    "updateLoginFlowSuperProperty forces LOGIN_FLOW_IS_OI ($name)",
+    async ({ enabled }) => {
+      const state = { some: "state" } as unknown as GlobalState;
+      jest
+        .spyOn(LOGIN_CONFIG_SELECTORS, "isOneIdentityLoginEnabledSelector")
+        .mockReturnValue(enabled);
+      const updateSuperPropertiesSpy = jest
+        .spyOn(SUPERPROPERTIES, "updateMixpanelSuperProperties")
+        .mockResolvedValue();
+
+      await updateLoginFlowSuperProperty(state);
+
+      expect(updateSuperPropertiesSpy).toHaveBeenCalledWith(state, {
+        property: "LOGIN_FLOW_IS_OI",
+        value: enabled
+      });
+    }
+  );
 });

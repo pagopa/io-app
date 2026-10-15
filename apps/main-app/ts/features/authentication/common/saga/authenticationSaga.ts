@@ -7,6 +7,7 @@ import {
 } from "../../../../store/actions/analytics";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
+import { GlobalState } from "../../../../store/reducers/types";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 import {
@@ -18,7 +19,8 @@ import {
   trackCieIDLoginSuccess,
   trackCieLoginSuccess,
   trackLoginFlowStarting,
-  trackSpidLoginSuccess
+  trackSpidLoginSuccess,
+  updateLoginFlowSuperProperty
 } from "../analytics";
 import { loginSuccess } from "../store/actions";
 import { idpSelector } from "../store/selectors";
@@ -72,6 +74,9 @@ export function* authenticationSaga(): Generator<ReduxSagaEffect, string> {
         );
     }
   }
+  // Update the login flow super property before completing the auth process.
+  const state: GlobalState = yield* select();
+  yield* call(updateLoginFlowSuperProperty, state);
   // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.
   // FIXME: what's the difference between AUTHENTICATION_COMPLETED and
   //        LOGIN_SUCCESS?

@@ -22,7 +22,8 @@ import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import {
   trackCieIDLoginSuccess,
   trackCieLoginSuccess,
-  trackSpidLoginSuccess
+  trackSpidLoginSuccess,
+  updateLoginFlowSuperProperty
 } from "../../common/analytics";
 import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
 import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
@@ -111,6 +112,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
       fastLoginOptIn ? "365" : "30"
     );
     yield* call(updateLoginMethodProfileAndSuperProperties, state, idp.id);
+    yield* call(updateLoginFlowSuperProperty, state);
 
     yield* put(
       consolidateActiveSessionLoginData({
