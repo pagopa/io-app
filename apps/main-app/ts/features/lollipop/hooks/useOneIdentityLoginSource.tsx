@@ -295,6 +295,10 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     const result = await jsonFetchToSchema(reservePromise, ReserveSchema);
 
     if (result.isErr()) {
+      if (controller.signal.aborted) {
+        return;
+      }
+
       abortControllerRef.current = null;
       setLoginSourceState({ status: "failure", error: result.error });
       onFailure(result.error);
