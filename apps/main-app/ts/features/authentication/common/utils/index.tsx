@@ -7,6 +7,7 @@ import { apiUrlPrefix, spidRelayState } from "../../../../config";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
+import { safeUrlParse } from "../../../../utils/url";
 import {
   trackSessionTokenFragmentFailure,
   trackSessionTokenSource
@@ -250,5 +251,8 @@ export const isOneIdentityErrorUrl = (url?: string): url is string => {
   if (!url) {
     return false;
   }
-  return url.includes(ONE_IDENTITY_ERROR_PATH);
+  return safeUrlParse(url).match(
+    ({ pathname }) => pathname.includes(ONE_IDENTITY_ERROR_PATH),
+    () => false
+  );
 };

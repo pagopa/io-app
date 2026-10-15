@@ -28,14 +28,14 @@ describe("isOneIdentityErrorUrl", () => {
       expected: true
     },
     {
-      name: "the marker inside a query",
+      name: "the error path inside a query",
       url: "https://oneid.example.com/authorize?next=/login/error",
-      expected: true
+      expected: false
     },
     {
-      name: "the marker inside a fragment",
+      name: "the error path inside a fragment",
       url: "https://oneid.example.com/authorize#/login/error",
-      expected: true
+      expected: false
     },
     {
       name: "an ordinary URL",
@@ -45,7 +45,7 @@ describe("isOneIdentityErrorUrl", () => {
     { name: "an empty input", url: "", expected: false }
   ];
 
-  it.each(scenarios)("recognizes $name", ({ url, expected }) => {
+  it.each(scenarios)("returns $expected for $name", ({ url, expected }) => {
     expect(isOneIdentityErrorUrl(url)).toBe(expected);
   });
 });
