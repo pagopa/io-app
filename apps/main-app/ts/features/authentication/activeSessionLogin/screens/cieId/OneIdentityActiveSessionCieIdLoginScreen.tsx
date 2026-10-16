@@ -18,6 +18,7 @@ import {
   LOGIN_TYPES
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
+import { CANCELLED_LOGIN_FAILURE_DATA } from "../../../common/utils/loginErrorDebugInfo";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
 import {
@@ -70,7 +71,7 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
         flow: LOGIN_TYPES.REAUTH,
         "error message": message
       });
-      navigateToAuthErrorScreen(errorCodeOrMessage);
+      navigateToAuthErrorScreen(errorCodeOrMessage, { reason });
     },
     [dispatch, navigateToAuthErrorScreen]
   );
@@ -85,10 +86,8 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
   const handleEvent = useCallback(
     (event: CieIdWebViewLoginEvent) => {
       switch (event.type) {
-        case "CANCEL":
-        case "ONE_IDENTITY_LOGIN_FAILURE":
-        case "WEBVIEW_ERROR": {
-          navigateToCieIdAuthenticationError();
+        case "CANCEL": {
+          navigateToCieIdAuthenticationError(CANCELLED_LOGIN_FAILURE_DATA);
           break;
         }
         case "LOGIN_FAILURE": {
@@ -106,6 +105,11 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
           navigateToCieIdAuthUrlError(url);
           break;
         }
+        case "ONE_IDENTITY_LOGIN_FAILURE":
+        case "WEBVIEW_ERROR": {
+          navigateToCieIdAuthenticationError(event.payload.failureData);
+          break;
+        }
         case "WEBVIEW_HTTP_ERROR": {
           const { url, statusCode } = event.payload;
 
@@ -113,7 +117,7 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
           } else if (statusCode !== 403) {
-            navigateToAuthErrorScreen();
+            navigateToAuthErrorScreen(undefined, event.payload.failureData);
           }
           break;
         }
