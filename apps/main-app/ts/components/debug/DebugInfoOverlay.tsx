@@ -6,7 +6,7 @@ import {
   useIOTheme,
   VStack
 } from "@io-app/design-system";
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const DebugInfoOverlay: FunctionComponent = () => {
+const DebugInfoOverlay = () => {
   const theme = useIOTheme();
   const appVersion = getAppVersion();
   const [showRootName, setShowRootName] = useState(true);
