@@ -106,7 +106,11 @@ describe("OneIdentityCieIdLoginScreen", () => {
     });
 
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginSuccess({ token: "session-token", idp: "cieid" })
+      loginSuccess({
+        token: "session-token",
+        idp: "cieid",
+        isOneIdentityLogin: true
+      })
     );
   });
 
