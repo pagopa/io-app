@@ -1,9 +1,9 @@
 import { testSaga } from "redux-saga-test-plan";
 
 import {
-  watchItwOfflineStatusListSaga,
-  watchItwStatusListAuthenticatedSaga,
-  watchItwStatusListSaga
+  handleItwOfflineStatusListSaga,
+  handleItwStatusListSaga,
+  watchItwStatusListAuthenticatedSaga
 } from "..";
 import {
   selectItwEnv,
@@ -29,9 +29,9 @@ describe("watchItwStatusListAuthenticatedSaga", () => {
   });
 });
 
-describe("watchItwOfflineStatusListSaga", () => {
+describe("handleItwOfflineStatusListSaga", () => {
   it("stops when Status List is unsupported", () => {
-    testSaga(watchItwOfflineStatusListSaga)
+    testSaga(handleItwOfflineStatusListSaga)
       .next()
       .select(selectItwSpecsVersion)
       .next("1.0.0")
@@ -39,7 +39,7 @@ describe("watchItwOfflineStatusListSaga", () => {
   });
 
   it("prunes the cache and applies cached Status Lists when supported", () => {
-    testSaga(watchItwOfflineStatusListSaga)
+    testSaga(handleItwOfflineStatusListSaga)
       .next()
       .select(selectItwSpecsVersion)
       .next("1.4.6")
@@ -51,9 +51,9 @@ describe("watchItwOfflineStatusListSaga", () => {
   });
 });
 
-describe("watchItwStatusListSaga", () => {
+describe("handleItwStatusListSaga", () => {
   it("stops when Status List is unsupported", () => {
-    testSaga(watchItwStatusListSaga)
+    testSaga(handleItwStatusListSaga)
       .next()
       .select(selectItwSpecsVersion)
       .next("1.0.0")
@@ -61,7 +61,7 @@ describe("watchItwStatusListSaga", () => {
   });
 
   it("refreshes stale Status Lists and applies them when supported", () => {
-    testSaga(watchItwStatusListSaga)
+    testSaga(handleItwStatusListSaga)
       .next()
       .select(selectItwSpecsVersion)
       .next("1.4.6")

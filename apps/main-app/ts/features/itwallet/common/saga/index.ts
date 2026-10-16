@@ -34,9 +34,9 @@ import {
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import {
-  watchItwOfflineStatusListSaga,
-  watchItwStatusListAuthenticatedSaga,
-  watchItwStatusListSaga
+  handleItwOfflineStatusListSaga,
+  handleItwStatusListSaga,
+  watchItwStatusListAuthenticatedSaga
 } from "../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
 import {
@@ -101,7 +101,7 @@ export function* watchItwSaga(): SagaIterator {
   // Ensure Redux and CredentialsVault are coherent
   yield* call(handleItwCredentialsVaultCoherenceSaga);
   // Apply cached Status Lists to credentials, even offline (e.g. refreshed by the background task)
-  yield* call(watchItwOfflineStatusListSaga);
+  yield* call(handleItwOfflineStatusListSaga);
   // Rehydrate wallet cards from Redux credentials store
   yield* fork(handleWalletCredentialsRehydration);
   // Clean up stale Key Attestations
@@ -117,7 +117,7 @@ export function* watchItwSaga(): SagaIterator {
   // Warmup the integrity service to ensure it's ready for subsequent operations
   yield* fork(warmUpIntegrityServiceSaga);
   // Run Status List check and refresh sagas
-  yield* call(watchItwStatusListSaga);
+  yield* call(handleItwStatusListSaga);
 }
 
 /**

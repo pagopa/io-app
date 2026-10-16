@@ -25,9 +25,9 @@ import {
   checkWalletInstanceStateSaga
 } from "../../../lifecycle/saga/checkWalletInstanceStateSaga";
 import {
-  watchItwOfflineStatusListSaga,
-  watchItwStatusListAuthenticatedSaga,
-  watchItwStatusListSaga
+  handleItwOfflineStatusListSaga,
+  handleItwStatusListSaga,
+  watchItwStatusListAuthenticatedSaga
 } from "../../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
 import { watchItwEnvironment } from "../environment";
@@ -55,7 +55,7 @@ describe("watchItwSaga", () => {
       .next()
       .call(handleItwCredentialsVaultCoherenceSaga)
       .next()
-      .call(watchItwOfflineStatusListSaga)
+      .call(handleItwOfflineStatusListSaga)
       .next()
       .fork(handleWalletCredentialsRehydration)
       .next()
@@ -69,7 +69,7 @@ describe("watchItwSaga", () => {
       .next(true)
       .fork(warmUpIntegrityServiceSaga)
       .next()
-      .call(watchItwStatusListSaga)
+      .call(handleItwStatusListSaga)
       .next()
       .isDone();
   });

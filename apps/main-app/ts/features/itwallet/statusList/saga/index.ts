@@ -20,7 +20,7 @@ import { updateCredentialsStatusSaga } from "./updateCredentialsStatusSaga";
  * Check status list coherence and update credentials status with the cached
  * Status List Tokens.
  */
-export function* watchItwOfflineStatusListSaga(): SagaIterator {
+export function* handleItwOfflineStatusListSaga(): SagaIterator {
   const itwVersion = yield* select(selectItwSpecsVersion);
   const ioWallet = getIoWallet(itwVersion);
 
@@ -35,23 +35,10 @@ export function* watchItwOfflineStatusListSaga(): SagaIterator {
 }
 
 /**
- * Saga that runs when the user is authenticated.
- *
- * Keeps the background task for Status List fetch synchronized with the active
- * wallet and registers necessary background tasks.
- */
-export function* watchItwStatusListAuthenticatedSaga(): SagaIterator {
-  // Keep the background-task specs version synchronized with eID changes
-  yield* fork(watchItwSpecsVersionStorageSaga);
-  // Register the background task for Status List fetch only for active wallet instances
-  yield* fork(registerStatusListFetchTaskSaga);
-}
-
-/**
  * Saga that runs only if device is online and triggers a refresh of stale
  * Status List Tokens.
  */
-export function* watchItwStatusListSaga(): SagaIterator {
+export function* handleItwStatusListSaga(): SagaIterator {
   const itwVersion = yield* select(selectItwSpecsVersion);
   const ioWallet = getIoWallet(itwVersion);
 
@@ -70,4 +57,17 @@ export function* watchItwStatusListSaga(): SagaIterator {
   yield* call(updateCredentialsStatusSaga, { itwVersion });
   // Register Status List super properties
   yield* call(registerStatusListProperties);
+}
+
+/**
+ * Saga that runs when the user is authenticated.
+ *
+ * Keeps the background task for Status List fetch synchronized with the active
+ * wallet and registers necessary background tasks.
+ */
+export function* watchItwStatusListAuthenticatedSaga(): SagaIterator {
+  // Keep the background-task specs version synchronized with eID changes
+  yield* fork(watchItwSpecsVersionStorageSaga);
+  // Register the background task for Status List fetch only for active wallet instances
+  yield* fork(registerStatusListFetchTaskSaga);
 }
