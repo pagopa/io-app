@@ -28,7 +28,9 @@ import {
   watchItwStatusListAuthenticatedSaga,
   watchItwStatusListSaga
 } from "../../../statusList/saga";
+import { updateCredentialsStatusSaga } from "../../../statusList/saga/updateCredentialsStatusSaga";
 import { checkFiscalCodeEnabledSaga } from "../../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
+import { selectItwSpecsVersion } from "../../store/selectors/environment";
 import { watchItwEnvironment } from "../environment";
 import { watchItwOfflineSaga } from "../offlineAccess";
 
@@ -39,9 +41,11 @@ type TakeEffect<TAction> = {
 };
 
 describe("watchItwSaga", () => {
-  it("starts offline-safe watchers and waits for connectivity before Status List checks", () => {
+  it("applies cached Status Lists before waiting for connectivity", () => {
     testSaga(watchItwSaga)
       .next()
+      .select(selectItwSpecsVersion)
+      .next("1.4.6")
       .fork(watchItwOfflineSaga)
       .next()
       .fork(watchItwEnvironment)
@@ -53,6 +57,8 @@ describe("watchItwSaga", () => {
       .call(handleItwCredentialsVaultMigrationSaga)
       .next()
       .call(handleItwCredentialsVaultCoherenceSaga)
+      .next()
+      .call(updateCredentialsStatusSaga, { itwVersion: "1.4.6" })
       .next()
       .fork(handleWalletCredentialsRehydration)
       .next()
