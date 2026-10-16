@@ -4,15 +4,19 @@ import { useIOSelector } from "../../../store/hooks";
 import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { PnStackNavigator } from "../../pn/navigation/navigator";
 import PN_ROUTES from "../../pn/navigation/routes";
+import { MessageRouterHeader } from "../components/MessageRouter/MessageRouterHeader";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageCalendarScreen } from "../screens/MessageCalendarScreen";
-import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
-import { MessageGreenPassScreen } from "../screens/MessageGreenPassScreen";
 import { MessageRouterScreen } from "../screens/MessageRouterScreen";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 
 const Stack = createStackNavigator<MessagesParamsList>();
+
+// message router defines a default header to avoid UI jump during screen changes
+const messageRouterOptions = {
+  header: () => <MessageRouterHeader />
+};
 
 export const MessagesStackNavigator = () => {
   const isPnEnabled = useIOSelector(isPnRemoteEnabledSelector);
@@ -29,24 +33,12 @@ export const MessagesStackNavigator = () => {
         <Stack.Screen
           component={MessageRouterScreen}
           name={MESSAGES_ROUTES.MESSAGE_ROUTER}
-        />
-
-        <Stack.Screen
-          component={MessageDetailsScreen}
-          name={MESSAGES_ROUTES.MESSAGE_DETAIL}
+          options={messageRouterOptions}
         />
 
         <Stack.Screen
           component={MessageAttachmentScreen}
           name={MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT}
-        />
-
-        <Stack.Screen
-          component={MessageGreenPassScreen}
-          name={MESSAGES_ROUTES.MESSAGE_GREEN_PASS}
-          options={{
-            animationEnabled: false
-          }}
         />
 
         {isPnEnabled && (

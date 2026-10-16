@@ -22,7 +22,8 @@ import { readablePrivacyReport } from "../../../utils/reporters";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
-  reloadAllMessages
+  reloadAllMessages,
+  SuccessGetMessageDataActionType
 } from "../store/actions";
 import {
   messageCountForCategorySelector,
@@ -89,6 +90,26 @@ export const trackOpenMessage = (
   });
   void mixpanelTrack(eventName, props);
 };
+
+export const trackOpenMessageFromSuccessData = (
+  data: SuccessGetMessageDataActionType,
+  fromPushNotification: boolean
+) =>
+  trackOpenMessage(
+    data.serviceId,
+    data.serviceName,
+    data.organizationName,
+    data.organizationFiscalCode,
+    data.firstTimeOpening,
+    data.containsPayment,
+    data.hasRemoteContent,
+    data.containsAttachments,
+    fromPushNotification,
+    data.hasFIMSCTA,
+    data.createdAt,
+    data.fciMessageType,
+    data.fciResult
+  );
 
 export const trackMessageNotFoundScreen = () => {
   const eventName = "MESSAGE_NOT_AVAILABLE";
