@@ -4,20 +4,22 @@ import {
   useIOTheme,
   VSpacer,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 
 type Props = WithTestID<
   Readonly<{
-    captionTitle?: string;
     captionSubtitle?: string;
+    captionTitle?: string;
   }>
 >;
 
 /**
- * A Component to display an animated spinner.
- * It can be used to display a loading spinner with optionally a caption title and subtitle.
+ * A Component to display an animated spinner. It can be used to display a
+ * loading spinner with optionally a caption title and subtitle.
+ *
  * @deprecated Use `LoadingScreenContent` component instead
  */
 const LoadingComponent = (props: Props) => {

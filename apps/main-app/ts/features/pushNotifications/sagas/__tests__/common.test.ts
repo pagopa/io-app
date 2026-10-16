@@ -1,4 +1,5 @@
 import { testSaga } from "redux-saga-test-plan";
+
 import NavigationService from "../../../../navigation/NavigationService";
 import { maybeHandlePendingBackgroundActions } from "../../../../sagas/backgroundActions";
 import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";

@@ -1,12 +1,13 @@
 import {
+  hexToRgba,
   HStack,
-  IOColors,
-  IOText,
   Icon,
-  hexToRgba
-} from "@pagopa/io-app-design-system";
+  IOColors,
+  IOText
+} from "@io-app/design-system";
 import _ from "lodash";
 import { Pressable, StyleSheet } from "react-native";
+
 import { useIOSelector } from "../../store/hooks";
 import { debugDataSelector } from "../../store/reducers/debug";
 
@@ -24,22 +25,22 @@ export const DebugDataIndicator = (props: DebugDataIndicatorProps) => {
 
   return (
     <Pressable
-      style={styles.wrapper}
-      accessibilityRole="button"
       accessibilityHint={"Opend the debug data"}
+      accessibilityRole="button"
       onPress={props.onPress}
+      style={styles.wrapper}
     >
       <HStack space={4} style={{ alignItems: "center" }}>
-        <Icon name="ladybug" size={16} color="warning-850" />
+        <Icon color="warning-850" name="ladybug" size={16} />
         <IOText
-          size={14}
-          font={"TitilliumSansPro"}
-          weight={"Semibold"}
           color="warning-850"
+          font={"TitilliumSansPro"}
+          size={14}
           style={{
             letterSpacing: 0.2,
             textTransform: "uppercase"
           }}
+          weight={"Semibold"}
         >
           {dataSize}
         </IOText>

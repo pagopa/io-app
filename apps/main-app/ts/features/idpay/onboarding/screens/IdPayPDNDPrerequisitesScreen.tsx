@@ -1,31 +1,47 @@
-import {
-  IOMarkdownLite,
-  ModuleSummary,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
+import { CodeEnum } from "@io-app/api-types/generated/definitions/idpay/AutomatedCriteriaDTO";
+import { IOMarkdownLite, ModuleSummary, VSpacer } from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Fragment, useState } from "react";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackIDPayOnboardingPDNDAcceptance } from "../analytics";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
-  familyUnitCompositionCriteriaSelector,
+  informativeCriteriaSelector,
   pdndCriteriaSelector,
   selectInitiative
 } from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
+
+const getPDNDCriteriaCodeLabel = (code: CodeEnum): string => {
+  switch (code) {
+    case CodeEnum.BIRTHDAY:
+      return I18n.t("idpay.onboarding.PDNDPrerequisites.code.BIRTHDAY");
+    case CodeEnum.FAMILY_UNIT:
+      return I18n.t("idpay.onboarding.PDNDPrerequisites.code.FAMILY_UNIT");
+    case CodeEnum.ISEE:
+      return I18n.t("idpay.onboarding.PDNDPrerequisites.code.ISEE");
+    case CodeEnum.RESIDENCE:
+      return I18n.t("idpay.onboarding.PDNDPrerequisites.code.RESIDENCE");
+  }
+};
 
 const IdPayPDNDPrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
   const [authority, setAuthority] = useState<string | undefined>();
+  // Holds the free-text "value" of an "informative" self-declaration
+  // criteria (BE-provided), shown as-is in the bottom sheet instead of
+  // the generic templated body used for automated/PDND criteria.
+  const [informativeValue, setInformativeValue] = useState<
+    string | undefined
+  >();
 
   const initiative = useSelector(selectInitiative);
 
@@ -45,20 +61,35 @@ const IdPayPDNDPrerequisitesScreen = () => {
     component: (
       <>
         <IOMarkdownLite
-          content={I18n.t(
-            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
-            {
-              provider: authority
-            }
-          )}
+          content={
+            informativeValue ??
+            I18n.t(
+              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
+              {
+                provider: authority
+              }
+            )
+          }
         />
         <VSpacer size={24} />
       </>
     )
   });
 
+  const openPdndInfoBottomSheet = (criteriaAuthority: string | undefined) => {
+    setInformativeValue(undefined);
+    setAuthority(criteriaAuthority);
+    present();
+  };
+
+  const openInformativeBottomSheet = (value: string) => {
+    setAuthority(undefined);
+    setInformativeValue(value);
+    present();
+  };
+
   const pdndCriteria = useSelector(pdndCriteriaSelector);
-  const familyUnitCriteria = useSelector(familyUnitCompositionCriteriaSelector);
+  const informativeCriteria = useSelector(informativeCriteriaSelector);
 
   const initiativeId = pipe(
     initiative,
@@ -74,15 +105,6 @@ const IdPayPDNDPrerequisitesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      topElement={<IdPayOnboardingStepper />}
-      includeContentMargins
-      title={{
-        label: I18n.t("idpay.onboarding.PDNDPrerequisites.title"),
-        section: I18n.t("idpay.onboarding.navigation.header")
-      }}
-      description={I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
-        service: initiativeName
-      })}
       actions={{
         type: "SingleButton",
         primary: {
@@ -90,48 +112,40 @@ const IdPayPDNDPrerequisitesScreen = () => {
           onPress: continueOnPress
         }
       }}
+      description={I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
+        service: initiativeName
+      })}
       goBack={goBackOnPress}
-      contextualHelp={emptyContextualHelp}
       headerActionsProp={{ showHelp: true }}
+      includeContentMargins
+      title={{
+        label: I18n.t("idpay.onboarding.PDNDPrerequisites.title"),
+        section: I18n.t("idpay.onboarding.navigation.header")
+      }}
+      topElement={<IdPayOnboardingStepper />}
     >
       {pdndCriteria?.map((criteria, index) => (
         <Fragment key={index}>
           {criteria.code && (
             <ModuleSummary
-              label={I18n.t(
-                `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
-              )}
               description={getPDNDCriteriaDescription(criteria)}
-              onPress={() => {
-                setAuthority(criteria.authority);
-                present();
-              }}
+              label={getPDNDCriteriaCodeLabel(criteria.code)}
+              onPress={() => openPdndInfoBottomSheet(criteria.authority)}
             />
           )}
           <VSpacer size={16} />
         </Fragment>
       ))}
-      {familyUnitCriteria && (
-        <>
+      {informativeCriteria?.map(criteria => (
+        <Fragment key={criteria.code}>
           <ModuleSummary
-            label={I18n.t(
-              `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.title`
-            )}
-            description={I18n.t(
-              `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.description`
-            )}
-            onPress={() => {
-              setAuthority(
-                I18n.t(
-                  `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.description`
-                )
-              );
-              present();
-            }}
+            description={criteria.organization}
+            label={criteria.description}
+            onPress={() => openInformativeBottomSheet(criteria.value)}
           />
           <VSpacer size={16} />
-        </>
-      )}
+        </Fragment>
+      ))}
       {bottomSheet}
     </IOScrollViewWithLargeHeader>
   );

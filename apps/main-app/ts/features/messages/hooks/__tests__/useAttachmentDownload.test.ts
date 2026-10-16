@@ -1,8 +1,10 @@
-import I18n from "i18next";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
-import RNFS from "react-native-fs";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
+import { File as MockFile } from "expo-file-system";
+import I18n from "i18next";
+
+import NavigationService from "../../../../navigation/NavigationService";
 import { isAarAttachmentTtlError } from "../../../pn/aar/utils/aarErrorMappings";
 import {
   trackPNAttachmentDownloadFailure,
@@ -23,12 +25,12 @@ import {
 import {
   Download,
   downloadedMessageAttachmentSelector,
-  requestedDownloadErrorSelector,
   isDownloadingMessageAttachmentSelector,
-  isRequestedAttachmentDownloadSelector
+  isRequestedAttachmentDownloadSelector,
+  requestedDownloadErrorSelector
 } from "../../store/reducers/downloads";
+import { SendFailureReason } from "../../utils";
 import { useAttachmentDownload } from "../useAttachmentDownload";
-import NavigationService from "../../../../navigation/NavigationService";
 
 // ---- Mocks ----
 
@@ -44,19 +46,27 @@ jest.mock("../../../../store/hooks", () => ({
 }));
 
 const mockErrorToast = jest.fn();
-jest.mock("@pagopa/io-app-design-system", () => ({
+jest.mock("@io-app/design-system", () => ({
   useIOToast: () => ({
     error: mockErrorToast
   })
 }));
 
-jest.mock("react-native-fs", () => ({
-  exists: jest.fn()
+jest.mock("expo-file-system", () => ({
+  File: jest.fn(),
+  Paths: { cache: { uri: "file:///cache/" } },
+  Directory: jest.fn()
 }));
+
+const mockFileInstance = (exists: boolean) =>
+  jest
+    .mocked(MockFile)
+    .mockReturnValue({ exists, delete: jest.fn(), uri: "" } as any);
 
 jest.mock("../../store/reducers/downloads");
 
 jest.mock("../../utils/attachments", () => ({
+  ...jest.requireActual("../../utils/attachments"),
   attachmentDisplayName: jest.fn(() => "test.pdf")
 }));
 
@@ -160,7 +170,7 @@ describe("useAttachmentDownload", () => {
     it("should navigate directly if download is defined and file exists on disk", async () => {
       const downloadPath = "/tmp/test.pdf";
       setupSelectors({ download: { path: downloadPath } });
-      (RNFS.exists as jest.Mock).mockResolvedValue(true);
+      mockFileInstance(true);
 
       const { result } = renderUseAttachmentDownload();
 
@@ -168,7 +178,7 @@ describe("useAttachmentDownload", () => {
         await result.current.onModuleAttachmentPress();
       });
 
-      expect(RNFS.exists).toHaveBeenCalledWith(downloadPath);
+      expect(MockFile).toHaveBeenCalledWith(`file://${downloadPath}`);
       expect(mockDispatch).toHaveBeenCalledWith(
         clearRequestedAttachmentDownload()
       );
@@ -187,10 +197,10 @@ describe("useAttachmentDownload", () => {
 
     it.each<{
       desc: string;
-      download: { path: string } | undefined;
+      download: undefined | { path: string };
+      expectedSkipMixpanel: boolean;
       sendOpeningSource: SendOpeningSource;
       sendUserType: SendUserType;
-      expectedSkipMixpanel: boolean;
     }>([
       {
         desc: "download exists but file not on disk (non-send)",
@@ -223,7 +233,7 @@ describe("useAttachmentDownload", () => {
       }) => {
         setupSelectors({ download });
         if (download) {
-          (RNFS.exists as jest.Mock).mockResolvedValue(false);
+          mockFileInstance(false);
         }
 
         const { result } = renderUseAttachmentDownload(
@@ -249,7 +259,7 @@ describe("useAttachmentDownload", () => {
     it("should navigate to PN route when it is a send attachment", async () => {
       const downloadPath = "/tmp/test.pdf";
       setupSelectors({ download: { path: downloadPath } });
-      (RNFS.exists as jest.Mock).mockResolvedValue(true);
+      mockFileInstance(true);
 
       const { result } = renderUseAttachmentDownload("message", "recipient");
 
@@ -280,7 +290,7 @@ describe("useAttachmentDownload", () => {
     it("should call onPreNavigate before navigating", async () => {
       const downloadPath = "/tmp/test.pdf";
       setupSelectors({ download: { path: downloadPath } });
-      (RNFS.exists as jest.Mock).mockResolvedValue(true);
+      mockFileInstance(true);
 
       const onPreNavigate = jest.fn();
       const { result } = renderUseAttachmentDownload(
@@ -316,7 +326,7 @@ describe("useAttachmentDownload", () => {
     });
 
     it("should prioritize download success over error when both are present", async () => {
-      (RNFS.exists as jest.Mock).mockResolvedValue(true);
+      mockFileInstance(true);
       setupSelectors({
         download: { path: "/tmp/test.pdf" },
         downloadError: new Error("should be ignored"),
@@ -352,7 +362,7 @@ describe("useAttachmentDownload", () => {
     ])(
       "should $desc after download completes",
       async ({ fileExists, shouldNavigate }) => {
-        (RNFS.exists as jest.Mock).mockResolvedValue(fileExists);
+        mockFileInstance(fileExists);
         setupSelectors({
           download: { path: "/tmp/test.pdf" },
           isRequested: true
@@ -366,6 +376,7 @@ describe("useAttachmentDownload", () => {
             clearRequestedAttachmentDownload()
           );
         });
+        expect(MockFile).toHaveBeenCalledWith("file:///tmp/test.pdf");
         if (shouldNavigate) {
           expect(mockNavigate).toHaveBeenCalled();
         } else {
@@ -377,8 +388,8 @@ describe("useAttachmentDownload", () => {
 
   describe("useEffect - download failure", () => {
     it.each<{
-      isTtlError: boolean;
       expectedToast: string;
+      isTtlError: boolean;
     }>([
       {
         isTtlError: false,
@@ -429,7 +440,8 @@ describe("useAttachmentDownload", () => {
 
         if (shouldTrack) {
           expect(trackPNAttachmentDownloadFailure).toHaveBeenCalledWith(
-            "DOCUMENT"
+            "DOCUMENT",
+            SendFailureReason.NETWORK_ERROR
           );
         } else {
           expect(trackPNAttachmentDownloadFailure).not.toHaveBeenCalled();
@@ -453,7 +465,7 @@ const baseAttachment: ThirdPartyAttachment = {
 } as unknown as ThirdPartyAttachment;
 
 const setupSelectors = (overrides?: {
-  download?: { path: string } | undefined;
+  download?: undefined | { path: string };
   downloadError?: Error | undefined;
   isFetching?: boolean;
   isRequested?: boolean;

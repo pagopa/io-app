@@ -1,24 +1,23 @@
-import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { call, put } from "typed-redux-saga/macro";
-import { PublicSession } from "../../../../../definitions/session_manager/PublicSession";
 
+import { SessionManagerClient } from "../../../../api/SessionManagerClientManager";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
+import { convertUnknownToError } from "../../../../utils/errors";
 import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
 } from "../store/actions";
 
-import { SessionManagerClient } from "../../../../api/SessionManagerClientManager";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
-import { convertUnknownToError } from "../../../../utils/errors";
-
 /**
  * Load session info from the Backend
  *
  * FIXME: this logic is common to all sagas that make requests to the backend,
- *        we should create a high order function that converts an API call into
- *        a saga.
+ * we should create a high order function that converts an API call into a
+ * saga.
  */
 export function* loadSessionInformationSaga(
   getSession: SessionManagerClient["getSessionState"],

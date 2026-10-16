@@ -3,6 +3,7 @@ import { Ref, useCallback, useRef } from "react";
 import { FlatList, NativeSyntheticEvent } from "react-native";
 import PagerView from "react-native-pager-view";
 import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
+
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { pageSize } from "../../../../config";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
@@ -15,7 +16,6 @@ import {
   shownMessageCategorySelector
 } from "../../store/reducers/allPaginated";
 import { ArchiveRestoreBar } from "./ArchiveRestoreBar";
-import { MessageList } from "./MessageList";
 import {
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadPreviousPageMessagesActionIfAllowed,
@@ -23,6 +23,7 @@ import {
   messageViewPageIndexToListCategory,
   trackMessagePageOnFocusEventIfAllowed
 } from "./homeUtils";
+import { MessageList } from "./MessageList";
 
 export const PagerViewContainer = ({ ref }: { ref?: Ref<PagerView> }) => {
   const dispatch = useIODispatch();

@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
@@ -60,8 +61,6 @@ const WrappedPaymentCard = (props: PaymentWalletCardProps) => {
   );
 };
 
-/**
- * Wrapper component which adds wallet capabilites to the PaymentCard component
- */
+/** Wrapper component which adds wallet capabilites to the PaymentCard component */
 export const PaymentWalletCard =
   withWalletCardBaseComponent(WrappedPaymentCard);

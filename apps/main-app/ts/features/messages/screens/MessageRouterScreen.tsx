@@ -1,6 +1,7 @@
 import I18n from "i18next";
 import { ReactElement, useCallback, useEffect, useRef } from "react";
-import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
+
+import { LoadingScreenContent } from "../../../components/screens/LoadingScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import {
   IOStackNavigationRouteProps,
@@ -10,6 +11,7 @@ import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import PN_ROUTES from "../../pn/navigation/routes";
 import { trackOpenMessage } from "../analytics";
+import { MessageRouterScreenErrorComponent } from "../components/MessageRouter/MessageRouterScreenErrorComponent";
 import { MessagesParamsList } from "../navigation/params";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import {
@@ -17,7 +19,6 @@ import {
   getMessageDataAction,
   SuccessGetMessageDataActionType
 } from "../store/actions";
-import { MessageRouterScreenErrorComponent } from "../components/MessageRouter/MessageRouterScreenErrorComponent";
 import {
   blockedFromPushNotificationSelector,
   messageSuccessDataSelector,
@@ -25,8 +26,8 @@ import {
 } from "../store/reducers/messageGetStatus";
 
 export type MessageRouterScreenRouteParams = {
-  messageId: string;
   fromNotification: boolean;
+  messageId: string;
 };
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -120,7 +121,6 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
 
   useEffect(() => {
     if (isFirstRendering.current) {
-      // eslint-disable-next-line functional/immutable-data
       isFirstRendering.current = false;
       getMessageDataCallback();
     } else if (messageSuccessDataOrUndefined) {
@@ -145,18 +145,18 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
   if (isLoading) {
     return (
       <LoadingScreenContent
+        headerVisible
+        subtitle={I18n.t("messageDetails.pleaseWait")}
         testID="routerScreen-loading"
         title={I18n.t("messageDetails.loadingText")}
-        subtitle={I18n.t("messageDetails.pleaseWait")}
-        headerVisible
       />
     );
   }
   return (
     <MessageRouterScreenErrorComponent
-      onRetry={getMessageDataCallback}
-      onCancel={onCancelCallback}
       messageId={messageId}
+      onCancel={onCancelCallback}
+      onRetry={getMessageDataCallback}
     />
   );
 };

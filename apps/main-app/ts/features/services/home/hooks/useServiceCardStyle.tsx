@@ -3,8 +3,8 @@ import {
   IOColors,
   useIOTheme,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
-import { ViewStyle, ColorValue } from "react-native";
+} from "@io-app/design-system";
+import { ColorValue, ViewStyle } from "react-native";
 
 type ServiceCardStyleProps = {
   default: {
@@ -24,9 +24,7 @@ type ServiceCardStyleProps = {
   skeletonColor: ColorValue;
 };
 
-/**
- * Returns the common style used for service cards
- */
+/** Returns the common style used for service cards */
 export const useServiceCardStyle = (): ServiceCardStyleProps => {
   const theme = useIOTheme();
   const { themeType } = useIOThemeContext();
@@ -34,8 +32,7 @@ export const useServiceCardStyle = (): ServiceCardStyleProps => {
   return {
     default: {
       card: {
-        borderColor:
-          themeType === "light" ? IOColors["grey-100"] : IOColors["grey-850"],
+        borderColor: IOColors[theme["cardBorder-default"]],
         backgroundColor: IOColors[theme["appBackground-secondary"]]
       },
       foreground: {

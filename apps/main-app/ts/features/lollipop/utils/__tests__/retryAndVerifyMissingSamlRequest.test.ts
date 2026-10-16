@@ -1,7 +1,9 @@
-import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
+import { getRedirects } from "@pagopa/io-react-native-login-utils";
+import { err } from "neverthrow";
+
 import { AppDispatch } from "../../../../App";
+import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
 
 const jwkPublicKey: PublicKey = {
   crv: "P-256",
@@ -21,11 +23,27 @@ jest.mock("../..", () => {
   };
 });
 jest.mock("@pagopa/io-react-native-login-utils", () => ({
-  getRedirects: jest.fn().mockResolvedValue([undefined])
+  getRedirects: jest.fn()
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
-  it("should be succeded", async () => {
+  it.each([
+    {
+      name: "no redirects are returned",
+      redirects: [],
+      expectedError: { reason: "Missing Redirects" }
+    },
+    {
+      name: "the last redirect has no SAMLRequest",
+      redirects: ["https://idp.example.com/sso"],
+      expectedError: {
+        reason: "Missing SAMLRequest parameter in URL",
+        url: "https://idp.example.com/sso"
+      }
+    }
+  ])("should fail when $name", async ({ redirects, expectedError }) => {
+    jest.mocked(getRedirects).mockResolvedValue(redirects);
+
     const result = await regenerateKeyGetRedirectsAndVerifySaml(
       "loginUri",
       "keyTag",
@@ -33,9 +51,7 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
       false,
       dispatch
     );
-    expect(E.isLeft(result)).toBeTruthy();
-    if (E.isLeft(result)) {
-      expect(result.left).toEqual(new Error("Missing SAMLRequest"));
-    }
+
+    expect(result).toEqual(err(expectedError));
   });
 });

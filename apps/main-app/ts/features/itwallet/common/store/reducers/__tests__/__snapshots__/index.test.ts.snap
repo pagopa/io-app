@@ -16,13 +16,8 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
       "kind": "PotNone",
     },
   },
-  "debug": {
-    "credentialStatusOverrides": {},
-    "savedCredentials": undefined,
-  },
   "environment": {
     "env": "prod",
-    "itWalletSpecsVersion": "1.0.0",
   },
   "identification": {
     "hasNfcFeature": {
@@ -30,26 +25,31 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
     },
   },
   "issuance": {
-    "integrityKeyTag": {
-      "_tag": "None",
-    },
+    "integrityKeyTag": undefined,
   },
   "preferences": {},
   "proximity": {
     "consents": {},
   },
+  "remoteConfig": {},
   "securePreferences": {
     "offlineAccessCounter": 0,
     "unverifiedCredentialsAccessCounter": 0,
   },
+  "ui": {
+    "activationExitSurvey": undefined,
+    "credentialExitSurvey": undefined,
+    "itwFeedbackBottomSheet": false,
+  },
   "walletInstance": {
     "attestation": undefined,
     "isRemotelyActive": undefined,
+    "keyAttestations": {},
     "renewalError": false,
     "status": {
       "kind": "PotNone",
     },
-    "walletUnitAttestations": {},
+    "statusList": undefined,
   },
 }
 `;

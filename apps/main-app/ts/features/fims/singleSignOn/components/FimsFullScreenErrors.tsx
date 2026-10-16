@@ -1,16 +1,17 @@
-import { useMemo, useCallback } from "react";
 import I18n from "i18next";
+import { useCallback, useMemo } from "react";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { fimsCancelOrAbortAction } from "../store/actions";
 import {
   fimsAuthenticationErrorTagSelector,
   fimsDebugDataSelector
 } from "../store/selectors";
-import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import { fimsCancelOrAbortAction } from "../store/actions";
 
 export const FimsSSOFullScreenError = () => {
   const dispatch = useIODispatch();

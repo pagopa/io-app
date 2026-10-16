@@ -1,5 +1,5 @@
-import { loginInfoReducer } from "../reducers";
 import { loginSuccess } from "../../../common/store/actions";
+import { loginInfoReducer } from "../reducers";
 
 describe("loginInfoReducer", () => {
   it("should return the initial state", () => {
@@ -12,7 +12,8 @@ describe("loginInfoReducer", () => {
   it("should handle loginSuccess and set userFromSuccessLogin to true", () => {
     const action = loginSuccess({
       token: "mock-token",
-      idp: "test"
+      idp: "test",
+      isOneIdentityLogin: false
     });
 
     const state = loginInfoReducer(undefined, action);

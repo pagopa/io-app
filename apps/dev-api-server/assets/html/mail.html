@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mail configuration</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        function setIsEmailValidated(value){
+            const element = document.getElementById("mailStatus");
+            $.ajax({
+                type: 'POST',
+                url: "/validate-profile-email",
+                data: JSON.stringify({value}),
+                contentType: "application/json"
+            }).done(function(data) {                                
+                element.innerHTML = `Email validated = ${value}, ${getNiceParam(data)}`
+            }).fail(function(jqXHR, textStatus, errorThrown) {                                
+                element.innerHTML = `Email validated ERROR ${textStatus}`                
+            });           
+        }
+
+        function setIsEmailAlreadyTaken(value){
+            const element = document.getElementById("mailStatus");
+            $.ajax({
+                type: 'POST',
+                url: "/set-email-already-taken",
+                data: JSON.stringify({value}),
+                contentType: "application/json"
+            }).done(function(data) {                                
+                element.innerHTML = `Email already taken = ${value}, ${getNiceParam(data)}`
+            }).fail(function(jqXHR, textStatus, errorThrown) {                                
+                element.innerHTML = `Email already taken ERROR: ${textStatus}`                
+            });          
+        }
+
+        function getNiceParam(value){
+            if(value && value.message){                
+                return value.message;
+            } else {
+                return "Standard Behavior";
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <table style="padding:16px;border: 1px solid black;margin-top:16px">
+        <tr>
+            <td>
+                <b>Mail configuration</b>
+            </td>
+        </tr>
+        <tr class="form_item">
+            <td>
+                <button onclick="setIsEmailValidated(true)">Validate email</button>
+                <button onclick="setIsEmailValidated(false)">Invalidate email</button>                
+            </td>            
+        </tr>
+        <tr class="form_item">
+            <td>
+                <button onclick="setIsEmailAlreadyTaken(true)">Set email already taken</button>
+                <button onclick="setIsEmailAlreadyTaken(false)">Set email not taken</button>                
+            </td>
+        <tr class="form_item">
+            <td>
+                <h4>Status: <span id="mailStatus">Standard Behavior</span></h4>                
+            </td>
+        </tr>        
+    </table>
+</body>
+
+</html>

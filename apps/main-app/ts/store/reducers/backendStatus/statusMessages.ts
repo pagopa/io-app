@@ -1,13 +1,13 @@
-import * as O from "fp-ts/lib/Option";
-import { getType } from "typesafe-actions";
-import { createSelector } from "reselect";
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { StatusMessage } from "@io-app/api-types/generated/definitions/content/StatusMessage";
 import { pipe } from "fp-ts/lib/function";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { Action } from "../../actions/types";
+import * as O from "fp-ts/lib/Option";
+import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+
 import { backendStatusLoadSuccess } from "../../actions/backendStatus";
+import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
-import { currentRouteSelector } from "../navigation";
-import { StatusMessage } from "../../../../definitions/content/StatusMessage";
 
 export type StatusMessagesState = O.Option<BackendStatus["statusMessages"]>;
 
@@ -30,18 +30,19 @@ const EMPTY_ARRAY: ReadonlyArray<StatusMessage> = [];
 
 // Since the return of the selector comes from an array.filter function it is important to cache the result
 // to avoid unintended rerender on components.
-export const statusMessageByRouteSelector = createSelector(
-  [statusMessagesSelector, currentRouteSelector],
-  (statusMessages, currentRoute): ReadonlyArray<StatusMessage> | undefined =>
-    pipe(
-      statusMessages,
-      O.fromNullable,
-      O.map(({ items }) => {
-        const messages = items.filter(message =>
-          message.routes.includes(currentRoute)
-        );
-        return messages.length > 0 ? messages : EMPTY_ARRAY;
-      }),
-      O.toUndefined
-    )
-);
+export const statusMessageByRouteSelector = (currentRoute: string) =>
+  createSelector(
+    [statusMessagesSelector],
+    (statusMessages): ReadonlyArray<StatusMessage> | undefined =>
+      pipe(
+        statusMessages,
+        O.fromNullable,
+        O.map(({ items }) => {
+          const messages = items.filter(message =>
+            message.routes.includes(currentRoute)
+          );
+          return messages.length > 0 ? messages : EMPTY_ARRAY;
+        }),
+        O.toUndefined
+      )
+  );

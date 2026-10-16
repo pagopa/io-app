@@ -203,7 +203,6 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -237,7 +236,6 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -271,7 +269,6 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -305,7 +302,6 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -339,7 +335,6 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -387,7 +382,6 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -421,7 +415,6 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -455,7 +448,6 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -489,7 +481,6 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -523,7 +514,6 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -557,7 +547,6 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -631,7 +620,6 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -665,7 +653,6 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -699,7 +686,6 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -733,7 +719,6 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -767,7 +752,6 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -801,7 +785,6 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -835,7 +818,6 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -869,7 +851,6 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {
@@ -903,7 +884,6 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={
         {

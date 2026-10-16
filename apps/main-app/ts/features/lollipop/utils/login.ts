@@ -1,20 +1,18 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
-import * as TE from "fp-ts/lib/TaskEither";
-import { parseStringPromise } from "xml2js";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import {
   getRedirects,
   isLoginUtilsError
 } from "@pagopa/io-react-native-login-utils";
-import URLParse from "url-parse";
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { err, ok, Result, ResultAsync } from "neverthrow";
 import pako from "pako";
-import { last } from "fp-ts/lib/Array";
+import URLParse from "url-parse";
+import { parseStringPromise, processors } from "xml2js";
+
 import { handleRegenerateEphemeralKey } from "..";
 import { AppDispatch } from "../../../App";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
-import { getLoginHeaders } from "../../authentication/common/utils/login";
+import { unknownToString } from "../../../utils/errors";
+import { getLoginHeaders } from "../../authentication/common/utils";
 import { toBase64EncodedThumbprint } from "./crypto";
 
 export const DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT = "SHA-256";
@@ -37,17 +35,21 @@ export const lollipopSamlVerify = (
       }
     );
 
-    // Convert XML to Json (in order not to include a XML Parser library)
-    parseStringPromise(xmlSamlRequest)
+    // Convert XML to JSON (in order not to include an XML Parser library).
+    // We strip XML namespace prefixes (e.g., 'samlp:' or 'saml2p:') from tag names
+    // to reliably access the 'AuthnRequest', regardless of the namespace alias.
+    parseStringPromise(xmlSamlRequest, {
+      tagNameProcessors: [processors.stripPrefix]
+    })
       .then(jsonSamlRequest => {
         // Extract the AuthnRequest from the JSON
-        const authnRequest = jsonSamlRequest["samlp:AuthnRequest"];
+        const authnRequest = jsonSamlRequest.AuthnRequest;
         // Extract the ID parameter (which may not be there, so handle the case).
         // The extracted string is in the format {HashAlgorithmName}-{HashedPublicKey}
         const responseThumbprintWithHashAlgorithm = authnRequest?.$?.ID;
         if (!responseThumbprintWithHashAlgorithm) {
           // If the request did not include the ID, treat it as a failure
-          onFailure("Missing ID parameter in samlp:AuthnRequest");
+          onFailure("Missing ID parameter in AuthnRequest");
           return;
         }
 
@@ -72,7 +74,7 @@ export const lollipopSamlVerify = (
       .catch(_ => {
         onFailure("Unable to convert saml request from xml to json");
       });
-  } catch (e) {
+  } catch {
     onFailure("Unable to decode saml request");
   }
 };
@@ -96,7 +98,13 @@ export const verifyLollipopSamlRequestTask = (
     );
   });
 
-export const regenerateKeyGetRedirectsAndVerifySaml = (
+type RedirectsResult = Result<string, { reason: string; url?: string }>;
+
+/**
+ * Generates a new ephemeral key, then follows the native redirects and verifies
+ * the SAML request bound to it.
+ */
+export const regenerateKeyGetRedirectsAndVerifySaml = async (
   loginUri: string,
   keyTag: string,
   isMixpanelEnabled: boolean | null,
@@ -104,67 +112,105 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
   dispatch: AppDispatch,
   idpId?: string,
   hashedFiscalCode?: string
-) =>
-  pipe(
-    TE.tryCatch(
-      () => handleRegenerateEphemeralKey(keyTag, isMixpanelEnabled, dispatch),
-      E.toError
-    ),
-    TE.chain(publicKey =>
-      pipe(
-        publicKey,
-        O.fromNullable,
-        O.fold(
-          () => TE.left(new Error("Missing publicKey")),
-          publicKey =>
-            pipe(
-              TE.tryCatch(
-                () => {
-                  const headers = getLoginHeaders(
-                    publicKey,
-                    DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-                    isFastLogin,
-                    idpId,
-                    hashedFiscalCode
-                  );
-                  return getRedirects(loginUri, headers, "SAMLRequest");
-                },
-                error => {
-                  if (isLoginUtilsError(error)) {
-                    return error;
-                  }
-                  return E.toError(error);
-                }
-              ),
-              TE.chainW(redirects =>
-                pipe(
-                  redirects,
-                  last,
-                  O.fold(
-                    () => TE.left(new Error("Missing Redirects")),
-                    url =>
-                      pipe(
-                        new URLParse(url, true).query.SAMLRequest,
-                        O.fromNullable,
-                        O.fold(
-                          () => TE.left(new Error("Missing SAMLRequest")),
-                          urlEncodedSamlRequest =>
-                            TE.tryCatch(
-                              () =>
-                                verifyLollipopSamlRequestTask(
-                                  url,
-                                  urlEncodedSamlRequest,
-                                  publicKey
-                                ),
-                              E.toError
-                            )
-                        )
-                      )
-                  )
-                )
-              )
-            )
-        )
-      )
-    )
-  )();
+): Promise<RedirectsResult> => {
+  const publicKey = await handleRegenerateEphemeralKey(
+    keyTag,
+    isMixpanelEnabled,
+    dispatch
+  );
+
+  if (!publicKey) {
+    return err({ reason: "Missing publicKey" });
+  }
+
+  const headers = getLoginHeaders(
+    publicKey,
+    DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
+    isFastLogin,
+    idpId,
+    hashedFiscalCode
+  );
+
+  return followNativeRedirectsAndVerifySaml(loginUri, headers, publicKey);
+};
+
+/**
+ * Builds a failure reason for the native redirects flow, including the native
+ * error details when available.
+ *
+ * @param error The error object to extract the failure message from.
+ * @returns A string describing the failure reason.
+ */
+const getNativeRedirectsFailure = (error: unknown): string => {
+  if (isLoginUtilsError(error)) {
+    return `${error.code} ${unknownToString(error.userInfo)}`;
+  }
+  return unknownToString(error);
+};
+
+/**
+ * Follows the native redirects starting from the given URL and returns the last
+ * redirect URL.
+ *
+ * @param url The URL to start following the redirects from.
+ * @param headers Headers sent with the first request only.
+ * @returns The last redirect URL wrapped in a `Result` object.
+ */
+export const getLastRedirect = async (
+  url: string,
+  headers: Record<string, string | undefined>
+) => {
+  const redirectsResult = await ResultAsync.fromPromise(
+    getRedirects(url, headers, "SAMLRequest"),
+    getNativeRedirectsFailure
+  );
+
+  if (redirectsResult.isErr()) {
+    return err(redirectsResult.error);
+  }
+
+  const lastRedirect = redirectsResult.value?.at(-1);
+  return lastRedirect ? ok(lastRedirect) : err("Missing Redirects");
+};
+
+/**
+ * Follows the native redirects starting from the given URL and verifies the
+ * SAML request.
+ *
+ * @param url The URL to start following the redirects from.
+ * @param headers Headers sent with the first request only.
+ * @param publicKey The lollipop public key the SAML request must be bound to.
+ * @returns The verified `SAMLRequest` redirect URL wrapped in a `Result`
+ *   object.
+ */
+export const followNativeRedirectsAndVerifySaml = async (
+  url: string,
+  headers: Record<string, string | undefined>,
+  publicKey: PublicKey
+): Promise<RedirectsResult> => {
+  const lastRedirectResult = await getLastRedirect(url, headers);
+
+  if (lastRedirectResult.isErr()) {
+    return err({ reason: lastRedirectResult.error });
+  }
+
+  const lastRedirectUrl = lastRedirectResult.value;
+  const { SAMLRequest } = new URLParse(lastRedirectUrl, true).query;
+
+  if (!SAMLRequest) {
+    return err({
+      reason: "Missing SAMLRequest parameter in URL",
+      url: lastRedirectUrl
+    });
+  }
+
+  const verifiedResult = await ResultAsync.fromPromise(
+    verifyLollipopSamlRequestTask(lastRedirectUrl, SAMLRequest, publicKey),
+    error => (error instanceof Error ? error.message : unknownToString(error))
+  );
+
+  if (verifiedResult.isErr()) {
+    return err({ reason: verifiedResult.error });
+  }
+  return ok(lastRedirectUrl);
+};

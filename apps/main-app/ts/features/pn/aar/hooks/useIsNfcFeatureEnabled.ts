@@ -1,6 +1,6 @@
-import { useCallback, useState } from "react";
 import cieSdk from "@pagopa/react-native-cie";
 import { constNull } from "fp-ts/lib/function";
+import { useCallback, useState } from "react";
 import { Platform } from "react-native";
 
 export const useIsNfcFeatureEnabled = () => {

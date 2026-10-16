@@ -1,8 +1,8 @@
 /**
- * A screen to display, by a webview, the consent to send user sensitive data
- * to backend and proceed with the onboarding process
+ * A screen to display, by a webview, the consent to send user sensitive data to
+ * backend and proceed with the onboarding process
  */
-import { Route, useRoute } from "@react-navigation/native";
+import { Route, StackActions, useRoute } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
@@ -10,20 +10,24 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
+
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../../store/hooks";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
+import { LoaderComponent } from "../../../activeSessionLogin/shared/components/LoaderComponent";
 import {
   trackLoginCieConsentDataUsageScreen,
   trackLoginCieDataSharingError
 } from "../../../common/analytics/cieAnalytics";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIODispatch } from "../../../../../store/hooks";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
-import { onLoginUriChanged } from "../../../common/utils/login";
-import { LoaderComponent } from "../../../activeSessionLogin/shared/components/LoaderComponent";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import {
+  AUTH_LEVELS,
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -48,7 +52,8 @@ const CieConsentDataUsageScreen = () => {
   const { showAlert } = useOnboardingAbortAlert();
   const navigation = useIONavigation();
   const loginSuccessDispatch = useCallback(
-    (token: string) => dispatch(loginSuccess({ token, idp: "cie" })),
+    (token: string) =>
+      dispatch(loginSuccess({ token, idp: "cie", isOneIdentityLogin: false })),
     [dispatch]
   );
 
@@ -135,14 +140,13 @@ const CieConsentDataUsageScreen = () => {
 
   useEffect(() => {
     if (hasError) {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        params: {
+      navigation.dispatch(
+        StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
           errorCodeOrMessage,
           authMethod: "CIE",
-          authLevel: "L2"
-        }
-      });
+          authLevel: AUTH_LEVELS.L3
+        })
+      );
     }
   }, [errorCodeOrMessage, hasError, navigation]);
 
@@ -151,19 +155,19 @@ const CieConsentDataUsageScreen = () => {
   }
   if (!hasError) {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
         <WebView
-          testID="webview-cie-test"
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
-          textZoom={100}
-          originWhitelist={originSchemasWhiteList}
-          source={{ uri: decodeURIComponent(cieConsentUri) }}
           javaScriptEnabled={true}
-          onShouldStartLoadWithRequest={handleShouldStartLoading}
-          renderLoading={() => <LoaderComponent />}
           onError={handleWebViewError}
           onHttpError={handleHttpError}
+          onShouldStartLoadWithRequest={handleShouldStartLoading}
+          originWhitelist={originSchemasWhiteList}
+          renderLoading={() => <LoaderComponent />}
+          source={{ uri: decodeURIComponent(cieConsentUri) }}
+          testID="webview-cie-test"
+          textZoom={100}
         />
       </SafeAreaView>
     );

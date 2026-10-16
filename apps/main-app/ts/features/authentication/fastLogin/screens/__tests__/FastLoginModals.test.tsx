@@ -1,19 +1,20 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
-import FastLoginModals from "../FastLoginModals";
+
 import * as hooks from "../../../../../store/hooks";
-import { TokenRefreshState } from "../../store/reducers/tokenRefreshReducer";
-import * as actions from "../../store/actions/tokenRefreshActions";
 import * as commonActions from "../../../common/store/actions";
 import * as refreshTokenLoadingScreen from "../../screens/RefreshTokenLoadingScreen";
+import * as actions from "../../store/actions/tokenRefreshActions";
+import { TokenRefreshState } from "../../store/reducers/tokenRefreshReducer";
+import FastLoginModals from "../FastLoginModals";
 
 const dispatchMock = jest.fn();
 
 const renderComponent = (props: {
-  tokenRefreshing: TokenRefreshState;
   isFastLoginUserInteractionNeeded: boolean;
   lifecycleValid?: boolean;
   offlineEnabled?: boolean;
+  tokenRefreshing: TokenRefreshState;
 }) => {
   jest.spyOn(hooks, "useIODispatch").mockReturnValue(dispatchMock);
   jest.spyOn(hooks, "useIOSelector").mockImplementation(selector => {

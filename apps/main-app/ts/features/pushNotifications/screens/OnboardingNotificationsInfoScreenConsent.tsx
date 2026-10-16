@@ -4,14 +4,15 @@ import {
   FooterActions,
   H2,
   H6,
-  IOVisualCostants,
   IconButton,
+  IOVisualCostants,
   ListItemInfo,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { AppState, FlatList, Platform, StyleSheet, View } from "react-native";
-import I18n from "i18next";
+
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   pushNotificationPreviewEnabledSelector,
@@ -128,18 +129,16 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener(
-      "change",
-      async nextAppState => {
-        if (nextAppState === "active") {
-          const authorizationStatus = await checkNotificationPermissions();
-
-          if (authorizationStatus) {
-            closeModalAndScreen();
-          }
-        }
+    const subscription = AppState.addEventListener("change", nextAppState => {
+      if (nextAppState !== "active") {
+        return;
       }
-    );
+      void checkNotificationPermissions().then(authorizationStatus => {
+        if (authorizationStatus) {
+          closeModalAndScreen();
+        }
+      });
+    });
     return () => {
       subscription.remove();
     };
@@ -182,21 +181,21 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
     <>
       <View style={styles.header}>
         <IconButton
-          icon="closeLarge"
+          accessibilityLabel={I18n.t("global.buttons.close")}
           color="neutral"
+          icon="closeLarge"
           onPress={goNext}
           testID="continue-btn"
-          accessibilityLabel={I18n.t("global.buttons.close")}
         />
       </View>
       <FlatList
+        contentContainerStyle={styles.listContainer}
         data={instructions}
+        ItemSeparatorComponent={() => <Divider />}
+        ListHeaderComponent={ListHeader}
         renderItem={({ item, index }) => (
           <ListItemInfo {...item} label={`${item.label} ${index + 1}`} />
         )}
-        contentContainerStyle={styles.listContainer}
-        ItemSeparatorComponent={() => <Divider />}
-        ListHeaderComponent={ListHeader}
       />
       <FooterActions
         actions={{

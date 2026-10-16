@@ -1,34 +1,32 @@
+import { Divider } from "@io-app/design-system";
 import { Fragment } from "react";
-import { Divider } from "@pagopa/io-app-design-system";
+
+import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils.ts";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
-import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
-import { ItwNestedClaimsListItem } from "./ItwNestedClaimsListItem.tsx";
 import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
+import { ItwNestedClaimsListItem } from "./ItwNestedClaimsListItem.tsx";
 
 interface ItwCredentialMultiClaimProps {
-  nestedClaims: Array<Array<ClaimDisplayFormat>>;
   claim: ClaimDisplayFormat;
-  hidden?: boolean;
-  isPreview?: boolean;
   credentialStatus?: ItwCredentialStatus;
   credentialType?: string;
+  hidden?: boolean;
+  isPreview?: boolean;
+  nestedClaims: Array<Array<ClaimDisplayFormat>>;
 }
 
-/**
- * Type for the configuration of nested credential summaries.
- */
+/** Type for the configuration of nested credential summaries. */
 type NestedCredentialSummaryConfig = {
   summaryLabelId: string;
   summaryValueId: string;
 };
 
 /**
- * Map of nested credential summary configurations.
- * This is used to define how to summarize nested credentials in the UI.
- * Each key is the type of the nested credential, and the value is an object
- * containing the IDs of the label and value to be displayed in the summary.
- * Map more types here as needed.
+ * Map of nested credential summary configurations. This is used to define how
+ * to summarize nested credentials in the UI. Each key is the type of the nested
+ * credential, and the value is an object containing the IDs of the label and
+ * value to be displayed in the summary. Map more types here as needed.
  */
 const itwNestedCredentialSummaryMap: Record<
   string,
@@ -46,9 +44,9 @@ const itwNestedCredentialSummaryMap: Record<
 
 /**
  * Given a set of claims for a single nested item and its parent's claim ID,
- * this function looks up the correct configuration and returns the
- * appropriate summary fields. If no configuration is found, it falls back
- * to searching for claims with the IDs "label" and "value".
+ * this function looks up the correct configuration and returns the appropriate
+ * summary fields. If no configuration is found, it falls back to searching for
+ * claims with the IDs "label" and "value".
  *
  * @param claimId The ID of the parent claim (e.g., "education_degrees").
  * @param singleItemClaims The array of claims for the one nested item.
@@ -83,7 +81,9 @@ export const getNestedItemSummary = (
 
 /**
  * Component to render multiple claims that are nested within a parent claim.
- * @param nestedClaims An array of arrays, where each inner array contains claims for a single nested item.
+ *
+ * @param nestedClaims An array of arrays, where each inner array contains
+ *   claims for a single nested item.
  * @param claim The parent claim that contains the nested claims.
  * @param hidden Indicates if the claim values should be hidden.
  * @param isPreview Indicates if the claims are being rendered in preview mode.
@@ -115,14 +115,14 @@ export const ItwCredentialMultiClaim = ({
             <Fragment key={`${index}_${claim.id}_${claim.label}`}>
               {index > 0 && <Divider />}
               <ItwNestedClaimsListItem
-                itemTitle={displaySummaryValue}
-                itemClaims={singleItemClaims}
-                summaryLabel={summaryLabel}
-                summaryValue={displaySummaryValue}
-                hidden={hidden}
-                isPreview={isPreview}
                 credentialStatus={credentialStatus}
                 credentialType={credentialType}
+                hidden={hidden}
+                isPreview={isPreview}
+                itemClaims={singleItemClaims}
+                itemTitle={displaySummaryValue}
+                summaryLabel={summaryLabel}
+                summaryValue={displaySummaryValue}
               />
             </Fragment>
           );
@@ -137,12 +137,12 @@ export const ItwCredentialMultiClaim = ({
           <Fragment key={`${index}_${nestedClaim.id}_${nestedClaim.label}`}>
             {index > 0 && <Divider />}
             <ItwCredentialClaim
-              key={nestedClaim.id}
               claim={nestedClaim}
-              hidden={hidden}
-              isPreview={isPreview}
               credentialStatus={credentialStatus}
               credentialType={credentialType}
+              hidden={hidden}
+              isPreview={isPreview}
+              key={nestedClaim.id}
             />
           </Fragment>
         ))}

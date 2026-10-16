@@ -1,16 +1,10 @@
-import i18n from "i18next";
+import I18n from "i18next";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { sendAarInAppDelegationUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../../utils/url";
-import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
-import { setAarFlowState } from "../../store/actions";
-import {
-  currentAarFlowStateAssistanceErrorCode,
-  currentAarFlowStateErrorDebugInfoSelector
-} from "../../store/selectors";
-import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   trackSendAarMandateCieErrorCac,
   trackSendAarMandateCieErrorClosure,
@@ -19,6 +13,13 @@ import {
   trackSendAarMandateCieErrorDetailHelp,
   trackSendAarMandateCieErrorRetry
 } from "../../analytics";
+import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
+import { setAarFlowState } from "../../store/actions";
+import {
+  currentAarFlowStateAssistanceErrorCode,
+  currentAarFlowStateErrorDebugInfoSelector
+} from "../../store/selectors";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import { useAarGenericErrorBottomSheet } from "./hooks/useAarGenericErrorBottomSheet";
 import { SendAarZendeskSecondLevelTag } from "./hooks/useAarStartSendZendeskSupport";
 
@@ -31,13 +32,9 @@ export const CieExpiredComponent = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="cardIssue"
-      testID="CieExpiredErrorComponent"
-      title={i18n.t("features.pn.aar.flow.ko.cieValidation.expired.title")}
-      subtitle={i18n.t("features.pn.aar.flow.ko.cieValidation.expired.body")}
       action={{
         testID: "CieExpiredHelpCenterButton",
-        label: i18n.t(
+        label: I18n.t(
           "features.pn.aar.flow.ko.cieValidation.expired.actions.primary"
         ),
         onPress: () => {
@@ -46,14 +43,18 @@ export const CieExpiredComponent = () => {
         },
         icon: "instruction"
       }}
+      pictogram="cardIssue"
       secondaryAction={{
         testID: "CieExpiredCloseButton",
-        label: i18n.t("global.buttons.close"),
+        label: I18n.t("global.buttons.close"),
         onPress: () => {
           trackSendAarMandateCieErrorClosure(assistanceErrorCode ?? "");
           terminateFlow();
         }
       }}
+      subtitle={I18n.t("features.pn.aar.flow.ko.cieValidation.expired.body")}
+      testID="CieExpiredErrorComponent"
+      title={I18n.t("features.pn.aar.flow.ko.cieValidation.expired.title")}
     />
   );
 };
@@ -89,23 +90,23 @@ export const UnrelatedCieComponent = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="attention"
-      testID="UnrelatedCieErrorComponent"
-      title={i18n.t("features.pn.aar.flow.ko.cieValidation.unrelated.title")}
-      subtitle={i18n.t("features.pn.aar.flow.ko.cieValidation.unrelated.body")}
       action={{
         testID: "UnrelatedCieRetryButton",
-        label: i18n.t("global.buttons.retry"),
+        label: I18n.t("global.buttons.retry"),
         onPress: handleRetry
       }}
+      pictogram="attention"
       secondaryAction={{
         testID: "UnrelatedCieCloseButton",
-        label: i18n.t("global.buttons.close"),
+        label: I18n.t("global.buttons.close"),
         onPress: () => {
           trackSendAarMandateCieErrorClosure(assistanceErrorCode);
           terminateFlow();
         }
       }}
+      subtitle={I18n.t("features.pn.aar.flow.ko.cieValidation.unrelated.body")}
+      testID="UnrelatedCieErrorComponent"
+      title={I18n.t("features.pn.aar.flow.ko.cieValidation.unrelated.title")}
     />
   );
 };
@@ -116,18 +117,18 @@ export const CieValidationExpiredTtlComponent = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="ended"
-      testID="CieValidationExpiredTtlErrorComponent"
-      title={i18n.t("features.pn.aar.flow.ko.cieValidation.expiredTtl.title")}
-      subtitle={i18n.t("features.pn.aar.flow.ko.cieValidation.expiredTtl.body")}
       action={{
         testID: "CieValidationExpiredTtlCloseButton",
-        label: i18n.t("global.buttons.close"),
+        label: I18n.t("global.buttons.close"),
         onPress: () => {
           trackSendAarMandateCieErrorClosure(assistanceErrorCode);
           terminateFlow();
         }
       }}
+      pictogram="ended"
+      subtitle={I18n.t("features.pn.aar.flow.ko.cieValidation.expiredTtl.body")}
+      testID="CieValidationExpiredTtlErrorComponent"
+      title={I18n.t("features.pn.aar.flow.ko.cieValidation.expiredTtl.title")}
     />
   );
 };
@@ -151,21 +152,18 @@ export const GenericCieValidationErrorComponent = () => {
   return (
     <>
       <OperationResultScreenContent
-        testID="GenericCieValidationErrorComponent"
-        pictogram="umbrella"
-        title={i18n.t("features.pn.aar.flow.ko.cieValidation.generic.title")}
-        subtitle={i18n.t("features.pn.aar.flow.ko.cieValidation.generic.body")}
         action={{
           testID: "GenericCieValidationErrorCloseButton",
-          label: i18n.t("global.buttons.close"),
+          label: I18n.t("global.buttons.close"),
           onPress: () => {
             trackSendAarMandateCieErrorClosure(assistanceErrorCode ?? "");
             terminateFlow();
           }
         }}
+        pictogram="umbrella"
         secondaryAction={{
           testID: "GenericCieValidationErrorSupportButton",
-          label: i18n.t(
+          label: I18n.t(
             "features.pn.aar.flow.ko.cieValidation.generic.actions.secondary"
           ),
           onPress: () => {
@@ -173,6 +171,9 @@ export const GenericCieValidationErrorComponent = () => {
             present();
           }
         }}
+        subtitle={I18n.t("features.pn.aar.flow.ko.cieValidation.generic.body")}
+        testID="GenericCieValidationErrorComponent"
+        title={I18n.t("features.pn.aar.flow.ko.cieValidation.generic.title")}
       />
       {bottomSheet}
     </>

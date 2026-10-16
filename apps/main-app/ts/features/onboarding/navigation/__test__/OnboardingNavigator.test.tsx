@@ -1,12 +1,13 @@
+import { InitialState, NavigationContainer } from "@react-navigation/native";
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
-import { NavigationContainer, InitialState } from "@react-navigation/native";
 import configureMockStore from "redux-mock-store";
-import { appReducer } from "../../../../store/reducers";
+
+import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import OnboardingNavigator from "../OnboardingNavigator";
-import ROUTES from "../../../../navigation/routes";
 
 jest.mock("react-native-background-timer", () => ({
   runBackgroundTimer: jest.fn(),

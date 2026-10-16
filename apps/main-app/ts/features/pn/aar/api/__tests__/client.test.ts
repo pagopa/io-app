@@ -1,4 +1,5 @@
-import * as sendAarClient from "../../../../../../definitions/pn/aar/client";
+import * as sendAarClient from "@io-app/api-types/generated/definitions/pn/aar/client";
+
 import { LollipopConfig } from "../../../../lollipop";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import * as lollipopFetch from "../../../../lollipop/utils/fetch";

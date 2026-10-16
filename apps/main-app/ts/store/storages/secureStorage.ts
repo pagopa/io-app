@@ -1,6 +1,7 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
 import { type SecureStorageError } from "@pagopa/io-react-native-secure-storage";
 import { type Storage } from "redux-persist";
+
 import { trackAppCaughtError } from "../../utils/analytics";
 import { unknownToString } from "../../utils/errors";
 

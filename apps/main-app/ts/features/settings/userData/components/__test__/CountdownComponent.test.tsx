@@ -1,9 +1,10 @@
 import React from "react";
 import { createStore } from "redux";
-import Countdown from "../CountdownComponent";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import Countdown from "../CountdownComponent";
 
 const mockStartTimer = jest.fn();
 const mockIsRunning = jest.fn();

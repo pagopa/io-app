@@ -1,9 +1,10 @@
 import { createStore } from "redux";
-import { appReducer } from "../../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { RemoteContentBanner } from "../RemoteContentBanner";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import { RemoteContentBanner } from "../RemoteContentBanner";
 
 describe("RemoteContentBanner", () => {
   it("Should match snapshot", () => {

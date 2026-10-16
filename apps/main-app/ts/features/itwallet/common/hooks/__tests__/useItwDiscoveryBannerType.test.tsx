@@ -1,10 +1,11 @@
-import { Provider } from "react-redux";
-import configureMockStore from "redux-mock-store";
 import { render } from "@testing-library/react-native";
 import { Text } from "react-native";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { appReducer } from "../../../../../store/reducers";
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
 import * as itwWalletInstanceSelectors from "../../../walletInstance/store/selectors";
 import { useItwDiscoveryBannerType } from "../useItwDiscoveryBannerType";
 

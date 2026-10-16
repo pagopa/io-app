@@ -1,24 +1,27 @@
 import * as E from "fp-ts/lib/Either";
-import * as TE from "fp-ts/lib/TaskEither";
 import { constNull, pipe } from "fp-ts/lib/function";
+import * as TE from "fp-ts/lib/TaskEither";
+import { err, ok } from "neverthrow";
 import { ImageURISource, Linking } from "react-native";
+import URLParse from "url-parse";
+
 import { storeUrl, webStoreURL } from "./appVersion";
 import { clipboardSetStringWithFeedback } from "./clipboard";
+import { unknownToString } from "./errors";
 import { openMaps } from "./openMaps";
 import { splitAndTakeFirst } from "./strings";
 
-/**
- * Generic utilities for url parsing
- */
+/** Generic utilities for url parsing */
 
 /**
  * Return the base name of a remote resource from a give path
- * @param resourceUrl the remote resource url
- * @param includeExt if true include the extension part of the resource
+ *
+ * @param resourceUrl The remote resource url
+ * @param includeExt If true include the extension part of the resource
  */
 export function getResourceNameFromUrl(
   resourceUrl: string,
-  includeExt: boolean = false
+  includeExt = false
 ): string {
   const splitted = resourceUrl.split("/");
   const resourceName = splitted[splitted.length - 1].toLowerCase();
@@ -26,7 +29,8 @@ export function getResourceNameFromUrl(
 }
 
 /**
- * from a given url return the base path excluding query string and fragments
+ * From a given url return the base path excluding query string and fragments
+ *
  * @param url
  */
 export const getUrlBasepath = (url: string): string => {
@@ -46,12 +50,13 @@ export const getUrlBasepath = (url: string): string => {
   );
 };
 
-export type ItemAction = "MAP" | "COPY" | "LINK";
+export type ItemAction = "COPY" | "LINK" | "MAP";
 /**
  * Return the function to:
- * - copy the value, if valueType is COPY
- * - navigate to the map, if valueType is MAP
- * - navigate to a browser, if valueType is LINK
+ *
+ * - Copy the value, if valueType is COPY
+ * - Navigate to the map, if valueType is MAP
+ * - Navigate to a browser, if valueType is LINK
  */
 export function handleItemOnPress(
   value: string,
@@ -60,12 +65,12 @@ export function handleItemOnPress(
   onError: () => void = constNull
 ): () => void {
   switch (valueType) {
-    case "MAP":
-      return () => openMaps(value);
     case "COPY":
       return () => clipboardSetStringWithFeedback(value);
+    case "MAP":
+      return () => openMaps(value);
     default:
-      return () => Linking.openURL(value).then(onSuccess).catch(onError);
+      return () => void Linking.openURL(value).then(onSuccess).catch(onError);
   }
 }
 
@@ -95,8 +100,9 @@ const taskCanOpenUrl = (url: string) =>
   );
 
 /**
- * open the web url if it can ben opened and if it has a valid protocol (http/https)
- * it should be used in place of direct call of Linking.openURL(url) with web urls
+ * Open the web url if it can ben opened and if it has a valid protocol
+ * (http/https) it should be used in place of direct call of
+ * Linking.openURL(url) with web urls
  */
 export const openWebUrl = (url: string, onError: () => void = constNull) => {
   pipe(
@@ -108,14 +114,16 @@ export const openWebUrl = (url: string, onError: () => void = constNull) => {
 export const openAppStoreUrl = async (onError: () => void = constNull) => {
   try {
     await Linking.openURL(storeUrl);
-  } catch (e) {
+  } catch {
     openWebUrl(webStoreURL, onError);
   }
 };
 
 /**
- * Escape characters with special meaning either inside or outside character sets.
- * Use a simple backslash escape when it’s always valid, and a `\xnn` escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
+ * Escape characters with special meaning either inside or outside character
+ * sets. Use a simple backslash escape when it’s always valid, and a `\xnn`
+ * escape when the simpler form would be disallowed by Unicode patterns’
+ * stricter grammar.
  */
 export function escapeStringRegexp(string: string) {
   if (typeof string !== "string") {
@@ -127,9 +135,10 @@ export function escapeStringRegexp(string: string) {
 
 /**
  * Extract the path from a given url if it matches one of the given prefixes
- * @param prefixes  the prefixes to match
- * @param url the url to match
- * @returns the path if the url matches one of the prefixes, undefined otherwise
+ *
+ * @param prefixes The prefixes to match
+ * @param url The url to match
+ * @returns The path if the url matches one of the prefixes, undefined otherwise
  */
 export function extractPathFromURL(
   prefixes: ReadonlyArray<string>,
@@ -161,9 +170,25 @@ export function extractPathFromURL(
 }
 
 /**
- * type guard to check if a value is an ImageURISource
- * @argument value the value to check, can be anything
- * @returns boolean
+ * Type guard to check if a value is an ImageURISource
+ *
+ * @param value The value to check, can be anything
+ * @returns Boolean
  */
 export const isImageUri = (value: unknown): value is ImageURISource =>
   typeof value === "object" && value !== null && "uri" in value;
+
+/**
+ * Parses a URL without throwing: parsing failures are returned as an `Err` with
+ * a description of the cause, so that callers can decide the fallback.
+ *
+ * @param url The URL to parse
+ * @returns The parsed URL, with the query string parsed into an object
+ */
+export const safeUrlParse = (url: string) => {
+  try {
+    return ok(new URLParse(url, true));
+  } catch (error) {
+    return err(unknownToString(error));
+  }
+};

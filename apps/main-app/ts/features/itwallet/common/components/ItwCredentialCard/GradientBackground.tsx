@@ -5,19 +5,20 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { memo, useMemo } from "react";
+
 import { CredentialCardConfig } from "./config";
 
 /**
- * Computes the Skia LinearGradient start/end vectors for a given angle
- * (CSS convention: 0° = bottom→top, 90° = left→right) and canvas dimensions.
- * The resulting line passes through the center and is long enough to cover
- * all four corners of the rectangle.
+ * Computes the Skia LinearGradient start/end vectors for a given angle (CSS
+ * convention: 0° = bottom→top, 90° = left→right) and canvas dimensions. The
+ * resulting line passes through the center and is long enough to cover all four
+ * corners of the rectangle.
  */
 export const getGradientVectors = (
   angle: number,
   width: number,
   height: number
-): { start: ReturnType<typeof vec>; end: ReturnType<typeof vec> } => {
+): { end: ReturnType<typeof vec>; start: ReturnType<typeof vec> } => {
   const rad = (angle * Math.PI) / 180;
   const dx = Math.sin(rad);
   const dy = -Math.cos(rad);
@@ -33,14 +34,14 @@ export const getGradientVectors = (
 
 type CredentialCardSkiaBackgroundProps = {
   bg: CredentialCardConfig["background"];
-  width: number;
   height: number;
+  width: number;
 };
 
 /**
- * Skia-renderable background layer for a credential card or detail header.
- * Must be rendered inside a Skia <Canvas>.
- * Memoized to avoid re-renders when dimensions and background config are stable.
+ * Skia-renderable background layer for a credential card or detail header. Must
+ * be rendered inside a Skia <Canvas>. Memoized to avoid re-renders when
+ * dimensions and background config are stable.
  */
 export const SkiaGradientBackground = memo(
   ({ bg, width, height }: CredentialCardSkiaBackgroundProps) => {
@@ -49,20 +50,20 @@ export const SkiaGradientBackground = memo(
       [bg.angle, width, height]
     );
     return (
-      <Rect x={0} y={0} width={width} height={height}>
+      <Rect height={height} width={width} x={0} y={0}>
         {bg.type === "radial" ? (
           <RadialGradient
             c={vec(width * bg.center[0], height * bg.center[1])}
-            r={width * bg.radius}
             colors={bg.colors}
             positions={bg.positions}
+            r={width * bg.radius}
           />
         ) : (
           <LinearGradient
-            start={start}
-            end={end}
             colors={bg.colors}
+            end={end}
             positions={bg.positions}
+            start={start}
           />
         )}
       </Rect>

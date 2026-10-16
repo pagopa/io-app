@@ -1,10 +1,10 @@
+import { UserDataProcessing } from "@io-app/api-types/generated/definitions/identity/UserDataProcessing";
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { UserDataProcessing } from "../../../../../../definitions/identity/UserDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
 
 export const loadUserDataProcessing = createAsyncAction(
   "LOAD_USER_DATA_PROCESSING_REQUEST",
@@ -50,8 +50,8 @@ export const resetDeleteUserDataProcessing = createStandardAction(
 )();
 
 export type UserDataProcessingActions =
-  | ActionType<typeof loadUserDataProcessing>
-  | ActionType<typeof upsertUserDataProcessing>
   | ActionType<typeof deleteUserDataProcessing>
+  | ActionType<typeof loadUserDataProcessing>
   | ActionType<typeof resetDeleteUserDataProcessing>
-  | ActionType<typeof resetUserDataProcessingRequest>;
+  | ActionType<typeof resetUserDataProcessingRequest>
+  | ActionType<typeof upsertUserDataProcessing>;

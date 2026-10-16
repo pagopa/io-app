@@ -2,7 +2,8 @@ import { useEffect, useRef } from "react";
 import { AppState, type AppStateStatus } from "react-native";
 
 /**
- * A hook that executes a callback function when the app state changes to 'active'.
+ * A hook that executes a callback function when the app state changes to
+ * 'active'.
  *
  * @param onActive - The function to call when the app becomes active.
  */
@@ -23,7 +24,6 @@ export const useAppStateActive = (onActive: () => void): void => {
         ) {
           onActive();
         }
-        // eslint-disable-next-line functional/immutable-data
         appState.current = nextAppState;
       }
     );

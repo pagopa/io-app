@@ -5,6 +5,7 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useIOSelector } from "../../store/hooks";
 import { debugDataSelector } from "../../store/reducers/debug";
 import { DebugPrettyPrint } from "./DebugPrettyPrint";
@@ -17,20 +18,20 @@ export const DebugDataOverlay = ({ onDismissed }: DebugDataOverlayProps) => {
   const debugData = useIOSelector(debugDataSelector);
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableWithoutFeedback onPress={onDismissed} accessibilityRole="none">
+      <TouchableWithoutFeedback accessibilityRole="none" onPress={onDismissed}>
         <View style={styles.overlay} />
       </TouchableWithoutFeedback>
       <ScrollView
-        style={styles.scroll}
         contentContainerStyle={styles.scrollContainer}
+        style={styles.scroll}
       >
         {Object.entries(debugData).map(([key, value]) => (
           <DebugPrettyPrint
-            key={`debug_data_${key}`}
-            title={key}
             data={value}
             expandable={true}
             isExpanded={false}
+            key={`debug_data_${key}`}
+            title={key}
           />
         ))}
       </ScrollView>

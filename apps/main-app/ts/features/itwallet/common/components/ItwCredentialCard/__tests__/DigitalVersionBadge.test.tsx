@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -44,8 +45,8 @@ describe("DigitalVersionBadge", () => {
       const component = render(
         <Provider store={store}>
           <DigitalVersionBadge
-            credentialType={credentialType}
             colorScheme={colorScheme as CardColorScheme}
+            credentialType={credentialType}
           />
         </Provider>
       ).toJSON();

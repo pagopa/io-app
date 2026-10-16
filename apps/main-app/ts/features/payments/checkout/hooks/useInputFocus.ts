@@ -1,22 +1,23 @@
-/* eslint-disable functional/immutable-data */
-import { TextInputValidationRefProps } from "@pagopa/io-app-design-system";
+import { TextInputValidationRefProps } from "@io-app/design-system";
 import { useIsFocused } from "@react-navigation/native";
 import { RefObject, useEffect, useRef } from "react";
 import { TextInput } from "react-native";
 
 /**
- * Hook to automatically focus an input when the screen becomes focused for the first time.
- * Resets when the screen loses focus, so it will focus again on subsequent visits.
- * This is designed to fix issues with autoFocus on iOS when navigating with React Navigation, especially with v7
+ * Hook to automatically focus an input when the screen becomes focused for the
+ * first time. Resets when the screen loses focus, so it will focus again on
+ * subsequent visits. This is designed to fix issues with autoFocus on iOS when
+ * navigating with React Navigation, especially with v7
  *
  * @param inputRef - Ref to the input component that may have a `focus()` method
  * @param delayMs - Optional delay before focusing (default: 500ms)
- * @param canAutoFocus - Optional flag to enable or disable autofocus (default: true)
+ * @param canAutoFocus - Optional flag to enable or disable autofocus (default:
+ *   true)
  */
 const useInputFocus = (
-  inputRef: RefObject<TextInput | TextInputValidationRefProps | null>,
-  delayMs: number = 500,
-  canAutoFocus: boolean = true
+  inputRef: RefObject<null | TextInput | TextInputValidationRefProps>,
+  delayMs = 500,
+  canAutoFocus = true
 ) => {
   const hasFocused = useRef(false);
   const isFocused = useIsFocused();

@@ -13,7 +13,7 @@ import {
   Pictogram,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
@@ -22,36 +22,33 @@ import Animated, {
   useDerivedValue,
   withSpring
 } from "react-native-reanimated";
+
 import { CircularProgress } from "../../../../components/ui/CircularProgress";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { isDevEnv } from "../../../../utils/environment";
 import { platformSelect } from "../../utils";
 
 export type CieCardReadContentProps = {
-  progress?: number;
-  title: string;
-  subtitle?: string;
+  /** @platform iOS */
+  hiddenProgressBar?: boolean;
   pictogram: IOPictograms;
   primaryAction?: Omit<IOButtonBlockSpecificProps, "variant">;
+  progress?: number;
   secondaryAction?: Omit<IOButtonLinkSpecificProps, "variant">;
-  /**
-   * @platform iOS
-   */
-  hiddenProgressBar?: boolean;
+  subtitle?: string;
+  title: string;
 };
 
-/**
- * Renders the title component title based on the platform
- */
+/** Renders the title component title based on the platform */
 const Title = ({ title }: Pick<CieCardReadContentProps, "title">) => (
   <View>
     {/* A11y live node */}
     <View
-      accessible
-      accessibilityLiveRegion="polite"
       accessibilityLabel={title}
-      style={{ position: "absolute", width: 1, height: 1, opacity: 0 }}
+      accessibilityLiveRegion="polite"
+      accessible
       importantForAccessibility="yes"
+      style={{ position: "absolute", width: 1, height: 1, opacity: 0 }}
     />
     {platformSelect({
       ios: <H4>{title}</H4>,
@@ -60,9 +57,7 @@ const Title = ({ title }: Pick<CieCardReadContentProps, "title">) => (
   </View>
 );
 
-/**
- * Renders the component subtitle based on the platform and progress
- */
+/** Renders the component subtitle based on the platform and progress */
 const Subtitle = ({ subtitle }: Pick<CieCardReadContentProps, "subtitle">) => {
   if (subtitle === undefined) {
     return null;
@@ -77,9 +72,7 @@ const Subtitle = ({ subtitle }: Pick<CieCardReadContentProps, "subtitle">) => {
   });
 };
 
-/**
- * Renders the content actions (Android) or footer actions (iOS)
- */
+/** Renders the content actions (Android) or footer actions (iOS) */
 const Actions = (
   props: Pick<CieCardReadContentProps, "primaryAction" | "secondaryAction">
 ) =>
@@ -87,7 +80,7 @@ const Actions = (
     ios: (
       <VStack space={16}>
         {props.primaryAction ? (
-          <IOButton {...props.primaryAction} variant="solid" fullWidth={true} />
+          <IOButton {...props.primaryAction} fullWidth={true} variant="solid" />
         ) : null}
         {props.secondaryAction ? (
           <View style={{ alignSelf: "center" }}>
@@ -118,7 +111,9 @@ const Actions = (
 
 /**
  * Custom progress bar for read progress visualization on iOS
+ *
  * TODO: use ProgressLoader from the DS
+ *
  * @param props.progress - Progress value from 0 to 1
  */
 const LinearProgressBar = (
@@ -152,7 +147,17 @@ const LinearProgressBar = (
 
   return (
     <View
+      accessibilityLabel={a11yLabel}
+      accessibilityRole="progressbar"
+      accessibilityValue={{
+        min: 0,
+        max: 100,
+        now: progressPercent
+      }}
+      accessible={true}
       focusable
+      importantForAccessibility="yes"
+      onLayout={e => setWidth(e.nativeEvent.layout.width)}
       /* We set a fixed height to make the component focusable on Android */
       style={{
         width: "100%",
@@ -160,16 +165,6 @@ const LinearProgressBar = (
         justifyContent: "center",
         borderRadius: 4,
         backgroundColor
-      }}
-      onLayout={e => setWidth(e.nativeEvent.layout.width)}
-      importantForAccessibility="yes"
-      accessibilityLabel={a11yLabel}
-      accessible={true}
-      accessibilityRole="progressbar"
-      accessibilityValue={{
-        min: 0,
-        max: 100,
-        now: progressPercent
       }}
     >
       <Animated.View
@@ -225,14 +220,14 @@ const ContentAndroid = (props: CieCardReadContentProps) => {
       <ContentWrapper>
         <VStack space={24}>
           <CircularProgress
-            size={240}
-            radius={120}
             progress={(props.progress || 0) * 100}
-            strokeColor={IOColors["blueIO-500"]}
+            radius={120}
+            size={240}
             strokeBgColor={IOColors["grey-200"]}
+            strokeColor={IOColors["blueIO-500"]}
             strokeWidth={4}
           >
-            <Pictogram size={180} name={props.pictogram} />
+            <Pictogram name={props.pictogram} size={180} />
           </CircularProgress>
           <VStack space={8}>
             <Title title={props.title} />
@@ -249,8 +244,8 @@ const ContentAndroid = (props: CieCardReadContentProps) => {
 };
 
 /**
- * Renders the read progress screen content based on the platform.
- * It is fully customizable via props and it is used as base component to display the
+ * Renders the read progress screen content based on the platform. It is fully
+ * customizable via props and it is used as base component to display the
  * reading, failure and success states for the CIE manager flow.
  */
 export const CieCardReadContent = platformSelect({

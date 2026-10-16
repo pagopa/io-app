@@ -1,22 +1,25 @@
-import { VoucherStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
+import { VoucherStatusEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { NetworkError } from "../../../../utils/errors";
+import { getNetworkErrorFailureReason } from "../../../../utils/failureReason";
 
 type DefaultOnboardingEventProperties = {
-  initiativeName?: string;
   initiativeId?: string;
+  initiativeName?: string;
 };
 
 const mapIDPayDetailStatusToMixpanel = (
   status?: VoucherStatusEnum
-): "valid" | "about_to_expire" | "expired" | "spent" | undefined => {
+): "about_to_expire" | "expired" | "spent" | "valid" | undefined => {
   switch (status) {
     case VoucherStatusEnum.ACTIVE:
       return "valid";
-    case VoucherStatusEnum.EXPIRING:
-      return "about_to_expire";
     case VoucherStatusEnum.EXPIRED:
       return "expired";
+    case VoucherStatusEnum.EXPIRING:
+      return "about_to_expire";
     case VoucherStatusEnum.USED:
       return "spent";
     default:
@@ -112,7 +115,7 @@ export const trackIDPayDetailManualEntryConfirm = (
 
 export const trackIDPayDetailAuthorizationSummary = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "qr_code" | "manual";
+    data_entry: "manual" | "qr_code";
   }
 ) => {
   mixpanelTrack(
@@ -123,7 +126,7 @@ export const trackIDPayDetailAuthorizationSummary = (
 
 export const trackIDPayDetailAuthorizationConversion = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "qr_code" | "manual";
+    data_entry: "manual" | "qr_code";
   }
 ) => {
   mixpanelTrack(
@@ -134,7 +137,7 @@ export const trackIDPayDetailAuthorizationConversion = (
 
 export const trackIDPayDetailAuthorizationCancel = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "qr_code" | "manual";
+    data_entry: "manual" | "qr_code";
   }
 ) => {
   mixpanelTrack(
@@ -145,7 +148,7 @@ export const trackIDPayDetailAuthorizationCancel = (
 
 export const trackIDPayDetailAuthorizationUXSuccess = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "qr_code" | "manual";
+    data_entry: "manual" | "qr_code";
   }
 ) => {
   mixpanelTrack(
@@ -156,7 +159,7 @@ export const trackIDPayDetailAuthorizationUXSuccess = (
 
 export const trackIDPayDetailAuthorizationError = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "qr_code" | "manual";
+    data_entry: "manual" | "qr_code";
     reason?: string;
   }
 ) => {
@@ -211,6 +214,22 @@ export const trackIDPayDetailCodeGenerateNew = (
     "IDPAY_CODE_EXPIRED_GENERATE_NEW",
     buildEventProperties("UX", "action", {
       ...props
+    })
+  );
+};
+
+export const trackIDPayDetailTimelineError = ({
+  error,
+  ...props
+}: {
+  error: NetworkError;
+  initiative_id: string;
+}) => {
+  mixpanelTrack(
+    "IDPAY_DETAIL_TIMELINE_ERROR",
+    buildEventProperties("KO", "screen_view", {
+      ...props,
+      reason: getNetworkErrorFailureReason(error)
     })
   );
 };

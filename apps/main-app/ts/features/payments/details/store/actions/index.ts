@@ -1,10 +1,11 @@
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { NetworkError } from "../../../../../utils/errors";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 
 export const paymentsGetMethodDetailsAction = createAsyncAction(
   "PAYMENTS_GET_METHOD_DETAILS_REQUEST",
@@ -14,9 +15,9 @@ export const paymentsGetMethodDetailsAction = createAsyncAction(
 )<{ walletId: string }, WalletInfo, NetworkError, void>();
 
 type DeleteMethodPayload = {
-  walletId: string;
-  onSuccess?: () => void;
   onFailure?: () => void;
+  onSuccess?: () => void;
+  walletId: string;
 };
 
 export const paymentsDeleteMethodAction = createAsyncAction(
@@ -27,9 +28,9 @@ export const paymentsDeleteMethodAction = createAsyncAction(
 )<DeleteMethodPayload, string, NetworkError, void>();
 
 type TogglePagoPaCapabilityPayload = {
-  walletId: string;
-  onSuccess?: () => void;
   onFailure?: () => void;
+  onSuccess?: () => void;
+  walletId: string;
 };
 
 export const paymentsTogglePagoPaCapabilityAction = createAsyncAction(
@@ -39,13 +40,16 @@ export const paymentsTogglePagoPaCapabilityAction = createAsyncAction(
   "PAYMENTS_TOGGLE_PAGOPA_CAPABILITY_CANCEL"
 )<TogglePagoPaCapabilityPayload, void, NetworkError, void>();
 
-/** This action is used to close/show the PayPal banner into a payment method details of type paypal */
+/**
+ * This action is used to close/show the PayPal banner into a payment method
+ * details of type paypal
+ */
 export const paymentsPayPalBannerSetIsClosedAction = createStandardAction(
   "PAYMENTS_PAYPAL_BANNER_SET_IS_CLOSED"
 )<boolean>();
 
 export type PaymentsMethodDetailsActions =
-  | ActionType<typeof paymentsGetMethodDetailsAction>
   | ActionType<typeof paymentsDeleteMethodAction>
-  | ActionType<typeof paymentsTogglePagoPaCapabilityAction>
-  | ActionType<typeof paymentsPayPalBannerSetIsClosedAction>;
+  | ActionType<typeof paymentsGetMethodDetailsAction>
+  | ActionType<typeof paymentsPayPalBannerSetIsClosedAction>
+  | ActionType<typeof paymentsTogglePagoPaCapabilityAction>;

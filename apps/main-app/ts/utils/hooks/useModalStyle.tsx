@@ -1,23 +1,17 @@
-import {
-  IOColors,
-  useIOTheme,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme, useIOThemeContext } from "@io-app/design-system";
 import { ColorValue, ViewStyle } from "react-native";
 
 type ModalStyleProps = {
   backdrop: {
-    opacity: number;
     backgroundColor: ColorValue;
+    opacity: number;
   };
   modal: {
     backgroundColor: ColorValue;
   };
 };
 
-/**
- * Returns the common style used for modals
- */
+/** Returns the common style used for modals */
 export const useModalStyle = (): ModalStyleProps => {
   const theme = useIOTheme();
   const { themeType } = useIOThemeContext();

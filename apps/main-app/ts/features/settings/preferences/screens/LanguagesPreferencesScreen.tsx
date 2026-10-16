@@ -6,21 +6,20 @@ import {
   useIOToast,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Alert, View } from "react-native";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { availableTranslations, Locales, setLocale } from "../../../../i18n";
 import { preferredLanguageSaveSuccess } from "../../../../store/actions/persistedPreferences";
-
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import {
   fromLocaleToPreferredLanguage,
@@ -29,16 +28,31 @@ import {
 import { profileUpsert } from "../../common/store/actions";
 import { profileSelector } from "../../common/store/selectors";
 
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.language.contextualHelpTitle",
-  body: "profile.preferences.language.contextualHelpContent"
-};
-
-/**
- * Allows the user to select one of the available Languages as preferred
- */
+/** Allows the user to select one of the available Languages as preferred */
 
 type AppLocaleId = `app-locale-${Locales}`;
+
+const getLocaleNativeName = (locale: Locales): string => {
+  switch (locale) {
+    case "de":
+      return I18n.t("localesTranslated.de");
+    case "en":
+      return I18n.t("localesTranslated.en");
+    case "it":
+      return I18n.t("localesTranslated.it");
+  }
+};
+
+const getLocaleName = (locale: Locales): string => {
+  switch (locale) {
+    case "de":
+      return I18n.t("locales.de");
+    case "en":
+      return I18n.t("locales.en");
+    case "it":
+      return I18n.t("locales.it");
+  }
+};
 
 const LanguagesPreferencesScreen = () => {
   const dispatch = useIODispatch();
@@ -82,9 +96,7 @@ const LanguagesPreferencesScreen = () => {
   const renderedItem: Array<RadioItem<string>> = useMemo(
     () =>
       availableTranslations.map(item => ({
-        value: I18n.t(`localesTranslated.${item}`, {
-          defaultValue: item
-        }),
+        value: getLocaleNativeName(item),
         id: item,
         techName: `${item}-${item.toUpperCase()}`
       })),
@@ -112,13 +124,12 @@ const LanguagesPreferencesScreen = () => {
       [
         ...new Set<Locales>([
           "it",
+          // eslint-disable-next-line perfectionist/sort-sets -- IT, EN order is intentional (pinned first)
           "en",
           ...[...availableTranslations].sort((a, b) => a.localeCompare(b))
         ])
       ].map(locale => ({
-        value: I18n.t(`localesTranslated.${locale}`, {
-          defaultValue: locale
-        }),
+        value: getLocaleNativeName(locale),
         id: `app-locale-${locale}`
       })),
     []
@@ -184,7 +195,6 @@ const LanguagesPreferencesScreen = () => {
   const onLanguageSelected = useCallback(
     (language: string) => {
       if (selectedItem !== language) {
-        // eslint-disable-next-line functional/immutable-data
         previousSelectedItem.current = selectedItem;
         setSelectedItem(language);
         upsertProfile(language as Locales);
@@ -199,7 +209,7 @@ const LanguagesPreferencesScreen = () => {
         const locale = language.replace("app-locale-", "") as Locales;
         Alert.alert(
           I18n.t("profile.preferences.list.preferred_language.alert.title", {
-            lang: I18n.t(`locales.${locale}`)
+            lang: getLocaleName(locale)
           }),
           I18n.t("profile.preferences.list.preferred_language.alert.subtitle"),
           [
@@ -222,16 +232,15 @@ const LanguagesPreferencesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      canGoback={true}
+      description={I18n.t(
+        "profile.preferences.list.preferred_language.subtitle"
+      )}
+      headerActionsProp={{ showHelp: true }}
       includeContentMargins
       title={{
         label: I18n.t("profile.preferences.list.preferred_language.title")
       }}
-      description={I18n.t(
-        "profile.preferences.list.preferred_language.subtitle"
-      )}
-      canGoback={true}
-      headerActionsProp={{ showHelp: true }}
-      contextualHelpMarkdown={contextualHelpMarkdown}
     >
       <VStack space={24}>
         <View>
@@ -250,10 +259,10 @@ const LanguagesPreferencesScreen = () => {
           <VSpacer size={8} />
 
           <RadioGroup<AppLocaleId>
-            type="radioListItem"
             items={appLocaleOptions}
-            selectedItem={selectedAppLocale}
             onPress={onAppLanguageSelected}
+            selectedItem={selectedAppLocale}
+            type="radioListItem"
           />
         </View>
 
@@ -273,10 +282,10 @@ const LanguagesPreferencesScreen = () => {
           <VSpacer size={8} />
 
           <RadioGroup<string>
-            type="radioListItem"
             items={renderedItem}
-            selectedItem={selectedItem}
             onPress={onLanguageSelected}
+            selectedItem={selectedItem}
+            type="radioListItem"
           />
         </View>
       </VStack>

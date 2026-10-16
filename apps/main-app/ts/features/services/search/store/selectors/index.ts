@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 
 export const paginatedInstitutionsPotSelector = (state: GlobalState) =>
@@ -24,7 +25,7 @@ export const isErrorPaginatedInstitutionsSelector = (state: GlobalState) =>
  * Returns the current page of the paginated institutions.
  *
  * | count | offset | limit | result |
- * |------:|-------:|------:|-------:|
+ * | ----: | -----: | ----: | -----: |
  * | 55    | 0      | 20    | 0      |
  * | 55    | 20     | 20    | 1      |
  * | 55    | 40     | 20    | 2      |

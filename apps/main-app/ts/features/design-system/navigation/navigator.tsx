@@ -1,22 +1,23 @@
 import {
-  IOColors,
   IconButton,
+  IOColors,
   makeFontStyleObject,
   useIOExperimentalDesign,
   useIOTheme,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform } from "react-native";
+
 import {
   IONavigationDarkTheme,
   IONavigationLightTheme
 } from "../../../navigation/theme";
 import { isGestureEnabled } from "../../../utils/navigation";
-import { DesignSystem } from "../DesignSystem";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAlert } from "../core/DSAlert";
+import { DSAnimatedNumericText } from "../core/DSAnimatedNumericText";
 import { DSAnimatedPictograms } from "../core/DSAnimatedPictograms";
 import { DSBadges } from "../core/DSBadges";
 import { DSBonusCardScreen } from "../core/DSBonusCardScreen";
@@ -37,19 +38,11 @@ import { DSForceScrollDownView } from "../core/DSForceScrollDownView";
 import { DSForceScrollDownViewCustomSlot } from "../core/DSForceScrollDownViewCustomSlot";
 import { DSForceScrollDownViewTitleTransition } from "../core/DSForceScrollDownViewTitleTransition";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
-import { DSNativeBottomSheet } from "../core/DSNativeBottomSheet";
-import {
-  NativeSheetFitToContents,
-  NativeSheetHalf,
-  NativeSheetLongContent,
-  NativeSheetLongContentFit,
-  NativeSheetTwoDetents
-} from "../core/DSNativeBottomSheetContent";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
-import { DSHapticFeedbackPulsar } from "../core/DSHapticFeedbackPulsar";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
+import { DSIcons } from "../core/DSIcons";
 import { DSIOListViewWithLargeHeader } from "../core/DSIOListViewWithLargeHeader";
 import { DSIOMarkdown } from "../core/DSIOMarkdown";
 import { DSIOScrollView } from "../core/DSIOScrollView";
@@ -57,7 +50,6 @@ import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredConte
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
-import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSItwBrandExploration } from "../core/DSItwBrandExploration";
 import { DSLayout } from "../core/DSLayout";
@@ -67,6 +59,14 @@ import { DSLoadingScreen } from "../core/DSLoadingScreen";
 import { DSLoadingScreenExtendedProps } from "../core/DSLoadingScreenExtendedProps";
 import { DSLogos } from "../core/DSLogos";
 import { DSModules } from "../core/DSModules";
+import { DSNativeBottomSheet } from "../core/DSNativeBottomSheet";
+import {
+  NativeSheetFitToContents,
+  NativeSheetHalf,
+  NativeSheetLongContent,
+  NativeSheetLongContentFit,
+  NativeSheetTwoDetents
+} from "../core/DSNativeBottomSheetContent";
 import { DSNumberPad } from "../core/DSNumberPad";
 import { DSOTPInput } from "../core/DSOTPInput";
 import { DSPictograms } from "../core/DSPictograms";
@@ -76,12 +76,14 @@ import { DSScreenEndMargin } from "../core/DSScreenEndMargin";
 import { DSScreenOperationResult } from "../core/DSScreenOperationResult";
 import { DSScreenOperationResultAnimated } from "../core/DSScreenOperationResultAnimated";
 import { DSSelection } from "../core/DSSelection";
+import { DSServicePreferences } from "../core/DSServicePreferences";
 import { DSStepper } from "../core/DSStepper";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
+import { DesignSystem } from "../DesignSystem";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -93,12 +95,12 @@ const RNNCloseButton = () => {
 
   return (
     <IconButton
-      icon="closeMedium"
+      accessibilityLabel={""}
       color={themeType === "dark" ? "contrast" : "neutral"}
+      icon="closeMedium"
       onPress={() => {
         navigation.goBack();
       }}
-      accessibilityLabel={""}
     />
   );
 };
@@ -144,223 +146,214 @@ export const DesignSystemNavigator = () => {
             color: IOColors[theme["textHeading-default"]]
           },
           headerTitleAlign: "center",
-          headerBackButtonDisplayMode: "minimal",
+          headerBackTitleVisible: false,
           headerShown: true,
           autoHideHomeIndicator: true
         }}
       >
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.MAIN.route}
           component={DesignSystem}
+          name={DESIGN_SYSTEM_ROUTES.MAIN.route}
           options={{
             title: DESIGN_SYSTEM_ROUTES.MAIN.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route}
           component={DSColors}
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
           component={DSTypography}
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.route}
           component={DSLayout}
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.route}
           component={DSIcons}
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.route}
           component={DSPictograms}
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.route}
           component={DSLogos}
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.route}
           component={DSLoaders}
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.route}
           component={DSHapticFeedback}
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.title
           }}
         />
 
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK_PULSAR.route}
-          component={DSHapticFeedbackPulsar}
-          options={{
-            headerTitle:
-              DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK_PULSAR.title
-          }}
-        />
-
         {/* COMPONENTS */}
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.route}
           component={DSButtons}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.route}
           component={DSSelection}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.route}
           component={DSTextFields}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.route}
           component={DSBadges}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.route}
           component={DSListItems}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.MODULES.route}
           component={DSModules}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.MODULES.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.MODULES.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.route}
           component={DSCards}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.title
           }}
         />
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.route}
           component={DSToastNotifications}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.COLLAPSIBLE.route}
           component={DSCollapsible}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.COLLAPSIBLE.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.COLLAPSIBLE.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.route}
           component={DSAlert}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.OTP_INPUT.route}
           component={DSOTPInput}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.OTP_INPUT.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.OTP_INPUT.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.STEPPER.route}
           component={DSStepper}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.STEPPER.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.STEPPER.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.route}
           component={DSAdvice}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.route}
           component={DSBottomSheet}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.route}
           component={DSTabNavigation}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.route}
           component={DSWallet}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.route}
           component={DSIOMarkdown}
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.IO_MARKDOWN.title
           }}
@@ -369,8 +362,19 @@ export const DesignSystemNavigator = () => {
         {/* EXPERIMENTAL LAB */}
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_PICTOGRAMS.route}
+          component={DSAnimatedNumericText}
+          name={
+            DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_NUMERIC_TEXT.route
+          }
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_NUMERIC_TEXT.title
+          }}
+        />
+
+        <Stack.Screen
           component={DSAnimatedPictograms}
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_PICTOGRAMS.route}
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_PICTOGRAMS.title
@@ -378,8 +382,8 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.route}
           component={DSDynamicBackground}
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.route}
           options={{
             headerShown: false,
             headerTitle:
@@ -388,10 +392,10 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
+          component={DSDynamicCardRotation}
           name={
             DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_CARD_ROTATION.route
           }
-          component={DSDynamicCardRotation}
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_CARD_ROTATION.title
@@ -399,10 +403,10 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
+          component={DSIridescentTrustmark}
           name={
             DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.route
           }
-          component={DSIridescentTrustmark}
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.title
@@ -410,10 +414,10 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
+          component={DSItwBrandExploration}
           name={
             DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION.route
           }
-          component={DSItwBrandExploration}
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION.title,
@@ -421,46 +425,55 @@ export const DesignSystemNavigator = () => {
           }}
         />
 
+        <Stack.Screen
+          component={DSServicePreferences}
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.SERVICE_PREFERENCES.route}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.SERVICE_PREFERENCES.title
+          }}
+        />
+
         {/* HEADERS */}
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
           component={DSHeaderFirstLevel}
+          name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL.route}
           component={DSHeaderSecondLevel}
+          name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL.route}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL_SECTION_TITLE.route}
           component={DSHeaderSecondLevelWithSectionTitle}
+          name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL_SECTION_TITLE.route}
         />
 
         {/* SCREENS */}
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT.route}
           component={DSScreenOperationResult}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT.route}
           options={{ headerShown: false }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT_ANIMATED.route}
           component={DSScreenOperationResultAnimated}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT_ANIMATED.route}
           options={{ headerShown: false }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.route}
           component={DSIOScrollView}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WO_ACTIONS.route}
           component={DSIOScrollViewWithoutActions}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WO_ACTIONS.route}
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WO_ACTIONS.title
@@ -468,8 +481,8 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGEHEADER.route}
           component={DSIOScrollViewScreenWithLargeHeader}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGEHEADER.route}
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGEHEADER.title
@@ -477,26 +490,26 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_CENTRED_CONTENT.route}
           component={DSIOScrollViewCentredContent}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_CENTRED_CONTENT.route}
           options={{ headerShown: true }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WITH_LIST_ITEMS.route}
           component={DSIOScrollViewWithListItems}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WITH_LIST_ITEMS.route}
           options={{ headerShown: true }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOLISTVIEW_LARGE_HEADER.route}
           component={DSIOListViewWithLargeHeader}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOLISTVIEW_LARGE_HEADER.route}
           options={{ headerShown: true }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_ACTIONS.route}
           component={DSForceScrollDownView}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_ACTIONS.route}
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_ACTIONS.title
@@ -504,10 +517,10 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
+          component={DSForceScrollDownViewCustomSlot}
           name={
             DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_CUSTOM_SLOT.route
           }
-          component={DSForceScrollDownViewCustomSlot}
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_CUSTOM_SLOT
@@ -516,11 +529,11 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
+          component={DSForceScrollDownViewTitleTransition}
           name={
             DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_TITLE_TRANSITION
               .route
           }
-          component={DSForceScrollDownViewTitleTransition}
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_TITLE_TRANSITION
@@ -529,23 +542,23 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route}
           component={DSBonusCardScreen}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN.route}
           component={DSLoadingScreen}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN.title
           }}
         />
 
         <Stack.Screen
+          component={DSLoadingScreenExtendedProps}
           name={
             DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN_EXTENDED_PROPS.route
           }
-          component={DSLoadingScreenExtendedProps}
           options={{
             headerShown: false,
             headerTitle:
@@ -554,57 +567,57 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.NUMBERPAD.route}
           component={DSNumberPad}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.NUMBERPAD.route}
           options={{ headerShown: false }}
         />
 
         {/* DEBUG */}
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA.route}
           component={DSSafeArea}
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA.route}
           options={{ headerShown: false }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA_CENTERED.route}
           component={DSSafeAreaCentered}
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA_CENTERED.route}
           options={{ headerShown: false }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
           component={DSEdgeToEdgeArea}
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
           options={{ headerShown: false }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.SCREEN_END_MARGIN.route}
           component={DSScreenEndMargin}
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.SCREEN_END_MARGIN.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.SCREEN_END_MARGIN.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS.route}
           component={DSFooterActions}
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_STICKY.route}
           component={DSFooterActionsSticky}
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_STICKY.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_STICKY.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_NOT_FIXED.route}
           component={DSFooterActionsNotFixed}
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_NOT_FIXED.route}
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_NOT_FIXED.title
@@ -612,18 +625,18 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE.route}
           component={DSFooterActionsInline}
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE.title
           }}
         />
 
         <Stack.Screen
+          component={DSFooterActionsInlineNotFixed}
           name={
             DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE_NOT_FIXED.route
           }
-          component={DSFooterActionsInlineNotFixed}
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE_NOT_FIXED.title
@@ -632,16 +645,16 @@ export const DesignSystemNavigator = () => {
 
         {/* NATIVE */}
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.NATIVE.BOTTOM_SHEET.route}
           component={DSNativeBottomSheet}
+          name={DESIGN_SYSTEM_ROUTES.NATIVE.BOTTOM_SHEET.route}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.NATIVE.BOTTOM_SHEET.title
           }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.NATIVE.FULL_SCREEN_MODAL.route}
           component={DSFullScreenModal}
+          name={DESIGN_SYSTEM_ROUTES.NATIVE.FULL_SCREEN_MODAL.route}
           options={{
             ...customModalHeaderConf,
             presentation: "pageSheet"
@@ -660,32 +673,32 @@ export const DesignSystemNavigator = () => {
           }}
         >
           <Stack.Screen
-            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.FIT_TO_CONTENTS.route}
             component={NativeSheetFitToContents}
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.FIT_TO_CONTENTS.route}
             options={{
               sheetAllowedDetents: "fitToContents",
               headerShown: false
             }}
           />
           <Stack.Screen
-            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.HALF_SCREEN.route}
             component={NativeSheetHalf}
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.HALF_SCREEN.route}
             options={{
               sheetAllowedDetents: [0.5],
               headerShown: false
             }}
           />
           <Stack.Screen
-            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.TWO_DETENTS.route}
             component={NativeSheetTwoDetents}
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.TWO_DETENTS.route}
             options={{
               sheetAllowedDetents: [0.35, 0.8],
               headerShown: false
             }}
           />
           <Stack.Screen
-            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT.route}
             component={NativeSheetLongContent}
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT.route}
             options={{
               sheetAllowedDetents: [0.5, 1.0],
               sheetGrabberVisible: true,
@@ -693,8 +706,8 @@ export const DesignSystemNavigator = () => {
             }}
           />
           <Stack.Screen
-            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT_FIT.route}
             component={NativeSheetLongContentFit}
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT_FIT.route}
             options={{
               sheetAllowedDetents: "fitToContents",
               headerShown: false

@@ -1,6 +1,7 @@
-import { Alert } from "@pagopa/io-app-design-system";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
+import { Alert } from "@io-app/design-system";
 import I18n from "i18next";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPaymentMethodExpired } from "../../common/utils";
@@ -11,8 +12,9 @@ type Props = { paymentMethod: WalletInfo };
 
 /**
  * Display the features available for a payment method:
- * - vertical initiatives (eg: cashback, fa)
- * - global settings (payment capability, favourite, etc.)
+ *
+ * - Vertical initiatives (eg: cashback, fa)
+ * - Global settings (payment capability, favourite, etc.)
  */
 const WalletDetailsPaymentMethodFeatures = ({ paymentMethod }: Props) => {
   const isMethodExpired = isPaymentMethodExpired(paymentMethod.details);
@@ -20,7 +22,7 @@ const WalletDetailsPaymentMethodFeatures = ({ paymentMethod }: Props) => {
 
   if (isMethodExpired) {
     return (
-      <Alert variant="error" content={I18n.t("wallet.methodDetails.expired")} />
+      <Alert content={I18n.t("wallet.methodDetails.expired")} variant="error" />
     );
   }
 

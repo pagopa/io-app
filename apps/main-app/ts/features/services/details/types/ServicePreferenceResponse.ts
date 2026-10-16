@@ -1,58 +1,45 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import { EnabledChannels } from "../../../../utils/profile";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
-export type ServicePreference = { settings_version: number } & EnabledChannels;
+export type ServicePreference = EnabledChannels & { settings_version: number };
 
-/**
- * Type representing service preference successfully loaded
- */
+/** Type representing all handled responses from backend */
+export type ServicePreferenceResponse = WithServiceID<
+  ServicePreferenceResponseFailure | ServicePreferenceResponseSuccess
+>;
+
+/** Type representing all failures provided by API responses */
+export type ServicePreferenceResponseFailure =
+  | ServicePreferenceConflict
+  | ServicePreferenceNotFound
+  | ServicePreferenceTooManyRequests;
+
+/** Bind the response with the id of the service */
+export type WithServiceID<T> = T & {
+  id: ServiceId;
+};
+
+/** The Service Preference has a different version on remote (409) */
+type ServicePreferenceConflict = {
+  kind: "conflictingVersion";
+};
+
+/** The required service is not found (404) */
+type ServicePreferenceNotFound = {
+  kind: "notFound";
+};
+
+/** Type representing service preference successfully loaded */
 type ServicePreferenceResponseSuccess = {
   kind: "success";
   value: ServicePreference;
 };
 
-/**
- * The required service is not found (404)
- */
-type ServicePreferenceNotFound = {
-  kind: "notFound";
-};
-
-/**
- * The Service Preference has a different version on remote (409)
- */
-type ServicePreferenceConflict = {
-  kind: "conflictingVersion";
-};
-
-/**
- * Too many requests has been sent for the Service Preference (429)
- */
+/** Too many requests has been sent for the Service Preference (429) */
 type ServicePreferenceTooManyRequests = {
   kind: "tooManyRequests";
 };
-
-/**
- * Type representing all failures provided by API responses
- */
-export type ServicePreferenceResponseFailure =
-  | ServicePreferenceNotFound
-  | ServicePreferenceConflict
-  | ServicePreferenceTooManyRequests;
-
-/**
- * Bind the response with the id of the service
- */
-export type WithServiceID<T> = T & {
-  id: ServiceId;
-};
-
-/**
- * Type representing all handled responses from backend
- */
-export type ServicePreferenceResponse = WithServiceID<
-  ServicePreferenceResponseSuccess | ServicePreferenceResponseFailure
->;
 
 export const isServicePreferenceResponseSuccess = (
   sp: ServicePreferenceResponse

@@ -1,12 +1,19 @@
-import RNFS from "react-native-fs";
-import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { Paths } from "expo-file-system";
+
 import { apiUrlPrefix } from "../../../config";
 
+// Paths.cache.uri is a file:// URI with a trailing slash; react-native-blob-util needs a plain path
 export const AttachmentsDirectoryPath =
-  RNFS.CachesDirectoryPath + "/attachments";
+  Paths.cache.uri.replace(/^file:\/\//, "").replace(/\/$/, "") + "/attachments";
+
+/** Converts a filesystem path to a file URI without adding a duplicate scheme. */
+export const toFileUri = (path: string) =>
+  path.startsWith("file://") ? path : `file://${path}`;
 
 /**
  * Builds the save path for the given attachment
+ *
  * @param attachment
  */
 export const pdfSavePath = (
@@ -47,7 +54,7 @@ export const attachmentDownloadUrl = (
 // It also prevents a retry-after that is too long for the user
 export const restrainRetryAfterIntervalInMilliseconds = (
   input: number,
-  upperBoundSeconds: number = 24
+  upperBoundSeconds = 24
 ) => {
   if (input >= 0 && input <= upperBoundSeconds) {
     return 1000 * input;

@@ -1,3 +1,5 @@
+import { InfoNotice } from "@io-app/api-types/generated/definitions/pagopa/biz-events/InfoNotice";
+import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListItem";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ResponseHeaders } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
@@ -5,8 +7,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { SectionListData } from "react-native";
-import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
-import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+
 import { OperationResultScreenContentProps } from "../../../../components/screens/OperationResultScreenContent";
 import { NetworkError } from "../../../../utils/errors";
 import { capitalizeTextName } from "../../../../utils/strings";
@@ -19,7 +20,9 @@ import { ReceiptsHeaders } from "./types";
 export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
 
 /**
- * Function that groups the transactions by month and returns an array of objects with the month as title and the transactions as data
+ * Function that groups the transactions by month and returns an array of
+ * objects with the month as title and the transactions as data
+ *
  * - The year is shown only if it's different from the current year
  */
 export const groupTransactionsByMonth = (
@@ -75,9 +78,7 @@ export const byteArrayToBase64 = (byteArray: Uint8Array): string => {
   return buffer.toString("base64");
 };
 
-/**
- * Function that returns the payer info label formatted as "name\n(taxCode)"
- */
+/** Function that returns the payer info label formatted as "name\n(taxCode)" */
 export const getPayerInfoLabel = (payer: InfoNotice["payer"]): string => {
   if (!payer) {
     return "";
@@ -92,7 +93,8 @@ export const getPayerInfoLabel = (payer: InfoNotice["payer"]): string => {
 };
 
 /**
- * Function that calculates the total amount of a transaction by summing the amount and the fee
+ * Function that calculates the total amount of a transaction by summing the
+ * amount and the fee
  */
 export const calculateTotalAmount = (
   transactionInfo?: InfoNotice
@@ -117,17 +119,24 @@ export const calculateTotalAmount = (
 };
 
 /**
- * Filters transactions by a given transaction ID and returns the filtered transactions along with indices of removed transactions.
+ * Filters transactions by a given transaction ID and returns the filtered
+ * transactions along with indices of removed transactions.
  *
  * For cart transactions:
- * - Payer carts (eventId ends with _CART_): removes all transactions with that prefix
+ *
+ * - Payer carts (eventId ends with _CART_): removes all transactions with that
+ *   prefix
  * - Debtor carts (eventId contains _CART_<id-biz>): removes only the exact match
  *
- * @param transactions - A potential array of NoticeListItem objects wrapped in a Pot, which may contain a NetworkError.
+ * @param transactions - A potential array of NoticeListItem objects wrapped in
+ *   a Pot, which may contain a NetworkError.
  * @param transactionId - The ID of the transaction to filter out.
  * @returns An object containing:
- *   - `filteredTransactions`: An array of NoticeListItem objects excluding the transaction(s) with the given ID.
- *   - `removedIndices`: Array of indices of removed transactions in the original array.
+ *
+ *   - `filteredTransactions`: An array of NoticeListItem objects excluding the
+ *     transaction(s) with the given ID.
+ *   - `removedIndices`: Array of indices of removed transactions in the original
+ *     array.
  */
 export const filterTransactionsByIdAndGetIndex = (
   transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
@@ -157,10 +166,11 @@ export const filterTransactionsByIdAndGetIndex = (
 };
 
 /**
- * Restores multiple transactions at their original indices.
- * Rebuilds the complete array by placing removed items at their original positions.
+ * Restores multiple transactions at their original indices. Rebuilds the
+ * complete array by placing removed items at their original positions.
  *
- * @param filteredTransactions - The current filtered array (without removed items).
+ * @param filteredTransactions - The current filtered array (without removed
+ *   items).
  * @param removedIndices - Array of original indices where items were removed.
  * @param removedItems - Array of items that were removed.
  * @returns The restored array with all items in their original positions.
@@ -225,16 +235,6 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
   };
 
   switch (errorCode) {
-    case DownloadReceiptOutcomeErrorEnum.GN_400_003:
-      return {
-        title: I18n.t("features.payments.transactions.receipt.error.400.title"),
-        subtitle: I18n.t(
-          "features.payments.transactions.receipt.error.400.subtitle"
-        ),
-        pictogram: "attention",
-        action: supportAction,
-        secondaryAction: closeAction
-      };
     case DownloadReceiptOutcomeErrorEnum.AT_404_001:
     case DownloadReceiptOutcomeErrorEnum.BZ_404_003:
       return {
@@ -246,12 +246,22 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
         action: closeAction,
         secondaryAction: supportAction
       };
-    case DownloadReceiptOutcomeErrorEnum.UN_500_000:
+    case DownloadReceiptOutcomeErrorEnum.GN_400_003:
+      return {
+        title: I18n.t("features.payments.transactions.receipt.error.400.title"),
+        subtitle: I18n.t(
+          "features.payments.transactions.receipt.error.400.subtitle"
+        ),
+        pictogram: "attention",
+        action: supportAction,
+        secondaryAction: closeAction
+      };
+    case DownloadReceiptOutcomeErrorEnum.FG_000_001:
     case DownloadReceiptOutcomeErrorEnum.GN_500_001:
     case DownloadReceiptOutcomeErrorEnum.GN_500_002:
     case DownloadReceiptOutcomeErrorEnum.GN_500_003:
     case DownloadReceiptOutcomeErrorEnum.GN_500_004:
-    case DownloadReceiptOutcomeErrorEnum.FG_000_001:
+    case DownloadReceiptOutcomeErrorEnum.UN_500_000:
     default:
       return {
         title: I18n.t("features.payments.transactions.receipt.error.500.title"),

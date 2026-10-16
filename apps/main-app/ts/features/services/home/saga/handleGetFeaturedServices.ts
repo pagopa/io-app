@@ -1,15 +1,17 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
+import { ServicesClient } from "../../../../api/ServicesClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { ServicesClient } from "../../../../api/ServicesClientManager";
 import { featuredServicesGet } from "../store/actions";
 
 /**
- * saga to handle the loading of featured services
+ * Saga to handle the loading of featured services
+ *
  * @param getFeaturedServices
  * @param action
  */

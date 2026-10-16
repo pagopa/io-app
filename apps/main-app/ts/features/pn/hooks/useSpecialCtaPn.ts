@@ -1,7 +1,8 @@
-import { IOToast } from "@pagopa/io-app-design-system";
-import { useCallback, useMemo } from "react";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { useCallback, useMemo } from "react";
+
 import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
@@ -19,9 +20,7 @@ import {
 import { pnActivationUpsert } from "../store/actions";
 import { isLoadingPnActivationSelector } from "../store/reducers/activation";
 
-/**
- * Hook to handle the PN activation/deactivation
- */
+/** Hook to handle the PN activation/deactivation */
 const usePnActivation = (serviceId: ServiceId) => {
   const dispatch = useIODispatch();
 
@@ -62,12 +61,12 @@ const usePnActivation = (serviceId: ServiceId) => {
 };
 
 /**
- * This hook determines and returns the appropriate primary action prop
- * for activating and deactivating the PN service.
+ * This hook determines and returns the appropriate primary action prop for
+ * activating and deactivating the PN service.
  */
 export const useSpecialCtaPn = (
   serviceId: ServiceId,
-  activate: boolean = false
+  activate = false
 ): IOScrollViewActions["primary"] | undefined => {
   const isPnEnabled = useIOSelector(isPnRemoteEnabledSelector);
   const isPnSupported = useIOSelector(isPnAppVersionSupportedSelector);

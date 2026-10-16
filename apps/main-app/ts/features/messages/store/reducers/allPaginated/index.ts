@@ -1,6 +1,15 @@
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory.ts";
+
+import type {
+  AllPaginated,
+  Collection,
+  LastRequestValues,
+  MessagePage,
+  MessagePagePot
+} from "./types.ts";
+
 import { Action } from "../../../../../store/actions/types";
 import { paymentsByRptIdSelector } from "../../../../../store/reducers/entities/payments";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -24,13 +33,6 @@ import { reduceAutomaticMessageRefreshRequest } from "./automaticMessagesRefresh
 import { reduceLoadNextPage } from "./loadNextPage.ts";
 import { reduceLoadPreviousPage } from "./loadPreviousPage.ts";
 import { reduceReloadAll } from "./reloadAll.ts";
-import type {
-  AllPaginated,
-  Collection,
-  LastRequestValues,
-  MessagePage,
-  MessagePagePot
-} from "./types.ts";
 import { reduceUpsertMessageStatusAttributes } from "./upsertMessageStatusAttributes.ts";
 const ALL_PAGINATED_INITIAL_STATE: AllPaginated = {
   archive: {
@@ -46,47 +48,45 @@ const ALL_PAGINATED_INITIAL_STATE: AllPaginated = {
   shownCategory: "INBOX"
 };
 
-/**
- * A reducer to store all messages with pagination
- */
+/** A reducer to store all messages with pagination */
 const reducer = (
   state: AllPaginated = ALL_PAGINATED_INITIAL_STATE,
   action: Action
 ): AllPaginated => {
   switch (action.type) {
-    case getType(setShownMessageCategoryAction):
-      return {
-        ...state,
-        shownCategory: action.payload
-      };
-    case getType(reloadAllMessages.request):
-    case getType(reloadAllMessages.success):
-    case getType(reloadAllMessages.failure):
-      return reduceReloadAll(state, action);
-
-    case getType(loadNextPageMessages.request):
-    case getType(loadNextPageMessages.success):
-    case getType(loadNextPageMessages.failure):
-      return reduceLoadNextPage(state, action);
-
-    case getType(loadPreviousPageMessages.request):
-    case getType(loadPreviousPageMessages.success):
-    case getType(loadPreviousPageMessages.failure):
-      return reduceLoadPreviousPage(state, action);
-
-    case getType(upsertMessageStatusAttributes.request):
-    case getType(upsertMessageStatusAttributes.success):
-    case getType(upsertMessageStatusAttributes.failure):
-      return reduceUpsertMessageStatusAttributes(state, action);
-
-    case getType(requestAutomaticMessagesRefresh):
-      return reduceAutomaticMessageRefreshRequest(state, action);
-
     case getType(clearCache):
       return {
         ...ALL_PAGINATED_INITIAL_STATE,
         shownCategory: state.shownCategory
       };
+    case getType(loadNextPageMessages.failure):
+    case getType(loadNextPageMessages.request):
+    case getType(loadNextPageMessages.success):
+      return reduceLoadNextPage(state, action);
+
+    case getType(loadPreviousPageMessages.failure):
+    case getType(loadPreviousPageMessages.request):
+    case getType(loadPreviousPageMessages.success):
+      return reduceLoadPreviousPage(state, action);
+
+    case getType(reloadAllMessages.failure):
+    case getType(reloadAllMessages.request):
+    case getType(reloadAllMessages.success):
+      return reduceReloadAll(state, action);
+
+    case getType(requestAutomaticMessagesRefresh):
+      return reduceAutomaticMessageRefreshRequest(state, action);
+    case getType(setShownMessageCategoryAction):
+      return {
+        ...state,
+        shownCategory: action.payload
+      };
+    case getType(upsertMessageStatusAttributes.failure):
+
+    case getType(upsertMessageStatusAttributes.request):
+
+    case getType(upsertMessageStatusAttributes.success):
+      return reduceUpsertMessageStatusAttributes(state, action);
 
     default:
       return state;
@@ -98,6 +98,7 @@ const reducer = (
 /**
  * True if the inbox state is loading or updating, regardless of the request
  * that triggered the load/update.
+ *
  * @param state
  */
 export const isLoadingOrUpdatingInbox = (state: GlobalState) => {
@@ -138,7 +139,7 @@ export const messageCountForCategorySelector = (
 export const emptyListReasonSelector = (
   state: GlobalState,
   category: MessageListCategory
-): "noData" | "error" | "notEmpty" => {
+): "error" | "noData" | "notEmpty" => {
   const categoryPot = messagePagePotFromCategorySelector(category, state);
   if (pot.isSome(categoryPot)) {
     return reasonFromMessagePageContainer(categoryPot.value);
@@ -189,15 +190,17 @@ export const messagePagePotFromCategorySelector = (
 };
 
 /**
- * This method checks if there is a local record of a processed payment
- * for the given message category's rptId (ricevuta pagamento telematico).
+ * This method checks if there is a local record of a processed payment for the
+ * given message category's rptId (ricevuta pagamento telematico).
  *
- * Be aware that such record is persisted on the device and it is not synchronized
- * with server so it is lost upon device change / app folder cleaning / app uninstall.
+ * Be aware that such record is persisted on the device and it is not
+ * synchronized with server so it is lost upon device change / app folder
+ * cleaning / app uninstall.
  *
  * @param state Redux global state
- * @param category The enriched message category, returned by the `GET /messages?enrich_result_data=true` endpoint, that contains the rptId
- * @returns true if there is a matching paid transaction
+ * @param category The enriched message category, returned by the `GET
+ *   /messages?enrich_result_data=true` endpoint, that contains the rptId
+ * @returns True if there is a matching paid transaction
  */
 export const isPaymentMessageWithPaidNoticeSelector = (
   state: GlobalState,
@@ -216,10 +219,10 @@ const messageCollectionFromCategory = (
 ) => {
   const allPaginated = state.entities.messages.allPaginated;
   switch (category) {
-    case "INBOX":
-      return allPaginated.inbox;
     case "ARCHIVE":
       return allPaginated.archive;
+    case "INBOX":
+      return allPaginated.inbox;
   }
 };
 

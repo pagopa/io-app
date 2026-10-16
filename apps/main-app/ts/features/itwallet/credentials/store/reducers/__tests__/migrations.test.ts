@@ -1,5 +1,6 @@
-import _ from "lodash";
 import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
+import _ from "lodash";
+
 import issuerECv0_7 from "../../../../__mocks__/issuerECv0_7.json";
 import issuerECv1_0 from "../../../../__mocks__/issuerECv1_0.json";
 import { itwCredentialsStateMigrations } from "../migrations";
@@ -917,5 +918,205 @@ describe("ITW credentials reducer migrations", () => {
     const nextState = from9To10Migration(basePersistedStateAt9);
 
     expect(nextState).toStrictEqual(persistedStateAt10);
+  });
+
+  it("should migrate from 10 to 11 (status assertion to validity)", () => {
+    const inputCredentials = {
+      dc_sd_jwt_mDL: {
+        credentialId: "dc_sd_jwt_mDL",
+        credentialType: "mDL",
+        format: "dc+sd-jwt",
+        credential: "sd-jwt-credential-string",
+        parsedCredential: {},
+        spec_version: "1.0.0",
+        storedStatusAssertion: {
+          credentialStatus: "valid",
+          statusAssertion: "status-assertion-string",
+          parsedStatusAssertion: { iss: "https://issuer.example.com" }
+        }
+      },
+      dc_sd_jwt_EuropeanDisabilityCard: {
+        credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+        credentialType: "EuropeanDisabilityCard",
+        format: "dc+sd-jwt",
+        credential: "sd-jwt-credential-string",
+        parsedCredential: {},
+        spec_version: "1.0.0",
+        storedStatusAssertion: {
+          credentialStatus: "invalid",
+          errorCode: "error-code-string"
+        }
+      },
+      dc_sd_jwt_residency: {
+        credentialId: "dc_sd_jwt_residency",
+        credentialType: "residency",
+        format: "dc+sd-jwt",
+        credential: "sd-jwt-credential-string",
+        parsedCredential: {},
+        spec_version: "1.0.0"
+      }
+    };
+
+    const basePersistedStateAt10 = {
+      credentials: inputCredentials,
+      legacyCredentials: {},
+      _persist: {
+        version: 10,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt10 = {
+      credentials: {
+        dc_sd_jwt_mDL: {
+          credentialId: "dc_sd_jwt_mDL",
+          credentialType: "mDL",
+          format: "dc+sd-jwt",
+          credential: "sd-jwt-credential-string",
+          parsedCredential: {},
+          spec_version: "1.0.0",
+          validity: {
+            type: "status_assertion",
+            status: "valid",
+            statusAssertion: { iss: "https://issuer.example.com" },
+            errorCode: undefined
+          }
+        },
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard",
+          format: "dc+sd-jwt",
+          credential: "sd-jwt-credential-string",
+          parsedCredential: {},
+          spec_version: "1.0.0",
+          validity: {
+            type: "status_assertion",
+            status: "invalid",
+            errorCode: "error-code-string",
+            statusAssertion: undefined
+          }
+        },
+        dc_sd_jwt_residency: inputCredentials.dc_sd_jwt_residency
+      },
+      legacyCredentials: {},
+      _persist: {
+        version: 10,
+        rehydrated: false
+      }
+    };
+
+    const from10To11Migration = itwCredentialsStateMigrations[11];
+    expect(from10To11Migration).toBeDefined();
+    const nextState = from10To11Migration(basePersistedStateAt10);
+
+    expect(nextState).toStrictEqual(persistedStateAt10);
+  });
+
+  it("should migrate from 11 to 12 (add origin: catalogue to existing credentials)", () => {
+    const basePersistedStateAt11 = {
+      credentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard"
+        },
+        pid: {
+          credentialId: "pid",
+          credentialType: "pid"
+        }
+      },
+      legacyCredentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard"
+        }
+      },
+      _persist: {
+        version: 11,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt12 = {
+      credentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard",
+          origin: "catalogue"
+        },
+        pid: {
+          credentialId: "pid",
+          credentialType: "pid",
+          origin: "catalogue"
+        }
+      },
+      legacyCredentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard",
+          origin: "catalogue"
+        }
+      },
+      _persist: {
+        version: 11,
+        rehydrated: false
+      }
+    };
+
+    const from11To12Migration = itwCredentialsStateMigrations[12];
+    expect(from11To12Migration).toBeDefined();
+    const nextState = from11To12Migration(basePersistedStateAt11);
+
+    expect(nextState).toStrictEqual(persistedStateAt12);
+  });
+
+  it("should migrate from 12 to 13 (credentials spec version 1.3.3 -> 1.4.6)", () => {
+    const basePersistedStateAt12 = {
+      credentials: {
+        cred_1_3: {
+          credentialId: "cred_1_3",
+          credentialType: "cred_1_3",
+          walletUnitAttestationId: "att_1",
+          spec_version: "1.3.3"
+        },
+        cred_1_0: {
+          credentialId: "cred_1_0",
+          credentialType: "cred_1_0",
+          spec_version: "1.0.0"
+        }
+      },
+      legacyCredentials: {},
+      _persist: {
+        version: 12,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt13 = {
+      credentials: {
+        cred_1_3: {
+          credentialId: "cred_1_3",
+          credentialType: "cred_1_3",
+          keyAttestationId: "att_1",
+          spec_version: "1.4.6"
+        },
+        cred_1_0: {
+          credentialId: "cred_1_0",
+          credentialType: "cred_1_0",
+          keyAttestationId: undefined,
+          spec_version: "1.0.0"
+        }
+      },
+      legacyCredentials: {},
+      _persist: {
+        version: 12,
+        rehydrated: false
+      }
+    };
+
+    const from12To13Migration = itwCredentialsStateMigrations[13];
+    expect(from12To13Migration).toBeDefined();
+    const nextState = from12To13Migration(basePersistedStateAt12);
+
+    expect(nextState).toStrictEqual(persistedStateAt13);
   });
 });

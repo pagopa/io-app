@@ -1,10 +1,12 @@
-/**
- * A screen to alert the user about the number of attempts remains
- */
 import I18n from "i18next";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 
+/**
+ * Screen to display an error when the CIE card reader does not support extended
+ * APDU commands
+ */
 const CieExtendedApduNotSupportedScreen = () => {
   const { navigateToAuthenticationScreen } = useActiveSessionLoginNavigation();
 
@@ -15,10 +17,10 @@ const CieExtendedApduNotSupportedScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="attention"
-      title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
-      subtitle={I18n.t("authentication.cie.nfc.apduNotSupported")}
       action={action}
+      pictogram="attention"
+      subtitle={I18n.t("authentication.cie.nfc.apduNotSupported")}
+      title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
     />
   );
 };

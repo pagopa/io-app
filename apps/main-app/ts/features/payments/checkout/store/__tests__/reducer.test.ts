@@ -1,8 +1,11 @@
+import { AmountEuroCents } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/AmountEuroCents";
+import { PaymentMethodStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodStatus";
+import { TransactionStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/TransactionStatus";
+import { WalletLastUsageTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletLastUsageType";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
-import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
-import { WalletLastUsageTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletLastUsageType";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { getNetworkError } from "../../../../../utils/errors";
@@ -27,8 +30,6 @@ import {
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
 import { WALLET_PAYMENT_STEP_MAX } from "../reducers";
-import { PaymentMethodStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
-import { TransactionStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 
 describe("payments checkout reducer index.ts", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -37,24 +38,28 @@ describe("payments checkout reducer index.ts", () => {
   const createTestStore = () => createStore(appReducer, globalState as any);
 
   /**
-   * A utility function to test Redux action patterns for request, success, and failure states.
-   *
-   * @param actionCreator - An object containing the action creators for request, success, and failure.
-   * @param requestParams - The parameters to be passed to the request action creator.
-   * @param successParams - The parameters to be passed to the success action creator.
-   * @param expectedSuccessState - The expected state after the success action is dispatched.
-   * @param stateSelector - A function to select the relevant part of the state for assertions.
+   * A utility function to test Redux action patterns for request, success, and
+   * failure states.
    *
    * @example
-   * ```typescript
-   * testActionPattern(
-   *   myActionCreator,
-   *   { id: 1 }, // requestParams
-   *   { data: "success" }, // successParams
-   *   { data: "success", loading: false }, // expectedSuccessState
-   *   (state) => state.myFeature // stateSelector
-   * );
-   * ```
+   *   testActionPattern(
+   *     myActionCreator,
+   *     { id: 1 }, // requestParams
+   *     { data: "success" }, // successParams
+   *     { data: "success", loading: false }, // expectedSuccessState
+   *     state => state.myFeature // stateSelector
+   *   );
+   *
+   * @param actionCreator - An object containing the action creators for
+   *   request, success, and failure.
+   * @param requestParams - The parameters to be passed to the request action
+   *   creator.
+   * @param successParams - The parameters to be passed to the success action
+   *   creator.
+   * @param expectedSuccessState - The expected state after the success action
+   *   is dispatched.
+   * @param stateSelector - A function to select the relevant part of the state
+   *   for assertions.
    */
   const testActionPattern = (
     actionCreator: any,

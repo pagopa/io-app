@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
+
 import { ClaimDisplayFormat } from "../../../../../common/utils/itwClaimsUtils";
 import { ClaimItem } from "../ClaimItem";
 
@@ -13,10 +14,10 @@ describe("ClaimItem", () => {
 
     const component = render(
       <ClaimItem
-        item={item}
-        selectionEnabled={true}
         isSelected={false}
+        item={item}
         onItemSelected={onItemSelected}
+        selectionEnabled={true}
       />
     );
 
@@ -40,7 +41,6 @@ describe("ClaimItem", () => {
   it("renders single nested object arrays inline", () => {
     const component = render(
       <ClaimItem
-        selectionEnabled={false}
         item={{
           id: "education_degrees",
           label: "Degrees",
@@ -57,6 +57,7 @@ describe("ClaimItem", () => {
             }
           ]
         }}
+        selectionEnabled={false}
       />
     );
 
@@ -69,7 +70,6 @@ describe("ClaimItem", () => {
   it("renders multiple nested object arrays as summary rows", () => {
     const component = render(
       <ClaimItem
-        selectionEnabled={false}
         item={{
           id: "education_degrees",
           label: "Degrees",
@@ -96,6 +96,7 @@ describe("ClaimItem", () => {
             }
           ]
         }}
+        selectionEnabled={false}
       />
     );
 
@@ -108,13 +109,13 @@ describe("ClaimItem", () => {
   it("renders driving privileges values", () => {
     const component = render(
       <ClaimItem
-        selectionEnabled={false}
         item={{
           id: "driving_privileges",
           label: "Category",
           value:
             '[{"driving_privilege":"B","issue_date":"2020-01-01","expiry_date":"2030-01-01","restrictions_conditions":""}]'
         }}
+        selectionEnabled={false}
       />
     );
 

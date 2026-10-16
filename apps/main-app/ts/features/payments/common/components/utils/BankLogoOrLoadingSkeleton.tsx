@@ -1,21 +1,23 @@
-import { IOColors, IOSkeleton } from "@pagopa/io-app-design-system";
+import { IOColors, IOSkeleton } from "@io-app/design-system";
 import { useEffect, useState } from "react";
 import { Image } from "react-native";
+
 import { getBankLogosCdnUri } from "../../../../../components/ui/utils/strings";
 
 type BankLogoOrSkeletonProps = {
   abiCode?: string;
   dimensions: { height: number; width: number };
-  placeHolderColor?: IOColors;
   imageA11yLabel?: string;
+  placeHolderColor?: IOColors;
 };
 
 /**
- *component that renders a bank logo based on the abiCode,
- * and displays a loader while the image is loading
+ * *component that renders a bank logo based on the abiCode, and displays a
+ * loader while the image is loading
+ *
  * @param abiCode
- * @param dimensions - height and width of the image and placeholder
- * @param placeHolderColor - color of the placeholder
+ * @param dimensions - Height and width of the image and placeholder
+ * @param placeHolderColor - Color of the placeholder
  */
 export const BankLogoOrSkeleton = ({
   abiCode,
@@ -49,8 +51,8 @@ export const BankLogoOrSkeleton = ({
   return imageUrl !== undefined ? (
     <Image
       accessibilityIgnoresInvertColors
-      accessible
       accessibilityLabel={imageA11yLabel}
+      accessible
       source={{ uri: imageUrl }}
       style={{
         height,
@@ -61,9 +63,9 @@ export const BankLogoOrSkeleton = ({
   ) : (
     <IOSkeleton
       color={IOColors[placeHolderColor]}
-      shape="rectangle"
-      radius={8}
       height={height}
+      radius={8}
+      shape="rectangle"
       width={width}
     />
   );

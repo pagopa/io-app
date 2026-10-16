@@ -1,10 +1,14 @@
-import { H6, IOToast, TextInput, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  SelfCriteriaTextDTO,
+  _typeEnum as SelfCriteriaTextTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaTextDTO";
+import { H6, IOToast, TextInput, VSpacer } from "@io-app/design-system";
+import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
-import I18n from "i18next";
+
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
@@ -12,10 +16,6 @@ import {
   selectCurrentInputTextNumber,
   textRequiredCriteriaSelector
 } from "../machine/selectors";
-import {
-  SelfCriteriaTextDTO,
-  _typeEnum as SelfCriteriaTextTypeEnum
-} from "../../../../../definitions/idpay/SelfCriteriaTextDTO";
 
 const IdPayInputFormVerificationScreen = () => {
   const { useSelector } = IdPayOnboardingMachineContext;
@@ -30,10 +30,10 @@ const IdPayInputFormVerificationScreen = () => {
 
   return (
     <PagerView
+      initialPage={0}
       ref={pagerRef}
       scrollEnabled={false}
       style={{ flex: 1 }}
-      initialPage={0}
     >
       {selfCriteriaText.map((criteria, index) => (
         <InputFormVerificationContent criteria={criteria} key={index} />
@@ -80,14 +80,6 @@ const InputFormVerificationContent = ({
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <IOScrollViewWithLargeHeader
-        topElement={<IdPayOnboardingStepper />}
-        title={{
-          label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
-          section: I18n.t("idpay.onboarding.navigation.header")
-        }}
-        goBack={goBackOnPress}
-        contextualHelp={emptyContextualHelp}
-        headerActionsProp={{ showHelp: true }}
         actions={{
           type: "SingleButton",
           primary: {
@@ -95,16 +87,23 @@ const InputFormVerificationContent = ({
             onPress: handleContinuePress
           }
         }}
+        goBack={goBackOnPress}
+        headerActionsProp={{ showHelp: true }}
         includeContentMargins
+        title={{
+          label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
+          section: I18n.t("idpay.onboarding.navigation.header")
+        }}
+        topElement={<IdPayOnboardingStepper />}
       >
         <H6>{criteria.description}</H6>
         <VSpacer size={16} />
         <TextInput
-          key={criteria.code}
-          accessibilityLabel={criteria.description}
           accessibilityHint={criteria.description}
-          placeholder={criteria.value ?? ""}
+          accessibilityLabel={criteria.description}
+          key={criteria.code}
           onChangeText={text => setValue(text)}
+          placeholder={criteria.value ?? ""}
           value={value}
         />
         <VSpacer size={16} />

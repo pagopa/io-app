@@ -6,23 +6,23 @@ import {
   ItwScreenFlowContext
 } from "../../analytics/utils/types";
 import {
-  TrackITWalletSpidIDPSelected,
-  TrackItWalletCieCardVerifyFailure,
-  TrackItWalletCieCardReadingFailure,
-  TrackItWalletCieCardReadingUnexpectedFailure,
-  ItwUserWithoutL3requirements,
-  TrackCieScreenProperties,
-  TrackCieCanProperties,
-  TrackItWalletErrorCardReading,
-  TrackItWalletCardReadingClose,
-  TrackIdMethodBottomsheetProperties,
-  ItwFallbackL2Flow
-} from "./types";
-import {
   ITW_IDENTIFICATION_ACTIONS_EVENTS,
   ITW_IDENTIFICATION_ERRORS_EVENTS,
   ITW_IDENTIFICATION_SCREENVIEW_EVENTS
 } from "./enum";
+import {
+  ItwFallbackL2Flow,
+  ItwUserWithoutL3requirements,
+  TrackCieCanProperties,
+  TrackCieScreenProperties,
+  TrackIdMethodBottomsheetProperties,
+  TrackItWalletCardReadingClose,
+  TrackItWalletCieCardReadingFailure,
+  TrackItWalletCieCardReadingUnexpectedFailure,
+  TrackItWalletCieCardVerifyFailure,
+  TrackItWalletErrorCardReading,
+  TrackITWalletSpidIDPSelected
+} from "./types";
 
 // Screen view events
 
@@ -314,6 +314,9 @@ export const trackItWalletErrorCan = (
 ) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_ERRORS_EVENTS.ITW_CIE_CAN_ERROR,
-    buildEventProperties("UX", "error", { cie_reading_progress, ITW_ID_method })
+    buildEventProperties("UX", "error", {
+      cie_reading_progress,
+      ITW_ID_method
+    })
   );
 };

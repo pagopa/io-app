@@ -8,19 +8,19 @@ import {
   IOMarkdownLite,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback } from "react";
+
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { isItwCredential } from "../../common/utils/itwCredentialUtils";
@@ -28,9 +28,11 @@ import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
-  selectEidOption,
+  selectCanRenderEidPreview,
+  selectEid,
   selectIdentification,
-  selectIsLoading
+  selectIsLoading,
+  selectIssuanceMode
 } from "../../machine/eid/selectors";
 import {
   trackCredentialPreview,
@@ -38,25 +40,25 @@ import {
   trackItwRequestSuccess,
   trackSaveCredentialToWallet
 } from "../analytics";
-import { toItwIdMethod } from "../../analytics/utils/types";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
-  const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
+  const eid = ItwEidIssuanceMachineContext.useSelector(selectEid);
+  const canRenderEidPreview = ItwEidIssuanceMachineContext.useSelector(
+    selectCanRenderEidPreview
+  );
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return pipe(
-    eidOption,
-    O.fold(
-      // If there is no eID in the context (None), we can safely assume the issuing phase is still ongoing.
-      // A None eID cannot be stored in the context, as any issuance failure causes the machine to transition
-      // to the Failure state.
-      () => <LoadingScreenContent title={I18n.t("global.genericWaiting")} />,
-      eid => <ContentView eid={eid.metadata} />
-    )
-  );
+  // If there is no eID in the context, the issuing phase is still ongoing.
+  // Once the eID is assigned, wait for the identity-match check to finish before
+  // rendering its details; otherwise the preview could flash before a mismatch failure.
+  if (!canRenderEidPreview || eid === undefined) {
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  }
+
+  return <ContentView eid={eid.metadata} />;
 };
 
 type ContentViewProps = {
@@ -65,7 +67,8 @@ type ContentViewProps = {
 
 /**
  * Renders the content of the screen if the PID is decoded.
- * @param eid - the decoded eID
+ *
+ * @param eid - The decoded eID
  */
 const ContentView = ({ eid }: ContentViewProps) => {
   const dispatch = useIODispatch();
@@ -77,9 +80,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   const isL3 = isL3FeaturesEnabled && isItwCredential(eid);
+  const isReissuance = mode === "reissuance";
   const mixPanelCredential = isL3 ? "ITW_PID" : "ITW_ID_V2";
 
   const theme = useIOTheme();
@@ -91,9 +96,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
         credential_type: "unique"
       });
       if (identification) {
+        // `identification.level` is the authentication level; the issued PID can
+        // still be L3, as determined from its credential metadata.
         trackItwRequestSuccess(
           toItwIdMethod(identification),
-          identification.level,
+          isL3 ? "L3" : identification.level,
           isL3 ? "L3" : "L2"
         );
       }
@@ -104,10 +111,33 @@ const ContentView = ({ eid }: ContentViewProps) => {
     parsedCredential: eid.parsedCredential
   });
 
+  const customLabels = isL3
+    ? {
+        customLabels: {
+          title: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.title"
+          ),
+          body: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.body"
+          ),
+          confirmLabel: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.confirm"
+          ),
+          cancelLabel: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.cancel"
+          )
+        }
+      }
+    : undefined;
+
   const dismissDialog = useItwDismissalDialog({
+    ...customLabels,
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+      machineRef.send({
+        type: "close",
+        surveyStep: isL3 ? "pid_preview" : undefined
+      });
     }
   });
 
@@ -140,6 +170,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
       <ForceScrollDownView
+        buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
         contentContainerStyle={{ flexGrow: 1 }}
         footerActions={{
           actions: {
@@ -167,8 +198,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
             <HStack space={8} style={{ alignItems: "center" }}>
               {!isL3 && (
                 <Icon
-                  name="legalValue"
                   color={theme["interactiveElem-default"]}
+                  name="legalValue"
                 />
               )}
               <H2>
@@ -188,8 +219,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
               data={eid}
               releaserVisible={false}
             />
-            {isL3 && (
-              <BodySmall>
+            {isL3 && !isReissuance && (
+              <BodySmall testID="credentialUpgradeDisclaimerTestID">
                 {I18n.t("features.itWallet.issuance.eidPreview.bottomTextL3")}
               </BodySmall>
             )}

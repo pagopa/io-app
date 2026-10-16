@@ -1,5 +1,6 @@
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
+
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { Store } from "../../../store/actions/types";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
@@ -12,11 +13,13 @@ import { handleMessageNotificationInteraction } from "./pushNotificationHandlers
 
 const unhandledForegroundNotificationIds = new Set<string>();
 /**
- * Registers listeners for push notifications and push token updates,
- * handles any pending notification response from a cold start,
- * and fetches the device push token.
- * @param store the redux store, needed to dispatch actions from the notification listeners
- * @returns a function to remove the registered listeners
+ * Registers listeners for push notifications and push token updates, handles
+ * any pending notification response from a cold start, and fetches the device
+ * push token.
+ *
+ * @param store The redux store, needed to dispatch actions from the
+ *   notification listeners
+ * @returns A function to remove the registered listeners
  */
 export const configurePushNotificationListeners = (store: Store) => {
   // check if the app was woken up by a notification interaction,
@@ -116,7 +119,7 @@ const onNotificationResponse = (
   void Notifications.dismissNotificationAsync(identifier);
 };
 const onPushNotificationTokenReceived =
-  (store: Store) => (token: { data?: string | null }) => {
+  (store: Store) => (token: { data?: null | string }) => {
     if (!token || !token.data) {
       trackAppCaughtError(
         "onPushNotificationTokenAvailable",

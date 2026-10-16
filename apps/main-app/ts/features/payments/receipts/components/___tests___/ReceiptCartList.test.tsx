@@ -1,6 +1,7 @@
-import { render, fireEvent } from "@testing-library/react-native";
+import { CartItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/CartItem";
+import { fireEvent, render } from "@testing-library/react-native";
+
 import { ReceiptCartList } from "../ReceiptCartList";
-import { CartItem } from "../../../../../../definitions/pagopa/biz-events/CartItem";
 
 describe("ReceiptCartList", () => {
   const mockOnPress = jest.fn();

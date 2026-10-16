@@ -1,11 +1,16 @@
+import { TagEnum as BaseTagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryBase";
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import {
   trackCTAFrontMatterDecodingError,
+  trackDisclaimerLoadError,
+  trackMessageNotFoundScreen,
   trackMessageNotificationParsingFailure,
   trackMessageNotificationTap,
   trackMessagePaymentFailure,
   trackOpenMessage
 } from "..";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as MIXPANEL from "../../../../mixpanel";
 
 describe("index", () => {
@@ -102,6 +107,61 @@ describe("index", () => {
         flow: undefined,
         reason,
         serviceId
+      });
+    });
+  });
+
+  describe("trackDisclaimerLoadError", () => {
+    it("should include the reason when the category tag is PN", () => {
+      const spyOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation();
+
+      trackDisclaimerLoadError(TagEnum.PN, "MARKDOWN_RENDER_ERROR");
+
+      expect(spyOnMixpanelTrack).toHaveBeenCalledWith(
+        "PN_DISCLAIMER_LOAD_ERROR",
+        {
+          event_category: "TECH",
+          event_type: undefined,
+          flow: undefined,
+          reason: "MARKDOWN_RENDER_ERROR"
+        }
+      );
+    });
+
+    it("should not include the reason when the category tag is not PN", () => {
+      const spyOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation();
+
+      trackDisclaimerLoadError(BaseTagEnum.GENERIC, "MARKDOWN_RENDER_ERROR");
+
+      expect(spyOnMixpanelTrack).toHaveBeenCalledWith(
+        "GENERIC_DISCLAIMER_LOAD_ERROR",
+        {
+          event_category: "TECH",
+          event_type: undefined,
+          flow: undefined
+        }
+      );
+    });
+  });
+
+  describe("trackMessageNotFoundScreen", () => {
+    it("should call 'mixpanelTrack' with proper parameters", () => {
+      const spyOnMixpanelTrack = jest
+        .spyOn(MIXPANEL, "mixpanelTrack")
+        .mockImplementation((_event, _properties) => undefined);
+
+      expect(spyOnMixpanelTrack).not.toHaveBeenCalled();
+
+      trackMessageNotFoundScreen();
+
+      expect(spyOnMixpanelTrack).toHaveBeenCalledWith("MESSAGE_NOT_AVAILABLE", {
+        event_category: "KO",
+        event_type: "screen_view",
+        flow: undefined
       });
     });
   });

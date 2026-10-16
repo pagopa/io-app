@@ -1,71 +1,106 @@
+import { CreateSignatureBody } from "@io-app/api-types/generated/definitions/fci/CreateSignatureBody";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { SagaIterator } from "redux-saga";
-import { ActionType, isActionOf } from "typesafe-actions";
-import RNFS from "react-native-fs";
-import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { CommonActions, StackActions } from "@react-navigation/native";
+import { Directory, File } from "expo-file-system";
 import I18n from "i18next";
-import NavigationService from "../../../navigation/NavigationService";
-import { FCI_ROUTES } from "../navigation/routes";
-import ROUTES from "../../../navigation/routes";
+import { SagaIterator } from "redux-saga";
+import {
+  call,
+  delay,
+  put,
+  select,
+  take,
+  takeLatest
+} from "typed-redux-saga/macro";
+import { ActionType, isActionOf } from "typesafe-actions";
+
 import { apiUrlPrefix } from "../../../config";
+import NavigationService from "../../../navigation/NavigationService";
+import ROUTES from "../../../navigation/routes";
+import { appCurrentStateSelector } from "../../../store/reducers/appState";
+import { isTestEnv } from "../../../utils/environment";
+import { setActiveSessionLoginFlow } from "../../authentication/activeSessionLogin/store/actions";
+import { activeSessionLoginFlowSelector } from "../../authentication/activeSessionLogin/store/selectors";
+import { spidLevelFromSessionInfoSelector } from "../../authentication/common/store/selectors";
 import {
   identificationPinReset,
   identificationRequest,
   identificationSuccess
 } from "../../identification/store/actions";
+import { KeyInfo } from "../../lollipop/utils/crypto";
+import { toFileUri } from "../../messages/utils/attachments";
+import { createFciClient } from "../api/backendFci";
+import { FCI_ROUTES } from "../navigation/routes";
 import {
-  fciSignatureRequestIdSelector,
-  fciSignatureRequestSelector,
-  FciSignatureRequestState
-} from "../store/reducers/fciSignatureRequest";
-import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
-import { CreateSignatureBody } from "../../../../definitions/fci/CreateSignatureBody";
-import {
-  fciSignatureRequestFromId,
-  fciSignatureRequestRetryFromId,
+  fciClearAllFiles,
   fciClearStateRequest,
-  fciStartRequest,
-  fciLoadQtspClauses,
-  fciLoadQtspFilledDocument,
+  fciDocumentSignatureFields,
   fciDownloadPreview,
   fciDownloadPreviewClear,
-  fciStartSigningRequest,
-  fciSigningRequest,
   fciEndRequest,
-  fciClearAllFiles,
+  fciLoadQtspClauses,
+  fciLoadQtspFilledDocument,
   fciMetadataRequest,
+  fciSignatureRequestFromId,
+  fciSignatureRequestRetryFromId,
   fciSignaturesListRequest,
-  fciDocumentSignatureFields
+  fciSigningRequest,
+  fciStartRequest,
+  fciStartSigningRequest
 } from "../store/actions";
+import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
 import {
   fciQtspClausesMetadataSelector,
   FciQtspClausesState,
   fciQtspNonceSelector
 } from "../store/reducers/fciQtspClauses";
-import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
-import { KeyInfo } from "../../lollipop/utils/crypto";
-import { createFciClient } from "../api/backendFci";
-import { spidLevelFromSessionInfoSelector } from "../../authentication/common/store/selectors";
-import { isFciSecurityLevelCheckEnabledSelector } from "../store/reducers/fciSecurityLevelReducer";
-import { isTestEnv } from "../../../utils/environment";
-import { activeSessionLoginFlowSelector } from "../../authentication/activeSessionLogin/store/selectors";
-import { setActiveSessionLoginFlow } from "../../authentication/activeSessionLogin/store/actions";
-import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
-import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
+import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
+import {
+  fciSignatureRequestIdSelector,
+  fciSignatureRequestSelector,
+  FciSignatureRequestState
+} from "../store/reducers/fciSignatureRequest";
+import { isFciSecurityLevelCheckRemoteFFEnabledSelector } from "../store/selectors/remoteConfig";
+import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
+import { handleCreateSignature } from "./networking/handleCreateSignature";
 import {
   FciDownloadPreviewDirectoryPath,
   handleDownloadDocument
 } from "./networking/handleDownloadDocument";
-import { handleCreateSignature } from "./networking/handleCreateSignature";
 import { handleGetMetadata } from "./networking/handleGetMetadata";
+import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
+import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetSignatureRequests } from "./networking/handleGetSignatureRequests";
-import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
+
+/** Maximum time to wait for the app to become active (20 seconds). */
+const APP_ACTIVE_POLLING_TIMEOUT = (20 * 1000) as Millisecond;
+
+/** Interval between polling checks (2 seconds). */
+const APP_ACTIVE_POLLING_INTERVAL = (2 * 1000) as Millisecond;
+
+export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
+  isActiveLoginSuccessProp: boolean
+): SagaIterator {
+  const signatureRequestId = yield* select(fciSignatureRequestIdSelector);
+  const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
+  yield* put(setActiveSessionLoginFlow(undefined));
+
+  if (
+    isActiveLoginSuccessProp &&
+    signatureRequestId &&
+    activeSessionLoginFlow === "FCI"
+  ) {
+    yield* put(fciSignatureRequestRetryFromId(signatureRequestId));
+  }
+  return;
+}
 
 /**
  * Handle the FCI Signature requests
+ *
  * @param bearerToken
  */
 export function* watchFciSaga(
@@ -147,37 +182,33 @@ export function* watchFciSaga(
   yield* takeLatest(identificationPinReset, watchIdentificationPinResetSaga);
 }
 
-/**
- * Handle the identification pin reset to clear fci state
- */
-function* watchIdentificationPinResetSaga(): SagaIterator {
-  yield* put(fciClearStateRequest());
+/** Clears cached file for the fci document preview */
+function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
+  const dir = new Directory(toFileUri(action.payload.path));
+  if (dir.exists) {
+    yield* call([dir, dir.delete]);
+  }
 }
 
-/**
- * Handle the FCI requests to get the QTSP filled_document
- */
-function* watchFciQtspClausesSaga(): SagaIterator {
-  const potQtspClauses: FciQtspClausesState = yield* select(
-    fciQtspClausesMetadataSelector
+/** Clears cached file for the fci document preview and reset the state to empty. */
+function* clearFciDownloadPreview(
+  action: ActionType<typeof fciDownloadPreviewClear>
+) {
+  const path = action.payload.path;
+  if (path) {
+    yield* deletePath(path);
+  }
+  yield* put(fciDownloadPreview.cancel());
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    CommonActions.goBack()
   );
+}
 
-  if (pot.isSome(potQtspClauses)) {
-    const documentUrl = Buffer.from(
-      `${potQtspClauses.value.document_url}`
-    ).toString("base64");
-    yield* put(
-      fciLoadQtspFilledDocument.request({
-        document_url: documentUrl as NonEmptyString
-      })
-    );
-  } else {
-    yield* call(
-      NavigationService.dispatchNavigationAction,
-      CommonActions.navigate(ROUTES.MAIN, {
-        screen: ROUTES.WORKUNIT_GENERIC_FAILURE
-      })
-    );
+function* deletePath(path: string) {
+  const file = new File(toFileUri(path));
+  if (file.exists) {
+    yield* call([file, file.delete]);
   }
 }
 
@@ -203,89 +234,93 @@ function* standardFciFlowStartSaga(): SagaIterator {
 }
 
 /**
- * Handle the FCI start requests saga
+ * Waits for the app to return to the active state using a polling strategy.
+ * This prevents network requests from being killed and auto-retried when the
+ * app transitions from inactive to active.
+ *
+ * Polls the app state every APP_ACTIVE_POLLING_INTERVAL milliseconds for a
+ * maximum of APP_ACTIVE_POLLING_TIMEOUT milliseconds. If the app becomes active
+ * before the timeout, returns immediately. If the timeout expires, continues
+ * anyway.
  */
-function* watchFciStartSaga(): SagaIterator {
-  const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
-  const isFciSecurityLevelCheckEnabled = yield* select(
-    isFciSecurityLevelCheckEnabledSelector
-  );
+function* waitForAppActive() {
+  const startTime = new Date().getTime();
 
-  if (!isFciSecurityLevelCheckEnabled) {
-    yield* call(standardFciFlowStartSaga);
-    return;
-  } else {
-    if (spidLevel === "L3") {
-      yield* call(standardFciFlowStartSaga);
+  while (true) {
+    const currentAppState = yield* select(appCurrentStateSelector);
+
+    // If app is active, exit immediately
+    if (currentAppState === "active") {
       return;
     }
-    yield* call(
-      NavigationService.dispatchNavigationAction,
-      StackActions.push(FCI_ROUTES.MAIN, {
-        screen: FCI_ROUTES.FCI_LOGIN_L3
+
+    // Check if timeout has been exceeded
+    const now = new Date().getTime();
+    if (now - startTime >= APP_ACTIVE_POLLING_TIMEOUT) {
+      // Timeout exceeded, continue anyway
+      return;
+    }
+
+    // Wait before the next poll
+    yield* delay(APP_ACTIVE_POLLING_INTERVAL);
+  }
+}
+
+/** Handle the FCI abort requests saga */
+function* watchFciEndSaga(): SagaIterator {
+  yield* put(fciClearStateRequest());
+  yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    CommonActions.navigate(ROUTES.MAIN)
+  );
+}
+
+/** Handle the FCI requests to get the QTSP filled_document */
+function* watchFciQtspClausesSaga(): SagaIterator {
+  const potQtspClauses: FciQtspClausesState = yield* select(
+    fciQtspClausesMetadataSelector
+  );
+
+  if (pot.isSome(potQtspClauses)) {
+    const documentUrl = Buffer.from(
+      `${potQtspClauses.value.document_url}`
+    ).toString("base64");
+    yield* put(
+      fciLoadQtspFilledDocument.request({
+        document_url: documentUrl as NonEmptyString
       })
     );
-    return;
+  } else {
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      CommonActions.navigate(ROUTES.MAIN, {
+        screen: ROUTES.WORKUNIT_GENERIC_FAILURE
+      })
+    );
   }
 }
 
 /**
- * Handle the FCI signature request retry saga
+ * Handle the FCI signature request retry saga. Clears FCI state and restarts
+ * the flow from the router screen, which re-fetches fresh signature request.
  */
 function* watchFciSignatureRequestRetrySaga(
   action: ActionType<typeof fciSignatureRequestRetryFromId>
 ): SagaIterator {
-  // get new SignatureRequestDetails
-  yield* put(fciSignatureRequestFromId.request(action.payload));
-
-  while (true) {
-    const result = yield* take([
-      fciSignatureRequestFromId.success,
-      fciSignatureRequestFromId.failure
-    ]);
-
-    if (isActionOf(fciSignatureRequestFromId.success, result)) {
-      if (result.payload.id === action.payload) {
-        /**
-         * when restarting the flow from 'DocumentUnavailableScreen',
-         * FciDocumentsScreen will still get pot error if not reset
-         */
-        yield* put(fciDownloadPreview.cancel());
-        // start a new signing flow
-        yield* put(fciStartRequest());
-        return;
-      }
-
-      continue;
-    }
-
-    if (isActionOf(fciSignatureRequestFromId.failure, result)) {
-      return;
-    }
-  }
-}
-
-/**
- * Clears cached file for the fci document preview
- * and reset the state to empty.
- */
-function* clearFciDownloadPreview(
-  action: ActionType<typeof fciDownloadPreviewClear>
-) {
-  const path = action.payload.path;
-  if (path) {
-    yield* deletePath(path);
-  }
-  yield* put(fciDownloadPreview.cancel());
+  yield* put(fciClearStateRequest());
   yield* call(
     NavigationService.dispatchNavigationAction,
-    CommonActions.goBack()
+    StackActions.replace(FCI_ROUTES.MAIN, {
+      screen: FCI_ROUTES.ROUTER,
+      params: {
+        signatureRequestId: action.payload
+      }
+    })
   );
 }
 
-/**
- * Handle the FCI start signing saga
- */
+/** Handle the FCI start signing saga */
 function* watchFciSigningRequestSaga(): SagaIterator {
   yield* put(
     identificationRequest(false, true, undefined, {
@@ -315,6 +350,22 @@ function* watchFciSigningRequestSaga(): SagaIterator {
       qtspFilledDocumentUrl &&
       qtspNonce
     ) {
+      // Navigate to the Thank You Page immediately to show loading
+      NavigationService.dispatchNavigationAction(
+        CommonActions.navigate(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.TYP
+        })
+      );
+
+      // Check if the app is in active state
+      // This prevents the signature request from being killed and re-triggered
+      // when the app transitions from inactive to active after biometric authentication
+      const currentAppState = yield* select(appCurrentStateSelector);
+      if (currentAppState !== "active") {
+        // Wait for the app to return to active state before proceeding
+        yield* call(waitForAppActive);
+      }
+
       const createSignaturePayload: CreateSignatureBody = {
         signature_request_id: potSignatureRequest.value.id,
         documents_to_sign: documentSignatures,
@@ -329,56 +380,37 @@ function* watchFciSigningRequestSaga(): SagaIterator {
 
       yield* put(fciSigningRequest.request(createSignaturePayload));
     }
+  }
+}
 
-    NavigationService.dispatchNavigationAction(
-      CommonActions.navigate(FCI_ROUTES.MAIN, {
-        screen: FCI_ROUTES.TYP
+/** Handle the FCI start requests saga */
+function* watchFciStartSaga(): SagaIterator {
+  const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
+  const isFciSecurityLevelCheckEnabled = yield* select(
+    isFciSecurityLevelCheckRemoteFFEnabledSelector
+  );
+
+  if (!isFciSecurityLevelCheckEnabled) {
+    yield* call(standardFciFlowStartSaga);
+    return;
+  } else {
+    if (spidLevel === "L3") {
+      yield* call(standardFciFlowStartSaga);
+      return;
+    }
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.push(FCI_ROUTES.MAIN, {
+        screen: FCI_ROUTES.FCI_LOGIN_L3
       })
     );
+    return;
   }
 }
 
-function* deletePath(path: string) {
-  yield RNFS.exists(path).then(exists =>
-    exists ? RNFS.unlink(path) : Promise.resolve()
-  );
-}
-
-/**
- * Clears cached file for the fci document preview
- * and reset the state to empty.
- */
-function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
-  yield* deletePath(action.payload.path);
-}
-
-/**
- * Handle the FCI abort requests saga
- */
-function* watchFciEndSaga(): SagaIterator {
+/** Handle the identification pin reset to clear fci state */
+function* watchIdentificationPinResetSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
-  yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));
-  yield* call(
-    NavigationService.dispatchNavigationAction,
-    CommonActions.navigate(ROUTES.MAIN)
-  );
-}
-
-export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
-  isActiveLoginSuccessProp: boolean
-): SagaIterator {
-  const signatureRequestId = yield* select(fciSignatureRequestIdSelector);
-  const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
-  yield* put(setActiveSessionLoginFlow(undefined));
-
-  if (
-    isActiveLoginSuccessProp &&
-    signatureRequestId &&
-    activeSessionLoginFlow === "FCI"
-  ) {
-    yield* put(fciSignatureRequestRetryFromId(signatureRequestId));
-  }
-  return;
 }
 
 export const testable = isTestEnv

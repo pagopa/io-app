@@ -1,7 +1,8 @@
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { Config } from "../../../../definitions/content/Config";
-import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { Config } from "@io-app/api-types/generated/definitions/content/Config";
+import { LevelEnum } from "@io-app/api-types/generated/definitions/content/SectionStatus";
+
 import { absolutePortalLinksFallback } from "../backendStatus/remoteConfig";
 
 export const baseRawBackendStatus: BackendStatus = {

@@ -1,6 +1,8 @@
 import { fireEvent } from "@testing-library/react-native";
-import { createStore } from "redux";
 import I18n from "i18next";
+import { createStore } from "redux";
+
+import { setLocale } from "../../../../../../i18n";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
@@ -60,6 +62,22 @@ const mockNavigate = jest.fn();
 describe("CgnMerchantsCategoriesSelectionScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    setLocale("it");
+  });
+
+  it("should render the tab labels in the locale set after module import", () => {
+    setLocale("en");
+    const { getByText } = renderComponent(defaultState);
+
+    expect(
+      getByText(I18n.t("bonus.cgn.merchantsList.tabs.perInitiative"))
+    ).toBeTruthy();
+    expect(
+      getByText(I18n.t("bonus.cgn.merchantsList.tabs.perMerchant"))
+    ).toBeTruthy();
   });
 
   it("should render correctly", () => {

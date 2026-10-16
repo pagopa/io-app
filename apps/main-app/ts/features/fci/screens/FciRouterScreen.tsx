@@ -1,3 +1,5 @@
+import { ProblemJson } from "@io-app/api-types/generated/definitions/fci/ProblemJson";
+import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -5,17 +7,21 @@ import * as J from "fp-ts/lib/Json";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ReactElement, useEffect } from "react";
-import { ProblemJson } from "../../../../definitions/fci/ProblemJson";
-import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
+
+import { useAppRequiredUpdate } from "../../../components/helpers/withAppRequiredUpdate";
+import { UpdateAppAlert } from "../../../components/UpdateAppAlert";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isFciEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { isTestEnv } from "../../../utils/environment";
 import {
-  NetworkError,
   getErrorFromNetworkError,
-  getGenericError
+  getGenericError,
+  NetworkError
 } from "../../../utils/errors";
+import {
+  trackFciSignatureDetailFailureAction,
+  trackFciSignatureGenericFailure,
+  trackFciSignatureMismatch
+} from "../analytics";
 import LoadingComponent from "../components/LoadingComponent";
 import {
   default as ErrorComponent,
@@ -25,44 +31,21 @@ import SuccessComponent from "../components/SuccessComponent";
 import { FciParamsList } from "../navigation/params";
 import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
 import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
-import {
-  trackFciSignatureDetailFailureAction,
-  trackFciSignatureGenericFailure,
-  trackFciSignatureMismatch
-} from "../analytics";
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
 }>;
 
-const FciSignatureScreen = (
+const FciSignatureScreenComponent = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
 ): ReactElement => {
-  // TODO: add a check to validate signatureRequestId using io-ts
-  // https://pagopa.atlassian.net/browse/SFEQS-1705?atlOrigin=eyJpIjoiOWY2NDA4YmQ0ZTQ0NGRjZTk5MGNlZDczZGIxMDllMmIiLCJwIjoiaiJ9
-  const signatureRequestId = props.route.params.signatureRequestId;
+  const { signatureRequestId } = props.route.params;
   const dispatch = useIODispatch();
   const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
-  const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
-  const fciEnabled = isTestEnv || fciEnabledSelector;
 
   useEffect(() => {
-    if (fciEnabled) {
-      dispatch(fciSignatureRequestFromId.request(signatureRequestId));
-    }
-  }, [dispatch, signatureRequestId, fciEnabled]);
-
-  if (!fciEnabled) {
-    return (
-      <SignatureStatusComponent
-        title={I18n.t("features.fci.errors.generic.update.title")}
-        subTitle={I18n.t("features.fci.errors.generic.update.subTitle")}
-        onPress={() => dispatch(fciEndRequest())}
-        pictogram={"umbrella"}
-        testID="GenericErrorComponentTestID"
-      />
-    );
-  }
+    dispatch(fciSignatureRequestFromId.request(signatureRequestId));
+  }, [dispatch, signatureRequestId]);
 
   const LoadingView = () => (
     <LoadingComponent testID={"FciRouterLoadingScreenTestID"} />
@@ -74,19 +57,17 @@ const FciSignatureScreen = (
       trackFciSignatureMismatch();
       return (
         <ErrorComponent
-          title={I18n.t("features.fci.errors.generic.wrongUser.title")}
-          subTitle={I18n.t("features.fci.errors.generic.wrongUser.subTitle")}
-          pictogram="accessDenied"
           onPress={() => dispatch(fciEndRequest())}
+          pictogram="accessDenied"
+          subTitle={I18n.t("features.fci.errors.generic.wrongUser.subTitle")}
           testID="WrongUserErrorComponentTestID"
+          title={I18n.t("features.fci.errors.generic.wrongUser.title")}
         />
       );
     }
     trackFciSignatureGenericFailure(errorReason);
     return (
       <SignatureStatusComponent
-        title={I18n.t("features.fci.errors.generic.default.title")}
-        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
         onPress={() => {
           trackFciSignatureDetailFailureAction(
             errorReason,
@@ -95,8 +76,6 @@ const FciSignatureScreen = (
           );
           dispatch(fciEndRequest());
         }}
-        pictogram={"umbrella"}
-        testID="GenericErrorComponentTestID"
         onPressAssistance={() => {
           trackFciSignatureDetailFailureAction(
             errorReason,
@@ -104,6 +83,10 @@ const FciSignatureScreen = (
             I18n.t("features.fci.errors.buttons.assistance")
           );
         }}
+        pictogram={"umbrella"}
+        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        testID="GenericErrorComponentTestID"
+        title={I18n.t("features.fci.errors.generic.default.title")}
       />
     );
   };
@@ -137,6 +120,16 @@ const FciSignatureScreen = (
     () => <LoadingView />,
     () => renderErrorComponent()
   );
+};
+
+const FciSignatureScreen = (
+  props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
+) => {
+  const requiresUpdate = useAppRequiredUpdate("fci");
+  if (requiresUpdate) {
+    return <UpdateAppAlert />;
+  }
+  return <FciSignatureScreenComponent {...props} />;
 };
 
 export default FciSignatureScreen;

@@ -1,9 +1,9 @@
 // __tests__/tosAnalytics.test.ts
 import {
-  trackToSWebViewError,
-  trackToSWebViewErrorRetry,
+  trackTosAccepted,
   trackTosScreen,
-  trackTosAccepted
+  trackToSWebViewError,
+  trackToSWebViewErrorRetry
 } from "..";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../../../mixpanelConfig/profileProperties";

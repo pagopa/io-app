@@ -1,25 +1,25 @@
-import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
-import IdpSelectionScreen from "../IdpSelectionScreen";
-import { appReducer } from "../../../../../../store/reducers";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import * as IOHooks from "../../../../../../store/hooks";
 import { loadIdps } from "../../../../../../store/actions/content";
-import * as supportAssistance from "../../../../../../utils/supportAssistance";
-import * as analytics from "../../../../common/analytics/spidAnalytics";
-import { idpSelected } from "../../../../common/store/actions";
+import * as IOHooks from "../../../../../../store/hooks";
+import { appReducer } from "../../../../../../store/reducers";
 import * as idpsRemoteValue from "../../../../../../store/reducers/content.ts";
+import * as supportAssistance from "../../../../../../utils/supportAssistance";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import * as analytics from "../../../../common/analytics/spidAnalytics";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { idpSelected } from "../../../../common/store/actions";
+import IdpSelectionScreen from "../IdpSelectionScreen";
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
     useNavigation: () => ({
-      navigate: mockNavigate,
-      addListener: jest.fn(() => jest.fn())
+      navigate: mockNavigate
     })
   };
 });
@@ -76,7 +76,7 @@ describe("IdpSelectionScreen", () => {
     expect(mockDispatch).toHaveBeenCalledWith(loadIdps.request());
   });
 
-  it("should dispatch idpSelected and navigate to IDP_LOGIN when native login is disabled", () => {
+  it("should dispatch idpSelected and navigate to IDP_LOGIN", () => {
     jest.spyOn(IOHooks, "useIODispatch").mockReturnValue(mockDispatch);
 
     jest

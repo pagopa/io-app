@@ -1,7 +1,10 @@
+import { IOMarkdownLite } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as hooks from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
@@ -25,8 +28,7 @@ const ASSISTANCE_URL =
 const mockNavigation = {
   popToTop: jest.fn(),
   reset: jest.fn(),
-  getParent: jest.fn(() => ({ setOptions: jest.fn() })),
-  addListener: jest.fn(() => jest.fn())
+  getParent: jest.fn(() => ({ setOptions: jest.fn() }))
 };
 
 jest.mock("@react-navigation/native", () => ({
@@ -152,5 +154,35 @@ describe("PaymentsOnboardingFeedbackScreen", () => {
       payment_method_selected: "Mock Method"
     });
     expect(mockBottomSheet.present).toHaveBeenCalled();
+  });
+
+  const outcomeScenarios = Object.entries(WalletOnboardingOutcomeEnum).map(
+    ([name, outcome]) => ({ name, outcome })
+  );
+
+  it.each(outcomeScenarios)(
+    "should render no raw translation key for outcome $name",
+    ({ outcome }) => {
+      const { queryByText } = renderComponent(outcome);
+
+      // i18next echoes a missing key back as its own path
+      expect(queryByText(/^wallet\.onboarding\.outcome\./)).toBeNull();
+    }
+  );
+
+  it("should render the TIMEOUT subtitle for the TIMEOUT outcome", () => {
+    const { getByText } = renderComponent(WalletOnboardingOutcomeEnum.TIMEOUT);
+
+    expect(
+      getByText(I18n.t("wallet.onboarding.outcome.TIMEOUT.subtitle"))
+    ).toBeTruthy();
+  });
+
+  it("should render no subtitle for the SUCCESS outcome", () => {
+    const { UNSAFE_queryByType } = renderComponent(
+      WalletOnboardingOutcomeEnum.SUCCESS
+    );
+
+    expect(UNSAFE_queryByType(IOMarkdownLite)).toBeNull();
   });
 });

@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as Notifications from "expo-notifications";
 import _ from "lodash";
+
 import { maximumItemsFromAPI, pageSize } from "../../../config";
 import { Store } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
@@ -15,9 +16,9 @@ import { isArchivingInProcessingModeSelector } from "../../messages/store/reduce
 import { updateNotificationsPendingMessage } from "../store/actions/pendingMessage";
 
 /**
- * Messages' feature logic linked to push notifications interactions
- * if the notification includes a messageId in its payload, it will reload
- * the messages list, else no logic will be ran.
+ * Messages' feature logic linked to push notifications interactions if the
+ * notification includes a messageId in its payload, it will reload the messages
+ * list, else no logic will be ran.
  */
 export const handleMessageNotificationInteraction = (
   response: Notifications.NotificationResponse,
@@ -50,8 +51,8 @@ export const handleMessageNotificationInteraction = (
 };
 
 /**
- * Decides how to refresh the messages based on pagination.
- * It only reloads Inbox since Archive is never changed server-side.
+ * Decides how to refresh the messages based on pagination. It only reloads
+ * Inbox since Archive is never changed server-side.
  */
 const handleForegroundMessageReload = (store: Store) => {
   const state = store.getState();
@@ -74,7 +75,11 @@ const handleForegroundMessageReload = (store: Store) => {
   if (pot.isNone(inboxIndexes)) {
     // collection is empty, refresh
     store.dispatch(
-      reloadAllMessages.request({ pageSize, filter: {}, fromUserAction: false })
+      reloadAllMessages.request({
+        pageSize,
+        filter: {},
+        fromUserAction: false
+      })
     );
   } else if (pot.isSome(inboxIndexes)) {
     // current collection exists, fetch the maximum number of new

@@ -1,18 +1,18 @@
 import React from "react";
 import { createStore } from "redux";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import CieCardReadingAnimation, {
   ReadingState,
   testableCieCardReadingAnimation
 } from "../CieCardReadingAnimation";
 
 /**
- * in order to test all other behaviors and side effects
- * there is a need for the screen to be refactored.
- * https://pagopa.atlassian.net/browse/IOPID-1857
+ * In order to test all other behaviors and side effects there is a need for the
+ * screen to be refactored. https://pagopa.atlassian.net/browse/IOPID-1857
  */
 
 if (!testableCieCardReadingAnimation) {
@@ -20,10 +20,11 @@ if (!testableCieCardReadingAnimation) {
     "handleApplicationInitialized is not available in test environment"
   );
 }
-const CieCardReadingAnimationProps =
-  testableCieCardReadingAnimation.types.CieCardReadingAnimationProps;
+type CieCardReadingAnimationProps = NonNullable<
+  typeof testableCieCardReadingAnimation
+>["types"]["CieCardReadingAnimationProps"];
 
-const defaultProps: typeof CieCardReadingAnimationProps = {
+const defaultProps: CieCardReadingAnimationProps = {
   readingState: ReadingState.waiting_card,
   pictogramName: "accessDenied",
   circleColor: "#000000"

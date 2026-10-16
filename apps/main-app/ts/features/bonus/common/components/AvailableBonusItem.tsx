@@ -1,13 +1,13 @@
-import { Badge, Body, H6, HSpacer } from "@pagopa/io-app-design-system";
-
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
+import { BonusAvailableContent } from "@io-app/api-types/generated/definitions/content/BonusAvailableContent";
+import { Badge, Body, H6, HSpacer } from "@io-app/design-system";
+import I18n from "i18next";
 import { FunctionComponent } from "react";
 import { Image, Pressable, StyleSheet, View, ViewStyle } from "react-native";
-import I18n from "i18next";
-import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
+
 import { getRemoteLocale } from "../../../messages/utils/ctas";
 
-type AvailableBonusItemState = "incoming" | "active" | "completed";
+type AvailableBonusItemState = "active" | "completed" | "incoming";
 
 type Props = {
   bonusItem: BonusAvailable;
@@ -39,25 +39,26 @@ const styles = StyleSheet.create({
 
 const renderBadge = (state: AvailableBonusItemState) => {
   switch (state) {
-    case "incoming":
-      return (
-        <Badge variant="default" text={I18n.t("wallet.methods.comingSoon")} />
-      );
+    case "active":
+      return null;
     case "completed":
       return (
         <Badge
-          variant="default"
           text={I18n.t("bonus.state.completed.caption")}
+          variant="default"
         />
       );
-    case "active":
-      return null;
+    case "incoming":
+      return (
+        <Badge text={I18n.t("wallet.methods.comingSoon")} variant="default" />
+      );
   }
 };
 
 /**
- * Component to show the listItem for available bonuses list,
- * clicking the item user navigates to the request of the related bonus
+ * Component to show the listItem for available bonuses list, clicking the item
+ * user navigates to the request of the related bonus
+ *
  * @param props
  */
 export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {
@@ -69,8 +70,8 @@ export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {
   return (
     <Pressable
       accessibilityRole="button"
-      style={styles.listItem}
       onPress={props.onPress}
+      style={styles.listItem}
       testID={`AvailableBonusItem-${bonusItem.id_type}`}
     >
       <View style={styles.columnLeft}>
@@ -96,8 +97,8 @@ export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {
         {bonusItem.cover && (
           <Image
             accessibilityIgnoresInvertColors
-            style={styles.methodImage}
             source={{ uri: bonusItem.cover }}
+            style={styles.methodImage}
           />
         )}
       </View>

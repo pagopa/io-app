@@ -1,14 +1,15 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-import { setFastLoginOptIn } from "../actions/optInActions";
+
 import { Action } from "../../../../../store/actions/types";
+import { isDevEnv } from "../../../../../utils/environment";
 import {
   logoutFailure,
   logoutSuccess
 } from "../../../../authentication/common/store/actions";
-import { isDevEnv } from "../../../../../utils/environment";
 import { consolidateActiveSessionLoginData } from "../../../activeSessionLogin/store/actions";
+import { setFastLoginOptIn } from "../actions/optInActions";
 
 export type FastLoginOptInState = {
   enabled: boolean | undefined;
@@ -23,18 +24,18 @@ const fastLoginOptInReducer = (
   action: Action
 ): FastLoginOptInState => {
   switch (action.type) {
-    case getType(logoutSuccess):
+    case getType(consolidateActiveSessionLoginData):
+      return {
+        ...state,
+        enabled: action.payload.fastLoginOptIn
+      };
     case getType(logoutFailure):
+    case getType(logoutSuccess):
       return fastLoginOptInInitialState;
     case getType(setFastLoginOptIn):
       return {
         ...state,
         enabled: action.payload.enabled
-      };
-    case getType(consolidateActiveSessionLoginData):
-      return {
-        ...state,
-        enabled: action.payload.fastLoginOptIn
       };
     default:
       return state;

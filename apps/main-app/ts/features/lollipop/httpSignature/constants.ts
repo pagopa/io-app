@@ -9,7 +9,7 @@ export const constants = {
     CONTENT_LENGTH: "Content-Length"
   },
   SHA_256: "sha256",
-  SIGNATURE_PREFIX: (d: number = 1) => `sig${d}=`,
+  SIGNATURE_PREFIX: (d = 1) => `sig${d}=`,
   UTF8: "utf8",
   X_PAGOPA_LOLLIPOP_METHOD: "x-pagopa-lollipop-original-method",
   X_PAGOPA_LOLLIPOP_ORIGINAL_URL: "x-pagopa-lollipop-original-url"

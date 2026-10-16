@@ -1,6 +1,6 @@
 import {
-  IOColors,
   Icon,
+  IOColors,
   IOIconSizeScale,
   IOLogoPaymentExtType,
   IOLogoPaymentType,
@@ -9,31 +9,30 @@ import {
   LogoPayment,
   LogoPaymentExt,
   useIOTheme
-} from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
+} from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 
 export type LogoPaymentWithFallback = {
   brand?: string;
   fallbackIconColor?: IOColors;
-  size?: IOIconSizeScale;
   isExtended?: boolean;
-};
-export type LogoPaymentExtOrDefaultIconProps = {
-  cardIcon?: IOLogoPaymentExtType;
-  fallbackIconColor?: IOColors;
   size?: IOIconSizeScale;
 };
 /**
- * This component renders either
- * - a LogoPayment/LogoPaymentExt component
- * - a default credit card icon
+ * This component renders either:
+ *
+ * - A LogoPayment/LogoPaymentExt component
+ * - A default credit card icon
+ *
  * @param cardIcon: IOLogoPaymentType icon
- * @param size: the size of the icon (standard is 24/48)
- * @param fallbackIconColor: default icon color (standard is grey-700)
- * @param isExtended: if true, renders a LogoPaymentExt component
- * @returns a LogoPayment/LogopaymentExt component if the cardIcon is supported, a default credit card icon otherwise
+ * @param size: The size of the icon (standard is 24/48)
+ * @param fallbackIconColor: Default icon color (standard is grey-700)
+ * @param isExtended: If true, renders a LogoPaymentExt component
+ * @returns A LogoPayment/LogopaymentExt component if the cardIcon is supported,
+ *   a default credit card icon otherwise
  */
 export const LogoPaymentWithFallback = ({
   brand,
@@ -53,9 +52,9 @@ export const LogoPaymentWithFallback = ({
     O.fold(
       () => (
         <Icon
+          color={fallbackIconColor ?? theme["icon-default"]}
           name="creditCard"
           size={size}
-          color={fallbackIconColor ?? theme["icon-default"]}
         />
       ),
       brand =>

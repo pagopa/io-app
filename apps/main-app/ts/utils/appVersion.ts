@@ -1,10 +1,11 @@
-import * as E from "fp-ts/lib/Either";
 import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import semver, { SemVer } from "semver";
-import { pipe } from "fp-ts/lib/function";
-import { NumberFromString } from "./number";
+
 import { getDeviceAppVersion } from "./device";
+import { NumberFromString } from "./number";
 
 export const storeUrl = Platform.select({
   ios: "itms-apps://itunes.apple.com/it/app/io/id1501681835",
@@ -33,9 +34,10 @@ const validateFormat = (value: string): E.Either<Error, SemVer> =>
   );
 
 /**
- * return true if appVersion >= minAppVersion
- * @param minAppVersion the min version supported
- * @param appVersion the version to be tested
+ * Return true if appVersion >= minAppVersion
+ *
+ * @param minAppVersion The min version supported
+ * @param appVersion The version to be tested
  */
 export const isVersionSupported = (
   minAppVersion: string,

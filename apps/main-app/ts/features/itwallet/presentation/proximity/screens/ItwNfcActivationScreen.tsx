@@ -1,64 +1,93 @@
 import I18n from "i18next";
+import { useEffect, useRef } from "react";
 import { Alert, Platform } from "react-native";
+
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import {
+  trackItwProximityNfcActivation,
+  trackItwProximityNfcActivationClose,
+  trackItwProximityNfcGoToSettings
+} from "../analytics";
 import { ItwProximityMachineContext } from "../machine/provider";
+import { selectIsLoading } from "../machine/selectors";
 import { checkNfcActivation, openNfcPreferences } from "../utils/nfc";
 
 export const ItwNfcActivationScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
+  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
+  const nfcStartupPending = useRef(false);
+
+  useEffect(() => {
+    trackItwProximityNfcActivation();
+  }, []);
+
+  useEffect(() => {
+    const subscription = machineRef.subscribe(snapshot => {
+      if (!nfcStartupPending.current) {
+        return;
+      }
+      if (
+        snapshot.context.engagementMode === "nfc" &&
+        (snapshot.matches({ Presentment: "Starting" }) ||
+          snapshot.matches({ Presentment: "AwaitingNfcStart" }))
+      ) {
+        return;
+      }
+
+      nfcStartupPending.current = false;
+      if (snapshot.matches({ Nfc: "RequireActivation" })) {
+        showNfcActivationAlert(() => machineRef.send({ type: "close" }));
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [machineRef]);
 
   useHeaderSecondLevel({
     title: "",
     goBack: () => {
+      trackItwProximityNfcActivationClose();
       machineRef.send({ type: "close" });
     }
   });
 
   const handleContinue = async () => {
-    const isNfcActive = await checkNfcActivation();
-    if (isNfcActive) {
+    // iOS contactless consent is confirmed by the machine's nfc-started event.
+    if (Platform.OS === "ios") {
+      nfcStartupPending.current = true;
+      machineRef.send({ type: "continue" });
+      return;
+    }
+    if (await checkNfcActivation()) {
       machineRef.send({ type: "continue" });
       return;
     }
 
-    Alert.alert(
-      I18n.t(
-        "features.itWallet.presentation.proximity.nfc.activation.alert.title"
-      ),
-      I18n.t(
-        "features.itWallet.presentation.proximity.nfc.activation.alert.message"
-      ),
-      [
-        {
-          text: I18n.t(
-            "features.itWallet.presentation.proximity.nfc.activation.alert.action"
-          ),
-          onPress: () => {
-            void openNfcPreferences();
-          }
-        },
-        {
-          text: I18n.t(
-            "features.itWallet.presentation.proximity.nfc.activation.alert.close"
-          ),
-          onPress: () => {
-            machineRef.send({ type: "close" });
-          },
-          style: "cancel"
-        }
-      ]
-    );
+    showNfcActivationAlert(() => machineRef.send({ type: "close" }));
   };
 
   return (
     <IOScrollViewWithListItems
-      title={I18n.t(
-        "features.itWallet.presentation.proximity.nfc.activation.title"
-      )}
-      subtitle={I18n.t(
-        "features.itWallet.presentation.proximity.nfc.activation.subtitle"
-      )}
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          disabled: isLoading,
+          label: I18n.t(
+            "features.itWallet.presentation.proximity.nfc.activation.actions.primary"
+          ),
+          onPress: () => {
+            trackItwProximityNfcGoToSettings();
+            void openNfcPreferences();
+          }
+        },
+        secondary: {
+          disabled: isLoading,
+          label: I18n.t(
+            "features.itWallet.presentation.proximity.nfc.activation.actions.secondary"
+          ),
+          onPress: () => void handleContinue()
+        }
+      }}
       listItemHeaderLabel={I18n.t(
         "features.itWallet.presentation.proximity.nfc.activation.listItems.title"
       )}
@@ -80,7 +109,9 @@ export const ItwNfcActivationScreen = () => {
             "features.itWallet.presentation.proximity.nfc.activation.listItems.step2.label"
           ),
           value: I18n.t(
-            "features.itWallet.presentation.proximity.nfc.activation.listItems.step2.value"
+            Platform.OS === "ios"
+              ? "features.itWallet.presentation.proximity.nfc.activation.listItems.step2.value_ios"
+              : "features.itWallet.presentation.proximity.nfc.activation.listItems.step2.value"
           ),
           icon: "systemAppsAndroid"
         },
@@ -89,28 +120,50 @@ export const ItwNfcActivationScreen = () => {
             "features.itWallet.presentation.proximity.nfc.activation.listItems.step3.label"
           ),
           value: I18n.t(
-            "features.itWallet.presentation.proximity.nfc.activation.listItems.step3.value"
+            Platform.OS === "ios"
+              ? "features.itWallet.presentation.proximity.nfc.activation.listItems.step3.value_ios"
+              : "features.itWallet.presentation.proximity.nfc.activation.listItems.step3.value"
           ),
           icon: "systemToggleInstructions"
         }
       ]}
-      actions={{
-        type: "TwoButtons",
-        primary: {
-          label: I18n.t(
-            "features.itWallet.presentation.proximity.nfc.activation.actions.primary"
-          ),
-          onPress: () => {
-            void openNfcPreferences();
-          }
-        },
-        secondary: {
-          label: I18n.t(
-            "features.itWallet.presentation.proximity.nfc.activation.actions.secondary"
-          ),
-          onPress: handleContinue
-        }
-      }}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.proximity.nfc.activation.subtitle"
+      )}
+      title={I18n.t(
+        "features.itWallet.presentation.proximity.nfc.activation.title"
+      )}
     />
   );
 };
+
+const showNfcActivationAlert = (onClose: () => void) =>
+  Alert.alert(
+    I18n.t(
+      "features.itWallet.presentation.proximity.nfc.activation.alert.title"
+    ),
+    I18n.t(
+      "features.itWallet.presentation.proximity.nfc.activation.alert.message"
+    ),
+    [
+      {
+        text: I18n.t(
+          "features.itWallet.presentation.proximity.nfc.activation.alert.action"
+        ),
+        onPress: () => {
+          trackItwProximityNfcGoToSettings();
+          void openNfcPreferences();
+        }
+      },
+      {
+        text: I18n.t(
+          "features.itWallet.presentation.proximity.nfc.activation.alert.close"
+        ),
+        onPress: () => {
+          trackItwProximityNfcActivationClose();
+          onClose();
+        },
+        style: "cancel"
+      }
+    ]
+  );

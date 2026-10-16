@@ -1,6 +1,7 @@
-import { VStack } from "@pagopa/io-app-design-system";
+import { VStack } from "@io-app/design-system";
 import { memo } from "react";
 import { View } from "react-native";
+
 import { ItwClaimsSelector } from "../../common/components/ItwClaimsSelector";
 import { ProximityDetails } from "../utils/types";
 
@@ -15,10 +16,10 @@ const ItwProximityPresentationDetails = ({
     <VStack space={24}>
       {data.map(({ claimsToDisplay, credentialType }) => (
         <ItwClaimsSelector
-          key={credentialType}
           credentialType={credentialType}
-          items={claimsToDisplay}
           defaultExpanded
+          items={claimsToDisplay}
+          key={credentialType}
           selectionEnabled={false}
         />
       ))}

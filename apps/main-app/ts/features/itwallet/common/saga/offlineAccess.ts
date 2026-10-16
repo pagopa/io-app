@@ -1,6 +1,14 @@
 import { AppStateStatus } from "react-native";
-import { fork, put, select, takeLatest } from "typed-redux-saga/macro";
-import { ActionType, getType } from "typesafe-actions";
+import {
+  call,
+  fork,
+  put,
+  select,
+  take,
+  takeLatest
+} from "typed-redux-saga/macro";
+import { Action, ActionType, getType, isActionOf } from "typesafe-actions";
+
 import { backgroundActivityTimeout } from "../../../../config";
 import {
   applicationChangeState,
@@ -15,59 +23,71 @@ import {
   resetOfflineAccessReason,
   setOfflineAccessReason
 } from "../../../ingress/store/actions";
+import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
+import { checkWalletInstanceStateOfflineSaga } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import {
   itwOfflineAccessCounterReset,
   itwOfflineAccessCounterUp
 } from "../store/actions/securePreferences";
-import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
-import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 
 /**
- * Handles the offline access counter reset by listening for the wallet
- * instance status store success actions.
+ * Waits for offline access before proceeding. Returns immediately when an
+ * offline reason is already available; otherwise waits for
+ * `setOfflineAccessReason`.
  *
- * The offline access counter is reset when the wallet instance status is updated
- * successfully, indicating that the user has returned online and the wallet instance
- * stattus is refreshed.
+ * @returns A generator that yields until offline access is active.
  */
-function* handleItwOfflineAccessCounterReset() {
-  yield* put(itwOfflineAccessCounterReset());
-}
+export function* waitForOfflineAccess() {
+  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
 
-/**
- * Increments the offline access counter if the startup status is OFFLINE.
- *
- * @param startupStatus - The current startup status of the application.
- */
-function* handleItwOfflineAccessCounterUp(
-  offlineAccessReason?: OfflineAccessReasonEnum
-) {
-  if (offlineAccessReason) {
-    yield* put(itwOfflineAccessCounterUp());
+  if (offlineAccessReason !== undefined) {
+    return;
   }
+
+  yield* take(
+    (action: Action): action is ReturnType<typeof setOfflineAccessReason> =>
+      isActionOf(setOfflineAccessReason, action) && action.payload !== undefined
+  );
 }
 
 /**
- * Increments the offline access counter if the offline access reason is defined.
- * It also listens for the offline access reason action
- * to increment the counter if defined or reset it if not.
+ * Starts offline access bookkeeping and checks the valid Wallet Instance
+ * against its cached Status List after device-offline access begins.
  */
-function* watchItwOfflineAccessCounterUp() {
+export function* watchItwOfflineSaga() {
+  /**
+   * Handles the offline access counter reset by listening for the wallet
+   * instance status store success actions.
+   *
+   * The offline access counter is reset when the wallet instance status is
+   * updated successfully, indicating that the user has returned online and the
+   * wallet instance status is refreshed.
+   */
   yield* takeLatest(
-    getType(setOfflineAccessReason),
-    function* (action: ActionType<typeof setOfflineAccessReason>) {
-      yield* handleItwOfflineAccessCounterUp(action.payload);
+    getType(itwUpdateWalletInstanceStatus.success),
+    function* () {
+      yield* put(itwOfflineAccessCounterReset());
     }
   );
 
-  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
-  yield* handleItwOfflineAccessCounterUp(offlineAccessReason);
+  // Wait for offline access signal before proceeding with offline access logic
+  yield* waitForOfflineAccess();
+
+  // Check the valid Wallet Instance against its cached Status List after
+  // device-offline access begins
+  yield* call(checkWalletInstanceStateOfflineSaga);
+  // Increment the offline access counter to indicate that the user has accessed
+  // the app in offline mode.
+  yield* put(itwOfflineAccessCounterUp());
+  // Start watching for background activity to reset offline access if the app
+  // is in the background for too long
+  yield* fork(watchOfflineWalletBackgroundActivity);
 }
 
 /**
- * Watches for changes in the application state and resets the offline access reason
- * if the app goes to the background for a certain amount of time.
+ * Watches for changes in the application state and resets the offline access
+ * reason if the app goes to the background for a certain amount of time.
  */
 function* watchOfflineWalletBackgroundActivity() {
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
@@ -128,17 +148,4 @@ function* watchOfflineWalletBackgroundActivity() {
       }
     }
   );
-}
-
-/**
- * Watch actions that trigger the offline access counter reset.
- */
-export function* watchItwOfflineAccess() {
-  yield* takeLatest(
-    getType(itwUpdateWalletInstanceStatus.success),
-    handleItwOfflineAccessCounterReset
-  );
-
-  yield* fork(watchItwOfflineAccessCounterUp);
-  yield* fork(watchOfflineWalletBackgroundActivity);
 }

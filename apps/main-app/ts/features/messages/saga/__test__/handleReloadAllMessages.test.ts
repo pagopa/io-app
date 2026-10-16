@@ -2,17 +2,17 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { reloadAllMessages as action } from "../../store/actions";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import {
   apiPayload,
   defaultRequestError,
   defaultRequestPayload,
   successReloadMessagesPayload
 } from "../../__mocks__/messages";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { handleReloadAllMessages } from "../handleReloadAllMessages";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { reloadAllMessages as action } from "../../store/actions";
 import { getCommunicationClient } from "../commons";
+import { handleReloadAllMessages } from "../handleReloadAllMessages";
 
 jest.mock("../commons");
 

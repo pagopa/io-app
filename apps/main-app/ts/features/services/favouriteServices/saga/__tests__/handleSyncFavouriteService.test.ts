@@ -1,15 +1,16 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import MockDate from "mockdate";
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga/effects";
-import { addFavouriteServiceSuccess } from "../../store/actions";
-import { favouriteServiceByIdSelector } from "../../store/selectors";
+
+import { loadServiceDetail } from "../../../details/store/actions/details";
 import {
   createMockService,
   createMockServiceDetails
 } from "../../__mocks__/favouriteServicesMocks";
+import { addFavouriteServiceSuccess } from "../../store/actions";
+import { favouriteServiceByIdSelector } from "../../store/selectors";
 import { handleSyncFavouriteService } from "../handleSyncFavouriteService";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { loadServiceDetail } from "../../../details/store/actions/details";
 
 const mockedDate = Date.now();
 MockDate.set(mockedDate);

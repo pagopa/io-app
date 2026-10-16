@@ -2,6 +2,7 @@ import { useIsFocused } from "@react-navigation/core";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
+
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
@@ -12,25 +13,30 @@ import { ItwScreenFlowContext } from "../../analytics/utils/types";
 import { useItwDisableGestureNavigation } from "./useItwDisableGestureNavigation";
 
 type ItwDismissalDialogProps = {
-  handleDismiss?: () => void;
+  customLabels?: {
+    body?: string;
+    cancelLabel?: string;
+    confirmLabel?: string;
+    title?: string;
+  };
   dismissalContext?: ItwScreenFlowContext;
   enabled?: boolean;
-  customLabels?: {
-    title?: string;
-    body?: string;
-    confirmLabel?: string;
-    cancelLabel?: string;
-  };
+  handleDismiss?: () => void;
 };
 
 /**
- * Allows to show a dismissal dialog in which the user must confirm the desire to close the current flow.
- * This hook also handles the hardware back button to show the dialog when the user presses the back button.
- * @param handleDismiss - An optionalfunction that will be called when the user confirms the dismissal.
- * @param dismissalContext - An optional dismissal context to be used for analytics tracking.
+ * Allows to show a dismissal dialog in which the user must confirm the desire
+ * to close the current flow. This hook also handles the hardware back button to
+ * show the dialog when the user presses the back button.
+ *
+ * @param handleDismiss - An optionalfunction that will be called when the user
+ *   confirms the dismissal.
+ * @param dismissalContext - An optional dismissal context to be used for
+ *   analytics tracking.
  * @param enabled - If false, disables the internal hardware back handler.
- * @param customLabels - Optional object to override the default title, message, confirm button label, and cancel button label.
- * @returns a function that can be used to show the dialog
+ * @param customLabels - Optional object to override the default title, message,
+ *   confirm button label, and cancel button label.
+ * @returns A function that can be used to show the dialog
  */
 export const useItwDismissalDialog = ({
   handleDismiss,

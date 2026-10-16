@@ -3,13 +3,15 @@ import {
   TabItem,
   TabNavigation,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { ReactNode, useCallback, useState } from "react";
 import { ScrollView } from "react-native";
+
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { ItwBatchCredentialsSection } from "../components/ItwBatchCredentialsSection";
 import { ItwCardsHeaderSection } from "../components/ItwCardsHeaderSection";
 import { ItwCardsSection } from "../components/ItwCardsSection";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
@@ -25,13 +27,14 @@ import { ItwSpecsVersionSection } from "../components/ItwSpecsVersionSection";
 import { ItwStatusListSection } from "../components/ItwStatusListSection";
 
 type PlaygroundTab = {
-  label: string;
   content: ReactNode;
+  label: string;
 };
 
 /**
  * ITW Playground screen
- * @returns a screen with a list of playgrounds for the ITW
+ *
+ * @returns A screen with a list of playgrounds for the ITW
  */
 const ItwPlayground = () => {
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -62,7 +65,12 @@ const ItwPlayground = () => {
     },
     {
       label: "Issuance",
-      content: <ItwPidIssuanceSection />
+      content: (
+        <>
+          <ItwPidIssuanceSection />
+          <ItwBatchCredentialsSection />
+        </>
+      )
     },
     {
       label: "ISO-18013",
@@ -102,12 +110,12 @@ const ItwPlayground = () => {
   return (
     <VStack space={16} style={{ paddingBottom: screenEndMargin }}>
       <TabNavigation
-        tabAlignment="start"
-        selectedIndex={page}
         onItemPress={setPage}
+        selectedIndex={page}
+        tabAlignment="start"
       >
         {tabs.map(({ label }) => (
-          <TabItem key={label} label={label} accessibilityLabel={label} />
+          <TabItem accessibilityLabel={label} key={label} label={label} />
         ))}
       </TabNavigation>
       <ScrollView contentContainerStyle={{ paddingBottom: screenEndSafeArea }}>

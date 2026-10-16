@@ -1,7 +1,7 @@
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
-import { IOReceivedNotification } from "../../../../../definitions/pn/IOReceivedNotification";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { IOReceivedNotification } from "@io-app/api-types/generated/definitions/pn/IOReceivedNotification";
 
 export type PNMessage = IOReceivedNotification & {
-  created_at: Date;
   attachments?: ReadonlyArray<ThirdPartyAttachment>;
+  created_at: Date;
 };

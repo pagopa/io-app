@@ -1,17 +1,18 @@
-import { FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
-import i18n from "i18next";
+import { FeatureInfo, VSpacer } from "@io-app/design-system";
+import I18n from "i18next";
 import { useEffect } from "react";
+
 import { IOScrollViewCentredContent } from "../../../../../components/ui/IOScrollViewCentredContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { openWebUrl } from "../../../../../utils/url";
-import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import { useIOSelector } from "../../../../../store/hooks";
 import { sendAarInAppDelegationUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { openWebUrl } from "../../../../../utils/url";
 import {
   trackSendAarNotificationOpeningNfcNotSupported,
   trackSendAarNotificationOpeningNfcNotSupportedClosure,
   trackSendAarNotificationOpeningNfcNotSupportedInfo
 } from "../../analytics";
+import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 
 export const SendAarNfcNotSupportedComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
@@ -26,18 +27,13 @@ export const SendAarNfcNotSupportedComponent = () => {
     trackSendAarNotificationOpeningNfcNotSupported();
   }, []);
 
-  const featureInfoText = i18n.t(
+  const featureInfoText = I18n.t(
     "features.pn.aar.flow.delegated.nfcNotSupported.featureInfoText",
     { returnObjects: true }
   );
 
   return (
     <IOScrollViewCentredContent
-      pictogram="updateOS"
-      title={i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.title")}
-      description={i18n.t(
-        "features.pn.aar.flow.delegated.nfcNotSupported.body"
-      )}
       actions={{
         type: "SingleButton",
         primary: {
@@ -47,10 +43,15 @@ export const SendAarNfcNotSupportedComponent = () => {
             trackSendAarNotificationOpeningNfcNotSupportedInfo();
             openWebUrl(helpCenterUrl);
           },
-          label: i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.cta")
+          label: I18n.t("features.pn.aar.flow.delegated.nfcNotSupported.cta")
         }
       }}
-      alwaysBounceVertical={false}
+      contentContainerStyle={{
+        paddingHorizontal: 32
+      }}
+      description={I18n.t(
+        "features.pn.aar.flow.delegated.nfcNotSupported.body"
+      )}
       headerConfig={{
         title: "",
         type: "singleAction",
@@ -60,20 +61,19 @@ export const SendAarNfcNotSupportedComponent = () => {
             trackSendAarNotificationOpeningNfcNotSupportedClosure();
             terminateFlow();
           },
-          accessibilityLabel: i18n.t(
+          accessibilityLabel: I18n.t(
             "global.accessibility.contextualHelp.close"
           ),
           testID: "close-x"
         }
       }}
-      contentContainerStyle={{
-        paddingHorizontal: 32
-      }}
+      pictogram="updateOS"
+      title={I18n.t("features.pn.aar.flow.delegated.nfcNotSupported.title")}
     >
       <VSpacer size={24} />
-      <FeatureInfo iconName="contactless" body={featureInfoText[0]} />
+      <FeatureInfo body={featureInfoText[0]} iconName="contactless" />
       <VSpacer size={24} />
-      <FeatureInfo iconName="history" body={featureInfoText[1]} />
+      <FeatureInfo body={featureInfoText[1]} iconName="history" />
     </IOScrollViewCentredContent>
   );
 };

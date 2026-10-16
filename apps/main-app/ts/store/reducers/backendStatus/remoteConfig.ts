@@ -1,22 +1,22 @@
-import * as B from "fp-ts/lib/boolean";
+import { AppFeedbackConfig } from "@io-app/api-types/generated/definitions/content/AppFeedbackConfig";
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { BancomatPayConfig } from "@io-app/api-types/generated/definitions/content/BancomatPayConfig";
+import { Banner } from "@io-app/api-types/generated/definitions/content/Banner";
+import { BarcodesScannerConfig } from "@io-app/api-types/generated/definitions/content/BarcodesScannerConfig";
+import { FimsServiceConfiguration } from "@io-app/api-types/generated/definitions/content/FimsServiceConfiguration";
+import { OSPerPlatform } from "@io-app/api-types/generated/definitions/content/OSPerPlatform";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
-import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { BancomatPayConfig } from "../../../../definitions/content/BancomatPayConfig";
-import { Banner } from "../../../../definitions/content/Banner";
-import { BarcodesScannerConfig } from "../../../../definitions/content/BarcodesScannerConfig";
-import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
+
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
-  fciEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled
 } from "../../../config";
@@ -30,7 +30,6 @@ import {
 } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
-import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -137,8 +136,8 @@ export const assistanceToolConfigSelector = createSelector(
 );
 
 /**
- * return the remote config about paypal enabled/disabled
- * if there is no data, false is the default value -> (paypal disabled)
+ * Return the remote config about paypal enabled/disabled if there is no data,
+ * false is the default value -> (paypal disabled)
  */
 export const isPaypalEnabledSelector = createSelector(
   remoteConfigSelector,
@@ -151,8 +150,8 @@ export const isPaypalEnabledSelector = createSelector(
 );
 
 /**
- * return the remote config about BancomatPay
- * if no data is available the default is considering all flags set to false
+ * Return the remote config about BancomatPay if no data is available the
+ * default is considering all flags set to false
  */
 export const bancomatPayConfigSelector = createSelector(
   remoteConfigSelector,
@@ -169,8 +168,8 @@ export const bancomatPayConfigSelector = createSelector(
 );
 
 /**
- * return the remote config about CGN enabled/disabled
- * if there is no data, false is the default value -> (CGN disabled)
+ * Return the remote config about CGN enabled/disabled if there is no data,
+ * false is the default value -> (CGN disabled)
  */
 export const isCGNEnabledSelector = (state: GlobalState) =>
   pipe(
@@ -181,8 +180,9 @@ export const isCGNEnabledSelector = (state: GlobalState) =>
   );
 
 /**
- * Return true if CGN is enabled, but only after backend status is loaded.
- * This prevents CGN from being disabled by default when backend status is not yet loaded.
+ * Return true if CGN is enabled, but only after backend status is loaded. This
+ * prevents CGN from being disabled by default when backend status is not yet
+ * loaded.
  */
 export const isCGNEnabledAfterLoadSelector = createSelector(
   [isBackendStatusLoadedSelector, isCGNEnabledSelector],
@@ -221,11 +221,17 @@ export const fimsServiceConfiguration = createSelector(
     )
 );
 
+export const fimsTrackingEnrichedUrlsSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): ReadonlyArray<string> =>
+    O.toUndefined(remoteConfig)?.fims.trackingEnrichedUrls ?? emptyArray
+);
+
 /**
- * Checks if a service should share iOS cookies in the FIMS flow.
- * Returns true if the serviceId is in the iOSCookieDisabledServiceIds list,
- * false if it's not in the list.
- * If no configuration is available, returns false by default (cookies are shared).
+ * Checks if a service should share iOS cookies in the FIMS flow. Returns true
+ * if the serviceId is in the iOSCookieDisabledServiceIds list, false if it's
+ * not in the list. If no configuration is available, returns false by default
+ * (cookies are shared).
  */
 export const fimsServiceIdInCookieDisabledListSelector = (
   state: GlobalState,
@@ -248,9 +254,9 @@ export const oidcProviderDomainSelector = (state: GlobalState) =>
   );
 
 /**
- * Return the remote config about the Premium Messages opt-in/out
- * screens enabled/disable. If there is no data or the local Feature Flag is
- * disabled, false is the default value -> (Opt-in/out screen disabled)
+ * Return the remote config about the Premium Messages opt-in/out screens
+ * enabled/disable. If there is no data or the local Feature Flag is disabled,
+ * false is the default value -> (Opt-in/out screen disabled)
  */
 export const isPremiumMessagesOptInOutEnabledSelector = createSelector(
   remoteConfigSelector,
@@ -265,9 +271,9 @@ export const isPremiumMessagesOptInOutEnabledSelector = createSelector(
 );
 
 /**
- * return the remote config about CDC enabled/disabled
- * if there is no data or the local Feature Flag is disabled,
- * false is the default value -> (CDC disabled)
+ * Return the remote config about CDC enabled/disabled if there is no data or
+ * the local Feature Flag is disabled, false is the default value -> (CDC
+ * disabled)
  */
 export const isCdcAppVersionSupportedSelector = createSelector(
   remoteConfigSelector,
@@ -288,9 +294,9 @@ export const isCdcAppVersionSupportedSelector = createSelector(
 );
 
 /**
- * Return the remote config about the barcodes scanner.
- * If no data is available or the local feature flag is falsy
- * the default is considering all flags set to false.
+ * Return the remote config about the barcodes scanner. If no data is available
+ * or the local feature flag is falsy the default is considering all flags set
+ * to false.
  */
 export const barcodesScannerConfigSelector = createSelector(
   remoteConfigSelector,
@@ -308,8 +314,8 @@ export const barcodesScannerConfigSelector = createSelector(
 );
 
 /**
- * Return the remote config about PN enabled/disabled
- * if there is no data, false is the default value -> (PN disabled)
+ * Return the remote config about PN enabled/disabled if there is no data, false
+ * is the default value -> (PN disabled)
  */
 export const isPnRemoteEnabledSelector = (state: GlobalState) =>
   pipe(
@@ -318,9 +324,7 @@ export const isPnRemoteEnabledSelector = (state: GlobalState) =>
     O.getOrElse(() => false)
   );
 
-/**
- * Return false if the app needs to be updated in order to use PN.
- */
+/** Return false if the app needs to be updated in order to use PN. */
 export const isPnAppVersionSupportedSelector = (state: GlobalState) =>
   pipe(
     state,
@@ -336,9 +340,7 @@ export const isPnAppVersionSupportedSelector = (state: GlobalState) =>
     O.getOrElse(() => false)
   );
 
-/**
- * Return the minimum app version required to use PN.
- */
+/** Return the minimum app version required to use PN. */
 export const pnMinAppVersionSelector = (state: GlobalState) =>
   pipe(
     state.remoteConfig,
@@ -350,9 +352,7 @@ export const pnMinAppVersionSelector = (state: GlobalState) =>
     O.getOrElse(() => "-")
   );
 
-/**
- * Return the url of the PN frontend.
- */
+/** Return the url of the PN frontend. */
 export const pnFrontendUrlSelector = (state: GlobalState) =>
   pipe(
     state.remoteConfig,
@@ -387,14 +387,13 @@ export const preferredPspsByOriginSelector = createSelector(
 );
 
 /**
- * Return the remote config about FCI enabled/disabled
- * if there is no data or the local Feature Flag is disabled,
- * false is the default value -> (FCI disabled)
+ * Return the remote config about FCI enabled/disabled if there is no data or
+ * the local Feature Flag is disabled, false is the default value -> (FCI
+ * disabled)
  */
 export const isFciEnabledSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): boolean =>
-    fciEnabled &&
     pipe(
       remoteConfig,
       O.map(config =>
@@ -539,9 +538,7 @@ export const absolutePortalLinksFallback = {
   io_showcase: "https://io.italia.it/"
 };
 
-/**
- * returns the absolute URLs for showcase and logout (io-web) sites
- */
+/** Returns the absolute URLs for showcase and logout (io-web) sites */
 export const absolutePortalLinksSelector = createSelector(
   remoteConfigSelector,
   remoteConfig =>
@@ -555,8 +552,9 @@ export const absolutePortalLinksSelector = createSelector(
 type hostType = keyof ReturnType<typeof absolutePortalLinksSelector>;
 
 /**
- * Selector to dynamically generate a complete URL by combining a base URL and a path.
- * This selector is useful when constructing URLs based on configuration or application state.
+ * Selector to dynamically generate a complete URL by combining a base URL and a
+ * path. This selector is useful when constructing URLs based on configuration
+ * or application state.
  */
 export const generateDynamicUrlSelector = createSelector(
   // Step 1: Input selector that retrieves the absolutePortalLinks object from the state.
@@ -582,7 +580,7 @@ export const generateDynamicUrlSelector = createSelector(
 
       // Append the provided path to the base URL.
       return `${baseUrl}${path}`;
-    } catch (error) {
+    } catch {
       // In case of an error (e.g., missing key or invalid path), return the base URL key as a fallback.
       return baseUrlKey;
     }
@@ -590,8 +588,8 @@ export const generateDynamicUrlSelector = createSelector(
 );
 
 /**
- * Return the remote feature flag about the payment feedback banner enabled/disabled
- * that is shown after a successful payment.
+ * Return the remote feature flag about the payment feedback banner
+ * enabled/disabled that is shown after a successful payment.
  */
 export const isPaymentsFeedbackBannerEnabledSelector = createSelector(
   remoteConfigSelector,
@@ -629,8 +627,8 @@ export const isPaymentsWebViewFlowEnabledSelector = createSelector(
 );
 
 /**
- * Return the remote feature flag about the payment-method-specific psp banner enabled/disabled
- * that is shown after a successful payment.
+ * Return the remote feature flag about the payment-method-specific psp banner
+ * enabled/disabled that is shown after a successful payment.
  */
 export const isPaymentsPspBannerEnabledSelector = (paymentMethodName: string) =>
   createSelector(remoteConfigSelector, (remoteConfig): boolean =>
@@ -650,9 +648,7 @@ export const isPaymentsPspBannerEnabledSelector = (paymentMethodName: string) =>
     )
   );
 
-/**
- * Return the remote config about the payment-method-specific psp banner
- */
+/** Return the remote config about the payment-method-specific psp banner */
 export const paymentsPspBannerConfigSelector = (paymentMethodName: string) =>
   createSelector(remoteConfigSelector, (remoteConfig): Banner | undefined =>
     pipe(
@@ -662,9 +658,7 @@ export const paymentsPspBannerConfigSelector = (paymentMethodName: string) =>
     )
   );
 
-/**
- * Return the remote config about the payment feedback banner
- */
+/** Return the remote config about the payment feedback banner */
 export const paymentsFeedbackBannerConfigSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): Banner | undefined =>
@@ -747,6 +741,24 @@ export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
       )
   );
 
+export const messageSurveyBannerUriSelector = (
+  state: GlobalState
+): string | undefined => {
+  const remoteConfig = remoteConfigSelector(state);
+
+  const isEnabled = isPropertyWithMinAppVersionEnabled({
+    remoteConfig,
+    mainLocalFlag: true,
+    configPropertyName: "messages_feedback_banner"
+  });
+
+  if (O.isNone(remoteConfig) || !isEnabled) {
+    return undefined;
+  }
+
+  return remoteConfig.value.messages_feedback_banner?.feedback_uri;
+};
+
 export const appFeedbackEnabledSelector = (state: GlobalState) =>
   pipe(state, remoteConfigSelector, remoteConfig =>
     isPropertyWithMinAppVersionEnabled({
@@ -754,42 +766,6 @@ export const appFeedbackEnabledSelector = (state: GlobalState) =>
       mainLocalFlag: true,
       configPropertyName: "app_feedback"
     })
-  );
-
-/**
- * This selector is used to know if IOMarkdown is enabled on Messages and Services
- *
- * @returns true (enabled) if:
- * - the IOMarkdown configuration is missing
- * - the min_app_version parameter is missing
- * - current app version is greater than or equal to the min app version
- * false (disabled) if:
- * - CDN data is not available
- * - current app version is lower than the min app version
- * - min app version is set to 0
- */
-export const isIOMarkdownEnabledForMessagesAndServicesSelector = (
-  state: GlobalState
-) =>
-  pipe(
-    state,
-    remoteConfigSelector,
-    O.fold(
-      () => false, // CDN data not available, IOMarkdown is disabled
-      remoteConfig =>
-        pipe(
-          remoteConfig.ioMarkdown?.min_app_version != null,
-          B.fold(
-            () => true, // Either IOMarkdown configuration missing or min_app_version missing on IOMarkdown configuration. IOMarkdown is enabled
-            () =>
-              isPropertyWithMinAppVersionEnabled({
-                remoteConfig: O.some(remoteConfig),
-                mainLocalFlag: true,
-                configPropertyName: "ioMarkdown"
-              })
-          )
-        )
-    )
   );
 
 export const pnMessagingServiceIdSelector = (
@@ -820,8 +796,8 @@ export const pnPrivacyUrlsSelector = createSelector(
 );
 
 /**
- * Return true if the app supports the AAR feature (based on remote config).
- * If the remote value is missing, consider the feature as enabled.
+ * Return true if the app supports the AAR feature (based on remote config). If
+ * the remote value is missing, consider the feature as enabled.
  */
 export const isAarRemoteEnabled = (state: GlobalState) => {
   const remoteConfigOption = remoteConfigSelector(state);
@@ -842,8 +818,9 @@ export const isAarRemoteEnabled = (state: GlobalState) => {
 };
 
 /**
- * Returns true if the app supports the AAR in-app delegation feature (based on remote config).
- * If the remote value is missing, the feature is consider enabled.
+ * Returns true if the app supports the AAR in-app delegation feature (based on
+ * remote config). If the remote value is missing, the feature is consider
+ * enabled.
  */
 export const isAarInAppDelegationRemoteEnabledSelector = (
   state: GlobalState
@@ -985,4 +962,24 @@ export const isSendLollipopPlaygroundEnabledSelector = (
   }
   const remoteConfig = remoteConfigOption.value;
   return !!remoteConfig.pn.lollipopPlaygroundEnabled;
+};
+
+export const fseDiscoveryBannerWebUrlSelector = (
+  state: GlobalState
+): string | undefined => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return undefined;
+  }
+  return remoteConfigOption.value.fse?.landingBanner?.engagement_url;
+};
+export const isFseDiscoveryBannerDismissableSelector = (
+  state: GlobalState
+): boolean => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return false;
+  }
+
+  return remoteConfigOption.value.fse?.landingBanner?.is_dismissable ?? false;
 };

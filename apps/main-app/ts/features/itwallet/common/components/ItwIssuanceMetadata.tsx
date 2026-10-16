@@ -1,6 +1,7 @@
-import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
+import { Divider, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
@@ -9,14 +10,11 @@ import {
   trackWalletCredentialShowIssuer
 } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
-import {
-  itwCatalogueTranslationsByLocaleSelector,
-  itwCredentialsCatalogueByTypesSelector
-} from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { useItwAuthSourceName } from "../hooks/useItwAuthSourceName";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
+import { itwIpzsItwalletPrivacyUrlSelector } from "../store/selectors/remoteConfig";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
-import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils.ts";
 
@@ -26,14 +24,14 @@ type ItwIssuanceMetadataProps = {
 };
 
 type ItwMetadataIssuanceListItemProps = {
-  label: string;
-  value: string;
   bottomSheet: {
-    contentTitle: string;
     contentBody: string;
+    contentTitle: string;
     onPress: () => void;
   };
   isPreview?: boolean;
+  label: string;
+  value: string;
 };
 
 const ItwMetadataIssuanceListItem = ({
@@ -73,10 +71,10 @@ const ItwMetadataIssuanceListItem = ({
   return (
     <>
       <ListItemInfo
+        accessibilityLabel={`${label} ${value}`}
         endElement={endElement}
         label={label}
         value={value}
-        accessibilityLabel={`${label} ${value}`}
       />
       {bottomSheet.bottomSheet}
     </>
@@ -86,9 +84,11 @@ const ItwMetadataIssuanceListItem = ({
 /**
  * Renders additional issuance-related metadata, i.e. releaser and auth source.
  * They are not part of the claims list, thus they're rendered separately.
- * @param credential - the credential with the issuer configuration
- * @param isPreview - whether the component is rendered in preview mode which hides the info button.
- * @returns the list items with the metadata.
+ *
+ * @param credential - The credential with the issuer configuration
+ * @param isPreview - Whether the component is rendered in preview mode which
+ *   hides the info button.
+ * @returns The list items with the metadata.
  */
 export const ItwIssuanceMetadata = ({
   credential,
@@ -97,36 +97,24 @@ export const ItwIssuanceMetadata = ({
   const releaserName =
     credential.issuerConf.federation_entity.organization_name;
   const itwCredential = isItwCredential(credential);
-  const privacyUrl = useIOSelector(state =>
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const ipzsPrivacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const itwalletPrivacyUrl = useIOSelector(itwIpzsItwalletPrivacyUrlSelector);
+  const privacyUrl = isItwL3 ? itwalletPrivacyUrl : ipzsPrivacyUrl;
   const mixPanelCredential = getMixPanelCredential(
     credential.credentialType,
     isItwL3
   );
 
-  const credentialsFromCatalogue = useIOSelector(
-    itwCredentialsCatalogueByTypesSelector
+  const authSource = useItwAuthSourceName(
+    credential.credentialType,
+    credential
   );
 
-  const translationsByLocale = useIOSelector(
-    itwCatalogueTranslationsByLocaleSelector
-  );
-
-  const authSource =
-    credentialsFromCatalogue &&
-    credentialsFromCatalogue[credential.credentialType]
-      ? getItwAuthSource(
-          credentialsFromCatalogue[credential.credentialType],
-          translationsByLocale
-        )
-      : getAuthSource(credential);
-
-  const releasedByKey =
-    itwCredential && credential.credentialType === CredentialType.PID
-      ? "releasedByPid"
-      : "releasedBy";
+  const releasedByPid =
+    itwCredential && credential.credentialType === CredentialType.PID;
 
   const releaserNameBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
     useMemo(
@@ -171,23 +159,25 @@ export const ItwIssuanceMetadata = ({
     <>
       {authSource && (
         <ItwMetadataIssuanceListItem
+          bottomSheet={authSourceBottomSheet}
+          isPreview={isPreview}
           label={I18n.t(
             "features.itWallet.verifiableCredentials.claims.authenticSource"
           )}
           value={authSource}
-          isPreview={isPreview}
-          bottomSheet={authSourceBottomSheet}
         />
       )}
       {authSource && releaserName && <Divider />}
       {releaserName && (
         <ItwMetadataIssuanceListItem
+          bottomSheet={releaserNameBottomSheet}
+          isPreview={isPreview}
           label={I18n.t(
-            `features.itWallet.verifiableCredentials.claims.${releasedByKey}`
+            releasedByPid
+              ? "features.itWallet.verifiableCredentials.claims.releasedByPid"
+              : "features.itWallet.verifiableCredentials.claims.releasedBy"
           )}
           value={releaserName}
-          isPreview={isPreview}
-          bottomSheet={releaserNameBottomSheet}
         />
       )}
     </>

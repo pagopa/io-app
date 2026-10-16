@@ -1,9 +1,12 @@
+import { TypeEnum as ClauseType } from "@io-app/api-types/generated/definitions/fci/Clause";
+import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
 import {
   FooterActionsInline,
   IOColors,
   IOSpacing,
   useFooterActionsInlineMeasurements
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   RouteProp,
   StackActions,
@@ -14,16 +17,15 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as S from "fp-ts/lib/string";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useRef, useState, useEffect, ComponentProps } from "react";
+import I18n from "i18next";
+import { ComponentProps, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Pdf, { PdfRef } from "react-native-pdf";
-import I18n from "i18next";
-import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
-import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
+
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackFciDocOpeningSuccess,
   trackFciDocumentsView,
@@ -54,8 +56,6 @@ import {
   getRequiredSignatureFields,
   getSignatureFieldsLength
 } from "../../utils/signatureFields";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -164,8 +164,9 @@ const FciDocumentsScreen = () => {
     }
   }, [currentDoc, documents, isFocused, fciEnvironment]);
 
-  const { present, bottomSheet: fciAbortSignature } =
-    useFciAbortSignatureFlow();
+  const { present, bottomSheet: fciAbortSignature } = useFciAbortSignatureFlow({
+    showDialogOnBack: currentDoc <= 0
+  });
 
   const {
     present: showNoSignatureFieldsBs,
@@ -222,19 +223,18 @@ const FciDocumentsScreen = () => {
     );
 
   const renderPager = () => (
-    /** Be aware that, in react-native-pdf 6.7.7, on Android, there
-     * is a bug where onLoadComplete callback is not called. So,
-     * in order to detect proper PDF loading ending, we rely on
-     * onPageChanged, which is called to report that the first page
-     * has loaded */
+    /**
+     * Be aware that, in react-native-pdf 6.7.7, on Android, there is a bug
+     * where onLoadComplete callback is not called. So, in order to detect
+     * proper PDF loading ending, we rely on onPageChanged, which is called to
+     * report that the first page has loaded
+     */
     <Pdf
+      enablePaging
       key={`${
         documents[currentDoc]?.id ?? "doc"
       }:${downloadPath}:${focusEpoch}`}
-      ref={pdfRef}
-      source={{
-        uri: `${downloadPath}`
-      }}
+      onError={_ => setHasDocumentLoadError(true)}
       onLoadComplete={(numberOfPages, _) => {
         if (!isFocused) {
           return;
@@ -248,8 +248,10 @@ const FciDocumentsScreen = () => {
         setTotalPages(numberOfPages);
         setCurrentPage(page);
       }}
-      onError={_ => setHasDocumentLoadError(true)}
-      enablePaging
+      ref={pdfRef}
+      source={{
+        uri: `${downloadPath}`
+      }}
       style={styles.pdf}
     />
   );
@@ -281,7 +283,6 @@ const FciDocumentsScreen = () => {
   useHeaderSecondLevel({
     title: I18n.t("features.fci.title"),
     supportRequest: true,
-    contextualHelp: emptyContextualHelp,
     goBack: () => {
       if (currentDoc <= 0) {
         present();
@@ -302,7 +303,17 @@ const FciDocumentsScreen = () => {
   return (
     <>
       <DocumentsNavigationBar
+        disabled={false}
+        iconLeftDisabled={totalPages === 0 || currentPage === 1}
+        /**
+         * Buttons have to be disabled when totalPages is not ready yet (zero
+         * value) OR when corresponding limit is reached
+         */
+        iconRightDisabled={currentPage >= totalPages}
         indicatorPosition={"right"}
+        onNext={onNext}
+        onPrevious={onPrevious}
+        testID={"FciDocumentsNavBarTestID"}
         titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
           currentDoc: currentDoc + 1,
           totalDocs: documents.length
@@ -311,16 +322,6 @@ const FciDocumentsScreen = () => {
           currentPage,
           totalPages
         })}
-        /**
-         * buttons have to be disabled when totalPages is not ready yet (zero value) OR
-         * when corresponding limit is reached
-         */
-        iconRightDisabled={currentPage >= totalPages}
-        iconLeftDisabled={totalPages === 0 || currentPage === 1}
-        onPrevious={onPrevious}
-        onNext={onNext}
-        disabled={false}
-        testID={"FciDocumentsNavBarTestID"}
       />
       <View style={{ flex: 1 }} testID={"FciDocumentsScreenTestID"}>
         {documents.length > 0 && (
@@ -336,9 +337,9 @@ const FciDocumentsScreen = () => {
               {renderPager()}
             </View>
             <FooterActionsInline
+              endAction={endActionButtonProps}
               onMeasure={handleFooterActionsInlineMeasurements}
               startAction={cancelButtonProps}
-              endAction={endActionButtonProps}
             />
           </>
         )}

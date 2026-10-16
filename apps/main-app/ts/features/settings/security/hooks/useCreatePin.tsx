@@ -1,26 +1,28 @@
-import { useMemo, useCallback } from "react";
-import { useIOToast } from "@pagopa/io-app-design-system";
-import { AccessibilityInfo, Platform } from "react-native";
+import { useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
-import { createPinSuccess } from "../store/actions/pinset";
+import { useCallback, useMemo } from "react";
+import { AccessibilityInfo, Platform } from "react-native";
+
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { PinString } from "../../../../types/PinString";
+import { getFlowType } from "../../../../utils/analytics";
 import { setPin } from "../../../../utils/keychain";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../utils/supportAssistance";
-import { isProfileFirstOnBoardingSelector } from "../../common/store/selectors";
-import { getFlowType } from "../../../../utils/analytics";
 import { trackCreatePinSuccess } from "../../common/analytics";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import { isProfileFirstOnBoardingSelector } from "../../common/store/selectors";
+import { createPinSuccess } from "../store/actions/pinset";
 
 /**
- *
- * @param {boolean} [isOnboarding=false] A boolean value used to identify when the submit action comes from onboarding process.
- * @returns {object} An object containing the `handleSubmit` function which accepts a pin of type `PinString` used to submit the chosen pin.
+ * @param {boolean} [isOnboarding=false] A boolean value used to identify when
+ *   the submit action comes from onboarding process. Default is `false`
+ * @returns {object} An object containing the `handleSubmit` function which
+ *   accepts a pin of type `PinString` used to submit the chosen pin.
  */
 export const useCreatePin = (props = { isOnboarding: false }) => {
   const { isOnboarding } = props;

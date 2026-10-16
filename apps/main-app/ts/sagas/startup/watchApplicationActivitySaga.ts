@@ -1,24 +1,26 @@
 import { AppStateStatus } from "react-native";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+
 import { backgroundActivityTimeout } from "../../config";
-import NavigationService from "../../navigation/NavigationService";
-import { applicationChangeState } from "../../store/actions/application";
-import { identificationRequest } from "../../features/identification/store/actions";
-import { ReduxSagaEffect } from "../../types/utils";
-import {
-  StartupStatusEnum,
-  isStartupLoaded
-} from "../../store/reducers/startup";
-import { maybeHandlePendingBackgroundActions } from "../backgroundActions";
 import { areTwoMinElapsedFromLastActivity } from "../../features/authentication/fastLogin/store/actions/sessionRefreshActions";
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
+import { identificationRequest } from "../../features/identification/store/actions";
 import { IdentificationBackActionType } from "../../features/identification/store/reducers";
+import NavigationService from "../../navigation/NavigationService";
+import { applicationChangeState } from "../../store/actions/application";
+import {
+  isStartupLoaded,
+  StartupStatusEnum
+} from "../../store/reducers/startup";
+import { ReduxSagaEffect } from "../../types/utils";
+import { maybeHandlePendingBackgroundActions } from "../backgroundActions";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:
- * - if needed, force the user to identify
- * - if a notification is pressed, redirect to the related message
+ *
+ * - If needed, force the user to identify
+ * - If a notification is pressed, redirect to the related message
  */
 export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffect> {
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
@@ -69,10 +71,11 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
           currentRoute && whiteList.indexOf(currentRoute) !== -1;
         if (isSecuredRoute) {
           /**
-           * Request always identification to display again screens included in the witheList.
-           * It is done on status change from active/inactive to background to avoid secured
-           * screen being displayed for a while before the IdentificationScreen when the user
-           * focuses again on the app
+           * Request always identification to display again screens included in
+           * the witheList. It is done on status change from active/inactive to
+           * background to avoid secured screen being displayed for a while
+           * before the IdentificationScreen when the user focuses again on the
+           * app
            */
           yield* put(
             identificationRequest(

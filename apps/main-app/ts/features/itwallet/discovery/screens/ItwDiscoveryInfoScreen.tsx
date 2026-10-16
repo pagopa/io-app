@@ -8,13 +8,13 @@ import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
 import { ItwDiscoveryInfoFallbackComponent } from "../components/ItwDiscoveryInfoFallbackComponent.tsx";
 import { ItwDiscoveryInfoLegacyComponent } from "../components/ItwDiscoveryInfoLegacyComponent.tsx";
-import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
 import { ItwL2FallbackComponent } from "../components/ItwL2FallbackComponent.tsx";
+import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
-  level?: EidIssuanceLevel;
+  animationEnabled?: boolean;
   credentialType?: string;
-  disableAnimation?: boolean;
+  level?: EidIssuanceLevel;
 };
 
 export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
@@ -22,9 +22,7 @@ export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
   "ITW_DISCOVERY_INFO"
 >;
 
-/**
- * Screen displaying information about the discovery process for DIW activation.
- */
+/** Screen displaying information about the discovery process for DIW activation. */
 export const ItwDiscoveryInfoScreen = ({
   route
 }: ItwDiscoveryInfoScreenProps) => {

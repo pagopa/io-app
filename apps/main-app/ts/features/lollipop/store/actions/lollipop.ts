@@ -1,6 +1,4 @@
-/**
- * Action types and action creator related to lollipop
- */
+/** Action types and action creator related to lollipop */
 
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { ActionType, createStandardAction } from "typesafe-actions";
@@ -39,9 +37,9 @@ export const lollipopSetSupportedDevice = createStandardAction(
 
 export type LollipopActions = ActionType<
   | typeof lollipopKeyTagSave
-  | typeof lollipopSetPublicKey
+  | typeof lollipopRemoveEphemeralPublicKey
   | typeof lollipopRemovePublicKey
   | typeof lollipopSetEphemeralPublicKey
-  | typeof lollipopRemoveEphemeralPublicKey
+  | typeof lollipopSetPublicKey
   | typeof lollipopSetSupportedDevice
 >;

@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { IOVisualCostants } from "@io-app/design-system";
 import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -8,16 +8,16 @@ type FooterActionsMargin = {
 };
 
 /**
- * A custom React Hook that returns the bottom margin value after taking
- * into consideration the safe area insets and the need to include
- * a default margin or not.
+ * A custom React Hook that returns the bottom margin value after taking into
+ * consideration the safe area insets and the need to include a default margin
+ * or not.
  *
  * Depending on those conditions, it returns two values:
- * - `bottomMargin`
- *    The amount of space to add just before the end of the actions block.
- * - `needSafeAreaMargin`
- *    A boolean value that indicates if the safe area insets are needed.
- *    We expose this value in case of need.
+ *
+ * - `bottomMargin`: the amount of space to add just before the end of the actions
+ *   block.
+ * - `needSafeAreaMargin`: a boolean value that indicates if the safe area insets
+ *   are needed. We expose this value in case of need.
  */
 export const useFooterActionsMargin = (
   excludeSafeAreaMargins?: boolean

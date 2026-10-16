@@ -1,19 +1,20 @@
 /* eslint-disable functional/immutable-data */
-/**
- * An ingress screen to choose the real first screen the user must navigate to.
- */
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
+/** An ingress screen to choose the real first screen the user must navigate to. */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { isEqual } from "lodash";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
-import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
-import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
+
+import { versionInfoDataSelector } from "../../../common/versionInfo/store/reducers/versionInfo";
+import { IOVersionInfo } from "../../../common/versionInfo/types/IOVersionInfo";
+import { LoadingScreenContent } from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
+import { startApplicationInitialization } from "../../../store/actions/application";
 import { startupLoadSuccess } from "../../../store/actions/startup";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus/remoteConfig";
@@ -40,16 +41,17 @@ import {
 } from "../analytics";
 import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
-import { checkSessionErrorSelector } from "../store/selectors";
-import { versionInfoDataSelector } from "../../../common/versionInfo/store/reducers/versionInfo";
-import { IOVersionInfo } from "../../../common/versionInfo/types/IOVersionInfo";
+import {
+  checkSessionErrorSelector,
+  isBlockingScreenSelector
+} from "../store/selectors";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
 
 const getApiFailureValue = (
   isConnected: boolean | undefined,
-  sessionLoaded: O.Option<PublicSession>,
+  sessionLoaded: PublicSession | undefined,
   profileLoaded: pot.Pot<InitializedProfile, ProfileError>,
   checkSession: boolean,
   versionInfo: IOVersionInfo | null
@@ -63,7 +65,7 @@ const getApiFailureValue = (
 
   // Add "get session" if sessionLoaded is None (error loading session)
   // OR if there was a checkCurrentSession.failure
-  if (O.isNone(sessionLoaded) || checkSession) {
+  if (sessionLoaded == null || checkSession) {
     apiFailures.push("get session");
   }
 
@@ -87,12 +89,14 @@ export const IngressScreen = () => {
   const isOfflineAccessAvailable = useIOSelector(
     itwOfflineAccessAvailableSelector
   );
+  const isBlockingScreenFlag = useIOSelector(isBlockingScreenSelector);
+  const wasOfflineRef = useRef(false);
 
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [content, setContent] = useState<{
-    title: string;
     subtitle?: string;
+    title: string;
   }>({
     title: I18n.t("startup.title")
   });
@@ -132,7 +136,7 @@ export const IngressScreen = () => {
 
     timeouts.push(
       setTimeout(() => {
-        dispatch(setIsBlockingScreen());
+        dispatch(setIsBlockingScreen(true));
         setShowBlockingScreen(true);
         timeouts.shift();
       }, TIMEOUT_BLOCKING_SCREEN)
@@ -182,6 +186,30 @@ export const IngressScreen = () => {
     navigateOnOfflineMiniApp
   ]);
 
+  // Recover from a stale `isBlockingScreen` flag: it may have been set while
+  // the device was offline (see `IngressScreenNoInternetConnection`), which
+  // would otherwise cause `initializeApplicationSaga` to bail out silently
+  // forever, even after connectivity is restored. Once we detect the
+  // offline -> online transition, clear the flag and restart the bootstrap
+  // flow so the saga can retry with a clean state.
+  useEffect(() => {
+    if (isConnected === false) {
+      wasOfflineRef.current = true;
+      return;
+    }
+
+    if (isConnected && wasOfflineRef.current) {
+      wasOfflineRef.current = false;
+      if (isBlockingScreenFlag) {
+        dispatch(setIsBlockingScreen(false));
+        dispatch(startApplicationInitialization());
+        setShowBlockingScreen(false);
+        setShowBanner(false);
+        setContent({ title: I18n.t("startup.title") });
+      }
+    }
+  }, [dispatch, isConnected, isBlockingScreenFlag]);
+
   if (isConnected === false && !isOfflineAccessAvailable) {
     return <IngressScreenNoInternetConnection />;
   }
@@ -198,9 +226,6 @@ export const IngressScreen = () => {
         trackingAction={trackIngressServicesSlowDown}
       />
       <LoadingScreenContent
-        testID="ingress-screen-loader-id"
-        title={content.title}
-        subtitle={content.subtitle}
         animatedPictogramSource="waiting"
         banner={
           isOfflineAccessAvailable && showBanner
@@ -217,6 +242,9 @@ export const IngressScreen = () => {
               }
             : undefined
         }
+        subtitle={content.subtitle}
+        testID="ingress-screen-loader-id"
+        title={content.title}
       />
     </>
   );
@@ -228,7 +256,7 @@ const IngressScreenNoInternetConnection = memo(() => {
   const dispatch = useIODispatch();
 
   useOnFirstRender(() => {
-    dispatch(setIsBlockingScreen());
+    dispatch(setIsBlockingScreen(true));
   });
 
   useEffect(() => {
@@ -239,10 +267,10 @@ const IngressScreenNoInternetConnection = memo(() => {
 
   return (
     <OperationResultScreenContent
-      testID="device-connection-lost-id"
       pictogram="lostConnection"
-      title={I18n.t("startup.connection_lost.title")}
       subtitle={I18n.t("startup.connection_lost.description")}
+      testID="device-connection-lost-id"
+      title={I18n.t("startup.connection_lost.title")}
     />
   );
 });

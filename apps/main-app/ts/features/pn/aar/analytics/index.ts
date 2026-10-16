@@ -1,4 +1,5 @@
-import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
+import { AARProblemJson } from "@io-app/api-types/generated/definitions/pn/aar/AARProblemJson";
+
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { SendUserType } from "../../../pushNotifications/analytics";

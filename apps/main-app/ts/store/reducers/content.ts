@@ -1,16 +1,11 @@
-/**
- * Implements the reducers for static content.
- */
+import { ContextualHelp } from "@io-app/api-types/generated/definitions/content/ContextualHelp";
+import { Municipality as MunicipalityMetadata } from "@io-app/api-types/generated/definitions/content/Municipality";
+import { ScreenCHData } from "@io-app/api-types/generated/definitions/content/ScreenCHData";
+/** Implements the reducers for static content. */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
-import { Idp } from "../../../definitions/content/Idp";
-import { IdpData } from "../../../definitions/content/IdpData";
-import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
-import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
+
 import {
   isReady,
   remoteError,
@@ -19,7 +14,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../common/model/RemoteValue";
-import { getRemoteLocale } from "../../features/messages/utils/ctas";
+import { clearCache } from "../../features/settings/common/store/actions";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import {
   fromGeneratedToLocalSpidIdp,
@@ -32,19 +27,17 @@ import {
   loadContextualHelpData,
   loadIdps
 } from "../actions/content";
-import { clearCache } from "../../features/settings/common/store/actions";
 import { Action } from "../actions/types";
-import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";
 
 /**
- * Stores useful content such as services and organizations metadata,
- * help pages, etc...
+ * Stores useful content such as services and organizations metadata, help
+ * pages, etc...
  */
 export type ContentState = Readonly<{
-  municipality: MunicipalityState;
   contextualHelp: pot.Pot<ContextualHelp, Error>;
   idps: RemoteValue<ReadonlyArray<SpidIdp>, Error>;
+  municipality: MunicipalityState;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -88,79 +81,20 @@ export const idpsRemoteValueSelector = createSelector(
 );
 
 /**
- * return an option with Idp contextual help data if they are loaded and defined
- * @param id
- */
-export const idpContextualHelpDataFromIdSelector = (
-  id: SpidIdp["id"] | undefined
-) =>
-  createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, O.Option<Idp>>(
-    contextualHelpDataSelector,
-    contextualHelpData =>
-      pipe(
-        id,
-        O.fromNullable,
-        O.fold(
-          () => O.none,
-          () =>
-            pot.getOrElse(
-              pot.map(contextualHelpData, data => {
-                const locale = getRemoteLocale();
-                return pipe(
-                  data[locale],
-                  O.fromNullable,
-                  O.chain(l => O.fromNullable(l.idps[id as keyof IdpData]))
-                );
-              }),
-              O.none
-            )
-        )
-      )
-  );
-
-/**
- * return a pot with screen contextual help data if they are loaded and defined otherwise
- * @param id
- */
-export const screenContextualHelpDataSelector = createSelector<
-  GlobalState,
-  pot.Pot<ContextualHelp, Error>,
-  string,
-  pot.Pot<O.Option<ScreenCHData>, Error>
->(
-  [contextualHelpDataSelector, currentRouteSelector],
-  (contextualHelpData, currentRoute) =>
-    pot.map(contextualHelpData, data => {
-      if (currentRoute === undefined) {
-        return O.none;
-      }
-      const locale = getCurrentLocale();
-
-      const localeData = data[locale];
-      const screenData =
-        localeData !== undefined
-          ? localeData.screens.find(
-              s =>
-                s.route_name.toLowerCase() === currentRoute.toLocaleLowerCase()
-            )
-          : undefined;
-      return O.fromNullable(screenData);
-    })
-);
-
-/**
- * Return a pot with screen contextual help data given a route if they are loaded and defined otherwise return undefined
+ * Return a pot with screen contextual help data given a route if they are
+ * loaded and defined otherwise return undefined
+ *
  * @param route
  */
 export const getContextualHelpDataFromRouteSelector = (route: string) =>
   createSelector<
     GlobalState,
     pot.Pot<ContextualHelp, Error>,
-    pot.Pot<O.Option<ScreenCHData>, Error>
+    pot.Pot<ScreenCHData | undefined, Error>
   >([contextualHelpDataSelector], contextualHelpData =>
     pot.map(contextualHelpData, data => {
       if (route === undefined) {
-        return O.none;
+        return undefined;
       }
       const locale = getCurrentLocale();
       const localeData = data[locale];
@@ -171,7 +105,7 @@ export const getContextualHelpDataFromRouteSelector = (route: string) =>
             )
           : undefined;
 
-      return O.fromNullable(screenData);
+      return screenData;
     })
   );
 
@@ -180,6 +114,25 @@ export default function content(
   action: Action
 ): ContentState {
   switch (action.type) {
+    case getType(clearCache):
+      return {
+        ...state,
+        municipality: { ...initialContentState.municipality },
+        contextualHelp: { ...initialContentState.contextualHelp }
+      };
+
+    case getType(contentMunicipalityLoad.failure):
+      return {
+        ...state,
+        municipality: {
+          codiceCatastale: pot.toError(
+            state.municipality.codiceCatastale,
+            action.payload.error
+          ),
+          data: pot.toError(state.municipality.data, action.payload.error)
+        }
+      };
+
     case getType(contentMunicipalityLoad.request):
       const codiceCatastale = state.municipality.codiceCatastale;
       const municipalityData = state.municipality.data;
@@ -200,16 +153,10 @@ export default function content(
         }
       };
 
-    case getType(contentMunicipalityLoad.failure):
+    case getType(loadContextualHelpData.failure):
       return {
         ...state,
-        municipality: {
-          codiceCatastale: pot.toError(
-            state.municipality.codiceCatastale,
-            action.payload.error
-          ),
-          data: pot.toError(state.municipality.data, action.payload.error)
-        }
+        contextualHelp: pot.toError(state.contextualHelp, action.payload)
       };
 
     // contextualHelp text data
@@ -225,10 +172,10 @@ export default function content(
         contextualHelp: pot.some(action.payload)
       };
 
-    case getType(loadContextualHelpData.failure):
+    case getType(loadIdps.failure):
       return {
         ...state,
-        contextualHelp: pot.toError(state.contextualHelp, action.payload)
+        idps: remoteError(action.payload)
       };
 
     // idps data
@@ -242,19 +189,6 @@ export default function content(
       return {
         ...state,
         idps: remoteReady(fromGeneratedToLocalSpidIdp(action.payload.items))
-      };
-
-    case getType(loadIdps.failure):
-      return {
-        ...state,
-        idps: remoteError(action.payload)
-      };
-
-    case getType(clearCache):
-      return {
-        ...state,
-        municipality: { ...initialContentState.municipality },
-        contextualHelp: { ...initialContentState.contextualHelp }
       };
 
     default:

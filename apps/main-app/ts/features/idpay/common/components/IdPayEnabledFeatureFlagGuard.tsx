@@ -1,13 +1,14 @@
 import { PropsWithChildren } from "react";
+
+import { useIOSelector } from "../../../../store/hooks";
 import {
   isIdPayDetailsEnabledSelector,
   isIdPayOnboardingEnabledSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
-import { useIOSelector } from "../../../../store/hooks";
 import { IdPayDisabledSubFeatureAlert } from "./IdPayDisabledSubFeatureAlert";
 
-export type IdPayFeatureKey = "idpay.onboarding" | "idpay.initiative_details";
+export type IdPayFeatureKey = "idpay.initiative_details" | "idpay.onboarding";
 
 const featureFlagSelectorMap: Record<
   IdPayFeatureKey,
@@ -22,7 +23,9 @@ type IdPayEnabledSubFeatureGuardProps = {
 };
 
 /**
- * Component wrapper that checks if the sub-feature is enabled and shows the disabled sub-feature alert if not.
+ * Component wrapper that checks if the sub-feature is enabled and shows the
+ * disabled sub-feature alert if not.
+ *
  * @param children - The children to render
  * @param featureKey - The key of the feature to check
  * @returns The children or the disabled sub-feature alert

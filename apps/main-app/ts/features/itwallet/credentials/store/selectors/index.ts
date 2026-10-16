@@ -1,52 +1,73 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import _, { partition } from "lodash";
 import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   getFamilyNameFromCredential,
   getFirstNameFromCredential,
   getFiscalCodeFromCredential
 } from "../../../common/utils/itwClaimsUtils";
-import {
-  getCredentialStatus,
-  getCredentialStatusObject
-} from "../../../common/utils/itwCredentialStatusUtils";
+import { shouldRefillBatch } from "../../../common/utils/itwCredentialIssuanceUtils";
+import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialFormat,
   CredentialMetadata,
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
+import { DISPLAY_FORMAT_PRIORITY } from "../../utils/format";
 
 type CredentialsByType = {
   [K: string]: Record<CredentialFormat, CredentialMetadata>;
 };
 
 /**
- * The Wallet might contain older credentials in `vc+sd-jwt` format.
- * We must ensure credentials selectors still work with the older format.
+ * Resolves the credential to display for a given format.
+ *
+ * When the requested format is SD-JWT (the default for display), it falls back
+ * to the other formats following {@link DISPLAY_FORMAT_PRIORITY}, so that
+ * credentials issued only as mDoc (e.g. proof of age) are still resolved.
+ *
+ * For any other requested format the exact format is returned, with no
+ * fallback.
  */
-const withLegacyFallback = (
+const withDisplayFormatFallback = (
   credential: CredentialsByType[string] | undefined,
   format: CredentialFormat
 ) => {
   if (format === CredentialFormat.SD_JWT) {
-    return credential?.[format] ?? credential?.[CredentialFormat.LEGACY_SD_JWT];
+    return DISPLAY_FORMAT_PRIORITY.reduce<CredentialMetadata | undefined>(
+      (acc, f) => acc ?? credential?.[f],
+      undefined
+    );
   }
   return credential?.[format];
 };
 
 /**
- * Aggregate credentials by type to get the same credential with all its formats
+ * Returns all stored credentials as a flat list. A batch credential is a single
+ * entry that lists all its copies' keyTags in `keyTags` (see
+ * {@link CredentialMetadata}).
+ *
+ * @param state - The global state.
+ * @returns The flat list of all stored credentials
+ */
+export const itwAllStoredCredentialsSelector = createSelector(
+  (state: GlobalState) => state.features.itWallet.credentials.credentials,
+  (credentials): ReadonlyArray<CredentialMetadata> => Object.values(credentials)
+);
+
+/**
+ * Aggregate credentials by type to get the same credential with all its
+ * formats.
  *
  * @param state - The global state.
  * @returns The credentials object grouped by type
  */
 export const itwCredentialsByTypeSelector = createSelector(
-  (state: GlobalState) => state.features.itWallet.credentials.credentials,
+  itwAllStoredCredentialsSelector,
   credentials =>
-    Object.values(credentials).reduce<CredentialsByType>(
+    credentials.reduce<CredentialsByType>(
       (acc, c) => ({
         ...acc,
         [c.credentialType]: { ...acc[c.credentialType], [c.format]: c }
@@ -64,7 +85,7 @@ export const itwCredentialsByTypeSelector = createSelector(
 export const makeSelectAllCredentials = (format: CredentialFormat) =>
   createSelector(itwCredentialsByTypeSelector, credentials =>
     Object.values(credentials)
-      .map(c => withLegacyFallback(c, format))
+      .map(c => withDisplayFormatFallback(c, format))
       .reduce<Record<string, CredentialMetadata>>(
         (acc, c) => (c ? { ...acc, [c.credentialType]: c } : acc),
         {}
@@ -72,8 +93,9 @@ export const makeSelectAllCredentials = (format: CredentialFormat) =>
   );
 
 /**
- * Returns the credentials object from the itw credentials state, including the PID credential.
- * Only SD-JWT credentials are returned.
+ * Returns the credentials object from the itw credentials state, including the
+ * PID credential. SD-JWT credentials are preferred; credentials available only
+ * as mDoc fall back to that format.
  *
  * @param state - The global state.
  * @returns The credentials object.
@@ -83,8 +105,9 @@ export const itwCredentialsAllSelector = makeSelectAllCredentials(
 );
 
 /**
- * Returns the credentials object from the itw credentials state, excluding the PID credential.
- * Only SD-JWT credentials are returned.
+ * Returns the credentials object from the itw credentials state, excluding the
+ * PID credential. SD-JWT credentials are preferred; credentials available only
+ * as mDoc fall back to that format.
  *
  * @param state - The global state.
  * @returns The credentials object.
@@ -95,34 +118,38 @@ export const itwCredentialsSelector = createSelector(
 );
 
 /**
- * Convenience selector that returns an Option containing the eID credential from the credentials object.
+ * Convenience selector that returns the eID credential from the credentials
+ * object.
  *
  * @param state - The global state.
- * @returns The eID credential Option
+ * @returns The eID credential, or `undefined` when the wallet does not contain
+ *   one.
  */
 export const itwCredentialsEidSelector = createSelector(
   itwCredentialsByTypeSelector,
   ({ [CredentialType.PID]: pid }) =>
-    O.fromNullable(withLegacyFallback(pid, CredentialFormat.SD_JWT))
+    withDisplayFormatFallback(pid, CredentialFormat.SD_JWT)
 );
 
 /**
- * Given a credential key, returns an Option containing the credential of the given type from the credentials object.
+ * Given a credential key, returns the credential of the given type from the
+ * credentials object.
  *
  * @param type - The credential type.
  * @param format - The credential format (default to SD-JWT).
- * @returns The credential Option.
+ * @returns The credential, or `undefined` when the wallet does not contain one.
  */
 export const itwCredentialSelector = (
   key: string,
   format = CredentialFormat.SD_JWT
 ) =>
   createSelector(itwCredentialsByTypeSelector, credentials =>
-    O.fromNullable(withLegacyFallback(credentials[key], format))
+    withDisplayFormatFallback(credentials[key], format)
   );
 
 /**
- * Returns the list of unique types of credentials contained in the credentials object.
+ * Returns the list of unique types of credentials contained in the credentials
+ * object.
  *
  * @param state - The global state.
  * @returns The types of the credentials.
@@ -141,12 +168,7 @@ export const itwCredentialsTypesSelector = createSelector(
  */
 export const selectFiscalCodeFromEid = createSelector(
   itwCredentialsEidSelector,
-  eid =>
-    pipe(
-      eid,
-      O.map(getFiscalCodeFromCredential),
-      O.getOrElse(() => "")
-    )
+  eid => (eid ? getFiscalCodeFromCredential(eid) : "")
 );
 
 /**
@@ -157,25 +179,19 @@ export const selectFiscalCodeFromEid = createSelector(
  */
 export const selectNameSurnameFromEid = createSelector(
   itwCredentialsEidSelector,
-  eid =>
-    pipe(
-      eid,
-      O.map(getFirstNameFromCredential),
-      O.chain(firstName =>
-        pipe(
-          eid,
-          O.map(getFamilyNameFromCredential),
-          O.map(familyName =>
-            `${_.capitalize(firstName)} ${_.capitalize(familyName)}`.trim()
-          )
-        )
-      ),
-      O.getOrElse(() => "")
-    )
+  eid => {
+    if (!eid) {
+      return "";
+    }
+    const firstName = _.capitalize(getFirstNameFromCredential(eid));
+    const familyName = _.capitalize(getFamilyNameFromCredential(eid));
+    return `${firstName} ${familyName}`.trim();
+  }
 );
 
 /**
- * Returns the number of credentials in the credentials object, excluding the eID credential.
+ * Returns the number of credentials in the credentials object, excluding the
+ * eID credential.
  *
  * @param state - The global state.
  * @returns The number of credentials.
@@ -200,8 +216,8 @@ export const itwIsWalletEmptySelector = createSelector(
 );
 
 /**
- * Returns whether the wallet has at least 2 credentials.
- * The eID is not considered, only other (Q)EAAs.
+ * Returns whether the wallet has at least 2 credentials. The eID is not
+ * considered, only other (Q)EAAs.
  *
  * Note: this selector does not check the wallet validity.
  *
@@ -214,14 +230,16 @@ export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
 );
 
 /**
- * Get the credential status and the error message corresponding to the status assertion error, if present.
- * The message is dynamic and extracted from the issuer configuration.
+ * Get the credential status corresponding to the status list/status assertion
+ * error, if present.
  *
- * Note: the credential type is passed as second argument to reuse the same selector and cache per credential type.
+ * Note: the credential type is passed as second argument to reuse the same
+ * selector and cache per credential type.
  *
  * @param state - The global state.
  * @param type - The credential type.
- * @returns The credential status and the error message corresponding to the status assertion error, if present.
+ * @returns The credential status corresponding to the status assertion error,
+ *   if present.
  */
 export const itwCredentialStatusSelector = createSelector(
   itwCredentialsSelector,
@@ -229,28 +247,27 @@ export const itwCredentialStatusSelector = createSelector(
   (credentials, type) => {
     // This should never happen
     if (credentials[type] === undefined) {
-      return { status: undefined, message: undefined };
+      return { status: undefined };
     }
 
-    return getCredentialStatusObject(credentials[type]);
+    return { status: getCredentialStatus(credentials[type]) };
   }
 );
 
 /**
- * Returns the credential status and the error message corresponding to the status assertion error, if present.
+ * Returns the credential status for the eID.
+ *
+ * Note that this status is determined only by the SD-JWT credential, and does
+ * not use status assertion/status list.
  *
  * @param state - The global state.
- * @returns The credential status and the error message corresponding to the status assertion error, if present.
+ * @returns The eID's JWT status.
  */
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
-  eidOption =>
-    pipe(
-      eidOption,
-      // eID does not have status assertion nor expiry date, so it safe to assume its status is based on the JWT only
-      O.map(eid => getCredentialStatus(eid) as ItwJwtCredentialStatus),
-      O.toUndefined
-    )
+  eid =>
+    // eID does not have status assertion nor expiry date, so it safe to assume its status is based on the JWT only
+    eid ? (getCredentialStatus(eid) as ItwJwtCredentialStatus) : undefined
 );
 
 /**
@@ -261,12 +278,7 @@ export const itwCredentialsEidStatusSelector = createSelector(
  */
 export const itwCredentialsEidExpirationSelector = createSelector(
   itwCredentialsEidSelector,
-  eidOption =>
-    pipe(
-      eidOption,
-      O.map(eid => eid.jwt.expiration),
-      O.toUndefined
-    )
+  eid => eid?.jwt.expiration
 );
 
 /**
@@ -277,48 +289,43 @@ export const itwCredentialsEidExpirationSelector = createSelector(
  */
 export const itwCredentialsEidIssuedAtSelector = createSelector(
   itwCredentialsEidSelector,
-  eidOption =>
-    pipe(
-      eidOption,
-      O.map(eid => eid.jwt.issuedAt),
-      O.toUndefined
-    )
+  eid => eid?.jwt.issuedAt
 );
 
 /**
- * Return a list of all credentials of the same type, mainly used for clean up operations.
+ * Returns all stored credential instances of the given type, in every format.
+ * Unlike the representative-based selectors, this reads the raw store so it
+ * includes every copy of a credential obtained in batch. Used for clean up
+ * operations and batch consumption.
+ *
  * @param key The type of credential
  * @returns A list of CredentialMetadata
  */
 export const itwCredentialsListByTypeSelector = (key: string) =>
-  createSelector(itwCredentialsByTypeSelector, credentials =>
-    pipe(
-      O.fromNullable(credentials[key]),
-      O.map(Object.values),
-      O.getOrElse<ReadonlyArray<CredentialMetadata>>(() => [])
-    )
+  createSelector(
+    itwAllStoredCredentialsSelector,
+    (credentials): ReadonlyArray<CredentialMetadata> =>
+      credentials.filter(c => c.credentialType === key)
   );
 
 /**
- * Returns whether the wallet has at least one credential that is expiring or expired.
+ * Returns the types of the one-time-use credentials that are down to their
+ * refill threshold.
  *
- * @param state - The global state.
- * @returns Whether the wallet has at least one expiring or expired credential.
+ * Types are deduplicated: the same credential may be stored in multiple
+ * formats, but it is renewed once for all of them.
  */
-export const itwHasExpiringCredentialsSelector = createSelector(
-  itwCredentialsSelector,
-  credentials => {
-    const statuses = Object.values(credentials).map(credential =>
-      getCredentialStatus(credential)
-    );
-    return statuses.some(
-      status => status === "jwtExpiring" || status === "jwtExpired"
-    );
-  }
+export const itwCredentialsToRefillSelector = createSelector(
+  itwAllStoredCredentialsSelector,
+  (credentials): ReadonlyArray<string> =>
+    Array.from(
+      new Set(credentials.filter(shouldRefillBatch).map(c => c.credentialType))
+    )
 );
 
 /**
- * Convenience selector that returns true if the user has a mDL credential stored.
+ * Convenience selector that returns true if the user has a mDL credential
+ * stored.
  *
  * @param state - The global state.
  * @returns Whether the user has a mDL credential.

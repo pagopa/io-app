@@ -3,13 +3,16 @@ import {
   FooterActionsMeasurements,
   IOColors,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { File, Paths } from "expo-file-system";
+import * as Sharing from "expo-sharing";
 import I18n from "i18next";
 import { useState } from "react";
-import { Platform, View } from "react-native";
+import { View } from "react-native";
 import Pdf from "react-native-pdf";
-import Share from "react-native-share";
+
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -17,7 +20,6 @@ import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import * as analytics from "../analytics";
 import { walletReceiptPotSelector } from "../store/selectors";
 import { RECEIPT_DOCUMENT_TYPE_PREFIX } from "../utils";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 
 const ReceiptPreviewScreen = () => {
   const theme = useIOTheme();
@@ -58,21 +60,21 @@ const ReceiptPreviewScreen = () => {
       organization_fiscal_code:
         paymentAnalyticsData?.receiptOrganizationFiscalCode
     });
-    // The file name is normalized to remove the .pdf extension on Android devices since it's added by default to the Share module
-    const normalizedFilename =
-      Platform.OS === "ios"
-        ? transactionReceiptFileInfo.filename
-        : transactionReceiptFileInfo.filename?.replace(/.pdf/g, "");
-    await Share.open({
-      type: "application/pdf",
-      url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFileInfo.base64File}`,
-      filename:
-        normalizedFilename ||
-        `${I18n.t("features.payments.transactions.receipt.title")}${
-          Platform.OS === "ios" ? ".pdf" : ""
-        }`,
-      failOnCancel: false
+    const filename =
+      transactionReceiptFileInfo.filename ??
+      `${I18n.t("features.payments.transactions.receipt.title")}.pdf`;
+    const file = new File(Paths.cache, filename);
+    // File.write requires binary data; decode the base64 string before writing
+    file.write(
+      Uint8Array.from(atob(transactionReceiptFileInfo.base64File), c =>
+        c.charCodeAt(0)
+      )
+    );
+    await Sharing.shareAsync(`file://${file.uri}`, {
+      mimeType: "application/pdf",
+      dialogTitle: filename
     });
+    file.delete();
   };
 
   const handleFooterActionsMeasurements = (
@@ -90,40 +92,41 @@ const ReceiptPreviewScreen = () => {
         }}
       >
         <View
-          style={{ flex: 1 }}
           accessibilityLabel={I18n.t(
             "features.payments.transactions.receipt.a11y.preview"
           )}
+          style={{ flex: 1 }}
         >
-          {/** Be aware that, in react-native-pdf 6.7.7, on Android, there
-           * is a bug where onLoadComplete callback is not called. So,
-           * if you have to use such callback, you should rely upon
-           * onPageChanged, which is called to report that the first page
-           * has loaded */}
+          {/**
+           * Be aware that, in react-native-pdf 6.7.7, on Android, there is a bug where
+           * onLoadComplete callback is not called. So, if you have to use such callback,
+           * you should rely upon onPageChanged, which is called to report that the first
+           * page has loaded
+           */}
           <Pdf
             enablePaging
             fitPolicy={0}
-            style={{
-              flexGrow: 1,
-              backgroundColor
-            }}
             source={{
               uri: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptPot.value.base64File}`,
               cache: true
             }}
+            style={{
+              flexGrow: 1,
+              backgroundColor
+            }}
           />
         </View>
         <FooterActions
-          onMeasure={handleFooterActionsMeasurements}
           actions={{
             type: "SingleButton",
             primary: {
               label: I18n.t(
                 "features.payments.transactions.receipt.shareButton"
               ),
-              onPress: handleOnShare
+              onPress: () => void handleOnShare()
             }
           }}
+          onMeasure={handleFooterActionsMeasurements}
         />
       </View>
     );

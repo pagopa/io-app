@@ -1,16 +1,11 @@
-import {
-  Divider,
-  H6,
-  IconButton,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+import { Divider, H6, IconButton, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment, useMemo } from "react";
 import { View } from "react-native";
+
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim.tsx";
 import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata.tsx";
-import { ItwQrCodeClaimImage } from "../../../common/components/ItwQrCodeClaimImage.tsx";
 import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import {
@@ -36,7 +31,11 @@ export const ItwPresentationClaimsSection = ({
   );
 
   const claims = parseClaims(credential.parsedCredential, {
-    exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
+    exclude: [
+      WellKnownClaim.unique_id,
+      WellKnownClaim.content,
+      WellKnownClaim.link_qr_code
+    ]
   });
 
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
@@ -46,23 +45,14 @@ export const ItwPresentationClaimsSection = ({
   };
 
   const renderHideValuesToggle = () => (
-    <View
-      accessible={true}
+    <IconButton
       accessibilityLabel={I18n.t(
         "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
       )}
-      accessibilityRole="switch"
-      accessibilityState={{ checked: valuesHidden }}
-    >
-      <IconButton
-        testID="toggle-claim-visibility"
-        icon={valuesHidden ? "eyeHide" : "eyeShow"}
-        onPress={handleToggleClaimVisibility}
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
-        )}
-      />
-    </View>
+      icon={valuesHidden ? "eyeHide" : "eyeShow"}
+      onPress={handleToggleClaimVisibility}
+      testID="toggle-claim-visibility"
+    />
   );
 
   return (
@@ -84,26 +74,18 @@ export const ItwPresentationClaimsSection = ({
           </>
         )
       }
-      {claims.map((claim, index) => {
-        if (claim.id === WellKnownClaim.link_qr_code) {
-          // Since the `link_qr_code` claim  difficult to distinguish from a generic image claim, we need to manually
-          // check for the claim and render it accordingly
-          return <ItwQrCodeClaimImage key={index} claim={claim} />;
-        }
-
-        return (
-          <Fragment key={index}>
-            {index !== 0 && <Divider />}
-            <ItwCredentialClaim
-              claim={claim}
-              isPreview={false}
-              hidden={valuesHidden}
-              credentialStatus={credentialStatus}
-              credentialType={credential.credentialType}
-            />
-          </Fragment>
-        );
-      })}
+      {claims.map((claim, index) => (
+        <Fragment key={index}>
+          {index !== 0 && <Divider />}
+          <ItwCredentialClaim
+            claim={claim}
+            credentialStatus={credentialStatus}
+            credentialType={credential.credentialType}
+            hidden={valuesHidden}
+            isPreview={false}
+          />
+        </Fragment>
+      ))}
       {claims.length > 0 && <Divider />}
       <ItwIssuanceMetadata credential={credential} isPreview={false} />
     </View>

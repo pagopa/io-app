@@ -1,6 +1,4 @@
-/**
- * Action type related to the installation of the app.
- */
+/** Action type related to the installation of the app. */
 
 import { ActionType, createStandardAction } from "typesafe-actions";
 
@@ -13,5 +11,5 @@ export const appVersionHistory = createStandardAction(
 )<string>();
 
 export type InstallationActions =
-  | ActionType<typeof previousInstallationDataDeleteSuccess>
-  | ActionType<typeof appVersionHistory>;
+  | ActionType<typeof appVersionHistory>
+  | ActionType<typeof previousInstallationDataDeleteSuccess>;

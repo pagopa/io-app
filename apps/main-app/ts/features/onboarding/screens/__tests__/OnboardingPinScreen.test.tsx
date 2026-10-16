@@ -1,10 +1,11 @@
 import { createStore } from "redux";
-import OnboardingPinScreen from "../OnboardingPinScreen";
-import { PinCreation } from "../../../settings/security/shared/components/PinCreation";
+
+import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import ROUTES from "../../../../navigation/routes";
+import { PinCreation } from "../../../settings/security/shared/components/PinCreation";
+import OnboardingPinScreen from "../OnboardingPinScreen";
 
 jest.mock("../../../settings/security/shared/components/PinCreation", () => ({
   PinCreation: jest.fn(() => null)

@@ -1,4 +1,6 @@
-import { ActionType } from "typesafe-actions";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import I18n from "i18next";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import {
   call,
   cancelled,
@@ -8,17 +10,16 @@ import {
   select,
   take
 } from "typed-redux-saga/macro";
-import ReactNativeBlobUtil from "react-native-blob-util";
-import I18n from "i18next";
-import { ReduxSagaEffect } from "../../../types/utils";
+import { ActionType } from "typesafe-actions";
+
 import { fetchTimeout } from "../../../config";
-import { getError } from "../../../utils/errors";
+import { ReduxSagaEffect } from "../../../types/utils";
 import { isTestEnv } from "../../../utils/environment";
-import {
-  cancelPreviousAttachmentDownload,
-  downloadAttachment
-} from "../store/actions";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { getError } from "../../../utils/errors";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { getKeyInfo } from "../../lollipop/saga";
+import { KeyInfo } from "../../lollipop/utils/crypto";
+import { downloadAarAttachmentSaga } from "../../pn/aar/saga/downloadAarAttachmentSaga";
 import {
   trackThirdPartyMessageAttachmentBadFormat,
   trackThirdPartyMessageAttachmentDownloadFailed,
@@ -26,8 +27,16 @@ import {
   trackUndefinedBearerToken,
   UndefinedBearerTokenPhase
 } from "../analytics";
+import {
+  cancelPreviousAttachmentDownload,
+  downloadAttachment
+} from "../store/actions";
 import { thirdPartyMessageSelector } from "../store/reducers/thirdPartyById";
-import { KeyInfo } from "../../lollipop/utils/crypto";
+import {
+  decodeSendFailureReason,
+  SendFailureReason,
+  WrappedSendError
+} from "../utils";
 import {
   attachmentDisplayName,
   getHeaderValueByKey,
@@ -35,13 +44,11 @@ import {
   restrainRetryAfterIntervalInMilliseconds
 } from "../utils/attachments";
 import { isEphemeralAarThirdPartyMessage } from "../utils/thirdPartyById";
-import { downloadAarAttachmentSaga } from "../../pn/aar/saga/downloadAarAttachmentSaga";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { getKeyInfo } from "../../lollipop/saga";
 import { handleRequestInit } from "./handleRequestInit";
 
 /**
  * Handles the download of an attachment
+ *
  * @param bearerToken
  * @param action
  */
@@ -147,7 +154,10 @@ function* downloadAttachmentWorker(
           yield* delay(waitingMs);
           continue;
         }
-        throw Error(`response status ${status} without retry-after header`);
+        throw new WrappedSendError(
+          decodeSendFailureReason({ kind: "http_status", status }),
+          `response status ${status} without retry-after header`
+        );
       } else {
         trackFailureEvent(
           skipMixpanelTrackingOnFailure,
@@ -157,11 +167,16 @@ function* downloadAttachmentWorker(
         );
         // In this case we produce a taking error that can be
         // shown directly to the user
-        const errorKey =
+        const reason =
+          status === 401
+            ? SendFailureReason.SESSION_EXPIRED
+            : decodeSendFailureReason({ kind: "http_status", status });
+        const error = new WrappedSendError(
+          reason,
           status === 415
-            ? "messageDetails.attachments.badFormat"
-            : "messageDetails.attachments.downloadFailed";
-        const error = new Error(I18n.t(errorKey));
+            ? I18n.t("messageDetails.attachments.badFormat")
+            : I18n.t("messageDetails.attachments.downloadFailed")
+        );
         yield* put(
           downloadAttachment.failure({ attachment, messageId, error })
         );

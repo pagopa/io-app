@@ -1,13 +1,17 @@
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
+
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { appReducer } from "../../../../../store/reducers";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
+import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
+import * as credentialsCatalogueSelectors from "../../../credentialsCatalogue/store/selectors";
 import * as issuanceAnalytics from "../../../issuance/analytics";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -16,7 +20,7 @@ import { ItwIssuanceCredentialLandingScreen } from "../ItwIssuanceCredentialLand
 const mockReplace = jest.fn();
 const mockNavigate = jest.fn();
 const mockPopToTop = jest.fn();
-const mockPopTo = jest.fn();
+const mockReset = jest.fn();
 const mockTrackItwAlreadyHasCredential = jest.fn();
 
 jest.mock("@react-navigation/native", () => ({
@@ -25,8 +29,7 @@ jest.mock("@react-navigation/native", () => ({
     replace: mockReplace,
     navigate: mockNavigate,
     popToTop: mockPopToTop,
-    popTo: mockPopTo,
-    addListener: jest.fn(() => jest.fn())
+    reset: mockReset
   })
 }));
 
@@ -41,15 +44,25 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
     jest.clearAllMocks();
   });
 
+  it("waits for authenticated startup before navigating or tracking", () => {
+    mockSelectors({ credentialStatus: "valid" });
+
+    const { getByText } = renderComponent(StartupStatusEnum.INITIAL);
+
+    expect(getByText(I18n.t("global.genericWaiting"))).toBeTruthy();
+    expect(mockReplace).not.toHaveBeenCalled();
+    expect(mockTrackItwAlreadyHasCredential).not.toHaveBeenCalled();
+  });
+
   describe("Navigation scenarios", () => {
     test.each`
       credentialStatus | pidStatus    | isItwValid | isWhitelisted | expectedRoute                                  | expectedParams
-      ${undefined}     | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ disableAnimation: true, level: "l2", credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${false}   | ${true}       | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ disableAnimation: true, level: "l3", credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ disableAnimation: true, credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${true}    | ${true}       | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ disableAnimation: true, credentialType: "mDL" }}
-      ${"jwtExpired"}  | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ disableAnimation: true, level: "l2", credentialType: "mDL" }}
-      ${"jwtExpiring"} | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ disableAnimation: true, credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l2", credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${false}   | ${true}       | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l3", credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${true}    | ${true}       | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
+      ${"jwtExpired"}  | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l2", credentialType: "mDL" }}
+      ${"jwtExpiring"} | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
     `(
       "navigates to $expectedRoute when credentialStatus=$credentialStatus, pidStatus=$pidStatus, isItwValid=$isItwValid, isWhitelisted=$isWhitelisted",
       ({
@@ -109,9 +122,16 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
         )
       );
 
-      expect(mockPopTo).toHaveBeenCalledWith(ROUTES.MAIN, {
-        screen: ROUTES.WALLET_HOME,
-        params: {}
+      expect(mockReset).toHaveBeenCalledWith({
+        index: 1,
+        routes: [
+          {
+            name: ROUTES.MAIN,
+            params: {
+              screen: ROUTES.WALLET_HOME
+            }
+          }
+        ]
       });
     });
 
@@ -226,6 +246,30 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
     });
   });
 
+  describe("Introduction content routing", () => {
+    it("navigates to the introduction screen when the credential has intro content", () => {
+      mockSelectors({ isItwValid: true, hasIntroContent: true });
+
+      renderComponent();
+
+      expect(mockReplace).toHaveBeenCalledWith(
+        ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION,
+        { animationEnabled: false, credentialType: "mDL" }
+      );
+    });
+
+    it("navigates to the trust issuer screen when the credential has no intro content", () => {
+      mockSelectors({ isItwValid: true, hasIntroContent: false });
+
+      renderComponent();
+
+      expect(mockReplace).toHaveBeenCalledWith(
+        ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+        { animationEnabled: false, credentialType: "mDL" }
+      );
+    });
+  });
+
   describe("Landing error screen", () => {
     it("renders the error screen as fallback", () => {
       mockSelectors({
@@ -279,10 +323,11 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
 
 type MockSelectorOptions = {
   credentialStatus?: string;
-  pidStatus?: string;
-  isItwValid?: boolean;
+  hasIntroContent?: boolean;
   isItwL3?: boolean;
+  isItwValid?: boolean;
   isWhitelisted?: boolean;
+  pidStatus?: string;
 };
 
 const mockSelectors = ({
@@ -290,7 +335,8 @@ const mockSelectors = ({
   pidStatus,
   isItwValid = false,
   isItwL3 = false,
-  isWhitelisted = false
+  isWhitelisted = false,
+  hasIntroContent = false
 }: MockSelectorOptions = {}) => {
   jest
     .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
@@ -299,20 +345,28 @@ const mockSelectors = ({
     .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
     .mockReturnValue(isItwL3);
   jest
-    .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+    .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
     .mockReturnValue(isWhitelisted);
   jest
     .spyOn(credentialsSelectors, "itwCredentialStatusSelector")
-    .mockImplementation(
-      () => ({ status: credentialStatus, message: undefined }) as any
-    );
+    .mockImplementation(() => ({ status: credentialStatus }) as any);
   jest
     .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
     .mockReturnValue(pidStatus as any);
+  jest
+    .spyOn(credentialsCatalogueSelectors, "itwCredentialIntroContentSelector")
+    .mockReturnValue(() => (hasIntroContent ? "intro content" : undefined));
 };
 
-const renderComponent = () => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
+const renderComponent = (startupStatus = StartupStatusEnum.AUTHENTICATED) => {
+  const stateAfterApplicationChange = appReducer(
+    undefined,
+    applicationChangeState("active")
+  );
+  const globalState = appReducer(
+    stateAfterApplicationChange,
+    startupLoadSuccess(startupStatus)
+  );
   const mockStore = configureMockStore<GlobalState>();
   const store = mockStore(globalState);
 

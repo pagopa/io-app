@@ -1,60 +1,61 @@
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
+import _isEqual from "lodash/isEqual";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
-import I18n from "i18next";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import _isEqual from "lodash/isEqual";
-import { IdpData } from "../../../../../../definitions/content/IdpData";
+
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
-// import { trackSpidLoginError } from "../../../../../utils/analytics";
-import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
 import { getUrlBasepath } from "../../../../../utils/url";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
+import { trackLoginFailure } from "../../../common/analytics";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpLoginUrlChanged } from "../../../common/store/actions";
 import {
+  AUTH_LEVELS,
   getIdpLoginUri,
   getIntentFallbackUrl,
-  onLoginUriChanged
-} from "../../../common/utils/login";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { usePosteIDApp2AppEducational } from "../../../login/idp/hooks/usePosteIDApp2AppEducational";
+import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import { getSpidErrorCodeDescription } from "../../../login/idp/utils/spidErrorCode";
+import { ACS_PATH } from "../../shared/utils";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
 } from "../../store/actions";
 import {
-  idpSelectedActiveSessionLoginSelector,
   activeSessionUserLoggedSelector,
+  idpSelectedActiveSessionLoginSelector,
   remoteApiLoginUrlPrefixSelector
 } from "../../store/selectors";
-import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
-import { ACS_PATH } from "../../shared/utils";
 import { trackSpidLoginIntent } from "../analytics";
-import { trackLoginFailure } from "../../../common/analytics";
 
 // TODO: consider changing the loader to unify it and use the same one for both CIE and SPID
 
@@ -73,20 +74,15 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A screen that allows the user to login with an IDP.
- * The IDP page is opened in a WebView
+ * A screen that allows the user to login with an IDP. The IDP page is opened in
+ * a WebView
  */
 const ActiveSessionIdpLoginScreen = () => {
   const dispatch = useIODispatch();
-  // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
-  // ensuring the re-execution of the `useLollipopLoginSource` hook.
-  const { replace } = useIONavigation();
+  const { replace } =
+    useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();
 
   const selectedIdp = useIOSelector(idpSelectedActiveSessionLoginSelector);
-  const selectedIdpTextData = useIOSelector(
-    idpContextualHelpDataFromIdSelector(selectedIdp?.id),
-    _isEqual
-  );
 
   const activeSessionUserLogged = useIOSelector(
     activeSessionUserLoggedSelector
@@ -123,7 +119,7 @@ const ActiveSessionIdpLoginScreen = () => {
   const acsUrl = `${remoteApiLoginUrlPrefix}${ACS_PATH}`;
 
   const loginUri = idpId
-    ? getIdpLoginUri(idpId, 2, remoteApiLoginUrlPrefix)
+    ? getIdpLoginUri(idpId, AUTH_LEVELS.L2, remoteApiLoginUrlPrefix)
     : undefined;
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
@@ -143,7 +139,6 @@ const ActiveSessionIdpLoginScreen = () => {
 
   const handleLoadingError = useCallback(
     (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-      // trackSpidLoginError(selectedIdp?.id, error);
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
@@ -236,9 +231,9 @@ const ActiveSessionIdpLoginScreen = () => {
       const url = event.url;
       // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
       const idpIntent = getIntentFallbackUrl(url);
-      if (O.isSome(idpIntent)) {
+      if (idpIntent != null) {
         void trackSpidLoginIntent(selectedIdp, "reauth");
-        void Linking.openURL(idpIntent.value);
+        void Linking.openURL(idpIntent);
         return false;
       }
 
@@ -284,15 +279,12 @@ const ActiveSessionIdpLoginScreen = () => {
   };
 
   const navigateToAuthErrorScreen = useCallback(() => {
-    // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
-    // ensuring the re-execution of the `useLollipopLoginSource` hook.
-    replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage,
-        authMethod: "SPID",
-        authLevel: "L2"
-      }
+    // `replace` drops the failed login webview, so it doesn't stay
+    // mounted behind the error screen.
+    replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+      errorCodeOrMessage,
+      authMethod: "SPID",
+      authLevel: AUTH_LEVELS.L2
     });
   }, [errorCodeOrMessage, replace]);
 
@@ -301,16 +293,6 @@ const ActiveSessionIdpLoginScreen = () => {
       navigateToAuthErrorScreen();
     }
   }, [navigateToAuthErrorScreen, requestState]);
-
-  const contextualHelp = useMemo(() => {
-    if (O.isNone(selectedIdpTextData)) {
-      return {
-        title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-        body: I18n.t("authentication.idp_login.contextualHelpContent")
-      };
-    }
-    return emptyContextualHelp;
-  }, [selectedIdpTextData]);
 
   const hasError = pot.isError(requestState);
 
@@ -323,12 +305,10 @@ const ActiveSessionIdpLoginScreen = () => {
             title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
               selectedIdp?.name
             }`,
-            supportRequest: true,
-            contextualHelp,
-            faqCategories: ["authentication_SPID"]
+            supportRequest: true
           }
         : { title: "", canGoBack: false },
-    [activeSessionUserLogged, selectedIdp?.name, contextualHelp]
+    [activeSessionUserLogged, selectedIdp?.name]
   );
 
   useHeaderSecondLevel(headerProps);
@@ -337,18 +317,18 @@ const ActiveSessionIdpLoginScreen = () => {
   const content = useMemo(
     () => (
       <WebView
-        testID="webview-active-session-idp-login-screen"
-        cacheEnabled={false}
         androidCameraAccessDisabled
         androidMicrophoneAccessDisabled
+        cacheEnabled={false}
         javaScriptEnabled
-        textZoom={100}
-        originWhitelist={originSchemasWhiteList}
-        source={webviewSource}
         onError={handleLoadingError}
         onHttpError={handleLoadingError}
         onNavigationStateChange={handleNavigationStateChange}
         onShouldStartLoadWithRequest={handleShouldStartLoading}
+        originWhitelist={originSchemasWhiteList}
+        source={webviewSource}
+        testID="webview-active-session-idp-login-screen"
+        textZoom={100}
       />
     ),
     [

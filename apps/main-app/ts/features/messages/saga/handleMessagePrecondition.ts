@@ -1,12 +1,15 @@
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { CommunicationClient } from "../../../api/CommunicationClientManager";
-import { convertUnknownToError } from "../../../utils/errors";
-import { isTestEnv } from "../../../utils/environment";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+import { isTestEnv } from "../../../utils/environment";
+import { convertUnknownToError } from "../../../utils/errors";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import {
   trackDisclaimerLoadError,
   trackUndefinedBearerToken,
@@ -20,14 +23,31 @@ import {
   toErrorPayload,
   toLoadingContentPayload
 } from "../store/actions/preconditions";
-import { MessageCategory } from "../../../../definitions/communication/MessageCategory";
 import {
   preconditionsCategoryTagSelector,
   preconditionsMessageIdSelector
 } from "../store/reducers/messagePrecondition";
-import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import {
+  decodeSendFailureReason,
+  SendFailureReason,
+  WrappedSendError
+} from "../utils";
 import { getCommunicationClient } from "./commons";
+
+export function* getMessageIdAndCategoryTag(): Generator<
+  ReduxSagaEffect,
+  undefined | { categoryTag: MessageCategory["tag"]; messageId: string },
+  any
+> {
+  const messageId = yield* select(preconditionsMessageIdSelector);
+  const categoryTag = yield* select(preconditionsCategoryTagSelector);
+  return messageId && categoryTag
+    ? {
+        messageId,
+        categoryTag
+      }
+    : undefined;
+}
 
 export function* handleMessagePrecondition(
   action: ActionType<typeof retrievingDataPreconditionStatusAction>
@@ -79,24 +99,34 @@ function* messagePreconditionWorker(
     if (E.isRight(result)) {
       if (result.right.status === 200) {
         const content = result.right.value;
-        const isIOMarkdownEnabled = yield* select(
-          isIOMarkdownEnabledForMessagesAndServicesSelector
-        );
         yield* put(
           loadingContentPreconditionStatusAction(
-            toLoadingContentPayload(content, isIOMarkdownEnabled)
+            toLoadingContentPayload(content)
           )
         );
         return;
       }
-      throw Error(`response status ${result.right.status}`);
+      throw new WrappedSendError(
+        decodeSendFailureReason({
+          kind: "http_status",
+          status: result.right.status
+        }),
+        `response status ${result.right.status}`
+      );
     } else {
-      throw Error(readableReport(result.left));
+      throw new WrappedSendError(
+        SendFailureReason.DECODE_ERROR,
+        readableReport(result.left)
+      );
     }
   } catch (e) {
     const categoryTag = messageIdAndCategoryTag?.categoryTag;
     if (categoryTag) {
-      trackDisclaimerLoadError(categoryTag);
+      const reason =
+        e instanceof WrappedSendError
+          ? e.reason
+          : decodeSendFailureReason({ kind: "caught", error: e });
+      trackDisclaimerLoadError(categoryTag, reason);
     }
     yield* put(
       errorPreconditionStatusAction(
@@ -104,21 +134,6 @@ function* messagePreconditionWorker(
       )
     );
   }
-}
-
-export function* getMessageIdAndCategoryTag(): Generator<
-  ReduxSagaEffect,
-  { messageId: string; categoryTag: MessageCategory["tag"] } | undefined,
-  any
-> {
-  const messageId = yield* select(preconditionsMessageIdSelector);
-  const categoryTag = yield* select(preconditionsCategoryTagSelector);
-  return messageId && categoryTag
-    ? {
-        messageId,
-        categoryTag
-      }
-    : undefined;
 }
 
 export const testMessagePreconditionWorker = isTestEnv

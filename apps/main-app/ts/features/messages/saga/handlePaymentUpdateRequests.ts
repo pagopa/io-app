@@ -1,3 +1,4 @@
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
 import * as E from "fp-ts/lib/Either";
 import { Channel } from "redux-saga";
 import {
@@ -12,7 +13,7 @@ import {
   take
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { PaymentFaultV2Enum } from "../../../../definitions/communication/PaymentFaultV2";
+
 import { Action } from "../../../store/actions/types";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../types/utils";
@@ -21,17 +22,17 @@ import { readablePrivacyReport } from "../../../utils/reporters";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import {
-  UndefinedBearerTokenPhase,
   trackMessagePaymentFailure,
-  trackUndefinedBearerToken
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
 } from "../analytics";
 import {
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../store/actions";
 import {
-  MessagePaymentError,
   isMessagePaymentGenericError,
+  MessagePaymentError,
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
   toTimeoutMessagePaymentError

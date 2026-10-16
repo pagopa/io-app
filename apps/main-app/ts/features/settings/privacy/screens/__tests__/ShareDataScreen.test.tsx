@@ -1,14 +1,15 @@
-import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import * as hooks from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
+import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { tosConfigSelector } from "../../../../tos/store/selectors";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import ShareDataScreen from "../ShareDataScreen";
-import * as hooks from "../../../../../store/hooks";
-import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
-import { tosConfigSelector } from "../../../../tos/store/selectors";
 
 jest.mock("../../../../../store/hooks", () => ({
   ...jest.requireActual("../../../../../store/hooks"),
@@ -43,8 +44,8 @@ describe("ShareDataScreen", () => {
     });
 
     jest.spyOn(hooks, "useIODispatch").mockReturnValue(mockDispatch);
-    jest.mock("@pagopa/io-app-design-system", () => {
-      const actual = jest.requireActual("@pagopa/io-app-design-system");
+    jest.mock("@io-app/design-system", () => {
+      const actual = jest.requireActual("@io-app/design-system");
       return {
         ...actual,
         useIOToast: () => mockToast

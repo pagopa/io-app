@@ -1,5 +1,6 @@
-import { call, put } from "typed-redux-saga/macro";
 import { CieUtils } from "@pagopa/io-react-native-cie";
+import { call, put } from "typed-redux-saga/macro";
+
 import {
   ReduxSagaEffect,
   SagaCallReturnType

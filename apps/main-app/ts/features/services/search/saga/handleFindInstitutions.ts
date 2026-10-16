@@ -2,17 +2,19 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { call, delay, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
+import { ServicesClient } from "../../../../api/ServicesClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { ServicesClient } from "../../../../api/ServicesClientManager";
 import { searchPaginatedInstitutionsGet } from "../store/actions";
 
 const DEBOUNCE_SEARCH: Millisecond = 500 as Millisecond;
 
 /**
- * saga to handle the loading of institutions
+ * Saga to handle the loading of institutions
+ *
  * @param findInstitutions
  * @param action
  */

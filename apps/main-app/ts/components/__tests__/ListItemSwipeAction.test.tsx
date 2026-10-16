@@ -6,6 +6,7 @@ import {
   fireGestureHandler,
   getByGestureTestId
 } from "react-native-gesture-handler/jest-utils";
+
 import ListItemSwipeAction from "../ListItemSwipeAction";
 
 describe("ListItemSwipeAction", () => {
@@ -17,14 +18,14 @@ describe("ListItemSwipeAction", () => {
     render(
       <NavigationContainer>
         <ListItemSwipeAction
-          openedItemRef={openedItemRef}
+          accessibilityLabel="Hide item"
           color="contrast"
           icon="eyeHide"
           onRightActionPressed={({ triggerSwipeAction }) => {
             swipeActionMock();
             triggerSwipeAction();
           }}
-          accessibilityLabel="Hide item"
+          openedItemRef={openedItemRef}
         >
           <Text>Hide item</Text>
         </ListItemSwipeAction>

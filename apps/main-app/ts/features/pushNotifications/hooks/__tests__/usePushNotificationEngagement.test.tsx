@@ -1,21 +1,22 @@
 import { act, waitFor } from "@testing-library/react-native";
 import * as RN from "react-native";
 import { createStore } from "redux";
+
 import * as USEIO from "../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import * as NOTIF_UTILS from "../../utils";
-import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
-import * as MAIN_FILE from "../usePushNotificationEngagement";
+import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 import * as analytics from "../../analytics";
 import {
   NotificationModalFlow,
   SendOpeningSource,
   SendUserType
 } from "../../analytics";
-import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
+import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
+import * as NOTIF_UTILS from "../../utils";
+import * as MAIN_FILE from "../usePushNotificationEngagement";
 
 const notificationModalFlowList: Array<NotificationModalFlow> = [
   "authentication",
@@ -260,7 +261,7 @@ const renderHook = (
   flow: NotificationModalFlow = "send_notification_opening",
   sendOpeningSource: SendOpeningSource = "not_set",
   sendUserType: SendUserType = "not_set",
-  shouldSetSecurityAdviceUponLeaving: boolean = false
+  shouldSetSecurityAdviceUponLeaving = false
 ) => {
   const Component = () => {
     const hookOutput = MAIN_FILE.usePushNotificationEngagement(

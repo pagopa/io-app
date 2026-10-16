@@ -1,4 +1,5 @@
 import { View } from "react-native";
+
 import { ContactsListItemProps } from "../ContactsListItem";
 
 export const ContactsListItem = ({ email, phone }: ContactsListItemProps) => (

@@ -1,8 +1,9 @@
-import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { IOVisualCostants } from "@io-app/design-system";
 import { Canvas, Rect } from "@shopify/react-native-skia";
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { useLayoutSize } from "../hooks/useLayoutSize";
 import { borderVariantByStatus } from "../utils/itwCredentialUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
@@ -11,12 +12,12 @@ import {
   SkiaCardOverlay,
   SkiaCardPatternOverlay
 } from "./ItwCredentialCard/CardOverlay";
-import { SkiaGradientBackground } from "./ItwCredentialCard/GradientBackground";
 import { useCredentialCardConfig } from "./ItwCredentialCard/config";
+import { SkiaGradientBackground } from "./ItwCredentialCard/GradientBackground";
 
 type ItwCredentialDetailCardProps = PropsWithChildren<{
-  credentialType: string;
   credentialStatus?: ItwCredentialStatus;
+  credentialType: string;
 }>;
 
 // Height of the transparent HeaderSecondLevel navigation bar rendered above this card.
@@ -53,7 +54,7 @@ export const ItwCredentialDetailCard = ({
     SCROLL_HACK_OFFSET;
 
   return (
-    <View style={[styles.container, { paddingTop }]} onLayout={onLayout}>
+    <View onLayout={onLayout} style={[styles.container, { paddingTop }]}>
       {size && (
         <Canvas style={StyleSheet.absoluteFill}>
           {overlay?.header && (
@@ -71,10 +72,10 @@ export const ItwCredentialDetailCard = ({
           )}
 
           <ItwBrandedSkiaBorder
-            width={size.width}
-            height={size.height}
             borderRadius={CARD_BORDER_RADIUS}
+            height={size.height}
             variant={borderVariantByStatus[credentialStatus]}
+            width={size.width}
           />
         </Canvas>
       )}

@@ -1,10 +1,9 @@
 ---
 name: Feature request
 about: Invia un suggerimento per migliorare l’app
-title: ''
+title: ""
 labels: "Suggerimento \U0001F4AA"
-assignees: ''
-
+assignees: ""
 ---
 
 **Qual è il problema che vorresti risolvere?**

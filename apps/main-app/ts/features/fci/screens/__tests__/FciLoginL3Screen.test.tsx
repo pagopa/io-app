@@ -1,27 +1,28 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { act, fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+
+import mockedProfile from "../../../../__mocks__/initializedProfile";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { FCI_ROUTES } from "../../navigation/routes";
-import { FciLoginL3Screen } from "../loginL3/FciLoginL3Screen";
-import mockedProfile from "../../../../__mocks__/initializedProfile";
 import {
-  setStartActiveSessionLogin,
+  setActiveSessionLoginFlow,
   setIdpSelectedActiveSessionLogin,
-  setActiveSessionLoginFlow
+  setStartActiveSessionLogin
 } from "../../../authentication/activeSessionLogin/store/actions";
+import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes";
+import * as fastLoginSelectors from "../../../authentication/fastLogin/store/selectors";
 import { IdpCIE } from "../../../authentication/login/hooks/useNavigateToLoginMethod";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 import {
   trackFciLoginRequest,
   trackFciLoginRequestContinue
 } from "../../analytics";
-import * as fastLoginSelectors from "../../../authentication/fastLogin/store/selectors";
-import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes";
-import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
+import { FCI_ROUTES } from "../../navigation/routes";
+import { FciLoginL3Screen } from "../loginL3/FciLoginL3Screen";
 
 // Mock the NFC hook
 jest.mock("../../../pn/aar/hooks/useIsNfcFeatureAvailable");

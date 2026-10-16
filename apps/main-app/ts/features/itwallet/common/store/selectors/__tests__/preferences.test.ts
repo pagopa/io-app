@@ -1,13 +1,16 @@
 import _ from "lodash";
 import MockDate from "mockdate";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
+import { ItwWalletActivationFeedbackBannerData } from "../../actions/preferences";
 import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector,
-  itwIsPidReissuingSurveyHiddenSelector
+  itwIsPidReissuingSurveyHiddenSelector,
+  itwWalletActivationFeedbackBannerDataSelector
 } from "../preferences";
-import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 
 describe("itwAuthLevelSelector", () => {
   afterEach(() => {
@@ -112,5 +115,36 @@ describe("itwIsPidReissuingSurveyHiddenSelector", () => {
     });
 
     expect(itwIsPidReissuingSurveyHiddenSelector(updatedState)).toBe(true);
+  });
+});
+
+describe("itwWalletActivationFeedbackBannerDataSelector", () => {
+  it("returns undefined when no data is stored", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    expect(
+      itwWalletActivationFeedbackBannerDataSelector(state)
+    ).toBeUndefined();
+  });
+
+  it("returns the stored data regardless of visibility", () => {
+    const data: ItwWalletActivationFeedbackBannerData = {
+      docStatus: "not_active",
+      authMethod: "spid"
+    };
+    const base = appReducer(undefined, applicationChangeState("active"));
+    const state = {
+      ...base,
+      features: {
+        ...base.features,
+        itWallet: {
+          ...base.features?.itWallet,
+          preferences: {
+            ...base.features?.itWallet?.preferences,
+            walletActivationFeedbackBannerData: data
+          }
+        }
+      }
+    };
+    expect(itwWalletActivationFeedbackBannerDataSelector(state)).toEqual(data);
   });
 });

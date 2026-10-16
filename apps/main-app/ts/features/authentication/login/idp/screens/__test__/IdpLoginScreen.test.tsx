@@ -1,15 +1,17 @@
-import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import IdpLoginScreen from "../IdpLoginScreen";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import * as requestinfo from "../../store/selectors";
-import * as IOHooks from "../../../../../../store/hooks";
-import * as commonStoreSelector from "../../../../common/store/selectors";
 import * as useLollipopLoginSource from "../../../../../lollipop/hooks/useLollipopLoginSource";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import * as commonStoreSelector from "../../../../common/store/selectors";
+import { AUTH_LEVELS } from "../../../../common/utils";
+import * as requestinfo from "../../store/selectors";
+import { ErrorType } from "../../store/types";
+import IdpLoginScreen from "../IdpLoginScreen";
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -17,12 +19,13 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () => ({
       navigate: mockNavigate,
-      addListener: jest.fn(() => jest.fn())
+      replace: mockReplace
     })
   };
 });
 
 const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
 
 jest.mock("../../../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
@@ -31,10 +34,14 @@ jest.mock("../../../../../../hooks/useHeaderSecondLevel", () => ({
 describe("IdpLoginScreen", () => {
   const mockDispatch = jest.fn();
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   jest.spyOn(IOHooks, "useIODispatch").mockReturnValue(mockDispatch);
 
   jest.spyOn(useLollipopLoginSource, "useLollipopLoginSource").mockReturnValue({
-    lollipopCheckStatus: { status: "none", url: O.none },
+    lollipopCheckStatus: { status: "none" },
     retryLollipopLogin: jest.fn(),
     shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
     webviewSource: { uri: "https://example.com/login" }
@@ -59,11 +66,9 @@ describe("IdpLoginScreen", () => {
   });
 
   it("should render correctly the webview", () => {
-    jest
-      .spyOn(requestinfo, "standardLoginRequestInfoSelector")
-      .mockReturnValue({
-        requestState: pot.some(true)
-      });
+    jest.spyOn(requestinfo, "spidLoginRequestInfoSelector").mockReturnValue({
+      requestState: pot.some(true)
+    });
 
     const { getByTestId } = renderComponent();
 
@@ -71,11 +76,9 @@ describe("IdpLoginScreen", () => {
   });
 
   it("should render correctly the loader", () => {
-    jest
-      .spyOn(requestinfo, "standardLoginRequestInfoSelector")
-      .mockReturnValue({
-        requestState: pot.toLoading(pot.none)
-      });
+    jest.spyOn(requestinfo, "spidLoginRequestInfoSelector").mockReturnValue({
+      requestState: pot.toLoading(pot.none)
+    });
 
     const { getByTestId } = renderComponent();
 
@@ -98,15 +101,31 @@ describe("IdpLoginScreen", () => {
       }
     });
 
-    jest
-      .spyOn(requestinfo, "standardLoginRequestInfoSelector")
-      .mockReturnValue({
-        requestState: pot.some(true)
-      });
+    jest.spyOn(requestinfo, "spidLoginRequestInfoSelector").mockReturnValue({
+      requestState: pot.some(true)
+    });
 
     const { getByTestId } = renderComponent();
 
     expect(getByTestId("idp-successful-authentication")).toBeTruthy();
+  });
+
+  it("should replace with AuthErrorScreen when requestState is error", () => {
+    jest.spyOn(requestinfo, "spidLoginRequestInfoSelector").mockReturnValue({
+      requestState: pot.noneError(ErrorType.LOGIN_ERROR)
+    });
+
+    renderComponent();
+
+    expect(mockReplace).toHaveBeenCalledTimes(1);
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: AUTH_LEVELS.L2
+      }
+    );
   });
 });
 

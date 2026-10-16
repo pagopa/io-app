@@ -1,9 +1,10 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
-import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
+import { IOColors, useIOTheme } from "@io-app/design-system";
+import {
+  isLoginUtilsError,
+  LoginUtilsError
+} from "@pagopa/io-react-native-login-utils";
 import CookieManager from "@react-native-cookies/cookies";
-import { pipe } from "fp-ts/lib/function";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
+import I18n from "i18next";
 import {
   createRef,
   Dispatch,
@@ -22,27 +23,27 @@ import {
   WebViewNavigationEvent,
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
-import I18n from "i18next";
-import { withLoadingSpinner } from "../../../../../components/helpers/withLoadingSpinner";
+
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { selectedIdentityProviderSelector } from "../../../../../features/authentication/common/store/selectors";
 import { ephemeralKeyTagSelector } from "../../../../../features/lollipop/store/reducers/lollipop";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { hashedProfileFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
-import { trackSpidLoginError } from "../../../../../utils/analytics";
+import { trackLoginError } from "../../../../../utils/analytics";
 import { closeInjectedScript } from "../../../../../utils/webview";
-import { getIdpLoginUri } from "../../../common/utils/login";
-import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
-import { isCieLoginUatEnabledSelector } from "../store/selectors";
-import { cieFlowForDevServerEnabled } from "../utils";
 import {
   isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector,
   remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
-import { hashedProfileFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
+import { AUTH_LEVELS, getIdpLoginUri } from "../../../common/utils";
+import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
+import { isCieLoginUatEnabledSelector } from "../store/selectors";
+import { cieFlowForDevServerEnabled } from "../utils";
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
@@ -54,10 +55,11 @@ const defaultUserAgent = Platform.select({
 });
 
 /**
- * This JS is injection on every page load. It tries to decrease to 0 the sleeping time of a script.
- * That sleeping is used to allow user to read page content until the content changes to an automatic redirect.
- * This script also tries also to call apriIosUL.
- * If it is defined it starts the authentication process (iOS only).
+ * This JS is injection on every page load. It tries to decrease to 0 the
+ * sleeping time of a script. That sleeping is used to allow user to read page
+ * content until the content changes to an automatic redirect. This script also
+ * tries also to call apriIosUL. If it is defined it starts the authentication
+ * process (iOS only).
  */
 const injectJs =
   Platform.OS === "ios"
@@ -69,15 +71,15 @@ const injectJs =
 `
     : undefined;
 
-type Props = {
-  onClose: () => void;
-  onSuccess: (authorizationUri: string) => void;
-};
-
 type InternalState = {
   authUrl: string | undefined;
   error: boolean;
   key: number;
+};
+
+type Props = {
+  onClose: () => void;
+  onSuccess: (authorizationUri: string) => void;
 };
 
 const generateResetState: () => InternalState = () => ({
@@ -109,18 +111,23 @@ const generateRetryState: (state: InternalState) => InternalState = (
   key: state.key + 1
 });
 
+export enum CieEntityIds {
+  DEV = "xx_servizicie_coll",
+  PROD = "xx_servizicie"
+}
+
+type RequestInfo = RequestInfoAuthorizedState | RequestInfoLoadingState;
+
 type RequestInfoAuthorizedState = {
-  requestState: "AUTHORIZED";
   nativeAttempts: number;
+  requestState: "AUTHORIZED";
   url: string;
 };
 
 type RequestInfoLoadingState = {
-  requestState: "LOADING";
   nativeAttempts: number;
+  requestState: "LOADING";
 };
-
-type RequestInfo = RequestInfoLoadingState | RequestInfoAuthorizedState;
 
 function retryRequest(
   setInternalState: Dispatch<SetStateAction<InternalState>>,
@@ -131,11 +138,6 @@ function retryRequest(
     requestState: "LOADING",
     nativeAttempts: requestInfo.nativeAttempts + 1
   }));
-}
-
-export enum CieEntityIds {
-  PROD = "xx_servizicie",
-  DEV = "xx_servizicie_coll"
 }
 
 const CieWebView = (props: Props) => {
@@ -152,7 +154,11 @@ const CieWebView = (props: Props) => {
   const remoteApiLoginUrlPrefix = useIOSelector(
     remoteApiLoginUrlPrefixSelector
   );
-  const loginUri = getIdpLoginUri(CIE_IDP_ID, 3, remoteApiLoginUrlPrefix);
+  const loginUri = getIdpLoginUri(
+    CIE_IDP_ID,
+    AUTH_LEVELS.L3,
+    remoteApiLoginUrlPrefix
+  );
 
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const dispatch = useIODispatch();
@@ -173,7 +179,7 @@ const CieWebView = (props: Props) => {
     (
       e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
     ) => {
-      trackSpidLoginError("cie", e);
+      trackLoginError("cie", e);
       setInternalState(state => generateErrorState(state));
     },
     []
@@ -226,7 +232,7 @@ const CieWebView = (props: Props) => {
     return true;
   };
 
-  const handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
+  const handleOnLoadEnd = (e: WebViewErrorEvent | WebViewNavigationEvent) => {
     const eventTitle = e.nativeEvent.title.toLowerCase();
     if (
       eventTitle === "pagina web non disponibile" ||
@@ -242,87 +248,103 @@ const CieWebView = (props: Props) => {
     }
   };
 
+  const handleLogin = useCallback(async () => {
+    try {
+      if (Platform.OS === "android") {
+        await CookieManager.removeSessionCookies().catch(() => {
+          throw new Error("Error clearing cookies");
+        });
+      }
+
+      const redirectResult = await regenerateKeyGetRedirectsAndVerifySaml(
+        loginUri,
+        ephemeralKeyTag,
+        mixpanelEnabled,
+        isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+        dispatch,
+        idp?.id,
+        isActiveSessionLogin ? hashedFiscalCode : undefined
+      );
+
+      if (redirectResult.isErr()) {
+        handleOnError(new Error(redirectResult.error.reason));
+        return;
+      }
+
+      setRequestInfo({
+        requestState: "AUTHORIZED",
+        nativeAttempts: requestInfo.nativeAttempts,
+        url: redirectResult.value
+      });
+    } catch (error) {
+      if (error instanceof Error || isLoginUtilsError(error)) {
+        handleOnError(error);
+      }
+    }
+  }, [
+    dispatch,
+    handleOnError,
+    ephemeralKeyTag,
+    hashedFiscalCode,
+    idp?.id,
+    isActiveSessionFastLogin,
+    isActiveSessionLogin,
+    isFastLogin,
+    loginUri,
+    mixpanelEnabled,
+    requestInfo.nativeAttempts
+  ]);
+
+  useEffect(() => {
+    if (requestInfo.requestState === "LOADING") {
+      void handleLogin();
+    }
+  }, [handleLogin, requestInfo.requestState]);
+
   if (internalState.error) {
     return (
       <ErrorComponent
+        onClose={props.onClose}
         onRetry={() => {
           retryRequest(setInternalState, setRequestInfo);
         }}
-        onClose={props.onClose}
       />
     );
   }
 
-  if (requestInfo.requestState === "LOADING") {
-    void pipe(
-      TE.tryCatch(
-        () =>
-          Platform.OS === "android"
-            ? CookieManager.removeSessionCookies()
-            : Promise.resolve(true),
-        () => new Error("Error clearing cookies")
-      ),
-      TE.chain(
-        _ => () =>
-          regenerateKeyGetRedirectsAndVerifySaml(
-            loginUri,
-            ephemeralKeyTag,
-            mixpanelEnabled,
-            isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-            dispatch,
-            idp?.id,
-            isActiveSessionLogin ? hashedFiscalCode : undefined
-          )
-      ),
-      TE.fold(
-        e => T.of(handleOnError(e)),
-        url =>
-          T.of(
-            setRequestInfo({
-              requestState: "AUTHORIZED",
-              nativeAttempts: requestInfo.nativeAttempts,
-              url
-            })
-          )
-      )
-    )();
-  }
-
-  const WithLoading = withLoadingSpinner(() => (
-    <View style={{ flex: 1 }}>
-      {requestInfo.requestState === "AUTHORIZED" &&
-        internalState.authUrl === undefined && (
-          <WebView
-            testID="webview"
-            androidCameraAccessDisabled={true}
-            androidMicrophoneAccessDisabled={true}
-            ref={webView}
-            userAgent={defaultUserAgent}
-            javaScriptEnabled={true}
-            injectedJavaScript={injectJs}
-            onLoadEnd={handleOnLoadEnd}
-            onError={handleOnError}
-            onHttpError={handleOnError}
-            onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-            source={{ uri: requestInfo.url } as WebViewSource}
-            key={internalState.key}
-          />
-        )}
-    </View>
-  ));
-
   return (
-    <WithLoading
+    <LoadingSpinnerOverlay
       isLoading={!cieFlowForDevServerEnabled}
-      loadingOpacity={1.0}
       loadingCaption={I18n.t("global.genericWaiting")}
+      loadingOpacity={1.0}
       onCancel={props.onClose}
-    />
+    >
+      <View style={{ flex: 1 }}>
+        {requestInfo.requestState === "AUTHORIZED" &&
+          internalState.authUrl === undefined && (
+            <WebView
+              androidCameraAccessDisabled={true}
+              androidMicrophoneAccessDisabled={true}
+              injectedJavaScript={injectJs}
+              javaScriptEnabled={true}
+              key={internalState.key}
+              onError={handleOnError}
+              onHttpError={handleOnError}
+              onLoadEnd={handleOnLoadEnd}
+              onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+              ref={webView}
+              source={{ uri: requestInfo.url } as WebViewSource}
+              testID="webview"
+              userAgent={defaultUserAgent}
+            />
+          )}
+      </View>
+    </LoadingSpinnerOverlay>
   );
 };
 
 const ErrorComponent = (
-  props: { onRetry: () => void } & Pick<Props, "onClose">
+  props: Pick<Props, "onClose"> & { onRetry: () => void }
 ) => {
   const theme = useIOTheme();
 
@@ -334,29 +356,33 @@ const ErrorComponent = (
       }}
     >
       <OperationResultScreenContent
-        pictogram="umbrella"
-        title={I18n.t("authentication.errors.network.title")}
         action={{
           label: I18n.t("global.buttons.retry"),
           accessibilityLabel: I18n.t("global.buttons.retry"),
           onPress: props.onRetry
         }}
+        pictogram="umbrella"
         secondaryAction={{
           label: I18n.t("global.buttons.cancel"),
           accessibilityLabel: I18n.t("global.buttons.cancel"),
           onPress: props.onClose
         }}
+        title={I18n.t("authentication.errors.network.title")}
       />
     </View>
   );
 };
 /**
- * A screen to manage the request of authentication once the pin of the user's CIE has been inserted
- * 1) Start the first request with the getIdpLoginUri(CIE_IDP_ID) uri
- * 2) Accepts all the redirects until the uri with the right path is found and stop the loading
- * 3) Dispatch the found uri using the `onSuccess` callback
+ * A screen to manage the request of authentication once the pin of the user's
+ * CIE has been inserted
+ *
+ * 1. Start the first request with the getIdpLoginUri(CIE_IDP_ID) uri
+ * 2. Accepts all the redirects until the uri with the right path is found and stop
+ *    the loading
+ * 3. Dispatch the found uri using the `onSuccess` callback
+ *
+ * @class
  * @param props
- * @constructor
  */
 export const CieRequestAuthenticationOverlay = (props: Props): ReactElement => {
   // Disable android back button

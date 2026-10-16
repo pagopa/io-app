@@ -1,23 +1,31 @@
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
-import { ServicesPreferencesModeEnum } from "../../definitions/identity/ServicesPreferencesMode";
-import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
+
+import {
+  idpSelector,
+  spidLevelFromSessionInfoSelector
+} from "../features/authentication/common/store/selectors";
+import { isOneIdentityLoginEnabledSelector } from "../features/authentication/common/store/selectors/loginConfig";
+import { isOneIdentityLoginSelector } from "../features/authentication/common/store/selectors/loginFlow";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { fastLoginOptInSelector } from "../features/authentication/fastLogin/store/selectors";
-import {
-  selectWalletCardsByType,
-  selectWalletPlaceholderCards
-} from "../features/wallet/store/selectors";
+import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { paymentsWalletUserMethodsSelector } from "../features/payments/wallet/store/selectors";
 import {
+  getNotificationPreferenceConfiguration,
   NotificationPreferenceConfiguration,
-  ServiceConfigurationTrackingType,
-  getNotificationPreferenceConfiguration
+  ServiceConfigurationTrackingType
 } from "../features/settings/common/analytics";
 import {
   profileNotificationSettingsSelector,
   profileServicePreferencesModeSelector
 } from "../features/settings/common/store/selectors";
+import {
+  selectWalletCardsByType,
+  selectWalletPlaceholderCards
+} from "../features/wallet/store/selectors";
 import { GlobalState } from "../store/reducers/types";
 import { isMixpanelEnabled } from "./../store/reducers/persistedPreferences";
 
@@ -35,12 +43,12 @@ export const loginSessionConfigHandler = (
 ): LoginSessionDuration => {
   const optInState = fastLoginOptInSelector(state).enabled;
   switch (optInState) {
-    case undefined:
-      return "not set";
-    case true:
-      return "365";
     case false:
       return "30";
+    case true:
+      return "365";
+    case undefined:
+      return "not set";
   }
 };
 
@@ -109,3 +117,24 @@ export const cdcStatusHandler = (state: GlobalState): number => {
   const cdcCards = selectWalletCardsByType(state, "cdc");
   return cdcCards.reduce((sum, card) => sum + card.number_of_cards, 0);
 };
+
+/**
+ * Returns the authentication security level of the current session, regardless
+ * of the identity provider used
+ */
+export const authSecurityLevelHandler = (state: GlobalState): string =>
+  spidLevelFromSessionInfoSelector(state) ?? "not set";
+
+/** Returns the identifier of the identity provider (IdP) used to login */
+export const loginMethodHandler = (state: GlobalState): string => {
+  const idpSelected = idpSelector(state);
+  return O.isSome(idpSelected) ? idpSelected.value.id : "not set";
+};
+
+/**
+ * Whether the login flow is OneIdentity. While logged in it reflects the flow
+ * actually used for the session; while logged out it falls back to the rollout
+ * (or local flag) the user would be assigned to.
+ */
+export const loginFlowIsOneIdentityHandler = (state: GlobalState): boolean =>
+  isOneIdentityLoginSelector(state) ?? isOneIdentityLoginEnabledSelector(state);

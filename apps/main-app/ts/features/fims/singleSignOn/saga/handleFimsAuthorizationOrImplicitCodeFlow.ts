@@ -1,3 +1,4 @@
+import { IOToast } from "@io-app/design-system";
 import {
   HttpClientResponse,
   HttpClientSuccessResponse,
@@ -10,15 +11,18 @@ import {
 } from "@pagopa/io-react-native-login-utils";
 import * as E from "fp-ts/lib/Either";
 import { Parser as HTMLParser2 } from "htmlparser2";
+import I18n from "i18next";
 import {
   URL as PolyfillURL,
   URLSearchParams as PolyfillURLSearchParams
 } from "react-native-url-polyfill";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { IOToast } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+
+import { fimsTrackingEnrichedUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isMixpanelEnabled } from "../../../../store/reducers/persistedPreferences";
 import { ReduxSagaEffect } from "../../../../types/utils";
+import { getDeviceId } from "../../../../utils/device";
 import { LollipopConfig } from "../../../lollipop";
 import { generateKeyInfo } from "../../../lollipop/saga";
 import {
@@ -27,19 +31,20 @@ import {
 } from "../../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
+import { trackInAppBrowserOpening } from "../../common/analytics";
+import { fimsSignAndRetrieveInAppBrowserUrlAction } from "../store/actions";
 import {
   fimsCtaTextSelector,
   fimsEphemeralSessionOniOSSelector,
   relyingPartyServiceIdSelector
 } from "../store/selectors";
-import { trackInAppBrowserOpening } from "../../common/analytics";
-import { fimsSignAndRetrieveInAppBrowserUrlAction } from "../store/actions";
+import { enrichFimsDestinationUrl } from "../utils";
 import {
-  computeAndTrackAuthenticationError,
   absoluteRedirectUrlFromHttpClientResponse,
-  isRedirectStatusCode,
+  computeAndTrackAuthenticationError,
+  handleFimsBackNavigation,
   handleFimsResourcesDeallocation,
-  handleFimsBackNavigation
+  isRedirectStatusCode
 } from "./sagaUtils";
 
 // note: IAB => InAppBrowser
@@ -101,13 +106,17 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
   yield* call(handleFimsResourcesDeallocation);
   yield* call(computeAndTrackInAppBrowserOpening);
 
+  const enrichedInAppBrowserRedirectUrl = yield* call(
+    enrichFimsRedirectUrl,
+    inAppBrowserRedirectUrl
+  );
   const ephemeralSessionOniOS = yield* select(
     fimsEphemeralSessionOniOSSelector
   );
   try {
     yield* call(
       openAuthenticationSession,
-      inAppBrowserRedirectUrl,
+      enrichedInAppBrowserRedirectUrl,
       "iossoapi",
       !ephemeralSessionOniOS
     );
@@ -126,7 +135,7 @@ const getLollipopParamsFromUrlString = (url: string) => {
     const params: PolyfillURLSearchParams = constructedUrl.searchParams;
     params.forEach((value, name) => lollipopParams.set(name, value));
     return lollipopParams;
-  } catch (error) {
+  } catch {
     return undefined;
   }
 };
@@ -134,6 +143,12 @@ const getLollipopParamsFromUrlString = (url: string) => {
 export type RelyingPartyOutput = {
   relyingPartyUrl: string;
   response: HttpClientResponse;
+};
+
+type PostData = {
+  params: Map<string, string>;
+  state: string;
+  url: string;
 };
 
 export function* postToRelyingPartyWithImplicitCodeFlow(
@@ -299,12 +314,6 @@ function* generateLollipopSignature(
   }
 }
 
-type PostData = {
-  url: string;
-  params: Map<string, string>;
-  state: string;
-};
-
 const extractFormPostDataFromHTML = (
   html: string
 ): E.Either<string, PostData> => {
@@ -419,3 +428,21 @@ const inAppBrowserErrorToHumanReadable = (error: unknown) => {
   }
   return JSON.stringify(error);
 };
+
+export function* enrichFimsRedirectUrl(
+  redirectUrl: string
+): Generator<ReduxSagaEffect, string, any> {
+  const trackingEnrichedUrls = yield* select(fimsTrackingEnrichedUrlsSelector);
+  const mixpanelEnabled = yield* select(isMixpanelEnabled);
+  if (!mixpanelEnabled || trackingEnrichedUrls.length === 0) {
+    return redirectUrl;
+  }
+
+  const mixpanelDeviceId = yield* call(getDeviceId);
+  return yield* call(
+    enrichFimsDestinationUrl,
+    redirectUrl,
+    trackingEnrichedUrls,
+    mixpanelDeviceId
+  );
+}

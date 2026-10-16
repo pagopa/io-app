@@ -1,22 +1,20 @@
-import configureMockStore from "redux-mock-store";
 import { act, fireEvent } from "@testing-library/react-native";
+import configureMockStore from "redux-mock-store";
 
+import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-
+import { itwSetL2Fallback } from "../../../common/store/actions/preferences";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import * as credentialsSelectors from "../../../credentials/store/selectors/index";
+import * as catalogueSelectors from "../../../credentialsCatalogue/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
-
+import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCardOnboardingL2Screen } from "../ItwCardOnboardingL2Screen";
-
-import * as credentialsSelectors from "../../../credentials/store/selectors/index";
-
-import * as appParamsList from "../../../../../navigation/params/AppParamsList";
-
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 describe("ItwCardOnboardingL2Screen", () => {
   const replaceMock = jest.fn();
@@ -40,17 +38,17 @@ describe("ItwCardOnboardingL2Screen", () => {
       .mockReturnValue((() => mockSelectorResult) as any);
   });
 
-  it("it should render the screen correctly", () => {
+  it("should render the screen correctly", () => {
     const component = renderComponent();
     expect(component).toBeTruthy();
   });
 
-  it("it should render the restricted mode section", () => {
+  it("should render the restricted mode section", () => {
     const { getByTestId } = renderComponent();
     expect(getByTestId("restricted-mode-section-testID")).toBeTruthy();
   });
 
-  it("it should render restricted credentials modules", () => {
+  it("should render restricted credentials modules", () => {
     const { getByTestId } = renderComponent();
 
     expect(
@@ -58,7 +56,44 @@ describe("ItwCardOnboardingL2Screen", () => {
     ).toBeTruthy();
   });
 
-  it("it should navigate to L3 onboarding page=1 when add bonus button is pressed", () => {
+  it("does not show the fallback upgrade banner on the reduced screen", () => {
+    const state = appReducer(
+      appReducer(undefined, applicationChangeState("active")),
+      itwSetL2Fallback(true)
+    );
+
+    const { queryByTestId } = renderComponent(state);
+    expect(queryByTestId("itwL2FallbackUpgradeBannerTestID")).toBeNull();
+  });
+
+  it("shows only the three restricted documents from the full catalogue", () => {
+    jest
+      .spyOn(credentialsSelectors, "makeItwCredentialsByPresenceSelector")
+      .mockRestore();
+    const restrictedTypes = [
+      CredentialType.DRIVING_LICENSE,
+      CredentialType.EUROPEAN_DISABILITY_CARD,
+      CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+    ];
+    jest
+      .spyOn(catalogueSelectors, "itwAvailableCredentialsListSelector")
+      .mockReturnValue(
+        [...restrictedTypes, CredentialType.EDUCATION_DEGREE].map(type => ({
+          type,
+          name: type
+        }))
+      );
+
+    const { getByTestId, queryByTestId } = renderComponent();
+    restrictedTypes.forEach(type => {
+      expect(getByTestId(`${type}ModuleTestID`)).toBeTruthy();
+    });
+    expect(
+      queryByTestId(`${CredentialType.EDUCATION_DEGREE}ModuleTestID`)
+    ).toBeNull();
+  });
+
+  it("should navigate to L3 onboarding page=1 when add bonus button is pressed", () => {
     const { getByTestId } = renderComponent();
 
     act(() => {
@@ -72,9 +107,9 @@ describe("ItwCardOnboardingL2Screen", () => {
   });
 });
 
-const renderComponent = () => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-
+const renderComponent = (
+  globalState = appReducer(undefined, applicationChangeState("active"))
+) => {
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
@@ -86,7 +121,10 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
+      >
         <ItwCardOnboardingL2Screen />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),

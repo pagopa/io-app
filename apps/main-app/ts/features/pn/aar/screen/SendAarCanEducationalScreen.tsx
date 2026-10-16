@@ -1,9 +1,10 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { Alert, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import cieCanEducationalSource from "../../../../../img/features/pn/cieCanEducational.png";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
@@ -61,11 +62,11 @@ export const SendAarCanEducationalScreen = ({
   const handleGoBack = () => {
     trackSendAarMandateCieReadingClosureAlert("CIE_PREPARATION");
     Alert.alert(
-      i18n.t("features.pn.aar.flow.cieCanAdvisory.alert.title"),
-      i18n.t("features.pn.aar.flow.cieCanAdvisory.alert.message"),
+      I18n.t("features.pn.aar.flow.cieCanAdvisory.alert.title"),
+      I18n.t("features.pn.aar.flow.cieCanAdvisory.alert.message"),
       [
         {
-          text: i18n.t("features.pn.aar.flow.cieCanAdvisory.alert.confirm"),
+          text: I18n.t("features.pn.aar.flow.cieCanAdvisory.alert.confirm"),
           style: "destructive",
           onPress: () => {
             trackSendAarMandateCieReadingClosureAlertAccepted(
@@ -75,7 +76,7 @@ export const SendAarCanEducationalScreen = ({
           }
         },
         {
-          text: i18n.t("features.pn.aar.flow.cieCanAdvisory.alert.cancel"),
+          text: I18n.t("features.pn.aar.flow.cieCanAdvisory.alert.cancel"),
           onPress: () => {
             trackSendAarMandateCieReadingClosureAlertContinue(
               "CIE_PREPARATION"
@@ -105,42 +106,36 @@ export const SendAarCanEducationalScreen = ({
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
+    <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
       <IOScrollViewWithLargeHeader
         actions={{
           type: "SingleButton",
           primary: {
             testID: "primaryActionID",
-            label: i18n.t("global.buttons.continue"),
+            label: I18n.t("global.buttons.continue"),
             onPress: handleGoNext
           }
         }}
+        alwaysBounceVertical={false}
+        description={I18n.t("features.pn.aar.flow.cieCanAdvisory.description")}
+        goBack={handleGoBack}
+        headerActionsProp={{ showHelp: true }}
+        includeContentMargins
         title={{
-          label: i18n.t("features.pn.aar.flow.cieCanAdvisory.title", {
+          label: I18n.t("features.pn.aar.flow.cieCanAdvisory.title", {
             denomination
           })
         }}
-        description={i18n.t("features.pn.aar.flow.cieCanAdvisory.description")}
-        headerActionsProp={{ showHelp: true }}
-        contextualHelp={{
-          title: i18n.t(
-            "features.pn.aar.flow.delegated.cieContextualHelp.title"
-          ),
-          body: i18n.t("features.pn.aar.flow.delegated.cieContextualHelp.body")
-        }}
-        goBack={handleGoBack}
-        includeContentMargins
-        alwaysBounceVertical={false}
       >
         <VSpacer size={8} />
         <Image
+          accessibilityIgnoresInvertColors
           source={{
             uri
           }}
           style={{
             aspectRatio
           }}
-          accessibilityIgnoresInvertColors
         />
       </IOScrollViewWithLargeHeader>
     </SafeAreaView>

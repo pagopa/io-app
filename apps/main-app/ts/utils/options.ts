@@ -1,6 +1,4 @@
-/**
- * Utils for Option items
- */
+/** Utils for Option items */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
@@ -26,7 +24,7 @@ export function areSetEqual<T>(a: O.Option<Set<T>>, b: O.Option<Set<T>>) {
 export function areStringsEqual(
   aa: O.Option<string>,
   bb: O.Option<string>,
-  caseInsensitive: boolean = false
+  caseInsensitive = false
 ): boolean {
   return pipe(
     aa,
@@ -46,7 +44,8 @@ export function areStringsEqual(
 }
 
 /**
- * return some of item[key] if item is defined and item[key] too
+ * Return some of item[key] if item is defined and item[key] too
+ *
  * @param item
  * @param key
  * @param extractor

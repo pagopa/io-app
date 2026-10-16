@@ -1,15 +1,16 @@
 import { call, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { loadServicePreference } from "../../details/store/actions/preference";
-import { isServicePreferenceResponseSuccess } from "../../details/types/ServicePreferenceResponse";
+
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { loadServicePreference } from "../../details/store/actions/preference";
+import { isServicePreferenceResponseSuccess } from "../../details/types/ServicePreferenceResponse";
 
 /**
- * This saga is used to update the profile properties after
- * special services action status changes (for now, only SEND
- * is added as a profile property, nonetheless this saga can
- * later be used to trigger an update for other services)
+ * This saga is used to update the profile properties after special services
+ * action status changes (for now, only SEND is added as a profile property,
+ * nonetheless this saga can later be used to trigger an update for other
+ * services)
  */
 export function* specialServicePreferencesSaga(
   action: ActionType<typeof loadServicePreference.success>

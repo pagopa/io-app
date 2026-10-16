@@ -1,16 +1,22 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import { all, call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { apiUrlPrefix } from "../../../../config";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { isTestEnv } from "../../../../utils/environment";
-import { unknownToReason } from "../../../messages/utils";
+import {
+  decodeSendFailureReason,
+  SendFailureReason,
+  unknownToReason,
+  WrappedSendError
+} from "../../../messages/utils";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
@@ -18,7 +24,7 @@ import {
   trackPNServiceStatusChangeError,
   trackPNServiceStatusChangeSuccess
 } from "../../analytics";
-import { PnClient, createPnClient } from "../../api/client";
+import { createPnClient, PnClient } from "../../api/client";
 import { pnActivationUpsert, startPNPaymentStatusTracking } from "../actions";
 import { watchPaymentStatusForMixpanelTracking } from "./watchPaymentStatusSaga";
 
@@ -28,7 +34,20 @@ export function* tryLoadSENDPreferences() {
     yield* put(loadServicePreference.request(pnServiceId));
   }
 }
-const tooManyRequestsError = new Error("timeout -- too many requests");
+export function* watchPnSaga(bearerToken: string): SagaIterator {
+  const pnClient = createPnClient(apiUrlPrefix, bearerToken);
+
+  yield* takeLatest(
+    pnActivationUpsert.request,
+    handlePnActivation,
+    pnClient.upsertSendActivation
+  );
+
+  yield* takeLatest(
+    startPNPaymentStatusTracking,
+    watchPaymentStatusForMixpanelTracking
+  );
+}
 
 function* handlePnActivation(
   upsertSendActivation: PnClient["upsertSendActivation"],
@@ -59,20 +78,29 @@ function* handlePnActivation(
           ]);
           action.payload.onSuccess?.();
           break;
-        case 429:
-          throw tooManyRequestsError;
         default:
-          throw Error(
+          throw new WrappedSendError(
+            decodeSendFailureReason({
+              kind: "http_status",
+              status: result.right.status
+            }),
             `Status code: ${result.right.status} Request data: ${JSON.stringify(
               requestData
             )}`
           );
       }
     } else if (E.isLeft(result)) {
-      throw Error(readableReport(result.left));
+      throw new WrappedSendError(
+        SendFailureReason.DECODE_ERROR,
+        readableReport(result.left)
+      );
     }
   } catch (e) {
-    const isRateLimitError = e === tooManyRequestsError;
+    const reason =
+      e instanceof WrappedSendError
+        ? e.reason
+        : decodeSendFailureReason({ kind: "caught", error: e });
+    const isRateLimitError = reason === SendFailureReason.RATE_LIMITED;
     yield* all([
       call(
         reportPNServiceStatusOnFailure,
@@ -82,7 +110,7 @@ function* handlePnActivation(
       put(pnActivationUpsert.failure()),
       call(tryLoadSENDPreferences)
     ]);
-    action.payload.onFailure?.(isRateLimitError);
+    action.payload.onFailure?.(isRateLimitError, reason);
   }
 }
 
@@ -106,21 +134,6 @@ function* reportPNServiceStatusOnFailure(
     O.getOrElse(() => predictedValue)
   );
   trackPNServiceStatusChangeError(isServiceActive, reason);
-}
-
-export function* watchPnSaga(bearerToken: string): SagaIterator {
-  const pnClient = createPnClient(apiUrlPrefix, bearerToken);
-
-  yield* takeLatest(
-    pnActivationUpsert.request,
-    handlePnActivation,
-    pnClient.upsertSendActivation
-  );
-
-  yield* takeLatest(
-    startPNPaymentStatusTracking,
-    watchPaymentStatusForMixpanelTracking
-  );
 }
 
 export const testable = isTestEnv

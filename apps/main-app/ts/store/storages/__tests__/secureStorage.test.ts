@@ -1,6 +1,7 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
-import createSecureStorage, { isValueNotFoundError } from "../secureStorage";
+
 import * as analytics from "../../../utils/analytics";
+import createSecureStorage, { isValueNotFoundError } from "../secureStorage";
 
 jest.mock("@pagopa/io-react-native-secure-storage", () => ({
   get: jest.fn(),

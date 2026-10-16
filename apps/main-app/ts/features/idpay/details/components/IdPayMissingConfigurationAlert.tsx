@@ -1,23 +1,58 @@
-import { Alert, VSpacer } from "@pagopa/io-app-design-system";
+import { StatusEnum as InitiativeStatusEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { Alert, VSpacer } from "@io-app/design-system";
 import { NavigatorScreenParams } from "@react-navigation/native";
+import I18n from "i18next";
 import { createRef } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
-import { StatusEnum as InitiativeStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { IdPayConfigurationParamsList } from "../../configuration/navigation/params";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 
-type StatusWithAlert = Exclude<
-  InitiativeStatusEnum,
-  | InitiativeStatusEnum.REFUNDABLE
-  | InitiativeStatusEnum.UNSUBSCRIBED
-  | InitiativeStatusEnum.SUSPENDED
->;
-
 type Props = {
   initiativeId: string;
   status: InitiativeStatusEnum;
+};
+
+type StatusWithAlert = Exclude<
+  InitiativeStatusEnum,
+  | InitiativeStatusEnum.REFUNDABLE
+  | InitiativeStatusEnum.SUSPENDED
+  | InitiativeStatusEnum.UNSUBSCRIBED
+>;
+
+const getAlertCopy = (
+  status: StatusWithAlert
+): { action: string; content: string } => {
+  switch (status) {
+    case InitiativeStatusEnum.NOT_REFUNDABLE:
+      return {
+        action: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE.action"
+        ),
+        content: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE.content"
+        )
+      };
+    case InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
+      return {
+        action: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE_ONLY_IBAN.action"
+        ),
+        content: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE_ONLY_IBAN.content"
+        )
+      };
+    case InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
+      return {
+        action: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE_ONLY_INSTRUMENT.action"
+        ),
+        content: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE_ONLY_INSTRUMENT.content"
+        )
+      };
+  }
 };
 
 const IdPayMissingConfigurationAlert = (props: Props) => {
@@ -55,18 +90,16 @@ const IdPayMissingConfigurationAlert = (props: Props) => {
     );
   };
 
+  const { action, content } = getAlertCopy(status);
+
   return (
     <>
       <Alert
+        action={action}
+        content={content}
+        onPress={handleNavigation}
         ref={viewRef}
         testID="missing-configuration-alert"
-        content={I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
-        )}
-        action={I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.action`
-        )}
-        onPress={handleNavigation}
         variant="error"
       />
       <VSpacer size={16} />

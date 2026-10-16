@@ -1,11 +1,12 @@
+import { InstitutionServicesResource } from "@io-app/api-types/generated/definitions/services/InstitutionServicesResource";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
-import { InstitutionServicesResource } from "../../../../../../../definitions/services/InstitutionServicesResource";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { NetworkError } from "../../../../../../utils/errors";
-import { WithInstitutionID, paginatedServicesGet } from "../../actions";
-import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
+import { paginatedServicesGet, WithInstitutionID } from "../../actions";
 
 const MOCK_INSTITUTION_ID = "1";
 

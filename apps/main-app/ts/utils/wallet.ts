@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
+import I18n from "i18next";
 import * as t from "io-ts";
 import { Alert } from "react-native";
-import I18n from "i18next";
 /*
     Contains utility functions to check conditions
     used across project (currently just in CardComponent)
@@ -11,8 +11,9 @@ import I18n from "i18next";
 export const FOUR_UNICODE_CIRCLES = "●".repeat(4);
 
 /**
- * it sanitizes psp tags avoiding no string value and string duplicates
- * @param w wallet object
+ * It sanitizes psp tags avoiding no string value and string duplicates
+ *
+ * @param w Wallet object
  */
 export const fixWalletPspTagsValues = (w: unknown) => {
   const decoder = t.interface({
@@ -40,11 +41,16 @@ export const fixWalletPspTagsValues = (w: unknown) => {
 
 /**
  * This function handles the set favourite method on wallet section:
- * - if it is already a favourite it displays an alert suggesting to select another favourite method
- * - if it is not a favourite the callback will be executed
- * more information at https://www.pivotaltracker.com/story/show/172762258
- * @param willBeFavorite defines if the method will be the favourite selected by the user
- * @param callback method to invoke for saving the method
+ *
+ * - If it is already a favourite it displays an alert suggesting to select
+ *   another favourite method
+ * - If it is not a favourite the callback will be executed
+ *
+ * More information at https://www.pivotaltracker.com/story/show/172762258
+ *
+ * @param willBeFavorite Defines if the method will be the favourite selected by
+ *   the user
+ * @param callback Method to invoke for saving the method
  */
 export const handleSetFavourite = (
   willBeFavorite: boolean,

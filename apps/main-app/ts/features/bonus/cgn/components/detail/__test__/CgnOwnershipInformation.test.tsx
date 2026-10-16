@@ -1,7 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { render } from "@testing-library/react-native";
+import I18n from "i18next";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
+
 import mockedProfile from "../../../../../../__mocks__/initializedProfile";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
@@ -28,9 +30,15 @@ describe("CgnOwnershipInformation", () => {
     });
 
     expect(component).toBeTruthy();
-    expect(component.getByText("Nome")).not.toBeNull();
-    expect(component.getByText("Cognome")).not.toBeNull();
-    expect(component.getByText("Codice Fiscale")).not.toBeNull();
+    expect(
+      component.getByText(I18n.t("bonus.cgn.detail.ownershipData.name"))
+    ).not.toBeNull();
+    expect(
+      component.getByText(I18n.t("bonus.cgn.detail.ownershipData.surname"))
+    ).not.toBeNull();
+    expect(
+      component.getByText(I18n.t("bonus.cgn.detail.ownershipData.fiscalCode"))
+    ).not.toBeNull();
     expect(component.getByText(mockedProfile.name)).not.toBeNull();
     expect(component.getByText(mockedProfile.family_name)).not.toBeNull();
     expect(component.getByText(mockedProfile.fiscal_code)).not.toBeNull();
@@ -43,8 +51,14 @@ describe("CgnOwnershipInformation", () => {
     });
 
     expect(component).toBeTruthy();
-    expect(component.queryByText("Nome")).toBeNull();
-    expect(component.queryByText("Cognome")).toBeNull();
-    expect(component.queryByText("Codice Fiscale")).toBeNull();
+    expect(
+      component.queryByText(I18n.t("bonus.cgn.detail.ownershipData.name"))
+    ).toBeNull();
+    expect(
+      component.queryByText(I18n.t("bonus.cgn.detail.ownershipData.surname"))
+    ).toBeNull();
+    expect(
+      component.queryByText(I18n.t("bonus.cgn.detail.ownershipData.fiscalCode"))
+    ).toBeNull();
   });
 });

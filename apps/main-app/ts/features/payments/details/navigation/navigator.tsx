@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { IdPayInstrumentInitiativesScreen } from "../../../idpay/wallet/screens/IdPayInstrumentInitiativesScreen";
 import PaymentsMethodDetailsScreen from "../screens/PaymentsMethodDetailsScreen";
@@ -13,13 +14,13 @@ export const PaymentsMethodDetailsNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
-      name={PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN}
       component={PaymentsMethodDetailsScreen}
+      name={PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN}
       options={{ gestureEnabled: isGestureEnabled, headerShown: false }}
     />
     <Stack.Screen
-      name={PaymentsMethodDetailsRoutes.IDPAY_INITIATIVE_DETAILS_LIST}
       component={IdPayInstrumentInitiativesScreen}
+      name={PaymentsMethodDetailsRoutes.IDPAY_INITIATIVE_DETAILS_LIST}
     />
   </Stack.Navigator>
 );

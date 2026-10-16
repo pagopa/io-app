@@ -1,21 +1,28 @@
-import * as O from "fp-ts/lib/Option";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { identity } from "lodash";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+
 import * as appVersion from "../../../../utils/appVersion";
 import { GlobalState } from "../../types";
 import {
   absolutePortalLinksSelector,
   barcodesScannerConfigSelector,
+  engagementCGNDiscoveryBannerSelector,
   fimsServiceConfiguration,
   fimsServiceIdInCookieDisabledListSelector,
+  fimsTrackingEnrichedUrlsSelector,
+  fseDiscoveryBannerWebUrlSelector,
   generateDynamicUrlSelector,
   isAarInAppDelegationRemoteEnabledSelector,
   isAarRemoteEnabled,
-  isIOMarkdownEnabledForMessagesAndServicesSelector,
+  isCGNDiscoveryBannerEnabledSelector,
+  isFseDiscoveryBannerDismissableSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
+  isSendLollipopPlaygroundEnabledSelector,
   landingScreenBannerOrderSelector,
+  messageSurveyBannerUriSelector,
   pnAarQRCodeRegexSelector,
   pnMessagingServiceIdSelector,
   pnPrivacyUrlsSelector,
@@ -24,10 +31,7 @@ import {
   sendCustomServiceCenterUrlSelector,
   sendEstimateTimelinesUrlSelector,
   sendShowAbstractSelector,
-  sendVisitTheWebsiteUrlSelector,
-  isSendLollipopPlaygroundEnabledSelector,
-  isCGNDiscoveryBannerEnabledSelector,
-  engagementCGNDiscoveryBannerSelector
+  sendVisitTheWebsiteUrlSelector
 } from "../remoteConfig";
 
 describe("remoteConfig", () => {
@@ -264,11 +268,7 @@ describe("remoteConfig", () => {
       it(`should return [${testCase.expected}] for ${JSON.stringify(
         pipe(
           testCase.selectorInput.remoteConfig,
-          O.fold(
-            // eslint-disable-next-line no-underscore-dangle
-            () => testCase.selectorInput.remoteConfig._tag,
-            identity
-          )
+          O.fold(() => testCase.selectorInput.remoteConfig._tag, identity)
         )
       )}`, () => {
         const output = landingScreenBannerOrderSelector(testCase.selectorInput);
@@ -334,106 +334,107 @@ describe("remoteConfig", () => {
       expect(serviceConfiguration).toBeUndefined();
     });
   });
-});
-describe("isIOMarkdownEnabledForMessagesAndServicesSelector", () => {
-  (
-    [
-      [
-        {
-          remoteConfig: O.none
-        } as GlobalState,
-        false
-      ],
-      [
-        {
-          remoteConfig: O.some({})
-        },
-        true
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {}
-          })
-        },
-        true
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {
-              min_app_version: {}
-            }
-          })
-        },
-        false
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {
+
+  describe("fimsTrackingEnrichedUrlsSelector", () => {
+    it("should return the configured URL allowlist", () => {
+      const trackingEnrichedUrls = ["https://trusted.test/callback"];
+      const state = {
+        remoteConfig: O.some({
+          fims: { trackingEnrichedUrls }
+        })
+      } as GlobalState;
+
+      expect(fimsTrackingEnrichedUrlsSelector(state)).toEqual(
+        trackingEnrichedUrls
+      );
+    });
+
+    it("should return an empty allowlist when it is not configured", () => {
+      expect(fimsTrackingEnrichedUrlsSelector(noneStore)).toEqual([]);
+    });
+
+    it("should return an empty allowlist when the FIMS config is empty", () => {
+      const state = {
+        remoteConfig: O.some({ fims: {} })
+      } as GlobalState;
+
+      expect(fimsTrackingEnrichedUrlsSelector(state)).toEqual([]);
+    });
+  });
+
+  describe("messageSurveyBannerUriSelector", () => {
+    const currentAppVersion = "2.0.0.0";
+    const surveyUri = "https://example.com/messages-survey";
+    const enabledMinAppVersion = {
+      android: "1.0.0.0",
+      ios: "1.0.0.0"
+    };
+    const stateWithRemoteConfig = (remoteConfig: unknown) =>
+      ({
+        remoteConfig
+      }) as GlobalState;
+
+    it.each([
+      {
+        name: "remote config is unavailable",
+        state: stateWithRemoteConfig(O.none),
+        expected: undefined
+      },
+      {
+        name: "banner config is missing",
+        state: stateWithRemoteConfig(O.some({})),
+        expected: undefined
+      },
+      {
+        name: "app version is not supported",
+        state: stateWithRemoteConfig(
+          O.some({
+            messages_feedback_banner: {
+              feedback_uri: surveyUri,
               min_app_version: {
-                android: "0.0.0.0",
-                ios: "0.0.0.0"
+                android: "3.0.0.0",
+                ios: "3.0.0.0"
               }
             }
           })
-        },
-        false
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {
-              min_app_version: {
-                android: "1.0.0.0",
-                ios: "1.0.0.0"
-              }
+        ),
+        expected: undefined
+      },
+      {
+        name: "feedback URI is missing",
+        state: stateWithRemoteConfig(
+          O.some({
+            messages_feedback_banner: {
+              min_app_version: enabledMinAppVersion
             }
           })
-        },
-        true
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {
-              min_app_version: {
-                android: "2.0.0.0",
-                ios: "2.0.0.0"
-              }
+        ),
+        expected: undefined
+      },
+      {
+        name: "banner config is enabled",
+        state: stateWithRemoteConfig(
+          O.some({
+            messages_feedback_banner: {
+              feedback_uri: surveyUri,
+              min_app_version: enabledMinAppVersion
             }
           })
-        },
-        true
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {
-              min_app_version: {
-                android: "2.0.0.1",
-                ios: "2.0.0.1"
-              }
-            }
-          })
-        },
-        false
-      ]
-    ] as ReadonlyArray<[GlobalState, boolean]>
-  ).forEach(testData =>
-    it(`should return '${testData[1]}' for '${JSON.stringify(
-      testData[0]
-    )}'`, () => {
+        ),
+        expected: surveyUri
+      }
+    ] as ReadonlyArray<{
+      expected: string | undefined;
+      name: string;
+      state: GlobalState;
+    }>)('should return "$expected" when $name', ({ state, expected }) => {
       jest
         .spyOn(appVersion, "getAppVersion")
-        .mockImplementation(() => "2.0.0.0");
-      const output = isIOMarkdownEnabledForMessagesAndServicesSelector(
-        testData[0]
-      );
-      expect(output).toBe(testData[1]);
-    })
-  );
+        .mockImplementation(() => currentAppVersion);
+
+      expect(messageSurveyBannerUriSelector(state)).toBe(expected);
+    });
+  });
 });
 
 describe("pnMessageServiceIdSelector", () => {
@@ -1412,5 +1413,93 @@ describe("engagementCGNDiscoveryBannerSelector", () => {
         "en-EN": "test"
       }
     });
+  });
+});
+
+describe("fseDiscoveryBannerWebUrlSelector", () => {
+  const webUrl = "https://example.com/fse";
+
+  it("should return undefined if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+
+    expect(fseDiscoveryBannerWebUrlSelector(state)).toBeUndefined();
+  });
+
+  it("should return undefined if the FSE landing banner web url is missing", () => {
+    const state = {
+      remoteConfig: O.some({
+        fse: {
+          landingBanner: {}
+        }
+      })
+    } as GlobalState;
+
+    expect(fseDiscoveryBannerWebUrlSelector(state)).toBeUndefined();
+  });
+
+  it("should return the FSE landing banner web url", () => {
+    const state = {
+      remoteConfig: O.some({
+        fse: {
+          landingBanner: {
+            engagement_url: webUrl
+          }
+        }
+      })
+    } as GlobalState;
+
+    expect(fseDiscoveryBannerWebUrlSelector(state)).toBe(webUrl);
+  });
+});
+
+describe("isFseDiscoveryBannerDismissableSelector", () => {
+  it("should return false if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+
+    expect(isFseDiscoveryBannerDismissableSelector(state)).toBe(false);
+  });
+
+  it("should return false if the FSE landing banner dismissable flag is missing", () => {
+    const state = {
+      remoteConfig: O.some({
+        fse: {
+          landingBanner: {}
+        }
+      })
+    } as GlobalState;
+
+    expect(isFseDiscoveryBannerDismissableSelector(state)).toBe(false);
+  });
+
+  it("should return false if the FSE landing banner is not dismissable", () => {
+    const state = {
+      remoteConfig: O.some({
+        fse: {
+          landingBanner: {
+            is_dismissable: false
+          }
+        }
+      })
+    } as GlobalState;
+
+    expect(isFseDiscoveryBannerDismissableSelector(state)).toBe(false);
+  });
+
+  it("should return true if the FSE landing banner is dismissable", () => {
+    const state = {
+      remoteConfig: O.some({
+        fse: {
+          landingBanner: {
+            is_dismissable: true
+          }
+        }
+      })
+    } as GlobalState;
+
+    expect(isFseDiscoveryBannerDismissableSelector(state)).toBe(true);
   });
 });

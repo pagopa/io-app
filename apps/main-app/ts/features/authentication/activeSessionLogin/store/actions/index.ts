@@ -1,6 +1,7 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { SpidIdp } from "../../../../../utils/idps";
-import { SpidLevel } from "../../../login/cie/utils";
+import { AuthLevel } from "../../../common/utils";
 import { ActiveSessionLoginState } from "../reducer";
 
 export const setActiveSessionLoginLocalFlag = createStandardAction(
@@ -37,10 +38,11 @@ export const setFastLoginOptSessionLogin = createStandardAction(
 export const consolidateActiveSessionLoginData = createStandardAction(
   "CONSOLIDATE_ACTIVE_SESSION_LOGIN_DATA"
 )<{
-  token: string;
-  idp: SpidIdp;
+  cieIDSelectedSecurityLevel?: AuthLevel;
   fastLoginOptIn: boolean;
-  cieIDSelectedSecurityLevel?: SpidLevel;
+  idp: SpidIdp;
+  isOneIdentityLogin: boolean;
+  token: string;
 }>();
 
 export const setFinishedActiveSessionLoginFlow = createStandardAction(
@@ -55,10 +57,11 @@ export const setLoggedOutUserWithDifferentCF = createStandardAction(
  * Action to trigger logout before session corruption.
  *
  * This action is dispatched when the session needs to be corrupted but we still
- * have a valid token to perform the logout API call. It initiates a logout request
- * to the backend and then proceeds to corrupt the session.
+ * have a valid token to perform the logout API call. It initiates a logout
+ * request to the backend and then proceeds to corrupt the session.
  *
  * Flow:
+ *
  * 1. Dispatch this action with valid token
  * 2. Perform logout API call to backend
  * 3. Clean up crypto keys and reset mixpanel
@@ -78,7 +81,7 @@ export const setFinalizeLoggedOutUserWithDifferentCF = createStandardAction(
 export const setCieIDSelectedSecurityLevelActiveSessionLogin =
   createStandardAction(
     "SET_CIE_ID_SELECTED_SECURITY_LEVEL_ACTIVE_SESSION_LOGIN"
-  )<SpidLevel>();
+  )<AuthLevel>();
 
 export const closeSessionExpirationBanner = createStandardAction(
   "CLOSE_SESSION_EXPIRATION_BANNER"
@@ -89,19 +92,19 @@ export const setActiveSessionLoginFlow = createStandardAction(
 )<ActiveSessionLoginState["flow"]>();
 
 export type LoginInfoActions =
-  | ActionType<typeof setActiveSessionLoginLocalFlag>
-  | ActionType<typeof setActiveSessionLoginBlockingScreenHasBeenVisualized>
-  | ActionType<typeof setStartActiveSessionLogin>
-  | ActionType<typeof setRetryActiveSessionLogin>
-  | ActionType<typeof setIdpSelectedActiveSessionLogin>
   | ActionType<typeof activeSessionLoginFailure>
   | ActionType<typeof activeSessionLoginSuccess>
-  | ActionType<typeof consolidateActiveSessionLoginData>
-  | ActionType<typeof setFastLoginOptSessionLogin>
-  | ActionType<typeof setFinishedActiveSessionLoginFlow>
-  | ActionType<typeof setLoggedOutUserWithDifferentCF>
-  | ActionType<typeof logoutBeforeSessionCorrupted>
-  | ActionType<typeof setFinalizeLoggedOutUserWithDifferentCF>
-  | ActionType<typeof setCieIDSelectedSecurityLevelActiveSessionLogin>
   | ActionType<typeof closeSessionExpirationBanner>
-  | ActionType<typeof setActiveSessionLoginFlow>;
+  | ActionType<typeof consolidateActiveSessionLoginData>
+  | ActionType<typeof logoutBeforeSessionCorrupted>
+  | ActionType<typeof setActiveSessionLoginBlockingScreenHasBeenVisualized>
+  | ActionType<typeof setActiveSessionLoginFlow>
+  | ActionType<typeof setActiveSessionLoginLocalFlag>
+  | ActionType<typeof setCieIDSelectedSecurityLevelActiveSessionLogin>
+  | ActionType<typeof setFastLoginOptSessionLogin>
+  | ActionType<typeof setFinalizeLoggedOutUserWithDifferentCF>
+  | ActionType<typeof setFinishedActiveSessionLoginFlow>
+  | ActionType<typeof setIdpSelectedActiveSessionLogin>
+  | ActionType<typeof setLoggedOutUserWithDifferentCF>
+  | ActionType<typeof setRetryActiveSessionLogin>
+  | ActionType<typeof setStartActiveSessionLogin>;

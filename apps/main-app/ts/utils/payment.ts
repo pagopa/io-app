@@ -1,15 +1,15 @@
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { PaymentFaultV2Enum } from "../../definitions/communication/PaymentFaultV2";
+
 import { maybeNotNullyString } from "./strings";
 
 /**
- * Decode a Data Matrix string from Poste returning
- * a tuple with an `RptId` and an `AmountInEuroCents`
- * or none.
+ * Decode a Data Matrix string from Poste returning a tuple with an `RptId` and
+ * an `AmountInEuroCents` or none.
  */
 export function decodePosteDataMatrix(
   data: string
@@ -42,6 +42,7 @@ export function decodePosteDataMatrix(
 
 /**
  * This tags are defined in PagoPA specs for transaction description.
+ *
  * @see https://pagopa-codici.readthedocs.io/it/latest/_docs/Capitolo3.html
  */
 const prefixes: ReadonlyArray<string> = ["RFA", "RFB", "RFS"];
@@ -52,7 +53,8 @@ const hasDescriptionPrefix = (description: string) =>
   );
 
 /**
- * This function removes the tag from payment description of a PagoPA transaction.
+ * This function removes the tag from payment description of a PagoPA
+ * transaction.
  */
 export const cleanTransactionDescription = (description: string): string => {
   const descriptionParts = description.split("TXT/");
@@ -67,19 +69,20 @@ export const cleanTransactionDescription = (description: string): string => {
       );
 };
 
-export type ErrorTypes =
-  | "REVOKED"
-  | "EXPIRED"
-  | "ONGOING"
-  | "DUPLICATED"
-  | "NOT_FOUND"
-  | "UNCOVERED";
-
 export type DetailV2Keys = keyof typeof PaymentFaultV2Enum;
+
+export type ErrorTypes =
+  | "DUPLICATED"
+  | "EXPIRED"
+  | "NOT_FOUND"
+  | "ONGOING"
+  | "REVOKED"
+  | "UNCOVERED";
 
 /**
  * This function is used to convert the raw error code to the main error type.
  * Main error types is represented by the union type ErrorTypes.
+ *
  * @param error
  */
 export const getV2ErrorMainType = (
@@ -90,16 +93,16 @@ export const getV2ErrorMainType = (
   }
 
   switch (error) {
-    case "PAA_PAGAMENTO_IN_CORSO":
-    case "PPT_PAGAMENTO_IN_CORSO":
-      return "ONGOING";
     case "PAA_PAGAMENTO_ANNULLATO":
       return "REVOKED";
-    case "PAA_PAGAMENTO_SCADUTO":
-      return "EXPIRED";
     case "PAA_PAGAMENTO_DUPLICATO":
     case "PPT_PAGAMENTO_DUPLICATO":
       return "DUPLICATED";
+    case "PAA_PAGAMENTO_IN_CORSO":
+    case "PPT_PAGAMENTO_IN_CORSO":
+      return "ONGOING";
+    case "PAA_PAGAMENTO_SCADUTO":
+      return "EXPIRED";
     case "PAA_PAGAMENTO_SCONOSCIUTO":
       return "NOT_FOUND";
     default:

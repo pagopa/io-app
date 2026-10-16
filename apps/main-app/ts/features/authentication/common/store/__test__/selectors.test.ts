@@ -1,22 +1,23 @@
+import { SpidLevelEnum } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
 import * as O from "fp-ts/lib/Option";
+
+import { GlobalState } from "../../../../../store/reducers/types";
+import { format } from "../../../../../utils/dates";
 import {
   authenticationStateSelector,
-  loggedOutWithIdpAuthSelector,
-  fimsTokenSelector,
-  sessionInfoSelector,
-  formattedExpirationDateSelector,
-  zendeskTokenSelector,
-  walletTokenSelector,
   bpdTokenSelector,
-  selectedIdentityProviderSelector,
-  idpSelector,
   extractSpidLevel,
-  spidLevelFromSessionInfoSelector
+  fimsTokenSelector,
+  formattedExpirationDateSelector,
+  idpSelector,
+  loggedOutWithIdpAuthSelector,
+  selectedIdentityProviderSelector,
+  sessionInfoSelector,
+  spidLevelFromSessionInfoSelector,
+  walletTokenSelector,
+  zendeskTokenSelector
 } from "../selectors";
-import { format } from "../../../../../utils/dates";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { isLogoutRequested } from "../utils/guards";
-import { SpidLevelEnum } from "../../../../../../definitions/session_manager/SpidLevel";
 
 const mockIdp = { entityId: "idp1", isTestIdp: false };
 
@@ -77,10 +78,10 @@ describe("authentication selectors", () => {
     expect(fimsTokenSelector(state)).toBe("fims");
   });
 
-  it("should return session info as Option if logged in with session info", () => {
+  it("should return session info as data if logged in with session info", () => {
     const state = createLoggedInWithSessionInfoState();
     expect(sessionInfoSelector(state)).toEqual(
-      O.some((state.authentication as any).sessionInfo)
+      (state.authentication as any).sessionInfo
     );
   });
 

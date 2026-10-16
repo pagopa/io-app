@@ -1,17 +1,18 @@
 jest.mock("../FimsHistoryListItems.tsx");
 jest.mock("../FimsHistoryLoaders.tsx");
 
+import { Access } from "@io-app/api-types/generated/definitions/fims_history/Access";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { Access } from "../../../../../../definitions/fims_history/Access";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as LIST_ITEMS from "../FimsHistoryListItems";
 import * as FETCH_HOOKS from "../../../common/hooks";
-import { FimsHistoryListItemPicker } from "../FimsHistoryListItemPicker";
 import { FIMS_ROUTES } from "../../../common/navigation";
+import { FimsHistoryListItemPicker } from "../FimsHistoryListItemPicker";
+import * as LIST_ITEMS from "../FimsHistoryListItems";
 import * as LOADERS from "../FimsHistoryLoaders";
 
 const mockServiceDetails = { organization: { name: "TEST" } } as ServiceDetails;

@@ -1,0 +1,40 @@
+name: Unused code baseline
+on:
+  push:
+    branches:
+      - master
+permissions:
+  contents: read
+jobs:
+  baseline:
+    name: Record the unused-code baseline
+    runs-on: ubuntu-latest
+    environment: dev
+    permissions:
+      contents: read
+    concurrency:
+      # Every master commit needs its own baseline: PRs look one up by exact SHA.
+      # Keyed by commit and not by branch because a group shared across commits
+      # cancels its own pending runs as soon as the next push queues one.
+      group: ${{ github.workflow }}-${{ github.sha }}
+      cancel-in-progress: false
+    steps:
+      - id: checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - id: run-knip
+        # --silent keeps pnpm's script banner out of the redirected JSON.
+        run: |
+          pnpm --silent knip > knip-baseline.json
+          # A shapeless baseline would make every finding on a PR look new.
+          jq -e 'has("issues")' knip-baseline.json > /dev/null
+      - id: upload-baseline
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: knip-baseline
+          path: knip-baseline.json
+          retention-days: 90
+          # Without this the run stays green while uploading nothing, and every
+          # PR silently degrades to "no baseline" with no failure to notice.
+          if-no-files-found: error

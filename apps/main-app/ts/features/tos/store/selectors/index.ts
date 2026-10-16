@@ -1,7 +1,8 @@
-import { createSelector } from "reselect";
+import { TosConfig } from "@io-app/api-types/generated/definitions/content/TosConfig";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { TosConfig } from "../../../../../definitions/content/TosConfig";
+import { createSelector } from "reselect";
+
 import {
   absolutePortalLinksSelector,
   remoteConfigSelector

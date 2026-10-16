@@ -1,8 +1,9 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
-import { GlobalState } from "../../../../store/reducers/types.ts";
+
 import { isMinAppVersionSupported } from "../../../../store/reducers/featureFlagWithMinAppVersionStatus.ts";
+import { GlobalState } from "../../../../store/reducers/types.ts";
 
 const fciRemoteConfigSelector = (state: GlobalState) =>
   pipe(
@@ -11,9 +12,10 @@ const fciRemoteConfigSelector = (state: GlobalState) =>
   );
 
 /**
- * Return the remote config about FCI's Security Level Check (if it requires L3 auth) enabled/disabled
- * if there is no data or the local Feature Flag is disabled,
- * false is the default value -> (FCI's Security Level Check disabled)
+ * Return the remote config about FCI's Security Level Check (if it requires L3
+ * auth) enabled/disabled if there is no data or the local Feature Flag is
+ * disabled, false is the default value -> (FCI's Security Level Check
+ * disabled)
  */
 export const isFciSecurityLevelCheckRemoteFFEnabledSelector = (
   state: GlobalState
@@ -30,9 +32,7 @@ export const isFciSecurityLevelCheckRemoteFFEnabledSelector = (
       )
   );
 
-/**
- * Return the remote config help center url for the FCI security level check.
- */
+/** Return the remote config help center url for the FCI security level check. */
 export const fciSecurityLevelCheckHelpCenterUrlSelector = createSelector(
   fciRemoteConfigSelector,
   fciConfig =>

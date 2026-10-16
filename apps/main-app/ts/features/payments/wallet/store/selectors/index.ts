@@ -1,8 +1,9 @@
-import _ from "lodash";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import _ from "lodash";
 import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../../store/reducers/types";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 
 const selectPaymentsWallet = (state: GlobalState) =>
   state.features.payments.wallet;

@@ -3,7 +3,7 @@ import {
   FooterActions,
   useIOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import I18n from "i18next";
 import {
@@ -11,9 +11,11 @@ import {
   PropsWithChildren,
   useContext,
   useEffect,
+  useMemo,
   useState
 } from "react";
 import { Alert } from "react-native";
+
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   appFeedbackEnabledSelector,
@@ -40,7 +42,7 @@ export const AppFeedbackContext = createContext<AppFeedbackContextType>({
 export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
   const [topic, setTopic] = useState<TopicKeys | undefined>();
   const dispatch = useIODispatch();
-  const { show } = useIOToast();
+  const { info } = useIOToast();
   const surveyUrl = useIOSelector(appFeedbackUriConfigSelector(topic));
   const appFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
   const canAskFeedback = useIOSelector(canAskFeedbackSelector(topic));
@@ -71,7 +73,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
           secondary: {
             label: I18n.t("appFeedback.bottomSheet.discard"),
             onPress: () => {
-              show(I18n.t("appFeedback.toast.negativeFeedback"));
+              info(I18n.t("appFeedback.toast.negativeFeedback"));
               setTopic(undefined);
               dismiss();
             }
@@ -101,7 +103,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
             text: I18n.t("appFeedback.alert.continue"),
             style: "default",
             onPress: () => {
-              requestAppReview();
+              void requestAppReview();
               setTopic(undefined);
               dispatch(appReviewPositiveFeedback());
             }
@@ -109,12 +111,17 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
         ]
       );
     } else {
-      requestAppReview();
+      void requestAppReview();
     }
   }, [appFeedbackEnabled, canAskFeedback, dispatch, present, topic]);
 
+  const contextValue = useMemo(
+    () => ({ requestFeedback: setTopic }),
+    [setTopic]
+  );
+
   return (
-    <AppFeedbackContext.Provider value={{ requestFeedback: setTopic }}>
+    <AppFeedbackContext.Provider value={contextValue}>
       {children}
       {bottomSheet}
     </AppFeedbackContext.Provider>

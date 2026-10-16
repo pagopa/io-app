@@ -1,8 +1,9 @@
 import { put } from "typed-redux-saga/macro";
-import { startApplicationInitialization } from "../../store/actions/application";
+
 import { clearCache } from "../../features/settings/common/store/actions";
-import { resetAssistanceData } from "../../utils/supportAssistance";
 import { setMainNavigatorReady } from "../../navigation/NavigationService";
+import { startApplicationInitialization } from "../../store/actions/application";
+import { resetAssistanceData } from "../../utils/supportAssistance";
 
 export function* resetAssistanceDataAndClearCache() {
   resetAssistanceData();

@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+
 import * as LOADING_SCREEN from "../../../../../components/screens/LoadingScreenContent";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -30,15 +31,8 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () =>
       new Proxy(actualNav.useNavigation?.(), {
-        get: (_target, prop) => {
-          if (prop === "replace") {
-            return mockReplace;
-          }
-          if (prop === "addListener") {
-            return jest.fn(() => jest.fn());
-          }
-          return mockShouldNeverCall;
-        }
+        get: (_target, prop) =>
+          prop === "replace" ? mockReplace : mockShouldNeverCall
       })
   };
 });
@@ -54,7 +48,7 @@ describe("SendAarErrorScreen", () => {
     .spyOn(NFC_NOT_SUPPORTED_COMPONENT, "SendAarNfcNotSupportedComponent")
     .mockImplementation();
   const loadingScreenSpy = jest
-    .spyOn(LOADING_SCREEN, "default")
+    .spyOn(LOADING_SCREEN, "LoadingScreenContent")
     .mockImplementation(() => <></>);
   jest.spyOn(ERROR_MAPPINGS, "getAarErrorBehaviour").mockImplementation(() => ({
     track: jest.fn(),
@@ -63,14 +57,14 @@ describe("SendAarErrorScreen", () => {
 
   const getSpecificErrorScreenSpy = (flowState: AarFlowState) => {
     switch (flowState.type) {
-      case sendAarFlowStates.notAddresseeFinal:
-        return notAddresseeComponentSpy;
-      case sendAarFlowStates.nfcNotSupportedFinal:
-        return nfcNotSupportedComponentSpy;
-      case sendAarFlowStates.ko:
-        return mockKoComponent;
       case sendAarFlowStates.cieCanAdvisory:
         return loadingScreenSpy;
+      case sendAarFlowStates.ko:
+        return mockKoComponent;
+      case sendAarFlowStates.nfcNotSupportedFinal:
+        return nfcNotSupportedComponentSpy;
+      case sendAarFlowStates.notAddresseeFinal:
+        return notAddresseeComponentSpy;
       default:
         return undefined;
     }

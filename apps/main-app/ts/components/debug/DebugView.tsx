@@ -2,28 +2,28 @@ import {
   IOColors,
   IOVisualCostants,
   ListItemHeader
-} from "@pagopa/io-app-design-system";
-
+} from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { View } from "react-native";
-import { withDebugEnabled } from "./withDebugEnabled";
+
+import { WithDebugEnabled } from "./withDebugEnabled";
 
 export type DebugViewProps = {
-  title?: string;
   ignoreHorizontalMargins?: boolean;
+  title?: string;
 };
 
 /**
- * This component renders its content only if the debug mode is enabled, otherwise return null (nothing)
+ * This component renders its content only if the debug mode is enabled,
+ * otherwise return null (nothing)
  */
-export const DebugView = withDebugEnabled(
-  ({
-    children,
-    title = "Debug",
-    ignoreHorizontalMargins = false
-  }: PropsWithChildren<DebugViewProps>) => (
+export const DebugView = ({
+  children,
+  title = "Debug",
+  ignoreHorizontalMargins = false
+}: PropsWithChildren<DebugViewProps>) => (
+  <WithDebugEnabled>
     <View
-      testID="DebugViewTestID"
       style={{
         paddingHorizontal: 24,
         paddingBottom: 12,
@@ -32,9 +32,10 @@ export const DebugView = withDebugEnabled(
           ? -IOVisualCostants.appMarginDefault
           : 0
       }}
+      testID="DebugViewTestID"
     >
-      <ListItemHeader label={title} iconName="ladybug" />
+      <ListItemHeader iconName="ladybug" label={title} />
       {children}
     </View>
-  )
+  </WithDebugEnabled>
 );

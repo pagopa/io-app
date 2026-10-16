@@ -4,15 +4,17 @@ import {
   IOVisualCostants,
   ListItemAction,
   ListItemNav,
-  VSpacer,
-  useIOToast
-} from "@pagopa/io-app-design-system";
+  useIOToast,
+  VSpacer
+} from "@io-app/design-system";
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import I18n from "i18next";
 import {
-  useContext,
   ComponentProps,
   memo,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -25,8 +27,7 @@ import {
   Platform,
   ScrollView
 } from "react-native";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import I18n from "i18next";
+
 import AppVersion from "../../../../components/AppVersion";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
@@ -34,46 +35,44 @@ import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPre
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
-import { isDevEnv } from "../../../../utils/environment";
-import { itwLifecycleIsOperationalOrValid } from "../../../itwallet/lifecycle/store/selectors";
 import {
   appFeedbackEnabledSelector,
   appFeedbackUriConfigSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
+import { isDevEnv } from "../../../../utils/environment";
 import { openWebUrl } from "../../../../utils/url";
+import { itwIsL3EnabledSelector } from "../../../itwallet/common/store/selectors";
+import { itwLifecycleIsOperationalOrValid } from "../../../itwallet/lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import DeveloperModeSection from "../../devMode/components/DeveloperModeSection";
-import { ProfileMainScreenTopBanner } from "../components/ProfileMainScreenTopBanner";
-import { SETTINGS_ROUTES } from "../navigation/routes";
 import {
   trackPressLogoutCancelFromIO,
   trackPressLogoutConfirmFromIO,
   trackPressLogoutFromIO
 } from "../analytics";
-import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
-import { itwIsL3EnabledSelector } from "../../../itwallet/common/store/selectors/preferences";
+import { ProfileMainScreenTopBanner } from "../components/ProfileMainScreenTopBanner";
+import { SETTINGS_ROUTES } from "../navigation/routes";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
 
-type ProfileNavListItem = {
-  value: string;
-  isHidden?: boolean;
-} & Pick<
+type ProfileNavListItem = Pick<
   ComponentProps<typeof ListItemNav>,
-  "description" | "testID" | "onPress"
->;
+  "description" | "onPress" | "testID"
+> & {
+  isHidden?: boolean;
+  value: string;
+};
 
 const ListItem = memo(ListItemNav);
 
-/**
- * A screen to show all the options related to the user profile
- */
+/** A screen to show all the options related to the user profile */
 const ProfileMainScreenFC = () => {
   const { hideModal } = useContext(LightModalContext);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const { show, error } = useIOToast();
+  const { info, error } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const appFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
   const surveyUrl = useIOSelector(appFeedbackUriConfigSelector("general"));
@@ -140,9 +139,8 @@ const ProfileMainScreenFC = () => {
     if (tapsOnAppVersion === consecutiveTapRequired) {
       dispatch(setDebugModeEnabled(true));
       setTapsOnAppVersion(0);
-      show(I18n.t("profile.main.developerModeOn"));
+      info(I18n.t("profile.main.developerModeOn"));
     } else {
-      // eslint-disable-next-line functional/immutable-data
       idResetTap.current = setInterval(
         resetAppTapCounter,
         RESET_COUNTER_TIMEOUT
@@ -153,7 +151,7 @@ const ProfileMainScreenFC = () => {
     isDebugModeEnabled,
     resetAppTapCounter,
     dispatch,
-    show,
+    info,
     tapsOnAppVersion
   ]);
 
@@ -240,11 +238,11 @@ const ProfileMainScreenFC = () => {
 
       return (
         <ListItem
-          testID={testID}
           accessibilityLabel={accessibilityLabel}
-          value={value}
           description={description}
           onPress={onPress}
+          testID={testID}
+          value={value}
         />
       );
     },
@@ -260,34 +258,33 @@ const ProfileMainScreenFC = () => {
       <ProfileMainScreenTopBanner />
       <VSpacer size={16} />
       <FlatList
-        scrollEnabled={false}
-        keyExtractor={keyExtractor}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
         data={profileNavListItems}
-        renderItem={renderProfileNavItem}
         ItemSeparatorComponent={Divider}
+        keyExtractor={keyExtractor}
+        renderItem={renderProfileNavItem}
+        scrollEnabled={false}
       />
       <VSpacer size={8} />
       <ContentWrapper>
         {appFeedbackEnabled && surveyUrl && (
           <ListItemAction
-            label={feedbackLabel}
+            accessibilityLabel={feedbackLabel}
             icon="message"
-            variant="primary"
-            testID="feedbackButton"
+            label={feedbackLabel}
             onPress={() => {
               void openAuthenticationSession(surveyUrl, "");
             }}
-            accessibilityLabel={feedbackLabel}
+            testID="feedbackButton"
+            variant="primary"
           />
         )}
         <ListItemAction
-          label={reviewLabel}
+          accessibilityLabel={reviewLabel}
           icon="starEmpty"
-          variant="primary"
-          testID="reviewButton"
+          label={reviewLabel}
           onPress={() =>
             openWebUrl(
               Platform.select({
@@ -299,19 +296,20 @@ const ProfileMainScreenFC = () => {
               () => error(I18n.t("msgErrorUpdateApp"))
             )
           }
-          accessibilityLabel={reviewLabel}
+          testID="reviewButton"
+          variant="primary"
         />
         <ListItemAction
-          label={logoutLabel}
-          icon="logout"
-          variant="danger"
-          testID="logoutButton"
-          onPress={onLogoutPress}
           accessibilityLabel={logoutLabel}
+          icon="logout"
+          label={logoutLabel}
+          onPress={onLogoutPress}
+          testID="logoutButton"
+          variant="danger"
         />
         <AppVersion
-          testID="profileAppVersionButton"
           onPress={onTapAppVersion}
+          testID="profileAppVersionButton"
         />
       </ContentWrapper>
       {/* Developer Section */}
@@ -330,16 +328,11 @@ const ProfileMainScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      headerActionsProp={{ showHelp: true }}
       testID="ProfileMainScreen"
       title={{
         label: I18n.t("global.buttons.settings")
       }}
-      headerActionsProp={{ showHelp: true }}
-      contextualHelpMarkdown={{
-        title: "profile.main.contextualHelpTitle",
-        body: "profile.main.contextualHelpContent"
-      }}
-      faqCategories={["profile"]}
     >
       <ProfileMainScreenFC />
     </IOScrollViewWithLargeHeader>

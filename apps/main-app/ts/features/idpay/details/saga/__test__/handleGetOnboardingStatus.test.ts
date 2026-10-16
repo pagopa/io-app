@@ -1,11 +1,12 @@
-import * as E from "fp-ts/lib/Either";
-import { testSaga } from "redux-saga-test-plan";
-import { getType } from "typesafe-actions";
-import { PreferredLanguageEnum } from "../../../../../../definitions/identity/PreferredLanguage";
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import {
   OnboardingStatusDTO,
   StatusEnum as OnboardingStatusEnum
-} from "../../../../../../definitions/idpay/OnboardingStatusDTO";
+} from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
+import * as E from "fp-ts/lib/Either";
+import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
+
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { idPayOnboardingStatusGet } from "../../store/actions";
 import { handleGetOnboardingStatus } from "../handleGetOnboardingStatus";

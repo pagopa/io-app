@@ -1,5 +1,11 @@
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { selectItwEnv } from "../environment";
+import { CredentialType } from "../../../utils/itwMocksUtils";
+import { CredentialFormat } from "../../../utils/itwTypesUtils";
+import {
+  selectItwCieIdEnvironment,
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../environment";
 
 describe("selectItwEnv", () => {
   it("should return the correct environment", () => {
@@ -29,4 +35,70 @@ describe("selectItwEnv", () => {
 
     expect(selectItwEnv(state)).toEqual("prod");
   });
+});
+
+describe("selectItwCieIdEnvironment", () => {
+  const stateWithEnv = (env: string | undefined) =>
+    ({
+      features: {
+        itWallet: {
+          environment: {
+            env
+          }
+        }
+      }
+    }) as GlobalState;
+
+  it("should target the coll CieID app in the pre environment", () => {
+    expect(selectItwCieIdEnvironment(stateWithEnv("pre"))).toEqual("coll");
+  });
+
+  it("should target the production CieID app in the prod environment", () => {
+    expect(selectItwCieIdEnvironment(stateWithEnv("prod"))).toEqual(
+      "production"
+    );
+  });
+
+  it("should target the production CieID app when the environment is not set", () => {
+    expect(selectItwCieIdEnvironment(stateWithEnv(undefined))).toEqual(
+      "production"
+    );
+  });
+});
+
+describe("selectItwSpecsVersion", () => {
+  test.each`
+    isWhitelisted | pidSpecVersion | expected
+    ${false}      | ${undefined}   | ${"1.0.0"}
+    ${false}      | ${"1.0.0"}     | ${"1.0.0"}
+    ${true}       | ${undefined}   | ${"1.4.6"}
+    ${true}       | ${"1.0.0"}     | ${"1.0.0"}
+    ${true}       | ${"1.4.6"}     | ${"1.4.6"}
+  `(
+    "Whitelist: $isWhitelisted, PID: $pidSpecVersion -> ITW: $expected",
+    ({ isWhitelisted, pidSpecVersion, expected }) => {
+      const state = {
+        features: {
+          itWallet: {
+            remoteConfig: {},
+            preferences: {
+              isFiscalCodeWhitelisted: isWhitelisted
+            },
+            credentials: {
+              credentials: {
+                ...(pidSpecVersion && {
+                  pid: {
+                    spec_version: pidSpecVersion,
+                    credentialType: CredentialType.PID,
+                    format: CredentialFormat.SD_JWT
+                  }
+                })
+              }
+            }
+          }
+        }
+      } as GlobalState;
+      expect(selectItwSpecsVersion(state)).toBe(expected);
+    }
+  );
 });

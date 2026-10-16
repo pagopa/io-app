@@ -12,14 +12,15 @@ const directions = {
 };
 
 type FlipsGestureDetectorProps = {
-  isFlipped: boolean;
-  setIsFlipped: (isFlipped: boolean) => void;
   children: ReactNode;
   direction?: keyof typeof directions;
+  isFlipped: boolean;
+  setIsFlipped: (isFlipped: boolean) => void;
 };
 
 /**
- * This component wraps the children in a GestureDetector that flips the card when the user flicks left or right.
+ * This component wraps the children in a GestureDetector that flips the card
+ * when the user flicks left or right.
  */
 export const FlipGestureDetector = ({
   isFlipped,

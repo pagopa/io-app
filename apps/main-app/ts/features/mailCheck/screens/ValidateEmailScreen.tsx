@@ -1,21 +1,21 @@
-import { useCallback } from "react";
-import * as O from "fp-ts/lib/Option";
 import { Route, useRoute } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import ROUTES from "../../../navigation/routes";
-import { acknowledgeOnEmailValidation } from "../../settings/common/store/actions";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import {
-  trackSendValidationEmail,
-  trackEmailNotAlreadyConfirmed
-} from "../analytics";
-import { getFlowType } from "../../../utils/analytics";
-import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/selectors";
+import { useCallback } from "react";
+
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { ContextualHelpPropsMarkdown } from "../../../utils/contextualHelp";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import ROUTES from "../../../navigation/routes";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { getFlowType } from "../../../utils/analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { acknowledgeOnEmailValidation } from "../../settings/common/store/actions";
+import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/selectors";
+import {
+  trackEmailNotAlreadyConfirmed,
+  trackSendValidationEmail
+} from "../analytics";
 
 export type EmailNotVerifiedScreenParamList = {
   email: string;
@@ -39,11 +39,6 @@ const ValidateEmailScreen = () => {
     });
   }, [navigation]);
 
-  const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-    title: "email.cduScreens.validateMail.title",
-    body: "email.cduScreens.validateMail.help.body"
-  };
-
   useOnFirstRender(() => {
     trackEmailNotAlreadyConfirmed(flow);
   });
@@ -64,15 +59,11 @@ const ValidateEmailScreen = () => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    contextualHelpMarkdown,
     canGoBack: false
   });
 
   return (
     <OperationResultScreenContent
-      pictogram="attention"
-      title={I18n.t("email.cduScreens.validateMail.title")}
-      subtitle={I18n.t("email.cduScreens.validateMail.subtitle", { email })}
       action={{
         label: I18n.t("email.cduScreens.validateMail.validateButton"),
         accessibilityLabel: I18n.t(
@@ -80,12 +71,15 @@ const ValidateEmailScreen = () => {
         ),
         onPress: confirmButtonOnPress
       }}
+      isHeaderVisible={true}
+      pictogram="attention"
       secondaryAction={{
         label: I18n.t("email.cduScreens.validateMail.editButton"),
         accessibilityLabel: I18n.t("email.cduScreens.validateMail.editButton"),
         onPress: modifyEmailButtonOnPress
       }}
-      isHeaderVisible={true}
+      subtitle={I18n.t("email.cduScreens.validateMail.subtitle", { email })}
+      title={I18n.t("email.cduScreens.validateMail.title")}
     />
   );
 };

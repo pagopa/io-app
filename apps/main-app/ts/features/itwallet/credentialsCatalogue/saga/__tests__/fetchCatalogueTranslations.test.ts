@@ -1,12 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { type DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
-import { type DeepPartial } from "redux";
+
 import { GlobalState } from "../../../../../store/reducers/types";
-import { fetchCatalogueTranslationsSaga } from "../fetchCatalogueTranslations";
 import { fetchCatalogueTranslations } from "../../../common/utils/itwCredentialsCatalogueUtils";
 import { itwFetchCatalogueTranslations } from "../../store/actions";
+import { fetchCatalogueTranslationsSaga } from "../fetchCatalogueTranslations";
 
 const mockCatalogue = {
   taxonomy_uri: "",
@@ -30,14 +31,20 @@ describe("fetchCatalogueTranslationsSaga", () => {
   const baseStore: DeepPartial<GlobalState> = {
     features: {
       itWallet: {
+        remoteConfig: {},
         credentialsCatalogue: {
           catalogue: pot.some(mockCatalogue),
           translations: pot.none,
           isEnabledForCredentialsList: false
         },
         environment: {
-          env: "pre",
-          itWalletSpecsVersion: "1.3.3"
+          env: "pre"
+        },
+        preferences: {
+          isFiscalCodeWhitelisted: true
+        },
+        credentials: {
+          credentials: {}
         }
       }
     },
@@ -71,14 +78,20 @@ describe("fetchCatalogueTranslationsSaga", () => {
     const v1Store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          remoteConfig: {},
           credentialsCatalogue: {
             catalogue: pot.some(mockCatalogue),
             translations: pot.none,
             isEnabledForCredentialsList: false
           },
           environment: {
-            env: "prod",
-            itWalletSpecsVersion: "1.0.0"
+            env: "prod"
+          },
+          preferences: {
+            isFiscalCodeWhitelisted: false
+          },
+          credentials: {
+            credentials: {}
           }
         }
       },
@@ -96,14 +109,20 @@ describe("fetchCatalogueTranslationsSaga", () => {
     const noCatalogueStore: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
+          remoteConfig: {},
           credentialsCatalogue: {
             catalogue: pot.none,
             translations: pot.none,
             isEnabledForCredentialsList: false
           },
           environment: {
-            env: "pre",
-            itWalletSpecsVersion: "1.3.3"
+            env: "pre"
+          },
+          preferences: {
+            isFiscalCodeWhitelisted: true
+          },
+          credentials: {
+            credentials: {}
           }
         }
       },

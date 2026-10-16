@@ -1,19 +1,19 @@
+import { SessionTokenResponse } from "@io-app/api-types/generated/definitions/pagopa/platform/SessionTokenResponse";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
+import { Action } from "../../../../../store/actions/types";
+import { NetworkError } from "../../../../../utils/errors";
+import { PaymentsCheckoutActions } from "../../../checkout/store/actions";
 import { PaymentsMethodDetailsActions } from "../../../details/store/actions";
 import { PaymentsHistoryActions } from "../../../history/store/actions";
-import { PaymentsOnboardingActions } from "../../../onboarding/store/actions";
-import { PaymentsCheckoutActions } from "../../../checkout/store/actions";
 import { PaymentsHomeActions } from "../../../home/store/actions";
-import { PaymentsWalletActions } from "../../../wallet/store/actions";
+import { PaymentsOnboardingActions } from "../../../onboarding/store/actions";
 import { PaymentsReceiptActions } from "../../../receipts/store/actions";
-
-import { NetworkError } from "../../../../../utils/errors";
-import { SessionTokenResponse } from "../../../../../../definitions/pagopa/platform/SessionTokenResponse";
-import { Action } from "../../../../../store/actions/types";
+import { PaymentsWalletActions } from "../../../wallet/store/actions";
 import { PaymentsBackoffRetry } from "../../types/PaymentsBackoffRetry";
 
 export const paymentsGetPagoPaPlatformSessionTokenAction = createAsyncAction(
@@ -43,16 +43,16 @@ export const clearPaymentsBackoffRetry = createStandardAction(
 )<PaymentsBackoffRetry>();
 
 export type PaymentsActions =
-  | ActionType<typeof paymentsResetPagoPaPlatformSessionTokenAction>
-  | ActionType<typeof paymentsGetPagoPaPlatformSessionTokenAction>
-  | ActionType<typeof savePaymentsPendingAction>
+  | ActionType<typeof clearPaymentsBackoffRetry>
   | ActionType<typeof clearPaymentsPendingActions>
   | ActionType<typeof increasePaymentsBackoffRetry>
-  | ActionType<typeof clearPaymentsBackoffRetry>
-  | PaymentsOnboardingActions
-  | PaymentsMethodDetailsActions
+  | ActionType<typeof paymentsGetPagoPaPlatformSessionTokenAction>
+  | ActionType<typeof paymentsResetPagoPaPlatformSessionTokenAction>
+  | ActionType<typeof savePaymentsPendingAction>
   | PaymentsCheckoutActions
   | PaymentsHistoryActions
   | PaymentsHomeActions
-  | PaymentsWalletActions
-  | PaymentsReceiptActions;
+  | PaymentsMethodDetailsActions
+  | PaymentsOnboardingActions
+  | PaymentsReceiptActions
+  | PaymentsWalletActions;

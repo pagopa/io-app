@@ -1,14 +1,14 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { ItwSecurePreferencesState } from "../securePreferences";
+import { reproduceSequence } from "../../../../../../utils/tests";
 import {
   itwOfflineAccessCounterReset,
   itwOfflineAccessCounterUp,
   itwUnverifiedCredentialsCounterReset,
   itwUnverifiedCredentialsCounterUp
 } from "../../actions/securePreferences";
-import { reproduceSequence } from "../../../../../../utils/tests";
+import { ItwSecurePreferencesState } from "../securePreferences";
 
 describe("IT Wallet secure preferences reducer", () => {
   it("should return the initial state", () => {

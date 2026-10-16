@@ -1,10 +1,11 @@
-import { WithTestID } from "@pagopa/io-app-design-system";
+import { WithTestID } from "@io-app/design-system";
 import { Platform, StyleSheet } from "react-native";
 import Animated, {
   FadeInDown,
   FadeOutDown,
   LinearTransition
 } from "react-native-reanimated";
+
 import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
 
@@ -20,25 +21,25 @@ const itemLayoutAnimation =
   Platform.OS !== "android" ? LinearTransition.duration(200) : undefined;
 
 /**
- * This component handles the rendering of cards of a specific category.
- * The component also handles logic behind card stacking and animations
+ * This component handles the rendering of cards of a specific category. The
+ * component also handles logic behind card stacking and animations
  */
 export const WalletCardsCategoryContainer = ({
   cards,
   testID
 }: WalletCardsCategoryContainerProps) => (
   <Animated.FlatList
-    testID={testID}
-    scrollEnabled={false}
+    contentContainerStyle={styles.container}
     data={cards}
+    entering={FadeInDown.duration(150)}
+    exiting={FadeOutDown.duration(150)}
+    itemLayoutAnimation={itemLayoutAnimation}
+    layout={LinearTransition.duration(200)}
     renderItem={({ index, item }) =>
       renderWalletCardFn(item, index < cards.length - 1)
     }
-    itemLayoutAnimation={itemLayoutAnimation}
-    layout={LinearTransition.duration(200)}
-    contentContainerStyle={styles.container}
-    entering={FadeInDown.duration(150)}
-    exiting={FadeOutDown.duration(150)}
+    scrollEnabled={false}
+    testID={testID}
   />
 );
 

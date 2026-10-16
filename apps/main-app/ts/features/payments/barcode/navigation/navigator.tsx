@@ -2,6 +2,7 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
+
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { PaymentsBarcodeChoiceScreen } from "../screens/PaymentsBarcodeChoiceScreen";
 import { PaymentsBarcodeScanScreen } from "../screens/PaymentsBarcodeScanScreen";
@@ -16,8 +17,8 @@ export const WalletBarcodeNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <Stack.Screen
-      name={PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN}
       component={PaymentsBarcodeScanScreen}
+      name={PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN}
       options={{
         ...TransitionPresets.ModalSlideFromBottomIOS,
         headerShown: false,
@@ -25,8 +26,8 @@ export const WalletBarcodeNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={PaymentsBarcodeRoutes.PAYMENT_BARCODE_CHOICE}
       component={PaymentsBarcodeChoiceScreen}
+      name={PaymentsBarcodeRoutes.PAYMENT_BARCODE_CHOICE}
       options={{
         gestureEnabled: isGestureEnabled
       }}

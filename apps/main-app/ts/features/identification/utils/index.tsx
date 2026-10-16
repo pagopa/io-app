@@ -1,10 +1,11 @@
-import { BiometricsValidType, Body } from "@pagopa/io-app-design-system";
-import { BackHandler, Platform, View } from "react-native";
+import { BiometricsValidType, Body } from "@io-app/design-system";
 import { TxtParagraphNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
+import { BackHandler, Platform, View } from "react-native";
+
 import IOMarkdown from "../../../components/IOMarkdown";
-import { Renderer } from "../../../components/IOMarkdown/types";
 import { getTxtNodeKey } from "../../../components/IOMarkdown/renderRules";
+import { Renderer } from "../../../components/IOMarkdown/types";
 import { IdentificationBackActionType } from "../store/reducers";
 
 export const FAIL_ATTEMPTS_TO_SHOW_ALERT = 4;
@@ -23,7 +24,7 @@ export const getBiometryIconName = (
 
 export const getAccessibiliyIdentificationInstructions = (
   biometricType: BiometricsValidType | undefined,
-  isBimoetricIdentificatoinFailed: boolean = false
+  isBimoetricIdentificatoinFailed = false
 ) => {
   if (isBimoetricIdentificatoinFailed) {
     return I18n.t("identification.instructions.useUnlockCodeA11y");
@@ -56,8 +57,8 @@ export const IdentificationInstructionsComponent = (props: {
     Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
       return (
         <Body
-          key={getTxtNodeKey(paragraph)}
           color="white"
+          key={getTxtNodeKey(paragraph)}
           style={{ textAlign: "center" }}
         >
           {paragraph.children.map(render)}
@@ -68,10 +69,10 @@ export const IdentificationInstructionsComponent = (props: {
 
   const instructionComponent = (
     <View
-      accessible
       accessibilityLabel={I18n.t(
         "identification.instructions.useUnlockCodeA11y"
       )}
+      accessible
       style={{ flexDirection: "row" }}
     >
       <IOMarkdown
@@ -90,8 +91,8 @@ export const IdentificationInstructionsComponent = (props: {
     case "TOUCH_ID":
       return (
         <View
-          accessible
           accessibilityLabel={a11yInstruction}
+          accessible
           style={{ flexDirection: "row" }}
         >
           <IOMarkdown
@@ -105,8 +106,8 @@ export const IdentificationInstructionsComponent = (props: {
     case "FACE_ID":
       return (
         <View
-          accessible
           accessibilityLabel={a11yInstruction}
+          accessible
           style={{ flexDirection: "row" }}
         >
           <IOMarkdown

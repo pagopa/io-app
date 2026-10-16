@@ -1,4 +1,5 @@
 import { ImageSourcePropType } from "react-native";
+
 import { contentRepoUrl } from "../../../../config";
 
 const LOGO_SIZE = 180;
@@ -6,7 +7,7 @@ const LOGO_SIZE = 180;
 export function logoForService(
   serviceId: string,
   organizationFiscalCode: string,
-  logosRepoUrl: string = `${contentRepoUrl}/logos`
+  logosRepoUrl = `${contentRepoUrl}/logos`
 ): ImageSourcePropType {
   return [
     `services/${serviceId.toLowerCase()}`,

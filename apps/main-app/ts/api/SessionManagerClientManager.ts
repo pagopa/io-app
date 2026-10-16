@@ -1,11 +1,15 @@
-import { createClient, Client } from "../../definitions/session_manager/client";
-import { defaultRetryingFetch } from "../utils/fetch";
+import {
+  Client,
+  createClient
+} from "@io-app/api-types/generated/definitions/session_manager/client";
+
 import { isTestEnv } from "../utils/environment";
+import { defaultRetryingFetch } from "../utils/fetch";
 import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
 
 export type SessionManagerClient = Client<"Bearer">;
 
-export type SessionManagerClientOptions = BaseClientOptions;
+type SessionManagerClientOptions = BaseClientOptions;
 
 class SessionManagerClientManager extends ApiClientManager<
   SessionManagerClient,

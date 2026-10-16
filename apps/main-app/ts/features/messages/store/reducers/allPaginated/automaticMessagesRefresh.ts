@@ -1,6 +1,7 @@
 import { getType } from "typesafe-actions";
-import { requestAutomaticMessagesRefresh } from "../../actions";
+
 import { Action } from "../../../../../store/actions/types";
+import { requestAutomaticMessagesRefresh } from "../../actions";
 import { AllPaginated } from "./types";
 
 export const reduceAutomaticMessageRefreshRequest = (

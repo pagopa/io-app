@@ -1,13 +1,17 @@
+import {
+  Client,
+  createClient
+} from "@io-app/api-types/generated/definitions/identity/client";
 import { v4 as uuid } from "uuid";
-import { createClient, Client } from "../../definitions/identity/client";
+
 import { KeyInfo } from "../features/lollipop/utils/crypto";
-import { isTestEnv } from "../utils/environment";
 import { lollipopFetch } from "../features/lollipop/utils/fetch";
+import { isTestEnv } from "../utils/environment";
 import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
 
 export type IdentityClient = Client<"Bearer">;
 
-export type IdentityClientOptions = BaseClientOptions & {
+type IdentityClientOptions = BaseClientOptions & {
   keyInfo: KeyInfo;
   signBody?: boolean;
 };

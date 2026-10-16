@@ -3,8 +3,9 @@ import {
   hexToRgba,
   IOColors,
   IOVisualCostants
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
+
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import { useModalStyle } from "../../utils/hooks/useModalStyle";
 import { AlertModalOverlay } from "./AlertModalOverlay";
@@ -27,9 +28,7 @@ type AlertModalProps = Readonly<{
   message: string;
 }>;
 
-/**
- * A custom alert to show a message
- */
+/** A custom alert to show a message */
 export const AlertModal = ({ message }: AlertModalProps) => {
   useHardwareBackButton(() => true);
 
@@ -38,7 +37,6 @@ export const AlertModal = ({ message }: AlertModalProps) => {
   return (
     <AlertModalOverlay
       backgroundColor={backdrop.backgroundColor}
-      opacity={backdrop.opacity}
       foreground={
         <View
           style={[
@@ -53,6 +51,7 @@ export const AlertModal = ({ message }: AlertModalProps) => {
           <Body>{message}</Body>
         </View>
       }
+      opacity={backdrop.opacity}
     />
   );
 };

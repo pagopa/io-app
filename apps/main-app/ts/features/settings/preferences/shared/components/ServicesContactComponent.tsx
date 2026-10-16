@@ -1,12 +1,13 @@
-import { IOMarkdownLite, RadioGroup } from "@pagopa/io-app-design-system";
-import { ReactElement, useCallback, useEffect, useState } from "react";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
+import { IOMarkdownLite, RadioGroup } from "@io-app/design-system";
 import I18n from "i18next";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
+import { ReactElement, useCallback, useEffect, useState } from "react";
+
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
 
 type Props = {
-  onSelectMode: (mode: ServicesPreferencesModeEnum) => void;
   mode?: ServicesPreferencesModeEnum;
+  onSelectMode: (mode: ServicesPreferencesModeEnum) => void;
   showBadge?: boolean;
 };
 
@@ -60,10 +61,10 @@ const ServicesContactComponent = (props: Props): ReactElement => {
 
   return (
     <RadioGroup<string>
-      type="radioListItem"
       items={options}
-      selectedItem={selectedItem}
       onPress={handlePress}
+      selectedItem={selectedItem}
+      type="radioListItem"
     />
   );
 };

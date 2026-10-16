@@ -3,14 +3,26 @@ import {
   TabItem,
   TabNavigation,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import { StyleSheet, View } from "react-native";
+} from "@io-app/design-system";
 import I18n from "i18next";
+import { StyleSheet, View } from "react-native";
+
 import { ReceiptsCategoryFilter, receiptsCategoryFilters } from "../types";
 
 type Props = {
-  selectedCategory: ReceiptsCategoryFilter;
   onCategorySelected?: (category: ReceiptsCategoryFilter) => void;
+  selectedCategory: ReceiptsCategoryFilter;
+};
+
+const getCategoryLabel = (category: ReceiptsCategoryFilter): string => {
+  switch (category) {
+    case "all":
+      return I18n.t("features.payments.transactions.filters.tabs.all");
+    case "debtor":
+      return I18n.t("features.payments.transactions.filters.tabs.debtor");
+    case "payer":
+      return I18n.t("features.payments.transactions.filters.tabs.payer");
+  }
 };
 
 const ReceiptFilterTabs = ({ selectedCategory, onCategorySelected }: Props) => {
@@ -27,25 +39,27 @@ const ReceiptFilterTabs = ({ selectedCategory, onCategorySelected }: Props) => {
   return (
     <View style={styles.container}>
       <TabNavigation
-        tabAlignment="start"
         onItemPress={handleFilterSelected}
         selectedIndex={selectedIndexOfCategory}
+        tabAlignment="start"
       >
-        {receiptsCategoryFilters.map((category, index) => (
-          <TabItem
-            testID={`CategoryTabTestID-${category}`}
-            key={category}
-            label={I18n.t(
-              `features.payments.transactions.filters.tabs.${category}`
-            )}
-            accessibilityLabel={`${I18n.t(
-              `features.payments.transactions.filters.tabs.${category}`
-            )}, ${I18n.t("global.accessibility.progressTracker", {
-              index: index + 1,
-              total: receiptsCategoryFilters.length
-            })}`}
-          />
-        ))}
+        {receiptsCategoryFilters.map((category, index) => {
+          const label = getCategoryLabel(category);
+          return (
+            <TabItem
+              accessibilityLabel={`${label}, ${I18n.t(
+                "global.accessibility.progressTracker",
+                {
+                  index: index + 1,
+                  total: receiptsCategoryFilters.length
+                }
+              )}`}
+              key={category}
+              label={label}
+              testID={`CategoryTabTestID-${category}`}
+            />
+          );
+        })}
       </TabNavigation>
       <VSpacer size={16} />
     </View>

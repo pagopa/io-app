@@ -1,12 +1,19 @@
+import { EnableableFunctions } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+import { PayPalInfo } from "@io-app/api-types/generated/definitions/pagopa/PayPalInfo";
+import { TypeEnum as WalletTypeEnumV1 } from "@io-app/api-types/generated/definitions/pagopa/Wallet";
+import { WalletTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/WalletV2";
+import {
+  CardInfo,
+  TypeEnum
+} from "@io-app/api-types/generated/definitions/pagopa/walletv2/CardInfo";
+import { pipe } from "fp-ts/lib/function";
 /**
  * Return true if function is enabled for the wallet (aka payment method)
+ *
  * @param wallet
  */
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
-import { CardInfo, TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
-import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
+
 import {
   PatchedPaymentMethodInfo,
   PatchedWalletV2,
@@ -14,8 +21,6 @@ import {
   RawPaymentMethod,
   Wallet
 } from "../types/pagopa";
-import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
-import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
@@ -23,7 +28,8 @@ import {
 } from "./input";
 
 /**
- * true if the given paymentMethod supports the given walletFunction
+ * `true` if the given paymentMethod supports the given walletFunction
+ *
  * @param paymentMethod
  * @param walletFunction
  */
@@ -96,7 +102,8 @@ export const fromPatchedWalletV2ToRawBPay = (
   );
 
 /**
- * inject walletV2 into walletV1 structure
+ * Inject walletV2 into walletV1 structure
+ *
  * @param walletV2
  */
 export const convertWalletV2toWalletV1 = (

@@ -3,11 +3,14 @@ import RNQRGenerator, {
   QRCodeDetectOptions,
   QRCodeScanResult
 } from "rn-qr-generator";
+
 import { BarcodeFailure } from "../types/failure";
 
 /**
  * Creates a TaskEither that detects a barcode from an image URI
- * @param detectOptions object which may contain the uri or the base64 of the image
+ *
+ * @param detectOptions Object which may contain the uri or the base64 of the
+ *   image
  * @returns
  */
 export const barcodeDetectionTask = (

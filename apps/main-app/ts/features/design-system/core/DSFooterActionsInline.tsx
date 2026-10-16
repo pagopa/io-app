@@ -4,7 +4,7 @@ import {
   FooterActionsInline,
   H1,
   useFooterActionsInlineMeasurements
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Alert, ScrollView, View } from "react-native";
 
 export const DSFooterActionsInline = () => {
@@ -28,16 +28,16 @@ export const DSFooterActionsInline = () => {
         </ContentWrapper>
       </ScrollView>
       <FooterActionsInline
+        endAction={{
+          color: "primary",
+          onPress: () => Alert.alert("Button pressed"),
+          label: "Solid button"
+        }}
         onMeasure={handleFooterActionsInlineMeasurements}
         startAction={{
           color: "primary",
           label: "Outline button",
           onPress: () => Alert.alert("Button pressed")
-        }}
-        endAction={{
-          color: "primary",
-          onPress: () => Alert.alert("Button pressed"),
-          label: "Solid button"
         }}
       />
     </View>

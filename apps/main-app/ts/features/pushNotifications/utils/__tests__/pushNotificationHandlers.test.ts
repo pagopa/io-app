@@ -1,23 +1,24 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as Notifications from "expo-notifications";
-import {
-  handleMessageNotificationInteraction,
-  testable
-} from "../pushNotificationHandlers";
+
+import { maximumItemsFromAPI, pageSize } from "../../../../config";
+import { Store } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import * as MessagesAnalytics from "../../../messages/analytics";
-import { updateNotificationsPendingMessage } from "../../store/actions/pendingMessage";
 import {
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../../messages/store/actions";
-import { maximumItemsFromAPI, pageSize } from "../../../../config";
-import { Store } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
-import { ArchivingStatus } from "../../../messages/store/reducers/archiving";
 import {
   MessagePage,
   MessagePagePot
 } from "../../../messages/store/reducers/allPaginated/types";
+import { ArchivingStatus } from "../../../messages/store/reducers/archiving";
+import { updateNotificationsPendingMessage } from "../../store/actions/pendingMessage";
+import {
+  handleMessageNotificationInteraction,
+  testable
+} from "../pushNotificationHandlers";
 
 jest.mock("../../../messages/analytics");
 
@@ -33,7 +34,7 @@ const {
 } = testable!;
 
 const makeResponse = ({
-  messageId = MSG_ID as string | null
+  messageId = MSG_ID as null | string
 } = {}): Notifications.NotificationResponse =>
   ({
     notification: {
@@ -47,7 +48,10 @@ const makeResponse = ({
     }
   }) as unknown as Notifications.NotificationResponse;
 
-/** Build a minimal GlobalState slice with only the fields consumed by handleMessageNotificationInteraction. */
+/**
+ * Build a minimal GlobalState slice with only the fields consumed by
+ * handleMessageNotificationInteraction.
+ */
 const makeState = ({
   inboxData = messagePagePotNone,
   archiveData = messagePagePotNone,
@@ -67,7 +71,7 @@ const makeState = ({
 
 const makeMockStore = (
   state: GlobalState
-): { store: Store; dispatch: jest.Mock } => {
+): { dispatch: jest.Mock; store: Store } => {
   const dispatch = jest.fn();
   return {
     store: { dispatch, getState: () => state } as unknown as Store,
@@ -233,7 +237,11 @@ describe("handleForegroundMessageReload", () => {
     handleForegroundMessageReload(store);
 
     expect(dispatch).toHaveBeenCalledWith(
-      reloadAllMessages.request({ pageSize, filter: {}, fromUserAction: false })
+      reloadAllMessages.request({
+        pageSize,
+        filter: {},
+        fromUserAction: false
+      })
     );
   });
 

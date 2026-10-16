@@ -1,6 +1,7 @@
-import { Banner } from "@pagopa/io-app-design-system";
+import { Banner } from "@io-app/design-system";
 import I18n from "i18next";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -12,7 +13,7 @@ import {
 export const ItwWalletReadyBanner = () => {
   const navigation = useIONavigation();
   const shouldRender = useIOSelector(itwShouldRenderWalletReadyBannerSelector);
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
+  const isItWallet = useIOSelector(itwShouldRenderNewItWalletSelector);
 
   if (!shouldRender) {
     return null;
@@ -25,28 +26,37 @@ export const ItwWalletReadyBanner = () => {
   };
 
   return (
-    <View style={{ marginHorizontal: -8 }}>
+    <View style={isItWallet ? styles.containerItw : styles.container}>
       <Banner
-        testID="itwWalletReadyBannerTestID"
-        title={
-          isNewItwRenderable
-            ? undefined
-            : I18n.t(
-                "features.itWallet.issuance.emptyWallet.readyBannerL2.title"
-              )
-        }
-        content={I18n.t(
-          isNewItwRenderable
-            ? "features.itWallet.issuance.emptyWallet.readyBanner.content"
-            : "features.itWallet.issuance.emptyWallet.readyBannerL2.content"
-        )}
         action={I18n.t(
           "features.itWallet.issuance.emptyWallet.readyBanner.action"
         )}
         color="turquoise"
+        content={I18n.t(
+          isItWallet
+            ? "features.itWallet.issuance.emptyWallet.readyBanner.content"
+            : "features.itWallet.issuance.emptyWallet.readyBannerL2.content"
+        )}
         onPress={handleOnPress}
         pictogramName="itWallet"
+        testID="itwWalletReadyBannerTestID"
+        title={I18n.t(
+          isItWallet
+            ? "features.itWallet.issuance.emptyWallet.readyBanner.title"
+            : "features.itWallet.issuance.emptyWallet.readyBannerL2.title"
+        )}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 8,
+    marginTop: 0
+  },
+  containerItw: {
+    marginHorizontal: 0,
+    marginTop: 16
+  }
+});

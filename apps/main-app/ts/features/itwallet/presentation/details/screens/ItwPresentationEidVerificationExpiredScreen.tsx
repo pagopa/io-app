@@ -1,11 +1,12 @@
-import { useCallback } from "react";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
+import { useCallback } from "react";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
-import { ITW_ROUTES } from "../../../navigation/routes.ts";
-import { useItwEidFeedbackBottomSheet } from "../../../common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { trackItwSurveyRequest } from "../../../analytics";
+import { useItwEidFeedbackBottomSheet } from "../../../common/hooks/useItwEidFeedbackBottomSheet.tsx";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import {
   trackItwEidReissuingMandatory,
   trackItwEidReissuingMandatoryCancel,
@@ -17,9 +18,7 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
   const navigation = useIONavigation();
   const { name: routeName } = useRoute();
 
-  /**
-   * Fallback navigation action to main wallet home screen.
-   */
+  /** Fallback navigation action to main wallet home screen. */
   const fallbackNavigationAction = useCallback(() => {
     navigation.popToTop();
   }, [navigation]);
@@ -47,19 +46,13 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
   return (
     <>
       <OperationResultScreenContent
-        pictogram="identityRefresh"
-        title={I18n.t(
-          "features.itWallet.presentation.eid.verificationExpired.title"
-        )}
-        subtitle={I18n.t(
-          "features.itWallet.presentation.eid.verificationExpired.subtitle"
-        )}
         action={{
           label: I18n.t(
             "features.itWallet.presentation.eid.verificationExpired.primaryAction"
           ),
           onPress: startEidReissuing
         }}
+        pictogram="identityRefresh"
         secondaryAction={{
           label: I18n.t("global.buttons.cancel"),
           onPress: () => {
@@ -73,6 +66,12 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
             eidFeedbackBottomSheet.present();
           }
         }}
+        subtitle={I18n.t(
+          "features.itWallet.presentation.eid.verificationExpired.subtitle"
+        )}
+        title={I18n.t(
+          "features.itWallet.presentation.eid.verificationExpired.title"
+        )}
       />
       {eidFeedbackBottomSheet.bottomSheet}
     </>

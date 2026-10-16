@@ -1,13 +1,12 @@
-import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
-import { memo } from "react";
+import { Body, ListItemHeader, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
+import { memo } from "react";
+import { View } from "react-native";
+
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 import { trackItwRemoteUntrustedRPBottomSheet } from "../analytics";
 
-/**
- * Content component for the Not Trusted RP bottom sheet
- */
+/** Content component for the Not Trusted RP bottom sheet */
 const ItwRemoteUntrustedRPBottomSheetContent = memo(() => (
   <View>
     <Body>
@@ -32,7 +31,8 @@ const ItwRemoteUntrustedRPBottomSheetContent = memo(() => (
 ));
 
 /**
- * Hook to create the  Untrusted RP bottom sheet
+ * Hook to create the Untrusted RP bottom sheet
+ *
  * @returns Bottom sheet modal object
  */
 export const useItwRemoteUntrustedRPBottomSheet = () => {

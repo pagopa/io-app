@@ -1,8 +1,9 @@
 import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
+
+import { apiUrlPrefix } from "../../../../../config";
 import { watchCdcWalletSaga } from "../../wallet/saga";
 import { createCdcClient } from "../api/client";
-import { apiUrlPrefix } from "../../../../../config";
 import { isCdCWalletVisibilityEnabledSelector } from "../store/selectors/remoteConfig";
 
 export function* watchCdcSaga(sessionToken: string): SagaIterator {

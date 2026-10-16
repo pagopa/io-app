@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
+
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PnParamsList } from "../../navigation/params";
@@ -13,13 +14,9 @@ import {
 } from "../utils/stateUtils";
 
 type SendAarFlowManager = {
-  terminateFlow: () => void;
-  goToNextState: () => void;
   currentFlowData: AarFlowState;
-};
-
-export type SendAarFlowHandlerType = {
-  qrCode: string;
+  goToNextState: () => void;
+  terminateFlow: () => void;
 };
 
 export const useSendAarFlowManager = (): SendAarFlowManager => {
@@ -29,7 +26,9 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
 
   const handleTerminateFlow = useCallback(() => {
     dispatch(
-      terminateAarFlow({ messageId: maybeIunFromAarFlowState(currentFlowData) })
+      terminateAarFlow({
+        messageId: maybeIunFromAarFlowState(currentFlowData)
+      })
     );
     navigation.popToTop();
   }, [dispatch, navigation, currentFlowData]);

@@ -1,36 +1,27 @@
-export type ItwRemoteCredentialCombination =
-  | "PID"
-  | "PID_and_credentials"
-  | "other_credentials";
-
-export type ItwRemoteFailure = {
-  reason: unknown;
-  origin?: string;
-  type: string;
-};
-
-export type ItwRemoteMissingCredential = {
-  missing_credential: string;
-  missing_credential_number: number;
-};
-
-export type ItwRemoteInvalidCredential = {
-  not_valid_credential: string;
-  not_valid_credential_number: number;
-};
-
-export type ItwRemoteDataShare = {
-  data_type: "required" | "optional";
-  request_type: "unique_purpose" | "multiple_purpose" | "no_purpose";
-  credential_type: ItwRemoteCredentialCombination;
-};
-
 /**
- * Actions that trigger the requirement for L3 upgrade.
- * This type represents the user action that was performed immediately before
- * the L3 mandatory upgrade screen was displayed.
- * Add new values when implementing additional flows that require L3 upgrade.
+ * Actions that trigger the requirement for L3 upgrade. This type represents the
+ * user action that was performed immediately before the L3 mandatory upgrade
+ * screen was displayed. Add new values when implementing additional flows that
+ * require L3 upgrade.
  */
 export enum ItwL3UpgradeTrigger {
+  ADD_CREDENTIAL = "add_credential",
   REMOTE_QR_CODE = "remote_qr_code"
 }
+
+export type ItwRemoteCredentialCombination =
+  | "other_credentials"
+  | "PID"
+  | "PID_and_credentials";
+
+export type ItwRemoteDataShare = {
+  credential_type: ItwRemoteCredentialCombination;
+  data_type: "optional" | "required";
+  request_type: "multiple_purpose" | "no_purpose" | "unique_purpose";
+};
+
+export type ItwRemoteFailure = {
+  origin?: string;
+  reason: unknown;
+  type: string;
+};

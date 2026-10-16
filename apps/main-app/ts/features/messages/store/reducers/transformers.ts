@@ -1,9 +1,9 @@
-import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/communication/CreatedMessageWithContentAndAttachments";
-import { EnrichedMessage } from "../../../../../definitions/communication/EnrichedMessage";
-import { MessageCategory } from "../../../../../definitions/communication/MessageCategory";
-import { TagEnum } from "../../../../../definitions/communication/MessageCategoryBase";
-import { MessageStatusAttributes } from "../../../../../definitions/communication/MessageStatusAttributes";
-import { PublicMessage } from "../../../../../definitions/communication/PublicMessage";
+import { CreatedMessageWithContentAndAttachments } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndAttachments";
+import { EnrichedMessage } from "@io-app/api-types/generated/definitions/communication/EnrichedMessage";
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryBase";
+import { MessageStatusAttributes } from "@io-app/api-types/generated/definitions/communication/MessageStatusAttributes";
+import { PublicMessage } from "@io-app/api-types/generated/definitions/communication/PublicMessage";
 
 import {
   EUCovidCertificate,
@@ -13,13 +13,13 @@ import {
 } from "../../types";
 
 /**
- * Map an enriched message item from API to the app domain.
- * Since `category` is optional, it falls back on GENERIC.
+ * Map an enriched message item from API to the app domain. Since `category` is
+ * optional, it falls back on GENERIC.
  *
  * @param messageFromApi
  */
 export const toUIMessage = (
-  messageFromApi: PublicMessage | CreatedMessageWithContentAndAttachments
+  messageFromApi: CreatedMessageWithContentAndAttachments | PublicMessage
 ): UIMessage => {
   const enriched = messageFromApi as EnrichedMessage;
   const category: MessageCategory = enriched.category || {

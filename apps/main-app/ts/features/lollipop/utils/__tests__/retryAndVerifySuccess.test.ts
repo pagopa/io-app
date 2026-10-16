@@ -1,7 +1,11 @@
-import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
+import { ok } from "neverthrow";
+
 import { AppDispatch } from "../../../../App";
+import {
+  followNativeRedirectsAndVerifySaml,
+  regenerateKeyGetRedirectsAndVerifySaml
+} from "../login";
 
 const jwkPublicKey: PublicKey = {
   crv: "P-256",
@@ -28,6 +32,16 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
+  it("returns the verified redirect", async () => {
+    const result = await followNativeRedirectsAndVerifySaml(
+      "loginUri",
+      {},
+      jwkPublicKey
+    );
+
+    expect(result).toEqual(ok(url));
+  });
+
   it("should be succeded", async () => {
     const result = await regenerateKeyGetRedirectsAndVerifySaml(
       "loginUri",
@@ -36,6 +50,7 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
       false,
       dispatch
     );
-    expect(E.isRight(result)).toBeTruthy();
+
+    expect(result).toEqual(ok(url));
   });
 });

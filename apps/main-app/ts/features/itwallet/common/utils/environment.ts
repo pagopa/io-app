@@ -1,31 +1,34 @@
-/* eslint-disable complexity */
-
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import Config from "react-native-config";
-
-export type EnvType = "pre" | "prod";
+import { z } from "zod";
 
 export type Env = {
-  type: EnvType;
-  WALLET_PROVIDER_BASE_URL: string;
-  WALLET_PID_PROVIDER_BASE_URL: ItwSpecsEnvVar;
-  WALLET_EAA_PROVIDER_BASE_URL: ItwSpecsEnvVar;
-  WALLET_TA_BASE_URL: string;
-  REDIRECT_URI: string;
-  GOOGLE_CLOUD_PROJECT_NUMBER: string;
-  VERIFIER_BASE_URL: string;
-  ISSUANCE_REDIRECT_URI: string;
-  X509_CERT_ROOT: string;
   BYPASS_IDENTITY_MATCH: boolean;
+  GOOGLE_CLOUD_PROJECT_NUMBER: string;
+  ISSUANCE_REDIRECT_URI: string;
+  REDIRECT_URI: string;
+  type: EnvType;
+  VERIFIER_BASE_URL: string;
+  WALLET_EAA_PROVIDER_BASE_URL: ItwSpecsEnvVar;
+  WALLET_PID_PROVIDER_BASE_URL: ItwSpecsEnvVar;
+  WALLET_PROVIDER_BASE_URL: string;
+  WALLET_TA_BASE_URL: string;
+  X509_CERT_ROOT: string;
 };
 
+/** Runtime schema for persisted IT-Wallet environment values. */
+export const EnvTypeSchema = z.enum(["pre", "prod"]);
+
+export type EnvType = z.infer<typeof EnvTypeSchema>;
+
 /**
- * Wrapper for an env variable that has different values for each IT-Wallet specs version.
+ * Wrapper for an env variable that has different values for each IT-Wallet
+ * specs version.
  *
  * Call `.value()` to get the value for the specified version.
  *
  * @example
- * myVar.value("1.3.3")
+ *   myVar.value("1.3.3");
  */
 class ItwSpecsEnvVar {
   constructor(private values: Record<ItwVersion, string>) {}
@@ -35,6 +38,7 @@ class ItwSpecsEnvVar {
   }
 }
 
+// oxlint-disable-next-line complexity
 export const getEnv = (env: EnvType): Env => {
   switch (env) {
     case "pre":
@@ -43,11 +47,11 @@ export const getEnv = (env: EnvType): Env => {
         WALLET_PROVIDER_BASE_URL: Config.ITW_PRE_WALLET_PROVIDER_BASE_URL ?? "",
         WALLET_PID_PROVIDER_BASE_URL: new ItwSpecsEnvVar({
           "1.0.0": Config.ITW_PRE_WALLET_PID_PROVIDER_BASE_URL_V1_0 ?? "",
-          "1.3.3": Config.ITW_PRE_WALLET_PID_PROVIDER_BASE_URL_V1_3 ?? ""
+          "1.4.6": Config.ITW_PRE_WALLET_PID_PROVIDER_BASE_URL_V1_4 ?? ""
         }),
         WALLET_EAA_PROVIDER_BASE_URL: new ItwSpecsEnvVar({
           "1.0.0": Config.ITW_PRE_WALLET_EAA_PROVIDER_BASE_URL_V1_0 ?? "",
-          "1.3.3": Config.ITW_PRE_WALLET_EAA_PROVIDER_BASE_URL_V1_3 ?? ""
+          "1.4.6": Config.ITW_PRE_WALLET_EAA_PROVIDER_BASE_URL_V1_4 ?? ""
         }),
         WALLET_TA_BASE_URL: Config.ITW_PRE_WALLET_TA_BASE_URL ?? "",
         REDIRECT_URI: Config.ITW_PRE_REDIRECT_URI ?? "",
@@ -65,11 +69,11 @@ export const getEnv = (env: EnvType): Env => {
           Config.ITW_PROD_WALLET_PROVIDER_BASE_URL ?? "",
         WALLET_PID_PROVIDER_BASE_URL: new ItwSpecsEnvVar({
           "1.0.0": Config.ITW_PROD_WALLET_PID_PROVIDER_BASE_URL_V1_0 ?? "",
-          "1.3.3": Config.ITW_PROD_WALLET_PID_PROVIDER_BASE_URL_V1_3 ?? ""
+          "1.4.6": Config.ITW_PROD_WALLET_PID_PROVIDER_BASE_URL_V1_4 ?? ""
         }),
         WALLET_EAA_PROVIDER_BASE_URL: new ItwSpecsEnvVar({
           "1.0.0": Config.ITW_PROD_WALLET_EAA_PROVIDER_BASE_URL_V1_0 ?? "",
-          "1.3.3": Config.ITW_PROD_WALLET_EAA_PROVIDER_BASE_URL_V1_3 ?? ""
+          "1.4.6": Config.ITW_PROD_WALLET_EAA_PROVIDER_BASE_URL_V1_4 ?? ""
         }),
         WALLET_TA_BASE_URL: Config.ITW_PROD_WALLET_TA_BASE_URL ?? "",
         REDIRECT_URI: Config.ITW_PROD_REDIRECT_URI ?? "",

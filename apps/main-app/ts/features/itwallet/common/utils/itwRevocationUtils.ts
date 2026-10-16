@@ -1,14 +1,17 @@
 import { type ItwVersion } from "@pagopa/io-react-native-wallet";
+
 import { createItWalletFetch } from "../../api/client";
 import { Env } from "./environment";
 import { getIoWallet } from "./itwIoWallet";
 
 /**
  * Revoke the current wallet instance.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param sessionToken - The IO session token
- * @param integrityKeyTag - The integrity key tag used for the wallet instance creation
+ * @param integrityKeyTag - The integrity key tag used for the wallet instance
+ *   creation
  * @throws Error if the wallet instance revocation fails
  */
 export const revokeCurrentWalletInstance = async (

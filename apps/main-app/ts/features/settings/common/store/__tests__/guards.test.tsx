@@ -1,16 +1,17 @@
+import { EmailAddress } from "@io-app/api-types/generated/definitions/identity/EmailAddress";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import * as O from "fp-ts/lib/Option";
+
 import {
+  getProfileEmail,
+  getProfileSpidEmail,
   hasProfileEmail,
+  isProfileEmailAlreadyTaken,
   isProfileEmailValidated,
   isProfileFirstOnBoarding,
-  isProfileEmailAlreadyTaken,
-  isServicesPreferenceModeSet,
-  getProfileEmail,
-  getProfileSpidEmail
+  isServicesPreferenceModeSet
 } from "../utils/guards";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
-import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
 
 const baseProfile = {
   has_profile: true,
@@ -119,7 +120,9 @@ describe("guards utils", () => {
     it("should return false if mode is not LEGACY", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        service_preferences_settings: { mode: ServicesPreferencesModeEnum.AUTO }
+        service_preferences_settings: {
+          mode: ServicesPreferencesModeEnum.AUTO
+        }
       };
       expect(isProfileFirstOnBoarding(profile)).toBe(false);
     });

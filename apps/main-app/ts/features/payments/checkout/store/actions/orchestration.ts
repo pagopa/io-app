@@ -1,8 +1,9 @@
+import { Bundle } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Bundle";
+import { PaymentMethodResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodResponse";
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletInfo";
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
-import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
-import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
+
 import { PaymentStartOrigin, WalletPaymentStepEnum } from "../../types";
 import { WalletPaymentOutcomeEnum } from "../../types/PaymentOutcomeEnum";
 
@@ -11,31 +12,32 @@ export const walletPaymentSetCurrentStep = createStandardAction(
 )<WalletPaymentStepEnum>();
 
 export type OnPaymentSuccessAction =
+  | "showAarMessage"
   | "showHome"
-  | "showTransaction"
-  | "showAarMessage";
+  | "showTransaction";
 
 export type PaymentInitStateParams = {
-  startOrigin?: PaymentStartOrigin;
   onSuccess?: OnPaymentSuccessAction;
   serviceName?: string;
-};
-
-type PaymentCompletedSuccessPayload = {
-  rptId: RptId;
-  kind: "COMPLETED" | "DUPLICATED";
+  startOrigin?: PaymentStartOrigin;
 };
 
 export type PaymentStartWebViewPayload = {
-  url: string;
-  onSuccess?: (url: string) => void;
   onCancel?: (outcome?: WalletPaymentOutcomeEnum) => void;
   onError?: (outcome?: WalletPaymentOutcomeEnum) => void;
+  onSuccess?: (url: string) => void;
+  url: string;
+};
+
+type PaymentCompletedSuccessPayload = {
+  kind: "COMPLETED" | "DUPLICATED";
+  rptId: RptId;
 };
 
 /**
- * Action to initialize the state of a payment, optionally you can specify the route to go back to
- * after the payment is completed or cancelled (default is the popToTop route)
+ * Action to initialize the state of a payment, optionally you can specify the
+ * route to go back to after the payment is completed or cancelled (default is
+ * the popToTop route)
  */
 export const initPaymentStateAction = createStandardAction(
   "PAYMENTS_INIT_PAYMENT_STATE"
@@ -43,7 +45,7 @@ export const initPaymentStateAction = createStandardAction(
 
 export const selectPaymentMethodAction = createStandardAction(
   "PAYMENTS_SELECT_PAYMENT_METHOD"
-)<{ userWallet?: WalletInfo; paymentMethod?: PaymentMethodResponse }>();
+)<{ paymentMethod?: PaymentMethodResponse; userWallet?: WalletInfo }>();
 
 export const selectPaymentPspAction = createStandardAction(
   "PAYMENTS_SELECT_PAYMENT_PSP"
@@ -66,11 +68,11 @@ export const paymentClearWebViewFlow = createStandardAction(
 )<void>();
 
 export type PaymentsCheckoutOrchestrationActions =
-  | ActionType<typeof walletPaymentSetCurrentStep>
   | ActionType<typeof initPaymentStateAction>
-  | ActionType<typeof selectPaymentMethodAction>
-  | ActionType<typeof selectPaymentPspAction>
+  | ActionType<typeof paymentClearWebViewFlow>
   | ActionType<typeof paymentCompletedSuccess>
   | ActionType<typeof paymentMethodPspBannerClose>
   | ActionType<typeof paymentStartWebViewFlow>
-  | ActionType<typeof paymentClearWebViewFlow>;
+  | ActionType<typeof selectPaymentMethodAction>
+  | ActionType<typeof selectPaymentPspAction>
+  | ActionType<typeof walletPaymentSetCurrentStep>;

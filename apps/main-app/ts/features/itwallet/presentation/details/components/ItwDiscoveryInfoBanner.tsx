@@ -1,7 +1,8 @@
-import { Banner, IOToast } from "@pagopa/io-app-design-system";
+import { Banner, useIOToast } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
+
 import { useIODispatch } from "../../../../../store/hooks";
 import { openWebUrl } from "../../../../../utils/url";
 import {
@@ -12,10 +13,11 @@ import {
 import { itwCloseBanner } from "../../../common/store/actions/banners";
 
 const WHAT_IS_ITW_WALLET_ID =
-  "https://assistenza.ioapp.it/hc/it/articles/31106401885841-Quando-e-come-usare-i-documenti-digitali";
+  "https://assistenza.ioapp.it/hc/it/articles/50661930290449-Cos-é-l-IT-Wallet-ID";
 
 const ItwDiscoveryInfoBanner = () => {
   const dispatch = useIODispatch();
+  const toast = useIOToast();
 
   const trackBannerProperties = useMemo(
     () => ({
@@ -35,7 +37,7 @@ const ItwDiscoveryInfoBanner = () => {
   const handleOnPress = () => {
     trackItwBannerTap(trackBannerProperties);
     openWebUrl(WHAT_IS_ITW_WALLET_ID, () =>
-      IOToast.error(I18n.t("global.jserror.title"))
+      toast.error(I18n.t("global.jserror.title"))
     );
   };
 
@@ -46,17 +48,17 @@ const ItwDiscoveryInfoBanner = () => {
 
   return (
     <Banner
-      testID="itwDiscoveryInfoBannerTestID"
+      action={I18n.t("global.buttons.findOutMore")}
       color="neutral"
-      pictogramName="help"
-      title={I18n.t("features.itWallet.presentation.itWalletId.banner.title")}
       content={I18n.t(
         "features.itWallet.presentation.itWalletId.banner.content"
       )}
-      action={I18n.t("global.buttons.findOutMore")}
-      onPress={handleOnPress}
       labelClose={I18n.t("global.buttons.close")}
       onClose={handleOnClose}
+      onPress={handleOnPress}
+      pictogramName="help"
+      testID="itwDiscoveryInfoBannerTestID"
+      title={I18n.t("features.itWallet.presentation.itWalletId.banner.title")}
     />
   );
 };

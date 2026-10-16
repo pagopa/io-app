@@ -1,35 +1,21 @@
-/**
- * Generic utilities for strings
- */
+/** Generic utilities for strings */
 
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 
 /**
- * Check if the source includes searchText.
- * To make a case-insensitive check both the source and the searchText are
- * converted to lower-case.
+ * Return the same text with each token has the first char in uppercase. Tokens
+ * are retrieved by splitting the text with the provided separator
  *
- * @param source Source string where you want to search
- * @param searchText String you want search for
- */
-export function isTextIncludedCaseInsensitive(
-  source: string,
-  searchText: string
-) {
-  return source.toLocaleLowerCase().includes(searchText.toLocaleLowerCase());
-}
-
-/**
- * return the same text with each token has the first char in uppercase.
- * tokens are retrieved by splitting the text with the provided separator
- * ex capitalize("Hello World") -> "Hello Word"
- * ex capitalize("hello,world",",") -> "Hello,Word"
+ * @example
+ *   capitalize("Hello World"); // "Hello Word"
+ *   capitalize("hello,world", ","); // "Hello,Word"
+ *
  * @param text
  * @param separator
  */
-export function capitalize(text: string, separator: string = " ") {
+export function capitalize(text: string, separator = " ") {
   return text
     .split(separator)
     .reduce(
@@ -43,11 +29,26 @@ export function capitalize(text: string, separator: string = " ") {
 }
 
 /**
- * determine if the text is undefined or empty (or composed only by blanks)
+ * Check if the source includes searchText. To make a case-insensitive check
+ * both the source and the searchText are converted to lower-case.
+ *
+ * @param source Source string where you want to search
+ * @param searchText String you want search for
+ */
+export function isTextIncludedCaseInsensitive(
+  source: string,
+  searchText: string
+) {
+  return source.toLocaleLowerCase().includes(searchText.toLocaleLowerCase());
+}
+
+/**
+ * Determine if the text is undefined or empty (or composed only by blanks)
+ *
  * @param text
  */
 export const isStringNullyOrEmpty = (
-  text: string | null | undefined
+  text: null | string | undefined
 ): boolean =>
   pipe(
     text,
@@ -59,11 +60,13 @@ export const isStringNullyOrEmpty = (
   );
 
 /**
- * return some(text) if the text is not nully and not empty (or composed only by blanks)
+ * Return some(text) if the text is not nully and not empty (or composed only by
+ * blanks)
+ *
  * @param text
  */
 export const maybeNotNullyString = (
-  text: string | null | undefined
+  text: null | string | undefined
 ): O.Option<string> =>
   pipe(
     O.fromPredicate((t: string) => t.trim().length > 0)(
@@ -76,7 +79,8 @@ export const maybeNotNullyString = (
   );
 
 /**
- * return a string by adding 'toAdd' every 'every' chars
+ * Return a string by adding 'toAdd' every 'every' chars
+ *
  * @param text
  * @param toAdd
  * @param every
@@ -87,7 +91,8 @@ export const addEvery = (text: string, toAdd: string, every: number): string =>
     .replace(new RegExp(`(.{${every}})`, "g"), `$1${toAdd}`);
 
 /**
- * split text using the specified splitter and return the first substring
+ * Split text using the specified splitter and return the first substring
+ *
  * @param text
  * @param splitter
  */
@@ -96,7 +101,7 @@ export const splitAndTakeFirst = (text: string, splitter: string) =>
 
 export const withTrailingPoliceCarLightEmojii = (
   text: string,
-  visible: boolean = true
+  visible = true
 ) => {
   if (visible) {
     return `${text} \u{1F6A8}`;
@@ -106,10 +111,11 @@ export const withTrailingPoliceCarLightEmojii = (
 };
 
 /**
- * Format a number of bytes in a human readable format with the appropriate unit (B, KB, MB, GB, TB)
- * rounded to the first decimal.
- * @param bytes - number of bytes to format
- * @returns formatted string in the form of "value unit"
+ * Format a number of bytes in a human readable format with the appropriate unit
+ * (B, KB, MB, GB, TB) rounded to the first decimal.
+ *
+ * @param bytes - Number of bytes to format
+ * @returns Formatted string in the form of "value unit"
  */
 export const formatBytesWithUnit = (bytes: number) => {
   if (!bytes || bytes < 0) {
@@ -124,25 +130,23 @@ export const formatBytesWithUnit = (bytes: number) => {
 };
 
 /**
- * Capitalizes the first letter of each word in the given text, preserving leading and trailing spaces.
- * Words are separated by the specified separator.
- * Handles words with apostrophes by capitalizing the first letter of each sub-token.
+ * Capitalizes the first letter of each word in the given text, preserving
+ * leading and trailing spaces. Words are separated by the specified separator.
+ * Handles words with apostrophes by capitalizing the first letter of each
+ * sub-token.
+ *
+ * @example
+ *   capitalizeTextName(" hello world "); // returns " Hello World "
+ *
+ * @example
+ *   capitalizeTextName("d'angelo"); //returns "D'Angelo"
  *
  * @param {string} text
- * @param {string} [separator=" "]
+ * @param {string} [separator=" "] Default is `" "`
  * @returns {string}
- *
- * @example
- * capitalizeTextName(" hello world "); // returns " Hello World "
- *
- * @example
- * capitalizeTextName("d'angelo"); //returns "D'Angelo"
  */
 
-export const capitalizeTextName = (
-  text: string,
-  separator: string = " "
-): string => {
+export const capitalizeTextName = (text: string, separator = " "): string => {
   // Match leading and trailing spaces
   const leadingSpacesMatch = /^\s*/.exec(text);
   const trailingSpacesMatch = /\s*$/.exec(text);

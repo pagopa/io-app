@@ -1,6 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -11,14 +12,14 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { itwDisableItwActivation } from "../../common/store/actions/preferences";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import { ITW_ROUTES } from "../../navigation/routes";
 import {
   trackItwFallbackL2Flow,
   trackItwFallbackL2FlowExit,
   trackItwFallbackL2FlowStart
 } from "../../identification/analytics";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 type Props = {
   credentialType?: string;
@@ -68,9 +69,16 @@ export const ItwL2FallbackComponent = ({ credentialType }: Props) => {
       fallback_reason: "nfc_not_supported"
     });
 
-    navigation.popTo(ROUTES.MAIN, {
-      screen: ROUTES.WALLET_HOME,
-      params: {}
+    navigation.reset({
+      index: 1,
+      routes: [
+        {
+          name: ROUTES.MAIN,
+          params: {
+            screen: ROUTES.WALLET_HOME
+          }
+        }
+      ]
     });
   }, [navigation]);
 
@@ -91,14 +99,14 @@ export const ItwL2FallbackComponent = ({ credentialType }: Props) => {
 
   return (
     <OperationResultScreenContent
-      testID="ItwRestrictedModeFallbackComponentTestID"
-      title={I18n.t("features.itWallet.discovery.continueWithoutItw.title")}
+      action={action}
+      pictogram="cardAdd"
+      secondaryAction={secondaryAction}
       subtitle={I18n.t(
         "features.itWallet.discovery.continueWithoutItw.subtitle"
       )}
-      pictogram="cardAdd"
-      action={action}
-      secondaryAction={secondaryAction}
+      testID="ItwRestrictedModeFallbackComponentTestID"
+      title={I18n.t("features.itWallet.discovery.continueWithoutItw.title")}
     />
   );
 };

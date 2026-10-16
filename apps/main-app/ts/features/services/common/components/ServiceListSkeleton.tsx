@@ -1,5 +1,3 @@
-import { Fragment } from "react";
-import { View } from "react-native";
 import {
   Divider,
   IOListItemStyles,
@@ -7,12 +5,14 @@ import {
   IOSkeleton,
   IOVisualCostants,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
+import { Fragment } from "react";
+import { View } from "react-native";
 
 type ServiceListSkeletonProps = {
   /**
-   * Whether to show the avatar. The avatar is shown by default.
-   * Setting this to `false` hides the avatar.
+   * Whether to show the avatar. The avatar is shown by default. Setting this to
+   * `false` hides the avatar.
    */
   avatarShown?: boolean;
   /**
@@ -20,9 +20,7 @@ type ServiceListSkeletonProps = {
    * Setting this to `true` shows the section title.
    */
   sectionTitleShown?: boolean;
-  /**
-   * The number of items in the list. The default value is `3`.
-   */
+  /** The number of items in the list. The default value is `3`. */
   size?: number;
 };
 
@@ -35,7 +33,7 @@ export const ServiceListSkeleton = ({
     {sectionTitleShown && (
       <>
         <VSpacer size={16} />
-        <IOSkeleton shape="rectangle" radius={8} width={62} height={16} />
+        <IOSkeleton height={16} radius={8} shape="rectangle" width={62} />
         <VSpacer size={16} />
       </>
     )}
@@ -56,14 +54,14 @@ const ServiceListItemSkeleton = ({
       {avatarShown && (
         <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
           <IOSkeleton
+            radius={IOVisualCostants.avatarRadiusSizeSmall}
             shape="square"
             size={IOVisualCostants.avatarSizeSmall}
-            radius={IOVisualCostants.avatarRadiusSizeSmall}
           />
         </View>
       )}
       <View style={{ flex: 1 }}>
-        <IOSkeleton shape="rectangle" radius={8} width={"60%"} height={16} />
+        <IOSkeleton height={16} radius={8} shape="rectangle" width={"60%"} />
       </View>
     </View>
   </View>

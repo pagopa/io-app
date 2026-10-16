@@ -1,13 +1,14 @@
 // CieConsentDataUsageScreen.test.tsx
 
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { runConsentScreenSuite } from "../../../../activeSessionLogin/shared/CieContentDataUsageCommonSuite";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import * as loginUtils from "../../../../common/utils";
 import CieConsentDataUsageScreen from "../CieConsentDataUsageScreen";
-import * as loginUtils from "../../../../common/utils/login";
 
 jest.mock("react-native-webview", () => {
   const { View } = require("react-native");
@@ -29,7 +30,11 @@ jest.mock("../../../../../../store/hooks", () => ({
 }));
 
 // mock navigazione
-const mockNavigation = { navigate: jest.fn(), replace: jest.fn() };
+const mockNavigation = {
+  dispatch: jest.fn(),
+  navigate: jest.fn(),
+  replace: jest.fn()
+};
 jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => mockNavigation
 }));
@@ -55,7 +60,6 @@ runConsentScreenSuite({
   render: renderStd,
   mockNavigation,
   onLoginUriChangedSpy,
-  expectErrorRedirectMethod: "navigate",
   makeHttpError: () =>
     ({
       nativeEvent: {

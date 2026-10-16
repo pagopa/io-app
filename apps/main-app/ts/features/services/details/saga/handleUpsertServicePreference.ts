@@ -1,11 +1,12 @@
+import { ServicePreference } from "@io-app/api-types/generated/definitions/identity/ServicePreference";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { ServicePreference } from "../../../../../definitions/identity/ServicePreference";
+
 import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
@@ -22,9 +23,10 @@ import { isServicePreferenceResponseSuccess } from "../types/ServicePreferenceRe
 import { mapKinds } from "./handleGetServicePreference";
 
 /**
- * Generates the payload for the updating preferences request, if a users disables the inbox flag than the other flags
- * are disabled.
- * If a user activates a disabled inbox flag than webhook is enabled too.
+ * Generates the payload for the updating preferences request, if a users
+ * disables the inbox flag than the other flags are disabled. If a user
+ * activates a disabled inbox flag than webhook is enabled too.
+ *
  * @param currentServicePreferenceState
  * @param action
  */
@@ -65,28 +67,9 @@ const calculateUpdatingPreference = (
   };
 };
 
-export function* trackPNPushNotificationSettings(
-  action: ActionType<typeof upsertServicePreference.request>
-) {
-  const serviceMetadataInfo = yield* select(
-    serviceMetadataInfoSelector,
-    action.payload.id
-  );
-
-  pipe(
-    serviceMetadataInfo,
-    O.fromNullable,
-    O.chainNullableK(metadata => metadata.serviceKind),
-    O.filter(serviceKind => serviceKind === "pn"),
-    O.fold(
-      () => undefined,
-      _ => trackPNPushSettings(action.payload.push)
-    )
-  );
-}
-
 /**
- * saga to handle the update of service preferences after a user specific action
+ * Saga to handle the update of service preferences after a user specific action
+ *
  * @param upsertServicePreferences
  * @param action
  */
@@ -190,4 +173,24 @@ export function* handleUpsertServicePreference(
       })
     );
   }
+}
+
+export function* trackPNPushNotificationSettings(
+  action: ActionType<typeof upsertServicePreference.request>
+) {
+  const serviceMetadataInfo = yield* select(
+    serviceMetadataInfoSelector,
+    action.payload.id
+  );
+
+  pipe(
+    serviceMetadataInfo,
+    O.fromNullable,
+    O.chainNullableK(metadata => metadata.serviceKind),
+    O.filter(serviceKind => serviceKind === "pn"),
+    O.fold(
+      () => undefined,
+      _ => trackPNPushSettings(action.payload.push)
+    )
+  );
 }

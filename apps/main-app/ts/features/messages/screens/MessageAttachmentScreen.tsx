@@ -1,12 +1,13 @@
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { MessagesParamsList } from "../navigation/params";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
-import { MessageAttachment } from "../components/MessageAttachment/MessageAttachment";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { MessageAttachment } from "../components/MessageAttachment/MessageAttachment";
+import { MessagesParamsList } from "../navigation/params";
 
 export type MessageAttachmentScreenRouteParams = {
-  messageId: string;
   attachmentId: string;
+  messageId: string;
   serviceId?: ServiceId;
 };
 

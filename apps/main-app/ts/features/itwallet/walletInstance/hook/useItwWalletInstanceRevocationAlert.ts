@@ -1,21 +1,20 @@
-import { Alert } from "react-native";
-import { useCallback } from "react";
 import I18n from "i18next";
-import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
+import { useCallback } from "react";
+import { Alert } from "react-native";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwWalletInstanceStatusSelector } from "../store/selectors";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { itwUpdateWalletInstanceStatus } from "../store/actions";
-import { openWebUrl } from "../../../../utils/url";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   DOCUMENTS_ON_IO_FAQ_12_URL_BODY,
   DOCUMENTS_ON_IO_FAQ_14_URL_BODY
 } from "../../../../urls";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { openWebUrl } from "../../../../utils/url";
+import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
+import { itwUpdateWalletInstanceStatus } from "../store/actions";
+import { itwWalletInstanceStatusSelector } from "../store/selectors";
 
-/**
- * Hook to monitor wallet instance status and display alerts if revoked.
- */
+/** Hook to monitor wallet instance status and display alerts if revoked. */
 export const useItwWalletInstanceRevocationAlert = () => {
   const walletInstanceStatus = useIOSelector(itwWalletInstanceStatusSelector);
   const dispatch = useIODispatch();
@@ -54,9 +53,7 @@ export const useItwWalletInstanceRevocationAlert = () => {
   );
 };
 
-/**
- * Displays an alert based on the revocation reason.
- */
+/** Displays an alert based on the revocation reason. */
 const showWalletRevocationAlert = (
   itwMinIntegrityReqUrl: string,
   itwDocsOnIOMultipleDevicesUrl: string,

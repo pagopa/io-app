@@ -1,7 +1,8 @@
-import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
+import { err } from "neverthrow";
+
 import { AppDispatch } from "../../../../App";
+import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
 
 const wrongJwkPublicKey: PublicKey = {
   crv: "P-256",
@@ -28,7 +29,7 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
-  it("should be succeded", async () => {
+  it("should throw on key mismatch", async () => {
     const result = await regenerateKeyGetRedirectsAndVerifySaml(
       "loginUri",
       "keyTag",
@@ -36,11 +37,9 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
       false,
       dispatch
     );
-    expect(E.isLeft(result)).toBeTruthy();
-    if (E.isLeft(result)) {
-      expect(result.left).toEqual(
-        new Error("Mismatch between local and remote ID parameter content")
-      );
-    }
+
+    expect(result).toEqual(
+      err({ reason: "Mismatch between local and remote ID parameter content" })
+    );
   });
 });

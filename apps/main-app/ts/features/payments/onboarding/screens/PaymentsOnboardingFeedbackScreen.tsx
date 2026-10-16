@@ -1,9 +1,10 @@
-import { IOPictograms } from "@pagopa/io-app-design-system";
+import { IOPictograms } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOAnimatedPictograms,
@@ -20,6 +21,7 @@ import {
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
+import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../utils/url";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
@@ -36,7 +38,6 @@ import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
-import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -50,7 +51,7 @@ type PaymentsOnboardingFeedbackScreenRouteProps = RouteProp<
 
 const pictogramByOutcome: Record<
   WalletOnboardingOutcome,
-  IOPictograms | IOAnimatedPictograms
+  IOAnimatedPictograms | IOPictograms
 > = {
   [WalletOnboardingOutcomeEnum.SUCCESS]: "success",
   [WalletOnboardingOutcomeEnum.GENERIC_ERROR]: "umbrella",
@@ -62,6 +63,97 @@ const pictogramByOutcome: Record<
   [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention",
   [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING]: "attention",
   [WalletOnboardingOutcomeEnum.BE_KO]: "umbrella"
+};
+
+type OutcomeCopy = {
+  primaryAction: string;
+  subtitle: string | undefined;
+  title: string;
+};
+
+/**
+ * Title, optional subtitle and primary action label shown for an onboarding
+ * outcome.
+ */
+const getOutcomeCopy = (outcome: WalletOnboardingOutcome): OutcomeCopy => {
+  switch (outcome) {
+    case WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.ALREADY_ONBOARDED.title"),
+        subtitle: undefined,
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.ALREADY_ONBOARDED.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.AUTH_ERROR:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.AUTH_ERROR.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.AUTH_ERROR.subtitle"),
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.AUTH_ERROR.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.BE_KO:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.BE_KO.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.BE_KO.subtitle"),
+        primaryAction: I18n.t("wallet.onboarding.outcome.BE_KO.primaryAction")
+      };
+    case WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.BPAY_NOT_FOUND.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.BPAY_NOT_FOUND.subtitle"),
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.BPAY_NOT_FOUND.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.CANCELED_BY_USER:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.CANCELED_BY_USER.title"),
+        subtitle: undefined,
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.CANCELED_BY_USER.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.GENERIC_ERROR:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.GENERIC_ERROR.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.GENERIC_ERROR.subtitle"),
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.GENERIC_ERROR.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.INVALID_SESSION:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.INVALID_SESSION.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.INVALID_SESSION.subtitle"),
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.INVALID_SESSION.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.PSP_ERROR_ONBOARDING.title"),
+        subtitle: I18n.t(
+          "wallet.onboarding.outcome.PSP_ERROR_ONBOARDING.subtitle"
+        ),
+        primaryAction: I18n.t(
+          "wallet.onboarding.outcome.PSP_ERROR_ONBOARDING.primaryAction"
+        )
+      };
+    case WalletOnboardingOutcomeEnum.SUCCESS:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.SUCCESS.title"),
+        subtitle: undefined,
+        primaryAction: I18n.t("wallet.onboarding.outcome.SUCCESS.primaryAction")
+      };
+    case WalletOnboardingOutcomeEnum.TIMEOUT:
+      return {
+        title: I18n.t("wallet.onboarding.outcome.TIMEOUT.title"),
+        subtitle: I18n.t("wallet.onboarding.outcome.TIMEOUT.subtitle"),
+        primaryAction: I18n.t("wallet.onboarding.outcome.TIMEOUT.primaryAction")
+      };
+  }
 };
 
 const PAYMENT_AUTHORIZATION_DENIED_ERROR = "PAYMENT_AUTHORIZATION_DENIED_ERROR";
@@ -87,15 +179,12 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const paymentMethodSelectedRef = useRef<string | undefined>(undefined);
   const store = useIOStore();
 
-  const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
-    Object.values(WalletOnboardingOutcomeEnum).indexOf(outcome)
-  ] as keyof typeof WalletOnboardingOutcomeEnum;
+  const outcomeCopy = getOutcomeCopy(outcome);
 
   useOnFirstRender(() => {
     const payment_method_selected = availablePaymentMethods?.find(
       paymentMethod => paymentMethod.id === selectedPaymentMethodId
     )?.name;
-    // eslint-disable-next-line functional/immutable-data
     paymentMethodSelectedRef.current = payment_method_selected;
     analytics.trackAddOnboardingPaymentMethod(outcome, payment_method_selected);
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
@@ -192,7 +281,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
     return undefined;
   };
 
-  const hasAnimation = (value: IOPictograms | IOAnimatedPictograms): boolean =>
+  const hasAnimation = (value: IOAnimatedPictograms | IOPictograms): boolean =>
     value in IOAnimatedPictogramsAssets;
 
   const animationProps = hasAnimation(pictogramByOutcome[outcome])
@@ -211,21 +300,15 @@ const PaymentsOnboardingFeedbackScreen = () => {
     <View style={{ flex: 1 }}>
       <OperationResultScreenContent
         {...animationProps}
-        title={I18n.t(`wallet.onboarding.outcome.${outcomeEnumKey}.title`)}
-        subtitle={I18n.t(
-          `wallet.onboarding.outcome.${outcomeEnumKey}.subtitle`
-        )}
         action={{
-          label: I18n.t(
-            `wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`
-          ),
-          accessibilityLabel: I18n.t(
-            `wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`
-          ),
+          label: outcomeCopy.primaryAction,
+          accessibilityLabel: outcomeCopy.primaryAction,
           onPress: handleContinueButton,
           testID: "wallet-onboarding-continue-button"
         }}
         secondaryAction={renderSecondaryAction()}
+        subtitle={outcomeCopy.subtitle}
+        title={outcomeCopy.title}
       />
       {supportModal.bottomSheet}
     </View>

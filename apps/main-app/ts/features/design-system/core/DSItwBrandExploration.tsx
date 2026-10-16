@@ -1,4 +1,4 @@
-import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper } from "@io-app/design-system";
 import { Dimensions, Platform, StyleSheet, View } from "react-native";
 import Animated, {
   SharedValue,
@@ -8,6 +8,7 @@ import Animated, {
   withSpring,
   WithSpringConfig
 } from "react-native-reanimated";
+
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 
 const CARDS = [
@@ -55,22 +56,22 @@ export const DSItwBrandExploration = () => {
         }}
       />
       <FocusAwareStatusBar
-        barStyle={"dark-content"}
         backgroundColor={SCREEN_BGs.hero}
+        barStyle={"dark-content"}
       />
       <Animated.ScrollView
-        ref={scrollRef}
-        style={styles.container}
-        showsVerticalScrollIndicator={false}
         contentContainerStyle={{ backgroundColor: SCREEN_BGs.hero }}
+        ref={scrollRef}
+        showsVerticalScrollIndicator={false}
+        style={styles.container}
       >
         <View style={styles.heroSection}>
           <View style={styles.cardsContainer}>
             {cardsWithBuffer.map((card, index) => (
               <Card
-                key={card.id}
                 color={card.color}
                 index={index}
+                key={card.id}
                 scrollOffset={scrollOffset}
                 totalCards={cardsWithBuffer.length}
               />
@@ -98,8 +99,8 @@ export const DSItwBrandExploration = () => {
 interface CardProps {
   color: string;
   index: number;
-  totalCards: number;
   scrollOffset: SharedValue<number>;
+  totalCards: number;
 }
 
 const Card = ({ color, index, scrollOffset, totalCards }: CardProps) => {

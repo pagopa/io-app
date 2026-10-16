@@ -1,10 +1,11 @@
+import { EnableableFunctionsEnum } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+
 import { CreditCardPaymentMethod, PaymentMethod } from "../../types/pagopa";
 import {
   hasPaymentFeature,
   isDisabledToPay,
   isEnabledToPay
 } from "../paymentMethodCapabilities";
-import { EnableableFunctionsEnum } from "../../../definitions/pagopa/EnableableFunctions";
 
 const aCreditCard = {
   kind: "CreditCard",
@@ -21,12 +22,12 @@ const paymentMethod = {
 const testCases: ReadonlyArray<
   [
     {
-      pm: PaymentMethod;
       expected: {
         hasPaymentFeatureEnabled: boolean;
-        isEnabledToPay: boolean;
         isDisabledToPay: boolean;
+        isEnabledToPay: boolean;
       };
+      pm: PaymentMethod;
     }
   ]
 > = [

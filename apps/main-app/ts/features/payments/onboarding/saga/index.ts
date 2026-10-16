@@ -6,11 +6,12 @@ import {
   paymentsOnboardingGetMethodsAction,
   paymentsStartOnboardingAction
 } from "../store/actions";
-import { handleStartWalletOnboarding } from "./handleStartWalletOnboarding";
 import { handleGetPaymentMethods } from "./handleGetPaymentMethods";
+import { handleStartWalletOnboarding } from "./handleStartWalletOnboarding";
 
 /**
  * Handle Wallet onboarding requests
+ *
  * @param bearerToken
  */
 export function* watchPaymentsOnboardingSaga(

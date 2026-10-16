@@ -1,5 +1,6 @@
 import * as ioCrypto from "@pagopa/io-react-native-crypto";
 import { expectSaga } from "redux-saga-test-plan";
+
 import { walletRemoveCards } from "../../../../wallet/store/actions/cards";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
@@ -40,7 +41,11 @@ const baseCredential: CredentialMetadata = {
 const makeState = (credentials: Record<string, CredentialMetadata>) => ({
   features: {
     itWallet: {
-      credentials: { credentials }
+      credentials: {
+        credentials: Object.values(credentials).reduce<
+          Record<string, CredentialMetadata>
+        >((acc, c) => ({ ...acc, [c.credentialId]: c }), {})
+      }
     }
   }
 });
@@ -102,7 +107,7 @@ describe("handleItwCredentialsRemoveByTypeSaga", () => {
         expect(mockTrackRemoveFailed).toHaveBeenCalledWith({
           credential_ids: [credential.credentialId],
           reason: "vault error"
-        });
+        }); // tracks credentialIds, not vault ids
         expect(mockDeleteKey).not.toHaveBeenCalled();
       });
   });

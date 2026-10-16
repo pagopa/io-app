@@ -1,6 +1,7 @@
-import { ListItemInfo } from "@pagopa/io-app-design-system";
-import { Alert } from "react-native";
+import { ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
+import { Alert } from "react-native";
+
 import { IOScrollViewWithListItems } from "../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
@@ -36,11 +37,6 @@ export const DSIOScrollViewWithListItems = () => {
 
   return (
     <IOScrollViewWithListItems
-      isHeaderVisible={true}
-      title={I18n.t("authentication.cie.nfc.title")}
-      subtitle={I18n.t("authentication.cie.nfc.subtitle")}
-      listItemHeaderLabel={I18n.t("authentication.cie.nfc.listItemTitle")}
-      renderItems={renderItems}
       actions={{
         type: "TwoButtons",
         primary: {
@@ -52,6 +48,11 @@ export const DSIOScrollViewWithListItems = () => {
           onPress: onButtonPress
         }
       }}
+      isHeaderVisible={true}
+      listItemHeaderLabel={I18n.t("authentication.cie.nfc.listItemTitle")}
+      renderItems={renderItems}
+      subtitle={I18n.t("authentication.cie.nfc.subtitle")}
+      title={I18n.t("authentication.cie.nfc.title")}
     />
   );
 };

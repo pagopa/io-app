@@ -1,15 +1,16 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import _ from "lodash";
 import MockDate from "mockdate";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { createMockService } from "../../../__mocks__/favouriteServicesMocks";
 import {
   addFavouriteServiceSuccess,
   removeFavouriteService
 } from "../../actions";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { createMockService } from "../../../__mocks__/favouriteServicesMocks";
-import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 
 const mockedDate = Date.now();
 MockDate.set(mockedDate);

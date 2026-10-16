@@ -1,20 +1,22 @@
 /**
- * this state / reducer represents and handles all those data should be kept across multiple users sessions
+ * This state / reducer represents and handles all those data should be kept
+ * across multiple users sessions
  */
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { isActionOf } from "typesafe-actions";
-import { createSelector } from "reselect";
-import * as O from "fp-ts/lib/Option";
-import sha from "sha.js";
 import { pipe } from "fp-ts/lib/function";
-import { Action } from "../actions/types";
+import * as O from "fp-ts/lib/Option";
+import { createSelector } from "reselect";
+import sha from "sha.js";
+import { isActionOf } from "typesafe-actions";
+
 import { setProfileHashedFiscalCode } from "../actions/crossSessions";
+import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
-type HashedFiscalCode = NonEmptyString | undefined;
 export type CrossSessionsState = {
   hashedFiscalCode: HashedFiscalCode;
 };
+type HashedFiscalCode = NonEmptyString | undefined;
 
 const INITIAL_STATE: CrossSessionsState = {
   hashedFiscalCode: undefined
@@ -42,8 +44,9 @@ export const hashedProfileFiscalCodeSelector = (
 ): HashedFiscalCode => state.crossSessions.hashedFiscalCode;
 
 /**
- * return true if the given fiscal code is different from the hashed stored one, false otherwise
- * if there is no stored hashed fiscal code it returns undefined (cant say if they are different)
+ * Return true if the given fiscal code is different from the hashed stored one,
+ * false otherwise if there is no stored hashed fiscal code it returns undefined
+ * (cant say if they are different)
  */
 export const isDifferentFiscalCodeSelector = (
   state: GlobalState,

@@ -1,4 +1,5 @@
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 
 export const LoadingOverlay = ({ onCancel }: { onCancel: () => void }) => (

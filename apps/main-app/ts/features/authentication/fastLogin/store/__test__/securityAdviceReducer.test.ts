@@ -1,13 +1,13 @@
-import {
-  INITIAL_STATE,
-  SecurityAdviceAcknowledgedState,
-  testableSecurityAdviceAcknowledgedReducer
-} from "../reducers/securityAdviceReducer";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import {
   setSecurityAdviceAcknowledged,
   setSecurityAdviceReadyToShow
 } from "../actions/securityAdviceActions";
+import {
+  INITIAL_STATE,
+  SecurityAdviceAcknowledgedState,
+  testableSecurityAdviceAcknowledgedReducer
+} from "../reducers/securityAdviceReducer";
 
 describe("securityAdviceAcknowledgedReducer", () => {
   if (!testableSecurityAdviceAcknowledgedReducer) {

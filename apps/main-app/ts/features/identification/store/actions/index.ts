@@ -6,26 +6,26 @@ import {
 
 import { PinString } from "../../../../types/PinString";
 import {
-  IdentificationCancelData,
   IdentificationBackActionType,
+  IdentificationCancelData,
   IdentificationGenericData,
   IdentificationSuccessData
 } from "../reducers";
 
 /**
- * An action dispatched by the screen.
- * The identification saga will intercept it and enrich with the current unlock code.
+ * An action dispatched by the screen. The identification saga will intercept it
+ * and enrich with the current unlock code.
  */
 export const identificationRequest = createAction(
   "IDENTIFICATION_REQUEST",
   resolve =>
     (
-      canResetPin: boolean = true,
-      isValidatingTask: boolean = false,
+      canResetPin = true,
+      isValidatingTask = false,
       identificationGenericData?: IdentificationGenericData,
       identificationCancelData?: IdentificationCancelData,
       identificationSuccessData?: IdentificationSuccessData,
-      shufflePad: boolean = false,
+      shufflePad = false,
       identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
     ) =>
       resolve({
@@ -39,20 +39,18 @@ export const identificationRequest = createAction(
       })
 );
 
-/**
- * Action dispatched internally by the identification saga to start the process.
- */
+/** Action dispatched internally by the identification saga to start the process. */
 export const identificationStart = createAction(
   "IDENTIFICATION_START",
   resolve =>
     (
       pin: PinString,
-      canResetPin: boolean = true,
-      isValidatingTask: boolean = false,
+      canResetPin = true,
+      isValidatingTask = false,
       identificationGenericData?: IdentificationGenericData,
       identificationCancelData?: IdentificationCancelData,
       identificationSuccessData?: IdentificationSuccessData,
-      shufflePad: boolean = false,
+      shufflePad = false,
       identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
     ) =>
       resolve({
@@ -82,12 +80,12 @@ export const identificationHideLockModal = createAction(
 );
 
 export type IdentificationActions =
-  | ActionType<typeof identificationStart>
-  | ActionType<typeof identificationRequest>
   | ActionType<typeof identificationCancel>
-  | ActionType<typeof identificationSuccess>
   | ActionType<typeof identificationFailure>
-  | ActionType<typeof identificationPinReset>
   | ActionType<typeof identificationForceLogout>
+  | ActionType<typeof identificationHideLockModal>
+  | ActionType<typeof identificationPinReset>
+  | ActionType<typeof identificationRequest>
   | ActionType<typeof identificationReset>
-  | ActionType<typeof identificationHideLockModal>;
+  | ActionType<typeof identificationStart>
+  | ActionType<typeof identificationSuccess>;

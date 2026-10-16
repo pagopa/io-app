@@ -1,5 +1,6 @@
 import { takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
+
 import { restartCleanApplication } from "../../../../../sagas/commons";
 import { sessionExpired } from "../../store/actions";
 import { watchForceLogoutSaga } from "../watchForceLogoutSaga";

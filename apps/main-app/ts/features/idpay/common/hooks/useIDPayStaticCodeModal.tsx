@@ -1,19 +1,18 @@
+import { TransactionBarCodeResponse } from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeResponse";
+import { TransactionErrorDTO } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
 import {
   Body,
-  bodyFontSize,
   ContentWrapper,
   H2,
-  h2FontSize,
-  h3FontSize,
-  h3LineHeight,
   Icon,
   IOButton,
   IOColors,
   IOSkeleton,
   IOText,
+  IOTypography,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { flow, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -21,8 +20,7 @@ import I18n from "i18next";
 import { JSX } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
-import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
-import { TransactionErrorDTO } from "../../../../../definitions/idpay/TransactionErrorDTO";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -33,15 +31,15 @@ import {
   trackIDPayStaticCodeGenerationSuccess
 } from "../analytics";
 
+type IDPayFailureSupportModal = {
+  bottomSheet: JSX.Element;
+  present: () => void;
+};
+
 type Props = {
   initiativeId: string;
   initiativeName: string;
   onDismiss: () => void;
-};
-
-type IDPayFailureSupportModal = {
-  bottomSheet: JSX.Element;
-  present: () => void;
 };
 
 export const useIDPayStaticCodeModal = (
@@ -68,36 +66,36 @@ export const useIDPayStaticCodeModal = (
   const StaticCodeSkeleton = () => (
     <View testID="idpay-static-code-skeleton">
       <IOSkeleton
+        height={IOTypography.h2.size}
+        radius={4}
         shape="rectangle"
         width="80%"
-        height={h2FontSize}
-        radius={4}
       />
       <VSpacer size={16} />
       <IOSkeleton
+        height={IOTypography.body.size}
+        radius={4}
         shape="rectangle"
         width="100%"
-        height={bodyFontSize}
-        radius={4}
       />
       <VSpacer size={8} />
       <IOSkeleton
+        height={IOTypography.body.size}
+        radius={4}
         shape="rectangle"
         width="75%"
-        height={bodyFontSize}
-        radius={4}
       />
       <VSpacer size={24} />
       <View style={styles.barcodeContainer}>
         <IconPlaceholder />
-        <IOSkeleton shape="rectangle" width="100%" height={120} radius={4} />
+        <IOSkeleton height={120} radius={4} shape="rectangle" width="100%" />
         <VSpacer size={12} />
         <View style={{ alignItems: "center" }}>
           <IOSkeleton
+            height={IOTypography.h3.size}
+            radius={4}
             shape="rectangle"
             width="50%"
-            height={h3FontSize}
-            radius={4}
           />
         </View>
       </View>
@@ -128,8 +126,8 @@ export const useIDPayStaticCodeModal = (
             <IOText
               color={theme["textBody-default"]}
               font="FiraCode"
-              size={h3FontSize}
-              lineHeight={h3LineHeight}
+              lineHeight={IOTypography.h3.lineHeight}
+              size={IOTypography.h3.size}
               weight="Medium"
             >
               {barcode.trxCode}
@@ -203,7 +201,6 @@ export const useIDPayStaticCodeModal = (
           <ContentWrapper>
             <IOButton
               fullWidth
-              variant="solid"
               label={I18n.t(
                 "idpay.initiative.beneficiaryDetails.staticCodeModal.footer"
               )}
@@ -214,6 +211,7 @@ export const useIDPayStaticCodeModal = (
                 });
                 clipboardSetStringWithFeedback(barcode.trxCode);
               }}
+              variant="solid"
             />
             <VSpacer size={32} />
           </ContentWrapper>

@@ -1,8 +1,9 @@
 /* eslint-disable functional/no-let */
-import { BackHandler } from "react-native";
-import { renderHook, waitFor } from "@testing-library/react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { renderHook, waitFor } from "@testing-library/react-native";
 import { PropsWithChildren } from "react";
+import { BackHandler } from "react-native";
+
 import { useHardwareBackButtonWhenFocused } from "../useHardwareBackButton";
 
 const Wrapper = ({ children }: PropsWithChildren) => (

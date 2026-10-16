@@ -4,70 +4,49 @@ import {
   RadioGroup,
   RadioItem,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useState } from "react";
 import { View } from "react-native";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwCredentialsAllSelector } from "../../credentials/store/selectors";
-import { itwCredentialsStore } from "../../credentials/store/actions";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { selectItwEnv } from "../../common/store/selectors/environment";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { ItwCredentialStatus } from "../../common/utils/itwTypesUtils";
+import { itwCredentialsStore } from "../../credentials/store/actions";
 import {
-  itwDebugClearCredentialStatusOverride,
-  itwDebugSaveOriginalCredentials,
-  itwDebugSetCredentialStatusOverride
-} from "../store/actions";
-import {
-  itwDebugCredentialStatusOverridesSelector,
-  itwDebugSavedCredentialsSelector
-} from "../store/selectors";
+  itwCredentialsAllSelector,
+  itwCredentialsByTypeSelector
+} from "../../credentials/store/selectors";
 import {
   applyStatusToCredential,
   getAvailableStatusOverrides
 } from "../utils/itwDebugCredentialUtils";
-import { selectItwEnv } from "../../common/store/selectors/environment";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-
-const NO_OVERRIDE = "no_override" as const;
-type StatusOption = ItwCredentialStatus | typeof NO_OVERRIDE;
 
 type CredentialStatusPickerProps = {
   credentialType: string;
-  currentOverride: ItwCredentialStatus | undefined;
+  currentStatus: ItwCredentialStatus;
   onSelect: (status: ItwCredentialStatus) => void;
-  onReset: () => void;
 };
 
 const CredentialStatusPicker = ({
   credentialType,
-  currentOverride,
-  onSelect,
-  onReset
+  currentStatus,
+  onSelect
 }: CredentialStatusPickerProps) => {
-  const noOverrideItem: RadioItem<StatusOption> = {
-    id: NO_OVERRIDE,
-    value: "No override"
-  };
-  const statusItems: ReadonlyArray<RadioItem<StatusOption>> = [
-    noOverrideItem,
-    ...getAvailableStatusOverrides(credentialType).map(s => ({
-      id: s,
-      value: s
-    }))
-  ];
+  const statusItems: ReadonlyArray<RadioItem<ItwCredentialStatus>> =
+    getAvailableStatusOverrides(credentialType).map(status => ({
+      id: status,
+      value: status
+    }));
 
   return (
     <View>
-      <RadioGroup<StatusOption>
-        type="radioListItem"
+      <RadioGroup<ItwCredentialStatus>
         items={statusItems}
-        selectedItem={currentOverride ?? NO_OVERRIDE}
-        onPress={status => {
-          if (status === NO_OVERRIDE) {
-            onReset();
-          } else {
-            onSelect(status);
-          }
-        }}
+        onPress={onSelect}
+        selectedItem={currentStatus}
+        type="radioListItem"
       />
       <VSpacer size={16} />
     </View>
@@ -77,66 +56,55 @@ const CredentialStatusPicker = ({
 export const ItwCredentialStatusOverrideSection = () => {
   const dispatch = useIODispatch();
   const env = useIOSelector(selectItwEnv);
-  const credentialOverrides = useIOSelector(
-    itwDebugCredentialStatusOverridesSelector
-  );
-  const savedCredentials = useIOSelector(itwDebugSavedCredentialsSelector);
   const allCredentials = useIOSelector(itwCredentialsAllSelector);
+  const credentialsByType = useIOSelector(itwCredentialsByTypeSelector);
   const [selectedCredentialType, setSelectedCredentialType] = useState<
     string | undefined
   >(undefined);
-
-  const { present, bottomSheet } = useIOBottomSheetModal({
-    title: selectedCredentialType ?? "",
-    component: selectedCredentialType ? (
-      <CredentialStatusPicker
-        credentialType={selectedCredentialType}
-        currentOverride={credentialOverrides[selectedCredentialType]}
-        onSelect={status =>
-          applyCredentialOverride(selectedCredentialType, status)
-        }
-        onReset={() => resetCredentialOverride(selectedCredentialType)}
-      />
-    ) : (
-      <View />
-    )
-  });
-
-  if (env !== "pre" || Object.keys(allCredentials).length === 0) {
-    return null;
-  }
-
-  const ensureOriginalsAreSaved = () => {
-    if (savedCredentials === undefined) {
-      dispatch(itwDebugSaveOriginalCredentials(Object.values(allCredentials)));
-    }
-  };
 
   const applyCredentialOverride = (
     credentialType: string,
     status: ItwCredentialStatus
   ) => {
-    const credential = allCredentials[credentialType];
-    if (credential === undefined) {
+    const credentials = Object.values(credentialsByType[credentialType] ?? {});
+    if (credentials.length === 0) {
       return;
     }
-    ensureOriginalsAreSaved();
+
     dispatch(
-      itwCredentialsStore([applyStatusToCredential(credential, status)])
+      itwCredentialsStore(
+        credentials.map(credential =>
+          applyStatusToCredential(credential, status)
+        )
+      )
     );
-    dispatch(itwDebugSetCredentialStatusOverride({ credentialType, status }));
   };
 
-  const resetCredentialOverride = (credentialType: string) => {
-    const originals = savedCredentials ?? {};
-    const original = Object.values(originals).find(
-      c => c.credentialType === credentialType
-    );
-    if (original !== undefined) {
-      dispatch(itwCredentialsStore([original]));
-    }
-    dispatch(itwDebugClearCredentialStatusOverride({ credentialType }));
-  };
+  const selectedCredential =
+    selectedCredentialType === undefined
+      ? undefined
+      : allCredentials[selectedCredentialType];
+
+  const { present, bottomSheet } = useIOBottomSheetModal({
+    title: selectedCredentialType ?? "",
+    component:
+      selectedCredentialType !== undefined &&
+      selectedCredential !== undefined ? (
+        <CredentialStatusPicker
+          credentialType={selectedCredentialType}
+          currentStatus={getCredentialStatus(selectedCredential)}
+          onSelect={status =>
+            applyCredentialOverride(selectedCredentialType, status)
+          }
+        />
+      ) : (
+        <View />
+      )
+  });
+
+  if (env !== "pre" || Object.keys(allCredentials).length === 0) {
+    return null;
+  }
 
   const handlePress = (credentialType: string) => {
     setSelectedCredentialType(credentialType);
@@ -147,16 +115,12 @@ export const ItwCredentialStatusOverrideSection = () => {
     <>
       <View>
         <ListItemHeader label="Status Override (PRE only)" />
-        {Object.keys(allCredentials).map(credentialType => (
+        {Object.entries(allCredentials).map(([credentialType, credential]) => (
           <ListItemNav
+            description={getCredentialStatus(credential)}
             key={credentialType}
-            value={credentialType}
-            description={
-              credentialOverrides[credentialType]
-                ? `Active override: ${credentialOverrides[credentialType]}`
-                : "No override"
-            }
             onPress={() => handlePress(credentialType)}
+            value={credentialType}
           />
         ))}
       </View>

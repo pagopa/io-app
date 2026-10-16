@@ -1,9 +1,10 @@
+import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import MockDate from "mockdate";
-import { Store, createStore } from "redux";
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
-import { StatusEnum } from "../../../../../../definitions/cgn/CardActivated";
+import { createStore, Store } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { backendStatusLoadSuccess } from "../../../../../store/actions/backendStatus";
 import { appReducer } from "../../../../../store/reducers";

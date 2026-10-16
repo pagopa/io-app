@@ -1,16 +1,17 @@
-import { Alert } from "react-native";
-import { useCallback } from "react";
 import I18n from "i18next";
-import { abortOnboarding } from "../store/actions";
+import { useCallback } from "react";
+import { Alert } from "react-native";
+
 import { useIODispatch } from "../../../store/hooks";
+import { abortOnboarding } from "../store/actions";
 
 type OnboardingAbortAlertUtils = {
   showAlert: (callback?: () => void) => void;
 };
 
 /**
- * Return an object used to manage an alert
- * that will trigger the `abortOnboarding` action.
+ * Return an object used to manage an alert that will trigger the
+ * `abortOnboarding` action.
  */
 export const useOnboardingAbortAlert = (): OnboardingAbortAlertUtils => {
   const dispatch = useIODispatch();

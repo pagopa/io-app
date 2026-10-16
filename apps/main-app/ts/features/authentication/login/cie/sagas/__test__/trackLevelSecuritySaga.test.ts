@@ -1,13 +1,15 @@
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
+import { SpidLevelEnum } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
+import * as O from "fp-ts/Option";
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga/effects";
-import * as O from "fp-ts/Option";
-import { shouldTrackLevelSecurityMismatchSaga } from "../trackLevelSecuritySaga";
-import { cieIDSelectedSecurityLevelSelector } from "../../store/selectors";
+
 import { idpSelector } from "../../../../common/store/selectors";
+import { AUTH_LEVELS } from "../../../../common/utils";
 import { IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 import { trackCieIdSecurityLevelMismatch } from "../../analytics";
-import { PublicSession } from "../../../../../../../definitions/session_manager/PublicSession";
-import { SpidLevelEnum } from "../../../../../../../definitions/session_manager/SpidLevel";
+import { cieIDSelectedSecurityLevelSelector } from "../../store/selectors";
+import { shouldTrackLevelSecurityMismatchSaga } from "../trackLevelSecuritySaga";
 
 jest.mock("../../analytics", () => ({
   trackCieIdSecurityLevelMismatch: jest.fn()
@@ -39,9 +41,9 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
   });
 
   it("should track mismatch if spidLevel does not include selectedSecurityLevel and idp is cieid", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.some(mockSession))
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, mockSession)
       .provide([
-        [select(cieIDSelectedSecurityLevelSelector), "SpidL3"],
+        [select(cieIDSelectedSecurityLevelSelector), AUTH_LEVELS.L3],
         [select(idpSelector), O.some(cieid)]
       ])
       .run()
@@ -50,9 +52,9 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
       }));
 
   it("should NOT track if spidLevel includes selectedSecurityLevel", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.some(mockSession))
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, mockSession)
       .provide([
-        [select(cieIDSelectedSecurityLevelSelector), "SpidL2"],
+        [select(cieIDSelectedSecurityLevelSelector), AUTH_LEVELS.L2],
         [select(idpSelector), O.some(cieid)]
       ])
       .run()
@@ -61,9 +63,9 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
       }));
 
   it("should NOT track if idp is not cieid", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.some(mockSession))
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, mockSession)
       .provide([
-        [select(cieIDSelectedSecurityLevelSelector), "SpidL3"],
+        [select(cieIDSelectedSecurityLevelSelector), AUTH_LEVELS.L3],
         [select(idpSelector), O.some(nonCieIdp)]
       ])
       .run()
@@ -72,7 +74,7 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
       }));
 
   it("should NOT track if selectedSecurityLevel is undefined", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.some(mockSession))
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, mockSession)
       .provide([
         [select(cieIDSelectedSecurityLevelSelector), undefined],
         [select(idpSelector), O.some(cieid)]
@@ -83,9 +85,9 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
       }));
 
   it("should NOT track if session is none", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.none)
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, undefined)
       .provide([
-        [select(cieIDSelectedSecurityLevelSelector), "SpidL3"],
+        [select(cieIDSelectedSecurityLevelSelector), AUTH_LEVELS.L3],
         [select(idpSelector), O.some(cieid)]
       ])
       .run()
@@ -94,9 +96,9 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
       }));
 
   it("should NOT track if idp is none", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.some(mockSession))
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, mockSession)
       .provide([
-        [select(cieIDSelectedSecurityLevelSelector), "SpidL3"],
+        [select(cieIDSelectedSecurityLevelSelector), AUTH_LEVELS.L3],
         [select(idpSelector), O.none]
       ])
       .run()

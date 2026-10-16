@@ -1,6 +1,7 @@
 import I18n from "i18next";
 import { useLayoutEffect, useMemo } from "react";
 import { Linking } from "react-native";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
@@ -13,17 +14,17 @@ import {
   selectCredentialType
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { CieWarningType } from "../utils/types";
 import {
   trackItwFallbackL2Flow,
   trackItwFallbackL2FlowExit,
   trackItwFallbackL2FlowStart,
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
+import { CieWarningType } from "../utils/types";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
-  type: CieWarningType;
   routeName: string;
+  type: CieWarningType;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -54,10 +55,73 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
     [isL3FeaturesEnabled, credentialType]
   );
 
-  const sectionKey = isCieRequired ? "ko-no-cie" : "l2-fallback";
+  const copy = useMemo(() => {
+    if (type === "card" && isCieRequired) {
+      return {
+        primaryAction: I18n.t(
+          "features.itWallet.identification.cie.warning.card.ko-no-cie.primaryAction"
+        ),
+        secondaryAction: I18n.t(
+          "features.itWallet.identification.cie.warning.card.ko-no-cie.secondaryAction"
+        ),
+        subtitle: I18n.t(
+          "features.itWallet.identification.cie.warning.card.ko-no-cie.subtitle"
+        ),
+        title: I18n.t(
+          "features.itWallet.identification.cie.warning.card.ko-no-cie.title"
+        )
+      };
+    }
+    if (type === "card" && !isCieRequired) {
+      return {
+        primaryAction: I18n.t(
+          "features.itWallet.identification.cie.warning.card.l2-fallback.primaryAction"
+        ),
+        secondaryAction: I18n.t(
+          "features.itWallet.identification.cie.warning.card.l2-fallback.secondaryAction"
+        ),
+        subtitle: I18n.t(
+          "features.itWallet.identification.cie.warning.card.l2-fallback.subtitle"
+        ),
+        title: I18n.t(
+          "features.itWallet.identification.cie.warning.card.l2-fallback.title"
+        )
+      };
+    }
+    if (type === "pin" && isCieRequired) {
+      return {
+        primaryAction: I18n.t(
+          "features.itWallet.identification.cie.warning.pin.ko-no-cie.primaryAction"
+        ),
+        secondaryAction: I18n.t(
+          "features.itWallet.identification.cie.warning.pin.ko-no-cie.secondaryAction"
+        ),
+        subtitle: I18n.t(
+          "features.itWallet.identification.cie.warning.pin.ko-no-cie.subtitle"
+        ),
+        title: I18n.t(
+          "features.itWallet.identification.cie.warning.pin.ko-no-cie.title"
+        )
+      };
+    }
+    return {
+      primaryAction: I18n.t(
+        "features.itWallet.identification.cie.warning.pin.l2-fallback.primaryAction"
+      ),
+      secondaryAction: I18n.t(
+        "features.itWallet.identification.cie.warning.pin.l2-fallback.secondaryAction"
+      ),
+      subtitle: I18n.t(
+        "features.itWallet.identification.cie.warning.pin.l2-fallback.subtitle"
+      ),
+      title: I18n.t(
+        "features.itWallet.identification.cie.warning.pin.l2-fallback.title"
+      )
+    };
+  }, [type, isCieRequired]);
 
   useLayoutEffect(() => {
-    if (sectionKey === "ko-no-cie") {
+    if (isCieRequired) {
       trackItwUserWithoutL3Requirements({
         screen_name: routeName,
         reason,
@@ -68,41 +132,36 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
         fallback_reason: "user_without_cie"
       });
     }
-  }, [reason, routeName, sectionKey]);
+  }, [reason, routeName, isCieRequired]);
 
   const handlePrimaryActionPress = () => {
-    if (sectionKey === "ko-no-cie") {
+    if (isCieRequired) {
       trackItwKoStateAction({
         reason,
         cta_category: "custom_1",
-        cta_id: I18n.t(
-          `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
-        )
+        cta_id: copy.primaryAction
       });
+      void Linking.openURL(cieFaqUrls[type]);
     } else {
       trackItwFallbackL2FlowStart({
         fallback_reason: "user_without_cie"
       });
-    }
-    if (isCieRequired) {
-      void Linking.openURL(cieFaqUrls[type]);
-    } else if (credentialType) {
-      credentialMachineRef.send({
-        type: "select-credential",
-        credentialType,
-        mode: "issuance"
-      });
+      if (credentialType) {
+        credentialMachineRef.send({
+          type: "select-credential",
+          credentialType,
+          mode: "issuance"
+        });
+      }
     }
   };
 
   const handleSecondaryActionPress = () => {
-    if (sectionKey === "ko-no-cie") {
+    if (isCieRequired) {
       trackItwKoStateAction({
         reason,
         cta_category: "custom_2",
-        cta_id: I18n.t(
-          `features.itWallet.identification.cie.warning.${type}.${sectionKey}.secondaryAction`
-        )
+        cta_id: copy.secondaryAction
       });
     } else {
       trackItwFallbackL2FlowExit({
@@ -121,26 +180,18 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
 
   return (
     <OperationResultScreenContent
-      title={I18n.t(
-        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.title`
-      )}
-      subtitle={I18n.t(
-        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.subtitle`
-      )}
-      pictogram={isCieRequired ? "attention" : "cardAdd"}
       action={{
-        label: I18n.t(
-          `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
-        ),
+        label: copy.primaryAction,
         onPress: handlePrimaryActionPress
       }}
+      isHeaderVisible={true}
+      pictogram={isCieRequired ? "attention" : "cardAdd"}
       secondaryAction={{
-        label: I18n.t(
-          `features.itWallet.identification.cie.warning.${type}.${sectionKey}.secondaryAction`
-        ),
+        label: copy.secondaryAction,
         onPress: handleSecondaryActionPress
       }}
-      isHeaderVisible={true}
+      subtitle={copy.subtitle}
+      title={copy.title}
     />
   );
 };

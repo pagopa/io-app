@@ -1,5 +1,6 @@
+import { SpidIdp as GeneratedSpidIdpType } from "@io-app/api-types/generated/definitions/content/SpidIdp";
+
 import { fromGeneratedToLocalSpidIdp } from "../idps";
-import { SpidIdp as GeneratedSpidIdpType } from "../../../definitions/content/SpidIdp";
 
 describe("IDPS utils", () => {
   describe("fromGeneratedToLocalSpidIdp", () => {

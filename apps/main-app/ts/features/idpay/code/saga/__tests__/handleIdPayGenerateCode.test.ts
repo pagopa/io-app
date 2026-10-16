@@ -1,6 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
+
 import { getGenericError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withThirdPartyRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
@@ -28,7 +29,9 @@ describe("handleIdPayGenerateCode", () => {
             bearerAuth: tBearerToken,
             initiativeId: tInitiativeId
           }),
-          { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
+          {
+            action: idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          }
         )
         .next(E.right({ status: 200, value: { idpayCode: tIdPayCode } }))
         .put(idPayGenerateCode.success({ idpayCode: tIdPayCode }))
@@ -54,7 +57,9 @@ describe("handleIdPayGenerateCode", () => {
             bearerAuth: tBearerToken,
             initiativeId: tInitiativeId
           }),
-          { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
+          {
+            action: idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          }
         )
         .next(E.right({ status: 500 }))
         .put(
@@ -84,7 +89,9 @@ describe("handleIdPayGenerateCode", () => {
             bearerAuth: tBearerToken,
             initiativeId: tInitiativeId
           }),
-          { action: idPayGenerateCode.request({ initiativeId: tInitiativeId }) }
+          {
+            action: idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          }
         )
         .next(E.left([]))
         .put(

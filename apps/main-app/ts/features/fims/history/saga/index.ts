@@ -1,9 +1,10 @@
 import { call, takeLatest } from "typed-redux-saga/macro";
+
+import { apiUrlPrefix } from "../../../../config";
 import { createFimsClient } from "../api/client";
 import { fimsHistoryExport, fimsHistoryGet } from "../store/actions";
-import { apiUrlPrefix } from "../../../../config";
-import { handleGetFimsHistorySaga } from "./handleGetFimsHistorySaga";
 import { handleExportFimsHistorySaga } from "./handleExportFimsHistorySaga";
+import { handleGetFimsHistorySaga } from "./handleGetFimsHistorySaga";
 
 export function* watchFimsHistorySaga(bearerToken: string) {
   const client = yield* call(createFimsClient, apiUrlPrefix);

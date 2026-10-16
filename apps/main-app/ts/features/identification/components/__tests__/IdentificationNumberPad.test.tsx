@@ -1,5 +1,6 @@
-import { render, fireEvent } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import { ComponentProps } from "react";
+
 import { IdentificationNumberPad } from "../IdentificationNumberPad";
 
 describe("IdentificationNumberPad", () => {

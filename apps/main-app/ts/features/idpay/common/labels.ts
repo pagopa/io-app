@@ -1,22 +1,30 @@
-import * as O from "fp-ts/lib/Option";
+import { StatusEnum } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { StatusEnum } from "../../../../definitions/idpay/InstrumentDTO";
 
 type InstrumentStatusLabels = {
   [key in StatusEnum]: string;
 };
 
-const instrumentStatusLabels: InstrumentStatusLabels = {
-  [StatusEnum.ACTIVE]: I18n.t(
-    "idpay.configuration.instruments.instrumentStatus.active"
-  ),
-  [StatusEnum.PENDING_ENROLLMENT_REQUEST]: I18n.t(
-    "idpay.configuration.instruments.instrumentStatus.pendingActivation"
-  ),
-  [StatusEnum.PENDING_DEACTIVATION_REQUEST]: I18n.t(
-    "idpay.configuration.instruments.instrumentStatus.pendingDeactivation"
-  )
+/**
+ * Resolves the label at call time, so it follows the language currently
+ * selected by the user instead of the one active when this module loaded.
+ */
+const getInstrumentStatusLabel = (status: StatusEnum): string => {
+  const instrumentStatusLabels: InstrumentStatusLabels = {
+    [StatusEnum.ACTIVE]: I18n.t(
+      "idpay.configuration.instruments.instrumentStatus.active"
+    ),
+    [StatusEnum.PENDING_ENROLLMENT_REQUEST]: I18n.t(
+      "idpay.configuration.instruments.instrumentStatus.pendingActivation"
+    ),
+    [StatusEnum.PENDING_DEACTIVATION_REQUEST]: I18n.t(
+      "idpay.configuration.instruments.instrumentStatus.pendingDeactivation"
+    )
+  };
+
+  return instrumentStatusLabels[status];
 };
 
 type OperationTypeLabels = {
@@ -44,4 +52,4 @@ export const getLabelForCircuitType = (circuitType: string | undefined) =>
     O.getOrElse(() => "-")
   );
 
-export { instrumentStatusLabels };
+export { getInstrumentStatusLabel };

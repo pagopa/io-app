@@ -1,13 +1,12 @@
 import {
+  hexToRgba,
   IOColors,
   IOSpacingScale,
   IOVisualCostants,
-  hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
-
+} from "@io-app/design-system";
+import { LinearGradient } from "expo-linear-gradient";
 import { ComponentProps, ReactElement, useState } from "react";
-
 import {
   ColorValue,
   LayoutChangeEvent,
@@ -17,27 +16,20 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import Animated, { AnimatedRef } from "react-native-reanimated";
 
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { useScrollHeaderAnimation } from "../../hooks/useScrollHeaderAnimation";
-import {
-  IOScrollView,
-  IOScrollViewActions,
-  renderActionButtons
-} from "./IOScrollView";
+import { IOScrollView, renderActionButtons } from "./IOScrollView";
 
-export type IOListViewActions = IOScrollViewActions;
-
-type IOListView<T> = ComponentProps<typeof IOScrollView> &
-  ComponentProps<typeof Animated.FlatList<T>> & {
-    data: Array<T>;
-    renderItem: (item: ListRenderItemInfo<T>) => ReactElement | null;
-    keyExtractor: ((item: T, index: number) => string) | undefined;
+type IOListView<T> = ComponentProps<typeof Animated.FlatList<T>> &
+  ComponentProps<typeof IOScrollView> & {
     animatedRef?: AnimatedRef<Animated.FlatList<T>>;
-    skeleton?: ReactElement;
+    data: Array<T>;
+    keyExtractor: ((item: T, index: number) => string) | undefined;
     loading?: boolean;
+    renderItem: (item: ListRenderItemInfo<T>) => null | ReactElement;
+    skeleton?: ReactElement;
   };
 
 /* Extended gradient area above the actions */
@@ -56,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   gradientContainer: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFill
   },
   buttonContainer: {
     paddingHorizontal: IOVisualCostants.appMarginDefault,
@@ -72,20 +64,30 @@ const styles = StyleSheet.create({
 });
 
 /**
- * The main scrollable container component.
- * It includes full support for custom headers and actions.
+ * The main scrollable container component. It includes full support for custom
+ * headers and actions.
  *
- * @param [headerConfig] Configuration for the header component. Use this only if you need to configure a custom header from scratch.
- * If you need the predefined configuration with default `Back (<)` and `Help (?)` buttons, use `useHeaderSecondLevel`
- * @param {IOListViewActions} [actions] Actions to be rendered at the bottom of the `FlatList`
- * @param [animatedRef] Ref generated through `useAnimatedRef` (used by `useFlatListOffset` to get the scroll position)
+ * @param [headerConfig] Configuration for the header component. Use this only
+ *   if you need to configure a custom header from scratch. If you need the
+ *   predefined configuration with default `Back (<)` and `Help (?)` buttons,
+ *   use `useHeaderSecondLevel`
+ * @param {IOListViewActions} [actions] Actions to be rendered at the bottom of
+ *   the `FlatList`
+ * @param [animatedRef] Ref generated through `useAnimatedRef` (used by
+ *   `useFlatListOffset` to get the scroll position)
  * @param {number} [snapOffset] Offset when you need to add a snap point
- * @param {boolean} [excludeSafeAreaMargins=false] Exclude safe area margins at the bottom of the `FlatList`
- * This is useful if you have a screen with a tab bar at the bottom, or if the bottom margin is already being managed
- * @param {boolean} [excludeEndContentMargin=false] Exclude the end content margin
- * @param {boolean} [includeContentMargins=true] Include horizontal screen margins
- * @param {boolean} [debugMode=false] Enable debug mode. Only for testing purposes
+ * @param {boolean} [excludeSafeAreaMargins=false] Exclude safe area margins at
+ *   the bottom of the `FlatList` This is useful if you have a screen with a tab
+ *   bar at the bottom, or if the bottom margin is already being managed.
+ *   Default is `false`
+ * @param {boolean} [excludeEndContentMargin=false] Exclude the end content
+ *   margin. Default is `false`
+ * @param {boolean} [includeContentMargins=true] Include horizontal screen
+ *   margins. Default is `true`
+ * @param {boolean} [debugMode=false] Enable debug mode. Only for testing
+ *   purposes. Default is `false`
  */
+// oxlint-disable-next-line complexity
 export const IOListView = <T,>({
   headerConfig,
   data,
@@ -108,7 +110,6 @@ export const IOListView = <T,>({
   ItemSeparatorComponent,
   testID,
   loading
-  // eslint-disable-next-line complexity
 }: IOListView<T>) => {
   const theme = useIOTheme();
 
@@ -156,40 +157,36 @@ export const IOListView = <T,>({
 
   return (
     <Animated.FlatList<T>
-      ListHeaderComponent={ListHeaderComponent}
-      ItemSeparatorComponent={ItemSeparatorComponent}
-      ref={animatedRef}
-      keyExtractor={keyExtractor}
+      centerContent={centerContent}
+      contentContainerStyle={[
+        {
+          paddingBottom: excludeEndContentMargin
+            ? 0
+            : actions
+              ? safeBottomAreaHeight
+              : bottomMargin + contentEndMargin,
+          paddingHorizontal: includeContentMargins
+            ? IOVisualCostants.appMarginDefault
+            : 0,
+          ...(contentContainerStyle || {})
+        },
+        centerContent ? styles.centerContentWrapper : {}
+      ]}
       data={data}
-      renderItem={item =>
-        // If the refresh control is active, show the skeleton (if present) instead of the content
-        loading || refreshControlProps?.refreshing
-          ? (skeleton ?? null)
-          : renderItem(item)
-      }
-      testID={testID}
-      onScroll={handleScroll}
+      decelerationRate="normal"
+      ItemSeparatorComponent={ItemSeparatorComponent}
+      keyExtractor={keyExtractor}
       ListEmptyComponent={
         (loading || refreshControlProps?.refreshing) && skeleton
           ? skeleton
           : ListEmptyComponent
       }
-      refreshing={refreshControlProps?.refreshing}
-      scrollEventThrottle={8}
-      snapToOffsets={
-        // If there is a refresh control, don't snap to offsets
-        // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
-        RefreshControlComponent ? undefined : [0, snapOffset ?? 0]
-      }
-      snapToEnd={false}
-      decelerationRate="normal"
-      refreshControl={RefreshControlComponent}
-      centerContent={centerContent}
       ListFooterComponent={
         <>
           {ListFooterComponent}
           {actions && (
             <View
+              pointerEvents="box-none"
               style={[
                 styles.gradientBottomActions,
                 {
@@ -197,17 +194,16 @@ export const IOListView = <T,>({
                   paddingBottom: bottomMargin
                 }
               ]}
-              pointerEvents="box-none"
               {...(testID && { testID: `${testID}-actions` })}
             >
               <Animated.View
+                pointerEvents="none"
                 style={[
                   styles.gradientContainer,
                   debugMode && {
                     backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
                   }
                 ]}
-                pointerEvents="none"
               >
                 <Animated.View
                   style={[
@@ -220,11 +216,13 @@ export const IOListView = <T,>({
                   ]}
                 >
                   <LinearGradient
+                    colors={
+                      colors as [ColorValue, ColorValue, ...Array<ColorValue>]
+                    }
+                    locations={locations as [number, number, ...Array<number>]}
                     style={{
                       height: gradientAreaHeight - safeBackgroundBlockHeight
                     }}
-                    locations={locations}
-                    colors={colors}
                   />
                 </Animated.View>
 
@@ -240,9 +238,9 @@ export const IOListView = <T,>({
                 />
               </Animated.View>
               <View
-                style={styles.buttonContainer}
                 onLayout={getActionBlockHeight}
                 pointerEvents="box-none"
+                style={styles.buttonContainer}
               >
                 {renderActionButtons(actions, extraBottomMargin)}
               </View>
@@ -250,20 +248,27 @@ export const IOListView = <T,>({
           )}
         </>
       }
-      contentContainerStyle={[
-        {
-          paddingBottom: excludeEndContentMargin
-            ? 0
-            : actions
-              ? safeBottomAreaHeight
-              : bottomMargin + contentEndMargin,
-          paddingHorizontal: includeContentMargins
-            ? IOVisualCostants.appMarginDefault
-            : 0,
-          ...(contentContainerStyle || {})
-        },
-        centerContent ? styles.centerContentWrapper : {}
-      ]}
+      ListHeaderComponent={ListHeaderComponent}
+      onScroll={handleScroll}
+      ref={animatedRef}
+      refreshControl={RefreshControlComponent}
+      refreshing={refreshControlProps?.refreshing}
+      renderItem={item =>
+        // If the refresh control is active, show the skeleton (if present) instead of the content
+        loading || refreshControlProps?.refreshing
+          ? (skeleton ?? null)
+          : renderItem(item)
+      }
+      scrollEventThrottle={8}
+      snapToEnd={false}
+      snapToOffsets={
+        // If there is a refresh control, don't snap to offsets
+        // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
+        RefreshControlComponent || snapOffset === undefined || snapOffset === 0
+          ? undefined
+          : [0, snapOffset]
+      }
+      testID={testID}
     />
   );
 };

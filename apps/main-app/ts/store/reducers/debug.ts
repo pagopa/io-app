@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+
 import {
   resetDebugData,
   setDebugData,
@@ -11,8 +12,8 @@ import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 type DebugState = Readonly<{
-  isDebugModeEnabled: boolean;
   debugData: Record<string, unknown>;
+  isDebugModeEnabled: boolean;
 }>;
 
 const INITIAL_STATE: DebugState = {
@@ -25,24 +26,6 @@ function debugReducer(
   action: Action
 ): DebugState {
   switch (action.type) {
-    case getType(setDebugModeEnabled):
-      return {
-        ...state,
-        isDebugModeEnabled: action.payload,
-        debugData: {}
-      };
-
-    /**
-     * Debug data to be displayed in DebugInfoOverlay
-     */
-    case getType(setDebugData):
-      return {
-        ...state,
-        debugData: {
-          ...state.debugData,
-          ...action.payload
-        }
-      };
     case getType(resetDebugData):
       return {
         ...state,
@@ -51,6 +34,22 @@ function debugReducer(
             ([key]) => !action.payload.includes(key)
           )
         )
+      };
+
+    /** Debug data to be displayed in DebugInfoOverlay */
+    case getType(setDebugData):
+      return {
+        ...state,
+        debugData: {
+          ...state.debugData,
+          ...action.payload
+        }
+      };
+    case getType(setDebugModeEnabled):
+      return {
+        ...state,
+        isDebugModeEnabled: action.payload,
+        debugData: {}
       };
   }
 
@@ -79,8 +78,8 @@ export const isDebugModeEnabledSelector = (state: GlobalState) =>
   state.debug.isDebugModeEnabled;
 
 /**
- * Selector that returns the debug data without the undefined values
- * avoiding to display empty values in the DebugInfoOverlay
+ * Selector that returns the debug data without the undefined values avoiding to
+ * display empty values in the DebugInfoOverlay
  */
 export const debugDataSelector = createSelector(
   (state: GlobalState) => state.debug.debugData,

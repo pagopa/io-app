@@ -1,14 +1,15 @@
-import { createStore } from "redux";
-import * as O from "fp-ts/lib/Option";
 import { fireEvent } from "@testing-library/react-native";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import * as IOHooks from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import * as IOHooks from "../../../../store/hooks";
 import * as useLollipopLoginSource from "../../../lollipop/hooks/useLollipopLoginSource";
-import * as activeSessionSelectors from "../store/selectors";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { AUTH_LEVELS } from "../../common/utils";
 import ActiveSessionIdpLoginScreen from "../screens/spid/ActiveSessionIdpLoginScreen";
+import * as activeSessionSelectors from "../store/selectors";
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -16,12 +17,13 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () => ({
       navigate: mockNavigate,
-      addListener: jest.fn(() => jest.fn())
+      replace: mockReplace
     })
   };
 });
 
 const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
 
 jest.mock("../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
@@ -37,7 +39,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
     jest
       .spyOn(useLollipopLoginSource, "useLollipopLoginSource")
       .mockReturnValue({
-        lollipopCheckStatus: { status: "none", url: O.none },
+        lollipopCheckStatus: { status: "none" },
         retryLollipopLogin: jest.fn(),
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
         webviewSource: { uri: "https://example.com/login" }
@@ -74,7 +76,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
     jest
       .spyOn(useLollipopLoginSource, "useLollipopLoginSource")
       .mockReturnValue({
-        lollipopCheckStatus: { status: "none", url: O.none },
+        lollipopCheckStatus: { status: "none" },
         retryLollipopLogin: jest.fn(),
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
         webviewSource: undefined
@@ -94,14 +96,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
     expect(getByTestId("loading-indicator")).toBeTruthy();
   });
 
-  it("should navigate to AuthErrorScreen when requestState is error", () => {
-    const mockReplace = jest.fn();
-    // eslint-disable-next-line functional/immutable-data
-    require("@react-navigation/native").useNavigation = () => ({
-      replace: mockReplace,
-      addListener: jest.fn(() => jest.fn())
-    });
-
+  it("should replace with AuthErrorScreen when requestState is error", () => {
     const { getByTestId } = renderComponent();
 
     const webview = getByTestId("webview-active-session-idp-login-screen");
@@ -109,11 +104,14 @@ describe("ActiveSessionIdpLoginScreen", () => {
       nativeEvent: { description: "error" }
     });
 
+    expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockReplace).toHaveBeenCalledWith(
-      AUTHENTICATION_ROUTES.MAIN,
-      expect.objectContaining({
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN
-      })
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: AUTH_LEVELS.L2
+      }
     );
   });
 });

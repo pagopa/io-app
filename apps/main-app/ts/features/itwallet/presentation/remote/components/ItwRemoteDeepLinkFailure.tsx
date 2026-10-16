@@ -1,8 +1,10 @@
 import I18n from "i18next";
 import { useEffect } from "react";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { zendeskItWalletCategory } from "../../../../../utils/supportAssistance";
 import { trackItwKoStateAction } from "../../../analytics";
 import { useItwFailureSupportModal } from "../../../common/hooks/useItwFailureSupportModal.tsx";
 import { ZendeskSubcategoryValue } from "../../../common/hooks/useItwZendeskSupport";
@@ -14,19 +16,15 @@ import { trackItwRemoteDeepLinkFailure } from "../analytics";
 import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
 
 type Props = {
-  /**
-   * The validation error
-   */
+  /** The validation error */
   failure: Error;
-  /**
-   * The original payload that caused the error
-   */
+  /** The original payload that caused the error */
   payload: Partial<ItwRemoteRequestPayload>;
 };
 
 /**
- * Component that renders an error message for an invalid deep link payload
- * and provides access to the support bottom sheet.
+ * Component that renders an error message for an invalid deep link payload and
+ * provides access to the support bottom sheet.
  */
 export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   const navigation = useIONavigation();
@@ -44,6 +42,8 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   const supportModal = useItwFailureSupportModal({
     failure: itwFailure,
     supportChatEnabled: true,
+    // Remote presentation is an IT-Wallet feature, regardless of the wallet status
+    zendeskCategory: zendeskItWalletCategory,
     zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA
   });
 
@@ -60,10 +60,10 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   };
 
   /**
-   * Using useEffect delays this tracking call
-   * until after all layout effects (including the parent’s) have run.
-   * This ensures trackItwRemoteDeepLinkFailure() is triggered
-   * only after trackItwRemoteStart(), maintaining the correct event order.
+   * Using useEffect delays this tracking call until after all layout effects
+   * (including the parent’s) have run. This ensures
+   * trackItwRemoteDeepLinkFailure() is triggered only after
+   * trackItwRemoteStart(), maintaining the correct event order.
    */
   useEffect(() => {
     trackItwRemoteDeepLinkFailure(failure);
@@ -72,15 +72,8 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   return (
     <>
       <OperationResultScreenContent
-        title={I18n.t(
-          "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.title"
-        )}
-        subtitle={I18n.t(
-          "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.subtitle"
-        )}
-        testID={"failure"}
-        pictogram={"umbrella"}
         action={supportModalAction}
+        pictogram={"umbrella"}
         secondaryAction={{
           label: I18n.t(
             "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.secondaryAction"
@@ -96,6 +89,13 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
             navigation.popToTop();
           }
         }}
+        subtitle={I18n.t(
+          "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.subtitle"
+        )}
+        testID={"failure"}
+        title={I18n.t(
+          "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.title"
+        )}
       />
       {supportModal.bottomSheet}
     </>

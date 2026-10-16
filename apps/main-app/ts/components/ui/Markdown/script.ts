@@ -1,6 +1,4 @@
-/**
- * This file contains all the JS scripts used by the Markdown component.
- */
+/** This file contains all the JS scripts used by the Markdown component. */
 
 // Javascript to detect link click and generate window LINK_MESSAGE
 export const NOTIFY_LINK_CLICK_SCRIPT = `
@@ -29,15 +27,4 @@ document.body.onclick = function(e) {
     return false;
   }
 };
-`;
-
-// Script to notify the height of the body to the react WebView component
-export const NOTIFY_BODY_HEIGHT_SCRIPT = `
-const message = {
-  type: "RESIZE_MESSAGE",
-  payload: {
-    height: document.body.scrollHeight
-  }
-};
-window.ReactNativeWebView.postMessage(JSON.stringify(message));
 `;

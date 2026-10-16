@@ -3,14 +3,14 @@ import {
   NavigationContainerRef
 } from "@react-navigation/native";
 import { Route } from "@react-navigation/routers";
+import { createRef, RefObject, useSyncExternalStore } from "react";
 
-import { createRef, RefObject } from "react";
 import { mixpanelTrack } from "../mixpanel";
 import { AppParamsList } from "./params/AppParamsList";
 
 export const navigationRef = createRef<NavigationContainerRef<AppParamsList>>();
 // eslint-disable-next-line functional/no-let
-let isNavigationReady: boolean = false;
+let isNavigationReady = false;
 
 // eslint-disable-next-line functional/no-let
 let isMainNavigatorReady = false;
@@ -47,9 +47,7 @@ export type NavigationParams<T extends keyof AppParamsList> = T extends unknown
   ? // This condition checks if the params are optional,
     // which means it's either undefined or a union with undefined
     undefined extends AppParamsList[T]
-    ?
-        | [screen: T] // if the params are optional, we don't have to provide it
-        | [screen: T, params: AppParamsList[T]]
+    ? [screen: T, params: AppParamsList[T]] | [screen: T] // if the params are optional, we don't have to provide it
     : [screen: T, params: AppParamsList[T]]
   : never;
 
@@ -78,6 +76,28 @@ const getCurrentRoute = (): Route<string> | undefined =>
   navigationRef.current?.getCurrentRoute();
 
 const getCurrentState = () => navigationRef?.current?.getState();
+
+// Notifies components outside the navigation context (e.g. debug overlay,
+// status message/contextual-help selectors) that the current route may have changed.
+const currentRouteListeners = new Set<() => void>();
+
+export const notifyCurrentRouteChanged = () => {
+  currentRouteListeners.forEach(listener => listener());
+};
+
+const subscribeToCurrentRoute = (listener: () => void) => {
+  currentRouteListeners.add(listener);
+  return () => {
+    currentRouteListeners.delete(listener);
+  };
+};
+
+export const useCurrentRouteName = (): string =>
+  useSyncExternalStore(
+    subscribeToCurrentRoute,
+    getCurrentRouteName,
+    getCurrentRouteName
+  ) ?? "UNKNOWN";
 
 // add other navigation functions that you need and export them
 export default {

@@ -1,50 +1,51 @@
 import { getError } from "../../../utils/errors";
-import { SignatureConfig } from "./types/SignatureConfig";
 import { constants } from "./constants";
+import { SignatureConfig } from "./types/SignatureConfig";
 import { Signer } from "./types/Signer";
-
-/**
- * Extract the header parameter value from config
- *
- * @param {string} headerParameter - The name of the header parameter.
- * @param {SignatureConfig} config - The config.
- * @returns {string} The string value of the header parameter.
- * @throws {Error} if an unknown header parameter is found.
- */
-function getHttpSignatureHeaderParameterFromConfig(
-  headerParameter: string,
-  config: SignatureConfig
-): string {
-  // eslint-disable-next-line functional/no-let
-  let returnString: string;
-  switch (headerParameter.toLowerCase()) {
-    case "@method":
-      returnString = config.signatureComponents.method;
-      break;
-    case "@authority":
-      returnString = config.signatureComponents.authority;
-      break;
-    case "@target-uri":
-      returnString = config.signatureComponents.targetUri;
-      break;
-    case "@path":
-      returnString = config.signatureComponents.path;
-      break;
-    case "@scheme":
-      returnString = config.signatureComponents.scheme;
-      break;
-    default:
-      throw new Error(
-        "Unknown http-signature header parameter " + headerParameter
-      );
-  }
-  return returnString;
-}
 
 export type SignatureBaseResult = {
   signatureBase: string;
   signatureInput: string;
 };
+
+function contentRelatedHeaderParameterMissing(
+  headerParameter: string,
+  headers: Record<string, string>
+) {
+  return (
+    (headerParameter === constants.HEADERS.CONTENT_DIGEST &&
+      !headers[constants.HEADERS.CONTENT_DIGEST]) ||
+    (headerParameter === constants.HEADERS.CONTENT_TYPE &&
+      !headers[constants.HEADERS.CONTENT_TYPE]) ||
+    (headerParameter === constants.HEADERS.CONTENT_LENGTH &&
+      !headers[constants.HEADERS.CONTENT_LENGTH])
+  );
+}
+
+/**
+ * Generates the 'Signature' header value for provided config and headers.
+ * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-http-message-signatures
+ *
+ * @param {Record<string, string>} headers The HTTP headers.
+ * @param {SignatureConfig} config The input config.
+ * @returns {Promise<string>} A promise that resolve to signature header value.
+ */
+async function generateSignature(
+  headers: Record<string, string>,
+  config: SignatureConfig,
+  signer: Signer,
+  signatureOrdinal = 1
+): Promise<string> {
+  const baseString = generateSignatureBase(headers, config).signatureBase;
+  const keyTag = config.signKeyTag;
+
+  return await generateSignatureValue(
+    baseString,
+    keyTag,
+    signer,
+    signatureOrdinal
+  );
+}
 
 /**
  * Generates the base string.
@@ -52,17 +53,17 @@ export type SignatureBaseResult = {
  *
  * @param {ReadOnlyRecord<string, string>} headers - The HTTP request headers.
  * @param {SignatureConfig} config - The config.
- * @returns {SignatureBaseResult} signature base and input strings.
- * @throws {Error} if needed data is missing or unknown.
+ * @returns {SignatureBaseResult} Signature base and input strings.
+ * @throws {Error} If needed data is missing or unknown.
  */
 function generateSignatureBase(
   headers: Record<string, string>,
   config: SignatureConfig,
-  signatureOrdinal: number = 1
+  signatureOrdinal = 1
 ): SignatureBaseResult {
   try {
     // eslint-disable-next-line functional/no-let
-    let baseString: string = "";
+    let baseString = "";
     const signatureParams: Array<string> = config.signatureParams;
 
     signatureParams.forEach(headerParameter => {
@@ -98,9 +99,10 @@ function generateSignatureBase(
     /**
      * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-verifying-a-signature
      *
-     * The value of the @signature-params input is the value of the Signature-Input
-     * field for this signature serialized according to the rules described in Section 2.3.
-     * Note that this does not include the signature's label from the Signature-Input field.
+     * The value of the @signature-params input is the value of the
+     * Signature-Input field for this signature serialized according to the
+     * rules described in Section 2.3. Note that this does not include the
+     * signature's label from the Signature-Input field.
      */
     const signatureInput = generateSignatureInput(
       headers,
@@ -121,35 +123,21 @@ function generateSignatureBase(
   }
 }
 
-function contentRelatedHeaderParameterMissing(
-  headerParameter: string,
-  headers: Record<string, string>
-) {
-  return (
-    (headerParameter === constants.HEADERS.CONTENT_DIGEST &&
-      !headers[constants.HEADERS.CONTENT_DIGEST]) ||
-    (headerParameter === constants.HEADERS.CONTENT_TYPE &&
-      !headers[constants.HEADERS.CONTENT_TYPE]) ||
-    (headerParameter === constants.HEADERS.CONTENT_LENGTH &&
-      !headers[constants.HEADERS.CONTENT_LENGTH])
-  );
-}
-
 /**
  * Generates the 'Signature-Input' header value for provided config and headers.
  * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-the-signature-input-http-fi
  *
  * @param {Record<string, string>} headers - The HTTP headers.
  * @param {SignatureConfig} config - The input config.
- * @returns {string} - the 'Signature-Input' header value.
+ * @returns {string} - The 'Signature-Input' header value.
  */
 function generateSignatureInput(
   headers: Record<string, string>,
   config: SignatureConfig,
-  signatureOrdinal: number = 1
+  signatureOrdinal = 1
 ): string {
   // eslint-disable-next-line functional/no-let
-  let signatureInputPayload: string = "";
+  let signatureInputPayload = "";
   config.signatureParams.forEach(param => {
     if (contentRelatedHeaderParameterMissing(param, headers)) {
       return;
@@ -170,12 +158,12 @@ function generateSignatureInput(
  *
  * @param {string} payload
  * @param {number} signatureOrdinal
- * @returns the 'Signature-Input' header value.
+ * @returns The 'Signature-Input' header value.
  */
 function generateSignatureInputValue(
   payload: string,
   config: SignatureConfig,
-  signatureOrdinal: number = 1
+  signatureOrdinal = 1
 ): string {
   // https://github.com/pagopa/io-backend/pull/973
   const unixTimestamp = getUnixTimestamp();
@@ -187,65 +175,61 @@ function generateSignatureInputValue(
 }
 
 /**
- * Generates the 'Signature' header value for provided config and headers.
- * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-http-message-signatures
- *
- * @param {Record<string, string>} headers The HTTP headers.
- * @param {SignatureConfig} config The input config.
- * @returns {Promise<string>} a promise that resolve to signature header value.
- */
-async function generateSignature(
-  headers: Record<string, string>,
-  config: SignatureConfig,
-  signer: Signer,
-  signatureOrdinal: number = 1
-): Promise<string> {
-  const baseString = generateSignatureBase(headers, config).signatureBase;
-  const keyTag = config.signKeyTag;
-
-  return await generateSignatureValue(
-    baseString,
-    keyTag,
-    signer,
-    signatureOrdinal
-  );
-}
-
-/**
- * Generate the 'Signature' header value from provided `signature` signed data.
- * @param signature
- * @param signatureOrdinal
- * @returns
- */
-function toSignatureHeaderValue(
-  signature: string,
-  signatureOrdinal: number = 1
-): string {
-  return (
-    constants.SIGNATURE_PREFIX(signatureOrdinal) +
-    constants.COLON +
-    signature +
-    constants.COLON
-  );
-}
-
-/**
  * Generate the 'Signature' header value for a string payload.
  *
- * @param {string} payload - the string payload to sign.
- * @param {string} keyTag - the tag name of the private key to be used to sign the payload.
- * @param {number} signatureOrdinal - the signature ordinal.
- * @returns a Promise that resolves to the signature header value.
+ * @param {string} payload - The string payload to sign.
+ * @param {string} keyTag - The tag name of the private key to be used to sign
+ *   the payload.
+ * @param {number} signatureOrdinal - The signature ordinal.
+ * @returns A Promise that resolves to the signature header value.
  */
 async function generateSignatureValue(
   payload: string,
   keyTag: string,
   signer: Signer,
-  signatureOrdinal: number = 1
+  signatureOrdinal = 1
 ): Promise<string> {
   const signature: string = await signer.sign(payload, keyTag);
 
   return toSignatureHeaderValue(signature, signatureOrdinal);
+}
+
+/**
+ * Extract the header parameter value from config
+ *
+ * @param {string} headerParameter - The name of the header parameter.
+ * @param {SignatureConfig} config - The config.
+ * @returns {string} The string value of the header parameter.
+ * @throws {Error} If an unknown header parameter is found.
+ */
+function getHttpSignatureHeaderParameterFromConfig(
+  headerParameter: string,
+  config: SignatureConfig
+): string {
+  // eslint-disable-next-line functional/no-let
+  let returnString: string;
+  switch (headerParameter.toLowerCase()) {
+    case "@authority":
+      returnString = config.signatureComponents.authority;
+      break;
+    case "@method":
+      returnString = config.signatureComponents.method;
+      break;
+    case "@path":
+      returnString = config.signatureComponents.path;
+      break;
+    case "@scheme":
+      returnString = config.signatureComponents.scheme;
+      break;
+    case "@target-uri":
+      returnString = config.signatureComponents.targetUri;
+      break;
+    default:
+      throw new Error(
+        "Unknown http-signature header parameter " + headerParameter
+      );
+  }
+  return returnString;
 }
 
 /**
@@ -257,10 +241,29 @@ function getUnixTimestamp(): number {
   return Math.floor(Date.now() / 1000);
 }
 
+/**
+ * Generate the 'Signature' header value from provided `signature` signed data.
+ *
+ * @param signature
+ * @param signatureOrdinal
+ * @returns
+ */
+function toSignatureHeaderValue(
+  signature: string,
+  signatureOrdinal = 1
+): string {
+  return (
+    constants.SIGNATURE_PREFIX(signatureOrdinal) +
+    constants.COLON +
+    signature +
+    constants.COLON
+  );
+}
+
 export {
-  generateSignatureBase,
-  getUnixTimestamp,
-  generateSignatureInput,
   generateSignature,
+  generateSignatureBase,
+  generateSignatureInput,
+  getUnixTimestamp,
   toSignatureHeaderValue
 };

@@ -1,11 +1,12 @@
 import { renderHook } from "@testing-library/react-native";
-import { useDerivedConnectivityState } from "../useStatusAlertProps";
-import * as navigationSelectors from "../../store/reducers/navigation";
-import * as connectivitySelectors from "../../features/connectivity/store/selectors";
-import * as ingressSelectors from "../../features/ingress/store/selectors";
-import * as startup from "../../store/reducers/startup";
-import { OfflineAccessReasonEnum } from "../../features/ingress/store/reducer";
+
 import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
+import * as connectivitySelectors from "../../features/connectivity/store/selectors";
+import { OfflineAccessReasonEnum } from "../../features/ingress/store/reducer";
+import * as ingressSelectors from "../../features/ingress/store/selectors";
+import * as NavigationService from "../../navigation/NavigationService";
+import * as startup from "../../store/reducers/startup";
+import { useDerivedConnectivityState } from "../useStatusAlertProps";
 
 jest.mock("../../store/hooks", () => ({
   useIOSelector: (selector: any) => selector()
@@ -14,7 +15,7 @@ jest.mock("../../store/hooks", () => ({
 describe("useDerivedConnectivityState", () => {
   it("should return `initial`", () => {
     jest
-      .spyOn(navigationSelectors, "currentRouteSelector")
+      .spyOn(NavigationService, "useCurrentRouteName")
       .mockReturnValue("Home");
 
     jest
@@ -36,7 +37,7 @@ describe("useDerivedConnectivityState", () => {
 
   it("should return `blacklisted`", () => {
     jest
-      .spyOn(navigationSelectors, "currentRouteSelector")
+      .spyOn(NavigationService, "useCurrentRouteName")
       .mockReturnValue(AUTHENTICATION_ROUTES.LANDING);
 
     jest
@@ -58,7 +59,7 @@ describe("useDerivedConnectivityState", () => {
 
   it("should return `mini_app_device_offline`", () => {
     jest
-      .spyOn(navigationSelectors, "currentRouteSelector")
+      .spyOn(NavigationService, "useCurrentRouteName")
       .mockReturnValue("Home");
 
     jest
@@ -80,7 +81,7 @@ describe("useDerivedConnectivityState", () => {
 
   it("should return `mini_app_back_online`", () => {
     jest
-      .spyOn(navigationSelectors, "currentRouteSelector")
+      .spyOn(NavigationService, "useCurrentRouteName")
       .mockReturnValue("Home");
 
     jest
@@ -106,7 +107,7 @@ describe("useDerivedConnectivityState", () => {
     OfflineAccessReasonEnum.TIMEOUT
   ])(`should return "mini_app_$reason"`, reason => {
     jest
-      .spyOn(navigationSelectors, "currentRouteSelector")
+      .spyOn(NavigationService, "useCurrentRouteName")
       .mockReturnValue("Home");
 
     jest
@@ -128,7 +129,7 @@ describe("useDerivedConnectivityState", () => {
 
   it("should return `offline`", () => {
     jest
-      .spyOn(navigationSelectors, "currentRouteSelector")
+      .spyOn(NavigationService, "useCurrentRouteName")
       .mockReturnValue("Home");
 
     jest
@@ -150,7 +151,7 @@ describe("useDerivedConnectivityState", () => {
 
   it("should return `back_online`", () => {
     jest
-      .spyOn(navigationSelectors, "currentRouteSelector")
+      .spyOn(NavigationService, "useCurrentRouteName")
       .mockReturnValue("Home");
 
     const connectionSpy = jest

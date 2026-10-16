@@ -1,8 +1,9 @@
-import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getTimeoutError } from "../../../../../utils/errors";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { getTimeoutError } from "../../../../../utils/errors";
 import { fciDownloadPreview } from "../../actions";
 
 const genericError = getTimeoutError();

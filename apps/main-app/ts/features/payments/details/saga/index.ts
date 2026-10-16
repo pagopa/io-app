@@ -1,5 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
+
 import { WalletClient } from "../../common/api/client";
 import {
   paymentsDeleteMethodAction,
@@ -12,7 +13,8 @@ import { handleTogglePagoPaCapability } from "./handleTogglePagoPaCapability";
 
 /**
  * Handle payment method onboarding requests
- * @param walletClient wallet client
+ *
+ * @param walletClient Wallet client
  */
 export function* watchPaymentsMethodDetailsSaga(
   walletClient: WalletClient

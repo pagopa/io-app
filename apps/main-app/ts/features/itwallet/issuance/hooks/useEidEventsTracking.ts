@@ -1,4 +1,10 @@
 import { useEffect } from "react";
+
+import { ItwFlow } from "../../analytics/utils/types";
+import {
+  serializeFailureReason,
+  shouldSerializeReason
+} from "../../common/utils/itwStoreUtils";
 import {
   EidIssuanceLevel,
   IdentificationContext
@@ -7,49 +13,43 @@ import {
   IssuanceFailure,
   IssuanceFailureType
 } from "../../machine/eid/failure";
-import { ItwFlow } from "../../analytics/utils/types";
 import {
   trackIdNotMatch,
   trackItwCieIdCieNotRegistered,
-  trackItwIdRequestFederationFailed,
   trackItwIdRequestFailure,
+  trackItwIdRequestFederationFailed,
   trackItwIdRequestUnexpectedFailure,
   trackItwUnsupportedDevice,
   trackMrtdPoPChallengeInfoFailed
 } from "../analytics";
-import {
-  serializeFailureReason,
-  shouldSerializeReason
-} from "../../common/utils/itwStoreUtils";
 
 type EidTrackedCredential = "ITW_ID" | "ITW_PID";
 
 type Params = {
+  credential: EidTrackedCredential;
   failure: IssuanceFailure;
   identification?: IdentificationContext;
   issuanceLevel?: EidIssuanceLevel;
-  credential: EidTrackedCredential;
 };
 /**
  * Maps the eID issuance level to the corresponding ItwFlow value.
+ *
  * @param issuanceLevel - The eID issuance level.
  * @returns The corresponding ItwFlow value.
  */
 
 const mapIssuanceLevelToFlow = (issuanceLevel?: EidIssuanceLevel): ItwFlow => {
   switch (issuanceLevel) {
-    case "l3":
-      return "L3";
     case "l2":
     case "l2-fallback":
       return "L2";
+    case "l3":
+      return "L3";
     default:
       return "not_available";
   }
 };
-/**
- * Track errors occurred during the eID issuance process for analytics.
- */
+/** Track errors occurred during the eID issuance process for analytics. */
 export const useEidEventsTracking = ({
   failure,
   identification,
@@ -60,7 +60,9 @@ export const useEidEventsTracking = ({
 
   useEffect(() => {
     if (
-      failure.type === IssuanceFailureType.NOT_MATCHING_IDENTITY &&
+      (failure.type === IssuanceFailureType.NOT_MATCHING_IDENTITY ||
+        failure.type ===
+          IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY) &&
       identification
     ) {
       return trackIdNotMatch(identification.mode, itwFlow);

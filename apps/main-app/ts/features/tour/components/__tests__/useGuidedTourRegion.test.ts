@@ -1,7 +1,8 @@
 import { renderHook } from "@testing-library/react-native";
-import { useGuidedTourRegion } from "../useGuidedTourRegion";
-import { useTourContext } from "../TourProvider";
+
 import { TourItemMeasurement } from "../../types";
+import { useTourContext } from "../TourProvider";
+import { useGuidedTourRegion } from "../useGuidedTourRegion";
 
 jest.mock("../TourProvider", () => ({
   useTourContext: jest.fn()

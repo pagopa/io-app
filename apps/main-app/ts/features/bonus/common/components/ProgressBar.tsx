@@ -1,7 +1,6 @@
-import { IOColors, useIOThemeContext } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@io-app/design-system";
 import { FunctionComponent } from "react";
-
-import { View, StyleSheet, DimensionValue } from "react-native";
+import { DimensionValue, StyleSheet, View } from "react-native";
 
 type Props = {
   // between 0 and 1
@@ -11,6 +10,7 @@ type Props = {
 /**
  * In order to fill the first amount of the bar, if there are 0 transactions,
  * the percentage is set to 1
+ *
  * @param progressPercentage
  */
 const calculateStylePercentage = (
@@ -23,24 +23,28 @@ const calculateStylePercentage = (
 
 /**
  * Render a progress bar
+ *
+ * @class
  * @param props
- * @constructor
  */
 export const ProgressBar: FunctionComponent<Props> = props => {
-  const isDark = useIOThemeContext().themeType === "dark";
-  const backgroundColor = isDark
-    ? IOColors["blueIO-300"]
-    : IOColors["blueIO-500"];
+  const theme = useIOTheme();
+  const backgroundColor = IOColors[theme["interactiveElem-default"]];
 
   return (
-    <View style={{ backgroundColor: IOColors["grey-100"], height: 4 }}>
+    <View
+      style={{
+        backgroundColor: IOColors[theme["appBackground-tertiary"]],
+        height: 4
+      }}
+    >
       <View
-        testID={"progressBar"}
         style={{
-          ...StyleSheet.absoluteFillObject,
+          ...StyleSheet.absoluteFill,
           backgroundColor,
           width: calculateStylePercentage(props.progressPercentage)
         }}
+        testID={"progressBar"}
       />
     </View>
   );

@@ -1,11 +1,12 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { IOColors, useIOTheme } from "@io-app/design-system";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
-import { useSpecialCtaCgn } from "../../../bonus/cgn/hooks/useSpecialCtaCgn";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { getServiceActionsProps } from "../utils";
+import { useSpecialCtaCgn } from "../../../bonus/cgn/hooks/useSpecialCtaCgn";
 import { ServiceDetailsScreenBase } from "../types";
+import { getServiceActionsProps } from "../utils";
 
 export type ServiceDetailsScreenCgnProps = ServiceDetailsScreenBase & {
   serviceId: ServiceId;

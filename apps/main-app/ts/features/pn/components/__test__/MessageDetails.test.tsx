@@ -1,21 +1,22 @@
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { ComponentProps } from "react";
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as MSG_DETAILS_HEADER from "../../../messages/components/MessageDetail/MessageDetailsHeader";
-import { thirdPartyMessage } from "../../__mocks__/pnMessage";
-import { toSENDMessage } from "../../store/types/transformers";
-import { PNMessage } from "../../store/types/types";
-import { MessageDetails } from "../MessageDetails";
-import PN_ROUTES from "../../navigation/routes";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { thirdPartyMessage } from "../../__mocks__/pnMessage";
+import PN_ROUTES from "../../navigation/routes";
+import { toSENDMessage } from "../../store/types/transformers";
+import { PNMessage } from "../../store/types/types";
+import { MessageDetails } from "../MessageDetails";
 
 jest.mock("../MessageCancelledContent");
 jest.mock("../MessageDetailsContent");
@@ -25,7 +26,6 @@ jest.mock(
 jest.mock("../MessagePayments");
 jest.mock("../F24Section");
 jest.mock("../MessageBottomMenu");
-jest.mock("../MessageFooter");
 jest.mock("../MessagePaymentBottomSheet");
 
 const mockMessageId = "messageId1";
@@ -113,6 +113,29 @@ describe("MessageDetails component", () => {
         });
       })
     );
+  });
+
+  it("places the sticky footer placeholder before the message bottom menu", () => {
+    const sendMessage = toSENDMessage(thirdPartyMessage)!;
+    const props = generateComponentProperties(
+      mockMessageId,
+      sendMessage,
+      mockServiceId,
+      "message",
+      "recipient"
+    );
+    const { component } = renderComponent(props);
+    const scrollView = component.getByTestId("MessageDetailsScrollView");
+    const expectedTestIDs = [
+      "ScrollViewWithStickyFooterActionsPlaceholder",
+      "MessageBottomMenu"
+    ];
+    const renderedTestIDs = scrollView
+      .findAll(node => expectedTestIDs.includes(node.props.testID))
+      .map(node => node.props.testID)
+      .filter((testID, index, testIDs) => testIDs.indexOf(testID) === index);
+
+    expect(renderedTestIDs).toEqual(expectedTestIDs);
   });
 });
 

@@ -1,15 +1,16 @@
+import { Alert } from "@io-app/design-system";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useRef } from "react";
 import { View } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import { Alert } from "@pagopa/io-app-design-system";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import I18n from "i18next";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { preferredCalendarSelector } from "../../../../store/reducers/persistedPreferences";
-import { useMessageReminder } from "../../hooks/useMessageReminder";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
+import { useMessageReminder } from "../../hooks/useMessageReminder";
 
 type MessageDetailsReminderExpiringProps = {
   dueDate: Date;
@@ -28,7 +29,6 @@ export const MessageDetailsReminderExpiring = ({
   const preferredCalendar = useIOSelector(preferredCalendarSelector);
 
   const navigate = useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
     didShowCalendarModalRef.current = true;
     navigation.navigate("MESSAGES_NAVIGATOR", {
       screen: "MESSAGE_DETAIL_CALENDAR",
@@ -45,7 +45,6 @@ export const MessageDetailsReminderExpiring = ({
   useFocusEffect(
     useCallback(() => {
       if (didShowCalendarModalRef.current) {
-        // eslint-disable-next-line functional/immutable-data
         didShowCalendarModalRef.current = false;
         // 1000 is a safe delay on low spec Android devices. Lower
         // values will not prevent the back button to steal focus
@@ -60,15 +59,11 @@ export const MessageDetailsReminderExpiring = ({
   );
   return (
     <Alert
-      testID="due-date-alert"
-      variant="warning"
-      ref={alertRef}
       action={
         isEventInDeviceCalendar
           ? I18n.t("features.messages.alert.removeReminder")
           : I18n.t("features.messages.alert.addReminder")
       }
-      onPress={() => upsertReminder(dueDate, title, preferredCalendar)}
       content={I18n.t("features.messages.alert.content", {
         date: formatDateAsShortFormat(dueDate),
         time: new Intl.DateTimeFormat("it", {
@@ -76,6 +71,10 @@ export const MessageDetailsReminderExpiring = ({
           minute: "2-digit"
         }).format(dueDate)
       })}
+      onPress={() => void upsertReminder(dueDate, title, preferredCalendar)}
+      ref={alertRef}
+      testID="due-date-alert"
+      variant="warning"
     />
   );
 };

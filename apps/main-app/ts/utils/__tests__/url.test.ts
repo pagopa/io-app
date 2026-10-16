@@ -5,7 +5,8 @@ import {
 import {
   extractPathFromURL,
   getResourceNameFromUrl,
-  getUrlBasepath
+  getUrlBasepath,
+  safeUrlParse
 } from "../url";
 
 describe("getResourceNameFromUrl", () => {
@@ -23,7 +24,7 @@ describe("getResourceNameFromUrl", () => {
     );
   });
 
-  it("should return the resource name without extension", () => {
+  it("should return the resource name without extension for a local file url", () => {
     const localHost = "file://somefolder/somefolder2/";
     const localResource = localHost + resource + extension;
     expect(getResourceNameFromUrl(localResource)).toEqual(resource);
@@ -97,5 +98,39 @@ describe("extractPathFromURL", () => {
         url
       )
     ).toEqual(path);
+  });
+});
+
+describe("safeUrlParse", () => {
+  it("returns the parsed URL with the query string as an object", () => {
+    const result = safeUrlParse("https://example.com/path?a=1&b=2");
+
+    expect(
+      result.match(
+        ({ host, pathname, query }) => ({ host, pathname, query }),
+        error => error
+      )
+    ).toEqual({
+      host: "example.com",
+      pathname: "/path",
+      query: { a: "1", b: "2" }
+    });
+  });
+
+  it("returns an Err with the cause instead of throwing", () => {
+    const url = {
+      toString: () => {
+        throw new Error("Invalid URL");
+      }
+    } as unknown as string;
+
+    const result = safeUrlParse(url);
+
+    expect(
+      result.match(
+        () => "",
+        error => error
+      )
+    ).toContain("Invalid URL");
   });
 });

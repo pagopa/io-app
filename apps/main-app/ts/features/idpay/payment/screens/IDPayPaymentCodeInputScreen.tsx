@@ -1,14 +1,15 @@
-import { TextInput } from "@pagopa/io-app-design-system";
+import { TextInput } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useState } from "react";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   trackIDPayDetailManualEntryConfirm,
@@ -17,11 +18,10 @@ import {
 import { idpayInitiativeDetailsSelector } from "../../details/store";
 import { IDPayTransactionCode } from "../common/types";
 import { IdPayPaymentMachineContext } from "../machine/provider";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 type InputState = {
-  value?: string;
   code: O.Option<E.Either<unknown, string>>;
+  value?: string;
 };
 
 const IDPayPaymentCodeInputScreen = () => {
@@ -75,10 +75,6 @@ const IDPayPaymentCodeInputScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("idpay.payment.manualInput.title")
-      }}
-      description={I18n.t("idpay.payment.manualInput.subtitle")}
       actions={{
         type: "SingleButton",
         primary: {
@@ -88,16 +84,16 @@ const IDPayPaymentCodeInputScreen = () => {
           loading: isLoading
         }
       }}
-      contextualHelp={emptyContextualHelp}
+      description={I18n.t("idpay.payment.manualInput.subtitle")}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins
+      title={{
+        label: I18n.t("idpay.payment.manualInput.title")
+      }}
     >
       <TextInput
-        textInputProps={{
-          inputMode: "text",
-          autoCapitalize: "characters",
-          autoCorrect: false
-        }}
+        accessibilityLabel={I18n.t("idpay.payment.manualInput.input")}
+        counterLimit={8}
         icon="barcode"
         onChangeText={value => {
           setInputState({
@@ -111,9 +107,12 @@ const IDPayPaymentCodeInputScreen = () => {
           });
         }}
         placeholder={I18n.t("idpay.payment.manualInput.input")}
-        accessibilityLabel={I18n.t("idpay.payment.manualInput.input")}
+        textInputProps={{
+          inputMode: "text",
+          autoCapitalize: "characters",
+          autoCorrect: false
+        }}
         value={inputState.value ?? ""}
-        counterLimit={8}
       />
     </IOScrollViewWithLargeHeader>
   );

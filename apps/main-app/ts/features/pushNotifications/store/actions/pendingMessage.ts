@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { PendingMessageState } from "../reducers/pendingMessage";
 
 export const updateNotificationsPendingMessage = createStandardAction(
@@ -10,5 +11,5 @@ export const clearNotificationPendingMessage = createStandardAction(
 )<void>();
 
 export type PendingMessageActions =
-  | ActionType<typeof updateNotificationsPendingMessage>
-  | ActionType<typeof clearNotificationPendingMessage>;
+  | ActionType<typeof clearNotificationPendingMessage>
+  | ActionType<typeof updateNotificationsPendingMessage>;

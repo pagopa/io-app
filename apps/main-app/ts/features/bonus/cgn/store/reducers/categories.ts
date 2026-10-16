@@ -1,7 +1,8 @@
+import { ProductCategoryWithNewDiscountsCount } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
@@ -24,6 +25,11 @@ const reducer = (
   action: Action
 ): CgnCategoriesState => {
   switch (action.type) {
+    case getType(cgnCategories.failure):
+      return {
+        ...state,
+        list: pot.toError(state.list, action.payload)
+      };
     // Categories List
     case getType(cgnCategories.request):
       return {
@@ -34,11 +40,6 @@ const reducer = (
       return {
         ...state,
         list: pot.some(orderCategoriesByNameKey(action.payload))
-      };
-    case getType(cgnCategories.failure):
-      return {
-        ...state,
-        list: pot.toError(state.list, action.payload)
       };
   }
   return state;

@@ -1,10 +1,10 @@
-/* eslint-disable functional/immutable-data */
 import { PropsWithChildren, useEffect } from "react";
 import Animated, {
   measure,
   useAnimatedRef,
   useFrameCallback
 } from "react-native-reanimated";
+
 import { useIOSelector } from "../../../store/hooks";
 import {
   activeGroupIdSelector,
@@ -15,11 +15,11 @@ import { TourCutoutStyle } from "../types";
 import { useTourContext } from "./TourProvider";
 
 export type GuidedTourProps = {
+  cutoutStyle?: TourCutoutStyle;
+  description: string;
   groupId: string;
   index: number;
   title: string;
-  description: string;
-  cutoutStyle?: TourCutoutStyle;
 };
 
 export const GuidedTour = (props: PropsWithChildren<GuidedTourProps>) => {
@@ -66,11 +66,10 @@ export const GuidedTour = (props: PropsWithChildren<GuidedTourProps>) => {
   ]);
 
   /**
-   * Continuous position tracking on the UI thread.
-   * When this item is the active tour step and tracking is enabled,
-   * measure the element every frame and update the cutout shared values.
-   * This keeps the cutout aligned even when the layout shifts
-   * (e.g. offline banner, keyboard, orientation change).
+   * Continuous position tracking on the UI thread. When this item is the active
+   * tour step and tracking is enabled, measure the element every frame and
+   * update the cutout shared values. This keeps the cutout aligned even when
+   * the layout shifts (e.g. offline banner, keyboard, orientation change).
    */
   const frameCallback = useFrameCallback(() => {
     "worklet";

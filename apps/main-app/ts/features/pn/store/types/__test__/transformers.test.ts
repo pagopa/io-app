@@ -1,4 +1,5 @@
-import { ThirdPartyMessageWithContent } from "../../../../../../definitions/communication/ThirdPartyMessageWithContent";
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
+
 import { toSENDMessage } from "../transformers";
 
 describe("transformers", () => {

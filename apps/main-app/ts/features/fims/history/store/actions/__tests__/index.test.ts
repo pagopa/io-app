@@ -1,10 +1,11 @@
+import { Access } from "@io-app/api-types/generated/definitions/fims_history/Access";
+
 import {
   fimsHistoryExport,
   fimsHistoryGet,
   resetFimsHistoryExportState,
   resetFimsHistoryState
 } from "..";
-import { Access } from "../../../../../../../definitions/fims_history/Access";
 import { FimsExportSuccessStates } from "../../reducer";
 
 describe("fimsHistoryGet.request", () => {
@@ -62,7 +63,7 @@ describe("fimsHistoryExport.request", () => {
   });
 });
 
-describe("fimsHistoryExport.success", () =>
+describe("fimsHistoryExport.success", () => {
   (
     [
       "SUCCESS",
@@ -74,7 +75,8 @@ describe("fimsHistoryExport.success", () =>
       expect(fimsHistoryExportSuccess.type).toBe("FIMS_HISTORY_EXPORT_SUCCESS");
       expect(fimsHistoryExportSuccess.payload).toBe(successState);
     });
-  }));
+  });
+});
 
 describe("fimsHistoryExport.failure", () => {
   it("Should have a type of 'FIMS_HISTORY_EXPORT_FAILURE' and no payload", () => {

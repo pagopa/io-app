@@ -1,8 +1,9 @@
-import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
+import { Body, FooterActionsInline } from "@io-app/design-system";
 import { StackActions } from "@react-navigation/native";
 import { increment } from "fp-ts/lib/function";
-import { ComponentProps } from "react";
 import I18n from "i18next";
+import { ComponentProps } from "react";
+
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -16,7 +17,8 @@ type Props = {
 };
 
 /**
- * A hook that returns a function to present the abort signature flow bottom sheet
+ * A hook that returns a function to present the abort signature flow bottom
+ * sheet
  */
 export const useFciNoSignatureFields = (props: Props) => {
   const navigation = useIONavigation();
@@ -65,8 +67,8 @@ export const useFciNoSignatureFields = (props: Props) => {
     snapPoint: [280],
     footer: (
       <FooterActionsInline
-        startAction={readButtonProps}
         endAction={confirmButtonProps}
+        startAction={readButtonProps}
       />
     )
   });

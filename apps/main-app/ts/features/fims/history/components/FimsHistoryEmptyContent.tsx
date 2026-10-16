@@ -3,9 +3,10 @@ import {
   ContentWrapper,
   Pictogram,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import { StyleSheet, View } from "react-native";
+} from "@io-app/design-system";
 import I18n from "i18next";
+import { StyleSheet, View } from "react-native";
+
 import { FimsHistoryHeaderComponent } from "./FimsHistoryHeaderComponent";
 
 export const FimsHistoryEmptyContent = () => (

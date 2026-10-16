@@ -1,4 +1,10 @@
 import {
+  InitiativeDTO,
+  InitiativeRewardTypeEnum,
+  VoucherStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import {
   Body,
   ContentWrapper,
   H6,
@@ -6,27 +12,24 @@ import {
   IOToast,
   Pictogram,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/core";
+import { RouteProp, useFocusEffect } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
 import { Linking, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import {
-  InitiativeDTO,
-  InitiativeRewardTypeEnum,
-  VoucherStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
-import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
+import { useAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { UpdateAppAlert } from "../../../../components/UpdateAppAlert";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
@@ -167,17 +170,17 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   if (pot.isError(initiativeDataPot)) {
     return (
       <OperationResultScreenContent
-        pictogram="umbrella"
-        title={I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.error.title"
-        )}
-        subtitle={I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.error.subtitle"
-        )}
         action={{
           label: I18n.t("global.buttons.back"),
           onPress: () => navigation.pop()
         }}
+        pictogram="umbrella"
+        subtitle={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.error.subtitle"
+        )}
+        title={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.error.title"
+        )}
       />
     );
   }
@@ -344,11 +347,11 @@ const IdPayInitiativeDetailsScreenComponent = () => {
                     <VSpacer size={16} />
                     <IOButton
                       fullWidth
-                      variant="solid"
-                      onPress={navigateToConfiguration}
                       label={I18n.t(
                         "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
                       )}
+                      onPress={navigateToConfiguration}
+                      variant="solid"
                     />
                   </View>
                 );
@@ -440,8 +443,8 @@ const IdPayInitiativeDetailsScreenComponent = () => {
             onPress: onAddExpense
           }
         };
-      default:
       case InitiativeRewardTypeEnum.REFUND:
+      default:
         return undefined;
     }
   };
@@ -457,18 +460,18 @@ const IdPayInitiativeDetailsScreenComponent = () => {
 
   return (
     <BonusCardScreenComponent
-      title={initiativeName ?? ""}
+      actions={getInitiativeFooterProps(initiativeRewardType)}
+      counters={getInitiativeCounters(initiative)}
       headerAction={{
         icon: "info",
         onPress: navigateToBeneficiaryDetails,
-        accessibilityLabel: "info"
+        accessibilityLabel: I18n.t("global.buttons.info")
       }}
       logoUris={[{ uri: logoURL }]}
       name={initiativeName || ""}
       organizationName={organizationName || ""}
       status={<IdPayCardStatus initiative={initiative} />}
-      counters={getInitiativeCounters(initiative)}
-      actions={getInitiativeFooterProps(initiativeRewardType)}
+      title={initiativeName ?? ""}
     >
       <IdPayInitiativeLastUpdateCounter lastUpdateDate={lastCounterUpdate} />
       {getInitiativeDetailsContent(initiative)}
@@ -477,9 +480,10 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   );
 };
 
-const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
-  IdPayInitiativeDetailsScreenComponent,
-  "idpay.initiative_details"
-);
-
-export { IdPayInitiativeDetailsScreen };
+export const IdPayInitiativeDetailsScreen = () => {
+  const requiresUpdate = useAppRequiredUpdate("idpay.initiative_details");
+  if (requiresUpdate) {
+    return <UpdateAppAlert />;
+  }
+  return <IdPayInitiativeDetailsScreenComponent />;
+};

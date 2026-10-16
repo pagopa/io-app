@@ -10,11 +10,11 @@ import { IdPayUnsubscriptionActions } from "../../../unsubscription/store/action
 import { IdPayWalletActions } from "../../../wallet/store/actions";
 
 export type IdPayActions =
-  | IdPayWalletActions
-  | IdPayInitiativeActions
-  | IdPayTimelineActions
-  | IdPayCodeActions
-  | IDPayInitiativeConfigurationActions
   | IdPayBarcodeActions
+  | IdPayCodeActions
+  | IdPayInitiativeActions
+  | IDPayInitiativeConfigurationActions
   | IdPayStaticCodeActions
-  | IdPayUnsubscriptionActions;
+  | IdPayTimelineActions
+  | IdPayUnsubscriptionActions
+  | IdPayWalletActions;

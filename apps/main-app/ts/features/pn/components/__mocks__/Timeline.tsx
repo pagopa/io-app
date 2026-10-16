@@ -1,4 +1,5 @@
 import { View } from "react-native";
+
 import { TimelineProps } from "../Timeline";
 
 export const Timeline = ({ data }: TimelineProps) => (

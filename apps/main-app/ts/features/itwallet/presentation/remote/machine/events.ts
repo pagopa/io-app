@@ -1,56 +1,57 @@
 import type { DoneActorEvent } from "xstate";
+
 import {
   ItwRemoteFlowType,
   ItwRemoteRequestPayload
 } from "../utils/itwRemoteTypeUtils.ts";
 
-export type Start = {
-  type: "start";
-  payload: ItwRemoteRequestPayload;
-  flowType: ItwRemoteFlowType;
-};
+export type RemoteEvents =
+  | Back
+  | Close
+  | Consent
+  | DoneActorEvent
+  | GoToBarcodeScan
+  | GoToIdentificationMode
+  | GoToWalletActivation
+  | Reset
+  | Start
+  | ToggleCredential;
 
-export type GoToWalletActivation = {
-  type: "go-to-wallet-activation";
-};
-
-export type GoToIdentificationMode = {
-  type: "go-to-identification-mode";
-};
-
-export type GoToBarcodeScan = {
-  type: "go-to-barcode-scan";
-};
-
-export type Back = {
+type Back = {
   type: "back";
 };
 
-export type Close = {
+type Close = {
   type: "close";
 };
 
-export type ToggleCredential = {
-  type: "toggle-credential";
-  credentialIds: Array<string>;
-};
-
-export type Consent = {
+type Consent = {
   type: "holder-consent";
 };
 
-export type Reset = {
+type GoToBarcodeScan = {
+  type: "go-to-barcode-scan";
+};
+
+type GoToIdentificationMode = {
+  type: "go-to-identification-mode";
+};
+
+type GoToWalletActivation = {
+  type: "go-to-wallet-activation";
+};
+
+type Reset = {
   type: "reset";
 };
 
-export type RemoteEvents =
-  | Start
-  | GoToWalletActivation
-  | GoToIdentificationMode
-  | GoToBarcodeScan
-  | Consent
-  | ToggleCredential
-  | Back
-  | Close
-  | Reset
-  | DoneActorEvent;
+type Start = {
+  flowType: ItwRemoteFlowType;
+  payload: ItwRemoteRequestPayload;
+  type: "start";
+};
+
+type ToggleCredential = {
+  credentialIds: Array<string>;
+  type: "toggle-credential";
+};

@@ -1,18 +1,19 @@
 import * as Notifications from "expo-notifications";
 import NotificationsUtils from "react-native-notifications-utils";
 import { v4 as uuid } from "uuid";
+
 import { trackAppCaughtError } from "../../../utils/analytics";
+import { isTestEnv } from "../../../utils/environment";
 import { unknownToString } from "../../../utils/errors";
 import { isIos } from "../../../utils/platform";
-import { isTestEnv } from "../../../utils/environment";
 
 const areNotificationsEnabled = (
   permissions: Notifications.NotificationPermissionsStatus
 ) => {
   const areNotificationsDisabled = [
-    undefined,
     Notifications.IosAuthorizationStatus.DENIED,
-    Notifications.IosAuthorizationStatus.NOT_DETERMINED
+    Notifications.IosAuthorizationStatus.NOT_DETERMINED,
+    undefined
   ].includes(permissions.ios?.status);
   return permissions.granted || !areNotificationsDisabled;
 };
@@ -33,9 +34,9 @@ export const checkNotificationPermissions = async (): Promise<boolean> => {
   }
 };
 /**
- * Requests the system-level push notification permission.
- * On iOS, also enables alert, badge, and sound presentation options.
- * Returns false on error to avoid blocking the calling flow.
+ * Requests the system-level push notification permission. On iOS, also enables
+ * alert, badge, and sound presentation options. Returns false on error to avoid
+ * blocking the calling flow.
  */
 export const requestNotificationPermissions = async (): Promise<boolean> => {
   try {
@@ -61,12 +62,10 @@ export const requestNotificationPermissions = async (): Promise<boolean> => {
 };
 
 /**
- * This is a legacy code that was used to generate a unique Id
- * from client side. It is still used because the backend API
- * requires it as part of the URL's path but it is later not
- * used in any way.
- * When the backend API spec will remove it, it can also be
- * unlinked and deleted here
+ * This is a legacy code that was used to generate a unique Id from client side.
+ * It is still used because the backend API requires it as part of the URL's
+ * path but it is later not used in any way. When the backend API spec will
+ * remove it, it can also be unlinked and deleted here
  */
 export const generateInstallationId = () => `001${uuid().replace(/-/g, "")}`;
 

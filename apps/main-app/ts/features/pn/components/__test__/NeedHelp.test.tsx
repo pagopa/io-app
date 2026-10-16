@@ -1,14 +1,15 @@
+import { fireEvent } from "@testing-library/react-native";
 import { View } from "react-native";
 import { createStore } from "redux";
-import { fireEvent } from "@testing-library/react-native";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { NeedHelp } from "../NeedHelp";
-import PN_ROUTES from "../../navigation/routes";
-import * as bottomSheet from "../../../../utils/hooks/bottomSheet";
 import * as remoteConfigSelectors from "../../../../store/reducers/backendStatus/remoteConfig";
+import * as bottomSheet from "../../../../utils/hooks/bottomSheet";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as urlUtils from "../../../../utils/url";
+import PN_ROUTES from "../../navigation/routes";
+import { NeedHelp } from "../NeedHelp";
 
 describe("NeedHelp", () => {
   describe("NeedHelp Component", () => {
@@ -34,7 +35,8 @@ describe("NeedHelp", () => {
       fireEvent.press(listItemAction);
 
       expect(mockPresent.mock.calls.length).toBe(1);
-      expect(mockPresent.mock.calls[0].length).toBe(0);
+      // ListItemAction forwards the press event to `onPress`
+      expect(mockPresent.mock.calls[0].length).toBe(1);
     });
     it("Should open the external url upon tap on the bottom-sheet action", () => {
       const customerServiceUrl = "https://an.url/toCustomService";

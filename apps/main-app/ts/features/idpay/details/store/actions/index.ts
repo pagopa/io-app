@@ -1,9 +1,10 @@
+import { InitiativeDetailDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDetailDTO";
+import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { OnboardingStatusDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
+import { TimelineDTO } from "@io-app/api-types/generated/definitions/idpay/TimelineDTO";
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
+
 import { NetworkError } from "../../../../../utils/errors";
-import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
-import { OnboardingStatusDTO } from "../../../../../../definitions/idpay/OnboardingStatusDTO";
 
 type IdPayInitiativeGetPayloadType = { initiativeId: string };
 
@@ -20,8 +21,8 @@ type IdpayTimelinePageGetPayloadType = {
 };
 
 type IdPayTimelinePageGetSuccessPayloadType = {
-  timeline: TimelineDTO;
   page: number;
+  timeline: TimelineDTO;
 };
 
 export const idpayTimelinePageGet = createAsyncAction(
@@ -55,7 +56,7 @@ export const idPayOnboardingStatusGet = createAsyncAction(
 )<IdPayOnboardingStatusGetPayloadType, OnboardingStatusDTO, NetworkError>();
 
 export type IdPayInitiativeActions =
-  | ActionType<typeof idpayInitiativeGet>
-  | ActionType<typeof idpayTimelinePageGet>
   | ActionType<typeof idPayBeneficiaryDetailsGet>
-  | ActionType<typeof idPayOnboardingStatusGet>;
+  | ActionType<typeof idpayInitiativeGet>
+  | ActionType<typeof idPayOnboardingStatusGet>
+  | ActionType<typeof idpayTimelinePageGet>;

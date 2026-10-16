@@ -1,7 +1,7 @@
-import { IOButton, VStack } from "@pagopa/io-app-design-system";
+import { IOButton, IOMarkdown, VStack } from "@io-app/design-system";
 import I18n from "i18next";
 import { View } from "react-native";
-import IOMarkdown from "../../../../../components/IOMarkdown";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
@@ -30,19 +30,19 @@ type IssuerDynamicErrorBottomSheetContentConfig = {
 
 type UseItwIssuerDynamicErrorBottomSheetParams = {
   credential: CredentialMetadata;
-  localizedMessage: { title: string; description: string };
+  localizedMessage: { description: string; title: string };
   status?: ItwCredentialStatus;
 };
 
 /**
- * Maps the issuer dynamic error state to the additional mDL-only content/actions
- * shown in the bottom sheet.
+ * Maps the issuer dynamic error state to the additional mDL-only
+ * content/actions shown in the bottom sheet.
  *
- * - non-mDL credentials never render extra CTAs here
- * - expired mDL credentials show both update and remove actions
- * - invalid mDL credentials show both update and remove actions only when
- *   the issuer error code is `credential_invalid`
- * - any other mDL status falls back to the single remove action
+ * - Non-mDL credentials never render extra CTAs here
+ * - Expired mDL credentials show both update and remove actions
+ * - Invalid mDL credentials show both update and remove actions only when the
+ *   issuer error code is `credential_invalid`
+ * - Any other mDL status falls back to the single remove action
  */
 export const getIssuerDynamicErrorBottomSheetContentConfig = (
   credential: CredentialMetadata,
@@ -128,22 +128,22 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
         {contentConfig.actionMode === "updateAndRemove" && (
           <VStack space={16}>
             <IOButton
-              variant="solid"
               fullWidth
               label={I18n.t(
                 "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential"
               )}
               onPress={handleUpdateCredential}
+              variant="solid"
             />
             <View style={{ alignSelf: "center" }}>
               <IOButton
-                variant="link"
                 color="danger"
-                textAlign="center"
                 label={I18n.t(
                   "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
                 )}
                 onPress={confirmAndRemoveCredential}
+                textAlign="center"
+                variant="link"
               />
             </View>
           </VStack>
@@ -151,12 +151,12 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
         {contentConfig.actionMode === "removeOnly" && (
           <View style={{ marginBottom: 16 }}>
             <IOButton
-              variant="solid"
               fullWidth
               label={I18n.t(
-                "features.itWallet.presentation.alerts.mdl.invalid.cta"
+                "features.itWallet.presentation.bottomSheets.mDL.invalid.cta"
               )}
               onPress={confirmAndRemoveCredential}
+              variant="solid"
             />
           </View>
         )}

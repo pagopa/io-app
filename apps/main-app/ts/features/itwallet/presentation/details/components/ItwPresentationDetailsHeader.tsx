@@ -2,13 +2,15 @@ import {
   Body,
   ContentWrapper,
   H2,
-  Tag,
   makeFontStyleObject,
+  Tag,
   useIOExperimentalDesign
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import Color from "color";
+import I18n from "i18next";
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
+
 import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
@@ -16,13 +18,14 @@ import { useCredentialCardConfig } from "../../../common/components/ItwCredentia
 import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentialDetailCard.tsx";
 import { useItwAuthSourceName } from "../../../common/hooks/useItwAuthSourceName.ts";
 import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName.ts";
+import { itwShouldUpgradeCredentialSelector } from "../../../common/store/selectors";
 import { useTagPropsByStatus } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import {
-  itwCredentialStatusSelector,
-  itwCredentialsEidStatusSelector
+  itwCredentialsEidStatusSelector,
+  itwCredentialStatusSelector
 } from "../../../credentials/store/selectors";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
@@ -42,6 +45,12 @@ const ItwPresentationDetailsHeader = ({
   // Credential's header card is always in light mode
   const { color } = useCredentialCardConfig(credential.credentialType, "light");
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const needsItwUpgrade = useIOSelector(
+    itwShouldUpgradeCredentialSelector(
+      credential.credentialType,
+      credential.jwt.issuedAt
+    )
+  );
   const { status: credentialRawStatus } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -50,9 +59,22 @@ const ItwPresentationDetailsHeader = ({
     credential.credentialType === CredentialType.PID
       ? (eidStatus ?? "valid")
       : (credentialRawStatus ?? "valid");
-  const displayStatus = useItwDisplayCredentialStatus(rawStatus);
+  const displayStatus = useItwDisplayCredentialStatus(
+    rawStatus,
+    credential.credentialType
+  );
+
   const tagPropsByStatus = useTagPropsByStatus();
-  const statusTagProps = tagPropsByStatus[displayStatus];
+  const statusTagProps = useMemo<Tag | undefined>(() => {
+    if (needsItwUpgrade) {
+      return {
+        variant: "error",
+        text: I18n.t("features.itWallet.card.status.upgradePending")
+      };
+    }
+
+    return tagPropsByStatus[displayStatus];
+  }, [displayStatus, needsItwUpgrade, tagPropsByStatus]);
 
   const authSourceName = useItwAuthSourceName(credential.credentialType);
   const credentialName = useItwCredentialName(credential.credentialType);
@@ -67,20 +89,20 @@ const ItwPresentationDetailsHeader = ({
       />
 
       <ItwCredentialDetailCard
-        credentialType={credential.credentialType}
         credentialStatus={displayStatus}
+        credentialType={credential.credentialType}
       >
-        <ItwAvatar width={48} height={48} />
+        <ItwAvatar height={48} width={48} />
         <H2
-          style={styles.nameText}
           color={isLight ? "blueItalia-850" : "white"}
+          style={styles.nameText}
         >
           {credentialName}
         </H2>
         {authSourceName && (
           <Body
-            style={styles.authSourceText}
             color={isLight ? "blueItalia-850" : "white"}
+            style={styles.authSourceText}
           >
             {authSourceName}
           </Body>
@@ -96,7 +118,8 @@ const ItwPresentationDetailsHeader = ({
 };
 
 /**
- * @deprecated Legacy header component for presentation details, to be used until the new design is enabled for all users.
+ * @deprecated Legacy header component for presentation details, to be used
+ *   until the new design is enabled for all users.
  */
 const ItwPresentationDetailsHeaderLegacy = ({
   credential
@@ -115,13 +138,13 @@ const ItwPresentationDetailsHeaderLegacy = ({
       <View style={[styles.legacyHeader, { backgroundColor }]}>
         <ContentWrapper>
           <Text
+            accessibilityRole="header"
             style={[
               isExperimental
                 ? styles.legacyHeaderLabelExperimental
                 : styles.legacyHeaderLabel,
               { color: textColor }
             ]}
-            accessibilityRole="header"
           >
             {credentialName}
           </Text>
@@ -167,9 +190,7 @@ const styles = StyleSheet.create({
 
 const MemoizedItwPresentationDetailsHeader = memo(ItwPresentationDetailsHeader);
 
-/**
- * @deprecated
- */
+/** @deprecated */
 const MemoizedItwPresentationDetailsHeaderLegacy = memo(
   ItwPresentationDetailsHeaderLegacy
 );

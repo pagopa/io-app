@@ -1,9 +1,9 @@
-import { IOColors, LoadingSpinner } from "@pagopa/io-app-design-system";
-import * as R from "fp-ts/ReadonlyRecord";
+import { IOColors, LoadingSpinner } from "@io-app/design-system";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as R from "fp-ts/ReadonlyRecord";
 import {
   ReactNode,
   useCallback,
@@ -21,7 +21,11 @@ import {
   useCameraDevice,
   useCodeScanner
 } from "react-native-vision-camera";
+
+import { useIOStore } from "../../../store/hooks";
 import { AnimatedCameraMarker } from "../components/AnimatedCameraMarker";
+import { decodeIOBarcode } from "../types/decoders";
+import { BarcodeFailure } from "../types/failure";
 import {
   BarcodeFormat,
   IOBarcode,
@@ -29,81 +33,65 @@ import {
   IOBarcodeOrigin,
   IOBarcodeType
 } from "../types/IOBarcode";
-import { decodeIOBarcode } from "../types/decoders";
-import { BarcodeFailure } from "../types/failure";
-import { useIOStore } from "../../../store/hooks";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;
 };
 
 /**
- * Maps internal formats to external library formats
- * Necessary to work with the library {@link react-native-vision-camera}
+ * Maps internal formats to external library formats Necessary to work with the
+ * library {@link react-native-vision-camera}
  */
 const IOBarcodeFormats: IOBarcodeFormatsType = {
   DATA_MATRIX: BarcodeFormat.DATA_MATRIX,
   QR_CODE: BarcodeFormat.QR_CODE
 };
 
-/**
- * {@link useIOBarcodeCameraScanner} configuration
- */
+export type IOBarcodeCameraScanner = {
+  /** Component that renders the camera */
+  cameraComponent: ReactNode;
+  /** Returns true if the device has a torch */
+  hasTorch: boolean;
+  /** Returns true if the torch is on */
+  isTorchOn: boolean;
+  /** Toggles the torch states between "on" and "off" */
+  toggleTorch: () => void;
+};
+
+/** {@link useIOBarcodeCameraScanner} configuration */
 export type IOBarcodeCameraScannerConfiguration = {
   /**
-   * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
-   * If the format is not supported it will return an UNSUPPORTED_FORMAT error
+   * Accepted barcoded formats that can be detected. Leave empty to accept all
+   * formats. If the format is not supported it will return an
+   * UNSUPPORTED_FORMAT error
    */
   barcodeFormats?: Array<IOBarcodeFormat>;
   /**
-   * Accepted barcode types that can be detected. Leave empty to accept all types.
-   * If the type is not supported it will return an UNKNOWN_CONTENT error
+   * Accepted barcode types that can be detected. Leave empty to accept all
+   * types. If the type is not supported it will return an UNKNOWN_CONTENT
+   * error
    */
   barcodeTypes?: Array<IOBarcodeType>;
+  /** Disables the barcode scanner */
+  isDisabled?: boolean;
   /**
-   * Callback called when a barcode is successfully decoded
+   * If true, the component displays a loading indicator and disables all
+   * interactions
    */
+  isLoading?: boolean;
+  /** Callback called when a barcode is not successfully decoded */
+  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
+  /** Callback called when a barcode is successfully decoded */
   onBarcodeSuccess: (
     barcodes: Array<IOBarcode>,
     origin: IOBarcodeOrigin
   ) => void;
-  /**
-   * Callback called when a barcode is not successfully decoded
-   */
-  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
-  /**
-   * Disables the barcode scanner
-   */
-  isDisabled?: boolean;
-  /**
-   * If true, the component displays a loading indicator and disables all interactions
-   */
-  isLoading?: boolean;
-};
-
-export type IOBarcodeCameraScanner = {
-  /**
-   * Component that renders the camera
-   */
-  cameraComponent: ReactNode;
-  /**
-   * Returns true if the device has a torch
-   */
-  hasTorch: boolean;
-  /**
-   * Returns true if the torch is on
-   */
-  isTorchOn: boolean;
-  /**
-   * Toggles the torch states between "on" and "off"
-   */
-  toggleTorch: () => void;
 };
 
 /**
- * Utility functions to map external formats to internal formats
- * Converts {@link BarcodeFormat} to {@link IOBarcodeFormat}.
- * Returns null if no format is found
+ * Utility functions to map external formats to internal formats Converts
+ * {@link BarcodeFormat} to {@link IOBarcodeFormat}. Returns null if no format is
+ * found
  */
 const convertToIOBarcodeFormat = (
   format: BarcodeFormat
@@ -115,26 +103,25 @@ const convertToIOBarcodeFormat = (
   );
 
 /**
- * Utility functions to map internal formats to external formats
- * Converts {@link IOBarcodeFormat} to {@link BarcodeFormat}
+ * Utility functions to map internal formats to external formats Converts
+ * {@link IOBarcodeFormat} to {@link BarcodeFormat}
  */
 const convertFromIOBarcodeFormat = (format: IOBarcodeFormat): CodeType =>
   BarcodeFormat[format];
 
 /**
- * Retrieve the next barcode to handle from a list
- * of scansioned barcodes. This could be improved or
- * changed in relation to the business decisions.
+ * Retrieve the next barcode to handle from a list of scansioned barcodes. This
+ * could be improved or changed in relation to the business decisions.
  *
- * This function _should_ take performance in mind even
- * though the `barcodes` array should be quite small. This is
- * because in very low-end device the barcode scan is slower
- * than the previous implementation. In the current state it has
- * a complexity of ~O(n).
+ * This function _should_ take performance in mind even though the `barcodes`
+ * array should be quite small. This is because in very low-end device the
+ * barcode scan is slower than the previous implementation. In the current state
+ * it has a complexity of ~O(n).
  *
  * At the moment the precedence order is:
- *  1. QR Code
- *  2. Data Matrix
+ *
+ * 1. QR Code
+ * 2. Data Matrix
  */
 export const retrieveNextBarcode = (barcodes: Array<Code>): O.Option<Code> =>
   pipe(
@@ -149,9 +136,7 @@ export const retrieveNextBarcode = (barcodes: Array<Code>): O.Option<Code> =>
     O.chain(O.fromNullable)
   );
 
-/**
- * Delay for reactivating the QR scanner after a scan
- */
+/** Delay for reactivating the QR scanner after a scan */
 const QRCODE_SCANNER_REACTIVATION_TIME_MS = 3000;
 
 export const useIOBarcodeCameraScanner = ({
@@ -210,9 +195,7 @@ export const useIOBarcodeCameraScanner = ({
     [acceptedFormats, barcodeTypes, store]
   );
 
-  /**
-   * Handles the scanned barcodes and calls the callbacks for the results
-   */
+  /** Handles the scanned barcodes and calls the callbacks for the results */
   const handleScannedBarcodes = useCallback(
     (codes: Array<Code>) =>
       pipe(
@@ -225,7 +208,6 @@ export const useIOBarcodeCameraScanner = ({
           // After a scan (even if not successful) the decoding is disabled for a while
           // to avoid multiple scans of the same barcode
           setIsResting(true);
-          // eslint-disable-next-line functional/immutable-data
           scannerReactivateTimeoutHandler.current = setTimeout(() => {
             setIsResting(false);
           }, QRCODE_SCANNER_REACTIVATION_TIME_MS);
@@ -254,9 +236,7 @@ export const useIOBarcodeCameraScanner = ({
     onCodeScanned: handleScannedBarcodes
   });
 
-  /**
-   * Hook that clears the timeout handler on unmount
-   */
+  /** Hook that clears the timeout handler on unmount */
   useEffect(
     () => () => {
       clearTimeout(scannerReactivateTimeoutHandler.current);
@@ -264,18 +244,16 @@ export const useIOBarcodeCameraScanner = ({
     [scannerReactivateTimeoutHandler]
   );
 
-  /**
-   * Component that renders camera and marker
-   */
+  /** Component that renders camera and marker */
   const cameraComponent = (
     <View style={styles.cameraContainer} testID="BarcodeScannerCameraTestID">
       {device && (
         <Camera
-          style={styles.camera}
-          device={device}
           audio={false}
           codeScanner={codeScanner}
+          device={device}
           isActive={!isDisabled}
+          style={styles.camera}
           torch={isTorchOn ? "on" : "off"}
         />
       )}
@@ -309,7 +287,7 @@ const LoadingMarkerComponent = () => (
       justifyContent: "center"
     }}
   >
-    <LoadingSpinner size={48} color="white" />
+    <LoadingSpinner color="white" size={48} />
   </Animated.View>
 );
 

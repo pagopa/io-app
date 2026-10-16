@@ -1,7 +1,8 @@
+import { OperationDTO } from "@io-app/api-types/generated/definitions/idpay/OperationDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { OperationDTO } from "../../../../../definitions/idpay/OperationDTO";
+
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
@@ -20,6 +21,11 @@ const reducer = (
   action: Action
 ): IdPayTimelineState => {
   switch (action.type) {
+    case getType(idpayTimelineDetailsGet.failure):
+      return {
+        ...state,
+        details: pot.toError(state.details, action.payload)
+      };
     case getType(idpayTimelineDetailsGet.request):
       return {
         ...state,
@@ -29,11 +35,6 @@ const reducer = (
       return {
         ...state,
         details: pot.some(action.payload)
-      };
-    case getType(idpayTimelineDetailsGet.failure):
-      return {
-        ...state,
-        details: pot.toError(state.details, action.payload)
       };
   }
   return state;

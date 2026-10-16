@@ -1,12 +1,7 @@
-import {
-  Body,
-  ContentWrapper,
-  H2,
-  H6,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { Dimensions, Image, View } from "react-native";
+import { Body, ContentWrapper, H2, H6, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
+import { Dimensions, Image, View } from "react-native";
+
 import landingHeroImage from "../../../../../img/features/pn/activationLandingHero.png";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
@@ -20,41 +15,115 @@ import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../utils/url";
 import LoadingComponent from "../../../fci/components/LoadingComponent";
+import { SendFailureReason } from "../../../messages/utils";
 import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 import {
-  PnBannerFlowStateKey,
-  pnBannerFlowStateEnum
+  pnBannerFlowStateEnum,
+  PnBannerFlowStateKey
 } from "../screens/PnReminderBannerFlow";
 
 // ---------------------------- COMPONENT TYPES ---------------------------
 
-type SuccessFlowStateKeys = Extract<
-  PnBannerFlowStateKey,
-  "SUCCESS_ACTIVATION" | "ALREADY_ACTIVE"
->;
-type SuccessFlowStateProps = { flowState: SuccessFlowStateKeys };
-
-type ErrorFlowStateKeys =
+export type ErrorFlowStateKeys =
+  | "MISSING-SID"
   | Extract<
       PnBannerFlowStateKey,
       "FAILURE_ACTIVATION" | "FAILURE_DETAILS_FETCH"
-    >
-  | "MISSING-SID";
+    >;
 type ErrorFlowStateProps = {
   flowState: ErrorFlowStateKeys;
+  reason?: SendFailureReason;
 };
+
 type LoadingStateProps = {
   loadingState: "LOADING-ACTIVATION" | "LOADING-DATA";
+};
+type ResultCopy = { body: string; title: string };
+type SuccessFlowStateKeys = Extract<
+  PnBannerFlowStateKey,
+  "ALREADY_ACTIVE" | "SUCCESS_ACTIVATION"
+>;
+
+type SuccessFlowStateProps = { flowState: SuccessFlowStateKeys };
+
+// ---------------------------- COPY ---------------------------
+
+const getLoadingTitle = (
+  loadingState: LoadingStateProps["loadingState"]
+): string => {
+  switch (loadingState) {
+    case "LOADING-ACTIVATION":
+      return I18n.t(
+        "features.pn.reminderBanner.activationFlow.LOADING-ACTIVATION.title"
+      );
+    case "LOADING-DATA":
+      return I18n.t(
+        "features.pn.reminderBanner.activationFlow.LOADING-DATA.title"
+      );
+  }
+};
+
+const getSuccessCopy = (flowState: SuccessFlowStateKeys): ResultCopy => {
+  switch (flowState) {
+    case "ALREADY_ACTIVE":
+      return {
+        title: I18n.t(
+          "features.pn.reminderBanner.activationFlow.ALREADY_ACTIVE.title"
+        ),
+        body: I18n.t(
+          "features.pn.reminderBanner.activationFlow.ALREADY_ACTIVE.body"
+        )
+      };
+    case "SUCCESS_ACTIVATION":
+      return {
+        title: I18n.t(
+          "features.pn.reminderBanner.activationFlow.SUCCESS_ACTIVATION.title"
+        ),
+        body: I18n.t(
+          "features.pn.reminderBanner.activationFlow.SUCCESS_ACTIVATION.body"
+        )
+      };
+  }
+};
+
+const getErrorCopy = (flowState: ErrorFlowStateKeys): ResultCopy => {
+  switch (flowState) {
+    case "FAILURE_ACTIVATION":
+      return {
+        title: I18n.t(
+          "features.pn.reminderBanner.activationFlow.FAILURE_ACTIVATION.title"
+        ),
+        body: I18n.t(
+          "features.pn.reminderBanner.activationFlow.FAILURE_ACTIVATION.body"
+        )
+      };
+    case "FAILURE_DETAILS_FETCH":
+      return {
+        title: I18n.t(
+          "features.pn.reminderBanner.activationFlow.FAILURE_DETAILS_FETCH.title"
+        ),
+        body: I18n.t(
+          "features.pn.reminderBanner.activationFlow.FAILURE_DETAILS_FETCH.body"
+        )
+      };
+    case "MISSING-SID":
+      return {
+        title: I18n.t(
+          "features.pn.reminderBanner.activationFlow.MISSING-SID.title"
+        ),
+        body: I18n.t(
+          "features.pn.reminderBanner.activationFlow.MISSING-SID.body"
+        )
+      };
+  }
 };
 
 // ---------------------------- COMPONENTS ---------------------------
 
 const LoadingScreen = ({ loadingState }: LoadingStateProps) => (
   <LoadingComponent
+    captionTitle={getLoadingTitle(loadingState)}
     testID={`loading-${loadingState}`}
-    captionTitle={I18n.t(
-      `features.pn.reminderBanner.activationFlow.${loadingState}.title`
-    )}
   />
 );
 
@@ -68,52 +137,45 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
       sendBannerMixpanelEvents.activationSuccess();
     }
   });
+  const { title, body } = getSuccessCopy(flowState);
 
   return (
     <OperationResultScreenContent
-      testID={`success-${flowState}`}
-      title={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.title`
-      )}
-      subtitle={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.body`
-      )}
       action={{
         testID: "success-cta",
         label: I18n.t("global.buttons.close"),
         onPress: () => navigation.navigate(...navigateHomeParams)
       }}
       pictogram="success"
+      subtitle={body}
+      testID={`success-${flowState}`}
+      title={title}
     />
   );
 };
 
-const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
+const ErrorScreen = ({ flowState, reason }: ErrorFlowStateProps) => {
   const navigation = useIONavigation();
   useOnFirstRender(() => {
-    sendBannerMixpanelEvents.bannerKO(flowState);
+    sendBannerMixpanelEvents.bannerKO(flowState, reason);
   });
+  const { title, body } = getErrorCopy(flowState);
+
   return (
     <OperationResultScreenContent
-      testID={`error-${flowState}`}
-      title={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.title`
-      )}
-      subtitle={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.body`
-      )}
       action={{
         testID: "error-cta",
         label: I18n.t("global.buttons.close"),
         onPress: () => navigation.navigate(...navigateHomeParams)
       }}
       pictogram="umbrella"
+      subtitle={body}
+      testID={`error-${flowState}`}
+      title={title}
     />
   );
 };
 
-const ctaScreenBaseI18nKey =
-  "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT" as const;
 const CtaScreen = ({
   scrollViewAction
 }: {
@@ -124,39 +186,65 @@ const CtaScreen = ({
   return (
     <IOScrollView
       actions={scrollViewAction}
-      testID={`cta-${pnBannerFlowStateEnum.WAITING_USER_INPUT}`}
       contentContainerStyle={{ paddingHorizontal: 0 }}
+      testID={`cta-${pnBannerFlowStateEnum.WAITING_USER_INPUT}`}
     >
       <Image
+        accessibilityIgnoresInvertColors={true}
+        resizeMethod="scale"
+        resizeMode="contain"
         source={landingHeroImage}
         style={{
           width: screenWidth,
           height: screenWidth * (3 / 4)
         }}
-        resizeMethod="scale"
-        accessibilityIgnoresInvertColors={true}
-        resizeMode="contain"
       />
       <VSpacer size={24} />
       <ContentWrapper>
         <H2 accessibilityRole="header">
-          {I18n.t(`${ctaScreenBaseI18nKey}.title`)}
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.title"
+          )}
         </H2>
         <VSpacer size={24} />
 
-        <H6>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph1.title`)}</H6>
+        <H6>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph1.title"
+          )}
+        </H6>
         <VSpacer size={8} />
-        <Body>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph1.body`)}</Body>
+        <Body>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph1.body"
+          )}
+        </Body>
 
         <VSpacer size={24} />
-        <H6>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph2.title`)}</H6>
+        <H6>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph2.title"
+          )}
+        </H6>
         <VSpacer size={8} />
-        <Body>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph2.body`)}</Body>
+        <Body>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph2.body"
+          )}
+        </Body>
 
         <VSpacer size={24} />
-        <H6>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph3.title`)}</H6>
+        <H6>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph3.title"
+          )}
+        </H6>
         <VSpacer size={8} />
-        <Body>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph3.body`)}</Body>
+        <Body>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph3.body"
+          )}
+        </Body>
 
         <VSpacer size={24} />
         <Paragraph4 />
@@ -172,21 +260,33 @@ const Paragraph4 = () => {
   return (
     <View>
       <Body>
-        {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.pressing`)}
+        {I18n.t(
+          "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.pressing"
+        )}
         <Body weight="Semibold">
-          {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.activate`)}
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.activate"
+          )}
         </Body>
-        {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.readAndUnderstood`)}
+        {I18n.t(
+          "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.readAndUnderstood"
+        )}
         <Body
-          testID="privacy-url"
           asLink={true}
           onPress={() => openWebUrl(privacyUrl)}
+          testID="privacy-url"
         >
-          {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.privacyInfo`)}
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.privacyInfo"
+          )}
         </Body>
-        {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.andThe`)}
-        <Body testID="tos-url" asLink={true} onPress={() => openWebUrl(tosUrl)}>
-          {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.TOS`)}
+        {I18n.t(
+          "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.andThe"
+        )}
+        <Body asLink={true} onPress={() => openWebUrl(tosUrl)} testID="tos-url">
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.TOS"
+          )}
         </Body>
       </Body>
     </View>

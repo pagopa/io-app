@@ -1,12 +1,13 @@
-import { createStore, Store } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
-import { appReducer } from "../../../../store/reducers";
+import { createStore, Store } from "redux";
+
+import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import ROUTES from "../../../../navigation/routes";
-import ZendeskPanicMode from "../ZendeskPanicMode";
 import * as zendeskAction from "../../store/actions";
+import ZendeskPanicMode from "../ZendeskPanicMode";
 
 jest.useFakeTimers();
 

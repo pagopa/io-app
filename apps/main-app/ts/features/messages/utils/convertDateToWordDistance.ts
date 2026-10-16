@@ -2,13 +2,15 @@ import { differenceInCalendarDays } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+
 import { dateToAccessibilityReadableFormat } from "../../../utils/accessibility";
 import { format, formatDateAsLocal } from "../../../utils/dates";
 import { maybeNotNullyString } from "../../../utils/strings";
 
 /**
- * This function converts the distance from now to date in :
- * H.mm, yesterday, MM/DD (or DD/MM) and MM/DD/YYYY (or DD/MM/YYYY) depending on the system locale
+ * This function converts the distance from now to date in : H.mm, yesterday,
+ * MM/DD (or DD/MM) and MM/DD/YYYY (or DD/MM/YYYY) depending on the system
+ * locale
  */
 
 export function convertDateToWordDistance(
@@ -56,6 +58,7 @@ export function convertDateToWordDistance(
 
 /**
  * Convert a received {@link Date} in an accessible format
+ *
  * @param date
  */
 export const convertReceivedDateToAccessible = (date: Date) => {

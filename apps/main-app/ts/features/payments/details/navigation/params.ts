@@ -3,7 +3,7 @@ import { PaymentsMethodDetailsScreenNavigationParams } from "../screens/Payments
 import { PaymentsMethodDetailsRoutes } from "./routes";
 
 export type PaymentsMethodDetailsParamsList = {
+  [PaymentsMethodDetailsRoutes.IDPAY_INITIATIVE_DETAILS_LIST]: IdPayInstrumentInitiativesScreenRouteParams;
   [PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR]: undefined;
   [PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN]: PaymentsMethodDetailsScreenNavigationParams;
-  [PaymentsMethodDetailsRoutes.IDPAY_INITIATIVE_DETAILS_LIST]: IdPayInstrumentInitiativesScreenRouteParams;
 };

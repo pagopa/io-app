@@ -1,6 +1,6 @@
-import { trackTourGuideAction } from "../index";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { trackTourGuideAction } from "../index";
 
 jest.mock("../../../../mixpanel", () => ({
   mixpanelTrack: jest.fn()

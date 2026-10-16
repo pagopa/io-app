@@ -1,9 +1,8 @@
-/**
- * this saga checks at regular intervals the backend status
- */
+/** This saga checks at regular intervals the backend status */
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { call, fork, put, select } from "typed-redux-saga/macro";
+
 import { CdnBackendStatusClient } from "../api/backendPublic";
 import { contentRepoUrl } from "../config";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
@@ -32,16 +31,15 @@ export function* backendStatusSaga(
       return true;
     }
     return false;
-  } catch (e) {
+  } catch {
     // do nothing. it should be a network or decoding error
     return false;
   }
 }
 
 /**
- * this saga requests and checks in loop backend services status
- * if some of them is critical app could show a warning message or avoid
- * the whole usage.
+ * This saga requests and checks in loop backend services status if some of them
+ * is critical app could show a warning message or avoid the whole usage.
  */
 export function* backendStatusWatcherLoop(
   getStatus: ReturnType<typeof CdnBackendStatusClient>["getStatus"]

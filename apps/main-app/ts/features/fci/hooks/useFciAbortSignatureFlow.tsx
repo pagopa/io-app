@@ -2,10 +2,13 @@ import {
   FooterActions,
   IOMarkdownLite,
   useIOExperimentalDesign
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { Alert } from "react-native";
+
+import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton.ts";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { trackFciUserExit } from "../analytics";
@@ -14,18 +17,30 @@ import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
 
 /**
- * A hook that returns a function to present the abort signature flow bottom sheet
+ * - `showDialogOnBack` — when `true` (default), pressing back shows the abort
+ *   confirmation dialog. When `false`, back is handled internally: calls
+ *   `onBackPress` if provided, otherwise `navigation.goBack()`.
+ * - `onBackPress` — custom back handler used when `showDialogOnBack` is `false`.
  */
-export const useFciAbortSignatureFlow = () => {
+type Props = {
+  onBackPress?: () => void;
+  showDialogOnBack?: boolean;
+};
+
+/**
+ * A hook that returns a function to present the abort signature flow bottom
+ * sheet. Always intercepts the hardware back button; behavior is controlled via
+ * {@link Props}.
+ */
+export const useFciAbortSignatureFlow = (props?: Props) => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const route = useRoute();
   const dossierTitle = useIOSelector(fciSignatureRequestDossierTitleSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const { isExperimental } = useIOExperimentalDesign();
 
-  /**
-   * Callback function to abort the signature flow.
-   */
+  /** Callback function to abort the signature flow. */
   const abortSignatureFlow = () => {
     trackFciUserExit(route.name, fciEnvironment);
     dispatch(fciEndRequest());
@@ -63,9 +78,7 @@ export const useFciAbortSignatureFlow = () => {
     )
   });
 
-  /**
-   * Show an alert to confirm the abort signature flow.
-   */
+  /** Show an alert to confirm the abort signature flow. */
   const showAlert = () => {
     Alert.alert(I18n.t("features.fci.abort.alert.title"), undefined, [
       {
@@ -80,11 +93,23 @@ export const useFciAbortSignatureFlow = () => {
   };
 
   /**
-   * Overrides the present function of the bottom sheet to show an alert instead if the experimental design is enabled.
-   * This allows us to use an alert without changing single components which use the hook.
-   * TODO: remove when the experimental design will be enabled by default (SFEQS-2090)
+   * Overrides the present function of the bottom sheet to show an alert instead
+   * if the experimental design is enabled. This allows us to use an alert
+   * without changing single components which use the hook.
+   *
+   * TODO: remove when the experimental design will be enabled by default
+   * (SFEQS-2090)
    */
   const present = () => (isExperimental ? showAlert() : presentBs());
+
+  useHardwareBackButtonWhenFocused(() => {
+    if (props?.showDialogOnBack === false) {
+      (props.onBackPress ?? navigation.goBack)();
+    } else {
+      present();
+    }
+    return true;
+  });
 
   return {
     dismiss,

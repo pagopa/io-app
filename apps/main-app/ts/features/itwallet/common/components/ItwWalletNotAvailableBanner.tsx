@@ -1,18 +1,19 @@
 import {
   BodySmall,
+  Icon,
   IOAlertSpacing,
-  IOColors,
-  Icon
-} from "@pagopa/io-app-design-system";
+  IOColors
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { withWalletCategoryFilter } from "../../../wallet/utils";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/store/selectors";
 
 /**
- * Component shown when it is not possible to retrieve the wallet instance status
- * from the backend, because of unexpected errors.
+ * Component shown when it is not possible to retrieve the wallet instance
+ * status from the backend, because of unexpected errors.
  */
 export const ItwWalletNotAvailableBanner = withWalletCategoryFilter(
   "itw",
@@ -27,8 +28,8 @@ export const ItwWalletNotAvailableBanner = withWalletCategoryFilter(
 
     return (
       <View
-        testID="itwWalletNotAvailableBannerTestID"
         style={styles.bannerContainer}
+        testID="itwWalletNotAvailableBannerTestID"
       >
         <Icon name="warningFilled" />
         <BodySmall style={styles.textCenter}>

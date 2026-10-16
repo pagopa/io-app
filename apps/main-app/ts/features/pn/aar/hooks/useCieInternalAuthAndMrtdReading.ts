@@ -1,45 +1,44 @@
-import { useCallback, useEffect, useState } from "react";
+import { triggerHaptic } from "@io-app/design-system";
 import {
   CieManager,
-  ResultEncoding,
   type InternalAuthAndMrtdResponse,
-  type NfcError
+  type NfcError,
+  ResultEncoding
 } from "@pagopa/io-react-native-cie";
 import { constNull } from "fp-ts/lib/function";
-import HapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
+import I18n from "i18next";
+import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
-import i18n from "i18next";
+
 import { getProgressEmojis } from "../../../common/utils/cie";
 
 export const enum ReadStatus {
+  ERROR = "ERROR",
   IDLE = "IDLE",
   READING = "READING",
-  SUCCESS = "SUCCESS",
-  ERROR = "ERROR"
+  SUCCESS = "SUCCESS"
 }
+
+export type CieReadState = ErrorState | IdleState | ReadingState | SuccessState;
+
+type ErrorState = {
+  error: NfcError;
+  status: ReadStatus.ERROR;
+};
 
 type IdleState = {
   status: ReadStatus.IDLE;
 };
 
 type ReadingState = {
-  status: ReadStatus.READING;
   progress: number;
+  status: ReadStatus.READING;
 };
 
 type SuccessState = {
-  status: ReadStatus.SUCCESS;
   data: InternalAuthAndMrtdResponse;
+  status: ReadStatus.SUCCESS;
 };
-
-type ErrorState = {
-  status: ReadStatus.ERROR;
-  error: NfcError;
-};
-
-export type CieReadState = IdleState | ReadingState | SuccessState | ErrorState;
 
 export const isIdleState = (state: CieReadState): state is IdleState =>
   state.status === ReadStatus.IDLE;
@@ -84,7 +83,7 @@ export const useCieInternalAuthAndMrtdReading = () => {
         // Trigger a light haptic feedback on the start of the reading
         // when the tag is discovered
         if (event.name === "ON_TAG_DISCOVERED") {
-          HapticFeedback.trigger(HapticFeedbackTypes.impactHeavy);
+          triggerHaptic("impactHeavy");
         }
         setReadState({ status: ReadStatus.READING, progress: event.progress });
       }),
@@ -112,13 +111,13 @@ export const useCieInternalAuthAndMrtdReading = () => {
     if (Platform.OS === "ios") {
       CieManager.setAlertMessage(
         "readingInstructions",
-        `${getProgressEmojis(0)}\n${i18n.t(
+        `${getProgressEmojis(0)}\n${I18n.t(
           "features.pn.aar.flow.cieScanning.idle.status"
         )}`
       );
       CieManager.setAlertMessage(
         "readingSuccess",
-        `${getProgressEmojis(1)}\n${i18n.t(
+        `${getProgressEmojis(1)}\n${I18n.t(
           "features.pn.aar.flow.cieScanning.success.status"
         )}`
       );
@@ -133,7 +132,7 @@ export const useCieInternalAuthAndMrtdReading = () => {
   useEffect(() => {
     if (Platform.OS === "ios" && statusIsReading) {
       CieManager.setCurrentAlertMessage(
-        `${progressDots}\n${i18n.t(
+        `${progressDots}\n${I18n.t(
           "features.pn.aar.flow.cieScanning.reading.status"
         )}`
       );

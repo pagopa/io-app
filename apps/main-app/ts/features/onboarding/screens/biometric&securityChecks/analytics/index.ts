@@ -1,9 +1,9 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
-import { FlowType, buildEventProperties } from "../../../../../utils/analytics";
+import { buildEventProperties, FlowType } from "../../../../../utils/analytics";
 
-export function trackPinEducationalScreen(flow: FlowType) {
+export function trackBiometricActivationEducationalScreen(flow: FlowType) {
   void mixpanelTrack(
-    "ONBOARDING_EDU_PIN_CONFIGURATION",
+    "ONBOARDING_EDU_BIOMETRIC_ACTIVATION",
     buildEventProperties("UX", "screen_view", undefined, flow)
   );
 }
@@ -15,9 +15,9 @@ export function trackBiometricConfigurationEducationalScreen(flow: FlowType) {
   );
 }
 
-export function trackBiometricActivationEducationalScreen(flow: FlowType) {
+export function trackPinEducationalScreen(flow: FlowType) {
   void mixpanelTrack(
-    "ONBOARDING_EDU_BIOMETRIC_ACTIVATION",
+    "ONBOARDING_EDU_PIN_CONFIGURATION",
     buildEventProperties("UX", "screen_view", undefined, flow)
   );
 }

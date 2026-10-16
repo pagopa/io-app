@@ -1,72 +1,9 @@
-import { assign, fromCallback, fromPromise, setup } from "xstate";
-import { ItwSessionExpiredError } from "../../api/client";
-import {
-  RequestAccessTokenOutput,
-  RequestAccessTokenParams,
-  LoadContextOutput,
-  UpgradeCredentialOutput,
-  UpgradeCredentialParams
-} from "./actors";
-import { Context, getInitialContext } from "./context";
-import { CredentialUpgradeEvents } from "./events";
-import { mapUpgradeEventToFailure } from "./failure";
-import { Input } from "./input";
-import { Output } from "./output";
+import { assign } from "xstate";
 
-const notImplemented = () => {
-  throw new Error("Not implemented");
-};
+import { getInitialContext } from "./context";
+import { itwUpgradeSetup } from "./setup";
 
-export const itwCredentialUpgradeMachine = setup({
-  types: {
-    events: {} as CredentialUpgradeEvents,
-    context: {} as Context,
-    input: {} as Input,
-    output: {} as Output
-  },
-  actions: {
-    storeCredential: notImplemented,
-    pickNextCredential: assign({
-      credentialIndex: ({ context }) => context.credentialIndex + 1
-    }),
-    setFailedCredential: assign({
-      failedCredentials: ({ context, event }) => {
-        const current = context.credentials[context.credentialIndex];
-
-        const failedEvent = mapUpgradeEventToFailure(event);
-
-        const failedCredential = {
-          ...current,
-          failure: {
-            type: failedEvent.type,
-            reason: failedEvent.reason
-          }
-        };
-
-        return [...context.failedCredentials, failedCredential];
-      }
-    }),
-    handleSessionExpired: notImplemented
-  },
-  actors: {
-    requestAccessToken: fromPromise<
-      RequestAccessTokenOutput,
-      RequestAccessTokenParams
-    >(notImplemented),
-    loadContext: fromPromise<LoadContextOutput>(notImplemented),
-    upgradeCredential: fromPromise<
-      UpgradeCredentialOutput,
-      UpgradeCredentialParams
-    >(notImplemented),
-    waitForSessionRefresh: fromCallback(notImplemented)
-  },
-  guards: {
-    isSessionExpired: ({ event }) =>
-      "error" in event && event.error instanceof ItwSessionExpiredError,
-    hasMoreCredentials: ({ context }) =>
-      context.credentialIndex < context.credentials.length - 1
-  }
-}).createMachine({
+export const itwCredentialUpgradeMachine = itwUpgradeSetup.createMachine({
   /** @xstate-layout N4IgpgJg5mDOIC5QEsAuB3AwgJ0mAdqsgIYA2AqgA5TbERgCyxAxgBbL5gB0mrYzAaw5QAxAG0ADAF1EoSgHtYaZPPyyQAD0QA2ACwBOLgHZ92gBx6AzPssSjZgDQgAnogCMAVkvGATNo8eFmYS5mb6PgC+EU5oWLj0hCQU1LT0TGwc3Lz8QviiYm4ySCAKSkSq6loIlnpcEmYe4dpGHm76Nk6uCGZuXAbtYWESdroSHlExGDh4iWRUNHSMLOycXPOpYNMJRGQiEKrcHABu8gKHU-EEO8kLacuZaymLW1dJCMfyzMTl+JJSf+pSsoKsUqrYfFx9EZ-IE3D4fG4JLoPJ1EPCJJCvHCjLojG5bJYzBMQLEXrMbht0ituOtnpdySIwNhsPJsFxKKRvgAzVkAWy4pPp11pdwyqxFmyFbw+Xx+fwBxSBP0qiHBkOhAR68MRyNRCGxfXaULc5iM9jaRii0RA+Hk9HgxUFM2FT1F1MBimBalBiAAtNo9f66sMQ6GQwjiU7tkkJVSHtlBMIPWUVN7QFUPH5IQiLIEfEYQj5HC53K11f4LHYfJZGuZIxdnTHXUsxTTm2TrsmvSqELofHq3GauLZcR49OY-JYfLp63FG3Nm3HVph5LyOWBUJAu8qfQh7Lo+mZdDVkfoTRI3LoBx4MUY-K0zJZB24jzOrUA */
   id: "itwCredentialUpgradeMachine",
   context: ({ input }) => getInitialContext(input),
@@ -75,6 +12,7 @@ export const itwCredentialUpgradeMachine = setup({
     LoadingContext: {
       invoke: {
         src: "loadContext",
+        input: ({ context }) => ({ deps: context.deps }),
         onDone: {
           target: "Checking",
           actions: assign(({ event }) => ({
@@ -104,7 +42,9 @@ export const itwCredentialUpgradeMachine = setup({
           pid: context.pid,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           credential: context.credentials[context.credentialIndex],
-          issuanceMode: context.issuanceMode
+          deps: context.deps,
+          issuanceMode: context.issuanceMode,
+          itwVersion: context.itwVersion
         }),
         onDone: {
           target: "UpgradeCredential",
@@ -118,7 +58,7 @@ export const itwCredentialUpgradeMachine = setup({
     },
     UpgradeCredential: {
       description:
-        "Obtain the credential(s) with the WUA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
+        "Obtain the credential(s) with the KA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
       invoke: {
         src: "upgradeCredential",
         id: "upgradeCredential",
@@ -129,7 +69,9 @@ export const itwCredentialUpgradeMachine = setup({
           issuerConf: context.issuerConf,
           clientId: context.clientId,
           integrityKeyTag: context.integrityKeyTag,
-          issuanceMode: context.issuanceMode
+          issuanceMode: context.issuanceMode,
+          itwVersion: context.itwVersion,
+          deps: context.deps
         }),
         onDone: {
           actions: ["storeCredential"],
@@ -150,7 +92,8 @@ export const itwCredentialUpgradeMachine = setup({
     },
     WaitingForSessionRefresh: {
       invoke: {
-        src: "waitForSessionRefresh"
+        src: "waitForSessionRefresh",
+        input: ({ context }) => ({ deps: context.deps })
       },
       on: {
         "session-refresh-complete": { target: "UpgradeCredential" }
@@ -164,5 +107,3 @@ export const itwCredentialUpgradeMachine = setup({
     failedCredentials: context.failedCredentials
   })
 });
-
-export type ItwCredentialUpgradeMachine = typeof itwCredentialUpgradeMachine;

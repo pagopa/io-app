@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 import { isMethodOnboardable } from "../../utils";
 
@@ -11,9 +12,7 @@ export const selectPaymentOnboardingRequestResult = createSelector(
   onboarding => onboarding.result
 );
 
-/**
- * A payment method must be ONBOARDABLE and ENABLED in order to be onboarder
- */
+/** A payment method must be ONBOARDABLE and ENABLED in order to be onboarder */
 export const selectPaymentOnboardingMethods = createSelector(
   walletOnboardingSelector,
   onboarding =>

@@ -1,22 +1,28 @@
-import { call, take } from "typed-redux-saga/macro";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { CommonActions } from "@react-navigation/native";
-import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
+import { call, take } from "typed-redux-saga/macro";
+
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
+import { ReduxSagaEffect } from "../../../types/utils";
 import { emailAcknowledged } from "../../onboarding/store/actions";
 import {
+  hasProfileEmail,
   isProfileEmailValidated,
-  isProfileFirstOnBoarding,
-  hasProfileEmail
+  isProfileFirstOnBoarding
 } from "../../settings/common/store/utils/guards";
-import { ReduxSagaEffect } from "../../../types/utils";
 
 /**
  * Launch email saga that consists of:
+ *
  * If user have an existing email:
- * - acknowledgement screen if the email address is validated (eg SPID login) and this if the first onboarding
- * - if the email address is not validated, promt a screen to inform and remember about validation
- * - if the user has not an email address (eg CIE login), a screen will be prompt to insert his own email address
+ *
+ * - Acknowledgement screen if the email address is validated (eg SPID login) and
+ *   this if the first onboarding
+ * - If the email address is not validated, promt a screen to inform and remember
+ *   about validation
+ * - If the user has not an email address (eg CIE login), a screen will be prompt
+ *   to insert his own email address
  */
 export function* checkAcknowledgedEmailSaga(
   userProfile: InitializedProfile

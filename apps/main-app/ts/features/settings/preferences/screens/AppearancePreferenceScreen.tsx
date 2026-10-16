@@ -1,25 +1,21 @@
 import {
+  IOColors,
+  IOThemeDark,
+  IOThemeLight,
   ListItemHeader,
   RadioGroup,
   useIONewTypeface,
   useIOThemeContext,
-  VStack,
-  IOColors,
-  IOThemeLight,
-  IOThemeDark
-} from "@pagopa/io-app-design-system";
+  VStack
+} from "@io-app/design-system";
+import { setNavigationBarColor } from "@io-app/expo-navigation-bar-manager";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { constVoid } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { ReactElement, useState } from "react";
-import {
-  Appearance,
-  useColorScheme,
-  View,
-  NativeModules,
-  Platform
-} from "react-native";
+import { Appearance, Platform, useColorScheme, View } from "react-native";
+
 import { FONT_PERSISTENCE_KEY } from "../../../../common/context/DSTypefaceContext";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
@@ -38,27 +34,23 @@ import {
   trackAppearancePreferenceTypefaceUpdate
 } from "../../common/analytics";
 
-const { NavigationBarManager } = NativeModules;
-
 export const updateNavigationBarColor = (theme?: ColorModeChoice) => {
-  if (Platform.OS === "android" && NavigationBarManager && theme) {
+  if (Platform.OS === "android" && theme) {
     const resolvedTheme = theme === "auto" ? "light" : theme;
     const backgroundColor =
       resolvedTheme === "dark"
         ? IOColors[IOThemeDark["appBackground-primary"]]
         : IOColors[IOThemeLight["appBackground-primary"]];
 
-    NavigationBarManager.setNavigationBarColor(
-      resolvedTheme,
-      backgroundColor
-    ).catch(constVoid);
+    setNavigationBarColor(resolvedTheme, backgroundColor).catch(constVoid);
   }
 };
 
 /**
  * Display the appearance related settings
+ *
+ * @class
  * @param props
- * @constructor
  */
 const AppearancePreferenceScreen = (): ReactElement => {
   const store = useIOStore();
@@ -156,12 +148,12 @@ const AppearancePreferenceScreen = (): ReactElement => {
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("profile.preferences.list.appearance.title")
-      }}
       description={I18n.t("profile.preferences.list.appearance.subtitle")}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins
+      title={{
+        label: I18n.t("profile.preferences.list.appearance.title")
+      }}
     >
       <VStack space={24}>
         <View>
@@ -172,30 +164,30 @@ const AppearancePreferenceScreen = (): ReactElement => {
             )}
           />
           <RadioGroup<TypefaceChoice>
-            type="radioListItem"
             items={typefaceOptions}
-            selectedItem={selectedTypeface}
             onPress={handleTypefaceChange}
+            selectedItem={selectedTypeface}
+            type="radioListItem"
           />
         </View>
 
         <View>
           <ListItemHeader
-            iconName="theme"
-            label={I18n.t("profile.preferences.list.appearance.theme.title")}
             endElement={{
               type: "badge",
               componentProps: {
-                text: "Beta",
+                text: I18n.t("global.badges.beta"),
                 variant: "highlight"
               }
             }}
+            iconName="theme"
+            label={I18n.t("profile.preferences.list.appearance.theme.title")}
           />
           <RadioGroup<ColorModeChoice>
-            type="radioListItem"
             items={colorModeOptions}
-            selectedItem={selectedColorMode}
             onPress={handleColorModeChange}
+            selectedItem={selectedColorMode}
+            type="radioListItem"
           />
         </View>
       </VStack>

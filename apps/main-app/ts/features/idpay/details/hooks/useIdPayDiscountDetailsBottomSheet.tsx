@@ -1,23 +1,24 @@
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
+import { Divider, ListItemNav, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
+
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isIdPayQrCodeFeatureEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { IdPayBarcodeRoutes } from "../../barcode/navigation/routes";
 import { idPayGenerateBarcode } from "../../barcode/store/actions";
+import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store/selectors";
 import { IdPayPaymentRoutes } from "../../payment/navigation/routes";
 import {
   trackIDPayDetailCodeGeneration,
   trackIDPayDetailQRCodeScan
 } from "../analytics";
 import { idpayInitiativeDetailsSelector } from "../store";
-import { isIdPayQrCodeFeatureEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store/selectors";
 
 export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -56,7 +57,7 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
       {isQrCodeFeatureEnabled && (
         <>
           <ListItemNav
-            value={I18n.t(
+            accessibilityLabel={I18n.t(
               "idpay.initiative.discountDetails.bottomSheetOptions.scanQr"
             )}
             icon="qrCode"
@@ -68,7 +69,7 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
                 initiativeName
               });
             }}
-            accessibilityLabel={I18n.t(
+            value={I18n.t(
               "idpay.initiative.discountDetails.bottomSheetOptions.scanQr"
             )}
           />
@@ -76,10 +77,10 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
         </>
       )}
       <ListItemNav
-        icon="barcode"
-        value={I18n.t(
+        accessibilityLabel={I18n.t(
           "idpay.initiative.discountDetails.bottomSheetOptions.generateBarcode"
         )}
+        icon="barcode"
         onPress={() => {
           barcodePressHandler();
           trackIDPayDetailCodeGeneration({
@@ -87,7 +88,7 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
             initiativeName
           });
         }}
-        accessibilityLabel={I18n.t(
+        value={I18n.t(
           "idpay.initiative.discountDetails.bottomSheetOptions.generateBarcode"
         )}
       />

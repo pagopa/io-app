@@ -1,14 +1,14 @@
-import * as E from "fp-ts/lib/Either";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { getNetworkError } from "../../../../../utils/errors";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { walletAddCards } from "../../../../wallet/store/actions/cards";
+import * as analytics from "../../analytics";
 import { CdcClient } from "../../common/api/client";
 import { getCdcStatusWallet } from "../store/actions";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../../../../types/utils";
-import { walletAddCards } from "../../../../wallet/store/actions/cards";
-import { getNetworkError } from "../../../../../utils/errors";
-import * as analytics from "../../analytics";
 
 export function* handleGetCdcStatusWallet(
   getCdcStatus: CdcClient["getStatus"],
@@ -21,17 +21,14 @@ export function* handleGetCdcStatusWallet(
       cdcStatusRequest,
       action
     )) as unknown as SagaCallReturnType<typeof getCdcStatus>;
-    if (E.isLeft(cdcStatusResponse)) {
+    if ("left" in cdcStatusResponse) {
       yield* put(
         getCdcStatusWallet.failure({
           kind: "generic",
           value: new Error(readableReport(cdcStatusResponse.left))
         })
       );
-    } else if (
-      E.isRight(cdcStatusResponse) &&
-      cdcStatusResponse.right.status === 200
-    ) {
+    } else if (cdcStatusResponse.right.status === 200) {
       const cdcInfo = cdcStatusResponse.right.value;
       yield* put(
         walletAddCards([

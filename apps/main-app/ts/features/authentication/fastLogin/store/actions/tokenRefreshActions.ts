@@ -3,6 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../utils/environment";
 
@@ -32,9 +33,9 @@ export const clearTokenRefreshError = createStandardAction(
 )<void>();
 
 type RefreshSessionTokenRequestPayload = {
-  withUserInteraction: boolean;
   showIdentificationModalAtStartup: boolean;
   showLoader: boolean;
+  withUserInteraction: boolean;
 };
 export const refreshSessionToken = createAsyncAction(
   "REFRESH_SESSION_TOKEN_REQUEST",
@@ -42,20 +43,20 @@ export const refreshSessionToken = createAsyncAction(
   "REFRESH_SESSION_TOKEN_FAILURE"
 )<RefreshSessionTokenRequestPayload, string, Error>();
 
-type SessionTokenRefreshChoice = "yes" | "no";
+type SessionTokenRefreshChoice = "no" | "yes";
 export const askUserToRefreshSessionToken = createAsyncAction(
   "ASK_USER_TO_REFRESH_SESSION_TOKEN_REQUEST",
   "ASK_USER_TO_REFRESH_SESSION_TOKEN_SUCCESS",
   "ASK_USER_TO_REFRESH_SESSION_TOKEN_FAILURE"
 )<void, SessionTokenRefreshChoice, Error>();
 
-type PendingActionTypes = typeof savePendingAction | typeof clearPendingAction;
-
 export type FastLoginTokenRefreshActions =
-  | ActionType<typeof clearTokenRefreshError>
   | ActionType<PendingActionTypes>
-  | ActionType<typeof refreshSessionToken>
-  | ActionType<typeof askUserToRefreshSessionToken>;
+  | ActionType<typeof askUserToRefreshSessionToken>
+  | ActionType<typeof clearTokenRefreshError>
+  | ActionType<typeof refreshSessionToken>;
+
+type PendingActionTypes = typeof clearPendingAction | typeof savePendingAction;
 
 export const testable = isDevEnv
   ? {

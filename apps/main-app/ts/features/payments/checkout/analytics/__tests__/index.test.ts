@@ -1,4 +1,5 @@
 import { People } from "mixpanel-react-native";
+
 import { PaymentAnalyticsProps, trackPaymentOutcomeSuccess } from "..";
 import * as MIXPANEL from "../../../../../mixpanel";
 

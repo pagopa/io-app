@@ -1,30 +1,47 @@
-import { ListItemAction } from "@pagopa/io-app-design-system";
+import { ListItemAction } from "@io-app/design-system";
 import I18n from "i18next";
 import { memo, ReactNode, useMemo } from "react";
 import { View } from "react-native";
+
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
+import { trackItwCredentialManageConsent } from "../../proximity/analytics";
+import { itwProximityConsentsByCredentialTypeSelector } from "../../proximity/store/selectors/consents";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
-
-type ItwPresentationDetailFooterProps = {
-  credential: CredentialMetadata;
-};
 
 type IPatenteListItemActionProps = {
   docNumber?: string;
 };
 
+type ItwPresentationDetailFooterProps = {
+  credential: CredentialMetadata;
+};
+
 const ItwPresentationDetailsFooter = ({
   credential
 }: ItwPresentationDetailFooterProps) => {
+  const navigation = useIONavigation();
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const consentsSelector = useMemo(
+    () =>
+      itwProximityConsentsByCredentialTypeSelector(credential.credentialType),
+    [credential.credentialType]
+  );
+  const consents = useIOSelector(consentsSelector);
   const startAndTrackSupportRequest = useOfflineToastGuard(
     useItwStartCredentialSupportRequest(credential)
+  );
+  const handleSupportRequest = useNotAvailableToastGuard(
+    startAndTrackSupportRequest
   );
   const { confirmAndRemoveCredential } = useItwRemoveCredentialWithConfirm(
     credential,
@@ -38,53 +55,71 @@ const ItwPresentationDetailsFooter = ({
   return (
     <View>
       {credentialActions}
+      {consents.length > 0 && (
+        <ListItemAction
+          accessibilityLabel={I18n.t(
+            "features.itWallet.presentation.proximity.consentManagement.cta"
+          )}
+          icon="key"
+          label={I18n.t(
+            "features.itWallet.presentation.proximity.consentManagement.cta"
+          )}
+          onPress={() => {
+            trackItwCredentialManageConsent();
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
+              params: { credentialType: credential.credentialType }
+            });
+          }}
+          testID="manageConsentsActionTestID"
+          variant="primary"
+        />
+      )}
+      {!isItwL3 && (
+        <ListItemAction
+          accessibilityLabel={I18n.t(
+            "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+          )}
+          icon="message"
+          label={I18n.t(
+            "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+          )}
+          onPress={handleSupportRequest}
+          testID="requestAssistanceActionTestID"
+          variant="primary"
+        />
+      )}
       <ListItemAction
-        testID="requestAssistanceActionTestID"
-        variant="primary"
-        icon="message"
-        label={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
-        )}
         accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+          "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
         )}
-        onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
-      />
-      <ListItemAction
-        testID="removeCredentialActionTestID"
-        variant="danger"
         icon="trashcan"
         label={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
         )}
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-        )}
         onPress={confirmAndRemoveCredential}
+        testID="removeCredentialActionTestID"
+        variant="danger"
       />
     </View>
   );
 };
 
-/**
- * Returns custom CTAs for a credential
- */
+/** Returns custom CTAs for a credential */
 const getCredentialActions = (credential: CredentialMetadata): ReactNode => {
   const { credentialType, parsedCredential } = credential;
   const docNumber = getCredentialDocumentNumber(parsedCredential);
 
   return {
     mDL: [
-      <IPatenteListItemAction key="iPatenteActionMdl" docNumber={docNumber} />
+      <IPatenteListItemAction docNumber={docNumber} key="iPatenteActionMdl" />
     ],
     EuropeanHealthInsuranceCard: [],
     EuropeanDisabilityCard: []
   }[credentialType];
 };
 
-/**
- * Renders the IPatente service action item
- */
+/** Renders the IPatente service action item */
 const IPatenteListItemAction = ({ docNumber }: IPatenteListItemActionProps) => {
   const { startFIMSAuthenticationFlow } =
     useFIMSRemoteServiceConfiguration("iPatente");
@@ -107,11 +142,11 @@ const IPatenteListItemAction = ({ docNumber }: IPatenteListItemActionProps) => {
 
   return (
     <ListItemAction
-      testID="openIPatenteActionTestID"
-      variant="primary"
       icon="externalLink"
       label={label}
       onPress={startFimsAuthenticationFlow}
+      testID="openIPatenteActionTestID"
+      variant="primary"
     />
   );
 };

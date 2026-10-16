@@ -12,9 +12,7 @@ export type ItwSuperProperties = ItwBaseProperties & {
   OFFLINE_ACCESS_REASON: string;
 };
 
-/**
- * Updates only ITW Profile properties.
- */
+/** Updates only ITW Profile properties. */
 export const updateItwSuperProperties = (state: GlobalState) => {
   if (!isMixpanelInstanceInitialized()) {
     return;
@@ -47,7 +45,7 @@ export const buildItwSuperProperties = (
 
 const offlineReasonHandler = (
   state: GlobalState
-): OfflineAccessReasonEnum | "not_available" => {
+): "not_available" | OfflineAccessReasonEnum => {
   const offlineAccessReason = offlineAccessReasonSelector(state);
   return offlineAccessReason ? offlineAccessReason : "not_available";
 };

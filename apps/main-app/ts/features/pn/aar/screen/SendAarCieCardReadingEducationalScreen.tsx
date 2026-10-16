@@ -1,9 +1,10 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import cieScanningEducationalSource from "../../../../../img/features/itWallet/identification/itw_cie_nfc.gif";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
@@ -44,13 +45,8 @@ export const SendAarCieCardReadingEducationalScreen = ({
 
   useEffect(() => {
     switch (currentAarState.type) {
-      case sendAarFlowStates.cieScanning: {
-        const { type: _, ...params } = currentAarState;
-
-        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING, {
-          ...params,
-          animationTypeForReplace: "push"
-        });
+      case sendAarFlowStates.androidNFCActivation: {
+        navigation.replace(PN_ROUTES.SEND_AAR_NFC_ACTIVATION);
         break;
       }
       case sendAarFlowStates.cieCanInsertion: {
@@ -59,8 +55,12 @@ export const SendAarCieCardReadingEducationalScreen = ({
         });
         break;
       }
-      case sendAarFlowStates.androidNFCActivation: {
-        navigation.replace(PN_ROUTES.SEND_AAR_NFC_ACTIVATION);
+      case sendAarFlowStates.cieScanning: {
+        const { type: _, ...params } = currentAarState;
+        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING, {
+          ...params,
+          animationTypeForReplace: "push"
+        });
         break;
       }
       default:
@@ -107,47 +107,41 @@ export const SendAarCieCardReadingEducationalScreen = ({
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
+    <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
       <IOScrollViewWithLargeHeader
         actions={{
           type: "SingleButton",
           primary: {
             testID: "primaryActionID",
-            label: i18n.t(
+            label: I18n.t(
               "features.pn.aar.flow.cieScanningAdvisory.primaryAction"
             ),
             loading: isChecking,
-            onPress: handleGoNext
+            onPress: () => void handleGoNext()
           }
         }}
+        alwaysBounceVertical={false}
+        description={I18n.t(
+          "features.pn.aar.flow.cieScanningAdvisory.description"
+        )}
+        goBack={handleGoBack}
+        headerActionsProp={{ showHelp: true }}
+        includeContentMargins
         title={{
-          label: i18n.t("features.pn.aar.flow.cieScanningAdvisory.title", {
+          label: I18n.t("features.pn.aar.flow.cieScanningAdvisory.title", {
             denomination
           })
         }}
-        description={i18n.t(
-          "features.pn.aar.flow.cieScanningAdvisory.description"
-        )}
-        headerActionsProp={{ showHelp: true }}
-        contextualHelp={{
-          title: i18n.t(
-            "features.pn.aar.flow.delegated.cieContextualHelp.title"
-          ),
-          body: i18n.t("features.pn.aar.flow.delegated.cieContextualHelp.body")
-        }}
-        goBack={handleGoBack}
-        includeContentMargins
-        alwaysBounceVertical={false}
       >
         <VSpacer size={8} />
         <Image
+          accessibilityIgnoresInvertColors
           source={{
             uri
           }}
           style={{
             aspectRatio
           }}
-          accessibilityIgnoresInvertColors
         />
       </IOScrollViewWithLargeHeader>
     </SafeAreaView>

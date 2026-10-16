@@ -1,17 +1,34 @@
+import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { ITW_PRIVACY_URL, ITW_TOS_URL } from "../../../../../urls";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as urlUtils from "../../../../../utils/url";
 import * as identificationSelectors from "../../../identification/common/store/selectors";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { testEidIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
   ItwDiscoveryInfoScreen,
   ItwDiscoveryInfoScreenProps
 } from "../ItwDiscoveryInfoScreen";
+
+jest.mock("@io-app/design-system", () => {
+  const actual = jest.requireActual("@io-app/design-system");
+  const { View } = jest.requireActual("react-native");
+
+  return {
+    ...actual,
+    ForceScrollDownView: ({ children }: import("react").PropsWithChildren) => (
+      <View>{children}</View>
+    )
+  };
+});
 
 describe("ItwDiscoveryInfoScreen", () => {
   beforeEach(() => {
@@ -24,6 +41,33 @@ describe("ItwDiscoveryInfoScreen", () => {
       .mockReturnValue(true);
     const { getByTestId } = renderComponent("l3");
     expect(getByTestId("itwDiscoveryInfoComponentTestID")).toBeTruthy();
+  });
+
+  test.each([
+    {
+      name: "privacy policy",
+      label: "Informativa Privacy",
+      url: ITW_PRIVACY_URL
+    },
+    {
+      name: "terms of service",
+      label: "Termini e Condizioni d'uso",
+      url: ITW_TOS_URL
+    }
+  ])("should open the IT-Wallet $name link for level l3", ({ label, url }) => {
+    jest
+      .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(true);
+    const openWebUrlSpy = jest
+      .spyOn(urlUtils, "openWebUrl")
+      .mockImplementation(jest.fn());
+    const { getByText } = renderComponent("l3");
+
+    const link = getByText(label);
+    expect(link.props.accessibilityRole).toBe("link");
+
+    fireEvent.press(link);
+    expect(openWebUrlSpy).toHaveBeenCalledWith(url, expect.any(Function));
   });
 
   it("should render ItwNfcNotSupportedComponent for level l3 when NFC is not supported", () => {
@@ -50,7 +94,6 @@ describe("ItwDiscoveryInfoScreen", () => {
 
 const renderComponent = (level: EidIssuanceLevel | undefined) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
@@ -58,12 +101,16 @@ const renderComponent = (level: EidIssuanceLevel | undefined) => {
     const logic = itwEidIssuanceMachine.provide({
       actions: {
         onInit: jest.fn(),
-        navigateToTosScreen: () => undefined
+        navigateToTosScreen: () => undefined,
+        trackIntroScreen: jest.fn()
       }
     });
 
     return (
-      <ItwEidIssuanceMachineContext.Provider logic={logic}>
+      <ItwEidIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testEidIssuanceDeps() } }}
+      >
         <ItwDiscoveryInfoScreen {...props} />
       </ItwEidIssuanceMachineContext.Provider>
     );

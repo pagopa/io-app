@@ -1,22 +1,23 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { applyMiddleware, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { put, takeLatest } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
+
+import { applicationChangeState } from "../../../../../store/actions/application";
 import * as USEIO from "../../../../../store/hooks";
+import { appReducer } from "../../../../../store/reducers";
 import * as SID_SELECTOR from "../../../../../store/reducers/backendStatus/remoteConfig";
-import * as LOADING_PN_ACTIVATION from "../../../store/reducers/activation";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as PREFERENCES_FETCHER from "../../../hooks/usePnPreferencesFetcher";
+import PN_ROUTES from "../../../navigation/routes";
+import { pnActivationUpsert } from "../../../store/actions";
+import * as LOADING_PN_ACTIVATION from "../../../store/reducers/activation";
 import {
   PNActivationBannerFlowScreen,
   pnBannerFlowStateEnum
 } from "../PnReminderBannerFlow";
-import { pnActivationUpsert } from "../../../store/actions";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { GlobalState } from "../../../../../store/reducers/types";
-import PN_ROUTES from "../../../navigation/routes";
 
 jest.mock("../../../analytics/activationReminderBanner", () => {
   const actual = jest.requireActual(
@@ -30,56 +31,6 @@ jest.mock("../../../analytics/activationReminderBanner", () => {
   };
 });
 
-// const WAITING_USER_INPUT_BASE_MOCKS = () => {
-//   jest
-//     .spyOn(SID_SELECTOR, "pnMessagingServiceIdSelector")
-//     .mockImplementation(() => "SOME_SID" as ServiceId);
-//   jest
-//     .spyOn(LOADING_PN_ACTIVATION, "isLoadingPnActivationSelector")
-//     .mockImplementation(() => false);
-//   jest
-//     .spyOn(PREFERENCES_FETCHER, "usePnPreferencesFetcher")
-//     .mockImplementation(() => ({
-//       isError: false,
-//       isLoading: false,
-//       isEnabled: false
-//     }));
-// };
-
-// describe("PnActivationReminderBannerFlow", () => {
-//   beforeEach(() => {
-//     WAITING_USER_INPUT_BASE_MOCKS();
-//     jest.spyOn(USEIO, "useIODispatch").mockImplementation(() => jest.fn());
-//   });
-//   afterEach(() => {
-//     jest.restoreAllMocks();
-//   });
-
-//   for (const [_key, val] of Object.entries(pnBannerFlowStateEnum)) {
-//     // handles flow-induced screens
-//     it(`should match snapshot for state= ${val}`, () => {
-//       jest
-//         .spyOn(React, "useState")
-//         .mockImplementationOnce(() => [val, () => null]);
-//       const component = renderComponent();
-//       expect(component.toJSON()).toMatchSnapshot();
-
-//       switch (val) {
-//         case "FAILURE_DETAILS_FETCH":
-//         case "FAILURE_ACTIVATION":
-//           expect(component.getByTestId(`error-${val}`)).toBeDefined();
-//           break;
-//         case "WAITING_USER_INPUT":
-//           expect(component.getByTestId(`cta-${val}`)).toBeDefined();
-//           break;
-//         case "SUCCESS_ACTIVATION":
-//         case "ALREADY_ACTIVE":
-//           expect(component.getByTestId(`success-${val}`)).toBeDefined();
-//           break;
-//       }
-//     });
-//   }
-// });
 describe("error screens", () => {
   beforeEach(() => {
     jest
@@ -155,12 +106,6 @@ describe("loading screens + error interop", () => {
         const component = renderComponent();
         expect(component.toJSON()).toMatchSnapshot();
         switch (loadingState) {
-          case "both":
-            expect(component.getByTestId(`loading-LOADING-DATA`)).toBeDefined();
-            break;
-          case "data":
-            expect(component.getByTestId(`loading-LOADING-DATA`)).toBeDefined();
-            break;
           case "activation":
             // activation requires the preferences to not be in error.
             expect(
@@ -171,53 +116,18 @@ describe("loading screens + error interop", () => {
               )
             ).toBeDefined();
             break;
+          case "both":
+            expect(component.getByTestId(`loading-LOADING-DATA`)).toBeDefined();
+            break;
+          case "data":
+            expect(component.getByTestId(`loading-LOADING-DATA`)).toBeDefined();
+            break;
         }
       });
     }
   }
 });
 
-// describe("activation input screen", () => {
-//   beforeEach(() => {
-//     WAITING_USER_INPUT_BASE_MOCKS();
-//   });
-//   afterEach(() => {
-//     jest.restoreAllMocks();
-//   });
-//   for (const result of ["success", "error"] as const) {
-//     it(`should dispatch an upsert request and a tracking action on cta click, and correctly deliver a ${result} result. should then show the correct result screen`, () => {
-//       const mockSetState = jest.fn();
-
-//       const useStateMock = jest
-//         .spyOn(React, "useState")
-//         .mockImplementationOnce(() => [
-//           pnBannerFlowStateEnum.WAITING_USER_INPUT,
-//           mockSetState
-//         ]);
-
-//       const expectedState =
-//         result === "success"
-//           ? pnBannerFlowStateEnum.SUCCESS_ACTIVATION
-//           : pnBannerFlowStateEnum.FAILURE_ACTIVATION;
-
-//       const component = renderComponent(result === "success");
-//       expect(component).toBeDefined();
-//       const cta = component.getByTestId("enable-pn-cta");
-//       expect(cta).toBeDefined();
-//       fireEvent.press(cta);
-//       expect(mockSetState).toHaveBeenCalledWith(expectedState);
-//       expect(sendBannerMixpanelEvents.activationStart).toHaveBeenCalled();
-
-//       // ---- new screen rendered ----
-
-//       useStateMock.mockImplementationOnce(() => [expectedState, mockSetState]);
-//       const componentAgain = renderComponent();
-//       const expectedId = `${result}-${expectedState}`;
-//       const newScreen = componentAgain.getByTestId(expectedId);
-//       expect(newScreen).toBeDefined();
-//     });
-//   }
-// });
 function* mockSaga(sagaSuccess: boolean) {
   yield* takeLatest(
     pnActivationUpsert.request,
@@ -236,7 +146,7 @@ function* mockSaga(sagaSuccess: boolean) {
   );
 }
 
-const renderComponent = (sagaSuccess: boolean = true) => {
+const renderComponent = (sagaSuccess = true) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const saga = createSagaMiddleware();
   const store = createStore(

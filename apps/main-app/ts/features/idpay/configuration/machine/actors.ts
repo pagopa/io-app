@@ -1,14 +1,15 @@
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { IbanDTO } from "@io-app/api-types/generated/definitions/idpay/IbanDTO";
+import { IbanListDTO } from "@io-app/api-types/generated/definitions/idpay/IbanListDTO";
+import { IbanPutDTO } from "@io-app/api-types/generated/definitions/idpay/IbanPutDTO";
+import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { InstrumentDTO } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
+import { TypeEnum } from "@io-app/api-types/generated/definitions/pagopa/Wallet";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { fromCallback, fromPromise } from "xstate";
-import { PreferredLanguageEnum } from "../../../../../definitions/identity/PreferredLanguage";
-import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
-import { IbanListDTO } from "../../../../../definitions/idpay/IbanListDTO";
-import { IbanPutDTO } from "../../../../../definitions/idpay/IbanPutDTO";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
-import { InstrumentDTO } from "../../../../../definitions/idpay/InstrumentDTO";
-import { TypeEnum } from "../../../../../definitions/pagopa/Wallet";
+
 import { PaymentManagerClient } from "../../../../api/pagopa";
 import { PaymentManagerToken, Wallet } from "../../../../types/pagopa";
 import { SessionManager } from "../../../../utils/SessionManager";
@@ -88,7 +89,7 @@ export const createActorsImplementation = (
 
   const enrollIban = fromPromise<
     undefined,
-    { initiativeId: string; iban: IbanDTO | IbanPutDTO }
+    { iban: IbanDTO | IbanPutDTO; initiativeId: string }
   >(async ({ input }) => {
     try {
       const res = await idPayClient.enrollIban({
@@ -118,7 +119,7 @@ export const createActorsImplementation = (
           }
         )
       );
-    } catch (e) {
+    } catch {
       return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
     }
   });

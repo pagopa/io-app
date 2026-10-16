@@ -1,6 +1,7 @@
 import {
   Alert,
   Badge,
+  Banner,
   ContentWrapper,
   Divider,
   H6,
@@ -12,19 +13,20 @@ import {
   TabNavigation,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { clamp } from "lodash";
 import { useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { openWebUrl } from "../../../../utils/url.ts";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation.ts";
 import {
@@ -34,15 +36,20 @@ import {
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes.ts";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes.ts";
 import {
+  trackItwDiscoveryBanner,
+  trackItwDiscoveryBannerTap,
   trackShowCredentialsList,
   trackStartAddNewCredential
 } from "../../analytics";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 import { PoweredByItWalletText } from "../../common/components/PoweredByItWalletText.tsx";
 import { selectItwEnv } from "../../common/store/selectors/environment.ts";
 import {
-  itwIsActivationDisabledSelector,
-  itwIsL3EnabledSelector
-} from "../../common/store/selectors/preferences.ts";
+  itwIsL2FallbackSelector,
+  itwIsL3EnabledSelector,
+  itwShouldRenderL3UpgradeBannerSelector
+} from "../../common/store/selectors/index.ts";
+import { itwIsActivationDisabledSelector } from "../../common/store/selectors/preferences.ts";
 import {
   isL2Credential,
   isUpcomingCredential
@@ -59,6 +66,12 @@ import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalog
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
 
 const MAX_INDEX = 1;
+
+const fallbackBannerTrackingProperties = {
+  banner_id: "itwL2FallbackUpgradeBanner",
+  banner_page: ITW_ROUTES.L3_ONBOARDING,
+  banner_landing: ITW_SCREENVIEW_EVENTS.ITW_INTRO
+};
 
 const NFC_NOT_SUPPORTED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
@@ -83,31 +96,29 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
 
   return (
     <IOScrollViewWithLargeHeader
+      headerActionsProp={{ showHelp: true }}
       title={{
         label: I18n.t("features.wallet.onboarding.title")
       }}
-      contextualHelp={emptyContextualHelp}
-      faqCategories={["wallet", "wallet_methods"]}
-      headerActionsProp={{ showHelp: true }}
     >
       <View style={styles.tabs}>
         <TabNavigation
           key={`tab-${page}`}
-          tabAlignment="start"
-          selectedIndex={page}
           onItemPress={setPage}
+          selectedIndex={page}
+          tabAlignment="start"
         >
           <TabItem
-            label={I18n.t("features.wallet.onboarding.l3-sections.itw")}
             accessibilityLabel={I18n.t(
               "features.wallet.onboarding.l3-sections.itw"
             )}
+            label={I18n.t("features.wallet.onboarding.l3-sections.itw")}
           />
           <TabItem
-            label={I18n.t("features.wallet.onboarding.l3-sections.other")}
             accessibilityLabel={I18n.t(
               "features.wallet.onboarding.l3-sections.other"
             )}
+            label={I18n.t("features.wallet.onboarding.l3-sections.other")}
           />
         </TabNavigation>
       </View>
@@ -126,93 +137,119 @@ const ItwCredentialOnboardingSection = () => {
   const env = useIOSelector(selectItwEnv);
   const isWalletEnabled = useIOSelector(itwLifecycleIsValidSelector);
   const isITWalletEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
-
+  const isL2Fallback = useIOSelector(itwIsL2FallbackSelector);
+  const isUpgradeAvailable = useIOSelector(
+    itwShouldRenderL3UpgradeBannerSelector
+  );
   const isItWalletActivationDisabled = useIOSelector(
     itwIsActivationDisabledSelector
   );
   const catalogueCredentials = useIOSelector(
     itwAvailableCredentialsListSelector
   );
+  const shouldRenderUpgradeBanner =
+    !isItWalletActivationDisabled && isL2Fallback && isUpgradeAvailable;
+
+  useFocusEffect(
+    useCallback(() => {
+      if (shouldRenderUpgradeBanner) {
+        trackItwDiscoveryBanner(fallbackBannerTrackingProperties);
+      }
+    }, [shouldRenderUpgradeBanner])
+  );
+
+  const startItWalletActivation = useOfflineToastGuard(() => {
+    trackItwDiscoveryBannerTap(fallbackBannerTrackingProperties);
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: { level: "l3" }
+    });
+  });
 
   // Show upcoming credentials only if env is "pre"
   const shouldShowUpcoming = env === "pre";
+  const shouldShowL2Credentials = isItWalletActivationDisabled || isL2Fallback;
   const shouldShowRestrictedAction =
-    isWalletEnabled && !isITWalletEnabled && !isItWalletActivationDisabled;
+    isWalletEnabled &&
+    !isITWalletEnabled &&
+    !isItWalletActivationDisabled &&
+    !isL2Fallback;
 
   const credentialsToDisplay = useMemo(() => {
-    if (isItWalletActivationDisabled) {
+    if (shouldShowL2Credentials) {
       return catalogueCredentials.filter(c => isL2Credential(c.type));
     }
     if (shouldShowUpcoming) {
       return catalogueCredentials;
     }
     return catalogueCredentials.filter(c => !isUpcomingCredential(c.type));
-  }, [catalogueCredentials, shouldShowUpcoming, isItWalletActivationDisabled]);
+  }, [catalogueCredentials, shouldShowUpcoming, shouldShowL2Credentials]);
 
-  const { obtained, notObtained } = useIOSelector(
+  const { notObtained } = useIOSelector(
     makeItwCredentialsByPresenceSelector(credentialsToDisplay)
   );
 
   return (
     <View>
       <View style={styles.header}>
-        <H6 role="heading" color={theme["textBody-tertiary"]}>
+        <H6 color={theme["textBody-tertiary"]} role="heading">
           {I18n.t("features.wallet.onboarding.sections.itw")}
         </H6>
-        {!isItWalletActivationDisabled && <PoweredByItWalletText />}
+        {!shouldShowL2Credentials && <PoweredByItWalletText />}
       </View>
       <VStack space={24}>
         {/* Available credentials for issuance */}
         <AsyncCredentialsCatalogue>
           <ItwOnboardingModuleCredentialsList
             credentialsToDisplay={notObtained}
-            isL2Credential={isItWalletActivationDisabled}
+            isL2Credential={shouldShowL2Credentials}
           />
         </AsyncCredentialsCatalogue>
 
         {isItWalletActivationDisabled && (
           <Alert
-            variant="info"
-            content={I18n.t("features.wallet.onboarding.no-nfc-banner.content")}
             action={I18n.t("features.wallet.onboarding.no-nfc-banner.cta")}
+            content={I18n.t("features.wallet.onboarding.no-nfc-banner.content")}
             onPress={() => openWebUrl(NFC_NOT_SUPPORTED_FAQ_URL)}
+            variant="info"
           />
         )}
 
-        {/* Obtained credentials  */}
-        {obtained.length > 0 && (
-          <VStack space={8}>
-            <View style={styles.header}>
-              <H6 role="heading" color={theme["textBody-tertiary"]}>
-                {I18n.t("features.wallet.onboarding.l3-sections.added")}
-              </H6>
-            </View>
-            <ItwOnboardingModuleCredentialsList
-              credentialsToDisplay={obtained}
-            />
-          </VStack>
-        )}
-
-        {/* Documenti su IO fallback action */}
         {shouldShowRestrictedAction ? (
           <>
             <Divider />
             <IOButton
-              testID={"restricted-action-testID"}
-              variant="link"
+              accessibilityLabel={I18n.t(
+                "features.wallet.onboarding.cta.addRestricted"
+              )}
               label={I18n.t("features.wallet.onboarding.cta.addRestricted")}
+              numberOfLines={2}
               onPress={() =>
                 navigation.replace(ITW_ROUTES.MAIN, {
                   screen: ITW_ROUTES.L2_ONBOARDING
                 })
               }
-              accessibilityLabel={I18n.t(
-                "features.wallet.onboarding.cta.addRestricted"
-              )}
-              numberOfLines={2}
+              testID={"restricted-action-testID"}
+              variant="link"
             />
           </>
         ) : null}
+
+        {shouldRenderUpgradeBanner && (
+          <Banner
+            action={I18n.t(
+              "features.itWallet.onboarding.fallbackBanner.action"
+            )}
+            color="turquoise"
+            content={I18n.t(
+              "features.itWallet.onboarding.fallbackBanner.content"
+            )}
+            onPress={startItWalletActivation}
+            pictogramName="premiumCredentials"
+            testID="itwL2FallbackUpgradeBannerTestID"
+            title={I18n.t("features.itWallet.onboarding.fallbackBanner.title")}
+          />
+        )}
       </VStack>
     </View>
   );
@@ -256,7 +293,7 @@ const OtherCardsOnboardingSection = () => {
   const cgnModule = useMemo(
     () =>
       isCgnLoading ? (
-        <ModuleCredential testID="cgnModuleLoadingTestID" isLoading={true} />
+        <ModuleCredential isLoading={true} testID="cgnModuleLoadingTestID" />
       ) : isL3Enabled ? (
         <ModuleCredential {...cgnBaseProps} />
       ) : (

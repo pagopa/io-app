@@ -1,10 +1,11 @@
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
+import { BonusVisibilityEnum } from "@io-app/api-types/generated/definitions/content/BonusVisibility";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
-import { BonusAvailable } from "../../../../../../../definitions/content/BonusAvailable";
-import { BonusVisibilityEnum } from "../../../../../../../definitions/content/BonusVisibility";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { backendStatusLoadSuccess } from "../../../../../../store/actions/backendStatus";
 import { useIODispatch } from "../../../../../../store/hooks";
@@ -12,9 +13,9 @@ import { appReducer } from "../../../../../../store/reducers";
 import { baseRawBackendStatus } from "../../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { loadAvailableBonuses } from "../../../../common/store/actions/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../../../common/utils";
 import * as bonusUtils from "../../../../common/utils";
-import { loadAvailableBonuses } from "../../../../common/store/actions/availableBonusesTypes";
 import CGN_ROUTES from "../../../navigation/routes";
 import { cgnActivationStart } from "../../../store/actions/activation";
 import CgnCTAStartOnboardingScreen from "../CgnCTAStartActivationScreen";

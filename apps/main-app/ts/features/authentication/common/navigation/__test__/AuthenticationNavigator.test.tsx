@@ -1,7 +1,8 @@
+import { InitialState, NavigationContainer } from "@react-navigation/native";
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
-import { NavigationContainer, InitialState } from "@react-navigation/native";
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

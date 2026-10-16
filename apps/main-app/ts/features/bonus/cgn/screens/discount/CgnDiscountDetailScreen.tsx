@@ -1,11 +1,12 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { DiscountCodeTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountCodeType";
+import { IOToast } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { Platform, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import I18n from "i18next";
-import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
+
 import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import {
@@ -16,8 +17,9 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { profileSelector } from "../../../../settings/common/store/selectors";
+import { buildEventProperties } from "../../../../../utils/analytics";
 import { openWebUrl } from "../../../../../utils/url";
+import { profileSelector } from "../../../../settings/common/store/selectors";
 import { CgnDiscountContent } from "../../components/merchants/discount/CgnDiscountContent";
 import { CgnDiscountHeader } from "../../components/merchants/discount/CgnDiscountHeader";
 import { useCgnStyle } from "../../hooks/useCgnStyle";
@@ -37,7 +39,21 @@ import {
 } from "../../store/reducers/merchants";
 import { cgnOtpDataSelector } from "../../store/reducers/otp";
 import { getCgnUserAgeRange } from "../../utils/dates";
-import { buildEventProperties } from "../../../../../utils/analytics";
+
+const getDiscountCodeCtaLabel = (
+  discountCodeType: DiscountCodeTypeEnum
+): string => {
+  switch (discountCodeType) {
+    case DiscountCodeTypeEnum.api:
+      return I18n.t("bonus.cgn.merchantDetail.discount.cta.api");
+    case DiscountCodeTypeEnum.bucket:
+      return I18n.t("bonus.cgn.merchantDetail.discount.cta.bucket");
+    case DiscountCodeTypeEnum.landingpage:
+      return I18n.t("bonus.cgn.merchantDetail.discount.cta.landingpage");
+    case DiscountCodeTypeEnum.static:
+      return I18n.t("bonus.cgn.merchantDetail.discount.cta.static");
+  }
+};
 
 const CgnDiscountDetailScreen = () => {
   const dispatch = useIODispatch();
@@ -103,22 +119,6 @@ const CgnDiscountDetailScreen = () => {
       return;
     }
     switch (merchantDetails?.discountCodeType) {
-      case DiscountCodeTypeEnum.landingpage: {
-        const landingPageUrl = discountDetails?.landingPageUrl;
-        const referer = discountDetails?.landingPageReferrer;
-        if (!landingPageUrl) {
-          return;
-        }
-        mixpanelCgnEvent("CGN_LANDING_PAGE_REQUEST");
-        navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
-          screen: CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW,
-          params: {
-            landingPageUrl,
-            landingPageReferrer: referer as string
-          }
-        });
-        break;
-      }
       case DiscountCodeTypeEnum.api:
         mixpanelCgnEvent("CGN_OTP_START_REQUEST");
         dispatch(
@@ -141,6 +141,22 @@ const CgnDiscountDetailScreen = () => {
           })
         );
         break;
+      case DiscountCodeTypeEnum.landingpage: {
+        const landingPageUrl = discountDetails?.landingPageUrl;
+        const referer = discountDetails?.landingPageReferrer;
+        if (!landingPageUrl) {
+          return;
+        }
+        mixpanelCgnEvent("CGN_LANDING_PAGE_REQUEST");
+        navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
+          screen: CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW,
+          params: {
+            landingPageUrl,
+            landingPageReferrer: referer as string
+          }
+        });
+        break;
+      }
       case DiscountCodeTypeEnum.static:
         if (!discountDetails?.staticCode) {
           return;
@@ -180,9 +196,7 @@ const CgnDiscountDetailScreen = () => {
 
   const renderActions = (): IOScrollViewActions | undefined => {
     const primary = merchantDetails?.discountCodeType && {
-      label: I18n.t(
-        `bonus.cgn.merchantDetail.discount.cta.${merchantDetails.discountCodeType}`
-      ),
+      label: getDiscountCodeCtaLabel(merchantDetails.discountCodeType),
       onPress: onPressDiscountCode,
       disabled: loading,
       loading,
@@ -227,9 +241,9 @@ const CgnDiscountDetailScreen = () => {
       <>
         <FocusAwareStatusBar backgroundColor={backgroundColor} />
         <IOScrollView
+          actions={renderActions()}
           animatedRef={animatedScrollViewRef}
           includeContentMargins={false}
-          actions={renderActions()}
         >
           {Platform.OS === "ios" && (
             <View

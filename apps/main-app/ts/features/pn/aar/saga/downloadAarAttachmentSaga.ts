@@ -1,9 +1,11 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { AARProblemJson } from "@io-app/api-types/generated/definitions/pn/aar/AARProblemJson";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { isLeft } from "fp-ts/lib/Either";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { call, cancelled, delay, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
+
 import { apiUrlPrefix, fetchTimeout } from "../../../../config";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
@@ -11,7 +13,12 @@ import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { downloadAttachment } from "../../../messages/store/actions";
-import { unknownToReason } from "../../../messages/utils";
+import {
+  decodeSendFailureReason,
+  SendFailureReason,
+  unknownToReason,
+  WrappedSendError
+} from "../../../messages/utils";
 import {
   attachmentDisplayName,
   pdfSavePath,
@@ -24,15 +31,16 @@ import {
 } from "../analytics";
 import { createSendAarClientWithLollipop } from "../api/client";
 import { isAarAttachmentTtlError } from "../utils/aarErrorMappings";
-import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { SendAarFailurePhase } from "../utils/stateUtils";
 class SendServerError extends Error {
   public readonly aarProblemJson: AARProblemJson;
-  constructor(message: string, aarProblemJson: AARProblemJson) {
+  public readonly status: number;
+  constructor(message: string, aarProblemJson: AARProblemJson, status: number) {
     super(message);
 
     this.name = "SendServerError";
     this.aarProblemJson = aarProblemJson;
+    this.status = status;
   }
 }
 
@@ -78,7 +86,8 @@ export function* downloadAarAttachmentSaga(
     );
   } catch (e) {
     const reason = unknownToReason(e);
-    if (isFastLoginError(e)) {
+    const isFastLogin = isFastLoginError(e);
+    if (isFastLogin) {
       yield* call(
         trackSendAarFailure,
         sendAarFailurePhase,
@@ -96,11 +105,19 @@ export function* downloadAarAttachmentSaga(
       );
     }
 
+    const apiFailureReason = isFastLogin
+      ? SendFailureReason.SESSION_EXPIRED
+      : e instanceof SendServerError
+        ? decodeSendFailureReason({ kind: "http_status", status: e.status })
+        : e instanceof WrappedSendError
+          ? e.reason
+          : decodeSendFailureReason({ kind: "caught", error: e });
+
     yield* put(
       downloadAttachment.failure({
         attachment,
         messageId,
-        error: Error(reason)
+        error: new WrappedSendError(apiFailureReason, reason)
       })
     );
   } finally {
@@ -110,6 +127,69 @@ export function* downloadAarAttachmentSaga(
       yield* put(downloadAttachment.cancel({ attachment, messageId }));
     }
   }
+}
+
+function* getAttachmentMetadata(
+  bearerToken: string,
+  keyInfo: KeyInfo,
+  attachmentUrl: string,
+  useUATEnvironment: boolean,
+  mandateId: string | undefined,
+  action: ActionType<typeof downloadAttachment.request>
+): Generator<ReduxSagaEffect, number | string> {
+  const sendAarClient = createSendAarClientWithLollipop(apiUrlPrefix, keyInfo);
+  const getAttachmentMetadataFactory = sendAarClient.getNotificationAttachment;
+
+  const urlEncodedBase64AttachmentUrl = encodeAttachmentUrl(attachmentUrl);
+
+  const request = getAttachmentMetadataFactory({
+    Bearer: `Bearer ${bearerToken}`,
+    urlEncodedBase64AttachmentUrl,
+    "x-pagopa-pn-io-src": "QR_CODE",
+    mandateId,
+    isTest: useUATEnvironment
+  });
+
+  const responseEither = (yield* call(
+    withRefreshApiCall,
+    request,
+    action
+  )) as SagaCallReturnType<typeof getAttachmentMetadataFactory>;
+
+  if (isLeft(responseEither)) {
+    const reason = readableReportSimplified(responseEither.left);
+    throw new WrappedSendError(
+      SendFailureReason.DECODE_ERROR,
+      `Decoding failure (${reason})`
+    );
+  }
+
+  const { status, value } = responseEither.right;
+  if (status === 401) {
+    throw fastLoginError;
+  }
+  if (status === 500) {
+    const errorCode = value.errors?.[0]?.code;
+    if (isAarAttachmentTtlError(errorCode)) {
+      yield* call(trackSendAarNotificationDetailTtlError);
+      throw new SendServerError(errorCode, value, status);
+    }
+  }
+  if (status !== 200) {
+    const reason = aarProblemJsonAnalyticsReport(status, value);
+    throw new SendServerError(reason, value, status);
+  }
+
+  const { retryAfter, url } = value;
+  if (url != null && url.trim().length > 0) {
+    return url;
+  } else if (retryAfter != null) {
+    return retryAfter;
+  }
+  throw new WrappedSendError(
+    SendFailureReason.MALFORMED_RESPONSE,
+    `Both 'retryAfter' and 'url' fields are missing or invalid (${retryAfter}) (${url})`
+  );
 }
 
 function* getAttachmentPrevalidatedUrl(
@@ -139,65 +219,6 @@ function* getAttachmentPrevalidatedUrl(
     );
     yield* delay(retryAfterMilliseconds);
   }
-}
-
-function* getAttachmentMetadata(
-  bearerToken: string,
-  keyInfo: KeyInfo,
-  attachmentUrl: string,
-  useUATEnvironment: boolean,
-  mandateId: string | undefined,
-  action: ActionType<typeof downloadAttachment.request>
-): Generator<ReduxSagaEffect, string | number> {
-  const sendAarClient = createSendAarClientWithLollipop(apiUrlPrefix, keyInfo);
-  const getAttachmentMetadataFactory = sendAarClient.getNotificationAttachment;
-
-  const urlEncodedBase64AttachmentUrl = encodeAttachmentUrl(attachmentUrl);
-
-  const request = getAttachmentMetadataFactory({
-    Bearer: `Bearer ${bearerToken}`,
-    urlEncodedBase64AttachmentUrl,
-    "x-pagopa-pn-io-src": "QR_CODE",
-    mandateId,
-    isTest: useUATEnvironment
-  });
-
-  const responseEither = (yield* call(
-    withRefreshApiCall,
-    request,
-    action
-  )) as SagaCallReturnType<typeof getAttachmentMetadataFactory>;
-
-  if (isLeft(responseEither)) {
-    const reason = readableReportSimplified(responseEither.left);
-    throw Error(`Decoding failure (${reason})`);
-  }
-
-  const { status, value } = responseEither.right;
-  if (status === 401) {
-    throw fastLoginError;
-  }
-  if (status === 500) {
-    const errorCode = value.errors?.[0]?.code;
-    if (isAarAttachmentTtlError(errorCode)) {
-      yield* call(trackSendAarNotificationDetailTtlError);
-      throw new SendServerError(errorCode, value);
-    }
-  }
-  if (status !== 200) {
-    const reason = aarProblemJsonAnalyticsReport(status, value);
-    throw new SendServerError(reason, value);
-  }
-
-  const { retryAfter, url } = value;
-  if (url != null && url.trim().length > 0) {
-    return url;
-  } else if (retryAfter != null) {
-    return retryAfter;
-  }
-  throw Error(
-    `Both 'retryAfter' and 'url' fields are missing or invalid (${retryAfter}) (${url})`
-  );
 }
 
 const encodeAttachmentUrl = (inputAttachmentUrl: string): string => {
@@ -231,7 +252,11 @@ function* downloadAttachmentFromPrevalidatedUrl(
   if (status === 200) {
     return result.path();
   }
-  throw Error(
+  if (status === 401) {
+    throw fastLoginError;
+  }
+  throw new WrappedSendError(
+    decodeSendFailureReason({ kind: "http_status", status }),
     `Download from prevalidated url failed: ${
       timeout ? "Timeout " : ""
     }${status} ${state} ${respType}`

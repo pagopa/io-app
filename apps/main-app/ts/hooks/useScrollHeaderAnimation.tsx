@@ -1,10 +1,9 @@
-/* eslint-disable functional/immutable-data */
 import {
   HeaderSecondLevel,
   hexToRgba,
   IOColors,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, useLayoutEffect, useMemo } from "react";
 import { ColorValue } from "react-native";
@@ -17,20 +16,21 @@ import {
   useAnimatedStyle,
   useSharedValue
 } from "react-native-reanimated";
+
 import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { IOListView } from "../components/ui/IOListView";
 
 const GRADIENT_OPACITY_SCROLL_TRIGGER = 0.85;
 const EXTRA_COLOR_STOPS = 20;
 
-type IOViewHeaderScrollValues = ComponentProps<
-  typeof HeaderSecondLevel
->["scrollValues"];
-
 export type ScrollAnimationHookProps = {
   headerConfig?: ComponentProps<typeof IOListView>["headerConfig"];
   snapOffset?: number;
 };
+
+type IOViewHeaderScrollValues = ComponentProps<
+  typeof HeaderSecondLevel
+>["scrollValues"];
 
 export const useScrollHeaderAnimation = ({
   snapOffset,

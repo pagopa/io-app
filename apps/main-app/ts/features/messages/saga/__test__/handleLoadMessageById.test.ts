@@ -2,17 +2,17 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { loadMessageById as action } from "../../store/actions";
-import { paymentValidInvalidAfterDueDate } from "../../__mocks__/message";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { handleLoadMessageById } from "../handleLoadMessageById";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { getCommunicationClient } from "../commons";
-import { toUIMessage } from "../../store/reducers/transformers";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { paymentValidInvalidAfterDueDate } from "../../__mocks__/message";
 import {
   trackUndefinedBearerToken,
   UndefinedBearerTokenPhase
 } from "../../analytics";
+import { loadMessageById as action } from "../../store/actions";
+import { toUIMessage } from "../../store/reducers/transformers";
+import { getCommunicationClient } from "../commons";
+import { handleLoadMessageById } from "../handleLoadMessageById";
 
 jest.mock("../commons");
 

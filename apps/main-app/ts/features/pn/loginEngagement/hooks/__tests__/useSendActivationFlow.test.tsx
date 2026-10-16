@@ -1,15 +1,16 @@
-import { renderHook, act } from "@testing-library/react-native";
-import { useIOToast } from "@pagopa/io-app-design-system";
-import i18n from "i18next";
-import { useSendActivationFlow } from "../useSendActivationFlow";
+import { useIOToast } from "@io-app/design-system";
+import { act, renderHook } from "@testing-library/react-native";
+import I18n from "i18next";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../../store/hooks";
-import { pnActivationUpsert } from "../../../store/actions";
-import { setSendEngagementScreenHasBeenDismissed } from "../../store/actions";
-import { isLoadingPnActivationSelector } from "../../../store/reducers/activation";
-import { areNotificationPermissionsEnabledSelector } from "../../../../pushNotifications/store/reducers/environment";
-import { NOTIFICATIONS_ROUTES } from "../../../../pushNotifications/navigation/routes";
 import { setSecurityAdviceReadyToShow } from "../../../../authentication/fastLogin/store/actions/securityAdviceActions";
+import { NOTIFICATIONS_ROUTES } from "../../../../pushNotifications/navigation/routes";
+import { areNotificationPermissionsEnabledSelector } from "../../../../pushNotifications/store/reducers/environment";
+import { pnActivationUpsert } from "../../../store/actions";
+import { isLoadingPnActivationSelector } from "../../../store/reducers/activation";
+import { setSendEngagementScreenHasBeenDismissed } from "../../store/actions";
+import { useSendActivationFlow } from "../useSendActivationFlow";
 
 jest.mock("../../../store/reducers/activation", () => ({
   isLoadingPnActivationSelector: jest.fn()
@@ -27,7 +28,7 @@ jest.mock("../../../../../store/hooks", () => ({
   useIOSelector: (fn: () => any) => fn()
 }));
 
-jest.mock("@pagopa/io-app-design-system", () => ({
+jest.mock("@io-app/design-system", () => ({
   useIOToast: jest.fn()
 }));
 
@@ -117,7 +118,7 @@ describe(useSendActivationFlow, () => {
       expect(mockToastSuccess).toHaveBeenCalledTimes(1);
       expect(mockToastError).not.toHaveBeenCalled();
       expect(mockToastSuccess).toHaveBeenCalledWith(
-        i18n.t("features.pn.loginEngagement.send.toast")
+        I18n.t("features.pn.loginEngagement.send.toast")
       );
     });
 
@@ -154,7 +155,7 @@ describe(useSendActivationFlow, () => {
       expect(mockToastSuccess).toHaveBeenCalledTimes(1);
       expect(mockToastError).not.toHaveBeenCalled();
       expect(mockToastSuccess).toHaveBeenCalledWith(
-        i18n.t("features.pn.loginEngagement.send.toast")
+        I18n.t("features.pn.loginEngagement.send.toast")
       );
     });
   });

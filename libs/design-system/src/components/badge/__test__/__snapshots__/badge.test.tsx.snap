@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Test Badge Components - Experimental Enabled Badge Snapshot 1`] = `
+<View
+  accessible={true}
+  style={
+    [
+      {
+        "alignItems": "center",
+        "borderCurve": "continuous",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "overflow": "hidden",
+      },
+      {
+        "borderRadius": 24,
+        "paddingHorizontal": 8,
+        "paddingVertical": 4,
+      },
+      {
+        "backgroundColor": "rgba(157,178,244,0.2)",
+      },
+    ]
+  }
+>
+  <Text
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    maxFontSizeMultiplier={1.5}
+    numberOfLines={1}
+    style={
+      [
+        {},
+        {
+          "color": "#9DB2F4",
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+        },
+        {
+          "alignSelf": "center",
+          "letterSpacing": 0.5,
+          "textTransform": "uppercase",
+        },
+      ]
+    }
+  >
+    text
+  </Text>
+</View>
+`;
+
+exports[`Test Badge Components Badge Snapshot 1`] = `
+<View
+  accessible={true}
+  style={
+    [
+      {
+        "alignItems": "center",
+        "borderCurve": "continuous",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "overflow": "hidden",
+      },
+      {
+        "borderRadius": 24,
+        "paddingHorizontal": 8,
+        "paddingVertical": 4,
+      },
+      {
+        "backgroundColor": "rgba(157,178,244,0.2)",
+      },
+    ]
+  }
+>
+  <Text
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    maxFontSizeMultiplier={1.5}
+    numberOfLines={1}
+    style={
+      [
+        {},
+        {
+          "color": "#9DB2F4",
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+        },
+        {
+          "alignSelf": "center",
+          "letterSpacing": 0.5,
+          "textTransform": "uppercase",
+        },
+      ]
+    }
+  >
+    text
+  </Text>
+</View>
+`;

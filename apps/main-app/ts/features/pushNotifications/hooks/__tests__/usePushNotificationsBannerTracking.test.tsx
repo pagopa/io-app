@@ -1,11 +1,12 @@
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { usePushNotificationsBannerTracking } from "../usePushNotificationsBannerTracking";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import * as selectors from "../../store/selectors/notificationsBannerDismissed";
 import * as analytics from "../../analytics";
+import * as selectors from "../../store/selectors/notificationsBannerDismissed";
+import { usePushNotificationsBannerTracking } from "../usePushNotificationsBannerTracking";
 
 describe("usePushNotificationsBannerTracking", () => {
   afterEach(() => {

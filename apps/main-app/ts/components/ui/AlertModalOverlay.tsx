@@ -1,6 +1,6 @@
-import { ColorValue, StyleSheet, View } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors } from "@io-app/design-system";
 import { ReactNode } from "react";
+import { ColorValue, StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -36,9 +36,7 @@ type Props = Readonly<{
   opacity?: number;
 }>;
 
-/**
- * Creates a full screen overlay on top of another screen for `AlertModal`
- */
+/** Creates a full screen overlay on top of another screen for `AlertModal` */
 export const AlertModalOverlay = ({
   backgroundColor = IOColors.white,
   opacity = 1,

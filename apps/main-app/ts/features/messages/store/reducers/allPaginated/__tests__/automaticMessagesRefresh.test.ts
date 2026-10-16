@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { requestAutomaticMessagesRefresh } from "../../../actions";
 import { reduceAutomaticMessageRefreshRequest } from "../automaticMessagesRefresh";
 import { AllPaginated } from "../types";

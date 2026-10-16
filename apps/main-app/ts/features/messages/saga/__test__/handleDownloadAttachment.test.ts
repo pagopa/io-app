@@ -1,31 +1,33 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import ReactNativeBlobUtil from "react-native-blob-util";
-import { expectSaga, testSaga } from "redux-saga-test-plan";
-import { Effect } from "redux-saga/effects";
-import * as matchers from "redux-saga-test-plan/matchers";
-import { call, take } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import {
-  handleDownloadAttachment,
-  testable
-} from "../handleDownloadAttachment";
-import {
-  cancelPreviousAttachmentDownload,
-  downloadAttachment
-} from "../../store/actions";
-import { mockPdfAttachment } from "../../__mocks__/attachment";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import ReactNativeBlobUtil from "react-native-blob-util";
+import { expectSaga, testSaga } from "redux-saga-test-plan";
+import * as matchers from "redux-saga-test-plan/matchers";
+import { Effect } from "redux-saga/effects";
+import { call, take } from "typed-redux-saga/macro";
+
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { getKeyInfo } from "../../../lollipop/saga";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { downloadAarAttachmentSaga } from "../../../pn/aar/saga/downloadAarAttachmentSaga";
-import { thirdPartyMessageSelector } from "../../store/reducers/thirdPartyById";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { getKeyInfo } from "../../../lollipop/saga";
+import { mockPdfAttachment } from "../../__mocks__/attachment";
 import * as analytics from "../../analytics";
+import {
+  cancelPreviousAttachmentDownload,
+  downloadAttachment
+} from "../../store/actions";
+import { thirdPartyMessageSelector } from "../../store/reducers/thirdPartyById";
+import { SendFailureReason, WrappedSendError } from "../../utils";
+import {
+  handleDownloadAttachment,
+  testable
+} from "../handleDownloadAttachment";
 
 const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH";
 const savePath = "/tmp/attachment.pdf";
@@ -306,6 +308,51 @@ describe("handleDownloadAttachment", () => {
             })
           )
           .run());
+    });
+
+    describe("when a download request fails because the session has expired", () => {
+      it("then it puts a failure action with a SESSION_EXPIRED reason", () =>
+        expectSaga(
+          testable!.downloadAttachmentWorker,
+          sessionToken,
+          keyInfo,
+          downloadAttachment.request({
+            attachment,
+            messageId,
+            skipMixpanelTrackingOnFailure: false,
+            serviceId
+          })
+        )
+          .provide([
+            [
+              matchers.call.fn(ReactNativeBlobUtil.config),
+              {
+                fetch: jest.fn().mockReturnValue({
+                  info: jest.fn().mockReturnValue({ status: 401 })
+                })
+              }
+            ],
+            [matchers.select(lollipopKeyTagSelector), someKeyTag],
+            [matchers.select(lollipopPublicKeySelector), somePublicKey]
+          ])
+          .silentRun()
+          .then(result => {
+            const [putEffect] = result.effects.put;
+            const dispatchedAction = putEffect.payload.action;
+            expect(dispatchedAction).toEqual(
+              downloadAttachment.failure({
+                attachment,
+                messageId,
+                error: expect.any(Error)
+              })
+            );
+            const error = dispatchedAction.payload.error as WrappedSendError;
+            expect(error).toBeInstanceOf(WrappedSendError);
+            expect(error.reason).toBe(SendFailureReason.SESSION_EXPIRED);
+            expect(error.message).toBe(
+              I18n.t("messageDetails.attachments.downloadFailed")
+            );
+          }));
     });
   });
   describe("getDelayMilliseconds", () => {

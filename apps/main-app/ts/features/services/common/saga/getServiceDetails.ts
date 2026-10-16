@@ -1,11 +1,12 @@
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { put, select, take } from "typed-redux-saga/macro";
 import { isActionOf } from "typesafe-actions";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+
+import { ReduxSagaEffect } from "../../../../types/utils";
 import { loadServiceDetail } from "../../details/store/actions/details";
 import { serviceDetailsByIdPotSelector } from "../../details/store/selectors";
-import { ReduxSagaEffect } from "../../../../types/utils";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 
 export function* getServiceDetails(
   serviceId: ServiceId

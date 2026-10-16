@@ -1,54 +1,64 @@
-import {
-  HeaderActionProps,
-  HeaderSecondLevel
-} from "@pagopa/io-app-design-system";
+import { HeaderActionProps, HeaderSecondLevel } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
-
 import I18n from "i18next";
 import { ComponentProps, useCallback, useLayoutEffect, useMemo } from "react";
+
 import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
-import {
-  ContextualHelpProps,
-  ContextualHelpPropsMarkdown
-} from "../utils/contextualHelp.ts";
-import { FAQsCategoriesType } from "../utils/faq";
 import { useOfflineToastGuard } from "./useOfflineToastGuard.ts";
 import { useStartSupportRequest } from "./useStartSupportRequest";
 
-type SpecificHookProps = {
-  canGoBack?: boolean;
-  ignoreAccessibilityCheck?: boolean;
-  /* On the surface, this prop seems useless, but it's used
-  to programmatically hide the header.
-  See PR#5795 for more details. */
-  headerShown?: boolean;
-};
+export type HeaderSecondLevelHookProps = PropsWithoutSupport | PropsWithSupport;
+
+type HeaderActionConfigProps = Pick<
+  ComponentProps<typeof HeaderSecondLevel>,
+  "firstAction" | "secondAction" | "thirdAction" | "type"
+>;
 
 /* Tried to spread the props of the `HeaderSecondLevel` component,
 but caused some type mismatches, so it's better to pick some specific
 props without manually (re)declaring each prop */
 type HeaderHookManagedProps = Pick<
   ComponentProps<typeof HeaderSecondLevel>,
-  | "title"
-  | "backAccessibilityLabel"
-  | "backTestID"
-  | "goBack"
-  | "transparent"
-  | "scrollValues"
-  | "variant"
-  | "backgroundColor"
-  | "enableDiscreteTransition"
   | "animatedRef"
+  | "backAccessibilityLabel"
+  | "backgroundColor"
+  | "backTestID"
+  | "enableDiscreteTransition"
+  | "goBack"
+  | "scrollValues"
+  | "title"
+  | "transparent"
+  | "variant"
 >;
 
-type HeaderActionConfigProps = Pick<
-  ComponentProps<typeof HeaderSecondLevel>,
-  "type" | "firstAction" | "secondAction" | "thirdAction"
->;
+type HeaderProps = ComponentProps<typeof HeaderSecondLevel>;
 
 type NoAdditionalActions = {
   secondAction?: never;
   thirdAction?: never;
+};
+
+type PropsWithoutSupport = HeaderHookManagedProps &
+  NoAdditionalActions &
+  SpecificHookProps & {
+    onStartSupportRequest?: never;
+    supportRequest?: false;
+  };
+
+type PropsWithSupport = HeaderHookManagedProps &
+  SpecificHookProps &
+  WithAdditionalActions & {
+    onStartSupportRequest?: () => boolean;
+    supportRequest: true;
+  };
+
+type SpecificHookProps = {
+  canGoBack?: boolean;
+  /* On the surface, this prop seems useless, but it's used
+  to programmatically hide the header.
+  See PR#5795 for more details. */
+  headerShown?: boolean;
+  ignoreAccessibilityCheck?: boolean;
 };
 
 type WithAdditionalActions =
@@ -58,45 +68,25 @@ type WithAdditionalActions =
       thirdAction?: HeaderActionProps;
     };
 
-type PropsWithSupport = SpecificHookProps &
-  HeaderHookManagedProps & {
-    supportRequest: true;
-    onStartSupportRequest?: () => boolean;
-    faqCategories?: ReadonlyArray<FAQsCategoriesType>;
-    contextualHelp?: ContextualHelpProps;
-    contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  } & WithAdditionalActions;
-
-type PropsWithoutSupport = SpecificHookProps &
-  HeaderHookManagedProps & {
-    supportRequest?: false;
-    onStartSupportRequest?: never;
-    faqCategories?: never;
-    contextualHelp?: never;
-    contextualHelpMarkdown?: never;
-  } & NoAdditionalActions;
-
-export type HeaderSecondLevelHookProps = PropsWithSupport | PropsWithoutSupport;
-
-type HeaderProps = ComponentProps<typeof HeaderSecondLevel>;
-
 /**
- * This hook sets the `HeaderSecondLevel` in a screen using the `useLayoutEffect` hook.
- * It handles two basic use cases:
- * * With support request: the header is rendered with the (?) icon. You can configure the remaining actions.
- * * Without support request: the header is rendered just with the `Back` button.
+ * This hook sets the `HeaderSecondLevel` in a screen using the
+ * `useLayoutEffect` hook. It handles two basic use cases:
  *
- * @param {boolean} [canGoBack=true] - Completely disable `Back` button.
+ * - With support request: the header is rendered with the (?) icon. You can
+ *   configure the remaining actions.
+ * - Without support request: the header is rendered just with the `Back` button.
+ *
+ * @param {boolean} [canGoBack=true] - Completely disable `Back` button. Default
+ *   is `true`
  * @param {boolean} [headerShown=true] - Hide the header programmatically.
- * @param props - Props to configure the header. Not all original props are supported.
+ *   Default is `true`
+ * @param props - Props to configure the header. Not all original props are
+ *   supported.
  */
 export const useHeaderSecondLevel = ({
   title,
   backAccessibilityLabel,
   backTestID,
-  contextualHelp,
-  contextualHelpMarkdown,
-  faqCategories,
   goBack,
   headerShown = true,
   canGoBack = true,
@@ -113,13 +103,7 @@ export const useHeaderSecondLevel = ({
   animatedRef
 }: HeaderSecondLevelHookProps) => {
   const { isAlertVisible } = useIOAlertVisible();
-  const startSupportRequest = useOfflineToastGuard(
-    useStartSupportRequest({
-      faqCategories,
-      contextualHelpMarkdown,
-      contextualHelp
-    })
-  );
+  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest());
 
   // Conditionally run startSupportRequest allowing overrides with onStartSupportRequest
   const handleStartSupportRequest = useCallback(() => {

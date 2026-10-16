@@ -1,26 +1,24 @@
 import { useNavigation } from "@react-navigation/native";
-
+import I18n from "i18next";
 import { FC, useCallback, useEffect, useRef } from "react";
 import { Alert } from "react-native";
-import I18n from "i18next";
-import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
-import { ID_CGN_TYPE } from "../../../common/utils";
 import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import {
   availableBonusTypesSelectorFromId,
   isAvailableBonusErrorSelector,
   supportedAvailableBonusSelector
 } from "../../../common/store/selectors";
+import { ID_CGN_TYPE } from "../../../common/utils";
 import { cgnActivationStart } from "../../store/actions/activation";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 
-/**
- * this is a dummy screen reachable only from a message CTA
- */
+/** This is a dummy screen reachable only from a message CTA */
 const CgnCTAStartOnboardingComponent: FC = () => {
   const dispatch = useIODispatch();
   const isFirstRender = useRef<boolean>(true);
@@ -46,7 +44,6 @@ const CgnCTAStartOnboardingComponent: FC = () => {
     // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
     if (availableBonus.length > 0 && cgnBonus && isFirstRender.current) {
       startCgn();
-      // eslint-disable-next-line functional/immutable-data
       isFirstRender.current = false;
     }
   }, [availableBonus, startCgn, cgnBonus]);
@@ -60,12 +57,12 @@ const CgnCTAStartOnboardingComponent: FC = () => {
   if (hasError) {
     return (
       <OperationResultScreenContent
-        pictogram="umbrella"
-        title={I18n.t("global.genericError")}
         action={{
           label: I18n.t("global.buttons.retry"),
           onPress: loadAvailableBonus
         }}
+        pictogram="umbrella"
+        title={I18n.t("global.genericError")}
       />
     );
   }
@@ -73,9 +70,7 @@ const CgnCTAStartOnboardingComponent: FC = () => {
   return <LoadingScreenContent title={I18n.t("global.remoteStates.loading")} />;
 };
 
-/**
- * this is a dummy screen reachable only from a message CTA
- */
+/** This is a dummy screen reachable only from a message CTA */
 const CgnCTAStartOnboardingScreen = () => {
   const navigation = useNavigation();
   const isCgnEnabled = useIOSelector(isCGNEnabledSelector);

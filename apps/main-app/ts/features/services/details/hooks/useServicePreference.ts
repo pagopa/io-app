@@ -1,12 +1,11 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { EnabledChannels } from "../../../../utils/profile";
 import { servicePreferenceByChannelPotSelector } from "../store/selectors";
 
-/**
- * Hook to get the service preference by channel
- */
+/** Hook to get the service preference by channel */
 export const useServicePreferenceByChannel = (
   channel: keyof EnabledChannels,
   serviceId: ServiceId | undefined

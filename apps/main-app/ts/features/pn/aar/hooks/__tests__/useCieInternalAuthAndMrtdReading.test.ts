@@ -1,14 +1,13 @@
-import { renderHook, act } from "@testing-library/react-native";
 import {
   CieManager,
   InternalAuthAndMrtdResponse,
   NfcError,
   NfcEvent
 } from "@pagopa/io-react-native-cie";
-import HapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
+import { act, renderHook } from "@testing-library/react-native";
 import { Platform } from "react-native";
+import { Presets } from "react-native-pulsar";
+
 import {
   ReadStatus,
   useCieInternalAuthAndMrtdReading
@@ -110,9 +109,8 @@ describe("useCieInternalAuthAndMrtdReading", () => {
     "SELECT_CIE",
     "READ_FILE"
   ])(
-    'should trigger HapticFeedback only when the "ON_TAG_DISCOVERED" event is sent, not for "%s"',
+    'should trigger the haptic feedback only when the "ON_TAG_DISCOVERED" event is sent, not for "%s"',
     eventName => {
-      const spyOnHapticFeedbackTrigger = jest.spyOn(HapticFeedback, "trigger");
       const { result } = renderHook(() => useCieInternalAuthAndMrtdReading());
 
       expect(mockAddListener.mock.calls[0][0]).toBe("onEvent");
@@ -131,16 +129,14 @@ describe("useCieInternalAuthAndMrtdReading", () => {
         progress: progress1
       });
 
-      expect(spyOnHapticFeedbackTrigger).not.toHaveBeenCalled();
+      expect(Presets.System.impactHeavy).not.toHaveBeenCalled();
 
       const progress2 = Math.random();
       act(() => {
         onEventCallback({ name: "ON_TAG_DISCOVERED", progress: progress2 });
       });
 
-      expect(spyOnHapticFeedbackTrigger).toHaveBeenCalledWith(
-        HapticFeedbackTypes.impactHeavy
-      );
+      expect(Presets.System.impactHeavy).toHaveBeenCalledTimes(1);
       expect(result.current.readState).toStrictEqual({
         status: ReadStatus.READING,
         progress: progress2
@@ -226,7 +222,7 @@ describe("useCieInternalAuthAndMrtdReading", () => {
       platform: "android",
       it: 'shouldn\'t invoke "CieManager.setAlertMessage" when platform is android'
     }
-  ] as Array<{ platform: typeof Platform.OS; it: string }>)(
+  ] as Array<{ it: string; platform: typeof Platform.OS }>)(
     "$it",
     async ({ platform }) => {
       jest.replaceProperty(Platform, "OS", platform);
@@ -282,7 +278,7 @@ describe("useCieInternalAuthAndMrtdReading", () => {
       platform: "android",
       it: 'shouldn\'t invoke "CieManager.setCurrentAlertMessage" when platform is android'
     }
-  ] as Array<{ platform: typeof Platform.OS; it: string }>)(
+  ] as Array<{ it: string; platform: typeof Platform.OS }>)(
     "$it",
     ({ platform }) => {
       jest.replaceProperty(Platform, "OS", platform);

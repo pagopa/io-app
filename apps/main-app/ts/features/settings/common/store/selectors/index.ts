@@ -1,19 +1,20 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
-import { ProfileState } from "../reducers";
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../../definitions/identity/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 import { capitalize } from "../../../../../utils/strings";
+import { ProfileState } from "../reducers";
 import {
-  isProfileFirstOnBoarding,
-  isProfileEmailValidated,
+  getProfileEmail,
   hasProfileEmail,
-  getProfileEmail
+  isProfileEmailValidated,
+  isProfileFirstOnBoarding
 } from "../utils/guards";
 
 export const profileSelector = (state: GlobalState): ProfileState =>
@@ -44,9 +45,7 @@ export const profileEmailSelector = createSelector(
       O.none
     )
 );
-/**
- * Return the name of the profile if some, else undefined
- */
+/** Return the name of the profile if some, else undefined */
 
 export const profileNameSelector = createSelector(
   profileSelector,
@@ -56,9 +55,7 @@ export const profileNameSelector = createSelector(
       undefined
     )
 );
-/**
- * Return the fiscal code of the profile if some, else undefined
- */
+/** Return the fiscal code of the profile if some, else undefined */
 
 export const profileFiscalCodeSelector = createSelector(
   profileSelector,
@@ -68,9 +65,7 @@ export const profileFiscalCodeSelector = createSelector(
       undefined
     )
 );
-/**
- * The complete name + surname
- */
+/** The complete name + surname */
 
 export const profileNameSurnameSelector = createSelector(
   profileSelector,
@@ -172,8 +167,8 @@ export const profileNotificationSettingsSelector = createSelector(
   (
     profile: ProfileState
   ):
-    | { reminder: boolean | undefined; preview: boolean | undefined }
-    | undefined =>
+    | undefined
+    | { preview: boolean | undefined; reminder: boolean | undefined } =>
     pot.getOrElse(
       pot.map(profile, p => ({
         reminder:

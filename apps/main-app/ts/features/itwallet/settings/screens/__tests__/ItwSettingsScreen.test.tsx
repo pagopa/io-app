@@ -1,8 +1,8 @@
 import { fireEvent } from "@testing-library/react-native";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -27,7 +27,7 @@ describe("ItwSettingsScreen", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    // By default, wallet invalid and no simplified activation
+    // By default, wallet invalid
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
       .mockReturnValue(false);
@@ -74,7 +74,7 @@ describe("ItwSettingsScreen", () => {
       .mockReturnValue(true);
     jest
       .spyOn(credentials, "itwCredentialsEidSelector")
-      .mockReturnValue(O.some(ItwStoredCredentialsMocks.eid));
+      .mockReturnValue(ItwStoredCredentialsMocks.eid);
     jest
       .spyOn(credentials, "itwCredentialsEidStatusSelector")
       .mockReturnValue("valid");

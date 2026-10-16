@@ -1,67 +1,63 @@
-import i18n from "i18next";
+import { Body, FeatureInfo, IOToast, VSpacer } from "@io-app/design-system";
+import I18n from "i18next";
 import { View } from "react-native";
-import {
-  Body,
-  FeatureInfo,
-  VSpacer,
-  IOToast
-} from "@pagopa/io-app-design-system";
+
 import { WhatsNewScreenContent } from "../../../../components/screens/WhatsNewScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { openWebUrl } from "../../../../utils/url";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import { openWebUrl } from "../../../../utils/url";
 import { setFastLoginOptSessionLogin } from "../../../authentication/activeSessionLogin/store/actions";
 import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 import {
   trackLoginSessionOptIn,
   trackLoginSessionOptIn30,
   trackLoginSessionOptIn365,
   trackLoginSessionOptInInfo
 } from "../../../authentication/fastLogin/analytics/optinAnalytics.ts";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 
 const FciSecurityInfo = () => (
   <View>
     <FeatureInfo
-      iconName="fingerprint"
-      body={i18n.t(
-        "features.fci.requestL3.optinLogin.securityBottomsheet.featureInfo1"
-      )}
       action={{
-        label: i18n.t(
+        label: I18n.t(
           "features.fci.requestL3.optinLogin.securityBottomsheet.featureInfo1Action"
         ),
         onPress: () =>
           openWebUrl("https://account.ioapp.it/it/esci/", () =>
-            IOToast.error(i18n.t("global.jserror.title"))
+            IOToast.error(I18n.t("global.jserror.title"))
           )
       }}
+      body={I18n.t(
+        "features.fci.requestL3.optinLogin.securityBottomsheet.featureInfo1"
+      )}
+      iconName="fingerprint"
     />
     <VSpacer size={24} />
     <FeatureInfo
-      iconName="locked"
-      body={i18n.t(
-        "features.fci.requestL3.optinLogin.securityBottomsheet.featureInfo2"
-      )}
       action={{
-        label: i18n.t(
+        label: I18n.t(
           "features.fci.requestL3.optinLogin.securityBottomsheet.featureInfo2Action"
         ),
         onPress: () =>
           openWebUrl("https://ioapp.it/esci-da-io", () =>
-            IOToast.error(i18n.t("global.jserror.title"))
+            IOToast.error(I18n.t("global.jserror.title"))
           )
       }}
+      body={I18n.t(
+        "features.fci.requestL3.optinLogin.securityBottomsheet.featureInfo2"
+      )}
+      iconName="locked"
     />
     <VSpacer size={24} />
     <FeatureInfo
-      iconName="device"
-      body={i18n.t(
+      body={I18n.t(
         "features.fci.requestL3.optinLogin.securityBottomsheet.featureInfo3"
       )}
+      iconName="device"
     />
     <VSpacer size={24} />
   </View>
@@ -75,7 +71,7 @@ export const LoginOptInScreen = () => {
     present: presentFciSecurityBottomSheet,
     bottomSheet: fciSecurityBottomSheet
   } = useIOBottomSheetModal({
-    title: i18n.t(
+    title: I18n.t(
       "features.fci.requestL3.optinLogin.securityBottomsheet.title"
     ),
     component: <FciSecurityInfo />
@@ -83,7 +79,9 @@ export const LoginOptInScreen = () => {
 
   useHeaderSecondLevel({
     title: "",
-    supportRequest: true
+    supportRequest: true,
+    transparent: true,
+    backgroundColor: "transparent"
   });
 
   useOnFirstRender(() => {
@@ -107,23 +105,23 @@ export const LoginOptInScreen = () => {
 
   return (
     <WhatsNewScreenContent
-      testID="FciLoginL3ScreenContent"
-      pictogram="security"
-      title={i18n.t("features.fci.requestL3.optinLogin.title")}
       action={{
-        label: i18n.t("features.fci.requestL3.optinLogin.primaryAction"),
+        label: I18n.t("features.fci.requestL3.optinLogin.primaryAction"),
         fullWidth: true,
         onPress: () => navigateToLoginPage(true),
         testID: "FciLoginL3ContinueButton"
       }}
+      pictogram="security"
       secondaryAction={{
-        label: i18n.t("features.fci.requestL3.optinLogin.secondaryAction"),
+        label: I18n.t("features.fci.requestL3.optinLogin.secondaryAction"),
         onPress: () => navigateToLoginPage(false),
         testID: "FciLoginL3HelpButton"
       }}
+      testID="FciLoginL3ScreenContent"
+      title={I18n.t("features.fci.requestL3.optinLogin.title")}
     >
       <Body style={{ textAlign: "center" }} testID="FciLoginL3SubtitleText">
-        {i18n.t("features.fci.requestL3.optinLogin.description")}
+        {I18n.t("features.fci.requestL3.optinLogin.description")}
       </Body>
       <View
         style={{
@@ -131,15 +129,15 @@ export const LoginOptInScreen = () => {
         }}
       >
         <Body
-          testID="FciLoginL3DescriptionButton"
-          weight="Semibold"
           asLink
           onPress={() => {
             trackLoginSessionOptInInfo("FCI_auth");
             presentFciSecurityBottomSheet();
           }}
+          testID="FciLoginL3DescriptionButton"
+          weight="Semibold"
         >
-          {i18n.t("features.fci.requestL3.optinLogin.descriptionButton")}
+          {I18n.t("features.fci.requestL3.optinLogin.descriptionButton")}
         </Body>
       </View>
       <VSpacer />

@@ -1,19 +1,20 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import * as LOGIC_HOOK from "../../hooks/usePushNotificationEngagement";
+import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 import * as analytics from "../../analytics";
-import { PushNotificationEngagementScreen } from "../PushNotificationEngagementScreen";
-import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
 import {
   NotificationModalFlow,
   SendOpeningSource,
   SendUserType
 } from "../../analytics";
-import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
+import * as LOGIC_HOOK from "../../hooks/usePushNotificationEngagement";
+import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
+import { PushNotificationEngagementScreen } from "../PushNotificationEngagementScreen";
 
 const notificationModalFlowList: Array<NotificationModalFlow> = [
   "send_notification_opening",

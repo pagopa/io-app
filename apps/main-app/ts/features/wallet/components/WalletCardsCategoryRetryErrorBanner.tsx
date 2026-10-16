@@ -1,8 +1,11 @@
-import { BannerErrorState } from "@pagopa/io-app-design-system";
+import { BannerErrorState } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "react-native";
 import I18n from "i18next";
+import { View } from "react-native";
+
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { getCdcStatusWallet } from "../../bonus/cdc/wallet/store/actions";
+import { cdcStatusSelector } from "../../bonus/cdc/wallet/store/selectors";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../../bonus/cgn/store/reducers/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
@@ -10,15 +13,11 @@ import { idPayWalletInitiativeListSelector } from "../../idpay/wallet/store/redu
 import { usePaymentsBackoffRetry } from "../../payments/common/hooks/usePaymentsBackoffRetry";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { paymentsWalletUserMethodsSelector } from "../../payments/wallet/store/selectors";
-import { cdcStatusSelector } from "../../bonus/cdc/wallet/store/selectors";
-import { getCdcStatusWallet } from "../../bonus/cdc/wallet/store/actions";
 
 const WALLET_OTHER_CARDS_CATEGORY_BACKOFF =
   "WALLET_OTHER_CARDS_CATEGORY_BACKOFF";
 
-/**
- * This component shows a retry error banner if any of the B&P request fails
- */
+/** This component shows a retry error banner if any of the B&P request fails */
 export const WalletCardsCategoryRetryErrorBanner = () => {
   const dispatch = useIODispatch();
 
@@ -60,11 +59,11 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
         testID="walletCardsCategoryRetryErrorBannerTestID"
       >
         <BannerErrorState
-          icon="warningFilled"
-          label={I18n.t("features.wallet.home.otherMethods.error.banner.label")}
           actionText={I18n.t(
             "features.wallet.home.otherMethods.error.banner.cta"
           )}
+          icon="warningFilled"
+          label={I18n.t("features.wallet.home.otherMethods.error.banner.label")}
           onPress={handleOnRetry}
         />
       </View>

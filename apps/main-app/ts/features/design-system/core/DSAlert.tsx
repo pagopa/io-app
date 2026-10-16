@@ -1,4 +1,4 @@
-import { Alert, H4, useIOTheme, VStack } from "@pagopa/io-app-design-system";
+import { Alert, H4, useIOTheme, VStack } from "@io-app/design-system";
 import { Alert as RNAlert } from "react-native";
 
 /* Types */

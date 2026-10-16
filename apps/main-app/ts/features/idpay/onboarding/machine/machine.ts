@@ -1,9 +1,10 @@
-import * as O from "fp-ts/lib/Option";
+import { InitiativeDataDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDataDTO";
+import { OnboardingInitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingInitiativeDTO";
+import { StatusEnum as OnboardingStatusEnum } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { and, assertEvent, assign, fromPromise, setup } from "xstate";
-import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
-import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
-import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
+
 import { IdPayTags } from "../../common/machine/tags";
 import { InitiativeFailureType } from "../../configuration/types/failure";
 import {
@@ -14,6 +15,7 @@ import { Context, InitialContext } from "./context";
 import { IdPayOnboardingEvents } from "./events";
 import {
   getBooleanSelfDeclarationListFromContext,
+  getInformativeSelfDeclarationListFromContext,
   getInputFormSelfDeclarationFromContext,
   getMultiSelfDeclarationListFromContext
 } from "./selectors";
@@ -67,19 +69,22 @@ export const idPayOnboardingMachine = setup({
       pipe(
         context.requiredCriteria,
         O.map(
-          ({ beneficiaryRule, general }) =>
+          ({ beneficiaryRule }) =>
             (beneficiaryRule?.automatedCriteria?.length || 0) > 0 ||
-            // since familyUnitComposition can also display Family Unit criteria if it's ANPR
-            general?.familyUnitComposition !== undefined
+            getInformativeSelfDeclarationListFromContext(context).length > 0
         ),
         O.getOrElse(() => false)
       ),
+    // "informative" self-declarations are excluded: they are rendered directly
+    // on the PDND prerequisites screen, not by DisplayingSelfDeclarationList.
     hasSelfDecalrationList: ({ context }) =>
       pipe(
         context.requiredCriteria,
         O.map(
           ({ beneficiaryRule }) =>
-            (beneficiaryRule?.selfDeclarationCriteria?.length || 0) > 0
+            (beneficiaryRule?.selfDeclarationCriteria?.length || 0) -
+              getInformativeSelfDeclarationListFromContext(context).length >
+            0
         ),
         O.getOrElse(() => false)
       ),
@@ -305,7 +310,6 @@ export const idPayOnboardingMachine = setup({
           }
         ],
         back: {
-          actions: assign(() => ({ navigationDirection: "back" })),
           target: "#idpay-onboarding.DisplayingInitiativeInfo"
         }
       }
@@ -338,16 +342,14 @@ export const idPayOnboardingMachine = setup({
             back: [
               {
                 actions: assign(({ context }) => ({
-                  currentStep: context.currentStep - 1,
-                  navigationDirection: "back"
+                  currentStep: context.currentStep - 1
                 })),
                 guard: "hasPdndCriteria",
                 target: "#idpay-onboarding.DisplayingPdndCriteria"
               },
               {
                 actions: assign(({ context }) => ({
-                  currentStep: context.currentStep - 1,
-                  navigationDirection: "back"
+                  currentStep: context.currentStep - 1
                 })),
                 target: "#idpay-onboarding.DisplayingInitiativeInfo"
               }
@@ -414,8 +416,7 @@ export const idPayOnboardingMachine = setup({
                         0,
                         +context.selfDeclarationsMultiPage - 1
                       ),
-                      currentStep: context.currentStep - 1,
-                      navigationDirection: "back"
+                      currentStep: context.currentStep - 1
                     }))
                   },
                   {
@@ -426,8 +427,7 @@ export const idPayOnboardingMachine = setup({
                         0,
                         +context.selfDeclarationsMultiPage - 1
                       ),
-                      currentStep: context.currentStep - 1,
-                      navigationDirection: "back"
+                      currentStep: context.currentStep - 1
                     }))
                   },
                   {
@@ -438,8 +438,7 @@ export const idPayOnboardingMachine = setup({
                         0,
                         +context.selfDeclarationsMultiPage - 1
                       ),
-                      currentStep: context.currentStep - 1,
-                      navigationDirection: "back"
+                      currentStep: context.currentStep - 1
                     }))
                   },
                   {
@@ -500,7 +499,6 @@ export const idPayOnboardingMachine = setup({
                       "isFirstMultiTextConsent",
                       "hasMultiSelfDeclarationList"
                     ]),
-                    actions: assign(() => ({ navigationDirection: "back" })),
                     target:
                       "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingMultiSelfDeclarationList"
                   },
@@ -509,18 +507,15 @@ export const idPayOnboardingMachine = setup({
                       "isFirstMultiTextConsent",
                       "hasBooleanSelfDeclarationList"
                     ]),
-                    actions: assign(() => ({ navigationDirection: "back" })),
                     target:
                       "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingBooleanSelfDeclarationList"
                   },
                   {
                     guard: and(["isFirstMultiConsentPage", "hasPdndCriteria"]),
-                    actions: assign(() => ({ navigationDirection: "back" })),
                     target: "#idpay-onboarding.DisplayingPdndCriteria"
                   },
                   {
                     guard: "isFirstMultiTextConsent",
-                    actions: assign(() => ({ navigationDirection: "back" })),
                     target: "#idpay-onboarding.DisplayingInitiativeInfo"
                   },
                   {

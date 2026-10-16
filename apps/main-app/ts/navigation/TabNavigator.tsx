@@ -2,10 +2,10 @@ import {
   IOColors,
   makeFontStyleObject,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import I18n from "i18next";
-import { Platform } from "react-native";
+
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -18,14 +18,17 @@ import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle"
 import { useIOSelector } from "../store/hooks";
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences";
 import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
+import { getListItemAccessibilityLabelCount } from "../utils/accessibility";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
-const tabBarLabelLineHeight = 16;
-const androidTabLabelNudgeUp = -2;
-const androidTabItemPaddingBottom = 2;
+const MAIN_TAB_COUNT = 5;
+
+// TODO: remove this development once we migrate to IOPLT-2051
+const getTabAccessibilityLabel = (label: string, index: number) =>
+  `${label}${getListItemAccessibilityLabelCount(MAIN_TAB_COUNT, index)}`;
 
 export const MainTabNavigator = () => {
   const theme = useIOTheme();
@@ -33,6 +36,11 @@ export const MainTabNavigator = () => {
 
   const startupLoaded = useIOSelector(isStartupLoaded);
   const typefacePreference = useIOSelector(fontPreferenceSelector);
+  const messagesLabel = I18n.t("global.navigator.messages");
+  const walletLabel = I18n.t("global.navigator.wallet");
+  const scanLabel = I18n.t("global.navigator.scan");
+  const paymentsLabel = I18n.t("global.navigator.payments");
+  const servicesLabel = I18n.t("global.navigator.services");
 
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
@@ -47,26 +55,14 @@ export const MainTabNavigator = () => {
     >
       <Tab.Navigator
         screenOptions={{
-          tabBarLabelStyle: {
-            ...makeFontStyleObject(
-              11,
-              typefacePreference === "comfortable"
-                ? "Titillio"
-                : "TitilliumSansPro",
-              tabBarLabelLineHeight,
-              "Regular"
-            ),
-            ...(Platform.OS === "android"
-              ? {
-                  includeFontPadding: true,
-                  marginTop: androidTabLabelNudgeUp
-                }
-              : {})
-          },
-          tabBarItemStyle:
-            Platform.OS === "android"
-              ? { paddingBottom: androidTabItemPaddingBottom }
-              : undefined,
+          tabBarLabelStyle: makeFontStyleObject(
+            11,
+            typefacePreference === "comfortable"
+              ? "Titillio"
+              : "TitilliumSansPro",
+            14,
+            "Regular"
+          ),
           tabBarHideOnKeyboard: true,
           tabBarAllowFontScaling: false,
           tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],
@@ -75,38 +71,42 @@ export const MainTabNavigator = () => {
         }}
       >
         <Tab.Screen
-          name={MESSAGES_ROUTES.MESSAGES_HOME}
           component={MessagesHomeScreen}
+          name={MESSAGES_ROUTES.MESSAGES_HOME}
           options={{
-            title: I18n.t("global.navigator.messages"),
+            title: messagesLabel,
+            tabBarAccessibilityLabel: getTabAccessibilityLabel(
+              messagesLabel,
+              0
+            ),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={"navMessages"}
-                iconNameFocused={"navMessagesFocused"}
                 color={color}
                 focused={focused}
+                iconName={"navMessages"}
+                iconNameFocused={"navMessagesFocused"}
               />
             )
           }}
         />
         <Tab.Screen
-          name={ROUTES.WALLET_HOME}
           component={WalletHomeScreen}
+          name={ROUTES.WALLET_HOME}
           options={{
-            title: I18n.t("global.navigator.wallet"),
+            title: walletLabel,
+            tabBarAccessibilityLabel: getTabAccessibilityLabel(walletLabel, 1),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={"navWallet"}
-                iconNameFocused={"navWalletFocused"}
                 color={color}
                 focused={focused}
+                iconName={"navWallet"}
+                iconNameFocused={"navWalletFocused"}
               />
             )
           }}
         />
 
         <Tab.Screen
-          name={ROUTES.BARCODE_SCAN_TAB_EMPTY}
           component={EmptyComponent}
           listeners={{
             tabPress: ({ preventDefault }) => {
@@ -114,46 +114,56 @@ export const MainTabNavigator = () => {
               navigateToBarcodeScanScreen();
             }
           }}
+          name={ROUTES.BARCODE_SCAN_TAB_EMPTY}
           options={{
-            title: I18n.t("global.navigator.scan"),
+            title: scanLabel,
+            tabBarAccessibilityLabel: getTabAccessibilityLabel(scanLabel, 2),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
+                color={color}
+                focused={focused}
                 iconName={"navScan"}
                 iconNameFocused={"navScan"}
-                color={color}
-                focused={focused}
               />
             )
           }}
         />
 
         <Tab.Screen
-          name={ROUTES.PAYMENTS_HOME}
           component={PaymentsHomeScreen}
+          name={ROUTES.PAYMENTS_HOME}
           options={{
-            title: I18n.t("global.navigator.payments"),
+            title: paymentsLabel,
+            tabBarAccessibilityLabel: getTabAccessibilityLabel(
+              paymentsLabel,
+              3
+            ),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
+                color={color}
+                focused={focused}
                 iconName={"navPsp"}
                 iconNameFocused={"navPsp"}
-                color={color}
-                focused={focused}
               />
             )
           }}
         />
 
         <Tab.Screen
-          name={SERVICES_ROUTES.SERVICES_HOME}
           component={ServicesHomeScreen}
+          name={SERVICES_ROUTES.SERVICES_HOME}
           options={{
-            title: I18n.t("global.navigator.services"),
+            title: servicesLabel,
+            tabBarAccessibilityLabel: getTabAccessibilityLabel(
+              servicesLabel,
+              4
+            ),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName="navServices"
-                iconNameFocused="navServicesFocused"
                 color={color}
                 focused={focused}
+                iconName="navServices"
+                iconNameFocused="navServicesFocused"
               />
             )
           }}
@@ -163,7 +173,5 @@ export const MainTabNavigator = () => {
   );
 };
 
-/**
- * Used to mock tab content. This will never be rendered.
- */
+/** Used to mock tab content. This will never be rendered. */
 const EmptyComponent = () => <></>;

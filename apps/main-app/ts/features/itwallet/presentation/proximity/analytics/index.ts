@@ -3,13 +3,18 @@ import { buildEventProperties } from "../../../../../utils/analytics";
 import {
   ITW_PROXIMITY_ACTIONS_EVENTS,
   ITW_PROXIMITY_ERRORS_EVENTS,
-  ITW_PROXIMITY_SCREENVIEW_EVENTS
+  ITW_PROXIMITY_SCREENVIEW_EVENTS,
+  ITW_PROXIMITY_TECH_EVENTS
 } from "./enum";
 import {
   ItwProximityFailure,
+  ItwProximityFlowFailure,
+  ItwProximityFlowProperties,
   ItwProximityGenericFailure,
+  ItwProximityHttpFailure,
   ItwProximityQrCode,
   ItwProximityShowQrCode,
+  ItwRevokeConsentUserAction,
   ItwStartReissuingPID
 } from "./types";
 
@@ -50,6 +55,30 @@ export const trackItwProximityBluetoothNotActivated = () => {
   );
 };
 
+/** Tracks the consent-management list screen for a credential. */
+export const trackItwConsentManagement = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_CONSENT_MANAGEMENT,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
+/** Tracks the saved-consent detail screen. */
+export const trackItwConsentManagementDetail = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_CONSENT_MANAGEMENT_DETAIL,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
+/** Tracks the revoke-confirmation alert impression. */
+export const trackItwRevokeConsentOperationBlock = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_REVOKE_CONSENT_OPERATION_BLOCK,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
 export const trackItwProximityQrCode = ({
   source,
   qr_code_status
@@ -60,23 +89,48 @@ export const trackItwProximityQrCode = ({
   );
 };
 
-export const trackItwProximityDataShare = () => {
+export const trackItwProximityDataShare = ({
+  proximity_flow
+}: ItwProximityFlowProperties) => {
   void mixpanelTrack(
     ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_DATA_SHARE,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { proximity_flow })
   );
 };
 
-export const trackItwProximityPresentationCompleted = () => {
+export const trackItwProximityPresentationCompleted = ({
+  proximity_flow
+}: ItwProximityFlowProperties) => {
   void mixpanelTrack(
     ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_UX_SUCCESS,
+    buildEventProperties("UX", "screen_view", { proximity_flow })
+  );
+};
+
+export const trackItwProximityRpNotTrustedBottomSheet = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_RP_NOT_TRUSTED_BOTTOMSHEET,
     buildEventProperties("UX", "screen_view")
   );
 };
 
-export const trackItwProximityUnofficialVerifierBottomSheet = () => {
+export const trackItwProximitySavePreferences = () => {
   void mixpanelTrack(
-    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UNOFFICIAL_VERIFIER_BOTTOMSHEET,
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_SAVE_PREFERENCES,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
+export const trackItwProximityRpNotTrustedDiscoverMore = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_RP_NOT_TRUSTED_DISCOVER_MORE,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximityNfcActivation = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_NFC_ACTIVATION,
     buildEventProperties("UX", "screen_view")
   );
 };
@@ -90,6 +144,32 @@ export const trackItwProximityShowQrCode = ({
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_SHOW_QR_CODE,
     buildEventProperties("UX", "action", { credential, position })
+  );
+};
+
+/** Tracks access to consent management from credential details. */
+export const trackItwCredentialManageConsent = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_CREDENTIAL_MANAGE_CONSENT,
+    buildEventProperties("UX", "action")
+  );
+};
+
+/** Tracks the request to revoke a saved consent. */
+export const trackItwRevokeConsent = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_REVOKE_CONSENT,
+    buildEventProperties("UX", "action")
+  );
+};
+
+/** Tracks the action selected in the revoke-confirmation alert. */
+export const trackItwRevokeConsentOperationBlockAction = (
+  user_action: ItwRevokeConsentUserAction
+) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_REVOKE_CONSENT_OPERATION_BLOCK_ACTION,
+    buildEventProperties("UX", "action", { user_action })
   );
 };
 
@@ -135,9 +215,46 @@ export const trackItwProximityQrCodeLoadingRetry = () => {
   );
 };
 
-export const trackItwProximityContinuePresentation = () => {
+export const trackItwProximityContinuePresentation = ({
+  proximity_flow
+}: ItwProximityFlowProperties) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UX_CONVERSION,
+    buildEventProperties("UX", "action", { proximity_flow })
+  );
+};
+
+export const trackItwProximityNfcStart = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_NFC_START,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximityNfcActivationClose = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_NFC_ACTIVATION_CLOSE,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximityNfcGoToSettings = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_NFC_GO_TO_SETTINGS,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximitySavePreferencesConfirm = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_SAVE_PREFERENCES_CONFIRM,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximitySavePreferencesDismiss = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_SAVE_PREFERENCES_DISMISS,
     buildEventProperties("UX", "action")
   );
 };
@@ -153,6 +270,26 @@ export const trackItwStartReissuingPID = ({
 
 // Errors events
 
+export const trackItwProximityNfcSessionError = ({
+  reason,
+  type
+}: ItwProximityFailure) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_NFC_SESSION_ERROR,
+    buildEventProperties("KO", "screen_view", { reason, type })
+  );
+};
+
+export const trackItwProximityNfcSessionTimeout = ({
+  reason,
+  type
+}: ItwProximityFailure) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_NFC_SESSION_TIMEOUT,
+    buildEventProperties("KO", "screen_view", { reason, type })
+  );
+};
+
 export const trackItwProximityQrCodeLoadingFailure = ({
   reason,
   type
@@ -164,6 +301,7 @@ export const trackItwProximityQrCodeLoadingFailure = ({
 };
 
 export const trackItwProximityRPGenericFailure = ({
+  proximity_flow,
   proximity_sharing_status,
   reason,
   type
@@ -171,6 +309,7 @@ export const trackItwProximityRPGenericFailure = ({
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_GENERIC_ERROR,
     buildEventProperties("KO", "screen_view", {
+      proximity_flow,
       proximity_sharing_status,
       reason,
       type
@@ -179,32 +318,69 @@ export const trackItwProximityRPGenericFailure = ({
 };
 
 export const trackItwProximityTimeout = ({
+  proximity_flow,
   reason,
   type
-}: ItwProximityFailure) => {
+}: ItwProximityFlowFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_TIMEOUT,
-    buildEventProperties("KO", "screen_view", { reason, type })
+    buildEventProperties("KO", "screen_view", { proximity_flow, reason, type })
   );
 };
 
 export const trackItwProximityUnexpectedFailure = ({
   origin,
+  proximity_flow,
   reason,
   type
-}: ItwProximityFailure) => {
+}: ItwProximityFlowFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "screen_view", { origin, reason, type })
+    buildEventProperties("KO", "screen_view", {
+      origin,
+      proximity_flow,
+      reason,
+      type
+    })
   );
 };
 
-export const trackItwProximityUnofficialVerifier = ({
+export const trackItwProximityRpNotTrusted = ({
+  proximity_flow,
   reason,
   type
-}: ItwProximityFailure) => {
+}: ItwProximityFlowFailure) => {
   void mixpanelTrack(
-    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNOFFICIAL_VERIFIER,
-    buildEventProperties("KO", "screen_view", { reason, type })
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_RP_NOT_TRUSTED,
+    buildEventProperties("KO", "screen_view", { proximity_flow, reason, type })
+  );
+};
+
+export const trackItwProximityRequestObjectFailure = ({
+  reason
+}: ItwProximityHttpFailure) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_REQUEST_OBJECT_FAILURE,
+    buildEventProperties("KO", "screen_view", { reason })
+  );
+};
+
+export const trackItwProximityMandatoryCredentialMissing = ({
+  proximity_flow
+}: ItwProximityFlowProperties) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING,
+    buildEventProperties("KO", "screen_view", { proximity_flow })
+  );
+};
+
+// Tech events
+
+export const trackItwProximityStart = ({
+  proximity_flow
+}: ItwProximityFlowProperties) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_TECH_EVENTS.ITW_PROXIMITY_START,
+    buildEventProperties("TECH", undefined, { proximity_flow })
   );
 };

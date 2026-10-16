@@ -4,8 +4,9 @@ import {
   H2,
   IOMarkdownLite,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
+
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIODispatch } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
@@ -33,9 +34,9 @@ const ItwRemoteClaimsDisclosureScreen = () => {
   const isLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
 
   /**
-   * In addition to checking for the loading state,
-   * we need to ensure that the current state is not `ClaimsDisclosure`
-   * to prevent a visual glitch caused by a slight delay in navigation
+   * In addition to checking for the loading state, we need to ensure that the
+   * current state is not `ClaimsDisclosure` to prevent a visual glitch caused
+   * by a slight delay in navigation
    */
   if (isLoading) {
     return (
@@ -51,7 +52,8 @@ const ItwRemoteClaimsDisclosureScreen = () => {
 };
 
 /**
- * The actual content of the screen, with the claims to disclose for the verifiable presentation.
+ * The actual content of the screen, with the claims to disclose for the
+ * verifiable presentation.
  */
 const ContentView = () => {
   const machineRef = ItwRemoteMachineContext.useActorRef();
@@ -96,6 +98,7 @@ const ContentView = () => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       footerActions={{
         actions: {
           type: "TwoButtons",

@@ -1,12 +1,13 @@
 /* eslint-disable functional/immutable-data */
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../../components/SectionStatus/modal";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -16,7 +17,6 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getFullLocale } from "../../../../utils/locale";
 import { openWebUrl } from "../../../../utils/url";
 import { trackIngressServicesSlowDown } from "../../../ingress/analytics";
-import { setIsBlockingScreen } from "../../../ingress/store/actions";
 import {
   trackIDPayIngressScreenCTA,
   trackIDPayIngressScreenLoading,
@@ -79,7 +79,6 @@ export const IdPayFailToRetryScreen = () => {
         }
         setShowSubtitle(false);
         setShowBlockingScreen(true);
-        dispatch(setIsBlockingScreen());
         timeouts.shift();
       }, TIMEOUT_BLOCKING_SCREEN)
     );
@@ -108,14 +107,14 @@ export const IdPayFailToRetryScreen = () => {
         trackingAction={trackIngressServicesSlowDown}
       />
       <LoadingScreenContent
-        testID="ingress-screen-loader-id"
-        title={contentTitle}
+        animatedPictogramSource="waiting"
         subtitle={
           showSubtitle
             ? I18n.t("idpay.onboarding.failToRetry.slowDownSubtitle")
             : undefined
         }
-        animatedPictogramSource="waiting"
+        testID="ingress-screen-loader-id"
+        title={contentTitle}
       />
     </>
   );
@@ -161,15 +160,12 @@ const IngressScreenBlockingError = memo(() => {
 
   return (
     <OperationResultScreenContent
-      ref={operationRef}
-      testID="device-blocking-screen-id"
-      pictogram="time"
-      title={I18n.t("startup.slowdowns_results_screen.title")}
-      subtitle={I18n.t("idpay.onboarding.failToRetry.failureSubtitle")}
       action={{
         label: I18n.t("global.buttons.back"),
         onPress: () => machine.send({ type: "close" })
       }}
+      pictogram="time"
+      ref={operationRef}
       secondaryAction={
         websiteUrl === ""
           ? undefined
@@ -178,6 +174,9 @@ const IngressScreenBlockingError = memo(() => {
               onPress: handleNavigateToWebsite
             }
       }
+      subtitle={I18n.t("idpay.onboarding.failToRetry.failureSubtitle")}
+      testID="device-blocking-screen-id"
+      title={I18n.t("startup.slowdowns_results_screen.title")}
     />
   );
 });

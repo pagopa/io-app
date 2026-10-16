@@ -1,11 +1,13 @@
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
-import { useState } from "react";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { HeaderSecondLevel } from "@io-app/design-system";
 import I18n from "i18next";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { useState } from "react";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { SendFailureReason } from "../../../messages/utils";
 import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 import { usePnPreferencesFetcher } from "../../hooks/usePnPreferencesFetcher";
 import { pnActivationUpsert } from "../../store/actions";
@@ -38,6 +40,8 @@ const PNFlowScreenPicker = ({ serviceId }: { serviceId: ServiceId }) => {
   const [flowState, setFlowState] = useState<PnBannerFlowStateKey>(
     pnBannerFlowStateEnum.WAITING_USER_INPUT
   );
+  const [activationFailureReason, setActivationFailureReason] =
+    useState<SendFailureReason>();
 
   const { isError, isLoading, isEnabled } = usePnPreferencesFetcher(serviceId);
 
@@ -46,13 +50,16 @@ const PNFlowScreenPicker = ({ serviceId }: { serviceId: ServiceId }) => {
   }
 
   switch (flowState) {
-    case pnBannerFlowStateEnum.FAILURE_ACTIVATION:
-    case pnBannerFlowStateEnum.FAILURE_DETAILS_FETCH:
-      return <ErrorScreen flowState={flowState} />;
-
     case pnBannerFlowStateEnum.ALREADY_ACTIVE:
     case pnBannerFlowStateEnum.SUCCESS_ACTIVATION:
       return <SuccessScreen flowState={flowState} />;
+
+    case pnBannerFlowStateEnum.FAILURE_ACTIVATION:
+      return (
+        <ErrorScreen flowState={flowState} reason={activationFailureReason} />
+      );
+    case pnBannerFlowStateEnum.FAILURE_DETAILS_FETCH:
+      return <ErrorScreen flowState={flowState} />;
     case pnBannerFlowStateEnum.WAITING_USER_INPUT:
       if (isEnabled) {
         setFlowState(pnBannerFlowStateEnum.ALREADY_ACTIVE);
@@ -60,15 +67,24 @@ const PNFlowScreenPicker = ({ serviceId }: { serviceId: ServiceId }) => {
       if (isError) {
         setFlowState(pnBannerFlowStateEnum.FAILURE_DETAILS_FETCH);
       }
-      return <PnActivationInputScreen setFlowState={setFlowState} />;
+      return (
+        <PnActivationInputScreen
+          setActivationFailureReason={setActivationFailureReason}
+          setFlowState={setFlowState}
+        />
+      );
   }
 };
 
 type FlowScreenProps = {
+  setActivationFailureReason: (reason: SendFailureReason | undefined) => void;
   setFlowState: (state: PnBannerFlowStateKey) => void;
 };
 
-const PnActivationInputScreen = ({ setFlowState }: FlowScreenProps) => {
+const PnActivationInputScreen = ({
+  setActivationFailureReason,
+  setFlowState
+}: FlowScreenProps) => {
   const dispatch = useIODispatch();
   const isLoadingActivation = useIOSelector(isLoadingPnActivationSelector);
   const navigation = useIONavigation();
@@ -82,7 +98,10 @@ const PnActivationInputScreen = ({ setFlowState }: FlowScreenProps) => {
       pnActivationUpsert.request({
         value: true,
         onSuccess: () => setFlowState(pnBannerFlowStateEnum.SUCCESS_ACTIVATION),
-        onFailure: () => setFlowState(pnBannerFlowStateEnum.FAILURE_ACTIVATION)
+        onFailure: (_isRateLimitError, reason) => {
+          setActivationFailureReason(reason);
+          setFlowState(pnBannerFlowStateEnum.FAILURE_ACTIVATION);
+        }
       })
     );
   };
@@ -90,12 +109,12 @@ const PnActivationInputScreen = ({ setFlowState }: FlowScreenProps) => {
   return (
     <>
       <HeaderSecondLevel
-        title=""
-        type="base"
+        backAccessibilityLabel={I18n.t("accessibility.buttons.navigateBack")}
         goBack={() =>
           navigation.navigate(ROUTES.MAIN, { screen: "MESSAGES_HOME" })
         }
-        backAccessibilityLabel={I18n.t("accessibility.buttons.navigateBack")}
+        title=""
+        type="base"
       />
       <CtaScreen
         scrollViewAction={{

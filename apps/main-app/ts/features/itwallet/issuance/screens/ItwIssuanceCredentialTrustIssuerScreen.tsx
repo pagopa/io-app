@@ -5,15 +5,15 @@ import {
   ListItemHeader,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { sequenceS } from "fp-ts/lib/Apply";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useRef } from "react";
+
+import type { CredentialIssuanceMode } from "../../machine/credential/context";
+
 import IOMarkdown from "../../../../components/IOMarkdown";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -26,26 +26,23 @@ import { trackOpenItwTos } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { RequiresConnectivity } from "../../common/components/RequiresConnectivity";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { itwIpzsItwalletPrivacyUrlSelector } from "../../common/store/selectors/remoteConfig";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
-import {
-  CredentialMetadata,
-  RequestObject
-} from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import type { CredentialIssuanceMode } from "../../machine/credential/context";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
-  selectCredentialTypeOption,
+  selectCredentialType,
   selectIsIssuing,
   selectIsLoading,
-  selectRequestedCredentialOption
+  selectRequiredClaims
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -56,10 +53,10 @@ import {
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
+  animationEnabled?: boolean;
   credentialType?: string;
   isUpgrade?: boolean;
   mode?: CredentialIssuanceMode;
-  disableAnimation?: boolean;
 };
 
 type ScreenProps =
@@ -75,16 +72,13 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   const { credentialType, isUpgrade, mode } =
     ("route" in props ? props.route.params : props) ?? {};
 
-  const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const eid = useIOSelector(itwCredentialsEidSelector);
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const requestedCredentialOption =
-    ItwCredentialIssuanceMachineContext.useSelector(
-      selectRequestedCredentialOption
-    );
-  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
+  const requiredClaimNames =
+    ItwCredentialIssuanceMachineContext.useSelector(selectRequiredClaims);
+  const machineCredentialType =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
   usePreventScreenCapture();
@@ -109,35 +103,43 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
     return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
-  return pipe(
-    sequenceS(O.Monad)({
-      credentialType: credentialTypeOption,
-      requestedCredential: requestedCredentialOption,
-      eid: eidOption
-    }),
-    O.fold(
-      () => <ItwGenericErrorContent />,
-      innerProps => <ContentView {...innerProps} />
-    )
+  if (!machineCredentialType || !requiredClaimNames || !eid) {
+    return <ItwGenericErrorContent />;
+  }
+
+  return (
+    <ContentView
+      credentialType={machineCredentialType}
+      eid={eid}
+      requiredClaimNames={requiredClaimNames}
+    />
   );
 };
 
 type ContentViewProps = {
   credentialType: string;
-  requestedCredential: RequestObject;
   eid: CredentialMetadata;
+  requiredClaimNames: ReadonlyArray<string>;
 };
 
-/**
- * Renders the content of the screen
- */
-const ContentView = ({ credentialType, eid }: ContentViewProps) => {
+/** Renders the content of the screen */
+const ContentView = ({
+  credentialType,
+  requiredClaimNames,
+  eid
+}: ContentViewProps) => {
   const route = useRoute();
   const hasScrolledToBottom = useRef(false);
-  const privacyUrl = useIOSelector(state =>
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const ipzsDocumentsPrivacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const ipzsItwalletPrivacyUrl = useIOSelector(
+    itwIpzsItwalletPrivacyUrlSelector
+  );
+  const ipzsPrivacyUrl = isItwL3
+    ? ipzsItwalletPrivacyUrl
+    : ipzsDocumentsPrivacyUrl;
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
@@ -154,10 +156,14 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({
         exit_page: route.name,
         credential: mixPanelCredential
+      });
+      machineRef.send({
+        type: "close",
+        surveyStep: isItwL3 ? "data_share" : undefined,
+        surveyCredential: isItwL3 ? mixPanelCredential : undefined
       });
     }
   });
@@ -175,29 +181,27 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const claims = parseClaims(eid.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
   });
-  const requiredClaims = claims.map(claim => ({
-    claim,
-    source: eidCredentialName
-  }));
+  const requiredClaims = requiredClaimNames.flatMap(name => {
+    const claim = claims.find(({ id }) => id === name);
+    return claim ? [{ claim, source: eidCredentialName }] : [];
+  });
 
   // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
   const trackScrollToBottom = (crossed: boolean) => {
     if (crossed && !hasScrolledToBottom.current) {
-      // eslint-disable-next-line functional/immutable-data
       hasScrolledToBottom.current = true;
       trackIssuanceCredentialScrollToBottom(
         mixPanelCredential,
         ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
       );
     } else if (!crossed && hasScrolledToBottom.current) {
-      // eslint-disable-next-line functional/immutable-data
       hasScrolledToBottom.current = false;
     }
   };
 
   return (
     <ForceScrollDownView
-      onThresholdCrossed={trackScrollToBottom}
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       footerActions={{
         actions: {
           type: "TwoButtons",
@@ -212,6 +216,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           }
         }
       }}
+      onThresholdCrossed={trackScrollToBottom}
     >
       <ContentWrapper>
         <VSpacer size={24} />
@@ -235,26 +240,29 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
         />
         <VSpacer size={24} />
         <ListItemHeader
+          iconColor={theme["icon-default"]}
+          iconName="security"
           label={I18n.t(
             "features.itWallet.issuance.credentialAuth.requiredClaims"
           )}
-          iconName="security"
-          iconColor={theme["icon-default"]}
         />
         <ItwRequestedClaimsList items={requiredClaims} />
         <VSpacer size={32} />
         <IOMarkdown
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
-            privacyUrl
+            privacyUrl: ipzsPrivacyUrl
           })}
-          rules={generateItwIOMarkdownRules({ linkCallback: trackOpenItwTos })}
+          rules={generateItwIOMarkdownRules({
+            linkCallback: trackOpenItwTos
+          })}
         />
       </ContentWrapper>
     </ForceScrollDownView>
   );
 };
 
-// Offline failure screen HOC
-export const ItwIssuanceCredentialTrustIssuerScreen = withOfflineFailureScreen(
-  ItwIssuanceCredentialTrustIssuer
+export const ItwIssuanceCredentialTrustIssuerScreen = (props: ScreenProps) => (
+  <RequiresConnectivity>
+    <ItwIssuanceCredentialTrustIssuer {...props} />
+  </RequiresConnectivity>
 );

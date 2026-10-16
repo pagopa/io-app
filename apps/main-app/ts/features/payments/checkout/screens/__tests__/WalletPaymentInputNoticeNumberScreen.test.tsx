@@ -1,6 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
-import configureMockStore from "redux-mock-store";
 import I18n from "i18next";
+import { default as configureMockStore } from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -10,8 +11,7 @@ import { WalletPaymentInputNoticeNumberScreen } from "../WalletPaymentInputNotic
 
 const mockNavigation = {
   navigate: jest.fn(),
-  setOptions: jest.fn(),
-  addListener: jest.fn(() => jest.fn())
+  setOptions: jest.fn()
 };
 
 jest.mock("@react-navigation/native", () => ({

@@ -1,19 +1,20 @@
 import { useCallback } from "react";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import {
-  cieLoginFlowSelector,
-  isActiveSessionLoginSelector
-} from "../store/selectors";
+import { CieCardReaderScreenNavigationParams } from "../../login/cie/screens/CieCardReaderScreen";
+import { CieConsentDataUsageScreenNavigationParams } from "../../login/cie/screens/CieConsentDataUsageScreen";
 import {
   logoutBeforeSessionCorrupted,
   setFinishedActiveSessionLoginFlow
 } from "../store/actions";
-import { CieCardReaderScreenNavigationParams } from "../../login/cie/screens/CieCardReaderScreen";
-import { CieConsentDataUsageScreenNavigationParams } from "../../login/cie/screens/CieConsentDataUsageScreen";
-import ROUTES from "../../../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import {
+  cieLoginFlowSelector,
+  isActiveSessionLoginSelector
+} from "../store/selectors";
 
 const useActiveSessionLoginNavigation = () => {
   const navigation = useIONavigation();

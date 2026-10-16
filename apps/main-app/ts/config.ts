@@ -104,9 +104,6 @@ export const premiumMessagesOptInEnabled =
 export const scanAdditionalBarcodesEnabled =
   Config.SCAN_ADDITIONAL_BARCODES_ENABLED === "YES";
 
-// FCI (Firma con IO) Feature Flag
-export const fciEnabled = Config.FCI_ENABLED === "YES";
-
 // SPID Relay State
 export const spidRelayState = Config.SPID_RELAY_STATE;
 
@@ -120,27 +117,24 @@ export const fastLoginOptIn = Config.FAST_LOGIN_OPTIN === "YES";
 export const cieLoginFlowWithDevServerEnabled =
   Config.CIE_LOGIN_WITH_DEV_SERVER_ENABLED === "YES";
 
-// Native Login Feature Flag
-export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
-
 // #region Help Center URLs
 
 /**
  * Help Center URL for the "What to do when the session is expired" article
- * hard-coded for now [by design]( https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33508#1129981819)
+ * hard-coded for now [by
+ * design](https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33508#1129981819)
  */
 export const helpCenterHowToDoWhenSessionIsExpiredUrl =
   "https://assistenza.ioapp.it/hc/it/articles/32616176301713" as NonEmptyString;
-/**
- * Help Center URL for the "How to login with SPID" article
- */
+/** Help Center URL for the "How to login with SPID" article */
 export const helpCenterHowToLoginWithSpidUrl =
   "https://assistenza.ioapp.it/hc/it/sections/30616637679505" as NonEmptyString;
-/**
- * Help Center URL for the "How to login with EIC" article
- */
+/** Help Center URL for the "How to login with EIC" article */
 export const helpCenterHowToLoginWithEicUrl =
   "https://assistenza.ioapp.it/hc/it/articles/30724124984593#h_01JF0DQRRPJWY61RAFNG2AKF3R" as NonEmptyString;
+/** Help Center URL for the "How to read the CIE" article */
+export const helpCenterHowToReadCieUrl =
+  "https://assistenza.ioapp.it/hc/it/articles/50892848629905-Leggere-la-CIE" as NonEmptyString;
 
 // #endregion
 
@@ -219,14 +213,12 @@ export const fastLoginMaxRetries = pipe(
 export const pageSize: number = DEFAULT_PAGE_SIZE;
 
 // This is the maximum number supported by API via pagination regardless of the content.
-export const maximumItemsFromAPI: number = 100;
+export const maximumItemsFromAPI = 100;
 
 export const testOverlayCaption: string | undefined =
   Config.TEST_OVERLAY_CAPTION;
 
-/**
- * Payments
- */
+/** Payments */
 
 // If not defined or invalid we don't want to filter PSPs
 export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
@@ -240,9 +232,7 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
   O.toUndefined
 );
 
-/**
- * IDPay
- */
+/** IDPay */
 
 export const idPayTestToken =
   Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;

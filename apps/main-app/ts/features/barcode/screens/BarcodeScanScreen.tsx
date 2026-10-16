@@ -2,15 +2,14 @@ import {
   Divider,
   IOToast,
   ListItemNav,
+  triggerHaptic,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { Alert, View } from "react-native";
-import ReactNativeHapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+
+import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
@@ -23,10 +22,10 @@ import {
   isIdPayEnabledInScanScreenSelector,
   isPnRemoteEnabledSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
-import { emptyContextualHelp } from "../../../utils/contextualHelp.ts";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { ITW_REMOTE_ROUTES } from "../../itwallet/presentation/remote/navigation/routes.ts";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes.ts";
 import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes";
@@ -38,16 +37,16 @@ import PN_ROUTES from "../../pn/navigation/routes.ts";
 import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
+import { BarcodeFailure } from "../types/failure";
 import {
+  IO_BARCODE_ALL_FORMATS,
+  IO_BARCODE_ALL_TYPES,
   IOBarcode,
   IOBarcodeFormat,
   IOBarcodeOrigin,
   IOBarcodeType,
-  IO_BARCODE_ALL_FORMATS,
-  IO_BARCODE_ALL_TYPES,
   PagoPaBarcode
 } from "../types/IOBarcode";
-import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 
 const BarcodeScanScreen = () => {
@@ -61,8 +60,10 @@ const BarcodeScanScreen = () => {
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
-  useHardwareBackButton(() => {
-    navigation.goBack();
+  useHardwareBackButtonWhenFocused(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
     return true;
   });
 
@@ -84,8 +85,10 @@ const BarcodeScanScreen = () => {
   );
 
   /**
-   * Handles the case with multiple barcodes.It gives priority to pagoPA barcodes.
-   * If barcode type does not support multiple barcode, it shows an alert.
+   * Handles the case with multiple barcodes.It gives priority to pagoPA
+   * barcodes. If barcode type does not support multiple barcode, it shows an
+   * alert.
+   *
    * @param barcodes Array of scanned barcodes
    */
   const handleMultipleBarcodes = (
@@ -97,9 +100,7 @@ const BarcodeScanScreen = () => {
     if (barcodesByType.PAGOPA) {
       const pagoPABarcodes = barcodesByType.PAGOPA as Array<PagoPaBarcode>;
 
-      ReactNativeHapticFeedback.trigger(
-        HapticFeedbackTypes.notificationSuccess
-      );
+      triggerHaptic("notificationSuccess");
 
       analytics.trackBarcodeScanSuccess("home", pagoPABarcodes[0], origin);
 
@@ -135,14 +136,53 @@ const BarcodeScanScreen = () => {
 
   /**
    * Handles a single barcode and navigates to the correct screen.
+   *
    * @param barcode Scanned barcode
    */
   const handleSingleBarcode = (barcode: IOBarcode, origin: IOBarcodeOrigin) => {
-    ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+    triggerHaptic("notificationSuccess");
 
     analytics.trackBarcodeScanSuccess("home", barcode, origin);
 
     switch (barcode.type) {
+      case "FCI":
+        navigation.navigate(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.ROUTER,
+          params: {
+            signatureRequestId: barcode.signatureRequestId
+          }
+        });
+        break;
+      case "IDPAY":
+        openDeepLink(barcode.authUrl);
+        break;
+      case "ITW_CREDENTIAL_OFFER":
+        /**
+         * Use replace so BARCODE_SCAN is removed from the parent stack. This
+         * lets the offer flow close with goBack and return directly to the
+         * screen shown before the scanner.
+         */
+        navigation.replace(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
+          params: {
+            itwCredentialOfferUri: barcode.itwCredentialOfferUri
+          }
+        });
+        break;
+      case "ITW_REMOTE":
+        /**
+         * Use replace so BARCODE_SCAN is removed from the parent stack. This
+         * lets the remote flow close with goBack and return directly to the
+         * screen shown before the scanner.
+         */
+        navigation.replace(ITW_REMOTE_ROUTES.MAIN, {
+          screen: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
+          params: {
+            ...barcode.itwRemoteRequestPayload,
+            flowType: "cross-device"
+          }
+        });
+        break;
       case "PAGOPA":
         const isDataMatrix = barcode.format === "DATA_MATRIX";
 
@@ -155,31 +195,6 @@ const BarcodeScanScreen = () => {
           startOrigin: isDataMatrix ? "poste_datamatrix_scan" : "qrcode_scan"
         });
 
-        break;
-      case "IDPAY":
-        openDeepLink(barcode.authUrl);
-        break;
-      case "FCI":
-        navigation.navigate(FCI_ROUTES.MAIN, {
-          screen: FCI_ROUTES.ROUTER,
-          params: {
-            signatureRequestId: barcode.signatureRequestId
-          }
-        });
-        break;
-      case "ITW_REMOTE":
-        /**
-         * Use replace so BARCODE_SCAN is removed from the parent stack.
-         * This lets the remote flow close with goBack and return directly
-         * to the screen shown before the scanner.
-         */
-        navigation.replace(ITW_REMOTE_ROUTES.MAIN, {
-          screen: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
-          params: {
-            ...barcode.itwRemoteRequestPayload,
-            flowType: "cross-device"
-          }
-        });
         break;
       case "SEND":
         navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
@@ -230,18 +245,18 @@ const BarcodeScanScreen = () => {
   const manualInputModalComponent = (
     <View>
       <ListItemNav
-        value={I18n.t("barcodeScan.manual.notice")}
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
-        onPress={handlePagoPACodeInput}
         icon="productPagoPA"
         iconColor="blueItalia-500"
+        onPress={handlePagoPACodeInput}
+        value={I18n.t("barcodeScan.manual.notice")}
       />
       <Divider />
       <ListItemNav
-        value={I18n.t("barcodeScan.manual.authorize")}
         accessibilityLabel={I18n.t("barcodeScan.manual.authorize")}
-        onPress={handleIdPayPaymentCodeInput}
         icon="gallery"
+        onPress={handleIdPayPaymentCodeInput}
+        value={I18n.t("barcodeScan.manual.authorize")}
       />
       <VSpacer size={16} />
     </View>
@@ -278,22 +293,21 @@ const BarcodeScanScreen = () => {
   return (
     <>
       <View
-        style={{ flex: 1 }}
         importantForAccessibility={
           isFilePickerVisible ? "no-hide-descendants" : "auto"
         }
+        style={{ flex: 1 }}
       >
         <BarcodeScanBaseScreenComponent
+          barcodeAnalyticsFlow="home"
           barcodeFormats={barcodeFormats}
           barcodeTypes={barcodeTypes}
-          onBarcodeSuccess={handleBarcodeSuccess}
+          isDisabled={isFilePickerVisible || isFileReaderLoading}
+          isLoading={isFileReaderLoading}
           onBarcodeError={handleBarcodeError}
+          onBarcodeSuccess={handleBarcodeSuccess}
           onFileInputPressed={showFilePicker}
           onManualInputPressed={handleManualInputPressed}
-          contextualHelp={emptyContextualHelp}
-          barcodeAnalyticsFlow="home"
-          isLoading={isFileReaderLoading}
-          isDisabled={isFilePickerVisible || isFileReaderLoading}
         />
       </View>
       {filePickerBottomSheet}

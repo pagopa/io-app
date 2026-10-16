@@ -1,38 +1,43 @@
-import { Fragment } from "react";
-import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
+import { Divider, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
-import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
-import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
+import { Fragment } from "react";
+
+import { useIOSelector } from "../../../../store/hooks.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { trackItwCredentialQualificationDetail } from "../../analytics";
-import { CREDENTIALS_MAP } from "../../analytics/utils/types.ts";
 import { getMixPanelCredential } from "../../analytics/utils/index.ts";
-import { useIOSelector } from "../../../../store/hooks.ts";
+import { CREDENTIALS_MAP } from "../../analytics/utils/types.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
+import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
 import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
 
 type ItwNestedClaimsListItemProps = {
+  credentialStatus?: ItwCredentialStatus;
+  credentialType?: string;
+  hidden?: boolean;
+  isPreview?: boolean;
+  itemClaims: Array<ClaimDisplayFormat>;
   itemTitle?: string;
   summaryLabel?: string;
   summaryValue?: string;
-  itemClaims: Array<ClaimDisplayFormat>;
-  hidden?: boolean;
-  isPreview?: boolean;
-  credentialStatus?: ItwCredentialStatus;
-  credentialType?: string;
 };
 
 /**
  * Component which renders a list item with nested claims.
- * @param itemTitle - the title of the item
- * @param summaryLabel - the label of the summary item
- * @param summaryValue - the value of the summary item
- * @param itemClaims - the claims to display in the bottom sheet
- * @param hidden - a flag to hide the claim values
- * @param isPreview - a flag to indicate if the claims are being rendered in preview mode
- * @param credentialStatus - the status of the credential, used for expiration date claims
- * @param credentialType - the type of the credential, used for analytics tracking
- * @constructor
+ *
+ * @class
+ * @param itemTitle - The title of the item
+ * @param summaryLabel - The label of the summary item
+ * @param summaryValue - The value of the summary item
+ * @param itemClaims - The claims to display in the bottom sheet
+ * @param hidden - A flag to hide the claim values
+ * @param isPreview - A flag to indicate if the claims are being rendered in
+ *   preview mode
+ * @param credentialStatus - The status of the credential, used for expiration
+ *   date claims
+ * @param credentialType - The type of the credential, used for analytics
+ *   tracking
  */
 export const ItwNestedClaimsListItem = ({
   itemTitle,
@@ -54,10 +59,10 @@ export const ItwNestedClaimsListItem = ({
             {index > 0 && <Divider />}
             <ItwCredentialClaim
               claim={claim}
-              hidden={hidden}
-              isPreview={isPreview}
               credentialStatus={credentialStatus}
               credentialType={credentialType}
+              hidden={hidden}
+              isPreview={isPreview}
             />
           </Fragment>
         ))}
@@ -78,8 +83,6 @@ export const ItwNestedClaimsListItem = ({
   return (
     <>
       <ListItemInfo
-        label={summaryLabel}
-        value={summaryValue}
         endElement={{
           type: "buttonLink",
           componentProps: {
@@ -88,6 +91,8 @@ export const ItwNestedClaimsListItem = ({
             accessibilityLabel: I18n.t("global.buttons.show")
           }
         }}
+        label={summaryLabel}
+        value={summaryValue}
       />
       {itemBottomSheet.bottomSheet}
     </>

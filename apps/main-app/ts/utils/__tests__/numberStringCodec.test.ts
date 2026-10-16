@@ -1,4 +1,5 @@
 import * as E from "fp-ts/lib/Either";
+
 import { NumberFromString } from "../number";
 
 describe("should convert a string representin a number into a number", () => {

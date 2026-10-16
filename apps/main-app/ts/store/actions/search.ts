@@ -1,6 +1,4 @@
-/**
- * Action types and action creator related to the Search.
- */
+/** Action types and action creator related to the Search. */
 
 import * as O from "fp-ts/lib/Option";
 import { ActionType, createStandardAction } from "typesafe-actions";
@@ -15,6 +13,6 @@ export const updateSearchText =
 export const disableSearch = createStandardAction("DISABLE_SEARCH")();
 
 export type SearchActions =
+  | ActionType<typeof disableSearch>
   | ActionType<typeof searchMessagesEnabled>
-  | ActionType<typeof updateSearchText>
-  | ActionType<typeof disableSearch>;
+  | ActionType<typeof updateSearchText>;

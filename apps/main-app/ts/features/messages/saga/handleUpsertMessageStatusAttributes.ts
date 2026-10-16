@@ -1,77 +1,50 @@
+import { MessageStatusArchivingChange } from "@io-app/api-types/generated/definitions/communication/MessageStatusArchivingChange";
+import { MessageStatusBulkChange } from "@io-app/api-types/generated/definitions/communication/MessageStatusBulkChange";
+import { MessageStatusChange } from "@io-app/api-types/generated/definitions/communication/MessageStatusChange";
+import { MessageStatusReadingChange } from "@io-app/api-types/generated/definitions/communication/MessageStatusReadingChange";
+import I18n from "i18next";
 import {
   call,
   cancelled,
   put,
   race,
-  take,
-  select
+  select,
+  take
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import I18n from "i18next";
-import { MessageStatusArchivingChange } from "../../../../definitions/communication/MessageStatusArchivingChange";
-import { MessageStatusBulkChange } from "../../../../definitions/communication/MessageStatusBulkChange";
-import { MessageStatusChange } from "../../../../definitions/communication/MessageStatusChange";
-import { MessageStatusReadingChange } from "../../../../definitions/communication/MessageStatusReadingChange";
+
+import { CommunicationClient } from "../../../api/CommunicationClientManager";
+import { SagaCallReturnType } from "../../../types/utils";
+import { getError } from "../../../utils/errors";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import {
+  trackArchivedRestoredMessages,
+  trackUndefinedBearerToken,
+  trackUpsertMessageStatusAttributesFailure,
+  UndefinedBearerTokenPhase
+} from "../analytics";
 import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
 } from "../store/actions";
-import { SagaCallReturnType } from "../../../types/utils";
-import { getError } from "../../../utils/errors";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
-import { errorToReason, unknownToReason } from "../utils";
 import {
-  trackArchivedRestoredMessages,
-  trackUpsertMessageStatusAttributesFailure,
-  trackUndefinedBearerToken,
-  UndefinedBearerTokenPhase
-} from "../analytics";
-import { handleResponse } from "../utils/responseHandling";
-import {
-  resetMessageArchivingAction,
   interruptMessageArchivingProcessingAction,
   removeScheduledMessageArchivingAction,
+  resetMessageArchivingAction,
   startProcessingMessageArchivingAction
 } from "../store/actions/archiving";
-import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archiving";
 import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
+import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archiving";
 import { MessageListCategory } from "../types/messageListCategory";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { CommunicationClient } from "../../../api/CommunicationClientManager";
+import { errorToReason, unknownToReason } from "../utils";
+import { handleResponse } from "../utils/responseHandling";
 import { getCommunicationClient } from "./commons";
-
-/**
- * @throws invalid payload
- * @param payload
- */
-function validatePayload(
-  payload: UpsertMessageStatusAttributesPayload
-): MessageStatusChange {
-  switch (payload.update.tag) {
-    case "archiving":
-      return {
-        change_type: "archiving",
-        is_archived: payload.update.isArchived
-      } as MessageStatusArchivingChange;
-    case "reading":
-      return {
-        change_type: "reading",
-        is_read: true
-      } as MessageStatusReadingChange;
-    case "bulk":
-      return {
-        change_type: "bulk",
-        is_read: true,
-        is_archived: payload.update.isArchived
-      } as MessageStatusBulkChange;
-    default:
-      throw new TypeError("invalid payload");
-  }
-}
 
 /**
  * The algorithm of this saga is as follows:
  *
+ * ```text
  * Get awaken by the receival of `startProcessingMessageArchivingAction` in takeLastest mode
  * do {
  *   Extract the first message ID for archiving/restoring queues, along with the info about archiving or restoring the message
@@ -94,15 +67,20 @@ function validatePayload(
  *       If resetMessageArchivingAction is received, then just go to the next do-while loop interaction, which will extract no data from the
  *         archiving/restoring queues (since they have been emptied by resetMessageArchivingAction) and will terminate
  * } while (true)
+ * ```
  *
- * If the session expires (due to fast login), it is expected that the legacy saga fails with a 401 error and the
- * 'upsertMessageStatusAttributes.failure' is triggered. If the authentication session is later restored, the original
- * 'upsertMessageStatusAttributes.request' action will be redispatched and the related legacy saga will either succeed or fail. At this point
- * the user may either discard the scheduled archiving/restoring of messages, in which case the UI is consistent (since the message has been
- * moved) or she may retry the restoring/archiving, in which case the message ID will not have a match into the original message collection
- * (INBOX or ARCHIVE) and so it will just be discarded, leaving the UI consistent. In case the automatically dispatched action from fast
- * login had failed, there will be a match and the process will resume.
- *
+ * If the session expires (due to fast login), it is expected that the legacy
+ * saga fails with a 401 error and the 'upsertMessageStatusAttributes.failure'
+ * is triggered. If the authentication session is later restored, the original
+ * 'upsertMessageStatusAttributes.request' action will be redispatched and the
+ * related legacy saga will either succeed or fail. At this point the user may
+ * either discard the scheduled archiving/restoring of messages, in which case
+ * the UI is consistent (since the message has been moved) or she may retry the
+ * restoring/archiving, in which case the message ID will not have a match into
+ * the original message collection (INBOX or ARCHIVE) and so it will just be
+ * discarded, leaving the UI consistent. In case the automatically dispatched
+ * action from fast login had failed, there will be a match and the process will
+ * resume.
  */
 export function* handleMessageArchivingRestoring(
   _: ActionType<typeof startProcessingMessageArchivingAction>
@@ -178,31 +156,6 @@ export function* handleMessageArchivingRestoring(
   } while (true);
 }
 
-// Be aware that this saga is execute with a takeEvery, in order to remain
-// compatible with the old messages home way of archiving messages
-export function* raceUpsertMessageStatusAttributes(
-  action: ActionType<typeof upsertMessageStatusAttributes.request>
-) {
-  const sessionToken = yield* select(sessionTokenSelector);
-
-  if (!sessionToken) {
-    trackUndefinedBearerToken(
-      UndefinedBearerTokenPhase.upsertMessageStatusAttributes
-    );
-    return;
-  }
-
-  const { upsertMessageStatusAttributes: putMessage } = yield* call(
-    getCommunicationClient,
-    sessionToken
-  );
-
-  yield* race({
-    task: call(handleUpsertMessageStatusAttributes, putMessage, action),
-    cancel: take(resetMessageArchivingAction)
-  });
-}
-
 export function* handleUpsertMessageStatusAttributes(
   putMessage: CommunicationClient["upsertMessageStatusAttributes"],
   action: ActionType<typeof upsertMessageStatusAttributes.request>
@@ -249,6 +202,60 @@ export function* handleUpsertMessageStatusAttributes(
         })
       );
     }
+  }
+}
+
+// Be aware that this saga is execute with a takeEvery, in order to remain
+// compatible with the old messages home way of archiving messages
+export function* raceUpsertMessageStatusAttributes(
+  action: ActionType<typeof upsertMessageStatusAttributes.request>
+) {
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.upsertMessageStatusAttributes
+    );
+    return;
+  }
+
+  const { upsertMessageStatusAttributes: putMessage } = yield* call(
+    getCommunicationClient,
+    sessionToken
+  );
+
+  yield* race({
+    task: call(handleUpsertMessageStatusAttributes, putMessage, action),
+    cancel: take(resetMessageArchivingAction)
+  });
+}
+
+/**
+ * @param payload
+ * @throws Invalid payload
+ */
+function validatePayload(
+  payload: UpsertMessageStatusAttributesPayload
+): MessageStatusChange {
+  switch (payload.update.tag) {
+    case "archiving":
+      return {
+        change_type: "archiving",
+        is_archived: payload.update.isArchived
+      } as MessageStatusArchivingChange;
+    case "bulk":
+      return {
+        change_type: "bulk",
+        is_read: true,
+        is_archived: payload.update.isArchived
+      } as MessageStatusBulkChange;
+    case "reading":
+      return {
+        change_type: "reading",
+        is_read: true
+      } as MessageStatusReadingChange;
+    default:
+      throw new TypeError("invalid payload");
   }
 }
 

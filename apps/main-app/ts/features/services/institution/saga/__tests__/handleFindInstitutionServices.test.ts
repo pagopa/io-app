@@ -1,15 +1,16 @@
+import { InstitutionServicesResource } from "@io-app/api-types/generated/definitions/services/InstitutionServicesResource";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+
 import { servicesClientManager } from "../../../../../api/ServicesClientManager";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
-  PaginatedServicesGetPayload,
-  paginatedServicesGet
+  paginatedServicesGet,
+  PaginatedServicesGetPayload
 } from "../../store/actions";
 import { handleFindInstitutionServices } from "../handleFindInstitutionServices";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 jest.mock("../../../../../api/ServicesClientManager");
 

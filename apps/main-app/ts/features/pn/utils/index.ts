@@ -1,25 +1,51 @@
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
+import { NotificationStatus } from "@io-app/api-types/generated/definitions/pn/NotificationStatus";
+import { NotificationStatusHistoryElement } from "@io-app/api-types/generated/definitions/pn/NotificationStatusHistoryElement";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { PNMessage } from "../store/types/types";
-import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
-import { CTAS } from "../../../types/LocalizedCTAs";
-import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
+
 import { GlobalState } from "../../../store/reducers/types";
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
-import { TimelineStatus } from "../components/Timeline";
-import { SendOpeningSource } from "../../pushNotifications/analytics";
-import { NotificationStatusHistoryElement } from "../../../../definitions/pn/NotificationStatusHistoryElement.ts";
+import { CTAS } from "../../../types/LocalizedCTAs";
 import { format } from "../../../utils/dates.ts";
+import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
+import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import { SendOpeningSource } from "../../pushNotifications/analytics";
+import { TimelineStatus } from "../components/Timeline";
+import { PNMessage } from "../store/types/types";
 
 export const maxVisiblePaymentCount = 5;
 
-export const getNotificationStatusInfo = (status: NotificationStatus) =>
-  I18n.t(`features.pn.details.timeline.status.${status}`, {
-    defaultValue: status
-  });
+export const getNotificationStatusInfo = (
+  status: NotificationStatus
+): string => {
+  switch (status) {
+    case "ACCEPTED":
+      return I18n.t("features.pn.details.timeline.status.ACCEPTED");
+    case "CANCELLED":
+      return I18n.t("features.pn.details.timeline.status.CANCELLED");
+    case "DELIVERED":
+      return I18n.t("features.pn.details.timeline.status.DELIVERED");
+    case "DELIVERING":
+      return I18n.t("features.pn.details.timeline.status.DELIVERING");
+    case "EFFECTIVE_DATE":
+      return I18n.t("features.pn.details.timeline.status.EFFECTIVE_DATE");
+    case "IN_VALIDATION":
+      return I18n.t("features.pn.details.timeline.status.IN_VALIDATION");
+    case "PAID":
+      return I18n.t("features.pn.details.timeline.status.PAID");
+    case "REFUSED":
+      return I18n.t("features.pn.details.timeline.status.REFUSED");
+    case "UNREACHABLE":
+      return I18n.t("features.pn.details.timeline.status.UNREACHABLE");
+    case "VIEWED":
+      return I18n.t("features.pn.details.timeline.status.VIEWED");
+    default:
+      // The backend may send statuses that have no translation yet
+      return status;
+  }
+};
 
 export const getNotificationStatusAccessibilityLabel = (
   historyItem: NotificationStatusHistoryElement
@@ -30,22 +56,22 @@ export const notificationStatusToTimelineStatus = (
   status: NotificationStatus
 ): TimelineStatus => {
   switch (status) {
-    case "VIEWED":
-      return "viewed";
+    case "CANCELLED":
+      return "cancelled";
     case "EFFECTIVE_DATE":
       return "effective";
     case "UNREACHABLE":
       return "unreachable";
-    case "CANCELLED":
-      return "cancelled";
+    case "VIEWED":
+      return "viewed";
   }
   return "default";
 };
 
 export type PNOptInMessageInfo = {
-  isPNOptInMessage: boolean;
   cta1LinksToPNService: boolean;
   cta2LinksToPNService: boolean;
+  isPNOptInMessage: boolean;
 };
 
 export const extractPNOptInMessageInfoIfAvailable = (

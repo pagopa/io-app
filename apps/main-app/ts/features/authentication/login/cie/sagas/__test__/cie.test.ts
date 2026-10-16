@@ -1,6 +1,9 @@
-import { expectSaga } from "redux-saga-test-plan";
 import cieManager from "@pagopa/react-native-cie";
+import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
+
+import { convertUnknownToError } from "../../../../../../utils/errors";
+import { startTimer } from "../../../../../../utils/timer";
 import { cieIsSupported, nfcIsEnabled } from "../../store/actions";
 import {
   checkCieAvailabilitySaga,
@@ -8,8 +11,6 @@ import {
   stopCieManager,
   watchCieAuthenticationSaga
 } from "../cie";
-import { convertUnknownToError } from "../../../../../../utils/errors";
-import { startTimer } from "../../../../../../utils/timer";
 
 jest.mock("@pagopa/react-native-cie", () => ({
   stopListeningNFC: jest.fn(),

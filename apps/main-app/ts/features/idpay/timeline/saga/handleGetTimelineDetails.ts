@@ -1,8 +1,9 @@
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { PreferredLanguageEnum } from "../../../../../definitions/identity/PreferredLanguage";
+
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
@@ -12,6 +13,7 @@ import { idpayTimelineDetailsGet } from "../store/actions";
 
 /**
  * Handle the remote call to retrieve the IDPay operation details
+ *
  * @param getTimelineDetail BE API call
  * @param bpdToken Auth token
  * @param language Preferred language

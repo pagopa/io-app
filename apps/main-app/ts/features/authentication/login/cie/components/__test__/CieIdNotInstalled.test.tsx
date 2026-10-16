@@ -1,12 +1,13 @@
-import { Platform } from "react-native";
 import { fireEvent, render } from "@testing-library/react-native";
+import { Platform } from "react-native";
+
+import { withStore } from "../../../../../../utils/jest/withStore";
+import * as urlUtils from "../../../../../../utils/url";
 import CieIdNotInstalled, {
   CIE_ID_ANDROID_COLL_LINK,
   CIE_ID_ANDROID_LINK,
   CIE_ID_IOS_LINK
 } from "../CieIdNotInstalled";
-import * as urlUtils from "../../../../../../utils/url";
-import { withStore } from "../../../../../../utils/jest/withStore";
 
 const UAT_ENV_ENABLE_STATES = [true, false];
 

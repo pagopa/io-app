@@ -1,11 +1,11 @@
-import { Body, H4, H6, WithTestID } from "@pagopa/io-app-design-system";
+import { Body, H4, H6, WithTestID } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import { Fragment } from "react";
 
 type Props = WithTestID<{
-  text: string;
-  replacementUrl: string;
   onPress: (holder: string) => void;
+  replacementUrl: string;
+  text: string;
 }>;
 
 // a regex to match markdown links
@@ -15,10 +15,8 @@ const matchMarkdownLink = /!?\[([^\]]*)\]\(([^\\)]+)\)/g;
 const getMatchedLinks = (text: string) => text.match(matchMarkdownLink) ?? [];
 
 /**
- * This function returns the replacement url
- * for the tag DOCUMENT_URL and PRIVACY_URL
- * otherwise returns the tag because
- * it's a custom link
+ * This function returns the replacement url for the tag DOCUMENT_URL and
+ * PRIVACY_URL otherwise returns the tag because it's a custom link
  */
 const getOrReplaceTagWithLink = (tagLink: string, replacementUrl: string) => {
   switch (tagLink) {
@@ -30,9 +28,7 @@ const getOrReplaceTagWithLink = (tagLink: string, replacementUrl: string) => {
   }
 };
 
-/**
- * This component renders a text with markdown links
- */
+/** This component renders a text with markdown links */
 const LinkedText = (props: Props) => {
   const parts = getMatchedLinks(props.text);
   // generate unique string with the separator
@@ -48,8 +44,8 @@ const LinkedText = (props: Props) => {
   );
 
   /**
-   * This function generates an array of Link components
-   * used to render the list of clauses
+   * This function generates an array of Link components used to render the list
+   * of clauses
    */
   const generateArrayOfLinkedText = (
     text: string,
@@ -64,13 +60,13 @@ const LinkedText = (props: Props) => {
       const url = splitted[2];
       return (
         <Body
-          weight="Semibold"
           asLink
           avoidPressable
           key={index}
           onPress={() =>
             onPress(getOrReplaceTagWithLink(url, props.replacementUrl))
           }
+          weight="Semibold"
         >
           {textToBeLinked}
         </Body>

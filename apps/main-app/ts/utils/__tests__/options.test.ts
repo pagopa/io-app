@@ -1,20 +1,21 @@
 import * as O from "fp-ts/lib/Option";
+
 import { areSetEqual, areStringsEqual, maybeInnerProperty } from "../options";
 
 describe("areSetEqual", () => {
   it("should return true for equal set of strings", () => {
     const setA: O.Option<Set<string>> = O.some(new Set(["1", "2", "3"]));
-    const setB: O.Option<Set<string>> = O.some(new Set(["2", "3", "1"]));
+    const setB: O.Option<Set<string>> = O.some(new Set(["1", "2", "3"]));
     expect(areSetEqual(setA, setB)).toBeTruthy();
   });
 
   it("should return false for not equal set of strings", () => {
     const setA: O.Option<Set<string>> = O.some(new Set(["1", "2"]));
-    const setB: O.Option<Set<string>> = O.some(new Set(["2", "3", "1"]));
+    const setB: O.Option<Set<string>> = O.some(new Set(["1", "2", "3"]));
     expect(areSetEqual(setA, setB)).toBeFalsy();
   });
 
-  it("should return false for not equal set of strings", () => {
+  it("should return false when one set of strings is a superset of the other", () => {
     const setA: O.Option<Set<string>> = O.some(new Set(["1", "2", "4"]));
     const setB: O.Option<Set<string>> = O.some(new Set(["1", "2"]));
     expect(areSetEqual(setA, setB)).toBeFalsy();
@@ -26,7 +27,7 @@ describe("areSetEqual", () => {
     expect(areSetEqual(setA, setB)).toBeFalsy();
   });
 
-  it("should return false for not equal set of numbers", () => {
+  it("should return false when one set of numbers is none", () => {
     const setA: O.Option<Set<number>> = O.some(new Set([1, 2, 3]));
     const setB: O.Option<Set<number>> = O.none;
     expect(areSetEqual(setA, setB)).toBeFalsy();
@@ -64,7 +65,7 @@ describe("areStringEqual", () => {
     expect(areStringsEqual(O.some("abc"), O.some("ab"))).toBeFalsy();
   });
 
-  it("should return false if the strings are not equal", () => {
+  it("should return false if the strings are entirely different", () => {
     expect(areStringsEqual(O.some("a"), O.some("bb"))).toBeFalsy();
   });
 
@@ -92,7 +93,7 @@ describe("maybeInnerProperty", () => {
     expect(innerProp).toEqual(O.some("John"));
   });
 
-  it("should return the inner property", () => {
+  it("should return the inner property transformed by the mapping function", () => {
     const obj = {
       person: {
         name: "John"
@@ -112,7 +113,7 @@ describe("maybeInnerProperty", () => {
     expect(innerProp).toEqual(O.none);
   });
 
-  it("should return the O.none", () => {
+  it("should return the O.none when the intermediate object is undefined", () => {
     type Person = {
       person?: { name?: string };
     };

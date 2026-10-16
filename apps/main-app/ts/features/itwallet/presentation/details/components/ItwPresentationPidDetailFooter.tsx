@@ -1,29 +1,18 @@
-import { ListItemAction } from "@pagopa/io-app-design-system";
-import { constVoid } from "fp-ts/function";
+import { ListItemAction, useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { memo } from "react";
 import { Alert, View } from "react-native";
-import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
+
+import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { openWebUrl } from "../../../../../utils/url.ts";
 import { trackItwStartDeactivation } from "../../../analytics";
-import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
-import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import { itwShowcaseUrlSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../analytics/enum";
-import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest";
 
-type Props = {
-  credential: CredentialMetadata;
-};
-
-const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
+const ItwPresentationPidDetailFooter = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const startAndTrackSupportRequest = useOfflineToastGuard(
-    useItwStartCredentialSupportRequest(credential)
-  );
-
-  const requestAssistanceLabel = I18n.t(
-    "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
-  );
 
   const handleRevokePress = () => {
     trackItwStartDeactivation({
@@ -51,28 +40,36 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
       ]
     );
   };
+  const guardedHandleRevokePress = useOfflineToastGuard(handleRevokePress);
+
+  const toast = useIOToast();
+  const showcaseUrl = useIOSelector(itwShowcaseUrlSelector);
+
+  const handleOnPress = () => {
+    if (!showcaseUrl) {
+      toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
+      return;
+    }
+    openWebUrl(showcaseUrl, () => {
+      toast.error(I18n.t("global.jserror.title"));
+    });
+  };
 
   return (
     <View>
       <ListItemAction
-        variant="primary"
         icon="website"
         label={I18n.t(
           "features.itWallet.presentation.credentialDetails.discoverItWallet"
         )}
-        onPress={useNotAvailableToastGuard(constVoid)}
-      />
-      <ListItemAction
+        onPress={handleOnPress}
         variant="primary"
-        icon="message"
-        label={requestAssistanceLabel}
-        onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
       />
       <ListItemAction
-        variant="danger"
         icon="trashcan"
         label={I18n.t("features.itWallet.presentation.itWalletId.cta.revoke")}
-        onPress={handleRevokePress}
+        onPress={guardedHandleRevokePress}
+        variant="danger"
       />
     </View>
   );

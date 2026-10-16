@@ -5,12 +5,11 @@ import {
   Icon,
   IOButton,
   VStack
-} from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
-import { constNull, pipe } from "fp-ts/lib/function";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment, memo, useEffect } from "react";
 import { View } from "react-native";
+
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -41,7 +40,7 @@ export const ItwEidInfoBottomSheetTitle = ({
 
   return (
     <HStack space={8} style={{ alignItems: "center" }}>
-      <Icon name="legalValue" color={iconColor} />
+      <Icon color={iconColor} name="legalValue" />
       <H4>
         {I18n.t(
           isExpired
@@ -54,15 +53,15 @@ export const ItwEidInfoBottomSheetTitle = ({
 };
 
 type ItwEidInfoBottomSheetContentProps = {
-  navigation: ReturnType<typeof useIONavigation>;
   currentScreenName?: string;
+  navigation: ReturnType<typeof useIONavigation>;
 };
 
 const ItwEidInfoBottomSheetContent = ({
   navigation,
   currentScreenName
 }: ItwEidInfoBottomSheetContentProps) => {
-  const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const eid = useIOSelector(itwCredentialsEidSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
@@ -99,8 +98,8 @@ const ItwEidInfoBottomSheetContent = ({
           )}
         />
         <ItwEidLifecycleAlert
-          navigation={navigation}
           currentScreenName={currentScreenName}
+          navigation={navigation}
           skipViewTracking={true}
         />
         <View>
@@ -117,23 +116,18 @@ const ItwEidInfoBottomSheetContent = ({
           )}
         />
         <IOButton
-          fullWidth
-          variant="solid"
           color="danger"
+          fullWidth
           label={I18n.t("features.itWallet.walletRevocation.cta")}
           onPress={navigateToWalletRevocationScreen}
+          variant="solid"
         />
       </VStack>
     );
   };
 
-  return pipe(
-    eidOption,
-    O.fold(
-      constNull, // This should never happen
-      credential => <Content credential={credential} />
-    )
-  );
+  // A missing eID should never happen when this bottom sheet is shown
+  return eid ? <Content credential={eid} /> : null;
 };
 
 const MemoizedItwEidInfoBottomSheetContent = memo(ItwEidInfoBottomSheetContent);

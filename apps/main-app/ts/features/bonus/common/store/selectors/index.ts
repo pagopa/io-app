@@ -1,18 +1,16 @@
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
+import { BonusesAvailable } from "@io-app/api-types/generated/definitions/content/BonusesAvailable";
+import { BonusVisibilityEnum } from "@io-app/api-types/generated/definitions/content/BonusVisibility";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
-import { BonusAvailable } from "../../../../../../definitions/content/BonusAvailable";
-import { BonusesAvailable } from "../../../../../../definitions/content/BonusesAvailable";
-import { GlobalState } from "../../../../../store/reducers/types";
 
-import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { mapBonusIdFeatureFlag } from "../../utils";
 import { AvailableBonusTypesState } from "../reducers/availableBonusesTypes";
 
-/**
- * return all available bonus: visibile, hidden or experimental
- */
+/** Return all available bonus: visibile, hidden or experimental */
 const allAvailableBonusTypesSelector = (
   state: GlobalState
 ): AvailableBonusTypesState => state.bonus.availableBonusTypes;
@@ -22,8 +20,9 @@ const experimentalAndVisibleBonus = (bonus: BonusAvailable): boolean =>
     v => v === bonus.visibility
   );
 /**
- * return only these bonus the app supports: a bonus is supported when the relative feature flag
- * exists and it is ON and the relative available bonus is in state 'visible' or 'experimental'
+ * Return only these bonus the app supports: a bonus is supported when the
+ * relative feature flag exists and it is ON and the relative available bonus is
+ * in state 'visible' or 'experimental'
  */
 export const supportedAvailableBonusSelector = createSelector(
   allAvailableBonusTypesSelector,
@@ -64,7 +63,8 @@ export const isAvailableBonusNoneErrorSelector = createSelector(
 );
 
 /**
- * return the bonus type corresponding to the given idBonusType
+ * Return the bonus type corresponding to the given idBonusType
+ *
  * @param idBonusType
  */
 export const availableBonusTypesSelectorFromId = (idBonusType: number) =>

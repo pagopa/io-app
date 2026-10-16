@@ -80,7 +80,10 @@ buck-out/
 *.jsbundle
 
 # Visual Studio Code settings
-.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
 
 # Bundler
 vendor
@@ -118,3 +121,11 @@ GeneratedDotEnv.m
 .nx/polygraph
 .claude/worktrees
 .claude/settings.local.json
+
+*.tsbuildinfo
+
+# dev-api-server local artifacts
+apps/dev-api-server/pnpm-debug.log
+apps/dev-api-server/*.js
+apps/dev-api-server/*.js.map
+apps/dev-api-server/local.*

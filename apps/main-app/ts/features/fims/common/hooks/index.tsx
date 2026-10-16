@@ -1,36 +1,37 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { useCallback, useEffect, useMemo } from "react";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+
+import {
+  AppParamsList,
+  IOStackNavigationProp,
+  useIONavigation
+} from "../../../../navigation/params/AppParamsList";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
 import {
-  serviceDetailsByIdPotSelector,
-  serviceDetailsByIdSelector
-} from "../../../services/details/store/selectors";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { isStrictNone } from "../../../../utils/pot";
-import {
-  AppParamsList,
-  IOStackNavigationProp,
-  useIONavigation
-} from "../../../../navigation/params/AppParamsList";
-import { FIMS_ROUTES } from "../navigation";
-import { removeFIMSPrefixFromUrl } from "../../singleSignOn/utils";
-import { isTestEnv } from "../../../../utils/environment";
-import {
   fimsServiceConfiguration,
   fimsServiceIdInCookieDisabledListSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
+import { isTestEnv } from "../../../../utils/environment";
+import { isStrictNone } from "../../../../utils/pot";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import {
+  serviceDetailsByIdPotSelector,
+  serviceDetailsByIdSelector
+} from "../../../services/details/store/selectors";
+import { removeFIMSPrefixFromUrl } from "../../singleSignOn/utils";
+import { FIMS_ROUTES } from "../navigation";
 
 export type FIMSServiceData = {
+  ephemeralSessionOniOS: boolean;
   organizationFiscalCode?: string;
   organizationName?: string;
   serviceId: ServiceId;
   serviceName?: string;
-  ephemeralSessionOniOS: boolean;
 };
 
 export const useAutoFetchingServiceByIdPot = (serviceId: ServiceId) => {
@@ -53,8 +54,8 @@ export const useAutoFetchingServiceByIdPot = (serviceId: ServiceId) => {
 };
 
 /**
- * Use this hook to retrieve a function that starts the FIMS authentication flow.
- * Choose this hook when the service data is already loaded into redux
+ * Use this hook to retrieve a function that starts the FIMS authentication
+ * flow. Choose this hook when the service data is already loaded into redux
  * (e.g., when coming from a message details or service details).
  */
 export const useFIMSFromServiceId = (serviceId: ServiceId) => {
@@ -74,9 +75,9 @@ export const useFIMSFromServiceId = (serviceId: ServiceId) => {
 };
 
 /**
- * Use this hook to retrieve a function that starts the FIMS authentication flow.
- * Choose this hook when the service id is not available upon hook invocation
- * but it will be later, when the returned function is called.
+ * Use this hook to retrieve a function that starts the FIMS authentication
+ * flow. Choose this hook when the service id is not available upon hook
+ * invocation but it will be later, when the returned function is called.
  */
 export const useFIMSAuthenticationFlow = () => {
   const navigation = useIONavigation();
@@ -94,9 +95,9 @@ export const useFIMSAuthenticationFlow = () => {
 };
 
 /**
- * Use this hook to retrieve a function that starts the FIMS authentication flow.
- * Choose this hook when the service data are stored into the remote CDN and you
- * know the configuration id that identifies and retrieves such data.
+ * Use this hook to retrieve a function that starts the FIMS authentication
+ * flow. Choose this hook when the service data are stored into the remote CDN
+ * and you know the configuration id that identifies and retrieves such data.
  */
 export const useFIMSRemoteServiceConfiguration = (configurationId: string) => {
   const store = useIOStore();

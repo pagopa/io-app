@@ -5,7 +5,7 @@ import {
   OTPInput,
   TextInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   CieManager,
   InternalAuthAndMrtdResponse,
@@ -21,6 +21,7 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useDebugInfo } from "../../../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../../../hooks/useScreenEndMargin";
@@ -159,7 +160,7 @@ export const CieInternalAuthMrtdScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={["bottom"]}>
+    <SafeAreaView edges={["bottom"]} style={styles.container}>
       <KeyboardAvoidingView
         behavior="padding"
         contentContainerStyle={{
@@ -197,9 +198,9 @@ export const CieInternalAuthMrtdScreen = () => {
               <TextInput
                 accessibilityLabel="AAR"
                 disabled={false}
-                value={aar}
-                placeholder={"AAR"}
                 onChangeText={setAar}
+                placeholder={"AAR"}
+                value={aar}
               />
             </>
           )}
@@ -207,38 +208,40 @@ export const CieInternalAuthMrtdScreen = () => {
           <TextInput
             accessibilityLabel="Challenge text input field"
             disabled={useSENDChallenge}
-            value={useSENDChallenge ? sendVerificationCode : challenge}
-            placeholder={"Challenge"}
             onChangeText={setChallenge}
+            placeholder={"Challenge"}
+            value={useSENDChallenge ? sendVerificationCode : challenge}
           />
           <ListItemHeader label="Insert card CAN" />
           <OTPInput
             accessibilityLabel="CAN text input field"
-            value={can}
-            onValueChange={onCanChanged}
             length={CAN_PIN_LENGTH}
+            onValueChange={onCanChanged}
+            value={can}
           />
         </View>
         <VSpacer size={16} />
         <IOButton
-          variant="solid"
-          label={status === "reading" ? "Stop" : "Start sign and reading"}
           disabled={
             !selectedChallenge ||
             selectedChallenge.length === 0 ||
             can.length < 6
           }
+          label={status === "reading" ? "Stop" : "Start sign and reading"}
           onPress={() =>
-            status === "reading" ? handleStopReading() : handleStartReading()
+            void (status === "reading"
+              ? handleStopReading()
+              : handleStartReading())
           }
+          variant="solid"
         />
         {useSENDChallenge && (
           <>
             <VSpacer size={8} />
             <IOButton
               disabled={aar.trim().length === 0}
-              loading={isRequestingSENDMandate}
               label="Request SEND Challenge"
+              loading={isRequestingSENDMandate}
               onPress={() => dispatch(testAarCreateMandate.request(aar))}
             />
           </>

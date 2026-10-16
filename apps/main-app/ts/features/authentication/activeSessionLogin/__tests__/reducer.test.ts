@@ -1,13 +1,13 @@
 import { SpidIdp } from "../../../../utils/idps";
 import {
-  setStartActiveSessionLogin,
-  setIdpSelectedActiveSessionLogin,
-  setFastLoginOptSessionLogin,
-  activeSessionLoginSuccess,
   activeSessionLoginFailure,
+  activeSessionLoginSuccess,
+  closeSessionExpirationBanner,
   consolidateActiveSessionLoginData,
+  setFastLoginOptSessionLogin,
   setFinishedActiveSessionLoginFlow,
-  closeSessionExpirationBanner
+  setIdpSelectedActiveSessionLogin,
+  setStartActiveSessionLogin
 } from "../store/actions";
 import {
   ActiveSessionLoginState,
@@ -102,7 +102,8 @@ describe("activeSessionLoginReducer", () => {
         consolidateActiveSessionLoginData({
           token: modifiedState.loginInfo.token,
           idp: modifiedState.loginInfo.idp,
-          fastLoginOptIn: modifiedState.loginInfo.fastLoginOptIn
+          fastLoginOptIn: modifiedState.loginInfo.fastLoginOptIn,
+          isOneIdentityLogin: false
         })
       );
       expect(state).toEqual(testableInitialState);

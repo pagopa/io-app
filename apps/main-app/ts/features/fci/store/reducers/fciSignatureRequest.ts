@@ -1,15 +1,16 @@
+import { DocumentDetailView } from "@io-app/api-types/generated/definitions/fci/DocumentDetailView";
+import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
+import { IssuerEnvironmentEnum } from "@io-app/api-types/generated/definitions/fci/IssuerEnvironment";
+import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
-import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
+
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
-import { fciSignatureRequestFromId, fciClearStateRequest } from "../actions";
-import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { QtspDocumentToSign } from "../../utils/signature";
-import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
+import { fciClearStateRequest, fciSignatureRequestFromId } from "../actions";
 
 export type FciSignatureRequestState = pot.Pot<
   SignatureRequestDetailView,
@@ -23,14 +24,14 @@ const reducer = (
   action: Action
 ): FciSignatureRequestState => {
   switch (action.type) {
+    case getType(fciClearStateRequest):
+      return emptyState;
+    case getType(fciSignatureRequestFromId.failure):
+      return pot.toError(state, action.payload);
     case getType(fciSignatureRequestFromId.request):
       return pot.toLoading(state);
     case getType(fciSignatureRequestFromId.success):
       return pot.some(action.payload);
-    case getType(fciSignatureRequestFromId.failure):
-      return pot.toError(state, action.payload);
-    case getType(fciClearStateRequest):
-      return emptyState;
   }
 
   return state;
@@ -80,9 +81,7 @@ export const fciDocumentsWithUrlSelector = (
     )
   );
 
-/**
- * @deprecated Use the new {@link fciEnvironmentSelector} instead.
- */
+/** @deprecated Use the new {@link fciEnvironmentSelector} instead. */
 export const fciIssuerEnvironmentSelector = createSelector(
   fciSignatureRequestSelector,
   signatureDetailView =>
@@ -97,9 +96,7 @@ export const fciSignatureRequestIdSelector = createSelector(
     pot.isSome(signatureDetailView) ? signatureDetailView.value.id : undefined
 );
 
-/**
- * Selects the dossier title if present, undefined otherwise.
- */
+/** Selects the dossier title if present, undefined otherwise. */
 export const fciSignatureRequestDossierTitleSelector = (state: GlobalState) => {
   const signatureRequest = state.features.fci.signatureRequest;
   return pot.isSome(signatureRequest)

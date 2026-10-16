@@ -1,8 +1,11 @@
-import { Linking } from "react-native";
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
+import { Linking } from "react-native";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
+import { trackItwRemotePresentationCompleted } from "../analytics";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import {
@@ -13,8 +16,6 @@ import {
   selectRelyingPartyData,
   selectRemoteCredentialCombination
 } from "../machine/selectors";
-import { trackItwRemotePresentationCompleted } from "../analytics";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 
 export const ItwRemoteAuthResponseScreen = () => {
   useItwDisableGestureNavigation();
@@ -36,9 +37,9 @@ export const ItwRemoteAuthResponseScreen = () => {
   });
 
   /**
-   * In addition to checking for the loading state,
-   * we need to ensure that the current state is not `Success`
-   * to prevent a visual glitch caused by a slight delay in navigation
+   * In addition to checking for the loading state, we need to ensure that the
+   * current state is not `Success` to prevent a visual glitch caused by a
+   * slight delay in navigation
    */
   if (isLoading || !isSuccess) {
     return (
@@ -80,13 +81,13 @@ export const ItwRemoteAuthResponseScreen = () => {
 
   return (
     <OperationResultScreenContent
+      action={action}
       pictogram="success"
-      title={I18n.t("features.itWallet.presentation.remote.success.title")}
+      secondaryAction={secondaryAction}
       subtitle={I18n.t(
         "features.itWallet.presentation.remote.success.subtitle"
       )}
-      action={action}
-      secondaryAction={secondaryAction}
+      title={I18n.t("features.itWallet.presentation.remote.success.title")}
     />
   );
 };

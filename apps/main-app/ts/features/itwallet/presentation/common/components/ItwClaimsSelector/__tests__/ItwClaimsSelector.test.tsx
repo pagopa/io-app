@@ -1,6 +1,12 @@
 import { fireEvent, render } from "@testing-library/react-native";
+
 import { ClaimDisplayFormat } from "../../../../../common/utils/itwClaimsUtils";
 import { ItwClaimsSelector } from "../index";
+
+jest.mock("../../../../../common/hooks/useItwCredentialName", () => ({
+  useItwCredentialName: (credentialType: string) =>
+    `catalogue-name-${credentialType}`
+}));
 
 jest.mock("../../../hooks/useClaimsDetailsBottomSheet", () => ({
   useClaimsDetailsBottomSheet: () => ({
@@ -22,12 +28,12 @@ jest.mock("react-native-gesture-handler", () => {
       accessibilityState,
       accessible
     }: {
-      children: React.ReactNode;
-      onPress: () => void;
       accessibilityLabel?: string;
       accessibilityRole?: string;
       accessibilityState?: object;
       accessible?: boolean;
+      children: React.ReactNode;
+      onPress: () => void;
     }) =>
       React.createElement(
         Pressable,
@@ -43,20 +49,17 @@ jest.mock("react-native-gesture-handler", () => {
   };
 });
 
-jest.mock(
-  "@pagopa/io-app-design-system/src/hooks/useAccordionAnimation",
-  () => ({
-    useAccordionAnimation: () => ({
-      expanded: false,
-      toggleAccordion: jest.fn(),
-      onBodyLayout: jest.fn(),
-      iconAnimatedStyle: {},
-      bodyAnimatedStyle: {},
-      bodyInnerStyle: {},
-      progress: { value: 0 }
-    })
+jest.mock("@io-app/design-system/src/hooks/useAccordionAnimation", () => ({
+  useAccordionAnimation: () => ({
+    expanded: false,
+    toggleAccordion: jest.fn(),
+    onBodyLayout: jest.fn(),
+    iconAnimatedStyle: {},
+    bodyAnimatedStyle: {},
+    bodyInnerStyle: {},
+    progress: { value: 0 }
   })
-);
+}));
 
 describe("ItwClaimsSelector", () => {
   const items: Array<ClaimDisplayFormat> = [
@@ -67,9 +70,9 @@ describe("ItwClaimsSelector", () => {
   it("renders credential claims", () => {
     const component = render(
       <ItwClaimsSelector
+        accessibilityLabel="claims-selector"
         credentialType="PersonIdentificationData"
         items={items}
-        accessibilityLabel="claims-selector"
       />
     );
 
@@ -78,13 +81,27 @@ describe("ItwClaimsSelector", () => {
     expect(component.getByText("Birth date")).toBeTruthy();
   });
 
+  it("renders the credential name resolved from the catalogue as title", () => {
+    const component = render(
+      <ItwClaimsSelector
+        accessibilityLabel="claims-selector"
+        credentialType="education_diploma"
+        items={items}
+      />
+    );
+
+    expect(
+      component.getByText("catalogue-name-education_diploma")
+    ).toBeTruthy();
+  });
+
   it("calls onToggle when the accordion header is pressed", () => {
     const onToggle = jest.fn();
     const component = render(
       <ItwClaimsSelector
+        accessibilityLabel="claims-selector"
         credentialType="PersonIdentificationData"
         items={items}
-        accessibilityLabel="claims-selector"
         onToggle={onToggle}
       />
     );

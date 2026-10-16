@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
+
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationProp,
@@ -8,8 +9,12 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import {
+  isStartupLoaded,
+  StartupStatusEnum
+} from "../../../../store/reducers/startup";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
@@ -19,9 +24,9 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 /**
- * Landing screen for the eID reissuing flow started from a message.
- * Since this flow is started from outside the Wallet screen,
- * it it necessary to make some preliminary checks before proceeding.
+ * Landing screen for the eID reissuing flow started from a message. Since this
+ * flow is started from outside the Wallet screen, it it necessary to make some
+ * preliminary checks before proceeding.
  */
 export const ItwIssuanceEidReissuanceLandingScreen = () => {
   const navigation = useIONavigation();
@@ -37,27 +42,27 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
   if (hasValidEid) {
     return (
       <OperationResultScreenContent
-        title={I18n.t(
-          "features.itWallet.reissuanceLandingScreen.notNecessary.title"
-        )}
-        subtitle={I18n.t(
-          "features.itWallet.reissuanceLandingScreen.notNecessary.subtitle"
-        )}
-        pictogram="success"
         action={{
           label: I18n.t(
             "features.itWallet.reissuanceLandingScreen.notNecessary.primaryAction"
           ),
           onPress: () =>
-            navigation.popTo(ROUTES.MAIN, {
+            navigation.navigate(ROUTES.MAIN, {
               screen: ROUTES.WALLET_HOME,
               params: { newMethodAdded: false }
             })
         }}
+        pictogram="success"
         secondaryAction={{
           label: I18n.t("global.buttons.cancel"),
           onPress: () => navigation.goBack()
         }}
+        subtitle={I18n.t(
+          "features.itWallet.reissuanceLandingScreen.notNecessary.subtitle"
+        )}
+        title={I18n.t(
+          "features.itWallet.reissuanceLandingScreen.notNecessary.title"
+        )}
       />
     );
   }
@@ -69,13 +74,6 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
   if (canActivateItWallet && !isItWalletValid) {
     return (
       <OperationResultScreenContent
-        title={I18n.t(
-          "features.itWallet.reissuanceLandingScreen.itWalletActivation.title"
-        )}
-        subtitle={I18n.t(
-          "features.itWallet.reissuanceLandingScreen.itWalletActivation.subtitle"
-        )}
-        pictogram="itWallet"
         action={{
           label: I18n.t(
             "features.itWallet.reissuanceLandingScreen.itWalletActivation.primaryAction"
@@ -86,10 +84,17 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
               params: { level: "l3" }
             })
         }}
+        pictogram="itWallet"
         secondaryAction={{
           label: I18n.t("global.buttons.cancel"),
           onPress: () => navigation.goBack()
         }}
+        subtitle={I18n.t(
+          "features.itWallet.reissuanceLandingScreen.itWalletActivation.subtitle"
+        )}
+        title={I18n.t(
+          "features.itWallet.reissuanceLandingScreen.itWalletActivation.title"
+        )}
       />
     );
   }
@@ -105,24 +110,30 @@ type Props = {
 };
 
 /**
- * Navigate to the issuance machine. The entry point depends on
- * whether the user has a valid Wallet and only needs to reissue the eID/PID
- * or does not have an active Wallet and needs to activate it first.
+ * Navigate to the issuance machine. The entry point depends on whether the user
+ * has a valid Wallet and only needs to reissue the eID/PID or does not have an
+ * active Wallet and needs to activate it first.
  */
 const NavigateToEidIssuanceMachine = ({ eidReissuing }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const startupStatus = useIOSelector(isStartupLoaded);
 
   const handleNavigation = useCallback(() => {
+    if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
+      // Skip navigation until the startup process is completed and the user is authenticated
+      return;
+    }
+
     if (eidReissuing) {
       return navigation.replace(ITW_ROUTES.IDENTIFICATION.MODE_SELECTION, {
         eidReissuing: true,
-        disableAnimation: true
+        animationEnabled: false
       });
     }
     navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
-      disableAnimation: true
+      animationEnabled: false
     });
-  }, [navigation, eidReissuing]);
+  }, [startupStatus, navigation, eidReissuing]);
 
   useOnFirstRender(handleNavigation);
 

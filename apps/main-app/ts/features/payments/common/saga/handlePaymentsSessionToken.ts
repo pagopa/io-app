@@ -1,6 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
@@ -17,10 +18,10 @@ import {
 import { selectPagoPaPlatformSessionToken } from "../store/selectors";
 
 /**
- * Retrieves the PagoPA session token from the Redux store.
- * If the token is not present, this function dispatches a request action
- * and stores the original action that triggered the request in order to
- * resume it once the token is available.
+ * Retrieves the PagoPA session token from the Redux store. If the token is not
+ * present, this function dispatches a request action and stores the original
+ * action that triggered the request in order to resume it once the token is
+ * available.
  *
  * @returns The PagoPA session token if available, otherwise undefined.
  */

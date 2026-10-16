@@ -1,23 +1,19 @@
-import {
-  H6,
-  IOSkeleton,
-  Pictogram,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/OperationListDTO";
+import { OperationTypeEnum as RefundOperationTypeEnum } from "@io-app/api-types/generated/definitions/idpay/RefundOperationDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
+import { ChannelEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
+import { H6, IOSkeleton, Pictogram, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import * as t from "io-ts";
 import { useState } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
-import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
-import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../definitions/idpay/TransactionDetailDTO";
-import { ChannelEnum } from "../../../../../definitions/idpay/TransactionOperationDTO";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   IOBottomSheetModal,
@@ -32,11 +28,24 @@ import { IdPayTimelineTransactionDetailsComponent } from "./IdPayTimelineTransac
 type OperationWithDetailsType = t.TypeOf<typeof OperationWithDetailsType>;
 
 const OperationWithDetailsType = enumType<
-  TransactionOperationTypeEnum | RefundOperationTypeEnum
+  RefundOperationTypeEnum | TransactionOperationTypeEnum
 >(
   { ...TransactionOperationTypeEnum, ...RefundOperationTypeEnum },
   "OperationWithDetails"
 );
+
+const getOperationDetailsTitle = (type: OperationWithDetailsType): string => {
+  switch (type) {
+    case RefundOperationTypeEnum.PAID_REFUND:
+      return I18n.t("idpay.initiative.operationDetails.title.PAID_REFUND");
+    case RefundOperationTypeEnum.REJECTED_REFUND:
+      return I18n.t("idpay.initiative.operationDetails.title.REJECTED_REFUND");
+    case TransactionOperationTypeEnum.REVERSAL:
+      return I18n.t("idpay.initiative.operationDetails.title.REVERSAL");
+    case TransactionOperationTypeEnum.TRANSACTION:
+      return I18n.t("idpay.initiative.operationDetails.title.TRANSACTION");
+  }
+};
 
 type IdPayTimelineDetailsBottomSheetModal = Omit<
   IOBottomSheetModal,
@@ -46,7 +55,9 @@ type IdPayTimelineDetailsBottomSheetModal = Omit<
 };
 
 /**
- * This hook is used to show the bottom sheet with the details of a timeline operation
+ * This hook is used to show the bottom sheet with the details of a timeline
+ * operation
+ *
  * @param initiativeId ID of the initiative associated to the operation details
  */
 const useIdPayTimelineDetailsBottomSheet = (
@@ -82,8 +93,17 @@ const useIdPayTimelineDetailsBottomSheet = (
     return pipe(
       detailsPot,
       pot.toOption,
+      // oxlint-disable-next-line react/jsx-key -- O.map is fp-ts Option map, not Array.map; key prop is not needed
       O.map(details => {
         switch (details.operationType) {
+          case RefundOperationTypeEnum.PAID_REFUND:
+
+          case RefundOperationTypeEnum.REJECTED_REFUND:
+            return <IdPayTimelineRefundDetailsComponent refund={details} />;
+          case TransactionOperationTypeEnum.REVERSAL:
+            return (
+              <IdPayTimelineTransactionDetailsComponent transaction={details} />
+            );
           case TransactionOperationTypeEnum.TRANSACTION:
             if (details.channel === ChannelEnum.RTD) {
               return (
@@ -97,14 +117,6 @@ const useIdPayTimelineDetailsBottomSheet = (
                 transaction={details}
               />
             );
-
-          case TransactionOperationTypeEnum.REVERSAL:
-            return (
-              <IdPayTimelineTransactionDetailsComponent transaction={details} />
-            );
-          case RefundOperationTypeEnum.PAID_REFUND:
-          case RefundOperationTypeEnum.REJECTED_REFUND:
-            return <IdPayTimelineRefundDetailsComponent refund={details} />;
           default:
             // We don't show additional info for other operation types
             return <></>;
@@ -122,7 +134,7 @@ const useIdPayTimelineDetailsBottomSheet = (
     pipe(
       OperationWithDetailsType.decode(operation.operationType),
       E.map(type => {
-        setTitle(I18n.t(`idpay.initiative.operationDetails.title.${type}`));
+        setTitle(getOperationDetailsTitle(type));
         dispatch(
           idpayTimelineDetailsGet.request({
             initiativeId,
@@ -137,7 +149,7 @@ const useIdPayTimelineDetailsBottomSheet = (
 };
 
 const TitleSkeleton = () => (
-  <IOSkeleton shape="rectangle" width={100} height={20} radius={4} />
+  <IOSkeleton height={20} radius={4} shape="rectangle" width={100} />
 );
 
 const ContentSkeleton = () => (
@@ -145,8 +157,8 @@ const ContentSkeleton = () => (
     {Array.from({ length: 6 }).map((_, i) => (
       <View key={i} style={{ paddingVertical: 8 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <IOSkeleton shape="rectangle" width={100} height={21} radius={4} />
-          <IOSkeleton shape="rectangle" width={150} height={21} radius={4} />
+          <IOSkeleton height={21} radius={4} shape="rectangle" width={100} />
+          <IOSkeleton height={21} radius={4} shape="rectangle" width={150} />
         </View>
       </View>
     ))}

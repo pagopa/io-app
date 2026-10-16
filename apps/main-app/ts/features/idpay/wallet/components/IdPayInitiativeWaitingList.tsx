@@ -1,18 +1,19 @@
 import {
+  StatusEnum as InitiativeOnboardingStatus,
+  UserOnboardingStatusDTO
+} from "@io-app/api-types/generated/definitions/idpay/UserOnboardingStatusDTO";
+import {
   Divider,
   IOMarkdown,
   ListItemHeader,
   ListItemInfo,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { useState } from "react";
 import { FlatList } from "react-native";
-import {
-  StatusEnum as InitiativeOnboardingStatus,
-  UserOnboardingStatusDTO
-} from "../../../../../definitions/idpay/UserOnboardingStatusDTO";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -26,28 +27,24 @@ export const IdPayInitiativeWaitingList = () => {
   const dispatch = useIODispatch();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const [selectedInitiative, setSelectedInitiative] = useState<
-    UserOnboardingStatusDTO | undefined
+    undefined | UserOnboardingStatusDTO
   >();
+
+  const bottomSheetContent = getBottomSheetContent(
+    selectedInitiative?.status ?? InitiativeOnboardingStatus.ON_WAITING_LIST,
+    selectedInitiative?.initiativeName
+  );
 
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: (
       <>
         {/* TODO: Use `IOMarkdown` with custom headers,
         such as the ones used in Messages */}
-        <IOMarkdown
-          content={I18n.t(
-            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.bottomSheet.content",
-            {
-              initiativeName: selectedInitiative?.initiativeName
-            }
-          )}
-        />
+        <IOMarkdown content={bottomSheetContent.content} />
         {isAndroid && <VSpacer size={24} />}
       </>
     ),
-    title: I18n.t(
-      "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.bottomSheet.title"
-    )
+    title: bottomSheetContent.title
   });
 
   useOnFirstRender(
@@ -78,7 +75,8 @@ export const IdPayInitiativeWaitingList = () => {
   const handleOpenWaitingListBottomSheet = (item: UserOnboardingStatusDTO) => {
     setSelectedInitiative(item);
     trackIDPayOnWaitingListInfoButtonTap({
-      initiativeId: item.initiativeId
+      initiativeId: item.initiativeId,
+      status: item.status
     });
     present();
   };
@@ -86,29 +84,25 @@ export const IdPayInitiativeWaitingList = () => {
   return (
     <>
       <FlatList
-        ListHeaderComponent={renderListHeaderComponent}
         data={initiativeWaitingList}
         ItemSeparatorComponent={() => <Divider />}
+        ListHeaderComponent={renderListHeaderComponent}
         renderItem={({ item }) => (
           <ListItemInfo
+            endElement={{
+              type: "iconButton",
+              componentProps: {
+                icon: "info",
+                color: "primary",
+                accessibilityLabel: I18n.t(
+                  "idpay.wallet.initiativeOnboardedStatus.accessibilityInfoLabel"
+                ),
+                onPress: () => handleOpenWaitingListBottomSheet(item)
+              }
+            }}
             icon="hourglass"
             topElement={getInitiativeStatusBadge(item.status)}
             value={item.initiativeName}
-            endElement={
-              item.status !== InitiativeOnboardingStatus.ON_WAITING_LIST
-                ? undefined
-                : {
-                    type: "iconButton",
-                    componentProps: {
-                      icon: "info",
-                      color: "primary",
-                      accessibilityLabel: I18n.t(
-                        "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.accessibilityInfoLabel"
-                      ),
-                      onPress: () => handleOpenWaitingListBottomSheet(item)
-                    }
-                  }
-            }
           />
         )}
       />
@@ -117,20 +111,38 @@ export const IdPayInitiativeWaitingList = () => {
   );
 };
 
+const getBottomSheetContent = (
+  status: InitiativeOnboardingStatus,
+  initiativeName?: string
+) => {
+  switch (status) {
+    case InitiativeOnboardingStatus.ON_EVALUATION:
+      return {
+        title: I18n.t(
+          "idpay.wallet.initiativeOnboardedStatus.ON_EVALUATION.bottomSheet.title"
+        ),
+        content: I18n.t(
+          "idpay.wallet.initiativeOnboardedStatus.ON_EVALUATION.bottomSheet.content",
+          { initiativeName }
+        )
+      };
+    case InitiativeOnboardingStatus.ON_WAITING_LIST:
+      return {
+        title: I18n.t(
+          "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.bottomSheet.title"
+        ),
+        content: I18n.t(
+          "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.bottomSheet.content",
+          { initiativeName }
+        )
+      };
+  }
+};
+
 const getInitiativeStatusBadge = (
   initiativeStatus: InitiativeOnboardingStatus
 ): ListItemInfo["topElement"] | undefined => {
   switch (initiativeStatus) {
-    case InitiativeOnboardingStatus.ON_WAITING_LIST:
-      return {
-        type: "badge",
-        componentProps: {
-          variant: "default",
-          text: I18n.t(
-            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.label"
-          )
-        }
-      };
     case InitiativeOnboardingStatus.ON_EVALUATION: {
       return {
         type: "badge",
@@ -142,6 +154,16 @@ const getInitiativeStatusBadge = (
         }
       };
     }
+    case InitiativeOnboardingStatus.ON_WAITING_LIST:
+      return {
+        type: "badge",
+        componentProps: {
+          variant: "default",
+          text: I18n.t(
+            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.label"
+          )
+        }
+      };
     default: {
       return undefined;
     }

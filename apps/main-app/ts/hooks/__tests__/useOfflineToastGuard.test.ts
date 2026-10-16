@@ -1,12 +1,13 @@
-import { createStore } from "redux";
 import I18n from "i18next";
-import { appReducer } from "../../store/reducers";
-import { applicationChangeState } from "../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
+import { createStore } from "redux";
+
 import * as connectivitySelectors from "../../features/connectivity/store/selectors";
-import * as ingressSelectors from "../../features/ingress/store/selectors";
-import { useOfflineToastGuard } from "../useOfflineToastGuard.ts";
 import { OfflineAccessReasonEnum } from "../../features/ingress/store/reducer";
+import * as ingressSelectors from "../../features/ingress/store/selectors";
+import { applicationChangeState } from "../../store/actions/application";
+import { appReducer } from "../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
+import { useOfflineToastGuard } from "../useOfflineToastGuard.ts";
 
 const mockNavigate = jest.fn();
 
@@ -15,16 +16,15 @@ jest.mock("@react-navigation/native", () => ({
     "@react-navigation/native"
   ),
   useNavigation: () => ({
-    navigate: mockNavigate,
-    addListener: jest.fn(() => jest.fn())
+    navigate: mockNavigate
   })
 }));
 
 const mockToast = jest.fn();
 
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual<typeof import("@pagopa/io-app-design-system")>(
-    "@pagopa/io-app-design-system"
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual<typeof import("@io-app/design-system")>(
+    "@io-app/design-system"
   ),
   useIOToast: () => ({
     error: mockToast
@@ -32,7 +32,8 @@ jest.mock("@pagopa/io-app-design-system", () => ({
 }));
 
 /**
- * Helper function to render a component that uses the hook and executes a function
+ * Helper function to render a component that uses the hook and executes a
+ * function
  */
 const renderWithConnectivityGuard = (
   fn: (...args: Array<any>) => any,

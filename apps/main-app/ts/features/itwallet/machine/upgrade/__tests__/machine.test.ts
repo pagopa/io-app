@@ -1,14 +1,19 @@
 import { createActor, fromCallback, fromPromise, waitFor } from "xstate";
-import { itwCredentialUpgradeMachine } from "../machine";
-import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import {
-  LoadContextOutput,
-  UpgradeCredentialParams,
-  UpgradeCredentialOutput,
-  RequestAccessTokenOutput,
-  RequestAccessTokenParams
-} from "../actors";
+
 import { ItwSessionExpiredError } from "../../../api/client";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import { testCredentialUpgradeDeps } from "../../utils/testDeps";
+import {
+  LoadContextInput,
+  LoadContextOutput,
+  RequestAccessTokenOutput,
+  RequestAccessTokenParams,
+  UpgradeCredentialOutput,
+  UpgradeCredentialParams
+} from "../actors";
+import { itwCredentialUpgradeMachine } from "../machine";
+
+const T_DEPS = testCredentialUpgradeDeps();
 
 const mockLoadContext = jest.fn(() => Promise.resolve({} as LoadContextOutput));
 
@@ -31,7 +36,7 @@ const makeUpgradeOutput = (
 ): UpgradeCredentialOutput => ({
   credentialType: credential.credentialType,
   credentials: [{ credential: "raw-jwt", metadata: credential }],
-  walletUnitAttestations: { wua1: "wua-jwt" }
+  keyAttestations: { ka1: "ka-jwt" }
 });
 
 describe("itwCredentialUpgradeMachine", () => {
@@ -48,7 +53,9 @@ describe("itwCredentialUpgradeMachine", () => {
           RequestAccessTokenOutput,
           RequestAccessTokenParams
         >(mockRequestAccessToken),
-        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
+        loadContext: fromPromise<LoadContextOutput, LoadContextInput>(
+          mockLoadContext
+        ),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -59,7 +66,9 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials: [],
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.4.6",
+        deps: T_DEPS
       }
     });
     actor.start();
@@ -86,7 +95,9 @@ describe("itwCredentialUpgradeMachine", () => {
           RequestAccessTokenOutput,
           RequestAccessTokenParams
         >(mockRequestAccessToken),
-        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
+        loadContext: fromPromise<LoadContextOutput, LoadContextInput>(
+          mockLoadContext
+        ),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -103,7 +114,9 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials,
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.4.6",
+        deps: T_DEPS
       }
     });
     actor.start();
@@ -134,7 +147,9 @@ describe("itwCredentialUpgradeMachine", () => {
           RequestAccessTokenOutput,
           RequestAccessTokenParams
         >(mockRequestAccessToken),
-        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
+        loadContext: fromPromise<LoadContextOutput, LoadContextInput>(
+          mockLoadContext
+        ),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -149,7 +164,9 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials,
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.4.6",
+        deps: T_DEPS
       }
     });
     actor.start();
@@ -183,7 +200,9 @@ describe("itwCredentialUpgradeMachine", () => {
           RequestAccessTokenOutput,
           RequestAccessTokenParams
         >(mockRequestAccessToken),
-        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
+        loadContext: fromPromise<LoadContextOutput, LoadContextInput>(
+          mockLoadContext
+        ),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -201,7 +220,9 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials,
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.4.6",
+        deps: T_DEPS
       }
     });
     actor.start();

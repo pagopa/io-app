@@ -2,6 +2,7 @@ import { renderHook } from "@testing-library/react-native";
 import React from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -82,7 +83,7 @@ describe("useItwStartCredentialSupportRequest", () => {
     expect(supportStartAction?.payload?.assistanceType?.itWallet).toBe(true);
   });
 
-  it("dispatches zendeskSelectedCategory with it_wallet category", () => {
+  it("dispatches zendeskSelectedCategory with Documenti su IO category when IT-Wallet is not active", () => {
     const actions = renderAndAct(baseMockedCredential);
 
     const selectedCategoryAction = actions.find(
@@ -92,12 +93,12 @@ describe("useItwStartCredentialSupportRequest", () => {
     expect(selectedCategoryAction?.payload?.value).toBe("it_wallet");
   });
 
-  it("sets the IT Wallet category custom field", () => {
+  it("sets the Documenti su IO category custom field when IT-Wallet is not active", () => {
     renderAndAct(baseMockedCredential);
 
     expect(mockedAddTicketCustomField).toHaveBeenCalledWith(
       supportAssistance.zendeskCategoryId,
-      supportAssistance.zendeskItWalletCategory.value
+      supportAssistance.zendeskDocumentiSuIoCategory.value
     );
   });
 
@@ -110,7 +111,7 @@ describe("useItwStartCredentialSupportRequest", () => {
     );
   });
 
-  it("does NOT set the failure code field when storedStatusAssertion is absent", () => {
+  it("does NOT set the failure code field when validity is absent", () => {
     renderAndAct(baseMockedCredential);
 
     expect(mockedAddTicketCustomField).not.toHaveBeenCalledWith(
@@ -120,11 +121,12 @@ describe("useItwStartCredentialSupportRequest", () => {
     expect(mockedAppendLog).not.toHaveBeenCalled();
   });
 
-  it("sets the failure code field and appends log when storedStatusAssertion errorCode is present", () => {
+  it("sets the failure code field and appends log when validity errorCode is present", () => {
     const credentialWithError: CredentialMetadata = {
       ...baseMockedCredential,
-      storedStatusAssertion: {
-        credentialStatus: "invalid",
+      validity: {
+        type: "status_assertion",
+        status: "invalid",
         errorCode: "driving_license_suspended"
       }
     };

@@ -1,9 +1,10 @@
+import { isEqual, uniqWith } from "lodash";
 import { createSelector } from "reselect";
-import { uniqWith, isEqual } from "lodash";
+
+import { fastLoginEnabled, fastLoginOptIn } from "../../../../../config";
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { fastLoginOptIn, fastLoginEnabled } from "../../../../../config";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { isPropertyWithMinAppVersionEnabled } from "../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export const fastLoginOptInSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.optIn;
@@ -26,9 +27,9 @@ export const isSecurityAdviceReadyToShow = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.securityAdviceAcknowledged.readyToShow;
 
 /**
- * return the remote config about FastLoginOptIn enabled/disabled
- * based on a minumum version of the app.
- * if there is no data, false is the default value -> (FastLoginOptIn disabled)
+ * Return the remote config about FastLoginOptIn enabled/disabled based on a
+ * minumum version of the app. if there is no data, false is the default value
+ * -> (FastLoginOptIn disabled)
  */
 export const fastLoginOptInFFEnabled = createSelector(
   remoteConfigSelector,
@@ -54,9 +55,9 @@ const isFastLoginOptInEnabledSelector = createSelector(
 );
 
 /**
- * return the remote config about FastLogin enabled/disabled
- * based on a minumum version of the app.
- * if there is no data, false is the default value -> (FastLogin disabled)
+ * Return the remote config about FastLogin enabled/disabled based on a minumum
+ * version of the app. if there is no data, false is the default value ->
+ * (FastLogin disabled)
  */
 export const isFastLoginFFEnabledSelector = createSelector(
   remoteConfigSelector,
@@ -69,10 +70,10 @@ export const isFastLoginFFEnabledSelector = createSelector(
 );
 
 /**
- * return the remote config about FastLogin enabled/disabled
- * based on a minumum version of the app, combined with FL opt-in user preference.
- * If there is no data from backend nor user expressed an opt-in preference,
- * false is the default value -> (FastLogin disabled)
+ * Return the remote config about FastLogin enabled/disabled based on a minumum
+ * version of the app, combined with FL opt-in user preference. If there is no
+ * data from backend nor user expressed an opt-in preference, false is the
+ * default value -> (FastLogin disabled)
  */
 export const isFastLoginEnabledSelector = createSelector(
   isFastLoginFFEnabledSelector,

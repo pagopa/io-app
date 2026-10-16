@@ -1,12 +1,13 @@
+import { CartItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/CartItem";
+import { NoticeDetailResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeDetailResponse";
 import {
   ContentWrapper,
   IOColors,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
-import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
-import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+
 import { Psp } from "../../../../types/pagopa";
 import { ReceiptStackNavigation } from "../navigation/navigator";
 import { PaymentsReceiptRoutes } from "../navigation/routes";
@@ -16,9 +17,9 @@ import ReceiptFeeAmountSection from "./ReceiptFeeAmountSection";
 import { ReceiptTotalAmount } from "./ReceiptTotalAmount";
 
 type Props = {
-  transaction?: NoticeDetailResponse;
-  psp?: Psp;
   isLoading: boolean;
+  psp?: Psp;
+  transaction?: NoticeDetailResponse;
 };
 
 export const ReceiptHeadingSection = ({ transaction, isLoading }: Props) => {

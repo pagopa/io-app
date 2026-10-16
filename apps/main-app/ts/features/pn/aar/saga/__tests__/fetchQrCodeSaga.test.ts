@@ -1,6 +1,8 @@
+import { AARProblemJson } from "@io-app/api-types/generated/definitions/pn/aar/AARProblemJson";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
-import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
+
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { trackSendAarFailure } from "../../analytics";
@@ -10,7 +12,6 @@ import { currentAarFlowData } from "../../store/selectors";
 import { AarFlowState, sendAarFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStateFactory } from "../../utils/testUtils";
 import { fetchAarQrCodeSaga } from "../fetchQrCodeSaga";
-import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 
 const sendUATEnvironment = [false, true];
 
@@ -227,15 +228,10 @@ describe("fetchQrCodeSaga", () => {
       it(`should dispatch KO state on a response of ${JSON.stringify(
         res
       )} with isTest='${isSendUATEnvironment}'`, () => {
-        // eslint-disable-next-line no-underscore-dangle
         const error = res._tag === "Right" ? res.right.value : undefined;
         const reason = `HTTP request failed (${
-          // eslint-disable-next-line no-underscore-dangle
           res._tag === "Right" ? res.right.status : ""
-        } ${
-          // eslint-disable-next-line no-underscore-dangle
-          res._tag === "Right" ? res.right.value.status : ""
-        } A detail)`;
+        } ${res._tag === "Right" ? res.right.value.status : ""} A detail)`;
         testSaga(
           fetchAarQrCodeSaga,
           mockFetchQrCode,

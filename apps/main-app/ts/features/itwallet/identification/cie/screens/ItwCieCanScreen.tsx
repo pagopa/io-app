@@ -4,14 +4,13 @@ import {
   H2,
   OTPInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  InteractionManager,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -19,6 +18,7 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
@@ -43,15 +43,14 @@ export const ItwCieCanScreen = () => {
   const canPadViewRef = useRef<View>(null);
 
   const headerHeight = useHeaderHeight();
+  const isFocused = useIsFocused();
 
-  useFocusEffect(
-    useCallback(() => {
+  useEffect(() => {
+    // Reset the pin when the user leaves the screen.
+    if (!isFocused) {
       setCan("");
-      return () => {
-        Keyboard.dismiss();
-      };
-    }, [])
-  );
+    }
+  }, [isFocused]);
 
   useFocusEffect(
     useCallback(() => {
@@ -70,25 +69,12 @@ export const ItwCieCanScreen = () => {
     supportRequest: true
   });
 
-  useFocusEffect(
-    useCallback(() => {
-      const task = InteractionManager.runAfterInteractions(() => {
-        setAccessibilityFocus(canPadViewRef, 300 as Millisecond);
-      });
-
-      return () => task.cancel();
-    }, [])
-  );
-
   const onCanChanged = (value: string) => {
     setCan(value);
 
     if (value.length === CIE_CAN_LENGTH) {
       Keyboard.dismiss();
-
-      requestAnimationFrame(() => {
-        machineRef.send({ type: "cie-can-entered", can: value });
-      });
+      machineRef.send({ type: "cie-can-entered", can: value });
     }
   };
 
@@ -100,8 +86,8 @@ export const ItwCieCanScreen = () => {
           android: undefined
         })}
         contentContainerStyle={{ flex: 1 }}
-        style={{ flex: 1 }}
         keyboardVerticalOffset={headerHeight}
+        style={{ flex: 1 }}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <ContentWrapper>
@@ -115,18 +101,25 @@ export const ItwCieCanScreen = () => {
             <VSpacer size={24} />
             <View style={{ flex: 1 }}>
               <OTPInput
-                ref={canPadViewRef}
-                secret
-                value={can}
-                accessibilityLabel={I18n.t(
-                  "authentication.cie.pin.accessibility.label"
-                )}
                 accessibilityHint={I18n.t(
                   "authentication.cie.pin.accessibility.hint"
                 )}
-                onValueChange={onCanChanged}
+                accessibilityLabel={I18n.t(
+                  "authentication.cie.pin.accessibility.label"
+                )}
+                accessibilityValueText={({ valueLength, length }) =>
+                  I18n.t("global.accessibility.otpInput.valueText", {
+                    valueLength,
+                    length
+                  })
+                }
+                autoFocus={isFocused}
+                key={isFocused ? "focused" : "unfocused"}
                 length={CIE_CAN_LENGTH}
-                autoFocus={false}
+                onValueChange={onCanChanged}
+                ref={canPadViewRef}
+                secret
+                value={can}
               />
             </View>
           </ContentWrapper>

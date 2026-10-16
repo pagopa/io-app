@@ -1,49 +1,42 @@
+import { CountResult } from "@io-app/api-types/generated/definitions/cgn/merchants/CountResult";
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { OfflineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchants";
+import { OfflineMerchantSearchRequest } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchantSearchRequest";
+import { OnlineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchants";
+import { OnlineMerchantSearchRequest } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchantSearchRequest";
+import { SearchRequest } from "@io-app/api-types/generated/definitions/cgn/merchants/SearchRequest";
+import { SearchResult } from "@io-app/api-types/generated/definitions/cgn/merchants/SearchResult";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { NetworkError } from "../../../../../utils/errors";
-import { SearchResult } from "../../../../../../definitions/cgn/merchants/SearchResult";
-import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
-import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { SearchRequest } from "../../../../../../definitions/cgn/merchants/SearchRequest";
-import { OfflineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OfflineMerchantSearchRequest";
-import { OnlineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OnlineMerchantSearchRequest";
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { CountResult } from "../../../../../../definitions/cgn/merchants/CountResult";
 
-/**
- * count merchants conventioned with CGN
- */
+import { NetworkError } from "../../../../../utils/errors";
+
+/** Count merchants conventioned with CGN */
 export const cgnMerchantsCount = createAsyncAction(
   "CGN_MERCHANTS_COUNT_REQUEST",
   "CGN_MERCHANTS_COUNT_SUCCESS",
   "CGN_MERCHANTS_COUNT_FAILURE"
 )<void, CountResult, NetworkError>();
 
-/**
- * search merchants conventioned with CGN
- */
+/** Search merchants conventioned with CGN */
 export const cgnSearchMerchants = createAsyncAction(
   "CGN_SEARCH_MERCHANTS_REQUEST",
   "CGN_SEARCH_MERCHANTS_SUCCESS",
   "CGN_SEARCH_MERCHANTS_FAILURE"
 )<SearchRequest, SearchResult["items"], NetworkError>();
 
-/**
- * get and handle list of online merchants conventioned with CGN
- */
+/** Get and handle list of online merchants conventioned with CGN */
 export const cgnOnlineMerchants = createAsyncAction(
   "CGN_ONLINE_MERCHANTS_REQUEST",
   "CGN_ONLINE_MERCHANTS_SUCCESS",
   "CGN_ONLINE_MERCHANTS_FAILURE"
 )<OnlineMerchantSearchRequest, OnlineMerchants["items"], NetworkError>();
 
-/**
- * get and handle list of online merchants conventioned with CGN
- */
+/** Get and handle list of online merchants conventioned with CGN */
 export const cgnOfflineMerchants = createAsyncAction(
   "CGN_OFFLINE_MERCHANTS_REQUEST",
   "CGN_OFFLINE_MERCHANTS_SUCCESS",
@@ -70,10 +63,10 @@ export const resetMerchantDiscountCode = createStandardAction(
 
 export type CgnMerchantsAction =
   | ActionType<typeof cgnMerchantsCount>
-  | ActionType<typeof cgnSearchMerchants>
   | ActionType<typeof cgnOfflineMerchants>
   | ActionType<typeof cgnOnlineMerchants>
+  | ActionType<typeof cgnSearchMerchants>
   | ActionType<typeof cgnSelectedMerchant>
+  | ActionType<typeof resetMerchantDiscountCode>
   | ActionType<typeof selectMerchantDiscount>
-  | ActionType<typeof setMerchantDiscountCode>
-  | ActionType<typeof resetMerchantDiscountCode>;
+  | ActionType<typeof setMerchantDiscountCode>;

@@ -1,0 +1,2131 @@
+{
+   "data": [
+      {
+         "abi": "05414",
+         "name": "BANCA POPOLARE DI APRILIA"
+      },
+      {
+         "abi": "05424",
+         "name": "BANCA POPOLARE DI BARI - SOCIETÀ COOPERATIVA PER AZIONI "
+      },
+      {
+         "abi": "05428",
+         "name": "BANCA POPOLARE DI BERGAMO"
+      },
+      {
+         "abi": "05437",
+         "name": "BIPOP CARIRE"
+      },
+      {
+         "abi": "05484",
+         "name": "BANCA DI CIVIDALE S.C.P.A - CIVIBANK"
+      },
+      {
+         "abi": "05496",
+         "name": "BANCA POPOLARE DI CORTONA - SOCIETÀ COOPERATIVA PER AZIONI "
+      },
+      {
+         "abi": "05512",
+         "name": "BANCA POPOLARE DI CREMONA"
+      },
+      {
+         "abi": "05526",
+         "name": "BANCO SAN GIORGIO"
+      },
+      {
+         "abi": "05550",
+         "name": "BANCA POPOLARE DI LANCIANO E SULMONA"
+      },
+      {
+         "abi": "05556",
+         "name": "BANCA POPOLARE DI LUINO E VARESE"
+      },
+      {
+         "abi": "05572",
+         "name": "BANCA POPOLARE DI MAROSTICA"
+      },
+      {
+         "abi": "05584",
+         "name": "BANCA POPOLARE DI MILANO"
+      },
+      {
+         "abi": "05600",
+         "name": "BANCA POPOLARE DI NAPOLI"
+      },
+      {
+         "abi": "05602",
+         "name": "BANCA POPOLARE VESUVIANA - SOCIETÀ COOPERATIVA "
+      },
+      {
+         "abi": "05608",
+         "name": "BANCA POPOLARE DI NOVARA"
+      },
+      {
+         "abi": "05630",
+         "name": "BANCA NETWORK INVESTIMENTI"
+      },
+      {
+         "abi": "05640",
+         "name": "BANCA POPOLARE DI RAVENNA"
+      },
+      {
+         "abi": "05650",
+         "name": "BANCA POPOLARE DI ROMA"
+      },
+      {
+         "abi": "05652",
+         "name": "SANFELICE 1893 BANCA POPOLARE SOC. COOP. PER AZIONI"
+      },
+      {
+         "abi": "05676",
+         "name": "BIBANCA S.P.A."
+      },
+      {
+         "abi": "05696",
+         "name": "BANCA POPOLARE DI SONDRIO - SOCIETÀ COOPERATIVA PER AZIONI"
+      },
+      {
+         "abi": "05704",
+         "name": "BANCA POPOLARE DI SPOLETO"
+      },
+      {
+         "abi": "05728",
+         "name": "BANCA POPOLARE DI VICENZA"
+      },
+      {
+         "abi": "05748",
+         "name": "BANCA DELL’ADRIATICO"
+      },
+      {
+         "abi": "05772",
+         "name": "BANCA POPOLARE SANT'ANGELO - SOCIETÀ COOPERATIVA PER AZIONI"
+      },
+      {
+         "abi": "05787",
+         "name": "BANCAPULIA S.P.A."
+      },
+      {
+         "abi": "05792",
+         "name": "BANCA POPOLARE VALCONCA  SPA"
+      },
+      {
+         "abi": "05824",
+         "name": "CASSA DI SOVVENZIONI E RISPARMIO FRA IL PERSONALE DELLA BANCA D'ITALIA - SOCIETÀ COOPERATIVA PER AZIONI "
+      },
+      {
+         "abi": "05856",
+         "name": "BANCA POPOLARE DELL'ALTO ADIGE - S.P.A."
+      },
+      {
+         "abi": "06010",
+         "name": "CASSA DEI RISPARMI DI FORLÌ E DELLA ROMAGNA"
+      },
+      {
+         "abi": "06015",
+         "name": "C. R. LIVORNO"
+      },
+      {
+         "abi": "06030",
+         "name": "C. R. DELLA SPEZIA"
+      },
+      {
+         "abi": "06035",
+         "name": "CASSAMARCA"
+      },
+      {
+         "abi": "06040",
+         "name": "CARISPAQ"
+      },
+      {
+         "abi": "06045",
+         "name": "CASSA DI RISPARMIO DI BOLZANO - S.P.A."
+      },
+      {
+         "abi": "06050",
+         "name": "BANCA TEATINA S.P.A."
+      },
+      {
+         "abi": "06055",
+         "name": "BANCA DELLE MARCHE SPA"
+      },
+      {
+         "abi": "06060",
+         "name": "TERCAS - CASSA DI RISP. DELLA PROV. DI TERAMO"
+      },
+      {
+         "abi": "06065",
+         "name": "CASSA DI RISPARMIO DELLA PROVINCIA DI VITERBO"
+      },
+      {
+         "abi": "06070",
+         "name": "CARIPLO SPA"
+      },
+      {
+         "abi": "06075",
+         "name": "CASSA DI RISPARMIO DI ALESSANDRIA SPA"
+      },
+      {
+         "abi": "06080",
+         "name": "CASSA DI RISPARMIO DI ASCOLI PICENO"
+      },
+      {
+         "abi": "06085",
+         "name": "CASSA DI RISPARMIO DI ASTI  - S.P.A."
+      },
+      {
+         "abi": "06090",
+         "name": "CASSA DI RISPARMIO DI BIELLA E VERCELLI  - S.P.A."
+      },
+      {
+         "abi": "06095",
+         "name": "CASSA DI RISPARMIO DI BRA SPA"
+      },
+      {
+         "abi": "06105",
+         "name": "CASSA DI RISPARMIO CARPI S.P.A."
+      },
+      {
+         "abi": "06110",
+         "name": "CASSA DI RISPARMIO DI CARRARA"
+      },
+      {
+         "abi": "06115",
+         "name": "CASSA DI RISPARMIO DI CENTO - S.P.A."
+      },
+      {
+         "abi": "06120",
+         "name": "CASSA DI RISPARMIO DI CESENA SPA"
+      },
+      {
+         "abi": "06125",
+         "name": "CASSA DI RISPARMIO DI CITTA DI CASTELLO"
+      },
+      {
+         "abi": "06130",
+         "name": "CASSA DI RISPARMIO DI CIVITAVECCHIA"
+      },
+      {
+         "abi": "06140",
+         "name": "CASSA DI RISPARMIO DI FABRIANO E CUPRAMONTANA"
+      },
+      {
+         "abi": "06145",
+         "name": "CASSA DI RISPARMIO DI FANO SPA"
+      },
+      {
+         "abi": "06150",
+         "name": "CASSA DI RISPARMIO DI FERMO - S.P.A."
+      },
+      {
+         "abi": "06155",
+         "name": "CASSA DI RISPARMIO DI FERRARA"
+      },
+      {
+         "abi": "06160",
+         "name": "CASSA DI RISPARMIO DI FIRENZE"
+      },
+      {
+         "abi": "06165",
+         "name": "CASSA DI RISPARMIO DI FOLIGNO"
+      },
+      {
+         "abi": "06170",
+         "name": "CASSA DI RISPARMIO DI FOSSANO - S.P.A."
+      },
+      {
+         "abi": "06175",
+         "name": "BANCA CARIGE - CASSA DI RISPARMIO DI GENOVA E IMPERIA - S.P.A."
+      },
+      {
+         "abi": "06185",
+         "name": "BANCA BIPIELLE ADRIATICO SPA"
+      },
+      {
+         "abi": "06195",
+         "name": "CASSA DI RISPARMIO DI LORETO SPA"
+      },
+      {
+         "abi": "06200",
+         "name": "CASSA DI RISPARMIO DI LUCCA PISA E LIVORNO"
+      },
+      {
+         "abi": "06205",
+         "name": "BANCA DI ROMAGNA SPA"
+      },
+      {
+         "abi": "06220",
+         "name": "CASSA DI RISPARMIO DI ORVIETO - S.P.A."
+      },
+      {
+         "abi": "06225",
+         "name": "CASSA DI RISPARMIO DEL VENETO"
+      },
+      {
+         "abi": "06230",
+         "name": "CRÉDIT AGRICOLE ITALIA S.P.A"
+      },
+      {
+         "abi": "06235",
+         "name": "BANCA DELL'UMBRIA 1462 S.P.A."
+      },
+      {
+         "abi": "06245",
+         "name": "BANCA CARIPE SPA"
+      },
+      {
+         "abi": "06255",
+         "name": "CASSA DI RISPARMIO DI PISA SPA"
+      },
+      {
+         "abi": "06270",
+         "name": "LA CASSA DI RAVENNA - S.P.A"
+      },
+      {
+         "abi": "06280",
+         "name": "CASSA DI RISPARMIO DI RIETI"
+      },
+      {
+         "abi": "06285",
+         "name": "BANCA CARIM - CASSA DI RISPARMIO DI RIMINI SPA"
+      },
+      {
+         "abi": "06295",
+         "name": "CASSA DI RISPARMIO DI SALUZZO SPA"
+      },
+      {
+         "abi": "06305",
+         "name": "BANCA CASSA DI RISPARMIO DI SAVIGLIANO - S.P.A."
+      },
+      {
+         "abi": "06310",
+         "name": "CASSA DI RISPARMIO DI SAVONA SPA"
+      },
+      {
+         "abi": "06315",
+         "name": "CASSE DI RISPARMIO DELL'UMBRIA"
+      },
+      {
+         "abi": "06320",
+         "name": "BANCA CRT - CASSA DI RISPARMIO D ITORINO"
+      },
+      {
+         "abi": "06330",
+         "name": "C. R. TRENTO E ROVERETO"
+      },
+      {
+         "abi": "06335",
+         "name": "CASSA DI RISPARMIO DI TRIESTE"
+      },
+      {
+         "abi": "06340",
+         "name": "CASSA DI RISPARMIO DEL FRIULI VENEZIA GIULIA"
+      },
+      {
+         "abi": "06345",
+         "name": "CASSA DI RISPARMIO DI VENEZIA SPA"
+      },
+      {
+         "abi": "06355",
+         "name": "CARIVERONA SPA"
+      },
+      {
+         "abi": "06365",
+         "name": "CASSA DI RISPARMIO DI VIGNOLA"
+      },
+      {
+         "abi": "06370",
+         "name": "CASSA DI RISPARMIO DI VOLTERRA - S.P.A."
+      },
+      {
+         "abi": "06380",
+         "name": "CASSA DI RISPARMIO DI TERNI E NARNI"
+      },
+      {
+         "abi": "06385",
+         "name": "CASSA DI RISPARMIO IN BOLOGNA SPA"
+      },
+      {
+         "abi": "06906",
+         "name": "BANCA REGIONALE EUROPEA SPA"
+      },
+      {
+         "abi": "06915",
+         "name": "BANCA DEL MONTE DI LUCCA - S.P.A."
+      },
+      {
+         "abi": "06930",
+         "name": "BANCA MONTE PARMA SPA"
+      },
+      {
+         "abi": "06950",
+         "name": "BANCA DEL MONTE E CASSA DI RISPARMIO DI FAENZA"
+      },
+      {
+         "abi": "07012",
+         "name": "BANCA DI CREDITO COOPERATIVO DI BARI"
+      },
+      {
+         "abi": "07013",
+         "name": "BANCA DI CREDITO COOPERATIVO BASSO MOLISE"
+      },
+      {
+         "abi": "07017",
+         "name": "BANCA DI CREDITO COOPERATIVO DEL CIRCEO E PRIVERNATE -  SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "07048",
+         "name": "BANCA DI CREDITO COOPERATIVO DELL'ELBA"
+      },
+      {
+         "abi": "07055",
+         "name": "BANCA DI LUCCA DI CREDITO COOPERATIVO"
+      },
+      {
+         "abi": "07062",
+         "name": "BANCA DI CREDITO COOPERATIVO MEDIOCRATI"
+      },
+      {
+         "abi": "07066",
+         "name": "BANCA DI CREDITO COOPERATIVO DEI COMUNI CILENTANI"
+      },
+      {
+         "abi": "07070",
+         "name": "CREDITO COOPERATIVO ROMAGNOLO - BCC DI CESENA E GATTEO - SOCIETA COOPERATIVA "
+      },
+      {
+         "abi": "07072",
+         "name": "EMIL BANCA - CREDITO COOPERATIVO"
+      },
+      {
+         "abi": "07074",
+         "name": "BANCA DI MONASTIER E DEL SILE - CREDITO COOPERATIVO"
+      },
+      {
+         "abi": "07075",
+         "name": "BCC UMBRIA CREDITO COOPERATIVO SOC. COOP."
+      },
+      {
+         "abi": "07076",
+         "name": "BANCA DI CREDITO COOPERATIVO CREMASCA E MANTOVANA"
+      },
+      {
+         "abi": "07079",
+         "name": "BANCA CATONE DI CREDITO COOPERATIVO"
+      },
+      {
+         "abi": "07081",
+         "name": "BANCA DI ASCOLI DI CREDITO COOPERATIVO"
+      },
+      {
+         "abi": "07084",
+         "name": "BANCA DELLA MARCA - CREDITO COOPERATIVO"
+      },
+      {
+         "abi": "07085",
+         "name": "CREDITO COOPERATIVO FRIULI  - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "07086",
+         "name": "BANCA DI CREDITO COOPERATIVO DELL'ADRIATICO TERAMANO"
+      },
+      {
+         "abi": "07087",
+         "name": "BANCA DI CREDITO COOPERATIVO DI TARANTO"
+      },
+      {
+         "abi": "07091",
+         "name": "BANCA DI CREDITO COOPERATIVO DEL CATANZARESE"
+      },
+      {
+         "abi": "07094",
+         "name": "BANCA DI CREDITO COOPERATIVO DI MASSAFRA"
+      },
+      {
+         "abi": "07096",
+         "name": "BANCA DI CREDITO COOPERATIVO DI CAGLIARI"
+      },
+      {
+         "abi": "07101",
+         "name": "BANCA DI CREDITO COOPERATIVO DI ANDRIA"
+      },
+      {
+         "abi": "07108",
+         "name": "BANCA DI CREDITO COOPERATIVO AGRIGENTINO"
+      },
+      {
+         "abi": "07110",
+         "name": "BANCA DI CREDITO COOPERATIVO DI NAPOLI"
+      },
+      {
+         "abi": "07113",
+         "name": "BANCA DI CREDITO COOPERATIVO DI PUTIGNANO"
+      },
+      {
+         "abi": "07535",
+         "name": "BANCA DEL MONTE DI FOGGIA SPA"
+      },
+      {
+         "abi": "08003",
+         "name": "VIVAL BANCA – BANCA DI CREDITO COOPERATIVO DI MONTECATINI TERME , BIENTINA E S. PIETRO IN VINCIO S.C.  "
+      },
+      {
+         "abi": "08010",
+         "name": "CASSA RAIFFEISEN VAL BADIA SCRL"
+      },
+      {
+         "abi": "08015",
+         "name": "CASSA RAIFFEISEN DI ANDRIANO SOC"
+      },
+      {
+         "abi": "08020",
+         "name": "CASSA RAIFFEISEN ALTA PUSTERIA"
+      },
+      {
+         "abi": "08021",
+         "name": "BANCA DI CREDITO COOPERATIVO SUD FRIULI"
+      },
+      {
+         "abi": "08030",
+         "name": "BANCA DI CREDITO COOPERATIVO DI BORGHETTO LODIGIANO"
+      },
+      {
+         "abi": "08033",
+         "name": "CASSA RAIFFEISEN DI BRONZOLO-ORA"
+      },
+      {
+         "abi": "08035",
+         "name": "CASSA RAIFFEISEN DI BRUNICO SCRL"
+      },
+      {
+         "abi": "08056",
+         "name": "CASSA RAIFFEISEN CASTELROTTO"
+      },
+      {
+         "abi": "08078",
+         "name": "CASSA RURALE GIUDICARIE VALSABBIA PAGANELLA BANCA DI CREDITO COOPERATIVO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08080",
+         "name": "CASSA RAIFFEISEN DI DOBBIACO SCRL"
+      },
+      {
+         "abi": "08081",
+         "name": "CASSA RURALE DI BOLZANO"
+      },
+      {
+         "abi": "08086",
+         "name": "BANCA DI CREDITO COOPERATIVO DI FALCONARA MARITTINA"
+      },
+      {
+         "abi": "08089",
+         "name": "CASSA RAIFFEISEN FIE' ALLO SCILI"
+      },
+      {
+         "abi": "08095",
+         "name": "BANCA DI CREDITO COOPERATIVO DI REGGIANO"
+      },
+      {
+         "abi": "08112",
+         "name": "CASSA RAIFFEISEN DI LAGUNDO SCRL"
+      },
+      {
+         "abi": "08113",
+         "name": "CASSA RAIFFEISEN BASSA VALL'ISARCO"
+      },
+      {
+         "abi": "08114",
+         "name": "CASSA RAIFFEISEN BASSA ATESINA"
+      },
+      {
+         "abi": "08115",
+         "name": "CASSA RAIFFEISEN DI LANA"
+      },
+      {
+         "abi": "08126",
+         "name": "BANCA DI CREDITO COOPERATIVO DI MONTEPAONE"
+      },
+      {
+         "abi": "08133",
+         "name": "CASSA RAIFFEISEN MERANO"
+      },
+      {
+         "abi": "08134",
+         "name": "CASSA RAIFFEISEN DI MARLENGO"
+      },
+      {
+         "abi": "08148",
+         "name": "CASSA RURALE DI MONGUELFO CASIES TESIDO"
+      },
+      {
+         "abi": "08149",
+         "name": "BANCA DI CREDITO COOPERATIVO DI BASCIANO"
+      },
+      {
+         "abi": "08150",
+         "name": "BANCA DI CREDITO COOPERATIVO DI CARLOPOLI"
+      },
+      {
+         "abi": "08869",
+         "name": "BCC BERGAMO E VALLI SOC. COOP."
+      },
+      {
+         "abi": "08873",
+         "name": "B.C.C. DI SPINAZZOLA"
+      },
+      {
+         "abi": "08877",
+         "name": "B.C.C. DI STARANZANO E VILLESSE (14/12/2009)"
+      },
+      {
+         "abi": "08881",
+         "name": "CREDITO COOPERATIVO BOLOGNESE SCRL"
+      },
+      {
+         "abi": "08883",
+         "name": "BANCA DI BOLOGNA CREDITO COOPERATIVO - SOCIETÀ COOPERATIVA "
+      },
+      {
+         "abi": "08887",
+         "name": "CREDITO COOPERATIVO DI SAN CALOGERO E MAIERATO - BCC DEL VIBONESE"
+      },
+      {
+         "abi": "08899",
+         "name": "B.C.C. DI TREVIGLIO"
+      },
+      {
+         "abi": "08901",
+         "name": "B.C.C. DI TRIUGGIO E VALLE DEL LAMBRO"
+      },
+      {
+         "abi": "08904",
+         "name": "BANCA PREALPI SANBIAGIO CREDITO COOPERATIVO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08910",
+         "name": "CASSA RURALE ED ARTIGIANA DI VESTENANOVA - CREDITO COOPERATIVO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08913",
+         "name": "B.C.C. DELLA VALLE DEL FITALIA"
+      },
+      {
+         "abi": "08917",
+         "name": "CREDITO TREVIGIANO - B.C.C."
+      },
+      {
+         "abi": "08922",
+         "name": "BANCA ALTA TOSCANA CREDITO COOPERATIVO - SOC. COOP."
+      },
+      {
+         "abi": "08931",
+         "name": "BANCA LAZIO NORD CREDITO COOPERATIVO SOC.COOP. PER AZIONI"
+      },
+      {
+         "abi": "08934",
+         "name": "BANCA DI CREDITO COOPERATIVO DI VILLAPIANA SCRL"
+      },
+      {
+         "abi": "08936",
+         "name": "BANCA DI CREDITO COOPERATIVO DELL'ALTA MARCA"
+      },
+      {
+         "abi": "08940",
+         "name": "BANCA DI CREDITO COOPERATIVO BERGAMASCA E OROBICA "
+      },
+      {
+         "abi": "08946",
+         "name": "BANCA DON RIZZO - CREDITO COOPERATIVO DELLA SICILIA OCCIDENTALE - SOCIETÀ COOPERATIVA "
+      },
+      {
+         "abi": "08947",
+         "name": "B.C.C. \"DON STELLA\" DI RESUTTANO"
+      },
+      {
+         "abi": "08948",
+         "name": "B.C.C. ERICINA DI VAL D'ERICE"
+      },
+      {
+         "abi": "08951",
+         "name": "BANCA DI CREDITO COOPERATIVO DEI COLLI ALBANI SOCIETÀ COOPERATIVA  "
+      },
+      {
+         "abi": "08952",
+         "name": "B.C.C. \"G. TONIOLO\" DI SAN CATALDO - CALTANISSETTA"
+      },
+      {
+         "abi": "08953",
+         "name": "B.C.C. LA CONCORDIA DI PIETRAPERZIA"
+      },
+      {
+         "abi": "08958",
+         "name": "B.C.C. MUTUO SOCCORSO DI GANGI"
+      },
+      {
+         "abi": "08965",
+         "name": "BANCA S. BIAGIO DEL VENETO ORIENTALE DI CESAROLO, FOSSALTA DI PORTOGRUARO"
+      },
+      {
+         "abi": "08969",
+         "name": "BANCA SAN FRANCESCO - CRED. COOP. CANICATTÌ"
+      },
+      {
+         "abi": "08975",
+         "name": "B.C.C. \"S. GIUSPPE\" DI MUSSUMELI"
+      },
+      {
+         "abi": "08976",
+         "name": "BANCA DI CREDITO COOPERATIVO SAN GIUSEPPE DELLE MADONIE"
+      },
+      {
+         "abi": "08979",
+         "name": "B.C.C. SAN MICHELE DI CALTANISSETTA E PIETRAPERZIA"
+      },
+      {
+         "abi": "08982",
+         "name": "BANCA ADRIA COLLI EUGANEI CREDITO COOPERATIVO S.C."
+      },
+      {
+         "abi": "08987",
+         "name": "BANCA DI CREDITO COOPERATIVO TERRA DI LAVORO S. VINCENZO DE' PAOLI"
+      },
+      {
+         "abi": "08988",
+         "name": "B.C.C. DEGLI ULIVI - TERRA DI BARI"
+      },
+      {
+         "abi": "08990",
+         "name": "B.C.C. - S.STEFANO - MARTELLAGO"
+      },
+      {
+         "abi": "08995",
+         "name": "RIVIERABANCA - CREDITO COOPERATIVO DI RIMINI E GRADARA - SOCIETA' COOPERATIVA"
+      },
+      {
+         "abi": "08997",
+         "name": "B.C.C. S. MARCO DEI CAVOTI DEL SANNIO (25/07/2011)"
+      },
+      {
+         "abi": "09500",
+         "name": "CITYPOSTE PAYMENT"
+      },
+      {
+         "abi": "09501",
+         "name": "MONEYNET"
+      },
+      {
+         "abi": "09506",
+         "name": "A-TONO PAYMENT INSTITUTE S.P.A."
+      },
+      {
+         "abi": "09513",
+         "name": "MACCORP FINANCIAL SERVICES SRL "
+      },
+      {
+         "abi": "03034",
+         "name": "BANCA AGRICOLA COMMERCIALE ISTITUTO BANCARIO SAMMARINESE S.P.A."
+      },
+      {
+         "abi": "07056",
+         "name": "BANCA DI CREDITO COOPERATIVO DELL'ALTA MURGIA - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "07078",
+         "name": "BANCA DI CREDITO COOPERATIVO DEI CASTELLI E DEGLI IBLEI"
+      },
+      {
+         "abi": "07080",
+         "name": "CREDITO ETNEO - BANCA DI CREDITO COOPERATIVO, SOCIETA' COOPERATIVA A RESPONSABILITA' LIMITATA"
+      },
+      {
+         "abi": "07090",
+         "name": "BANCA MALATESTIANA CREDITO COOPERATIVO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "07092",
+         "name": "BANCA DI CREDITO COOPERATIVO DEI CASTELLI ROMANI E DEL TUSCOLO"
+      },
+      {
+         "abi": "07116",
+         "name": "BANCA DEL GRAN SASSO D'ITALIA- BANCA DI CREDITO COOPERATIVO SCPA"
+      },
+      {
+         "abi": "08000",
+         "name": "ICCREA BANCA - ISTITUTO CENTRALE DEL CREDITO COOPERATIVO - S.P.A."
+      },
+      {
+         "abi": "08226",
+         "name": "CASSA RAIFFEISEN DI SAN MARTINO IN PASSIRIA- SOC COOP"
+      },
+      {
+         "abi": "08340",
+         "name": "CASSA PADANA BANCA DI CREDITO COOPERATIVO SOCIETA' COOPERATIVA"
+      },
+      {
+         "abi": "08342",
+         "name": "BANCA DI CREDITO COOPERATIVO DI AQUARA - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08365",
+         "name": "BANCA DI CREDITO COOPERATIVO DELL'ALTO TIRRENO DELLA CALABRIA - VERBICARO (COSENZA) - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08374",
+         "name": "BANCA DI CREDITO COOPERATIVO DI BARLASSINA (MILANO) - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08382",
+         "name": "BENE BANCA CREDITO COOPERATIVO DI BENE VAGIENNA (CUNEO) - SOCIETA' COOPERATIVA"
+      },
+      {
+         "abi": "08397",
+         "name": "CASSA RURALE ED ARTIGIANA DI BOVES - BANCA DI CREDITO COOPERATIVO (BOVES-CUNEO) - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08439",
+         "name": "BANCA DI CARAGLIO, DEL CUNEESE E DELLA RIVIERA DEI FIORI - CREDITO COOPERATIVO  - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08462",
+         "name": "BANCA DI CREDITO COOPERATIVO DELLA ROMAGNA OCCIDENTALE - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08472",
+         "name": "BCC FELSINEA- BANCA DI CREDITO COOPERATIVO DAL 1902- SOCIETÀ COOPERATIVA "
+      },
+      {
+         "abi": "08487",
+         "name": "BANCA DI CREDITO COOPERATIVO DI CHERASCO - SOCIETÀ COOOPERATIVA"
+      },
+      {
+         "abi": "08491",
+         "name": "BANCO MARCHIGIANO CREDITO COOPERATIVO"
+      },
+      {
+         "abi": "08509",
+         "name": "BANCA CENTRO EMILIA CREDITO COOPERATIVO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08540",
+         "name": "BANCA DI SAN MARINO - S.P.A."
+      },
+      {
+         "abi": "08553",
+         "name": "BANCA DI CREDITO COOPERATIVO DI FLUMERI - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08587",
+         "name": "BANCA DI CREDITO COOPERATIVO VALDOSTANA - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08590",
+         "name": "CENTROVENETO BASSANO BANCA - CREDITO COOPERATIVO - SOC. COOP. "
+      },
+      {
+         "abi": "08607",
+         "name": "BANCA DI CREDITO COOPERATIVO DI LOCOROTONDO - CASSA RURALE ED ARTIGIANA - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08622",
+         "name": "CREDITO COOPERATIVO - CASSA RURALE ED ARTIGIANA DEL FRIULI VENEZIA GIULIA   - SOCIETÀ COOPERATIVA (ABBREVIATO CASSA RURALE FVG)"
+      },
+      {
+         "abi": "08631",
+         "name": "BANCA TER CREDITO COOPERATIVO FVG - SOCIETA' COOPERATIVA"
+      },
+      {
+         "abi": "08716",
+         "name": "BANCA CENTRO LAZIO CREDITO COOPERATIVO SOC. COOP."
+      },
+      {
+         "abi": "08735",
+         "name": "BANCA DEL TERRITORIO LOMBARDO - CREDITO COOPERATIVO- SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08753",
+         "name": "BANCA DI CREDITO COOPERATIVO DI PIANFEI E ROCCA DE' BALDI  SOCIETÀ COOPERATIVA "
+      },
+      {
+         "abi": "08784",
+         "name": "BANCA MONTE PRUNO - CREDITO COOPERATIVO DI FISCIANO, ROSCIGNO E LAURINO- SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08794",
+         "name": "BANCA DI CREDITO COOPERATIVO LAUDENSE LODI (MILANO) - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08810",
+         "name": "BANCA DI CREDITO COOPERATIVO DI SAN GIOVANNI ROTONDO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08817",
+         "name": "BANCA DI CREDITO COOPERATIVO DI SAN MARZANO DI SAN GIUSEPPE (TARANTO) - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08833",
+         "name": "BANCA DI CREDITO COOPERATIVO DI CASALGRASSO E SANT'ALBANO STURA - SOCIETÀ COOPERATIVA "
+      },
+      {
+         "abi": "08850",
+         "name": "BANCA DI CREDITO COOPERATIVO DI SARSINA - SOCIETÀ COOPERATIVA "
+      },
+      {
+         "abi": "08852",
+         "name": "BANCA DI CREDITO COOPERATIVO ROMAGNA EST E SALA DI CESENATICO S.C."
+      },
+      {
+         "abi": "08871",
+         "name": "BANCA DI CREDITO COOPERATIVO DI SPELLO E BETTONA - SOCIETÀ COOPERATIVA "
+      },
+      {
+         "abi": "08903",
+         "name": "BANCA DI CREDITO COOPERATIVO DI TURRIACO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08928",
+         "name": "BANCA DI CREDITO COOPERATIVO DEL CARSO SOCIETÀ COOPERATIVA - ZADRUGA ZADRUZNA KRASKA BANKA"
+      },
+      {
+         "abi": "08954",
+         "name": "BANCA DI CREDITO COOPERATIVO LA RISCOSSA DI REGALBUTO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08968",
+         "name": "BANCA DI CREDITO COOPERATIVO SANGRO TEATINA DI ATESSA"
+      },
+      {
+         "abi": "08985",
+         "name": "BANCA SICANA CREDITO COOPERATIVO DI SOMMATINO, SERRADIFALCO E SAMBUCA DI SICILIA SOCIETA' COOPERATIVA"
+      },
+      {
+         "abi": "03226",
+         "name": "UNICREDIT CORPORATE BANKING"
+      },
+      {
+         "abi": "03273",
+         "name": "CREDITO DI ROMAGNA - S.P.A."
+      },
+      {
+         "abi": "03367",
+         "name": "BANCA SANTA GIULIA"
+      },
+      {
+         "abi": "03393",
+         "name": "BANCA SVILUPPO ECONOMICO"
+      },
+      {
+         "abi": "06260",
+         "name": "C. R. DI PISTOIA E DELLA LUCCHESIA S.P.A."
+      },
+      {
+         "abi": "07027",
+         "name": "BANCA DI CREDITO COOP. DI MONOPOLI"
+      },
+      {
+         "abi": "08699",
+         "name": "B.C.C. DI OFFANENGO"
+      },
+      {
+         "abi": "08154",
+         "name": "BANCA DI CREDITO COOPERATIVO DEL CILENTO DI SASSANO E VALLE DI DIANO E DELLA LUCANIA "
+      },
+      {
+         "abi": "08155",
+         "name": "CASSA RAIFFEISEN DI NALLES"
+      },
+      {
+         "abi": "08161",
+         "name": "CASSA RAIFFEISEN NOVA LEVANTE"
+      },
+      {
+         "abi": "08175",
+         "name": "CASSA RAIFFEISEN DI PARCINES"
+      },
+      {
+         "abi": "08182",
+         "name": "CASSA RAIFFEISEN WIPPTAL SCRL"
+      },
+      {
+         "abi": "08183",
+         "name": "CASSA RAIFFEISEN PRATO-TUBRE"
+      },
+      {
+         "abi": "08187",
+         "name": "CASSA RURALE DI RENON (RAIFFEISENKASSE RITTEN G.M.B.H.)"
+      },
+      {
+         "abi": "08189",
+         "name": "BANCA DI CREDITO COOPERATIVO DELLA VALLE DEL TRIGNO"
+      },
+      {
+         "abi": "08201",
+         "name": "CASSA RAIFFEISEN DI RIFIANO CAINES"
+      },
+      {
+         "abi": "08210",
+         "name": "CASSA RURALE DI ROVERETO - BANCA DI CREDITO COOPERATIVO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08220",
+         "name": "CASSA RAIFFEISEN DI SALORNO"
+      },
+      {
+         "abi": "08231",
+         "name": "CASSA RAIFFEISEN VAL D'ULTIMO"
+      },
+      {
+         "abi": "08233",
+         "name": "CASSA RAIFFEISEN SARENTINO"
+      },
+      {
+         "abi": "08238",
+         "name": "CASSA RAIFFEISEN DI SELVA GARDENA"
+      },
+      {
+         "abi": "08255",
+         "name": " CASSA RAIFFEISEN OLTRADIGE"
+      },
+      {
+         "abi": "08273",
+         "name": "CASSA RAIFFEISEN DI TESIMO"
+      },
+      {
+         "abi": "08277",
+         "name": "CASSA RAIFFEISEN DI TIRES"
+      },
+      {
+         "abi": "08278",
+         "name": "CASSA RAIFFEISEN TIROLO"
+      },
+      {
+         "abi": "08284",
+         "name": "BANCA DI CREDITO COOPERATIVO DELL'OLTREPO PAVESE"
+      },
+      {
+         "abi": "08285",
+         "name": "CASSA RAIFFEISEN TURES AURINA"
+      },
+      {
+         "abi": "08295",
+         "name": "CASSA RAIFFEISEN DI VANDOIES"
+      },
+      {
+         "abi": "08302",
+         "name": "CASSA RAIFFEISEN DI VILLABASSA"
+      },
+      {
+         "abi": "08307",
+         "name": "CASSA RAIFFEISEN DELLA VALL'ISARCO"
+      },
+      {
+         "abi": "08309",
+         "name": "BASSANO BANCA - CREDITO COOPERATIVO DI ROMANO E S. CATERINA "
+      },
+      {
+         "abi": "08315",
+         "name": "VALPOLICELLA BENACO BANCA"
+      },
+      {
+         "abi": "08322",
+         "name": "BANCA VERONESE CREDITO COOPERATIVO DI CONCAMARISE"
+      },
+      {
+         "abi": "08324",
+         "name": "BANCA DI CREDITO COOPERATIVO CENTROPADANA"
+      },
+      {
+         "abi": "08325",
+         "name": "BANCO FIORENTINO - MUGELLO IMPRUNETA SIGNA - CREDITO COOPERATIVO"
+      },
+      {
+         "abi": "08327",
+         "name": "B.C.C. DI ROMA"
+      },
+      {
+         "abi": "08329",
+         "name": "BCC BRIANZA E LAGHI CREDITO COOPERATIVO"
+      },
+      {
+         "abi": "08341",
+         "name": "B.C.C. ALTOFONTE"
+      },
+      {
+         "abi": "08345",
+         "name": "B.C.C. DI ANGHIARI E STIA"
+      },
+      {
+         "abi": "08354",
+         "name": "B.C.C. DI AVETRANA"
+      },
+      {
+         "abi": "08356",
+         "name": "B.C.C. PORDENONESE E MONSILE"
+      },
+      {
+         "abi": "08358",
+         "name": "BANCA DI PESCIA E CASCINA CREDITO COOPERATIVO "
+      },
+      {
+         "abi": "08361",
+         "name": "B.C.C. DEL TUBENNA"
+      },
+      {
+         "abi": "08362",
+         "name": "B.C.C. DI ARBOREA"
+      },
+      {
+         "abi": "08378",
+         "name": "BANCA DI CREDITO COOPERATIVO CAMPANIA CENTRO – CASSA RURALE ED ARTIGIANA SOC. COOP.  "
+      },
+      {
+         "abi": "08381",
+         "name": "B.C.C. DI BELLEGRA"
+      },
+      {
+         "abi": "08386",
+         "name": "C.R.A. DI BINASCO"
+      },
+      {
+         "abi": "08399",
+         "name": "C.R.A. DI BRENDOLA CREDITO COOPERATIVO"
+      },
+      {
+         "abi": "08404",
+         "name": "B.C.C. DI BUSTO GAROLFO"
+      },
+      {
+         "abi": "08409",
+         "name": "B.C.C. DI BUONABITACOLO"
+      },
+      {
+         "abi": "08416",
+         "name": "BANCA DI VERONA CREDITO COOPERATIVO CADIDAVID"
+      },
+      {
+         "abi": "08425",
+         "name": "BANCA CAMBIANO 1884 - S.P.A. "
+      },
+      {
+         "abi": "08427",
+         "name": "CREDITO COOPERATIVO FIORENTINO - CAMPI BISENZIO"
+      },
+      {
+         "abi": "08430",
+         "name": "C.R.A. DI CANTÙ"
+      },
+      {
+         "abi": "08431",
+         "name": "BANCA DI CREDITO COOPERATIVO DI CAPACCIO PAESTUM  E SERINO SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08434",
+         "name": "B.C.C. ABRUZZESE DI CAPPELLE SUL TAVO"
+      },
+      {
+         "abi": "08437",
+         "name": "B.C.C. DEL BASSO SEBINO"
+      },
+      {
+         "abi": "08440",
+         "name": "B.C.C. DI CARATE BRIANZA"
+      },
+      {
+         "abi": "08441",
+         "name": "CREDITO COOPERATIVO DI CARAVAGGIO ADDA E CREMASCO - CASSA RURALE"
+      },
+      {
+         "abi": "08445",
+         "name": "B.C.C. DI TERRA D’OTRANTO"
+      },
+      {
+         "abi": "08450",
+         "name": "BANCA ALPI MARITTIME CREDITO COOPERATIVO CARRU"
+      },
+      {
+         "abi": "08451",
+         "name": "B.C.C. DI CASALGRASSO E DEL CARMAGNOLESE"
+      },
+      {
+         "abi": "08452",
+         "name": "BANCA DI CREDITO COOPERATIVO DI VENEZIA, PADOVA E ROVIGO - BANCA ANNIA S.C"
+      },
+      {
+         "abi": "08453",
+         "name": "BANCA DI CREDITO COOPERATIVO DI MILANO - SOC. COOP."
+      },
+      {
+         "abi": "08454",
+         "name": "CREDITO PADANO BANCA DI CREDITO COOPERATIVO SOC. COOP."
+      },
+      {
+         "abi": "08456",
+         "name": "BANCA DEI SIBILLINI CREDITO COOPERATIVO DI CASAVECCHIA"
+      },
+      {
+         "abi": "08457",
+         "name": "CREDITO COOPERATIVO VALDARNO FIORENTINO BANCA DI CASCIA - SOCIETA' COOPERATIVA "
+      },
+      {
+         "abi": "08460",
+         "name": "BANCA DI CREDITO COOPERATIVO DI CASSANO DELLE MURGE E TOLVE - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08461",
+         "name": "BANCA DI CREDITO COOPERATIVO DI CASTAGNETO CARDUCCI - SOCIETÀ COOPERATIVA PER AZIONI "
+      },
+      {
+         "abi": "08465",
+         "name": "B.C.C. DI CASTEL GANDOLFO"
+      },
+      {
+         "abi": "08467",
+         "name": "B.C.C. DEL POLESINE OCCIDENTALE"
+      },
+      {
+         "abi": "08469",
+         "name": "C.R.A. DI CASTELLANA GROTTE"
+      },
+      {
+         "abi": "08473",
+         "name": "B.C.C. DI CASTIGLIONE MESSER RAIMONDO E PIANELLA"
+      },
+      {
+         "abi": "08474",
+         "name": "BANCA DEL PICENO CREDITO COOPERATIVO SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08481",
+         "name": "CEREABANCA 1897 "
+      },
+      {
+         "abi": "08489",
+         "name": "BANCA VALDICHIANA CREDITO COOPERATIVO DI CHIUSI E MONTEPULCIANO"
+      },
+      {
+         "abi": "08492",
+         "name": "B.C.C. DI CITTANOVA"
+      },
+      {
+         "abi": "08511",
+         "name": "CORTINABANCA – CREDITO COOPERATIVO – SOCIETA' COOPERATIVA"
+      },
+      {
+         "abi": "08514",
+         "name": "BANCA DI CREDITO COOPERATIVO DELL’OGLIO E DEL SERIO S.C."
+      },
+      {
+         "abi": "08515",
+         "name": "BANCA VALSASSINA CRED. COOP."
+      },
+      {
+         "abi": "08519",
+         "name": "B.C.C. DI FANO"
+      },
+      {
+         "abi": "08527",
+         "name": "B.C.C. DI CASTIGLIONE MESSER MARINO"
+      },
+      {
+         "abi": "08530",
+         "name": "B.C.C. D'ALBA, LANGHE, ROERO E DEL CANAVESE"
+      },
+      {
+         "abi": "08537",
+         "name": "C.R.A. DI ERCHIE"
+      },
+      {
+         "abi": "08542",
+         "name": "CRED. COOP. RAVENNATE FORLIVESE E IMOLESE"
+      },
+      {
+         "abi": "08549",
+         "name": "BANCA DI FILOTTRANO CREDITO COOPERATIVO DI FILOTTRANO E DI CAMERANO SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08554",
+         "name": "B.C.C. DI GAUDIANO DI LAVELLO"
+      },
+      {
+         "abi": "08562",
+         "name": "BANCA DI PISA E FORNACETTE CREDITO COOPERATIVO SOC. COOP. PER AZIONI"
+      },
+      {
+         "abi": "08572",
+         "name": "B.C.C. DI GAMBATESA"
+      },
+      {
+         "abi": "08575",
+         "name": "B.C.C. DELL’AGRO BRESCIANO"
+      },
+      {
+         "abi": "08595",
+         "name": "BANCA DEL CROTONESE CRED. COOP."
+      },
+      {
+         "abi": "08597",
+         "name": "B.C.C. BASILICATA CREDITO COOPERATIVO DI LAURENZANA E COMUNI LUCANI"
+      },
+      {
+         "abi": "08600",
+         "name": "B.C.C. DI LEPRENO"
+      },
+      {
+         "abi": "08601",
+         "name": "B.C.C. VALLE DEL TORTO"
+      },
+      {
+         "abi": "08603",
+         "name": "B.C.C. DI LEVERANO"
+      },
+      {
+         "abi": "08606",
+         "name": "B.C.C. DI CANOSA LOCONIA"
+      },
+      {
+         "abi": "08618",
+         "name": "B.C.C. DI LEZZENO"
+      },
+      {
+         "abi": "08623",
+         "name": "BANCO COOPERATIVO EMILIANO - CREDITO COOPERATIVO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08637",
+         "name": "PRIMACASSA - CREDITO COOPERATIVO FVG  - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08638",
+         "name": "B.C.C. ROMAGNA CENTRO SCRL MARTORANO DI CESENA"
+      },
+      {
+         "abi": "08646",
+         "name": "B.C.C. DI MINERBIO"
+      },
+      {
+         "abi": "08652",
+         "name": "B.C.C. DEL TRASIMENO"
+      },
+      {
+         "abi": "08657",
+         "name": "BANCA DI PALERMO SPA"
+      },
+      {
+         "abi": "08673",
+         "name": "CHIANTIBANCA CREDITO COOPERATIVO - SOCIETÀ COOPERATIVA "
+      },
+      {
+         "abi": "08676",
+         "name": "B.C.C. DEL GARDA - BANCA DI CREDITO COOPERATIVO COLLI MORENICI DEL GARDA"
+      },
+      {
+         "abi": "08679",
+         "name": "B.C.C. DI MOZZANICA"
+      },
+      {
+         "abi": "08688",
+         "name": "B.C.C. DI MARINA DI GINOSA"
+      },
+      {
+         "abi": "08693",
+         "name": "B.C.C. DI NETTUNO"
+      },
+      {
+         "abi": "08697",
+         "name": "B.C.C. “CIVITELLA” – MOIO DELLA CIVITELLA"
+      },
+      {
+         "abi": "08700",
+         "name": "B.C.C. DEL METAURO"
+      },
+      {
+         "abi": "08701",
+         "name": "B.C.C. DI ORSAGO"
+      },
+      {
+         "abi": "08704",
+         "name": "B.C.C. DI OSTRA E MORRO D’ALBA"
+      },
+      {
+         "abi": "08705",
+         "name": "B.C.C. DI OSTRA VETERE"
+      },
+      {
+         "abi": "08706",
+         "name": "B.C.C. DI OSTUNI"
+      },
+      {
+         "abi": "08708",
+         "name": "B.C.C. DI OPPIDO LUCANO E RIPACANDIDA"
+      },
+      {
+         "abi": "08711",
+         "name": "CASSA RURALE ED ARTIGIANA CARLO DE CARDONA"
+      },
+      {
+         "abi": "08713",
+         "name": "B.C.C. DI PACHINO"
+      },
+      {
+         "abi": "08715",
+         "name": "B.C.C. DI UDINE E BRESSA"
+      },
+      {
+         "abi": "08717",
+         "name": "C.R.A. DI PALIANO"
+      },
+      {
+         "abi": "08720",
+         "name": "B.C.C. DI PEDEMONTE"
+      },
+      {
+         "abi": "08724",
+         "name": "B.C.C. DI PIAZZE"
+      },
+      {
+         "abi": "08726",
+         "name": "B.C.C. DELLA VERSILIA DELLA LUNIGIANA E GARFAGNANA"
+      },
+      {
+         "abi": "08728",
+         "name": "BANCA PATAVINA CREDITO COOPERATIVO DI SANT’ELENA E PIOVE DI SACCO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08731",
+         "name": "BANCA DI CREDITO COOPERATIVO DI PERGOLA E CORINALDO – SOCIETÀ COOPERATIVA "
+      },
+      {
+         "abi": "08732",
+         "name": "B.C.C. VICENTINO DI POJANA MAGGIORE"
+      },
+      {
+         "abi": "08736",
+         "name": "B.C.C. DI PONTASSIEVE"
+      },
+      {
+         "abi": "08738",
+         "name": "C.R.A. DELL’AGRO PONTINO"
+      },
+      {
+         "abi": "08747",
+         "name": "B.C.C. DI PRATOLA PELIGNA"
+      },
+      {
+         "abi": "08749",
+         "name": "CENTROMARCA BANCA CREDITO COOPERATIVO DI TREVISO "
+      },
+      {
+         "abi": "08765",
+         "name": "B.C.C. DI RECANATI E COLMURANO"
+      },
+      {
+         "abi": "08769",
+         "name": "B.C.C. DI RIPATRANSONE"
+      },
+      {
+         "abi": "08770",
+         "name": "C.R.A. DI RIVAROLO MANTOVANO"
+      },
+      {
+         "abi": "08772",
+         "name": "C.R.A. DI ROANA"
+      },
+      {
+         "abi": "08787",
+         "name": "BANCA DI CREDITO COOPERATIVO DELLA PROVINCIA ROMANA"
+      },
+      {
+         "abi": "08800",
+         "name": "B.C.C. SAN BIAGIO PLATANI"
+      },
+      {
+         "abi": "08806",
+         "name": "B.C.C. SAN GIORGIO DI CESENA"
+      },
+      {
+         "abi": "08807",
+         "name": "BANCA DI S. GIORGIO QUINTO VALLE AGNO CRED. COOP."
+      },
+      {
+         "abi": "08811",
+         "name": "B.C.C. DI SAN GIOVANNI VALDARNO"
+      },
+      {
+         "abi": "08826",
+         "name": "B.C.C. DI PESARO."
+      },
+      {
+         "abi": "08844",
+         "name": "BANCA DI CREDITO COOPERATIVO DI SANTERAMO IN COLLE - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "08851",
+         "name": "BANCA TERRE ETRUSCHE E DI MAREMMA CREDITO COOPERATIVO"
+      },
+      {
+         "abi": "08855",
+         "name": "B.C.C. DI SCAFATI E CETARA"
+      },
+      {
+         "abi": "08859",
+         "name": "B.C.C. DI SEGNI"
+      },
+      {
+         "abi": "01005",
+         "name": "BANCA NAZIONALE DEL LAVORO  - S.P.A."
+      },
+      {
+         "abi": "01010",
+         "name": "BANCO DI NAPOLI S.P.A."
+      },
+      {
+         "abi": "01015",
+         "name": "BANCO DI SARDEGNA - S.P.A."
+      },
+      {
+         "abi": "01020",
+         "name": "BANCO DI SICILIA SPA"
+      },
+      {
+         "abi": "01025",
+         "name": "SANPAOLO IMI S.P.A."
+      },
+      {
+         "abi": "01030",
+         "name": "BANCA MONTE DEI PASCHI DI SIENA  - S.P.A."
+      },
+      {
+         "abi": "02008",
+         "name": "UNICREDIT S.P.A."
+      },
+      {
+         "abi": "03001",
+         "name": "BANCO AMBROSIANO VENETO S.P.A."
+      },
+      {
+         "abi": "03002",
+         "name": "UNICREDIT BANCA DI ROMA SPA"
+      },
+      {
+         "abi": "03011",
+         "name": "HYPO ALPE ADRIA BANK SPA"
+      },
+      {
+         "abi": "03015",
+         "name": "FINECOBANK BANCA FINECO - S.P.A."
+      },
+      {
+         "abi": "03017",
+         "name": "INVEST BANCA - S.P.A."
+      },
+      {
+         "abi": "03018",
+         "name": "NOVA LJUBLJANSKA BANKA"
+      },
+      {
+         "abi": "03019",
+         "name": "CREDITO SICILIANO"
+      },
+      {
+         "abi": "03032",
+         "name": "CREDITO EMILIANO S.P.A."
+      },
+      {
+         "abi": "03041",
+         "name": "UBS EUROPE SE SUCCURSALE ITALIA"
+      },
+      {
+         "abi": "03043",
+         "name": "BANCA INTERMOBILIARE DI INVESTIMENTI E GESTIONI  - S.P.A."
+      },
+      {
+         "abi": "03047",
+         "name": "BANCA CAPASSO ANTONIO - S.P.A."
+      },
+      {
+         "abi": "03048",
+         "name": "BANCA DEL PIEMONTE - S.P.A."
+      },
+      {
+         "abi": "03049",
+         "name": "BANCA ARDITI GALATI SPA"
+      },
+      {
+         "abi": "03053",
+         "name": "BANCA APERTA"
+      },
+      {
+         "abi": "03058",
+         "name": "CHE BANCA! - S.P.A."
+      },
+      {
+         "abi": "03059",
+         "name": "BANCA DI CREDITO SARDO S.P.A."
+      },
+      {
+         "abi": "03060",
+         "name": "BANCA BRIGNONE SPA"
+      },
+      {
+         "abi": "03062",
+         "name": "BANCA MEDIOLANUM  - S.P.A."
+      },
+      {
+         "abi": "03064",
+         "name": "BANCA SELLA NORD EST BOVIO CALDERARI"
+      },
+      {
+         "abi": "03067",
+         "name": "BANCA CARIME SPA"
+      },
+      {
+         "abi": "03069",
+         "name": "INTESA SANPAOLO - S.P.A."
+      },
+      {
+         "abi": "03075",
+         "name": "BANCA GENERALI - S.P.A."
+      },
+      {
+         "abi": "03078",
+         "name": "BANCA DELL'ARTIGIANATO E DELL'INDUSTRIA"
+      },
+      {
+         "abi": "03083",
+         "name": "IW BANK - S.P.A."
+      },
+      {
+         "abi": "03084",
+         "name": "BANCA CESARE PONTI  - S.P.A."
+      },
+      {
+         "abi": "03087",
+         "name": "BANCA FINNAT EURAMERICA - S.P.A."
+      },
+      {
+         "abi": "03089",
+         "name": "CREDIT SUISSE (ITALY) - S.P.A."
+      },
+      {
+         "abi": "03104",
+         "name": "DEUTSCHE BANK  - S.P.A."
+      },
+      {
+         "abi": "03110",
+         "name": "FARBANCA - S.P.A."
+      },
+      {
+         "abi": "03111",
+         "name": "UNIONE DI BANCHE ITALIANE -  S.P.A."
+      },
+      {
+         "abi": "03122",
+         "name": "BANCA DELLA VALLE D'AOSTA S.P.A."
+      },
+      {
+         "abi": "03124",
+         "name": "BANCA DEL FUCINO – S.P.A."
+      },
+      {
+         "abi": "03126",
+         "name": "CA-INDOSUEZ WEALTH (ITALY) S.P.A"
+      },
+      {
+         "abi": "03127",
+         "name": "UNIPOL BANCA SPA"
+      },
+      {
+         "abi": "03136",
+         "name": "BANCA DEL LAVORO E DEL PICCOLO RISPARMIO"
+      },
+      {
+         "abi": "03138",
+         "name": "BANCA REALE - S.P.A."
+      },
+      {
+         "abi": "03139",
+         "name": "BANCA PER LO SVILUPPO DELLA COOPERAZIONE DEL CREDITO"
+      },
+      {
+         "abi": "03140",
+         "name": "MPS BANCA PERSONALE SPA"
+      },
+      {
+         "abi": "03141",
+         "name": "BANCA DI TREVISO SPA"
+      },
+      {
+         "abi": "03142",
+         "name": "BANCA SANPAOLO INVEST S.P.A."
+      },
+      {
+         "abi": "03149",
+         "name": "BANCO EMILIANO ROMAGNOLO S.P.A."
+      },
+      {
+         "abi": "03151",
+         "name": "HYPO TIROL BANK AG - S.P.A."
+      },
+      {
+         "abi": "03158",
+         "name": "BANCA SISTEMA S.P.A."
+      },
+      {
+         "abi": "03159",
+         "name": "BANCA CONSULIA S.P.A"
+      },
+      {
+         "abi": "03165",
+         "name": "IW BANK SPA"
+      },
+      {
+         "abi": "03177",
+         "name": "BANCA SAI S.P.A."
+      },
+      {
+         "abi": "03178",
+         "name": "EURO COMMERCIAL BANK SPA"
+      },
+      {
+         "abi": "03183",
+         "name": "BANCA ESPERIA SPA"
+      },
+      {
+         "abi": "03185",
+         "name": "BANCA IFIGEST - S.P.A."
+      },
+      {
+         "abi": "03190",
+         "name": "EBP EUROBANCA PRIVATA SPA"
+      },
+      {
+         "abi": "03195",
+         "name": "BANCA COMMERCIALE SAMMARINESE SPA"
+      },
+      {
+         "abi": "03204",
+         "name": "BANCA DI LEGNANO SPA"
+      },
+      {
+         "abi": "03205",
+         "name": "BANCA IFIS S.P.A."
+      },
+      {
+         "abi": "03211",
+         "name": "BANCA PATRIMONI SELLA & C. - S.P.A."
+      },
+      {
+         "abi": "03216",
+         "name": "BANCA 2000"
+      },
+      {
+         "abi": "03223",
+         "name": "UNICREDIT PRIVATE BANKING S.P.A."
+      },
+      {
+         "abi": "03229",
+         "name": "BANCA MODENESE SPA"
+      },
+      {
+         "abi": "03235",
+         "name": "BANCA DI SCONTO E CONTI CORRENTI DI S. MARIA CAPUA VETERE - S.P.A."
+      },
+      {
+         "abi": "03239",
+         "name": "INTESA SANPAOLO PRIVATE BANKING - S.P.A."
+      },
+      {
+         "abi": "03240",
+         "name": "BANCA DI TRENTO E BOLZANO"
+      },
+      {
+         "abi": "03242",
+         "name": "BANCO DI LUCCA E DEL TIRRENO - S.P.A."
+      },
+      {
+         "abi": "03244",
+         "name": "BANCA DI VALLE CAMONICA SPA"
+      },
+      {
+         "abi": "03245",
+         "name": "CREDITO VERONESE SPA"
+      },
+      {
+         "abi": "03250",
+         "name": "BANCA EUROMOBILIARE - S.P.A."
+      },
+      {
+         "abi": "03253",
+         "name": "BANCA FEDERICO DEL VECCHIO SPA"
+      },
+      {
+         "abi": "03263",
+         "name": "IBL BANCA - ISTITUTO BANCARIO DEL LAVORO S.P.A."
+      },
+      {
+         "abi": "03265",
+         "name": "BANCA PROMOS - S.P.A."
+      },
+      {
+         "abi": "03266",
+         "name": "BANCA FINANZIARIA INTERNAZIONALE S.P.A. - BANCA FININT"
+      },
+      {
+         "abi": "03268",
+         "name": "BANCA SELLA - S.P.A."
+      },
+      {
+         "abi": "03279",
+         "name": "SANTANDER PRIVATE BANKING"
+      },
+      {
+         "abi": "03296",
+         "name": "BANCA FIDEURAM - S.P.A."
+      },
+      {
+         "abi": "03300",
+         "name": "BANCA DELLA CIOCIARIA SPA"
+      },
+      {
+         "abi": "03301",
+         "name": "CASSA DI RISPARMIO DI MILANO E DELLA LOMBARDIA"
+      },
+      {
+         "abi": "03312",
+         "name": "BANCA DEL SUD - BANCA MERCANTILE ITALIANA SPA"
+      },
+      {
+         "abi": "03323",
+         "name": "GBM BANCA - S.P.A."
+      },
+      {
+         "abi": "03330",
+         "name": "BANCA INTERREGIONALE SPA"
+      },
+      {
+         "abi": "03332",
+         "name": "BANCA PASSADORE & C. - S.P.A."
+      },
+      {
+         "abi": "03336",
+         "name": "CREDITO BERGAMASCO"
+      },
+      {
+         "abi": "03338",
+         "name": "SERFINA BANCA SPA"
+      },
+      {
+         "abi": "03353",
+         "name": "BANCA DEL SUD - S.P.A."
+      },
+      {
+         "abi": "03357",
+         "name": "BANCA A.G.C.I."
+      },
+      {
+         "abi": "03359",
+         "name": "BANCA PROSSIMA S.P.A."
+      },
+      {
+         "abi": "03365",
+         "name": "BANCO DELLE TRE VENEZIE"
+      },
+      {
+         "abi": "03387",
+         "name": "BANQUE CHAABI DU MAROC"
+      },
+      {
+         "abi": "03388",
+         "name": "BANCA STABIESE - S.P.A."
+      },
+      {
+         "abi": "03395",
+         "name": "ILLIMITY BANK S.P.A."
+      },
+      {
+         "abi": "03399",
+         "name": "EXTRABANCA  - S. P. A."
+      },
+      {
+         "abi": "03400",
+         "name": "BANCA TOSCANA S.P.A."
+      },
+      {
+         "abi": "03402",
+         "name": "WEBANK"
+      },
+      {
+         "abi": "03403",
+         "name": "IMPREBANCA - S.P.A."
+      },
+      {
+         "abi": "03417",
+         "name": "BANCA PRIVATA LEASING - S.P.A."
+      },
+      {
+         "abi": "03424",
+         "name": "BANCO CHIAVARI E DELLA RIVIERA LIGURE SPA"
+      },
+      {
+         "abi": "03425",
+         "name": "BANCO DI CREDITO P. AZZOAGLIO - S.P.A."
+      },
+      {
+         "abi": "03426",
+         "name": "BANCA DI CREDITO PELORITANO - S.P.A."
+      },
+      {
+         "abi": "03431",
+         "name": "BANCA CARIGE ITALIA SPA"
+      },
+      {
+         "abi": "03440",
+         "name": "BANCO DI DESIO E DELLA BRIANZA - S.P.A."
+      },
+      {
+         "abi": "03441",
+         "name": "BANCA SVILUPPO TUSCIA "
+      },
+      {
+         "abi": "03442",
+         "name": "WIDIBA - WISE DIALOG BANK SPA"
+      },
+      {
+         "abi": "03488",
+         "name": "CASSA LOMBARDA - S.P.A."
+      },
+      {
+         "abi": "03493",
+         "name": "CASSA CENTRALE RAIFFEISEN DELL'ALTO ADIGE - S.P.A."
+      },
+      {
+         "abi": "03500",
+         "name": "BANCO DI BRESCIA SAN PAOLO SPA"
+      },
+      {
+         "abi": "03512",
+         "name": "CREDITO ARTIGIANO SPA"
+      },
+      {
+         "abi": "03556",
+         "name": "ROLO BANCA 1473 S.P.A."
+      },
+      {
+         "abi": "03589",
+         "name": "ALLIANZ BANK FINANCIAL ADVISORS - S.P.A."
+      },
+      {
+         "abi": "03598",
+         "name": "BANCA UBAE S.P.A."
+      },
+      {
+         "abi": "03599",
+         "name": "Cassa Centrale Banca – Credito Cooperativo Italiano S.p.A."
+      },
+      {
+         "abi": "05000",
+         "name": "DEPOBANK - BANCA DEPOSITARIA ITALIANA SPA"
+      },
+      {
+         "abi": "05009",
+         "name": "BANCA BIPIELLE ROMAGNA SPA"
+      },
+      {
+         "abi": "05015",
+         "name": "BANCA PROGETTO SPA"
+      },
+      {
+         "abi": "05022",
+         "name": "BANCA POPOLARE CREDIEURONORD SCRL"
+      },
+      {
+         "abi": "05023",
+         "name": "BANCA REGIONALE DI SVILUPPO - S.P.A."
+      },
+      {
+         "abi": "05024",
+         "name": "BANCA AGRICOLA MANTOVANA S.P.A."
+      },
+      {
+         "abi": "05025",
+         "name": "BANCA FARNESE"
+      },
+      {
+         "abi": "05027",
+         "name": "BANCA POPOLARE VALLE DI ITRIA E MAGNA GRECIA"
+      },
+      {
+         "abi": "05029",
+         "name": "IGEA DIGITAL BANK - S.P.A."
+      },
+      {
+         "abi": "05030",
+         "name": "VIVIBANCA - S.P.A."
+      },
+      {
+         "abi": "05033",
+         "name": "BANCA POPOLARE DELLE PROVINCE MOLISANE - SOCIETÀ COOPERATIVA PER AZIONI A RESPONSABILITÀ LIMITATA"
+      },
+      {
+         "abi": "05034",
+         "name": "BANCO BPM -  S.P.A. "
+      },
+      {
+         "abi": "05035",
+         "name": "VENETO BANCA S.P.A."
+      },
+      {
+         "abi": "05036",
+         "name": "BANCA AGRICOLA POPOLARE DI RAGUSA - SOCIETÀ COOPERATIVA PER AZIONI"
+      },
+      {
+         "abi": "05037",
+         "name": "BANCA POPOLARE DELLE PROVINCE CALABRE"
+      },
+      {
+         "abi": "05038",
+         "name": "BANCA POPOLARE DEL MEDITERRANEO - SOCIETÀ COOPERATIVA PER AZIONI"
+      },
+      {
+         "abi": "05040",
+         "name": "BANCA ANTONVENETA"
+      },
+      {
+         "abi": "05048",
+         "name": "BANCA POPOLARE COMMERCIO E INDUSTRIA"
+      },
+      {
+         "abi": "05060",
+         "name": "BANCA COOPERATIVA CATTOLICA"
+      },
+      {
+         "abi": "05080",
+         "name": "BANCA DI IMOLA - S.P.A."
+      },
+      {
+         "abi": "05104",
+         "name": "BANCA POPOLARE DEL LAZIO - SOCIETÀ COOPERATIVA"
+      },
+      {
+         "abi": "05116",
+         "name": "BANCA VALSABBINA - SOCIETÀ COOPERATIVA PER AZIONI "
+      },
+      {
+         "abi": "05132",
+         "name": "BANCA NUOVA SPA"
+      },
+      {
+         "abi": "05142",
+         "name": "BANCA DI CREDITO POPOLARE - SOCIETÀ COOPERATIVA PER AZIONI"
+      },
+      {
+         "abi": "05156",
+         "name": "BANCA DI PIACENZA - SOCIETÀ COOPERATIVA PER AZIONI "
+      },
+      {
+         "abi": "05164",
+         "name": "BANCA POPOLARE DI LODI"
+      },
+      {
+         "abi": "05188",
+         "name": "BANCA POPOLARE DI VERONA - S. GEMINIANO E S. PROSPERO"
+      },
+      {
+         "abi": "05204",
+         "name": "BANCA POPOLARE DI MANTOVA"
+      },
+      {
+         "abi": "05216",
+         "name": "BANCA PICCOLO CREDITO VALTELLINESE - S.P.A."
+      },
+      {
+         "abi": "05228",
+         "name": "BANCA POPOLARE DI CREMA"
+      },
+      {
+         "abi": "05232",
+         "name": "BANCA POPOLARE DI LAJATICO - SOCIETÀ COOPERATIVA PER AZIONI"
+      },
+      {
+         "abi": "05256",
+         "name": "BANCA POPOLARE DEL MEZZOGIORNO"
+      },
+      {
+         "abi": "05262",
+         "name": "BANCA POPOLARE PUGLIESE - SOCIETÀ COOPERATIVA PER AZIONI"
+      },
+      {
+         "abi": "05290",
+         "name": "BANCA POPOLARE DEL TRENTINO"
+      },
+      {
+         "abi": "05296",
+         "name": "BANCA POPOLARE DI FONDI - SOCIETÀ COOPERATIVA "
+      },
+      {
+         "abi": "05297",
+         "name": "BANCA POPOLARE DEL FRUSINATE - SOCIETÀ COOPERATIVA PER AZIONI "
+      },
+      {
+         "abi": "05308",
+         "name": "BANCA POPOLARE DI ANCONA"
+      },
+      {
+         "abi": "05336",
+         "name": "CRÉDIT AGRICOLE FRIULADRIA  S.P.A."
+      },
+      {
+         "abi": "05352",
+         "name": "BANCA POPOLARE DI TODI"
+      },
+      {
+         "abi": "05372",
+         "name": "BANCA POPOLARE DEL CASSINATE - SOCIETÀ COOPERATIVA PER AZIONI "
+      },
+      {
+         "abi": "05385",
+         "name": "BANCA POPOLARE DI PUGLIA E BASILICATA - SOCIETÀ COOPERATIVA PER AZIONI"
+      },
+      {
+         "abi": "05387",
+         "name": "BPER BANCA - S.P.A."
+      },
+      {
+         "abi": "05390",
+         "name": "BANCA POPOLARE DELL'ETRURIA E DEL LAZIO SCRL"
+      },
+      {
+         "abi": "05392",
+         "name": "BANCA DELLA CAMPANIA SPA"
+      },
+      {
+         "abi": "05398",
+         "name": "BANCA POPOLARE DEL MATERANO"
+      },
+      {
+         "abi": "02002",
+         "name": "Banca Commerciale Italiana"
+      },
+      {
+         "abi": "03309",
+         "name": "Banca Infrastrutture Innovazione e Sviluppo S.p.A."
+      },
+      {
+         "abi": "03186",
+         "name": "B@nca 24-7 S.p.a."
+      },
+      {
+         "abi": "05026",
+         "name": "BPU Banca - Banche Popolari Unite"
+      },
+      {
+         "abi": "06325",
+         "name": "Cassa di Risparmio di Tortona S.p.A."
+      },
+      {
+         "abi": "07601",
+         "name": "Poste Italiane S.p.A."
+      }
+   ],
+   "total": 531,
+   "start": 0,
+   "size": 531
+}

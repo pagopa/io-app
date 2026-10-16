@@ -1,17 +1,18 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import { default as configureMockStore } from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import * as useIO from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { getPaymentsLatestReceiptAction } from "../../../receipts/store/actions";
 import { PaymentsCheckoutRoutes } from "../../navigation/routes";
+import { WalletPaymentOutcomeEnum } from "../../types/PaymentOutcomeEnum";
 import {
   REFETCH_LATEST_RECEIPTS_DELAY_MS,
   WalletPaymentOutcomeScreen
 } from "../WalletPaymentOutcomeScreen";
-import { WalletPaymentOutcomeEnum } from "../../types/PaymentOutcomeEnum";
-import { getPaymentsLatestReceiptAction } from "../../../receipts/store/actions";
-import * as useIO from "../../../../../store/hooks";
 
 const renderComponent = (outcome: WalletPaymentOutcomeEnum) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));

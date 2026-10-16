@@ -1,8 +1,4 @@
-import {
-  Banner,
-  IOVisualCostants,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Banner, IOVisualCostants, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { useCallback } from "react";
@@ -11,6 +7,7 @@ import Animated, {
   FadeOut,
   LinearTransition
 } from "react-native-reanimated";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   engagementCGNDiscoveryBannerSelector,
@@ -22,6 +19,7 @@ import {
   getFullLocale
 } from "../../../../utils/locale";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
+import { trackCgnEngagementBanner } from "../analytics/index.ts";
 import { cgnActivationStart } from "../store/actions/activation";
 import { closeCgnDiscoveryBanner } from "../store/actions/banners.ts";
 import { cgnDetails } from "../store/actions/details.ts";
@@ -29,7 +27,6 @@ import {
   cgnDetailSelector,
   isCgnDetailsAlreadyFetchedSelector
 } from "../store/reducers/details";
-import { trackCgnEngagementBanner } from "../analytics/index.ts";
 
 type Props = {
   handleOnClose: () => void;
@@ -90,18 +87,18 @@ const CgnDiscoveryBanner = ({ handleOnClose }: Props) => {
     >
       <VSpacer size={16} />
       <Banner
-        testID="cgnDiscoveryBannerTestID"
-        title={engagementBannerContent.title?.[localeFallback]}
-        content={engagementBannerContent.description[localeFallback]}
         action={
           engagementBannerContent.action?.label[localeFallback] ??
           I18n.t("bonus.cgn.engagement.banner.cta")
         }
-        pictogramName="star"
         color="turquoise"
-        onClose={closeHandler}
+        content={engagementBannerContent.description[localeFallback]}
         labelClose={I18n.t("global.buttons.close")}
+        onClose={closeHandler}
         onPress={onPressHandler}
+        pictogramName="star"
+        testID="cgnDiscoveryBannerTestID"
+        title={engagementBannerContent.title?.[localeFallback]}
       />
     </Animated.View>
   );

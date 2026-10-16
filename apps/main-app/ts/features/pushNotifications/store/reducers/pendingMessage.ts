@@ -1,6 +1,4 @@
-/**
- * Notification message reducer
- */
+/** Notification message reducer */
 import { getType } from "typesafe-actions";
 
 import { Action } from "../../../../store/actions/types";
@@ -10,10 +8,10 @@ import {
   updateNotificationsPendingMessage
 } from "../actions/pendingMessage";
 
-export type PendingMessageState = Readonly<{
-  id: string;
+export type PendingMessageState = null | Readonly<{
   foreground: boolean;
-}> | null;
+  id: string;
+}>;
 
 const INITIAL_STATE: PendingMessageState = null;
 
@@ -22,10 +20,10 @@ export const pendingMessageReducer = (
   action: Action
 ): PendingMessageState => {
   switch (action.type) {
-    case getType(updateNotificationsPendingMessage):
-      return action.payload;
     case getType(clearNotificationPendingMessage):
       return INITIAL_STATE;
+    case getType(updateNotificationsPendingMessage):
+      return action.payload;
     default:
       return state;
   }

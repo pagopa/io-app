@@ -1,38 +1,35 @@
-import {
-  Banner,
-  IOVisualCostants,
-  useIOToast
-} from "@pagopa/io-app-design-system";
-import { useCallback, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { Banner, IOVisualCostants, useIOToast } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { openWebUrl } from "../../../../utils/url";
-import { formattedExpirationDateSelector } from "../../common/store/selectors";
+import { useCallback, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+
 import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../config";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
+import { openWebUrl } from "../../../../utils/url";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
+import {
+  closeSessionExpirationBanner,
+  setStartActiveSessionLogin
+} from "../../activeSessionLogin/store/actions";
+import { isActiveSessionLoginEnabledSelector } from "../../activeSessionLogin/store/selectors";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { formattedExpirationDateSelector } from "../../common/store/selectors";
 import {
   BANNER_ID,
   trackLoginExpirationBannerClosure,
   trackLoginExpirationBannerPrompt,
   trackLoginExpirationBannerTap
 } from "../analytics";
-import { isActiveSessionLoginEnabledSelector } from "../../activeSessionLogin/store/selectors";
-import {
-  closeSessionExpirationBanner,
-  setStartActiveSessionLogin
-} from "../../activeSessionLogin/store/actions";
-import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 type Props = {
   handleOnClose: () => void;
 };
 /**
- * to use in case the banner's visibility has to be handled externally
- * (see MultiBanner feature for the landing screen)
+ * To use in case the banner's visibility has to be handled externally (see
+ * MultiBanner feature for the landing screen)
  */
 export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   const { name: routeName } = useRoute();
@@ -101,15 +98,15 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   return (
     <View style={styles.margins}>
       <Banner
+        action={action}
+        color="neutral"
+        content={content}
+        labelClose={I18n.t("global.buttons.close")}
+        onClose={closeHandler}
+        onPress={handleOnPress}
+        pictogramName="identityCheck"
         testID="loginExpirationBanner"
         title={title}
-        content={content}
-        action={action}
-        pictogramName="identityCheck"
-        color="neutral"
-        onClose={closeHandler}
-        labelClose={I18n.t("global.buttons.close")}
-        onPress={handleOnPress}
       />
     </View>
   );

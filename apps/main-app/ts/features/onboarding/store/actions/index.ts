@@ -1,6 +1,4 @@
-/**
- * Action types and action creator related to the Onboarding.
- */
+/** Action types and action creator related to the Onboarding. */
 
 import { ActionType, createStandardAction } from "typesafe-actions";
 
@@ -22,13 +20,13 @@ export const servicesOptinCompleted = createStandardAction(
 
 export const completeOnboarding = createStandardAction("COMPLETE_ONBOARDING")();
 
-type OnboardingActionTypes =
-  | typeof tosAccepted
-  | typeof fingerprintAcknowledged
-  | typeof emailInsert
-  | typeof emailAcknowledged
-  | typeof abortOnboarding
-  | typeof servicesOptinCompleted
-  | typeof completeOnboarding;
-
 export type OnboardingActions = ActionType<OnboardingActionTypes>;
+
+type OnboardingActionTypes =
+  | typeof abortOnboarding
+  | typeof completeOnboarding
+  | typeof emailAcknowledged
+  | typeof emailInsert
+  | typeof fingerprintAcknowledged
+  | typeof servicesOptinCompleted
+  | typeof tosAccepted;

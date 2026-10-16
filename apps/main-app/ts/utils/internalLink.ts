@@ -1,17 +1,15 @@
-/**
- * An handler for application internal links
- */
+/** An handler for application internal links */
 import * as A from "fp-ts/lib/Array";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { fciEnabled } from "../config";
+import * as O from "fp-ts/lib/Option";
+
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
-import ROUTES from "../navigation/routes";
+import { IO_FIMS_LINK_PREFIX } from "../features/fims/singleSignOn/utils";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { IO_FIMS_LINK_PREFIX } from "../features/fims/singleSignOn/utils";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
+import ROUTES from "../navigation/routes";
 import { isTestEnv } from "./environment";
 import {
   IO_INTERNAL_LINK_PREFIX,
@@ -21,11 +19,11 @@ import {
 import { extractPathFromURL } from "./url";
 
 /**
- * This handling is used to convert old CTAs and links to current internal linking config
- * of react-navigation ≥ v5.
+ * This handling is used to convert old CTAs and links to current internal
+ * linking config of react-navigation ≥ v5.
  *
- * This object should not be edited anymore.
- * To add new routes consider to add a new path only on AppStackNavigator linking config.
+ * This object should not be edited anymore. To add new routes consider to add a
+ * new path only on AppStackNavigator linking config.
  */
 // TODO: string should be replaced with a strong type that express all the allowed routes
 const routesToNavigationLink: Record<string, string> = {
@@ -55,7 +53,7 @@ const allowedRoutes = {
   ...routesToNavigationLink,
   ...cgnRoutesToNavigationLink,
   ...legacyRoutesToNavigationLink,
-  ...(fciEnabled ? fciRoutesToNavigationLink : {})
+  ...fciRoutesToNavigationLink
 };
 
 export const isServiceDetailNavigationLink = (
@@ -84,8 +82,9 @@ export const testableALLOWED_ROUTE_NAMES = isTestEnv
   : undefined;
 
 /**
- * Extracts the internal route from href. If it is defined and allowed (white listed)
- * returns the internal route, otherwise returns the href
+ * Extracts the internal route from href. If it is defined and allowed (white
+ * listed) returns the internal route, otherwise returns the href
+ *
  * @param href
  * @returns
  */
@@ -113,8 +112,10 @@ export function getInternalRoute(href: string): string {
 }
 
 /**
- * try to extract the internal route from href. If it is defined and allowed (white listed)
- * dispatch the navigation params (to store into the store) and dispatch the navigation action
+ * Try to extract the internal route from href. If it is defined and allowed
+ * (white listed) dispatch the navigation params (to store into the store) and
+ * dispatch the navigation action
+ *
  * @param linkTo
  * @param href
  */

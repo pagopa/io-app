@@ -1,26 +1,27 @@
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
 import {
   ContentWrapper,
   IOMarkdown,
-  VSpacer,
-  useIOToast
-} from "@pagopa/io-app-design-system";
+  useIOToast,
+  VSpacer
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
-import I18n from "i18next";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/identity/UserDataProcessingChoice";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { upsertUserDataProcessing } from "../../common/store/actions/userDataProcessing";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { userDataProcessingSelector } from "../../common/store/selectors/userDataProcessing";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
-import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
+import { upsertUserDataProcessing } from "../../common/store/actions/userDataProcessing";
+import { userDataProcessingSelector } from "../../common/store/selectors/userDataProcessing";
 
 /**
- * A screen to explain how profile data export works.
- * Here user can ask to download his data
+ * A screen to explain how profile data export works. Here user can ask to
+ * download his data
  */
 const DownloadProfileDataScreen = () => {
   const dispatch = useIODispatch();
@@ -48,9 +49,9 @@ const DownloadProfileDataScreen = () => {
         return;
       }
       /**
-       * When the data submission request is successful and the user has
-       * the screen reader active he is notified that the operation was
-       * successful and then is sent back to the previous page.
+       * When the data submission request is successful and the user has the
+       * screen reader active he is notified that the operation was successful
+       * and then is sent back to the previous page.
        */
       if (screenReaderEnabled) {
         const message = I18n.t("profile.main.privacy.exportData.a11y");
@@ -91,11 +92,6 @@ const DownloadProfileDataScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("profile.main.privacy.exportData.title"),
-        testID: "share-data-component-title"
-      }}
-      description={I18n.t("profile.main.privacy.exportData.subtitle")}
       actions={{
         type: "SingleButton",
         primary: {
@@ -105,6 +101,11 @@ const DownloadProfileDataScreen = () => {
           loading: isLoading,
           onPress: handleDownloadPress
         }
+      }}
+      description={I18n.t("profile.main.privacy.exportData.subtitle")}
+      title={{
+        label: I18n.t("profile.main.privacy.exportData.title"),
+        testID: "share-data-component-title"
       }}
     >
       <VSpacer size={8} />

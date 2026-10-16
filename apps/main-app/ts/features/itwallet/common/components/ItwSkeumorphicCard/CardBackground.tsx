@@ -1,6 +1,7 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors } from "@io-app/design-system";
 import { memo } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
+
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
 import { CredentialMetadata } from "../../utils/itwTypesUtils";
 import { CardSide } from "./types";
@@ -10,9 +11,7 @@ type CardBackgroundProps = {
   side: CardSide;
 };
 
-/**
- * Renders the background of a card based on its type and side
- */
+/** Renders the background of a card based on its type and side */
 const CardBackground = ({ credentialType, side }: CardBackgroundProps) => {
   const cardAssets = assetsMap[credentialType];
 
@@ -29,9 +28,7 @@ const CardBackground = ({ credentialType, side }: CardBackgroundProps) => {
 
 type CardAssets = Record<CardSide, ImageSourcePropType>;
 
-/**
- * Map that defines which assets to use for each credential type
- */
+/** Map that defines which assets to use for each credential type */
 const assetsMap: Record<string, CardAssets> = {
   mDL: {
     front: require("../../../../../../img/features/itWallet/credential/mdl_front.png"),

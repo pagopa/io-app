@@ -1,18 +1,14 @@
 import { render } from "@testing-library/react-native";
 import { Text } from "react-native";
-import {
-  DrivingPrivilegesClaim,
-  FiscalCodeClaim,
-  StringClaim
-} from "../../../utils/itwClaimsUtils";
+
 import { CardClaim, CardClaimRenderer } from "../CardClaim";
 
 describe("CardClaim", () => {
   it("should return null if claim is not decoded correctly", () => {
     const { queryByTestId } = render(
       <CardClaim
-        testID="claimTestID"
         claim={{ name: "test", value: undefined }}
+        testID="claimTestID"
       />
     );
 
@@ -22,8 +18,8 @@ describe("CardClaim", () => {
   it("should render correctly if claim is successfully decoded", () => {
     const { queryByText, queryByTestId } = render(
       <CardClaim
-        testID="claimTestID"
         claim={{ name: "test", value: "Some string" }}
+        testID="claimTestID"
       />
     );
 
@@ -37,10 +33,10 @@ describe("CardClaimRenderer", () => {
     const { queryByTestId, queryByText } = render(
       <CardClaimRenderer
         claim={{ name: "test", value: "Some string" }}
-        is={FiscalCodeClaim.is}
         component={() => (
           <Text testID="claimTestID">This should not be rendered!</Text>
         )}
+        kinds={["fiscalCode"]}
       />
     );
 
@@ -52,8 +48,8 @@ describe("CardClaimRenderer", () => {
     const { queryByTestId, queryByText } = render(
       <CardClaimRenderer
         claim={{ name: "test", value: "Some string" }}
-        is={StringClaim.is}
-        component={decoded => <Text testID="claimTestID">{decoded}</Text>}
+        component={value => <Text testID="claimTestID">{value}</Text>}
+        kinds={["string"]}
       />
     );
 
@@ -69,9 +65,8 @@ describe("CardClaimRenderer", () => {
           value:
             '[{"driving_privilege":"AM","issue_date":"1935-01-23","expiry_date":"2035-02-16","restrictions_conditions":""},{"driving_privilege":"B","issue_date":"1935-01-23","expiry_date":"2035-02-16","restrictions_conditions":""}]'
         }}
-        is={DrivingPrivilegesClaim.is}
-        component={decoded =>
-          decoded.map(p => (
+        component={value =>
+          value.map(p => (
             <Text
               key={p.driving_privilege}
               testID={`claimTestID_${p.driving_privilege}`}
@@ -80,6 +75,7 @@ describe("CardClaimRenderer", () => {
             </Text>
           ))
         }
+        kinds={["drivingPrivileges"]}
       />
     );
 

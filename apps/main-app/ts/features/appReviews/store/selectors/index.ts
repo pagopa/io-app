@@ -1,7 +1,8 @@
 import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../store/reducers/types";
-import { TopicKeys } from "../actions";
 import { checkFourMonthPeriod } from "../../utils/date";
+import { TopicKeys } from "../actions";
 
 export const appFeedbackSelector = (state: GlobalState) =>
   state.features.appFeedback;

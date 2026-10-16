@@ -1,14 +1,20 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { AARProblemJson } from "@io-app/api-types/generated/definitions/pn/aar/AARProblemJson";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as E from "fp-ts/lib/Either";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { testSaga } from "redux-saga-test-plan";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
-import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
+
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import { downloadAttachment } from "../../../../messages/store/actions";
-import { unknownToReason } from "../../../../messages/utils";
+import {
+  decodeSendFailureReason,
+  SendFailureReason,
+  unknownToReason,
+  WrappedSendError
+} from "../../../../messages/utils";
 import * as attachmentsUtils from "../../../../messages/utils/attachments";
 import * as analytics from "../../analytics";
 import * as client from "../../api/client";
@@ -20,7 +26,14 @@ import {
 // Mock external dependencies
 const mockRNBUFetch = jest.fn();
 
-jest.mock("../../../../messages/utils");
+jest.mock("../../../../messages/utils", () => ({
+  // `WrappedSendError` is a plain data-carrying class with no side
+  // effects, so keep the real implementation instead of an automock
+  // (which would drop the properties its constructor sets).
+  ...jest.requireActual("../../../../messages/utils"),
+  decodeSendFailureReason: jest.fn(),
+  unknownToReason: jest.fn()
+}));
 jest.mock("react-native-blob-util", () => ({
   config: jest.fn().mockImplementation(() => ({
     fetch: mockRNBUFetch
@@ -107,6 +120,9 @@ describe("downloadAarAttachmentSaga", () => {
         const error = new Error("Download failed");
         const reason = "Download failed";
         (unknownToReason as jest.Mock).mockReturnValue(reason);
+        (decodeSendFailureReason as jest.Mock).mockReturnValue(
+          SendFailureReason.NETWORK_ERROR
+        );
 
         testSaga(
           downloadAarAttachmentSaga,
@@ -139,7 +155,10 @@ describe("downloadAarAttachmentSaga", () => {
             downloadAttachment.failure({
               attachment,
               messageId,
-              error: new Error(reason)
+              error: new WrappedSendError(
+                SendFailureReason.NETWORK_ERROR,
+                reason
+              )
             })
           )
           .next()
@@ -154,8 +173,11 @@ describe("downloadAarAttachmentSaga", () => {
           detail: "Internal server error",
           errors: [{ code: "PN_GENERIC_ERROR" }]
         } as unknown as AARProblemJson;
-        const error = new testable!.SendServerError(reason, problemJson);
+        const error = new testable!.SendServerError(reason, problemJson, 500);
         (unknownToReason as jest.Mock).mockReturnValue(reason);
+        (decodeSendFailureReason as jest.Mock).mockReturnValue(
+          SendFailureReason.HTTP_STATUS_ERROR
+        );
 
         testSaga(
           downloadAarAttachmentSaga,
@@ -188,7 +210,10 @@ describe("downloadAarAttachmentSaga", () => {
             downloadAttachment.failure({
               attachment,
               messageId,
-              error: new Error(reason)
+              error: new WrappedSendError(
+                SendFailureReason.HTTP_STATUS_ERROR,
+                reason
+              )
             })
           )
           .next()
@@ -200,6 +225,9 @@ describe("downloadAarAttachmentSaga", () => {
         const error = new Error("FAST_LOGIN_EXPIRED");
         const reason = "FAST_LOGIN_EXPIRED";
         (unknownToReason as jest.Mock).mockReturnValue(reason);
+        (decodeSendFailureReason as jest.Mock).mockReturnValue(
+          SendFailureReason.SESSION_EXPIRED
+        );
 
         testSaga(
           downloadAarAttachmentSaga,
@@ -232,7 +260,10 @@ describe("downloadAarAttachmentSaga", () => {
             downloadAttachment.failure({
               attachment,
               messageId,
-              error: new Error(reason)
+              error: new WrappedSendError(
+                SendFailureReason.SESSION_EXPIRED,
+                reason
+              )
             })
           )
           .next()
@@ -882,6 +913,33 @@ describe("downloadAttachmentFromPrevalidatedUrl", () => {
         expect(spiedOnPdfSavePath.mock.calls[0][2]).toBe(attachment.name);
       });
     });
+  });
+
+  it("should throw FAST_LOGIN_EXPIRED on a 401 response", () => {
+    const fakeConfigFetch = (_method: string, _url: string) => undefined;
+    jest.spyOn(attachmentsUtils, "pdfSavePath").mockReturnValue(savePath);
+
+    // eslint-disable-next-line functional/no-let
+    let expectionThrown = false;
+    try {
+      testSaga(
+        testable!.downloadAttachmentFromPrevalidatedUrl,
+        attachment,
+        messageId,
+        prevalidatedUrl
+      )
+        .next()
+        .call(ReactNativeBlobUtil.config, { path: savePath, timeout: 8000 })
+        .next({ fetch: fakeConfigFetch })
+        .call(fakeConfigFetch, "get", prevalidatedUrl)
+        .next({ info: () => ({ status: 401 }) });
+    } catch (e: unknown) {
+      expectionThrown = true;
+      expect(e).toEqual(new Error("FAST_LOGIN_EXPIRED"));
+    }
+
+    expect(expectionThrown).toBe(true);
+    expect(decodeSendFailureReason).not.toHaveBeenCalled();
   });
 });
 

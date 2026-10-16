@@ -1,18 +1,20 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { parsePdfAsBase64, drawSignatureField } from "../utils/signatureFields";
-import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
-import { fciDocumentSignatureFields } from "../store/actions";
+
 import { getError } from "../../../utils/errors";
+import { fciDocumentSignatureFields } from "../store/actions";
+import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
+import { drawSignatureField, parsePdfAsBase64 } from "../utils/signatureFields";
 
 /**
- * Handle the FCI signature box drawing.
- * The saga checks for a cached document and if it is present it uses it to draw the signature box
- * Otherwise it parses the document and then draws the signature box
- * @param action the action to handle
- * @returns a SagaIterator
+ * Handle the FCI signature box drawing. The saga checks for a cached document
+ * and if it is present it uses it to draw the signature box Otherwise it parses
+ * the document and then draws the signature box
+ *
+ * @param action The action to handle
+ * @returns A SagaIterator
  */
 export function* handleDrawSignatureBox(
   action: ActionType<typeof fciDocumentSignatureFields.request>

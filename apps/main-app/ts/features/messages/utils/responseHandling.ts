@@ -1,6 +1,7 @@
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
 import { ValidationError } from "io-ts";
+
 import { Action } from "../../../store/actions/types";
 import { readablePrivacyReport } from "../../../utils/reporters";
 
@@ -8,13 +9,13 @@ export type ResponseType<T> =
   | IResponseType<200, T>
   | IResponseType<
       400 | 401 | 403 | 404 | 429 | 500,
-      { title?: string } | undefined
+      undefined | { title?: string }
     >;
 
 /**
- * Discern between Either.Right/Left, and status codes.
- * Will call onSuccess if and only if response is _Right with status 200_.
- * Returns undefined for status 401 (session expired, handled upstream).
+ * Discern between Either.Right/Left, and status codes. Will call onSuccess if
+ * and only if response is _Right with status 200_. Returns undefined for status
+ * 401 (session expired, handled upstream).
  *
  * @param response
  * @param onSuccess

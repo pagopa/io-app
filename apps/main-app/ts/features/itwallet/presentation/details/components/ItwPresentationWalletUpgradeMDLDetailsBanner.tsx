@@ -1,21 +1,22 @@
-import { Banner } from "@pagopa/io-app-design-system";
+import { Banner } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../../store/hooks";
 import {
-  trackItwBannerVisualized,
   trackItwBannerClosure,
-  trackItwBannerTap
+  trackItwBannerTap,
+  trackItwBannerVisualized
 } from "../../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../../analytics/enum";
 import { itwCloseBanner } from "../../../common/store/actions/banners";
 import { ITW_ROUTES } from "../../../navigation/routes";
 
 /**
- * Banner promoting IT Wallet upgrade in MDL details to enable
- * driving license usage as identity document.
+ * Banner promoting IT Wallet upgrade in MDL details to enable driving license
+ * usage as identity document.
  */
 export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
   const dispatch = useIODispatch();
@@ -55,21 +56,21 @@ export const ItwPresentationWalletUpgradeMDLDetailsBanner = () => {
 
   return (
     <Banner
+      action={I18n.t(
+        "features.itWallet.presentation.credentialDetails.mdl.walletUpgradeBanner.action"
+      )}
+      color="neutral"
+      content={I18n.t(
+        "features.itWallet.presentation.credentialDetails.mdl.walletUpgradeBanner.content"
+      )}
+      labelClose={I18n.t("global.buttons.close")}
+      onClose={handleOnClose}
+      onPress={handleOnPress}
+      pictogramName="cie"
       testID="itwUpgradeMDLDetailsBannerTestID"
       title={I18n.t(
         "features.itWallet.presentation.credentialDetails.mdl.walletUpgradeBanner.title"
       )}
-      content={I18n.t(
-        "features.itWallet.presentation.credentialDetails.mdl.walletUpgradeBanner.content"
-      )}
-      action={I18n.t(
-        "features.itWallet.presentation.credentialDetails.mdl.walletUpgradeBanner.action"
-      )}
-      pictogramName="cie"
-      color="neutral"
-      onPress={handleOnPress}
-      labelClose={I18n.t("global.buttons.close")}
-      onClose={handleOnClose}
     />
   );
 };

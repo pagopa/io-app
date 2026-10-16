@@ -1,8 +1,9 @@
-import { HeaderActionProps } from "@pagopa/io-app-design-system";
-import { useCallback } from "react";
+import { HeaderActionProps } from "@io-app/design-system";
 import I18n from "i18next";
-import { useIONavigation } from "../navigation/params/AppParamsList";
+import { useCallback } from "react";
+
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
+import { useIONavigation } from "../navigation/params/AppParamsList";
 
 export const useNavigateToSettingMainScreen = () => {
   const navigation = useIONavigation();
@@ -14,9 +15,7 @@ export const useNavigateToSettingMainScreen = () => {
   }, [navigation]);
 };
 
-/**
- * This hook returns a prop object to be applied to the `HeaderFirstLevel`
- */
+/** This hook returns a prop object to be applied to the `HeaderFirstLevel` */
 export const useHeaderFirstLevelActionPropSettings = (): HeaderActionProps => ({
   icon: "coggle",
   accessibilityLabel: I18n.t("global.buttons.settings"),

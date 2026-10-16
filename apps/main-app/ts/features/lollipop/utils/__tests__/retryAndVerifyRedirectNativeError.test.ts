@@ -1,8 +1,9 @@
-import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
-import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
+import { err } from "neverthrow";
+
 import { AppDispatch } from "../../../../App";
+import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
 
 const jwkPublicKey: PublicKey = {
   crv: "P-256",
@@ -36,7 +37,7 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
-  it("should be succeded", async () => {
+  it('should fail with the native error code "409"', async () => {
     const result = await regenerateKeyGetRedirectsAndVerifySaml(
       "loginUri",
       "keyTag",
@@ -44,10 +45,9 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
       false,
       dispatch
     );
-    expect(E.isLeft(result)).toBeTruthy();
-    if (E.isLeft(result)) {
-      const e = result.left as LoginUtilsError;
-      expect(e.code).toEqual("409");
-    }
+
+    expect(result).toEqual(
+      err({ reason: expect.stringMatching(/409.*fake network error/) })
+    );
   });
 });

@@ -1,18 +1,18 @@
-import { render, fireEvent } from "@testing-library/react-native";
+import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { View } from "react-native";
 import { createStore } from "redux";
-import { Provider } from "react-redux";
-import I18n from "i18next";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import { openWebUrl } from "../../../../../utils/url";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { openWebUrl } from "../../../../../utils/url";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../components/UnlockAccessComponent";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 jest.mock("../../../../../utils/hooks/bottomSheet");
 jest.mock("../../../../../utils/url");
@@ -96,10 +96,11 @@ const renderComponent = (authLevel?: "L2" | "L3") => {
   if (authLevel) {
     const props: UnlockAccessProps = { authLevel };
 
-    return render(
-      <Provider store={store}>
-        <UnlockAccessComponent {...props} />
-      </Provider>
+    return renderScreenWithNavigationStoreContext(
+      () => <UnlockAccessComponent {...props} />,
+      "DUMMY",
+      {},
+      store
     );
   }
   return renderScreenWithNavigationStoreContext(

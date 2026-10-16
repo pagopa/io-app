@@ -1,15 +1,17 @@
+import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/OperationListDTO";
+import { TimelineDTO } from "@io-app/api-types/generated/definitions/idpay/TimelineDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { trackIDPayDetailTimelineError } from "../../analytics";
 import { IDPayDetailsRoutes } from "../../navigation";
 import { PaginatedTimelineDTO } from "../../store";
 import { IdPayInitiativeTimelineComponent } from "../IdPayInitiativeTimelineComponent";
-import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
-import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 
 const mockedTimeline: PaginatedTimelineDTO = {
   0: {
@@ -22,9 +24,17 @@ const mockedTimeline: PaginatedTimelineDTO = {
   } as TimelineDTO
 };
 
+jest.mock("../../analytics", () => ({
+  ...jest.requireActual("../../analytics"),
+  trackIDPayDetailTimelineError: jest.fn()
+}));
+
+const mockedError: NetworkError = { kind: "timeout" };
+
 describe("Test IdPayInitiativeTimelineComponent screen", () => {
   beforeEach(() => {
     jest.useFakeTimers();
+    jest.clearAllMocks();
   });
   it("should render the component correctly", () => {
     const { component } = renderComponent();
@@ -56,6 +66,36 @@ describe("Test IdPayInitiativeTimelineComponent screen", () => {
     expect(component.queryByTestId("IDPayTimelineTestID")).not.toBeNull();
     expect(component.queryByTestId("IDPayTimelineSkeletonTestID")).toBeNull();
   });
+
+  it.each([
+    { name: "noneError", timelinePot: pot.noneError(mockedError) },
+    {
+      name: "someError",
+      timelinePot: pot.someError(mockedTimeline, mockedError)
+    }
+  ])(
+    "should track IDPAY_DETAIL_TIMELINE_ERROR with pot.$name",
+    ({ timelinePot }) => {
+      renderComponent(timelinePot);
+      expect(trackIDPayDetailTimelineError).toHaveBeenCalledTimes(1);
+      expect(trackIDPayDetailTimelineError).toHaveBeenCalledWith({
+        initiative_id: "ABC",
+        error: mockedError
+      });
+    }
+  );
+
+  it.each([
+    { name: "none", timelinePot: pot.none },
+    { name: "noneLoading", timelinePot: pot.noneLoading },
+    { name: "some", timelinePot: pot.some(mockedTimeline) }
+  ])(
+    "should not track IDPAY_DETAIL_TIMELINE_ERROR with pot.$name",
+    ({ timelinePot }) => {
+      renderComponent(timelinePot);
+      expect(trackIDPayDetailTimelineError).not.toHaveBeenCalled();
+    }
+  );
 });
 
 const renderComponent = (

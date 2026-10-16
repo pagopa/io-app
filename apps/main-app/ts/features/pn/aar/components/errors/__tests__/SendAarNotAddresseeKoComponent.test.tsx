@@ -1,14 +1,15 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import * as SELECTORS from "../../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as URL_UTILS from "../../../../../../utils/url";
 import PN_ROUTES from "../../../../navigation/routes";
-import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
-import * as SELECTORS from "../../../../../../store/reducers/backendStatus/remoteConfig";
 import * as ANALYTICS from "../../../analytics";
+import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
 import { SendAarNotAddresseeKoComponent } from "../SendAarNotAddresseeKoComponent";
 
 const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");

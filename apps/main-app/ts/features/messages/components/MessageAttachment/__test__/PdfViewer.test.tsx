@@ -1,10 +1,11 @@
 import { render } from "@testing-library/react-native";
-import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { PdfViewer } from "../PdfViewer";
-import { appReducer } from "../../../../../store/reducers";
+import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { PdfViewer } from "../PdfViewer";
 
 describe("PdfViewer", () => {
   it("should match the snapshot", () => {
