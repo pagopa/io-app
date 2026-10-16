@@ -1,3 +1,4 @@
+import * as SecureStore from "expo-secure-store";
 import * as Keychain from "react-native-keychain";
 
 import { PinString } from "../../types/PinString";
@@ -13,15 +14,26 @@ jest.mock("react-native-keychain", () => ({
   resetGenericPassword: jest.fn()
 }));
 
+jest.mock("expo-secure-store", () => ({
+  WHEN_UNLOCKED_THIS_DEVICE_ONLY: 1,
+  getItemAsync: jest.fn(),
+  setItemAsync: jest.fn(),
+  deleteItemAsync: jest.fn()
+}));
+
 const mockGetGenericPassword = jest.mocked(Keychain.getGenericPassword);
-const mockSetGenericPassword = jest.mocked(Keychain.setGenericPassword);
 const mockResetGenericPassword = jest.mocked(Keychain.resetGenericPassword);
+
+const mockGetItemAsync = jest.mocked(SecureStore.getItemAsync);
+const mockSetItemAsync = jest.mocked(SecureStore.setItemAsync);
 
 const validPin = "123456" as PinString;
 
 describe("getPin", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockGetItemAsync.mockResolvedValue(null);
+    mockSetItemAsync.mockResolvedValue(undefined);
   });
 
   it("should return the pin when a valid pin is stored", async () => {
@@ -74,17 +86,14 @@ describe("setPin", () => {
   });
 
   it("should return true when the pin is saved successfully", async () => {
-    mockSetGenericPassword.mockResolvedValue({
-      service: "service",
-      storage: "storage"
-    } as unknown as Awaited<ReturnType<typeof Keychain.setGenericPassword>>);
+    mockSetItemAsync.mockResolvedValue(undefined);
 
     const result = await setPin(validPin);
     expect(result).toBe(true);
   });
 
   it("should return false when saving the pin fails", async () => {
-    mockSetGenericPassword.mockResolvedValue(false);
+    mockSetItemAsync.mockRejectedValue(new Error("failed to save"));
 
     const result = await setPin(validPin);
     expect(result).toBe(false);
