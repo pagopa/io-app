@@ -1,11 +1,6 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 
-import {
-  isMixpanelInstanceInitialized,
-  mixpanelTrack,
-  registerSuperProperties
-} from "../../../../mixpanel";
-import { loginFlowIsOneIdentityHandler } from "../../../../mixpanelConfig/mixpanelPropertyUtils";
+import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties, FlowType } from "../../../../utils/analytics";
@@ -254,14 +249,4 @@ export function trackTosUserExit(flow: FlowType) {
     "TOS_USER_EXIT",
     buildEventProperties("UX", "exit", undefined, flow)
   );
-}
-
-export function updateLoginFlowSuperProperty(state: GlobalState) {
-  if (!isMixpanelInstanceInitialized()) {
-    return;
-  }
-
-  registerSuperProperties({
-    LOGIN_FLOW_IS_OI: loginFlowIsOneIdentityHandler(state)
-  });
 }

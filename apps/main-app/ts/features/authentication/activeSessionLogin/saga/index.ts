@@ -9,6 +9,7 @@ import {
 } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import {
@@ -22,8 +23,7 @@ import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import {
   trackCieIDLoginSuccess,
   trackCieLoginSuccess,
-  trackSpidLoginSuccess,
-  updateLoginFlowSuperProperty
+  trackSpidLoginSuccess
 } from "../../common/analytics";
 import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
 import { isOneIdentityLoginEnabledSelector } from "../../common/store/selectors/loginConfig";
@@ -107,6 +107,14 @@ export function* handleActiveSessionLoginSaga(): Generator<
       return;
     }
 
+    const state: GlobalState = yield* select();
+    yield* call(
+      updateLoginSessionProfileAndSuperProperties,
+      state,
+      fastLoginOptIn ? "365" : "30"
+    );
+    yield* call(updateLoginMethodProfileAndSuperProperties, state, idp.id);
+
     yield* put(
       consolidateActiveSessionLoginData({
         idp,
@@ -116,16 +124,11 @@ export function* handleActiveSessionLoginSaga(): Generator<
         isOneIdentityLogin
       })
     );
-    // Read the state after the consolidation so that the properties derived
-    // from the authentication reflect the newly created session.
-    const state: GlobalState = yield* select();
-    yield* call(
-      updateLoginSessionProfileAndSuperProperties,
-      state,
-      fastLoginOptIn ? "365" : "30"
-    );
-    yield* call(updateLoginMethodProfileAndSuperProperties, state, idp.id);
-    yield* call(updateLoginFlowSuperProperty, state);
+    // Refresh all the super properties from the post-consolidation state, so
+    // that those derived from the authentication (e.g. LOGIN_FLOW_IS_OI)
+    // reflect the newly created session.
+    const globalState: GlobalState = yield* select();
+    yield* call(updateMixpanelSuperProperties, globalState);
     // This event is tracked with the correct LOGIN_SESSION and LOGIN_METHOD
     // because they were just forced in the profile/super properties above.
     // AUTH_SECURITY_LEVEL, however, may be stale: we don't know the actual

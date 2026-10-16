@@ -2,12 +2,12 @@ import { fireEvent } from "@testing-library/react-native";
 import { ComponentProps } from "react";
 import { createStore } from "redux";
 
+import { updateMixpanelSuperProperties } from "../../../../../mixpanelConfig/superProperties";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
-import { updateLoginFlowSuperProperty } from "../../analytics";
 import { ONE_IDENTITY_ENVS } from "../../store/reducers/loginConfig";
 import {
   oneIdentityEnvSelector,
@@ -15,8 +15,8 @@ import {
 } from "../../store/selectors/loginConfig";
 import { LoginConfigScreenContent } from "../LoginConfigScreenContent";
 
-jest.mock("../../analytics", () => ({
-  updateLoginFlowSuperProperty: jest.fn()
+jest.mock("../../../../../mixpanelConfig/superProperties", () => ({
+  updateMixpanelSuperProperties: jest.fn()
 }));
 
 describe("LoginConfigScreenContent", () => {
@@ -84,14 +84,14 @@ describe("LoginConfigScreenContent", () => {
     ).toBeUndefined();
   });
 
-  it("should refresh the login flow super property with the updated state when a radio option is selected", () => {
+  it("should update the Mixpanel super properties with the updated state when a radio option is selected", () => {
     const { store, getByLabelText } = renderComponent();
 
     fireEvent.press(getByLabelText("Usa solo OneIdentity"));
 
-    expect(updateLoginFlowSuperProperty).toHaveBeenCalledTimes(1);
-    expect(updateLoginFlowSuperProperty).toHaveBeenCalledWith(store.getState());
-    const [state] = (updateLoginFlowSuperProperty as jest.Mock).mock.calls[0];
+    expect(updateMixpanelSuperProperties).toHaveBeenCalledTimes(1);
+    const [state] = (updateMixpanelSuperProperties as jest.Mock).mock.calls[0];
+    expect(state).toBe(store.getState());
     expect(oneIdentityLocalFeatureFlagSelector(state)).toBe(true);
   });
 

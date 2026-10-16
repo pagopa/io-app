@@ -3,6 +3,7 @@ import * as O from "fp-ts/Option";
 import { Task } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
 
+import { updateMixpanelSuperProperties } from "../../../../../mixpanelConfig/superProperties";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
@@ -22,8 +23,7 @@ import {
 import {
   trackCieIDLoginSuccess,
   trackCieLoginSuccess,
-  trackSpidLoginSuccess,
-  updateLoginFlowSuperProperty
+  trackSpidLoginSuccess
 } from "../../analytics";
 import { loginSuccess } from "../../store/actions";
 import * as storeSelectors from "../../store/selectors";
@@ -41,8 +41,11 @@ jest.mock("../../analytics", () => ({
   trackCieLoginSuccess: jest.fn(),
   trackCieIDLoginSuccess: jest.fn(),
   trackSpidLoginSuccess: jest.fn(),
-  trackLoginFlowStarting: jest.fn(),
-  updateLoginFlowSuperProperty: jest.fn()
+  trackLoginFlowStarting: jest.fn()
+}));
+
+jest.mock("../../../../../mixpanelConfig/superProperties", () => ({
+  updateMixpanelSuperProperties: jest.fn()
 }));
 
 describe("authenticationSaga", () => {
@@ -78,7 +81,7 @@ describe("authenticationSaga", () => {
       .next({ _tag: "some" }) // idpSelector
       .select()
       .next(aState)
-      .call(updateLoginFlowSuperProperty, aState)
+      .call(updateMixpanelSuperProperties, aState)
       .next()
       .put(analyticsAuthenticationCompleted("auth"))
       .next()
@@ -140,7 +143,7 @@ describe("authenticationSaga 2", () => {
       )
       .select()
       .next(aState)
-      .call(updateLoginFlowSuperProperty, aState)
+      .call(updateMixpanelSuperProperties, aState)
       .next()
       .put(analyticsAuthenticationCompleted("auth"))
       .next()

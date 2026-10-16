@@ -10,6 +10,7 @@ import {
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import {
   useIODispatch,
@@ -22,7 +23,6 @@ import {
   cieLoginEnableUat
 } from "../../login/cie/store/actions";
 import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
-import { updateLoginFlowSuperProperty } from "../analytics";
 import {
   setOneIdentityEnv,
   setOneIdentityLocalFeatureFlag
@@ -89,7 +89,7 @@ export const LoginConfigScreenContent = ({
   const handleOneIdentityFlow = useCallback(
     (value: OneIdentityLocalFeatureFlag) => {
       dispatch(setOneIdentityLocalFeatureFlag(value));
-      updateLoginFlowSuperProperty(store.getState());
+      void updateMixpanelSuperProperties(store.getState());
     },
     [dispatch, store]
   );

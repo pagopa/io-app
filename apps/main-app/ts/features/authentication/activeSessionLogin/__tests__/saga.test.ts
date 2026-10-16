@@ -2,9 +2,9 @@ import { expectSaga, testSaga } from "redux-saga-test-plan";
 import { call, fork, race, select, take } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { analyticsAuthenticationStarted } from "../../../../store/actions/analytics";
 import { startApplicationInitialization } from "../../../../store/actions/application";
-import { updateLoginFlowSuperProperty } from "../../common/analytics";
 import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
 import { isOneIdentityLoginEnabledSelector } from "../../common/store/selectors/loginConfig";
 import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
@@ -62,11 +62,11 @@ describe("handleActiveSessionLoginSaga", () => {
           AUTH_LEVEL_L2
         ],
         [select(), mockState],
-        [call(updateLoginFlowSuperProperty, mockState), undefined]
+        [call(updateMixpanelSuperProperties, mockState), undefined]
       ])
       .call(updateLoginSessionProfileAndSuperProperties, mockState, "365")
       .call(updateLoginMethodProfileAndSuperProperties, mockState, mockIdp.id)
-      .call(updateLoginFlowSuperProperty, mockState)
+      .call(updateMixpanelSuperProperties, mockState)
       .put(
         consolidateActiveSessionLoginData({
           token: mockToken,
@@ -108,7 +108,7 @@ describe("handleActiveSessionLoginSaga", () => {
       ])
       .not.call.fn(updateLoginSessionProfileAndSuperProperties)
       .not.call.fn(updateLoginMethodProfileAndSuperProperties)
-      .not.call.fn(updateLoginFlowSuperProperty)
+      .not.call.fn(updateMixpanelSuperProperties)
       .not.put(
         consolidateActiveSessionLoginData({
           token: mockToken,
@@ -150,7 +150,7 @@ describe("handleActiveSessionLoginSaga", () => {
       ])
       .not.call.fn(updateLoginSessionProfileAndSuperProperties)
       .not.call.fn(updateLoginMethodProfileAndSuperProperties)
-      .not.call.fn(updateLoginFlowSuperProperty)
+      .not.call.fn(updateMixpanelSuperProperties)
       .not.put(
         consolidateActiveSessionLoginData({
           token: mockToken,
