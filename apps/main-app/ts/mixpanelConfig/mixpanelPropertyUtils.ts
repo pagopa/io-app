@@ -5,10 +5,10 @@ import { createSelector } from "reselect";
 
 import {
   idpSelector,
-  sessionTokenSelector,
   spidLevelFromSessionInfoSelector
 } from "../features/authentication/common/store/selectors";
 import { isOneIdentityLoginEnabledSelector } from "../features/authentication/common/store/selectors/loginConfig";
+import { isOneIdentityLoginSelector } from "../features/authentication/common/store/selectors/loginFlow";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { fastLoginOptInSelector } from "../features/authentication/fastLogin/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
@@ -132,13 +132,9 @@ export const loginMethodHandler = (state: GlobalState): string => {
 };
 
 /**
- * Returns the OneIdentity membership only while logged out. When logged in the
- * property is owned by the login flow (written at login completion), so
- * `undefined` is returned to leave the stored value untouched.
+ * Whether the login flow is OneIdentity. While logged in it reflects the flow
+ * actually used for the session; while logged out it falls back to the rollout
+ * (or local flag) the user would be assigned to.
  */
-export const loginFlowIsOneIdentityHandler = (
-  state: GlobalState
-): boolean | undefined =>
-  sessionTokenSelector(state) === undefined
-    ? isOneIdentityLoginEnabledSelector(state)
-    : undefined;
+export const loginFlowIsOneIdentityHandler = (state: GlobalState): boolean =>
+  isOneIdentityLoginSelector(state) ?? isOneIdentityLoginEnabledSelector(state);

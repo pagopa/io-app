@@ -1,14 +1,17 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 
-import { mixpanelTrack } from "../../../../mixpanel";
+import {
+  isMixpanelInstanceInitialized,
+  mixpanelTrack,
+  registerSuperProperties
+} from "../../../../mixpanel";
+import { loginFlowIsOneIdentityHandler } from "../../../../mixpanelConfig/mixpanelPropertyUtils";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
-import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties, FlowType } from "../../../../utils/analytics";
 import { safeUrlParse } from "../../../../utils/url";
 import { LoginSessionDuration } from "../../fastLogin/analytics/optinAnalytics";
 import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
-import { isOneIdentityLoginEnabledSelector } from "../store/selectors/loginConfig";
 import { AuthLevel } from "../utils";
 import { LoginType } from "../utils/index";
 
@@ -253,9 +256,12 @@ export function trackTosUserExit(flow: FlowType) {
   );
 }
 
-export async function updateLoginFlowSuperProperty(state: GlobalState) {
-  await updateMixpanelSuperProperties(state, {
-    property: "LOGIN_FLOW_IS_OI",
-    value: isOneIdentityLoginEnabledSelector(state)
+export function updateLoginFlowSuperProperty(state: GlobalState) {
+  if (!isMixpanelInstanceInitialized()) {
+    return;
+  }
+
+  registerSuperProperties({
+    LOGIN_FLOW_IS_OI: loginFlowIsOneIdentityHandler(state)
   });
 }

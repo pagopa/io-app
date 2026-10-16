@@ -61,7 +61,13 @@ describe("authenticationSaga", () => {
       .fork(watchCieAuthenticationSaga)
       .next(watchCieAuthentication)
       .take(loginSuccess)
-      .next(loginSuccess({ token: aSessionToken, idp: "test" }))
+      .next(
+        loginSuccess({
+          token: aSessionToken,
+          idp: "test",
+          isOneIdentityLogin: false
+        })
+      )
       .cancel(watchCieAuthentication)
       .next()
       .cancel(watchTestLoginRequest)
@@ -108,7 +114,13 @@ describe("authenticationSaga 2", () => {
       .fork(watchCieAuthenticationSaga)
       .next(watchCieAuthentication)
       .take(loginSuccess)
-      .next(loginSuccess({ token: aSessionToken, idp: idpMock }))
+      .next(
+        loginSuccess({
+          token: aSessionToken,
+          idp: idpMock,
+          isOneIdentityLogin: false
+        })
+      )
       .cancel(watchCieAuthentication)
       .next()
       .cancel(watchTestLoginRequest)

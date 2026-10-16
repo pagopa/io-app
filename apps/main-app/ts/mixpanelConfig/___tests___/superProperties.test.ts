@@ -250,14 +250,23 @@ describe("superProperties", () => {
 
     const registerWith = async (
       authentication: Record<string, unknown>,
-      isOneIdentityEnabled: boolean
+      isOneIdentityEnabled: boolean,
+      isOneIdentityLogin: boolean | undefined = undefined
     ) => {
       jest
         .spyOn(LOGIN_CONFIG_SELECTORS, "isOneIdentityLoginEnabledSelector")
         .mockReturnValue(isOneIdentityEnabled);
+      const baseState = generateMockedGlobalState(undefined, undefined);
       const state = {
-        ...generateMockedGlobalState(undefined, undefined),
-        authentication
+        ...baseState,
+        authentication,
+        features: {
+          ...baseState.features,
+          loginFeatures: {
+            ...baseState.features.loginFeatures,
+            loginFlow: { isOneIdentityLogin }
+          }
+        }
       } as unknown as GlobalState;
 
       await updateMixpanelSuperProperties(state);
@@ -266,30 +275,57 @@ describe("superProperties", () => {
       return mockedRegisterSuperProperties.mock.calls[0][0];
     };
 
-    it.each([true, false])(
-      "registers LOGIN_FLOW_IS_OI with the OneIdentity enabled state while logged out (enabled: %s)",
-      async isOneIdentityEnabled => {
-        const registered = await registerWith(
-          loggedOutAuthentication,
-          isOneIdentityEnabled
-        );
-
-        expect(registered).toHaveProperty(
-          "LOGIN_FLOW_IS_OI",
-          isOneIdentityEnabled
-        );
+    it.each([
+      {
+        name: "logged out with rollout on",
+        authentication: loggedOutAuthentication,
+        rollout: true,
+        expected: true
+      },
+      {
+        name: "logged out with rollout off",
+        authentication: loggedOutAuthentication,
+        rollout: false,
+        expected: false
+      },
+      {
+        name: "logged in without a stored login flow and rollout on",
+        authentication: loggedInAuthentication,
+        isOneIdentityLogin: undefined,
+        rollout: true,
+        expected: true
+      },
+      {
+        name: "logged in without a stored login flow and rollout off",
+        authentication: loggedInAuthentication,
+        isOneIdentityLogin: undefined,
+        rollout: false,
+        expected: false
+      },
+      {
+        name: "logged in with OneIdentity and rollout turned off",
+        authentication: loggedInAuthentication,
+        isOneIdentityLogin: true,
+        rollout: false,
+        expected: true
+      },
+      {
+        name: "logged in with IO and rollout turned on",
+        authentication: loggedInAuthentication,
+        isOneIdentityLogin: false,
+        rollout: true,
+        expected: false
       }
-    );
-
-    it.each([true, false])(
-      "does not provide LOGIN_FLOW_IS_OI while logged in, whether OneIdentity is enabled or not (enabled: %s)",
-      async isOneIdentityEnabled => {
+    ])(
+      "registers LOGIN_FLOW_IS_OI=$expected when $name",
+      async ({ authentication, isOneIdentityLogin, rollout, expected }) => {
         const registered = await registerWith(
-          loggedInAuthentication,
-          isOneIdentityEnabled
+          authentication,
+          rollout,
+          isOneIdentityLogin
         );
 
-        expect(registered.LOGIN_FLOW_IS_OI).toBeUndefined();
+        expect(registered).toHaveProperty("LOGIN_FLOW_IS_OI", expected);
       }
     );
 
@@ -355,6 +391,9 @@ const generateMockedGlobalState = (
           optIn: {
             enabled: true
           }
+        },
+        loginFlow: {
+          isOneIdentityLogin: undefined
         }
       },
       payments: {

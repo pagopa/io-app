@@ -7,6 +7,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
+import { updateLoginFlowSuperProperty } from "../../analytics";
 import { ONE_IDENTITY_ENVS } from "../../store/reducers/loginConfig";
 import {
   oneIdentityEnvSelector,
@@ -14,7 +15,15 @@ import {
 } from "../../store/selectors/loginConfig";
 import { LoginConfigScreenContent } from "../LoginConfigScreenContent";
 
+jest.mock("../../analytics", () => ({
+  updateLoginFlowSuperProperty: jest.fn()
+}));
+
 describe("LoginConfigScreenContent", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should render all controls as disabled when disabled is true", () => {
     const { getByLabelText } = renderComponent({ disabled: true });
 
@@ -73,6 +82,17 @@ describe("LoginConfigScreenContent", () => {
     expect(
       oneIdentityLocalFeatureFlagSelector(store.getState())
     ).toBeUndefined();
+  });
+
+  it("should refresh the login flow super property with the updated state when a radio option is selected", () => {
+    const { store, getByLabelText } = renderComponent();
+
+    fireEvent.press(getByLabelText("Usa solo OneIdentity"));
+
+    expect(updateLoginFlowSuperProperty).toHaveBeenCalledTimes(1);
+    expect(updateLoginFlowSuperProperty).toHaveBeenCalledWith(store.getState());
+    const [state] = (updateLoginFlowSuperProperty as jest.Mock).mock.calls[0];
+    expect(oneIdentityLocalFeatureFlagSelector(state)).toBe(true);
   });
 
   it("should dispatch the debug mode action when the switch is toggled", () => {

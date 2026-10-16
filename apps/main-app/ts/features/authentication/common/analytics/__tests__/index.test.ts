@@ -1,6 +1,5 @@
 import * as MIXPANEL from "../../../../../mixpanel";
 import * as PROFILEPROPERTIES from "../../../../../mixpanelConfig/profileProperties";
-import * as SUPERPROPERTIES from "../../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   trackToSWebViewError,
@@ -10,7 +9,6 @@ import {
   IdpCIE,
   IdpCIE_ID
 } from "../../../login/hooks/useNavigateToLoginMethod";
-import * as LOGIN_CONFIG_SELECTORS from "../../store/selectors/loginConfig";
 import { AUTH_LEVELS } from "../../utils";
 import {
   loginCieWizardSelected,
@@ -364,25 +362,43 @@ describe("analytics/index.ts", () => {
   });
 
   it.each([
-    { name: "OneIdentity enabled", enabled: true },
-    { name: "OneIdentity disabled", enabled: false }
+    { name: "OneIdentity session", flow: true },
+    { name: "IO session", flow: false }
   ])(
-    "updateLoginFlowSuperProperty forces LOGIN_FLOW_IS_OI ($name)",
-    async ({ enabled }) => {
-      const state = { some: "state" } as unknown as GlobalState;
+    "updateLoginFlowSuperProperty registers only LOGIN_FLOW_IS_OI for an $name",
+    ({ flow }) => {
+      const state = {
+        authentication: {
+          kind: "LoggedInWithSessionInfo"
+        },
+        features: {
+          loginFeatures: { loginFlow: { isOneIdentityLogin: flow } }
+        }
+      } as unknown as GlobalState;
       jest
-        .spyOn(LOGIN_CONFIG_SELECTORS, "isOneIdentityLoginEnabledSelector")
-        .mockReturnValue(enabled);
-      const updateSuperPropertiesSpy = jest
-        .spyOn(SUPERPROPERTIES, "updateMixpanelSuperProperties")
-        .mockResolvedValue();
+        .spyOn(MIXPANEL, "isMixpanelInstanceInitialized")
+        .mockReturnValue(true);
+      const registerSpy = jest
+        .spyOn(MIXPANEL, "registerSuperProperties")
+        .mockImplementation();
 
-      await updateLoginFlowSuperProperty(state);
+      updateLoginFlowSuperProperty(state);
 
-      expect(updateSuperPropertiesSpy).toHaveBeenCalledWith(state, {
-        property: "LOGIN_FLOW_IS_OI",
-        value: enabled
-      });
+      expect(registerSpy).toHaveBeenCalledTimes(1);
+      expect(registerSpy).toHaveBeenCalledWith({ LOGIN_FLOW_IS_OI: flow });
     }
   );
+
+  it("updateLoginFlowSuperProperty does nothing when mixpanel is not initialized", () => {
+    jest
+      .spyOn(MIXPANEL, "isMixpanelInstanceInitialized")
+      .mockReturnValue(false);
+    const registerSpy = jest
+      .spyOn(MIXPANEL, "registerSuperProperties")
+      .mockImplementation();
+
+    updateLoginFlowSuperProperty({} as GlobalState);
+
+    expect(registerSpy).not.toHaveBeenCalled();
+  });
 });

@@ -6,6 +6,7 @@ import { analyticsAuthenticationStarted } from "../../../../store/actions/analyt
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { updateLoginFlowSuperProperty } from "../../common/analytics";
 import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
+import { isOneIdentityLoginEnabledSelector } from "../../common/store/selectors/loginConfig";
 import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
 import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
@@ -55,6 +56,7 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(idpSelectedActiveSessionLoginSelector), mockIdp],
         [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
+        [select(isOneIdentityLoginEnabledSelector), true],
         [
           select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
           AUTH_LEVEL_L2
@@ -70,7 +72,8 @@ describe("handleActiveSessionLoginSaga", () => {
           token: mockToken,
           idp: mockIdp,
           fastLoginOptIn: mockOptIn,
-          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2
+          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2,
+          isOneIdentityLogin: true
         })
       )
       .put(
@@ -97,6 +100,7 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(idpSelectedActiveSessionLoginSelector), undefined],
         [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
+        [select(isOneIdentityLoginEnabledSelector), true],
         [
           select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
           AUTH_LEVEL_L2
@@ -110,7 +114,8 @@ describe("handleActiveSessionLoginSaga", () => {
           token: mockToken,
           idp: mockIdp,
           fastLoginOptIn: mockOptIn,
-          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2
+          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2,
+          isOneIdentityLogin: true
         })
       )
       .not.put(
@@ -137,6 +142,7 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(idpSelectedActiveSessionLoginSelector), mockIdp],
         [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
+        [select(isOneIdentityLoginEnabledSelector), true],
         [
           select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
           AUTH_LEVEL_L2
@@ -150,7 +156,8 @@ describe("handleActiveSessionLoginSaga", () => {
           token: mockToken,
           idp: mockIdp,
           fastLoginOptIn: mockOptIn,
-          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2
+          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2,
+          isOneIdentityLogin: true
         })
       )
       .not.put(
@@ -177,6 +184,7 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(idpSelectedActiveSessionLoginSelector), undefined],
         [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), undefined],
+        [select(isOneIdentityLoginEnabledSelector), false],
         [
           select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
           undefined

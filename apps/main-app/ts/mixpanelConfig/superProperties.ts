@@ -52,7 +52,7 @@ type SuperProperties = {
   fontScale: number;
   isScreenLockSet: boolean;
   isScreenReaderEnabled: boolean;
-  LOGIN_FLOW_IS_OI?: boolean;
+  LOGIN_FLOW_IS_OI: boolean;
   LOGIN_METHOD: string;
   LOGIN_SESSION: LoginSessionDuration;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;

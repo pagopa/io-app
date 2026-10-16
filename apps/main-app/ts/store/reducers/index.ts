@@ -25,6 +25,7 @@ import authenticationReducer, {
   INITIAL_STATE as authenticationInitialState,
   AuthenticationState
 } from "../../features/authentication/common/store/reducers";
+import { loginFlowInitialState } from "../../features/authentication/common/store/reducers/loginFlow";
 import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
@@ -265,6 +266,10 @@ export function createRootReducer(
                 },
                 loginConfig: {
                   ...state.features.loginFeatures.loginConfig
+                },
+                loginFlow: {
+                  ...loginFlowInitialState,
+                  _persist: state.features.loginFeatures.loginFlow._persist
                 },
                 activeSessionLogin: {
                   ...activeSessionLoginInitialState,

@@ -97,7 +97,13 @@ const OneIdentityIdpLoginScreenContent = ({
 
   const handleLoginSuccess = useCallback(
     (token: string) => {
-      dispatch(loginSuccess({ token, idp: idp.id as keyof IdpData }));
+      dispatch(
+        loginSuccess({
+          token,
+          idp: idp.id as keyof IdpData,
+          isOneIdentityLogin: true
+        })
+      );
     },
     [dispatch, idp.id]
   );

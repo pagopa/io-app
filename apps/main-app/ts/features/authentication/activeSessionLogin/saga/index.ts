@@ -26,6 +26,7 @@ import {
   updateLoginFlowSuperProperty
 } from "../../common/analytics";
 import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
+import { isOneIdentityLoginEnabledSelector } from "../../common/store/selectors/loginConfig";
 import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
 import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
@@ -74,6 +75,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
     const fastLoginOptIn = yield* select(
       isActiveSessionFastLoginEnabledSelector
     );
+    const isOneIdentityLogin = yield* select(isOneIdentityLoginEnabledSelector);
     const cieIDSelectedSecurityLevel = yield* select(
       cieIDSelectedSecurityLevelActiveSessionLoginSelector
     );
@@ -105,6 +107,17 @@ export function* handleActiveSessionLoginSaga(): Generator<
       return;
     }
 
+    yield* put(
+      consolidateActiveSessionLoginData({
+        idp,
+        token,
+        fastLoginOptIn: !!fastLoginOptIn,
+        cieIDSelectedSecurityLevel,
+        isOneIdentityLogin
+      })
+    );
+    // Read the state after the consolidation so that the properties derived
+    // from the authentication reflect the newly created session.
     const state: GlobalState = yield* select();
     yield* call(
       updateLoginSessionProfileAndSuperProperties,
@@ -113,15 +126,6 @@ export function* handleActiveSessionLoginSaga(): Generator<
     );
     yield* call(updateLoginMethodProfileAndSuperProperties, state, idp.id);
     yield* call(updateLoginFlowSuperProperty, state);
-
-    yield* put(
-      consolidateActiveSessionLoginData({
-        idp,
-        token,
-        fastLoginOptIn: !!fastLoginOptIn,
-        cieIDSelectedSecurityLevel
-      })
-    );
     // This event is tracked with the correct LOGIN_SESSION and LOGIN_METHOD
     // because they were just forced in the profile/super properties above.
     // AUTH_SECURITY_LEVEL, however, may be stale: we don't know the actual
