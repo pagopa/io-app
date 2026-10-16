@@ -9,17 +9,23 @@ import {
 
 import { useIOStore } from "../../../../store/hooks";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
-import { LoginType } from "../../activeSessionLogin/screens/analytics";
+import { trackLoginOIConfigurationError } from "../../common/analytics";
 import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
 import { getCieIdpId, isAuthenticationUrl } from "../../login/cie/utils";
 import { useCieIdApp } from "../hooks/useCieIdApp";
 import { oneIdentityAllowedCieOriginsSelector } from "../store/selectors/remoteConfig";
-import { AUTH_LEVELS, onLoginUriChanged } from "../utils";
+import {
+  AUTH_LEVELS,
+  isOneIdentityErrorUrl,
+  LOGIN_TYPES,
+  onLoginUriChanged
+} from "../utils";
 import {
   defaultUserAgent,
   isAllowedUrl,
   originSchemasWhiteList
 } from "../utils/cie";
+import { LoginType } from "../utils/index";
 
 export type CieIdWebViewLoginEvent =
   | {
@@ -49,7 +55,7 @@ export type CieIdWebViewLoginProps = {
 };
 
 export const CieIdWebViewLogin = memo(
-  ({ flow = "auth", isUat, onEvent }: CieIdWebViewLoginProps) => {
+  ({ flow = LOGIN_TYPES.AUTH, isUat, onEvent }: CieIdWebViewLoginProps) => {
     const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(
       null
     );
@@ -105,6 +111,7 @@ export const CieIdWebViewLogin = memo(
 
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
+        flow,
         idpId: getCieIdpId(isUat),
         onFailure: handleFailure,
         minAuthLevel: AUTH_LEVELS.L2
@@ -113,6 +120,10 @@ export const CieIdWebViewLogin = memo(
     const handleOnShouldStartLoadWithRequest = useCallback(
       (event: WebViewNavigation): boolean => {
         const url = event.url;
+
+        if (isOneIdentityErrorUrl(url)) {
+          trackLoginOIConfigurationError(url, flow);
+        }
 
         if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
           return false;
@@ -130,8 +141,7 @@ export const CieIdWebViewLogin = memo(
           flow
         )(event);
 
-        // URL can be loaded if it's not the login URL containing the session token - this avoids
-        // making a (useless) GET request with the session in the URL
+        // URL can be loaded if it's not containing the token
         return !isLoginUrlWithToken;
       },
       [

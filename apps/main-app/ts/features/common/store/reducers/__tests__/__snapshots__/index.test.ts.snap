@@ -238,6 +238,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "oneIdentityEnv": "prod",
       "oneIdentityLocalFeatureFlag": undefined,
     },
+    "loginFlow": {
+      "isOneIdentityLogin": undefined,
+    },
     "loginInfo": {
       "userFromSuccessLogin": false,
     },

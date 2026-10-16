@@ -206,30 +206,61 @@ describe("itwCredentialTypeFromDocTypeSelector", () => {
 });
 
 describe("itwCredentialNameResolverSelector", () => {
-  const translations = pot.some({ it: { "cred2.name": "Credenziale 2" } });
+  type Scenario = {
+    credentialType: string;
+    expected: string;
+    name: string;
+    translations: Record<string, string>;
+    withDefault?: string;
+  };
 
-  test.each([
+  it.each<Scenario>([
     {
-      name: "the translated name of a catalogue credential",
+      name: "the translated catalogue name",
       credentialType: "cred2",
-      state: buildState({ catalogue: pot.some(mockCatalogue), translations }),
+      translations: { "cred2.name": "Credenziale 2" },
       expected: "Credenziale 2"
     },
     {
-      name: "the hardcoded name of a credential missing from the catalogue",
+      name: "the static catalogue name when the translation is missing",
+      credentialType: "cred2",
+      translations: {},
+      expected: "Credential 2"
+    },
+    {
+      name: "the hardcoded name when the type is not in the catalogue",
       credentialType: CredentialType.DRIVING_LICENSE,
-      state: buildState({ catalogue: pot.some(mockCatalogue), translations }),
+      translations: {},
       expected: getCredentialNameFromType(CredentialType.DRIVING_LICENSE)
     },
     {
-      name: "the hardcoded name when the catalogue is unavailable",
-      credentialType: CredentialType.DRIVING_LICENSE,
-      state: buildState({ translations }),
-      expected: getCredentialNameFromType(CredentialType.DRIVING_LICENSE)
+      name: "the default when the type is unknown",
+      credentialType: "unknown_type",
+      translations: {},
+      withDefault: "Default name",
+      expected: "Default name"
     }
-  ])("should resolve $name", ({ credentialType, state, expected }) => {
-    expect(itwCredentialNameResolverSelector(state)(credentialType)).toBe(
-      expected
+  ])(
+    "should resolve $name",
+    ({ credentialType, translations, withDefault, expected }) => {
+      const state = buildState({
+        catalogue: pot.some(mockCatalogue),
+        translations: pot.some({ it: translations })
+      });
+
+      expect(
+        itwCredentialNameResolverSelector(state)(credentialType, withDefault)
+      ).toBe(expected);
+    }
+  );
+
+  it("should use the hardcoded name when the catalogue is unavailable", () => {
+    const state = buildState({
+      translations: pot.some({ it: { "cred2.name": "Credenziale 2" } })
+    });
+
+    expect(itwCredentialNameResolverSelector(state)("cred2", "Fallback")).toBe(
+      "Fallback"
     );
   });
 });

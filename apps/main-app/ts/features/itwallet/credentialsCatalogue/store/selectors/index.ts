@@ -86,17 +86,20 @@ export const itwIsCredentialsCatalogueStale = (state: GlobalState) => {
 
 /**
  * Return a dictionary that maps each credential type to its metadata in the
- * catalogue. Credential types not included in the catalogue have no entry.
+ * catalogue. Lookups return `undefined` for credential types that are not in
+ * the catalogue.
  */
 export const itwCredentialsCatalogueByTypesSelector = createSelector(
   itwCredentialsCatalogueSelector,
   catalogue =>
-    catalogue?.credentials.reduce(
+    catalogue?.credentials.reduce<
+      Partial<Record<string, DigitalCredentialMetadata>>
+    >(
       (acc, credential) => ({
         ...acc,
         [credential.credential_type]: credential
       }),
-      {} as Partial<Record<string, DigitalCredentialMetadata>>
+      {}
     )
 );
 
@@ -138,6 +141,21 @@ export const itwCatalogueTranslationsByLocaleSelector = createSelector(
 );
 
 /**
+ * Resolves the credential name from the catalogue metadata, preferring the
+ * translation of `name_l10n_id` over the static `name`. Returns `undefined`
+ * when the credential type is not in the catalogue.
+ */
+const getCatalogueCredentialName = (
+  metadata: DigitalCredentialMetadata | undefined,
+  translations: Record<string, string>
+): string | undefined => {
+  const translatedName = metadata?.name_l10n_id
+    ? translations[metadata.name_l10n_id]
+    : undefined;
+  return translatedName || metadata?.name;
+};
+
+/**
  * Returns a resolver function that resolves a credential display name. When the
  * catalogue and its translations (v1.3.3+) are available, the name is resolved
  * from the translations, falling back to the catalogue static name. Otherwise,
@@ -156,14 +174,11 @@ export const itwCredentialNameResolverSelector = createSelector(
   ],
   (catalogue, translations, withL3Design) =>
     (credentialType: string | undefined, withDefault = ""): string => {
-      const catalogueMeta = credentialType
-        ? catalogue?.[credentialType]
-        : undefined;
-      if (catalogueMeta && translations) {
-        const resolvedName =
-          (catalogueMeta.name_l10n_id &&
-            translations[catalogueMeta.name_l10n_id]) ||
-          catalogueMeta.name;
+      if (credentialType && catalogue && translations) {
+        const resolvedName = getCatalogueCredentialName(
+          catalogue[credentialType],
+          translations
+        );
         if (resolvedName) {
           return resolvedName;
         }
@@ -175,6 +190,7 @@ export const itwCredentialNameResolverSelector = createSelector(
       );
     }
 );
+
 
 /**
  * Returns a resolver function that gets a credential type from an mdoc document

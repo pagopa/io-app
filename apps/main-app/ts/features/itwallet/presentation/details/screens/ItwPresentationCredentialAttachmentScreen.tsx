@@ -105,7 +105,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
           dialogTitle: fileNameWithExtension
         });
       } catch {
-        toast.show(I18n.t("messagePDFPreview.errors.sharing"));
+        toast.error(I18n.t("messagePDFPreview.errors.sharing"));
       } finally {
         try {
           if (file.exists) {

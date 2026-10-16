@@ -41,6 +41,7 @@ export const consolidateActiveSessionLoginData = createStandardAction(
   cieIDSelectedSecurityLevel?: AuthLevel;
   fastLoginOptIn: boolean;
   idp: SpidIdp;
+  isOneIdentityLogin: boolean;
   token: string;
 }>();
 

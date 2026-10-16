@@ -4,6 +4,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { MixpanelProperties } from "mixpanel-react-native";
 import { Appearance } from "react-native";
 
+import * as LOGIN_CONFIG_SELECTORS from "../../features/authentication/common/store/selectors/loginConfig";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { GlobalState } from "../../store/reducers/types";
 import * as ACCESSIBILITY from "../../utils/accessibility";
@@ -32,6 +33,9 @@ describe("superProperties", () => {
 
     // Mock Appearance.getColorScheme using spyOn
     jest.spyOn(Appearance, "getColorScheme").mockReturnValue(mockColorScheme);
+    jest
+      .spyOn(LOGIN_CONFIG_SELECTORS, "isOneIdentityLoginEnabledSelector")
+      .mockReturnValue(false);
   });
 
   afterEach(() => {
@@ -118,6 +122,7 @@ describe("superProperties", () => {
             AUTH_SECURITY_LEVEL: "not set",
             CGN_STATUS: "not_active",
             CDC_STATUS: 0,
+            LOGIN_FLOW_IS_OI: false,
             LOGIN_METHOD: "not set",
             LOGIN_SESSION: "365",
             NOTIFICATION_CONFIGURATION: pushContentReminderTuple[2],
@@ -213,6 +218,136 @@ describe("superProperties", () => {
       );
     }
   );
+  describe("LOGIN_FLOW_IS_OI", () => {
+    const loggedOutAuthentication = {
+      kind: "LoggedOutWithoutIdp",
+      reason: "NOT_LOGGED_IN"
+    };
+    const loggedInAuthentication = {
+      kind: "LoggedInWithSessionInfo",
+      idp: {
+        id: "poste",
+        name: "Poste ID",
+        logo: { light: { uri: "" } },
+        profileUrl: ""
+      },
+      sessionToken: "aSessionToken",
+      sessionInfo: { spidLevel: "https://www.spid.gov.it/SpidL2" }
+    };
+
+    beforeEach(() => {
+      mockIsMixpanelInitialized = () => true;
+      jest.spyOn(BIOMETRICS, "getBiometricsType").mockResolvedValue("FACE_ID");
+      jest
+        .spyOn(PUSHUTILS, "checkNotificationPermissions")
+        .mockResolvedValue(false);
+      jest.spyOn(DEVICE, "getFontScale").mockResolvedValue(1);
+      jest.spyOn(DEVICE, "isScreenLockSet").mockResolvedValue(true);
+      jest
+        .spyOn(ACCESSIBILITY, "isScreenReaderEnabled")
+        .mockResolvedValue(true);
+    });
+
+    const registerWith = async (
+      authentication: Record<string, unknown>,
+      isOneIdentityEnabled: boolean,
+      isOneIdentityLogin: boolean | undefined = undefined
+    ) => {
+      jest
+        .spyOn(LOGIN_CONFIG_SELECTORS, "isOneIdentityLoginEnabledSelector")
+        .mockReturnValue(isOneIdentityEnabled);
+      const baseState = generateMockedGlobalState(undefined, undefined);
+      const state = {
+        ...baseState,
+        authentication,
+        features: {
+          ...baseState.features,
+          loginFeatures: {
+            ...baseState.features.loginFeatures,
+            loginFlow: { isOneIdentityLogin }
+          }
+        }
+      } as unknown as GlobalState;
+
+      await updateMixpanelSuperProperties(state);
+
+      expect(mockedRegisterSuperProperties).toHaveBeenCalledTimes(1);
+      return mockedRegisterSuperProperties.mock.calls[0][0];
+    };
+
+    it.each([
+      {
+        name: "logged out with rollout on",
+        authentication: loggedOutAuthentication,
+        rollout: true,
+        expected: true
+      },
+      {
+        name: "logged out with rollout off",
+        authentication: loggedOutAuthentication,
+        rollout: false,
+        expected: false
+      },
+      {
+        name: "logged in without a stored login flow and rollout on",
+        authentication: loggedInAuthentication,
+        isOneIdentityLogin: undefined,
+        rollout: true,
+        expected: true
+      },
+      {
+        name: "logged in without a stored login flow and rollout off",
+        authentication: loggedInAuthentication,
+        isOneIdentityLogin: undefined,
+        rollout: false,
+        expected: false
+      },
+      {
+        name: "logged in with OneIdentity and rollout turned off",
+        authentication: loggedInAuthentication,
+        isOneIdentityLogin: true,
+        rollout: false,
+        expected: true
+      },
+      {
+        name: "logged in with IO and rollout turned on",
+        authentication: loggedInAuthentication,
+        isOneIdentityLogin: false,
+        rollout: true,
+        expected: false
+      }
+    ])(
+      "registers LOGIN_FLOW_IS_OI=$expected when $name",
+      async ({ authentication, isOneIdentityLogin, rollout, expected }) => {
+        const registered = await registerWith(
+          authentication,
+          rollout,
+          isOneIdentityLogin
+        );
+
+        expect(registered).toHaveProperty("LOGIN_FLOW_IS_OI", expected);
+      }
+    );
+
+    it("registers the forced value even while logged in", async () => {
+      jest
+        .spyOn(LOGIN_CONFIG_SELECTORS, "isOneIdentityLoginEnabledSelector")
+        .mockReturnValue(false);
+      const state = {
+        ...generateMockedGlobalState(undefined, undefined),
+        authentication: loggedInAuthentication
+      } as unknown as GlobalState;
+
+      await updateMixpanelSuperProperties(state, {
+        property: "LOGIN_FLOW_IS_OI",
+        value: true
+      });
+
+      expect(mockedRegisterSuperProperties).toHaveBeenCalledWith(
+        expect.objectContaining({ LOGIN_FLOW_IS_OI: true })
+      );
+    });
+  });
   it("should do nothing if 'isMixpanelInstanceInitialized' returns 'false'", async () => {
     mockIsMixpanelInitialized = () => false;
     const state = {} as GlobalState;
@@ -256,6 +391,9 @@ const generateMockedGlobalState = (
           optIn: {
             enabled: true
           }
+        },
+        loginFlow: {
+          isOneIdentityLogin: undefined
         }
       },
       payments: {
