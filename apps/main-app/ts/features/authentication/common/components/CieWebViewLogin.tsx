@@ -9,7 +9,12 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
-import { LOGIN_TYPES, onLoginUriChanged } from "../utils";
+import { trackLoginOIConfigurationError } from "../../common/analytics";
+import {
+  isOneIdentityErrorUrl,
+  LOGIN_TYPES,
+  onLoginUriChanged
+} from "../utils";
 import { defaultUserAgent, originSchemasWhiteList } from "../utils/cie";
 import { LoginType } from "../utils/index";
 
@@ -56,6 +61,10 @@ export const CieWebViewLogin = memo(
 
     const handleOnShouldStartLoadWithRequest = useCallback(
       (event: WebViewNavigation): boolean => {
+        if (isOneIdentityErrorUrl(event.url)) {
+          trackLoginOIConfigurationError(event.url, flow);
+        }
+
         const bearerTokenFoundInUrl = onLoginUriChanged(
           handleLoginFailure,
           handleLoginSuccess,

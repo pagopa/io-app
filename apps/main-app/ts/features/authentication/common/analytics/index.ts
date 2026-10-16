@@ -4,6 +4,7 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties, FlowType } from "../../../../utils/analytics";
+import { safeUrlParse } from "../../../../utils/url";
 import { LoginSessionDuration } from "../../fastLogin/analytics/optinAnalytics";
 import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
 import { AuthLevel } from "../utils";
@@ -158,9 +159,25 @@ export function trackLoginInfoTap() {
   );
 }
 
+export function trackLoginOIConfigurationError(
+  url: string,
+  flow: LoginType = "auth"
+) {
+  const reason = safeUrlParse(url).match(
+    ({ host, pathname, query }) => ({ host, pathname, query }),
+    error => ({ url, error })
+  );
+
+  void mixpanelTrack(
+    "LOGIN_OI_CONFIGURATION_ERROR",
+    buildEventProperties("KO", undefined, { flow, reason })
+  );
+}
+
 export function trackLoginUserExit() {
   void mixpanelTrack("LOGIN_USER_EXIT", buildEventProperties("UX", "exit"));
 }
+
 export function trackLogoutFailure(
   reason?: Error | string,
   flow: LoginType = "auth"

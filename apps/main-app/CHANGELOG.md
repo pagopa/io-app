@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.41.0-rc.6](https://github.com/pagopa/io-app/compare/3.41.0-rc.5...3.41.0-rc.6) (2026-10-15)
+
+### Features
+
+* [[IOPID-4246](https://pagopa.atlassian.net/browse/IOPID-4246)] Add Mixpanel event for OneIdentity configuration errors ([#8715](https://github.com/pagopa/io-app/issues/8715)) ([5dbcc10](https://github.com/pagopa/io-app/commit/5dbcc10787cdba62f812638936de886d8f4516de))
+* [[IOPID-4250](https://pagopa.atlassian.net/browse/IOPID-4250)] Add OneIdentity routes to the dev server ([#8721](https://github.com/pagopa/io-app/issues/8721)) ([a492f6f](https://github.com/pagopa/io-app/commit/a492f6f586792538273a15cef4751012d75ec9b8))
+* [[IOPID-4261](https://pagopa.atlassian.net/browse/IOPID-4261)] Preserve developer login config across logout ([#8744](https://github.com/pagopa/io-app/issues/8744)) ([f04a574](https://github.com/pagopa/io-app/commit/f04a574ecd0f691b810f7412dc0feaaec5b9fe56))
+* [[IOPID-4262](https://pagopa.atlassian.net/browse/IOPID-4262)] Add session section in Authentication playground ([#8746](https://github.com/pagopa/io-app/issues/8746)) ([a85fc95](https://github.com/pagopa/io-app/commit/a85fc952eb079c10c125c799a993d38a7832b7f6))
+* **IT-Wallet:** [[SIW-5229](https://pagopa.atlassian.net/browse/SIW-5229)] Track mandatory L3 upgrade flow for adding credentials ([#8740](https://github.com/pagopa/io-app/issues/8740)) ([f28e1e5](https://github.com/pagopa/io-app/commit/f28e1e5918e6af99c8d96443d760d2659796a322))
+* **IT-Wallet:** [[SIW-5299](https://pagopa.atlassian.net/browse/SIW-5299)] Show wallet status in Zendesk consents ([#8748](https://github.com/pagopa/io-app/issues/8748)) ([6e97934](https://github.com/pagopa/io-app/commit/6e97934007255bbe4736611b1cd92406563006c0))
+
+### Bug Fixes
+
+* [[IOPID-4264](https://pagopa.atlassian.net/browse/IOPID-4264)] Ignore aborted reserve request in OneIdentity login ([#8751](https://github.com/pagopa/io-app/issues/8751)) ([bd48147](https://github.com/pagopa/io-app/commit/bd4814717082b0b38a1dd6f9126a7bc2f34041bc))
+* [[IOPLT-2187](https://pagopa.atlassian.net/browse/IOPLT-2187)] `IOButton` border radius when `link` type ([#8743](https://github.com/pagopa/io-app/issues/8743)) ([f4a032c](https://github.com/pagopa/io-app/commit/f4a032ce2e32d41cd0d07c1260d01ee1e9507150))
+* **IT-Wallet:** [[SIW-5260](https://pagopa.atlassian.net/browse/SIW-5260)] Show credential names from the catalogue ([#8738](https://github.com/pagopa/io-app/issues/8738)) ([c9b0d67](https://github.com/pagopa/io-app/commit/c9b0d67c76dff8fdfc50ebac65c9d7af3285e818))
+
+### Chores
+
+* [[IEL-855](https://pagopa.atlassian.net/browse/IEL-855),[IEL-873](https://pagopa.atlassian.net/browse/IEL-873)] IDPay initiative bottomsheet update ([#8722](https://github.com/pagopa/io-app/issues/8722)) ([6eb0d55](https://github.com/pagopa/io-app/commit/6eb0d551cd436784f64e19b4ccaff558ac07992f))
+* [[IEL-874](https://pagopa.atlassian.net/browse/IEL-874)] added IDPAY_DETAIL_TIMELINE_ERROR event tracking ([#8713](https://github.com/pagopa/io-app/issues/8713)) ([26b03f8](https://github.com/pagopa/io-app/commit/26b03f82d7ec92e1527cda8b0dce170acb9c7ad3))
+* **deps:** [[IOPLT-2111](https://pagopa.atlassian.net/browse/IOPLT-2111)] Update dev server `uuid` dependency ([#8644](https://github.com/pagopa/io-app/issues/8644)) ([22b9530](https://github.com/pagopa/io-app/commit/22b95305080660c59ef21032a6adc52caa8ba75f))
 ## [3.41.0-rc.5](https://github.com/pagopa/io-app/compare/3.41.0-rc.4...3.41.0-rc.5) (2026-10-14)
 
 ### Features

@@ -225,12 +225,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
@@ -1374,12 +1368,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
@@ -2523,12 +2511,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
@@ -3290,12 +3272,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
