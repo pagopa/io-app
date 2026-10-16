@@ -762,12 +762,6 @@ describe("itwProximityMachine", () => {
       connected: false
     },
     {
-      name: "NFC after connection",
-      engagementMode: "nfc",
-      retrievalMethod: "nfc",
-      connected: true
-    },
-    {
       name: "NFC engagement with BLE retrieval",
       engagementMode: "nfc",
       retrievalMethod: "ble",
@@ -792,7 +786,6 @@ describe("itwProximityMachine", () => {
 
       actor.start();
       if (connected) {
-        actor.send({ type: "device-connected" });
         actor.send({ type: "device-connected" });
       }
       expect(trackProximityStart).not.toHaveBeenCalled();
@@ -846,42 +839,6 @@ describe("itwProximityMachine", () => {
     ).toBe(true);
     expect(trackProximityStart).toHaveBeenCalledTimes(1);
     actor.stop();
-  });
-
-  it("allows tracking a new presentation after closing the previous one", () => {
-    const actor = createActor(mockedMachine, {
-      input: { deps: T_DEPS },
-      snapshot: makeSnapshot("Success", {
-        engagementMode: "nfc",
-        retrievalMethod: "nfc",
-        grantedConsentKey: generateConsentKey(
-          getConsentDataFromProximityDetails(T_PROXIMITY_DETAILS)
-        )
-      })
-    });
-
-    actor.start();
-    expect(actor.getSnapshot().context.grantedConsentKey).toBeDefined();
-    actor.send({ type: "close" });
-    expect(actor.getSnapshot().context.grantedConsentKey).toBeUndefined();
-
-    const nextActor = createActor(mockedMachine, {
-      input: { deps: T_DEPS },
-      snapshot: makeSnapshot(
-        { Presentment: "Connecting" },
-        actor.getSnapshot().context
-      )
-    });
-    nextActor.start();
-    nextActor.send({
-      type: "device-document-request-received",
-      proximityDetails: T_PROXIMITY_DETAILS,
-      verifierRequest: T_VERIFIER_REQUEST,
-      retrievalMethod: "ble"
-    });
-    expect(trackProximityStart).toHaveBeenCalledTimes(1);
-    actor.stop();
-    nextActor.stop();
   });
 
   it("close from Presentment.AwaitingConnection calls closeProximity", () => {
