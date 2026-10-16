@@ -217,6 +217,16 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
   );
 };
 
+const AccompanyingPersonMark = () => (
+  <View
+    accessibilityElementsHidden
+    importantForAccessibility="no-hide-descendants"
+    style={styles.accompanyingPersonMark}
+  >
+    <ClaimLabel>{ACCOMPANYING_PERSON_MARK}</ClaimLabel>
+  </View>
+);
+
 const DcFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
   const row = 44.5; // Row padding, defines the first row position
   const rowStep = 11.4; // Row step, defines the space between each row
@@ -231,13 +241,10 @@ const DcFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
       {claims["constant_attendance_allowance"]?.value === true &&
         !valuesHidden && (
           <CardClaimContainer
-            accessibilityElementsHidden
             dimensions={{ width: "5.5%", aspectRatio: 1 }}
-            importantForAccessibility="no-hide-descendants"
             position={{ right: "2.75%", top: "33%" }}
-            style={styles.accompanyingPersonMark}
           >
-            <ClaimLabel>{ACCOMPANYING_PERSON_MARK}</ClaimLabel>
+            <AccompanyingPersonMark />
           </CardClaimContainer>
         )}
       <CardClaim
@@ -325,6 +332,8 @@ const CardData = ({ credential, side, valuesHidden }: CardDataProps) => {
 
 const styles = StyleSheet.create({
   accompanyingPersonMark: {
+    width: "100%",
+    height: "100%",
     borderRadius: "50%",
     alignItems: "center",
     justifyContent: "center",

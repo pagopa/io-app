@@ -55,6 +55,9 @@ describe("CardData", () => {
           includeHiddenElements: true
         }) !== null
       ).toBe(scenario.expectedMark);
+      expect(
+        component.queryByText("A", { includeHiddenElements: false })
+      ).toBeNull();
     }
   );
 

@@ -1,12 +1,6 @@
 import { WithTestID } from "@io-app/design-system";
 import { memo, ReactElement, ReactNode, useMemo } from "react";
-import {
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewProps,
-  ViewStyle
-} from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 
 import { Either, Prettify } from "../../../../../types/helpers";
 import {
@@ -164,17 +158,11 @@ const CardClaimRenderer = <K extends ClaimValueKind>({
     renderNothing
   );
 
-type CardClaimContainerProps = WithTestID<
-  Pick<
-    ViewProps,
-    "accessibilityElementsHidden" | "importantForAccessibility"
-  > & {
-    children?: ReactNode;
-    dimensions?: ClaimDimensions;
-    position?: ClaimPosition;
-    style?: StyleProp<ViewStyle>;
-  }
->;
+type CardClaimContainerProps = WithTestID<{
+  children?: ReactNode;
+  dimensions?: ClaimDimensions;
+  position?: ClaimPosition;
+}>;
 
 /**
  * Component that allows to position a claim using "left" and "top" absolute
@@ -184,15 +172,9 @@ const CardClaimContainer = ({
   position,
   dimensions,
   children,
-  testID,
-  style,
-  ...accessibilityProps
+  testID
 }: CardClaimContainerProps) => (
-  <View
-    {...accessibilityProps}
-    style={[styles.container, style, position, dimensions]}
-    testID={testID}
-  >
+  <View style={[styles.container, position, dimensions]} testID={testID}>
     {children}
   </View>
 );
