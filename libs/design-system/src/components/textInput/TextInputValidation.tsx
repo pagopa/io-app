@@ -30,6 +30,10 @@ type TextInputValidationProps = Omit<
   /** A string that will be read by screen readers when the field is not valid. */
   accessibilityErrorLabel?: string;
   /**
+   * A string that will be read by screen readers when the field is valid.
+   */
+  accessibilityValidLabel?: string;
+  /**
    * In case of a dynamic `errorMessage`, use the `onValidate` function with a
    * `ValidationWithOptions` object as the return value to ensure that screen
    * readers announce the correct value.
@@ -79,6 +83,7 @@ export const TextInputValidation = ({
   onFocus,
   validationMode = "onBlur",
   accessibilityErrorLabel,
+  accessibilityValidLabel,
   ref,
   ...props
 }: TextInputValidationProps) => {
@@ -186,6 +191,13 @@ export const TextInputValidation = ({
   return (
     <TextInputBase
       {...props}
+      accessibilityLabel={`${props.accessibilityLabel}${
+        isValid === false && errMessage
+          ? `. ${accessibilityErrorLabel ?? errMessage}`
+          : isValid === true
+            ? `. ${accessibilityValidLabel}`
+            : ""
+      }`}
       bottomMessage={labelError}
       bottomMessageColor={labelErrorColor}
       inputRef={inputRef}
