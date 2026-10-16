@@ -2,7 +2,6 @@ import { CommonActions, StackActions } from "@react-navigation/native";
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
-import { updateLoginFlowSuperProperty } from "../features/authentication/common/analytics";
 import {
   sessionExpired,
   sessionInvalid
@@ -100,7 +99,6 @@ export function* resetMixpanelSaga(): Generator<
   boolean
 > {
   yield* call(resetMixpanel);
-  yield* call(refreshLoginFlowSuperProperty);
 }
 
 /**
@@ -116,7 +114,7 @@ export function* updateMixpanelProfileAndSuperProperties() {
 export function* watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel() {
   yield* takeLatest(
     [getType(sessionExpired), getType(sessionInvalid)],
-    resetMixpanelSaga
+    resetMixpanel
   );
 }
 
@@ -126,15 +124,6 @@ function* initializeMixpanelAndUpdateState() {
   yield* put(setIsMixpanelInitialized(true));
 }
 
-function* refreshLoginFlowSuperProperty() {
-  const state: GlobalState = yield* select();
-  yield* call(updateLoginFlowSuperProperty, state);
-}
-
 export const testable = isTestEnv
-  ? {
-      initializeMixpanelAndUpdateState,
-      refreshLoginFlowSuperProperty,
-      resetMixpanelSaga
-    }
+  ? { initializeMixpanelAndUpdateState }
   : undefined;

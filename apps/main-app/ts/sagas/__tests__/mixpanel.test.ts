@@ -2,7 +2,6 @@ import { CommonActions, StackActions } from "@react-navigation/native";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { updateLoginFlowSuperProperty } from "../../features/authentication/common/analytics";
 import {
   sessionExpired,
   sessionInvalid
@@ -39,21 +38,8 @@ describe("mixpanel", () => {
         .next()
         .takeLatest(
           [getType(sessionExpired), getType(sessionInvalid)],
-          resetMixpanelSaga
+          resetMixpanel
         )
-        .next()
-        .isDone();
-    });
-  });
-
-  describe("refreshLoginFlowSuperProperty", () => {
-    it("should register LOGIN_FLOW_IS_OI from the current state", () => {
-      const state = { some: "state" } as unknown as GlobalState;
-      testSaga(testable!.refreshLoginFlowSuperProperty)
-        .next()
-        .select()
-        .next(state)
-        .call(updateLoginFlowSuperProperty, state)
         .next()
         .isDone();
     });
@@ -71,13 +57,7 @@ describe("mixpanel", () => {
 
   describe("resetMixpanelSaga", () => {
     it("should call resetMixpanel", () => {
-      testSaga(resetMixpanelSaga)
-        .next()
-        .call(resetMixpanel)
-        .next()
-        .call(testable!.refreshLoginFlowSuperProperty)
-        .next()
-        .isDone();
+      testSaga(resetMixpanelSaga).next().call(resetMixpanel).next().isDone();
     });
   });
 
