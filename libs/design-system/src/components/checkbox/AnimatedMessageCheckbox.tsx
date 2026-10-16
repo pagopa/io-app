@@ -12,8 +12,7 @@ import Animated, {
 import { useIOTheme } from "../../context";
 import { IOSpringValues } from "../../core/IOAnimations";
 import { IOColors } from "../../core/IOColors";
-import { IOSpacingScale } from "../../core/IOSpacing";
-import { IOVisualCostants } from "../../core/IOStyles";
+import { IODimensions, IODimensionScale } from "../../core/tokens";
 import { AnimatedTick } from "../common/AnimatedTick";
 
 type AnimatedMessageCheckbox = Pick<PressableProps, "accessible" | "onPress"> &
@@ -23,21 +22,21 @@ type Props = {
   checked?: boolean;
 };
 
-const internalSpacing: IOSpacingScale = 4;
+const internalSpacing: IODimensionScale = 4;
 
 const styles = StyleSheet.create({
   checkBoxWrapper: {
-    width: IOVisualCostants.avatarSizeSmall,
-    height: IOVisualCostants.avatarSizeSmall,
+    width: IODimensions.size.avatar.small,
+    height: IODimensions.size.avatar.small,
     padding: internalSpacing
   },
   checkBoxShape: {
     position: "absolute",
     left: 0,
     top: 0,
-    width: IOVisualCostants.avatarSizeSmall,
-    height: IOVisualCostants.avatarSizeSmall,
-    borderRadius: IOVisualCostants.avatarRadiusSizeSmall,
+    width: IODimensions.size.avatar.small,
+    height: IODimensions.size.avatar.small,
+    borderRadius: IODimensions.radius.avatar.small,
     borderCurve: "continuous"
   }
 });

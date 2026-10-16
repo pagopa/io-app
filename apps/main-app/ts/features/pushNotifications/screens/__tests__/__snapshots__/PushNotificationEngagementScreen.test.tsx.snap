@@ -828,7 +828,7 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
                             <View
                               style={
                                 {
-                                  "width": 32,
+                                  "width": 24,
                                 }
                               }
                             />

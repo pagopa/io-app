@@ -1,4 +1,4 @@
-import { IOColors, IOVisualCostants, useIOTheme } from "@io-app/design-system";
+import { IOColors, IODimensions, useIOTheme } from "@io-app/design-system";
 import { useLinkTo } from "@react-navigation/native";
 import { memo, ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderCurve: "continuous",
     borderWidth: 1,
-    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginHorizontal: IODimensions.padding.screen.default,
     padding: 24
   }
 });

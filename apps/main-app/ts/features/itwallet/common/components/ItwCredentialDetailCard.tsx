@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@io-app/design-system";
+import { IODimensions } from "@io-app/design-system";
 import { Canvas, Rect } from "@shopify/react-native-skia";
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
@@ -21,11 +21,11 @@ type ItwCredentialDetailCardProps = PropsWithChildren<{
 }>;
 
 // Height of the transparent HeaderSecondLevel navigation bar rendered above this card.
-// Note: IOVisualCostants.headerHeight is 56, plus an 8px visual buffer to prevent
+// Note: IODimensions.height.header is 56, plus an 8px visual buffer to prevent
 // children from appearing too close to the header bottom edge.
-const NAVIGATION_HEADER_HEIGHT = IOVisualCostants.headerHeight + 8;
-// Standard top padding for content after the header (matches IOVisualCostants.appMarginDefault).
-const POST_HEADER_CONTENT_PADDING = IOVisualCostants.appMarginDefault;
+const NAVIGATION_HEADER_HEIGHT = IODimensions.height.header + 8;
+// Standard top padding for content after the header (matches IODimensions.padding.screen.default).
+const POST_HEADER_CONTENT_PADDING = IODimensions.padding.screen.default;
 // Pulls the card up by this amount so the top rounded border is hidden behind the header at rest.
 const SCROLL_HACK_OFFSET = 4;
 // Border radius for the card container and Skia border.

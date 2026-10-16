@@ -1,4 +1,4 @@
-import { H4, IconButton, IOVisualCostants } from "@io-app/design-system";
+import { H4, IconButton, IODimensions } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "i18next";
 import {
@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    paddingTop: IOVisualCostants.appMarginDefault,
-    paddingBottom: IOVisualCostants.appMarginDefault
+    paddingHorizontal: IODimensions.padding.screen.default,
+    paddingTop: IODimensions.padding.screen.default,
+    paddingBottom: IODimensions.padding.screen.default
   }
 });
 

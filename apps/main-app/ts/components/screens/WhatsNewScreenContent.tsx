@@ -3,8 +3,8 @@ import {
   H3,
   IOButton,
   IOButtonProps,
+  IODimensions,
   IOPictograms,
-  IOVisualCostants,
   Pictogram,
   VStack,
   WithTestID
@@ -67,9 +67,16 @@ export const WhatsNewScreenContent = ({
         {pictogram && (
           <View style={styles.centeredItems}>
             {enableAnimatedPictogram ? (
-              <AnimatedPictogram loop={loop} name={pictogram} size={120} />
+              <AnimatedPictogram
+                loop={loop}
+                name={pictogram}
+                size={IODimensions.size.pictogram.screen}
+              />
             ) : (
-              <Pictogram name={pictogram} size={120} />
+              <Pictogram
+                name={pictogram}
+                size={IODimensions.size.pictogram.screen}
+              />
             )}
           </View>
         )}
@@ -107,7 +114,7 @@ export const WhatsNewScreenContent = ({
 
 const styles = StyleSheet.create({
   mainStack: {
-    padding: IOVisualCostants.appMarginDefault
+    padding: IODimensions.padding.screen.default
   },
   container: {
     flexGrow: 1,

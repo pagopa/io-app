@@ -3,6 +3,7 @@ import {
   H6,
   hexToRgba,
   IOColors,
+  IODimensions,
   IOSkeleton,
   Tag,
   useIOTheme,
@@ -250,10 +251,10 @@ const PaymentCardSkeleton = () => {
 
 const styles = StyleSheet.create({
   card: {
-    padding: 16,
+    padding: IODimensions.padding.card,
     paddingTop: 8,
     aspectRatio: 16 / 10,
-    borderRadius: 8,
+    borderRadius: IODimensions.radius.card,
     borderWidth: 2,
     borderCurve: "continuous"
   },

@@ -6,8 +6,8 @@ import {
   hexToRgba,
   HStack,
   IOColors,
+  IODimensions,
   IOListItemStyles,
-  IOVisualCostants,
   Tag,
   triggerHaptic,
   useIOTheme,
@@ -34,16 +34,19 @@ export const ListItemMessageStandardHeight = 95;
 export const ListItemMessageEnhancedHeight = 133;
 
 const styles = StyleSheet.create({
+  listItem: {
+    paddingVertical: IODimensions.padding.listItem.messages.vertical,
+    paddingHorizontal: IODimensions.padding.listItem.messages.horizontal
+  },
   container: {
-    flexDirection: "row",
-    paddingHorizontal: 16
+    flexDirection: "row"
   },
   organizationContainer: {
     flexDirection: "row"
   },
   messageReadContainer: {
     justifyContent: "center",
-    marginLeft: 8
+    marginLeft: IODimensions.gap.listItem.messages.trailing
   },
   serviceNameAndMessageTitleContainer: {
     flexDirection: "row"
@@ -54,10 +57,13 @@ const styles = StyleSheet.create({
   serviceLogoContainer: {
     alignItems: "center",
     justifyContent: "center",
-    height: IOVisualCostants.avatarSizeSmall,
-    width: IOVisualCostants.avatarSizeSmall
+    height: IODimensions.size.avatar.small,
+    width: IODimensions.size.avatar.small
   },
-  textContainer: { flex: 1, marginLeft: 8 }
+  textContainer: {
+    flex: 1,
+    marginLeft: IODimensions.gap.listItem.messages.leading
+  }
 });
 
 export type ListItemMessageProps = Pick<
@@ -151,7 +157,7 @@ export const ListItemMessage = ({
     >
       <Animated.View
         style={[
-          IOListItemStyles.listItem,
+          styles.listItem,
           !selected ? backgroundAnimatedStyle : undefined,
           { flexGrow: 1, justifyContent: "center" }
         ]}
@@ -201,7 +207,9 @@ export const ListItemMessage = ({
                 </H6>
                 <BodySmall
                   color={theme["textBody-tertiary"]}
-                  style={{ marginLeft: 8 }}
+                  style={{
+                    marginLeft: IODimensions.gap.listItem.messages.trailing
+                  }}
                   weight="Regular"
                 >
                   {formattedDate}
@@ -221,8 +229,10 @@ export const ListItemMessage = ({
               {tag && (
                 /* We add a `View` because we need to re-arrange block elements using
                `VStack` and/or `HStack` */
-                <View style={{ marginTop: 8 }}>
-                  <HStack space={8}>
+                <View
+                  style={{ marginTop: IODimensions.gap.listItem.messages.tag }}
+                >
+                  <HStack space={IODimensions.gap.listItem.messages.tag}>
                     <Tag text={tag.text} variant={tag.variant} />
                     {tag.variant === "legalMessage" && (
                       <Tag

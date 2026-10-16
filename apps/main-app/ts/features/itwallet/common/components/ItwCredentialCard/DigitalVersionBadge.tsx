@@ -1,8 +1,6 @@
 import {
-  IOBadgeHSpacing,
-  IOBadgeRadius,
-  IOBadgeVSpacing,
   IOColors,
+  IODimensions,
   makeFontStyleObject
 } from "@io-app/design-system";
 import {
@@ -130,7 +128,7 @@ const DigitalVersionBadge = ({
           <Canvas style={styles.gradientCanvas}>
             <RoundedRect
               height={layout.height}
-              r={IOBadgeRadius}
+              r={IODimensions.radius.badge}
               width={layout.width}
               x={0}
               y={0}
@@ -188,11 +186,11 @@ const styles = StyleSheet.create({
       }
     }),
     borderCurve: "continuous",
-    borderRadius: IOBadgeRadius,
-    paddingHorizontal: IOBadgeHSpacing,
-    paddingVertical: IOBadgeVSpacing,
-    paddingEnd: IOBadgeHSpacing + 8,
-    marginEnd: -IOBadgeHSpacing
+    borderRadius: IODimensions.radius.badge,
+    paddingHorizontal: IODimensions.padding.badge.horizontal,
+    paddingVertical: IODimensions.padding.badge.vertical,
+    paddingEnd: IODimensions.padding.badge.horizontal + 8,
+    marginEnd: -IODimensions.padding.badge.horizontal
   },
   faded: {
     ...StyleSheet.absoluteFill,

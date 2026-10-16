@@ -2,6 +2,7 @@ import {
   hexToRgba,
   Icon,
   IOColors,
+  IODimensions,
   IOSkeleton,
   LabelMini,
   useIOTheme,
@@ -174,8 +175,8 @@ const styles = StyleSheet.create({
     height: PAYMENT_CARD_SMALL_HEIGHT,
     flexBasis: PAYMENT_CARD_SMALL_WIDTH,
     flexGrow: 0,
-    borderRadius: 8,
-    padding: 16,
+    borderRadius: IODimensions.radius.card,
+    padding: IODimensions.padding.card,
     aspectRatio: 16 / 10
   }
 });

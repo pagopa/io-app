@@ -3,7 +3,7 @@ import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/Docu
 import {
   FooterActionsInline,
   IOColors,
-  IOSpacing,
+  IODimensions,
   useFooterActionsInlineMeasurements
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -331,7 +331,7 @@ const FciDocumentsScreen = () => {
                 flex: 1,
                 marginBottom:
                   footerActionsInlineMeasurements.safeBottomAreaHeight -
-                  IOSpacing.screenEndMargin
+                  IODimensions.padding.screen.end
               }}
             >
               {renderPager()}

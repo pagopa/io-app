@@ -338,30 +338,40 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                                   {
                                     "alignSelf": "center",
                                     "flex": 1,
-                                    "gap": 4,
+                                    "gap": 12,
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "display": "flex",
+                                      "flexDirection": "column",
+                                      "gap": 4,
+                                    }
                                   }
                                 >
-                                  Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
+                                  </Text>
+                                </View>
                               </View>
                               <View
                                 style={

@@ -4,8 +4,8 @@ import {
   H2,
   IOButton,
   IOButtonBlockSpecificProps,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   ListItemHeader,
   ListItemInfoCopy,
   ListItemNav,
@@ -16,7 +16,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import I18n from "i18next";
 import { ComponentProps, useContext } from "react";
-import { Alert, FlatList, ListRenderItemInfo } from "react-native";
+import { Alert, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 
 import { AlertModal } from "../../../../components/ui/AlertModal";
 import { LightModalContext } from "../../../../components/ui/LightModal";
@@ -181,9 +181,7 @@ const DeveloperActionsSection = () => {
   return (
     <>
       <FlatList
-        contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
-        }}
+        contentContainerStyle={styles.listContent}
         data={filteredDevActionButtons}
         ItemSeparatorComponent={() => <VSpacer size={8} />}
         keyExtractor={(item: DevActionButton, index: number) =>
@@ -280,9 +278,7 @@ const DeveloperDataSection = () => {
 
   return (
     <FlatList
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
+      contentContainerStyle={styles.listContent}
       data={filteredDevDataCopyListItems}
       ItemSeparatorComponent={() => <Divider />}
       keyExtractor={(item: DevDataCopyListItem, index: number) =>
@@ -456,9 +452,7 @@ const PlaygroundsSection = () => {
 
   return (
     <FlatList
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
+      contentContainerStyle={styles.listContent}
       data={filteredPlaygroundsNavListItems}
       ItemSeparatorComponent={() => <Divider />}
       keyExtractor={(item: PlaygroundsNavListItem, index: number) =>
@@ -581,9 +575,7 @@ const DeveloperTestEnvironmentSection = ({
 
   return (
     <FlatList
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
+      contentContainerStyle={styles.listContent}
       data={testEnvironmentsListItems}
       ItemSeparatorComponent={() => <Divider />}
       keyExtractor={(item: TestEnvironmentsListItem, index: number) =>
@@ -676,5 +668,11 @@ const DeveloperModeSection = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  listContent: {
+    paddingHorizontal: IODimensions.padding.screen.default
+  }
+});
 
 export default DeveloperModeSection;

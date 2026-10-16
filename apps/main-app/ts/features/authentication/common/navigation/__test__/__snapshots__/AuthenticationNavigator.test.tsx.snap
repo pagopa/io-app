@@ -2082,7 +2082,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           {
                                             "borderColor": "#E8EBF1",
                                           },
-                                          false,
                                         ]
                                       }
                                       style={
@@ -2101,7 +2100,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           {
                                             "borderColor": "#E8EBF1",
                                           },
-                                          false,
                                           {
                                             "transform": [
                                               {
@@ -2323,7 +2321,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           {
                                             "borderColor": "#E8EBF1",
                                           },
-                                          false,
                                         ]
                                       }
                                       style={
@@ -2342,7 +2339,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           {
                                             "borderColor": "#E8EBF1",
                                           },
-                                          false,
                                           {
                                             "transform": [
                                               {
@@ -2583,30 +2579,40 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           {
                                             "alignSelf": "center",
                                             "flex": 1,
-                                            "gap": 4,
+                                            "gap": 12,
                                           }
                                         }
                                       >
-                                        <Text
-                                          allowFontScaling={true}
-                                          dynamicTypeRamp="headline"
-                                          maxFontSizeMultiplier={1.5}
+                                        <View
                                           style={
-                                            [
-                                              {},
-                                              {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                                "lineHeight": 24,
-                                              },
-                                            ]
+                                            {
+                                              "display": "flex",
+                                              "flexDirection": "column",
+                                              "gap": 4,
+                                            }
                                           }
                                         >
-                                          Non sai cosa scegliere?
-                                        </Text>
+                                          <Text
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="headline"
+                                            maxFontSizeMultiplier={1.5}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#0E0F13",
+                                                  "fontFamily": "Titillio",
+                                                  "fontSize": 16,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 24,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            Non sai cosa scegliere?
+                                          </Text>
+                                        </View>
                                         <View
                                           accessibilityElementsHidden={true}
                                           accessibilityLabel="Ti diamo una mano"
@@ -2643,13 +2649,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           onStartShouldSetResponder={[Function]}
                                           pointerEvents="none"
                                         >
-                                          <View
-                                            style={
-                                              {
-                                                "height": 8,
-                                              }
-                                            }
-                                          />
                                           <Text
                                             accessibilityElementsHidden={true}
                                             accessible={false}
@@ -3700,7 +3699,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                             <View
                               style={
                                 {
-                                  "width": 32,
+                                  "width": 24,
                                 }
                               }
                             />

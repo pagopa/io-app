@@ -28,7 +28,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIONewTypeface, useIOTheme } from "../../context";
-import { hexToRgba, IOColors, IOSpacingScale } from "../../core";
+import { hexToRgba, IOColors, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import {
   IOFontSize,
@@ -37,7 +37,7 @@ import {
 } from "../../utils/fonts";
 import { getInputPropsByType, RNTextInputProps } from "../../utils/textInput";
 import { InputType, WithTestID } from "../../utils/types";
-import { Icon, IOIcons, IOIconSizeScale } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HSpacer } from "../layout";
 import { BodySmall } from "../typography";
 
@@ -72,18 +72,18 @@ type InputTextProps = WithTestID<{
   value: string;
 }>;
 
-const inputMarginTop: IOSpacingScale = 16;
-const inputHeight = 60;
-const inputPaddingHorizontal: IOSpacingScale = 12;
-const inputPaddingVertical: IOSpacingScale = 8;
-const inputRadius = 8;
+const inputMarginTop = IODimensions.padding.textInput.floatingLabel;
+const inputHeight = IODimensions.height.textInput;
+const inputPaddingHorizontal = IODimensions.padding.textInput.horizontal;
+const inputPaddingVertical = IODimensions.padding.textInput.vertical;
+const inputRadius = IODimensions.radius.textInput;
 const inputTransitionDuration = 250;
 const inputLabelScaleFactor = 0.75; /* 16pt becomes 12pt */
 const inputLabelFontSize: IOFontSize = 16;
 const inputDisabledOpacity = 0.5;
-const inputRightElementMargin: IOSpacingScale = 8;
-const iconSize: IOIconSizeScale = 24;
-const iconMargin: IOSpacingScale = 8;
+const inputRightElementMargin = IODimensions.gap.textInput.trailing;
+const iconSize = IODimensions.size.icon.textInput;
+const iconMargin = IODimensions.gap.textInput.leading;
 
 const styles = StyleSheet.create({
   textInput: {
@@ -96,13 +96,13 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill,
     borderRadius: inputRadius,
     borderCurve: "continuous",
-    borderWidth: 1
+    borderWidth: IODimensions.stroke.textInput.default
   },
   textInputInnerBorder: {
     ...StyleSheet.absoluteFill,
     borderRadius: inputRadius,
     borderCurve: "continuous",
-    borderWidth: 2
+    borderWidth: IODimensions.stroke.textInput.focused
   },
   textInputStyle: {
     flexGrow: 1,
@@ -310,7 +310,10 @@ export const TextInputBase = ({
           )
         },
         {
-          translateY: withTiming(enableTransition ? -12 : 0, easingConf)
+          translateY: withTiming(
+            enableTransition ? -IODimensions.offset.textInput.floatingLabel : 0,
+            easingConf
+          )
         },
         {
           scale: withTiming(

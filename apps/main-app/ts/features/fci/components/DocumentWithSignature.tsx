@@ -7,8 +7,8 @@ import {
   HSpacer,
   IconButton,
   IOColors,
-  IOSpacing,
-  IOSpacingScale,
+  IODimensions,
+  IODimensionScale,
   useFooterActionsMeasurements,
   useIOTheme,
   VSpacer
@@ -65,7 +65,7 @@ const DocumentWithSignature = (props: Props) => {
   const dispatch = useIODispatch();
   const onContinuePress = () => props.onClose();
 
-  const extraFooterActionsMargin: IOSpacingScale = 16;
+  const extraFooterActionsMargin: IODimensionScale = 16;
 
   const theme = useIOTheme();
 
@@ -245,7 +245,7 @@ const DocumentWithSignature = (props: Props) => {
           flex: 1,
           marginBottom:
             footerActionsMeasurements.safeBottomAreaHeight -
-            IOSpacing.screenEndMargin +
+            IODimensions.padding.screen.end +
             extraFooterActionsMargin
         }}
       >

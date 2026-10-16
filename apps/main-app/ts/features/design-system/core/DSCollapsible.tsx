@@ -13,6 +13,11 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 const assistanceData: Array<AccordionItem> = [
   {
     title: "Come posso pagare su IO?",
+    body: "Puoi pagare con carte di debito, credito e prepagate, con PayPal o BANCOMAT Pay.",
+    icon: "creditCard"
+  },
+  {
+    title: "Come posso pagare su IO?",
     body: "Puoi pagare con carte di debito, credito e prepagate, con PayPal o BANCOMAT Pay."
   },
   {
@@ -51,7 +56,7 @@ export const DSCollapsible = () => {
   );
 
   const renderItem = ({ item }: ListRenderItemInfo<AccordionItem>) => (
-    <AccordionItem body={item.body} title={item.title} />
+    <AccordionItem body={item.body} icon={item.icon} title={item.title} />
   );
 
   return (

@@ -1,8 +1,4 @@
-import {
-  HSpacer,
-  IOSpacingScale,
-  IOVisualCostants
-} from "@io-app/design-system";
+import { HSpacer, IODimensions, IODimensionScale } from "@io-app/design-system";
 import { FlatList, FlatListProps, StyleSheet } from "react-native";
 
 import { WithTestID } from "../../../../types/WithTestID";
@@ -17,7 +13,7 @@ export type PaymentCardsCarouselProps = WithTestID<{
   cards: Array<PaymentCardSmallProps>;
 }>;
 
-const PAYMENT_CARDS_SPACING: IOSpacingScale = 8;
+const PAYMENT_CARDS_SPACING: IODimensionScale = 8;
 const PAYMENT_CARD_TOTAL_WIDTH =
   PAYMENT_CARD_SMALL_WIDTH + PAYMENT_CARDS_SPACING;
 
@@ -63,8 +59,8 @@ const PaymentCardsCarouselSkeleton = ({ testID }: WithTestID<any>) => (
 
 const style = StyleSheet.create({
   list: {
-    marginHorizontal: -IOVisualCostants.appMarginDefault,
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    marginHorizontal: -IODimensions.padding.screen.default,
+    paddingHorizontal: IODimensions.padding.screen.default
   }
 });
 

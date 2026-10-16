@@ -6,7 +6,7 @@ import {
   View
 } from "react-native";
 
-import { IOColors, IOVisualCostants } from "../../core";
+import { IOColors, IODimensions } from "../../core";
 import { IconButton } from "../buttons";
 import { H4 } from "../typography";
 
@@ -15,9 +15,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    paddingTop: IOVisualCostants.appMarginDefault,
-    paddingBottom: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
+    paddingTop: IODimensions.padding.screen.default,
+    paddingBottom: IODimensions.padding.screen.default,
     backgroundColor: IOColors.white
   }
 });

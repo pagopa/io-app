@@ -367,17 +367,6 @@ const renderModuleIDP = () => {
           testID={`idp-${posteItem.id}-button`}
         />
       </DSComponentViewerBox>
-      <DSComponentViewerBox name="ModuleIDP, loose spacing (saved) variant">
-        <ModuleIDP
-          logo={{
-            light: posteItem.logo.light
-          }}
-          name={posteItem.name}
-          onPress={onButtonPress}
-          testID={`idp-${posteItem.id}-button`}
-          withLooseSpacing
-        />
-      </DSComponentViewerBox>
       <DSComponentViewerBox name="ModuleIDP, both color modes supported">
         <ModuleIDP
           logo={{

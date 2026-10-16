@@ -1,7 +1,7 @@
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
-import { IOListItemLogoMargin } from "../../core";
+import { IODimensions } from "../../core";
 import { addCacheTimestampToUri } from "../../utils/image";
 import { VStack } from "../layout";
 import { IOSkeleton } from "../skeleton";
@@ -33,7 +33,7 @@ type ModuleIDPProps = ModuleIDPContentProps | ModuleIDPLoadingProps;
 
 const styles = StyleSheet.create({
   idpLogo: {
-    marginStart: IOListItemLogoMargin,
+    marginStart: IODimensions.gap.module.trailing,
     width: 120,
     height: 28,
     resizeMode: "contain"
@@ -70,18 +70,13 @@ const ModuleIDPContent = ({
   name,
   onPress,
   testID,
-  withLooseSpacing,
   accessibilityLabel
 }: ModuleIDPContentProps) => {
   const theme = useIOTheme();
   const IDPLogoSource = useIDPLogo(logo);
 
   return (
-    <PressableModuleBase
-      onPress={onPress}
-      testID={testID}
-      withLooseSpacing={withLooseSpacing}
-    >
+    <PressableModuleBase onPress={onPress} testID={testID}>
       <IOText
         accessibilityLabel={accessibilityLabel ?? name}
         color={theme["textBody-tertiary"]}
@@ -113,10 +108,21 @@ const ModuleIDPSkeleton = ({
     accessibilityLabel={loadingAccessibilityLabel}
     accessibilityState={{ busy: true }}
     accessible={true}
-    endBlock={<IOSkeleton radius={8} shape="square" size={24} />}
+    endBlock={
+      <IOSkeleton
+        radius={IODimensions.radius.default}
+        shape="square"
+        size={24}
+      />
+    }
     startBlock={
       <VStack space={4}>
-        <IOSkeleton height={10} radius={8} shape="rectangle" width={100} />
+        <IOSkeleton
+          height={10}
+          radius={IODimensions.radius.default}
+          shape="rectangle"
+          width={100}
+        />
       </VStack>
     }
   />

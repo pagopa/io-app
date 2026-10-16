@@ -1,9 +1,4 @@
-import {
-  Body,
-  IOButton,
-  IOVisualCostants,
-  Pictogram
-} from "@io-app/design-system";
+import { Body, IOButton, IODimensions, Pictogram } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -78,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 24,
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     justifyContent: "center",
     alignItems: "center"
   },

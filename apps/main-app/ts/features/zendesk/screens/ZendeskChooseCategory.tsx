@@ -1,5 +1,5 @@
 import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
-import { Divider, IOVisualCostants, ListItemNav } from "@io-app/design-system";
+import { Divider, IODimensions, ListItemNav } from "@io-app/design-system";
 import I18n from "i18next";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 
@@ -100,7 +100,7 @@ const ZendeskChooseCategory = (props: Props) => {
     >
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
         data={categories}
         ItemSeparatorComponent={() => <Divider />}

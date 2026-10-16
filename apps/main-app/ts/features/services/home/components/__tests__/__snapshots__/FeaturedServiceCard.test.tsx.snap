@@ -425,9 +425,6 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                               [
                                 {
                                   "alignItems": "flex-start",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
                                   "flex": 1,
                                   "flexDirection": "column",
                                   "justifyContent": "space-between",
@@ -437,6 +434,9 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                 {
                                   "backgroundColor": "#F4F5F8",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
                                 },
                                 undefined,
                               ]
@@ -467,7 +467,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                       "backgroundColor": "#FFFFFF",
                                       "borderRadius": 12,
                                       "height": 66,
-                                      "padding": 9,
+                                      "padding": 8,
                                       "width": 66,
                                     },
                                   ]
@@ -482,7 +482,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                                         "overflow": "hidden",
                                       },
                                       {
-                                        "borderRadius": 3,
+                                        "borderRadius": 4,
                                       },
                                     ]
                                   }
@@ -986,9 +986,6 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                               [
                                 {
                                   "alignItems": "flex-start",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
                                   "flex": 1,
                                   "flexDirection": "column",
                                   "justifyContent": "space-between",
@@ -998,6 +995,9 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                 {
                                   "backgroundColor": "#F4F5F8",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
                                 },
                                 {
                                   "backgroundColor": "#EEE8FC",
@@ -1031,7 +1031,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                       "backgroundColor": "#FFFFFF",
                                       "borderRadius": 12,
                                       "height": 66,
-                                      "padding": 9,
+                                      "padding": 8,
                                       "width": 66,
                                     },
                                   ]
@@ -1046,7 +1046,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                                         "overflow": "hidden",
                                       },
                                       {
-                                        "borderRadius": 3,
+                                        "borderRadius": 4,
                                       },
                                     ]
                                   }
