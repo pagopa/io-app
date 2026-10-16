@@ -53,9 +53,9 @@ export const loginFlowReducer = (
   }
 };
 
-export const CURRENT_REDUX_LOGIN_FLOW_STORE_VERSION = 0;
+const CURRENT_REDUX_LOGIN_FLOW_STORE_VERSION = 0;
 
-export const loginFlowPersistConfig: PersistConfig = {
+const loginFlowPersistConfig: PersistConfig = {
   key: "loginFlow",
   storage: AsyncStorage,
   version: CURRENT_REDUX_LOGIN_FLOW_STORE_VERSION
