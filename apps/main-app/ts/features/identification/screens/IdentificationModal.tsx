@@ -437,7 +437,12 @@ export const IdentificationModal = () => {
                   />
                 </View>
               )}
-              <View accessible ref={headerRef} style={{ alignItems: "center" }}>
+              <View
+                accessibilityRole="header"
+                accessible
+                ref={headerRef}
+                style={{ alignItems: "center" }}
+              >
                 <VSpacer size={8} />
                 <H2 color={"white"} style={{ textAlign: "center" }}>
                   {titleLabel}
