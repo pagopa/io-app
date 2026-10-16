@@ -3154,7 +3154,7 @@ describe("itwEidIssuanceMachine credential trigger", () => {
     },
     { name: "the catalogue", credentialOfferUri: undefined }
   ])(
-    "keeps the credential trigger from $name on start and restart",
+    "keeps the credential trigger from $name on start and restart, dropping the offer for 1.0.0 specs",
     ({ credentialOfferUri }) => {
       const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
       actor.start();
@@ -3180,9 +3180,50 @@ describe("itwEidIssuanceMachine credential trigger", () => {
       });
       expect(actor.getSnapshot().context).toMatchObject({
         level: "l2-fallback",
+        itwVersion: "1.0.0",
         credentialType: "MDL",
-        credentialOfferUri
+        credentialOfferUri: undefined
       });
     }
   );
+
+  test.each([
+    {
+      name: "keeps the offer for an L3 issuance",
+      mode: "issuance",
+      level: "l3",
+      expected: T_CREDENTIAL_OFFER_URI
+    },
+    {
+      name: "keeps the offer for an upgrade",
+      mode: "upgrade",
+      level: "l2",
+      expected: T_CREDENTIAL_OFFER_URI
+    },
+    {
+      name: "drops the offer for an L2 issuance",
+      mode: "issuance",
+      level: "l2",
+      expected: undefined
+    },
+    {
+      name: "drops the offer for an L2 reissuance",
+      mode: "reissuance",
+      level: "l2",
+      expected: undefined
+    }
+  ] as const)("$name", ({ mode, level, expected }) => {
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+    actor.start();
+
+    actor.send({
+      type: "start",
+      mode,
+      level,
+      credentialType: "MDL",
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI
+    });
+
+    expect(actor.getSnapshot().context.credentialOfferUri).toBe(expected);
+  });
 });

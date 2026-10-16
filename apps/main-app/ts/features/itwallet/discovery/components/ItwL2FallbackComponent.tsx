@@ -22,14 +22,9 @@ import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/pr
 import { ITW_ROUTES } from "../../navigation/routes";
 
 type Props = {
-  /** Credential offer URI to resume after the activation, if any. */
-  credentialOfferUri?: string;
   credentialType?: string;
 };
-export const ItwL2FallbackComponent = ({
-  credentialType,
-  credentialOfferUri
-}: Props) => {
+export const ItwL2FallbackComponent = ({ credentialType }: Props) => {
   const navigation = useIONavigation();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
@@ -64,9 +59,7 @@ export const ItwL2FallbackComponent = ({
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: {
-        level: "l2-fallback",
-        credentialType,
-        credentialOfferUri
+        level: "l2-fallback"
       }
     });
   };

@@ -27,20 +27,11 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
 import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
 
-type Props = {
-  /** Credential offer URI to resume after the activation, if any. */
-  credentialOfferUri?: string;
-  credentialType?: string;
-};
-
 /**
  * This is the component that shows the information about about the activation
  * of Documenti su IO after an user chooses to not use IT-WAllet
  */
-export const ItwDiscoveryInfoFallbackComponent = ({
-  credentialType,
-  credentialOfferUri
-}: Props) => {
+export const ItwDiscoveryInfoFallbackComponent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
@@ -54,11 +45,9 @@ export const ItwDiscoveryInfoFallbackComponent = ({
       machineRef.send({
         type: "start",
         mode: "issuance",
-        level: "l2-fallback",
-        credentialType,
-        credentialOfferUri
+        level: "l2-fallback"
       });
-    }, [machineRef, credentialType, credentialOfferUri])
+    }, [machineRef])
   );
 
   const dismissalDialog = useItwDismissalDialog({
