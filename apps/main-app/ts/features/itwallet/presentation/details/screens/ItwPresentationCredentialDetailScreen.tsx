@@ -253,7 +253,7 @@ export const ItwPresentationCredentialDetail = ({
     if (!isL3Credential && contentClaim !== undefined) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
-        icon: "docPaymentTitle",
+        icon: "docTitle",
         onPress: () => {
           if (mixPanelCredential === "ITW_TS_V2") {
             trackWalletCredentialShowFAC_SIMILE();
