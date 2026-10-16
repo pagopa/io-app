@@ -17,8 +17,13 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIOSelector } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
 import { useOneIdentityLoginSource } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
+import { trackLoginOIConfigurationError } from "../../../common/analytics";
 import { oneIdentityCieNativeRedirectsEnabledSelector } from "../../../common/store/selectors/remoteConfig";
-import { AUTH_LEVELS, onLoginUriChanged } from "../../../common/utils";
+import {
+  AUTH_LEVELS,
+  isOneIdentityErrorUrl,
+  onLoginUriChanged
+} from "../../../common/utils";
 import { defaultUserAgent } from "../../../common/utils/cie";
 import { LoginType } from "../../../common/utils/index";
 import {
@@ -119,6 +124,10 @@ export const OneIdentityCieAuthenticationWebView = ({
   const handleShouldStartLoadWithRequest = useCallback(
     (event: WebViewNavigation): boolean => {
       const url = event.url;
+
+      if (isOneIdentityErrorUrl(url)) {
+        trackLoginOIConfigurationError(url, flow);
+      }
 
       if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
         return false;

@@ -87,17 +87,20 @@ export const itwIsCredentialsCatalogueStale = (state: GlobalState) => {
 
 /**
  * Return a dictionary that maps each credential type to its metadata in the
- * catalogue.
+ * catalogue. Lookups return `undefined` for credential types that are not in
+ * the catalogue.
  */
 export const itwCredentialsCatalogueByTypesSelector = createSelector(
   itwCredentialsCatalogueSelector,
   catalogue =>
-    catalogue?.credentials.reduce(
+    catalogue?.credentials.reduce<
+      Partial<Record<string, DigitalCredentialMetadata>>
+    >(
       (acc, credential) => ({
         ...acc,
         [credential.credential_type]: credential
       }),
-      {} as Record<string, DigitalCredentialMetadata>
+      {}
     )
 );
 
@@ -146,6 +149,21 @@ export const itwCatalogueTranslationsByLocaleSelector = createSelector(
 );
 
 /**
+ * Resolves the credential name from the catalogue metadata, preferring the
+ * translation of `name_l10n_id` over the static `name`. Returns `undefined`
+ * when the credential type is not in the catalogue.
+ */
+const getCatalogueCredentialName = (
+  metadata: DigitalCredentialMetadata | undefined,
+  translations: Record<string, string>
+): string | undefined => {
+  const translatedName = metadata?.name_l10n_id
+    ? translations[metadata.name_l10n_id]
+    : undefined;
+  return translatedName || metadata?.name;
+};
+
+/**
  * Returns a resolver function that resolves a credential display name. When the
  * credentials catalogue feature flag is enabled, names are resolved using
  * catalogue translations (v1.3.3+) when available, falling back to the
@@ -166,11 +184,10 @@ export const itwCredentialNameResolverSelector = createSelector(
   (isCatalogueEnabled, catalogue, translations, withL3Design) =>
     (credentialType: string | undefined, withDefault = ""): string => {
       if (isCatalogueEnabled && credentialType && catalogue && translations) {
-        const catalogueMeta = catalogue[credentialType];
-        const resolvedName =
-          (catalogueMeta.name_l10n_id &&
-            translations[catalogueMeta.name_l10n_id]) ||
-          catalogueMeta.name;
+        const resolvedName = getCatalogueCredentialName(
+          catalogue[credentialType],
+          translations
+        );
         if (resolvedName) {
           return resolvedName;
         }

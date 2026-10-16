@@ -115,7 +115,7 @@ const OneIdentityCieIdLoginScreenContent = ({
 
   const handleLoginSuccess = useCallback(
     (token: string) => {
-      dispatch(loginSuccess({ token, idp: "cieid" }));
+      dispatch(loginSuccess({ token, idp: "cieid", isOneIdentityLogin: true }));
     },
     [dispatch]
   );

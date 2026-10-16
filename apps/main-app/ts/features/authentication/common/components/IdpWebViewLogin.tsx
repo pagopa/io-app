@@ -21,12 +21,14 @@ import {
 import { getUrlBasepath } from "../../../../utils/url";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { trackSpidLoginIntent } from "../../activeSessionLogin/screens/analytics";
+import { trackLoginOIConfigurationError } from "../../common/analytics";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
 import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { idpLoginUrlChanged } from "../store/actions";
 import {
   AUTH_LEVELS,
   getIntentFallbackUrl,
+  isOneIdentityErrorUrl,
   LOGIN_TYPES,
   LoginType,
   onLoginUriChanged,
@@ -141,7 +143,9 @@ export const IdpWebViewLogin = memo(
     const handleLoginFailure = useCallback(
       (code?: string, message?: string) => {
         const reason = code
-          ? `login failed with code (${code}) : ${getSpidErrorCodeDescription(code)}`
+          ? `login failed with code (${code}) : ${getSpidErrorCodeDescription(
+              code
+            )}`
           : message
             ? `login failed with message ${message}`
             : "login failed with no error code or message available";
@@ -166,6 +170,11 @@ export const IdpWebViewLogin = memo(
     const handleShouldStartLoading = useCallback(
       (event: WebViewNavigation): boolean => {
         const url = event.url;
+
+        if (isOneIdentityErrorUrl(url)) {
+          trackLoginOIConfigurationError(url, flow);
+        }
+
         // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
         const idpIntent = getIntentFallbackUrl(url);
         if (idpIntent != null) {
@@ -184,8 +193,7 @@ export const IdpWebViewLogin = memo(
           idp.id as keyof IdpData,
           flow
         )(event);
-        // URL can be loaded if it's not the login URL containing the session token - this avoids
-        // making a (useless) GET request with the session in the URL
+        // URL can be loaded if it's not containing the token
         return !isLoginUrlWithToken;
       },
       [

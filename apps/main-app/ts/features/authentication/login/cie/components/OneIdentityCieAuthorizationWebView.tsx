@@ -126,7 +126,13 @@ const OneIdentityCieAuthorizationWebViewContent = ({
 
   const handleLoginSuccess = useCallback(
     (token: string) => {
-      dispatch(loginSuccess({ token, idp: "cie" as keyof IdpData }));
+      dispatch(
+        loginSuccess({
+          token,
+          idp: "cie" as keyof IdpData,
+          isOneIdentityLogin: true
+        })
+      );
     },
     [dispatch]
   );
