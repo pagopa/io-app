@@ -1,4 +1,4 @@
-import { GestureResponderEvent, Pressable } from "react-native";
+import { GestureResponderEvent, Platform, Pressable } from "react-native";
 import Animated, {
   interpolateColor,
   useAnimatedProps,
@@ -12,7 +12,7 @@ import {
   IOIconButtonStyles,
   IOThemeLight
 } from "../../core";
-import { useScaleAnimation } from "../../hooks";
+import { useKeyboardFocus, useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import {
   AnimatedIcon,
@@ -51,6 +51,7 @@ export const IconButton = ({
   accessibilityHint,
   testID
 }: IconButton) => {
+  const { onFocus, onBlur, focusStyle } = useKeyboardFocus(disabled);
   const theme = useIOTheme();
   const { progress, onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("exaggerated");
@@ -109,15 +110,22 @@ export const IconButton = ({
       accessibilityRole={"button"}
       accessibilityState={{ disabled }}
       // Accessibility
-      accessible={true}
+      accessible={Platform.OS !== "android" || !disabled}
       disabled={disabled}
+      focusable={disabled ? false : undefined}
       // Usability
       // Add a touchable area around the button
       hitSlop={8}
+      importantForAccessibility={
+        Platform.OS === "android" && disabled ? "yes" : undefined
+      }
       // Events
+      onBlur={onBlur}
+      onFocus={onFocus}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      style={focusStyle}
       // Test
       testID={testID}
     >

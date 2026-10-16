@@ -3,6 +3,7 @@ import {
   AccessibilityRole,
   ColorValue,
   GestureResponderEvent,
+  Platform,
   Pressable,
   PressableProps,
   StyleSheet,
@@ -23,7 +24,7 @@ import {
   IOTypography
 } from "../../../core";
 import { triggerHaptic } from "../../../functions";
-import { useScaleAnimation } from "../../../hooks";
+import { useKeyboardFocus, useScaleAnimation } from "../../../hooks";
 import { WithTestID } from "../../../utils/types";
 import {
   AnimatedIcon,
@@ -110,6 +111,7 @@ export const IOButton = ({
   ref,
   testID
 }: IOButtonProps) => {
+  const { onFocus, onBlur, focusStyle } = useKeyboardFocus(disabled ?? false);
   const mapColorStates = useButtonColorMap(variant);
   const { progress, onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation();
@@ -275,20 +277,27 @@ export const IOButton = ({
         busy: loading,
         disabled: disabled || false
       }}
-      accessible={true}
+      accessible={Platform.OS !== "android" || !disabled}
       disabled={disabled}
+      focusable={!disabled}
       hitSlop={isLinkButton ? btnLinkHitSlop : undefined}
+      importantForAccessibility={
+        Platform.OS === "android" && disabled ? "yes" : undefined
+      }
+      onBlur={onBlur}
+      onFocus={onFocus}
       onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       ref={ref}
-      style={
-        isLinkButton
+      style={{
+        ...(isLinkButton
           ? { alignSelf: "flex-start" }
           : fullWidth
             ? { flexShrink: 0, alignSelf: "stretch" }
-            : { flexShrink: 1, alignSelf: "auto" }
-      }
+            : { flexShrink: 1, alignSelf: "auto" }),
+        ...focusStyle
+      }}
       testID={testID}
     >
       <Animated.View
