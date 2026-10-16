@@ -1,4 +1,4 @@
-import { assign, not } from "xstate";
+import { not } from "xstate";
 
 import { InitialContext } from "./context";
 import { itwProximityMachineSetup } from "./setup";
@@ -14,7 +14,6 @@ export const itwProximityMachine = itwProximityMachineSetup.createMachine({
   states: {
     Idle: {
       description: "Initial state, awaiting the start of the flow",
-      entry: assign({ proximityStartTracked: false }),
       on: {
         start: {
           target: "Bluetooth"

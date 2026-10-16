@@ -854,14 +854,16 @@ describe("itwProximityMachine", () => {
       snapshot: makeSnapshot("Success", {
         engagementMode: "nfc",
         retrievalMethod: "nfc",
-        proximityStartTracked: true
+        grantedConsentKey: generateConsentKey(
+          getConsentDataFromProximityDetails(T_PROXIMITY_DETAILS)
+        )
       })
     });
 
     actor.start();
-    expect(actor.getSnapshot().context.proximityStartTracked).toBe(true);
+    expect(actor.getSnapshot().context.grantedConsentKey).toBeDefined();
     actor.send({ type: "close" });
-    expect(actor.getSnapshot().context.proximityStartTracked).toBe(false);
+    expect(actor.getSnapshot().context.grantedConsentKey).toBeUndefined();
 
     const nextActor = createActor(mockedMachine, {
       input: { deps: T_DEPS },

@@ -91,9 +91,8 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       {
         actions: [
           enqueueActions(({ context, enqueue }) => {
-            if (!context.proximityStartTracked) {
+            if (!context.grantedConsentKey) {
               enqueue("trackProximityStart");
-              enqueue.assign({ proximityStartTracked: true });
             }
           }),
           assign(({ event }) => ({
