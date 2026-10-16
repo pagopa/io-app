@@ -25,7 +25,6 @@ import authenticationReducer, {
   INITIAL_STATE as authenticationInitialState,
   AuthenticationState
 } from "../../features/authentication/common/store/reducers";
-import { loginConfigInitialState } from "../../features/authentication/common/store/reducers/loginConfig";
 import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
@@ -261,11 +260,11 @@ export function createRootReducer(
                   isCieIDTourGuideEnabled:
                     state.features.loginFeatures.cieLogin
                       .isCieIDTourGuideEnabled,
+                  useUat: state.features.loginFeatures.cieLogin.useUat,
                   _persist: state.features.loginFeatures.cieLogin._persist
                 },
                 loginConfig: {
-                  ...loginConfigInitialState,
-                  _persist: state.features.loginFeatures.loginConfig._persist
+                  ...state.features.loginFeatures.loginConfig
                 },
                 activeSessionLogin: {
                   ...activeSessionLoginInitialState,
@@ -330,6 +329,10 @@ export function createRootReducer(
                 .isFingerprintEnabled
                 ? true
                 : undefined
+            },
+            debug: {
+              ...state.debug,
+              debugData: {}
             },
             lollipop: {
               ...initialLollipopState,

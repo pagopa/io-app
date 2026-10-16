@@ -67,6 +67,12 @@ const initiativeData: {
     initiativeName: "Bonus Elettrodomestici"
   },
 
+  [IDPayServiceID.OK_BONUS_DECODER]: {
+    ...createRandomInitiativeDataDTO(),
+    initiativeId: initiativeIdToString(IDPayInitiativeID.OK_BONUS_DECODER),
+    initiativeName: "Bonus Decoder"
+  },
+
   [IDPayServiceID.KO_STATUS_NOT_ELIGIBLE]: {
     ...createRandomInitiativeDataDTO(),
     initiativeId: initiativeIdToString(
@@ -133,6 +139,13 @@ const initiativeData: {
     ...createRandomInitiativeDataDTO(),
     initiativeId: initiativeIdToString(IDPayInitiativeID.KO_TOO_MANY_REQUESTS),
     initiativeName: "Iniziativa - Troppe richieste"
+  },
+  [IDPayServiceID.KO_USER_BONUS_ALREADY_USED]: {
+    ...createRandomInitiativeDataDTO(),
+    initiativeId: initiativeIdToString(
+      IDPayInitiativeID.KO_USER_BONUS_ALREADY_USED
+    ),
+    initiativeName: "Iniziativa - Bonus già utilizzato"
   }
 };
 

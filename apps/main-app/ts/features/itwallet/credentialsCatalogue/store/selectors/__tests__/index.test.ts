@@ -1,9 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 
 import {
   itwAvailableCredentialsListSelector,
   itwCatalogueTranslationsByLocaleSelector,
   itwCredentialIntroContentSelector,
+  itwCredentialNameResolverSelector,
   itwCredentialsCatalogueByTypesSelector,
   itwCredentialsCatalogueSelector,
   itwCredentialTypeFromDocTypeSelector
@@ -205,6 +207,69 @@ describe("itwCredentialTypeFromDocTypeSelector", () => {
   });
 });
 
+describe("itwCredentialNameResolverSelector", () => {
+  type Scenario = {
+    credentialType: string;
+    expected: string;
+    name: string;
+    translations: Record<string, string>;
+    withDefault?: string;
+  };
+
+  it.each<Scenario>([
+    {
+      name: "the translated catalogue name",
+      credentialType: "cred2",
+      translations: { "cred2.name": "Credenziale 2" },
+      expected: "Credenziale 2"
+    },
+    {
+      name: "the static catalogue name when the translation is missing",
+      credentialType: "cred2",
+      translations: {},
+      expected: "Credential 2"
+    },
+    {
+      name: "the hardcoded name when the type is not in the catalogue",
+      credentialType: "education_diploma",
+      translations: {},
+      expected: I18n.t("features.itWallet.credentialName.edip")
+    },
+    {
+      name: "the default when the type is unknown",
+      credentialType: "unknown_type",
+      translations: {},
+      withDefault: "Default name",
+      expected: "Default name"
+    }
+  ])(
+    "should resolve $name",
+    ({ credentialType, translations, withDefault, expected }) => {
+      const state = buildState({
+        isEnabledForCredentialsList: true,
+        catalogue: pot.some(mockCatalogue),
+        translations: pot.some({ it: translations })
+      });
+
+      expect(
+        itwCredentialNameResolverSelector(state)(credentialType, withDefault)
+      ).toBe(expected);
+    }
+  );
+
+  it("should use the hardcoded name when the catalogue is not enabled", () => {
+    const state = buildState({
+      isEnabledForCredentialsList: false,
+      catalogue: pot.some(mockCatalogue),
+      translations: pot.some({ it: { "cred2.name": "Credenziale 2" } })
+    });
+
+    expect(itwCredentialNameResolverSelector(state)("cred2", "Fallback")).toBe(
+      "Fallback"
+    );
+  });
+});
+
 describe("itwAvailableCredentialsListSelector", () => {
   it("should return the list of credentials from the catalogue when it is enabled", () => {
     const state = buildState({
@@ -253,25 +318,40 @@ describe("itwAvailableCredentialsListSelector", () => {
     });
 
     expect(itwAvailableCredentialsListSelector(state)).toEqual([
-      { name: "Patente di guida", type: "mDL" },
       {
-        name: "Carta Europea della Disabilità",
+        name: I18n.t("features.itWallet.credentialName.mdl"),
+        type: "mDL"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.dc"),
         type: "EuropeanDisabilityCard"
       },
       {
-        name: "Tessera Sanitaria - Tessera europea di assicurazione malattia",
+        name: I18n.t("features.itWallet.credentialName.ts"),
         type: "EuropeanHealthInsuranceCard"
       },
-      { name: "Età certificata", type: "proof_of_age" },
-      { name: "Titoli accademici", type: "education_degree" },
       {
-        name: "Iscrizioni accademiche",
+        name: I18n.t("features.itWallet.credentialName.av"),
+        type: "proof_of_age"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.ed"),
+        type: "education_degree"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.ee"),
         type: "education_enrollment"
       },
-      { name: "Attestato di residenza", type: "residency" },
-      { name: "Diplomi", type: "education_diploma" },
       {
-        name: "Frequenza scolastica",
+        name: I18n.t("features.itWallet.credentialName.res"),
+        type: "residency"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.edip"),
+        type: "education_diploma"
+      },
+      {
+        name: I18n.t("features.itWallet.credentialName.edat"),
         type: "education_attendance"
       }
     ]);
