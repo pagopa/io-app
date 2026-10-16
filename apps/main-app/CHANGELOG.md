@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.42.0-rc.1](https://github.com/pagopa/io-app/compare/3.42.0-rc.0...3.42.0-rc.1) (2026-10-16)
+
+### Chores
+
+* [[SIW-5365](https://pagopa.atlassian.net/browse/SIW-5365)] remove `handleAuthLevelSanitizationSaga` ([#8756](https://github.com/pagopa/io-app/issues/8756)) ([58e92f4](https://github.com/pagopa/io-app/commit/58e92f481482aa270f04970c60adea54d23e2c79))
 ## [3.42.0-rc.0](https://github.com/pagopa/io-app/compare/3.41.0-rc.7...3.42.0-rc.0) (2026-10-16)
 ## [3.41.0-rc.7](https://github.com/pagopa/io-app/compare/3.41.0-rc.6...3.41.0-rc.7) (2026-10-16)
 
