@@ -33,6 +33,7 @@ patchedDependencies:
 allowBuilds:
   "@shopify/react-native-skia": true
   "@swc/core": true
+  cbor-extract: true
   core-js: true
   lefthook: true
   nx: true
@@ -88,5 +89,4 @@ catalog:
   react-native-svg: "^15.14.0"
 
 minimumReleaseAgeExclude:
-  - "@pagopa/io-react-native-jwt@2.2.5"
-  - "@pagopa/io-react-native-iso18013@0.8.5"
+  - "@pagopa/io-react-native-wallet@3.8.3"
