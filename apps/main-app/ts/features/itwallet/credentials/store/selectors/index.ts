@@ -231,6 +231,26 @@ export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
 );
 
 /**
+ * Returns whether the wallet has at least one credential and all of them are
+ * expired. The eID is not considered, only other (Q)EAAs.
+ *
+ * @param state - The global state.
+ * @returns Whether all the credentials are expired.
+ */
+export const itwAreAllCredentialsExpiredSelector = createSelector(
+  itwCredentialsSelector,
+  credentials => {
+    const list = Object.values(credentials);
+    return (
+      list.length > 0 &&
+      list.every(c =>
+        ["expired", "jwtExpired"].includes(getCredentialStatus(c))
+      )
+    );
+  }
+);
+
+/**
  * Get the credential status corresponding to the status list/status assertion
  * error, if present.
  *

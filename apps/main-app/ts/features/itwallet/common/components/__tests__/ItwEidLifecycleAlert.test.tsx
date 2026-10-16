@@ -5,6 +5,7 @@ import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import * as credentialStatusMessage from "../../../credentials/hooks/useCredentialStatusMessage";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -166,6 +167,48 @@ describe("ItwEidLifecycleAlert", () => {
       fireEvent.press(
         getByTestId("itwEidInvalidBottomSheetUpdateButtonTestID")
       );
+
+      expect(mockNavigation.navigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+        params: { eidReissuing: true, level: "l3" }
+      });
+    });
+
+    it("should render the catalogue message in the bottom sheet", () => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(true);
+      jest
+        .spyOn(credentialStatusMessage, "useCredentialStatusMessage")
+        .mockReturnValue({
+          title: "Conferma identità",
+          description: "Conferma la tua identità per continuare."
+        });
+
+      const { getByText } = renderComponent({
+        lifecycleStatus: ["invalid"]
+      });
+
+      expect(
+        getByText("Conferma la tua identità per continuare.")
+      ).toBeTruthy();
+    });
+
+    it("should start the eID reissuance from the alert when all credentials are expired", () => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(true);
+      jest
+        .spyOn(credentialsSelectors, "itwAreAllCredentialsExpiredSelector")
+        .mockReturnValue(true);
+
+      const { getByText } = renderComponent({ lifecycleStatus: ["invalid"] });
+      expect(
+        getByText(
+          "Conferma la tua identità per continuare a usare il tuo portafoglio IT-Wallet."
+        )
+      ).toBeTruthy();
+      fireEvent.press(getByText("Conferma identità"));
 
       expect(mockNavigation.navigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,

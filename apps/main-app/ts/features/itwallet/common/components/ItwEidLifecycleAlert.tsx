@@ -8,6 +8,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import {
+  itwAreAllCredentialsExpiredSelector,
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
@@ -45,6 +46,9 @@ export const ItwEidLifecycleAlert = ({
   const eid = useIOSelector(itwCredentialsEidSelector);
   const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const areAllCredentialsExpired = useIOSelector(
+    itwAreAllCredentialsExpiredSelector
+  );
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
   const isOffline = offlineAccessReason !== undefined;
 
@@ -135,19 +139,31 @@ export const ItwEidLifecycleAlert = ({
           ),
           onPress: startEidReissuing
         },
-        invalid: {
-          testID: "itwEidLifecycleAlertTestID_invalid",
-          variant: "error",
-          content: I18n.t(
-            "features.itWallet.presentation.bottomSheets.eidInvalid.alert.content"
-          ),
-          action: I18n.t(
-            currentScreenName === ITW_ROUTES.PRESENTATION.PID_DETAIL
-              ? "features.itWallet.presentation.bottomSheets.eidInvalid.alert.action.detail"
-              : "features.itWallet.presentation.bottomSheets.eidInvalid.alert.action.wallet"
-          ),
-          onPress: eidInvalidBottomSheet.present
-        }
+        invalid: areAllCredentialsExpired
+          ? {
+              testID: "itwEidLifecycleAlertTestID_invalid",
+              variant: "error",
+              content: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInvalid.alert.allExpired.content"
+              ),
+              action: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInvalid.alert.allExpired.action"
+              ),
+              onPress: startEidReissuing
+            }
+          : {
+              testID: "itwEidLifecycleAlertTestID_invalid",
+              variant: "error",
+              content: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInvalid.alert.content"
+              ),
+              action: I18n.t(
+                currentScreenName === ITW_ROUTES.PRESENTATION.PID_DETAIL
+                  ? "features.itWallet.presentation.bottomSheets.eidInvalid.alert.action.detail"
+                  : "features.itWallet.presentation.bottomSheets.eidInvalid.alert.action.wallet"
+              ),
+              onPress: eidInvalidBottomSheet.present
+            }
       };
 
       if (offlineAccessReason !== undefined && !isItwCredential) {
