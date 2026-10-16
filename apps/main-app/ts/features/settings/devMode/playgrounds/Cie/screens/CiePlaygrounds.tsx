@@ -65,33 +65,33 @@ export const CiePlaygrounds = () => {
 
   const tests: ReadonlyArray<ListItemNav> = [
     {
-      value: "Read CIE attributes",
+      label: "Read CIE attributes",
       icon: "creditCard",
       onPress: () => navigation.navigate(CIE_PLAYGROUNDS_ROUTES.ATTRIBUTES)
     },
     {
-      value: "Read CIE certificate",
+      label: "Read CIE certificate",
       icon: "creditCard",
       onPress: () =>
         navigation.navigate(CIE_PLAYGROUNDS_ROUTES.CERTIFICATE_READING)
     },
     {
-      value: "Start CIE Auth",
+      label: "Start CIE Auth",
       icon: "cieLetter",
       onPress: () => navigation.navigate(CIE_PLAYGROUNDS_ROUTES.AUTHENTICATION)
     },
     {
-      value: "Start CIE Internal Auth",
+      label: "Start CIE Internal Auth",
       icon: "selfCert",
       onPress: () => navigation.navigate(CIE_PLAYGROUNDS_ROUTES.INTERNAL_AUTH)
     },
     {
-      value: "Start MRTD with PACE reading",
+      label: "Start MRTD with PACE reading",
       icon: "fiscalCodeIndividual",
       onPress: () => navigation.navigate(CIE_PLAYGROUNDS_ROUTES.MRTD)
     },
     {
-      value: "Start CIE Internal Auth + MRTD reading",
+      label: "Start CIE Internal Auth + MRTD reading",
       icon: "navWalletFocused",
       onPress: () =>
         navigation.navigate(CIE_PLAYGROUNDS_ROUTES.INTERNAL_AUTH_MRTD)
@@ -119,7 +119,7 @@ export const CiePlaygrounds = () => {
       <ListItemHeader label="Tests" />
       <VStack space={4}>
         {tests.map((item, index) => (
-          <Fragment key={`home-screen-fragment-${item.value}-${index}`}>
+          <Fragment key={`home-screen-fragment-${item.label}-${index}`}>
             {index !== 0 && <Divider />}
             <ListItemNav {...item} />
           </Fragment>
@@ -129,8 +129,8 @@ export const CiePlaygrounds = () => {
             <Divider />
             <ListItemNav
               icon="coggle"
+              label="Open NFC Settings"
               onPress={() => void CieUtils.openNfcSettings()}
-              value="Open NFC Settings"
             />
           </>
         )}
@@ -139,8 +139,8 @@ export const CiePlaygrounds = () => {
             <Divider />
             <ListItemNav
               icon="docAttach"
+              label="View logs"
               onPress={() => void obtainLogs()}
-              value="View logs"
             />
           </>
         )}

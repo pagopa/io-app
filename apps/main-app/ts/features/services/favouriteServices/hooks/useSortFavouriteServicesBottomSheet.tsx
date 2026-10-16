@@ -18,19 +18,19 @@ const useSortFavouriteServicesBottomSheet = () => {
   const sortTypeOptions: Array<RadioItem<FavouriteServicesSortType>> = [
     {
       id: "addedAt_desc",
-      value: I18n.t(
+      label: I18n.t(
         "services.favouriteServices.bottomSheet.content.addedAt_desc"
       )
     },
     {
       id: "addedAt_asc",
-      value: I18n.t(
+      label: I18n.t(
         "services.favouriteServices.bottomSheet.content.addedAt_asc"
       )
     },
     {
       id: "name_asc",
-      value: I18n.t("services.favouriteServices.bottomSheet.content.name_asc")
+      label: I18n.t("services.favouriteServices.bottomSheet.content.name_asc")
     }
   ];
 

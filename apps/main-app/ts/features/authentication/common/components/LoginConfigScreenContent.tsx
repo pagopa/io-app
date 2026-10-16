@@ -36,20 +36,20 @@ const LOGIN_FLOW_OPTIONS: ReadonlyArray<
   {
     accessibilityLabel: "Usa solo IO",
     id: false,
-    value: "Usa solo IO",
+    label: "Usa solo IO",
     description: "Forza le login in ingresso ad utilizzare lo stack di IO."
   },
   {
     accessibilityLabel: "Usa solo OneIdentity",
     id: true,
-    value: "Usa solo OneIdentity",
+    label: "Usa solo OneIdentity",
     description:
       "Forza le login in ingresso ad utilizzare lo stack di OneIdentity."
   },
   {
     accessibilityLabel: "Automatico",
     id: undefined,
-    value: "Automatico",
+    label: "Automatico",
     description:
       "Questo è il normale funzionamento dell'app. Usa questa opzione per l'utilizzo comune."
   }
@@ -136,18 +136,18 @@ export const LoginConfigScreenContent = ({
       <ListItemCheckbox
         description="Questa opzione serve agli sviluppatori per testare la login con OneIdentity in ambiente di UAT."
         disabled={disabled}
+        label="Abilita ambiente di UAT OneIdentity"
         onValueChange={handleOneIdentityEnv}
         selected={oneIdentityEnv === ONE_IDENTITY_ENVS.UAT}
-        value="Abilita ambiente di UAT OneIdentity"
       />
       <VSpacer size={24} />
       <ListItemHeader label="Environment CIE" />
       <ListItemCheckbox
         description="Questa opzione serve agli sviluppatori per testare la login con OneIdentity in ambiente di UAT e la CIE in ambiente di preproduzione (L3)."
         disabled={disabled}
+        label="Abilita endpoint di preproduzione"
         onValueChange={handleCieEnv}
         selected={useCieUat}
-        value="Abilita endpoint di preproduzione"
       />
       <VSpacer size={24} />
     </>
