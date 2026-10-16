@@ -75,8 +75,10 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 /** Component that renders the credential detail screen. */
-export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
-  const navigation = useIONavigation();
+export const ItwPresentationCredentialDetailScreen = ({
+  navigation,
+  route
+}: Props) => {
   const { credentialType } = route.params;
 
   const isL3 = useIOSelector(itwIsL3EnabledSelector);
@@ -105,11 +107,8 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
             "features.itWallet.issuance.walletInstanceNotActive.primaryAction"
           ),
           onPress: () =>
-            navigation.replace(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.DISCOVERY.INFO,
-              params: {
-                level: isL3 ? "l3" : "l2"
-              }
+            navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
+              level: isL3 ? "l3" : "l2"
             })
         }}
         pictogram="itWallet"

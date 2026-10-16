@@ -1176,6 +1176,11 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-new-credential" });
 
     expect(navigateToCredentialCatalog).toHaveBeenCalledTimes(1);
+    expect(onInit).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     // entry does not re-fire when resuming from a snapshot, so storeWalletActivationFeedbackBannerData
     // is never called in this path (it only fires on entry when credentialType is set)
     expect(storeWalletActivationFeedbackBannerData).not.toHaveBeenCalled();
