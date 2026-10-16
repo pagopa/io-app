@@ -274,7 +274,7 @@ importers:
         version: 2.4.0
       uuid:
         specifier: ^14.0.2
-        version: 14.0.2
+        version: 14.0.3
       xml2js:
         specifier: ^0.5.0
         version: 0.5.0
@@ -731,7 +731,7 @@ importers:
         version: 1.5.9
       uuid:
         specifier: ^14.0.2
-        version: 14.0.2
+        version: 14.0.3
       validator:
         specifier: ^13.7.0
         version: 13.7.0
@@ -11489,10 +11489,6 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
-
-  uuid@11.1.1:
-    resolution: {integrity: sha512-vIYxrBCC/N/K+Js3qSN88go7kIfNPssr/hHCesKCQNAjmgvYS2oqr69kIufEG+O4+PfezOH4EbIeHCfFov8ZgQ==}
-    hasBin: true
 
   uuid@14.0.3:
     resolution: {integrity: sha512-Sc5u1VVln93y1Xnz4R+CunOZc7R9LUcTmhj7Rc7Eg3HVcf7rVn2FOoa812fe0W8p3jD7xeoGSYbfqCGGH2B6xw==}
@@ -29037,8 +29033,6 @@ snapshots:
       which-typed-array: 1.1.19
 
   utils-merge@1.0.1: {}
-
-  uuid@11.1.1: {}
 
   uuid@14.0.3: {}
 
