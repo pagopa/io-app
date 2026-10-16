@@ -191,7 +191,6 @@ export const itwCredentialNameResolverSelector = createSelector(
     }
 );
 
-
 /**
  * Returns a resolver function that gets a credential type from an mdoc document
  * type.
