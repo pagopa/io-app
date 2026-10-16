@@ -126,7 +126,11 @@ describe("OneIdentityIdpLoginScreen", () => {
     });
 
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginSuccess({ token: "session-token", idp: mockIdp.id as keyof IdpData })
+      loginSuccess({
+        token: "session-token",
+        idp: mockIdp.id as keyof IdpData,
+        isOneIdentityLogin: true
+      })
     );
   });
 
