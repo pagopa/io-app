@@ -40,7 +40,7 @@ export const credentialsUpgradeState =
               })),
               "storeCredentialUpgradeFailures"
             ],
-            target: "#itwEidIssuanceMachine.Success"
+            target: "#itwEidIssuanceMachine.RefreshingCredentialsCatalogue"
           },
           onError: {
             description:
