@@ -4,9 +4,9 @@ import {
   H4,
   IOButton,
   IOVisualCostants,
-  VSpacer,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+  useIOTheme,
+  VSpacer
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -46,9 +46,9 @@ export const NativeSheetFitToContents = () => {
         <VSpacer size={16} />
         <IOButton
           fullWidth
-          variant="solid"
           label="Dismiss"
           onPress={() => navigation.goBack()}
+          variant="solid"
         />
       </ContentWrapper>
     </View>
@@ -69,9 +69,9 @@ export const NativeSheetHalf = () => {
         <VSpacer size={16} />
         <IOButton
           fullWidth
-          variant="solid"
           label="Dismiss"
           onPress={() => navigation.goBack()}
+          variant="solid"
         />
       </ContentWrapper>
     </View>
@@ -92,9 +92,9 @@ export const NativeSheetTwoDetents = () => {
         <VSpacer size={16} />
         <IOButton
           fullWidth
-          variant="solid"
           label="Dismiss"
           onPress={() => navigation.goBack()}
+          variant="solid"
         />
       </ContentWrapper>
     </View>
@@ -116,9 +116,9 @@ export const NativeSheetLongContent = () => {
         <VSpacer size={IOVisualCostants.appMarginDefault} />
         <IOButton
           fullWidth
-          variant="solid"
           label="Dismiss"
           onPress={() => navigation.goBack()}
+          variant="solid"
         />
       </ContentWrapper>
     </ScrollView>
@@ -142,9 +142,9 @@ export const NativeSheetLongContentFit = () => {
         <VSpacer size={IOVisualCostants.appMarginDefault} />
         <IOButton
           fullWidth
-          variant="solid"
           label="Dismiss"
           onPress={() => navigation.goBack()}
+          variant="solid"
         />
       </ContentWrapper>
     </ScrollView>

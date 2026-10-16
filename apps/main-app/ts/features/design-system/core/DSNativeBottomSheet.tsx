@@ -1,5 +1,6 @@
-import { Divider, ListItemNav } from "@pagopa/io-app-design-system";
+import { Divider, ListItemNav } from "@io-app/design-system";
 import { View } from "react-native";
+
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
@@ -14,9 +15,9 @@ export const DSNativeBottomSheet = () => {
           (item, index, arr) => (
             <View key={item.route}>
               <ListItemNav
-                value={item.title}
                 accessibilityLabel={item.title}
                 onPress={() => navigation.navigate(item.route as any)}
+                value={item.title}
               />
               {index < arr.length - 1 && <Divider />}
             </View>
