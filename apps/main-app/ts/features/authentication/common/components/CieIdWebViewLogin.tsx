@@ -9,11 +9,17 @@ import {
 
 import { useIOStore } from "../../../../store/hooks";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
+import { trackLoginOIConfigurationError } from "../../common/analytics";
 import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
 import { getCieIdpId, isAuthenticationUrl } from "../../login/cie/utils";
 import { useCieIdApp } from "../hooks/useCieIdApp";
 import { oneIdentityAllowedCieOriginsSelector } from "../store/selectors/remoteConfig";
-import { AUTH_LEVELS, LOGIN_TYPES, onLoginUriChanged } from "../utils";
+import {
+  AUTH_LEVELS,
+  isOneIdentityErrorUrl,
+  LOGIN_TYPES,
+  onLoginUriChanged
+} from "../utils";
 import {
   defaultUserAgent,
   isAllowedUrl,
@@ -115,6 +121,10 @@ export const CieIdWebViewLogin = memo(
       (event: WebViewNavigation): boolean => {
         const url = event.url;
 
+        if (isOneIdentityErrorUrl(url)) {
+          trackLoginOIConfigurationError(url, flow);
+        }
+
         if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
           return false;
         }
@@ -131,8 +141,7 @@ export const CieIdWebViewLogin = memo(
           flow
         )(event);
 
-        // URL can be loaded if it's not the login URL containing the session token - this avoids
-        // making a (useless) GET request with the session in the URL
+        // URL can be loaded if it's not containing the token
         return !isLoginUrlWithToken;
       },
       [
