@@ -596,6 +596,7 @@ exports[`MessageDetailsHeader component should match the snapshot with a valid t
                                       "width": "100%",
                                     }
                                   }
+                                  testID="avatar_image"
                                 />
                               </View>
                             </View>
@@ -1191,6 +1192,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                       "width": "100%",
                                     }
                                   }
+                                  testID="avatar_image"
                                 />
                               </View>
                             </View>
