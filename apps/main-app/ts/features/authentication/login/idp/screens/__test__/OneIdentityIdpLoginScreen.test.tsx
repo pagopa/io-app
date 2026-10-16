@@ -155,8 +155,8 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        debugInfo: {
-          message: expect.stringContaining("(err-code)"),
+        failureData: {
+          reason: expect.stringContaining("(err-code)"),
           idp: mockIdp.id
         }
       }
@@ -180,8 +180,8 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        debugInfo: {
-          message: "Unexpected HTTP status 403",
+        failureData: {
+          description: "Unexpected HTTP status 403",
           code: 403,
           url: `${apiUrlPrefix}/some-path`,
           idp: mockIdp.id
@@ -221,8 +221,8 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        debugInfo: {
-          message: "Unexpected HTTP status 500",
+        failureData: {
+          description: "Unexpected HTTP status 500",
           code: 500,
           url: `${apiUrlPrefix}/some-path`,
           idp: mockIdp.id
@@ -231,17 +231,17 @@ describe("OneIdentityIdpLoginScreen", () => {
     );
   });
 
-  it("should keep the analytics reason and pass the debug info to AuthErrorScreen when the login source fails", () => {
+  it("should track the reason and pass the failure data to AuthErrorScreen when the login source fails", () => {
     renderComponent();
     const { onFailure } = jest.mocked(
       useOneIdentityLoginSourceModule.useOneIdentityLoginSource
     ).mock.calls[0][0];
-    const debugInfo = {
-      message: "Reserve request failed: Unexpected HTTP status 500",
+    const failureData = {
+      reason: "Unexpected HTTP status 500",
       url: "https://example.com/api/auth/v1/reserve"
     };
 
-    onFailure("Unexpected HTTP status 500", debugInfo);
+    onFailure(failureData);
 
     expect(mockDispatch).toHaveBeenCalledWith(
       loginFailure({
@@ -255,7 +255,7 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        debugInfo: { ...debugInfo, idp: mockIdp.id }
+        failureData: { ...failureData, idp: mockIdp.id }
       }
     );
   });
@@ -278,8 +278,8 @@ describe("OneIdentityIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        debugInfo: {
-          message: "net::ERR_INTERNET_DISCONNECTED",
+        failureData: {
+          description: "net::ERR_INTERNET_DISCONNECTED",
           code: -2,
           url: "https://example.com/authorize",
           idp: mockIdp.id

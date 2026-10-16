@@ -66,9 +66,7 @@ export const OneIdentityIdpSelectionScreen = ({
   // list is loading or once it has loaded
   const debugInfo = useMemo(
     () =>
-      state.status === "failure"
-        ? { message: state.error, url: state.url }
-        : {},
+      state.status === "failure" ? { reason: state.error, url: state.url } : {},
     [state]
   );
   useDebugInfo(debugInfo);

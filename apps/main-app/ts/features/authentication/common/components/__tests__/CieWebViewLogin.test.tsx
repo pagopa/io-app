@@ -93,8 +93,8 @@ describe("CieWebViewLogin", () => {
       type: "WEBVIEW_ERROR",
       payload: {
         url: nativeEvent.url,
-        debugInfo: {
-          message: nativeEvent.description,
+        failureData: {
+          description: nativeEvent.description,
           code: nativeEvent.code,
           url: nativeEvent.url
         }
@@ -119,8 +119,8 @@ describe("CieWebViewLogin", () => {
       payload: {
         url: nativeEvent.url,
         statusCode: nativeEvent.statusCode,
-        debugInfo: {
-          message: `Unexpected HTTP status ${nativeEvent.statusCode}`,
+        failureData: {
+          description: `Unexpected HTTP status ${nativeEvent.statusCode}`,
           code: nativeEvent.statusCode,
           url: nativeEvent.url
         }

@@ -86,7 +86,7 @@ describe("OneIdentityIdpSelectionScreen", () => {
     ).toBeTruthy();
   });
 
-  it("should forward the error message and URL to useDebugInfo when the fetch fails", () => {
+  it("should forward the failure reason and URL to useDebugInfo when the fetch fails", () => {
     mockUseGetIdps.mockReturnValue({
       state: {
         status: "failure",
@@ -98,7 +98,7 @@ describe("OneIdentityIdpSelectionScreen", () => {
     renderComponent();
 
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      message: "IDP_LIST_FETCH_ERROR",
+      reason: "IDP_LIST_FETCH_ERROR",
       url: "https://example.com/idps.json"
     });
   });

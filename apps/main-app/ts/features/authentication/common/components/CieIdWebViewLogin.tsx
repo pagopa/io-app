@@ -27,8 +27,9 @@ import {
 } from "../utils/cie";
 import { LoginType } from "../utils/index";
 import {
-  getWebViewErrorDebugInfo,
-  LoginErrorDebugInfo
+  getWebViewFailureData,
+  LoginFailureData,
+  WebViewFailureData
 } from "../utils/loginErrorDebugInfo";
 
 export type CieIdWebViewLoginEvent =
@@ -37,20 +38,20 @@ export type CieIdWebViewLoginEvent =
       type: "LOGIN_FAILURE";
     }
   | {
+      payload: { failureData: LoginFailureData };
+      type: "ONE_IDENTITY_LOGIN_FAILURE";
+    }
+  | {
       payload: {
-        debugInfo: LoginErrorDebugInfo;
+        failureData: WebViewFailureData;
         statusCode: number;
         url: string;
       };
       type: "WEBVIEW_HTTP_ERROR";
     }
   | {
-      payload: { debugInfo: LoginErrorDebugInfo; url: string };
+      payload: { failureData: WebViewFailureData; url: string };
       type: "WEBVIEW_ERROR";
-    }
-  | {
-      payload: { debugInfo?: LoginErrorDebugInfo; reason: string };
-      type: "ONE_IDENTITY_LOGIN_FAILURE";
     }
   | { payload: { token: string }; type: "LOGIN_SUCCESS" }
   | { payload: { url: string }; type: "NOT_ALLOWED_URL" }
@@ -111,10 +112,10 @@ export const CieIdWebViewLogin = memo(
     });
 
     const handleFailure = useCallback(
-      (reason: string, debugInfo?: LoginErrorDebugInfo) => {
+      (failureData: LoginFailureData) => {
         onEvent({
           type: "ONE_IDENTITY_LOGIN_FAILURE",
-          payload: { reason, debugInfo }
+          payload: { failureData }
         });
       },
       [onEvent]
@@ -174,7 +175,7 @@ export const CieIdWebViewLogin = memo(
             payload: {
               url: nativeEvent.url,
               statusCode: nativeEvent.statusCode,
-              debugInfo: getWebViewErrorDebugInfo(event)
+              failureData: getWebViewFailureData(event)
             }
           });
           return;
@@ -184,7 +185,7 @@ export const CieIdWebViewLogin = memo(
           type: "WEBVIEW_ERROR",
           payload: {
             url: nativeEvent.url,
-            debugInfo: getWebViewErrorDebugInfo(event)
+            failureData: getWebViewFailureData(event)
           }
         });
       },

@@ -20,7 +20,7 @@ import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
 import { AUTH_LEVELS, AuthLevel, LOGIN_TYPES } from "../../../common/utils";
-import { CANCELLED_LOGIN_DEBUG_INFO } from "../../../common/utils/loginErrorDebugInfo";
+import { CANCELLED_LOGIN_FAILURE_DATA } from "../../../common/utils/loginErrorDebugInfo";
 import {
   cieIDSelectedSecurityLevelSelector,
   isCieLoginUatEnabledSelector
@@ -108,7 +108,7 @@ const OneIdentityCieIdLoginScreenContent = ({
           idp: "cieid"
         })
       );
-      navigateToAuthErrorScreen(errorCodeOrMessage, { message: reason });
+      navigateToAuthErrorScreen(errorCodeOrMessage, { reason });
     },
     [dispatch, navigateToAuthErrorScreen]
   );
@@ -124,7 +124,7 @@ const OneIdentityCieIdLoginScreenContent = ({
     (event: CieIdWebViewLoginEvent) => {
       switch (event.type) {
         case "CANCEL": {
-          navigateToCieIdAuthenticationError(CANCELLED_LOGIN_DEBUG_INFO);
+          navigateToCieIdAuthenticationError(CANCELLED_LOGIN_FAILURE_DATA);
           break;
         }
         case "LOGIN_FAILURE": {
@@ -142,13 +142,9 @@ const OneIdentityCieIdLoginScreenContent = ({
           navigateToCieIdAuthUrlError(url);
           break;
         }
-        case "ONE_IDENTITY_LOGIN_FAILURE": {
-          const { debugInfo, reason } = event.payload;
-          navigateToCieIdAuthenticationError(debugInfo ?? { message: reason });
-          break;
-        }
+        case "ONE_IDENTITY_LOGIN_FAILURE":
         case "WEBVIEW_ERROR": {
-          navigateToCieIdAuthenticationError(event.payload.debugInfo);
+          navigateToCieIdAuthenticationError(event.payload.failureData);
           break;
         }
         case "WEBVIEW_HTTP_ERROR": {
@@ -157,7 +153,7 @@ const OneIdentityCieIdLoginScreenContent = ({
           if (!url.includes(apiUrlPrefix) && statusCode === 403) {
             break;
           }
-          navigateToCieIdAuthenticationError(event.payload.debugInfo);
+          navigateToCieIdAuthenticationError(event.payload.failureData);
           break;
         }
         default:

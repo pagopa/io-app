@@ -18,8 +18,8 @@ import {
 import { defaultUserAgent, originSchemasWhiteList } from "../utils/cie";
 import { LoginType } from "../utils/index";
 import {
-  getWebViewErrorDebugInfo,
-  LoginErrorDebugInfo
+  getWebViewFailureData,
+  WebViewFailureData
 } from "../utils/loginErrorDebugInfo";
 
 export type CieWebViewLoginEvent =
@@ -29,14 +29,14 @@ export type CieWebViewLoginEvent =
     }
   | {
       payload: {
-        debugInfo: LoginErrorDebugInfo;
+        failureData: WebViewFailureData;
         statusCode: number;
         url: string;
       };
       type: "WEBVIEW_HTTP_ERROR";
     }
   | {
-      payload: { debugInfo: LoginErrorDebugInfo; url: string };
+      payload: { failureData: WebViewFailureData; url: string };
       type: "WEBVIEW_ERROR";
     }
   | { payload: { token: string }; type: "LOGIN_SUCCESS" };
@@ -99,7 +99,7 @@ export const CieWebViewLogin = memo(
             payload: {
               url: nativeEvent.url,
               statusCode: nativeEvent.statusCode,
-              debugInfo: getWebViewErrorDebugInfo(event)
+              failureData: getWebViewFailureData(event)
             }
           });
           return;
@@ -109,7 +109,7 @@ export const CieWebViewLogin = memo(
           type: "WEBVIEW_ERROR",
           payload: {
             url: nativeEvent.url,
-            debugInfo: getWebViewErrorDebugInfo(event)
+            failureData: getWebViewFailureData(event)
           }
         });
       },

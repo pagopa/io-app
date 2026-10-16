@@ -3,9 +3,9 @@ import {
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 
-import { getWebViewErrorDebugInfo } from "../loginErrorDebugInfo";
+import { getWebViewFailureData } from "../loginErrorDebugInfo";
 
-describe("getWebViewErrorDebugInfo", () => {
+describe("getWebViewFailureData", () => {
   test.each([
     {
       name: "a WebView error",
@@ -17,7 +17,7 @@ describe("getWebViewErrorDebugInfo", () => {
         }
       } as WebViewErrorEvent,
       expected: {
-        message: "net::ERR_INTERNET_DISCONNECTED",
+        description: "net::ERR_INTERNET_DISCONNECTED",
         code: -2,
         url: "https://example.com"
       }
@@ -28,12 +28,12 @@ describe("getWebViewErrorDebugInfo", () => {
         nativeEvent: { url: "https://example.com", statusCode: 500 }
       } as WebViewHttpErrorEvent,
       expected: {
-        message: "Unexpected HTTP status 500",
+        description: "Unexpected HTTP status 500",
         code: 500,
         url: "https://example.com"
       }
     }
   ])("should keep the native details of $name", ({ event, expected }) => {
-    expect(getWebViewErrorDebugInfo(event)).toStrictEqual(expected);
+    expect(getWebViewFailureData(event)).toStrictEqual(expected);
   });
 });

@@ -131,7 +131,7 @@ describe("OneIdentityCieIdLoginScreen", () => {
 
     expect(mockNavigationDispatch).toHaveBeenCalledWith(
       authErrorReplaceAction("err-code", {
-        message: expect.stringContaining("err-code")
+        reason: expect.stringContaining("err-code")
       })
     );
     expect(mockReplace).not.toHaveBeenCalled();
@@ -165,8 +165,8 @@ describe("OneIdentityCieIdLoginScreen", () => {
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
       params: {
-        debugInfo: {
-          message: "net::ERR_INTERNET_DISCONNECTED",
+        failureData: {
+          description: "net::ERR_INTERNET_DISCONNECTED",
           code: -2,
           url: "https://example.com/authorize"
         }
@@ -177,13 +177,13 @@ describe("OneIdentityCieIdLoginScreen", () => {
 
 const authErrorReplaceAction = (
   errorCodeOrMessage: string | undefined,
-  debugInfo: Record<string, unknown>
+  failureData: Record<string, unknown>
 ) =>
   StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
     errorCodeOrMessage,
     authMethod: "CIE_ID",
     authLevel: AUTH_LEVELS.L2,
-    debugInfo
+    failureData
   });
 
 const renderComponent = () => {

@@ -98,10 +98,10 @@ describe("CieIdErrorScreen debug info", () => {
 
   it.each([
     {
-      name: "the received debug info",
-      params: { debugInfo: { message: "some reason", code: 500 } },
+      name: "the received failure data",
+      params: { failureData: { reason: "some reason", code: 500 } },
       expected: {
-        message: "some reason",
+        reason: "some reason",
         code: 500,
         flow: "auth",
         isCieSupported: true

@@ -153,21 +153,21 @@ describe("IdpWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
     });
 
-    it("should call onEvent with LOGIN_FAILURE and the debug info when the login source fails", () => {
+    it("should call onEvent with LOGIN_FAILURE and the failure data when the login source fails", () => {
       render(<IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />);
       const { onFailure } = jest.mocked(
         useOneIdentityLoginSourceModule.useOneIdentityLoginSource
       ).mock.calls[0][0];
-      const debugInfo = {
-        message: "Reserve request failed: Unexpected HTTP status 500",
+      const failureData = {
+        reason: "Unexpected HTTP status 500",
         url: "https://example.com/api/auth/v1/reserve"
       };
 
-      onFailure("Unexpected HTTP status 500", debugInfo);
+      onFailure(failureData);
 
       expect(onEvent).toHaveBeenCalledWith({
         type: "LOGIN_FAILURE",
-        payload: { reason: "Unexpected HTTP status 500", debugInfo }
+        payload: { failureData }
       });
     });
 
@@ -188,8 +188,8 @@ describe("IdpWebViewLogin", () => {
         type: "WEBVIEW_ERROR",
         payload: {
           url: nativeEvent.url,
-          debugInfo: {
-            message: nativeEvent.description,
+          failureData: {
+            description: nativeEvent.description,
             code: nativeEvent.code,
             url: nativeEvent.url
           }
@@ -217,8 +217,8 @@ describe("IdpWebViewLogin", () => {
         payload: {
           url: nativeEvent.url,
           statusCode: nativeEvent.statusCode,
-          debugInfo: {
-            message: `Unexpected HTTP status ${nativeEvent.statusCode}`,
+          failureData: {
+            description: `Unexpected HTTP status ${nativeEvent.statusCode}`,
             code: nativeEvent.statusCode,
             url: nativeEvent.url
           }
@@ -308,7 +308,7 @@ describe("IdpWebViewLogin", () => {
           payload: {
             code: "19",
             message: "annullato",
-            reason: expect.any(String)
+            failureData: { reason: expect.any(String) }
           }
         })
       );

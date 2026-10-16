@@ -93,15 +93,15 @@ describe("AuthErrorScreen", () => {
     });
   });
 
-  it("should add the received debug info to useDebugInfo", () => {
+  it("should add the received failure data to useDebugInfo", () => {
     mockIsActiveSessionLogin(false);
-    const debugInfo = {
-      message: "net::ERR_INTERNET_DISCONNECTED",
+    const failureData = {
+      description: "net::ERR_INTERNET_DISCONNECTED",
       code: -2,
       url: "https://example.com/authorize"
     };
     mockUseRoute.mockReturnValue({
-      params: { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, debugInfo }
+      params: { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, failureData }
     });
 
     renderComponent();
@@ -110,7 +110,7 @@ describe("AuthErrorScreen", () => {
       errorCodeOrMessage: undefined,
       authMethod: "CIE",
       authLevel: AUTH_LEVELS.L3,
-      ...debugInfo
+      ...failureData
     });
   });
 

@@ -24,7 +24,7 @@ import {
 import { createRetriableFetch } from "../../authentication/common/utils/fetch";
 import { LoginType } from "../../authentication/common/utils/index";
 import { jsonFetchToSchema } from "../../authentication/common/utils/jsonFetchToSchema";
-import { LoginErrorDebugInfo } from "../../authentication/common/utils/loginErrorDebugInfo";
+import { LoginFailureData } from "../../authentication/common/utils/loginErrorDebugInfo";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import {
   ephemeralKeyTagSelector,
@@ -168,15 +168,7 @@ export type UseOneIdentityLoginSource = (params: {
    */
   minAuthLevel?: AuthLevel;
   /** Handler called upon a failure during the login flow. */
-  onFailure: (
-    /** The failure reason, also sent to analytics. */
-    reason: string,
-    /**
-     * What went wrong, shown only in debug mode. Missing when `reason` alone
-     * explains it.
-     */
-    debugInfo?: LoginErrorDebugInfo
-  ) => void;
+  onFailure: (failureData: LoginFailureData) => void;
 }) => {
   /**
    * Handler that restarts the login flow by generating a new login source. It
@@ -258,10 +250,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
               error: reason
             });
             trackLollipopIdpLoginFailure(reason);
-            onFailure(reason, {
-              message: `SAML verification failed: ${reason}`,
-              url
-            });
+            onFailure({ reason, url });
           }
         );
         return true;
@@ -292,7 +281,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
         status: "failure",
         error: "Unable to generate ephemeral public key"
       });
-      onFailure("Unable to generate ephemeral public key");
+      onFailure({ reason: "Unable to generate ephemeral public key" });
       return;
     }
 
@@ -321,10 +310,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
       abortControllerRef.current = null;
       setLoginSourceState({ status: "failure", error: result.error });
-      onFailure(result.error, {
-        message: `Reserve request failed: ${result.error}`,
-        url: reserveUrl
-      });
+      onFailure({ reason: result.error, url: reserveUrl });
       return;
     }
 
@@ -353,7 +339,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
         abortControllerRef.current = null;
         setLoginSourceState({ status: "failure", error: reason });
-        onFailure(reason);
+        onFailure({ reason });
         return;
       }
 

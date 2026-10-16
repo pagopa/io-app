@@ -275,10 +275,8 @@ describe("useOneIdentityLoginSource", () => {
     await waitFor(() => {
       expect(result.current.loginSourceState.status).toBe("failure");
     });
-    // The reason sent to analytics stays the plain error, while the debug
-    // info tells which request failed
-    expect(onFailure).toHaveBeenCalledWith("Unexpected HTTP status 500", {
-      message: "Reserve request failed: Unexpected HTTP status 500",
+    expect(onFailure).toHaveBeenCalledWith({
+      reason: "Unexpected HTTP status 500",
       url: `${apiUrlPrefix}/api/auth/v1/reserve`
     });
   });
@@ -429,9 +427,9 @@ describe("useOneIdentityLoginSource", () => {
     });
 
     expect(mockRetriableFetch).not.toHaveBeenCalled();
-    expect(onFailure).toHaveBeenCalledWith(
-      "Unable to generate ephemeral public key"
-    );
+    expect(onFailure).toHaveBeenCalledWith({
+      reason: "Unable to generate ephemeral public key"
+    });
   });
 
   it("should send LV as login_type in the reserve body when fast login is enabled", async () => {
@@ -558,10 +556,7 @@ describe("useOneIdentityLoginSource", () => {
 
       expect(blocked).toBe(true);
       await waitFor(() => {
-        expect(onFailure).toHaveBeenCalledWith("mismatch", {
-          message: "SAML verification failed: mismatch",
-          url
-        });
+        expect(onFailure).toHaveBeenCalledWith({ reason: "mismatch", url });
       });
     });
   });
@@ -606,9 +601,9 @@ describe("useOneIdentityLoginSource", () => {
           errorUrl,
           flow
         );
-        expect(onFailure).toHaveBeenCalledWith(
-          expect.stringContaining("Missing SAMLRequest")
-        );
+        expect(onFailure).toHaveBeenCalledWith({
+          reason: expect.stringContaining("Missing SAMLRequest")
+        });
       }
     );
 
@@ -673,9 +668,9 @@ describe("useOneIdentityLoginSource", () => {
       });
 
       expect(spyTrackLoginOIConfigurationError).not.toHaveBeenCalled();
-      expect(onFailure).toHaveBeenCalledWith(
-        expect.stringContaining("Missing SAMLRequest")
-      );
+      expect(onFailure).toHaveBeenCalledWith({
+        reason: expect.stringContaining("Missing SAMLRequest")
+      });
     });
 
     it("should not follow the redirects natively when disabled", async () => {
@@ -766,7 +761,7 @@ describe("useOneIdentityLoginSource", () => {
           error: reason
         });
       });
-      expect(onFailure).toHaveBeenCalledWith(reason);
+      expect(onFailure).toHaveBeenCalledWith({ reason });
     });
 
     it("should discard the result of a stale native redirects flow when generateLoginSource is called again", async () => {

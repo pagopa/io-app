@@ -35,8 +35,9 @@ import {
   originSchemasWhiteList
 } from "../utils";
 import {
-  getWebViewErrorDebugInfo,
-  LoginErrorDebugInfo
+  getWebViewFailureData,
+  LoginFailureData,
+  WebViewFailureData
 } from "../utils/loginErrorDebugInfo";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent.
@@ -56,23 +57,21 @@ export type WebViewLoginEvent =
   | {
       payload: {
         code?: string;
-        /** Set when the failure happened before reaching the IDP page. */
-        debugInfo?: LoginErrorDebugInfo;
+        failureData: LoginFailureData;
         message?: string;
-        reason: string;
       };
       type: "LOGIN_FAILURE";
     }
   | {
       payload: {
-        debugInfo: LoginErrorDebugInfo;
+        failureData: WebViewFailureData;
         statusCode: number;
         url: string;
       };
       type: "WEBVIEW_HTTP_ERROR";
     }
   | {
-      payload: { debugInfo: LoginErrorDebugInfo; url: string };
+      payload: { failureData: WebViewFailureData; url: string };
       type: "WEBVIEW_ERROR";
     }
   | { payload: { token: string }; type: "LOGIN_SUCCESS" };
@@ -90,10 +89,10 @@ export const IdpWebViewLogin = memo(
     const lastTrackedUrl = useRef<string | undefined>(undefined);
 
     const handleFailure = useCallback(
-      (reason: string, debugInfo?: LoginErrorDebugInfo) => {
+      (failureData: LoginFailureData) => {
         onEvent({
           type: "LOGIN_FAILURE",
-          payload: { reason, debugInfo }
+          payload: { failureData }
         });
       },
       [onEvent]
@@ -123,7 +122,7 @@ export const IdpWebViewLogin = memo(
             payload: {
               url: nativeEvent.url,
               statusCode: nativeEvent.statusCode,
-              debugInfo: getWebViewErrorDebugInfo(event)
+              failureData: getWebViewFailureData(event)
             }
           });
           return;
@@ -133,7 +132,7 @@ export const IdpWebViewLogin = memo(
           type: "WEBVIEW_ERROR",
           payload: {
             url: nativeEvent.url,
-            debugInfo: getWebViewErrorDebugInfo(event)
+            failureData: getWebViewFailureData(event)
           }
         });
       },
@@ -153,7 +152,7 @@ export const IdpWebViewLogin = memo(
 
         onEvent({
           type: "LOGIN_FAILURE",
-          payload: { code, message, reason }
+          payload: { code, message, failureData: { reason } }
         });
       },
       [choosenTool, onEvent]

@@ -139,21 +139,21 @@ describe("CieIdWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
     });
 
-    it("should call onEvent with ONE_IDENTITY_LOGIN_FAILURE and the debug info when the login source fails", () => {
+    it("should call onEvent with ONE_IDENTITY_LOGIN_FAILURE and the failure data when the login source fails", () => {
       render(<CieIdWebViewLogin isUat={false} onEvent={onEvent} />);
       const { onFailure } = jest.mocked(
         useOneIdentityLoginSourceModule.useOneIdentityLoginSource
       ).mock.calls[0][0];
-      const debugInfo = {
-        message: "Reserve request failed: Unexpected HTTP status 500",
+      const failureData = {
+        reason: "Unexpected HTTP status 500",
         url: "https://example.com/api/auth/v1/reserve"
       };
 
-      onFailure("Unexpected HTTP status 500", debugInfo);
+      onFailure(failureData);
 
       expect(onEvent).toHaveBeenCalledWith({
         type: "ONE_IDENTITY_LOGIN_FAILURE",
-        payload: { reason: "Unexpected HTTP status 500", debugInfo }
+        payload: { failureData }
       });
     });
 
@@ -174,8 +174,8 @@ describe("CieIdWebViewLogin", () => {
         type: "WEBVIEW_ERROR",
         payload: {
           url: nativeEvent.url,
-          debugInfo: {
-            message: nativeEvent.description,
+          failureData: {
+            description: nativeEvent.description,
             code: nativeEvent.code,
             url: nativeEvent.url
           }
@@ -200,8 +200,8 @@ describe("CieIdWebViewLogin", () => {
         payload: {
           url: nativeEvent.url,
           statusCode: nativeEvent.statusCode,
-          debugInfo: {
-            message: `Unexpected HTTP status ${nativeEvent.statusCode}`,
+          failureData: {
+            description: `Unexpected HTTP status ${nativeEvent.statusCode}`,
             code: nativeEvent.statusCode,
             url: nativeEvent.url
           }

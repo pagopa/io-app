@@ -147,8 +147,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        debugInfo: {
-          message: expect.stringContaining("(err-code)"),
+        failureData: {
+          reason: expect.stringContaining("(err-code)"),
           idp: mockIdp.id
         }
       }
@@ -171,8 +171,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        debugInfo: {
-          message: expect.stringContaining(AUTH_ERRORS.ERROR_1004),
+        failureData: {
+          reason: expect.stringContaining(AUTH_ERRORS.ERROR_1004),
           idp: mockIdp.id
         }
       }
@@ -209,8 +209,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        debugInfo: {
-          message: "Unexpected HTTP status 500",
+        failureData: {
+          description: "Unexpected HTTP status 500",
           code: 500,
           url: `${MOCK_VALID_CALLBACK_URL}/extra-path`,
           idp: mockIdp.id
@@ -245,8 +245,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        debugInfo: {
-          message: "Unexpected HTTP status 500",
+        failureData: {
+          description: "Unexpected HTTP status 500",
           code: 500,
           url: "https://example.com/some-path",
           idp: mockIdp.id
@@ -274,8 +274,8 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        debugInfo: {
-          message: "net::ERR_INTERNET_DISCONNECTED",
+        failureData: {
+          description: "net::ERR_INTERNET_DISCONNECTED",
           code: -2,
           url: "https://example.com/authorize",
           idp: mockIdp.id
