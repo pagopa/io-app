@@ -887,7 +887,7 @@ Premendo **Vai alla notifica SEND** dichiari di aver letto e compreso l’**[Inf
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -918,7 +918,7 @@ Premendo **Vai alla notifica SEND** dichiari di aver letto e compreso l’**[Inf
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
