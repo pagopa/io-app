@@ -93,9 +93,7 @@ describe("superProperties", () => {
             .mockImplementation(() =>
               Promise.resolve(notificationPermissionTuple[0] as boolean)
             );
-          jest
-            .spyOn(DEVICE, "getFontScale")
-            .mockImplementation(() => Promise.resolve(2.0));
+          jest.spyOn(DEVICE, "getFontScale").mockImplementation(() => 2.0);
           jest
             .spyOn(DEVICE, "isScreenLockSet")
             .mockImplementation(() => Promise.resolve(true));
@@ -193,9 +191,7 @@ describe("superProperties", () => {
       jest
         .spyOn(PUSHUTILS, "checkNotificationPermissions")
         .mockImplementation(() => Promise.resolve(false));
-      jest
-        .spyOn(DEVICE, "getFontScale")
-        .mockImplementation(() => Promise.resolve(2.0));
+      jest.spyOn(DEVICE, "getFontScale").mockImplementation(() => 2.0);
       jest
         .spyOn(DEVICE, "isScreenLockSet")
         .mockImplementation(() => Promise.resolve(true));

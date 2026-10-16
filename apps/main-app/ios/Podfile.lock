@@ -3,7 +3,7 @@ PODS:
   - boost (1.84.0)
   - CieSDK (0.1.21)
   - DoubleConversion (1.1.6)
-  - EXApplication (55.0.15):
+  - EXApplication (55.0.17):
     - ExpoModulesCore
   - EXConstants (55.0.16):
     - ExpoModulesCore
@@ -49,7 +49,9 @@ PODS:
     - ExpoModulesCore
   - ExpoClipboard (55.0.15):
     - ExpoModulesCore
-  - ExpoDevice (55.0.17):
+  - ExpoDevice (55.0.19):
+    - ExpoModulesCore
+  - ExpoDeviceInternal (1.0.0):
     - ExpoModulesCore
   - ExpoDocumentPicker (55.0.15):
     - ExpoModulesCore
@@ -3436,8 +3438,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNDeviceInfo (14.0.4):
-    - React-Core
   - RNGestureHandler (2.31.0):
     - boost
     - DoubleConversion
@@ -3902,6 +3902,7 @@ DEPENDENCIES:
   - ExpoCalendar (from `../../../node_modules/expo-calendar/ios`)
   - ExpoClipboard (from `../../../node_modules/expo-clipboard/ios`)
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
+  - ExpoDeviceInternal (from `../../../libs/expo-device-internal/ios`)
   - ExpoDocumentPicker (from `../../../node_modules/expo-document-picker/ios`)
   - "ExpoDomWebView (from `../../../node_modules/@expo/dom-webview/ios`)"
   - ExpoFileSystem (from `../../../node_modules/expo-file-system/ios`)
@@ -4030,7 +4031,6 @@ DEPENDENCIES:
   - "ReactNativeBottomSheet (from `../../../node_modules/@swmansion/react-native-bottom-sheet`)"
   - ReactNativeExceptionHandler (from `../../../node_modules/react-native-exception-handler`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-async-storage/async-storage`)"
-  - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../../../node_modules/react-native-keychain`)
   - RNPermissions (from `../../../node_modules/react-native-permissions`)
@@ -4094,6 +4094,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-clipboard/ios"
   ExpoDevice:
     :path: "../../../node_modules/expo-device/ios"
+  ExpoDeviceInternal:
+    :path: "../../../libs/expo-device-internal/ios"
   ExpoDocumentPicker:
     :path: "../../../node_modules/expo-document-picker/ios"
   ExpoDomWebView:
@@ -4349,8 +4351,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-exception-handler"
   RNCAsyncStorage:
     :path: "../../../node_modules/@react-native-async-storage/async-storage"
-  RNDeviceInfo:
-    :path: "../../../node_modules/react-native-device-info"
   RNGestureHandler:
     :path: "../../../node_modules/react-native-gesture-handler"
   RNKeychain:
@@ -4379,7 +4379,7 @@ SPEC CHECKSUMS:
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   CieSDK: 832ee98a89d0fc79c1a429c6ad8f31a056741d59
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
-  EXApplication: 82a44fa8236bb644a805ee21e64054eeb01d22ea
+  EXApplication: 62f11f3b27bbeb132b4fceaa4e7275dd0fd39cb7
   EXConstants: dadbeba983acc30f855a919658a2b34fbd86615d
   Expo: fb8cded217862a2c6fc046a6cc68aa83a2ed15f0
   ExpoAsset: 7721c5c4ae2a7c3c8147a046727ac6c020b05648
@@ -4387,7 +4387,8 @@ SPEC CHECKSUMS:
   ExpoBrightness: 6080760e05eb3dcd9765024472d4c78a50f3b201
   ExpoCalendar: a3a1a208327305361637b6127390e7b61c62bba5
   ExpoClipboard: 0e4b587fc6b5c5996b4ad4e5804d509e90aa6c75
-  ExpoDevice: b8a65afe42c3c5934eb6983870672fe785b39dea
+  ExpoDevice: a574891cc954723e53062a2d69ec55f6d8196641
+  ExpoDeviceInternal: 66b86e1d388629845cbecc30e0faeb9b837f44c4
   ExpoDocumentPicker: 8f1356ab2ac5b67aeaafc4c14b3719ceb480c099
   ExpoDomWebView: b2e9d601f9cb77d3c97da73234e175b64be91928
   ExpoFileSystem: 61e663d0bbd1a973d324530d1d6ee559a5e5192c
@@ -4409,8 +4410,8 @@ SPEC CHECKSUMS:
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 07433c4ab85da44d0b5ceac374ff4e1d57c7aa23
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
-  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  hermes-engine: 9c45a1dcb85eca692601d2f4fff763b820c8176d
+  glog: 0456694f3aaf09460b660ea327cfc11defbeea4c
+  hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 5344f279534758a68bb111c20df640c6afc67e70
@@ -4523,7 +4524,6 @@ SPEC CHECKSUMS:
   ReactNativeBottomSheet: 03b2317ce62b9f686e6caad94fe5124534791831
   ReactNativeExceptionHandler: a23922ca00122b050ae9412f960061791c232c47
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
-  RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNGestureHandler: 884f03ad24511911552480eb2058266db0b177ce
   RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
