@@ -70,7 +70,7 @@
     "oxlint": "catalog:",
     "oxlint-tsgolint": "catalog:",
     "nodemon": "^2.0.15",
-    "supertest": "^6.2.1",
+    "supertest": "^7.3.0",
     "ts-jest": "^29.4.6",
     "ts-node": "^10.4.0",
     "typescript": "catalog:"
