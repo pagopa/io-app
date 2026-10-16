@@ -317,6 +317,7 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         component={ItwPresentationPidDetailScreen}
         name={ITW_ROUTES.PRESENTATION.PID_DETAIL}
+        options={hiddenHeader}
       />
       {/* LIFECYCLE */}
       <Stack.Screen
