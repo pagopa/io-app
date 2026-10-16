@@ -1,5 +1,6 @@
 import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { act, fireEvent, RenderAPI } from "@testing-library/react-native";
+import I18n from "i18next";
 import { createStore, Store } from "redux";
 
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
@@ -87,6 +88,41 @@ describe("the ZendeskAskPermissions screen", () => {
     const component: RenderAPI = renderComponent(store, true);
     expect(component.getByTestId("appVersionsHistory")).toBeDefined();
   });
+
+  test.each([
+    {
+      name: "not active",
+      walletStatus: itwZendeskSelectors.ItwZendeskWalletStatus.NOT_ACTIVE,
+      expectedLabelKey: "support.askPermissions.walletStatusValue.notActive"
+    },
+    {
+      name: "Documenti su IO",
+      walletStatus: itwZendeskSelectors.ItwZendeskWalletStatus.DOCUMENTI_SU_IO,
+      expectedLabelKey: "support.askPermissions.walletStatusValue.documentiSuIo"
+    },
+    {
+      name: "IT-Wallet",
+      walletStatus: itwZendeskSelectors.ItwZendeskWalletStatus.IT_WALLET,
+      expectedLabelKey: "support.askPermissions.walletStatusValue.itWallet"
+    }
+  ] as const)(
+    "should render the walletStatus item when the wallet is $name",
+    ({ walletStatus, expectedLabelKey }) => {
+      jest
+        .spyOn(itwZendeskSelectors, "itwZendeskWalletStatusSelector")
+        .mockReturnValue(walletStatus);
+      const store: Store<GlobalState> = createStore(
+        appReducer,
+        globalState as any
+      );
+      act(() => {
+        store.dispatch(zendeskSelectedCategory(mockedZendeskCategory));
+      });
+      const component: RenderAPI = renderComponent(store, false);
+      expect(component.getByTestId("walletStatus")).toBeDefined();
+      expect(component.getByText(I18n.t(expectedLabelKey))).toBeDefined();
+    }
+  );
 
   it("should render the paymentIssues item if assistanceForPayment prop is true", () => {
     const store: Store<GlobalState> = createStore(
