@@ -1,4 +1,4 @@
-import { openCieIdApp } from "@pagopa/io-react-native-cieid";
+import { openCieIdApp } from "@io-app/expo-cieid";
 import { useCallback, useEffect } from "react";
 import { Linking } from "react-native";
 
