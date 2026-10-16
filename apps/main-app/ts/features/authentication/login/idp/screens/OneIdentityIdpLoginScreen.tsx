@@ -97,7 +97,13 @@ const OneIdentityIdpLoginScreenContent = ({
 
   const handleLoginSuccess = useCallback(
     (token: string) => {
-      dispatch(loginSuccess({ token, idp: idp.id as keyof IdpData }));
+      dispatch(
+        loginSuccess({
+          token,
+          idp: idp.id as keyof IdpData,
+          isOneIdentityLogin: true
+        })
+      );
     },
     [dispatch, idp.id]
   );
@@ -135,6 +141,5 @@ const OneIdentityIdpLoginScreenContent = ({
     [handleLoginFailure, handleLoginSuccess, navigateToAuthErrorScreen]
   );
 
-  // TODO: Remove flow to keep IdpWebViewLogin agnostic
-  return <IdpWebViewLogin flow="auth" idp={idp} onEvent={handleEvent} />;
+  return <IdpWebViewLogin idp={idp} onEvent={handleEvent} />;
 };

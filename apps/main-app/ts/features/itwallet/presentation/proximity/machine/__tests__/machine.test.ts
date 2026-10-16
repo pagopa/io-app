@@ -8,6 +8,7 @@ import {
   waitFor
 } from "xstate";
 
+import * as remoteConfig from "../../../../common/store/selectors/remoteConfig";
 import {
   CredentialMetadata,
   WalletInstanceAttestations
@@ -155,8 +156,15 @@ describe("itwProximityMachine", () => {
     } as Partial<MachineSnapshot>) as MachineSnapshot;
   };
 
+  beforeEach(() => {
+    jest
+      .spyOn(remoteConfig, "isItwProximityNfcMinAppVersionSupportedSelector")
+      .mockReturnValue(true);
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     jest.useRealTimers();
   });
 
@@ -351,6 +359,35 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Nfc: "CheckActivation" })
     );
+  });
+
+  it("ignores start-nfc-presentment when the NFC minimum app version is not supported", () => {
+    const state = T_DEPS.store.getState();
+    jest.spyOn(T_DEPS.store, "getState").mockReturnValue(state);
+    jest
+      .mocked(remoteConfig.isItwProximityNfcMinAppVersionSupportedSelector)
+      .mockReturnValue(false);
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
+    });
+
+    actor.start();
+    actor.send({ type: "start-nfc-presentment" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "AwaitingConnection"
+    });
+    expect(actor.getSnapshot().context.engagementMode).toBe("qrcode");
+    expect(
+      remoteConfig.isItwProximityNfcMinAppVersionSupportedSelector
+    ).toHaveBeenCalledWith(state);
+    expect(checkNfcActivation).not.toHaveBeenCalled();
+    expect(startEngagement).not.toHaveBeenCalled();
+    expect(navigateToNfcActivationScreen).not.toHaveBeenCalled();
+    expect(navigateToNfcPresentmentScreen).not.toHaveBeenCalled();
+
+    actor.stop();
   });
 
   it("inactive NFC from start-nfc-presentment moves to Nfc.RequireActivation", async () => {
@@ -737,7 +774,7 @@ describe("itwProximityMachine", () => {
   });
 
   test.each(["qrcode", "nfc"] as const)(
-    "tracks %s proximity start when verifier connects",
+    "does not track %s proximity start before a document request",
     engagementMode => {
       const actor = createActor(mockedMachine, {
         input: { deps: T_DEPS },
@@ -750,9 +787,96 @@ describe("itwProximityMachine", () => {
       actor.start();
       actor.send({ type: "device-connected" });
 
-      expect(trackProximityStart).toHaveBeenCalledTimes(1);
+      expect(trackProximityStart).not.toHaveBeenCalled();
     }
   );
+
+  test.each([
+    {
+      name: "pure NFC",
+      engagementMode: "nfc",
+      retrievalMethod: "nfc",
+      connected: false
+    },
+    {
+      name: "NFC engagement with BLE retrieval",
+      engagementMode: "nfc",
+      retrievalMethod: "ble",
+      connected: true
+    },
+    {
+      name: "QR engagement with BLE retrieval",
+      engagementMode: "qrcode",
+      retrievalMethod: "ble",
+      connected: true
+    }
+  ] as const)(
+    "tracks start for $name",
+    async ({ engagementMode, retrievalMethod, connected }) => {
+      const actor = createActor(mockedMachine, {
+        input: { deps: T_DEPS },
+        snapshot: makeSnapshot(
+          { Presentment: "AwaitingConnection" },
+          { engagementMode }
+        )
+      });
+
+      actor.start();
+      if (connected) {
+        actor.send({ type: "device-connected" });
+      }
+      expect(trackProximityStart).not.toHaveBeenCalled();
+      actor.send({
+        type: "device-document-request-received",
+        proximityDetails: T_PROXIMITY_DETAILS,
+        verifierRequest: T_VERIFIER_REQUEST,
+        retrievalMethod
+      });
+
+      await waitFor(actor, snapshot =>
+        snapshot.matches({ Presentment: "ClaimsDisclosure" })
+      );
+      expect(trackProximityStart).toHaveBeenCalledTimes(1);
+      actor.stop();
+    }
+  );
+
+  it("tracks pure NFC once across duplicate requests and the consent restart", async () => {
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot(
+        { Presentment: "AwaitingConnection" },
+        { engagementMode: "nfc" }
+      )
+    });
+    const request = {
+      type: "device-document-request-received",
+      proximityDetails: T_PROXIMITY_DETAILS,
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "nfc"
+    } as const;
+
+    actor.start();
+    actor.send(request);
+    actor.send(request);
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "ClaimsDisclosure" })
+    );
+    actor.send(request);
+    actor.send({ type: "holder-consent" });
+    actor.send({ type: "continue" });
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "AwaitingNfcStart" })
+    );
+    actor.send({ type: "nfc-started" });
+    actor.send(request);
+
+    expect(
+      actor.getSnapshot().matches({ Presentment: "SendingDocuments" })
+    ).toBe(true);
+    expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    actor.stop();
+  });
 
   it("close from Presentment.AwaitingConnection calls closeProximity", () => {
     const actor = createActor(mockedMachine, {

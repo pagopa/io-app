@@ -224,12 +224,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -1974,12 +1968,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View

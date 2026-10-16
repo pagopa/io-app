@@ -13,6 +13,7 @@ import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
+  CredentialBundle,
   CredentialMetadata,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
@@ -24,6 +25,7 @@ import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  ObtainEidStatusListActorInput,
   ObtainStatusListActorInput,
   ObtainStatusListActorOutput,
   RequestAccessTokenActorParams,
@@ -117,6 +119,7 @@ const trackWalletInstanceCreation = jest.fn();
 const trackWalletInstanceRevocation = jest.fn();
 const trackIdentificationMethodSelected = jest.fn();
 const storeAuthLevel = jest.fn();
+const storeL2Fallback = jest.fn();
 const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
@@ -134,6 +137,7 @@ const startAuthFlow = jest.fn();
 const initMrtdPoPChallenge = jest.fn();
 const validateMrtdPoPChallenge = jest.fn();
 const obtainStatusList = jest.fn();
+const obtainEidStatusList = jest.fn();
 const storeEidCredentialActor = jest.fn();
 const waitForSessionRefresh = jest.fn();
 
@@ -183,6 +187,7 @@ describe("itwEidIssuanceMachine", () => {
       trackWalletInstanceRevocation,
       trackIdentificationMethodSelected,
       storeAuthLevel,
+      storeL2Fallback,
       trackItwIdAuthenticationCompleted,
       trackItwIdVerifiedDocument,
       storeWalletActivationFeedbackBannerData
@@ -216,6 +221,10 @@ describe("itwEidIssuanceMachine", () => {
         ObtainStatusListActorOutput,
         ObtainStatusListActorInput
       >(obtainStatusList),
+      obtainEidStatusList: fromPromise<
+        CredentialBundle,
+        ObtainEidStatusListActorInput
+      >(obtainEidStatusList),
       storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
         storeEidCredentialActor
       ),
@@ -247,6 +256,9 @@ describe("itwEidIssuanceMachine", () => {
     jest.resetAllMocks();
     jest.useFakeTimers();
     obtainStatusList.mockResolvedValue(undefined);
+    obtainEidStatusList.mockImplementation(({ input }) =>
+      Promise.resolve(input.eid)
+    );
     storeEidCredentialActor.mockResolvedValue(undefined);
   });
 
@@ -1211,8 +1223,34 @@ describe("itwEidIssuanceMachine", () => {
 
     // entry fires on genuine transition into Success → storeWalletActivationFeedbackBannerData called
     expect(storeWalletActivationFeedbackBannerData).toHaveBeenCalledTimes(1);
+    expect(storeL2Fallback).toHaveBeenCalledTimes(1);
     // add-new-credential is not sent in this flow
     expect(navigateToCredentialCatalog).not.toHaveBeenCalled();
+  });
+
+  it("does not record fallback activation when eID storage fails", async () => {
+    storeEidCredentialActor.mockRejectedValue(new Error("Storage unavailable"));
+    const initialSnapshot = createActor(itwEidIssuanceMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "DisplayingPreview" },
+      context: {
+        mode: "issuance",
+        level: "l2-fallback",
+        eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid }
+      }
+    } as MachineSnapshot);
+    const actor = createActor(mockedMachine, {
+      snapshot,
+      input: { deps: T_DEPS }
+    });
+    actor.start();
+    actor.send({ type: "add-to-wallet" });
+    await waitForActor(actor, snap => snap.matches("Failure"));
+
+    expect(storeL2Fallback).not.toHaveBeenCalled();
+    actor.stop();
   });
 
   it("Should return to TOS acceptance if session expires when creating a Wallet Instance", async () => {
@@ -1616,6 +1654,84 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitForActor(actor, state => state.matches("Failure"));
 
+    expect(actor.getSnapshot().context.failure).toStrictEqual({
+      type: IssuanceFailureType.UNEXPECTED,
+      reason: error
+    });
+  });
+
+  it("Should attach the eID status list before checking the issued eID", async () => {
+    const eidWithStatusList: CredentialBundle = {
+      ...T_EID_REQUEST_OUTPUT.credential,
+      metadata: {
+        ...T_EID_REQUEST_OUTPUT.credential.metadata,
+        validity: {
+          type: "status_list",
+          status: "valid",
+          rawStatus: "0x00",
+          statusList: {
+            uri: "https://pid-provider.example/status-list",
+            idx: 1
+          }
+        }
+      }
+    };
+    requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
+    obtainEidStatusList.mockResolvedValue(eidWithStatusList);
+    issuedEidMatchesAuthenticatedUser.mockReturnValue(true);
+
+    const initialSnapshot = createActor(itwEidIssuanceMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "WaitingForSessionRefresh" },
+      context: { itwVersion: "1.4.6" }
+    });
+
+    const actor = createActor(mockedMachine, {
+      snapshot,
+      input: { deps: T_DEPS }
+    });
+    actor.start();
+    actor.send({ type: "session-refresh-complete" });
+
+    const finalSnapshot = await waitForActor(actor, state =>
+      state.matches({ Issuance: "DisplayingPreview" })
+    );
+
+    expect(obtainEidStatusList).toHaveBeenCalledWith(
+      expect.objectContaining({
+        input: {
+          itwVersion: "1.4.6",
+          eid: T_EID_REQUEST_OUTPUT.credential
+        }
+      })
+    );
+    expect(finalSnapshot.context.eid).toEqual(eidWithStatusList);
+  });
+
+  it("Should fail when obtaining the eID status list fails", async () => {
+    const error = new Error("eID status is not valid");
+    requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
+    obtainEidStatusList.mockRejectedValue(error);
+
+    const initialSnapshot = createActor(itwEidIssuanceMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "WaitingForSessionRefresh" }
+    });
+
+    const actor = createActor(mockedMachine, {
+      snapshot,
+      input: { deps: T_DEPS }
+    });
+    actor.start();
+    actor.send({ type: "session-refresh-complete" });
+
+    await waitForActor(actor, state => state.matches("Failure"));
+
+    expect(issuedEidMatchesAuthenticatedUser).not.toHaveBeenCalled();
     expect(actor.getSnapshot().context.failure).toStrictEqual({
       type: IssuanceFailureType.UNEXPECTED,
       reason: error

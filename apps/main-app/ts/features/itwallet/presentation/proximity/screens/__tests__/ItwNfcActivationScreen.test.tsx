@@ -8,6 +8,7 @@ import { ActorRefFrom, createActor, fromCallback, fromPromise } from "xstate";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContextAsync } from "../../../../../../utils/testWrapper";
+import * as remoteConfig from "../../../../common/store/selectors/remoteConfig";
 import { testProximityDeps } from "../../../../machine/utils/testDeps";
 import {
   trackItwProximityNfcActivationClose,
@@ -95,6 +96,9 @@ describe("ItwNfcActivationScreen", () => {
     jest.mocked(checkNfcActivation).mockResolvedValue(true);
     startEngagement.mockResolvedValue(undefined);
     jest.spyOn(Alert, "alert").mockImplementation();
+    jest
+      .spyOn(remoteConfig, "isItwProximityNfcMinAppVersionSupportedSelector")
+      .mockReturnValue(true);
   });
 
   afterEach(async () => {
