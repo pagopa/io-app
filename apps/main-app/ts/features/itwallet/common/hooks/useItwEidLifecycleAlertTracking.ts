@@ -3,19 +3,19 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { trackItwBannerTap, trackItwBannerVisualized } from "../../analytics";
 import { ITW_IDENTIFICATION_SCREENVIEW_EVENTS } from "../../identification/analytics/enum";
-import { ItwJwtCredentialStatus } from "../utils/itwTypesUtils";
+import { ItwEidStatus } from "../utils/itwTypesUtils";
 
 type Props = {
   currentScreenName?: string;
   isItwCredential: boolean;
   isOffline?: boolean;
-  maybeEidStatus: ItwJwtCredentialStatus | undefined;
+  maybeEidStatus: ItwEidStatus | undefined;
   navigation: ReturnType<typeof useIONavigation>;
   skipViewTracking?: boolean;
 };
 
 const getLifecycleBannerId = (
-  status: ItwJwtCredentialStatus | undefined,
+  status: ItwEidStatus | undefined,
   isItwCredential: boolean
 ) => {
   if (isItwCredential) {

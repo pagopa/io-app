@@ -13,6 +13,7 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialFormat,
   CredentialMetadata,
+  ItwEidStatus,
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
 import { DISPLAY_FORMAT_PRIORITY } from "../../utils/format";
@@ -230,6 +231,26 @@ export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
 );
 
 /**
+ * Returns whether the wallet has at least one credential and all of them are
+ * expired. The eID is not considered, only other (Q)EAAs.
+ *
+ * @param state - The global state.
+ * @returns Whether all the credentials are expired.
+ */
+export const itwAreAllCredentialsExpiredSelector = createSelector(
+  itwCredentialsSelector,
+  credentials => {
+    const list = Object.values(credentials);
+    return (
+      list.length > 0 &&
+      list.every(c =>
+        ["expired", "jwtExpired"].includes(getCredentialStatus(c))
+      )
+    );
+  }
+);
+
+/**
  * Get the credential status corresponding to the status list/status assertion
  * error, if present.
  *
@@ -257,17 +278,30 @@ export const itwCredentialStatusSelector = createSelector(
 /**
  * Returns the credential status for the eID.
  *
- * Note that this status is determined only by the SD-JWT credential, and does
- * not use status assertion/status list.
+ * The eID is "invalid" when revoked by its PID Status List, otherwise the
+ * status is determined only by the SD-JWT expiration.
  *
  * @param state - The global state.
- * @returns The eID's JWT status.
+ * @returns The eID status.
  */
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
-  eid =>
-    // eID does not have status assertion nor expiry date, so it safe to assume its status is based on the JWT only
-    eid ? (getCredentialStatus(eid) as ItwJwtCredentialStatus) : undefined
+  (eid): ItwEidStatus | undefined => {
+    if (!eid) {
+      return undefined;
+    }
+    if (
+      eid.validity?.type === "status_list" &&
+      eid.validity.status === "invalid"
+    ) {
+      return "invalid";
+    }
+    // eID has no expiry date, so without its validity the status is based on the JWT only
+    return getCredentialStatus({
+      ...eid,
+      validity: undefined
+    }) as ItwJwtCredentialStatus;
+  }
 );
 
 /**
