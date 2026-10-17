@@ -9,7 +9,7 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useState } from "react";
+import { ComponentRef, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -18,6 +18,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { IdPayCodeRoutes } from "../../../idpay/code/navigation/routes";
+import { useInputFocus } from "../../../payments/checkout/hooks/useInputFocus";
 
 export const IdPayCodePlayGround = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -47,6 +48,9 @@ export const IdPayCodePlayGround = () => {
     title: "IdPay Code Playground",
     canGoBack: true
   });
+
+  const textInputRef = useRef<ComponentRef<typeof TextInput>>(null);
+  useInputFocus(textInputRef);
 
   return (
     <ScrollView>
