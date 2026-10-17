@@ -2731,86 +2731,182 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Nascita; 06/01/1991"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
-                              style={
+                              collapsable={false}
+                              jestAnimatedProps={
                                 {
-                                  "flex": 1,
+                                  "value": {},
                                 }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={false}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
-                                    "flexDirection": "column",
+                                    "flex": 1,
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "flexDirection": "column",
+                                    }
                                   }
                                 >
-                                  Data di Nascita
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  06/01/1991
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Data di Nascita
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    06/01/1991
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -3395,140 +3491,236 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Scadenza; 22/02/2025; Scaduta"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
-                              style={
+                              collapsable={false}
+                              jestAnimatedProps={
                                 {
-                                  "flex": 1,
+                                  "value": {},
                                 }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={false}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
-                                    "flexDirection": "column",
+                                    "flex": 1,
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "flexDirection": "column",
+                                    }
                                   }
                                 >
-                                  Data di Scadenza
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  22/02/2025
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Data di Scadenza
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    22/02/2025
+                                  </Text>
+                                </View>
                               </View>
-                            </View>
-                            <View
-                              accessible={false}
-                              importantForAccessibility="no-hide-descendants"
-                            >
                               <View
-                                accessible={true}
-                                style={
-                                  [
-                                    {
-                                      "alignItems": "center",
-                                      "borderCurve": "continuous",
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                      "overflow": "hidden",
-                                    },
-                                    {
-                                      "borderRadius": 36,
-                                      "paddingHorizontal": 12,
-                                      "paddingVertical": 6,
-                                    },
-                                    {
-                                      "backgroundColor": "#FFD9D9",
-                                    },
-                                  ]
-                                }
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  ellipsizeMode="tail"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
+                                <View
+                                  accessible={true}
                                   style={
                                     [
-                                      {},
                                       {
-                                        "color": "#5D1313",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 16,
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
-                                        "alignSelf": "center",
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
+                                        "backgroundColor": "#FFD9D9",
                                       },
                                     ]
                                   }
                                 >
-                                  Scaduta
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#5D1313",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Scaduta
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -3923,86 +4115,182 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Codice Fiscale RSSMRA80A10H501A"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
-                              style={
+                              collapsable={false}
+                              jestAnimatedProps={
                                 {
-                                  "flex": 1,
+                                  "value": {},
                                 }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={false}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
-                                    "flexDirection": "column",
+                                    "flex": 1,
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "flexDirection": "column",
+                                    }
                                   }
                                 >
-                                  Codice Fiscale
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={4}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  RSSMRA80A10H501A
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Codice Fiscale
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={4}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    RSSMRA80A10H501A
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
