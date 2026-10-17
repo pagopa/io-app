@@ -19,7 +19,8 @@ import { AuthenticationParamsList } from "../../../common/navigation/params/Auth
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
-import { AUTH_LEVELS, AuthLevel } from "../../../common/utils";
+import { AUTH_LEVELS, AuthLevel, LOGIN_TYPES } from "../../../common/utils";
+import { CANCELLED_LOGIN_FAILURE_DATA } from "../../../common/utils/loginErrorDebugInfo";
 import {
   cieIDSelectedSecurityLevelSelector,
   isCieLoginUatEnabledSelector
@@ -97,7 +98,7 @@ const OneIdentityCieIdLoginScreenContent = ({
 
       trackLoginSpidError(errorCodeOrMessage, {
         idp: IdpCIE_ID.id,
-        flow: "auth",
+        flow: LOGIN_TYPES.AUTH,
         "error message": message
       });
 
@@ -107,14 +108,14 @@ const OneIdentityCieIdLoginScreenContent = ({
           idp: "cieid"
         })
       );
-      navigateToAuthErrorScreen(errorCodeOrMessage);
+      navigateToAuthErrorScreen(errorCodeOrMessage, { reason });
     },
     [dispatch, navigateToAuthErrorScreen]
   );
 
   const handleLoginSuccess = useCallback(
     (token: string) => {
-      dispatch(loginSuccess({ token, idp: "cieid" }));
+      dispatch(loginSuccess({ token, idp: "cieid", isOneIdentityLogin: true }));
     },
     [dispatch]
   );
@@ -122,10 +123,8 @@ const OneIdentityCieIdLoginScreenContent = ({
   const handleEvent = useCallback(
     (event: CieIdWebViewLoginEvent) => {
       switch (event.type) {
-        case "CANCEL":
-        case "ONE_IDENTITY_LOGIN_FAILURE":
-        case "WEBVIEW_ERROR": {
-          navigateToCieIdAuthenticationError();
+        case "CANCEL": {
+          navigateToCieIdAuthenticationError(CANCELLED_LOGIN_FAILURE_DATA);
           break;
         }
         case "LOGIN_FAILURE": {
@@ -143,13 +142,18 @@ const OneIdentityCieIdLoginScreenContent = ({
           navigateToCieIdAuthUrlError(url);
           break;
         }
+        case "ONE_IDENTITY_LOGIN_FAILURE":
+        case "WEBVIEW_ERROR": {
+          navigateToCieIdAuthenticationError(event.payload.failureData);
+          break;
+        }
         case "WEBVIEW_HTTP_ERROR": {
           const { statusCode, url } = event.payload;
           // Ignore 403 errors for URLs that are not part of the API login URL prefix
           if (!url.includes(apiUrlPrefix) && statusCode === 403) {
             break;
           }
-          navigateToCieIdAuthenticationError();
+          navigateToCieIdAuthenticationError(event.payload.failureData);
           break;
         }
         default:
@@ -164,5 +168,5 @@ const OneIdentityCieIdLoginScreenContent = ({
     ]
   );
 
-  return <CieIdWebViewLogin flow="auth" isUat={isUat} onEvent={handleEvent} />;
+  return <CieIdWebViewLogin isUat={isUat} onEvent={handleEvent} />;
 };

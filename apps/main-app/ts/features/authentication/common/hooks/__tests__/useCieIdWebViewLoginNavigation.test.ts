@@ -31,15 +31,18 @@ describe("useCieIdWebViewLoginNavigation", () => {
     jest.clearAllMocks();
   });
 
-  it("navigateToCieIdAuthenticationError should replace with CIE_ID_ERROR", () => {
+  it("navigateToCieIdAuthenticationError should replace with CIE_ID_ERROR and the failure data", () => {
     const { result } = renderHook(() =>
       useCieIdWebViewLoginNavigation({ authLevel })
     );
 
-    result.current.navigateToCieIdAuthenticationError();
+    result.current.navigateToCieIdAuthenticationError({
+      reason: "some reason"
+    });
 
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
+      params: { failureData: { reason: "some reason" } }
     });
   });
 
@@ -61,13 +64,16 @@ describe("useCieIdWebViewLoginNavigation", () => {
       useCieIdWebViewLoginNavigation({ authLevel })
     );
 
-    result.current.navigateToAuthErrorScreen("err-code");
+    result.current.navigateToAuthErrorScreen("err-code", {
+      reason: "some reason"
+    });
 
     expect(mockDispatch).toHaveBeenCalledWith(
       StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
         errorCodeOrMessage: "err-code",
         authMethod: "CIE_ID",
-        authLevel
+        authLevel,
+        failureData: { reason: "some reason" }
       })
     );
     expect(mockReplace).not.toHaveBeenCalled();

@@ -600,7 +600,7 @@ exports[`TourTooltip snapshot matches snapshot for first step 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
-                    "borderRadius": 8,
+                    "borderRadius": 0,
                     "borderWidth": 0,
                     "height": undefined,
                   },
@@ -631,7 +631,7 @@ exports[`TourTooltip snapshot matches snapshot for first step 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
-                    "borderRadius": 8,
+                    "borderRadius": 0,
                     "borderWidth": 0,
                     "height": undefined,
                   },
@@ -1509,7 +1509,7 @@ exports[`TourTooltip snapshot matches snapshot for last step 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
-                    "borderRadius": 8,
+                    "borderRadius": 0,
                     "borderWidth": 0,
                     "height": undefined,
                   },
@@ -1540,7 +1540,7 @@ exports[`TourTooltip snapshot matches snapshot for last step 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
-                    "borderRadius": 8,
+                    "borderRadius": 0,
                     "borderWidth": 0,
                     "height": undefined,
                   },

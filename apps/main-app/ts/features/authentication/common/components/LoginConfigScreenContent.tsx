@@ -10,8 +10,13 @@ import {
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
   cieLoginDisableUat,
@@ -62,7 +67,9 @@ type LoginConfigScreenContentProps = {
 export const LoginConfigScreenContent = ({
   disabled = false
 }: LoginConfigScreenContentProps) => {
+  const store = useIOStore();
   const dispatch = useIODispatch();
+
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const oneIdentityLocalFeatureFlag = useIOSelector(
     oneIdentityLocalFeatureFlagSelector
@@ -82,8 +89,9 @@ export const LoginConfigScreenContent = ({
   const handleOneIdentityFlow = useCallback(
     (value: OneIdentityLocalFeatureFlag) => {
       dispatch(setOneIdentityLocalFeatureFlag(value));
+      void updateMixpanelSuperProperties(store.getState());
     },
-    [dispatch]
+    [dispatch, store]
   );
 
   const handleOneIdentityEnv = useCallback(
