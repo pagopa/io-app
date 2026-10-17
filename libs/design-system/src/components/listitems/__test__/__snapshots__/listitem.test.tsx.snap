@@ -190,6 +190,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemInfo Snapshot 
       }
     >
       <View
+        accessibilityElementsHidden={true}
         accessible={false}
         importantForAccessibility="no-hide-descendants"
         style={
@@ -2314,6 +2315,7 @@ exports[`Test List Item Components ListItemInfo Snapshot 1`] = `
       }
     >
       <View
+        accessibilityElementsHidden={true}
         accessible={false}
         importantForAccessibility="no-hide-descendants"
         style={

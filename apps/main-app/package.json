@@ -47,6 +47,7 @@
     "@io-app/design-system": "workspace:@pagopa/io-app-design-system@*",
     "@io-app/expo-navigation-bar-manager": "workspace:*",
     "@io-app/expo-pdf-high-res-generator": "workspace:*",
+    "@io-app/expo-switch-access": "workspace:*",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-cie": "1.3.6",
     "@pagopa/io-react-native-cieid": "0.5.2",

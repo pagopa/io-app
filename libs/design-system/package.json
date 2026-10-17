@@ -146,6 +146,7 @@
   },
   "dependencies": {
     "markdown-it": "^14.1.0",
+    "@io-app/expo-switch-access": "workspace:*",
     "expo-linear-gradient": "catalog:",
     "react-native-easing-gradient": "catalog:",
     "react-native-gesture-handler": "catalog:",

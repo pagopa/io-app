@@ -5,7 +5,11 @@ import Animated from "react-native-reanimated";
 import { useIOTheme } from "../../context";
 import { IOListItemStyles, IOListItemVisualParams } from "../../core";
 import { useListItemAnimation } from "../../hooks";
-import { useIOFontDynamicScale } from "../../utils/accessibility";
+import {
+  useIOFontDynamicScale,
+  useScreenReaderEnabled,
+  useSwitchAccessEnabled
+} from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
 import { IconButton, IOButton, IOButtonLinkSpecificProps } from "../buttons";
@@ -59,6 +63,25 @@ type InteractiveProps = Pick<
 
 const PAYMENT_LOGO_SIZE: IOIconSizeScale = 24;
 
+const getContainerAccessibilityProps = (
+  hasInteractiveElements: boolean,
+  hideFromSwitchAccess: boolean,
+  accessibilityLabel: string,
+  accessibilityRole?: AccessibilityRole
+): Partial<ComponentProps<typeof View>> => {
+  if (hasInteractiveElements) {
+    return { accessible: false };
+  }
+  if (hideFromSwitchAccess) {
+    return {
+      accessibilityElementsHidden: true,
+      accessible: false,
+      importantForAccessibility: "no-hide-descendants"
+    };
+  }
+  return { accessibilityLabel, accessibilityRole, accessible: true };
+};
+
 const EndElementComponent = ({ type, componentProps }: EndElementProps) => {
   switch (type) {
     case "badge":
@@ -95,6 +118,7 @@ const ListItemInfoContent = ({
   topElement,
   endElement,
   hasInteractiveElements,
+  hideFromSwitchAccess,
   listItemAccessibilityLabel
 }: Pick<
   ListItemInfo,
@@ -108,6 +132,7 @@ const ListItemInfoContent = ({
   | "value"
 > & {
   hasInteractiveElements: boolean;
+  hideFromSwitchAccess: boolean;
   listItemAccessibilityLabel?: string;
 }) => {
   const theme = useIOTheme();
@@ -133,12 +158,19 @@ const ListItemInfoContent = ({
 
       <View style={{ flex: 1 }}>
         <View
-          accessibilityLabel={
-            hasInteractiveElements ? listItemAccessibilityLabel : undefined
+          accessibilityElementsHidden={
+            !hasInteractiveElements || hideFromSwitchAccess
           }
-          accessible={hasInteractiveElements}
+          accessibilityLabel={
+            hasInteractiveElements && !hideFromSwitchAccess
+              ? listItemAccessibilityLabel
+              : undefined
+          }
+          accessible={hasInteractiveElements && !hideFromSwitchAccess}
           importantForAccessibility={
-            hasInteractiveElements ? "yes" : "no-hide-descendants"
+            hasInteractiveElements && !hideFromSwitchAccess
+              ? "yes"
+              : "no-hide-descendants"
           }
           style={{ flexDirection: reversed ? "column-reverse" : "column" }}
         >
@@ -226,6 +258,9 @@ export const ListItemInfo = ({
   testID
 }: ListItemInfo) => {
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
+  const switchAccessEnabled = useSwitchAccessEnabled();
+  const screenReaderEnabled = useScreenReaderEnabled();
+  const hideFromSwitchAccess = switchAccessEnabled && !screenReaderEnabled;
 
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
@@ -278,16 +313,21 @@ export const ListItemInfo = ({
     topElement,
     endElement,
     hasInteractiveElements,
-    listItemAccessibilityLabel
+    listItemAccessibilityLabel,
+    hideFromSwitchAccess
   } as const;
 
   if (onLongPress) {
     return (
       <Pressable
         accessibilityActions={accessibilityActions}
+        accessibilityElementsHidden={hideFromSwitchAccess}
         accessibilityLabel={listItemAccessibilityLabel}
         accessibilityRole="button"
-        accessible
+        accessible={!hideFromSwitchAccess}
+        importantForAccessibility={
+          hideFromSwitchAccess ? "no-hide-descendants" : "auto"
+        }
         onAccessibilityAction={onAccessibilityAction}
         onLongPress={onLongPress}
         onPressIn={onPressIn}
@@ -319,11 +359,12 @@ export const ListItemInfo = ({
 
   return (
     <View
-      accessibilityLabel={
-        hasInteractiveElements ? undefined : listItemAccessibilityLabel
-      }
-      accessibilityRole={hasInteractiveElements ? undefined : accessibilityRole}
-      accessible={!hasInteractiveElements}
+      {...getContainerAccessibilityProps(
+        hasInteractiveElements,
+        hideFromSwitchAccess,
+        listItemAccessibilityLabel,
+        accessibilityRole
+      )}
       style={IOListItemStyles.listItem}
       testID={testID}
     >
