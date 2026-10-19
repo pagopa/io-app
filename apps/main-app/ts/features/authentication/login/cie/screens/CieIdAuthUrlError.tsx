@@ -1,8 +1,9 @@
 import { Route, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -25,6 +26,15 @@ const CieIdAuthUrlError = () => {
   useOnFirstRender(() => {
     trackCieIdNoWhitelistUrl(url, isActiveSessionLogin ? "reauth" : "auth");
   });
+
+  const debugInfo = useMemo(
+    () => ({
+      notAllowedUrl: url,
+      flow: isActiveSessionLogin ? "reauth" : "auth"
+    }),
+    [url, isActiveSessionLogin]
+  );
+  useDebugInfo(debugInfo);
 
   const handleClose = useCallback(() => {
     if (isActiveSessionLogin) {

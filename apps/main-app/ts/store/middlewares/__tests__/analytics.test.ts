@@ -264,7 +264,8 @@ describe("analytics", () => {
     it("should call 'mixpanelTrack' for 'loginSuccess' with proper parameters", () => {
       const action = loginSuccess({
         token: "mock-token",
-        idp: "test"
+        idp: "test",
+        isOneIdentityLogin: false
       });
 
       testable!.trackAction(action);

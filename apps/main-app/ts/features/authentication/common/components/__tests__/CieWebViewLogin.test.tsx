@@ -1,6 +1,7 @@
 import { fireEvent, render } from "@testing-library/react-native";
 
 import { withStore } from "../../../../../utils/jest/withStore";
+import * as analytics from "../../analytics";
 import { CieWebViewLogin as CieWebViewLoginComponent } from "../CieWebViewLogin";
 
 const CieWebViewLogin = withStore(CieWebViewLoginComponent);
@@ -25,6 +26,33 @@ describe("CieWebViewLogin", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
+  it.each([
+    { name: "auth", flow: "auth" as const },
+    { name: "reauth", flow: "reauth" as const }
+  ])(
+    "should track One Identity configuration error when is error page ($name)",
+    ({ flow }) => {
+      const spyTrackLoginOIConfigurationError = jest
+        .spyOn(analytics, "trackLoginOIConfigurationError")
+        .mockImplementation();
+      const errorUrl =
+        "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR";
+      const { getByTestId } = render(
+        <CieWebViewLogin flow={flow} onEvent={onEvent} url={url} />
+      );
+      const webview = getByTestId("cie-webview");
+
+      expect(
+        fireEvent(webview, "onShouldStartLoadWithRequest", { url: errorUrl })
+      ).toBe(true);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledTimes(1);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledWith(
+        errorUrl,
+        flow
+      );
+    }
+  );
 
   it("should render the WebView with the given url as source", () => {
     const { getByTestId } = render(
@@ -54,12 +82,23 @@ describe("CieWebViewLogin", () => {
     );
 
     const webview = getByTestId("cie-webview");
-    const nativeEvent = { url: "https://example.com/error" };
+    const nativeEvent = {
+      url: "https://example.com/error",
+      code: -2,
+      description: "net::ERR_INTERNET_DISCONNECTED"
+    };
     fireEvent(webview, "onError", { nativeEvent });
 
     expect(onEvent).toHaveBeenCalledWith({
       type: "WEBVIEW_ERROR",
-      payload: { url: nativeEvent.url }
+      payload: {
+        url: nativeEvent.url,
+        failureData: {
+          description: nativeEvent.description,
+          code: nativeEvent.code,
+          url: nativeEvent.url
+        }
+      }
     });
   });
 
@@ -77,7 +116,15 @@ describe("CieWebViewLogin", () => {
 
     expect(onEvent).toHaveBeenCalledWith({
       type: "WEBVIEW_HTTP_ERROR",
-      payload: { url: nativeEvent.url, statusCode: nativeEvent.statusCode }
+      payload: {
+        url: nativeEvent.url,
+        statusCode: nativeEvent.statusCode,
+        failureData: {
+          description: `Unexpected HTTP status ${nativeEvent.statusCode}`,
+          code: nativeEvent.statusCode,
+          url: nativeEvent.url
+        }
+      }
     });
   });
 
