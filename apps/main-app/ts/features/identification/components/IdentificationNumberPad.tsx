@@ -108,6 +108,13 @@ export const IdentificationNumberPad = (
       <VSpacer size={48} />
       <View testID="number-pad">
         <NumberPad
+          deleteAccessibilityAnnouncement={
+            value.length > 0
+              ? I18n.t("global.accessibility.deletedDigit", {
+                  digit: value.slice(-1)
+                })
+              : undefined
+          }
           deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
           onDeletePress={onDeletePress}
           onNumberPress={onValueChange}

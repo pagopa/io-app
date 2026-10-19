@@ -13,6 +13,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -116,6 +117,13 @@ export const DSNumberPad = () => {
         <NumberPad
           biometricAccessibilityLabel="Face ID"
           biometricType="FACE_ID"
+          deleteAccessibilityAnnouncement={
+            value.length > 0
+              ? I18n.t("global.accessibility.deletedDigit", {
+                  digit: value.slice(-1)
+                })
+              : undefined
+          }
           deleteAccessibilityLabel="Delete"
           onBiometricPress={() => Alert.alert("biometric")}
           onDeletePress={onDeletePress}
