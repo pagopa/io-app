@@ -402,6 +402,13 @@ export default defineConfig([
           selector:
             "ImportDeclaration[source.value='i18next'] > :matches(ImportDefaultSpecifier, ImportNamespaceSpecifier)[local.name!='I18n']",
           message: 'Import i18next as `I18n`: import I18n from "i18next".'
+        },
+        // Every color use must show it's a token
+        {
+          selector:
+            "VariableDeclarator[id.type='ObjectPattern']:matches([init.name='IOColorPalette'], [init.object.name='IOColorPalette'], [init.callee.name='useIOColors'])",
+          message:
+            "Don't destructure color tokens: read them as `IOColorPalette.…` or `colors.…` (`const colors = useIOColors()`)."
         }
       ],
 
