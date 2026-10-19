@@ -6,9 +6,7 @@ import { View } from "react-native";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { cdcStatusSelector } from "../../bonus/cdc/wallet/store/selectors";
-import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../../bonus/cgn/store/reducers/details";
-import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { idPayWalletInitiativeListSelector } from "../../idpay/wallet/store/reducers";
 import { usePaymentsBackoffRetry } from "../../payments/common/hooks/usePaymentsBackoffRetry";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
@@ -39,7 +37,7 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
   );
 
   const handleOnAction = () => {
-    if (isCdcError) {
+    if (isBonusError) {
       navigation.navigate(SERVICES_ROUTES.SERVICES_HOME);
       return;
     }
@@ -51,12 +49,6 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
     if (isPaymentMethodsError) {
       dispatch(getPaymentsWalletUserMethods.request());
     }
-    if (isCgnError) {
-      dispatch(cgnDetails.request());
-    }
-    if (isIdPayError) {
-      dispatch(idPayWalletGet.request());
-    }
   };
 
   return (
@@ -67,13 +59,13 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
       >
         <BannerErrorState
           actionText={I18n.t(
-            isCdcError
+            isBonusError
               ? "features.wallet.home.otherMethods.error.banner.bonus.cta"
               : "features.wallet.home.otherMethods.error.banner.cta"
           )}
           icon="warningFilled"
           label={I18n.t(
-            isCdcError
+            isBonusError
               ? "features.wallet.home.otherMethods.error.banner.bonus.label"
               : "features.wallet.home.otherMethods.error.banner.label"
           )}

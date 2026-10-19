@@ -10,9 +10,7 @@ import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as cdcSelectors from "../../../bonus/cdc/wallet/store/selectors";
-import { cgnDetails } from "../../../bonus/cgn/store/actions/details";
 import * as cgnSelectors from "../../../bonus/cgn/store/reducers/details";
-import { idPayWalletGet } from "../../../idpay/wallet/store/actions";
 import * as idPayWalletSelectors from "../../../idpay/wallet/store/reducers";
 import { getPaymentsWalletUserMethods } from "../../../payments/wallet/store/actions";
 import * as paymentsWalletSelectors from "../../../payments/wallet/store/selectors";
@@ -94,14 +92,24 @@ describe("WalletCardsCategoryRetryErrorBanner", () => {
     expect(navigate).toHaveBeenCalledWith(SERVICES_ROUTES.SERVICES_HOME);
   });
 
-  it("should navigate to services for a CdC status error", () => {
-    mockErrorSelectors({ isCdcError: true });
+  it.each([
+    ["CDC", { isCdcError: true }],
+    ["CGN", { isCgnError: true }],
+    ["IDPay", { isIdPayError: true }]
+  ])("should navigate to services for standalone %s errors", (_, errors) => {
+    mockErrorSelectors(errors);
     const navigate = jest.fn();
     jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
       navigate
     } as unknown as ReturnType<typeof appParamsList.useIONavigation>);
 
-    const { getByTestId } = renderComponent();
+    const { getByTestId, getByText } = renderComponent();
+
+    expect(
+      getByText(
+        I18n.t("features.wallet.home.otherMethods.error.banner.bonus.cta")
+      )
+    ).toBeTruthy();
 
     fireEvent.press(
       getByTestId("walletCardsCategoryRetryErrorBannerActionTestID")
@@ -111,68 +119,53 @@ describe("WalletCardsCategoryRetryErrorBanner", () => {
   });
 
   it.each([
-    ["CGN", { isCgnError: true }, cgnDetails.request().type],
-    ["IDPay", { isIdPayError: true }, idPayWalletGet.request().type]
-  ])(
-    "should keep the %s retry behavior for standalone errors",
-    (_, errors, actionType) => {
-      mockErrorSelectors(errors);
-      const navigate = jest.fn();
-      jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
-        navigate
-      } as unknown as ReturnType<typeof appParamsList.useIONavigation>);
+    ["CGN", { isPaymentMethodsError: true, isCgnError: true }],
+    ["IDPay", { isPaymentMethodsError: true, isIdPayError: true }]
+  ])("should prioritize %s bonus errors when both fail", (_, errors) => {
+    mockErrorSelectors(errors);
+    const navigate = jest.fn();
+    jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
+      navigate
+    } as unknown as ReturnType<typeof appParamsList.useIONavigation>);
 
-      const { getByTestId, store } = renderComponent();
+    const { getByTestId, store } = renderComponent();
 
-      fireEvent.press(
-        getByTestId("walletCardsCategoryRetryErrorBannerActionTestID")
-      );
+    fireEvent.press(
+      getByTestId("walletCardsCategoryRetryErrorBannerActionTestID")
+    );
 
-      expect(navigate).not.toHaveBeenCalled();
-      expect(store.getActions()).toEqual(
-        expect.arrayContaining([expect.objectContaining({ type: actionType })])
-      );
-    }
-  );
+    expect(navigate).toHaveBeenCalledWith(SERVICES_ROUTES.SERVICES_HOME);
+    expect(store.getActions()).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: getPaymentsWalletUserMethods.request().type
+        })
+      ])
+    );
+  });
 
-  it.each([
-    [
-      "CGN",
-      { isPaymentMethodsError: true, isCgnError: true },
-      [getPaymentsWalletUserMethods.request().type, cgnDetails.request().type]
-    ],
-    [
-      "IDPay",
-      { isPaymentMethodsError: true, isIdPayError: true },
-      [
-        getPaymentsWalletUserMethods.request().type,
-        idPayWalletGet.request().type
-      ]
-    ]
-  ])(
-    "should retry payment methods and %s when both fail",
-    (_, errors, expectedActionTypes: ReadonlyArray<string>) => {
-      mockErrorSelectors(errors);
-      const navigate = jest.fn();
-      jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
-        navigate
-      } as unknown as ReturnType<typeof appParamsList.useIONavigation>);
+  it("should retry payment methods when only payment methods fail", () => {
+    mockErrorSelectors({ isPaymentMethodsError: true });
+    const navigate = jest.fn();
+    jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
+      navigate
+    } as unknown as ReturnType<typeof appParamsList.useIONavigation>);
 
-      const { getByTestId, store } = renderComponent();
+    const { getByTestId, store } = renderComponent();
 
-      fireEvent.press(
-        getByTestId("walletCardsCategoryRetryErrorBannerActionTestID")
-      );
+    fireEvent.press(
+      getByTestId("walletCardsCategoryRetryErrorBannerActionTestID")
+    );
 
-      const dispatchedActionTypes = store
-        .getActions()
-        .map(action => action.type);
-      expect(navigate).not.toHaveBeenCalled();
-      expect(dispatchedActionTypes).toEqual(
-        expect.arrayContaining(expectedActionTypes)
-      );
-    }
-  );
+    expect(navigate).not.toHaveBeenCalled();
+    expect(store.getActions()).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: getPaymentsWalletUserMethods.request().type
+        })
+      ])
+    );
+  });
 });
 
 const mockErrorSelectors = ({
