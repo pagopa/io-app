@@ -38,11 +38,6 @@ export const IOIconButtonStyles = StyleSheet.create({
     width: size.iconButton.small,
     height: size.iconButton.small
   },
-  buttonSizeDefault: {
-    width: size.iconButton.default,
-    height: size.iconButton.default,
-    borderRadius: size.iconButton.default
-  },
   buttonSizeLarge: {
     width: size.iconButton.large,
     height: size.iconButton.large,
