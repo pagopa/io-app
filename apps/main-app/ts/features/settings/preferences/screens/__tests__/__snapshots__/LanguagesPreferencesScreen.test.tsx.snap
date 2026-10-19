@@ -588,7 +588,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 "width": 36,
                                               }
                                             }
-                                            testID="AnimatedRadioInput"
+                                            testID="RadioInput"
                                           >
                                             <View
                                               style={
@@ -884,7 +884,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 "width": 36,
                                               }
                                             }
-                                            testID="AnimatedRadioInput"
+                                            testID="RadioInput"
                                           >
                                             <View
                                               style={
@@ -1180,7 +1180,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 "width": 36,
                                               }
                                             }
-                                            testID="AnimatedRadioInput"
+                                            testID="RadioInput"
                                           >
                                             <View
                                               style={
@@ -1551,7 +1551,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 "width": 36,
                                               }
                                             }
-                                            testID="AnimatedRadioInput"
+                                            testID="RadioInput"
                                           >
                                             <View
                                               style={
@@ -1847,7 +1847,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 "width": 36,
                                               }
                                             }
-                                            testID="AnimatedRadioInput"
+                                            testID="RadioInput"
                                           >
                                             <View
                                               style={
@@ -2143,7 +2143,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 "width": 36,
                                               }
                                             }
-                                            testID="AnimatedRadioInput"
+                                            testID="RadioInput"
                                           >
                                             <View
                                               style={

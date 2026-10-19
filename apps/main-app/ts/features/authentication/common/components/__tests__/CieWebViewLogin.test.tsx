@@ -82,12 +82,23 @@ describe("CieWebViewLogin", () => {
     );
 
     const webview = getByTestId("cie-webview");
-    const nativeEvent = { url: "https://example.com/error" };
+    const nativeEvent = {
+      url: "https://example.com/error",
+      code: -2,
+      description: "net::ERR_INTERNET_DISCONNECTED"
+    };
     fireEvent(webview, "onError", { nativeEvent });
 
     expect(onEvent).toHaveBeenCalledWith({
       type: "WEBVIEW_ERROR",
-      payload: { url: nativeEvent.url }
+      payload: {
+        url: nativeEvent.url,
+        failureData: {
+          description: nativeEvent.description,
+          code: nativeEvent.code,
+          url: nativeEvent.url
+        }
+      }
     });
   });
 
@@ -105,7 +116,15 @@ describe("CieWebViewLogin", () => {
 
     expect(onEvent).toHaveBeenCalledWith({
       type: "WEBVIEW_HTTP_ERROR",
-      payload: { url: nativeEvent.url, statusCode: nativeEvent.statusCode }
+      payload: {
+        url: nativeEvent.url,
+        statusCode: nativeEvent.statusCode,
+        failureData: {
+          description: `Unexpected HTTP status ${nativeEvent.statusCode}`,
+          code: nativeEvent.statusCode,
+          url: nativeEvent.url
+        }
+      }
     });
   });
 

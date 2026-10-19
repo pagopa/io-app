@@ -47,7 +47,7 @@ export const MessageDetailsAttachments = ({
   return (
     <>
       <ListItemHeader
-        iconName={"attachment"}
+        iconName={"paperclip"}
         label={I18n.t("features.messages.attachments")}
       />
       {banner}
