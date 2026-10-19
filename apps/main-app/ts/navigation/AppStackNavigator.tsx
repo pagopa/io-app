@@ -25,7 +25,6 @@ import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 import { processUtmLink } from "../features/utmLink";
 import { startApplicationInitialization } from "../store/actions/application";
-import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
@@ -41,6 +40,7 @@ import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import { linkingSubscription } from "./linkingSubscription";
 import NavigationService, {
   navigationRef,
+  notifyCurrentRouteChanged,
   setMainNavigatorReady
 } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
@@ -195,8 +195,8 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         }
         const previousRouteName = routeNameRef.current;
         const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
+        notifyCurrentRouteChanged();
         if (currentRouteName !== undefined) {
-          dispatch(setDebugCurrentRouteName(currentRouteName));
           trackScreen(previousRouteName, currentRouteName);
         }
         routeNameRef.current = currentRouteName;

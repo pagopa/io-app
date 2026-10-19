@@ -15,6 +15,7 @@ module.exports = {
     ],
     "macros",
     ["@babel/plugin-transform-export-namespace-from", { loose: true }],
+    "@babel/plugin-transform-class-static-block",
     [
       "react-native-worklets/plugin",
       {
