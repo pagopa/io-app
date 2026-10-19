@@ -224,12 +224,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View

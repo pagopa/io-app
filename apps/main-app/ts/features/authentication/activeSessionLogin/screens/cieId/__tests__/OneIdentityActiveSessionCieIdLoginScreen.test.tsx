@@ -111,7 +111,7 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
     expect(mockNavigationDispatch).toHaveBeenCalledWith(
-      authErrorReplaceAction("err-code")
+      authErrorReplaceAction("err-code", { reason: "some-reason" })
     );
     expect(mockReplace).not.toHaveBeenCalled();
   });
@@ -127,7 +127,9 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
 
     expect(mockDispatch).not.toHaveBeenCalledWith(activeSessionLoginFailure());
     expect(mockNavigationDispatch).toHaveBeenCalledWith(
-      authErrorReplaceAction(AUTH_ERRORS.ERROR_1004)
+      authErrorReplaceAction(AUTH_ERRORS.ERROR_1004, {
+        reason: "some-reason"
+      })
     );
     expect(mockReplace).not.toHaveBeenCalled();
   });
@@ -191,16 +193,45 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
     });
   });
 
-  it.each(["CANCEL", "ONE_IDENTITY_LOGIN_FAILURE", "WEBVIEW_ERROR"] as const)(
-    "should navigate to CIE_ID_ERROR on %s event",
-    eventType => {
+  it.each([
+    {
+      name: "CANCEL",
+      event: { type: "CANCEL" },
+      failureData: { reason: "Login cancelled by the user" }
+    },
+    {
+      name: "ONE_IDENTITY_LOGIN_FAILURE",
+      event: {
+        type: "ONE_IDENTITY_LOGIN_FAILURE",
+        payload: { failureData: { reason: "some-reason" } }
+      },
+      failureData: { reason: "some-reason" }
+    },
+    {
+      name: "WEBVIEW_ERROR",
+      event: {
+        type: "WEBVIEW_ERROR",
+        payload: {
+          url: "https://example.com",
+          failureData: {
+            description: "net::ERR_INTERNET_DISCONNECTED",
+            code: -2
+          }
+        }
+      },
+      failureData: { description: "net::ERR_INTERNET_DISCONNECTED", code: -2 }
+    }
+  ])(
+    "should navigate to CIE_ID_ERROR with the failure data on $name event",
+    ({ event, failureData }) => {
       const { getByTestId } = renderComponent();
       const cieIdLoginMock = getByTestId("cie-id-webview-login-mock");
 
-      fireEvent(cieIdLoginMock, "event", { type: eventType });
+      fireEvent(cieIdLoginMock, "event", event);
 
       expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+        screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
+        params: { failureData }
       });
     }
   );
@@ -221,11 +252,15 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
   });
 });
 
-const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
+const authErrorReplaceAction = (
+  errorCodeOrMessage: string | undefined,
+  failureData?: Record<string, unknown>
+) =>
   StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
     errorCodeOrMessage,
     authMethod: "CIE_ID",
-    authLevel: MOCK_AUTH_LEVEL_L2
+    authLevel: MOCK_AUTH_LEVEL_L2,
+    failureData
   });
 
 const renderComponent = (

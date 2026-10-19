@@ -26,6 +26,11 @@ import {
   originSchemasWhiteList
 } from "../utils/cie";
 import { LoginType } from "../utils/index";
+import {
+  getWebViewFailureData,
+  LoginFailureData,
+  WebViewFailureData
+} from "../utils/loginErrorDebugInfo";
 
 export type CieIdWebViewLoginEvent =
   | {
@@ -33,16 +38,23 @@ export type CieIdWebViewLoginEvent =
       type: "LOGIN_FAILURE";
     }
   | {
-      payload: { reason: string };
+      payload: { failureData: LoginFailureData };
       type: "ONE_IDENTITY_LOGIN_FAILURE";
     }
   | {
-      payload: { statusCode: number; url: string };
+      payload: {
+        failureData: WebViewFailureData;
+        statusCode: number;
+        url: string;
+      };
       type: "WEBVIEW_HTTP_ERROR";
+    }
+  | {
+      payload: { failureData: WebViewFailureData; url: string };
+      type: "WEBVIEW_ERROR";
     }
   | { payload: { token: string }; type: "LOGIN_SUCCESS" }
   | { payload: { url: string }; type: "NOT_ALLOWED_URL" }
-  | { payload: { url: string }; type: "WEBVIEW_ERROR" }
   | { type: "CANCEL" };
 
 export type CieIdWebViewLoginProps = {
@@ -100,10 +112,10 @@ export const CieIdWebViewLogin = memo(
     });
 
     const handleFailure = useCallback(
-      (reason: string) => {
+      (failureData: LoginFailureData) => {
         onEvent({
           type: "ONE_IDENTITY_LOGIN_FAILURE",
-          payload: { reason }
+          payload: { failureData }
         });
       },
       [onEvent]
@@ -162,7 +174,8 @@ export const CieIdWebViewLogin = memo(
             type: "WEBVIEW_HTTP_ERROR",
             payload: {
               url: nativeEvent.url,
-              statusCode: nativeEvent.statusCode
+              statusCode: nativeEvent.statusCode,
+              failureData: getWebViewFailureData(event)
             }
           });
           return;
@@ -170,7 +183,10 @@ export const CieIdWebViewLogin = memo(
 
         onEvent({
           type: "WEBVIEW_ERROR",
-          payload: { url: nativeEvent.url }
+          payload: {
+            url: nativeEvent.url,
+            failureData: getWebViewFailureData(event)
+          }
         });
       },
       [onEvent]
