@@ -53,35 +53,35 @@ type BannerScenario = {
 const allScenarios: Array<BannerScenario> = [
   {
     name: "activation banner",
-    lifecycle: lifecycleSelectors.ItwLifecycleState.INACTIVE,
+    lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
     isRemotelyActive: false,
     isWalletEmpty: true,
     hasMdl: false
   },
   {
     name: "empty wallet banner",
-    lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+    lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
     isRemotelyActive: false,
     isWalletEmpty: true,
     hasMdl: false
   },
   {
     name: "MDL upgrade banner",
-    lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+    lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
     isRemotelyActive: false,
     isWalletEmpty: false,
     hasMdl: true
   },
   {
     name: "default upgrade banner",
-    lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+    lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
     isRemotelyActive: false,
     isWalletEmpty: false,
     hasMdl: false
   },
   {
     name: "reactivation banner",
-    lifecycle: lifecycleSelectors.ItwLifecycleState.INACTIVE,
+    lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
     isRemotelyActive: true,
     isWalletEmpty: true,
     hasMdl: false
@@ -125,7 +125,7 @@ describe("ItwDiscoveryBanner", () => {
     it("should render skeleton while remote wallet instance state is loading and wallet is not active", () => {
       setupMocks({
         name: "skeleton",
-        lifecycle: lifecycleSelectors.ItwLifecycleState.INACTIVE,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
         isRemotelyActive: undefined,
         isWalletEmpty: true,
         hasMdl: false
@@ -139,7 +139,7 @@ describe("ItwDiscoveryBanner", () => {
     it("should not render skeleton when wallet is active", () => {
       setupMocks({
         name: "active wallet",
-        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
         isRemotelyActive: undefined,
         isWalletEmpty: true,
         hasMdl: false
@@ -185,7 +185,7 @@ describe("ItwDiscoveryBanner", () => {
     it("should navigate to discovery screen when reactivation banner action is pressed", () => {
       setupMocks({
         name: "reactivation banner",
-        lifecycle: lifecycleSelectors.ItwLifecycleState.INACTIVE,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
         isRemotelyActive: true,
         isWalletEmpty: true,
         hasMdl: false
@@ -204,7 +204,7 @@ describe("ItwDiscoveryBanner", () => {
     it("should show an offline toast and block navigation when the empty wallet banner action is pressed offline", () => {
       setupMocks({
         name: "empty wallet banner",
-        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
         isRemotelyActive: false,
         isWalletEmpty: true,
         hasMdl: false

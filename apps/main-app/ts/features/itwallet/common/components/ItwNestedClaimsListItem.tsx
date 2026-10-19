@@ -53,7 +53,8 @@ export const ItwNestedClaimsListItem = ({
   credentialType
 }: ItwNestedClaimsListItemProps) => {
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const itemBottomSheet = useIOBottomSheetModal({
     title: itemTitle,
     component: (

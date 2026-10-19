@@ -27,7 +27,7 @@ export const ItwLifecycleSection = () => {
           text: I18n.t("global.buttons.confirm"),
           style: "destructive",
           onPress: () => {
-            if (lifecycle === ItwLifecycleState.IT_WALLET) {
+            if (lifecycle === ItwLifecycleState.VALID_IT_WALLET) {
               dispatch(itwLifecycleWalletReset());
             }
             dispatch(itwSetFiscalCodeWhitelisted(false));

@@ -41,7 +41,7 @@ export function* handleCredentialRemovedAnalytics(
 ): SagaIterator {
   const state: GlobalState = yield* select();
   const isItwL3 =
-    itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET;
+    itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET;
 
   const credential = getAnalyticsCredentialFromStored(action.payload, isItwL3);
 
@@ -68,7 +68,7 @@ export function* handleCredentialStoredAnalytics(
 ): SagaIterator {
   const state: GlobalState = yield* select();
   const isItwL3 =
-    itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET;
+    itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET;
 
   const credential = getAnalyticsCredentialFromStored(action.payload, isItwL3);
 

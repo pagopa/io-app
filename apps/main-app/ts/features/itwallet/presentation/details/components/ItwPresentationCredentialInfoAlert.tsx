@@ -37,7 +37,8 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
     itwCredentialStatusSelector(state, credential.credentialType)
   );
   const withL3Design =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const isMdlBannerVisible = useIOSelector(
     itwIsMdlDetailsInfoBannerVisibleSelector
   );

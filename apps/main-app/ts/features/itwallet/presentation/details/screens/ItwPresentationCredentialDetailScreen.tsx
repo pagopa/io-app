@@ -165,7 +165,7 @@ export const ItwPresentationCredentialDetail = ({
   const dispatch = useIODispatch();
 
   const lifecycle = useIOSelector(itwLifecycleStateSelector);
-  const isItWallet = lifecycle === ItwLifecycleState.IT_WALLET;
+  const isItWallet = lifecycle === ItwLifecycleState.VALID_IT_WALLET;
   const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)

@@ -24,7 +24,7 @@ export const itwZendeskWalletStatusSelector = (
   state: GlobalState
 ): ItwZendeskWalletStatus => {
   const lifecycle = itwLifecycleStateSelector(state);
-  if (lifecycle === ItwLifecycleState.IT_WALLET) {
+  if (lifecycle === ItwLifecycleState.VALID_IT_WALLET) {
     return ItwZendeskWalletStatus.IT_WALLET;
   }
   return isWalletActive(lifecycle)

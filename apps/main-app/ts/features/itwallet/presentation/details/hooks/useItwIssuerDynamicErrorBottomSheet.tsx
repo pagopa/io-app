@@ -87,7 +87,8 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
 }: UseItwIssuerDynamicErrorBottomSheetParams) => {
   const navigation = useIONavigation();
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const { confirmAndRemoveCredential } = useItwRemoveCredentialWithConfirm(
     credential,
     "bottom_sheet"

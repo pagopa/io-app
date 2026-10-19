@@ -38,7 +38,8 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const [isFlipped, setIsFlipped] = useState(false);
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const { status: credentialStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );

@@ -49,7 +49,8 @@ export const ItwEidLifecycleAlert = ({
 }: Props) => {
   const eid = useIOSelector(itwCredentialsEidSelector);
   const isItw =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
   const isOffline = offlineAccessReason !== undefined;

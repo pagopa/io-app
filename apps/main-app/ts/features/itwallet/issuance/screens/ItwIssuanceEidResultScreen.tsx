@@ -57,7 +57,8 @@ export const ItwIssuanceEidResultScreen = () => {
   const credentialType =
     ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const isL3IssuanceFlow = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );

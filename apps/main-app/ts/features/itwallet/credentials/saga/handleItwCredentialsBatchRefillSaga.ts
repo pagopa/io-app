@@ -163,7 +163,7 @@ export function* handleItwCredentialsBatchRefillSaga(
 
     const isItWalletValid =
       (yield* select(itwLifecycleStateSelector)) ===
-      ItwLifecycleState.IT_WALLET;
+      ItwLifecycleState.VALID_IT_WALLET;
 
     const {
       clientId,

@@ -29,7 +29,7 @@ describe("ItwCredentialCard", () => {
   ])("should match snapshot when credential type is [%p]", type => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.DOC_IO);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
     jest
       .spyOn(credentialUtils, "isCredentialIssuedBeforePid")
       .mockReturnValue(false);
@@ -44,7 +44,7 @@ describe("ItwCredentialCard", () => {
   it("should match snapshot when credential is pending upgrade", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
     jest
       .spyOn(credentialUtils, "isCredentialIssuedBeforePid")
       .mockReturnValue(true);
@@ -82,7 +82,7 @@ describe("ItwCredentialCard", () => {
             .mockReturnValue(pidStatus);
           jest
             .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-            .mockReturnValue(lifecycleSelectors.ItwLifecycleState.DOC_IO);
+            .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
           const component = renderComponent(
             <ItwCredentialCard
@@ -106,7 +106,7 @@ describe("ItwCredentialCardLegacy", () => {
   ])("should match snapshot when credential type is [%p]", type => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.DOC_IO);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
     jest
       .spyOn(credentialUtils, "isCredentialIssuedBeforePid")
       .mockReturnValue(false);
@@ -121,7 +121,7 @@ describe("ItwCredentialCardLegacy", () => {
   it("should match snapshot when credential is pending upgrade", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
     jest
       .spyOn(credentialUtils, "isCredentialIssuedBeforePid")
       .mockReturnValue(true);
@@ -159,7 +159,7 @@ describe("ItwCredentialCardLegacy", () => {
             .mockReturnValue(pidStatus);
           jest
             .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-            .mockReturnValue(lifecycleSelectors.ItwLifecycleState.DOC_IO);
+            .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
           const component = renderComponent(
             <ItwCredentialCardLegacy

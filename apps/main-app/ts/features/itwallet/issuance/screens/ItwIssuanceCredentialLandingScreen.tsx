@@ -53,7 +53,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const lifecycle = useIOSelector(itwLifecycleStateSelector);
   const hasActiveWallet = isWalletActive(lifecycle);
-  const isItwL3 = lifecycle === ItwLifecycleState.IT_WALLET;
+  const isItwL3 = lifecycle === ItwLifecycleState.VALID_IT_WALLET;
   const canUseItWallet = isItWalletAvailable(lifecycle);
   const { status: credentialStatus } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credentialType)

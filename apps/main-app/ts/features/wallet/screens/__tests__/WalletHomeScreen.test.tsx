@@ -77,17 +77,17 @@ describe("WalletHomeScreen", () => {
   test.each([
     {
       name: "fallback activation",
-      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_FALLBACK,
       expectedScreen: ITW_ROUTES.L3_ONBOARDING
     },
     {
       name: "existing Documenti su IO wallet",
-      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
       expectedScreen: ITW_ROUTES.L3_ONBOARDING
     },
     {
       name: "L3 disabled",
-      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO,
       expectedScreen: ITW_ROUTES.ONBOARDING
     }
   ] as const)(

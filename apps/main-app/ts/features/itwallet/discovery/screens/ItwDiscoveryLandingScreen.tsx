@@ -30,8 +30,8 @@ export const ItwDiscoveryLandingScreen = () => {
     }
 
     if (
-      lifecycle === ItwLifecycleState.IT_WALLET ||
-      lifecycle === ItwLifecycleState.DOC_IO
+      lifecycle === ItwLifecycleState.VALID_IT_WALLET ||
+      lifecycle === ItwLifecycleState.VALID_DOC_IO
     ) {
       navigation.replace(ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN);
       return;

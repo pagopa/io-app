@@ -27,7 +27,8 @@ export const useItwGuidedTour = () => {
 
   const { width: screenWidth } = Dimensions.get("window");
   const isItwActive =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const isCompleted = useIOSelector(state =>
     isTourCompletedSelector(state, ITW_TOUR_GROUP_ID)
   );

@@ -37,7 +37,7 @@ export const buildItwBaseProperties = (
     ITW_STATUS_V2: computeItwStatus(
       itwAuthLevelSelector(state),
       itwIdentificationModeSelector(state),
-      itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET
+      itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET
     ),
     ITW_THIRD_PARTY_CREDENTIAL: buildThirdPartyCredentialProperty(state),
     ITW_WALLET_LIST_CREDENTIAL: buildWalletListCredentialProperty(state),
@@ -56,7 +56,7 @@ export const buildItwBaseProperties = (
  */
 export const buildPidProperties = (state: GlobalState) => {
   const isItwL3 =
-    itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET;
+    itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET;
   const pidStatus = itwCredentialsEidStatusSelector(state);
 
   const v2Props = {
@@ -74,7 +74,7 @@ export const buildPidProperties = (state: GlobalState) => {
 /** IT-Wallet (L3) -> V2 properties are not sent to preserve historical data. */
 export const buildCredentialProperties = (state: GlobalState) => {
   const isItwL3 =
-    itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET;
+    itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET;
 
   const v3Props = {
     ITW_PG_V3: getMixpanelCredentialStatus(

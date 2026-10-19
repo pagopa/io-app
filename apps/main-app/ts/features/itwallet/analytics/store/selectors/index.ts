@@ -26,7 +26,7 @@ import { CREDENTIAL_STATUS_MAP, ItwCredentialDetails } from "../../utils/types";
 export const itwMixPanelCredentialDetailsSelector = createSelector(
   itwCredentialsSelector,
   (state: GlobalState) =>
-    itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET,
+    itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET,
   itwCredentialsEidIssuedAtSelector,
   (credentials, isItwPid, pidIssuedAt) =>
     Object.values(credentials).reduce<ItwCredentialDetails>((acc, c) => {

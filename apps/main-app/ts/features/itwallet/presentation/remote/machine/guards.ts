@@ -19,7 +19,7 @@ export const isItWalletL3ActiveGuard = ({ context }: GuardArgs) => {
   const state = context.deps.store.getState();
   return (
     isItwEnabledSelector(state) &&
-    itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET
+    itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET
   );
 };
 

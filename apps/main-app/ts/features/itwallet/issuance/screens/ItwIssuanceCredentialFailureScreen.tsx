@@ -67,7 +67,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
     selectIssuerConfiguration
   );
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const credentialName = useItwCredentialName(credentialType);
 
   const invalidStatusDetails = useCredentialIssuanceStatusMessage(

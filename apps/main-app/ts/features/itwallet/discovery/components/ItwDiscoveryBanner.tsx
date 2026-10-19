@@ -54,7 +54,7 @@ export const ItwDiscoveryBanner = ({
   const isRemotelyActive = useIOSelector(itwIsRemotelyActiveSelector);
   const lifecycle = useIOSelector(itwLifecycleStateSelector);
   const hasActiveWallet = isWalletActive(lifecycle);
-  const hasItwInstance = lifecycle === ItwLifecycleState.IT_WALLET;
+  const hasItwInstance = lifecycle === ItwLifecycleState.VALID_IT_WALLET;
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
   const hasMdl = useIOSelector(itwIsMdlPresentSelector);
 

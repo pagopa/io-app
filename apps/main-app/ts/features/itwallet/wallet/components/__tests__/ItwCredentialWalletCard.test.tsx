@@ -77,7 +77,7 @@ describe("WrappedItwCredentialCard", () => {
     beforeEach(() => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-        .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+        .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
       jest
         .spyOn(connectivitySelectors, "isConnectedSelector")
         .mockReturnValue(true);

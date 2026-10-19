@@ -57,7 +57,7 @@ describe("checkCredentialsBatchRefill", () => {
       .provide([
         [
           matchers.select(itwLifecycleStateSelector),
-          ItwLifecycleState.IT_WALLET
+          ItwLifecycleState.VALID_IT_WALLET
         ]
       ])
       .put(
@@ -72,7 +72,10 @@ describe("checkCredentialsBatchRefill", () => {
     expectSaga(checkCredentialsBatchRefill)
       .withState(makeState([proofOfAge]))
       .provide([
-        [matchers.select(itwLifecycleStateSelector), ItwLifecycleState.INACTIVE]
+        [
+          matchers.select(itwLifecycleStateSelector),
+          ItwLifecycleState.INSTALLED
+        ]
       ])
       .not.put.actionType(itwCredentialsBatchRefillRequest.toString())
       .run());
@@ -85,7 +88,7 @@ describe("checkCredentialsBatchRefill", () => {
       .provide([
         [
           matchers.select(itwLifecycleStateSelector),
-          ItwLifecycleState.IT_WALLET
+          ItwLifecycleState.VALID_IT_WALLET
         ]
       ])
       .not.put.actionType(itwCredentialsBatchRefillRequest.toString())

@@ -42,9 +42,9 @@ import {
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import { isDevEnv } from "../../../../utils/environment";
 import { openWebUrl } from "../../../../utils/url";
-import { itwIntegrityKeyTagSelector } from "../../../itwallet/issuance/store/selectors";
 import {
   isItWalletAvailable,
+  isWalletInstanceRegistered,
   itwLifecycleStateSelector
 } from "../../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
@@ -80,9 +80,6 @@ const ProfileMainScreenFC = () => {
   const appFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
   const surveyUrl = useIOSelector(appFeedbackUriConfigSelector("general"));
   const itwLifecycle = useIOSelector(itwLifecycleStateSelector);
-  // A registered wallet instance can exist even without a PID
-  const hasWalletInstance =
-    useIOSelector(itwIntegrityKeyTagSelector) !== undefined;
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
   const idResetTap = useRef<number>(undefined);
   const isItwFeaturesAvailable = isItWalletAvailable(itwLifecycle);
@@ -108,7 +105,7 @@ const ProfileMainScreenFC = () => {
     trackPressLogoutFromIO();
     Alert.alert(
       I18n.t("profile.logout.alertTitle"),
-      hasWalletInstance
+      isWalletInstanceRegistered(itwLifecycle)
         ? I18n.t("profile.logout.activeWiAlertMessage")
         : I18n.t("profile.logout.alertMessage"),
       [
@@ -123,7 +120,7 @@ const ProfileMainScreenFC = () => {
       ],
       { cancelable: true }
     );
-  }, [handleContinue, hasWalletInstance]);
+  }, [handleContinue, itwLifecycle]);
 
   const resetAppTapCounter = useCallback(() => {
     setTapsOnAppVersion(0);

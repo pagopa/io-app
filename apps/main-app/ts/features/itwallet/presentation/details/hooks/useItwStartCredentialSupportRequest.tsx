@@ -40,7 +40,8 @@ export const useItwStartCredentialSupportRequest = (
 ) => {
   const { startItwZendeskSupport } = useItwZendeskSupport();
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
 
   const errorCode = getErrorCodeFromCredential(credential);
 

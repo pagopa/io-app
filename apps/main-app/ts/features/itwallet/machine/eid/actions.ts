@@ -413,7 +413,7 @@ export const trackWalletInstanceRevocationAction = ({
 }: EidActionArgs) => {
   const isItwL3 =
     itwLifecycleStateSelector(context.deps.store.getState()) ===
-    ItwLifecycleState.IT_WALLET;
+    ItwLifecycleState.VALID_IT_WALLET;
   trackItwDeactivated(isItwL3 ? "ITW_PID" : "ITW_ID_V2");
 };
 

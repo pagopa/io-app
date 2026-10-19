@@ -440,9 +440,9 @@ describe("shouldRenderItwCardsContainerSelector", () => {
     },
     ...(
       [
-        ItwLifecycleState.INACTIVE,
-        ItwLifecycleState.IT_WALLET_ELIGIBLE,
-        ItwLifecycleState.IT_WALLET_UNSUPPORTED
+        ItwLifecycleState.INSTALLED,
+        ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
+        ItwLifecycleState.INSTALLED_IT_WALLET_UNSUPPORTED
       ] as const
     ).map(lifecycle => ({
       name: `the wallet is ${lifecycle}`,
@@ -451,9 +451,9 @@ describe("shouldRenderItwCardsContainerSelector", () => {
     })),
     ...(
       [
-        ItwLifecycleState.DOC_IO_UPGRADABLE,
-        ItwLifecycleState.DOC_IO_FALLBACK,
-        ItwLifecycleState.IT_WALLET
+        ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
+        ItwLifecycleState.VALID_DOC_IO_FALLBACK,
+        ItwLifecycleState.VALID_IT_WALLET
       ] as const
     ).map(lifecycle => ({
       name: `the wallet is ${lifecycle}`,
@@ -469,7 +469,7 @@ describe("shouldRenderItwCardsContainerSelector", () => {
     "should return $expected when $name",
     ({
       actions = [],
-      lifecycle = ItwLifecycleState.DOC_IO,
+      lifecycle = ItwLifecycleState.VALID_DOC_IO,
       isItwEnabled = true,
       walletInstanceFailure = false,
       expected

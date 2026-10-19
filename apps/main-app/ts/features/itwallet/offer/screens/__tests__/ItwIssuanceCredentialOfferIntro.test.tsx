@@ -63,7 +63,9 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
 
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE);
+      .mockReturnValue(
+        lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE
+      );
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
       .mockReturnValue("valid");
@@ -108,7 +110,9 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
   it("asks to activate the wallet when no wallet instance is active", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE);
+      .mockReturnValue(
+        lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
+      );
 
     const onDiscoveryParams = jest.fn();
     const { queryByText, getByText } = renderComponent(onDiscoveryParams);
@@ -149,7 +153,9 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
   it("tracks cancellation of the wallet activation required to add a credential", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE);
+      .mockReturnValue(
+        lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
+      );
 
     const { getByText } = renderComponent(jest.fn());
 
@@ -171,7 +177,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
         .mockReturnValue(
-          lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE
+          lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
         );
       const useSelectorMock = jest.spyOn(
         ItwCredentialIssuanceMachineContext,

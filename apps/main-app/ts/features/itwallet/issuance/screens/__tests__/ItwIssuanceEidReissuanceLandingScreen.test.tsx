@@ -28,27 +28,30 @@ describe("ItwIssuanceEidReissuanceLandingScreen", () => {
     (
       [
         {
-          lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE,
+          lifecycle:
+            lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
           eidStatus: "jwtExpiring"
         },
         {
-          lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE,
+          lifecycle:
+            lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
           eidStatus: "valid"
         },
         {
-          lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+          lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
           eidStatus: "jwtExpiring"
         },
         {
-          lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+          lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
           eidStatus: "valid"
         },
         {
-          lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE,
+          lifecycle:
+            lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
           eidStatus: undefined
         },
         {
-          lifecycle: lifecycleSelectors.ItwLifecycleState.INACTIVE,
+          lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
           eidStatus: undefined
         }
       ] satisfies Array<MockSelectorOptions>
@@ -73,7 +76,7 @@ describe("ItwIssuanceEidReissuanceLandingScreen", () => {
 
     it("waits for authenticated startup before navigating", () => {
       mockSelectors({
-        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
         eidStatus: "jwtExpiring"
       });
 
@@ -86,7 +89,7 @@ describe("ItwIssuanceEidReissuanceLandingScreen", () => {
 
     it("navigates after authenticated startup", () => {
       mockSelectors({
-        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
         eidStatus: "jwtExpiring"
       });
 
@@ -108,22 +111,22 @@ describe("ItwIssuanceEidReissuanceLandingScreen", () => {
       (
         [
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+            lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
             eidStatus: "jwtExpiring",
             level: "l3"
           },
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+            lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
             eidStatus: "jwtExpired",
             level: "l3"
           },
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+            lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO,
             eidStatus: "jwtExpiring",
             level: "l2"
           },
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+            lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO,
             eidStatus: "jwtExpired",
             level: "l2"
           }

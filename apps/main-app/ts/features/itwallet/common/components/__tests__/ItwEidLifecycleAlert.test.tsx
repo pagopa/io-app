@@ -33,7 +33,7 @@ describe("ItwEidLifecycleAlert", () => {
       .mockReturnValue("jwtExpiring");
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
 
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
@@ -62,7 +62,7 @@ describe("ItwEidLifecycleAlert", () => {
       .mockReturnValue("jwtExpiring");
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
 
     renderComponent({ currentScreenName: expectedRoute });
 
@@ -83,7 +83,7 @@ describe("ItwEidLifecycleAlert", () => {
       .mockReturnValue("jwtExpiring");
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
 
     const { queryByTestId } = renderComponent();
 
@@ -99,7 +99,7 @@ describe("ItwEidLifecycleAlert", () => {
       .mockReturnValue(undefined);
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.INACTIVE);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.INSTALLED);
 
     const { queryByTestId } = renderComponent();
 
@@ -115,7 +115,7 @@ describe("ItwEidLifecycleAlert", () => {
       .mockReturnValue("valid");
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
 
     const { queryByTestId } = renderComponent({
       lifecycleStatus: ["jwtExpiring"]

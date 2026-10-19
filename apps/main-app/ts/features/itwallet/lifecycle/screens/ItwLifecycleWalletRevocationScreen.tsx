@@ -24,7 +24,7 @@ const RevocationLoadingScreen = () => {
   const isItwL3 = useMemo(
     () =>
       itwLifecycleStateSelector(store.getState()) ===
-      ItwLifecycleState.IT_WALLET,
+      ItwLifecycleState.VALID_IT_WALLET,
     [store]
   );
 

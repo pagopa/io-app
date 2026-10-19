@@ -20,7 +20,8 @@ export const useNotAvailableToastGuard = (
 ) => {
   const toast = useIOToast();
   const isItwPid =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
 
   const guardFn = useCallback(() => {
     toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));

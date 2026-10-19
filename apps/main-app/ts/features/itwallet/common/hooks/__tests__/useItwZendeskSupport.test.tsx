@@ -88,12 +88,12 @@ describe("useItwZendeskSupport", () => {
   }>([
     {
       name: "IT-Wallet user",
-      lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
       expectedCategory: "it_wallet2"
     },
     {
       name: "Documenti su IO user",
-      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO,
       expectedCategory: "it_wallet"
     }
   ])(
@@ -117,7 +117,7 @@ describe("useItwZendeskSupport", () => {
   it("uses the provided category instead of the wallet status one", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.DOC_IO);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
     const actions = renderAndCall({
       ...baseParams,

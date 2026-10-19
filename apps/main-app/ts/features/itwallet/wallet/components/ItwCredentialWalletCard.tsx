@@ -37,8 +37,8 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
     itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
   );
   const withItwDesign =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET ||
-    props.withItwDesign;
+    useIOSelector(itwLifecycleStateSelector) ===
+      ItwLifecycleState.VALID_IT_WALLET || props.withItwDesign;
 
   const handleCredentialUpgrade = useOfflineToastGuard(() =>
     navigation.navigate(ITW_ROUTES.MAIN, {

@@ -57,7 +57,8 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const theme = useIOTheme();
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const dispatch = useIODispatch();
 
   usePreventScreenCapture();

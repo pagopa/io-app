@@ -21,7 +21,7 @@ export function* registerStatusListFetchTaskSaga(): SagaIterator {
   while (true) {
     const isItWalletValid =
       (yield* select(itwLifecycleStateSelector)) ===
-      ItwLifecycleState.IT_WALLET;
+      ItwLifecycleState.VALID_IT_WALLET;
     if (!isItWalletValid) {
       // If the wallet is not valid or the Status List is not supported, wait
       // for wallet activation before proceeding.

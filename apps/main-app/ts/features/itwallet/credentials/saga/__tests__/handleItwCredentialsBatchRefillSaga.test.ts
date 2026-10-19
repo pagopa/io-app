@@ -110,7 +110,7 @@ const requestCredentialOutput = (issuerConf: IssuerConfiguration) => ({
 const mockHappyPath = () => {
   jest
     .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-    .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+    .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
   jest
     .spyOn(connectivitySelectors, "isConnectedSelector")
     .mockReturnValue(true);
@@ -244,7 +244,7 @@ describe("handleItwCredentialsBatchRefillSaga", () => {
   it("does not renew the batch when the wallet is not valid", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.INACTIVE);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.INSTALLED);
 
     return expectSaga(handleItwCredentialsBatchRefillSaga, action)
       .withState({})

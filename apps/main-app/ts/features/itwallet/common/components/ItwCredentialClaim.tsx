@@ -126,7 +126,8 @@ const PlainTextClaimItem = ({
 }) => {
   const safeValue = getSafeText(claim);
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const displayValue = hidden ? HIDDEN_CLAIM_TEXT : safeValue;
   const accessibilityStateText = hidden
     ? getHiddenClaimAccessibilityText()

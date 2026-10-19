@@ -9,8 +9,11 @@ import {
 } from "../../common/store/selectors/environment.ts";
 import { getEnv } from "../../common/utils/environment.ts";
 import { getCurrentWalletInstanceStatus } from "../../common/utils/itwAttestationUtils.ts";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwSetWalletInstanceRemotelyActive } from "../../walletInstance/store/actions";
+import {
+  isWalletInstanceRegistered,
+  itwLifecycleStateSelector
+} from "../store/selectors";
 
 export function* checkCurrentWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
@@ -23,8 +26,9 @@ export function* checkCurrentWalletInstanceStateSaga(): Generator<
   );
   // An operational local wallet instance can exist even without a PID, for example
   // after a failed activation, and should not be treated as remotely active.
-  const hasLocalWalletInstance =
-    (yield* select(itwIntegrityKeyTagSelector)) !== undefined;
+  const hasLocalWalletInstance = isWalletInstanceRegistered(
+    yield* select(itwLifecycleStateSelector)
+  );
 
   const itwCanBeReactivated = Boolean(
     remoteWalletInstanceStatus &&

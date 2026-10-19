@@ -16,8 +16,8 @@ describe("WalletEmptyScreenContent", () => {
         .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
         .mockReturnValue(
           itwEnabled
-            ? lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE
-            : lifecycleSelectors.ItwLifecycleState.INACTIVE
+            ? lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
+            : lifecycleSelectors.ItwLifecycleState.INSTALLED
         );
       const component = renderComponent();
       expect(component.toJSON()).toMatchSnapshot();

@@ -46,7 +46,7 @@ describe("ItwIssuanceMetadata", () => {
     });
 
     it("keeps the original IPZS privacy policy for Documenti su IO", () => {
-      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.DOC_IO);
+      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
       const { queryByText } = renderComponent(ItwStoredCredentialsMocks.mdl);
 
@@ -56,7 +56,7 @@ describe("ItwIssuanceMetadata", () => {
     });
 
     it("uses the IT-Wallet privacy policy from the remote config for IT-Wallet", () => {
-      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
 
       const { queryByText } = renderComponent(ItwStoredCredentialsMocks.mdl, {
         ipzs_itwallet_privacy_url: ITWALLET_PRIVACY_URL

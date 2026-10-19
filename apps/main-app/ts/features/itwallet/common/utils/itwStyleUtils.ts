@@ -98,7 +98,8 @@ export const useThemeColorByCredentialType = (
 ): CredentialTheme => {
   const { themeType } = useIOThemeContext();
   const withL3Design =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
 
   return useMemo(
     () =>

@@ -66,7 +66,8 @@ export const ItwPresentationCredentialAttachmentScreen = ({
 }: ScreenProps) => {
   const toast = useIOToast();
   const isL3Credential =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
 
   const [footerActionsMeasurements, setfooterActionsMeasurements] =
     useState<FooterActionsMeasurements>({

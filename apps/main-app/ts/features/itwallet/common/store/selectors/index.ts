@@ -8,7 +8,10 @@ import {
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
 import {
+  isDocIoOnly,
   isItWalletAvailable,
+  isItWalletEligible,
+  isItWalletUnsupported,
   isWalletActive,
   ItwLifecycleState,
   itwLifecycleStateSelector
@@ -56,7 +59,7 @@ const itwAreBannersEnabledSelector = (state: GlobalState) =>
  */
 export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
   itwAreBannersEnabledSelector(state) &&
-  itwLifecycleStateSelector(state) === ItwLifecycleState.INACTIVE;
+  isDocIoOnly(itwLifecycleStateSelector(state));
 
 /**
  * Returns the renderable state of the discovery banner with the persisted
@@ -107,7 +110,7 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) => {
   return (
     itwAreBannersEnabledSelector(state) &&
     isItWalletAvailable(lifecycle) &&
-    lifecycle !== ItwLifecycleState.IT_WALLET
+    lifecycle !== ItwLifecycleState.VALID_IT_WALLET
   );
 };
 
@@ -115,7 +118,7 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) => {
 export const itwShouldUpgradeCredentialSelector =
   (credentialType: string, issuedAt?: string) => (state: GlobalState) => {
     const isItwPid =
-      itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET;
+      itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET;
     const pidIssuedAt = itwCredentialsEidIssuedAtSelector(state);
     const upgradeFailures = itwCredentialUpgradeFailedSelector(state);
 
@@ -132,7 +135,7 @@ export const itwShouldUpgradeCredentialSelector =
  */
 export const itwShouldRenderNewItWalletSelector = (state: GlobalState) =>
   itwIsWalletEnabledSelector(state) &&
-  itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET;
+  itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET;
 
 /**
  * Returns whether the IT-Wallet upgrade banner in MDL details should be
@@ -181,7 +184,7 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean => {
  */
 export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
   itwAreBannersEnabledSelector(state) &&
-  itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET_ELIGIBLE;
+  isItWalletEligible(itwLifecycleStateSelector(state));
 
 /**
  * Returns whether the new IT-Wallet activation banner in the messages inbox
@@ -217,7 +220,8 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
  */
 export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   itwAreBannersEnabledSelector(state) &&
-  itwLifecycleStateSelector(state) === ItwLifecycleState.DOC_IO_UPGRADABLE &&
+  itwLifecycleStateSelector(state) ===
+    ItwLifecycleState.VALID_DOC_IO_UPGRADABLE &&
   itwIsWalletDiscoveryBannerVisibleSelector(state);
 
 /**
@@ -228,7 +232,7 @@ export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
   state: GlobalState
 ) =>
   itwAreBannersEnabledSelector(state) &&
-  itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET_UNSUPPORTED;
+  isItWalletUnsupported(itwLifecycleStateSelector(state));
 
 /**
  * Returns whether the restricted Documenti su IO banner should be rendered to a
@@ -236,7 +240,7 @@ export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
  */
 export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
   itwAreBannersEnabledSelector(state) &&
-  itwLifecycleStateSelector(state) === ItwLifecycleState.DOC_IO_FALLBACK;
+  itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_DOC_IO_FALLBACK;
 
 /**
  * Returns whether the IT Wallet proximity presentation feature is enabled: the

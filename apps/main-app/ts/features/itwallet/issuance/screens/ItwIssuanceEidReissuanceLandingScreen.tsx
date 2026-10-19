@@ -70,7 +70,7 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
   // IT-Wallet is not yet active
   if (
     isItWalletAvailable(lifecycle) &&
-    lifecycle !== ItwLifecycleState.IT_WALLET
+    lifecycle !== ItwLifecycleState.VALID_IT_WALLET
   ) {
     return (
       <OperationResultScreenContent
@@ -127,7 +127,7 @@ const NavigateToEidIssuanceMachine = ({ lifecycle }: Props) => {
     if (isWalletActive(lifecycle)) {
       return navigation.replace(ITW_ROUTES.IDENTIFICATION.MODE_SELECTION, {
         eidReissuing: true,
-        level: lifecycle === ItwLifecycleState.IT_WALLET ? "l3" : "l2",
+        level: lifecycle === ItwLifecycleState.VALID_IT_WALLET ? "l3" : "l2",
         animationEnabled: false
       });
     }

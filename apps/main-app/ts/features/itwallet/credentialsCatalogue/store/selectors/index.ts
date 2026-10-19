@@ -183,7 +183,7 @@ export const itwCredentialNameResolverSelector = createSelector(
     itwCredentialsCatalogueByTypesSelector,
     itwCatalogueTranslationsByLocaleSelector,
     (state: GlobalState) =>
-      itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET
+      itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET
   ],
   (isCatalogueEnabled, catalogue, translations, withL3Design) =>
     (credentialType: string | undefined, withDefault = ""): string => {

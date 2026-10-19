@@ -113,7 +113,8 @@ export const ContentView = ({ credentialType }: ContentViewProps) => {
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const markdownContent =
     useIOSelector(itwCredentialIntroContentSelector(credentialType)) ?? "";
   const credentialName = useItwCredentialName(credentialType);

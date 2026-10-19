@@ -67,7 +67,8 @@ const ItwEidInfoBottomSheetContent = ({
   const eid = useIOSelector(itwCredentialsEidSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
 
   const Content = ({ credential }: { credential: CredentialMetadata }) => {
     const claims = parseClaims(credential.parsedCredential, {

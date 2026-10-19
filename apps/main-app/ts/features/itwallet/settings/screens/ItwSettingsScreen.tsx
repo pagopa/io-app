@@ -33,7 +33,8 @@ const ItwSettingsScreen = () => {
   const { name: currentScreenName } = useRoute();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isItWalletActive =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
 
   useFocusEffect(trackItwSettings);
 

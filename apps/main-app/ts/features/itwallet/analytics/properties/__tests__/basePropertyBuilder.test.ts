@@ -77,7 +77,7 @@ describe("buildItwBaseProperties", () => {
   it("includes only V3 properties when IT Wallet is active", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
 
     const state = appReducer(undefined, applicationChangeState("active"));
     const result = buildItwBaseProperties(state);
@@ -336,7 +336,7 @@ describe("aggregate credential properties with credentials that need the IT-Wall
   it("does not count as valid a credential issued before the IT-Wallet PID, i.e. not upgraded yet", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
     const pid = getMockedCredential(CredentialType.PID, {
       jwt: { issuedAt: "2025-01-01T00:00:00.000Z", expiration: jwtExpiration }
     });

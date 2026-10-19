@@ -57,7 +57,9 @@ describe("ItwRemoteFailureScreen", () => {
   ])("should render failure screen for $type", failure => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE);
+      .mockReturnValue(
+        lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
+      );
     expect(renderComponent(failure)).toMatchSnapshot();
   });
 });

@@ -101,7 +101,8 @@ export const ItwIssuanceMetadata = ({
     credential.issuerConf.federation_entity.organization_name;
   const itwCredential = isItwCredential(credential);
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const ipzsPrivacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );

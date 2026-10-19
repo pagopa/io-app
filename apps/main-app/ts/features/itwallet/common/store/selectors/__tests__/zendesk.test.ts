@@ -18,15 +18,15 @@ const scenarios: ReadonlyArray<{
   lifecycle: ItwLifecycleState;
 }> = [
   {
-    lifecycle: ItwLifecycleState.IT_WALLET,
+    lifecycle: ItwLifecycleState.VALID_IT_WALLET,
     expectedStatus: ItwZendeskWalletStatus.IT_WALLET,
     expectedCategory: zendeskItWalletCategory
   },
   ...(
     [
-      ItwLifecycleState.DOC_IO,
-      ItwLifecycleState.DOC_IO_UPGRADABLE,
-      ItwLifecycleState.DOC_IO_FALLBACK
+      ItwLifecycleState.VALID_DOC_IO,
+      ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
+      ItwLifecycleState.VALID_DOC_IO_FALLBACK
     ] as const
   ).map(lifecycle => ({
     lifecycle,
@@ -35,9 +35,9 @@ const scenarios: ReadonlyArray<{
   })),
   ...(
     [
-      ItwLifecycleState.INACTIVE,
-      ItwLifecycleState.IT_WALLET_ELIGIBLE,
-      ItwLifecycleState.IT_WALLET_UNSUPPORTED
+      ItwLifecycleState.INSTALLED,
+      ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
+      ItwLifecycleState.INSTALLED_IT_WALLET_UNSUPPORTED
     ] as const
   ).map(lifecycle => ({
     lifecycle,

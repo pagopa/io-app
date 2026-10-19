@@ -69,7 +69,7 @@ export const ItwOnboardingModuleCredentialsList = ({
           });
         } else if (
           isL2Credential &&
-          lifecycle !== ItwLifecycleState.IT_WALLET
+          lifecycle !== ItwLifecycleState.VALID_IT_WALLET
         ) {
           if (isWalletActive(lifecycle)) {
             /**
@@ -89,7 +89,7 @@ export const ItwOnboardingModuleCredentialsList = ({
           }
         } else if (
           isItWalletAvailable(lifecycle) &&
-          lifecycle !== ItwLifecycleState.IT_WALLET
+          lifecycle !== ItwLifecycleState.VALID_IT_WALLET
         ) {
           /**
            * User has a whitelisted fiscal code but has not yet obtained an IT

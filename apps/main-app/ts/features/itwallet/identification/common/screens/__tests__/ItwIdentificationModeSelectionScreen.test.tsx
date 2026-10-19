@@ -45,7 +45,9 @@ describe("ItwIdentificationModeSelectionScreen", () => {
   beforeEach(() => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
-      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE);
+      .mockReturnValue(
+        lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
+      );
     jest
       .spyOn(remoteConfigSelectors, "itwDisabledIdentificationMethodsSelector")
       .mockReturnValue([]);
@@ -175,7 +177,7 @@ describe("ItwIdentificationModeSelectionScreen", () => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
         .mockReturnValue(
-          lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE
+          lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE
         );
       const { getByTestId } = renderComponent("issuance", "l3", credentialType);
 

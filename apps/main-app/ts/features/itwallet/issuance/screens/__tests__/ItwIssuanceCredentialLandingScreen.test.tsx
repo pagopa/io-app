@@ -66,33 +66,35 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       (
         [
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.INACTIVE,
+            lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
             expectedArgs: discoveryInfo("l2")
           },
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE,
+            lifecycle:
+              lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
             expectedArgs: discoveryInfo("l3")
           },
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+            lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO,
             expectedArgs: trustIssuer
           },
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE,
+            lifecycle:
+              lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
             expectedArgs: trustIssuer
           },
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+            lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
             expectedArgs: trustIssuer
           },
           {
             credentialStatus: "jwtExpired",
-            lifecycle: lifecycleSelectors.ItwLifecycleState.INACTIVE,
+            lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
             expectedArgs: discoveryInfo("l2")
           },
           {
             credentialStatus: "jwtExpiring",
-            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+            lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO,
             expectedArgs: trustIssuer
           }
         ] satisfies Array<{
@@ -196,15 +198,16 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       (
         [
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+            lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO,
             level: "l2"
           },
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE,
+            lifecycle:
+              lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
             level: "l3"
           },
           {
-            lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+            lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
             level: "l3"
           }
         ] satisfies Array<{
@@ -280,7 +283,7 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
   describe("Introduction content routing", () => {
     it("navigates to the introduction screen when the credential has intro content", () => {
       mockSelectors({
-        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
         hasIntroContent: true
       });
 
@@ -294,7 +297,7 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
 
     it("navigates to the trust issuer screen when the credential has no intro content", () => {
       mockSelectors({
-        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
         hasIntroContent: false
       });
 
@@ -312,7 +315,7 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       mockSelectors({
         credentialStatus: undefined,
         pidStatus: undefined,
-        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET
       });
 
       const { getByText } = renderComponent();
@@ -326,7 +329,7 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       mockSelectors({
         credentialStatus: undefined,
         pidStatus: undefined,
-        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET
       });
 
       const { getByText } = renderComponent();
@@ -350,7 +353,7 @@ type MockSelectorOptions = {
 const mockSelectors = ({
   credentialStatus,
   pidStatus,
-  lifecycle = lifecycleSelectors.ItwLifecycleState.INACTIVE,
+  lifecycle = lifecycleSelectors.ItwLifecycleState.INSTALLED,
   hasIntroContent = false
 }: MockSelectorOptions = {}) => {
   jest

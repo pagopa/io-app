@@ -53,7 +53,7 @@ describe("ItwPresentationCredentialInfoAlert", () => {
   describe("MDL - L2 (Documenti su IO)", () => {
     it("renders the legacy alert when the credential is valid", () => {
       mockStatusSelector({ status: "valid" });
-      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.DOC_IO);
+      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
       const { getByText, getByTestId, queryByLabelText } =
         renderComponent(mockedMdl);
@@ -68,7 +68,7 @@ describe("ItwPresentationCredentialInfoAlert", () => {
 
     it("renders nothing when the credential status is not valid", () => {
       mockStatusSelector({ status: "expired" });
-      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.DOC_IO);
+      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
       const { queryByTestId } = renderComponent(mockedMdl);
 
@@ -79,7 +79,7 @@ describe("ItwPresentationCredentialInfoAlert", () => {
   describe("MDL - L3 (IT-Wallet)", () => {
     it("renders the informational banner when the credential is valid", () => {
       mockStatusSelector({ status: "valid" });
-      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
 
       const { getByText, getByTestId } = renderComponent(mockedMdl);
 
@@ -94,7 +94,7 @@ describe("ItwPresentationCredentialInfoAlert", () => {
 
     it("renders nothing when the credential status is not valid", () => {
       mockStatusSelector({ status: "expired" });
-      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
 
       const { queryByTestId } = renderComponent(mockedMdl);
 
@@ -103,7 +103,7 @@ describe("ItwPresentationCredentialInfoAlert", () => {
 
     it("dispatches the close action when dismissed", () => {
       mockStatusSelector({ status: "valid" });
-      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
 
       const { getByLabelText, store } = renderComponent(mockedMdl);
 

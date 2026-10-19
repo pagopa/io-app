@@ -48,7 +48,7 @@ describe("ItwCardOnboardingL3Screen", () => {
     jest.clearAllMocks();
 
     // default mocks
-    mockLifecycle(lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE);
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE);
     jest
       .spyOn(connectivitySelectors, "isConnectedSelector")
       .mockReturnValue(true);
@@ -107,7 +107,9 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 
   it("should NOT render the action button when wallet is NOT enabled", () => {
-    mockLifecycle(lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE);
+    mockLifecycle(
+      lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
+    );
 
     const { queryByText } = renderComponent({ page: 0 });
 
@@ -129,7 +131,7 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 
   it("shows the upgrade banner after the three L2 documents for a missing CIE/PIN fallback", () => {
-    mockLifecycle(lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK);
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_FALLBACK);
     mockL2Catalogue();
     const {
       getAllByTestId,
@@ -162,7 +164,7 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 
   it("never shows the upgrade banner together with the NFC alert when activation is disabled", () => {
-    mockLifecycle(lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK);
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_FALLBACK);
     jest
       .spyOn(preferencesSelectors, "itwIsActivationDisabledSelector")
       .mockReturnValue(true);
@@ -194,19 +196,19 @@ describe("ItwCardOnboardingL3Screen", () => {
       name: "other cards tab",
       page: 1,
       itwEnabled: true,
-      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK
+      lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_FALLBACK
     },
     {
       name: "IT-Wallet disabled",
       page: 0,
       itwEnabled: false,
-      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK
+      lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_FALLBACK
     },
     {
       name: "L3 disabled",
       page: 0,
       itwEnabled: true,
-      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO
+      lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO
     }
   ])(
     "hides the fallback upgrade banner for $name",
@@ -221,8 +223,8 @@ describe("ItwCardOnboardingL3Screen", () => {
   );
 
   test.each<lifecycleSelectors.ItwLifecycleState>([
-    lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK,
-    lifecycleSelectors.ItwLifecycleState.IT_WALLET_UNSUPPORTED
+    lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_FALLBACK,
+    lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_UNSUPPORTED
   ])("shows only the L2 documents for %s", lifecycle => {
     mockLifecycle(lifecycle);
     mockL2Catalogue();
@@ -241,13 +243,13 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 
   it("does not offer the reduced screen for an active IT-Wallet", () => {
-    mockLifecycle(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
     const { queryByTestId } = renderComponent({ page: 0 });
     expect(queryByTestId("restricted-action-testID")).toBeNull();
   });
 
   it("uses the offline guard for fallback upgrade activation", () => {
-    mockLifecycle(lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK);
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_FALLBACK);
     jest
       .spyOn(connectivitySelectors, "isConnectedSelector")
       .mockReturnValue(false);
@@ -257,7 +259,7 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 
   it("issues fallback documents directly instead of restarting L3 activation", () => {
-    mockLifecycle(lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK);
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_FALLBACK);
     const actor = createActor(itwCredentialIssuanceMachine, {
       input: { deps: testCredentialIssuanceDeps() }
     });

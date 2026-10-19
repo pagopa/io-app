@@ -39,31 +39,33 @@ describe("ItwDiscoveryLandingScreen", () => {
   }>(
     [
       {
-        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
         expectedArgs: [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]
       },
       {
-        lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO,
         expectedArgs: [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]
       },
       {
-        lifecycle: lifecycleSelectors.ItwLifecycleState.INACTIVE,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
         expectedArgs: discoveryInfo("l2")
       },
       {
-        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE,
+        lifecycle:
+          lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
         expectedArgs: discoveryInfo("l3")
       },
       {
-        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET_UNSUPPORTED,
+        lifecycle:
+          lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_UNSUPPORTED,
         expectedArgs: discoveryInfo("l3")
       },
       {
-        lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
         expectedArgs: discoveryInfo("l3")
       },
       {
-        lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_FALLBACK,
         expectedArgs: discoveryInfo("l3")
       }
     ].map(row => ({

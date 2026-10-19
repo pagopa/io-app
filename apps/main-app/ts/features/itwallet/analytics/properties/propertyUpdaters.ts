@@ -82,7 +82,7 @@ export const updateItwStatusAndPIDProperties = (state: GlobalState) => {
     ITW_STATUS_V2: computeItwStatus(
       authLevel,
       itwIdentificationModeSelector(state),
-      itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET
+      itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET
     ),
     ...pidProperties
   };

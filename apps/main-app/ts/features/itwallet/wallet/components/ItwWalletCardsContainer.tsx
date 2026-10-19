@@ -60,7 +60,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     itwShouldRenderL2EngagementBannerSelector
   );
   const isItWalletValid =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
 
   const cards = useIOSelector(state =>
     selectWalletCardsByCategory(state, "itw")

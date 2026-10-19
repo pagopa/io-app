@@ -31,20 +31,20 @@ import { itwCloseBanner } from "../../actions/banners";
 import * as remoteConfigSelectors from "../remoteConfig";
 
 const lifecycleStates: ReadonlyArray<ItwLifecycleState> = [
-  ItwLifecycleState.INACTIVE,
-  ItwLifecycleState.IT_WALLET_ELIGIBLE,
-  ItwLifecycleState.IT_WALLET_UNSUPPORTED,
-  ItwLifecycleState.DOC_IO,
-  ItwLifecycleState.DOC_IO_UPGRADABLE,
-  ItwLifecycleState.DOC_IO_FALLBACK,
-  ItwLifecycleState.IT_WALLET
+  ItwLifecycleState.INSTALLED,
+  ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
+  ItwLifecycleState.INSTALLED_IT_WALLET_UNSUPPORTED,
+  ItwLifecycleState.VALID_DOC_IO,
+  ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
+  ItwLifecycleState.VALID_DOC_IO_FALLBACK,
+  ItwLifecycleState.VALID_IT_WALLET
 ];
 
 const activeStates: ReadonlyArray<ItwLifecycleState> = [
-  ItwLifecycleState.DOC_IO,
-  ItwLifecycleState.DOC_IO_UPGRADABLE,
-  ItwLifecycleState.DOC_IO_FALLBACK,
-  ItwLifecycleState.IT_WALLET
+  ItwLifecycleState.VALID_DOC_IO,
+  ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
+  ItwLifecycleState.VALID_DOC_IO_FALLBACK,
+  ItwLifecycleState.VALID_IT_WALLET
 ];
 
 const deviceOffline = setOfflineAccessReason(
@@ -80,10 +80,10 @@ afterEach(() => {
 
 describe("banner selectors", () => {
   const l3UpgradeStates: ReadonlyArray<ItwLifecycleState> = [
-    ItwLifecycleState.IT_WALLET_ELIGIBLE,
-    ItwLifecycleState.IT_WALLET_UNSUPPORTED,
-    ItwLifecycleState.DOC_IO_UPGRADABLE,
-    ItwLifecycleState.DOC_IO_FALLBACK
+    ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
+    ItwLifecycleState.INSTALLED_IT_WALLET_UNSUPPORTED,
+    ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
+    ItwLifecycleState.VALID_DOC_IO_FALLBACK
   ];
 
   const banners: ReadonlyArray<{
@@ -94,37 +94,37 @@ describe("banner selectors", () => {
     {
       name: "isItwDiscoveryBannerRenderableSelector",
       selector: isItwDiscoveryBannerRenderableSelector,
-      renderedIn: [ItwLifecycleState.INACTIVE]
+      renderedIn: [ItwLifecycleState.INSTALLED]
     },
     {
       name: "itwShouldRenderDiscoveryBannerSelector",
       selector: itwShouldRenderDiscoveryBannerSelector,
-      renderedIn: [ItwLifecycleState.IT_WALLET_ELIGIBLE]
+      renderedIn: [ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE]
     },
     {
       name: "itwShouldRenderWalletDiscoveryBannerSelector",
       selector: itwShouldRenderWalletDiscoveryBannerSelector,
-      renderedIn: [ItwLifecycleState.IT_WALLET_ELIGIBLE]
+      renderedIn: [ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE]
     },
     {
       name: "itwShouldRenderInboxDiscoveryBannerSelector",
       selector: itwShouldRenderInboxDiscoveryBannerSelector,
-      renderedIn: [ItwLifecycleState.IT_WALLET_ELIGIBLE]
+      renderedIn: [ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE]
     },
     {
       name: "itwShouldRenderUpgradeBannerSelector",
       selector: itwShouldRenderUpgradeBannerSelector,
-      renderedIn: [ItwLifecycleState.DOC_IO_UPGRADABLE]
+      renderedIn: [ItwLifecycleState.VALID_DOC_IO_UPGRADABLE]
     },
     {
       name: "itwShouldRenderL2EngagementBannerForInactiveWalletSelector",
       selector: itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
-      renderedIn: [ItwLifecycleState.IT_WALLET_UNSUPPORTED]
+      renderedIn: [ItwLifecycleState.INSTALLED_IT_WALLET_UNSUPPORTED]
     },
     {
       name: "itwShouldRenderL2EngagementBannerSelector",
       selector: itwShouldRenderL2EngagementBannerSelector,
-      renderedIn: [ItwLifecycleState.DOC_IO_FALLBACK]
+      renderedIn: [ItwLifecycleState.VALID_DOC_IO_FALLBACK]
     },
     {
       name: "itwShouldRenderL3UpgradeBannerSelector",
@@ -184,42 +184,42 @@ describe("banner selectors", () => {
     {
       name: "itwShouldRenderWalletDiscoveryBannerSelector",
       selector: itwShouldRenderWalletDiscoveryBannerSelector,
-      lifecycle: ItwLifecycleState.IT_WALLET_ELIGIBLE,
+      lifecycle: ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
       reason: "the banner was closed",
       action: itwCloseBanner("discovery_wallet")
     },
     {
       name: "itwShouldRenderInboxDiscoveryBannerSelector",
       selector: itwShouldRenderInboxDiscoveryBannerSelector,
-      lifecycle: ItwLifecycleState.IT_WALLET_ELIGIBLE,
+      lifecycle: ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
       reason: "the banner was closed",
       action: itwCloseBanner("discovery_messages_inbox")
     },
     {
       name: "itwShouldRenderInboxDiscoveryBannerSelector",
       selector: itwShouldRenderInboxDiscoveryBannerSelector,
-      lifecycle: ItwLifecycleState.IT_WALLET_ELIGIBLE,
+      lifecycle: ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
       reason: "the wallet instance is remotely active",
       action: itwSetWalletInstanceRemotelyActive(true)
     },
     {
       name: "itwShouldRenderInboxDiscoveryBannerSelector",
       selector: itwShouldRenderInboxDiscoveryBannerSelector,
-      lifecycle: ItwLifecycleState.IT_WALLET_ELIGIBLE,
+      lifecycle: ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
       reason: "the wallet instance remote status is unknown",
       action: itwSetWalletInstanceRemotelyActive(undefined)
     },
     {
       name: "itwShouldRenderUpgradeBannerSelector",
       selector: itwShouldRenderUpgradeBannerSelector,
-      lifecycle: ItwLifecycleState.DOC_IO_UPGRADABLE,
+      lifecycle: ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
       reason: "the banner was closed",
       action: itwCloseBanner("discovery_wallet")
     },
     {
       name: "itwShouldRenderWalletUpgradeMDLDetailsBannerSelector",
       selector: itwShouldRenderWalletUpgradeMDLDetailsBannerSelector,
-      lifecycle: ItwLifecycleState.DOC_IO_UPGRADABLE,
+      lifecycle: ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
       reason: "the banner was closed",
       action: itwCloseBanner("upgradeMDLDetails")
     }
@@ -287,7 +287,7 @@ describe("itwShouldRenderWalletReadyBannerSelector", () => {
     { name: "the eID is expired", wallet: { eidStatus: "jwtExpired" } },
     { name: "the wallet is not empty", wallet: { isWalletEmpty: false } }
   ])("returns false when $name", ({ actions = [], wallet }) => {
-    mockLifecycle(ItwLifecycleState.DOC_IO);
+    mockLifecycle(ItwLifecycleState.VALID_DOC_IO);
     mockWallet(wallet);
     expect(
       itwShouldRenderWalletReadyBannerSelector(stateWith(...actions))
@@ -315,7 +315,7 @@ describe("itwOfflineAccessAvailableSelector", () => {
   );
 
   it("returns false with an empty wallet", () => {
-    mockLifecycle(ItwLifecycleState.IT_WALLET);
+    mockLifecycle(ItwLifecycleState.VALID_IT_WALLET);
     jest
       .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
       .mockReturnValue(true);
@@ -328,7 +328,7 @@ describe("itwShouldRenderNewItWalletSelector", () => {
     lifecycleStates
       .map(lifecycle => ({
         lifecycle,
-        expected: lifecycle === ItwLifecycleState.IT_WALLET
+        expected: lifecycle === ItwLifecycleState.VALID_IT_WALLET
       }))
       .map(row => ({ ...row, lifecycleName: ItwLifecycleState[row.lifecycle] }))
   )("returns $expected with $lifecycleName", ({ lifecycle, expected }) => {
@@ -352,7 +352,7 @@ describe("itwShouldRenderNewItWalletSelector", () => {
     "returns $expected for IT-Wallet remotely disabled when $name",
     ({ actions, expected }) => {
       mockItwEnabled(false);
-      mockLifecycle(ItwLifecycleState.IT_WALLET);
+      mockLifecycle(ItwLifecycleState.VALID_IT_WALLET);
       expect(itwShouldRenderNewItWalletSelector(stateWith(...actions))).toBe(
         expected
       );
@@ -382,7 +382,7 @@ describe("isItwProximityEnabledSelector", () => {
     },
     {
       name: "Documenti su IO is active",
-      lifecycle: ItwLifecycleState.DOC_IO_UPGRADABLE,
+      lifecycle: ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
       expected: false
     },
     {
@@ -393,7 +393,7 @@ describe("isItwProximityEnabledSelector", () => {
   ])(
     "returns $expected when $name",
     ({
-      lifecycle = ItwLifecycleState.IT_WALLET,
+      lifecycle = ItwLifecycleState.VALID_IT_WALLET,
       isItwEnabled = true,
       isProximityVersionSupported = true,
       hasPresentableCredentials = true,

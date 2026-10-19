@@ -226,7 +226,8 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   );
   const message = useCredentialStatusMessage(credential.credentialType);
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
   const needsItwUpgrade = useIOSelector(
     itwShouldUpgradeCredentialSelector(

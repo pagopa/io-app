@@ -30,7 +30,8 @@ export const useItwRemoveCredentialWithConfirm = (
   const toast = useIOToast();
   const navigation = useIONavigation();
   const isItwL3 =
-    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const { status = "unknown" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );

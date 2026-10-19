@@ -54,6 +54,7 @@ import { makeItwCredentialsByPresenceSelector } from "../../credentials/store/se
 import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors";
 import {
   isItWalletAvailable,
+  isItWalletUnsupported,
   ItwLifecycleState,
   itwLifecycleStateSelector
 } from "../../lifecycle/store/selectors";
@@ -144,7 +145,7 @@ const ItwCredentialOnboardingSection = () => {
   );
   // A user without a CIE can upgrade from the fallback as soon as they get one
   const shouldRenderUpgradeBanner =
-    lifecycle === ItwLifecycleState.DOC_IO_FALLBACK &&
+    lifecycle === ItwLifecycleState.VALID_DOC_IO_FALLBACK &&
     !isItWalletActivationDisabled &&
     isUpgradeAvailable;
 
@@ -167,10 +168,10 @@ const ItwCredentialOnboardingSection = () => {
   // Show upcoming credentials only if env is "pre"
   const shouldShowUpcoming = env === "pre";
   const shouldShowL2Credentials =
-    lifecycle === ItwLifecycleState.DOC_IO_FALLBACK ||
-    lifecycle === ItwLifecycleState.IT_WALLET_UNSUPPORTED;
+    lifecycle === ItwLifecycleState.VALID_DOC_IO_FALLBACK ||
+    isItWalletUnsupported(lifecycle);
   const shouldShowRestrictedAction =
-    lifecycle === ItwLifecycleState.DOC_IO_UPGRADABLE;
+    lifecycle === ItwLifecycleState.VALID_DOC_IO_UPGRADABLE;
 
   const credentialsToDisplay = useMemo(() => {
     if (shouldShowL2Credentials) {

@@ -131,7 +131,8 @@ export function* updateCredentialStatusAssertionSaga(
   const env = yield* select(selectItwEnv);
   const itwVersion = yield* select(selectItwSpecsVersion);
   const isItwL3 =
-    (yield* select(itwLifecycleStateSelector)) === ItwLifecycleState.IT_WALLET;
+    (yield* select(itwLifecycleStateSelector)) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const mixpanelCredential = getMixPanelCredential(
     metadata.credentialType,
     isItwL3
