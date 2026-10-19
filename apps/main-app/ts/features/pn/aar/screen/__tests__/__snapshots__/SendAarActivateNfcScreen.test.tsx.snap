@@ -224,12 +224,6 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
@@ -1082,7 +1076,7 @@ continuare
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -1113,7 +1107,7 @@ continuare
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
