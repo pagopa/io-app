@@ -868,7 +868,7 @@ exports[`BottomSheetContent doesn't render the website section and matches its s
                                   {
                                     "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
-                                    "borderRadius": 8,
+                                    "borderRadius": 0,
                                     "borderWidth": 0,
                                     "height": undefined,
                                   },
@@ -899,7 +899,7 @@ exports[`BottomSheetContent doesn't render the website section and matches its s
                                   {
                                     "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
-                                    "borderRadius": 8,
+                                    "borderRadius": 0,
                                     "borderWidth": 0,
                                     "height": undefined,
                                   },
@@ -1986,7 +1986,7 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                   {
                                     "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
-                                    "borderRadius": 8,
+                                    "borderRadius": 0,
                                     "borderWidth": 0,
                                     "height": undefined,
                                   },
@@ -2017,7 +2017,7 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                   {
                                     "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
-                                    "borderRadius": 8,
+                                    "borderRadius": 0,
                                     "borderWidth": 0,
                                     "height": undefined,
                                   },
@@ -3104,7 +3104,7 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                   {
                                     "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
-                                    "borderRadius": 8,
+                                    "borderRadius": 0,
                                     "borderWidth": 0,
                                     "height": undefined,
                                   },
@@ -3135,7 +3135,7 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                   {
                                     "backgroundColor": "transparent",
                                     "borderColor": "#0B3EE3",
-                                    "borderRadius": 8,
+                                    "borderRadius": 0,
                                     "borderWidth": 0,
                                     "height": undefined,
                                   },

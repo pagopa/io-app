@@ -51,6 +51,7 @@ import {
   getCieStatusActor,
   getWalletAttestationActor,
   initMrtdPoPChallengeActor,
+  obtainEidStatusListActor,
   obtainStatusListActor,
   requestAccessTokenActor,
   requestEidActor,
@@ -221,6 +222,7 @@ export const itwEidIssuanceMachineSetup = setup({
     requestAccessToken: requestAccessTokenActor,
     requestEid: requestEidActor,
     obtainStatusList: obtainStatusListActor,
+    obtainEidStatusList: obtainEidStatusListActor,
     storeEidCredential: storeEidCredentialActor,
     waitForSessionRefresh: waitForSessionRefreshActor,
 

@@ -6,7 +6,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { LoginType } from "../../../../activeSessionLogin/screens/analytics";
+import { LoginType } from "../../../../common/utils/index";
 
 export const cieIsSupported = createAsyncAction(
   "CIE_IS_SUPPORTED_REQUEST",
