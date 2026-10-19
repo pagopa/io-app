@@ -3187,6 +3187,7 @@
         }
       },
       "dateFormat": "DD MMMM YYYY",
+      "deletedDigit": "Hai eliminato la cifra {{digit}}",
       "expanded": "Espanso",
       "inputDigitCounter": "{{valueLength}} di {{length}} numeri inseriti",
       "list": {
