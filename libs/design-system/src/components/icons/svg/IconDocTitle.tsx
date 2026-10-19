@@ -1,7 +1,7 @@
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../types";
 
-const IconDocPaymentTitle = ({ size, style, ...props }: SVGIconProps) => (
+const IconDocTitle = ({ size, style, ...props }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       fill="currentColor"
@@ -12,4 +12,4 @@ const IconDocPaymentTitle = ({ size, style, ...props }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconDocPaymentTitle;
+export default IconDocTitle;

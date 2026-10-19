@@ -1,7 +1,7 @@
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../types";
 
-const IconDocumentAttachmentPDF = ({ size, style, ...props }: SVGIconProps) => (
+const IconAttachmentPDF = ({ size, style, ...props }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       fill="currentColor"
@@ -12,4 +12,4 @@ const IconDocumentAttachmentPDF = ({ size, style, ...props }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconDocumentAttachmentPDF;
+export default IconAttachmentPDF;
