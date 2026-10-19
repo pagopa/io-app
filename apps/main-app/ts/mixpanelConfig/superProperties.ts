@@ -71,7 +71,7 @@ export const updateMixpanelSuperProperties = async (
       return;
     }
     const screenReaderEnabled: boolean = await isScreenReaderEnabled();
-    const fontScale = await getFontScale();
+    const fontScale = getFontScale();
     const biometricTechnology = await getBiometricsType(false);
     const isScreenLockSet = await isScreenLockSetFunc();
     const AUTH_SECURITY_LEVEL = authSecurityLevelHandler(state);
