@@ -11,7 +11,7 @@ import { WithTestID } from "../../utils/types";
 import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer, VStack } from "../layout";
 import { IOLogoPaymentType, LogoPayment } from "../logos";
-import { AnimatedRadio } from "../radio/AnimatedRadio";
+import { Radio } from "../radio/Radio";
 import { IOSkeleton } from "../skeleton";
 import { BodySmall, H6 } from "../typography";
 
@@ -156,7 +156,7 @@ export const ListItemRadio = ({
           </View>
           <HSpacer size={IODimensions.gap.selection.control} />
           <View pointerEvents="none" style={disabledStyle}>
-            <AnimatedRadio
+            <Radio
               checked={toggleValue}
               size={IODimensions.size.selection.control * dynamicFontScale}
             />
@@ -244,7 +244,7 @@ export const ListItemRadio = ({
               importantForAccessibility="no-hide-descendants"
               pointerEvents="none"
             >
-              <AnimatedRadio
+              <Radio
                 checked={selected ?? toggleValue}
                 size={IODimensions.size.selection.control * dynamicFontScale}
               />

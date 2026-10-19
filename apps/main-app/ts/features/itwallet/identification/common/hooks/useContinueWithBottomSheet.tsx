@@ -32,7 +32,7 @@ const firstIconMap: Record<ModeType, IOIcons> = {
 
 const secondIconMap: Record<ModeType, IOIcons> = {
   ciePin: "securityPad",
-  cieId: "cie",
+  cieId: "cieID",
   spid: "fiscalCodeIndividual"
 };
 

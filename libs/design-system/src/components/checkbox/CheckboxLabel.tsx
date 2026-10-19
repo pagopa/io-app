@@ -7,7 +7,7 @@ import { triggerHaptic } from "../../functions/haptic-feedback/hapticFeedback";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { HStack } from "../layout";
 import { H6 } from "../typography/H6";
-import { AnimatedCheckbox } from "./AnimatedCheckbox";
+import { Checkbox } from "./Checkbox";
 
 type Props = {
   label: string;
@@ -18,17 +18,14 @@ type Props = {
 const DISABLED_OPACITY = 0.5;
 // disabled: the component is no longer touchable
 // onPress:
-type OwnProps = Pick<
-  ComponentProps<typeof AnimatedCheckbox>,
-  "checked" | "disabled"
-> &
+type OwnProps = Pick<ComponentProps<typeof Checkbox>, "checked" | "disabled"> &
   Pick<ComponentProps<typeof Pressable>, "onPress"> &
   Props;
 
 /**
- * A checkbox with the automatic state management that uses a
- * {@link AnimatedCheckBox} The toggleValue change when a `onPress` event is
- * received and dispatch the `onValueChange`.
+ * A checkbox with the automatic state management that uses a {@link Checkbox}
+ * The toggleValue change when a `onPress` event is received and dispatch the
+ * `onValueChange`.
  *
  * @class
  * @param props
@@ -68,7 +65,7 @@ export const CheckboxLabel = ({
         alignSelf: "flex-start",
         opacity: disabled ? DISABLED_OPACITY : 1
       }}
-      testID="AnimatedCheckbox"
+      testID="Checkbox"
     >
       <HStack
         allowScaleSpacing
@@ -83,7 +80,7 @@ export const CheckboxLabel = ({
             alignSelf: "flex-start"
           }}
         >
-          <AnimatedCheckbox
+          <Checkbox
             checked={checked ?? toggleValue}
             size={IODimensions.size.selection.control * dynamicFontScale}
           />

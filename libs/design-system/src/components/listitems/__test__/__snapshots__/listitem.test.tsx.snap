@@ -1264,7 +1264,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemRadioWithAmoun
               "width": 24,
             }
           }
-          testID="AnimatedRadioInput"
+          testID="RadioInput"
         >
           <View
             style={
@@ -1638,7 +1638,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemRadioWithAmoun
               "width": 24,
             }
           }
-          testID="AnimatedRadioInput"
+          testID="RadioInput"
         >
           <View
             style={
@@ -3389,7 +3389,7 @@ exports[`Test List Item Components ListItemRadioWithAmount Snapshot 1`] = `
               "width": 24,
             }
           }
-          testID="AnimatedRadioInput"
+          testID="RadioInput"
         >
           <View
             style={
@@ -3763,7 +3763,7 @@ exports[`Test List Item Components ListItemRadioWithAmount Snapshot 2`] = `
               "width": 24,
             }
           }
-          testID="AnimatedRadioInput"
+          testID="RadioInput"
         >
           <View
             style={

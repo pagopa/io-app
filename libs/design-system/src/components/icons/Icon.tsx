@@ -19,6 +19,7 @@ import IconArrowLeft from "./svg/IconArrowLeft";
 import IconArrowRight from "./svg/IconArrowRight";
 import IconArrowTop from "./svg/IconArrowTop";
 import IconAttachment from "./svg/IconAttachment";
+import IconAttachmentPDF from "./svg/IconAttachmentPDF";
 import IconBackAndroid from "./svg/IconBackAndroid";
 import IconBackiOS from "./svg/IconBackiOS";
 import IconBarcode from "./svg/IconBarcode";
@@ -55,7 +56,7 @@ import IconChevronRightListItem from "./svg/IconChevronRightListItem";
 import IconChevronTop from "./svg/IconChevronTop";
 import IconCie from "./svg/IconCie";
 import IconCieCard from "./svg/IconCieCard";
-import IconCieLetter from "./svg/IconCieLetter";
+import IconCieID from "./svg/IconCieID";
 import IconCloseLarge from "./svg/IconCloseLarge";
 import IconCloseMedium from "./svg/IconCloseMedium";
 import IconCloseSmall from "./svg/IconCloseSmall";
@@ -69,12 +70,10 @@ import IconCreditCardFilled from "./svg/IconCreditCardFilled";
 import IconCreditCardOff from "./svg/IconCreditCardOff";
 import IconDevice from "./svg/IconDevice";
 import IconDeviceVibration from "./svg/IconDeviceVibration";
+import IconDocCode from "./svg/IconDocCode";
 import IconDocGiacenza from "./svg/IconDocGiacenza";
-import IconDocPaymentCode from "./svg/IconDocPaymentCode";
-import IconDocPaymentTitle from "./svg/IconDocPaymentTitle";
+import IconDocTitle from "./svg/IconDocTitle";
 import IconDocumentAdd from "./svg/IconDocumentAdd";
-import IconDocumentAttachment from "./svg/IconDocumentAttachment";
-import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
 import IconDotMenu from "./svg/IconDotMenu";
 import IconEdit from "./svg/IconEdit";
 import IconEmail from "./svg/IconEmail";
@@ -96,7 +95,6 @@ import IconFilterOniOS from "./svg/IconFilterOniOS";
 import IconFingerprint from "./svg/IconFingerprint";
 import IconFiscalCodeIndividual from "./svg/IconFiscalCodeIndividual";
 import IconFolder from "./svg/IconFolder";
-import IconFornitori from "./svg/IconFornitori";
 import IconForward from "./svg/IconForward";
 import IconGallery from "./svg/IconGallery";
 import IconHealthCard from "./svg/IconHealthCard";
@@ -111,6 +109,7 @@ import IconInboxEmpty from "./svg/IconInboxEmpty";
 import IconInboxFilled from "./svg/IconInboxFilled";
 import IconInfo from "./svg/IconInfo";
 import IconInfoFilled from "./svg/IconInfoFilled";
+import IconInfrastructure from "./svg/IconInfrastructure";
 import IconInitiatives from "./svg/IconInitiatives";
 import IconInstagram from "./svg/IconInstagram";
 import IconInstitution from "./svg/IconInstitution";
@@ -154,6 +153,7 @@ import IconNoticePlain from "./svg/IconNoticePlain";
 import IconNotification from "./svg/IconNotification";
 import IconOk from "./svg/IconOk";
 import IconOption from "./svg/IconOption";
+import IconPaperclip from "./svg/IconPaperclip";
 import IconPEC from "./svg/IconPEC";
 import IconPhone from "./svg/IconPhone";
 import IconPinOff from "./svg/IconPinOff";
@@ -217,9 +217,9 @@ import IconWebsite from "./svg/IconWebsite";
 
 export const IOIcons = {
   spid: IconSpid,
-  cie: IconCie /* io-cie */,
+  cieID: IconCieID,
   cieCard: IconCieCard,
-  cieLetter: IconCieLetter,
+  cie: IconCie,
   qrCode: IconQrCode,
   bell: IconBell,
   website: IconWebsite,
@@ -240,7 +240,7 @@ export const IOIcons = {
   unlocked: IconLockOff,
   initiatives: IconInitiatives,
   analytics: IconAnalytics,
-  fornitori: IconFornitori,
+  infrastructure: IconInfrastructure,
   eyeShow: IconEyeShow,
   eyeHide: IconEyeHide,
   pinOff: IconPinOff,
@@ -269,15 +269,15 @@ export const IOIcons = {
   key: IconKey,
   documentAdd: IconDocumentAdd,
   docGiacenza: IconDocGiacenza,
-  docPaymentTitle: IconDocPaymentTitle,
-  docPaymentCode: IconDocPaymentCode,
-  docAttach: IconDocumentAttachment,
-  docAttachPDF: IconDocumentAttachmentPDF,
+  docTitle: IconDocTitle,
+  docCode: IconDocCode,
+  attachment: IconAttachment,
+  attachmentPDF: IconAttachmentPDF,
   folder: IconFolder,
   receiptOn: IconReceiptOn,
   receiptOff: IconReceiptOff,
   notes: IconNotes,
-  attachment: IconAttachment,
+  paperclip: IconPaperclip,
   print: IconPrint,
   add: IconAdd,
   addSmall: IconAddSmall,

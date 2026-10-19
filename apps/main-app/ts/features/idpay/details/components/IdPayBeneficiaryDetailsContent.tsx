@@ -317,7 +317,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             {initiativeDetails.voucherStatus !== VoucherStatusEnum.USED &&
               initiativeDetails.voucherStatus !== VoucherStatusEnum.EXPIRED && (
                 <ListItemAction
-                  icon="docAttach"
+                  icon="attachment"
                   label={I18n.t(
                     "idpay.initiative.beneficiaryDetails.buttons.staticCode"
                   )}

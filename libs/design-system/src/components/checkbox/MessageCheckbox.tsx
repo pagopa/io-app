@@ -15,8 +15,7 @@ import { IOColors } from "../../core/IOColors";
 import { IODimensions, IODimensionScale } from "../../core/tokens";
 import { AnimatedTick } from "../common/AnimatedTick";
 
-type AnimatedMessageCheckbox = Pick<PressableProps, "accessible" | "onPress"> &
-  Props;
+type MessageCheckbox = Pick<PressableProps, "accessible" | "onPress"> & Props;
 
 type Props = {
   checked?: boolean;
@@ -45,11 +44,11 @@ const styles = StyleSheet.create({
  * Animated message checkbox used for the specific message list item (Select
  * mode that enables related actions)
  */
-export const AnimatedMessageCheckbox = ({
+export const MessageCheckbox = ({
   accessible,
   checked,
   onPress
-}: AnimatedMessageCheckbox) => {
+}: MessageCheckbox) => {
   const theme = useIOTheme();
   const isChecked = !!checked;
 
@@ -86,7 +85,7 @@ export const AnimatedMessageCheckbox = ({
       accessible={accessible}
       onPress={onPress}
       style={styles.checkBoxWrapper}
-      testID="AnimatedMessageCheckboxInput"
+      testID="MessageCheckboxInput"
     >
       <Animated.View
         style={[
