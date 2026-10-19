@@ -231,19 +231,20 @@ export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
 
 /**
  * Returns whether the new IT-Wallet activation banner in the messages inbox
- * screen should be rendered
+ * screen should be rendered, or `undefined` while the remote Wallet Instance
+ * check is pending and the banner could otherwise be rendered
  */
 export const itwShouldRenderInboxDiscoveryBannerSelector = (
   state: GlobalState
-) => {
-  if (itwIsRemotelyActiveSelector(state) === undefined) {
+): boolean | undefined => {
+  if (
+    !itwShouldRenderDiscoveryBannerSelector(state) ||
+    !itwIsBannerVisibleSelector("discovery_messages_inbox")(state)
+  ) {
     return false;
   }
-  return (
-    itwShouldRenderDiscoveryBannerSelector(state) &&
-    itwIsBannerVisibleSelector("discovery_messages_inbox")(state) &&
-    !itwIsRemotelyActiveSelector(state)
-  );
+  const isRemotelyActive = itwIsRemotelyActiveSelector(state);
+  return isRemotelyActive === undefined ? undefined : !isRemotelyActive;
 };
 
 /**

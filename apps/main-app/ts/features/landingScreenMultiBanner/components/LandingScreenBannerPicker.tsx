@@ -5,25 +5,32 @@ import { usePushNotificationsBannerTracking } from "../../pushNotifications/hook
 import { updateLandingScreenBannerVisibility } from "../store/actions";
 import { landingScreenBannerToRenderSelector } from "../store/selectors";
 import { landingScreenBannerMap } from "../utils/landingScreenBannerMap";
+import { LandingScreenBannerSkeleton } from "./LandingScreenBannerSkeleton";
 
 export const LandingScreenBannerPicker = () => {
   const dispatch = useIODispatch();
   const bannerToRender = useIOSelector(landingScreenBannerToRenderSelector);
   usePushNotificationsBannerTracking();
 
+  const bannerId =
+    bannerToRender.type === "banner" ? bannerToRender.id : undefined;
+
   return useMemo(() => {
-    if (bannerToRender === undefined) {
+    if (bannerToRender.type === "loading") {
+      return <LandingScreenBannerSkeleton />;
+    }
+    if (bannerId === undefined) {
       return null;
     }
-    const entry = landingScreenBannerMap[bannerToRender];
+    const entry = landingScreenBannerMap[bannerId];
     const closeHandler = () => {
       dispatch(
         updateLandingScreenBannerVisibility({
-          id: bannerToRender,
+          id: bannerId,
           enabled: false
         })
       );
     };
     return entry.component(closeHandler);
-  }, [bannerToRender, dispatch]);
+  }, [bannerToRender.type, bannerId, dispatch]);
 };

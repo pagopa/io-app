@@ -407,12 +407,15 @@ describe("itwShouldRenderInboxDiscoveryBannerSelector", () => {
   });
 
   it.each`
-    itwEnabled | isL3Enabled | lifecycleValid | isBannerHidden | expected | isRemotelyActive
-    ${true}    | ${true}     | ${false}       | ${false}       | ${true}  | ${false}
-    ${true}    | ${true}     | ${false}       | ${true}        | ${false} | ${false}
-    ${true}    | ${true}     | ${true}        | ${false}       | ${false} | ${false}
-    ${false}   | ${true}     | ${false}       | ${false}       | ${false} | ${false}
-    ${true}    | ${true}     | ${false}       | ${false}       | ${false} | ${true}
+    itwEnabled | isL3Enabled | lifecycleValid | isBannerHidden | expected     | isRemotelyActive
+    ${true}    | ${true}     | ${false}       | ${false}       | ${true}      | ${false}
+    ${true}    | ${true}     | ${false}       | ${true}        | ${false}     | ${false}
+    ${true}    | ${true}     | ${true}        | ${false}       | ${false}     | ${false}
+    ${false}   | ${true}     | ${false}       | ${false}       | ${false}     | ${false}
+    ${true}    | ${true}     | ${false}       | ${false}       | ${false}     | ${true}
+    ${true}    | ${true}     | ${false}       | ${false}       | ${undefined} | ${undefined}
+    ${true}    | ${true}     | ${false}       | ${true}        | ${false}     | ${undefined}
+    ${false}   | ${true}     | ${false}       | ${false}       | ${false}     | ${undefined}
   `(
     "should return $expected when itwEnabled=$itwEnabled, isL3Enabled=$isL3Enabled, lifecycleValid=$lifecycleValid, isBannerHidden=$isBannerHidden, isRemotelyActive=$isRemotelyActive",
     ({
