@@ -237,7 +237,7 @@ describe("superProperties", () => {
       jest
         .spyOn(PUSHUTILS, "checkNotificationPermissions")
         .mockResolvedValue(false);
-      jest.spyOn(DEVICE, "getFontScale").mockResolvedValue(1);
+      jest.spyOn(DEVICE, "getFontScale").mockImplementation(() => 1);
       jest.spyOn(DEVICE, "isScreenLockSet").mockResolvedValue(true);
       jest
         .spyOn(ACCESSIBILITY, "isScreenReaderEnabled")
