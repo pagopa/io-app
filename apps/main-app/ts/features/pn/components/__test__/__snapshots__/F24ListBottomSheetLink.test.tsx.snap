@@ -397,7 +397,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -428,7 +428,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -989,7 +989,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -1020,7 +1020,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -1581,7 +1581,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -1612,7 +1612,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -2173,7 +2173,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -2204,7 +2204,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -2765,7 +2765,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -2796,7 +2796,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -3357,7 +3357,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -3388,7 +3388,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -3949,7 +3949,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -3980,7 +3980,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -4541,7 +4541,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -4572,7 +4572,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -5133,7 +5133,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -5164,7 +5164,7 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -5725,7 +5725,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -5756,7 +5756,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -6570,7 +6570,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -6601,7 +6601,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -7415,7 +7415,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -7446,7 +7446,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -8260,7 +8260,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -8291,7 +8291,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -9105,7 +9105,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -9136,7 +9136,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -9950,7 +9950,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -9981,7 +9981,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -10795,7 +10795,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -10826,7 +10826,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -11640,7 +11640,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -11671,7 +11671,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -12485,7 +12485,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -12516,7 +12516,7 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -13330,7 +13330,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -13361,7 +13361,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -14435,7 +14435,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -14466,7 +14466,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -15540,7 +15540,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -15571,7 +15571,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -16645,7 +16645,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -16676,7 +16676,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -17750,7 +17750,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -17781,7 +17781,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -18855,7 +18855,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -18886,7 +18886,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -19960,7 +19960,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -19991,7 +19991,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -21065,7 +21065,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -21096,7 +21096,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -22170,7 +22170,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },
@@ -22201,7 +22201,7 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "backgroundColor": "transparent",
                                 "borderColor": "#0B3EE3",
-                                "borderRadius": 8,
+                                "borderRadius": 0,
                                 "borderWidth": 0,
                                 "height": undefined,
                               },

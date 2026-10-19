@@ -56,7 +56,7 @@ describe("AuthErrorScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("should forward the raw error code and the translated title to useDebugInfo for a mapped error", () => {
+  it("should forward the raw error code to useDebugInfo for a mapped error", () => {
     mockIsActiveSessionLogin(false);
     mockUseRoute.mockReturnValue({
       params: {
@@ -70,13 +70,12 @@ describe("AuthErrorScreen", () => {
 
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
       errorCodeOrMessage: "25",
-      errorTitle: I18n.t("authentication.auth_errors.error_25.title"),
       authMethod: "SPID",
       authLevel: AUTH_LEVELS.L2
     });
   });
 
-  it("should forward the raw error code and the generic title to useDebugInfo for an unmapped error", () => {
+  it("should forward the raw error code to useDebugInfo for an unmapped error", () => {
     mockIsActiveSessionLogin(false);
     mockUseRoute.mockReturnValue({
       params: {
@@ -90,9 +89,29 @@ describe("AuthErrorScreen", () => {
 
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
       errorCodeOrMessage: "some_unmapped_raw_error",
-      errorTitle: I18n.t("authentication.auth_errors.generic.title"),
       authMethod: "SPID",
       authLevel: AUTH_LEVELS.L2
+    });
+  });
+
+  it("should add the received failure data to useDebugInfo", () => {
+    mockIsActiveSessionLogin(false);
+    const failureData = {
+      description: "net::ERR_INTERNET_DISCONNECTED",
+      code: -2,
+      url: "https://example.com/authorize"
+    };
+    mockUseRoute.mockReturnValue({
+      params: { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, failureData }
+    });
+
+    renderComponent();
+
+    expect(mockUseDebugInfo).toHaveBeenCalledWith({
+      errorCodeOrMessage: undefined,
+      authMethod: "CIE",
+      authLevel: AUTH_LEVELS.L3,
+      ...failureData
     });
   });
 

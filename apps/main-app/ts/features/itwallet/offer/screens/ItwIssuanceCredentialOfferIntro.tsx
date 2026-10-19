@@ -25,12 +25,14 @@ import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialSelector
 } from "../../credentials/store/selectors";
-import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
+import {
+  itwCredentialIntroContentSelector,
+  itwCredentialNameResolverSelector
+} from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
@@ -43,6 +45,12 @@ import {
   useItwNavigation
 } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import {
+  trackItwUpgradeL3Mandatory,
+  trackItwUpgradeL3MandatoryCancel,
+  trackItwUpgradeL3MandatoryConfirm
+} from "../../presentation/remote/analytics";
+import { ItwL3UpgradeTrigger } from "../../presentation/remote/analytics/utils/types";
 
 const introHeroUri = Image.resolveAssetSource(introHeroSource).uri;
 
@@ -91,6 +99,9 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const credentialName = useItwCredentialName(credentialType);
+  const resolveCredentialName = useIOSelector(
+    itwCredentialNameResolverSelector
+  );
 
   // The offer cannot proceed without an active wallet or with an eID that
   // needs to be renewed: both require the user to complete another flow first.
@@ -146,6 +157,14 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     }
   }, [shouldSkipIntro, handleContinue]);
 
+  useFocusEffect(
+    useCallback(() => {
+      if (isResolved && !isWalletValid) {
+        trackItwUpgradeL3Mandatory(ItwL3UpgradeTrigger.ADD_CREDENTIAL);
+      }
+    }, [isResolved, isWalletValid])
+  );
+
   if (!isResolved || shouldSkipIntro) {
     return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
@@ -158,6 +177,9 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
             "features.itWallet.issuance.credentialOffer.activation.primaryAction"
           ),
           onPress: () => {
+            trackItwUpgradeL3MandatoryConfirm(
+              ItwL3UpgradeTrigger.ADD_CREDENTIAL
+            );
             machineRef.send({ type: "close" });
             navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
               animationEnabled: false,
@@ -170,6 +192,9 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
         secondaryAction={{
           label: I18n.t("global.buttons.cancel"),
           onPress: () => {
+            trackItwUpgradeL3MandatoryCancel(
+              ItwL3UpgradeTrigger.ADD_CREDENTIAL
+            );
             machineRef.send({ type: "close" });
             navigation.popToTop();
           }
@@ -261,7 +286,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const fallbackTitle = I18n.t(
     "features.itWallet.issuance.credentialOffer.intro.fallbackTitle"
   );
-  const title = getCredentialNameFromType(credentialType, false, fallbackTitle);
+  const title = resolveCredentialName(credentialType, fallbackTitle);
 
   return (
     <IOScrollView

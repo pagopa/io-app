@@ -349,12 +349,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -620,7 +614,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -651,7 +645,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -1506,12 +1500,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -1777,7 +1765,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -1808,7 +1796,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -2618,7 +2606,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -2649,7 +2637,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -3122,12 +3110,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -3393,7 +3375,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -3424,7 +3406,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -4010,7 +3992,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -4041,7 +4023,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -4514,12 +4496,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -5444,12 +5420,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -6329,7 +6299,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -6360,7 +6330,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -6833,12 +6803,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -7494,7 +7458,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -7525,7 +7489,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -7998,12 +7962,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -8266,7 +8224,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -8297,7 +8255,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -9152,12 +9110,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -9420,7 +9372,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -9451,7 +9403,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -10261,7 +10213,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -10292,7 +10244,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -10765,12 +10717,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -11033,7 +10979,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -11064,7 +11010,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -11650,7 +11596,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -11681,7 +11627,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -12154,12 +12100,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -13081,12 +13021,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -13963,7 +13897,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -13994,7 +13928,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -14467,12 +14401,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -15125,7 +15053,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -15156,7 +15084,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },

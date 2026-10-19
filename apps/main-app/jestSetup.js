@@ -74,7 +74,7 @@ global.CanvasKit = {
 };
 
 jest.mock("react-native-quick-crypto", () => ({}));
-jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
+jest.mock("@io-app/expo-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("expo-notifications", () => ({}));
 jest.mock("expo-document-picker", () => ({
@@ -102,6 +102,10 @@ jest.mock("expo-store-review", () => ({
 
 jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
+}));
+
+jest.mock("@io-app/expo-pdf-high-res-generator", () => ({
+  generatePdfHighResImages: jest.fn().mockResolvedValue([])
 }));
 
 jest.mock("@io-app/expo-nfc-antenna-info", () => ({

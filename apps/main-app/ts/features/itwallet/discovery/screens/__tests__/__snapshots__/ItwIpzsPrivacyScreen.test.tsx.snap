@@ -998,12 +998,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                             onScroll={[Function]}
                             scrollEventThrottle={8}
                             snapToEnd={false}
-                            snapToOffsets={
-                              [
-                                0,
-                                0,
-                              ]
-                            }
                           >
                             <View>
                               <View
@@ -2531,12 +2525,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                             onScroll={[Function]}
                             scrollEventThrottle={8}
                             snapToEnd={false}
-                            snapToOffsets={
-                              [
-                                0,
-                                0,
-                              ]
-                            }
                           >
                             <View>
                               <View

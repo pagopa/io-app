@@ -1934,7 +1934,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -1965,7 +1965,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -4479,7 +4479,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -4510,7 +4510,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -6820,7 +6820,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -6851,7 +6851,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -9182,7 +9182,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -9213,7 +9213,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -11559,7 +11559,7 @@ Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’op
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -11590,7 +11590,7 @@ Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’op
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -13559,7 +13559,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -13590,7 +13590,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -14147,7 +14147,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -14178,7 +14178,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -16453,7 +16453,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -16484,7 +16484,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -17041,7 +17041,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -17072,7 +17072,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -19403,7 +19403,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -19434,7 +19434,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -21715,7 +21715,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -21746,7 +21746,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -24178,7 +24178,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -24209,7 +24209,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -26683,7 +26683,7 @@ Probabilmente hai sforato i limiti di spesa previsti dalla tua banca.
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -26714,7 +26714,7 @@ Probabilmente hai sforato i limiti di spesa previsti dalla tua banca.
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -29392,7 +29392,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -29423,7 +29423,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -31392,7 +31392,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -31423,7 +31423,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -31980,7 +31980,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -32011,7 +32011,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -34607,7 +34607,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -34638,7 +34638,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -37193,7 +37193,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -37224,7 +37224,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -39597,7 +39597,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -39628,7 +39628,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -41973,7 +41973,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -42004,7 +42004,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -44371,7 +44371,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -44402,7 +44402,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -44959,7 +44959,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -44990,7 +44990,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -47750,7 +47750,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -47781,7 +47781,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -50168,7 +50168,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -50199,7 +50199,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -52649,7 +52649,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -52680,7 +52680,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -53237,7 +53237,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -53268,7 +53268,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -55307,7 +55307,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -55338,7 +55338,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -55895,7 +55895,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -55926,7 +55926,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -58257,7 +58257,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -58288,7 +58288,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -60661,7 +60661,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -60692,7 +60692,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -63037,7 +63037,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -63068,7 +63068,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -65418,7 +65418,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },
@@ -65449,7 +65449,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "backgroundColor": "transparent",
                                             "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
+                                            "borderRadius": 0,
                                             "borderWidth": 0,
                                             "height": undefined,
                                           },

@@ -704,12 +704,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
@@ -1832,12 +1826,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
@@ -2960,12 +2948,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
@@ -3707,12 +3689,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
@@ -4835,12 +4811,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text

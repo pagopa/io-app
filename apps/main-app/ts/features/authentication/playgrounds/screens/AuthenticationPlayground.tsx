@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { LoginConfigScreenContent } from "../../common/components/LoginConfigScreenContent";
+import { SessionSection } from "../components/SessionSection";
 
 type PlaygroundTab = {
   content: ReactNode;
@@ -21,6 +22,10 @@ export const AuthenticationPlayground = () => {
     {
       label: "Login Config",
       content: <LoginConfigScreenContent disabled={true} />
+    },
+    {
+      label: "Session",
+      content: <SessionSection />
     }
   ];
 

@@ -705,12 +705,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -2154,12 +2148,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -3603,12 +3591,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -5052,12 +5034,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -6501,12 +6477,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -7950,12 +7920,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -9399,12 +9363,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -10848,12 +10806,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -12297,12 +12249,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -13746,12 +13692,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -15195,12 +15135,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -16644,12 +16578,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -18093,12 +18021,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -19542,12 +19464,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -20991,12 +20907,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -22440,12 +22350,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -23889,12 +23793,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -25338,12 +25236,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View

@@ -341,12 +341,6 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <Text
@@ -1196,7 +1190,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -1227,7 +1221,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },

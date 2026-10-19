@@ -555,12 +555,6 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                         testID="OnboardingShareDataScreen"
                       >
                         <View>
@@ -1944,7 +1938,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },
@@ -1975,7 +1969,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                     {
                                       "backgroundColor": "transparent",
                                       "borderColor": "#0B3EE3",
-                                      "borderRadius": 8,
+                                      "borderRadius": 0,
                                       "borderWidth": 0,
                                       "height": undefined,
                                     },

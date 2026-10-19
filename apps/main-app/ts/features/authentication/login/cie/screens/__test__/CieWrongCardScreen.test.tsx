@@ -6,7 +6,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import CieWrongCardScreen from "../../screens/CieWrongCardScreen";
+import CieWrongCardScreen from "../CieWrongCardScreen";
 
 const mockNavigate = jest.fn();
 const mockReset = jest.fn();

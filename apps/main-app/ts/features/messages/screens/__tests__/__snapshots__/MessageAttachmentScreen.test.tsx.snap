@@ -1125,6 +1125,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                 "flexShrink": 0,
                               }
                             }
+                            testID="message-attachment-save-or-share-button"
                           >
                             <View
                               collapsable={false}
@@ -2009,6 +2010,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                             "flexGrow": 1,
                           }
                         }
+                        testID="message-attachment-generic-error"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}

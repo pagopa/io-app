@@ -919,7 +919,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -950,7 +950,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -1994,7 +1994,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -2025,7 +2025,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -3069,7 +3069,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -3100,7 +3100,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -4095,7 +4095,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -4126,7 +4126,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -5065,7 +5065,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -5096,7 +5096,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -6035,7 +6035,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -6066,7 +6066,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -7005,7 +7005,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -7036,7 +7036,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -7975,7 +7975,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },
@@ -8006,7 +8006,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "backgroundColor": "transparent",
                                         "borderColor": "#0B3EE3",
-                                        "borderRadius": 8,
+                                        "borderRadius": 0,
                                         "borderWidth": 0,
                                         "height": undefined,
                                       },

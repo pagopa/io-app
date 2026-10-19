@@ -928,7 +928,7 @@ exports[`variant: genericError MessageRouterScreenErrorComponent matches snapsho
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -959,7 +959,7 @@ exports[`variant: genericError MessageRouterScreenErrorComponent matches snapsho
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -2745,7 +2745,7 @@ exports[`variant: thirdPartyError MessageRouterScreenErrorComponent matches snap
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -2776,7 +2776,7 @@ exports[`variant: thirdPartyError MessageRouterScreenErrorComponent matches snap
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },

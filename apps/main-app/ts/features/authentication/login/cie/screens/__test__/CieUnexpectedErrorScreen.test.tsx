@@ -6,7 +6,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import CieUnexpectedErrorScreen from "../../screens/CieUnexpectedErrorScreen";
+import CieUnexpectedErrorScreen from "../CieUnexpectedErrorScreen";
 
 const mockNavigate = jest.fn();
 const mockReset = jest.fn();
