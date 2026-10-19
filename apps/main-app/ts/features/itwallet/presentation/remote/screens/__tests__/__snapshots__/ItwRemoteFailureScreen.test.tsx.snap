@@ -6607,6 +6607,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -8180,6 +8181,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -8254,6 +8256,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={

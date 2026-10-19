@@ -493,6 +493,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -590,6 +591,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -2316,6 +2318,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -2413,6 +2416,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={

@@ -352,6 +352,7 @@ continuare
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -448,6 +449,7 @@ continuare
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -544,6 +546,7 @@ continuare
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={

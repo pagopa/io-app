@@ -709,6 +709,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -809,6 +810,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -909,6 +911,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={

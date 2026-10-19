@@ -114,7 +114,7 @@ jest.mock("@io-app/expo-nfc-antenna-info", () => ({
 }));
 
 jest.mock("@io-app/expo-switch-access", () => ({
-  isSwitchAccessEnabled: jest.fn().mockResolvedValue(false)
+  isSwitchAccessEnabled: () => Promise.resolve(false)
 }));
 
 /* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.
