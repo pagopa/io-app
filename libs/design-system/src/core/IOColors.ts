@@ -3,6 +3,8 @@ import type { ComponentProps } from "react";
 
 import { ColorValue } from "react-native";
 
+import { withAlpha } from "./tokens";
+
 /*
 TYPESCRIPT FUNCTIONS
 */
@@ -471,23 +473,8 @@ export type themeStatusColorsDarkMode = keyof typeof themeStatusColorsDarkMode;
 UTILS
 */
 
-/**
- * Return the color value with RGBA format (RGB + Alpha transparency), starting
- * from the hexadecimal color value only.
- *
- * @param hexCode Color value in hexadecimal format. No short version accepted.
- * @param opacity Opacity value that range from 0 to 1. Default value = 1.
- */
-/* Taken from this Gist: https://gist.github.com/danieliser/b4b24c9f772066bcf0a6 */
-export const hexToRgba = (hexCode: ColorValue, opacity = 1) => {
-  const hex = hexCode.toString().replace("#", "");
-
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
-
-  return `rgba(${r},${g},${b},${opacity})`;
-};
+/** @deprecated Use `withAlpha`, will be removed in the next major release */
+export const hexToRgba = withAlpha;
 
 /*
 REFACTORING REFERENCES
