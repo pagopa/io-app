@@ -12,7 +12,8 @@ import { landingScreenBannerToRenderSelector } from "../store/selectors";
 import { landingScreenBannerMap } from "../utils/landingScreenBannerMap";
 import { LandingScreenBannerSkeleton } from "./LandingScreenBannerSkeleton";
 
-export const BANNER_TRANSITION_DURATION = 300;
+const BANNER_TRANSITION_DURATION = 300;
+
 export const bannerLayoutTransition = LinearTransition.duration(
   BANNER_TRANSITION_DURATION
 );
