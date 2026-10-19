@@ -16,22 +16,20 @@ import {
 } from "../../../../store/reducers/startup";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialStatusSelector
 } from "../../credentials/store/selectors";
 import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
+  isItWalletAvailable,
+  isWalletActive,
+  ItwLifecycleState,
+  itwLifecycleStateSelector
 } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import {
-  trackItwAlreadyHasCredential,
-  trackItwIssuanceFromMsgFailure
-} from "../analytics";
+import { trackItwAlreadyHasCredential } from "../analytics";
 
 export type ItwIssuanceCredentialLandingScreenNavigationParams = {
   credentialType: string;
@@ -53,9 +51,10 @@ export const ItwIssuanceCredentialLandingScreen = ({
   const { credentialType } = route.params;
 
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isWhitelisted = useIOSelector(itwIsL3EnabledSelector);
+  const lifecycle = useIOSelector(itwLifecycleStateSelector);
+  const hasActiveWallet = isWalletActive(lifecycle);
+  const isItwL3 = lifecycle === ItwLifecycleState.IT_WALLET;
+  const canUseItWallet = isItWalletAvailable(lifecycle);
   const { status: credentialStatus } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credentialType)
   );
@@ -106,38 +105,30 @@ export const ItwIssuanceCredentialLandingScreen = ({
       return;
     }
 
-    if (!isItwValid) {
+    if (!hasActiveWallet) {
       // ITW not active, redirect to discovery info screen
       navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
         animationEnabled: false,
-        level: isWhitelisted ? "l3" : "l2",
+        level: canUseItWallet ? "l3" : "l2",
         credentialType
       });
       return;
     }
 
-    if (isItwValid) {
-      // ITW active, proceed to credential issuance
-      const targetScreen = introContent
-        ? ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION
-        : ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER;
+    // ITW active, proceed to credential issuance
+    const targetScreen = introContent
+      ? ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION
+      : ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER;
 
-      navigation.replace(targetScreen, {
-        animationEnabled: false,
-        credentialType
-      });
-      return;
-    }
-
-    // No branch handled this state — track the error
-    trackItwIssuanceFromMsgFailure(
-      getMixPanelCredential(credentialType, isWhitelisted)
-    );
+    navigation.replace(targetScreen, {
+      animationEnabled: false,
+      credentialType
+    });
   }, [
     startupStatus,
     navigation,
-    isItwValid,
-    isWhitelisted,
+    hasActiveWallet,
+    canUseItWallet,
     credentialType,
     introContent,
     isCredentialValid,
@@ -162,7 +153,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
               params: {
                 eidReissuing: true,
                 credentialType,
-                level: isWhitelisted ? "l3" : "l2"
+                level: canUseItWallet ? "l3" : "l2"
               }
             })
         }}
@@ -176,7 +167,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
         subtitle={I18n.t(
           `features.itWallet.issuance.confirmIdentity.subtitle`,
           {
-            wallet: isWhitelisted ? "IT Wallet" : "Documenti su IO"
+            wallet: canUseItWallet ? "IT Wallet" : "Documenti su IO"
           }
         )}
         title={I18n.t(`features.itWallet.issuance.confirmIdentity.title`, {

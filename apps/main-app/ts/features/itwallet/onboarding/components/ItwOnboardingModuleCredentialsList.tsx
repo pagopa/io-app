@@ -3,7 +3,6 @@ import { useCallback } from "react";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import {
   itwDisabledCredentialsSelector,
   itwNewCredentialsSelector
@@ -12,8 +11,10 @@ import { isUpcomingCredential } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import { type CredentialsListEntry } from "../../credentialsCatalogue/store/selectors";
 import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
+  isItWalletAvailable,
+  isWalletActive,
+  ItwLifecycleState,
+  itwLifecycleStateSelector
 } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
@@ -40,9 +41,7 @@ export const ItwOnboardingModuleCredentialsList = ({
   );
   const newCredentials = useIOSelector(itwNewCredentialsSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
-  const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isL2WalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const lifecycle = useIOSelector(itwLifecycleStateSelector);
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -68,8 +67,11 @@ export const ItwOnboardingModuleCredentialsList = ({
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
-        } else if (isL2Credential && !isItWalletValid) {
-          if (isL2WalletValid) {
+        } else if (
+          isL2Credential &&
+          lifecycle !== ItwLifecycleState.IT_WALLET
+        ) {
+          if (isWalletActive(lifecycle)) {
             /**
              * User has a whitelisted fiscal code but has requested a credential
              * in restricted mode the user has DocIO enabled
@@ -85,7 +87,10 @@ export const ItwOnboardingModuleCredentialsList = ({
               params: { level: "l2-fallback", credentialType: type }
             });
           }
-        } else if (isL3Enabled && !isItWalletValid) {
+        } else if (
+          isItWalletAvailable(lifecycle) &&
+          lifecycle !== ItwLifecycleState.IT_WALLET
+        ) {
           /**
            * User has a whitelisted fiscal code but has not yet obtained an IT
            * Wallet. If he requests an ITW credential, start the credential
@@ -100,14 +105,7 @@ export const ItwOnboardingModuleCredentialsList = ({
           sendSelectCredential();
         }
       },
-      [
-        machineRef,
-        navigation,
-        isL3Enabled,
-        isItWalletValid,
-        isL2WalletValid,
-        isL2Credential
-      ]
+      [machineRef, navigation, lifecycle, isL2Credential]
     )
   );
 
@@ -122,7 +120,7 @@ export const ItwOnboardingModuleCredentialsList = ({
       isUpcoming={isUpcomingCredential(type)}
       key={`itw_credential_${type}`}
       onPress={beginCredentialIssuance}
-      showIcon={!isL3Enabled}
+      showIcon={!isItWalletAvailable(lifecycle)}
       type={type}
     />
   ));

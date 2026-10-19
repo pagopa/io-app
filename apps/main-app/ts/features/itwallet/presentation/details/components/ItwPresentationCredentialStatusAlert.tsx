@@ -34,7 +34,10 @@ import {
   itwCredentialsEidStatusSelector,
   itwCredentialStatusSelector
 } from "../../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import {
@@ -222,7 +225,8 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     itwCredentialStatusSelector(state, credential.credentialType)
   );
   const message = useCredentialStatusMessage(credential.credentialType);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
   const needsItwUpgrade = useIOSelector(
     itwShouldUpgradeCredentialSelector(

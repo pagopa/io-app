@@ -12,12 +12,17 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { trackWalletAdd } from "../../itwallet/analytics";
 import { PoweredByItWalletText } from "../../itwallet/common/components/PoweredByItWalletText";
-import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors";
+import {
+  isItWalletAvailable,
+  itwLifecycleStateSelector
+} from "../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 
 const WalletEmptyScreenContent = () => {
   const navigation = useIONavigation();
-  const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
+  const isItWalletEnabled = isItWalletAvailable(
+    useIOSelector(itwLifecycleStateSelector)
+  );
 
   const handleAddToWalletButtonPress = () => {
     trackWalletAdd();

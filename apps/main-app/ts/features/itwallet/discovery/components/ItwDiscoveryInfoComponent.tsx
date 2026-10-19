@@ -36,8 +36,11 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { openWebUrl } from "../../../../utils/url";
 import { trackOpenItwTos } from "../../analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
-import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
+import { itwIsActivationRemotelyDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
+import {
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
 import {
@@ -57,8 +60,12 @@ type Props = {
 export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const itwActivationDisabled = useIOSelector(
+    itwIsActivationRemotelyDisabledSelector
+  );
+  const isWalletValid = isWalletActive(
+    useIOSelector(itwLifecycleStateSelector)
+  );
   const mixPanelCredentialDetails = useIOSelector(
     itwMixPanelCredentialDetailsSelector
   );

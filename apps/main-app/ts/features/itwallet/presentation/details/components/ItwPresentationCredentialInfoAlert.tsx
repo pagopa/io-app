@@ -14,7 +14,10 @@ import {
   ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 
 type Props = {
   credential: CredentialMetadata;
@@ -33,7 +36,8 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
   const { status } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const withL3Design =
+    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
   const isMdlBannerVisible = useIOSelector(
     itwIsMdlDetailsInfoBannerVisibleSelector
   );

@@ -6,7 +6,10 @@ import { getEnv } from "../../features/itwallet/common/utils/environment";
 import { selectFiscalCodeFromEid } from "../../features/itwallet/credentials/store/selectors";
 import { watchItwLifecycleSaga } from "../../features/itwallet/lifecycle/saga";
 import { itwLifecycleIdentityCheckCompleted } from "../../features/itwallet/lifecycle/store/actions";
-import { itwLifecycleIsValidSelector } from "../../features/itwallet/lifecycle/store/selectors";
+import {
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../features/itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { profileFiscalCodeSelector } from "../../features/settings/common/store/selectors";
 import NavigationService from "../../navigation/NavigationService";
@@ -20,7 +23,9 @@ import NavigationService from "../../navigation/NavigationService";
  */
 export function* checkItWalletIdentitySaga() {
   const env = getEnv(yield* select(selectItwEnv));
-  const isWalletValid = yield* select(itwLifecycleIsValidSelector);
+  const isWalletValid = isWalletActive(
+    yield* select(itwLifecycleStateSelector)
+  );
 
   if (!isWalletValid) {
     return;

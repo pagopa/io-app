@@ -37,8 +37,9 @@ import {
   itwIntegrityServiceStatusSelector
 } from "../../issuance/store/selectors";
 import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
+  isWalletActive,
+  ItwLifecycleState,
+  itwLifecycleStateSelector
 } from "../../lifecycle/store/selectors";
 import {
   itwKeyAttestationsStore,
@@ -101,7 +102,9 @@ export function* handleItwCredentialsBatchRefillSaga(
   const { credentialType } = action.payload;
 
   try {
-    const isWalletValid = yield* select(itwLifecycleIsValidSelector);
+    const isWalletValid = isWalletActive(
+      yield* select(itwLifecycleStateSelector)
+    );
     const isConnected = yield* select(isConnectedSelector);
 
     // A renewal is a full issuance, so it needs a valid wallet and connectivity.
@@ -158,7 +161,9 @@ export function* handleItwCredentialsBatchRefillSaga(
       sessionToken
     );
 
-    const isItWalletValid = yield* select(itwLifecycleIsITWalletValidSelector);
+    const isItWalletValid =
+      (yield* select(itwLifecycleStateSelector)) ===
+      ItwLifecycleState.IT_WALLET;
 
     const {
       clientId,

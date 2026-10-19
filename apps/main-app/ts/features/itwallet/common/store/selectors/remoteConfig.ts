@@ -57,7 +57,7 @@ export const isItwFeedbackBannerEnabledSelector = createSelector(
  * configuration to disable UI elements, it does not disable the entire IT
  * Wallet feature.
  */
-export const itwIsActivationDisabledSelector = createSelector(
+export const itwIsActivationRemotelyDisabledSelector = createSelector(
   itwRemoteConfigSelector,
   ({ wallet_activation_disabled }) => wallet_activation_disabled ?? false
 );

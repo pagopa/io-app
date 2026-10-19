@@ -8,7 +8,10 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { trackCopyListItem } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils/index.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import {
   ClaimDisplayFormat,
@@ -122,7 +125,8 @@ const PlainTextClaimItem = ({
   label: string;
 }) => {
   const safeValue = getSafeText(claim);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
   const displayValue = hidden ? HIDDEN_CLAIM_TEXT : safeValue;
   const accessibilityStateText = hidden
     ? getHiddenClaimAccessibilityText()

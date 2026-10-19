@@ -8,7 +8,10 @@ import {
   itwCredentialsRemove,
   itwCredentialsStore
 } from "../../credentials/store/actions";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import {
   updateCredentialProperties,
   updateItwStatusAndPIDProperties,
@@ -37,7 +40,8 @@ export function* handleCredentialRemovedAnalytics(
   action: ActionType<typeof itwCredentialsRemove>
 ): SagaIterator {
   const state: GlobalState = yield* select();
-  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+  const isItwL3 =
+    itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET;
 
   const credential = getAnalyticsCredentialFromStored(action.payload, isItwL3);
 
@@ -63,7 +67,8 @@ export function* handleCredentialStoredAnalytics(
   action: ActionType<typeof itwCredentialsStore>
 ): SagaIterator {
   const state: GlobalState = yield* select();
-  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+  const isItwL3 =
+    itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET;
 
   const credential = getAnalyticsCredentialFromStored(action.payload, isItwL3);
 

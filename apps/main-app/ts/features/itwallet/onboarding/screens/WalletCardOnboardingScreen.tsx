@@ -25,7 +25,6 @@ import {
   trackStartAddNewCredential
 } from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import {
@@ -33,22 +32,27 @@ import {
   isUpcomingCredential
 } from "../../common/utils/itwCredentialUtils";
 import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  isItWalletAvailable,
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
 
 const WalletCardOnboardingScreen = () => {
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const lifecycle = useIOSelector(itwLifecycleStateSelector);
+  const hasActiveWallet = isWalletActive(lifecycle);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
-  const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
+  const canUseItWallet = isItWalletAvailable(lifecycle);
   useFocusEffect(trackShowCredentialsList);
 
   const isItwSectionVisible = useMemo(
     // IT Wallet credential catalog should be visible if
     () =>
-      (isItwValid && isItwEnabled) || // An eID has been obtained, wallet is valid, and remote FF is enabled
-      isFiscalCodeWhitelisted, // OR the user is whitelisted for L3 credentials
-    [isItwValid, isItwEnabled, isFiscalCodeWhitelisted]
+      (hasActiveWallet && isItwEnabled) || // An eID has been obtained, wallet is valid, and remote FF is enabled
+      canUseItWallet, // OR the user can use IT-Wallet credentials
+    [hasActiveWallet, isItwEnabled, canUseItWallet]
   );
 
   return (
@@ -69,7 +73,9 @@ const WalletCardOnboardingScreen = () => {
 
 const ItwCredentialOnboardingSection = () => {
   const env = useIOSelector(selectItwEnv);
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const isL3Enabled = isItWalletAvailable(
+    useIOSelector(itwLifecycleStateSelector)
+  );
 
   const catalogueCredentials = useIOSelector(
     itwAvailableCredentialsListSelector

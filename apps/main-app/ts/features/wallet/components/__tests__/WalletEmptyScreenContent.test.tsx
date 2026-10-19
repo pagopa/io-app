@@ -5,7 +5,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import * as itwCommonSelectors from "../../../itwallet/common/store/selectors";
+import * as lifecycleSelectors from "../../../itwallet/lifecycle/store/selectors";
 import { WalletEmptyScreenContent } from "../WalletEmptyScreenContent";
 
 describe("WalletEmptyScreenContent", () => {
@@ -13,8 +13,12 @@ describe("WalletEmptyScreenContent", () => {
     "should render correctly when ITW whitelist status is %s",
     itwEnabled => {
       jest
-        .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
-        .mockReturnValue(itwEnabled);
+        .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+        .mockReturnValue(
+          itwEnabled
+            ? lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE
+            : lifecycleSelectors.ItwLifecycleState.INACTIVE
+        );
       const component = renderComponent();
       expect(component.toJSON()).toMatchSnapshot();
     }

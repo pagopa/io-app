@@ -9,7 +9,6 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as connectivitySelectors from "../../../../connectivity/store/selectors";
-import { itwSetL2Fallback } from "../../../common/store/actions/preferences";
 import * as envSelectors from "../../../common/store/selectors/environment";
 import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import * as remoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
@@ -26,10 +25,10 @@ import { ItwCardOnboardingL3Screen } from "../ItwCardOnboardingL3Screen";
 describe("ItwCardOnboardingL3Screen", () => {
   const replaceMock = jest.fn();
   const navigateMock = jest.fn();
-  const fallbackState = appReducer(
-    appReducer(undefined, applicationChangeState("active")),
-    itwSetL2Fallback(true)
-  );
+  const mockLifecycle = (lifecycle: lifecycleSelectors.ItwLifecycleState) =>
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(lifecycle);
   const restrictedTypes = [
     CredentialType.DRIVING_LICENSE,
     CredentialType.EUROPEAN_DISABILITY_CARD,
@@ -49,21 +48,10 @@ describe("ItwCardOnboardingL3Screen", () => {
     jest.clearAllMocks();
 
     // default mocks
-    jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(true);
-    jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(false);
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE);
     jest
       .spyOn(connectivitySelectors, "isConnectedSelector")
       .mockReturnValue(true);
-    jest
-      .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
-      .mockReturnValue(true);
-    jest
-      .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
-      .mockReturnValue(false);
     jest
       .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
       .mockReturnValue(true);
@@ -113,19 +101,13 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 
   it("should render the action button when wallet is enabled", () => {
-    jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(true);
-
     const { queryByTestId } = renderComponent({ page: 0 });
 
     expect(queryByTestId("restricted-action-testID")).toBeTruthy();
   });
 
   it("should NOT render the action button when wallet is NOT enabled", () => {
-    jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(false);
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE);
 
     const { queryByText } = renderComponent({ page: 0 });
 
@@ -135,10 +117,6 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 
   it("should navigate to restricted mode onboarding when action button is pressed", () => {
-    jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(true);
-
     const { getByTestId } = renderComponent({ page: 0 });
 
     const button = getByTestId("restricted-action-testID");
@@ -151,6 +129,7 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 
   it("shows the upgrade banner after the three L2 documents for a missing CIE/PIN fallback", () => {
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK);
     mockL2Catalogue();
     const {
       getAllByTestId,
@@ -158,7 +137,7 @@ describe("ItwCardOnboardingL3Screen", () => {
       getByText,
       queryByTestId,
       queryByText
-    } = renderComponent({ page: 0 }, fallbackState);
+    } = renderComponent({ page: 0 });
 
     expect(
       getAllByTestId(/ModuleTestID$|itwL2FallbackUpgradeBannerTestID/).map(
@@ -183,15 +162,15 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 
   it("never shows the upgrade banner together with the NFC alert when activation is disabled", () => {
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK);
     jest
       .spyOn(preferencesSelectors, "itwIsActivationDisabledSelector")
       .mockReturnValue(true);
     mockL2Catalogue();
 
-    const { queryByTestId, queryByText, getByText } = renderComponent(
-      { page: 0 },
-      fallbackState
-    );
+    const { queryByTestId, queryByText, getByText } = renderComponent({
+      page: 0
+    });
 
     expect(queryByTestId("itwL2FallbackUpgradeBannerTestID")).toBeNull();
     expect(
@@ -205,23 +184,55 @@ describe("ItwCardOnboardingL3Screen", () => {
     ).toBeTruthy();
   });
 
-  test.each([
-    { name: "other cards tab", page: 1, itwEnabled: true, l3Enabled: true },
-    { name: "IT-Wallet disabled", page: 0, itwEnabled: false, l3Enabled: true },
-    { name: "L3 disabled", page: 0, itwEnabled: true, l3Enabled: false }
+  test.each<{
+    itwEnabled: boolean;
+    lifecycle: lifecycleSelectors.ItwLifecycleState;
+    name: string;
+    page: number;
+  }>([
+    {
+      name: "other cards tab",
+      page: 1,
+      itwEnabled: true,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK
+    },
+    {
+      name: "IT-Wallet disabled",
+      page: 0,
+      itwEnabled: false,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK
+    },
+    {
+      name: "L3 disabled",
+      page: 0,
+      itwEnabled: true,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO
+    }
   ])(
     "hides the fallback upgrade banner for $name",
-    ({ page, itwEnabled, l3Enabled }) => {
+    ({ page, itwEnabled, lifecycle }) => {
+      mockLifecycle(lifecycle);
       jest
         .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(itwEnabled);
-      jest
-        .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
-        .mockReturnValue(l3Enabled);
-      const { queryByTestId } = renderComponent({ page }, fallbackState);
+      const { queryByTestId } = renderComponent({ page });
       expect(queryByTestId("itwL2FallbackUpgradeBannerTestID")).toBeNull();
     }
   );
+
+  test.each<lifecycleSelectors.ItwLifecycleState>([
+    lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK,
+    lifecycleSelectors.ItwLifecycleState.IT_WALLET_UNSUPPORTED
+  ])("shows only the L2 documents for %s", lifecycle => {
+    mockLifecycle(lifecycle);
+    mockL2Catalogue();
+
+    const { getAllByTestId } = renderComponent({ page: 0 });
+
+    expect(
+      getAllByTestId(/ModuleTestID$/).map(element => element.props.testID)
+    ).toEqual(restrictedTypes.map(type => `${type}ModuleTestID`));
+  });
 
   it("does not show the fallback upgrade banner for a non-fallback DocIO wallet", () => {
     const { queryByTestId } = renderComponent({ page: 0 });
@@ -230,23 +241,23 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 
   it("does not offer the reduced screen for an active IT-Wallet", () => {
-    jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(true);
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
     const { queryByTestId } = renderComponent({ page: 0 });
     expect(queryByTestId("restricted-action-testID")).toBeNull();
   });
 
   it("uses the offline guard for fallback upgrade activation", () => {
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK);
     jest
       .spyOn(connectivitySelectors, "isConnectedSelector")
       .mockReturnValue(false);
-    const { getByTestId } = renderComponent({ page: 0 }, fallbackState);
+    const { getByTestId } = renderComponent({ page: 0 });
     fireEvent.press(getByTestId("itwL2FallbackUpgradeBannerTestID"));
     expect(navigateMock).not.toHaveBeenCalled();
   });
 
   it("issues fallback documents directly instead of restarting L3 activation", () => {
+    mockLifecycle(lifecycleSelectors.ItwLifecycleState.DOC_IO_FALLBACK);
     const actor = createActor(itwCredentialIssuanceMachine, {
       input: { deps: testCredentialIssuanceDeps() }
     });
@@ -254,7 +265,7 @@ describe("ItwCardOnboardingL3Screen", () => {
     jest
       .spyOn(ItwCredentialIssuanceMachineContext, "useActorRef")
       .mockReturnValue(actor);
-    const { getByTestId } = renderComponent({ page: 0 }, fallbackState);
+    const { getByTestId } = renderComponent({ page: 0 });
     fireEvent.press(
       getByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
     );
@@ -293,10 +304,8 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 });
 
-const renderComponent = (
-  params?: undefined | { page?: number },
-  globalState = appReducer(undefined, applicationChangeState("active"))
-) => {
+const renderComponent = (params?: undefined | { page?: number }) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 

@@ -7,7 +7,10 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { trackItwCredentialQualificationDetail } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils/index.ts";
 import { CREDENTIALS_MAP } from "../../analytics/utils/types.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
 import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
@@ -49,7 +52,8 @@ export const ItwNestedClaimsListItem = ({
   credentialStatus,
   credentialType
 }: ItwNestedClaimsListItemProps) => {
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
   const itemBottomSheet = useIOBottomSheetModal({
     title: itemTitle,
     component: (

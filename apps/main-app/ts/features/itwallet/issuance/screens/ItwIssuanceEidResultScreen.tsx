@@ -17,7 +17,10 @@ import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils.ts";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { selectHasResolvedCredentialOffer } from "../../machine/credential/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
@@ -53,7 +56,8 @@ export const ItwIssuanceEidResultScreen = () => {
   );
   const credentialType =
     ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
   const isL3IssuanceFlow = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );

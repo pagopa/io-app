@@ -17,7 +17,10 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
 import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
@@ -66,7 +69,9 @@ export const ItwIdentificationModeSelectionScreen = ({
     itwDisabledIdentificationMethodsSelector
   );
   const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
-  const isL2Active = useIOSelector(itwLifecycleIsValidSelector);
+  const hasActiveWallet = isWalletActive(
+    useIOSelector(itwLifecycleStateSelector)
+  );
 
   const isReissuanceMode = mode === "reissuance";
 
@@ -135,7 +140,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   const handleNoCiePress = useCallback(() => {
     trackItwUserWithoutCie();
 
-    if (!isL2Active) {
+    if (!hasActiveWallet) {
       machineRef.send({
         type: "restart",
         mode: "issuance",
@@ -152,7 +157,7 @@ export const ItwIdentificationModeSelectionScreen = ({
         routeName
       });
     }
-  }, [machineRef, routeName, credentialType, isL2Active]);
+  }, [machineRef, routeName, credentialType, hasActiveWallet]);
 
   const dismissalDialog = useItwDismissalDialog({
     customLabels: { body: "" },

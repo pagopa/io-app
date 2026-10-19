@@ -26,7 +26,6 @@ import {
 } from "../../../../store/reducers/startup";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import {
   itwCredentialsEidStatusSelector,
@@ -36,7 +35,11 @@ import {
   itwCredentialIntroContentSelector,
   itwCredentialNameResolverSelector
 } from "../../credentialsCatalogue/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  isItWalletAvailable,
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialType,
@@ -95,8 +98,9 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const introductionContent = useIOSelector(
     itwCredentialIntroContentSelector(credentialType)
   );
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const lifecycle = useIOSelector(itwLifecycleStateSelector);
+  const isWalletValid = isWalletActive(lifecycle);
+  const isL3Enabled = isItWalletAvailable(lifecycle);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const credentialName = useItwCredentialName(credentialType);
   const resolveCredentialName = useIOSelector(

@@ -22,8 +22,8 @@ import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
+  ItwLifecycleState,
+  itwLifecycleStateSelector
 } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
@@ -51,10 +51,10 @@ export const onInitAction = assign<
   const state = context.deps.store.getState();
 
   return {
-    isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
+    isItWalletValid:
+      itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET,
     walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
     credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state),
-    isWalletValid: itwLifecycleIsValidSelector(state),
     deps: {
       ...context.deps,
       itwVersion: selectItwSpecsVersion(state) // Ensure IT-Wallet version is always updated
@@ -226,9 +226,9 @@ export const trackStartAddCredentialAction = ({
   context
 }: CredentialIssuanceActionArgs) => {
   if (context.credentialType) {
-    const isItwL3 = itwLifecycleIsITWalletValidSelector(
-      context.deps.store.getState()
-    );
+    const isItwL3 =
+      itwLifecycleStateSelector(context.deps.store.getState()) ===
+      ItwLifecycleState.IT_WALLET;
     const credential = getMixPanelCredential(context.credentialType, isItwL3);
     trackStartAddNewCredential(credential);
   }
@@ -239,7 +239,8 @@ export const trackAddCredentialAction = ({
 }: CredentialIssuanceActionArgs) => {
   if (context.credentialType) {
     const state = context.deps.store.getState();
-    const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+    const isItwL3 =
+      itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET;
     const credential = getMixPanelCredential(context.credentialType, isItwL3);
     trackSaveCredentialSuccess({
       credential,
@@ -278,9 +279,9 @@ const trackDataShareEvent = (context: Context, isAccepted = false) => {
     if (!credentialType) {
       return;
     }
-    const isItwL3 = itwLifecycleIsITWalletValidSelector(
-      context.deps.store.getState()
-    );
+    const isItwL3 =
+      itwLifecycleStateSelector(context.deps.store.getState()) ===
+      ItwLifecycleState.IT_WALLET;
     const credential = getMixPanelCredential(context.credentialType, isItwL3);
 
     const trackDataFn = isAccepted

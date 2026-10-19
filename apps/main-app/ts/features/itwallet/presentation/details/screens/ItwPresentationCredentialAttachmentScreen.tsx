@@ -22,7 +22,10 @@ import {
   isPdfClaim
 } from "../../../common/utils/itwClaimsUtils.ts";
 import { ParsedCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { trackWalletCredentialFAC_SIMILE } from "../analytics";
 
@@ -62,7 +65,8 @@ export const ItwPresentationCredentialAttachmentScreen = ({
   route
 }: ScreenProps) => {
   const toast = useIOToast();
-  const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isL3Credential =
+    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
 
   const [footerActionsMeasurements, setfooterActionsMeasurements] =
     useState<FooterActionsMeasurements>({

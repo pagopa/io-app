@@ -42,8 +42,11 @@ import {
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import { isDevEnv } from "../../../../utils/environment";
 import { openWebUrl } from "../../../../utils/url";
-import { itwIsL3EnabledSelector } from "../../../itwallet/common/store/selectors";
-import { itwLifecycleIsOperationalOrValid } from "../../../itwallet/lifecycle/store/selectors";
+import { itwIntegrityKeyTagSelector } from "../../../itwallet/issuance/store/selectors";
+import {
+  isItWalletAvailable,
+  itwLifecycleStateSelector
+} from "../../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import DeveloperModeSection from "../../devMode/components/DeveloperModeSection";
 import {
@@ -76,12 +79,13 @@ const ProfileMainScreenFC = () => {
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const appFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
   const surveyUrl = useIOSelector(appFeedbackUriConfigSelector("general"));
-  const selectItwLifecycleIsOperationalOrValid = useIOSelector(
-    itwLifecycleIsOperationalOrValid
-  );
+  const itwLifecycle = useIOSelector(itwLifecycleStateSelector);
+  // A registered wallet instance can exist even without a PID
+  const hasWalletInstance =
+    useIOSelector(itwIntegrityKeyTagSelector) !== undefined;
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
   const idResetTap = useRef<number>(undefined);
-  const isItwFeaturesAvailable = useIOSelector(itwIsL3EnabledSelector);
+  const isItwFeaturesAvailable = isItWalletAvailable(itwLifecycle);
 
   const handleContinue = useCallback(() => {
     trackPressLogoutConfirmFromIO();
@@ -104,7 +108,7 @@ const ProfileMainScreenFC = () => {
     trackPressLogoutFromIO();
     Alert.alert(
       I18n.t("profile.logout.alertTitle"),
-      selectItwLifecycleIsOperationalOrValid
+      hasWalletInstance
         ? I18n.t("profile.logout.activeWiAlertMessage")
         : I18n.t("profile.logout.alertMessage"),
       [
@@ -119,7 +123,7 @@ const ProfileMainScreenFC = () => {
       ],
       { cancelable: true }
     );
-  }, [handleContinue, selectItwLifecycleIsOperationalOrValid]);
+  }, [handleContinue, hasWalletInstance]);
 
   const resetAppTapCounter = useCallback(() => {
     setTapsOnAppVersion(0);

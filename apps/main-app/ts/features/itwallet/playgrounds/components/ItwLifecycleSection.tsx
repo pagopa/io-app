@@ -7,34 +7,15 @@ import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferen
 import { itwIsFiscalCodeWhitelisted } from "../../common/store/selectors/preferences";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import {
-  itwLifecycleIsInstalledSelector,
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsOperationalSelector,
-  itwLifecycleIsValidSelector
+  ItwLifecycleState,
+  itwLifecycleStateSelector
 } from "../../lifecycle/store/selectors";
 
 export const ItwLifecycleSection = () => {
   const dispatch = useIODispatch();
 
-  const isItwInstalled = useIOSelector(itwLifecycleIsInstalledSelector);
-  const isItwOperational = useIOSelector(itwLifecycleIsOperationalSelector);
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const lifecycle = useIOSelector(itwLifecycleStateSelector);
   const isFiscalCodeWhitelisted = useIOSelector(itwIsFiscalCodeWhitelisted);
-  const isITWalletInstanceValid = useIOSelector(
-    itwLifecycleIsITWalletValidSelector
-  );
-
-  const getLifecycleStateLabel = () => {
-    if (isItwInstalled) {
-      return "INSTALLED";
-    } else if (isItwOperational) {
-      return "OPERATIONAL";
-    } else if (isItwValid) {
-      return "VALID";
-    } else {
-      return "UNKNOWN";
-    }
-  };
 
   const confirmDisableL3Whitelist = () => {
     Alert.alert(
@@ -46,7 +27,7 @@ export const ItwLifecycleSection = () => {
           text: I18n.t("global.buttons.confirm"),
           style: "destructive",
           onPress: () => {
-            if (isITWalletInstanceValid) {
+            if (lifecycle === ItwLifecycleState.IT_WALLET) {
               dispatch(itwLifecycleWalletReset());
             }
             dispatch(itwSetFiscalCodeWhitelisted(false));
@@ -60,7 +41,10 @@ export const ItwLifecycleSection = () => {
   return (
     <View>
       <ListItemHeader label="Wallet Instance" />
-      <ListItemInfo label="Lifecycle status" value={getLifecycleStateLabel()} />
+      <ListItemInfo
+        label="Lifecycle status"
+        value={ItwLifecycleState[lifecycle]}
+      />
       <ListItemHeader label="L3 Whitelist" />
       <ListItemInfo
         label="Fiscal code whitelisted"

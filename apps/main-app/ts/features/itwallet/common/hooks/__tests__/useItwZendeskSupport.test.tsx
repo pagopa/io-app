@@ -81,23 +81,27 @@ describe("useItwZendeskSupport", () => {
     expect(action?.payload?.startingRoute).toBe("MOCK_SCREEN");
   });
 
-  test.each([
+  test.each<{
+    expectedCategory: string;
+    lifecycle: lifecycleSelectors.ItwLifecycleState;
+    name: string;
+  }>([
     {
       name: "IT-Wallet user",
-      isItwValid: true,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
       expectedCategory: "it_wallet2"
     },
     {
       name: "Documenti su IO user",
-      isItwValid: false,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
       expectedCategory: "it_wallet"
     }
   ])(
     "uses the $expectedCategory category for $name",
-    ({ isItwValid, expectedCategory }) => {
+    ({ lifecycle, expectedCategory }) => {
       jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-        .mockReturnValue(isItwValid);
+        .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+        .mockReturnValue(lifecycle);
 
       const actions = renderAndCall(baseParams);
 
@@ -112,8 +116,8 @@ describe("useItwZendeskSupport", () => {
 
   it("uses the provided category instead of the wallet status one", () => {
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(false);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.DOC_IO);
 
     const actions = renderAndCall({
       ...baseParams,

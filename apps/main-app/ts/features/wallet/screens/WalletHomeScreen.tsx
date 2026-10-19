@@ -30,11 +30,12 @@ import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hoo
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences";
 import { itwSetFeedbackBottomSheetVisible } from "../../itwallet/common/store/actions/ui";
-import {
-  isItwProximityEnabledSelector,
-  itwIsL3EnabledSelector
-} from "../../itwallet/common/store/selectors";
+import { isItwProximityEnabledSelector } from "../../itwallet/common/store/selectors";
 import { itwFeedbackBottomSheetVisibleSelector } from "../../itwallet/common/store/selectors/ui";
+import {
+  isItWalletAvailable,
+  itwLifecycleStateSelector
+} from "../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
@@ -68,7 +69,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const mixPanelCredentialDetails = useIOSelector(
     itwMixPanelCredentialDetailsSelector
   );
-  const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
+  const isItWalletEnabled = isItWalletAvailable(
+    useIOSelector(itwLifecycleStateSelector)
+  );
   const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
 
   const shouldRenderEmptyState = useIOSelector(

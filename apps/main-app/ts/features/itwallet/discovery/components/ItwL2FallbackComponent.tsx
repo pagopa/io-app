@@ -17,7 +17,10 @@ import {
   trackItwFallbackL2FlowExit,
   trackItwFallbackL2FlowStart
 } from "../../identification/analytics";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 
@@ -27,7 +30,9 @@ type Props = {
 export const ItwL2FallbackComponent = ({ credentialType }: Props) => {
   const navigation = useIONavigation();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
+  const hasActiveWallet = isWalletActive(
+    useIOSelector(itwLifecycleStateSelector)
+  );
 
   const dispatch = useIODispatch();
 
@@ -48,7 +53,7 @@ export const ItwL2FallbackComponent = ({ credentialType }: Props) => {
       fallback_reason: "nfc_not_supported"
     });
 
-    if (isWalletActive && credentialType) {
+    if (hasActiveWallet && credentialType) {
       machineRef.send({
         type: "select-credential",
         credentialType,

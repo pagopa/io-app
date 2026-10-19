@@ -23,7 +23,6 @@ import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText";
 import { isItwProximityEnabledSelector } from "../../../common/store/selectors";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/index";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
@@ -35,8 +34,10 @@ import {
   itwCredentialStatusSelector
 } from "../../../credentials/store/selectors";
 import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
+  isItWalletAvailable,
+  isWalletActive,
+  ItwLifecycleState,
+  itwLifecycleStateSelector
 } from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -79,7 +80,8 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const navigation = useIONavigation();
   const { credentialType } = route.params;
 
-  const isL3 = useIOSelector(itwIsL3EnabledSelector);
+  const lifecycle = useIOSelector(itwLifecycleStateSelector);
+  const isL3 = isItWalletAvailable(lifecycle);
 
   /**
    * Since the driver’s license is mapped as mDL but from the deeplink provided
@@ -95,9 +97,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
     itwCredentialSelector(normalizedCredentialType)
   );
 
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-
-  if (!isWalletValid) {
+  if (!isWalletActive(lifecycle)) {
     return (
       <OperationResultScreenContent
         action={{
@@ -164,8 +164,8 @@ export const ItwPresentationCredentialDetail = ({
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
-  const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const lifecycle = useIOSelector(itwLifecycleStateSelector);
+  const isItWallet = lifecycle === ItwLifecycleState.IT_WALLET;
   const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -182,11 +182,11 @@ export const ItwPresentationCredentialDetail = ({
     credential.credentialType
   );
   const showInlineCta =
-    isL3Credential && (hasSkeumorphicCard || contentClaim !== undefined);
+    isItWallet && (hasSkeumorphicCard || contentClaim !== undefined);
 
   const mixPanelCredential = useMemo(
-    () => getMixPanelCredential(credential.credentialType, isL3Credential),
-    [credential.credentialType, isL3Credential]
+    () => getMixPanelCredential(credential.credentialType, isItWallet),
+    [credential.credentialType, isItWallet]
   );
 
   useDebugInfo(credential);
@@ -250,7 +250,7 @@ export const ItwPresentationCredentialDetail = ({
       };
     }
 
-    if (!isL3Credential && contentClaim !== undefined) {
+    if (!isItWallet && contentClaim !== undefined) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
         icon: "docTitle",
@@ -268,7 +268,7 @@ export const ItwPresentationCredentialDetail = ({
 
     return undefined;
   }, [
-    isL3Credential,
+    isItWallet,
     isPresentableCredential,
     isProximityEnabled,
     contentClaim,
@@ -304,9 +304,9 @@ export const ItwPresentationCredentialDetail = ({
     <ItwPresentationDetailsScreenBase
       credential={credential}
       ctaProps={ctaProps}
-      headerTransparent={isL3Credential}
+      headerTransparent={isItWallet}
     >
-      {itwFeaturesEnabled ? (
+      {isItWallet ? (
         <ItwPresentationDetailsHeader credential={credential} />
       ) : (
         <ItwPresentationDetailsHeaderLegacy credential={credential} />
@@ -332,14 +332,14 @@ export const ItwPresentationCredentialDetail = ({
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
-          {!itwFeaturesEnabled && (
+          {!isItWallet && (
             <ItwCredentialTrustmark
               credential={credential}
               onPress={handleTrustmarkPress}
             />
           )}
           <ItwPresentationDetailsFooter credential={credential} />
-          {isL3Credential && (
+          {isItWallet && (
             <View style={{ alignItems: "center" }}>
               <PoweredByItWalletText />
             </View>

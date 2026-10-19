@@ -1,63 +1,48 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 
+import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
 import { itwSetWalletInstanceRemotelyActive } from "../../../walletInstance/store/actions";
-import { itwLifecycleIsOperationalOrValid } from "../../store/selectors";
 import {
   checkCurrentWalletInstanceStateSaga,
   getCurrentStatusWalletInstance
 } from "../checkCurrentWalletInstanceStateSaga.ts";
 
 describe("checkCurrentWalletInstanceStateSaga", () => {
-  it("Sets the wallet instance as remotely active when remote is active, not revoked, and local is inactive", () => {
-    const remoteStatus = { is_revoked: false };
-    const localStatus = false;
-
-    return expectSaga(checkCurrentWalletInstanceStateSaga)
-      .provide([
-        [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwLifecycleIsOperationalOrValid), localStatus]
-      ])
-      .put(itwSetWalletInstanceRemotelyActive(true))
-      .run(false);
-  });
-
-  it("Sets the wallet instance as not remotely active when remote is revoked", () => {
-    const remoteStatus = { is_revoked: true };
-    const localStatus = false;
-
-    return expectSaga(checkCurrentWalletInstanceStateSaga)
-      .provide([
-        [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwLifecycleIsOperationalOrValid), localStatus]
-      ])
-      .put(itwSetWalletInstanceRemotelyActive(false))
-      .run(false);
-  });
-
-  it("Sets the wallet instance as not remotely active when local is active", () => {
-    const remoteStatus = { is_revoked: false };
-    const localStatus = true;
-
-    return expectSaga(checkCurrentWalletInstanceStateSaga)
-      .provide([
-        [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwLifecycleIsOperationalOrValid), localStatus]
-      ])
-      .put(itwSetWalletInstanceRemotelyActive(false))
-      .run(false);
-  });
-
-  it("Sets the wallet instance as not remotely active when remote status is undefined", () => {
-    const remoteStatus = undefined;
-    const localStatus = false;
-
-    return expectSaga(checkCurrentWalletInstanceStateSaga)
-      .provide([
-        [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwLifecycleIsOperationalOrValid), localStatus]
-      ])
-      .put(itwSetWalletInstanceRemotelyActive(false))
-      .run(false);
-  });
+  test.each([
+    {
+      name: "remotely active when remote is active, not revoked, and there is no local instance",
+      remoteStatus: { is_revoked: false },
+      integrityKeyTag: undefined,
+      expected: true
+    },
+    {
+      name: "not remotely active when remote is revoked",
+      remoteStatus: { is_revoked: true },
+      integrityKeyTag: undefined,
+      expected: false
+    },
+    {
+      name: "not remotely active when there is a local instance",
+      remoteStatus: { is_revoked: false },
+      integrityKeyTag: "key-tag",
+      expected: false
+    },
+    {
+      name: "not remotely active when remote status is undefined",
+      remoteStatus: undefined,
+      integrityKeyTag: undefined,
+      expected: false
+    }
+  ])(
+    "Sets the wallet instance as $name",
+    ({ remoteStatus, integrityKeyTag, expected }) =>
+      expectSaga(checkCurrentWalletInstanceStateSaga)
+        .provide([
+          [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
+          [matchers.select(itwIntegrityKeyTagSelector), integrityKeyTag]
+        ])
+        .put(itwSetWalletInstanceRemotelyActive(expected))
+        .run(false)
+  );
 });

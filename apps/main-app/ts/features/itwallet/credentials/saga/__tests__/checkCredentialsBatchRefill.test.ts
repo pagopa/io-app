@@ -6,7 +6,10 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { itwCredentialsBatchRefillRequest } from "../../store/actions";
 import { checkCredentialsBatchRefill } from "../checkCredentialsBatchRefill";
 
@@ -51,7 +54,12 @@ describe("checkCredentialsBatchRefill", () => {
   it("requests a renewal for every credential under threshold", () =>
     expectSaga(checkCredentialsBatchRefill)
       .withState(makeState([proofOfAge]))
-      .provide([[matchers.select(itwLifecycleIsValidSelector), true]])
+      .provide([
+        [
+          matchers.select(itwLifecycleStateSelector),
+          ItwLifecycleState.IT_WALLET
+        ]
+      ])
       .put(
         itwCredentialsBatchRefillRequest({
           credentialType: CredentialType.PROOF_OF_AGE,
@@ -63,7 +71,9 @@ describe("checkCredentialsBatchRefill", () => {
   it("does nothing when the wallet is not valid", () =>
     expectSaga(checkCredentialsBatchRefill)
       .withState(makeState([proofOfAge]))
-      .provide([[matchers.select(itwLifecycleIsValidSelector), false]])
+      .provide([
+        [matchers.select(itwLifecycleStateSelector), ItwLifecycleState.INACTIVE]
+      ])
       .not.put.actionType(itwCredentialsBatchRefillRequest.toString())
       .run());
 
@@ -72,7 +82,12 @@ describe("checkCredentialsBatchRefill", () => {
       .withState(
         makeState([{ ...proofOfAge, keyTags: ["kt-1", "kt-2", "kt-3"] }])
       )
-      .provide([[matchers.select(itwLifecycleIsValidSelector), true]])
+      .provide([
+        [
+          matchers.select(itwLifecycleStateSelector),
+          ItwLifecycleState.IT_WALLET
+        ]
+      ])
       .not.put.actionType(itwCredentialsBatchRefillRequest.toString())
       .run());
 });

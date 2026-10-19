@@ -21,8 +21,8 @@ describe("ItwPresentationCredentialDetailScreen", () => {
 
   it("should render the activate wallet screen", () => {
     jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(false);
+      .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.INACTIVE);
 
     const component = renderComponent({ credentialType: "MDL" });
     expect(component).toMatchSnapshot();

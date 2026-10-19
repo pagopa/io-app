@@ -60,7 +60,7 @@ const buildState = (
           catalogue: overrides.catalogue ?? pot.none,
           translations: overrides.translations ?? pot.none
         },
-        // Required by itwLifecycleIsITWalletValidSelector, transitively used
+        // Required by itwLifecycleStateSelector, transitively used
         // by itwCredentialNameResolverSelector.
         issuance: { integrityKeyTag: { _tag: "None" } },
         credentials: { credentials: {} },

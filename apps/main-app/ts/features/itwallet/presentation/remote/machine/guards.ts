@@ -1,8 +1,10 @@
 import { ItwSessionExpiredError } from "../../../api/client.ts";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
 import { isItwEnabledSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors/index.ts";
 import { ClientIdPrefix } from "../utils/itwRemotePresentationUtils";
 import { Context } from "./context.ts";
@@ -17,8 +19,7 @@ export const isItWalletL3ActiveGuard = ({ context }: GuardArgs) => {
   const state = context.deps.store.getState();
   return (
     isItwEnabledSelector(state) &&
-    itwIsL3EnabledSelector(state) &&
-    itwLifecycleIsITWalletValidSelector(state)
+    itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET
   );
 };
 

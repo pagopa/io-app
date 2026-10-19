@@ -28,8 +28,8 @@ describe("ItwCredentialCard", () => {
     CredentialType.RESIDENCY
   ])("should match snapshot when credential type is [%p]", type => {
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(false);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.DOC_IO);
     jest
       .spyOn(credentialUtils, "isCredentialIssuedBeforePid")
       .mockReturnValue(false);
@@ -43,8 +43,8 @@ describe("ItwCredentialCard", () => {
 
   it("should match snapshot when credential is pending upgrade", () => {
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(true);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
     jest
       .spyOn(credentialUtils, "isCredentialIssuedBeforePid")
       .mockReturnValue(true);
@@ -81,8 +81,8 @@ describe("ItwCredentialCard", () => {
             .spyOn(credentials, "itwCredentialsEidStatusSelector")
             .mockReturnValue(pidStatus);
           jest
-            .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-            .mockReturnValue(false);
+            .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+            .mockReturnValue(lifecycleSelectors.ItwLifecycleState.DOC_IO);
 
           const component = renderComponent(
             <ItwCredentialCard
@@ -105,8 +105,8 @@ describe("ItwCredentialCardLegacy", () => {
     CredentialType.EUROPEAN_DISABILITY_CARD
   ])("should match snapshot when credential type is [%p]", type => {
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(false);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.DOC_IO);
     jest
       .spyOn(credentialUtils, "isCredentialIssuedBeforePid")
       .mockReturnValue(false);
@@ -120,8 +120,8 @@ describe("ItwCredentialCardLegacy", () => {
 
   it("should match snapshot when credential is pending upgrade", () => {
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(true);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
     jest
       .spyOn(credentialUtils, "isCredentialIssuedBeforePid")
       .mockReturnValue(true);
@@ -158,8 +158,8 @@ describe("ItwCredentialCardLegacy", () => {
             .spyOn(credentials, "itwCredentialsEidStatusSelector")
             .mockReturnValue(pidStatus);
           jest
-            .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-            .mockReturnValue(false);
+            .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+            .mockReturnValue(lifecycleSelectors.ItwLifecycleState.DOC_IO);
 
           const component = renderComponent(
             <ItwCredentialCardLegacy

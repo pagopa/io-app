@@ -21,7 +21,7 @@ import { trackOpenItwTos } from "../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
-import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
+import { itwIsActivationRemotelyDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
@@ -34,7 +34,9 @@ import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
 export const ItwDiscoveryInfoFallbackComponent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
+  const itwActivationDisabled = useIOSelector(
+    itwIsActivationRemotelyDisabledSelector
+  );
   const { tos_url } = useIOSelector(tosConfigSelector);
   const mixPanelCredentialDetails = useIOSelector(
     itwMixPanelCredentialDetailsSelector

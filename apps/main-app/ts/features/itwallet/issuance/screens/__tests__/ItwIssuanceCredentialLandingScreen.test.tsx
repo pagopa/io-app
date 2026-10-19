@@ -9,10 +9,8 @@ import { appReducer } from "../../../../../store/reducers";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as credentialsCatalogueSelectors from "../../../credentialsCatalogue/store/selectors";
-import * as issuanceAnalytics from "../../../issuance/analytics";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialLandingScreen } from "../ItwIssuanceCredentialLandingScreen";
@@ -55,34 +53,65 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
   });
 
   describe("Navigation scenarios", () => {
-    test.each`
-      credentialStatus | pidStatus    | isItwValid | isWhitelisted | expectedRoute                                  | expectedParams
-      ${undefined}     | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l2", credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${false}   | ${true}       | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l3", credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${true}    | ${true}       | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
-      ${"jwtExpired"}  | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l2", credentialType: "mDL" }}
-      ${"jwtExpiring"} | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
-    `(
-      "navigates to $expectedRoute when credentialStatus=$credentialStatus, pidStatus=$pidStatus, isItwValid=$isItwValid, isWhitelisted=$isWhitelisted",
-      ({
-        credentialStatus,
-        pidStatus,
-        isItwValid,
-        isWhitelisted,
-        expectedRoute,
-        expectedParams
-      }) => {
-        mockSelectors({
-          credentialStatus,
-          pidStatus,
-          isItwValid,
-          isWhitelisted
-        });
+    const discoveryInfo = (level: "l2" | "l3") => [
+      ITW_ROUTES.DISCOVERY.INFO,
+      { animationEnabled: false, level, credentialType: "mDL" }
+    ];
+    const trustIssuer = [
+      ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+      { animationEnabled: false, credentialType: "mDL" }
+    ];
+
+    test.each(
+      (
+        [
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.INACTIVE,
+            expectedArgs: discoveryInfo("l2")
+          },
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE,
+            expectedArgs: discoveryInfo("l3")
+          },
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+            expectedArgs: trustIssuer
+          },
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE,
+            expectedArgs: trustIssuer
+          },
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+            expectedArgs: trustIssuer
+          },
+          {
+            credentialStatus: "jwtExpired",
+            lifecycle: lifecycleSelectors.ItwLifecycleState.INACTIVE,
+            expectedArgs: discoveryInfo("l2")
+          },
+          {
+            credentialStatus: "jwtExpiring",
+            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+            expectedArgs: trustIssuer
+          }
+        ] satisfies Array<{
+          credentialStatus?: string;
+          expectedArgs: ReadonlyArray<unknown>;
+          lifecycle: lifecycleSelectors.ItwLifecycleState;
+        }>
+      ).map(row => ({
+        ...row,
+        lifecycleName: lifecycleSelectors.ItwLifecycleState[row.lifecycle]
+      }))
+    )(
+      "navigates to the expected route when credentialStatus=$credentialStatus, lifecycle=$lifecycleName",
+      ({ credentialStatus, lifecycle, expectedArgs }) => {
+        mockSelectors({ credentialStatus, lifecycle });
 
         renderComponent();
 
-        expect(mockReplace).toHaveBeenCalledWith(expectedRoute, expectedParams);
+        expect(mockReplace).toHaveBeenCalledWith(...expectedArgs);
       }
     );
   });
@@ -163,50 +192,52 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       }
     );
 
-    it("primary action navigates to identification with level l2 when not whitelisted", () => {
-      mockSelectors({ pidStatus: "jwtExpired", isWhitelisted: false });
+    test.each(
+      (
+        [
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+            level: "l2"
+          },
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE,
+            level: "l3"
+          },
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+            level: "l3"
+          }
+        ] satisfies Array<{
+          level: "l2" | "l3";
+          lifecycle: lifecycleSelectors.ItwLifecycleState;
+        }>
+      ).map(row => ({
+        ...row,
+        lifecycleName: lifecycleSelectors.ItwLifecycleState[row.lifecycle]
+      }))
+    )(
+      "primary action navigates to identification with level $level when the lifecycle is $lifecycleName",
+      ({ lifecycle, level }) => {
+        mockSelectors({ pidStatus: "jwtExpired", lifecycle });
 
-      const { getByText } = renderComponent();
+        const { getByText } = renderComponent();
 
-      fireEvent.press(
-        getByText(
-          I18n.t("features.itWallet.issuance.confirmIdentity.primaryAction")
-        )
-      );
+        fireEvent.press(
+          getByText(
+            I18n.t("features.itWallet.issuance.confirmIdentity.primaryAction")
+          )
+        );
 
-      expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-        params: {
-          eidReissuing: true,
-          credentialType: "mDL",
-          level: "l2"
-        }
-      });
-    });
-
-    it("primary action navigates to identification with level l3 when whitelisted", () => {
-      mockSelectors({
-        pidStatus: "jwtExpired",
-        isWhitelisted: true
-      });
-
-      const { getByText } = renderComponent();
-
-      fireEvent.press(
-        getByText(
-          I18n.t("features.itWallet.issuance.confirmIdentity.primaryAction")
-        )
-      );
-
-      expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-        params: {
-          eidReissuing: true,
-          credentialType: "mDL",
-          level: "l3"
-        }
-      });
-    });
+        expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+          params: {
+            eidReissuing: true,
+            credentialType: "mDL",
+            level
+          }
+        });
+      }
+    );
 
     it("secondary action calls popToTop", () => {
       mockSelectors({ pidStatus: "jwtExpiring" });
@@ -248,7 +279,10 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
 
   describe("Introduction content routing", () => {
     it("navigates to the introduction screen when the credential has intro content", () => {
-      mockSelectors({ isItwValid: true, hasIntroContent: true });
+      mockSelectors({
+        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+        hasIntroContent: true
+      });
 
       renderComponent();
 
@@ -259,7 +293,10 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
     });
 
     it("navigates to the trust issuer screen when the credential has no intro content", () => {
-      mockSelectors({ isItwValid: true, hasIntroContent: false });
+      mockSelectors({
+        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+        hasIntroContent: false
+      });
 
       renderComponent();
 
@@ -275,7 +312,7 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       mockSelectors({
         credentialStatus: undefined,
         pidStatus: undefined,
-        isItwValid: true
+        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET
       });
 
       const { getByText } = renderComponent();
@@ -289,7 +326,7 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       mockSelectors({
         credentialStatus: undefined,
         pidStatus: undefined,
-        isItwValid: true
+        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET
       });
 
       const { getByText } = renderComponent();
@@ -300,53 +337,25 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
 
       expect(mockPopToTop).toHaveBeenCalled();
     });
-
-    it("does not track failure analytics when navigation occurs", () => {
-      const trackSpy = jest.spyOn(
-        issuanceAnalytics,
-        "trackItwIssuanceFromMsgFailure"
-      );
-
-      mockSelectors({
-        credentialStatus: undefined,
-        pidStatus: undefined,
-        isItwValid: true
-      });
-
-      renderComponent();
-
-      expect(mockReplace).toHaveBeenCalled();
-      expect(trackSpy).not.toHaveBeenCalled();
-    });
   });
 });
 
 type MockSelectorOptions = {
   credentialStatus?: string;
   hasIntroContent?: boolean;
-  isItwL3?: boolean;
-  isItwValid?: boolean;
-  isWhitelisted?: boolean;
+  lifecycle?: lifecycleSelectors.ItwLifecycleState;
   pidStatus?: string;
 };
 
 const mockSelectors = ({
   credentialStatus,
   pidStatus,
-  isItwValid = false,
-  isItwL3 = false,
-  isWhitelisted = false,
+  lifecycle = lifecycleSelectors.ItwLifecycleState.INACTIVE,
   hasIntroContent = false
 }: MockSelectorOptions = {}) => {
   jest
-    .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-    .mockReturnValue(isItwValid);
-  jest
-    .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-    .mockReturnValue(isItwL3);
-  jest
-    .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
-    .mockReturnValue(isWhitelisted);
+    .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+    .mockReturnValue(lifecycle);
   jest
     .spyOn(credentialsSelectors, "itwCredentialStatusSelector")
     .mockImplementation(() => ({ status: credentialStatus }) as any);

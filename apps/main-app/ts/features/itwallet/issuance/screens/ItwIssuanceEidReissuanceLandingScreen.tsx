@@ -14,11 +14,12 @@ import {
   StartupStatusEnum
 } from "../../../../store/reducers/startup";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
+  isItWalletAvailable,
+  isWalletActive,
+  ItwLifecycleState,
+  itwLifecycleStateSelector
 } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -31,9 +32,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 export const ItwIssuanceEidReissuanceLandingScreen = () => {
   const navigation = useIONavigation();
 
-  const isAnyWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const canActivateItWallet = useIOSelector(itwIsL3EnabledSelector);
+  const lifecycle = useIOSelector(itwLifecycleStateSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const hasValidEid = eidStatus && eidStatus === "valid";
@@ -67,11 +66,12 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
     );
   }
 
-  // Tell the user IT-Wallet is available when:
-  // - The eID is expiring/expired
-  // - The user is whitelisted
-  // - IT-Wallet is not yet active
-  if (canActivateItWallet && !isItWalletValid) {
+  // Tell the user IT-Wallet is available when the eID is expiring/expired and
+  // IT-Wallet is not yet active
+  if (
+    isItWalletAvailable(lifecycle) &&
+    lifecycle !== ItwLifecycleState.IT_WALLET
+  ) {
     return (
       <OperationResultScreenContent
         action={{
@@ -102,11 +102,11 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
   // Go directly to one of the issuance routes:
   // - If the user has an active Wallet -> reissuance
   // - Else -> Documenti su IO issuance
-  return <NavigateToEidIssuanceMachine eidReissuing={isAnyWalletValid} />;
+  return <NavigateToEidIssuanceMachine lifecycle={lifecycle} />;
 };
 
 type Props = {
-  eidReissuing: boolean;
+  lifecycle: ItwLifecycleState;
 };
 
 /**
@@ -114,7 +114,7 @@ type Props = {
  * has a valid Wallet and only needs to reissue the eID/PID or does not have an
  * active Wallet and needs to activate it first.
  */
-const NavigateToEidIssuanceMachine = ({ eidReissuing }: Props) => {
+const NavigateToEidIssuanceMachine = ({ lifecycle }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const startupStatus = useIOSelector(isStartupLoaded);
 
@@ -124,16 +124,17 @@ const NavigateToEidIssuanceMachine = ({ eidReissuing }: Props) => {
       return;
     }
 
-    if (eidReissuing) {
+    if (isWalletActive(lifecycle)) {
       return navigation.replace(ITW_ROUTES.IDENTIFICATION.MODE_SELECTION, {
         eidReissuing: true,
+        level: lifecycle === ItwLifecycleState.IT_WALLET ? "l3" : "l2",
         animationEnabled: false
       });
     }
     navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
       animationEnabled: false
     });
-  }, [startupStatus, navigation, eidReissuing]);
+  }, [startupStatus, navigation, lifecycle]);
 
   useOnFirstRender(handleNavigation);
 

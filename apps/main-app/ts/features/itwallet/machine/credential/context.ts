@@ -40,11 +40,6 @@ export type Context = {
   isItWalletValid: boolean;
   /** Credential request data */
   issuerConf: IssuerConfiguration | undefined;
-  /**
-   * Flag to indicate if the wallet lifecycle is valid and can issue
-   * credentials.
-   */
-  isWalletValid: boolean;
   /** An optional dictionary of Key Attestations generated for the issuance. */
   keyAttestations?: Record<string, string>;
   /**
@@ -81,7 +76,6 @@ export type CredentialIssuanceMode = "issuance" | "reissuance" | "upgrade";
 export const InitialContext: Omit<Context, "deps"> = {
   mode: "issuance",
   isItWalletValid: false,
-  isWalletValid: false,
   credentialType: undefined,
   wiaCryptoContext: undefined,
   walletInstanceAttestation: undefined,

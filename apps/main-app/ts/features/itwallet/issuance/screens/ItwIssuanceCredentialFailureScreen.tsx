@@ -13,7 +13,10 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
 import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
@@ -63,7 +66,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
     selectIssuerConfiguration
   );
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
   const credentialName = useItwCredentialName(credentialType);
 
   const invalidStatusDetails = useCredentialIssuanceStatusMessage(

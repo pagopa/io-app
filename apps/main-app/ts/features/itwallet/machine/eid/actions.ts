@@ -38,7 +38,10 @@ import {
 } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
@@ -408,9 +411,9 @@ export const trackWalletInstanceCreationAction = ({
 export const trackWalletInstanceRevocationAction = ({
   context
 }: EidActionArgs) => {
-  const isItwL3 = itwLifecycleIsITWalletValidSelector(
-    context.deps.store.getState()
-  );
+  const isItwL3 =
+    itwLifecycleStateSelector(context.deps.store.getState()) ===
+    ItwLifecycleState.IT_WALLET;
   trackItwDeactivated(isItwL3 ? "ITW_PID" : "ITW_ID_V2");
 };
 

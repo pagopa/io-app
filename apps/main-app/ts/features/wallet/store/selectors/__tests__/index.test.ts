@@ -14,14 +14,20 @@ import {
   shouldRenderWalletLoadingStateSelector
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { Action } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
-import * as connectivitySelectors from "../../../../connectivity/store/selectors";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../utils/tests";
+import { setConnectionStatus } from "../../../../connectivity/store/actions";
+import { setOfflineAccessReason } from "../../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
 import * as itwSelectors from "../../../../itwallet/common/store/selectors/remoteConfig";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../../../itwallet/common/utils/itwMocksUtils";
 import * as itwLifecycleSelectors from "../../../../itwallet/lifecycle/store/selectors";
+import { ItwLifecycleState } from "../../../../itwallet/lifecycle/store/selectors";
 import * as itwWalletInstanceSelectors from "../../../../itwallet/walletInstance/store/selectors";
 import { walletCardCategoryFilters } from "../../../types";
 import { WalletCardsState } from "../../reducers/cards";
@@ -97,10 +103,6 @@ describe("selectWalletCards", () => {
 describe("selectWalletCategories", () => {
   it("should return 'itw' and 'other'", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-
-    jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
 
     const categories = selectWalletCategories(
       _.set(globalState, "features.wallet", {
@@ -403,126 +405,94 @@ describe("shouldRenderWalletCategorySelector", () => {
 });
 
 describe("shouldRenderItwCardsContainerSelector", () => {
-  it("should return true when ITW is enabled, lifecycle is valid, and no WI error", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-
-    jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
-
-    jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwIsWalletInstanceStatusFailureSelector"
-      )
-      .mockImplementation(() => false);
-
-    jest
-      .spyOn(itwSelectors, "isItwEnabledSelector")
-      .mockImplementation(() => true);
-
-    const shouldRenderItwCardsContainer =
-      shouldRenderItwCardsContainerSelector(globalState);
-    expect(shouldRenderItwCardsContainer).toBe(true);
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
-  it("should return true when offline, lifecycle is valid, and no WI error, even if ITW is disabled", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
+  test.each<{
+    actions?: ReadonlyArray<Action>;
+    expected: boolean;
+    isItwEnabled?: boolean;
+    lifecycle?: ItwLifecycleState;
+    name: string;
+    walletInstanceFailure?: boolean;
+  }>([
+    {
+      name: "ITW is enabled, the wallet is active and there is no WI error",
+      expected: true
+    },
+    {
+      name: "there is no connection, even if ITW is disabled",
+      actions: [setConnectionStatus(false)],
+      isItwEnabled: false,
+      expected: true
+    },
+    {
+      name: "the device is offline, even if ITW is disabled",
+      actions: [setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE)],
+      isItwEnabled: false,
+      expected: true
+    },
+    {
+      name: "ITW is disabled and online",
+      isItwEnabled: false,
+      expected: false
+    },
+    ...(
+      [
+        ItwLifecycleState.INACTIVE,
+        ItwLifecycleState.IT_WALLET_ELIGIBLE,
+        ItwLifecycleState.IT_WALLET_UNSUPPORTED
+      ] as const
+    ).map(lifecycle => ({
+      name: `the wallet is ${lifecycle}`,
+      lifecycle,
+      expected: false
+    })),
+    ...(
+      [
+        ItwLifecycleState.DOC_IO_UPGRADABLE,
+        ItwLifecycleState.DOC_IO_FALLBACK,
+        ItwLifecycleState.IT_WALLET
+      ] as const
+    ).map(lifecycle => ({
+      name: `the wallet is ${lifecycle}`,
+      lifecycle,
+      expected: true
+    })),
+    {
+      name: "there is a WI error",
+      walletInstanceFailure: true,
+      expected: false
+    }
+  ])(
+    "should return $expected when $name",
+    ({
+      actions = [],
+      lifecycle = ItwLifecycleState.DOC_IO,
+      isItwEnabled = true,
+      walletInstanceFailure = false,
+      expected
+    }) => {
+      const globalState = reproduceSequence({} as GlobalState, appReducer, [
+        applicationChangeState("active"),
+        setConnectionStatus(true),
+        ...actions
+      ]);
+      jest
+        .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+        .mockReturnValue(lifecycle);
+      jest
+        .spyOn(
+          itwWalletInstanceSelectors,
+          "itwIsWalletInstanceStatusFailureSelector"
+        )
+        .mockReturnValue(walletInstanceFailure);
+      jest
+        .spyOn(itwSelectors, "isItwEnabledSelector")
+        .mockReturnValue(isItwEnabled);
 
-    jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
-
-    jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwIsWalletInstanceStatusFailureSelector"
-      )
-      .mockImplementation(() => false);
-
-    jest
-      .spyOn(itwSelectors, "isItwEnabledSelector")
-      .mockImplementation(() => false);
-
-    jest
-      .spyOn(connectivitySelectors, "isConnectedSelector")
-      .mockImplementation(() => false);
-
-    const shouldRenderItwCardsContainer =
-      shouldRenderItwCardsContainerSelector(globalState);
-    expect(shouldRenderItwCardsContainer).toBe(true);
-  });
-
-  it("should return false when ITW is disabled and online", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-
-    jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
-
-    jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwIsWalletInstanceStatusFailureSelector"
-      )
-      .mockImplementation(() => false);
-
-    jest
-      .spyOn(itwSelectors, "isItwEnabledSelector")
-      .mockImplementation(() => false);
-
-    jest
-      .spyOn(connectivitySelectors, "isConnectedSelector")
-      .mockImplementation(() => true);
-
-    const shouldRenderItwCardsContainer =
-      shouldRenderItwCardsContainerSelector(globalState);
-    expect(shouldRenderItwCardsContainer).toBe(false);
-  });
-
-  it("should return false when lifecycle is not valid", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-
-    jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => false);
-
-    jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwIsWalletInstanceStatusFailureSelector"
-      )
-      .mockImplementation(() => false);
-
-    jest
-      .spyOn(itwSelectors, "isItwEnabledSelector")
-      .mockImplementation(() => true);
-
-    const shouldRenderItwCardsContainer =
-      shouldRenderItwCardsContainerSelector(globalState);
-    expect(shouldRenderItwCardsContainer).toBe(false);
-  });
-
-  it("should return false when there is a WI error", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-
-    jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
-
-    jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwIsWalletInstanceStatusFailureSelector"
-      )
-      .mockImplementation(() => true);
-
-    jest
-      .spyOn(itwSelectors, "isItwEnabledSelector")
-      .mockImplementation(() => true);
-
-    const shouldRenderItwCardsContainer =
-      shouldRenderItwCardsContainerSelector(globalState);
-    expect(shouldRenderItwCardsContainer).toBe(false);
-  });
+      expect(shouldRenderItwCardsContainerSelector(globalState)).toBe(expected);
+    }
+  );
 });

@@ -3,8 +3,11 @@ import I18n from "i18next";
 import { memo, useMemo } from "react";
 
 import { useIOSelector } from "../../../../store/hooks";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
+import {
+  isItWalletAvailable,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 
 type Props = {
   credentialName: string;
@@ -44,7 +47,9 @@ const ItwOnboardingModuleCredential = ({
   isRequested = false,
   credentialName
 }: Props) => {
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const isL3Enabled = isItWalletAvailable(
+    useIOSelector(itwLifecycleStateSelector)
+  );
 
   const badge = useMemo((): Badge | undefined => {
     if (isActive) {

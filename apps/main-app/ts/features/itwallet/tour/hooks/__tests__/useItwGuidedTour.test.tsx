@@ -45,7 +45,7 @@ describe("useItwGuidedTour", () => {
 
   it("starts the tour when the wallet is in L3 mode, not completed and not offline", () => {
     const store = renderHook({
-      isItWalletValid: true,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
       isCompleted: false,
       offlineAccessReason: undefined
     });
@@ -61,7 +61,7 @@ describe("useItwGuidedTour", () => {
   // only in L2 mode ("documenti su IO"), even if whitelisted for L3.
   it("does not start the tour when the wallet is not in L3 mode", () => {
     const store = renderHook({
-      isItWalletValid: false,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE,
       isCompleted: false,
       offlineAccessReason: undefined
     });
@@ -75,7 +75,7 @@ describe("useItwGuidedTour", () => {
 
   it("does not start the tour when it was already completed", () => {
     const store = renderHook({
-      isItWalletValid: true,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
       isCompleted: true,
       offlineAccessReason: undefined
     });
@@ -89,7 +89,7 @@ describe("useItwGuidedTour", () => {
 
   it("does not start the tour when the app is in offline mode", () => {
     const store = renderHook({
-      isItWalletValid: true,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
       isCompleted: false,
       offlineAccessReason: OfflineAccessReasonEnum.TIMEOUT
     });
@@ -104,18 +104,18 @@ describe("useItwGuidedTour", () => {
 
 type Params = {
   isCompleted: boolean;
-  isItWalletValid: boolean;
+  lifecycle: lifecycleSelectors.ItwLifecycleState;
   offlineAccessReason: OfflineAccessReasonEnum | undefined;
 };
 
 const renderHook = ({
-  isItWalletValid,
+  lifecycle,
   isCompleted,
   offlineAccessReason
 }: Params) => {
   jest
-    .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-    .mockReturnValue(isItWalletValid);
+    .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+    .mockReturnValue(lifecycle);
   jest
     .spyOn(tourSelectors, "isTourCompletedSelector")
     .mockReturnValue(isCompleted);

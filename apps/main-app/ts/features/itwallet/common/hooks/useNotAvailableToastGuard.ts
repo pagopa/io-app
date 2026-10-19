@@ -3,7 +3,10 @@ import I18n from "i18next";
 import { useCallback } from "react";
 
 import { useIOSelector } from "../../../../store/hooks.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 
 /**
  * A hook that wraps a function to show a "feature not available" toast if the
@@ -16,7 +19,8 @@ export const useNotAvailableToastGuard = (
   fn: (...args: Array<any>) => Promise<void> | void
 ) => {
   const toast = useIOToast();
-  const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwPid =
+    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
 
   const guardFn = useCallback(() => {
     toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));

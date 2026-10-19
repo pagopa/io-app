@@ -1,12 +1,16 @@
 import { createSelector } from "reselect";
 
+import { GlobalState } from "../../../../../store/reducers/types";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { isCredentialIssuedBeforePid } from "../../../common/utils/itwCredentialUtils";
 import {
   itwCredentialsEidIssuedAtSelector,
   itwCredentialsSelector
 } from "../../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { getMixPanelCredential } from "../../utils";
 import { CREDENTIAL_STATUS_MAP, ItwCredentialDetails } from "../../utils/types";
 
@@ -21,7 +25,8 @@ import { CREDENTIAL_STATUS_MAP, ItwCredentialDetails } from "../../utils/types";
  */
 export const itwMixPanelCredentialDetailsSelector = createSelector(
   itwCredentialsSelector,
-  itwLifecycleIsITWalletValidSelector,
+  (state: GlobalState) =>
+    itwLifecycleStateSelector(state) === ItwLifecycleState.IT_WALLET,
   itwCredentialsEidIssuedAtSelector,
   (credentials, isItwPid, pidIssuedAt) =>
     Object.values(credentials).reduce<ItwCredentialDetails>((acc, c) => {

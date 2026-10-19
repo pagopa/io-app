@@ -13,7 +13,10 @@ import {
   CredentialMetadata,
   ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { shouldShowMdlUpdateDigitalCredential } from "../utils";
 import { useItwRemoveCredentialWithConfirm } from "./useItwRemoveCredentialWithConfirm";
@@ -83,7 +86,8 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
   status
 }: UseItwIssuerDynamicErrorBottomSheetParams) => {
   const navigation = useIONavigation();
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET;
   const { confirmAndRemoveCredential } = useItwRemoveCredentialWithConfirm(
     credential,
     "bottom_sheet"

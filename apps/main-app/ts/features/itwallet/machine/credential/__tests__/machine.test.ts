@@ -923,7 +923,6 @@ describe("itwCredentialIssuanceMachine", () => {
 
     it("Should resolve a credential offer without navigating away when the wallet is not valid", async () => {
       onInit.mockImplementation(() => ({
-        isWalletValid: false,
         isItWalletValid: false,
         walletInstanceAttestation: undefined
       }));
@@ -1000,12 +999,10 @@ describe("itwCredentialIssuanceMachine", () => {
     it("Should resume the resolved credential offer after eID activation", async () => {
       onInit
         .mockImplementationOnce(() => ({
-          isWalletValid: false,
           isItWalletValid: false,
           walletInstanceAttestation: undefined
         }))
         .mockImplementationOnce(() => ({
-          isWalletValid: true,
           isItWalletValid: true,
           walletInstanceAttestation: { jwt: T_WIA }
         }));

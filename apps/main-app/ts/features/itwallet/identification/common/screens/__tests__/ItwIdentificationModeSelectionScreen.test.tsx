@@ -44,8 +44,8 @@ const every90Days = () =>
 describe("ItwIdentificationModeSelectionScreen", () => {
   beforeEach(() => {
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(false);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE);
     jest
       .spyOn(remoteConfigSelectors, "itwDisabledIdentificationMethodsSelector")
       .mockReturnValue([]);
@@ -173,8 +173,10 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     "shows the CIE warning for $name when Doc su IO is already active",
     async ({ credentialType }) => {
       jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(true);
+        .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+        .mockReturnValue(
+          lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE
+        );
       const { getByTestId } = renderComponent("issuance", "l3", credentialType);
 
       fireEvent.press(getByTestId("noCieButtonTestID"));

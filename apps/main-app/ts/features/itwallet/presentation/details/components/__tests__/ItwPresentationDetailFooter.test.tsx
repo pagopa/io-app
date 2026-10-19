@@ -192,8 +192,8 @@ describe("ItwPresentationDetailsFooter", () => {
 
   it("should not render the assistance action for IT-Wallet", () => {
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(true);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.IT_WALLET);
 
     const { queryByTestId } = renderComponent(CredentialType.DRIVING_LICENSE);
 

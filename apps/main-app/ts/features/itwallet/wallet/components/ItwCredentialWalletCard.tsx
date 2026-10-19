@@ -16,7 +16,10 @@ import {
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { itwShouldUpgradeCredentialSelector } from "../../common/store/selectors";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export type ItwCredentialWalletCardProps = ItwCredentialCard & {
@@ -34,7 +37,8 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
     itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
   );
   const withItwDesign =
-    useIOSelector(itwLifecycleIsITWalletValidSelector) || props.withItwDesign;
+    useIOSelector(itwLifecycleStateSelector) === ItwLifecycleState.IT_WALLET ||
+    props.withItwDesign;
 
   const handleCredentialUpgrade = useOfflineToastGuard(() =>
     navigation.navigate(ITW_ROUTES.MAIN, {

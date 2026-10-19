@@ -10,7 +10,6 @@ import { appReducer } from "../../../../../store/reducers";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -18,29 +17,49 @@ import { ItwIssuanceEidReissuanceLandingScreen } from "../ItwIssuanceEidReissuan
 
 const Stack = createStackNavigator();
 const targetTestId = "eid-issuance-target";
+const mockTargetParams = jest.fn();
 
 describe("ItwIssuanceEidReissuanceLandingScreen", () => {
   beforeAll(() => {
     jest.clearAllMocks();
   });
 
-  it.each`
-    isAnyWalletValid | isItWalletValid | canActivateItWallet | eidStatus
-    ${true}          | ${false}        | ${true}             | ${"jwtExpiring"}
-    ${true}          | ${false}        | ${true}             | ${"valid"}
-    ${true}          | ${true}         | ${true}             | ${"jwtExpiring"}
-    ${true}          | ${true}         | ${true}             | ${"valid"}
-    ${false}         | ${false}        | ${true}             | ${undefined}
-    ${false}         | ${false}        | ${false}            | ${undefined}
-  `(
-    "match snapshot for isAnyWalletValid=$isAnyWalletValid, isItWalletValid=$isItWalletValid, canActivateItWallet=$canActivateItWallet, eidStatus=$eidStatus",
-    ({ isAnyWalletValid, isItWalletValid, canActivateItWallet, eidStatus }) => {
-      mockSelectors({
-        isAnyWalletValid,
-        isItWalletValid,
-        canActivateItWallet,
-        eidStatus
-      });
+  it.each(
+    (
+      [
+        {
+          lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE,
+          eidStatus: "jwtExpiring"
+        },
+        {
+          lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO_UPGRADABLE,
+          eidStatus: "valid"
+        },
+        {
+          lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+          eidStatus: "jwtExpiring"
+        },
+        {
+          lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+          eidStatus: "valid"
+        },
+        {
+          lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET_ELIGIBLE,
+          eidStatus: undefined
+        },
+        {
+          lifecycle: lifecycleSelectors.ItwLifecycleState.INACTIVE,
+          eidStatus: undefined
+        }
+      ] satisfies Array<MockSelectorOptions>
+    ).map(row => ({
+      ...row,
+      lifecycleName: lifecycleSelectors.ItwLifecycleState[row.lifecycle]
+    }))
+  )(
+    "match snapshot for lifecycle=$lifecycleName, eidStatus=$eidStatus",
+    options => {
+      mockSelectors(options);
 
       const componentNoParams = renderComponent();
       expect(componentNoParams).toMatchSnapshot();
@@ -54,9 +73,7 @@ describe("ItwIssuanceEidReissuanceLandingScreen", () => {
 
     it("waits for authenticated startup before navigating", () => {
       mockSelectors({
-        isAnyWalletValid: true,
-        isItWalletValid: true,
-        canActivateItWallet: false,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
         eidStatus: "jwtExpiring"
       });
 
@@ -69,9 +86,7 @@ describe("ItwIssuanceEidReissuanceLandingScreen", () => {
 
     it("navigates after authenticated startup", () => {
       mockSelectors({
-        isAnyWalletValid: true,
-        isItWalletValid: true,
-        canActivateItWallet: false,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
         eidStatus: "jwtExpiring"
       });
 
@@ -82,30 +97,67 @@ describe("ItwIssuanceEidReissuanceLandingScreen", () => {
       expect(getByTestId(targetTestId)).toBeTruthy();
     });
   });
+
+  describe("eID reissuance", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    // Regression: IT-Wallet users used to reissue the eID with the default "l2"
+    test.each(
+      (
+        [
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+            eidStatus: "jwtExpiring",
+            level: "l3"
+          },
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.IT_WALLET,
+            eidStatus: "jwtExpired",
+            level: "l3"
+          },
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+            eidStatus: "jwtExpiring",
+            level: "l2"
+          },
+          {
+            lifecycle: lifecycleSelectors.ItwLifecycleState.DOC_IO,
+            eidStatus: "jwtExpired",
+            level: "l2"
+          }
+        ] satisfies Array<MockSelectorOptions & { level: "l2" | "l3" }>
+      ).map(row => ({
+        ...row,
+        lifecycleName: lifecycleSelectors.ItwLifecycleState[row.lifecycle]
+      }))
+    )(
+      "navigates to identification with level $level when the lifecycle is $lifecycleName and the eID is $eidStatus",
+      ({ level, ...options }) => {
+        mockSelectors(options);
+
+        renderComponentWithTarget(StartupStatusEnum.AUTHENTICATED);
+
+        expect(mockTargetParams).toHaveBeenCalledWith({
+          eidReissuing: true,
+          level,
+          animationEnabled: false
+        });
+      }
+    );
+  });
 });
 
 type MockSelectorOptions = {
-  canActivateItWallet?: boolean;
   eidStatus?: ItwJwtCredentialStatus;
-  isAnyWalletValid?: boolean;
-  isItWalletValid?: boolean;
+  lifecycle: lifecycleSelectors.ItwLifecycleState;
 };
 
-const mockSelectors = ({
-  canActivateItWallet = false,
-  eidStatus,
-  isAnyWalletValid = false,
-  isItWalletValid = false
-}: MockSelectorOptions = {}) => {
+const mockSelectors = ({ eidStatus, lifecycle }: MockSelectorOptions) => {
   jest
-    .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-    .mockReturnValue(isAnyWalletValid);
-  jest
-    .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-    .mockReturnValue(isItWalletValid);
-  jest
-    .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
-    .mockReturnValue(canActivateItWallet);
+    .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+    .mockReturnValue(lifecycle);
   jest
     .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
     .mockReturnValue(eidStatus);
@@ -155,7 +207,10 @@ const renderComponentWithTarget = (startupStatus: StartupStatusEnum) => {
           name={ITW_ROUTES.LANDING.EID_REISSUANCE}
         />
         <Stack.Screen name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}>
-          {() => <Text testID={targetTestId} />}
+          {({ route }) => {
+            mockTargetParams(route.params);
+            return <Text testID={targetTestId} />;
+          }}
         </Stack.Screen>
       </Stack.Navigator>
     ),

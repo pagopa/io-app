@@ -1,6 +1,9 @@
 import { put, select } from "typed-redux-saga/macro";
 
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { itwCredentialsBatchRefillRequest } from "../store/actions";
 import { itwCredentialsToRefillSelector } from "../store/selectors";
 
@@ -14,7 +17,9 @@ import { itwCredentialsToRefillSelector } from "../store/selectors";
  * and gets picked up here.
  */
 export function* checkCredentialsBatchRefill() {
-  const isWalletValid = yield* select(itwLifecycleIsValidSelector);
+  const isWalletValid = isWalletActive(
+    yield* select(itwLifecycleStateSelector)
+  );
 
   // Credentials can be renewed only when the wallet is valid, i.e. the eID was issued
   if (!isWalletValid) {

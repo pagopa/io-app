@@ -32,6 +32,7 @@ describe("fetchCatalogueTranslationsSaga", () => {
     features: {
       itWallet: {
         remoteConfig: {},
+        issuance: {},
         credentialsCatalogue: {
           catalogue: pot.some(mockCatalogue),
           translations: pot.none,
@@ -79,6 +80,7 @@ describe("fetchCatalogueTranslationsSaga", () => {
       features: {
         itWallet: {
           remoteConfig: {},
+          issuance: {},
           credentialsCatalogue: {
             catalogue: pot.some(mockCatalogue),
             translations: pot.none,
@@ -110,6 +112,7 @@ describe("fetchCatalogueTranslationsSaga", () => {
       features: {
         itWallet: {
           remoteConfig: {},
+          issuance: {},
           credentialsCatalogue: {
             catalogue: pot.none,
             translations: pot.none,

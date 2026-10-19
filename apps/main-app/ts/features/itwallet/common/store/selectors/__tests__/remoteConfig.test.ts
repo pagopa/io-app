@@ -14,7 +14,7 @@ import {
   itwIPatenteCtaConfigSelector,
   itwIpzsItwalletPrivacyUrlSelector,
   itwIpzsPrivacyUrlSelector,
-  itwIsActivationDisabledSelector,
+  itwIsActivationRemotelyDisabledSelector,
   itwIsIPatenteCtaEnabledSelector,
   itwNewCredentialsSelector,
   itwPinnedCredentialsSelector
@@ -199,7 +199,7 @@ describe.each([
   ] as const,
   [
     "wallet activation disabled",
-    itwIsActivationDisabledSelector,
+    itwIsActivationRemotelyDisabledSelector,
     { wallet_activation_disabled: true }
   ] as const,
   [
