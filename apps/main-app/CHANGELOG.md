@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.42.0-rc.3](https://github.com/pagopa/io-app/compare/3.42.0-rc.2...3.42.0-rc.3) (2026-10-19)
+
+### Features
+
+* **wallet:** [[IEG-3229](https://pagopa.atlassian.net/browse/IEG-3229)] wallet status retry banner ([#8732](https://github.com/pagopa/io-app/issues/8732)) ([8ed8fa7](https://github.com/pagopa/io-app/commit/8ed8fa75e2225f99994580c89fd54ab789a9a9f4))
+
+### Chores
+
+* [[IOPLT-1579](https://pagopa.atlassian.net/browse/IOPLT-1579)] Migrate react-native-device-info ([#8733](https://github.com/pagopa/io-app/issues/8733)) ([b6b527b](https://github.com/pagopa/io-app/commit/b6b527baac8ff608dbe742257868d00a39ac7526))
 ## [3.42.0-rc.2](https://github.com/pagopa/io-app/compare/3.42.0-rc.1...3.42.0-rc.2) (2026-10-17)
 ## [3.42.0-rc.1](https://github.com/pagopa/io-app/compare/3.42.0-rc.0...3.42.0-rc.1) (2026-10-16)
 
