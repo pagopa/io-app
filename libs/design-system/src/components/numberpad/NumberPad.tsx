@@ -1,5 +1,5 @@
 import { ComponentProps, JSX, ReactNode, useCallback, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { AccessibilityInfo, StyleSheet, View } from "react-native";
 
 import { BiometricsValidType, Optional } from "../../utils/types";
 import { IconButton } from "../buttons";
@@ -30,6 +30,8 @@ type BiometricAuthProps =
     };
 
 type NumberPadProps = BiometricAuthProps & {
+  /** Localized message to announce when the delete button is pressed. */
+  deleteAccessibilityAnnouncement?: string;
   /**
    * This label will be read from ScreenReaders and give informations about
    * delete button.
@@ -83,7 +85,8 @@ export const NumberPad = ({
   deleteAccessibilityLabel,
   onNumberPress,
   onBiometricPress,
-  onDeletePress
+  onDeletePress,
+  deleteAccessibilityAnnouncement
 }: NumberPadProps): JSX.Element => {
   /** Renders the buttons row from a given array. */
 
@@ -108,7 +111,14 @@ export const NumberPad = ({
                 accessibilityLabel={deleteAccessibilityLabel}
                 color={variant === "primary" ? "contrast" : "primary"}
                 icon="cancel"
-                onPress={onDeletePress}
+                onPress={() => {
+                  if (deleteAccessibilityAnnouncement) {
+                    AccessibilityInfo.announceForAccessibility(
+                      deleteAccessibilityAnnouncement
+                    );
+                  }
+                  onDeletePress();
+                }}
               />
             </ButtonWrapper>
           );
@@ -132,6 +142,7 @@ export const NumberPad = ({
     [
       biometricAccessibilityLabel,
       biometricType,
+      deleteAccessibilityAnnouncement,
       deleteAccessibilityLabel,
       onBiometricPress,
       onDeletePress,

@@ -1,5 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
+import { AccessibilityInfo } from "react-native";
 
 import { NumberPad } from "../NumberPad";
 
@@ -42,13 +43,32 @@ describe("NumberPad", () => {
     const { getByLabelText } = renderNumberPad();
     const deleteButton = getByLabelText("delete");
     const reactCreatElement = jest.spyOn(React, "createElement");
+    const announceForAccessibility = jest.spyOn(
+      AccessibilityInfo,
+      "announceForAccessibility"
+    );
 
     fireEvent.press(deleteButton);
 
     expect(mockOnDelete).toHaveBeenCalledTimes(1);
+    expect(announceForAccessibility).toHaveBeenCalledWith(
+      "Hai eliminato la cifra 2"
+    );
     expect(reactCreatElement).not.toHaveBeenCalled();
     expect(mockOnNumberPress).not.toHaveBeenCalled();
     expect(mockOnBiometricPress).not.toHaveBeenCalled();
+  });
+  it("Should not announce a number when deleting from an empty value", () => {
+    const { getByLabelText } = renderNumberPad("");
+    const announceForAccessibility = jest.spyOn(
+      AccessibilityInfo,
+      "announceForAccessibility"
+    );
+
+    fireEvent.press(getByLabelText("delete"));
+
+    expect(announceForAccessibility).not.toHaveBeenCalled();
+    expect(mockOnDelete).toHaveBeenCalledTimes(1);
   });
   it("Should properly call onBiometricPress without side effects", () => {
     const { getByLabelText } = renderNumberPad();
@@ -62,13 +82,27 @@ describe("NumberPad", () => {
     expect(mockOnNumberPress).not.toHaveBeenCalled();
     expect(mockOnDelete).not.toHaveBeenCalled();
   });
+  it("Should announce the pressed number", () => {
+    const { getByText } = renderNumberPad();
+    const announceForAccessibility = jest.spyOn(
+      AccessibilityInfo,
+      "announceForAccessibility"
+    );
+
+    fireEvent.press(getByText("1"));
+
+    expect(announceForAccessibility).toHaveBeenCalledWith("1");
+  });
 });
 
-function renderNumberPad() {
+function renderNumberPad(
+  deleteAccessibilityAnnouncement = "Hai eliminato la cifra 2"
+) {
   return render(
     <NumberPad
       biometricAccessibilityLabel="touch id trigger"
       biometricType="TOUCH_ID"
+      deleteAccessibilityAnnouncement={deleteAccessibilityAnnouncement}
       deleteAccessibilityLabel="delete"
       onBiometricPress={mockOnBiometricPress}
       onDeletePress={mockOnDelete}

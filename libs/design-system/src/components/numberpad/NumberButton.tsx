@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { AccessibilityInfo, Pressable, StyleSheet } from "react-native";
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -80,6 +80,7 @@ export const NumberButton = memo(
 
     const handleOnPress = useCallback(() => {
       triggerHaptic("impactLight");
+      AccessibilityInfo.announceForAccessibility(number.toString());
       onPress(number);
     }, [number, onPress]);
 
