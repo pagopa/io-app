@@ -11,7 +11,7 @@ import Animated from "react-native-reanimated";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
 import { IODimensions, IOTypography } from "../../core";
-import { hexToRgba, IOColors } from "../../core/IOColors";
+import { hexToRgba, IOColorsLegacy } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons";
@@ -105,7 +105,7 @@ export const bannerBackgroundColours: Array<BaseBannerProps["color"]> = [
 
 const mapBackgroundColorLightMode: Record<
   NonNullable<BaseBannerProps["color"]>,
-  IOColors
+  IOColorsLegacy
 > = {
   neutral: "grey-50",
   turquoise: "turquoise-50"
@@ -113,7 +113,7 @@ const mapBackgroundColorLightMode: Record<
 
 const mapBackgroundColorDarkMode: Record<
   NonNullable<BaseBannerProps["color"]>,
-  IOColors
+  IOColorsLegacy
 > = {
   neutral: "grey-50",
   turquoise: "turquoise-300"
@@ -140,7 +140,7 @@ export const Banner = ({
   const theme = useIOTheme();
 
   // Dynamic colors
-  const colorTitle: IOColors =
+  const colorTitle: IOColorsLegacy =
     themeType === "dark" ? "grey-50" : theme["textHeading-default"];
   const colorCloseButton: IconButton["color"] =
     themeType === "dark" ? "contrast" : "neutral";
@@ -150,8 +150,8 @@ export const Banner = ({
   const dynamicContainerStyles: ViewStyle = {
     backgroundColor:
       themeType === "dark"
-        ? hexToRgba(IOColors[mapBackgroundColorDarkMode[color]], 0.1)
-        : IOColors[mapBackgroundColorLightMode[color]]
+        ? hexToRgba(IOColorsLegacy[mapBackgroundColorDarkMode[color]], 0.1)
+        : IOColorsLegacy[mapBackgroundColorLightMode[color]]
   };
 
   /* Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action

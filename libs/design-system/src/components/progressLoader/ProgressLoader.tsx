@@ -7,11 +7,11 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IOSpringValues } from "../../core";
+import { IOColorsLegacy, IOSpringValues } from "../../core";
 
 export type ProgressLoader = {
   accessibilityLabel?: string;
-  color?: IOColors;
+  color?: IOColorsLegacy;
   progress: number;
 };
 
@@ -19,7 +19,7 @@ export type ProgressLoader = {
  * ProgressLoader component
  *
  * @param progress - The progress percentage
- * @param color - IOColors value or undefined to define the color of the
+ * @param color - IOColorsLegacy value or undefined to define the color of the
  *   progress bar
  */
 export const ProgressLoader = ({
@@ -31,7 +31,7 @@ export const ProgressLoader = ({
   const [width, setWidth] = useState(0);
   const progressWidth = useSharedValue(0);
 
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
+  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
   const foregroundColor = customColor ?? theme["interactiveElem-default"];
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export const ProgressLoader = ({
       <Animated.View
         style={[
           animatedStyle,
-          { height: 4, backgroundColor: IOColors[foregroundColor] }
+          { height: 4, backgroundColor: IOColorsLegacy[foregroundColor] }
         ]}
       />
     </View>

@@ -3,7 +3,7 @@ import { GestureResponderEvent, Image, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IODimensions, IOListItemStyles } from "../../core";
+import { IOColorsLegacy, IODimensions, IOListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -27,7 +27,7 @@ export type ListItemNavGraphicProps =
   | {
       avatarProps?: never;
       icon: IOIcons;
-      iconColor?: IOColors;
+      iconColor?: IOColorsLegacy;
       paymentLogoUri?: never;
     }
   | {
@@ -222,7 +222,9 @@ export const ListItemNav = ({
           <View style={{ flexGrow: 1, flexShrink: 1 }}>
             {listItemNavContent}
           </View>
-          {loading && <LoadingSpinner color={IOColors[interactiveColor]} />}
+          {loading && (
+            <LoadingSpinner color={IOColorsLegacy[interactiveColor]} />
+          )}
           {!loading && !hideChevron && (
             <Icon
               allowFontScaling

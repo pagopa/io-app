@@ -1,7 +1,7 @@
 import {
   hexToRgba,
   HStack,
-  IOColors,
+  IOColorsLegacy,
   IOText,
   useIOTheme,
   VStack
@@ -20,8 +20,8 @@ import PagoPATestIndicator from "../PagoPATestIndicator";
 import { DebugDataIndicator } from "./DebugDataIndicator";
 import { DebugDataOverlay } from "./DebugDataOverlay";
 
-const debugItemBgColor = hexToRgba(IOColors.white, 0.4);
-const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
+const debugItemBgColor = hexToRgba(IOColorsLegacy.white, 0.4);
+const debugItemBorderColor = hexToRgba(IOColorsLegacy.black, 0.1);
 
 const styles = StyleSheet.create({
   versionContainer: {
@@ -137,8 +137,8 @@ const ItwPreIndicator = () => {
       style={[
         styles.versionTextWrapper,
         {
-          backgroundColor: hexToRgba(IOColors["error-500"], 0.4),
-          borderColor: hexToRgba(IOColors["error-850"], 0.1)
+          backgroundColor: hexToRgba(IOColorsLegacy["error-500"], 0.4),
+          borderColor: hexToRgba(IOColorsLegacy["error-850"], 0.1)
         }
       ]}
     >

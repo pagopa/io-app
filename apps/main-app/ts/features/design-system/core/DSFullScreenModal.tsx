@@ -3,7 +3,7 @@ import {
   ContentWrapper,
   H4,
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   IODimensions
 } from "@io-app/design-system";
 import { ScrollView, Text, View } from "react-native";
@@ -18,12 +18,12 @@ export const DSFullScreenModal = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: IOColors.white
+        backgroundColor: IOColorsLegacy.white
       }}
     >
       <ScrollView
         contentContainerStyle={{
-          backgroundColor: IOColors.white,
+          backgroundColor: IOColorsLegacy.white,
           paddingVertical: IODimensions.padding.screen.default
         }}
       >
@@ -46,20 +46,20 @@ export const DSFullScreenModal = () => {
           bottom: 0,
           width: "100%",
           paddingHorizontal: IODimensions.padding.screen.default,
-          backgroundColor: hexToRgba(IOColors["blueIO-500"], 0.7),
+          backgroundColor: hexToRgba(IOColorsLegacy["blueIO-500"], 0.7),
           paddingBottom: insets.bottom
         }}
       >
         <View
           style={{
-            backgroundColor: hexToRgba(IOColors.black, 0.5),
+            backgroundColor: hexToRgba(IOColorsLegacy.black, 0.5),
             height: bottomBarHeight,
             width: "100%",
             alignItems: "center",
             justifyContent: "center"
           }}
         >
-          <Text style={{ color: IOColors.white }}>Fixed component</Text>
+          <Text style={{ color: IOColorsLegacy.white }}>Fixed component</Text>
         </View>
       </View>
       {/* BOTTOM BAR: End */}

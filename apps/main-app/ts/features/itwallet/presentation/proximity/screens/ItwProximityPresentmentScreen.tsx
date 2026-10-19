@@ -5,7 +5,7 @@ import {
   HeaderSecondLevel,
   hexToRgba,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   VSpacer,
   VStack
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     marginBottom: 24
   },
   qrCodeShadow: {
-    boxShadow: `0px 4px 32px ${hexToRgba(IOColors.black, 0.1)}`
+    boxShadow: `0px 4px 32px ${hexToRgba(IOColorsLegacy.black, 0.1)}`
   },
   nfcSection: {
     alignSelf: "center",

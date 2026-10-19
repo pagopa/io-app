@@ -3,7 +3,7 @@ import { ColorValue, DimensionValue, ViewStyle } from "react-native";
 import Animated, { useReducedMotion } from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IOEasingCurves } from "../../core";
+import { IOColorsLegacy, IOEasingCurves } from "../../core";
 import { WithTestID } from "../../utils/types";
 
 const ANIMATION_DURATION = 1250;
@@ -49,7 +49,7 @@ export const IOSkeleton = ({
   const reduceMotion = useReducedMotion();
   const theme = useIOTheme();
 
-  const backgroundColor = color ?? IOColors[theme["skeleton-background"]];
+  const backgroundColor = color ?? IOColorsLegacy[theme["skeleton-background"]];
 
   const baseStyle: ViewStyle = useMemo(
     () => ({

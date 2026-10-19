@@ -17,7 +17,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useIOTheme } from "../../context";
 import {
   alertEdgeToEdgeInsetTransitionConfig,
-  IOColors,
+  IOColorsLegacy,
   IODimensions
 } from "../../core";
 import { WithTestID } from "../../utils/types";
@@ -111,8 +111,8 @@ export const HeaderFirstLevel = ({
       style={[
         {
           backgroundColor: isPrimary
-            ? IOColors[theme["appBackground-primary"]]
-            : IOColors[theme["appBackground-accent"]]
+            ? IOColorsLegacy[theme["appBackground-primary"]]
+            : IOColorsLegacy[theme["appBackground-accent"]]
         },
         animatedStyle
       ]}
@@ -124,7 +124,7 @@ export const HeaderFirstLevel = ({
           style={[
             {
               ...styles.headerDivider,
-              backgroundColor: IOColors[theme["divider-default"]]
+              backgroundColor: IOColorsLegacy[theme["divider-default"]]
             },
             animatedDivider
           ]}

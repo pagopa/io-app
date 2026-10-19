@@ -20,7 +20,7 @@ import Animated, { Easing, FadeIn, FadeOut } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
-import { IOColors, IODimensions } from "../../core";
+import { IOColorsLegacy, IODimensions } from "../../core";
 import { IconButton } from "../buttons";
 import { Body, H6 } from "../typography";
 import { BottomArrow, LeftArrow, RightArrow, TopArrow } from "./Arrows";
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%",
-    backgroundColor: IOColors.black,
+    backgroundColor: IOColorsLegacy.black,
     zIndex: 997
   },
   childrenContainer: {
@@ -179,7 +179,7 @@ export const Tooltip = ({
   const theme = useIOTheme();
   const { themeType } = useIOThemeContext();
   const backdropOpacity = themeType === "light" ? 0.4 : 0.8;
-  const tooltipBackground = IOColors[theme["appBackground-secondary"]];
+  const tooltipBackground = IOColorsLegacy[theme["appBackground-secondary"]];
 
   const Arrow = useMemo(
     () => ARROWS_BY_PLACEMENT[currentPlacement],

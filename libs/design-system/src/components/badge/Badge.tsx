@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { useIOThemeContext } from "../../context";
-import { hexToRgba, IOColors, IODimensions } from "../../core";
+import { hexToRgba, IOColorsLegacy, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { IOText } from "../typography";
@@ -22,12 +22,12 @@ export type Badge = WithTestID<{
 
 type OutlinedVariantProps = {
   background?: never;
-  foreground: IOColors;
+  foreground: IOColorsLegacy;
 };
 
 type SolidVariantProps = {
   background: ColorValue;
-  foreground: IOColors;
+  foreground: IOColorsLegacy;
 };
 
 const styles = StyleSheet.create({
@@ -70,27 +70,27 @@ export const Badge = ({
   > = {
     default: {
       foreground: "blueIO-850",
-      background: IOColors["blueIO-50"]
+      background: IOColorsLegacy["blueIO-50"]
     },
     warning: {
       foreground: "warning-850",
-      background: IOColors["warning-100"]
+      background: IOColorsLegacy["warning-100"]
     },
     success: {
       foreground: "success-850",
-      background: IOColors["success-100"]
+      background: IOColorsLegacy["success-100"]
     },
     error: {
       foreground: "error-850",
-      background: IOColors["error-100"]
+      background: IOColorsLegacy["error-100"]
     },
     cgn: {
       foreground: "hanPurple-500",
-      background: IOColors["hanPurple-100"]
+      background: IOColorsLegacy["hanPurple-100"]
     },
     highlight: {
       foreground: "turquoise-850",
-      background: IOColors["turquoise-50"]
+      background: IOColorsLegacy["turquoise-50"]
     }
   };
 
@@ -100,27 +100,27 @@ export const Badge = ({
   > = {
     default: {
       foreground: "blueIO-200",
-      background: hexToRgba(IOColors["blueIO-200"], bgOpacityDarkMode)
+      background: hexToRgba(IOColorsLegacy["blueIO-200"], bgOpacityDarkMode)
     },
     warning: {
       foreground: "warning-400",
-      background: hexToRgba(IOColors["warning-400"], bgOpacityDarkMode)
+      background: hexToRgba(IOColorsLegacy["warning-400"], bgOpacityDarkMode)
     },
     success: {
       foreground: "success-400",
-      background: hexToRgba(IOColors["success-400"], bgOpacityDarkMode)
+      background: hexToRgba(IOColorsLegacy["success-400"], bgOpacityDarkMode)
     },
     error: {
       foreground: "error-400",
-      background: hexToRgba(IOColors["error-400"], bgOpacityDarkMode)
+      background: hexToRgba(IOColorsLegacy["error-400"], bgOpacityDarkMode)
     },
     cgn: {
       foreground: "hanPurple-250",
-      background: hexToRgba(IOColors["hanPurple-250"], bgOpacityDarkMode)
+      background: hexToRgba(IOColorsLegacy["hanPurple-250"], bgOpacityDarkMode)
     },
     highlight: {
       foreground: "turquoise-300",
-      background: hexToRgba(IOColors["turquoise-300"], bgOpacityDarkMode)
+      background: hexToRgba(IOColorsLegacy["turquoise-300"], bgOpacityDarkMode)
     }
   };
 
@@ -198,7 +198,7 @@ export const Badge = ({
         outline
           ? {
               borderWidth: IODimensions.stroke.default,
-              borderColor: IOColors[foreground]
+              borderColor: IOColorsLegacy[foreground]
             }
           : {
               backgroundColor: background ?? undefined

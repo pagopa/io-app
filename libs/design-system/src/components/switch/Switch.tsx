@@ -1,7 +1,7 @@
 import { Switch as RNSwitch, SwitchProps as RNSwitchProps } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors } from "../../core/IOColors";
+import { IOColorsLegacy } from "../../core/IOColors";
 
 type OwnProps = Pick<
   RNSwitchProps,
@@ -23,8 +23,8 @@ export const Switch = ({
   const theme = useIOTheme();
 
   const trackColor = {
-    false: IOColors[theme["switch-background-off"]],
-    true: IOColors[theme["switch-background-on"]]
+    false: IOColorsLegacy[theme["switch-background-off"]],
+    true: IOColorsLegacy[theme["switch-background-on"]]
   };
 
   return (
@@ -32,9 +32,9 @@ export const Switch = ({
       {...accessibility}
       accessibilityRole="switch"
       accessibilityState={{ checked: value, disabled: accessibility.disabled }}
-      ios_backgroundColor={IOColors[theme["switch-background-off"]]}
+      ios_backgroundColor={IOColorsLegacy[theme["switch-background-off"]]}
       onValueChange={onValueChange}
-      thumbColor={IOColors[theme["switch-thumb-color"]]}
+      thumbColor={IOColorsLegacy[theme["switch-thumb-color"]]}
       trackColor={trackColor}
       value={value}
     />

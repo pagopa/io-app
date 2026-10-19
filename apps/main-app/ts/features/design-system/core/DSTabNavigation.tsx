@@ -4,7 +4,7 @@ import {
   H4,
   H6,
   HStack,
-  IOColors,
+  IOColorsLegacy,
   TabItem,
   TabNavigation,
   useIOTheme,
@@ -24,7 +24,7 @@ const sectionTitleMargin = 16;
 const blockTitleMargin = 24;
 const blockMargin = 48;
 
-const blueBackground = IOColors["blueIO-850"];
+const blueBackground = IOColorsLegacy["blueIO-850"];
 
 export const DSTabNavigation = () => {
   const theme = useIOTheme();

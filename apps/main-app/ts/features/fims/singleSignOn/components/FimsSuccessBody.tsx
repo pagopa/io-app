@@ -10,7 +10,7 @@ import {
   HStack,
   Icon,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOMarkdownLite,
   ListItemHeader,
@@ -186,9 +186,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: IODimensions.radius.avatar.small,
-    borderColor: hexToRgba(IOColors.black, 0.1),
+    borderColor: hexToRgba(IOColorsLegacy.black, 0.1),
     borderCurve: "continuous",
-    backgroundColor: IOColors.white,
+    backgroundColor: IOColorsLegacy.white,
     width: IODimensions.size.avatar.small,
     height: IODimensions.size.avatar.small
   }

@@ -1,7 +1,7 @@
 import { ColorValue, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IODimensions } from "../../core";
+import { IOColorsLegacy, IODimensions } from "../../core";
 
 type StepperProps = {
   currentStep: number;
@@ -12,8 +12,8 @@ export const Stepper = ({ steps, currentStep }: StepperProps) => {
   const theme = useIOTheme();
 
   const colorMap: Record<string, ColorValue> = {
-    default: IOColors[theme["stepper-default"]],
-    active: IOColors[theme["interactiveElem-default"]]
+    default: IOColorsLegacy[theme["stepper-default"]],
+    active: IOColorsLegacy[theme["interactiveElem-default"]]
   };
 
   return (

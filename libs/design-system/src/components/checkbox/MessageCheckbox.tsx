@@ -11,7 +11,7 @@ import Animated, {
 
 import { useIOTheme } from "../../context";
 import { IOSpringValues } from "../../core/IOAnimations";
-import { IOColors } from "../../core/IOColors";
+import { IOColorsLegacy } from "../../core/IOColors";
 import { IODimensions, IODimensionScale } from "../../core/tokens";
 import { AnimatedTick } from "../common/AnimatedTick";
 
@@ -55,7 +55,7 @@ export const MessageCheckbox = ({
   const shapeAnimationProgress = useSharedValue(checked ? 1 : 0);
   const tickAnimationProgress = useSharedValue(checked ? 1 : 0);
 
-  const backgroundColor = IOColors[theme["selection-background-on"]];
+  const backgroundColor = IOColorsLegacy[theme["selection-background-on"]];
 
   useEffect(() => {
     shapeAnimationProgress.value = withSpring(
@@ -97,7 +97,7 @@ export const MessageCheckbox = ({
       {isChecked && (
         <AnimatedTick
           progress={tickAnimationProgress}
-          stroke={IOColors[theme["selection-tick"]]}
+          stroke={IOColorsLegacy[theme["selection-tick"]]}
           strokeWidth={1.5}
         />
       )}

@@ -1,4 +1,4 @@
-import { IOColors, useIOThemeContext } from "@io-app/design-system";
+import { IOColorsLegacy, useIOThemeContext } from "@io-app/design-system";
 import Color from "color";
 import { useMemo } from "react";
 import { ColorSchemeName, StatusBarStyle } from "react-native";
@@ -36,12 +36,12 @@ const getLegacyThemeColorByCredentialType = (
     case CredentialType.EDUCATION_DIPLOMA:
       return {
         backgroundColor: "#F2F1CE",
-        textColor: IOColors.black
+        textColor: IOColorsLegacy.black
       };
     case CredentialType.EDUCATION_ENROLLMENT:
       return {
         backgroundColor: "#E0F2CE",
-        textColor: IOColors.black
+        textColor: IOColorsLegacy.black
       };
     case CredentialType.EUROPEAN_DISABILITY_CARD:
       return {
@@ -56,7 +56,7 @@ const getLegacyThemeColorByCredentialType = (
     case CredentialType.RESIDENCY:
       return {
         backgroundColor: "#F2E4CE",
-        textColor: IOColors.black
+        textColor: IOColorsLegacy.black
       };
     case CredentialType.PID:
     default:

@@ -8,7 +8,7 @@ import {
 import Animated from "react-native-reanimated";
 
 import { useIONewTypeface } from "../../context";
-import { IOColors } from "../../core";
+import { IOColorsLegacy } from "../../core";
 import { useBoldTextEnabled } from "../../utils/accessibility";
 import {
   IOFontFamily,
@@ -37,10 +37,10 @@ export type TypographicStyleAsLinkProps =
       accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
       asLink: true;
       avoidPressable?: true;
-      color?: IOColors;
+      color?: IOColorsLegacy;
       onPress: (event: GestureResponderEvent) => void;
     }
-  | { asLink?: false; avoidPressable?: false; color?: IOColors };
+  | { asLink?: false; avoidPressable?: false; color?: IOColorsLegacy };
 
 export type TypographicStyleProps = Omit<
   IOTextProps,
@@ -55,7 +55,7 @@ export type TypographicStyleProps = Omit<
  * default StyleProp<TextStyle>
  */
 type IOTextBaseProps = {
-  color?: IOColors;
+  color?: IOColorsLegacy;
   font?: IOFontFamily;
   fontStyle?: TextStyle["fontStyle"];
   lineHeight?: TextStyle["lineHeight"];
@@ -71,16 +71,16 @@ type IOTextExcludedProps = Omit<ComponentPropsWithRef<typeof Text>, "style">;
  * Decorate the function {@link makeFontStyleObject} with the additional color
  * calculation.
  *
- * @param color A value key from {@link IOColors}, transformed here in
+ * @param color A value key from {@link IOColorsLegacy}, transformed here in
  *   {@link ColorValue}
  * @param args The args of the function {@link makeFontStyleObject}
  */
 const calculateTextStyle = (
-  color?: IOColors,
+  color?: IOColorsLegacy,
   ...args: Parameters<typeof makeFontStyleObject>
 ) => ({
   ...makeFontStyleObject(...args),
-  color: color ? IOColors[color] : undefined
+  color: color ? IOColorsLegacy[color] : undefined
 });
 
 /**
@@ -129,7 +129,7 @@ export const IOText = ({
 
   /* In some cases, for example when we use color transitions with
     `reanimated` we need to manage chromatic values as `ColorValue`
-    or `string` (not `IOColors`). So we keep a way to override
+    or `string` (not `IOColorsLegacy`). So we keep a way to override
     the the `color' attribute without giving the ability to
     override all other all other typographic attributes
     through the `style' prop. */

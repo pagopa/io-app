@@ -14,7 +14,7 @@ The visual attributes the whole library is built on.
 
 Not yet migrated to `tokens`:
 
-- [`IOColors`](./IOColors.ts): color palette, light and dark themes
+- [`IOColorsLegacy`](./IOColors.ts): color palette, light and dark themes
 - [`IOTypography`](./IOTypography.ts): visual attributes of each typographic style
 - [`IOStyles`](./IOStyles.ts): common styles shared across components
 - [`IOAnimations`](./IOAnimations.ts): animation attributes of interactive elements

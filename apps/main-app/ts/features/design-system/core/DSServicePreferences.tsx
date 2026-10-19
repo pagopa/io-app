@@ -2,7 +2,7 @@ import {
   Body,
   Divider,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IOSpringValues,
   ListItemHeader,
   ListItemSwitch,
@@ -98,7 +98,7 @@ const PlaceholderBox = ({
       layout={layout}
       style={[
         styles.placeholder,
-        { backgroundColor: IOColors[theme["appBackground-secondary"]] }
+        { backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]] }
       ]}
     >
       <Body color={theme["textBody-tertiary"]}>{label}</Body>

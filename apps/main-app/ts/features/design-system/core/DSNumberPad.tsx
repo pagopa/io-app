@@ -5,7 +5,7 @@ import {
   H2,
   hexToRgba,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   ListItemSwitch,
   NumberPad,
@@ -39,8 +39,8 @@ export const DSNumberPad = () => {
     navigation.setOptions({
       headerStyle: {
         backgroundColor: primaryBackground
-          ? IOColors["blueIO-500"]
-          : IOColors.white
+          ? IOColorsLegacy["blueIO-500"]
+          : IOColorsLegacy.white
       }
     });
   }, [primaryBackground, navigation]);
@@ -56,17 +56,17 @@ export const DSNumberPad = () => {
         },
         {
           backgroundColor: primaryBackground
-            ? IOColors["blueIO-500"]
-            : IOColors.white
+            ? IOColorsLegacy["blueIO-500"]
+            : IOColorsLegacy.white
         }
       ]}
     >
       <View
         style={{
-          backgroundColor: IOColors.white,
+          backgroundColor: IOColorsLegacy.white,
           borderRadius: 16,
           paddingHorizontal: 16,
-          borderColor: hexToRgba(IOColors.black, 0.2),
+          borderColor: hexToRgba(IOColorsLegacy.black, 0.2),
           borderWidth: 1
         }}
       >

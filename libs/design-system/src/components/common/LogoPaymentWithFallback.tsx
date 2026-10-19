@@ -1,4 +1,4 @@
-import { IOColors } from "../../core";
+import { IOColorsLegacy } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { findFirstCaseInsensitive } from "../../utils/object";
 import { Icon, IOIconSizeScale } from "../icons";
@@ -13,7 +13,7 @@ import {
 
 type LogoPaymentWithFallbackProps = {
   brand?: string;
-  fallbackIconColor?: IOColors;
+  fallbackIconColor?: IOColorsLegacy;
   isExtended?: boolean;
   size?: IOIconSizeScale;
 };

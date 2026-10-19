@@ -11,7 +11,7 @@ import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
 import { IODimensions } from "../../core";
-import { hexToRgba, IOColors } from "../../core/IOColors";
+import { hexToRgba, IOColorsLegacy } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import { IOButton } from "../buttons";
@@ -73,14 +73,14 @@ export const BannerErrorState = ({
   const { themeType } = useIOThemeContext();
 
   /* Styles */
-  const foregroundColor: IOColors = theme["textBody-tertiary"];
-  const backgroundColor: IOColors = "grey-50";
+  const foregroundColor: IOColorsLegacy = theme["textBody-tertiary"];
+  const backgroundColor: IOColorsLegacy = "grey-50";
 
   const dynamicContainerStyles: ViewStyle = {
     backgroundColor:
       themeType === "dark"
-        ? hexToRgba(IOColors[backgroundColor], 0.1)
-        : IOColors[backgroundColor]
+        ? hexToRgba(IOColorsLegacy[backgroundColor], 0.1)
+        : IOColorsLegacy[backgroundColor]
   };
 
   const renderMainBlock = () => (

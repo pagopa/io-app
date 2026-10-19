@@ -1,4 +1,4 @@
-import { IOColors, Tag, useIOTheme } from "@io-app/design-system";
+import { IOColorsLegacy, Tag, useIOTheme } from "@io-app/design-system";
 import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
 import { isBefore } from "date-fns";
 import I18n from "i18next";
@@ -141,14 +141,14 @@ export const useBorderColorByStatus: () => {
   const theme = useIOTheme();
 
   return {
-    valid: IOColors[theme["appBackground-primary"]],
-    invalid: IOColors["error-600"],
-    suspended: IOColors["error-600"],
-    expired: IOColors["error-600"],
-    expiring: IOColors["warning-700"],
-    jwtExpired: IOColors["error-600"],
-    jwtExpiring: IOColors["warning-700"],
-    unknown: IOColors["grey-300"]
+    valid: IOColorsLegacy[theme["appBackground-primary"]],
+    invalid: IOColorsLegacy["error-600"],
+    suspended: IOColorsLegacy["error-600"],
+    expired: IOColorsLegacy["error-600"],
+    expiring: IOColorsLegacy["warning-700"],
+    jwtExpired: IOColorsLegacy["error-600"],
+    jwtExpiring: IOColorsLegacy["warning-700"],
+    unknown: IOColorsLegacy["grey-300"]
   };
 };
 

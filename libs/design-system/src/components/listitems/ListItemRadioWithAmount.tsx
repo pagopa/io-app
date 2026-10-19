@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IODimensions } from "../../core";
+import { IOColorsLegacy, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { Icon } from "../icons";
 import { HStack } from "../layout";
@@ -46,7 +46,7 @@ export const ListItemRadioWithAmount = ({
   };
   const theme = useIOTheme();
 
-  const suggestColor: IOColors = theme["featured-default"];
+  const suggestColor: IOColorsLegacy = theme["featured-default"];
 
   const defaultAccessibilityLabel = `${label} ${formattedAmountString} ${
     suggestReason ?? ""

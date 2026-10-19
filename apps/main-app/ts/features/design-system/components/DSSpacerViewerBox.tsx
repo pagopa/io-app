@@ -1,6 +1,6 @@
 import {
   HSpacer,
-  IOColors,
+  IOColorsLegacy,
   IOSpace,
   useIOTheme,
   VSpacer
@@ -22,7 +22,7 @@ const DSSpacerLabel = ({ value }: DSSpacerLabelProps) => {
     <Text
       ellipsizeMode="tail"
       numberOfLines={1}
-      style={{ fontSize: 9, color: IOColors[theme["textBody-tertiary"]] }}
+      style={{ fontSize: 9, color: IOColorsLegacy[theme["textBody-tertiary"]] }}
     >
       {value}
     </Text>
@@ -40,7 +40,7 @@ export const DSSpacerViewerBox = ({
         <View style={{ flexDirection: "column" }}>
           <View
             style={{
-              backgroundColor: IOColors[theme["appBackground-tertiary"]]
+              backgroundColor: IOColorsLegacy[theme["appBackground-tertiary"]]
             }}
           >
             <VSpacer size={size} />
@@ -53,7 +53,7 @@ export const DSSpacerViewerBox = ({
         <View style={{ flexDirection: "row" }}>
           <View
             style={{
-              backgroundColor: IOColors[theme["appBackground-tertiary"]],
+              backgroundColor: IOColorsLegacy[theme["appBackground-tertiary"]],
               height: 75
             }}
           >

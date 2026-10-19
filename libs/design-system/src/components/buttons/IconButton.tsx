@@ -8,7 +8,7 @@ import Animated, {
 import { useIOTheme } from "../../context";
 import {
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   IOIconButtonStyles,
   IOThemeLight
 } from "../../core";
@@ -63,31 +63,31 @@ export const IconButton = ({
     // Primary button
     primary: {
       icon: {
-        default: IOColors[theme["interactiveElem-default"]],
-        pressed: IOColors[theme["interactiveElem-pressed"]],
-        disabled: IOColors[theme["interactiveElem-disabled"]]
+        default: IOColorsLegacy[theme["interactiveElem-default"]],
+        pressed: IOColorsLegacy[theme["interactiveElem-pressed"]],
+        disabled: IOColorsLegacy[theme["interactiveElem-disabled"]]
       }
     },
     // Neutral button
     neutral: {
       icon: {
         default: persistentColorMode
-          ? IOColors[IOThemeLight["neutralButton-default"]]
-          : IOColors[theme["neutralButton-default"]],
+          ? IOColorsLegacy[IOThemeLight["neutralButton-default"]]
+          : IOColorsLegacy[theme["neutralButton-default"]],
         pressed: persistentColorMode
-          ? IOColors[IOThemeLight["neutralButton-pressed"]]
-          : IOColors[theme["neutralButton-pressed"]],
+          ? IOColorsLegacy[IOThemeLight["neutralButton-pressed"]]
+          : IOColorsLegacy[theme["neutralButton-pressed"]],
         disabled: persistentColorMode
-          ? IOColors[IOThemeLight["neutralButton-disabled"]]
-          : IOColors[theme["neutralButton-disabled"]]
+          ? IOColorsLegacy[IOThemeLight["neutralButton-disabled"]]
+          : IOColorsLegacy[theme["neutralButton-disabled"]]
       }
     },
     // Contrast button
     contrast: {
       icon: {
-        default: IOColors.white,
-        pressed: hexToRgba(IOColors.white, 0.85),
-        disabled: hexToRgba(IOColors.white, 0.25)
+        default: IOColorsLegacy.white,
+        pressed: hexToRgba(IOColorsLegacy.white, 0.85),
+        disabled: hexToRgba(IOColorsLegacy.white, 0.25)
       }
     }
   };

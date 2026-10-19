@@ -16,7 +16,7 @@ import {
   IODimensions
 } from "../../core";
 import {
-  IOColors,
+  IOColorsLegacy,
   IOColorsStatusBackground,
   IOColorsStatusForeground
 } from "../../core/IOColors";
@@ -104,7 +104,7 @@ export const AlertEdgeToEdge = ({
   const insets = useSafeAreaInsets();
 
   const backgroundColor = useMemo(
-    () => IOColors[mapVariantStates[variant].background],
+    () => IOColorsLegacy[mapVariantStates[variant].background],
     [variant]
   );
 
@@ -138,7 +138,7 @@ export const AlertEdgeToEdge = ({
                   undefined,
                   "Bold"
                 ),
-                color: IOColors[mapVariantStates[variant].foreground]
+                color: IOColorsLegacy[mapVariantStates[variant].foreground]
               }}
             >
               {` ${action}`}

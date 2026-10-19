@@ -1,6 +1,6 @@
 import {
   Icon,
-  IOColors,
+  IOColorsLegacy,
   IOIconSizeScale,
   IOLogoPaymentExtType,
   IOLogoPaymentType,
@@ -17,7 +17,7 @@ import { findFirstCaseInsensitive } from "../../../../utils/object";
 
 export type LogoPaymentWithFallback = {
   brand?: string;
-  fallbackIconColor?: IOColors;
+  fallbackIconColor?: IOColorsLegacy;
   isExtended?: boolean;
   size?: IOIconSizeScale;
 };

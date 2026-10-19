@@ -3,7 +3,7 @@ import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IODimensions, IOListItemStyles } from "../../core";
+import { IOColorsLegacy, IODimensions, IOListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -51,7 +51,7 @@ export const ListItemAction = ({
 
   const mapForegroundColor: Record<
     NonNullable<ListItemAction["variant"]>,
-    IOColors
+    IOColorsLegacy
   > = {
     primary: theme["interactiveElem-default"],
     danger: theme.errorText
@@ -89,7 +89,7 @@ export const ListItemAction = ({
           {icon && (
             <AnimatedIcon
               allowFontScaling
-              color={IOColors[mapForegroundColor[variant]]}
+              color={IOColorsLegacy[mapForegroundColor[variant]]}
               name={icon}
               size={IODimensions.size.icon.listItem}
             />

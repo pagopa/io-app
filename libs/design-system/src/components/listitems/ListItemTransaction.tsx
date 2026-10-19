@@ -2,7 +2,7 @@ import { isValidElement, ReactNode } from "react";
 import { ImageURISource, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IODimensions, IOListItemStyles } from "../../core";
+import { IOColorsLegacy, IODimensions, IOListItemStyles } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { isImageUri } from "../../utils/url";
 import { Avatar } from "../avatar/Avatar";
@@ -95,8 +95,8 @@ const ListItemTransactionContent = ({
   refund: boolean | undefined;
 }) => {
   const theme = useIOTheme();
-  const interactiveColor: IOColors = theme["interactiveElem-default"];
-  const amountColor: IOColors = refund
+  const interactiveColor: IOColorsLegacy = theme["interactiveElem-default"];
+  const amountColor: IOColorsLegacy = refund
     ? theme.successText
     : theme["textBody-default"];
 

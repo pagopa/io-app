@@ -6,7 +6,7 @@ import {
   H5,
   HSpacer,
   IconButton,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IODimensionScale,
   useFooterActionsMeasurements,
@@ -47,7 +47,7 @@ type Props = WithTestID<{
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors["grey-700"]
+    backgroundColor: IOColorsLegacy["grey-700"]
   },
   headerTitle: {
     flex: 1,
@@ -207,7 +207,7 @@ const DocumentWithSignature = (props: Props) => {
       edges={["top", "left", "right"]}
       style={{
         flex: 1,
-        backgroundColor: IOColors[theme["appBackground-primary"]]
+        backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
       }}
       testID={"FciDocumentsScreenTestID"}
     >

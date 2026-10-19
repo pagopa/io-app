@@ -2,7 +2,7 @@ import {
   BodySmall,
   H6,
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOSkeleton,
   Tag,
@@ -46,13 +46,15 @@ const usePaymentCardStyles = () => {
   const isDarkMode = themeType === "dark";
 
   const textColor = theme["textHeading-default"];
-  const backgroundColor = IOColors[theme["appBackground-tertiary"]];
-  const borderColor = isDarkMode ? IOColors.black : IOColors["grey-200"];
-  const errorBorderColor = IOColors[theme.errorText];
+  const backgroundColor = IOColorsLegacy[theme["appBackground-tertiary"]];
+  const borderColor = isDarkMode
+    ? IOColorsLegacy.black
+    : IOColorsLegacy["grey-200"];
+  const errorBorderColor = IOColorsLegacy[theme.errorText];
 
   const skeletonColor = isDarkMode
-    ? hexToRgba(IOColors["grey-450"], 0.5)
-    : IOColors["grey-200"];
+    ? hexToRgba(IOColorsLegacy["grey-450"], 0.5)
+    : IOColorsLegacy["grey-200"];
 
   return {
     textColor,

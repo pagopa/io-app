@@ -1,7 +1,7 @@
 import {
   hexToRgba,
   Icon,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   useIOTheme
 } from "@io-app/design-system";
@@ -23,7 +23,7 @@ type AvatarDoubleProps = {
 const avatarSize = IODimensions.size.avatar.xsmall;
 const avatarRadius = IODimensions.radius.avatar.xsmall;
 const avatarPadding = IODimensions.padding.avatar.xsmall;
-const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
+const avatarBorderLightMode = hexToRgba(IOColorsLegacy.black, 0.1);
 
 const styles = StyleSheet.create({
   topContainer: {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   avatarInnerWrapper: {
     overflow: "hidden",
-    backgroundColor: IOColors.white,
+    backgroundColor: IOColorsLegacy.white,
     borderCurve: "continuous"
   },
   avatarImage: {
@@ -110,7 +110,9 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
             width: avatarSize,
             borderRadius: avatarRadius,
             backgroundColor:
-              imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
+              imageSource === undefined
+                ? IOColorsLegacy["grey-50"]
+                : IOColorsLegacy.white,
             padding:
               imageSource === undefined
                 ? avatarPadding.placeholder
@@ -153,7 +155,9 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
             width: avatarSize,
             borderRadius: avatarRadius,
             backgroundColor:
-              imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
+              imageSource === undefined
+                ? IOColorsLegacy["grey-50"]
+                : IOColorsLegacy.white,
             padding: 0,
             justifyContent: "center",
             alignItems: "center"

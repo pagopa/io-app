@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme } from "@io-app/design-system";
+import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
 import { ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     width: 4,
     height: 4,
     borderRadius: 4,
-    backgroundColor: IOColors["success-500"]
+    backgroundColor: IOColorsLegacy["success-500"]
   }
 });
 
@@ -113,7 +113,7 @@ export const DSIconViewerBox = ({
         style={[
           styles.iconItem,
           size ? sizeMap[size].item : {},
-          { borderColor: IOColors[theme["cardBorder-default"]] }
+          { borderColor: IOColorsLegacy[theme["cardBorder-default"]] }
         ]}
       >
         {withDot && <View style={styles.signalDot} />}
@@ -125,7 +125,7 @@ export const DSIconViewerBox = ({
             ellipsizeMode="tail"
             numberOfLines={1}
             style={[
-              { color: IOColors[theme["textBody-secondary"]] },
+              { color: IOColorsLegacy[theme["textBody-secondary"]] },
               size ? sizeMap[size].label : styles.iconLabelMedium
             ]}
           >

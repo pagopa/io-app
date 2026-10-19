@@ -1,7 +1,7 @@
 import { ComponentPropsWithRef } from "react";
 import { StyleProp, Text, TextStyle } from "react-native";
 
-import type { IOColors } from "../../core";
+import type { IOColorsLegacy } from "../../core";
 
 import { IOFontFamily, IOFontWeight } from "../../utils/fonts";
 import { RequiredAll } from "../../utils/types";
@@ -45,8 +45,8 @@ export type TypographyProps<WeightPropsType, ColorsPropsType> = {
   weight?: WeightPropsType;
 };
 
-// Define a standard type, using IOFontWeight and IOColors
-type DefaultTypographyProps = TypographyProps<IOFontWeight, IOColors>;
+// Define a standard type, using IOFontWeight and IOColorsLegacy
+type DefaultTypographyProps = TypographyProps<IOFontWeight, IOColorsLegacy>;
 
 /**
  * The style exported for the typography elements, without the fields

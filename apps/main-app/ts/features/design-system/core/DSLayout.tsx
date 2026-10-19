@@ -6,7 +6,7 @@ import {
   H2,
   H6,
   HStack,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   useIOTheme,
   VStack
@@ -47,14 +47,15 @@ const Grid = () => {
           <View
             key={`${value}-${i}`}
             style={{
-              backgroundColor: IOColors[theme["appBackground-tertiary"]]
+              backgroundColor: IOColorsLegacy[theme["appBackground-tertiary"]]
             }}
           >
             <ContentWrapper margin={value}>
               <View
                 style={{
                   paddingVertical: 16,
-                  backgroundColor: IOColors[theme["appBackground-secondary"]]
+                  backgroundColor:
+                    IOColorsLegacy[theme["appBackground-secondary"]]
                 }}
               >
                 <Body color={theme["textBody-secondary"]}>Content example</Body>
@@ -131,7 +132,8 @@ const Stack = () => {
             <DSComponentViewerBox name="VStack, space 16">
               <View
                 style={{
-                  backgroundColor: IOColors[theme["appBackground-secondary"]]
+                  backgroundColor:
+                    IOColorsLegacy[theme["appBackground-secondary"]]
                 }}
               >
                 <VStack space={16}>
@@ -144,7 +146,7 @@ const Stack = () => {
           <View
             style={{
               alignSelf: "flex-start",
-              backgroundColor: IOColors[theme["appBackground-secondary"]]
+              backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]]
             }}
           >
             <VStack space={16} style={{ alignItems: "center" }}>
@@ -161,7 +163,8 @@ const Stack = () => {
           <DSComponentViewerBox name="HStack, space 16">
             <View
               style={{
-                backgroundColor: IOColors[theme["appBackground-secondary"]]
+                backgroundColor:
+                  IOColorsLegacy[theme["appBackground-secondary"]]
               }}
             >
               <HStack space={16}>
@@ -173,7 +176,7 @@ const Stack = () => {
           {/* <DSComponentViewerBox name="HStack, space 16, centered">
           <View
             style={{
-              backgroundColor: IOColors[theme["appBackground-secondary"]]
+              backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]]
             }}
           >
             <HStack space={16} style={{ alignItems: "center" }}>
@@ -200,7 +203,7 @@ const VStackBlocks = () => {
             paddingHorizontal: 8,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: IOColors[theme["appBackground-tertiary"]]
+            backgroundColor: IOColorsLegacy[theme["appBackground-tertiary"]]
           }}
         >
           <BodySmall
@@ -215,7 +218,7 @@ const VStackBlocks = () => {
           paddingHorizontal: 16,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: IOColors[theme["appBackground-tertiary"]]
+          backgroundColor: IOColorsLegacy[theme["appBackground-tertiary"]]
         }}
       >
         <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
@@ -239,7 +242,7 @@ const HStackBlocks = () => {
             paddingVertical: 8,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: IOColors[theme["appBackground-tertiary"]]
+            backgroundColor: IOColorsLegacy[theme["appBackground-tertiary"]]
           }}
         >
           <BodySmall color={theme["textBody-tertiary"]} weight="Regular">{`${
@@ -253,7 +256,7 @@ const HStackBlocks = () => {
           paddingVertical: 16,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: IOColors[theme["appBackground-tertiary"]]
+          backgroundColor: IOColorsLegacy[theme["appBackground-tertiary"]]
         }}
       >
         <BodySmall color={theme["textBody-tertiary"]} weight="Regular">

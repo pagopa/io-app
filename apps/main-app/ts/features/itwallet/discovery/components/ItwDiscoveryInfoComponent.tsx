@@ -8,7 +8,7 @@ import {
   H4,
   HStack,
   Icon,
-  IOColors,
+  IOColorsLegacy,
   IOIcons,
   IOMarkdownLite,
   IOToast,
@@ -276,7 +276,7 @@ const FeatureBlock = (props: {
       space={16}
       style={{
         ...styles.feature,
-        borderColor: IOColors[theme["cardBorder-default"]]
+        borderColor: IOColorsLegacy[theme["cardBorder-default"]]
       }}
     >
       {props.image}

@@ -1,7 +1,12 @@
 import { Platform, StyleSheet, View, ViewStyle } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IODimensions, IOTheme, IOThemeLight } from "../../core";
+import {
+  IOColorsLegacy,
+  IODimensions,
+  IOTheme,
+  IOThemeLight
+} from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Icon, IOIcons } from "../icons";
@@ -150,12 +155,12 @@ export const Tag = ({
   const variantProps = getVariantProps(variant, icon);
 
   const borderColor = forceLightMode
-    ? IOColors[IOThemeLight["cardBorder-default"]]
-    : IOColors[theme["cardBorder-default"]];
+    ? IOColorsLegacy[IOThemeLight["cardBorder-default"]]
+    : IOColorsLegacy[theme["cardBorder-default"]];
 
   const backgroundColor = forceLightMode
-    ? IOColors[IOThemeLight["appBackground-primary"]]
-    : IOColors[theme["appBackground-primary"]];
+    ? IOColorsLegacy[IOThemeLight["appBackground-primary"]]
+    : IOColorsLegacy[theme["appBackground-primary"]];
 
   const tagDynamic: ViewStyle = {
     paddingHorizontal: IODimensions.padding.tag.horizontal * dynamicFontScale,

@@ -7,14 +7,14 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { hexToRgba, IOColors } from "../../core";
+import { hexToRgba, IOColorsLegacy } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { IOText } from "../typography";
 
 type ColorMapVariant = {
   background: string;
-  foreground: IOColors;
+  foreground: IOColorsLegacy;
   pressed: string;
 };
 
@@ -54,15 +54,18 @@ export const NumberButton = memo(
       () => ({
         neutral: {
           background: hexToRgba(
-            IOColors[theme["interactiveElem-default"]],
+            IOColorsLegacy[theme["interactiveElem-default"]],
             0.1
           ),
-          pressed: hexToRgba(IOColors[theme["interactiveElem-default"]], 0.35),
+          pressed: hexToRgba(
+            IOColorsLegacy[theme["interactiveElem-default"]],
+            0.35
+          ),
           foreground: theme["interactiveElem-default"]
         },
         primary: {
-          background: hexToRgba(IOColors.white, 0.15),
-          pressed: hexToRgba(IOColors.white, 0.5),
+          background: hexToRgba(IOColorsLegacy.white, 0.15),
+          pressed: hexToRgba(IOColorsLegacy.white, 0.5),
           foreground: "white"
         }
       }),

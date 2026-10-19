@@ -1,7 +1,7 @@
 import {
   ContentWrapper,
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOPictogramSizeScale,
   RadioGroup,
@@ -78,7 +78,7 @@ export const DSAnimatedPictograms = () => {
           width: "100%",
           zIndex: 1,
           minHeight: pictogramAreaHeight,
-          backgroundColor: IOColors[theme["appBackground-primary"]],
+          backgroundColor: IOColorsLegacy[theme["appBackground-primary"]],
           position: "absolute",
           alignItems: "center"
         }}
@@ -93,8 +93,8 @@ export const DSAnimatedPictograms = () => {
 
         <LinearGradient
           colors={[
-            IOColors[theme["appBackground-primary"]],
-            hexToRgba(IOColors[theme["appBackground-primary"]], 0)
+            IOColorsLegacy[theme["appBackground-primary"]],
+            hexToRgba(IOColorsLegacy[theme["appBackground-primary"]], 0)
           ]}
           style={{
             height: scrollGradientHeight,

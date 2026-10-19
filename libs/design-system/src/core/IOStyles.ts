@@ -1,6 +1,6 @@
 import { BoxShadowValue, StyleSheet } from "react-native";
 
-import { hexToRgba, IOColors } from "./IOColors";
+import { hexToRgba, IOColorsLegacy } from "./IOColors";
 import { IODimensions } from "./tokens";
 
 const { padding, radius, size, stroke } = IODimensions;
@@ -12,7 +12,7 @@ export const footerBoxShadow = {
   offsetX: 0,
   offsetY: 0,
   blurRadius: 32,
-  color: hexToRgba(IOColors.black, 0.1)
+  color: hexToRgba(IOColorsLegacy.black, 0.1)
 } satisfies BoxShadowValue;
 
 export const IOStyles = StyleSheet.create({
@@ -20,7 +20,7 @@ export const IOStyles = StyleSheet.create({
   // NativeBase's `View`. They are moved here to
   // prevent UI regressions.
   footer: {
-    backgroundColor: IOColors.white,
+    backgroundColor: IOColorsLegacy.white,
     paddingBottom: padding.footer.vertical,
     paddingHorizontal: padding.screen.default,
     paddingTop: padding.footer.vertical,
@@ -68,7 +68,7 @@ export const IOListItemStyles = StyleSheet.create({
 export const IOModuleStyles = StyleSheet.create({
   button: {
     borderWidth: stroke.default,
-    borderColor: IOColors["grey-100"],
+    borderColor: IOColorsLegacy["grey-100"],
     borderRadius: radius.module,
     borderCurve: "continuous",
     flexDirection: "row",

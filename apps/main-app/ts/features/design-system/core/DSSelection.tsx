@@ -4,7 +4,7 @@ import {
   Divider,
   H4,
   HSpacer,
-  IOColors,
+  IOColorsLegacy,
   ListItemCheckbox,
   ListItemRadioWithAmount,
   ListItemSwitch,
@@ -177,7 +177,7 @@ const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
       <BodySmall color="grey-700" weight="Regular">
         Ti contatteranno solo i servizi che hanno qualcosa di importante da
         dirti.{" "}
-        <Text style={{ color: IOColors["grey-700"], fontWeight: "600" }}>
+        <Text style={{ color: IOColorsLegacy["grey-700"], fontWeight: "600" }}>
           Potrai sempre disattivare le comunicazioni che non ti interessano.
         </Text>
       </BodySmall>

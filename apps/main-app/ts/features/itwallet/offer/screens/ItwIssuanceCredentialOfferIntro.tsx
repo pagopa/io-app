@@ -1,7 +1,7 @@
 import {
   ContentWrapper,
   H2,
-  IOColors,
+  IOColorsLegacy,
   IOMarkdown,
   VSpacer
 } from "@io-app/design-system";
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    borderColor: IOColors["grey-100"]
+    borderColor: IOColorsLegacy["grey-100"]
   }
 });
 

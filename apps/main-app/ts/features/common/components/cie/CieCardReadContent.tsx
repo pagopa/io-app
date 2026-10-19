@@ -7,7 +7,7 @@ import {
   IOButton,
   IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOPictograms,
   IOSpringValues,
@@ -123,8 +123,8 @@ const LinearProgressBar = (
   const { progress = 0 } = props;
   const [width, setWidth] = useState(0);
 
-  const backgroundColor = IOColors["grey-200"];
-  const foregroundColor = IOColors["turquoise-500"];
+  const backgroundColor = IOColorsLegacy["grey-200"];
+  const foregroundColor = IOColorsLegacy["turquoise-500"];
 
   // Convert progress to 0-100 scale and round to avoid floating-point precision issues
   const progressPercent = Math.round(
@@ -227,8 +227,8 @@ const ContentAndroid = (props: CieCardReadContentProps) => {
             progress={(props.progress || 0) * 100}
             radius={120}
             size={240}
-            strokeBgColor={IOColors["grey-200"]}
-            strokeColor={IOColors["blueIO-500"]}
+            strokeBgColor={IOColorsLegacy["grey-200"]}
+            strokeColor={IOColorsLegacy["blueIO-500"]}
             strokeWidth={4}
           >
             <Pictogram name={props.pictogram} size={180} />

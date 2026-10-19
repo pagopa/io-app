@@ -9,7 +9,7 @@ import {
 import { SvgProps } from "react-native-svg";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IODimensions } from "../../core";
+import { IOColorsLegacy, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -26,7 +26,7 @@ import {
 type BaseProps = ImageProps &
   PressableModuleBaseProps & {
     badge?: Badge;
-    iconColor?: IOColors;
+    iconColor?: IOColorsLegacy;
     isFetching?: boolean;
     isLoading?: false;
     rightIcon?: IOIcons;

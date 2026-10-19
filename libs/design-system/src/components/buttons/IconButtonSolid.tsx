@@ -7,7 +7,7 @@ import Animated, {
 
 import { useIOTheme } from "../../context";
 import { IOIconButtonStyles } from "../../core";
-import { hexToRgba, IOColors } from "../../core/IOColors";
+import { hexToRgba, IOColorsLegacy } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import { AnimatedIcon, IOIcons } from "../icons";
@@ -54,24 +54,24 @@ export const IconButtonSolid = ({
     // Primary button
     primary: {
       background: {
-        default: IOColors[theme["interactiveElem-default"]],
-        pressed: IOColors[theme["interactiveElem-pressed"]],
-        disabled: IOColors[theme["interactiveElem-disabled"]]
+        default: IOColorsLegacy[theme["interactiveElem-default"]],
+        pressed: IOColorsLegacy[theme["interactiveElem-pressed"]],
+        disabled: IOColorsLegacy[theme["interactiveElem-disabled"]]
       },
       icon: {
-        default: IOColors[theme["buttonText-default"]],
-        disabled: IOColors[theme["buttonText-disabled"]]
+        default: IOColorsLegacy[theme["buttonText-default"]],
+        disabled: IOColorsLegacy[theme["buttonText-disabled"]]
       }
     },
     contrast: {
       background: {
-        default: IOColors.white,
-        pressed: IOColors["blueIO-50"],
-        disabled: hexToRgba(IOColors.white, 0.25)
+        default: IOColorsLegacy.white,
+        pressed: IOColorsLegacy["blueIO-50"],
+        disabled: hexToRgba(IOColorsLegacy.white, 0.25)
       },
       icon: {
-        default: IOColors["blueIO-500"],
-        disabled: IOColors["blueIO-500"]
+        default: IOColorsLegacy["blueIO-500"],
+        disabled: IOColorsLegacy["blueIO-500"]
       }
     }
   };

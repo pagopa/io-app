@@ -2,7 +2,7 @@ import {
   Badge,
   H4,
   HStack,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   Tag,
   useIOTheme,
@@ -95,7 +95,7 @@ const renderTag = () => (
     <DSComponentViewerBox name={"Tag · Stress test"}>
       <View
         style={{
-          backgroundColor: IOColors["error-100"],
+          backgroundColor: IOColorsLegacy["error-100"],
           padding: 8,
           width: "40%",
           borderRadius: IODimensions.radius.tag + 8

@@ -24,7 +24,7 @@ import Animated, {
 
 import { useIONewTypeface, useIOTheme } from "../../context";
 import {
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IODimensionScale,
   IOTypography
@@ -111,15 +111,15 @@ export const SearchInput = ({
 
   /* Component visual attributes */
   const theme = useIOTheme();
-  const inputCaretColor = IOColors[theme["interactiveElem-default"]];
+  const inputCaretColor = IOColorsLegacy[theme["interactiveElem-default"]];
 
   const inputBgColorDefault: ColorValue =
-    IOColors[theme["appBackground-secondary"]];
+    IOColorsLegacy[theme["appBackground-secondary"]];
   const inputBgColorFocused: ColorValue =
-    IOColors[theme["appBackground-tertiary"]];
+    IOColorsLegacy[theme["appBackground-tertiary"]];
   const inputColorPlaceholder: ColorValue =
-    IOColors[theme["textBody-tertiary"]];
-  const iconColor: IOColors = theme["textBody-tertiary"];
+    IOColorsLegacy[theme["textBody-tertiary"]];
+  const iconColor: IOColorsLegacy = theme["textBody-tertiary"];
 
   /* Widths used for the transition:
        - `SearchInput` entire width
@@ -262,7 +262,7 @@ export const SearchInput = ({
           selectionColor={inputCaretColor}
           style={[
             {
-              color: IOColors[theme["textBody-default"]],
+              color: IOColorsLegacy[theme["textBody-default"]],
               ...makeFontStyleObject(
                 inputFontSizePlaceholder,
                 newTypefaceEnabled ? "Titillio" : "TitilliumSansPro",

@@ -1,4 +1,8 @@
-import { IOColors, useIOTheme, useIOThemeContext } from "@io-app/design-system";
+import {
+  IOColorsLegacy,
+  useIOTheme,
+  useIOThemeContext
+} from "@io-app/design-system";
 import { ColorValue, ViewStyle } from "react-native";
 
 type ModalStyleProps = {
@@ -22,10 +26,10 @@ export const useModalStyle = (): ModalStyleProps => {
   return {
     backdrop: {
       opacity: backdropOpacity,
-      backgroundColor: IOColors.black
+      backgroundColor: IOColorsLegacy.black
     },
     modal: {
-      backgroundColor: IOColors[theme["appBackground-primary"]]
+      backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
     }
   };
 };

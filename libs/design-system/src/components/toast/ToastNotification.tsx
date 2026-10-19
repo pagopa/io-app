@@ -2,15 +2,15 @@ import { useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 
 import { useIOThemeContext } from "../../context";
-import { hexToRgba, IOColors, IODimensions } from "../../core";
+import { hexToRgba, IOColorsLegacy, IODimensions } from "../../core";
 import { Icon } from "../icons";
 import { HSpacer } from "../layout";
 import { ButtonText } from "../typography";
 import { Toast, ToastVariant } from "./types";
 
 type ColorVariant = {
-  background: IOColors;
-  stroke: IOColors;
+  background: IOColorsLegacy;
+  stroke: IOColorsLegacy;
 };
 
 const toastColorVariants: Record<ToastVariant, ColorVariant> = {
@@ -41,14 +41,14 @@ const ToastNotification = ({ message, variant, icon }: Props) => {
   const dynamicStyle: ViewStyle = useMemo(() => {
     const borderColor =
       themeType === "dark"
-        ? hexToRgba(IOColors[colors.stroke], 0.25)
-        : hexToRgba(IOColors[colors.stroke], 0.5);
+        ? hexToRgba(IOColorsLegacy[colors.stroke], 0.25)
+        : hexToRgba(IOColorsLegacy[colors.stroke], 0.5);
 
     /* Remove border entirely when dark mode is enabled */
     const borderWidth = themeType === "dark" ? 0 : IODimensions.stroke.default;
 
     return {
-      backgroundColor: IOColors[colors.background],
+      backgroundColor: IOColorsLegacy[colors.background],
       borderColor,
       borderWidth
     };

@@ -11,7 +11,7 @@ import { AccessibilityInfo, TextInput, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOColors } from "../../core/IOColors";
+import { IOColorsLegacy } from "../../core/IOColors";
 import {
   enterTransitionInputIcon,
   exitTransitionInputIcon
@@ -142,14 +142,14 @@ export const TextInputValidation = ({
     [isValid, errMessage, bottomMessage]
   );
 
-  const labelErrorColor: IOColors | undefined = useMemo(
+  const labelErrorColor: IOColorsLegacy | undefined = useMemo(
     () => (isValid === false && errMessage ? theme.errorText : undefined),
     [isValid, errMessage, theme.errorText]
   );
 
   const feedbackIconAttrMap: Record<
     string,
-    { color: IOColors; name: IOIcons }
+    { color: IOColorsLegacy; name: IOIcons }
   > = useMemo(
     () => ({
       valid: {

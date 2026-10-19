@@ -3,7 +3,7 @@ import { ColorValue, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOThemeContext } from "../../context";
-import { hexToRgba, IOColors, IODimensions } from "../../core";
+import { hexToRgba, IOColorsLegacy, IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useErrorShakeAnimation } from "../../utils/hooks/useErrorShakeAnimation";
 import { HStack } from "../layout";
@@ -57,9 +57,9 @@ export const CodeInput = ({
 
   /* Empty Dot
   - Right color depending on both theme and variant */
-  const emptyDotColorLightBg = IOColors["grey-650"];
-  const emptyDotColorDarkBg = IOColors["grey-300"];
-  const emptyDotColorAccentBg = hexToRgba(IOColors.white, 0.75);
+  const emptyDotColorLightBg = IOColorsLegacy["grey-650"];
+  const emptyDotColorDarkBg = IOColorsLegacy["grey-300"];
+  const emptyDotColorAccentBg = hexToRgba(IOColorsLegacy.white, 0.75);
 
   const emptyDotColorThemeBased =
     themeType === "light" ? emptyDotColorLightBg : emptyDotColorDarkBg;
@@ -69,10 +69,12 @@ export const CodeInput = ({
 
   /* Filled Dot
   - Right color depending on theme, variant and status */
-  const filledDotColorLightBg = IOColors.black;
-  const filledDotColorDarkBg = IOColors.white;
+  const filledDotColorLightBg = IOColorsLegacy.black;
+  const filledDotColorDarkBg = IOColorsLegacy.white;
   const filledDotColorError =
-    variant === "primary" ? IOColors["error-400"] : IOColors[theme.errorText];
+    variant === "primary"
+      ? IOColorsLegacy["error-400"]
+      : IOColorsLegacy[theme.errorText];
   const filledDotColorThemeBased =
     themeType === "light" ? filledDotColorLightBg : filledDotColorDarkBg;
 

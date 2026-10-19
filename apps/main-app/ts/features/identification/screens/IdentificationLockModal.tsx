@@ -2,7 +2,7 @@ import {
   BodySmall,
   ContentWrapper,
   H4,
-  IOColors,
+  IOColorsLegacy,
   Pictogram,
   useIOTheme,
   VSpacer
@@ -83,7 +83,7 @@ export const IdentificationLockModal = (props: Props) => {
         style={{
           flex: 1,
           justifyContent: "center",
-          backgroundColor: IOColors[theme["appBackground-primary"]]
+          backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
         }}
       >
         <ContentWrapper>

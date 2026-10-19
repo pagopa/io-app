@@ -10,7 +10,7 @@ import Animated from "react-native-reanimated";
 
 import { useIOThemeContext } from "../../context";
 import { IODimensions } from "../../core";
-import { hexToRgba, IOColors } from "../../core/IOColors";
+import { hexToRgba, IOColorsLegacy } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
@@ -44,7 +44,7 @@ type AlertType = AlertActionProps & AlertProps;
 
 type VariantStates = {
   background: ColorValue;
-  foreground: IOColors;
+  foreground: IOColorsLegacy;
   icon: IOIcons;
 };
 
@@ -56,22 +56,22 @@ const mapVariantStatesLightMode: Record<
 > = {
   error: {
     icon: "errorFilled",
-    background: IOColors["error-100"],
+    background: IOColorsLegacy["error-100"],
     foreground: "error-850"
   },
   warning: {
     icon: "warningFilled",
-    background: IOColors["warning-100"],
+    background: IOColorsLegacy["warning-100"],
     foreground: "warning-850"
   },
   info: {
     icon: "infoFilled",
-    background: IOColors["info-100"],
+    background: IOColorsLegacy["info-100"],
     foreground: "info-850"
   },
   success: {
     icon: "success",
-    background: IOColors["success-100"],
+    background: IOColorsLegacy["success-100"],
     foreground: "success-850"
   }
 };
@@ -84,22 +84,22 @@ const mapVariantStatesDarkMode: Record<
 > = {
   error: {
     icon: "errorFilled",
-    background: hexToRgba(IOColors["error-400"], bgOpacityDarkMode),
+    background: hexToRgba(IOColorsLegacy["error-400"], bgOpacityDarkMode),
     foreground: "error-100"
   },
   warning: {
     icon: "warningFilled",
-    background: hexToRgba(IOColors["warning-400"], bgOpacityDarkMode),
+    background: hexToRgba(IOColorsLegacy["warning-400"], bgOpacityDarkMode),
     foreground: "warning-100"
   },
   info: {
     icon: "infoFilled",
-    background: hexToRgba(IOColors["info-400"], bgOpacityDarkMode),
+    background: hexToRgba(IOColorsLegacy["info-400"], bgOpacityDarkMode),
     foreground: "info-100"
   },
   success: {
     icon: "success",
-    background: hexToRgba(IOColors["success-400"], bgOpacityDarkMode),
+    background: hexToRgba(IOColorsLegacy["success-400"], bgOpacityDarkMode),
     foreground: "success-100"
   }
 };

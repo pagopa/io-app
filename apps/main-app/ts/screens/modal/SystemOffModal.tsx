@@ -3,7 +3,7 @@
  * could not work properly. This is due to avoid user tries to access features
  * or services potentially can't work as expected
  */
-import { IOColors, useIOTheme } from "@io-app/design-system";
+import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";
 import _ from "lodash";
 import { memo, useMemo } from "react";
@@ -27,7 +27,7 @@ const SystemOffModal = () => {
   const theme = useIOTheme();
 
   return (
-    <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
+    <Modal backdropColor={IOColorsLegacy[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
         pictogram="umbrella"
         subtitle={subtitle}

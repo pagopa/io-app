@@ -2,7 +2,7 @@ import {
   ContentWrapper,
   HSpacer,
   IconButton,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   ListItemSwitch,
   VSpacer
@@ -123,8 +123,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: IOColors["grey-200"],
-    backgroundColor: IOColors.white,
+    borderColor: IOColorsLegacy["grey-200"],
+    backgroundColor: IOColorsLegacy.white,
     maxHeight: 128
   }
 });
@@ -219,7 +219,7 @@ export const IOMarkdownPlayground = () => {
                 multiline
                 onChangeText={setContent}
                 placeholder="Insert here your markdown"
-                placeholderTextColor={IOColors["grey-450"]}
+                placeholderTextColor={IOColorsLegacy["grey-450"]}
                 style={styles.textInput}
                 value={content}
               />

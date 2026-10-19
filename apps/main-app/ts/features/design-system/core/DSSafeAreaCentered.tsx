@@ -2,7 +2,7 @@ import {
   Body,
   H4,
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   VStack
 } from "@io-app/design-system";
@@ -20,7 +20,7 @@ export const DSSafeAreaCentered = () => {
     <SafeAreaView
       style={{
         flexGrow: 1,
-        backgroundColor: IOColors["error-100"],
+        backgroundColor: IOColorsLegacy["error-100"],
         paddingBottom: fixedBottomBarHeight
       }}
     >
@@ -28,7 +28,7 @@ export const DSSafeAreaCentered = () => {
         alwaysBounceVertical={false}
         centerContent
         contentContainerStyle={[
-          { backgroundColor: IOColors.white },
+          { backgroundColor: IOColorsLegacy.white },
           /* Android fallback because `centerContent`
               is only an iOS property */
           Platform.OS === "android" && {
@@ -54,7 +54,7 @@ export const DSSafeAreaCentered = () => {
           width: "100%",
           paddingBottom: insets.bottom,
           paddingHorizontal: IODimensions.padding.screen.default,
-          backgroundColor: hexToRgba(IOColors["blueIO-500"], 0.5)
+          backgroundColor: hexToRgba(IOColorsLegacy["blueIO-500"], 0.5)
         }}
       >
         <View
@@ -64,10 +64,10 @@ export const DSSafeAreaCentered = () => {
             justifyContent: "center",
             height: fixedBottomBarHeight,
             width: "100%",
-            backgroundColor: hexToRgba(IOColors.black, 0.8)
+            backgroundColor: hexToRgba(IOColorsLegacy.black, 0.8)
           }}
         >
-          <Text style={{ color: IOColors.white }}>Fixed component</Text>
+          <Text style={{ color: IOColorsLegacy.white }}>Fixed component</Text>
         </View>
       </View>
       {/* Fixed Component: End */}

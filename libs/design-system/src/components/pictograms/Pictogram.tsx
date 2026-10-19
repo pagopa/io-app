@@ -2,7 +2,7 @@ import { JSX, useMemo } from "react";
 import { ColorValue } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IOThemeDark, IOThemeLight } from "../../core/IOColors";
+import { IOColorsLegacy, IOThemeDark, IOThemeLight } from "../../core/IOColors";
 import { IODimensions } from "../../core/tokens";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import PictogramAccessDenied from "./svg/PictogramAccessDenied";
@@ -253,10 +253,10 @@ export const Pictogram = ({
 
   const colorValues: PictogramPalette = useMemo(
     () => ({
-      hands: IOColors[themeObj["pictogram-hands"]],
-      main: IOColors[themeObj["pictogram-tint-main"]],
-      secondary: IOColors[themeObj["pictogram-tint-secondary"]],
-      tertiary: IOColors[themeObj["pictogram-tint-tertiary"]]
+      hands: IOColorsLegacy[themeObj["pictogram-hands"]],
+      main: IOColorsLegacy[themeObj["pictogram-tint-main"]],
+      secondary: IOColorsLegacy[themeObj["pictogram-tint-secondary"]],
+      tertiary: IOColorsLegacy[themeObj["pictogram-tint-tertiary"]]
     }),
     [themeObj]
   );
@@ -409,10 +409,10 @@ export const PictogramBleed = ({
 
   const colorValues: PictogramPalette = useMemo(
     () => ({
-      hands: IOColors[themeObj["pictogram-hands"]],
-      main: IOColors[themeObj["pictogram-tint-main"]],
-      secondary: IOColors[themeObj["pictogram-tint-secondary"]],
-      tertiary: IOColors[themeObj["pictogram-tint-tertiary"]]
+      hands: IOColorsLegacy[themeObj["pictogram-hands"]],
+      main: IOColorsLegacy[themeObj["pictogram-tint-main"]],
+      secondary: IOColorsLegacy[themeObj["pictogram-tint-secondary"]],
+      tertiary: IOColorsLegacy[themeObj["pictogram-tint-tertiary"]]
     }),
     [themeObj]
   );

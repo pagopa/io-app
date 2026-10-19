@@ -6,7 +6,7 @@ import {
   View
 } from "react-native";
 
-import { IOColors, IODimensions } from "../../core";
+import { IOColorsLegacy, IODimensions } from "../../core";
 import { IconButton } from "../buttons";
 import { H4 } from "../typography";
 
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: IODimensions.padding.screen.default,
     paddingTop: IODimensions.padding.screen.default,
     paddingBottom: IODimensions.padding.screen.default,
-    backgroundColor: IOColors.white
+    backgroundColor: IOColorsLegacy.white
   }
 });
 

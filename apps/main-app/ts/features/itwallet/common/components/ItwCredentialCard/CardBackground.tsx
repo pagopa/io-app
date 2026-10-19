@@ -1,4 +1,4 @@
-import { IOColors } from "@io-app/design-system";
+import { IOColorsLegacy } from "@io-app/design-system";
 import {
   BlendColor,
   Canvas,
@@ -43,7 +43,10 @@ export const CardBackground = memo(({ background, color, overlay }: Props) => {
   return (
     <View
       onLayout={onLayout}
-      style={[StyleSheet.absoluteFill, { backgroundColor: IOColors.white }]}
+      style={[
+        StyleSheet.absoluteFill,
+        { backgroundColor: IOColorsLegacy.white }
+      ]}
     >
       <Canvas
         key={isFocused ? "focused" : "unfocused"}
@@ -120,20 +123,23 @@ export const LegacyCardBackground = ({
   }, [image, loadingOverlayOpacity, size]);
 
   const gradientColors = legacyCredentialGradientColors[credentialType] || [
-    IOColors["grey-100"],
-    IOColors["grey-200"]
+    IOColorsLegacy["grey-100"],
+    IOColorsLegacy["grey-200"]
   ];
 
   return (
     <View
       onLayout={onLayout}
-      style={[StyleSheet.absoluteFill, { backgroundColor: IOColors.white }]}
+      style={[
+        StyleSheet.absoluteFill,
+        { backgroundColor: IOColorsLegacy.white }
+      ]}
     >
       <Animated.View
         style={[
           loadingOverlayOpacityTransition,
           StyleSheet.absoluteFill,
-          { backgroundColor: IOColors["grey-100"] }
+          { backgroundColor: IOColorsLegacy["grey-100"] }
         ]}
       />
       <Canvas key={isFocused ? "focused" : "unfocused"} style={{ flex: 1 }}>

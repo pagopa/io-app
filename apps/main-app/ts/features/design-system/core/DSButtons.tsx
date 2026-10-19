@@ -9,7 +9,7 @@ import {
   IOButton,
   IOButtonColor,
   IOButtonVariant,
-  IOColors,
+  IOColorsLegacy,
   IOIcons,
   ListItemSwitch,
   useIOTheme,
@@ -24,14 +24,14 @@ import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 const styles = StyleSheet.create({
   primaryBlock: {
-    backgroundColor: IOColors["blueIO-500"],
+    backgroundColor: IOColorsLegacy["blueIO-500"],
     padding: 16,
     borderRadius: 16
   },
   neutralBlock: {
     borderWidth: 1,
-    borderColor: hexToRgba(IOColors.black, 0.1),
-    backgroundColor: IOColors.white,
+    borderColor: hexToRgba(IOColorsLegacy.black, 0.1),
+    backgroundColor: IOColorsLegacy.white,
     padding: 16,
     borderRadius: 16
   }

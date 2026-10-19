@@ -12,7 +12,7 @@ import {
 } from "../../components";
 import { useIOTheme } from "../../context";
 import { IODimensions } from "../../core";
-import { IOColors } from "../../core/IOColors";
+import { IOColorsLegacy } from "../../core/IOColors";
 
 type FeatureInfoActionProps =
   | {
@@ -58,7 +58,7 @@ export const FeatureInfo = ({
 
   const variantMap: Record<
     NonNullable<FeatureInfoProps["variant"]>,
-    { action: IOColors; content: IOColors }
+    { action: IOColorsLegacy; content: IOColorsLegacy }
   > = {
     contrast: {
       action: "white",

@@ -1,4 +1,4 @@
-import { IOColors, LoadingSpinner } from "@io-app/design-system";
+import { IOColorsLegacy, LoadingSpinner } from "@io-app/design-system";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
     position: "relative",
     width: "100%",
     height: "100%",
-    backgroundColor: IOColors.black
+    backgroundColor: IOColorsLegacy.black
   },
   camera: {
     position: "absolute",

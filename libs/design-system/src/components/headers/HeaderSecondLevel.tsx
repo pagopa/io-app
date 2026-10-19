@@ -33,7 +33,7 @@ import { useIOTheme } from "../../context";
 import {
   alertEdgeToEdgeInsetTransitionConfig,
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOSpringValues,
   IOThemeDark,
@@ -184,24 +184,25 @@ export const HeaderSecondLevel = ({
   on the color scheme. */
   const titleColorVariant =
     variant === "contrast"
-      ? IOColors[IOThemeDark["textHeading-default"]]
-      : IOColors[IOThemeLight["textHeading-default"]];
+      ? IOColorsLegacy[IOThemeDark["textHeading-default"]]
+      : IOColorsLegacy[IOThemeLight["textHeading-default"]];
 
   const titleColor: ColorValue = variant
     ? titleColorVariant
-    : IOColors[theme["textHeading-default"]];
+    : IOColorsLegacy[theme["textHeading-default"]];
 
   /* Visual attributes when there are transitions between states */
-  const HEADER_DEFAULT_BG_COLOR: IOColors = theme["appBackground-primary"];
+  const HEADER_DEFAULT_BG_COLOR: IOColorsLegacy =
+    theme["appBackground-primary"];
 
   const headerBgColorSolidState =
-    backgroundColor ?? IOColors[HEADER_DEFAULT_BG_COLOR];
+    backgroundColor ?? IOColorsLegacy[HEADER_DEFAULT_BG_COLOR];
 
   const headerBgColorTransparentState = transparent
     ? hexToRgba(headerBgColorSolidState, 0)
     : headerBgColorSolidState;
 
-  const borderColorDefault = IOColors[theme["divider-default"]];
+  const borderColorDefault = IOColorsLegacy[theme["divider-default"]];
   const borderColorSolidState = backgroundColor ?? borderColorDefault;
   const borderColorTransparentState = hexToRgba(borderColorSolidState, 0);
 

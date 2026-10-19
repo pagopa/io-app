@@ -4,7 +4,7 @@ import Animated from "react-native-reanimated";
 import Svg, { Defs, G, LinearGradient, Path, Stop } from "react-native-svg";
 
 import { useIOTheme } from "../../context";
-import { IOColors } from "../../core/IOColors";
+import { IOColorsLegacy } from "../../core/IOColors";
 import { WithTestID } from "../../utils/types";
 
 /** Size scale */
@@ -40,7 +40,7 @@ export const LoadingSpinner = ({
   const id = useId();
   const stroke = strokeMap[size];
 
-  const color = customColor ?? IOColors[theme["interactiveElem-default"]];
+  const color = customColor ?? IOColorsLegacy[theme["interactiveElem-default"]];
 
   const secondHalfId = `${id}-secondHalf`;
   const firstHalfId = `${id}-firstHalf`;

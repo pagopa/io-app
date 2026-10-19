@@ -8,7 +8,7 @@ import {
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
 import {
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   useIOTheme,
   VSpacer
@@ -191,7 +191,7 @@ export const useIOBottomSheetModal = ({
               // bottomInset={insets.bottom}
               style={{
                 paddingBottom: insets.bottom,
-                backgroundColor: IOColors[theme["appBackground-primary"]]
+                backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
               }}
             >
               {footer}

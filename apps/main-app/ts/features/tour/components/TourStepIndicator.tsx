@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme } from "@io-app/design-system";
+import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
@@ -17,8 +17,8 @@ type Props = {
 
 export const TourStepIndicator = ({ stepIndex, totalSteps }: Props) => {
   const theme = useIOTheme();
-  const activeColor = IOColors[theme["interactiveElem-default"]];
-  const defaultColor = IOColors[theme["icon-default"]];
+  const activeColor = IOColorsLegacy[theme["interactiveElem-default"]];
+  const defaultColor = IOColorsLegacy[theme["icon-default"]];
 
   return (
     <View

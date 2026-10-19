@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors } from "../../core/IOColors";
+import { IOColorsLegacy } from "../../core/IOColors";
 
 const DEFAULT_BORDER_SIZE = StyleSheet.hairlineWidth;
 
@@ -12,7 +12,7 @@ export const Divider = () => {
   return (
     <View
       style={{
-        backgroundColor: IOColors[theme["divider-default"]],
+        backgroundColor: IOColorsLegacy[theme["divider-default"]],
         height: DEFAULT_BORDER_SIZE
       }}
     />

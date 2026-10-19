@@ -11,7 +11,7 @@ import {
   AnimatedIconWithColorTransition,
   IOIcons
 } from "../../components/icons";
-import { hexToRgba, IOColors, IOIconButtonStyles } from "../../core";
+import { hexToRgba, IOColorsLegacy, IOIconButtonStyles } from "../../core";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 
@@ -44,40 +44,40 @@ const mapColorStates: Record<
   // Primary button
   primary: {
     background: {
-      default: hexToRgba(IOColors["blueIO-500"], 0),
-      pressed: hexToRgba(IOColors["blueIO-500"], 0.15),
+      default: hexToRgba(IOColorsLegacy["blueIO-500"], 0),
+      pressed: hexToRgba(IOColorsLegacy["blueIO-500"], 0.15),
       disabled: "transparent"
     },
     icon: {
-      default: IOColors["blueIO-500"],
-      pressed: IOColors["blueIO-600"],
-      disabled: hexToRgba(IOColors["blueIO-500"], 0.25)
+      default: IOColorsLegacy["blueIO-500"],
+      pressed: IOColorsLegacy["blueIO-600"],
+      disabled: hexToRgba(IOColorsLegacy["blueIO-500"], 0.25)
     }
   },
   // Neutral button
   neutral: {
     background: {
-      default: IOColors.white,
-      pressed: IOColors["grey-50"],
+      default: IOColorsLegacy.white,
+      pressed: IOColorsLegacy["grey-50"],
       disabled: "transparent"
     },
     icon: {
-      default: IOColors["grey-700"],
-      pressed: IOColors.black,
-      disabled: IOColors["grey-450"]
+      default: IOColorsLegacy["grey-700"],
+      pressed: IOColorsLegacy.black,
+      disabled: IOColorsLegacy["grey-450"]
     }
   },
   // Contrast button
   contrast: {
     background: {
-      default: hexToRgba(IOColors.white, 0),
-      pressed: hexToRgba(IOColors.white, 0.2),
+      default: hexToRgba(IOColorsLegacy.white, 0),
+      pressed: hexToRgba(IOColorsLegacy.white, 0.2),
       disabled: "transparent"
     },
     icon: {
-      default: IOColors.white,
-      pressed: IOColors.white,
-      disabled: hexToRgba(IOColors.white, 0.25)
+      default: IOColorsLegacy.white,
+      pressed: IOColorsLegacy.white,
+      disabled: hexToRgba(IOColorsLegacy.white, 0.25)
     }
   }
 };

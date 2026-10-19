@@ -5,7 +5,7 @@ import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
 import { IODimensions } from "../../core";
-import { hexToRgba, IOColors } from "../../core/IOColors";
+import { hexToRgba, IOColorsLegacy } from "../../core/IOColors";
 import { useAccordionAnimation } from "../../hooks/useAccordionAnimation";
 import { Icon, IOIcons } from "../icons/Icon";
 import { HStack } from "../layout";
@@ -38,17 +38,17 @@ export const AccordionItem = ({
   } = useAccordionAnimation();
 
   // Visual attributes
-  const accordionBackground: IOColors = theme["appBackground-primary"];
-  const accordionBorder: IOColors = theme["cardBorder-default"];
-  const accordionIconColor: IOColors = theme["icon-decorative"];
+  const accordionBackground: IOColorsLegacy = theme["appBackground-primary"];
+  const accordionBorder: IOColorsLegacy = theme["cardBorder-default"];
+  const accordionIconColor: IOColorsLegacy = theme["icon-decorative"];
 
   return (
     <View
       style={[
         styles.accordionWrapper,
         {
-          backgroundColor: IOColors[accordionBackground],
-          borderColor: IOColors[accordionBorder]
+          backgroundColor: IOColorsLegacy[accordionBackground],
+          borderColor: IOColorsLegacy[accordionBorder]
         }
       ]}
     >
@@ -103,8 +103,8 @@ export const AccordionItem = ({
       <LinearGradient
         accessible={false}
         colors={[
-          hexToRgba(IOColors[accordionBackground], 0),
-          IOColors[accordionBackground]
+          hexToRgba(IOColorsLegacy[accordionBackground], 0),
+          IOColorsLegacy[accordionBackground]
         ]}
         style={{
           height: accordionPadding,

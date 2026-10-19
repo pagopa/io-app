@@ -1,5 +1,5 @@
 import {
-  IOColors,
+  IOColorsLegacy,
   ScrollViewWithStickyFooterActions,
   useIOTheme,
   VSpacer
@@ -26,10 +26,13 @@ export const DSFooterActionsSticky = () => {
           <View
             style={[
               styles.block,
-              { backgroundColor: IOColors[theme["appBackground-secondary"]] }
+              {
+                backgroundColor:
+                  IOColorsLegacy[theme["appBackground-secondary"]]
+              }
             ]}
           >
-            <Text style={{ color: IOColors[theme["textBody-tertiary"]] }}>
+            <Text style={{ color: IOColorsLegacy[theme["textBody-tertiary"]] }}>
               {`Block ${i}`}
             </Text>
           </View>
@@ -60,6 +63,6 @@ const styles = StyleSheet.create({
     aspectRatio: 16 / 10
   },
   footer: {
-    backgroundColor: IOColors["success-100"]
+    backgroundColor: IOColorsLegacy["success-100"]
   }
 });

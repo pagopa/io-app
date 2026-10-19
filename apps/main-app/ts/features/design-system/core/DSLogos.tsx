@@ -5,7 +5,7 @@ import {
   hexToRgba,
   HSpacer,
   HStack,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOLogoPaymentCardType,
   IOLogoPaymentExtType,
@@ -259,8 +259,8 @@ const renderPaymentLogosCard = () => (
         style={{
           borderRadius: 16,
           padding: 16,
-          backgroundColor: IOColors.white,
-          borderColor: hexToRgba(IOColors.black, 0.15),
+          backgroundColor: IOColorsLegacy.white,
+          borderColor: hexToRgba(IOColorsLegacy.black, 0.15),
           borderWidth: 1
         }}
       >

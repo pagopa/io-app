@@ -3,7 +3,7 @@ import { GestureResponderEvent, Pressable } from "react-native";
 import Animated, { useReducedMotion } from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IOModuleStyles } from "../../core";
+import { IOColorsLegacy, IOModuleStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
@@ -58,7 +58,7 @@ export const PressableModuleBase = ({
       <Animated.View
         style={[
           IOModuleStyles.button,
-          { borderColor: IOColors[theme["cardBorder-default"]] },
+          { borderColor: IOColorsLegacy[theme["cardBorder-default"]] },
           scaleAnimatedStyle
         ]}
       >

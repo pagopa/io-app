@@ -3,7 +3,7 @@ import {
   Avatar,
   Body,
   BodySmall,
-  IOColors,
+  IOColorsLegacy,
   IODimensionScale,
   useIOTheme
 } from "@io-app/design-system";
@@ -89,7 +89,10 @@ export const OrganizationHeader = ({
 
   return (
     <View
-      style={[styles.item, { borderColor: IOColors[theme["divider-default"]] }]}
+      style={[
+        styles.item,
+        { borderColor: IOColorsLegacy[theme["divider-default"]] }
+      ]}
       testID="organization-header"
     >
       <View style={{ flex: 1 }}>

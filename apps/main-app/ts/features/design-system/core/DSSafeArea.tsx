@@ -2,7 +2,7 @@ import {
   Body,
   H4,
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   IODimensions
 } from "@io-app/design-system";
 import { ScrollView, Text, View } from "react-native";
@@ -10,8 +10,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export const DSSafeArea = () => (
   <View style={{ flex: 1 }}>
-    <SafeAreaView style={{ flex: 1, backgroundColor: IOColors["error-100"] }}>
-      <ScrollView contentContainerStyle={{ backgroundColor: IOColors.white }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: IOColorsLegacy["error-100"] }}
+    >
+      <ScrollView
+        contentContainerStyle={{ backgroundColor: IOColorsLegacy.white }}
+      >
         <View style={{ flex: 1 }}>
           <H4>Start</H4>
           {[...Array(50)].map((_el, i) => (
@@ -24,7 +28,7 @@ export const DSSafeArea = () => (
         style={{
           width: "100%",
           paddingHorizontal: IODimensions.padding.screen.default,
-          backgroundColor: hexToRgba(IOColors["blueIO-500"], 0.7)
+          backgroundColor: hexToRgba(IOColorsLegacy["blueIO-500"], 0.7)
         }}
       >
         <View
@@ -34,10 +38,10 @@ export const DSSafeArea = () => (
             justifyContent: "center",
             height: 70,
             width: "100%",
-            backgroundColor: hexToRgba(IOColors.black, 0.8)
+            backgroundColor: hexToRgba(IOColorsLegacy.black, 0.8)
           }}
         >
-          <Text style={{ color: IOColors.white }}>Fixed component</Text>
+          <Text style={{ color: IOColorsLegacy.white }}>Fixed component</Text>
         </View>
       </View>
     </SafeAreaView>

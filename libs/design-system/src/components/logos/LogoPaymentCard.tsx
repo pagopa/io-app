@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 
-import { hexToRgba, IOColors } from "../../core";
+import { hexToRgba, IOColorsLegacy } from "../../core";
 import { WithTestID } from "../../utils/types";
 /* Logos */
 import LogoPaymentCardBancomatPay from "./svg/LogoPaymentCardBancomatPay";
@@ -34,7 +34,7 @@ const preserveAspectRatioValues: Record<
 
 const styles = StyleSheet.create({
   debugMode: {
-    backgroundColor: hexToRgba(IOColors["error-500"], 0.2)
+    backgroundColor: hexToRgba(IOColorsLegacy["error-500"], 0.2)
   }
 });
 

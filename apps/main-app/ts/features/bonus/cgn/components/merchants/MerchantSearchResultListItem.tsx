@@ -4,7 +4,7 @@ import {
   Body,
   ContentWrapper,
   H6,
-  IOColors,
+  IOColorsLegacy,
   ListItemNav
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     flexShrink: 1
   },
   highlightYes: {
-    backgroundColor: IOColors["turquoise-150"]
+    backgroundColor: IOColorsLegacy["turquoise-150"]
   }
 });
 

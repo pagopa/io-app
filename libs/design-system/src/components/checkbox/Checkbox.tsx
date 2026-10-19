@@ -17,7 +17,7 @@ import Animated, {
 
 import { useIOTheme } from "../../context";
 import { IODimensions, IOSpringValues } from "../../core";
-import { IOColors } from "../../core/IOColors";
+import { IOColorsLegacy } from "../../core/IOColors";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { AnimatedTick } from "../common/AnimatedTick";
 
@@ -53,8 +53,8 @@ export const Checkbox = ({ size, checked, onPress, disabled }: OwnProps) => {
   const { dynamicFontScale } = useIOFontDynamicScale();
   const isChecked = checked ?? false;
 
-  const borderColor = IOColors[theme["selection-border-off"]];
-  const backgroundColor = IOColors[theme["selection-background-on"]];
+  const borderColor = IOColorsLegacy[theme["selection-border-off"]];
+  const backgroundColor = IOColorsLegacy[theme["selection-background-on"]];
 
   const squareAnimationProgress = useSharedValue(checked ? 1 : 0);
   const tickAnimationProgress = useSharedValue(checked ? 1 : 0);
@@ -115,7 +115,7 @@ export const Checkbox = ({ size, checked, onPress, disabled }: OwnProps) => {
           <AnimatedTick
             progress={tickAnimationProgress}
             size={size}
-            stroke={IOColors[theme["selection-tick"]]}
+            stroke={IOColorsLegacy[theme["selection-tick"]]}
           />
         </View>
       )}

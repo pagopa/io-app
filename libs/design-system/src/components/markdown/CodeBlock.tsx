@@ -1,7 +1,7 @@
 import { View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors } from "../../core";
+import { IOColorsLegacy } from "../../core";
 import { BodyMonospace } from "../typography/BodyMonospace";
 
 type CodeBlockProps = {
@@ -18,8 +18,8 @@ export const CodeBlock = ({ content }: CodeBlockProps) => {
   return (
     <View
       style={{
-        backgroundColor: IOColors[theme["appBackground-secondary"]],
-        borderColor: IOColors[theme["cardBorder-default"]],
+        backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]],
+        borderColor: IOColorsLegacy[theme["cardBorder-default"]],
         borderWidth: 1,
         borderRadius: 4,
         borderCurve: "continuous",

@@ -3,7 +3,7 @@ import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 
 import { Icon } from "../../components/icons";
 import { useIOTheme } from "../../context";
-import { hexToRgba, IOColors, IODimensions } from "../../core";
+import { hexToRgba, IOColorsLegacy, IODimensions } from "../../core";
 import { addCacheTimestampToUri } from "../../utils/image";
 import avatarSearchPlaceholder from "./placeholder/avatar-placeholder.png";
 
@@ -12,7 +12,7 @@ type Avatar = {
   size: "medium" | "small";
 };
 
-const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
+const avatarBorderLightMode = hexToRgba(IOColorsLegacy.black, 0.1);
 
 const styles = StyleSheet.create({
   avatarWrapper: {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   avatarInnerWrapper: {
     overflow: "hidden",
-    backgroundColor: IOColors.white,
+    backgroundColor: IOColorsLegacy.white,
     borderCurve: "continuous"
   },
   avatarImage: {
@@ -77,7 +77,9 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
           width: avatarSize,
           borderRadius: avatarRadius,
           backgroundColor:
-            imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
+            imageSource === undefined
+              ? IOColorsLegacy["grey-50"]
+              : IOColorsLegacy.white,
           padding:
             imageSource === undefined
               ? avatarPadding.placeholder
@@ -141,7 +143,7 @@ export const AvatarSearch = memo(
             borderRadius,
             height: avatarSize,
             width: avatarSize,
-            backgroundColor: IOColors.white,
+            backgroundColor: IOColorsLegacy.white,
             padding: internalSpace
           }
         ]}

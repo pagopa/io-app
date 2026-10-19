@@ -28,7 +28,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIONewTypeface, useIOTheme } from "../../context";
-import { hexToRgba, IOColors, IODimensions } from "../../core";
+import { hexToRgba, IOColorsLegacy, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import {
   IOFontSize,
@@ -48,7 +48,7 @@ type InputTextProps = WithTestID<{
   accessibilityHint?: string;
   accessibilityLabel?: string;
   bottomMessage?: string;
-  bottomMessageColor?: IOColors;
+  bottomMessageColor?: IOColorsLegacy;
   counterLimit?: number;
   disabled?: boolean;
   icon?: IOIcons;
@@ -158,7 +158,7 @@ const HelperRow = ({
     return `${value}, ${valueCount}`;
   }, [value, valueCount, counterLimit, textInputProps]);
 
-  const bottomMessageColorDefault: IOColors = theme["textBody-tertiary"];
+  const bottomMessageColorDefault: IOColorsLegacy = theme["textBody-tertiary"];
   const bottomMessageColorValue =
     bottomMessageColor ?? bottomMessageColorDefault;
 
@@ -255,11 +255,13 @@ export const TextInputBase = ({
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
 
   const theme = useIOTheme();
-  const iconColor: IOColors = theme["icon-decorative"];
-  const inputLabelColor: ColorValue = IOColors[theme["textInputLabel-default"]];
-  const inputTextColor: ColorValue = IOColors[theme["textInputValue-default"]];
+  const iconColor: IOColorsLegacy = theme["icon-decorative"];
+  const inputLabelColor: ColorValue =
+    IOColorsLegacy[theme["textInputLabel-default"]];
+  const inputTextColor: ColorValue =
+    IOColorsLegacy[theme["textInputValue-default"]];
   const inputDisabledTextColor: ColorValue =
-    IOColors[theme["textInputValue-disabled"]];
+    IOColorsLegacy[theme["textInputValue-disabled"]];
 
   /* Get the label width to enable the correct translation */
   const [labelWidth, setLabelWidth] = useState<number>(0);
@@ -277,14 +279,15 @@ export const TextInputBase = ({
   }, [status]);
 
   /* Visual attributes */
-  const appBackground: ColorValue = IOColors[theme["appBackground-primary"]];
+  const appBackground: ColorValue =
+    IOColorsLegacy[theme["appBackground-primary"]];
 
   const borderColorMap: Record<InputStatus, string> = useMemo(
     () => ({
-      initial: IOColors[theme["textInputBorder-default"]],
-      disabled: IOColors[theme["textInputBorder-default"]],
-      focused: IOColors[theme["interactiveElem-default"]],
-      error: IOColors[theme.errorText]
+      initial: IOColorsLegacy[theme["textInputBorder-default"]],
+      disabled: IOColorsLegacy[theme["textInputBorder-default"]],
+      focused: IOColorsLegacy[theme["interactiveElem-default"]],
+      error: IOColorsLegacy[theme.errorText]
     }),
     [theme]
   );
@@ -488,7 +491,7 @@ export const TextInputBase = ({
           accessible
           autoFocus={false}
           blurOnSubmit={true}
-          cursorColor={IOColors[theme["interactiveElem-default"]]} // Caret Android
+          cursorColor={IOColorsLegacy[theme["interactiveElem-default"]]} // Caret Android
           disableFullscreenUI={true}
           editable={!disabled}
           importantForAccessibility="yes"
@@ -498,7 +501,7 @@ export const TextInputBase = ({
           onChangeText={onChangeTextHandler}
           onFocus={onFocusHandler}
           secureTextEntry={isSecretInput}
-          selectionColor={IOColors[theme["interactiveElem-default"]]} // Caret on iOS
+          selectionColor={IOColorsLegacy[theme["interactiveElem-default"]]} // Caret on iOS
           style={[
             {
               ...makeFontStyleObject(
