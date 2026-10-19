@@ -390,6 +390,9 @@ importers:
       '@io-app/expo-switch-access':
         specifier: workspace:*
         version: link:../../libs/expo-switch-access
+      '@io-app/expo-zendesk':
+        specifier: workspace:*
+        version: link:../../libs/expo-zendesk
       '@pagopa/io-pagopa-commons':
         specifier: ^3.1.0
         version: 3.1.0(supports-color@8.1.1)
@@ -423,9 +426,6 @@ importers:
       '@pagopa/io-react-native-wallet':
         specifier: 3.8.3
         version: 3.8.3(1980c7d3d346854dd414a200c92bb934)
-      '@pagopa/io-react-native-zendesk':
-        specifier: ^0.3.30
-        version: 0.3.30(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/react-native-cie':
         specifier: ^1.5.0
         version: 1.5.0
@@ -1128,6 +1128,18 @@ importers:
       expo-modules-core:
         specifier: ^55.0.25
         version: 55.0.25(react-native-worklets@0.8.3(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  libs/expo-zendesk:
+    devDependencies:
+      expo-modules-core:
+        specifier: ^55.0.25
+        version: 55.0.25(react-native-worklets@0.8.3(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+      react-native:
+        specifier: 'catalog:'
+        version: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -3809,13 +3821,6 @@ packages:
       react: 19.2.3
       react-native: 0.85.3
       react-native-quick-crypto: '*'
-
-  '@pagopa/io-react-native-zendesk@0.3.30':
-    resolution: {integrity: sha512-w6ks2Ty+EgdZoaXAVp/LeQ/BgHI0JH1lcvGjSo34Rjs64ZmRdBTQ4jN92Q/EjP5J7MkZ46+eLBybGqtOjgCQ2Q==}
-    engines: {node: '>= 18.0.0'}
-    peerDependencies:
-      react: '*'
-      react-native: '*'
 
   '@pagopa/io-wallet-oauth2@1.5.8':
     resolution: {integrity: sha512-blmvmF6FV8Pb2OUa1uwBaCs0UNuZlFVLMy7VPTjHBK+T9a3nPzopyeol55mR5KBNyu8yK/yv3efs0xpypBN/Hg==}
@@ -17462,11 +17467,6 @@ snapshots:
       zod: 4.3.6
     transitivePeerDependencies:
       - typescript
-
-  '@pagopa/io-react-native-zendesk@0.3.30(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)':
-    dependencies:
-      react: 19.2.0
-      react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
 
   '@pagopa/io-wallet-oauth2@1.5.8':
     dependencies:
