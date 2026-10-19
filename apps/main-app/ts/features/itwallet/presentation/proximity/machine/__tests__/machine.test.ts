@@ -875,6 +875,10 @@ describe("itwProximityMachine", () => {
       actor.getSnapshot().matches({ Presentment: "SendingDocuments" })
     ).toBe(true);
     expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    // The retrieval method must be in context when tracking, to derive proximity_flow
+    expect(trackProximityStart.mock.calls[0][0].context.retrievalMethod).toBe(
+      "nfc"
+    );
     actor.stop();
   });
 
