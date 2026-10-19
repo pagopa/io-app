@@ -33,14 +33,13 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
 
   const isCdcError = pot.isError(useIOSelector(cdcStatusSelector));
   const isBonusError = isIdPayError || isCgnError || isCdcError;
-  const shouldGoToServices = isCdcError;
 
   const { canRetryRequest } = usePaymentsBackoffRetry(
     WALLET_OTHER_CARDS_CATEGORY_BACKOFF
   );
 
   const handleOnAction = () => {
-    if (shouldGoToServices) {
+    if (isCdcError) {
       navigation.navigate(SERVICES_ROUTES.SERVICES_HOME);
       return;
     }
@@ -68,13 +67,13 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
       >
         <BannerErrorState
           actionText={I18n.t(
-            shouldGoToServices
+            isCdcError
               ? "features.wallet.home.otherMethods.error.banner.bonus.cta"
               : "features.wallet.home.otherMethods.error.banner.cta"
           )}
           icon="warningFilled"
           label={I18n.t(
-            shouldGoToServices
+            isCdcError
               ? "features.wallet.home.otherMethods.error.banner.bonus.label"
               : "features.wallet.home.otherMethods.error.banner.label"
           )}
