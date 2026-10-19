@@ -5,6 +5,7 @@ import {
   itwAvailableCredentialsListSelector,
   itwCatalogueTranslationsByLocaleSelector,
   itwCredentialIntroContentSelector,
+  itwCredentialNameResolverSelector,
   itwCredentialsCatalogueByTypesSelector,
   itwCredentialsCatalogueSelector,
   itwCredentialTypeFromDocTypeSelector
@@ -203,6 +204,69 @@ describe("itwCredentialTypeFromDocTypeSelector", () => {
     expect(
       itwCredentialTypeFromDocTypeSelector(state)(undefined)
     ).toBeUndefined();
+  });
+});
+
+describe("itwCredentialNameResolverSelector", () => {
+  type Scenario = {
+    credentialType: string;
+    expected: string;
+    name: string;
+    translations: Record<string, string>;
+    withDefault?: string;
+  };
+
+  it.each<Scenario>([
+    {
+      name: "the translated catalogue name",
+      credentialType: "cred2",
+      translations: { "cred2.name": "Credenziale 2" },
+      expected: "Credenziale 2"
+    },
+    {
+      name: "the static catalogue name when the translation is missing",
+      credentialType: "cred2",
+      translations: {},
+      expected: "Credential 2"
+    },
+    {
+      name: "the hardcoded name when the type is not in the catalogue",
+      credentialType: "education_diploma",
+      translations: {},
+      expected: I18n.t("features.itWallet.credentialName.edip")
+    },
+    {
+      name: "the default when the type is unknown",
+      credentialType: "unknown_type",
+      translations: {},
+      withDefault: "Default name",
+      expected: "Default name"
+    }
+  ])(
+    "should resolve $name",
+    ({ credentialType, translations, withDefault, expected }) => {
+      const state = buildState({
+        isEnabledForCredentialsList: true,
+        catalogue: pot.some(mockCatalogue),
+        translations: pot.some({ it: translations })
+      });
+
+      expect(
+        itwCredentialNameResolverSelector(state)(credentialType, withDefault)
+      ).toBe(expected);
+    }
+  );
+
+  it("should use the hardcoded name when the catalogue is not enabled", () => {
+    const state = buildState({
+      isEnabledForCredentialsList: false,
+      catalogue: pot.some(mockCatalogue),
+      translations: pot.some({ it: { "cred2.name": "Credenziale 2" } })
+    });
+
+    expect(itwCredentialNameResolverSelector(state)("cred2", "Fallback")).toBe(
+      "Fallback"
+    );
   });
 });
 

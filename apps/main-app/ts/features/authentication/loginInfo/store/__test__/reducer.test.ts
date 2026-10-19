@@ -12,7 +12,8 @@ describe("loginInfoReducer", () => {
   it("should handle loginSuccess and set userFromSuccessLogin to true", () => {
     const action = loginSuccess({
       token: "mock-token",
-      idp: "test"
+      idp: "test",
+      isOneIdentityLogin: false
     });
 
     const state = loginInfoReducer(undefined, action);

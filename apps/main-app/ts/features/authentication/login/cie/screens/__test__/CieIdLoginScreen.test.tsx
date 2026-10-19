@@ -229,7 +229,11 @@ describe(CieIdLoginScreen, () => {
     expect(mockReplace).toHaveBeenCalledTimes(0);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginSuccess({ idp: "cieid", token: "my-token" })
+      loginSuccess({
+        idp: "cieid",
+        token: "my-token",
+        isOneIdentityLogin: false
+      })
     );
   });
   it("Shouldn't execute the login because of missing token", () => {

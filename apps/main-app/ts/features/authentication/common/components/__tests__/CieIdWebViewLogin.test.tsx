@@ -2,6 +2,7 @@ import { fireEvent, render } from "@testing-library/react-native";
 
 import { withStore } from "../../../../../utils/jest/withStore";
 import * as useOneIdentityLoginSourceModule from "../../../../lollipop/hooks/useOneIdentityLoginSource";
+import * as analytics from "../../analytics";
 import * as useCieIdAppModule from "../../hooks/useCieIdApp";
 import { CieIdWebViewLogin as CieIdWebViewLoginComponent } from "../CieIdWebViewLogin";
 
@@ -52,6 +53,34 @@ describe("CieIdWebViewLogin", () => {
       startCieIdApp: mockStartCieIdApp
     });
   });
+
+  it.each([
+    { name: "initial login", flow: "auth" as const },
+    { name: "reauthentication", flow: "reauth" as const }
+  ])(
+    "should track One Identity configuration error when is error page ($name)",
+    ({ flow }) => {
+      mockUseOneIdentityLoginSource();
+      const spyTrackLoginOIConfigurationError = jest
+        .spyOn(analytics, "trackLoginOIConfigurationError")
+        .mockImplementation();
+      const errorUrl =
+        "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR";
+      const { getByTestId } = render(
+        <CieIdWebViewLogin flow={flow} isUat={false} onEvent={onEvent} />
+      );
+      const webview = getByTestId("cie-id-webview");
+
+      expect(
+        fireEvent(webview, "onShouldStartLoadWithRequest", { url: errorUrl })
+      ).toBe(true);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledTimes(1);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledWith(
+        errorUrl,
+        flow
+      );
+    }
+  );
 
   describe("conditional rendering", () => {
     it.each(["reserving-public-key", "verifying-assertion-ref"] as const)(
@@ -110,18 +139,47 @@ describe("CieIdWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
     });
 
+    it("should call onEvent with ONE_IDENTITY_LOGIN_FAILURE and the failure data when the login source fails", () => {
+      render(<CieIdWebViewLogin isUat={false} onEvent={onEvent} />);
+      const { onFailure } = jest.mocked(
+        useOneIdentityLoginSourceModule.useOneIdentityLoginSource
+      ).mock.calls[0][0];
+      const failureData = {
+        reason: "Unexpected HTTP status 500",
+        url: "https://example.com/api/auth/v1/reserve"
+      };
+
+      onFailure(failureData);
+
+      expect(onEvent).toHaveBeenCalledWith({
+        type: "ONE_IDENTITY_LOGIN_FAILURE",
+        payload: { failureData }
+      });
+    });
+
     it("should call onEvent with WEBVIEW_ERROR when there is a WebViewErrorEvent", () => {
       const { getByTestId } = render(
         <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
       );
 
       const webview = getByTestId("cie-id-webview");
-      const nativeEvent = { url: "https://example.com/error" };
+      const nativeEvent = {
+        url: "https://example.com/error",
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED"
+      };
       fireEvent(webview, "onError", { nativeEvent });
 
       expect(onEvent).toHaveBeenCalledWith({
         type: "WEBVIEW_ERROR",
-        payload: { url: nativeEvent.url }
+        payload: {
+          url: nativeEvent.url,
+          failureData: {
+            description: nativeEvent.description,
+            code: nativeEvent.code,
+            url: nativeEvent.url
+          }
+        }
       });
     });
 
@@ -139,7 +197,15 @@ describe("CieIdWebViewLogin", () => {
 
       expect(onEvent).toHaveBeenCalledWith({
         type: "WEBVIEW_HTTP_ERROR",
-        payload: { url: nativeEvent.url, statusCode: nativeEvent.statusCode }
+        payload: {
+          url: nativeEvent.url,
+          statusCode: nativeEvent.statusCode,
+          failureData: {
+            description: `Unexpected HTTP status ${nativeEvent.statusCode}`,
+            code: nativeEvent.statusCode,
+            url: nativeEvent.url
+          }
+        }
       });
     });
   });

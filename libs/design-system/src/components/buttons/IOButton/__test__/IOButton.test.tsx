@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react-native";
-import { Alert } from "react-native";
+import { Alert, StyleSheet } from "react-native";
+import Animated from "react-native-reanimated";
 
 import { IOButton } from "../IOButton";
 
@@ -8,6 +9,30 @@ const onButtonPress = () => {
 };
 
 describe("Test Buttons Components", () => {
+  it.each([
+    { variant: "link" as const, borderRadius: 0 },
+    { variant: "solid" as const, borderRadius: 8 },
+    { variant: "outline" as const, borderRadius: 8 }
+  ])(
+    "IOButton $variant has border radius $borderRadius",
+    ({ variant, borderRadius }) => {
+      const { getByTestId } = render(
+        <IOButton
+          icon="inbox"
+          label="label"
+          onPress={onButtonPress}
+          testID="button"
+          variant={variant}
+        />
+      );
+
+      const button = getByTestId("button").findByType(Animated.View);
+      expect(StyleSheet.flatten(button.props.style)).toEqual(
+        expect.objectContaining({ borderRadius })
+      );
+    }
+  );
+
   it("IOButton Snapshot · Solid variant", () => {
     const { toJSON } = render(
       <IOButton
