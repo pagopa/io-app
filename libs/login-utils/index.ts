@@ -1,5 +1,17 @@
 import { requireNativeModule } from "expo-modules-core";
 
+export type AreaError = "NativeRedirectError";
+
+export type LoginUtilsError = {
+  code: AreaError;
+  userInfo: {
+    error: Error;
+    parameter: Array<string> | undefined;
+    statusCode: number | undefined;
+    url: string | undefined;
+  };
+};
+
 interface ExpoLoginUtilsModule {
   getRedirects: (
     url: string,
@@ -21,3 +33,6 @@ export const getRedirects = (
   callbackURLParameter: string
 ): Promise<Array<string>> =>
   ExpoLoginUtils.getRedirects(url, headers, callbackURLParameter);
+
+export const isLoginUtilsError = (e: unknown): e is LoginUtilsError =>
+  (e as LoginUtilsError).userInfo !== undefined;
