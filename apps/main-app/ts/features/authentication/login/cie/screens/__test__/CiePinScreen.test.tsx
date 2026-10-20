@@ -10,7 +10,7 @@ import * as accessibilityUtils from "../../../../../../utils/accessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import CiePinScreen from "../../screens/CiePinScreen";
+import CiePinScreen from "../CiePinScreen";
 
 jest.mock("../../../../../../store/hooks", () => ({
   useIOSelector: jest.fn(),

@@ -14,14 +14,13 @@ import {
   trackCiePinLoginSelected
 } from "../analytics";
 import { AUTHENTICATION_ROUTES } from "../navigation/routes";
-import { AUTH_LEVELS, AuthLevel } from "../utils";
+import { AUTH_LEVELS, AuthLevel, LoginType } from "../utils";
 
-type LoginFlow = "auth" | "reauth";
+const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 
 type UseCieLoginMethodSelectionParams = {
-  flow: LoginFlow;
+  flow: LoginType;
 };
-const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 
 export const useCieLoginMethodSelection = ({
   flow
