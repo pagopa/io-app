@@ -48,10 +48,7 @@ jest.mock("@react-navigation/native", () => {
 });
 
 describe("ItwCardOnboardingL3Screen", () => {
-  const fallbackState = appReducer(
-    appReducer(undefined, applicationChangeState("active")),
-    itwSetL2Fallback(true)
-  );
+  const fallbackState = appReducer(initialState, itwSetL2Fallback(true));
   const restrictedTypes = [
     CredentialType.DRIVING_LICENSE,
     CredentialType.EUROPEAN_DISABILITY_CARD,
