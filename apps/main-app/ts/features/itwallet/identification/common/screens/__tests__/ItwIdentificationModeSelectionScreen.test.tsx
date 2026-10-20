@@ -156,7 +156,8 @@ describe("ItwIdentificationModeSelectionScreen", () => {
       await waitFor(() =>
         expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.DISCOVERY.INFO,
-          params: { level: "l2-fallback" }
+          params: { level: "l2-fallback" },
+          pop: true
         })
       );
     }
@@ -185,7 +186,8 @@ describe("ItwIdentificationModeSelectionScreen", () => {
           params: {
             type: "card",
             routeName: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
-          }
+          },
+          pop: true
         })
       );
     }

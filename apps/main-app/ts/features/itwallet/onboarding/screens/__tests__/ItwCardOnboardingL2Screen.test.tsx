@@ -1,7 +1,6 @@
 import { act, fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 
-import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -16,9 +15,20 @@ import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCardOnboardingL2Screen } from "../ItwCardOnboardingL2Screen";
 
-describe("ItwCardOnboardingL2Screen", () => {
-  const replaceMock = jest.fn();
+const mockReplace = jest.fn();
 
+jest.mock("@react-navigation/native", () => {
+  const actual = jest.requireActual("@react-navigation/native");
+  return {
+    ...actual,
+    useNavigation: () => ({
+      ...actual.useNavigation(),
+      replace: mockReplace
+    })
+  };
+});
+
+describe("ItwCardOnboardingL2Screen", () => {
   const mockSelectorResult = {
     obtained: [],
     notObtained: [
@@ -28,10 +38,6 @@ describe("ItwCardOnboardingL2Screen", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-
-    jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
-      replace: replaceMock
-    } as any);
 
     jest
       .spyOn(credentialsSelectors, "makeItwCredentialsByPresenceSelector")
@@ -100,9 +106,8 @@ describe("ItwCardOnboardingL2Screen", () => {
       fireEvent.press(getByTestId("add-bonus-action-testID"));
     });
 
-    expect(replaceMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.L3_ONBOARDING,
-      params: { page: 1 }
+    expect(mockReplace).toHaveBeenCalledWith(ITW_ROUTES.L3_ONBOARDING, {
+      page: 1
     });
   });
 });
