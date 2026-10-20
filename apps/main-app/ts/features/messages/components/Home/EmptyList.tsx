@@ -1,6 +1,4 @@
 import { IOPictograms } from "@io-app/design-system";
-import * as B from "fp-ts/lib/boolean";
-import { constUndefined, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
@@ -38,27 +36,18 @@ export const EmptyList = ({ category }: EmptyListProps) => {
   const emptyListReason = useIOSelector(state =>
     emptyListReasonSelector(state, category)
   );
-  const onRetryCallback = useCallback(
-    () =>
-      pipe(
-        store.getState(),
-        isArchivingInProcessingModeSelector,
-        B.fold(
-          () =>
-            pipe(
-              {
-                pageSize,
-                filter: { getArchived: category === "ARCHIVE" },
-                fromUserAction: true
-              },
-              reloadAllMessages.request,
-              dispatch
-            ),
-          constUndefined
-        )
-      ),
-    [category, dispatch, store]
-  );
+  const onRetryCallback = useCallback(() => {
+    if (isArchivingInProcessingModeSelector(store.getState())) {
+      return;
+    }
+    dispatch(
+      reloadAllMessages.request({
+        pageSize,
+        filter: { getArchived: category === "ARCHIVE" },
+        fromUserAction: true
+      })
+    );
+  }, [category, dispatch, store]);
 
   const screenData = useMemo((): ScreenDataType | undefined => {
     switch (emptyListReason) {

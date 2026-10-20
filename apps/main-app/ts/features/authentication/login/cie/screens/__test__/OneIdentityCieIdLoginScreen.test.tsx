@@ -34,6 +34,7 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
+      addListener: jest.fn(),
       replace: mockReplace,
       dispatch: mockNavigationDispatch,
       navigate: jest.fn()
@@ -130,7 +131,9 @@ describe("OneIdentityCieIdLoginScreen", () => {
     );
 
     expect(mockNavigationDispatch).toHaveBeenCalledWith(
-      authErrorReplaceAction("err-code")
+      authErrorReplaceAction("err-code", {
+        reason: expect.stringContaining("err-code")
+      })
     );
     expect(mockReplace).not.toHaveBeenCalled();
   });
@@ -153,20 +156,35 @@ describe("OneIdentityCieIdLoginScreen", () => {
     const webview = getByTestId("cie-id-webview");
 
     fireEvent(webview, "onError", {
-      nativeEvent: { url: "https://example.com/authorize" }
+      nativeEvent: {
+        url: "https://example.com/authorize",
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED"
+      }
     });
 
     expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
+      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
+      params: {
+        failureData: {
+          description: "net::ERR_INTERNET_DISCONNECTED",
+          code: -2,
+          url: "https://example.com/authorize"
+        }
+      }
     });
   });
 });
 
-const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
+const authErrorReplaceAction = (
+  errorCodeOrMessage: string | undefined,
+  failureData: Record<string, unknown>
+) =>
   StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
     errorCodeOrMessage,
     authMethod: "CIE_ID",
-    authLevel: AUTH_LEVELS.L2
+    authLevel: AUTH_LEVELS.L2,
+    failureData
   });
 
 const renderComponent = () => {

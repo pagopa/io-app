@@ -10,6 +10,7 @@ import { PaymentsCheckoutRoutes } from "../../navigation/routes";
 import { WalletPaymentInputFiscalCodeScreen } from "../WalletPaymentInputFiscalCodeScreen";
 
 const mockNavigation = {
+  addListener: jest.fn(),
   navigate: jest.fn(),
   setOptions: jest.fn()
 };
