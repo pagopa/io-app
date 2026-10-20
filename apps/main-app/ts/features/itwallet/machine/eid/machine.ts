@@ -47,7 +47,8 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
           type: "start",
           mode: event.mode,
           level: event.level,
-          credentialType: event.credentialType
+          credentialType: event.credentialType,
+          credentialOfferUri: event.credentialOfferUri
         }))
       ]
     }
@@ -57,19 +58,30 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
-          actions: assign(({ event }) => ({
-            mode: event.mode,
-            level: event.level,
-            credentialType: event.credentialType,
+          actions: assign(({ event }) => {
             // Override the IT-Wallet version from the global store set on machine init.
             // This is necessary because a user might use a different IT-Wallet version outside this machine:
             // - User has 1.0 PID and is upgrading (1.0 -> 1.4)
             // - User is whitelisted but falls back to L2 (1.4 -> 1.0)
-            itwVersion:
+            const itwVersion =
               event.mode === "upgrade" || event.level === "l3"
                 ? CURRENT_ITW_SPECS_VERSION
-                : "1.0.0"
-          })),
+                : "1.0.0";
+
+            return {
+              mode: event.mode,
+              level: event.level,
+              credentialType: event.credentialType,
+              // TODO: [SIW-5384] Use `CredentialsOffer.isSupported` from the Wallet SDK instead of checking the specs version
+              // Credential offers are not supported by the 1.0.0 specs (Documenti su IO),
+              // so the offer cannot be resumed after an L2 activation
+              credentialOfferUri:
+                itwVersion === CURRENT_ITW_SPECS_VERSION
+                  ? event.credentialOfferUri
+                  : undefined,
+              itwVersion
+            };
+          }),
           target: "EvaluatingIssuanceMode"
         },
         close: {
