@@ -28,8 +28,11 @@ export const LandingScreenBannerPicker = () => {
   const dispatch = useIODispatch();
   const bannerToRender = useIOSelector(landingScreenBannerToRenderSelector);
   usePushNotificationsBannerTracking();
-  // The home is mounted below the startup loading overlay: content waits for
-  // it to go away, so that the entrance animation is always visible
+
+  // During startup onboarding, TabNavigator covers this screen with an opaque
+  // LoadingSpinnerOverlay, so the banner mounts and animates out of sight.
+  // Rendering is deferred until the overlay is gone, so the entrance animation
+  // is visible.
   const isStartupOnboarding =
     useIOSelector(isStartupLoaded) === StartupStatusEnum.ONBOARDING;
 
