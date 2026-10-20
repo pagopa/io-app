@@ -18,6 +18,7 @@ import {
   hexToRgba,
   IOColorsLegacy,
   IODimensions,
+  IOOpacity,
   IOSpringValues
 } from "../../core";
 import { triggerHaptic } from "../../functions";
@@ -61,8 +62,6 @@ type ColorStates = {
 };
 
 type TabItemState = "default" | "disabled" | "selected";
-
-const DISABLED_OPACITY = 0.5;
 
 const TabItem = ({
   label,
@@ -196,7 +195,7 @@ const TabItem = ({
           { columnGap: IODimensions.gap.tab.icon },
           !disabled && !reducedMotion && scaleAnimatedStyle,
           animatedStyle,
-          disabled && { opacity: DISABLED_OPACITY }
+          disabled && { opacity: IOOpacity.disabled }
         ]}
       >
         {activeIcon && (

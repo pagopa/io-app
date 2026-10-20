@@ -3,7 +3,7 @@ import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IODimensions, IOSelectionListItemStyles } from "../../core";
+import { IODimensions, IOOpacity, IOSelectionListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -12,6 +12,12 @@ import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
 
+type ListItemCheckboxProps = Pick<
+  ComponentProps<typeof Pressable>,
+  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
+> &
+  Props;
+
 type Props = {
   description?: string;
   icon?: IOIcons;
@@ -19,14 +25,6 @@ type Props = {
   selected?: boolean;
   value: string;
 };
-
-const DISABLED_OPACITY = 0.5;
-
-type ListItemCheckboxProps = Pick<
-  ComponentProps<typeof Pressable>,
-  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
-> &
-  Props;
 
 /**
  * With the automatic state management that uses a {@link AnimatedCheckBox} The
@@ -94,7 +92,7 @@ export const ListItemCheckbox = ({
         style={[
           IOSelectionListItemStyles.listItem,
           backgroundAnimatedStyle,
-          { opacity: disabled ? DISABLED_OPACITY : 1 }
+          { opacity: disabled ? IOOpacity.disabled : 1 }
         ]}
       >
         <Animated.View style={scaleAnimatedStyle}>

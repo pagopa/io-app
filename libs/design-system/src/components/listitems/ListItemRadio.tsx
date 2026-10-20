@@ -3,7 +3,7 @@ import { Image, Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IODimensions, IOSelectionListItemStyles } from "../../core";
+import { IODimensions, IOOpacity, IOSelectionListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -34,6 +34,12 @@ type ListItemRadioLoadingProps =
       state: true;
     };
 
+type ListItemRadioProps = Pick<
+  ComponentProps<typeof Pressable>,
+  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
+> &
+  Props;
+
 type Props = WithTestID<{
   description?: ReactNode | string;
   loadingProps?: ListItemRadioLoadingProps;
@@ -42,14 +48,6 @@ type Props = WithTestID<{
   startImage?: ListItemRadioGraphicProps;
   value: string;
 }>;
-
-const DISABLED_OPACITY = 0.5;
-
-type ListItemRadioProps = Pick<
-  ComponentProps<typeof Pressable>,
-  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
-> &
-  Props;
 
 const styles = StyleSheet.create({
   imageSize: {
@@ -94,7 +92,7 @@ export const ListItemRadio = ({
     }
   };
 
-  const disabledStyle = { opacity: disabled ? DISABLED_OPACITY : 1 };
+  const disabledStyle = { opacity: disabled ? IOOpacity.disabled : 1 };
 
   const SkeletonDescriptionLines = () => (
     <VStack space={8}>

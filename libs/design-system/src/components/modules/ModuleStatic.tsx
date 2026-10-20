@@ -2,7 +2,12 @@ import { ReactNode } from "react";
 import { PressableProps, View, ViewProps } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColorsLegacy, IODimensions, IOModuleStyles } from "../../core";
+import {
+  IOColorsLegacy,
+  IODimensions,
+  IOModuleStyles,
+  IOOpacity
+} from "../../core";
 import { HStack } from "../layout";
 
 type ModuleStaticMultipleBlockProps = {
@@ -25,8 +30,6 @@ type ModuleStaticSingleBlockProps = {
   startBlock?: never;
 };
 
-const DISABLED_OPACITY = 0.5;
-
 export const ModuleStatic = ({
   disabled = false,
   startBlock,
@@ -47,7 +50,7 @@ export const ModuleStatic = ({
         IOModuleStyles.button,
         {
           borderColor: IOColorsLegacy[theme["cardBorder-default"]],
-          opacity: disabled ? DISABLED_OPACITY : 1
+          opacity: disabled ? IOOpacity.disabled : 1
         }
       ]}
     >

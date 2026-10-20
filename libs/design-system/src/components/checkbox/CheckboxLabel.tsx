@@ -2,25 +2,24 @@ import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IODimensions } from "../../core";
+import { IODimensions, IOOpacity } from "../../core";
 import { triggerHaptic } from "../../functions/haptic-feedback/hapticFeedback";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { HStack } from "../layout";
 import { H6 } from "../typography/H6";
 import { Checkbox } from "./Checkbox";
 
-type Props = {
-  label: string;
-  // dispatch the new value after the checkbox changes state
-  onValueChange?: (newValue: boolean) => void;
-};
-
-const DISABLED_OPACITY = 0.5;
 // disabled: the component is no longer touchable
 // onPress:
 type OwnProps = Pick<ComponentProps<typeof Checkbox>, "checked" | "disabled"> &
   Pick<ComponentProps<typeof Pressable>, "onPress"> &
   Props;
+
+type Props = {
+  label: string;
+  // dispatch the new value after the checkbox changes state
+  onValueChange?: (newValue: boolean) => void;
+};
 
 /**
  * A checkbox with the automatic state management that uses a {@link Checkbox}
@@ -63,7 +62,7 @@ export const CheckboxLabel = ({
       onPress={toggleCheckbox}
       style={{
         alignSelf: "flex-start",
-        opacity: disabled ? DISABLED_OPACITY : 1
+        opacity: disabled ? IOOpacity.disabled : 1
       }}
       testID="Checkbox"
     >

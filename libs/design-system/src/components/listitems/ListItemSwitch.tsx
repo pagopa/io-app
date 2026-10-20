@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IODimensions, IOSelectionListItemStyles } from "../../core";
+import { IODimensions, IOOpacity, IOSelectionListItemStyles } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -37,8 +37,6 @@ type PartialProps = WithTestID<{
   onSwitchValueChange?: (newValue: boolean) => void;
   switchTestID?: string;
 }>;
-
-const DISABLED_OPACITY = 0.5;
 
 /* Estimated height of the native switch component,
 both on iOS & Android */
@@ -82,7 +80,7 @@ export const ListItemSwitch = memo(
         style={[
           IOSelectionListItemStyles.listItem,
           {
-            opacity: disabled ? DISABLED_OPACITY : 1
+            opacity: disabled ? IOOpacity.disabled : 1
           }
         ]}
         testID={testID ?? "ListItemSwitch"}

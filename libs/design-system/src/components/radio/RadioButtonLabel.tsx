@@ -2,7 +2,7 @@ import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IODimensions } from "../../core";
+import { IODimensions, IOOpacity } from "../../core";
 import { triggerHaptic } from "../../functions/haptic-feedback/hapticFeedback";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { H6 } from "../typography/H6";
@@ -13,8 +13,6 @@ type Props = {
   // dispatch the new value after the radio button changes state
   onValueChange?: (newValue: boolean) => void;
 };
-
-const DISABLED_OPACITY = 0.5;
 
 type RadioButtonLabelProps = Pick<
   ComponentProps<typeof Pressable>,
@@ -65,7 +63,7 @@ export const RadioButtonLabel = ({
       onPress={toggleRadioButton}
       style={{
         alignSelf: "flex-start",
-        opacity: disabled ? DISABLED_OPACITY : 1
+        opacity: disabled ? IOOpacity.disabled : 1
       }}
       testID="RadioButton"
     >

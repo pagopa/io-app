@@ -88,8 +88,17 @@ export const IOColorPalette = tagColors<IOPaletteColor>()({
 });
 
 /* Alphas a token color can take. `0` keeps the hue, so a transition to transparent doesn't pass through grey */
-export const IOOpacityScale = [0, 0.1, 0.2, 0.5, 0.6, 0.85] as const;
-export type IOOpacity = (typeof IOOpacityScale)[number];
+const opacityScale = [0, 0.1, 0.15, 0.2, 0.5, 0.6, 0.7, 0.85] as const;
+export type IOOpacity = (typeof opacityScale)[number];
+
+/* Named values of Figma `Color/Opacity`: each one a single value of the scale */
+const namedOpacity = {
+  /* Disabled elements, and disabled colors with `withAlpha` */
+  disabled: 0.5
+} as const satisfies Record<string, IOOpacity>;
+
+/* The opacity ramp, and its named values */
+export const IOOpacity = { scale: opacityScale, ...namedOpacity } as const;
 
 declare const origin: unique symbol;
 

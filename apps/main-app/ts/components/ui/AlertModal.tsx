@@ -51,7 +51,6 @@ export const AlertModal = ({ message }: AlertModalProps) => {
           <Body>{message}</Body>
         </View>
       }
-      opacity={backdrop.opacity}
     />
   );
 };

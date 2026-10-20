@@ -20,6 +20,7 @@ import {
   enterTransitionInnerContentSmall,
   exitTransitionInnerContent,
   IODimensions,
+  IOOpacity,
   IOTypography
 } from "../../../core";
 import { triggerHaptic } from "../../../functions";
@@ -181,8 +182,6 @@ export const IOButton = ({
   const btnPaddingHorizontal = btnPaddingHorizontalMap[variant][btnWidth];
   const btnBorderRadius = btnBorderRadiusMap[variant];
 
-  const DISABLED_OPACITY = 0.5;
-
   const colorState = disabled ? "disabled" : "default";
   const backgroundColor: ColorValue =
     mapColorStates[color].background[colorState];
@@ -332,7 +331,7 @@ export const IOButton = ({
           },
           disabled
             ? {
-                opacity: DISABLED_OPACITY
+                opacity: IOOpacity.disabled
               }
             : {}
         ]}

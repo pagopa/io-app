@@ -17,7 +17,7 @@ export const tagColors =
 /**
  * Sets the alpha channel of a color, as `rgba(r,g,b,a)`. Accepts a hex or an
  * `rgba()` color: an existing alpha is replaced, not multiplied. A token color
- * with an alpha from `IOOpacityScale` returns a token color; anything else
+ * with an alpha from `IOOpacity.scale` returns a token color; anything else
  * returns a plain string (legacy `hexToRgba` calls).
  */
 export function withAlpha(
