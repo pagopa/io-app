@@ -220,6 +220,7 @@ const HelperRow = ({
   );
 };
 
+// oxlint-disable-next-line complexity
 export const TextInputBase = ({
   disabled = false,
   placeholder,
