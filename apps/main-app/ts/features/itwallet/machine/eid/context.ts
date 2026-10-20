@@ -13,6 +13,7 @@ import type {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 
+import { CURRENT_ITW_SPECS_VERSION } from "../../common/utils/constants";
 import { IssuanceFailure } from "./failure";
 import { EidIssuanceMachineDeps } from "./input";
 
@@ -87,6 +88,13 @@ export type Context = {
   /** An optional dictionary of Key Attestations generated for the issuance. */
   keyAttestations?: Record<string, string>;
   /**
+   * Set when the user switches from IT-Wallet (L3) identification to Documenti
+   * su IO because they do not have a CIE. It keeps the L3 credential type, so
+   * the user can go back from the Documenti su IO landing to the L3
+   * identification mode selection.
+   */
+  l2FallbackOrigin: undefined | { credentialType: string | undefined };
+  /**
    * The level of eID issuance, which determines the authentication methods
    * allowed and the eID level that will be issued: Documenti su IO (L2) or IT
    * Wallet (L2+, L3)
@@ -134,6 +142,19 @@ export type EidIssuanceLevel = "l2" | "l2-fallback" | "l3";
  */
 export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
 
+/**
+ * Returns the IT-Wallet specs version to use for the given issuance mode and
+ * level. A user might use a different version outside the issuance machine:
+ *
+ * - A user with a 1.0 PID who upgrades to IT-Wallet uses the current version.
+ * - A whitelisted user who falls back to Documenti su IO uses 1.0.
+ */
+export const getIssuanceItwVersion = (
+  mode: EidIssuanceMode,
+  level: EidIssuanceLevel
+): ItwVersion =>
+  mode === "upgrade" || level === "l3" ? CURRENT_ITW_SPECS_VERSION : "1.0.0";
+
 export type IdentificationContext =
   | { idpId: string; level: "L2"; mode: "spid" }
   | { level: "L2" | "L3"; mode: "cieId" }
@@ -176,6 +197,7 @@ export const InitialContext: Omit<Context, "deps"> = {
   credentialsToUpgrade: [],
   failedCredentials: undefined,
   credentialType: undefined,
+  l2FallbackOrigin: undefined,
   accessToken: undefined,
   walletInstanceStatusList: undefined
 };

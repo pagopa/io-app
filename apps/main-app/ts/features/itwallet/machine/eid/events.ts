@@ -72,6 +72,11 @@ type CiePinEntered = {
   type: "cie-pin-entered";
 };
 
+/**
+ * Closes the issuance. On the Documenti su IO landing reached by restarting
+ * from the IT-Wallet (L3) identification because the user does not have a CIE,
+ * it goes back to the L3 identification mode selection instead.
+ */
 type Close = {
   /**
    * Step at which the user exited, used to show the Qualtrics survey in
