@@ -68,7 +68,9 @@ export const navigateToPresentmentScreenAction = ({
 }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
   context.deps.navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
     screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
-    params: {}
+    params: {},
+    pop: true,
+    merge: true
   });
 };
 
