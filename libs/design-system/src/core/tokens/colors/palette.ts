@@ -105,7 +105,7 @@ declare const origin: unique symbol;
 /* One of our colors: declared once, then referenced by name */
 export type IOColorValue = IOCustomColor | IOPaletteColor | IOTranslucentColor;
 
-/* A color outside the palette, declared in a module-level `…Colors` object */
+/* A color outside the palette, declared in a module-level constant */
 export type IOCustomColor = `#${string}`;
 
 /* Hex values the palette declares: alpha comes from `withAlpha` */
@@ -120,6 +120,9 @@ export type IOPaletteColor = IOColor<"palette">;
 export type IOTaggedColors<T, C> = {
   readonly [K in keyof T]: T[K] extends string ? C : IOTaggedColors<T[K], C>;
 };
+
+/* A color only the palette or `withAlpha` can produce: a written string isn't one */
+export type IOTokenColor = IOPaletteColor | IOTranslucentColor;
 
 /* A palette or custom color with an alpha from the scale: only `withAlpha` creates it */
 export type IOTranslucentColor = IOColor<"translucent">;

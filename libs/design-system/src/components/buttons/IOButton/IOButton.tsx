@@ -15,6 +15,7 @@ import Animated, {
   useReducedMotion
 } from "react-native-reanimated";
 
+import { useIOColors } from "../../../context";
 import {
   enterTransitionInnerContent,
   enterTransitionInnerContentSmall,
@@ -34,7 +35,7 @@ import {
 } from "../../icons";
 import { LoadingSpinner } from "../../loadingSpinner";
 import { AnimatedIOText } from "../../typography";
-import { useButtonAnimatedStyles, useButtonColorMap } from "./styles";
+import { useButtonAnimatedStyles } from "./styles";
 
 export type IOButtonBlockSpecificProps = Omit<
   ComponentProps<typeof IOButton>,
@@ -164,11 +165,12 @@ export const IOButton = ({
   ref,
   testID
 }: IOButtonProps) => {
-  const mapColorStates = useButtonColorMap(variant);
+  const colors = useIOColors();
+  const buttonColors = colors.component.button[variant][color];
   const { progress, onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation();
   const { buttonAnimatedStyle, labelAnimatedStyle, iconColorAnimatedStyle } =
-    useButtonAnimatedStyles(variant, color, progress);
+    useButtonAnimatedStyles(variant, buttonColors, progress);
   const reducedMotion = useReducedMotion();
 
   const isLinkButton = variant === "link";
@@ -183,11 +185,9 @@ export const IOButton = ({
   const btnBorderRadius = btnBorderRadiusMap[variant];
 
   const colorState = disabled ? "disabled" : "default";
-  const backgroundColor: ColorValue =
-    mapColorStates[color].background[colorState];
+  const backgroundColor: ColorValue = buttonColors.background[colorState];
   // Label & Icons colors
-  const foregroundColor: ColorValue =
-    mapColorStates[color].foreground[colorState];
+  const foregroundColor: ColorValue = buttonColors.foreground[colorState];
 
   // ---------------------------------------
   // BUTTON INNER LOGIC
@@ -255,7 +255,7 @@ export const IOButton = ({
             ) : (
               <AnimatedIcon
                 allowFontScaling
-                color={mapColorStates[color]?.foreground?.disabled}
+                color={buttonColors.foreground.disabled}
                 name={icon}
                 size={btnIconSize}
               />
@@ -273,8 +273,8 @@ export const IOButton = ({
             style={[
               { textAlign },
               disabled
-                ? { color: mapColorStates[color]?.foreground?.disabled }
-                : { color: mapColorStates[color]?.foreground?.default },
+                ? { color: buttonColors.foreground.disabled }
+                : { color: buttonColors.foreground.default },
               !disabled && labelAnimatedStyle
             ]}
             weight={"Semibold"}

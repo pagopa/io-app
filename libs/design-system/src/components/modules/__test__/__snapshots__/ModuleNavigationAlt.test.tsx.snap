@@ -1099,7 +1099,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Badge (badge
                   "paddingVertical": 4,
                 },
                 {
-                  "backgroundColor": "rgba(97,220,223,0.2)",
+                  "backgroundColor": "#DBF9FA",
                 },
               ]
             }
@@ -1113,7 +1113,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Badge (badge
                 [
                   {},
                   {
-                    "color": "#61DCDF",
+                    "color": "#003B3D",
                     "fontFamily": "Titillio",
                     "fontSize": 12,
                     "fontStyle": "normal",
@@ -2569,7 +2569,7 @@ exports[`ModuleNavigationAlt - Snapshot With Badge (badge + chevron) 1`] = `
                   "paddingVertical": 4,
                 },
                 {
-                  "backgroundColor": "rgba(97,220,223,0.2)",
+                  "backgroundColor": "#DBF9FA",
                 },
               ]
             }
@@ -2583,7 +2583,7 @@ exports[`ModuleNavigationAlt - Snapshot With Badge (badge + chevron) 1`] = `
                 [
                   {},
                   {
-                    "color": "#61DCDF",
+                    "color": "#003B3D",
                     "fontFamily": "Titillio",
                     "fontSize": 12,
                     "fontStyle": "normal",

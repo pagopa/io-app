@@ -11,7 +11,7 @@ import {
 } from "@expo/ui/swift-ui/modifiers";
 import {
   getBolderFontWeight,
-  IOColorsLegacy,
+  getTextColorValue,
   IOMaxFontSizeMultiplier,
   IOTypography,
   makeFontPostScriptName,
@@ -87,7 +87,7 @@ const SwiftUINumericText = ({
         ),
         size: scaledSize
       }),
-      foregroundStyle(IOColorsLegacy[computedColor]),
+      foregroundStyle(getTextColorValue(computedColor)),
       accessibilityLabelModifier(accessibilityLabel),
       contentTransition("numericText", { countsDown }),
       animation(Animation.spring(TRANSITION_SPRING), value),

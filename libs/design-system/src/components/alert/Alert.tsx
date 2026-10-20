@@ -1,6 +1,5 @@
 import { JSX, Ref } from "react";
 import {
-  ColorValue,
   GestureResponderEvent,
   Pressable,
   View,
@@ -8,9 +7,8 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOThemeContext } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
-import { hexToRgba, IOColorsLegacy } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
@@ -42,66 +40,13 @@ type AlertProps = WithTestID<{
 
 type AlertType = AlertActionProps & AlertProps;
 
-type VariantStates = {
-  background: ColorValue;
-  foreground: IOColorsLegacy;
-  icon: IOIcons;
-};
-
 // COMPONENT CONFIGURATION
 
-const mapVariantStatesLightMode: Record<
-  NonNullable<AlertType["variant"]>,
-  VariantStates
-> = {
-  error: {
-    icon: "errorFilled",
-    background: IOColorsLegacy["error-100"],
-    foreground: "error-850"
-  },
-  warning: {
-    icon: "warningFilled",
-    background: IOColorsLegacy["warning-100"],
-    foreground: "warning-850"
-  },
-  info: {
-    icon: "infoFilled",
-    background: IOColorsLegacy["info-100"],
-    foreground: "info-850"
-  },
-  success: {
-    icon: "success",
-    background: IOColorsLegacy["success-100"],
-    foreground: "success-850"
-  }
-};
-
-const bgOpacityDarkMode = 0.2;
-
-const mapVariantStatesDarkMode: Record<
-  NonNullable<AlertType["variant"]>,
-  VariantStates
-> = {
-  error: {
-    icon: "errorFilled",
-    background: hexToRgba(IOColorsLegacy["error-400"], bgOpacityDarkMode),
-    foreground: "error-100"
-  },
-  warning: {
-    icon: "warningFilled",
-    background: hexToRgba(IOColorsLegacy["warning-400"], bgOpacityDarkMode),
-    foreground: "warning-100"
-  },
-  info: {
-    icon: "infoFilled",
-    background: hexToRgba(IOColorsLegacy["info-400"], bgOpacityDarkMode),
-    foreground: "info-100"
-  },
-  success: {
-    icon: "success",
-    background: hexToRgba(IOColorsLegacy["success-400"], bgOpacityDarkMode),
-    foreground: "success-100"
-  }
+const variantIcons: Record<NonNullable<AlertType["variant"]>, IOIcons> = {
+  error: "errorFilled",
+  warning: "warningFilled",
+  info: "infoFilled",
+  success: "success"
 };
 
 export const Alert = ({
@@ -117,7 +62,8 @@ export const Alert = ({
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
-  const { themeType } = useIOThemeContext();
+  const colors = useIOColors();
+  const alertColors = colors.component.alert[variant];
 
   const paddingDefaultVariant: ViewStyle = {
     padding,
@@ -125,11 +71,6 @@ export const Alert = ({
       IODimensions.radius.alert * dynamicFontScale * spacingScaleMultiplier,
     borderCurve: "continuous"
   };
-
-  const mapVariantStates =
-    themeType === "light"
-      ? mapVariantStatesLightMode
-      : mapVariantStatesDarkMode;
 
   const renderMainBlock = () => (
     <HStack
@@ -139,8 +80,8 @@ export const Alert = ({
     >
       <Icon
         allowFontScaling
-        color={mapVariantStates[variant].foreground}
-        name={mapVariantStates[variant].icon}
+        color={alertColors.foreground.default}
+        name={variantIcons[variant]}
         size={IODimensions.size.icon.alert}
       />
       {/* Sadly we don't have specific alignments style for text
@@ -157,14 +98,14 @@ export const Alert = ({
         <VStack allowScaleSpacing space={IODimensions.gap.alert.action}>
           <Body
             accessibilityRole="text"
-            color={mapVariantStates[variant].foreground}
+            color={alertColors.foreground.default}
             weight={"Regular"}
           >
             {content}
           </Body>
           {action && (
             <ButtonText
-              color={mapVariantStates[variant].foreground}
+              color={alertColors.foreground.default}
               ellipsizeMode="tail"
               numberOfLines={1}
             >
@@ -184,7 +125,7 @@ export const Alert = ({
       ref={viewRef}
       style={[
         fullWidth ? { padding: paddingFullWidth } : paddingDefaultVariant,
-        { backgroundColor: mapVariantStates[variant].background }
+        { backgroundColor: alertColors.background.default }
       ]}
       testID={testID}
     >
@@ -208,7 +149,7 @@ export const Alert = ({
       <Animated.View
         style={[
           fullWidth ? { padding: paddingFullWidth } : paddingDefaultVariant,
-          { backgroundColor: mapVariantStates[variant].background },
+          { backgroundColor: alertColors.background.default },
           // Disable pressed animation when component is full width
           !fullWidth && scaleAnimatedStyle
         ]}
