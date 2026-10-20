@@ -37,7 +37,8 @@ const ItwPresentationDetailsScreenBase = ({
   headerTransparent = false
 }: ItwPresentationDetailsScreenBaseProps) => {
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const { color } = useCredentialCardConfig(credential.credentialType);
+  // Must match the header card, which is always in light mode
+  const { color } = useCredentialCardConfig(credential.credentialType, "light");
   const title = useItwCredentialName(credential.credentialType);
 
   const backgroundColor = withL3Design
@@ -45,7 +46,7 @@ const ItwPresentationDetailsScreenBase = ({
     : getLegacyThemeColorByCredentialType(credential.credentialType)
         .backgroundColor;
   const variant = useMemo(
-    () => (Color(backgroundColor).isDark() ? "contrast" : undefined),
+    () => (Color(backgroundColor).isDark() ? "contrast" : "neutral"),
     [backgroundColor]
   );
 
