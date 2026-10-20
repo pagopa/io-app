@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useEffect } from "react";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { SendUserType } from "../../../pushNotifications/analytics";
@@ -79,7 +79,7 @@ export const SendAarInitialFlowScreen = ({
       return (
         <LoadingScreenContent
           testID="LoadingScreenContent"
-          title={i18n.t("features.pn.aar.flow.fetchingQrData.loadingText")}
+          title={I18n.t("features.pn.aar.flow.fetchingQrData.loadingText")}
         />
       );
   }

@@ -16,6 +16,11 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
+jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
+  AnimatedPictogram: () => null,
+  IOAnimatedPictogramsAssets: {}
+}));
+
 describe("PreconditionsContent", () => {
   afterEach(() => {
     jest.resetAllMocks();

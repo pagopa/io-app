@@ -12,11 +12,12 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
 
 describe("WalletCardOnboardingScreen", () => {
-  it("it should render the screen correctly", () => {
+  it("should render the screen correctly", () => {
     jest
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(true);
@@ -29,7 +30,7 @@ describe("WalletCardOnboardingScreen", () => {
     expect(component).toBeTruthy();
   });
 
-  it("it should render the IT Wallet modules", () => {
+  it("should render the IT Wallet modules", () => {
     jest
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(true);
@@ -79,11 +80,12 @@ describe("WalletCardOnboardingScreen", () => {
     expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
   });
 
-  test.each([["mDL"], ["mDL", "EuropeanHealthInsuranceCard"]] as ReadonlyArray<
-    ReadonlyArray<string>
-  >)(
-    "it should hide credential modules when %1 are remotely disabled",
-    (...disabledCredentials) => {
+  test.each([
+    { disabledCredentials: ["mDL"] },
+    { disabledCredentials: ["mDL", "EuropeanHealthInsuranceCard"] }
+  ])(
+    "it should hide credential modules when $disabledCredentials are remotely disabled",
+    ({ disabledCredentials }) => {
       jest
         .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(true);
@@ -97,7 +99,7 @@ describe("WalletCardOnboardingScreen", () => {
         .mockReturnValue(disabledCredentials);
 
       const { queryByTestId } = renderComponent();
-      for (const type of disabledCredentials!) {
+      for (const type of disabledCredentials) {
         // Currently ModuleCredential does not attach the testID if onPress is undefined.
         // Since disabled credentials have undefined onPress, we can test for null.
         expect(queryByTestId(`${type}ModuleTestID`)).toBeNull();
@@ -175,7 +177,10 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
+      >
         <WalletCardOnboardingScreen />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),

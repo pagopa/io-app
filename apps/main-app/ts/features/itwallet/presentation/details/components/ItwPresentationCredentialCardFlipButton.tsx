@@ -9,23 +9,13 @@ type ItwPresentationCredentialCardFlipButtonProps = {
   isFlipped: boolean;
 };
 
-/**
- * This component renders the flip button for the skeumorphic credential card
- */
+/** This component renders the flip button for the skeumorphic credential card */
 const ItwPresentationCredentialCardFlipButton = ({
   isFlipped,
   handleOnPress,
   fullScreen = false
 }: ItwPresentationCredentialCardFlipButtonProps) => (
-  <View
-    accessibilityLabel={I18n.t(
-      "features.itWallet.presentation.credentialDetails.card.showBack"
-    )}
-    accessibilityRole="switch"
-    accessibilityState={{ checked: isFlipped }}
-    accessible={true}
-    style={fullScreen ? styles.fullWidthButton : styles.button}
-  >
+  <View style={fullScreen ? styles.fullWidthButton : styles.button}>
     <IOButton
       icon="switchCard"
       iconPosition="end"

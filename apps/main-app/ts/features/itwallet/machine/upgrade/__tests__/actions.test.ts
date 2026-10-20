@@ -1,40 +1,41 @@
-import { default as configureMockStore } from "redux-mock-store";
 import { ActionArgs } from "xstate";
 
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { useIOStore } from "../../../../../store/hooks";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
-import { createCredentialUpgradeActionsImplementation } from "../actions";
+import {
+  testCredentialUpgradeDeps,
+  testMachineStore
+} from "../../utils/testDeps";
+import { storeCredentialAction } from "../actions";
 import { Context } from "../context";
 import { CredentialUpgradeEvents } from "../events";
 
 describe("itwCredentialUpgradeMachine actions", () => {
-  describe("storeCredential", () => {
-    it("should store the new credential removing the old one", () => {
+  describe("storeCredentialAction", () => {
+    const upgradedMdl = {
+      credential: "raw-jwt",
+      metadata: ItwStoredCredentialsMocks.L3.mdl
+    };
+
+    const runStoreCredentialAction = (
+      ownedCredentials: ReadonlyArray<CredentialMetadata>
+    ) => {
       const mockDispatch = jest.fn();
-      const mockStore = {
-        ...createMockStore(),
-        dispatch: mockDispatch
-      } as ReturnType<typeof useIOStore>;
 
-      const { storeCredential } =
-        createCredentialUpgradeActionsImplementation(mockStore);
-
-      storeCredential({
+      storeCredentialAction({
+        context: {
+          credentials: ownedCredentials,
+          deps: testCredentialUpgradeDeps({
+            store: testMachineStore({ dispatch: mockDispatch })
+          })
+        } as Context,
         event: {
           type: "xstate.done.actor.upgradeCredential",
           actorId: "upgradeCredential",
           output: {
-            credentialType: "MDL",
-            credentials: [
-              {
-                credential: "raw-jwt",
-                metadata: ItwStoredCredentialsMocks.L3.mdl
-              }
-            ]
+            credentialType: upgradedMdl.metadata.credentialType,
+            credentials: [upgradedMdl]
           }
         }
       } as unknown as ActionArgs<
@@ -43,12 +44,45 @@ describe("itwCredentialUpgradeMachine actions", () => {
         CredentialUpgradeEvents
       >);
 
+      return mockDispatch;
+    };
+
+    test.each([
+      { name: "catalogue", origin: "catalogue" as const },
+      { name: "credential offer", origin: "credentialOffer" as const },
+      { name: "unknown", origin: undefined }
+    ])(
+      "should replace the owned credential keeping its $name origin",
+      ({ origin }) => {
+        const mockDispatch = runStoreCredentialAction([
+          { ...ItwStoredCredentialsMocks.mdl, origin }
+        ]);
+
+        expect(mockDispatch).toHaveBeenCalledWith(
+          itwCredentialsReplaceByType(
+            [
+              {
+                ...upgradedMdl,
+                metadata: { ...upgradedMdl.metadata, origin }
+              }
+            ],
+            {}
+          )
+        );
+      }
+    );
+
+    it("should not take the origin from an owned credential of another type", () => {
+      const mockDispatch = runStoreCredentialAction([
+        { ...ItwStoredCredentialsMocks.ts, origin: "credentialOffer" }
+      ]);
+
       expect(mockDispatch).toHaveBeenCalledWith(
         itwCredentialsReplaceByType(
           [
             {
-              credential: "raw-jwt",
-              metadata: ItwStoredCredentialsMocks.L3.mdl
+              ...upgradedMdl,
+              metadata: { ...upgradedMdl.metadata, origin: undefined }
             }
           ],
           {}
@@ -57,9 +91,3 @@ describe("itwCredentialUpgradeMachine actions", () => {
     });
   });
 });
-
-const createMockStore = () => {
-  const defaultState = appReducer(undefined, applicationChangeState("active"));
-  const mockStore = configureMockStore<GlobalState>();
-  return mockStore(defaultState);
-};

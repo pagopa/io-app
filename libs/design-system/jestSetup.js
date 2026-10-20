@@ -1,7 +1,5 @@
 /* globals jest, NativeModules */
-/**
- * Set up of the testing environment
- */
+/** Set up of the testing environment */
 
 import nodeFetch from "node-fetch";
 import { NativeModules } from "react-native";
@@ -27,10 +25,9 @@ jest.mock("react-native-worklets", () =>
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("react-native-reanimated").setUpTests();
 
-// Pulsar is a TurboModule, so importing it under Jest throws: there is no
-// native module for TurboModuleRegistry.getEnforcing("RNPulsar") to bind to.
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-jest.mock("react-native-pulsar", () => require("./__mocks__/pulsarJestMock"));
+jest.mock("react-native-pulsar", () =>
+  require("react-native-pulsar/jest-mock")
+);
 
 // eslint-disable-next-line functional/immutable-data
 NativeModules.PlatformConstants = NativeModules.PlatformConstants || {

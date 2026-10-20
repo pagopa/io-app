@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 
@@ -79,7 +78,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          issuance: { integrityKeyTag: O.some("key-tag") },
+          issuance: { integrityKeyTag: "key-tag" },
           credentials: {
             credentials: {}
           }
@@ -107,7 +106,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          issuance: { integrityKeyTag: O.some("key-tag") },
+          issuance: { integrityKeyTag: "key-tag" },
           credentials: {
             credentials: {
               [mockedEid.credentialId]: mockedEid,
@@ -157,7 +156,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          issuance: { integrityKeyTag: O.none },
+          issuance: { integrityKeyTag: undefined },
           credentials: {
             credentials: {
               [mockedMdl.credentialId]: mockedMdl

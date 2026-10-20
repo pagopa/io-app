@@ -71,12 +71,12 @@ type PotFoldWithDefaultHandlers<A, E, O> = {
 
 /**
  * Fold a {@link pot.Pot} using a fallback default function
+ *
  * @param value
  * @param handlers {PotFoldWithDefaultHandlers}
  *
- * The default handler will be called if any of the args is not defined,
- * and will have two optional parameters, which can be *some* or *error*
- *
+ *   The default handler will be called if any of the args is not defined, and
+ *   will have two optional parameters, which can be _some_ or _error_
  */
 export const potFoldWithDefault = <A, E, O>(
   value: pot.Pot<A, E>,

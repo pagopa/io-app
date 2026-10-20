@@ -5,6 +5,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
+import { SendFailureReason } from "../../../messages/utils";
 import {
   SendOpeningSource,
   SendUserType
@@ -20,7 +21,7 @@ type PNPaymentStatusTracking = {
   userType: SendUserType;
 };
 type TogglePnActivationRequestPaylad = {
-  onFailure?: (isRateLimitError?: boolean) => void;
+  onFailure?: (isRateLimitError?: boolean, reason?: SendFailureReason) => void;
   onSuccess?: () => void;
   value: boolean;
 };

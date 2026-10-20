@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/knip/schema-jsonc.json",
+  // Metro picks the platform variant of a module at bundle time, so nothing
+  // ever imports `*.ios.tsx` / `*.android.tsx` by path. Knip resolves the
+  // plain specifier only and would report every variant as an unused file.
+  "ignoreIssues": {
+    "**/*.{ios,android,native,web}.{js,jsx,ts,tsx}": ["files"]
+  }
+}

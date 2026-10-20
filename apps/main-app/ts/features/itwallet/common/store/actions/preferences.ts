@@ -31,13 +31,17 @@ export const itwDisableItwActivation = createStandardAction(
   "ITW_DISABLE_ITW_ACTIVATION"
 )();
 
+/** Records a successful activation through an IT-Wallet fallback. */
+export const itwSetL2Fallback = createStandardAction(
+  "ITW_SET_L2_FALLBACK"
+)<boolean>();
+
 export const itwSetIdentificationMode = createStandardAction(
   "ITW_SET_IDENTIFICATION_MODE"
 )<IdentificationContext["mode"] | undefined>();
 
 export type ItwWalletActivationFeedbackBannerData = {
   authMethod: string;
-  date: string;
   docStatus: "active" | "not_active";
 };
 
@@ -58,5 +62,6 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetCredentialUpgradeFailed>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwSetIdentificationMode>
+  | ActionType<typeof itwSetL2Fallback>
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
   | ActionType<typeof itwSetWalletActivationFeedbackBannerData>;

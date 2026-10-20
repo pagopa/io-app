@@ -5,9 +5,7 @@ import NavigationService from "../../../../../../navigation/NavigationService";
 import { cgnActivationCancel } from "../../../store/actions/activation";
 import { CgnActivationType, cgnActivationWorker } from "./cgnActivationWorker";
 
-/**
- * This saga handles the CGN activation polling
- */
+/** This saga handles the CGN activation polling */
 export function* handleCgnActivationSaga(cgnActivationSaga: CgnActivationType) {
   const { cancelAction } = yield* race({
     activation: call(cgnActivationWorker, cgnActivationSaga),

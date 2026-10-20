@@ -15,7 +15,7 @@ import { WithTestID } from "../../utils/types";
 import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer, VStack } from "../layout";
 import { IOLogoPaymentType, LogoPayment } from "../logos";
-import { AnimatedRadio } from "../radio/AnimatedRadio";
+import { Radio } from "../radio/Radio";
 import { IOSkeleton } from "../skeleton";
 import { BodySmall, H6 } from "../typography";
 
@@ -64,11 +64,12 @@ const styles = StyleSheet.create({
 });
 
 /**
- * `ListItemRadio` component with the automatic state management that uses a {@link AnimatedCheckBox}
- * The toggleValue change when a `onPress` event is received and dispatch the `onValueChange`.
+ * `ListItemRadio` component with the automatic state management that uses a
+ * {@link AnimatedCheckBox} The toggleValue change when a `onPress` event is
+ * received and dispatch the `onValueChange`.
  *
+ * @class
  * @param props
- * @constructor
  */
 export const ListItemRadio = ({
   value,
@@ -144,7 +145,7 @@ export const ListItemRadio = ({
           </View>
           <HSpacer size={8} />
           <View pointerEvents="none" style={disabledStyle}>
-            <AnimatedRadio
+            <Radio
               checked={toggleValue}
               size={IOSelectionTickVisualParams.size * dynamicFontScale}
             />
@@ -232,7 +233,7 @@ export const ListItemRadio = ({
               importantForAccessibility="no-hide-descendants"
               pointerEvents="none"
             >
-              <AnimatedRadio
+              <Radio
                 checked={selected ?? toggleValue}
                 size={IOSelectionTickVisualParams.size * dynamicFontScale}
               />

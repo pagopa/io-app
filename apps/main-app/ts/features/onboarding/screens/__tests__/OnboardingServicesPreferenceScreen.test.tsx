@@ -120,7 +120,9 @@ describe("OnboardingServicesPreferenceScreen", () => {
     fireEvent.press(autoButton);
     expect(mockDispatch).toHaveBeenCalledWith(
       profileUpsert.request({
-        service_preferences_settings: { mode: ServicesPreferencesModeEnum.AUTO }
+        service_preferences_settings: {
+          mode: ServicesPreferencesModeEnum.AUTO
+        }
       })
     );
   });

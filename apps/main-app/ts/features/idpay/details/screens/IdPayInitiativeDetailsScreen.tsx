@@ -26,9 +26,10 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
-import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
+import { useAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { UpdateAppAlert } from "../../../../components/UpdateAppAlert";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
@@ -464,7 +465,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       headerAction={{
         icon: "info",
         onPress: navigateToBeneficiaryDetails,
-        accessibilityLabel: "info"
+        accessibilityLabel: I18n.t("global.buttons.info")
       }}
       logoUris={[{ uri: logoURL }]}
       name={initiativeName || ""}
@@ -479,9 +480,10 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   );
 };
 
-const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
-  IdPayInitiativeDetailsScreenComponent,
-  "idpay.initiative_details"
-);
-
-export { IdPayInitiativeDetailsScreen };
+export const IdPayInitiativeDetailsScreen = () => {
+  const requiresUpdate = useAppRequiredUpdate("idpay.initiative_details");
+  if (requiresUpdate) {
+    return <UpdateAppAlert />;
+  }
+  return <IdPayInitiativeDetailsScreenComponent />;
+};

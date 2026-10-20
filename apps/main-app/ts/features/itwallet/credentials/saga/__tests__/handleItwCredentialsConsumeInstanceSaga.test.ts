@@ -6,6 +6,7 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { trackItwVaultCredentialRemoveFailed } from "../../analytics";
 import {
+  itwCredentialsBatchRefillRequest,
   itwCredentialsConsumeInstance,
   itwCredentialsRemove,
   itwCredentialsStore
@@ -156,6 +157,58 @@ describe("handleItwCredentialsConsumeInstanceSaga", () => {
         });
         expect(mockDeleteKey).not.toHaveBeenCalled();
       });
+  });
+
+  it("requests a batch refill when the consumed copy brings the pool to the threshold", () => {
+    mockVaultRemove.mockResolvedValue(undefined);
+    mockDeleteKey.mockResolvedValue(undefined);
+
+    const action = itwCredentialsConsumeInstance([
+      { credentialId: batchCredential.credentialId, keyTag: "key-tag-01" }
+    ]);
+
+    return expectSaga(handleItwCredentialsConsumeInstanceSaga, action)
+      .withState(makeState([batchCredential]))
+      .put(
+        itwCredentialsBatchRefillRequest({
+          credentialType: CredentialType.PROOF_OF_AGE,
+          trigger: "presentation"
+        })
+      )
+      .run();
+  });
+
+  it("does not request a batch refill while the pool stays above the threshold", () => {
+    mockVaultRemove.mockResolvedValue(undefined);
+    mockDeleteKey.mockResolvedValue(undefined);
+
+    const fullBatchCredential: CredentialMetadata = {
+      ...batchCredential,
+      keyTags: ["key-tag-01", "key-tag-02", "key-tag-03", "key-tag-04"]
+    };
+
+    const action = itwCredentialsConsumeInstance([
+      { credentialId: fullBatchCredential.credentialId, keyTag: "key-tag-01" }
+    ]);
+
+    return expectSaga(handleItwCredentialsConsumeInstanceSaga, action)
+      .withState(makeState([fullBatchCredential]))
+      .not.put.actionType(itwCredentialsBatchRefillRequest.toString())
+      .run();
+  });
+
+  it("does not request a batch refill when the last copy is consumed", () => {
+    mockVaultRemove.mockResolvedValue(undefined);
+    mockDeleteKey.mockResolvedValue(undefined);
+
+    const action = itwCredentialsConsumeInstance([
+      { credentialId: lastCopyCredential.credentialId, keyTag: "key-tag-01" }
+    ]);
+
+    return expectSaga(handleItwCredentialsConsumeInstanceSaga, action)
+      .withState(makeState([lastCopyCredential]))
+      .not.put.actionType(itwCredentialsBatchRefillRequest.toString())
+      .run();
   });
 
   it("keeps processing the remaining instances after a failure", () => {

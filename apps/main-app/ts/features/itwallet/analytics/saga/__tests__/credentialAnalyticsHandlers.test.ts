@@ -1,4 +1,3 @@
-import * as O from "fp-ts/Option";
 import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
@@ -16,8 +15,8 @@ import {
   updateThirdPartyCredentialProperty
 } from "../../properties/propertyUpdaters";
 import {
+  handleAggregateCredentialPropertiesRefresh,
   handleCredentialRemovedAnalytics,
-  handleCredentialsCatalogueLoadedAnalytics,
   handleCredentialStoredAnalytics
 } from "../credentialAnalyticsHandlers";
 
@@ -62,10 +61,10 @@ const mockedMdl: CredentialMetadata = {
 };
 
 const store: DeepPartial<GlobalState> = {
-  remoteConfig: O.none,
   features: {
     itWallet: {
-      issuance: { integrityKeyTag: O.some("key-tag") },
+      remoteConfig: {},
+      issuance: { integrityKeyTag: "key-tag" },
       credentials: {
         credentials: {}
       },
@@ -137,8 +136,8 @@ describe("credentialAnalyticsHandlers", () => {
     expect(updateThirdPartyCredentialProperty).not.toHaveBeenCalled();
   });
 
-  it("updates aggregate credential properties when the catalogue is loaded", async () => {
-    await expectSaga(handleCredentialsCatalogueLoadedAnalytics)
+  it("recomputes the aggregate credential properties from the current state", async () => {
+    await expectSaga(handleAggregateCredentialPropertiesRefresh)
       .withState(store)
       .provide([[matchers.select(), store]])
       .run();

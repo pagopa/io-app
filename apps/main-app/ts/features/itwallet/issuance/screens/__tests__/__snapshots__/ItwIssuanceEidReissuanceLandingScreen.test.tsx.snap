@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=false, isItWalletValid=false, canActivateItWallet=false, eidStatus=undefined  1`] = `
+exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=false, isItWalletValid=false, canActivateItWallet=false, eidStatus=undefined 1`] = `
 <View
   style={
     {
@@ -352,7 +352,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
 </View>
 `;
 
-exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=false, isItWalletValid=false, canActivateItWallet=true, eidStatus=undefined  1`] = `
+exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=false, isItWalletValid=false, canActivateItWallet=true, eidStatus=undefined 1`] = `
 <View
   style={
     {
@@ -956,7 +956,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                               }
                             />
                             <Text>
-                              Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: pubblico, sicuro e gratuito.
+                              Porta i tuoi documenti digitali verso funzionalità evolute con il portafoglio IT-Wallet di IO: pubblico, sicuro, tuo.
                             </Text>
                             <View
                               style={
@@ -1285,7 +1285,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -1316,7 +1316,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -1442,7 +1442,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
 </View>
 `;
 
-exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=true, isItWalletValid=false, canActivateItWallet=true, eidStatus=jwtExpiring  1`] = `
+exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=true, isItWalletValid=false, canActivateItWallet=true, eidStatus=jwtExpiring 1`] = `
 <View
   style={
     {
@@ -2046,7 +2046,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                               }
                             />
                             <Text>
-                              Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: pubblico, sicuro e gratuito.
+                              Porta i tuoi documenti digitali verso funzionalità evolute con il portafoglio IT-Wallet di IO: pubblico, sicuro, tuo.
                             </Text>
                             <View
                               style={
@@ -2375,7 +2375,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -2406,7 +2406,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -2532,7 +2532,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
 </View>
 `;
 
-exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=true, isItWalletValid=false, canActivateItWallet=true, eidStatus=valid  1`] = `
+exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=true, isItWalletValid=false, canActivateItWallet=true, eidStatus=valid 1`] = `
 <View
   style={
     {
@@ -3392,7 +3392,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -3423,7 +3423,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -3549,7 +3549,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
 </View>
 `;
 
-exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=true, isItWalletValid=true, canActivateItWallet=true, eidStatus=jwtExpiring  1`] = `
+exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=true, isItWalletValid=true, canActivateItWallet=true, eidStatus=jwtExpiring 1`] = `
 <View
   style={
     {
@@ -3901,7 +3901,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
 </View>
 `;
 
-exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=true, isItWalletValid=true, canActivateItWallet=true, eidStatus=valid  1`] = `
+exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletValid=true, isItWalletValid=true, canActivateItWallet=true, eidStatus=valid 1`] = `
 <View
   style={
     {
@@ -4802,7 +4802,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -4833,7 +4833,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },

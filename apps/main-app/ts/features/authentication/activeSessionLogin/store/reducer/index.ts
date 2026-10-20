@@ -10,7 +10,7 @@ import {
   logoutSuccess,
   sessionCorrupted
 } from "../../../common/store/actions";
-import { SpidLevel } from "../../../login/cie/utils";
+import { AuthLevel } from "../../../common/utils";
 import { SpidLoginRequestInfo } from "../../../login/idp/store/types";
 import {
   activeSessionLoginFailure,
@@ -38,7 +38,7 @@ export type ActiveSessionLoginState = {
   isActiveSessionLogin: boolean;
   isUserLoggedIn: boolean;
   loginInfo?: {
-    cieIDSelectedSecurityLevel?: SpidLevel;
+    cieIDSelectedSecurityLevel?: AuthLevel;
     fastLoginOptIn?: boolean;
     idp?: SpidIdp;
     spidLoginInfo?: SpidLoginRequestInfo;

@@ -1,10 +1,16 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import MockDate from "mockdate";
+import URLParse from "url-parse";
 
 import { LollipopConfig } from "../..";
 import { getUnixTimestamp } from "../../httpSignature/signature";
 import { KeyInfo } from "../crypto";
-import { lollipopRequestInit } from "../fetch";
+import {
+  customContentSignatureBases,
+  customContentToSignPromises,
+  CutsomContentToSignInput,
+  lollipopRequestInit
+} from "../fetch";
 
 const publicKey: PublicKey = {
   crv: "P-256",
@@ -63,6 +69,177 @@ describe("Check lollipopRequestInit mocks", () => {
     it(`should be ${mockTimestamp}`, () => {
       expect(getUnixTimestamp()).toBe(mockTimestamp);
     });
+  });
+});
+
+const signatureConfigForgeInput = {
+  publicKey,
+  keyTag: keyInfo.keyTag as string,
+  lollipopConfig,
+  method: "GET",
+  inputUrl: new URLParse(fullUrl)
+};
+
+const baseCustomContentInput: CutsomContentToSignInput = {
+  customContentToSign: undefined,
+  keyInfo,
+  keyTag: keyInfo.keyTag as string,
+  signatureConfigForgeInput
+};
+
+const expectedSignatureInput = (headerName: string, ordinal: number) =>
+  `sig${ordinal}=("${headerName}");created=${mockTimestamp};nonce="nonce";alg="ecdsa-p256-sha256";keyid="${publicKeyThumbprint}"`;
+
+const expectedSignatureBase = (headerName: string, headerValue: string) =>
+  `"${headerName}": ${headerValue}\n"@signature-params": ("${headerName}");created=${mockTimestamp};nonce="nonce";alg="ecdsa-p256-sha256";keyid="${publicKeyThumbprint}"`;
+
+describe("customContentSignatureBases", () => {
+  const baseInput = baseCustomContentInput;
+
+  it("should return an empty array if customContentToSign is undefined", () => {
+    expect(customContentSignatureBases(baseInput)).toStrictEqual([]);
+  });
+
+  it("should return an empty array if customContentToSign is an empty object", () => {
+    expect(
+      customContentSignatureBases({
+        ...baseInput,
+        customContentToSign: {}
+      })
+    ).toStrictEqual([]);
+  });
+
+  it("should return a single signature base for a single custom content key", () => {
+    const externalMessageId = "00000000000000000005";
+    const headerName = "x-pagopa-lollipop-custom-externalmessageid";
+    const result = customContentSignatureBases({
+      ...baseInput,
+      customContentToSign: { externalMessageId }
+    });
+
+    expect(result).toStrictEqual([
+      {
+        signatureBase: expectedSignatureBase(headerName, externalMessageId),
+        signatureInput: expectedSignatureInput(headerName, 2),
+        headerIndex: 2,
+        headerPrefix: "externalMessageId",
+        headerName: "x-pagopa-lollipop-custom-externalMessageId",
+        headerValue: externalMessageId
+      }
+    ]);
+  });
+
+  it("should return signature bases with incremental headerIndex for multiple custom content keys", () => {
+    const externalMessageId = "00000000000000000005";
+    const anotherValue = "another-value";
+    const result = customContentSignatureBases({
+      ...baseInput,
+      customContentToSign: {
+        externalMessageId,
+        anotherKey: anotherValue
+      }
+    });
+
+    expect(result).toStrictEqual([
+      {
+        signatureBase: expectedSignatureBase(
+          "x-pagopa-lollipop-custom-externalmessageid",
+          externalMessageId
+        ),
+        signatureInput: expectedSignatureInput(
+          "x-pagopa-lollipop-custom-externalmessageid",
+          2
+        ),
+        headerIndex: 2,
+        headerPrefix: "externalMessageId",
+        headerName: "x-pagopa-lollipop-custom-externalMessageId",
+        headerValue: externalMessageId
+      },
+      {
+        signatureBase: expectedSignatureBase(
+          "x-pagopa-lollipop-custom-anotherkey",
+          anotherValue
+        ),
+        signatureInput: expectedSignatureInput(
+          "x-pagopa-lollipop-custom-anotherkey",
+          3
+        ),
+        headerIndex: 3,
+        headerPrefix: "anotherKey",
+        headerName: "x-pagopa-lollipop-custom-anotherKey",
+        headerValue: anotherValue
+      }
+    ]);
+  });
+});
+
+describe("customContentToSignPromises", () => {
+  const baseInput = baseCustomContentInput;
+
+  const { sign } = jest.requireMock("@pagopa/io-react-native-crypto");
+
+  beforeEach(() => {
+    sign.mockReset().mockResolvedValue("MockSignature");
+  });
+
+  it("should return an empty array if there is no custom content to sign", async () => {
+    const result = await customContentToSignPromises(baseInput);
+    expect(result).toStrictEqual([]);
+    expect(sign).not.toHaveBeenCalled();
+  });
+
+  it("should sign every custom content and return the results in order", async () => {
+    const externalMessageId = "00000000000000000005";
+    const anotherValue = "another-value";
+    const result = await customContentToSignPromises({
+      ...baseInput,
+      customContentToSign: {
+        externalMessageId,
+        anotherKey: anotherValue
+      }
+    });
+
+    expect(result).toStrictEqual([
+      {
+        headerIndex: 2,
+        headerPrefix: "externalMessageId",
+        headerName: "x-pagopa-lollipop-custom-externalMessageId",
+        headerValue: externalMessageId,
+        signature: "sig2=:MockSignature:",
+        signatureInput: expectedSignatureInput(
+          "x-pagopa-lollipop-custom-externalmessageid",
+          2
+        )
+      },
+      {
+        headerIndex: 3,
+        headerPrefix: "anotherKey",
+        headerName: "x-pagopa-lollipop-custom-anotherKey",
+        headerValue: anotherValue,
+        signature: "sig3=:MockSignature:",
+        signatureInput: expectedSignatureInput(
+          "x-pagopa-lollipop-custom-anotherkey",
+          3
+        )
+      }
+    ]);
+    expect(sign).toHaveBeenCalledTimes(2);
+  });
+
+  it("should return an empty array if signing any custom content fails", async () => {
+    sign
+      .mockResolvedValueOnce("MockSignature")
+      .mockRejectedValueOnce(new Error("Failure"));
+
+    const result = await customContentToSignPromises({
+      ...baseInput,
+      customContentToSign: {
+        externalMessageId: "00000000000000000005",
+        anotherKey: "another-value"
+      }
+    });
+
+    expect(result).toStrictEqual([]);
   });
 });
 
@@ -127,6 +304,29 @@ describe("Test lollipopRequestInit", () => {
         "x-pagopa-lollipop-custom-externalMessageId": `${externalMessageId}`
       }
     });
+  });
+
+  it("should ignore custom content signature failure and keep main signature", async () => {
+    const { sign } = jest.requireMock("@pagopa/io-react-native-crypto");
+    sign
+      .mockResolvedValueOnce("MockSignature")
+      .mockRejectedValueOnce(new Error("Failure"));
+
+    const externalMessageId = "00000000000000000005";
+    const init = await lollipopRequestInit(
+      {
+        ...lollipopConfig,
+        customContentToSign: {
+          externalMessageId
+        }
+      },
+      keyInfo,
+      fullUrl,
+      {
+        ...requestInit
+      }
+    );
+    expect(init).toStrictEqual(testInit());
   });
 
   it("should throw if no keyTag is set", async () => {

@@ -5,7 +5,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import CieWrongCiePinScreen from "../../screens/CieWrongCiePinScreen";
+import CieWrongCiePinScreen from "../CieWrongCiePinScreen";
 
 const closeLabel = I18n.t("global.buttons.close");
 const retryLabel = I18n.t("global.buttons.retry");
@@ -81,7 +81,7 @@ describe("CieWrongCiePinScreen", () => {
       expect(component.getByTestId(test.secondaryActionTestID)).toBeDefined();
     });
   });
-  it("it should render the default message, in case of unexpetect values", () => {
+  it("should render the default message, in case of unexpected values", () => {
     const component = renderComponent(
       useCaseThatShouldNotHappen.remainingCount
     );

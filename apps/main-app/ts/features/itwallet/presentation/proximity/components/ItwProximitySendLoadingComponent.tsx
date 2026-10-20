@@ -2,7 +2,7 @@ import { HeaderSecondLevel } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
 type LoadingStep = 0 | 1 | 2;

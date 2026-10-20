@@ -1,6 +1,6 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-import { SpidLevel } from "../../utils";
+import { AuthLevel } from "../../../../common/utils";
 
 export const cieLoginEnableUat = createStandardAction("CIE_LOGIN_ENABLE_UAT")();
 
@@ -13,7 +13,7 @@ export const cieIDDisableTourGuide = createStandardAction(
 )();
 export const cieIDSetSelectedSecurityLevel = createStandardAction(
   "CIE_ID_SET_SELECTED_SECURITY_LEVEL"
-)<SpidLevel>();
+)<AuthLevel>();
 
 export type CieLoginConfigActions =
   | ActionType<typeof cieIDDisableTourGuide>

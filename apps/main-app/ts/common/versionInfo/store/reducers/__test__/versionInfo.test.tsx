@@ -1,4 +1,3 @@
-import DeviceInfo from "react-native-device-info";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -63,8 +62,9 @@ describe("versionInfo selectors", () => {
           undefined,
           applicationChangeState("active")
         );
-        jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("2.0.0.1");
-        jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("2.0.0.1");
+        jest
+          .spyOn(require("../../../../../utils/device"), "getDeviceAppVersion")
+          .mockReturnValue("2.0.0.1");
         const store = createStore(appReducer, globalState as any);
         store.dispatch(versionInfoLoadSuccess(mockIoVersionInfo));
         expect(
@@ -80,8 +80,9 @@ describe("versionInfo selectors", () => {
           undefined,
           applicationChangeState("active")
         );
-        jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("2.0.0.1");
-        jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("2.0.0.1");
+        jest
+          .spyOn(require("../../../../../utils/device"), "getDeviceAppVersion")
+          .mockReturnValue("2.0.0.1");
         const store = createStore(appReducer, globalState as any);
         store.dispatch(
           versionInfoLoadSuccess({
@@ -106,8 +107,9 @@ describe("versionInfo selectors", () => {
           undefined,
           applicationChangeState("active")
         );
-        jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("2.0.0.1");
-        jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("2.0.0.1");
+        jest
+          .spyOn(require("../../../../../utils/device"), "getDeviceAppVersion")
+          .mockReturnValue("2.0.0.1");
         const store = createStore(appReducer, globalState as any);
         store.dispatch(
           versionInfoLoadSuccess({
@@ -158,8 +160,9 @@ const testIsAppSupportedSelector = (
   >
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  jest.spyOn(DeviceInfo, "getVersion").mockReturnValue(appVersion);
-  jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue(appVersion);
+  jest
+    .spyOn(require("../../../../../utils/device"), "getDeviceAppVersion")
+    .mockReturnValue(appVersion);
   const store = createStore(appReducer, globalState as any);
   store.dispatch(
     versionInfoLoadSuccess({

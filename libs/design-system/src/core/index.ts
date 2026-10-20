@@ -4,3 +4,4 @@ export * from "./IOShapes";
 export * from "./IOSpacing";
 export * from "./IOStyles";
 export * from "./IOTransitions";
+export * from "./IOTypography";

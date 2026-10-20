@@ -1,6 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+import { ok } from "neverthrow";
 import React from "react";
 import { createStore } from "redux";
 
@@ -17,9 +18,7 @@ import { isFastLoginEnabledSelector } from "../../../../fastLogin/store/selector
 import { isCieLoginUatEnabledSelector } from "../../store/selectors";
 import { CieRequestAuthenticationOverlay } from "../CieRequestAuthenticationOverlay";
 
-jest
-  .spyOn(AnalyticsUtils, "trackSpidLoginError")
-  .mockImplementation(() => null);
+jest.spyOn(AnalyticsUtils, "trackLoginError").mockImplementation(() => null);
 
 jest.mock("@react-native-cookies/cookies", () => ({
   removeSessionCookies: jest.fn(() => Promise.resolve(true))
@@ -30,12 +29,6 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
     userInfo: { statusCode: "500" }
   })),
   isLoginUtilsError: jest.fn().mockReturnValue(false)
-}));
-
-jest.mock("../../../../../../components/helpers/withLoadingSpinner", () => ({
-  withLoadingSpinner: (Component: any) => (props: any) => (
-    <Component {...props} />
-  )
 }));
 
 jest.mock("../../../../../../features/lollipop/utils/login", () => ({
@@ -74,7 +67,7 @@ jest.mock("../../../../../../store/hooks", () => ({
 
 jest
   .spyOn(LollipopLoginUtils, "regenerateKeyGetRedirectsAndVerifySaml")
-  .mockReturnValue(Promise.resolve("https://mock-url.com"));
+  .mockReturnValue(Promise.resolve(ok("https://mock-url.com")));
 
 describe("CieRequestAuthenticationOverlay", () => {
   const onCloseMock = jest.fn();
@@ -129,8 +122,10 @@ describe("CieRequestAuthenticationOverlay", () => {
 
     fireEvent(webview, "onError", errorValue);
 
-    expect(await findByText(I18n.t("global.buttons.retry"))).toBeTruthy();
-    expect(AnalyticsUtils.trackSpidLoginError).toHaveBeenCalledWith(
+    await expect(
+      findByText(I18n.t("global.buttons.retry"))
+    ).resolves.toBeTruthy();
+    expect(AnalyticsUtils.trackLoginError).toHaveBeenCalledWith(
       "cie",
       errorValue
     );

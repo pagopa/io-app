@@ -191,22 +191,23 @@ describe("Test FciRouterScreen", () => {
 
     expect(store.getActions()).toContainEqual(fciStartRequest());
   });
-  it("With skipInitialFetch true, fciSignatureRequestFromId.request should not be dispatched", () => {
+  it("On mount, fciSignatureRequestFromId.request should always be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore({
       ...globalState,
-      profile: pot.some(mockedProfile)
+      profile: pot.some(mockedProfile),
+      remoteConfig: O.some(minimumRemoteConfig)
     });
 
     renderScreenWithNavigationStoreContext<GlobalState>(
       FciRouterScreen,
       FCI_ROUTES.ROUTER,
-      { signatureRequestId: "signatureRequestId", skipInitialFetch: true },
+      { signatureRequestId: "signatureRequestId" },
       store
     );
 
-    expect(store.getActions()).not.toContainEqual(
+    expect(store.getActions()).toContainEqual(
       fciSignatureRequestFromId.request("signatureRequestId")
     );
   });

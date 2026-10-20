@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug io-dev-api-server",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/apps/dev-api-server",
+      "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+      "program": "${workspaceFolder}/apps/dev-api-server/src/start.ts",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**", "node_modules/**"]
+    }
+  ]
+}

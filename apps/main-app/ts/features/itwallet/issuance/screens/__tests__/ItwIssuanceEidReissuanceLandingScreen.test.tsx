@@ -33,7 +33,7 @@ describe("ItwIssuanceEidReissuanceLandingScreen", () => {
     ${false}         | ${false}        | ${true}             | ${undefined}
     ${false}         | ${false}        | ${false}            | ${undefined}
   `(
-    "match snapshot for isAnyWalletValid=$isAnyWalletValid, isItWalletValid=$isItWalletValid, canActivateItWallet=$canActivateItWallet, eidStatus=$eidStatus ",
+    "match snapshot for isAnyWalletValid=$isAnyWalletValid, isItWalletValid=$isItWalletValid, canActivateItWallet=$canActivateItWallet, eidStatus=$eidStatus",
     ({ isAnyWalletValid, isItWalletValid, canActivateItWallet, eidStatus }) => {
       mockSelectors({
         isAnyWalletValid,

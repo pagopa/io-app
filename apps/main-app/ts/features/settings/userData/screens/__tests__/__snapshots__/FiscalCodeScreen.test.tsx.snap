@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`WithLightModalContext should match snapshot 1`] = `
+exports[`FiscalCodeScreen should match snapshot 1`] = `
 <View
   style={
     {
@@ -224,12 +224,6 @@ exports[`WithLightModalContext should match snapshot 1`] = `
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View

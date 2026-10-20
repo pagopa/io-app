@@ -6,12 +6,19 @@ export type ItwProximityFailure = {
   type: string;
 };
 
+export type ItwProximityFlowFailure = ItwProximityFailure &
+  ItwProximityFlowProperties;
+
 export type ItwProximityFlowProperties = {
   proximity_flow: ProximityFlow;
 };
 
-export type ItwProximityGenericFailure = ItwProximityFailure & {
+export type ItwProximityGenericFailure = ItwProximityFlowFailure & {
   proximity_sharing_status: "post" | "pre";
+};
+
+export type ItwProximityHttpFailure = {
+  reason: unknown;
 };
 
 export type ItwProximityQrCode = {
@@ -27,9 +34,12 @@ export type ItwProximityShowQrCode = {
     | "WALLET_HOME";
 };
 
-export type ItwQRCodeLoadingFailure = {
-  reason: string;
-};
+/**
+ * Locale-independent identifiers of the action chosen in the revoke-consent
+ * alert. Never derive these from translated button labels, otherwise the
+ * tracked value would change with the app language.
+ */
+export type ItwRevokeConsentUserAction = "cancel" | "confirm";
 
 export type ItwStartReissuingPID = {
   position:

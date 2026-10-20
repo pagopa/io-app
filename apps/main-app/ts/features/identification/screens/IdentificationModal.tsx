@@ -12,10 +12,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import _ from "lodash";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import {
   Alert,
@@ -66,6 +63,7 @@ import { IdentificationLockModal } from "./IdentificationLockModal";
 const VERTICAL_PADDING = 16;
 const A11Y_FOCUS_DELAY = 1000 as Millisecond;
 
+// oxlint-disable-next-line complexity
 export const IdentificationModal = () => {
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
   const showRetryText = useRef(false);
@@ -88,14 +86,7 @@ export const IdentificationModal = () => {
   const previousIdentificationProgressState = usePrevious(
     identificationProgressState
   );
-  const identificationFailState = useIOSelector(
-    identificationFailSelector,
-    // Since the identificationFailState is an Option,
-    // we need to performs a deep comparison between
-    // two values to determine if they are equivalent
-    // to avoid unnecessary re-renders.
-    (l, r) => _.isEqual(l, r)
-  );
+  const identificationFailState = useIOSelector(identificationFailSelector);
   const name = useIOSelector(profileNameSelector);
   const { biometricType, isFingerprintEnabled } = useBiometricType();
 
@@ -149,11 +140,8 @@ export const IdentificationModal = () => {
   }, [dispatch]);
 
   const onIdentificationFailureHandler = useCallback(() => {
-    const forceLogout = pipe(
-      identificationFailState,
-      O.map(failState => failState.remainingAttempts === 1),
-      O.getOrElse(() => false)
-    );
+    const forceLogout = identificationFailState?.remainingAttempts === 1;
+
     if (forceLogout) {
       showRetryText.current = false;
       onPinResetHandler();
@@ -175,10 +163,10 @@ export const IdentificationModal = () => {
       }
       onIdentificationSuccess(isBiometric);
       /**
-       * if the identification was successful, if at least two minutes
-       * have passed since the last time the app was placed in the
-       * background and returned to the foreground then the dispatch
-       * of the action that refreshes the session will be performed
+       * If the identification was successful, if at least two minutes have
+       * passed since the last time the app was placed in the background and
+       * returned to the foreground then the dispatch of the action that
+       * refreshes the session will be performed
        */
       if (hasTwoMinutesElapsedSinceLastActivity && isFastLoginEnabled) {
         onSuccessDispatchTokenRefresh();
@@ -303,14 +291,14 @@ export const IdentificationModal = () => {
   let showLockModal = false;
   // eslint-disable-next-line functional/no-let
   let remainingAttempts = maxAttempts;
-  if (O.isSome(identificationFailState)) {
-    showLockModal = identificationFailState.value.showLockModal ?? false;
-    remainingAttempts = identificationFailState.value.remainingAttempts;
+  if (identificationFailState != null) {
+    showLockModal = identificationFailState.showLockModal ?? false;
+    remainingAttempts = identificationFailState.remainingAttempts;
     timeSpanBetweenAttemptsInSeconds =
-      identificationFailState.value.timespanBetweenAttempts;
+      identificationFailState.timespanBetweenAttempts;
     const nowInMs = new Date().getTime();
     const nextLegalAttemptInMs =
-      identificationFailState.value.nextLegalAttempt.getTime();
+      identificationFailState.nextLegalAttempt.getTime();
     const elapsedTimeInMs = nextLegalAttemptInMs - nowInMs;
     // This screen is refreshing at every app state change.
     // So we can rely on the elapsed time to show the lock modal.

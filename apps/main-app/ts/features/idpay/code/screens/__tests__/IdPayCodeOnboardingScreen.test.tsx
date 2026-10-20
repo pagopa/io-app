@@ -40,7 +40,7 @@ describe("IdPayCodeOnboardingScreen", () => {
 
   describe("if the code was already onboarded", () => {
     describe("when continue is pressed", () => {
-      it("should enroll the code to the initiative and navigate to the result screen ", () => {
+      it("should enroll the code to the initiative and navigate to the result screen", () => {
         const { component } = renderComponent(
           {
             isOnboarded: pot.some(true)

@@ -1,14 +1,12 @@
 import { Event as CEvent } from "@pagopa/react-native-cie";
-/**
- * Action types and action creator related to authentication by CIE
- */
+/** Action types and action creator related to authentication by CIE */
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { LoginType } from "../../../../activeSessionLogin/screens/analytics";
+import { LoginType } from "../../../../common/utils/index";
 
 export const cieIsSupported = createAsyncAction(
   "CIE_IS_SUPPORTED_REQUEST",

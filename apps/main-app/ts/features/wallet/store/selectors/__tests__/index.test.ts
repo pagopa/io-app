@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 
 import {
@@ -121,7 +120,7 @@ describe("selectWalletCategories", () => {
           cards: [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]
         }),
         _.set(globalState, "features.itWallet.issuance", {
-          integrityKeyTag: O.some("dummy")
+          integrityKeyTag: "dummy"
         }),
         _.set(globalState, "features.itWallet.credentials.credentials", {
           [CredentialType.PID]: ItwStoredCredentialsMocks.eid
@@ -182,10 +181,10 @@ describe("isWalletEmptySelector", () => {
           cards: []
         }),
         _.set(globalState, "features.itWallet.issuance", {
-          integrityKeyTag: O.none
+          integrityKeyTag: undefined
         }),
         _.set(globalState, "features.itWallet.credentials", {
-          eid: O.none
+          credentials: {}
         })
       )
     );
@@ -216,7 +215,7 @@ describe("isWalletEmptySelector", () => {
           cards: []
         }),
         _.set(globalState, "features.itWallet.issuance", {
-          integrityKeyTag: O.some("dummy")
+          integrityKeyTag: "dummy"
         }),
         _.set(globalState, "features.itWallet.credentials", {
           credentials: { [CredentialType.PID]: ItwStoredCredentialsMocks.eid }

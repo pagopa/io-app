@@ -106,7 +106,7 @@ const getVariantProps = (
     case "attachment":
       return {
         color: "grey",
-        name: "attachment"
+        name: "paperclip"
       };
     case "error":
       return {
@@ -145,9 +145,7 @@ const getVariantProps = (
   }
 };
 
-/**
- * Tag component, used mainly for message list and details
- */
+/** Tag component, used mainly for message list and details */
 export const Tag = ({
   text,
   variant,

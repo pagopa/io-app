@@ -5,8 +5,8 @@ import { useLayoutEffect } from "react";
 export const DS_PERSISTENCE_KEY = "isDesignSystemEnabled";
 
 /**
- * This hook is used to enable the experimental design system reading the value from AsyncStorage
- * remove this once the experimental design system is stable
+ * This hook is used to enable the experimental design system reading the value
+ * from AsyncStorage remove this once the experimental design system is stable
  */
 export const useStoredExperimentalDesign = () => {
   const { setExperimental } = useIOExperimentalDesign();

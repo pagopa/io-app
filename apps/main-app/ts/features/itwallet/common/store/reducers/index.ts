@@ -35,6 +35,7 @@ import wiaReducer, {
 import bannersReducer, { ItwBannersState } from "./banners";
 import environmentReducer, { ItwEnvironmentState } from "./environment";
 import preferencesReducer, { ItwPreferencesState } from "./preferences";
+import remoteConfigReducer, { ItwRemoteConfigState } from "./remoteConfig";
 import securePreferencesReducer, {
   ItwSecurePreferencesState
 } from "./securePreferences";
@@ -49,6 +50,7 @@ export type ItWalletState = {
   issuance: ItwIssuanceState & PersistPartial;
   preferences: ItwPreferencesState;
   proximity: ItwProximityState & PersistPartial;
+  remoteConfig: ItwRemoteConfigState & PersistPartial;
   securePreferences: ItwSecurePreferencesState & PersistPartial;
   ui: ItwUiState;
   walletInstance: ItwWalletInstanceState & PersistPartial;
@@ -57,20 +59,21 @@ export type ItWalletState = {
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
 
 const itwReducer = combineReducers({
+  banners: bannersReducer,
+  credentials: itwCredentialsReducer,
+  credentialsCatalogue: itwCredentialsCatalogueReducer,
   environment: environmentReducer,
   identification: identificationReducer,
   issuance: issuanceReducer,
-  credentials: itwCredentialsReducer,
-  walletInstance: wiaReducer,
   preferences: preferencesReducer,
-  securePreferences: securePreferencesReducer,
-  credentialsCatalogue: itwCredentialsCatalogueReducer,
   proximity: itwProximityReducer,
-  banners: bannersReducer,
-  ui: uiReducer
+  remoteConfig: remoteConfigReducer,
+  securePreferences: securePreferencesReducer,
+  ui: uiReducer,
+  walletInstance: wiaReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 18;
+const CURRENT_REDUX_ITW_STORE_VERSION = 19;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -191,7 +194,23 @@ export const migrations: MigrationManifest = {
   "17": (state: PersistedState): PersistedState =>
     _.omit(state, "preferences.isPendingReview"),
   // Removed the duplicated playground credential status state
-  "18": (state: PersistedState): PersistedState => _.omit(state, "debug")
+  "18": (state: PersistedState): PersistedState => _.omit(state, "debug"),
+  // Removed date from preferences.walletActivationFeedbackBannerData, migrating it to
+  // banners.activationSuccessFeedback.shownOn so the original 7-day shown-window is preserved.
+  // NOTE: this must stay at "19" (not "17"): migrations "17" and "18" above were already
+  // shipped with different content, so an installation persisted at version 18 would skip
+  // this step entirely if it were numbered below 19, leaving shownOn unset and the Wallet
+  // Home banner permanently hidden by the new selector.
+  "19": (state: PersistedState): PersistedState => {
+    const date = _.get(
+      state,
+      "preferences.walletActivationFeedbackBannerData.date"
+    );
+    if (date && !_.get(state, "banners.activationSuccessFeedback.shownOn")) {
+      _.set(state, "banners.activationSuccessFeedback.shownOn", date);
+    }
+    return _.omit(state, "preferences.walletActivationFeedbackBannerData.date");
+  }
 };
 
 const itwPersistConfig: PersistConfig = {
@@ -207,7 +226,7 @@ const itwPersistConfig: PersistConfig = {
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };
 
-export const persistedReducer = persistReducer<ItWalletState, Action>(
+const persistedReducer = persistReducer<ItWalletState, Action>(
   itwPersistConfig,
   itwReducer
 );

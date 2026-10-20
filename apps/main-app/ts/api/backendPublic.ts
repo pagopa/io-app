@@ -11,7 +11,7 @@ import {
   IPostApiRequestType
 } from "@pagopa/ts-commons/lib/requests";
 
-import { getLoginHeaders } from "../features/authentication/common/utils/login";
+import { getLoginHeaders } from "../features/authentication/common/utils";
 import { defaultRetryingFetch } from "../utils/fetch";
 
 type GetStatusT = IGetApiRequestType<

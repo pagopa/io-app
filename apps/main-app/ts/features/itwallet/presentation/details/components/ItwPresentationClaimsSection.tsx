@@ -45,23 +45,14 @@ export const ItwPresentationClaimsSection = ({
   };
 
   const renderHideValuesToggle = () => (
-    <View
+    <IconButton
       accessibilityLabel={I18n.t(
         "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
       )}
-      accessibilityRole="switch"
-      accessibilityState={{ checked: valuesHidden }}
-      accessible={true}
-    >
-      <IconButton
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
-        )}
-        icon={valuesHidden ? "eyeHide" : "eyeShow"}
-        onPress={handleToggleClaimVisibility}
-        testID="toggle-claim-visibility"
-      />
-    </View>
+      icon={valuesHidden ? "eyeHide" : "eyeShow"}
+      onPress={handleToggleClaimVisibility}
+      testID="toggle-claim-visibility"
+    />
   );
 
   return (

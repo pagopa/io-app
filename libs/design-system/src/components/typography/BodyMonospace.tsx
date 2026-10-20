@@ -1,10 +1,12 @@
 import { useIOTheme } from "../../context";
-import { bodyFontSize, bodyLineHeight } from "./Body";
+import { IOTypography } from "../../core";
 import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
-/**
- * `BodyMonospace` typographic style
- */
+const {
+  bodyMonospace: { colorToken, ...bodyMonospaceStyle }
+} = IOTypography;
+
+/** `BodyMonospace` typographic style */
 export const BodyMonospace = ({
   color: customColor,
   ...props
@@ -13,15 +15,8 @@ export const BodyMonospace = ({
 
   const BodyProps: IOTextProps = {
     ...props,
-    dynamicTypeRamp: "body", // iOS only
-    font: "FiraCode",
-    weight: "Medium",
-    size: bodyFontSize,
-    lineHeight: bodyLineHeight,
-    color: customColor ?? theme["textBody-tertiary"],
-    textStyle: {
-      letterSpacing: 0.5
-    }
+    ...bodyMonospaceStyle,
+    color: customColor ?? theme[colorToken]
   };
 
   return <IOText {...BodyProps}>{props.children}</IOText>;

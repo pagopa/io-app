@@ -32,7 +32,7 @@ const firstIconMap: Record<ModeType, IOIcons> = {
 
 const secondIconMap: Record<ModeType, IOIcons> = {
   ciePin: "securityPad",
-  cieId: "cie",
+  cieId: "cieID",
   spid: "fiscalCodeIndividual"
 };
 
@@ -43,9 +43,12 @@ type Props = {
 };
 
 /**
- * Hook to display a bottom sheet with information about what you will need to continue the issuance flow
+ * Hook to display a bottom sheet with information about what you will need to
+ * continue the issuance flow
+ *
  * @param type - The type of info to display
- * @param onPrimaryAction - The action to be executed when the primary button is pressed
+ * @param onPrimaryAction - The action to be executed when the primary button is
+ *   pressed
  * @returns The bottom sheet component
  */
 export const useContinueWithBottomSheet = ({

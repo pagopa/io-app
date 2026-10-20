@@ -31,20 +31,19 @@ import { CardColorScheme } from "./types";
 
 export type ItwCredentialCard = {
   /**
-   * Current status of the credential, used to determine the
-   * visual representation and the status tag to display.
+   * Current status of the credential, used to determine the visual
+   * representation and the status tag to display.
    */
   credentialStatus?: ItwCredentialStatus;
   /**
-   * Type of the credential, which is used to determine the
-   * visual representation and styling of the card.
+   * Type of the credential, which is used to determine the visual
+   * representation and styling of the card.
    */
   credentialType: string;
   /**
-   * Issue date of the credential.
-   * Used to determine whether the card should display
-   * the "upgrade pending" badge when the user owns
-   * an L3 PID and the credential was issued before it.
+   * Issue date of the credential. Used to determine whether the card should
+   * display the "upgrade pending" badge when the user owns an L3 PID and the
+   * credential was issued before it.
    */
   issuedAt?: string;
 };
@@ -69,7 +68,7 @@ export const ItwCredentialCard = memo(
       credentialStatus,
       credentialType
     );
-    const borderColorMap = useBorderColorByStatus();
+    const borderColorByStatus = useBorderColorByStatus();
     const cardConfig = useCredentialCardConfig(credentialType);
     const credentialName = useItwCredentialName(credentialType);
     const tagPropsByStatus = useTagPropsByStatus();
@@ -78,13 +77,21 @@ export const ItwCredentialCard = memo(
     const statusTagProps = useMemo<Tag | undefined>(() => {
       if (needsItwUpgrade) {
         return {
-          variant: "info",
+          variant: "error",
           text: I18n.t("features.itWallet.card.status.upgradePending")
         };
       }
 
       return tagPropsByStatus[status];
     }, [status, needsItwUpgrade, tagPropsByStatus]);
+
+    const borderColor = useMemo<string>(() => {
+      if (needsItwUpgrade) {
+        return IOColors["error-600"];
+      }
+
+      return borderColorByStatus[status];
+    }, [status, needsItwUpgrade, borderColorByStatus]);
 
     const appBackgroundColor = IOColors[theme["appBackground-primary"]];
 
@@ -147,9 +154,9 @@ export const ItwCredentialCard = memo(
           <View
             style={[
               styles.border,
-              status === "valid"
+              status === "valid" && !needsItwUpgrade
                 ? { borderColor: cardConfig.borderColor, borderWidth: 1 }
-                : { borderColor: borderColorMap[status], borderWidth: 2 }
+                : { borderColor, borderWidth: 2 }
             ]}
           />
         </View>
@@ -159,7 +166,8 @@ export const ItwCredentialCard = memo(
 );
 
 /**
- * @deprecated Only used for the older Documenti su IO, will be removed in the future
+ * @deprecated Only used for the older Documenti su IO, will be removed in the
+ *   future
  */
 export const ItwCredentialCardLegacy = ({
   credentialType,
@@ -177,18 +185,26 @@ export const ItwCredentialCardLegacy = ({
   const theme = useThemeColorByCredentialType(credentialType);
   const credentialName = useItwCredentialName(credentialType);
   const tagPropsByStatus = useTagPropsByStatus();
-  const borderColorMap = useBorderColorByStatus();
+  const borderColorByStatus = useBorderColorByStatus();
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
     if (needsItwUpgrade) {
       return {
-        variant: "info",
+        variant: "error",
         text: I18n.t("features.itWallet.card.status.upgradePending")
       };
     }
 
     return tagPropsByStatus[status];
   }, [status, needsItwUpgrade, tagPropsByStatus]);
+
+  const borderColor = useMemo<string>(() => {
+    if (needsItwUpgrade) {
+      return IOColors["error-600"];
+    }
+
+    return borderColorByStatus[status];
+  }, [status, needsItwUpgrade, borderColorByStatus]);
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<
     StyleProps & { colorScheme: CardColorScheme }
@@ -269,7 +285,7 @@ export const ItwCredentialCardLegacy = ({
           style={[
             styles.border,
             {
-              borderColor: borderColorMap[status]
+              borderColor
             }
           ]}
         />

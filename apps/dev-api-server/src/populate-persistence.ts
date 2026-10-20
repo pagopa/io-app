@@ -568,8 +568,8 @@ const attributesFromCreatedMessageWithContentAndAttachments = (
 };
 
 /**
- * Initialize the services and messages persistence layer.
- * Default on config.json if custom config not defined.
+ * Initialize the services and messages persistence layer. Default on
+ * config.json if custom config not defined.
  *
  * @param customConfig
  */

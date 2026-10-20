@@ -1,4 +1,4 @@
-import { fireEvent, waitFor } from "@testing-library/react-native";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor } from "xstate";
@@ -7,20 +7,46 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import { Context, EidIssuanceLevel } from "../../../machine/eid/context";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import {
+  testEidIssuanceDeps,
+  testMachineStore
+} from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import { trackBackToWallet } from "../../analytics";
 import { ItwIssuanceEidResultScreen } from "../ItwIssuanceEidResultScreen";
 
 const mockSend = jest.fn();
 const mockCredentialSend = jest.fn();
 const mockHasResolvedCredentialOffer = jest.fn();
+const mockAddListener = jest.fn();
+
+jest.mock("../../../../../navigation/params/AppParamsList", () => {
+  const actual = jest.requireActual(
+    "../../../../../navigation/params/AppParamsList"
+  );
+  return {
+    ...actual,
+    useIONavigation: () => ({
+      ...actual.useIONavigation(),
+      addListener: mockAddListener
+    })
+  };
+});
+
+jest.mock("../../analytics", () => ({
+  trackAddFirstCredential: jest.fn(),
+  trackBackToWallet: jest.fn(),
+  trackItwCredentialReissuingFailed: jest.fn()
+}));
 
 jest.mock("../../../../../components/screens/LoadingScreenContent", () => ({
   __esModule: true,
-  default: () => null
+  LoadingScreenContent: () => null
 }));
 
 jest.mock("../../../machine/eid/provider", () => {
@@ -47,9 +73,19 @@ jest.mock("../../../machine/credential/provider", () => {
 });
 
 describe("ItwIssuanceEidResultScreen", () => {
+  // eslint-disable-next-line functional/no-let
+  let navigationListeners: Record<string, () => void> = {};
+
   beforeEach(() => {
     jest.clearAllMocks();
     mockHasResolvedCredentialOffer.mockReturnValue(false);
+    navigationListeners = {};
+    mockAddListener.mockImplementation(
+      (event: string, callback: () => void) => {
+        navigationListeners = { ...navigationListeners, [event]: callback };
+        return jest.fn();
+      }
+    );
   });
 
   describe("IT-Wallet (L3) flow", () => {
@@ -170,17 +206,21 @@ describe("ItwIssuanceEidResultScreen", () => {
         );
 
         expect(mockSend).toHaveBeenCalledWith({ type: "go-to-wallet" });
+        expect(trackBackToWallet).toHaveBeenCalledWith({
+          credential: "ITW_PID",
+          exit_page: ITW_ROUTES.ISSUANCE.EID_RESULT
+        });
+        expect(trackBackToWallet).toHaveBeenCalledTimes(1);
       });
     });
   });
 
   describe("IT-Wallet upgrade flow (Documenti su IO → IT-Wallet)", () => {
     it("renders the 'add document' TYP when the upgraded wallet has documents", () => {
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(false);
-
-      const { getByText } = renderComponent("l3", { mode: "upgrade" });
+      const { getByText } = renderComponent("l3", {
+        mode: "upgrade",
+        credentialsToUpgrade: [{} as CredentialMetadata]
+      });
 
       expect(
         getByText(
@@ -199,13 +239,21 @@ describe("ItwIssuanceEidResultScreen", () => {
           I18n.t("features.itWallet.issuance.eidResult.success.secondaryAction")
         )
       ).toBeTruthy();
+
+      fireEvent.press(
+        getByText(
+          I18n.t("features.itWallet.issuance.eidResult.success.secondaryAction")
+        )
+      );
+
+      expect(trackBackToWallet).toHaveBeenCalledWith({
+        credential: "ITW_PID",
+        exit_page: ITW_ROUTES.ISSUANCE.EID_RESULT
+      });
+      expect(trackBackToWallet).toHaveBeenCalledTimes(1);
     });
 
     it("renders the 'explore IT-Wallet' TYP when the upgraded wallet has no documents", () => {
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(true);
-
       const { getByText, queryByText } = renderComponent("l3", {
         mode: "upgrade"
       });
@@ -258,6 +306,45 @@ describe("ItwIssuanceEidResultScreen", () => {
         )
       ).toBeNull();
     });
+
+    it("tracks ITW_ID_V2 when returning to the wallet", () => {
+      const { getByText } = renderComponent("l2");
+
+      fireEvent.press(
+        getByText(
+          I18n.t("features.itWallet.issuance.eidResult.success.secondaryAction")
+        )
+      );
+
+      expect(trackBackToWallet).toHaveBeenCalledWith({
+        credential: "ITW_ID_V2",
+        exit_page: ITW_ROUTES.ISSUANCE.EID_RESULT
+      });
+    });
+  });
+
+  // SIW-5129: the reissuance survey is reserved to Documenti su IO (L2) reissuance
+  describe("reissuance flow", () => {
+    it("renders the reissuance survey banner for Documenti su IO (L2)", () => {
+      const { getByTestId } = renderComponent("l2", { mode: "reissuance" });
+      expect(getByTestId("itwFeedbackBannerTestID")).toBeTruthy();
+    });
+
+    it("does not render the reissuance survey banner for IT-Wallet (L3)", () => {
+      const { queryByTestId } = renderComponent("l3", { mode: "reissuance" });
+      expect(queryByTestId("itwFeedbackBannerTestID")).toBeNull();
+    });
+  });
+
+  // SIW-4993: IT-Wallet surveys must never leak into the Documenti su IO fallback flow
+  it("does not render any survey banner for the Documenti su IO fallback issuance", () => {
+    const { queryByTestId } = renderComponent("l2-fallback", {
+      mode: "issuance"
+    });
+    expect(queryByTestId("itwFeedbackBannerTestID")).toBeNull();
+    expect(
+      queryByTestId("itwActivationSuccessFeedbackBannerTestID")
+    ).toBeNull();
   });
 
   describe("credential offer flow", () => {
@@ -281,6 +368,52 @@ describe("ItwIssuanceEidResultScreen", () => {
       });
     });
   });
+
+  describe("when the credential issuance flow is aborted", () => {
+    beforeEach(() => {
+      jest
+        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
+        .mockReturnValue(false);
+    });
+
+    it("navigates back to the wallet when the user returns to this screen", async () => {
+      renderComponent("l3", { credentialType: "education_degree" });
+
+      await waitFor(() => expect(navigationListeners.blur).toBeDefined());
+
+      act(() => {
+        navigationListeners.blur();
+        navigationListeners.focus();
+      });
+
+      expect(mockSend).toHaveBeenCalledWith({ type: "go-to-wallet" });
+    });
+
+    it("does not navigate to the wallet on the first focus", async () => {
+      renderComponent("l3", { credentialType: "education_degree" });
+
+      await waitFor(() => expect(navigationListeners.focus).toBeDefined());
+
+      act(() => {
+        navigationListeners.focus();
+      });
+
+      expect(mockSend).not.toHaveBeenCalledWith({ type: "go-to-wallet" });
+    });
+
+    it("does not navigate to the wallet when the flow is not credential driven", async () => {
+      renderComponent("l3");
+
+      await waitFor(() => expect(navigationListeners.blur).toBeDefined());
+
+      act(() => {
+        navigationListeners.blur();
+        navigationListeners.focus();
+      });
+
+      expect(mockSend).not.toHaveBeenCalledWith({ type: "go-to-wallet" });
+    });
+  });
 });
 
 const renderComponent = (
@@ -288,7 +421,13 @@ const renderComponent = (
   contextOverrides: Partial<Context> = {}
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+  const initialSnapshot = createActor(itwEidIssuanceMachine, {
+    input: {
+      deps: testEidIssuanceDeps({
+        store: testMachineStore({ getState: () => initialState })
+      })
+    }
+  }).getSnapshot();
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
     context: {

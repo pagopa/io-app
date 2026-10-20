@@ -8,16 +8,10 @@ import configureMockStore from "redux-mock-store";
 
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
-// import WebView from "react-native-webview";
-// import {
-//   WebViewErrorEvent,
-//   WebViewNavigationEvent
-// } from "react-native-webview/lib/WebViewTypes";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-// import * as ToastUtils from "../../../utils/showToast";
 import OnboardingTosScreen from "../OnboardingTosScreen";
 
 const CurrentTestToSVersion = 2.0;
@@ -92,131 +86,6 @@ describe("TosScreen", () => {
       expect(cancelButtonRTI).toBeFalsy();
     });
   });
-  // describe("When rendering the screen after the WebView has finished loading without any error", () => {
-  //   it("The TosWebviewComponent should be rendered without any loading spinner overlayed", async () => {
-  //     // eslint-disable-next-line functional/no-let
-  //     let maybeWebView: O.Option<WebView> = O.none;
-  //     jest
-  //       .spyOn(WebView.prototype, "render")
-  //       .mockImplementationOnce(function (this: WebView) {
-  //         maybeWebView = O.some(this);
-  //       });
-  //     const renderAPI = commonSetup();
-
-  //     expect(maybeWebView).not.toBe(O.none);
-  //     const webView = maybeWebView as O.Some<WebView>;
-
-  //     await act(() =>
-  //       webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
-  //     );
-
-  //     // Overlay component should be there (since the top view is rendered nonetheless)
-  //     const overlayComponentRTI = renderAPI.getByTestId("overlayComponent");
-  //     expect(overlayComponentRTI).toBeTruthy();
-
-  //     // There must not be the indeterminate spinner
-  //     const activityIndicatorRTI = renderAPI.queryByTestId("refreshIndicator");
-  //     expect(activityIndicatorRTI).toBeFalsy();
-
-  //     // TosWebviewComponent should be rendered
-  //     const webViewComponentRTI = renderAPI.getByTestId("toSWebViewContainer");
-  //     expect(webViewComponentRTI).toBeTruthy();
-  //   });
-  // });
-  // describe("When rendering the screen after the WebView has finished loading without any error but the profile is someUpdating", () => {
-  //   it("There should be the loading spinner overlay without the cancel button", async () => {
-  //     // eslint-disable-next-line functional/no-let
-  //     let maybeWebView: O.Option<WebView> = O.none;
-  //     jest
-  //       .spyOn(WebView.prototype, "render")
-  //       .mockImplementationOnce(function (this: WebView) {
-  //         maybeWebView = O.some(this);
-  //       });
-  //     const renderAPI = commonSetup({ profilePotType: "someUpdating" });
-
-  //     expect(maybeWebView).not.toBe(O.none);
-  //     const webView = maybeWebView as O.Some<WebView>;
-
-  //     await act(() =>
-  //       webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
-  //     );
-
-  //     // Overlay component should be there
-  //     const overlayComponentRTI = renderAPI.getByTestId("overlayComponent");
-  //     expect(overlayComponentRTI).toBeTruthy();
-
-  //     // Overlay should have the indeterminate spinner
-  //     const activityIndicatorRTI = renderAPI.getByTestId("refreshIndicator");
-  //     expect(activityIndicatorRTI).toBeTruthy();
-
-  //     // There must not be the cancel button
-  //     const cancelButtonRTI = renderAPI.queryByTestId(
-  //       "loadingSpinnerOverlayCancelButton"
-  //     );
-  //     expect(cancelButtonRTI).toBeFalsy();
-  //   });
-  // });
-  // describe("When rendering the screen after the WebView has finished loading without any error but the profile is noneUpdating", () => {
-  //   it("There should be the loading spinner overlay without the cancel button", async () => {
-  //     // eslint-disable-next-line functional/no-let
-  //     let maybeWebView: O.Option<WebView> = O.none;
-  //     jest
-  //       .spyOn(WebView.prototype, "render")
-  //       .mockImplementationOnce(function (this: WebView) {
-  //         maybeWebView = O.some(this);
-  //       });
-  //     const renderAPI = commonSetup({ profilePotType: "noneUpdating" });
-
-  //     expect(maybeWebView).not.toBe(O.none);
-  //     const webView = maybeWebView as O.Some<WebView>;
-
-  //     await act(() =>
-  //       webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
-  //     );
-
-  //     // Overlay component should be there
-  //     const overlayComponentRTI = renderAPI.getByTestId("overlayComponent");
-  //     expect(overlayComponentRTI).toBeTruthy();
-
-  //     // Overlay should have the indeterminate spinner
-  //     const activityIndicatorRTI = renderAPI.getByTestId("refreshIndicator");
-  //     expect(activityIndicatorRTI).toBeTruthy();
-
-  //     // There must not be the cancel button
-  //     const cancelButtonRTI = renderAPI.queryByTestId(
-  //       "loadingSpinnerOverlayCancelButton"
-  //     );
-  //     expect(cancelButtonRTI).toBeFalsy();
-  //   });
-  // });
-  // describe("When rendering the screen but the profile is someError", () => {
-  //   it("A Toast show have been displayed", async () => {
-  //     const spiedToastFunction = jest
-  //       .spyOn(ToastUtils, "showToast")
-  //       .mockImplementationOnce((..._) => undefined);
-  //     // eslint-disable-next-line functional/no-let
-  //     let maybeWebView: O.Option<WebView> = O.none;
-  //     jest
-  //       .spyOn(WebView.prototype, "render")
-  //       .mockImplementationOnce(function (this: WebView) {
-  //         maybeWebView = O.some(this);
-  //       });
-  //     commonSetup({ profilePotType: "someError" });
-
-  //     expect(maybeWebView).not.toBe(O.none);
-  //     const webView = maybeWebView as O.Some<WebView>;
-
-  //     // This is needed otherwise the componentDidUpdate method will not be triggered
-  //     await act(() =>
-  //       webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
-  //     );
-
-  //     // The showToast function should have been called
-  //     expect(spiedToastFunction).toHaveBeenCalledWith(
-  //       I18n.t("global.genericError")
-  //     );
-  //   });
-  // });
   describe("When rendering the screen, the state is loading and there are no state errors", () => {
     it("The ToS acceptance footer should not have been rendered", () => {
       const renderAPI = commonSetup();
@@ -226,50 +95,6 @@ describe("TosScreen", () => {
       expect(footerWithButtonsViewRTI).toBeFalsy();
     });
   });
-  // describe("When rendering the screen, the state is not loading but there are state errors", () => {
-  //   it("The ToS acceptance footer should not have been rendered", async () => {
-  //     // eslint-disable-next-line functional/no-let
-  //     let maybeWebView: O.Option<WebView> = O.none;
-  //     jest
-  //       .spyOn(WebView.prototype, "render")
-  //       .mockImplementationOnce(function (this: WebView) {
-  //         maybeWebView = O.some(this);
-  //       });
-  //     const renderAPI = commonSetup();
-
-  //     expect(maybeWebView).not.toBe(O.none);
-  //     const webView = maybeWebView as O.Some<WebView>;
-
-  //     await act(() => webView.value.props.onError?.({} as WebViewErrorEvent));
-
-  //     const footerWithButtonsViewRTI =
-  //       renderAPI.queryByTestId("FooterWithButtons");
-  //     expect(footerWithButtonsViewRTI).toBeFalsy();
-  //   });
-  // });
-  // describe("When rendering the screen, the state is not loading and there are no state errors", () => {
-  //   it("The ToS acceptance footer should have been rendered", async () => {
-  //     // eslint-disable-next-line functional/no-let
-  //     let maybeWebView: O.Option<WebView> = O.none;
-  //     jest
-  //       .spyOn(WebView.prototype, "render")
-  //       .mockImplementationOnce(function (this: WebView) {
-  //         maybeWebView = O.some(this);
-  //       });
-  //     const renderAPI = commonSetup();
-
-  //     expect(maybeWebView).not.toBe(O.none);
-  //     const webView = maybeWebView as O.Some<WebView>;
-
-  //     await act(() =>
-  //       webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
-  //     );
-
-  //     const footerWithButtonsViewRTI =
-  //       renderAPI.getByTestId("FooterWithButtons");
-  //     expect(footerWithButtonsViewRTI).toBeTruthy();
-  //   });
-  // });
 });
 
 type CurrentTestConfiguration = {
@@ -363,5 +188,3 @@ const commonSetup = ({
     store
   );
 };
-
-export {};

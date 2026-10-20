@@ -1,5 +1,6 @@
 import { BackendStatusMessage } from "@io-app/api-types/generated/definitions/content/BackendStatusMessage";
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/session_manager/PreferredLanguage";
+// eslint-disable-next-line no-restricted-syntax -- setup module: `I18n.use(plugin)` would be flagged as a React hook
 import i18next from "i18next";
 // import i18next, {
 //   BackendModule,
@@ -77,14 +78,14 @@ export const availableTranslations: ReadonlyArray<Locales> = Object.keys(
   resources
 ).map(k => k as Locales);
 
-export interface SmartBackendOptions {
-  localResources: typeof resources;
-}
-
 // TODO: Enable this backend plugin once the internal process to update translations on a remote source will be in place.
 // const DEFAULT_SMART_BACKEND_OPTIONS: SmartBackendOptions = {
 //   localResources: resources
 // };
+
+// export interface SmartBackendOptions {
+//   localResources: typeof resources;
+// }
 
 // Custom backend plugin for i18next that first loads translations from local resources and then tries to fetch updated translations from a remote repository.
 // If the remote fetch fails, it falls back to the local resources without affecting the user experience.

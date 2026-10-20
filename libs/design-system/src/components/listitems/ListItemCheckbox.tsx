@@ -11,7 +11,7 @@ import {
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
-import { AnimatedCheckbox } from "../checkbox/AnimatedCheckbox";
+import { Checkbox } from "../checkbox/Checkbox";
 import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
@@ -33,11 +33,12 @@ type ListItemCheckboxProps = Pick<
   Props;
 
 /**
- *  with the automatic state management that uses a {@link AnimatedCheckBox}
- * The toggleValue change when a `onPress` event is received and dispatch the `onValueChange`.
+ * With the automatic state management that uses a {@link AnimatedCheckBox} The
+ * toggleValue change when a `onPress` event is received and dispatch the
+ * `onValueChange`.
  *
+ * @class
  * @param props
- * @constructor
  */
 export const ListItemCheckbox = ({
   value,
@@ -130,7 +131,7 @@ export const ListItemCheckbox = ({
               importantForAccessibility="no-hide-descendants"
               pointerEvents="none"
             >
-              <AnimatedCheckbox
+              <Checkbox
                 checked={selected ?? toggleValue}
                 size={IOSelectionTickVisualParams.size * dynamicFontScale}
               />

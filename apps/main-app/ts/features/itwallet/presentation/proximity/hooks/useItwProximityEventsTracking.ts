@@ -5,48 +5,78 @@ import {
   shouldSerializeReason
 } from "../../../common/utils/itwStoreUtils";
 import {
+  trackItwProximityMandatoryCredentialMissing,
+  trackItwProximityNfcSessionError,
+  trackItwProximityNfcSessionTimeout,
   trackItwProximityRPGenericFailure,
+  trackItwProximityRpNotTrusted,
   trackItwProximityTimeout,
-  trackItwProximityUnexpectedFailure,
-  trackItwProximityUnofficialVerifier
+  trackItwProximityUnexpectedFailure
 } from "../analytics";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure";
 import { ItwProximityMachineContext } from "../machine/provider";
-import { hasGivenConsentSelector } from "../machine/selectors";
+import {
+  hasGivenConsentSelector,
+  selectIsNfcRetrieval,
+  selectProximityFlow
+} from "../machine/selectors";
 
 type Params = {
   failure: ProximityFailure;
 };
 
-/**
- * Track errors occurred during the proximity presentation flow for analytics.
- */
+/** Track errors occurred during the proximity presentation flow for analytics. */
 
 export const useItwProximityEventsTracking = ({ failure }: Params) => {
   const hasGivenConsent = ItwProximityMachineContext.useSelector(
     hasGivenConsentSelector
   );
+  const isNfcRetrieval =
+    ItwProximityMachineContext.useSelector(selectIsNfcRetrieval);
+  const proximityFlow =
+    ItwProximityMachineContext.useSelector(selectProximityFlow);
   useEffect(() => {
     const serializedFailure = serializeFailureReason(failure);
     switch (failure.type) {
-      case ProximityFailureType.RELYING_PARTY_GENERIC:
-        return trackItwProximityRPGenericFailure({
-          reason: serializedFailure.reason,
-          type: serializedFailure.type,
-          proximity_sharing_status: hasGivenConsent ? "post" : "pre"
+      case ProximityFailureType.MISSING_CREDENTIALS:
+        return trackItwProximityMandatoryCredentialMissing({
+          proximity_flow: proximityFlow
         });
 
+      case ProximityFailureType.RELYING_PARTY_GENERIC:
+        trackItwProximityRPGenericFailure({
+          reason: serializedFailure.reason,
+          type: serializedFailure.type,
+          proximity_flow: proximityFlow,
+          proximity_sharing_status: hasGivenConsent ? "post" : "pre"
+        });
+        if (isNfcRetrieval) {
+          return trackItwProximityNfcSessionError(serializedFailure);
+        }
+        return;
+
       case ProximityFailureType.TIMEOUT:
-        return trackItwProximityTimeout(serializedFailure);
+        trackItwProximityTimeout({
+          ...serializedFailure,
+          proximity_flow: proximityFlow
+        });
+        if (isNfcRetrieval) {
+          return trackItwProximityNfcSessionTimeout(serializedFailure);
+        }
+        return;
 
       case ProximityFailureType.UNEXPECTED:
-        return trackItwProximityUnexpectedFailure(
-          shouldSerializeReason(failure)
+        return trackItwProximityUnexpectedFailure({
+          ...(shouldSerializeReason(failure)
             ? { ...serializedFailure, origin: "ITW_PROXIMITY_EVENTS_TRACKING" }
-            : failure
-        );
+            : failure),
+          proximity_flow: proximityFlow
+        });
       case ProximityFailureType.UNTRUSTED_RP:
-        return trackItwProximityUnofficialVerifier(serializedFailure);
+        return trackItwProximityRpNotTrusted({
+          ...serializedFailure,
+          proximity_flow: proximityFlow
+        });
     }
-  }, [failure, hasGivenConsent]);
+  }, [failure, hasGivenConsent, isNfcRetrieval, proximityFlow]);
 };

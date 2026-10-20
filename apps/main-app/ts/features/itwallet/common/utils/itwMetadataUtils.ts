@@ -1,10 +1,4 @@
-import { pipe } from "fp-ts/function";
-import * as O from "fp-ts/Option";
-
-import {
-  CatalogueTranslations,
-  DigitalCredentialMetadata
-} from "./itwCredentialsCatalogueUtils.ts";
+import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils.ts";
 import { CredentialType } from "./itwMocksUtils.ts";
 import { CredentialMetadata } from "./itwTypesUtils.ts";
 
@@ -31,43 +25,34 @@ export const getForcedItwAuthSource = (
   FORCED_AUTH_SOURCE_BY_TYPE[credentialType as CredentialType];
 
 /**
- * Get the localized auth source organization name for a catalogue credential.
- * Resolves `organization_name_l10n_id` via the provided translations when available,
+ * Get the localized auth source's data origin for a catalogue credential.
+ * Resolves `data_origin_l10n_id` via the provided translations when available,
  * falling back to the static `organization_name` field.
  *
  * @param credential - Catalogue metadata for the credential
- * @param translations - Optional flat translations map for the current locale (l10n_id → string)
+ * @param translations - Optional flat translations map for the current locale
+ *   (l10n_id → string)
  */
 export const getItwAuthSource = (
   credential: DigitalCredentialMetadata,
   translations?: Record<string, string>
-) =>
-  pipe(
-    credential.authentic_sources?.[0],
-    O.fromNullable,
-    O.map(source => {
-      const l10nName =
-        source.organization_name_l10n_id &&
-        translations?.[source.organization_name_l10n_id];
-      return l10nName ?? source.organization_name;
-    }),
-    O.toUndefined
-  );
+) => {
+  const source = credential.authentic_sources?.[0];
+  if (source === undefined) {
+    return undefined;
+  }
+  const l10nName =
+    source.data_origin_l10n_id && translations?.[source.data_origin_l10n_id];
+  return l10nName ?? source.organization_name;
+};
 
 /**
- * Get the authentication source for a given credential based on its configuration.
- * This is only valid for legacy credentials (Documenti su IO)
+ * Get the authentication source for a given credential based on its
+ * configuration. This is only valid for legacy credentials (Documenti su IO)
+ *
  * @param credential - The credential to get the authentication source for.
  */
 export const getAuthSource = (credential: CredentialMetadata) =>
-  pipe(
-    credential.issuerConf.credential_configurations_supported?.[
-      credential.credentialId
-    ],
-    O.fromNullable,
-    O.map(config => config.authentic_source),
-    O.toUndefined
-  );
-
-// Re-export for callers that need the full translations map type
-export type { CatalogueTranslations };
+  credential.issuerConf.credential_configurations_supported?.[
+    credential.credentialId
+  ]?.authentic_source;

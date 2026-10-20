@@ -1011,4 +1011,112 @@ describe("ITW credentials reducer migrations", () => {
 
     expect(nextState).toStrictEqual(persistedStateAt10);
   });
+
+  it("should migrate from 11 to 12 (add origin: catalogue to existing credentials)", () => {
+    const basePersistedStateAt11 = {
+      credentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard"
+        },
+        pid: {
+          credentialId: "pid",
+          credentialType: "pid"
+        }
+      },
+      legacyCredentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard"
+        }
+      },
+      _persist: {
+        version: 11,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt12 = {
+      credentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard",
+          origin: "catalogue"
+        },
+        pid: {
+          credentialId: "pid",
+          credentialType: "pid",
+          origin: "catalogue"
+        }
+      },
+      legacyCredentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard",
+          origin: "catalogue"
+        }
+      },
+      _persist: {
+        version: 11,
+        rehydrated: false
+      }
+    };
+
+    const from11To12Migration = itwCredentialsStateMigrations[12];
+    expect(from11To12Migration).toBeDefined();
+    const nextState = from11To12Migration(basePersistedStateAt11);
+
+    expect(nextState).toStrictEqual(persistedStateAt12);
+  });
+
+  it("should migrate from 12 to 13 (credentials spec version 1.3.3 -> 1.4.6)", () => {
+    const basePersistedStateAt12 = {
+      credentials: {
+        cred_1_3: {
+          credentialId: "cred_1_3",
+          credentialType: "cred_1_3",
+          walletUnitAttestationId: "att_1",
+          spec_version: "1.3.3"
+        },
+        cred_1_0: {
+          credentialId: "cred_1_0",
+          credentialType: "cred_1_0",
+          spec_version: "1.0.0"
+        }
+      },
+      legacyCredentials: {},
+      _persist: {
+        version: 12,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt13 = {
+      credentials: {
+        cred_1_3: {
+          credentialId: "cred_1_3",
+          credentialType: "cred_1_3",
+          keyAttestationId: "att_1",
+          spec_version: "1.4.6"
+        },
+        cred_1_0: {
+          credentialId: "cred_1_0",
+          credentialType: "cred_1_0",
+          keyAttestationId: undefined,
+          spec_version: "1.0.0"
+        }
+      },
+      legacyCredentials: {},
+      _persist: {
+        version: 12,
+        rehydrated: false
+      }
+    };
+
+    const from12To13Migration = itwCredentialsStateMigrations[13];
+    expect(from12To13Migration).toBeDefined();
+    const nextState = from12To13Migration(basePersistedStateAt12);
+
+    expect(nextState).toStrictEqual(persistedStateAt13);
+  });
 });

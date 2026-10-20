@@ -7,7 +7,7 @@ import I18n from "i18next";
 import { memo, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../../components/SectionStatus/modal";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -17,7 +17,6 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getFullLocale } from "../../../../utils/locale";
 import { openWebUrl } from "../../../../utils/url";
 import { trackIngressServicesSlowDown } from "../../../ingress/analytics";
-import { setIsBlockingScreen } from "../../../ingress/store/actions";
 import {
   trackIDPayIngressScreenCTA,
   trackIDPayIngressScreenLoading,
@@ -80,7 +79,6 @@ export const IdPayFailToRetryScreen = () => {
         }
         setShowSubtitle(false);
         setShowBlockingScreen(true);
-        dispatch(setIsBlockingScreen());
         timeouts.shift();
       }, TIMEOUT_BLOCKING_SCREEN)
     );

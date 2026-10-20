@@ -1,6 +1,5 @@
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect*", "testSaga*"] }] */
 
-import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { CommonActions, StackActions } from "@react-navigation/native";
@@ -24,8 +23,7 @@ import {
   fciLoadQtspFilledDocument,
   fciMetadataRequest,
   fciSignatureRequestFromId,
-  fciSignatureRequestRetryFromId,
-  fciStartRequest
+  fciSignatureRequestRetryFromId
 } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import {
@@ -46,10 +44,22 @@ import {
 } from "../index";
 import { FciDownloadPreviewDirectoryPath } from "../networking/handleDownloadDocument";
 
-// Mock react-native-fs
-jest.mock("react-native-fs", () => ({
-  exists: jest.fn(() => Promise.resolve(true)),
-  unlink: jest.fn(() => Promise.resolve())
+// Mock expo-file-system
+const mockFileDelete = jest.fn();
+const mockFileExists = true;
+const mockDirectoryDelete = jest.fn();
+jest.mock("expo-file-system", () => ({
+  File: jest.fn().mockImplementation(() => ({
+    exists: mockFileExists,
+    delete: mockFileDelete,
+    uri: ""
+  })),
+  Paths: { cache: { uri: "file:///cache/" } },
+  Directory: jest.fn().mockImplementation(() => ({
+    exists: true,
+    delete: mockDirectoryDelete,
+    uri: ""
+  }))
 }));
 
 // Ensure testable is defined in test environment
@@ -111,7 +121,7 @@ describe("FCI Saga Tests", () => {
   });
 
   describe("standardFciFlowStartSaga", () => {
-    it("should navigate to documents screen and dispatch initial requests when no known data is provided", () =>
+    it("should navigate to documents screen and dispatch initial requests", () =>
       expectSaga(standardFciFlowStartSaga)
         .call(
           NavigationService.dispatchNavigationAction,
@@ -125,51 +135,11 @@ describe("FCI Saga Tests", () => {
         .put(fciLoadQtspClauses.request())
         .put(fciMetadataRequest.request())
         .run());
-
-    it("should navigate to documents screen and dispatch initial requests when known data is still signable", () =>
-      expectSaga(standardFciFlowStartSaga, {
-        ...mockSignatureRequestDetailView,
-        status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE,
-        expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-      })
-        .call(
-          NavigationService.dispatchNavigationAction,
-          StackActions.replace(FCI_ROUTES.MAIN, {
-            screen: FCI_ROUTES.DOCUMENTS,
-            params: {
-              attrs: undefined
-            }
-          })
-        )
-        .put(fciLoadQtspClauses.request())
-        .put(fciMetadataRequest.request())
-        .run());
-
-    it("should navigate to router screen and skip initial requests when known data is no longer signable", () => {
-      const signatureRequestId = "test-signature-id" as NonEmptyString;
-
-      return expectSaga(standardFciFlowStartSaga, {
-        ...mockSignatureRequestDetailView,
-        id: signatureRequestId,
-        status: SignatureRequestStatusEnum.SIGNED,
-        expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-      })
-        .call(
-          NavigationService.dispatchNavigationAction,
-          StackActions.replace(FCI_ROUTES.MAIN, {
-            screen: FCI_ROUTES.ROUTER,
-            params: { signatureRequestId, skipInitialFetch: true }
-          })
-        )
-        .not.put(fciLoadQtspClauses.request())
-        .not.put(fciMetadataRequest.request())
-        .run();
-    });
   });
 
   describe("watchFciStartSaga", () => {
     it("should start standard flow when security level check is disabled", () =>
-      expectSaga(watchFciStartSaga, fciStartRequest())
+      expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
           [
@@ -178,11 +148,11 @@ describe("FCI Saga Tests", () => {
           ],
           [matchers.call.fn(standardFciFlowStartSaga), undefined]
         ])
-        .call(standardFciFlowStartSaga, undefined)
+        .call(standardFciFlowStartSaga)
         .run());
 
     it("should start standard flow when security level check is enabled and spidLevel is L3", () =>
-      expectSaga(watchFciStartSaga, fciStartRequest())
+      expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L3"],
           [
@@ -191,11 +161,11 @@ describe("FCI Saga Tests", () => {
           ],
           [matchers.call.fn(standardFciFlowStartSaga), undefined]
         ])
-        .call(standardFciFlowStartSaga, undefined)
+        .call(standardFciFlowStartSaga)
         .run());
 
     it("should navigate to L3 login screen when security level check is enabled and spidLevel is not L3", () =>
-      expectSaga(watchFciStartSaga, fciStartRequest())
+      expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
           [
@@ -210,67 +180,44 @@ describe("FCI Saga Tests", () => {
           })
         )
         .run());
-
-    it("should forward the just-fetched signature request detail to standardFciFlowStartSaga when provided", () =>
-      expectSaga(
-        watchFciStartSaga,
-        fciStartRequest(mockSignatureRequestDetailView)
-      )
-        .provide([
-          [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
-          [
-            matchers.select(isFciSecurityLevelCheckRemoteFFEnabledSelector),
-            false
-          ],
-          [matchers.call.fn(standardFciFlowStartSaga), undefined]
-        ])
-        .call(standardFciFlowStartSaga, mockSignatureRequestDetailView)
-        .run());
   });
 
   describe("watchFciSignatureRequestRetrySaga", () => {
     const signatureRequestId = "test-signature-id" as NonEmptyString;
     const action = fciSignatureRequestRetryFromId(signatureRequestId);
 
-    it("should forward the fresh signature request to fciStartRequest on success", () => {
-      const signatureRequestDetail = {
-        ...mockSignatureRequestDetailView,
-        id: signatureRequestId
-      };
-
-      return expectSaga(watchFciSignatureRequestRetrySaga, action)
-        .put(fciSignatureRequestFromId.request(signatureRequestId))
-        .dispatch(fciSignatureRequestFromId.success(signatureRequestDetail))
-        .put(fciStartRequest(signatureRequestDetail))
-        .not.put(fciDownloadPreview.cancel())
-        .run();
-    });
-
-    it("should not start flow when signature request fetch fails", () =>
+    it("should clear the FCI state and restart the flow from the router screen", () =>
       expectSaga(watchFciSignatureRequestRetrySaga, action)
-        .put(fciSignatureRequestFromId.request(signatureRequestId))
-        .dispatch(
-          fciSignatureRequestFromId.failure({
-            kind: "timeout"
+        .put(fciClearStateRequest())
+        .call(
+          NavigationService.dispatchNavigationAction,
+          StackActions.replace(FCI_ROUTES.MAIN, {
+            screen: FCI_ROUTES.ROUTER,
+            params: { signatureRequestId }
           })
         )
-        .not.put(fciStartRequest())
+        .not.put(fciSignatureRequestFromId.request(signatureRequestId))
         .run());
   });
 
   describe("clearFciDownloadPreview", () => {
     const testPath = "/test/path/document.pdf";
 
-    it("should delete file, cancel download and navigate back when path is provided", () => {
+    it("should delete file, cancel download and navigate back when path is provided", async () => {
+      jest.clearAllMocks();
       const action = fciDownloadPreviewClear({ path: testPath });
+      const { File } = require("expo-file-system");
 
-      return expectSaga(clearFciDownloadPreview, action)
+      await expectSaga(clearFciDownloadPreview, action)
         .put(fciDownloadPreview.cancel())
         .call(
           NavigationService.dispatchNavigationAction,
           CommonActions.goBack()
         )
         .run();
+
+      expect(File).toHaveBeenCalledWith(`file://${testPath}`);
+      expect(mockFileDelete).toHaveBeenCalled();
     });
 
     it("should cancel download and navigate back when path is not provided", () => {
@@ -479,14 +426,33 @@ describe("FCI Saga Tests", () => {
   describe("clearAllFciFiles", () => {
     const testPath = FciDownloadPreviewDirectoryPath;
 
-    it("should delete the specified path", async () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should delete the fci directory using an absolute file URI", async () => {
       const action = fciClearAllFiles({ path: testPath });
-      const RNFS = require("react-native-fs");
+      const { Directory, File } = require("expo-file-system");
 
       await expectSaga(clearAllFciFiles, action).run();
 
-      expect(RNFS.exists).toHaveBeenCalledWith(testPath);
-      expect(RNFS.unlink).toHaveBeenCalledWith(testPath);
+      expect(Directory).toHaveBeenCalledWith(`file://${testPath}`);
+      expect(mockDirectoryDelete).toHaveBeenCalled();
+      expect(File).not.toHaveBeenCalled();
+    });
+
+    it("should not delete anything when the fci directory does not exist", async () => {
+      const { Directory } = require("expo-file-system");
+      Directory.mockImplementationOnce(() => ({
+        exists: false,
+        delete: mockDirectoryDelete,
+        uri: ""
+      }));
+      const action = fciClearAllFiles({ path: testPath });
+
+      await expectSaga(clearAllFciFiles, action).run();
+
+      expect(mockDirectoryDelete).not.toHaveBeenCalled();
     });
   });
 

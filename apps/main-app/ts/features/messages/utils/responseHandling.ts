@@ -13,9 +13,9 @@ export type ResponseType<T> =
     >;
 
 /**
- * Discern between Either.Right/Left, and status codes.
- * Will call onSuccess if and only if response is _Right with status 200_.
- * Returns undefined for status 401 (session expired, handled upstream).
+ * Discern between Either.Right/Left, and status codes. Will call onSuccess if
+ * and only if response is _Right with status 200_. Returns undefined for status
+ * 401 (session expired, handled upstream).
  *
  * @param response
  * @param onSuccess

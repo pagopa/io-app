@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* globals jest, require, global */
-/**
- * Set up of the testing environment
- */
+/** Set up of the testing environment */
 
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import * as mockClipboard from "expo-clipboard/mocks/ExpoClipboard.ts";
 import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo, AppState } from "react-native";
-import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 import "./ts/i18n.ts";
 
@@ -26,7 +23,9 @@ require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
 jest.mock("expo-screen-capture", () => ({}));
 jest.mock("expo-image-picker", () => ({
-  launchImageLibraryAsync: jest.fn().mockResolvedValue({ canceled: true, assets: null })
+  launchImageLibraryAsync: jest
+    .fn()
+    .mockResolvedValue({ canceled: true, assets: null })
 }));
 jest.mock("expo-background-task", () => ({
   BackgroundTaskStatus: { Available: 2, Restricted: 1 },
@@ -41,11 +40,8 @@ jest.mock("expo-task-manager", () => ({
   defineTask: jest.fn(),
   isTaskRegisteredAsync: jest.fn().mockResolvedValue(false)
 }));
-// Pulsar is a TurboModule, so importing it under Jest throws: there is no
-// native module for TurboModuleRegistry.getEnforcing("RNPulsar") to bind to.
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 jest.mock("react-native-pulsar", () =>
-  require("./ts/__mocks__/pulsarJestMock")
+  require("react-native-pulsar/jest-mock")
 );
 
 // eslint-disable-next-line functional/immutable-data
@@ -77,7 +73,7 @@ global.CanvasKit = {
 };
 
 jest.mock("react-native-quick-crypto", () => ({}));
-jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
+jest.mock("@io-app/expo-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("expo-notifications", () => ({}));
 jest.mock("expo-document-picker", () => ({
@@ -88,15 +84,70 @@ jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
 jest.mock("expo-clipboard", () => mockClipboard);
 jest.mock("expo-calendar", () => ({
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
-  getEventsAsync: jest.fn().mockResolvedValue([]),
+  getEventsAsync: jest.fn().mockResolvedValue([])
 }));
 jest.mock("expo-brightness", () => ({
   getBrightnessAsync: jest.fn().mockResolvedValue(0),
-  setBrightnessAsync: jest.fn().mockResolvedValue(undefined),
+  setBrightnessAsync: jest.fn().mockResolvedValue(undefined)
+}));
+jest.mock("expo-device", () => ({
+  modelName: "",
+  osVersion: "",
+  deviceType: "",
+  DeviceType: {
+    TABLET: 0
+  }
+}));
+jest.mock("expo-application", () => ({
+  nativeApplicationVersion: "",
+  nativeBuildVersion: ""
+}));
+jest.mock("@io-app/expo-navigation-bar-manager", () => ({
+  setNavigationBarColor: jest.fn().mockResolvedValue(true)
+}));
+
+// Mock DeviceInfo for version checks
+jest.mock("@io-app/expo-device-internal", () => ({
+  getUniqueIdSync: jest.fn(() => "SOME-UNIQUE-ID"),
+  isDisplayZoomed: jest.fn(() => false)
+}));
+
+jest.mock("expo-store-review", () => ({
+  isAvailableAsync: jest.fn().mockResolvedValue(true),
+  requestReview: jest.fn().mockResolvedValue(undefined)
 }));
 
 jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
+}));
+
+jest.mock("@io-app/expo-pdf-high-res-generator", () => ({
+  generatePdfHighResImages: jest.fn().mockResolvedValue([])
+}));
+
+jest.mock("@io-app/expo-nfc-antenna-info", () => ({
+  getNfcAntennaInfo: jest.fn(),
+  isHceSupported: jest.fn()
+}));
+
+/* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.
+   The `react-native` preset resolves the `.ios` implementations by default, so
+   every platform-branched component would otherwise pull in the native views. */
+jest.mock("@expo/ui/swift-ui", () => ({
+  Host: "Host",
+  Text: "Text"
+}));
+
+jest.mock("@expo/ui/swift-ui/modifiers", () => ({
+  Animation: { spring: jest.fn(() => ({})) },
+  accessibilityLabel: jest.fn(() => ({})),
+  animation: jest.fn(() => ({})),
+  contentTransition: jest.fn(() => ({})),
+  fixedSize: jest.fn(() => ({})),
+  font: jest.fn(() => ({})),
+  foregroundStyle: jest.fn(() => ({})),
+  frame: jest.fn(() => ({})),
+  monospacedDigit: jest.fn(() => ({}))
 }));
 
 jest.mock("expo-local-authentication", () => ({
@@ -105,9 +156,13 @@ jest.mock("expo-local-authentication", () => ({
     FACIAL_RECOGNITION: 2,
     IRIS: 3
   },
-  supportedAuthenticationTypesAsync: jest.fn().mockResolvedValue(Promise.resolve([])),
-  authenticateAsync: jest.fn().mockResolvedValue(Promise.resolve({ success: true })),
-  cancelAuthenticate: jest.fn().mockResolvedValue(Promise.resolve()),
+  supportedAuthenticationTypesAsync: jest
+    .fn()
+    .mockResolvedValue(Promise.resolve([])),
+  authenticateAsync: jest
+    .fn()
+    .mockResolvedValue(Promise.resolve({ success: true })),
+  cancelAuthenticate: jest.fn().mockResolvedValue(Promise.resolve())
 }));
 // Mock react-native-worklets before reanimated setup
 // See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/
@@ -135,8 +190,6 @@ NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
 // which differs from native fetch's DOMException with name === "AbortError"
 // eslint-disable-next-line functional/immutable-data
 global.fetch = nodeFetch;
-
-jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 
 // eslint-disable-next-line no-underscore-dangle, functional/immutable-data
 global.__reanimatedWorkletInit = () => jest.fn();
@@ -181,11 +234,6 @@ jest.mock("react-native", () => {
 
   // eslint-disable-next-line functional/immutable-data
   RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
-
-  // eslint-disable-next-line functional/immutable-data
-  RN.NativeModules.AppReviewModule = {
-    requestReview: jest.fn()
-  };
 
   return RN;
 });
@@ -259,9 +307,7 @@ jest
   .spyOn(AccessibilityInfo, "isBoldTextEnabled")
   .mockImplementation(() => Promise.resolve(false));
 
-/**
- * NefInfo's `fetch` method mock
- */
+/** NefInfo's `fetch` method mock */
 jest.mock("@react-native-community/netinfo", () => ({
   fetch: jest.fn().mockResolvedValue({ isConnected: true })
 }));
@@ -290,8 +336,18 @@ jest.mock("uuid", () => ({
   }
 }));
 
-jest.mock("react-native-bluetooth-state-manager", () => ({
-  getState: jest.fn().mockResolvedValue(true)
+jest.mock("react-native-ble-plx", () => ({
+  BleManager: jest.fn().mockImplementation(() => ({
+    state: jest.fn().mockResolvedValue("PoweredOn")
+  })),
+  State: {
+    Unknown: "Unknown",
+    Resetting: "Resetting",
+    Unsupported: "Unsupported",
+    Unauthorized: "Unauthorized",
+    PoweredOff: "PoweredOff",
+    PoweredOn: "PoweredOn"
+  }
 }));
 
 jest.mock("@pagopa/io-react-native-iso18013", () => ({

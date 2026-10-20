@@ -14,16 +14,16 @@ import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender
 import { openWebUrl } from "../../../../../../utils/url";
 import { isActiveSessionLoginSelector } from "../../../../activeSessionLogin/store/selectors";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
 import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import {
   trackCieIdWizardScreen,
   trackWizardCieIdSelected
 } from "../../analytics";
-import { SpidLevel } from "../../utils";
 
 export const CIE_ID_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/cie-id/";
-const SPID_LEVEL: SpidLevel = "SpidL2";
+const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 
 const CieIdWizard = () => {
   const store = useIOStore();
@@ -46,8 +46,8 @@ const CieIdWizard = () => {
         "authentication.wizards.cie_id_wizard.actions.primary.label"
       ),
       onPress: () => {
-        void trackWizardCieIdSelected(store.getState(), SPID_LEVEL, flow);
-        navigateToCieIdLoginScreen(SPID_LEVEL);
+        void trackWizardCieIdSelected(store.getState(), AUTH_LEVEL_L2, flow);
+        navigateToCieIdLoginScreen(AUTH_LEVEL_L2);
       }
     },
     secondary: {

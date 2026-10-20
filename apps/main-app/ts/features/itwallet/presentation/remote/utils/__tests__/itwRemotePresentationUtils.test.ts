@@ -324,10 +324,10 @@ describe("getCredentialTypeByVct - https format", () => {
 
 describe("getCredentialTypeByVct - urn format", () => {
   test.each([
-    [CredentialType.PID, "urn:it-wallet:pid:1"],
-    [CredentialType.PID, "urn:it-wallet:pid:1.2.3"],
-    [CredentialType.PID, "urn:it-wallet:pid"],
-    [CredentialType.PID, "urn:eudi:pid:it:1"],
+    [CredentialType.PID, "urn:it-wallet:eid:1"],
+    [CredentialType.PID, "urn:it-wallet:eid:1.2.3"],
+    [CredentialType.PID, "urn:it-wallet:eid"],
+    [CredentialType.PID, "urn:eudi:eid:it:1"],
     [CredentialType.DRIVING_LICENSE, "urn:it-wallet:mDL:1"],
     [
       CredentialType.EUROPEAN_DISABILITY_CARD,
@@ -342,7 +342,7 @@ describe("getCredentialTypeByVct - urn format", () => {
       "urn:it-wallet:education_enrollment:"
     ],
     [CredentialType.EDUCATION_DEGREE, "urn:it-wallet:education_degree:1"],
-    [undefined, "noturn:it-wallet:pid:1"],
+    [undefined, "noturn:it-wallet:eid:1"],
     [undefined, "urn:wrong"]
   ])("extracts %s from %s", (expected, vct) => {
     expect(getCredentialTypeByVct(vct)).toEqual(expected);
@@ -350,7 +350,7 @@ describe("getCredentialTypeByVct - urn format", () => {
 });
 
 describe("getInvalidCredentials", () => {
-  const PID_VCT = "urn:it-wallet:pid:1";
+  const PID_VCT = "urn:it-wallet:eid:1";
   const MDL_VCT = "urn:it-wallet:mDL:1";
 
   // Builds a presentation detail for the given vct (only format and vct are used)

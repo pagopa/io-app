@@ -7,7 +7,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { runConsentScreenSuite } from "../../../../activeSessionLogin/shared/CieContentDataUsageCommonSuite";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import * as loginUtils from "../../../../common/utils/login";
+import * as loginUtils from "../../../../common/utils";
 import CieConsentDataUsageScreen from "../CieConsentDataUsageScreen";
 
 jest.mock("react-native-webview", () => {
@@ -30,7 +30,11 @@ jest.mock("../../../../../../store/hooks", () => ({
 }));
 
 // mock navigazione
-const mockNavigation = { navigate: jest.fn(), replace: jest.fn() };
+const mockNavigation = {
+  dispatch: jest.fn(),
+  navigate: jest.fn(),
+  replace: jest.fn()
+};
 jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => mockNavigation
 }));
@@ -56,7 +60,6 @@ runConsentScreenSuite({
   render: renderStd,
   mockNavigation,
   onLoginUriChangedSpy,
-  expectErrorRedirectMethod: "navigate",
   makeHttpError: () =>
     ({
       nativeEvent: {

@@ -15,7 +15,8 @@ import {
   itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderWalletDiscoveryBannerSelector
 } from "../../itwallet/common/store/selectors";
-import { itwWalletActivationFeedbackBannerSelector } from "../../itwallet/common/store/selectors/preferences";
+import { itwIsActivationSuccessFeedbackBannerVisibleSelector } from "../../itwallet/common/store/selectors/banners";
+import { itwWalletActivationFeedbackBannerDataSelector } from "../../itwallet/common/store/selectors/preferences";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
@@ -32,9 +33,9 @@ import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
 /**
- * A component which renders the wallet cards container
- * It handles the loading state, which is displayed when the wallet is empty and the cards are still loading,
- * and the empty state
+ * A component which renders the wallet cards container It handles the loading
+ * state, which is displayed when the wallet is empty and the cards are still
+ * loading, and the empty state
  */
 const WalletCardsContainer = () => {
   const shouldRenderLoadingState = useIOSelector(
@@ -52,8 +53,11 @@ const WalletCardsContainer = () => {
   const shouldRenderL2EngagementBanner = useIOSelector(
     itwShouldRenderL2EngagementBannerForInactiveWalletSelector
   );
-  const walletActivationFeedbackBannerData = useIOSelector(
-    itwWalletActivationFeedbackBannerSelector
+  const isActivationSuccessFeedbackBannerVisible = useIOSelector(
+    itwIsActivationSuccessFeedbackBannerVisibleSelector
+  );
+  const activationSuccessFeedbackBannerData = useIOSelector(
+    itwWalletActivationFeedbackBannerDataSelector
   );
 
   useItwWalletInstanceRevocationAlert();
@@ -72,13 +76,14 @@ const WalletCardsContainer = () => {
         {shouldRenderItwDiscoveryBanner && (
           <ItwDiscoveryBanner style={{ marginVertical: 8 }} />
         )}
-        {walletActivationFeedbackBannerData && (
-          <ItwActivationSuccessFeedbackBanner
-            authMethod={walletActivationFeedbackBannerData.authMethod}
-            docStatus={walletActivationFeedbackBannerData.docStatus}
-            style={{ marginVertical: 8 }}
-          />
-        )}
+        {isActivationSuccessFeedbackBannerVisible &&
+          activationSuccessFeedbackBannerData && (
+            <ItwActivationSuccessFeedbackBanner
+              authMethod={activationSuccessFeedbackBannerData.authMethod}
+              docStatus={activationSuccessFeedbackBannerData.docStatus}
+              style={{ marginVertical: 8 }}
+            />
+          )}
         <View style={styles.walletContent} testID="walletCardsContainerTestID">
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
@@ -91,7 +96,8 @@ const WalletCardsContainer = () => {
     shouldRenderItwCardsContainer,
     shouldRenderItwDiscoveryBanner,
     shouldRenderL2EngagementBanner,
-    walletActivationFeedbackBannerData
+    isActivationSuccessFeedbackBannerVisible,
+    activationSuccessFeedbackBannerData
   ]);
 
   return (
@@ -108,9 +114,7 @@ const WalletCardsContainer = () => {
   );
 };
 
-/**
- * Skeleton for the wallet cards container
- */
+/** Skeleton for the wallet cards container */
 const WalletCardsContainerSkeleton = () => (
   <>
     <WalletCardSkeleton cardProps={{}} testID="walletCardSkeletonTestID_1" />
@@ -119,9 +123,7 @@ const WalletCardsContainerSkeleton = () => (
   </>
 );
 
-/**
- * Card container for the other cards (payments, bonus, etc.)
- */
+/** Card container for the other cards (payments, bonus, etc.) */
 const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   const cards = useIOSelector(selectWalletOtherCards);
 

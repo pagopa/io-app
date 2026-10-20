@@ -1,5 +1,4 @@
 import { ListItemHeader } from "@io-app/design-system";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
 import { Alert } from "react-native";
@@ -13,6 +12,8 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import * as connectivitySelectors from "../../../connectivity/store/selectors";
 import * as ingressSelectors from "../../../ingress/store/selectors";
 import * as itwSelectors from "../../../itwallet/common/store/selectors";
+import * as itwBannersSelectors from "../../../itwallet/common/store/selectors/banners";
+import * as itwPreferencesSelectors from "../../../itwallet/common/store/selectors/preferences";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
@@ -190,6 +191,49 @@ describe("WalletCardsContainer", () => {
       });
     }
   );
+
+  it.each([
+    [true, { authMethod: "spid", docStatus: "not_active" as const }, true],
+    [false, { authMethod: "spid", docStatus: "not_active" as const }, false],
+    [true, undefined, false]
+  ] as const)(
+    "when the activation success feedback banner is visible=%p and data=%p, it should render=%p",
+    (isVisible, data, shouldRender) => {
+      jest
+        .spyOn(walletSelectors, "shouldRenderWalletLoadingStateSelector")
+        .mockImplementation(() => false);
+      jest
+        .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
+        .mockImplementation(() => false);
+      jest
+        .spyOn(walletSelectors, "selectWalletOtherCards")
+        .mockImplementation(() => []);
+      jest
+        .spyOn(
+          itwBannersSelectors,
+          "itwIsActivationSuccessFeedbackBannerVisibleSelector"
+        )
+        .mockImplementation(() => isVisible);
+      jest
+        .spyOn(
+          itwPreferencesSelectors,
+          "itwWalletActivationFeedbackBannerDataSelector"
+        )
+        .mockImplementation(() => data);
+
+      const { queryByTestId } = renderComponent(<WalletCardsContainer />);
+
+      if (shouldRender) {
+        expect(
+          queryByTestId("itwActivationSuccessFeedbackBannerTestID")
+        ).not.toBeNull();
+      } else {
+        expect(
+          queryByTestId("itwActivationSuccessFeedbackBannerTestID")
+        ).toBeNull();
+      }
+    }
+  );
 });
 
 describe("ItwWalletCardsContainer", () => {
@@ -231,12 +275,16 @@ describe("ItwWalletCardsContainer", () => {
     expect(queryByTestId("itwWalletReadyBannerTestID")).not.toBeNull();
   });
 
-  it("should render the L2 engagement banner", () => {
+  it("should render the L2 engagement banner and hide the wallet ready banner", () => {
     jest
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(true);
 
     jest
+      .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
+      .mockReturnValue(true);
+
+    const l2BannerSpy = jest
       .spyOn(itwSelectors, "itwShouldRenderL2EngagementBannerSelector")
       .mockReturnValue(true);
 
@@ -247,6 +295,9 @@ describe("ItwWalletCardsContainer", () => {
     const { queryByTestId } = renderComponent(<ItwWalletCardsContainer />);
 
     expect(queryByTestId("itwWalletL2BannerTestID")).not.toBeNull();
+    expect(queryByTestId("itwWalletReadyBannerTestID")).toBeNull();
+
+    l2BannerSpy.mockRestore();
   });
 
   it("should render credential cards", () => {
@@ -343,7 +394,7 @@ describe("ItwWalletCardsContainer", () => {
         .mockReturnValue(undefined);
       jest
         .spyOn(itwCredentialsSelectors, "itwCredentialsEidSelector")
-        .mockImplementation(() => O.some(ItwStoredCredentialsMocks.eid));
+        .mockImplementation(() => ItwStoredCredentialsMocks.eid);
       jest
         .spyOn(itwCredentialsSelectors, "itwCredentialsEidStatusSelector")
         .mockImplementation(() => eidStatus as ItwJwtCredentialStatus);

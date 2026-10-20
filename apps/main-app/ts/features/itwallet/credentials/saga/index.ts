@@ -2,6 +2,7 @@ import { SagaIterator } from "redux-saga";
 import { takeLeading } from "typed-redux-saga/macro";
 
 import {
+  itwCredentialsBatchRefillRequest,
   itwCredentialsConsumeInstance,
   itwCredentialsRefreshStatusByType,
   itwCredentialsRemoveByType,
@@ -10,6 +11,7 @@ import {
   itwCredentialsStoreBundle
 } from "../store/actions";
 import { handleCredentialStatusAssertionRetry } from "./checkCredentialsStatusAssertion";
+import { handleItwCredentialsBatchRefillSaga } from "./handleItwCredentialsBatchRefillSaga";
 import { handleItwCredentialsConsumeInstanceSaga } from "./handleItwCredentialsConsumeInstanceSaga";
 import { handleItwCredentialsRemoveByTypeSaga } from "./handleItwCredentialsRemoveByTypeSaga";
 import { handleItwCredentialsReplaceByTypeSaga } from "./handleItwCredentialsReplaceByTypeSaga";
@@ -37,5 +39,11 @@ export function* watchItwCredentialsSaga(): SagaIterator {
   yield* takeLeading(
     itwCredentialsConsumeInstance,
     handleItwCredentialsConsumeInstanceSaga
+  );
+  // `takeLeading` avoids concurrent renewals when the two triggers fire close to each other.
+  // Proof of Age is the only batch credential, so dropping other types meanwhile is harmless.
+  yield* takeLeading(
+    itwCredentialsBatchRefillRequest,
+    handleItwCredentialsBatchRefillSaga
   );
 }

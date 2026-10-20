@@ -10,7 +10,7 @@ import * as accessibilityUtils from "../../../../../../utils/accessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import CiePinScreen from "../../screens/CiePinScreen";
+import CiePinScreen from "../CiePinScreen";
 
 jest.mock("../../../../../../store/hooks", () => ({
   useIOSelector: jest.fn(),
@@ -88,10 +88,12 @@ describe("CiePinScreen", () => {
     ).toBeTruthy();
   });
 
-  it("should open bottom sheet when subtitleCTA is pressed", () => {
+  it("should track the info event when subtitleCTA is pressed", () => {
+    const spy = jest.spyOn(cieAnalytics, "trackLoginCiePinInfo");
     const { getByText } = renderComponent();
     const subtitle = getByText(I18n.t("authentication.cie.pin.subtitleCTA"));
     fireEvent.press(subtitle);
+    expect(spy).toHaveBeenCalled();
   });
 
   it("should track the screen on first render", () => {

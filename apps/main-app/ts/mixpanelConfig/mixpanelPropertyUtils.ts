@@ -7,6 +7,8 @@ import {
   idpSelector,
   spidLevelFromSessionInfoSelector
 } from "../features/authentication/common/store/selectors";
+import { isOneIdentityLoginEnabledSelector } from "../features/authentication/common/store/selectors/loginConfig";
+import { isOneIdentityLoginSelector } from "../features/authentication/common/store/selectors/loginFlow";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { fastLoginOptInSelector } from "../features/authentication/fastLogin/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
@@ -117,16 +119,22 @@ export const cdcStatusHandler = (state: GlobalState): number => {
 };
 
 /**
- * Returns the authentication security level of the current session,
- * regardless of the identity provider used
+ * Returns the authentication security level of the current session, regardless
+ * of the identity provider used
  */
 export const authSecurityLevelHandler = (state: GlobalState): string =>
   spidLevelFromSessionInfoSelector(state) ?? "not set";
 
-/**
- * Returns the identifier of the identity provider (IdP) used to login
- */
+/** Returns the identifier of the identity provider (IdP) used to login */
 export const loginMethodHandler = (state: GlobalState): string => {
   const idpSelected = idpSelector(state);
   return O.isSome(idpSelected) ? idpSelected.value.id : "not set";
 };
+
+/**
+ * Whether the login flow is OneIdentity. While logged in it reflects the flow
+ * actually used for the session; while logged out it falls back to the rollout
+ * (or local flag) the user would be assigned to.
+ */
+export const loginFlowIsOneIdentityHandler = (state: GlobalState): boolean =>
+  isOneIdentityLoginSelector(state) ?? isOneIdentityLoginEnabledSelector(state);

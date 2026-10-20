@@ -25,9 +25,7 @@ import {
 import { addOnboardedInitiativeStatus } from "../../../persistence/idpay";
 import { addIdPayHandler } from "./router";
 
-/**
- * Retrieves the initiative ID starting from the corresponding service ID
- */
+/** Retrieves the initiative ID starting from the corresponding service ID */
 addIdPayHandler("get", "/onboarding/service/:serviceId", (req, res) =>
   pipe(
     req.params.serviceId,
@@ -77,9 +75,7 @@ addIdPayHandler("get", "/onboarding/:initiativeId/detail", (req, res) =>
   )
 );
 
-/**
- * Returns the actual onboarding status
- */
+/** Returns the actual onboarding status */
 addIdPayHandler("get", "/onboarding/:initiativeId/status", (req, res) =>
   pipe(
     req.params.initiativeId,
@@ -96,9 +92,7 @@ addIdPayHandler("get", "/onboarding/:initiativeId/status", (req, res) =>
   )
 );
 
-/**
- * Check the initiative prerequisites
- */
+/** Check the initiative prerequisites */
 addIdPayHandler("put", "/onboarding/", (req, res) =>
   pipe(
     OnboardingDTO.decode(req.body),
@@ -134,7 +128,8 @@ addIdPayHandler("put", "/onboarding/", (req, res) =>
 );
 
 /**
- * Returns all initiatives that the user is in waiting list or in evaluation status
+ * Returns all initiatives that the user is in waiting list or in evaluation
+ * status
  */
 addIdPayHandler("get", "/onboarding/user/initiative/status", (req, res) =>
   pipe(

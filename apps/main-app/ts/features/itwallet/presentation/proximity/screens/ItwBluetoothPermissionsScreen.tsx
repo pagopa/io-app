@@ -13,6 +13,7 @@ import {
   trackItwProximityBluetoothAccessGoToSettings
 } from "../analytics";
 import { ItwProximityMachineContext } from "../machine/provider";
+import { checkBluetoothPermissions } from "../utils/ble";
 
 export const ItwBluetoothPermissionsScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
@@ -32,7 +33,8 @@ export const ItwBluetoothPermissionsScreen = () => {
   );
 
   const handleContinue = async () => {
-    if (false) {
+    const isPermissionGranted = await checkBluetoothPermissions();
+    if (isPermissionGranted) {
       machineRef.send({ type: "continue" });
       return;
     }

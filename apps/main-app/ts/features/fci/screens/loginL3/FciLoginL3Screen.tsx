@@ -1,5 +1,5 @@
 import { Body, HeaderSecondLevel } from "@io-app/design-system";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useEffect } from "react";
 
 import { WhatsNewScreenContent } from "../../../../components/screens/WhatsNewScreenContent";
@@ -49,7 +49,7 @@ export const FciLoginL3Screen = () => {
               dispatch(setFinishedActiveSessionLoginFlow());
               dispatch(fciEndRequest());
             },
-            accessibilityLabel: i18n.t("global.buttons.close")
+            accessibilityLabel: I18n.t("global.buttons.close")
           }}
           ignoreSafeAreaMargin={false}
           title=""
@@ -88,17 +88,17 @@ export const FciLoginL3Screen = () => {
   return (
     <WhatsNewScreenContent
       action={{
-        label: i18n.t("global.buttons.continue"),
+        label: I18n.t("global.buttons.continue"),
         fullWidth: true,
         onPress: onPressContinue,
         testID: "FciLoginL3ContinueButton"
       }}
       pictogram="identityCheck"
       testID="FciLoginL3ScreenContent"
-      title={i18n.t("features.fci.requestL3.landingPage.title")}
+      title={I18n.t("features.fci.requestL3.landingPage.title")}
     >
       <Body style={{ textAlign: "center" }} testID="FciLoginL3SubtitleText">
-        {i18n.t("features.fci.requestL3.landingPage.subtitle")}
+        {I18n.t("features.fci.requestL3.landingPage.subtitle")}
       </Body>
     </WhatsNewScreenContent>
   );

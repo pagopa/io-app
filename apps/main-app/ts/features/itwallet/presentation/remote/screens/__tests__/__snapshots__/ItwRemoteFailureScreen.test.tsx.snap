@@ -896,7 +896,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -927,7 +927,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -6370,7 +6370,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -6401,7 +6401,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -7943,7 +7943,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -7974,7 +7974,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -9633,7 +9633,7 @@ Genera un nuovo QR Code e riprova.
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -9664,7 +9664,7 @@ Genera un nuovo QR Code e riprova.
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -10919,7 +10919,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -10950,7 +10950,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -12474,7 +12474,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -12505,7 +12505,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -13430,7 +13430,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                                 ]
                               }
                             >
-                              Ottieni IT-Wallet per 
+                              Attiva IT-Wallet per 
 continuare
                             </Text>
                             <View
@@ -13459,7 +13459,7 @@ continuare
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Ottieni IT-Wallet"
+                                  accessibilityLabel="Attiva IT-Wallet"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -13668,7 +13668,7 @@ continuare
                                           ]
                                         }
                                       >
-                                        Ottieni IT-Wallet
+                                        Attiva IT-Wallet
                                       </Text>
                                     </View>
                                   </View>
@@ -13770,7 +13770,7 @@ continuare
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },
@@ -13801,7 +13801,7 @@ continuare
                                         {
                                           "backgroundColor": "transparent",
                                           "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
+                                          "borderRadius": 0,
                                           "borderWidth": 0,
                                           "height": undefined,
                                         },

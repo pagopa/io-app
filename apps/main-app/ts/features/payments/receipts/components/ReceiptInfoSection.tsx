@@ -32,9 +32,8 @@ type Props = {
   transaction?: NoticeDetailResponse;
 };
 
-/**
- * Component that shows the biz-events transaction info
- */
+/** Component that shows the biz-events transaction info */
+// oxlint-disable-next-line complexity
 const ReceiptInfoSection = ({
   transaction,
   loading,
@@ -215,7 +214,7 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
       <ListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}
         paymentLogoIcon={"payPal"}
-        value="PayPal"
+        value={I18n.t("wallet.onboarding.paypal.name")}
       />
     );
   }

@@ -3,7 +3,7 @@ import { ProductCategoryEnum } from "@io-app/api-types/generated/definitions/cgn
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import I18n from "i18next";
 
-import { categories } from "../../../../utils/filters";
+import { getCategoryName } from "../../../../utils/filters";
 import {
   isValidDiscount,
   moduleCGNaccessibilityLabel,
@@ -121,10 +121,10 @@ describe("moduleCGNaccessibilityLabel", () => {
     });
     expect(accessibilityLabel).toContain(mockDiscount.name);
     expect(accessibilityLabel).toContain(
-      I18n.t(categories[ProductCategoryEnum.bankingServices].nameKey)
+      getCategoryName(ProductCategoryEnum.bankingServices)
     );
     expect(accessibilityLabel).toContain(
-      I18n.t(categories[ProductCategoryEnum.health].nameKey)
+      getCategoryName(ProductCategoryEnum.health)
     );
   });
 });

@@ -2,20 +2,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable functional/immutable-data */
 /**
- * This is an updater for the utility "standard-version" that increase the versionName value
- * for gradle files.
- * Replace the line
- *
- * versionName "$VERSION"
- *
+ * This is an updater for the utility "commit-and-tag-version" that increase the
+ * versionName value for gradle files. Replace the line `versionName "$VERSION"`
  * with the new generated version.
- *
  */
 
 const versionModule = require("./version_utility.js");
 
-const versionNameRegex = /(versionName ")(.+)(")/gm;
-const versionCodeRegex = /(versionCode )([0-9]+)/gm;
+const versionNameRegex = /(versionName ")(.+)(")/m;
+const versionCodeRegex = /(versionCode )([0-9]+)/m;
 
 module.exports.readVersion = function (contents) {
   // return the 2nd group of the regex (the version)

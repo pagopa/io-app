@@ -70,23 +70,23 @@ Yes. You need either a [SPID account](https://www.agid.gov.it/en/platforms/spid)
 <details>
 <summary><b>Android</b></summary>
 
-| Permission | Purpose |
-|-----------|---------|
-| `INTERNET` | Network connectivity |
-| `ACCESS_NETWORK_STATE` | Monitor connection quality |
-| `CAMERA` | QR code scanning |
-| `NFC` | NFC I/O operations |
-| `RECEIVE_BOOT_COMPLETED` | Push notification initialisation |
-| `VIBRATE` | Haptic feedback |
-| `WAKE_LOCK` | Push notification delivery |
-| `READ_APP_BADGE` | Notification badge on app icon |
-| `READ_CALENDAR` / `WRITE_CALENDAR` | Adding reminders to calendar |
-| `READ_EXTERNAL_STORAGE` / `WRITE_EXTERNAL_STORAGE` | Image and document handling |
-| `USE_FINGERPRINT` | Biometric login (API 23–28) |
-| `USE_BIOMETRIC` | Biometric login (API 28+) |
-| `SCHEDULE_EXACT_ALARM` | Local notifications |
-| `DOWNLOAD_WITHOUT_NOTIFICATION` | Background file download |
-| `POST_NOTIFICATIONS` | Push notifications (Android 13+) |
+| Permission                                         | Purpose                          |
+| -------------------------------------------------- | -------------------------------- |
+| `INTERNET`                                         | Network connectivity             |
+| `ACCESS_NETWORK_STATE`                             | Monitor connection quality       |
+| `CAMERA`                                           | QR code scanning                 |
+| `NFC`                                              | NFC I/O operations               |
+| `RECEIVE_BOOT_COMPLETED`                           | Push notification initialisation |
+| `VIBRATE`                                          | Haptic feedback                  |
+| `WAKE_LOCK`                                        | Push notification delivery       |
+| `READ_APP_BADGE`                                   | Notification badge on app icon   |
+| `READ_CALENDAR` / `WRITE_CALENDAR`                 | Adding reminders to calendar     |
+| `READ_EXTERNAL_STORAGE` / `WRITE_EXTERNAL_STORAGE` | Image and document handling      |
+| `USE_FINGERPRINT`                                  | Biometric login (API 23–28)      |
+| `USE_BIOMETRIC`                                    | Biometric login (API 28+)        |
+| `SCHEDULE_EXACT_ALARM`                             | Local notifications              |
+| `DOWNLOAD_WITHOUT_NOTIFICATION`                    | Background file download         |
+| `POST_NOTIFICATIONS`                               | Push notifications (Android 13+) |
 
 Additional manufacturer-specific permissions are also declared for notification badge support on Samsung, Huawei, Sony, OPPO, and other devices.
 
@@ -95,19 +95,19 @@ Additional manufacturer-specific permissions are also declared for notification 
 <details>
 <summary><b>iOS</b></summary>
 
-| Permission | Purpose |
-|-----------|---------|
-| `NSCameraUsageDescription` | QR code scanning |
-| `NSFaceIDUsageDescription` | Face ID biometric login |
-| `NSCalendarsUsageDescription` | Adding event reminders |
-| `NSContactsUsageDescription` | Attaching contacts to calendar events |
-| `NSMicrophoneUsageDescription` | Voice note in the assistance flow |
-| `NSSpeechRecognitionUsageDescription` | Speech-to-text in the assistance flow |
-| `NSPhotoLibraryUsageDescription` / `NSPhotoLibraryAddUsageDescription` | QR code scanning from gallery |
-| `NSLocationWhenInUseUsageDescription` | Location-based features |
-| `NSBluetoothAlwaysUsageDescription` | Bluetooth connectivity |
-| `Remote Notification` | Push notifications |
-| `NFC Tag Reading` | NFC operations |
+| Permission                                                             | Purpose                               |
+| ---------------------------------------------------------------------- | ------------------------------------- |
+| `NSCameraUsageDescription`                                             | QR code scanning                      |
+| `NSFaceIDUsageDescription`                                             | Face ID biometric login               |
+| `NSCalendarsUsageDescription`                                          | Adding event reminders                |
+| `NSContactsUsageDescription`                                           | Attaching contacts to calendar events |
+| `NSMicrophoneUsageDescription`                                         | Voice note in the assistance flow     |
+| `NSSpeechRecognitionUsageDescription`                                  | Speech-to-text in the assistance flow |
+| `NSPhotoLibraryUsageDescription` / `NSPhotoLibraryAddUsageDescription` | QR code scanning from gallery         |
+| `NSLocationWhenInUseUsageDescription`                                  | Location-based features               |
+| `NSBluetoothAlwaysUsageDescription`                                    | Bluetooth connectivity                |
+| `Remote Notification`                                                  | Push notifications                    |
+| `NFC Tag Reading`                                                      | NFC operations                        |
 
 </details>
 
@@ -120,13 +120,13 @@ Additional manufacturer-specific permissions are also declared for notification 
 
 ### Prerequisites
 
-| Tool | Notes |
-|------|-------|
-| **Node.js** | Version pinned in `/.node-version`; use [nodenv](https://github.com/nodenv/nodenv) or nvm |
-| **pnpm** | Managed via Corepack; version pinned in root `package.json` |
-| **Ruby** | Version pinned in `.ruby-version`; use [rbenv](https://github.com/rbenv/rbenv) |
-| **Xcode** | Required for iOS builds (macOS only) |
-| **Android Studio** | Required for Android builds |
+| Tool               | Notes                                                                                     |
+| ------------------ | ----------------------------------------------------------------------------------------- |
+| **Node.js**        | Version pinned in `/.node-version`; use [nodenv](https://github.com/nodenv/nodenv) or nvm |
+| **pnpm**           | Managed via Corepack; version pinned in root `package.json`                               |
+| **Ruby**           | Version pinned in `.ruby-version`; use [rbenv](https://github.com/rbenv/rbenv)            |
+| **Xcode**          | Required for iOS builds (macOS only)                                                      |
+| **Android Studio** | Required for Android builds                                                               |
 
 Follow the [official React Native environment setup](https://reactnative.dev/docs/environment-setup?guide=native) for your OS.
 
@@ -210,9 +210,11 @@ pnpm nx run main-app:dev-run-android
 
 > [!IMPORTANT]
 > Always restore the keystore check before committing:
+>
 > ```bash
 > pnpm nx run main-app:lollipop_checks-uncomment
 > ```
+>
 > CI enforces this check and will fail if it is disabled.
 
 ### Physical devices
@@ -263,14 +265,14 @@ softwareupdate --install-rosetta
 
 ### Technology stack
 
-| Concern | Technology |
-|---------|-----------|
-| UI framework | [React Native](https://reactnative.dev) + [Expo modules](https://docs.expo.dev/modules/overview/) |
-| Language | [TypeScript](https://www.typescriptlang.org/) |
-| State management | [Redux](https://redux.js.org/) + [Redux-Saga](https://redux-saga.js.org/) + [XState v5](https://stately.ai/docs) |
-| Component library | [`@io-app/design-system`](../../libs/design-system/README.md) |
-| Navigation | [React Navigation](https://reactnavigation.org/) |
-| Monorepo tooling | [Nx](https://nx.dev) |
+| Concern           | Technology                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------- |
+| UI framework      | [React Native](https://reactnative.dev) + [Expo modules](https://docs.expo.dev/modules/overview/)                |
+| Language          | [TypeScript](https://www.typescriptlang.org/)                                                                    |
+| State management  | [Redux](https://redux.js.org/) + [Redux-Saga](https://redux-saga.js.org/) + [XState v5](https://stately.ai/docs) |
+| Component library | [`@io-app/design-system`](../../libs/design-system/README.md)                                                    |
+| Navigation        | [React Navigation](https://reactnavigation.org/)                                                                 |
+| Monorepo tooling  | [Nx](https://nx.dev)                                                                                             |
 
 ### Feature structure
 
@@ -317,17 +319,17 @@ The app handles deep links via two mechanisms:
 <details>
 <summary>Supported URLs</summary>
 
-| Path | Notes |
-|------|-------|
-| `ioit://main/messages` | Message inbox |
-| `ioit://main/services` | Services list |
-| `ioit://wallet` | Wallet home |
-| `ioit://wallet/payments-history` | Payment history |
-| `ioit://services/service-detail?serviceId=:id` | Service detail |
-| `ioit://profile` | Profile home |
-| `ioit://profile/preferences` | Preferences |
-| `ioit://profile/privacy` | Privacy settings |
-| `ioit://fci/main?signatureRequestId=:id` | Firma con IO signature request |
+| Path                                           | Notes                          |
+| ---------------------------------------------- | ------------------------------ |
+| `ioit://main/messages`                         | Message inbox                  |
+| `ioit://main/services`                         | Services list                  |
+| `ioit://wallet`                                | Wallet home                    |
+| `ioit://wallet/payments-history`               | Payment history                |
+| `ioit://services/service-detail?serviceId=:id` | Service detail                 |
+| `ioit://profile`                               | Profile home                   |
+| `ioit://profile/preferences`                   | Preferences                    |
+| `ioit://profile/privacy`                       | Privacy settings               |
+| `ioit://fci/main?signatureRequestId=:id`       | Firma con IO signature request |
 
 </details>
 

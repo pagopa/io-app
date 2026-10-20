@@ -19,8 +19,6 @@ export type SendAarFailurePhase =
   | "Show Notification"
   | "Validate Mandate";
 
-export type SendAarFlowStatesType = typeof sendAarFlowStates;
-
 type AndroidNFCActivation = {
   can: string;
   iun: string;
@@ -84,6 +82,7 @@ type DisplayingTos = {
   qrCode: string;
   type: SendAarFlowStatesType["displayingAarToS"];
 };
+
 type ErrorState = {
   debugData: {
     phase: SendAarFailurePhase;
@@ -93,7 +92,6 @@ type ErrorState = {
   previousState: AarFlowState;
   type: SendAarFlowStatesType["ko"];
 };
-
 type FetchNotification = {
   iun: string;
   mandateId?: string;
@@ -142,6 +140,8 @@ type NotAddressee = {
 type NotInitialized = {
   type: SendAarFlowStatesType["none"];
 };
+
+type SendAarFlowStatesType = typeof sendAarFlowStates;
 
 type ValidatingMandate = {
   iun: string;

@@ -1,7 +1,6 @@
 import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
 import { CardPending } from "@io-app/api-types/generated/definitions/cgn/CardPending";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { constUndefined } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
@@ -78,14 +77,14 @@ export const isCgnEnrolledSelector = createSelector(
   (information: pot.Pot<Card, NetworkError>): boolean | undefined =>
     pot.fold(
       information,
-      constUndefined,
-      constUndefined,
-      constUndefined,
+      () => undefined,
+      () => undefined,
+      () => undefined,
       // we have a network error or a 404 the user is not enrolled
       () => false,
       isNotPending,
-      constUndefined,
-      constUndefined,
+      () => undefined,
+      () => undefined,
       () => false
     )
 );

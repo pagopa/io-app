@@ -9,7 +9,7 @@ import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
 
 export type SessionManagerClient = Client<"Bearer">;
 
-export type SessionManagerClientOptions = BaseClientOptions;
+type SessionManagerClientOptions = BaseClientOptions;
 
 class SessionManagerClientManager extends ApiClientManager<
   SessionManagerClient,

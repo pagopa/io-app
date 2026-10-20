@@ -3,7 +3,7 @@ import I18n from "i18next";
 import { FC, useCallback, useEffect, useRef } from "react";
 import { Alert } from "react-native";
 
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -18,9 +18,7 @@ import {
 import { ID_CGN_TYPE } from "../../../common/utils";
 import { cgnActivationStart } from "../../store/actions/activation";
 
-/**
- * this is a dummy screen reachable only from a message CTA
- */
+/** This is a dummy screen reachable only from a message CTA */
 const CgnCTAStartOnboardingComponent: FC = () => {
   const dispatch = useIODispatch();
   const isFirstRender = useRef<boolean>(true);
@@ -72,9 +70,7 @@ const CgnCTAStartOnboardingComponent: FC = () => {
   return <LoadingScreenContent title={I18n.t("global.remoteStates.loading")} />;
 };
 
-/**
- * this is a dummy screen reachable only from a message CTA
- */
+/** This is a dummy screen reachable only from a message CTA */
 const CgnCTAStartOnboardingScreen = () => {
   const navigation = useNavigation();
   const isCgnEnabled = useIOSelector(isCGNEnabledSelector);

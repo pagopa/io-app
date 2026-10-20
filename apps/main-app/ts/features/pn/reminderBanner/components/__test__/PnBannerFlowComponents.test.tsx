@@ -10,6 +10,7 @@ import { appReducer } from "../../../../../store/reducers";
 import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { openWebUrl } from "../../../../../utils/url";
+import { SendFailureReason } from "../../../../messages/utils";
 import { sendBannerMixpanelEvents } from "../../../analytics/activationReminderBanner";
 import PN_ROUTES from "../../../navigation/routes";
 import { PnBannerFlowComponents } from "../PnBannerFlowComponents";
@@ -83,15 +84,6 @@ describe("PnBannerFlowComponents", () => {
       expect(sendBannerMixpanelEvents.alreadyActive).toHaveBeenCalled();
       expect(sendBannerMixpanelEvents.activationSuccess).not.toHaveBeenCalled();
     });
-    it("should not trigger any analytics in case of a wrong flowState (the component should always be called with the correct flowState)", () => {
-      const flowState = "WRONG_FLOW_STATE" as SuccessProps["flowState"];
-      renderSuccessScreen(flowState);
-      const { alreadyActive, activationSuccess, bannerKO } =
-        sendBannerMixpanelEvents;
-      [alreadyActive, activationSuccess, bannerKO].forEach(mockMixpanelCall => {
-        expect(mockMixpanelCall).not.toHaveBeenCalled();
-      });
-    });
     it("should navigate to home when close button is pressed", () => {
       const mockNavigate = jest.fn();
 
@@ -120,7 +112,24 @@ describe("PnBannerFlowComponents", () => {
       const flowState = "FAILURE_ACTIVATION";
       renderErrorScreen(flowState);
 
-      expect(sendBannerMixpanelEvents.bannerKO).toHaveBeenCalledWith(flowState);
+      expect(sendBannerMixpanelEvents.bannerKO).toHaveBeenCalledWith(
+        flowState,
+        undefined
+      );
+    });
+    it("should trigger bannerKO analytics event with the classified reason when one is available", () => {
+      const flowState = "FAILURE_ACTIVATION";
+      renderComponent(
+        <ErrorScreen
+          flowState={flowState}
+          reason={SendFailureReason.NETWORK_ERROR}
+        />
+      );
+
+      expect(sendBannerMixpanelEvents.bannerKO).toHaveBeenCalledWith(
+        flowState,
+        SendFailureReason.NETWORK_ERROR
+      );
     });
 
     it("should navigate to home when close button is pressed", () => {

@@ -304,7 +304,7 @@ const WalletPaymentDetailContent = ({
         actions={{
           type: "SingleButton",
           primary: {
-            label: "Vai al pagamento",
+            label: I18n.t("wallet.continue"),
             onPress: navigateToMakePaymentScreen,
             loading: pot.isLoading(userWalletsPots),
             disabled: pot.isLoading(userWalletsPots),
@@ -346,7 +346,7 @@ const WalletPaymentDetailContent = ({
           </>
         )}
         <ListItemInfoCopy
-          icon="docPaymentCode"
+          icon="docCode"
           label={I18n.t("payment.noticeCode")}
           onPress={() => handleOnCopy(formattedPaymentNoticeNumber)}
           testID="payment-notice-copy-button"

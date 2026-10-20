@@ -1,3 +1,4 @@
+import { IntegrityError } from "@pagopa/io-react-native-integrity";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
@@ -7,7 +8,12 @@ import { createActor } from "xstate";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import {
+  zendeskDocumentiSuIoCategory,
+  zendeskItWalletCategory
+} from "../../../../../utils/supportAssistance";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as supportModal from "../../../common/hooks/useItwFailureSupportModal";
 import { type EidIssuanceLevel } from "../../../machine/eid/context";
 import {
   IssuanceFailure,
@@ -15,6 +21,10 @@ import {
 } from "../../../machine/eid/failure";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import {
+  testEidIssuanceDeps,
+  testMachineStore
+} from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceEidFailureScreen } from "../ItwIssuanceEidFailureScreen";
 
@@ -122,6 +132,56 @@ describe("ItwIssuanceEidFailureScreen", () => {
     ).toBeTruthy();
     expect(getByText(I18n.t("features.itWallet.support.button"))).toBeTruthy();
   });
+
+  test.each(["l2", "l3"] as const)(
+    "renders the dedicated integrity error copy for %s",
+    level => {
+      const component = renderComponent(
+        {
+          type: IssuanceFailureType.UNSUPPORTED_DEVICE,
+          reason: {
+            message: "UNSUPPORTED_SERVICE",
+            userInfo: {}
+          } as IntegrityError
+        },
+        level
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    }
+  );
+
+  test.each([
+    {
+      name: "Documenti su IO",
+      level: "l2",
+      expectedCategory: zendeskDocumentiSuIoCategory
+    },
+    {
+      name: "IT-Wallet",
+      level: "l3",
+      expectedCategory: zendeskItWalletCategory
+    }
+  ] as const)(
+    "uses the $expectedCategory.value Zendesk category for $name issuance",
+    ({ level, expectedCategory }) => {
+      const supportModalSpy = jest.spyOn(
+        supportModal,
+        "useItwFailureSupportModal"
+      );
+
+      renderComponent(
+        {
+          type: IssuanceFailureType.UNEXPECTED,
+          reason: "Unexpected failure"
+        },
+        level
+      );
+
+      expect(supportModalSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ zendeskCategory: expectedCategory })
+      );
+    }
+  );
 });
 
 const renderComponent = (
@@ -129,7 +189,13 @@ const renderComponent = (
   level?: EidIssuanceLevel
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+  const initialSnapshot = createActor(itwEidIssuanceMachine, {
+    input: {
+      deps: testEidIssuanceDeps({
+        store: testMachineStore({ getState: () => initialState })
+      })
+    }
+  }).getSnapshot();
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
     value: "Failure",

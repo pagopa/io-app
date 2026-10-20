@@ -1,12 +1,10 @@
 import { CreateSignatureBody } from "@io-app/api-types/generated/definitions/fci/CreateSignatureBody";
-import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
-import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { CommonActions, StackActions } from "@react-navigation/native";
+import { Directory, File } from "expo-file-system";
 import I18n from "i18next";
-import RNFS from "react-native-fs";
 import { SagaIterator } from "redux-saga";
 import {
   call,
@@ -32,6 +30,7 @@ import {
   identificationSuccess
 } from "../../identification/store/actions";
 import { KeyInfo } from "../../lollipop/utils/crypto";
+import { toFileUri } from "../../messages/utils/attachments";
 import { createFciClient } from "../api/backendFci";
 import { FCI_ROUTES } from "../navigation/routes";
 import {
@@ -76,14 +75,10 @@ import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetSignatureRequests } from "./networking/handleGetSignatureRequests";
 
-/**
- * Maximum time to wait for the app to become active (20 seconds).
- */
+/** Maximum time to wait for the app to become active (20 seconds). */
 const APP_ACTIVE_POLLING_TIMEOUT = (20 * 1000) as Millisecond;
 
-/**
- * Interval between polling checks (2 seconds).
- */
+/** Interval between polling checks (2 seconds). */
 const APP_ACTIVE_POLLING_INTERVAL = (2 * 1000) as Millisecond;
 
 export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
@@ -105,6 +100,7 @@ export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
 
 /**
  * Handle the FCI Signature requests
+ *
  * @param bearerToken
  */
 export function* watchFciSaga(
@@ -186,18 +182,15 @@ export function* watchFciSaga(
   yield* takeLatest(identificationPinReset, watchIdentificationPinResetSaga);
 }
 
-/**
- * Clears cached file for the fci document preview
- * and reset the state to empty.
- */
+/** Clears cached file for the fci document preview */
 function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
-  yield* deletePath(action.payload.path);
+  const dir = new Directory(toFileUri(action.payload.path));
+  if (dir.exists) {
+    yield* call([dir, dir.delete]);
+  }
 }
 
-/**
- * Clears cached file for the fci document preview
- * and reset the state to empty.
- */
+/** Clears cached file for the fci document preview and reset the state to empty. */
 function* clearFciDownloadPreview(
   action: ActionType<typeof fciDownloadPreviewClear>
 ) {
@@ -213,38 +206,13 @@ function* clearFciDownloadPreview(
 }
 
 function* deletePath(path: string) {
-  yield RNFS.exists(path).then(exists =>
-    exists ? RNFS.unlink(path) : Promise.resolve()
-  );
+  const file = new File(toFileUri(path));
+  if (file.exists) {
+    yield* call([file, file.delete]);
+  }
 }
 
-/**
- * Starts the FCI signing flow if we don't have a Signature Request Details or if
- * it is still signable.
- * @param currentSignatureRequest - optional fresh data (ex. after a retry)
- */
-function* standardFciFlowStartSaga(
-  currentSignatureRequest?: SignatureRequestDetailView
-): SagaIterator {
-  if (
-    currentSignatureRequest &&
-    (currentSignatureRequest.status !==
-      SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE ||
-      new Date(currentSignatureRequest.expires_at) < new Date())
-  ) {
-    yield* call(
-      NavigationService.dispatchNavigationAction,
-      StackActions.replace(FCI_ROUTES.MAIN, {
-        screen: FCI_ROUTES.ROUTER,
-        params: {
-          signatureRequestId: currentSignatureRequest.id,
-          skipInitialFetch: true
-        }
-      })
-    );
-    return;
-  }
-
+function* standardFciFlowStartSaga(): SagaIterator {
   yield* call(
     NavigationService.dispatchNavigationAction,
     StackActions.replace(FCI_ROUTES.MAIN, {
@@ -267,13 +235,13 @@ function* standardFciFlowStartSaga(
 
 /**
  * Waits for the app to return to the active state using a polling strategy.
- * This prevents network requests from being killed and auto-retried
- * when the app transitions from inactive to active.
+ * This prevents network requests from being killed and auto-retried when the
+ * app transitions from inactive to active.
  *
- * Polls the app state every APP_ACTIVE_POLLING_INTERVAL milliseconds
- * for a maximum of APP_ACTIVE_POLLING_TIMEOUT milliseconds.
- * If the app becomes active before the timeout, returns immediately.
- * If the timeout expires, continues anyway.
+ * Polls the app state every APP_ACTIVE_POLLING_INTERVAL milliseconds for a
+ * maximum of APP_ACTIVE_POLLING_TIMEOUT milliseconds. If the app becomes active
+ * before the timeout, returns immediately. If the timeout expires, continues
+ * anyway.
  */
 function* waitForAppActive() {
   const startTime = new Date().getTime();
@@ -298,9 +266,7 @@ function* waitForAppActive() {
   }
 }
 
-/**
- * Handle the FCI abort requests saga
- */
+/** Handle the FCI abort requests saga */
 function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
   yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));
@@ -310,9 +276,7 @@ function* watchFciEndSaga(): SagaIterator {
   );
 }
 
-/**
- * Handle the FCI requests to get the QTSP filled_document
- */
+/** Handle the FCI requests to get the QTSP filled_document */
 function* watchFciQtspClausesSaga(): SagaIterator {
   const potQtspClauses: FciQtspClausesState = yield* select(
     fciQtspClausesMetadataSelector
@@ -338,37 +302,25 @@ function* watchFciQtspClausesSaga(): SagaIterator {
 }
 
 /**
- * Handle the FCI signature request retry saga
+ * Handle the FCI signature request retry saga. Clears FCI state and restarts
+ * the flow from the router screen, which re-fetches fresh signature request.
  */
 function* watchFciSignatureRequestRetrySaga(
   action: ActionType<typeof fciSignatureRequestRetryFromId>
 ): SagaIterator {
-  // get new SignatureRequestDetails
-  yield* put(fciSignatureRequestFromId.request(action.payload));
-
-  while (true) {
-    const result = yield* take([
-      fciSignatureRequestFromId.success,
-      fciSignatureRequestFromId.failure
-    ]);
-
-    if (isActionOf(fciSignatureRequestFromId.success, result)) {
-      if (result.payload.id === action.payload) {
-        yield* put(fciStartRequest(result.payload));
-        return;
+  yield* put(fciClearStateRequest());
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.replace(FCI_ROUTES.MAIN, {
+      screen: FCI_ROUTES.ROUTER,
+      params: {
+        signatureRequestId: action.payload
       }
-      continue;
-    }
-
-    if (isActionOf(fciSignatureRequestFromId.failure, result)) {
-      return;
-    }
-  }
+    })
+  );
 }
 
-/**
- * Handle the FCI start signing saga
- */
+/** Handle the FCI start signing saga */
 function* watchFciSigningRequestSaga(): SagaIterator {
   yield* put(
     identificationRequest(false, true, undefined, {
@@ -431,25 +383,19 @@ function* watchFciSigningRequestSaga(): SagaIterator {
   }
 }
 
-/**
- * Handle the FCI start requests saga
- */
-function* watchFciStartSaga(
-  action: ActionType<typeof fciStartRequest>
-): SagaIterator {
-  const currentSignatureRequest: SignatureRequestDetailView | undefined =
-    action.payload || undefined;
+/** Handle the FCI start requests saga */
+function* watchFciStartSaga(): SagaIterator {
   const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
   const isFciSecurityLevelCheckEnabled = yield* select(
     isFciSecurityLevelCheckRemoteFFEnabledSelector
   );
 
   if (!isFciSecurityLevelCheckEnabled) {
-    yield* call(standardFciFlowStartSaga, currentSignatureRequest);
+    yield* call(standardFciFlowStartSaga);
     return;
   } else {
     if (spidLevel === "L3") {
-      yield* call(standardFciFlowStartSaga, currentSignatureRequest);
+      yield* call(standardFciFlowStartSaga);
       return;
     }
     yield* call(
@@ -462,9 +408,7 @@ function* watchFciStartSaga(
   }
 }
 
-/**
- * Handle the identification pin reset to clear fci state
- */
+/** Handle the identification pin reset to clear fci state */
 function* watchIdentificationPinResetSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
 }

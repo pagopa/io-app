@@ -19,6 +19,7 @@ import {
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
 import { IdpCIE, IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 
 jest.mock("../../../../../../mixpanel", () => ({
@@ -81,11 +82,12 @@ describe("Analytics", () => {
   });
 
   it("trackWizardCieIdSelected", async () => {
-    await trackWizardCieIdSelected(dummyState, "SpidL2");
+    const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
+    await trackWizardCieIdSelected(dummyState, AUTH_LEVEL_L2);
     expect(mixpanelTrack).toHaveBeenCalledWith(
       "LOGIN_CIE_WIZARD_CIEID_SELECTED",
       expect.objectContaining({
-        security_level: "L2"
+        security_level: AUTH_LEVEL_L2
       })
     );
     expect(updateMixpanelProfileProperties).toHaveBeenCalledWith(dummyState, {

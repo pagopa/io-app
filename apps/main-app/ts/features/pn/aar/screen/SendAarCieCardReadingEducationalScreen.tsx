@@ -1,6 +1,6 @@
 import { VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -113,7 +113,7 @@ export const SendAarCieCardReadingEducationalScreen = ({
           type: "SingleButton",
           primary: {
             testID: "primaryActionID",
-            label: i18n.t(
+            label: I18n.t(
               "features.pn.aar.flow.cieScanningAdvisory.primaryAction"
             ),
             loading: isChecking,
@@ -121,14 +121,14 @@ export const SendAarCieCardReadingEducationalScreen = ({
           }
         }}
         alwaysBounceVertical={false}
-        description={i18n.t(
+        description={I18n.t(
           "features.pn.aar.flow.cieScanningAdvisory.description"
         )}
         goBack={handleGoBack}
         headerActionsProp={{ showHelp: true }}
         includeContentMargins
         title={{
-          label: i18n.t("features.pn.aar.flow.cieScanningAdvisory.title", {
+          label: I18n.t("features.pn.aar.flow.cieScanningAdvisory.title", {
             denomination
           })
         }}

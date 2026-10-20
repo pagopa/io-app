@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 
 import { testable as IdentificationSagaModule } from "../";
@@ -168,7 +167,7 @@ describe("Identification Saga", () => {
     testSaga(testableModule.startAndHandleIdentificationResult, action)
       .next()
       .call(getPin)
-      .next(O.some(pin))
+      .next(pin)
       .put(
         identificationStart(
           pin,
@@ -194,7 +193,7 @@ describe("Identification Saga", () => {
     testSaga(testableModule.startAndHandleIdentificationResult, action)
       .next()
       .call(getPin)
-      .next(O.some(pin))
+      .next(pin)
       .put(
         identificationStart(
           pin,
@@ -220,7 +219,7 @@ describe("Identification Saga", () => {
     testSaga(testableModule.startAndHandleIdentificationResult, action)
       .next()
       .call(getPin)
-      .next(O.none)
+      .next(undefined)
       .isDone();
   });
 
@@ -240,7 +239,7 @@ describe("Identification Saga", () => {
     testSaga(testableModule.startAndHandleIdentificationResult, action)
       .next()
       .call(getPin)
-      .next(O.some(pin))
+      .next(pin)
       .put(
         identificationStart(
           pin,

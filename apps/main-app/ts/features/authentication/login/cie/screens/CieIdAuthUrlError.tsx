@@ -1,8 +1,9 @@
 import { Route, useRoute } from "@react-navigation/native";
-import i18n from "i18next";
-import { useCallback } from "react";
+import I18n from "i18next";
+import { useCallback, useMemo } from "react";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -26,6 +27,15 @@ const CieIdAuthUrlError = () => {
     trackCieIdNoWhitelistUrl(url, isActiveSessionLogin ? "reauth" : "auth");
   });
 
+  const debugInfo = useMemo(
+    () => ({
+      notAllowedUrl: url,
+      flow: isActiveSessionLogin ? "reauth" : "auth"
+    }),
+    [url, isActiveSessionLogin]
+  );
+  useDebugInfo(debugInfo);
+
   const handleClose = useCallback(() => {
     if (isActiveSessionLogin) {
       dispatch(setFinishedActiveSessionLoginFlow());
@@ -41,13 +51,13 @@ const CieIdAuthUrlError = () => {
   return (
     <OperationResultScreenContent
       action={{
-        label: i18n.t("global.buttons.close"),
-        accessibilityLabel: i18n.t("global.buttons.close"),
+        label: I18n.t("global.buttons.close"),
+        accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: handleClose
       }}
       pictogram="attention"
-      subtitle={i18n.t("authentication.cieidUrlErrorScreen.description")}
-      title={i18n.t("authentication.cieidUrlErrorScreen.title")}
+      subtitle={I18n.t("authentication.cieidUrlErrorScreen.description")}
+      title={I18n.t("authentication.cieidUrlErrorScreen.title")}
     />
   );
 };

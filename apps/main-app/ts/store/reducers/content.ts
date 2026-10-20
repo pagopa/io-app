@@ -1,11 +1,8 @@
 import { ContextualHelp } from "@io-app/api-types/generated/definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMetadata } from "@io-app/api-types/generated/definitions/content/Municipality";
 import { ScreenCHData } from "@io-app/api-types/generated/definitions/content/ScreenCHData";
-/**
- * Implements the reducers for static content.
- */
+/** Implements the reducers for static content. */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
@@ -31,12 +28,11 @@ import {
   loadIdps
 } from "../actions/content";
 import { Action } from "../actions/types";
-import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";
 
 /**
- * Stores useful content such as services and organizations metadata,
- * help pages, etc...
+ * Stores useful content such as services and organizations metadata, help
+ * pages, etc...
  */
 export type ContentState = Readonly<{
   contextualHelp: pot.Pot<ContextualHelp, Error>;
@@ -85,37 +81,9 @@ export const idpsRemoteValueSelector = createSelector(
 );
 
 /**
- * return a pot with screen contextual help data if they are loaded and defined otherwise
- * @param id
- */
-export const screenContextualHelpDataSelector = createSelector<
-  GlobalState,
-  pot.Pot<ContextualHelp, Error>,
-  string,
-  pot.Pot<O.Option<ScreenCHData>, Error>
->(
-  [contextualHelpDataSelector, currentRouteSelector],
-  (contextualHelpData, currentRoute) =>
-    pot.map(contextualHelpData, data => {
-      if (currentRoute === undefined) {
-        return O.none;
-      }
-      const locale = getCurrentLocale();
-
-      const localeData = data[locale];
-      const screenData =
-        localeData !== undefined
-          ? localeData.screens.find(
-              s =>
-                s.route_name.toLowerCase() === currentRoute.toLocaleLowerCase()
-            )
-          : undefined;
-      return O.fromNullable(screenData);
-    })
-);
-
-/**
- * Return a pot with screen contextual help data given a route if they are loaded and defined otherwise return undefined
+ * Return a pot with screen contextual help data given a route if they are
+ * loaded and defined otherwise return undefined
+ *
  * @param route
  */
 export const getContextualHelpDataFromRouteSelector = (route: string) =>

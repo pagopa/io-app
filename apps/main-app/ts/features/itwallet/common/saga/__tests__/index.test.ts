@@ -9,11 +9,12 @@ import {
   watchItwAnalyticsSaga
 } from "../../../analytics/saga";
 import { watchItwCredentialsSaga } from "../../../credentials/saga";
+import { checkCredentialsBatchRefill } from "../../../credentials/saga/checkCredentialsBatchRefill";
 import { checkCredentialsStatusAssertion } from "../../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleItwCredentialsVaultCoherenceSaga } from "../../../credentials/saga/handleItwCredentialsVaultCoherenceSaga";
 import { handleItwCredentialsVaultMigrationSaga } from "../../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
+import { handleKeyAttestationsCleanUp } from "../../../credentials/saga/handleKeyAttestationsCleanUp";
 import { handleWalletCredentialsRehydration } from "../../../credentials/saga/handleWalletCredentialsRehydration";
-import { handleWalletUnitAttestationsCleanUp } from "../../../credentials/saga/handleWalletUnitAttestationsCleanUp";
 import { watchItwCredentialsCatalogueSaga } from "../../../credentialsCatalogue/saga";
 import { checkHasNfcFeatureSaga } from "../../../identification/common/saga";
 import { watchItwLifecycleSaga } from "../../../lifecycle/saga";
@@ -29,11 +30,11 @@ import {
 } from "../../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
 import { watchItwEnvironment } from "../environment";
-import { watchItwOfflineAccess } from "../offlineAccess";
+import { watchItwOfflineSaga } from "../offlineAccess";
 
-type TakeEffect = {
+type TakeEffect<TAction> = {
   payload: {
-    pattern: (action: ReturnType<typeof setConnectionStatus>) => boolean;
+    pattern: (action: TAction) => boolean;
   };
 };
 
@@ -41,7 +42,7 @@ describe("watchItwSaga", () => {
   it("starts offline-safe watchers and waits for connectivity before Status List checks", () => {
     testSaga(watchItwSaga)
       .next()
-      .fork(watchItwOfflineAccess)
+      .fork(watchItwOfflineSaga)
       .next()
       .fork(watchItwEnvironment)
       .next()
@@ -55,7 +56,7 @@ describe("watchItwSaga", () => {
       .next()
       .fork(handleWalletCredentialsRehydration)
       .next()
-      .fork(handleWalletUnitAttestationsCleanUp)
+      .fork(handleKeyAttestationsCleanUp)
       .next()
       .fork(updateNfcInfoTrackingProperties)
       .next()
@@ -75,7 +76,6 @@ describe("watchItwAuthenticatedSaga", () => {
   it("stops after an inconsistent wallet instance", () => {
     testSaga(watchItwAuthenticatedSaga)
       .next()
-      .next()
       .fork(watchItwLifecycleSaga)
       .next()
       .fork(watchItwCredentialsCatalogueSaga)
@@ -94,7 +94,6 @@ describe("watchItwAuthenticatedSaga", () => {
   it("checks wallet state and credential status assertions for a consistent wallet", () => {
     testSaga(watchItwAuthenticatedSaga)
       .next()
-      .next()
       .fork(watchItwLifecycleSaga)
       .next()
       .fork(watchItwCredentialsCatalogueSaga)
@@ -112,6 +111,8 @@ describe("watchItwAuthenticatedSaga", () => {
       .call(checkCurrentWalletInstanceStateSaga)
       .next()
       .call(checkCredentialsStatusAssertion)
+      .next()
+      .call(checkCredentialsBatchRefill)
       .next()
       .isDone();
   });
@@ -133,7 +134,9 @@ describe("waitForConnection", () => {
       .next(false)
       .inspect(effect => {
         expect(effect).toMatchObject({ type: "TAKE" });
-        const takeEffect = effect as TakeEffect;
+        const takeEffect = effect as TakeEffect<
+          ReturnType<typeof setConnectionStatus>
+        >;
         expect(takeEffect.payload.pattern(setConnectionStatus(true))).toBe(
           true
         );

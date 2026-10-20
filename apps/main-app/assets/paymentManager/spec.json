@@ -59,15 +59,11 @@
       "description": "Wallet V 2 Controller"
     }
   ],
-  "produces": [
-    "application/json"
-  ],
+  "produces": ["application/json"],
   "paths": {
     "/v1/bancomat/abi": {
       "get": {
-        "tags": [
-          "bancomat-controller"
-        ],
+        "tags": ["bancomat-controller"],
         "summary": "restituisce la lista paginata degli ABI salvati a DB.size = numero di elementi da visualizzare sulla pagina (max 15).start = posizione dell'elemento da cui partire all'interno della lista.abiQuery = sottostringa a contenuta nei valori di ABI o nome dell'elemento.",
         "operationId": "getAbiListUsingGET",
         "parameters": [
@@ -123,14 +119,10 @@
     },
     "/v1/bancomat/add-wallets": {
       "post": {
-        "tags": [
-          "bancomat-controller"
-        ],
+        "tags": ["bancomat-controller"],
         "summary": "Possibili sottotipi del campo info (PaymentMethodInfo): [CardInfo]",
         "operationId": "addWalletsBancomatCardUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -171,9 +163,7 @@
     },
     "/v1/bancomat/pans": {
       "get": {
-        "tags": [
-          "bancomat-controller"
-        ],
+        "tags": ["bancomat-controller"],
         "summary": "getPans",
         "operationId": "getPansUsingGET",
         "parameters": [
@@ -211,14 +201,10 @@
     },
     "/v1/bpay/add-wallets": {
       "post": {
-        "tags": [
-          "b-pay-controller"
-        ],
+        "tags": ["b-pay-controller"],
         "summary": "Possibili sottotipi del campo info (PaymentMethodInfo): [BPayInfo]",
         "operationId": "addWalletsBPayUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -259,9 +245,7 @@
     },
     "/v1/bpay/list": {
       "get": {
-        "tags": [
-          "b-pay-controller"
-        ],
+        "tags": ["b-pay-controller"],
         "summary": "getBpayList",
         "operationId": "getBpayListUsingGET",
         "parameters": [
@@ -299,14 +283,10 @@
     },
     "/v1/payments/cc/actions/pay": {
       "post": {
-        "tags": [
-          "payments-controller"
-        ],
+        "tags": ["payments-controller"],
         "summary": "valori authorizationCode: [ 00 - OK ] [ 02 - parametro duplicato ] [ 03 - formato messaggio errato, campo mancante o errato ][ 04 - MAC non corretto ] [ 06 - errore imprevisto durante l’elaborazione ][ 37 - codice di verifica mancante ] [ 40 - errore xml ] [ 41 - errore xml ] [ 98 - errore applicativo ] [ 99 - operazione fallita ]",
         "operationId": "payCreditCardVerificationUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -355,9 +335,7 @@
     },
     "/v1/payments/{id}": {
       "delete": {
-        "tags": [
-          "payments-controller"
-        ],
+        "tags": ["payments-controller"],
         "summary": "deletePayment",
         "operationId": "deletePaymentUsingDELETE",
         "parameters": [
@@ -399,9 +377,7 @@
     },
     "/v1/payments/{id}/actions/check": {
       "get": {
-        "tags": [
-          "payments-controller"
-        ],
+        "tags": ["payments-controller"],
         "summary": "checkPayment",
         "operationId": "checkPaymentUsingGET",
         "parameters": [
@@ -434,9 +410,7 @@
     },
     "/v1/payments/{id}/actions/check-internal": {
       "get": {
-        "tags": [
-          "payments-controller"
-        ],
+        "tags": ["payments-controller"],
         "summary": "getPayment",
         "operationId": "getPaymentUsingGET",
         "parameters": [
@@ -469,9 +443,7 @@
     },
     "/v1/payments/{id}/actions/delete": {
       "delete": {
-        "tags": [
-          "payments-controller"
-        ],
+        "tags": ["payments-controller"],
         "summary": "deleteBySessionCookieExpired",
         "operationId": "deleteBySessionCookieExpiredUsingDELETE",
         "parameters": [
@@ -513,14 +485,10 @@
     },
     "/v1/payments/{id}/actions/pay": {
       "post": {
-        "tags": [
-          "payments-controller"
-        ],
+        "tags": ["payments-controller"],
         "summary": "valori authorizationCode: [ 00 - OK ] [ 02 - parametro duplicato ] [ 03 - formato messaggio errato, campo mancante o errato ][ 04 - MAC non corretto ] [ 06 - errore imprevisto durante l’elaborazione ][ 37 - codice di verifica mancante ] [ 40 - errore xml ] [ 41 - errore xml ] [ 98 - errore applicativo ] [ 99 - operazione fallita ]",
         "operationId": "paySslUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -576,9 +544,7 @@
     },
     "/v1/psps": {
       "get": {
-        "tags": [
-          "psp-controller"
-        ],
+        "tags": ["psp-controller"],
         "summary": "getPspList",
         "operationId": "getPspListUsingGET",
         "parameters": [
@@ -631,9 +597,7 @@
     },
     "/v1/psps/all": {
       "get": {
-        "tags": [
-          "psp-controller"
-        ],
+        "tags": ["psp-controller"],
         "summary": "getAllPsps",
         "operationId": "getAllPspsUsingGET",
         "parameters": [
@@ -685,9 +649,7 @@
     },
     "/v1/psps/selected": {
       "get": {
-        "tags": [
-          "psp-controller"
-        ],
+        "tags": ["psp-controller"],
         "summary": "getSelectedPsp",
         "operationId": "getSelectedPspUsingGET",
         "parameters": [
@@ -739,9 +701,7 @@
     },
     "/v1/psps/{id}": {
       "get": {
-        "tags": [
-          "psp-controller"
-        ],
+        "tags": ["psp-controller"],
         "summary": "getPsp",
         "operationId": "getPspUsingGET",
         "parameters": [
@@ -780,9 +740,7 @@
     },
     "/v1/resources": {
       "get": {
-        "tags": [
-          "resource-controller"
-        ],
+        "tags": ["resource-controller"],
         "summary": "getResources",
         "operationId": "getResourcesUsingGET",
         "responses": {
@@ -806,9 +764,7 @@
     },
     "/v1/resources/img/{imgName}": {
       "get": {
-        "tags": [
-          "resource-controller"
-        ],
+        "tags": ["resource-controller"],
         "summary": "getImageWithMediaType",
         "operationId": "getImageWithMediaTypeUsingGET",
         "parameters": [
@@ -838,9 +794,7 @@
     },
     "/v1/resources/psp/{id}": {
       "get": {
-        "tags": [
-          "resource-controller"
-        ],
+        "tags": ["resource-controller"],
         "summary": "getPspLogo",
         "operationId": "getPspLogoUsingGET",
         "parameters": [
@@ -871,9 +825,7 @@
     },
     "/v1/resources/service/{id}": {
       "get": {
-        "tags": [
-          "resource-controller"
-        ],
+        "tags": ["resource-controller"],
         "summary": "getServiceLogo",
         "operationId": "getServiceLogoUsingGET",
         "parameters": [
@@ -904,14 +856,10 @@
     },
     "/v1/satispay/add-wallet": {
       "post": {
-        "tags": [
-          "satispay-controller"
-        ],
+        "tags": ["satispay-controller"],
         "summary": "Possibili sottotipi del campo info (PaymentMethodInfo): [SatispayInfo]",
         "operationId": "addWalletSatispayUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -952,9 +900,7 @@
     },
     "/v1/satispay/consumers": {
       "get": {
-        "tags": [
-          "satispay-controller"
-        ],
+        "tags": ["satispay-controller"],
         "summary": "getConsumer",
         "operationId": "getConsumerUsingGET",
         "responses": {
@@ -983,9 +929,7 @@
     },
     "/v1/transactions": {
       "get": {
-        "tags": [
-          "transaction-controller"
-        ],
+        "tags": ["transaction-controller"],
         "summary": "valori authorizationCode: [ 00 - OK ] [ 02 - parametro duplicato ] [ 03 - formato messaggio errato, campo mancante o errato ][ 04 - MAC non corretto ] [ 06 - errore imprevisto durante l’elaborazione ][ 37 - codice di verifica mancante ] [ 40 - errore xml ] [ 41 - errore xml ] [ 98 - errore applicativo ] [ 99 - operazione fallita ]",
         "operationId": "getTransactionsUsingGET",
         "responses": {
@@ -1014,9 +958,7 @@
     },
     "/v1/transactions/{id}": {
       "get": {
-        "tags": [
-          "transaction-controller"
-        ],
+        "tags": ["transaction-controller"],
         "summary": "valori authorizationCode: [ 00 - OK ] [ 02 - parametro duplicato ] [ 03 - formato messaggio errato, campo mancante o errato ][ 04 - MAC non corretto ] [ 06 - errore imprevisto durante l’elaborazione ][ 37 - codice di verifica mancante ] [ 40 - errore xml ] [ 41 - errore xml ] [ 98 - errore applicativo ] [ 99 - operazione fallita ]",
         "operationId": "getTransactionUsingGET",
         "parameters": [
@@ -1055,9 +997,7 @@
     },
     "/v1/transactions/{id}/actions/check": {
       "get": {
-        "tags": [
-          "transaction-controller"
-        ],
+        "tags": ["transaction-controller"],
         "summary": "checkStatus",
         "operationId": "checkStatusUsingGET",
         "parameters": [
@@ -1095,14 +1035,10 @@
     },
     "/v1/transactions/{id}/actions/resume": {
       "post": {
-        "tags": [
-          "transaction-controller"
-        ],
+        "tags": ["transaction-controller"],
         "summary": "resume",
         "operationId": "resumeUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -1155,9 +1091,7 @@
     },
     "/v1/users": {
       "get": {
-        "tags": [
-          "users-controller"
-        ],
+        "tags": ["users-controller"],
         "summary": "getUser",
         "operationId": "getUserUsingGET",
         "responses": {
@@ -1186,14 +1120,10 @@
     },
     "/v1/users/actions/send-otp": {
       "post": {
-        "tags": [
-          "otp-controller"
-        ],
+        "tags": ["otp-controller"],
         "summary": "sendOtp",
         "operationId": "sendOtpUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -1239,9 +1169,7 @@
     },
     "/v1/users/actions/start-session": {
       "get": {
-        "tags": [
-          "users-controller"
-        ],
+        "tags": ["users-controller"],
         "summary": "startSession",
         "operationId": "startSessionUsingGET",
         "parameters": [
@@ -1274,14 +1202,10 @@
     },
     "/v1/users/actions/verify-otp": {
       "post": {
-        "tags": [
-          "otp-controller"
-        ],
+        "tags": ["otp-controller"],
         "summary": "verifyOtp",
         "operationId": "verifyOtpUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -1322,9 +1246,7 @@
     },
     "/v1/wallet": {
       "get": {
-        "tags": [
-          "wallet-controller"
-        ],
+        "tags": ["wallet-controller"],
         "summary": "getWallets",
         "operationId": "getWalletsUsingGET",
         "responses": {
@@ -1351,14 +1273,10 @@
         ]
       },
       "post": {
-        "tags": [
-          "wallet-controller"
-        ],
+        "tags": ["wallet-controller"],
         "summary": "addWallet",
         "operationId": "addWalletUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -1406,14 +1324,10 @@
     },
     "/v1/wallet/actions/check-card-bin": {
       "post": {
-        "tags": [
-          "wallet-controller"
-        ],
+        "tags": ["wallet-controller"],
         "summary": "checkCardBin",
         "operationId": "checkCardBinUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -1454,14 +1368,10 @@
     },
     "/v1/wallet/cc": {
       "post": {
-        "tags": [
-          "wallet-controller"
-        ],
+        "tags": ["wallet-controller"],
         "summary": "addWalletCreditCard",
         "operationId": "addWalletCreditCardUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -1502,14 +1412,10 @@
     },
     "/v2/wallet/{id}": {
       "put": {
-        "tags": [
-          "wallet-v-2-controller"
-        ],
+        "tags": ["wallet-v-2-controller"],
         "summary": "updateWalletV2",
         "operationId": "updateWalletUsingPUTV2",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -1558,9 +1464,7 @@
     },
     "/v1/wallet/{id}": {
       "get": {
-        "tags": [
-          "wallet-controller"
-        ],
+        "tags": ["wallet-controller"],
         "summary": "getWallet",
         "operationId": "getWalletUsingGET",
         "parameters": [
@@ -1597,9 +1501,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "wallet-controller"
-        ],
+        "tags": ["wallet-controller"],
         "summary": "deleteWallet",
         "operationId": "deleteWalletUsingDELETE",
         "parameters": [
@@ -1635,14 +1537,10 @@
     },
     "/v1/wallet/{id}/actions/confirm": {
       "post": {
-        "tags": [
-          "wallet-controller"
-        ],
+        "tags": ["wallet-controller"],
         "summary": "confirmWallet",
         "operationId": "confirmWalletUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -1682,14 +1580,10 @@
     },
     "/v1/wallet/{id}/actions/favourite": {
       "post": {
-        "tags": [
-          "wallet-controller"
-        ],
+        "tags": ["wallet-controller"],
         "summary": "favouriteWallet",
         "operationId": "favouriteWalletUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -1729,14 +1623,10 @@
     },
     "/v2/payments/{id}/actions/pay": {
       "post": {
-        "tags": [
-          "payments-controller"
-        ],
+        "tags": ["payments-controller"],
         "summary": "pay3ds",
         "operationId": "pay3dsUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -1792,9 +1682,7 @@
     },
     "/v2/wallet": {
       "get": {
-        "tags": [
-          "wallet-v-2-controller"
-        ],
+        "tags": ["wallet-v-2-controller"],
         "summary": "Possibili sottotipi del campo info (PaymentMethodInfo): [CardInfo, SatispayInfo, BPayInfo]",
         "operationId": "getWalletsV2UsingGET",
         "responses": {
@@ -1905,9 +1793,7 @@
     },
     "/v2/payments/{idPayment}/psps": {
       "get": {
-        "tags": [
-          "payments-v-2-controller"
-        ],
+        "tags": ["payments-v-2-controller"],
         "summary": "getPspListV2",
         "operationId": "getPspListV2UsingGET",
         "parameters": [
@@ -1980,9 +1866,7 @@
     },
     "/v3/paypal/searchPSP": {
       "get": {
-        "tags": [
-          "pay-pal-controller"
-        ],
+        "tags": ["pay-pal-controller"],
         "summary": "getPaypalPsps",
         "operationId": "getPaypalPspsUsingGET",
         "parameters": [
@@ -2247,10 +2131,7 @@
         },
         "productType": {
           "type": "string",
-          "enum": [
-            "PP",
-            "DEB"
-          ]
+          "enum": ["PP", "DEB"]
         },
         "tokens": {
           "type": "array",
@@ -2260,10 +2141,7 @@
         },
         "validityState": {
           "type": "string",
-          "enum": [
-            "V",
-            "BR"
-          ]
+          "enum": ["V", "BR"]
         }
       },
       "title": "Card"
@@ -2303,10 +2181,7 @@
         },
         "type": {
           "type": "string",
-          "enum": [
-            "PP",
-            "DEB"
-          ]
+          "enum": ["PP", "DEB"]
         }
       },
       "title": "CardInfo"
@@ -2437,11 +2312,7 @@
       "properties": {
         "caName": {
           "type": "string",
-          "enum": [
-            "ICCREA",
-            "NEXI",
-            "SIA"
-          ]
+          "enum": ["ICCREA", "NEXI", "SIA"]
         },
         "cardsNumber": {
           "type": "integer",
@@ -2578,9 +2449,7 @@
     },
     "PayPalInfo": {
       "type": "object",
-      "required": [
-        "pspInfo"
-      ],
+      "required": ["pspInfo"],
       "properties": {
         "pspInfo": {
           "type": "array",
@@ -2593,12 +2462,7 @@
     },
     "PayPalAccountPspInfo": {
       "type": "object",
-      "required": [
-        "abi",
-        "default",
-        "email",
-        "ragioneSociale"
-      ],
+      "required": ["abi", "default", "email", "ragioneSociale"],
       "properties": {
         "abi": {
           "type": "string"
@@ -2724,13 +2588,7 @@
         },
         "lingua": {
           "type": "string",
-          "enum": [
-            "IT",
-            "EN",
-            "FR",
-            "DE",
-            "SL"
-          ]
+          "enum": ["IT", "EN", "FR", "DE", "SL"]
         },
         "logoPSP": {
           "type": "string"
@@ -2782,9 +2640,7 @@
     },
     "PspDataListResponse": {
       "type": "object",
-      "required": [
-        "data"
-      ],
+      "required": ["data"],
       "properties": {
         "data": {
           "type": "array",
@@ -2987,11 +2843,7 @@
         },
         "provider": {
           "type": "string",
-          "enum": [
-            "EMAIL",
-            "SMS",
-            "PUSH"
-          ]
+          "enum": ["EMAIL", "SMS", "PUSH"]
         }
       },
       "title": "SendOtp"
@@ -3139,14 +2991,14 @@
       },
       "title": "Transaction",
       "required": [
-        "created", 
-        "description", 
-        "id", 
-        "idPayment", 
-        "idWallet", 
-        "merchant", 
-        "statusMessage", 
-        "grandTotal", 
+        "created",
+        "description",
+        "id",
+        "idPayment",
+        "idWallet",
+        "merchant",
+        "statusMessage",
+        "grandTotal",
         "amount"
       ]
     },
@@ -3416,21 +3268,12 @@
           "type": "array",
           "items": {
             "type": "string",
-            "enum": [
-              "pagoPA",
-              "BPD",
-              "FA"
-            ]
+            "enum": ["pagoPA", "BPD", "FA"]
           }
         },
         "type": {
           "type": "string",
-          "enum": [
-            "CREDIT_CARD",
-            "BANK_ACCOUNT",
-            "EXTERNAL_PS",
-            "PAYPAL"
-          ]
+          "enum": ["CREDIT_CARD", "BANK_ACCOUNT", "EXTERNAL_PS", "PAYPAL"]
         }
       },
       "title": "Wallet"
@@ -3467,11 +3310,7 @@
     },
     "EnableableFunctions": {
       "type": "string",
-      "enum": [
-        "pagoPA",
-        "BPD",
-        "FA"
-      ]
+      "enum": ["pagoPA", "BPD", "FA"]
     },
     "WalletV2": {
       "type": "object",
@@ -3508,14 +3347,7 @@
         },
         "walletType": {
           "type": "string",
-          "enum": [
-            "Card",
-            "Bancomat",
-            "Satispay",
-            "BPay",
-            "Generic",
-            "PayPal"
-          ]
+          "enum": ["Card", "Bancomat", "Satispay", "BPay", "Generic", "PayPal"]
         }
       },
       "title": "WalletV2"
@@ -3552,9 +3384,7 @@
     },
     "WalletPaymentStatusRequest": {
       "type": "object",
-      "required": [
-        "data"
-      ],
+      "required": ["data"],
       "properties": {
         "data": {
           "$ref": "#/definitions/WalletPaymentStatus"
@@ -3570,10 +3400,7 @@
         },
         "esito": {
           "type": "string",
-          "enum": [
-            "OK",
-            "KO"
-          ]
+          "enum": ["OK", "KO"]
         },
         "idOperazione": {
           "type": "string"

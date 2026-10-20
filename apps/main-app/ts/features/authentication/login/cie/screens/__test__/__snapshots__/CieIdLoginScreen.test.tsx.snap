@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`CieIdLoginScreen Should match snapshot 1`] = `
+exports[`CieIdLoginScreen Should match the snapshot 1`] = `
 <RNCSafeAreaView
   edges={
     {

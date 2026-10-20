@@ -11,6 +11,7 @@ import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { ItwBatchCredentialsSection } from "../components/ItwBatchCredentialsSection";
 import { ItwCardsHeaderSection } from "../components/ItwCardsHeaderSection";
 import { ItwCardsSection } from "../components/ItwCardsSection";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
@@ -32,7 +33,8 @@ type PlaygroundTab = {
 
 /**
  * ITW Playground screen
- * @returns a screen with a list of playgrounds for the ITW
+ *
+ * @returns A screen with a list of playgrounds for the ITW
  */
 const ItwPlayground = () => {
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -63,7 +65,12 @@ const ItwPlayground = () => {
     },
     {
       label: "Issuance",
-      content: <ItwPidIssuanceSection />
+      content: (
+        <>
+          <ItwPidIssuanceSection />
+          <ItwBatchCredentialsSection />
+        </>
+      )
     },
     {
       label: "ISO-18013",

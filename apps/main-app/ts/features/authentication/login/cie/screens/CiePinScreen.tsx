@@ -60,7 +60,7 @@ import {
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginSuccess } from "../../../common/store/actions";
-import { getIdpLoginUri } from "../../../common/utils/login";
+import { AUTH_LEVELS, getIdpLoginUri } from "../../../common/utils";
 import {
   CieEntityIds,
   CieRequestAuthenticationOverlay
@@ -101,7 +101,7 @@ const CiePinScreen = () => {
 
   const doLoginSuccess = useCallback(
     (token: string, idp: keyof IdpData) =>
-      dispatch(loginSuccess({ token, idp })),
+      dispatch(loginSuccess({ token, idp, isOneIdentityLogin: false })),
     [dispatch]
   );
 
@@ -154,7 +154,7 @@ const CiePinScreen = () => {
       if (cieFlowForDevServerEnabled) {
         const loginUri = getIdpLoginUri(
           CieEntityIds.PROD,
-          3,
+          AUTH_LEVELS.L3,
           remoteApiLoginUrlPrefix
         );
         navigateToCieConsentDataUsage({ cieConsentUri: loginUri });

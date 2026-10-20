@@ -1,6 +1,5 @@
 import { act } from "@testing-library/react-native";
 import I18n from "i18next";
-import DeviceInfo from "react-native-device-info";
 import { createStore } from "redux";
 
 import {
@@ -23,8 +22,9 @@ describe("RootModal", () => {
         undefined,
         applicationChangeState("active")
       );
-      jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("5.0.4.2");
-      jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("5.0.4.2");
+      jest
+        .spyOn(require("../../../utils/device"), "getDeviceAppVersion")
+        .mockReturnValue("5.0.4.2");
       const store = createStore(appReducer, globalState as any);
       expect(store.getState().versionInfo).toStrictEqual(null);
 
@@ -45,8 +45,9 @@ describe("RootModal", () => {
         undefined,
         applicationChangeState("active")
       );
-      jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("5.0.4.2");
-      jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("5.0.4.2");
+      jest
+        .spyOn(require("../../../utils/device"), "getDeviceAppVersion")
+        .mockReturnValue("5.0.4.2");
       const store = createStore(appReducer, globalState as any);
       expect(store.getState().versionInfo).toStrictEqual(null);
       act(() => {
@@ -69,8 +70,9 @@ describe("RootModal", () => {
           undefined,
           applicationChangeState("active")
         );
-        jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("5.0.4.2");
-        jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("5.0.4.2");
+        jest
+          .spyOn(require("../../../utils/device"), "getDeviceAppVersion")
+          .mockReturnValue("5.0.4.2");
         const store = createStore(appReducer, globalState as any);
         expect(store.getState().versionInfo).toStrictEqual(null);
         act(() => {
@@ -122,8 +124,9 @@ const testRootModal = (
   isSupported: boolean
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  jest.spyOn(DeviceInfo, "getVersion").mockReturnValue(appVersion);
-  jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue(appVersion);
+  jest
+    .spyOn(require("../../../utils/device"), "getDeviceAppVersion")
+    .mockReturnValue(appVersion);
   const store = createStore(appReducer, globalState as any);
   act(() => {
     store.dispatch(
@@ -149,12 +152,10 @@ const testRootModal = (
   );
   expect(testComponent).not.toBeNull();
 
-  const searchUpdateText = expect(
-    testComponent.queryByText(I18n.t("titleUpdateApp"))
-  );
+  const updateText = testComponent.queryByText(I18n.t("titleUpdateApp"));
   if (isSupported) {
-    searchUpdateText.toBeNull();
+    expect(updateText).toBeNull();
   } else {
-    searchUpdateText.not.toBeNull();
+    expect(updateText).not.toBeNull();
   }
 };
