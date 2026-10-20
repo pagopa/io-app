@@ -213,6 +213,11 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
+                        style={
+                          {
+                            "flex": 1,
+                          }
+                        }
                       >
                         <RCTScrollView
                           collapsable={false}
