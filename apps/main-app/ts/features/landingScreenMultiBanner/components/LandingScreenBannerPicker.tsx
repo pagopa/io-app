@@ -1,40 +1,17 @@
 import { useMemo } from "react";
-import Animated, {
-  FadeIn,
-  FadeOut,
-  LinearTransition
-} from "react-native-reanimated";
 
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import {
-  isStartupLoaded,
-  StartupStatusEnum
-} from "../../../store/reducers/startup";
 import { usePushNotificationsBannerTracking } from "../../pushNotifications/hooks/usePushNotificationsBannerTracking";
 import { updateLandingScreenBannerVisibility } from "../store/actions";
 import { landingScreenBannerToRenderSelector } from "../store/selectors";
 import { landingScreenBannerMap } from "../utils/landingScreenBannerMap";
 import { LandingScreenBannerSkeleton } from "./LandingScreenBannerSkeleton";
-
-const BANNER_TRANSITION_DURATION = 300;
-
-export const bannerLayoutTransition = LinearTransition.duration(
-  BANNER_TRANSITION_DURATION
-);
-const bannerEntering = FadeIn.duration(BANNER_TRANSITION_DURATION);
-const bannerExiting = FadeOut.duration(BANNER_TRANSITION_DURATION / 2);
+import { LandingScreenBannerTransition } from "./LandingScreenBannerTransition";
 
 export const LandingScreenBannerPicker = () => {
   const dispatch = useIODispatch();
   const bannerToRender = useIOSelector(landingScreenBannerToRenderSelector);
   usePushNotificationsBannerTracking();
-
-  // During startup onboarding, TabNavigator covers this screen with an opaque
-  // LoadingSpinnerOverlay, so the banner mounts and animates out of sight.
-  // Rendering is deferred until the overlay is gone, so the entrance animation
-  // is visible.
-  const isStartupOnboarding =
-    useIOSelector(isStartupLoaded) === StartupStatusEnum.ONBOARDING;
 
   const bannerId =
     bannerToRender.type === "banner" ? bannerToRender.id : undefined;
@@ -58,19 +35,9 @@ export const LandingScreenBannerPicker = () => {
     return entry.component(closeHandler);
   }, [bannerToRender.type, bannerId, dispatch]);
 
-  // The container is always mounted so its height change between skeleton,
-  // banner and nothing is animated, while the keyed content cross-fades
   return (
-    <Animated.View layout={bannerLayoutTransition}>
-      {!isStartupOnboarding && content && (
-        <Animated.View
-          entering={bannerEntering}
-          exiting={bannerExiting}
-          key={bannerId ?? bannerToRender.type}
-        >
-          {content}
-        </Animated.View>
-      )}
-    </Animated.View>
+    <LandingScreenBannerTransition contentKey={bannerId ?? bannerToRender.type}>
+      {content}
+    </LandingScreenBannerTransition>
   );
 };
