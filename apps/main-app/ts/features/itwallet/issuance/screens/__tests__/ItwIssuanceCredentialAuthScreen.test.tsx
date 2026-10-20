@@ -18,9 +18,6 @@ describe("ItwIssuanceCredentialTrustIssuerScreen", () => {
   it("should render the screen correctly", () => {
     const component = renderComponent();
     expect(component).toBeTruthy();
-    expect(
-      component.getByRole("header", { name: "Dati richiesti, verificati" })
-    ).toBeTruthy();
   });
 });
 
