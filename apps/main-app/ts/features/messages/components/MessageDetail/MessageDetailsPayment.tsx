@@ -32,7 +32,7 @@ export const MessageDetailsPayment = ({
     <>
       <VSpacer size={16} />
       <ListItemHeader
-        iconColor={colors.product.pagopa.icon}
+        iconColor={colors.icon.pagopa}
         iconName={"productPagoPA"}
         label={I18n.t("features.messages.payments.title")}
       />

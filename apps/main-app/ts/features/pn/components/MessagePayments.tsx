@@ -112,7 +112,7 @@ export const MessagePayments = ({
   const navigation = useNavigation();
   const colors = useIOColors();
 
-  const pagoPAIconColor = colors.product.pagopa.icon;
+  const pagoPAIconColor = colors.icon.pagopa;
 
   const paymentsButtonStatus = useIOSelector(state =>
     paymentsButtonStateSelector(

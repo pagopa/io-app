@@ -7,6 +7,8 @@ Groups are properties shared across components: no component names, no
 states (both live in component configs). A status color at the root of a
 group sits on a neutral background; `onTint` holds the ones on the matching
 `surface` tint, `onColor` the ones on a solid fill.
+Product intents (`cgn`, `pagopa`) only for products a DS component or icon
+shows; colors of a single feature live in that feature.
 It also defines the shape every component color config shares.
 */
 
@@ -55,7 +57,9 @@ export const light = {
     info: p.lightBlue[100],
     success: p.green[100],
     warning: p.yellow[100],
-    highlight: p.turquoise[50]
+    highlight: p.turquoise[50],
+    /* Product */
+    cgn: p.hanPurple[100]
   },
   icon: {
     default: p.greyscale[650],
@@ -66,6 +70,8 @@ export const light = {
     info: p.lightBlue[700],
     success: p.green[700],
     warning: p.yellow[700],
+    /* Product */
+    pagopa: p.blueItalia[500],
     onTint: {
       error: p.red[850],
       info: p.lightBlue[850],
@@ -118,7 +124,9 @@ export const light = {
         error: p.red[850],
         success: p.green[850],
         warning: p.yellow[850],
-        highlight: p.turquoise[850]
+        highlight: p.turquoise[850],
+        /* Product */
+        cgn: p.hanPurple[500]
       }
     }
   },
@@ -154,7 +162,9 @@ export const dark = {
     info: withAlpha(p.lightBlue[400], 0.2),
     success: withAlpha(p.green[400], 0.2),
     warning: withAlpha(p.yellow[400], 0.2),
-    highlight: withAlpha(p.turquoise[300], 0.2)
+    highlight: withAlpha(p.turquoise[300], 0.2),
+    /* Product */
+    cgn: withAlpha(p.hanPurple[250], 0.2)
   },
   icon: {
     default: p.greyscale[450],
@@ -165,6 +175,8 @@ export const dark = {
     info: p.lightBlue[500],
     success: p.green[500],
     warning: p.yellow[500],
+    /* Product */
+    pagopa: p.blueItalia[300],
     onTint: {
       error: p.red[100],
       info: p.lightBlue[100],
@@ -216,7 +228,9 @@ export const dark = {
         error: p.red[400],
         success: p.green[400],
         warning: p.yellow[400],
-        highlight: p.turquoise[300]
+        highlight: p.turquoise[300],
+        /* Product */
+        cgn: p.hanPurple[250]
       }
     }
   },

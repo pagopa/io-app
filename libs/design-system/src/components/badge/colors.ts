@@ -1,11 +1,10 @@
-import type { IOColorProducts } from "../../core/tokens/colors/product";
 import type {
   IOColorSemantics,
   IOComponentColors
 } from "../../core/tokens/colors/semantic";
 import type { Badge } from "./Badge";
 
-export const badgeColors = (s: IOColorSemantics, product: IOColorProducts) =>
+export const badgeColors = (s: IOColorSemantics) =>
   ({
     default: {
       background: { default: s.surface.accent },
@@ -24,8 +23,8 @@ export const badgeColors = (s: IOColorSemantics, product: IOColorProducts) =>
       foreground: { default: s.text.label.onTint.error }
     },
     cgn: {
-      background: { default: product.cgn.surface },
-      foreground: { default: product.cgn.content }
+      background: { default: s.surface.cgn },
+      foreground: { default: s.text.label.onTint.cgn }
     },
     highlight: {
       background: { default: s.surface.highlight },
