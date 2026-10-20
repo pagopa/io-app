@@ -119,7 +119,6 @@ patchedDependencies:
   '@react-navigation/stack@6.4.1': e2a5b59c2c1d2574b25cc2ef6c7ddaa52528bdae0d1abc9025400ac9dbc6f514
   expo-screen-capture@~55.0.9: 74f8b19daf73b86e72d9d61e5fc0ab2e2362516a40718b4fb9a956cbb56fc7dd
   react-native-barcode-builder@2.0.0: 185bbf5a5ace23a4f4b0fe9ae693a101d9f5f95ffcbc30d34f6293080065bc33
-  react-native-device-info@14.0.4: b5e3683f3a8950e16f58e0d657f1372e1981f5250008f5ef02f47e7602c8d435
   react-native-exception-handler@^2.10.8: fd242598519fc7e652937710695c34417af98515385035ef8db1bb9921e896a8
   react-native-pdf@7.0.3: da79e4de07c9520dd9a872e9ce02ce04892636879226c505ffdc9c01593fbe50
   react-native-webview@13.16.0: f50190f7feff67b44970713f309dbb5962fdcbd2e85b7d4ae8d248d4f1c06b0e
@@ -378,6 +377,9 @@ importers:
       '@io-app/design-system':
         specifier: workspace:@pagopa/io-app-design-system@*
         version: link:../../libs/design-system
+      '@io-app/expo-device-internal':
+        specifier: workspace:*
+        version: link:../../libs/expo-device-internal
       '@io-app/expo-navigation-bar-manager':
         specifier: workspace:*
         version: link:../../libs/expo-navigation-bar-manager
@@ -387,6 +389,9 @@ importers:
       '@io-app/expo-pdf-high-res-generator':
         specifier: workspace:*
         version: link:../../libs/expo-pdf-high-res-generator
+      '@io-app/expo-zendesk':
+        specifier: workspace:*
+        version: link:../../libs/expo-zendesk
       '@pagopa/io-pagopa-commons':
         specifier: ^3.1.0
         version: 3.1.0(supports-color@8.1.1)
@@ -420,9 +425,6 @@ importers:
       '@pagopa/io-react-native-wallet':
         specifier: 3.8.3
         version: 3.8.3(1980c7d3d346854dd414a200c92bb934)
-      '@pagopa/io-react-native-zendesk':
-        specifier: ^0.3.30
-        version: 0.3.30(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/react-native-cie':
         specifier: ^1.5.0
         version: 1.5.0
@@ -495,6 +497,9 @@ importers:
       expo:
         specifier: ^55.0.8
         version: 55.0.26(bcb58a91d04f10539236d86e17d0d1bd)
+      expo-application:
+        specifier: ~55.0.17
+        version: 55.0.17(expo@55.0.26)
       expo-background-task:
         specifier: ~55.0.18
         version: 55.0.18(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))
@@ -512,7 +517,7 @@ importers:
         version: 55.0.16(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(supports-color@8.1.1)
       expo-device:
         specifier: ~55.0.17
-        version: 55.0.17(expo@55.0.26)
+        version: 55.0.19(expo@55.0.26)
       expo-document-picker:
         specifier: ~55.0.15
         version: 55.0.15(expo@55.0.26)
@@ -612,9 +617,6 @@ importers:
       react-native-config:
         specifier: ^1.6.1
         version: 1.6.1(react-native-windows@0.80.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.2.16)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1)(tslib@1.14.1)(typescript@6.0.3))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
-      react-native-device-info:
-        specifier: ^14.0.4
-        version: 14.0.4(patch_hash=b5e3683f3a8950e16f58e0d657f1372e1981f5250008f5ef02f47e7602c8d435)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))
       react-native-easing-gradient:
         specifier: 'catalog:'
         version: 1.1.1(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
@@ -1084,6 +1086,21 @@ importers:
         specifier: 'catalog:'
         version: 6.0.3
 
+  libs/expo-device-internal:
+    devDependencies:
+      '@types/jest':
+        specifier: 'catalog:'
+        version: 30.0.0
+      expo-modules-core:
+        specifier: ^55.0.25
+        version: 55.0.25(react-native-worklets@0.8.3(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+      react-native:
+        specifier: 'catalog:'
+        version: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
   libs/expo-navigation-bar-manager:
     devDependencies:
       expo-modules-core:
@@ -1113,6 +1130,18 @@ importers:
       expo-modules-core:
         specifier: ^55.0.25
         version: 55.0.25(react-native-worklets@0.8.3(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  libs/expo-zendesk:
+    devDependencies:
+      expo-modules-core:
+        specifier: ^55.0.25
+        version: 55.0.25(react-native-worklets@0.8.3(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+      react-native:
+        specifier: 'catalog:'
+        version: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -3794,13 +3823,6 @@ packages:
       react: 19.2.3
       react-native: 0.85.3
       react-native-quick-crypto: '*'
-
-  '@pagopa/io-react-native-zendesk@0.3.30':
-    resolution: {integrity: sha512-w6ks2Ty+EgdZoaXAVp/LeQ/BgHI0JH1lcvGjSo34Rjs64ZmRdBTQ4jN92Q/EjP5J7MkZ46+eLBybGqtOjgCQ2Q==}
-    engines: {node: '>= 18.0.0'}
-    peerDependencies:
-      react: '*'
-      react-native: '*'
 
   '@pagopa/io-wallet-oauth2@1.5.8':
     resolution: {integrity: sha512-blmvmF6FV8Pb2OUa1uwBaCs0UNuZlFVLMy7VPTjHBK+T9a3nPzopyeol55mR5KBNyu8yK/yv3efs0xpypBN/Hg==}
@@ -6891,8 +6913,8 @@ packages:
     resolution: {integrity: sha512-1zQrciTiQfRdo7qJM1uG4navm8DayFa2TgCSRlzUyNkhcJ6XUZF3hjnpkyr3VhAqPH7i/9GkG7Tv5abz6fqz0Q==}
     engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
 
-  expo-application@55.0.15:
-    resolution: {integrity: sha512-eWf5OGrat1r/TYr0daL684C6pJYiN2k30NmcISsD9fbtZLfA6Sbo/JebfYzP3OjO/T/i8j/9Pf3ePqUYPLfZnw==}
+  expo-application@55.0.17:
+    resolution: {integrity: sha512-ASuZe+Sl8ax+0pQOjd8L5cz5xpxW0F1VSorRKFr9LHxDSQwH929nYjbMrvW6KlRIIWZBIAQQsYqWiowytCLMRA==}
     peerDependencies:
       expo: '*'
 
@@ -6933,8 +6955,8 @@ packages:
       expo: '*'
       react-native: '*'
 
-  expo-device@55.0.17:
-    resolution: {integrity: sha512-ZcMrSeD0zWooosm5Bet5qluxUrhw+NPgcMmN6ySVF7cm4K8Bvh4KPogJePbI1qfhFAiJWcWeV9e/2uewb9ktfw==}
+  expo-device@55.0.19:
+    resolution: {integrity: sha512-BYEr3oyjtnXk432usxavftybCtucelCQD1QGIo2zruxeT/hzoGe36uclOC49a+tYFQoybqOylSV2035H7kDIPg==}
     peerDependencies:
       expo: '*'
 
@@ -10015,11 +10037,6 @@ packages:
     peerDependenciesMeta:
       react-native-windows:
         optional: true
-
-  react-native-device-info@14.0.4:
-    resolution: {integrity: sha512-NX0wMAknSDBeFnEnSFQ8kkAcQrFHrG4Cl0mVjoD+0++iaKrOupiGpBXqs8xR0SeJyPC5zpdPl4h/SaBGly6UxA==}
-    peerDependencies:
-      react-native: '*'
 
   react-native-easing-gradient@1.1.1:
     resolution: {integrity: sha512-KrGU97kPTMrLNzVXxFirFMgl65uo70gVNoKw2OngDzcDfoswb648I3ggeCnoY+JgMWkPyx4LlG7n3ZNgSPFnLw==}
@@ -17448,11 +17465,6 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@pagopa/io-react-native-zendesk@0.3.30(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)':
-    dependencies:
-      react: 19.2.0
-      react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
-
   '@pagopa/io-wallet-oauth2@1.5.8':
     dependencies:
       '@openid4vc/oauth2': 0.4.3
@@ -22347,7 +22359,7 @@ snapshots:
       jest-mock: 30.3.0
       jest-util: 30.3.0
 
-  expo-application@55.0.15(expo@55.0.26):
+  expo-application@55.0.17(expo@55.0.26):
     dependencies:
       expo: 55.0.26(bcb58a91d04f10539236d86e17d0d1bd)
 
@@ -22412,7 +22424,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  expo-device@55.0.17(expo@55.0.26):
+  expo-device@55.0.19(expo@55.0.26):
     dependencies:
       expo: 55.0.26(bcb58a91d04f10539236d86e17d0d1bd)
       ua-parser-js: 0.7.41
@@ -22512,7 +22524,7 @@ snapshots:
       abort-controller: 3.0.0
       badgin: 1.2.3
       expo: 55.0.26(bcb58a91d04f10539236d86e17d0d1bd)
-      expo-application: 55.0.15(expo@55.0.26)
+      expo-application: 55.0.17(expo@55.0.26)
       expo-constants: 55.0.16(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(supports-color@8.1.1)
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
@@ -27153,10 +27165,6 @@ snapshots:
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
     optionalDependencies:
       react-native-windows: 0.80.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.2.16)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1)(tslib@1.14.1)(typescript@6.0.3)
-
-  react-native-device-info@14.0.4(patch_hash=b5e3683f3a8950e16f58e0d657f1372e1981f5250008f5ef02f47e7602c8d435)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)):
-    dependencies:
-      react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
 
   react-native-easing-gradient@1.1.1(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0):
     dependencies:
