@@ -6,6 +6,10 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import {
+  isStartupLoaded,
+  StartupStatusEnum
+} from "../../../store/reducers/startup";
 import { usePushNotificationsBannerTracking } from "../../pushNotifications/hooks/usePushNotificationsBannerTracking";
 import { updateLandingScreenBannerVisibility } from "../store/actions";
 import { landingScreenBannerToRenderSelector } from "../store/selectors";
@@ -24,6 +28,10 @@ export const LandingScreenBannerPicker = () => {
   const dispatch = useIODispatch();
   const bannerToRender = useIOSelector(landingScreenBannerToRenderSelector);
   usePushNotificationsBannerTracking();
+  // The home is mounted below the startup loading overlay: content waits for
+  // it to go away, so that the entrance animation is always visible
+  const isStartupOnboarding =
+    useIOSelector(isStartupLoaded) === StartupStatusEnum.ONBOARDING;
 
   const bannerId =
     bannerToRender.type === "banner" ? bannerToRender.id : undefined;
@@ -51,7 +59,7 @@ export const LandingScreenBannerPicker = () => {
   // banner and nothing is animated, while the keyed content cross-fades
   return (
     <Animated.View layout={bannerLayoutTransition}>
-      {content && (
+      {!isStartupOnboarding && content && (
         <Animated.View
           entering={bannerEntering}
           exiting={bannerExiting}
