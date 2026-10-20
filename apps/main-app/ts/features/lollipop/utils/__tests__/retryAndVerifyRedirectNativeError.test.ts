@@ -1,4 +1,5 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { err } from "neverthrow";
 
 import { AppDispatch } from "../../../../App";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
@@ -33,15 +34,17 @@ jest.mock("@io-app/login-utils", () => ({
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
-  it('should reject with code "409"', async () => {
-    await expect(
-      regenerateKeyGetRedirectsAndVerifySaml(
-        "loginUri",
-        "keyTag",
-        false,
-        false,
-        dispatch
-      )
-    ).rejects.toEqual(expect.objectContaining({ code: "409" }));
+  it('should fail with the native error code "409"', async () => {
+    const result = await regenerateKeyGetRedirectsAndVerifySaml(
+      "loginUri",
+      "keyTag",
+      false,
+      false,
+      dispatch
+    );
+
+    expect(result).toEqual(
+      err({ reason: expect.stringMatching(/409.*fake network error/) })
+    );
   });
 });

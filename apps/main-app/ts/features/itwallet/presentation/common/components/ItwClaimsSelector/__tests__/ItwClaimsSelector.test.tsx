@@ -3,6 +3,11 @@ import { fireEvent, render } from "@testing-library/react-native";
 import { ClaimDisplayFormat } from "../../../../../common/utils/itwClaimsUtils";
 import { ItwClaimsSelector } from "../index";
 
+jest.mock("../../../../../common/hooks/useItwCredentialName", () => ({
+  useItwCredentialName: (credentialType: string) =>
+    `catalogue-name-${credentialType}`
+}));
+
 jest.mock("../../../hooks/useClaimsDetailsBottomSheet", () => ({
   useClaimsDetailsBottomSheet: () => ({
     present: jest.fn(),
@@ -74,6 +79,20 @@ describe("ItwClaimsSelector", () => {
     expect(component.getByLabelText("claims-selector")).toBeTruthy();
     expect(component.getByText("Name")).toBeTruthy();
     expect(component.getByText("Birth date")).toBeTruthy();
+  });
+
+  it("renders the credential name resolved from the catalogue as title", () => {
+    const component = render(
+      <ItwClaimsSelector
+        accessibilityLabel="claims-selector"
+        credentialType="education_diploma"
+        items={items}
+      />
+    );
+
+    expect(
+      component.getByText("catalogue-name-education_diploma")
+    ).toBeTruthy();
   });
 
   it("calls onToggle when the accordion header is pressed", () => {

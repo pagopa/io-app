@@ -53,6 +53,7 @@ import {
   WAIT_TIMEOUT_NAVIGATION,
   WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
 } from "../../../common/utils/constants";
+import { ReauthLoginType } from "../../../common/utils/index";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../login/cie/components/CieCardReadingAnimation";
@@ -63,7 +64,6 @@ import {
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { getCieUatEndpoint } from "../../../login/cie/utils/endpoints";
 import { getTextForState, TextForState } from "../../shared/utils";
-import { ReauthLoginType } from "../analytics";
 
 export type ActiveSessionCieCardReaderScreenNavigationParams = {
   authorizationUri: string;

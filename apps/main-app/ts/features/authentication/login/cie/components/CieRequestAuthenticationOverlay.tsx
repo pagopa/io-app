@@ -249,7 +249,8 @@ const CieWebView = (props: Props) => {
           throw new Error("Error clearing cookies");
         });
       }
-      const url = await regenerateKeyGetRedirectsAndVerifySaml(
+
+      const redirectResult = await regenerateKeyGetRedirectsAndVerifySaml(
         loginUri,
         ephemeralKeyTag,
         mixpanelEnabled,
@@ -258,10 +259,16 @@ const CieWebView = (props: Props) => {
         idp?.id,
         isActiveSessionLogin ? hashedFiscalCode : undefined
       );
+
+      if (redirectResult.isErr()) {
+        handleOnError(new Error(redirectResult.error.reason));
+        return;
+      }
+
       setRequestInfo({
         requestState: "AUTHORIZED",
         nativeAttempts: requestInfo.nativeAttempts,
-        url
+        url: redirectResult.value
       });
     } catch (error) {
       if (error instanceof Error) {

@@ -6,7 +6,7 @@ import { IOColors, IOSelectionTickVisualParams } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { Icon } from "../icons";
 import { HStack } from "../layout";
-import { AnimatedRadio } from "../radio/AnimatedRadio";
+import { Radio } from "../radio/Radio";
 import { BodySmall, H6 } from "../typography";
 import { PressableListItemBase } from "./PressableListItemBase";
 
@@ -46,7 +46,7 @@ export const ListItemRadioWithAmount = ({
   };
   const theme = useIOTheme();
 
-  const suggestColor: IOColors = "hanPurple-500";
+  const suggestColor: IOColors = theme["featured-default"];
 
   const defaultAccessibilityLabel = `${label} ${formattedAmountString} ${
     suggestReason ?? ""
@@ -83,7 +83,7 @@ export const ListItemRadioWithAmount = ({
         <H6 color={theme["interactiveElem-default"]}>
           {formattedAmountString}
         </H6>
-        <AnimatedRadio
+        <Radio
           checked={selected ?? toggleValue}
           size={IOSelectionTickVisualParams.size * dynamicFontScale}
         />

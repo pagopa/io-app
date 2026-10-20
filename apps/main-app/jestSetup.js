@@ -6,7 +6,6 @@ import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/asy
 import * as mockClipboard from "expo-clipboard/mocks/ExpoClipboard.ts";
 import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo, AppState } from "react-native";
-import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 import "./ts/i18n.ts";
 
@@ -74,7 +73,7 @@ global.CanvasKit = {
 };
 
 jest.mock("react-native-quick-crypto", () => ({}));
-jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
+jest.mock("@io-app/expo-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("expo-notifications", () => ({}));
 jest.mock("expo-document-picker", () => ({
@@ -91,6 +90,32 @@ jest.mock("expo-brightness", () => ({
   getBrightnessAsync: jest.fn().mockResolvedValue(0),
   setBrightnessAsync: jest.fn().mockResolvedValue(undefined)
 }));
+jest.mock("expo-device", () => ({
+  modelName: "",
+  osVersion: "",
+  deviceType: "",
+  DeviceType: {
+    TABLET: 0
+  }
+}));
+jest.mock("expo-application", () => ({
+  nativeApplicationVersion: "",
+  nativeBuildVersion: ""
+}));
+jest.mock("@io-app/expo-navigation-bar-manager", () => ({
+  setNavigationBarColor: jest.fn().mockResolvedValue(true)
+}));
+
+// Mock DeviceInfo for version checks
+jest.mock("@io-app/expo-device-internal", () => ({
+  getUniqueIdSync: jest.fn(() => "SOME-UNIQUE-ID"),
+  isDisplayZoomed: jest.fn(() => false)
+}));
+
+jest.mock("expo-store-review", () => ({
+  isAvailableAsync: jest.fn().mockResolvedValue(true),
+  requestReview: jest.fn().mockResolvedValue(undefined)
+}));
 
 jest.mock("expo-web-browser", () => ({
   openAuthSessionAsync: jest
@@ -100,6 +125,10 @@ jest.mock("expo-web-browser", () => ({
 
 jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
+}));
+
+jest.mock("@io-app/expo-pdf-high-res-generator", () => ({
+  generatePdfHighResImages: jest.fn().mockResolvedValue([])
 }));
 
 jest.mock("@io-app/expo-nfc-antenna-info", () => ({
@@ -172,8 +201,6 @@ NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
 // eslint-disable-next-line functional/immutable-data
 global.fetch = nodeFetch;
 
-jest.mock("react-native-device-info", () => mockRNDeviceInfo);
-
 // eslint-disable-next-line no-underscore-dangle, functional/immutable-data
 global.__reanimatedWorkletInit = () => jest.fn();
 
@@ -217,11 +244,6 @@ jest.mock("react-native", () => {
 
   // eslint-disable-next-line functional/immutable-data
   RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
-
-  // eslint-disable-next-line functional/immutable-data
-  RN.NativeModules.AppReviewModule = {
-    requestReview: jest.fn()
-  };
 
   return RN;
 });
