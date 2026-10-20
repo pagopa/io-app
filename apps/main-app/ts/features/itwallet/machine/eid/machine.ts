@@ -72,6 +72,7 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
               mode: event.mode,
               level: event.level,
               credentialType: event.credentialType,
+              // TODO: [SIW-5384] Use `CredentialsOffer.isSupported` from the Wallet SDK instead of checking the specs version
               // Credential offers are not supported by the 1.0.0 specs (Documenti su IO),
               // so the offer cannot be resumed after an L2 activation
               credentialOfferUri:
