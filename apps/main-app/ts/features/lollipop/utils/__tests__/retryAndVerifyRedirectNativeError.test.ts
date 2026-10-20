@@ -1,3 +1,4 @@
+import { LoginUtilsError } from "@io-app/login-utils";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { err } from "neverthrow";
 
@@ -30,7 +31,9 @@ jest.mock("@io-app/login-utils", () => ({
       Parameter: undefined
     },
     code: "409"
-  })
+  }),
+  isLoginUtilsError: (e: unknown) =>
+    (e as LoginUtilsError).userInfo !== undefined
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
