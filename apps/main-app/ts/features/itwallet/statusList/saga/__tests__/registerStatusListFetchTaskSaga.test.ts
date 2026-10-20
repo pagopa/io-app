@@ -5,7 +5,10 @@ import {
   selectItwSpecsVersion
 } from "../../../common/store/selectors/environment";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
@@ -18,8 +21,8 @@ describe("registerStatusListFetchTaskSaga", () => {
   it("registers the fetch task immediately when the wallet is valid", () => {
     testSaga(registerStatusListFetchTaskSaga)
       .next()
-      .select(itwLifecycleIsITWalletValidSelector)
-      .next(true)
+      .select(itwLifecycleStateSelector)
+      .next(ItwLifecycleState.VALID_IT_WALLET)
       .select(selectItwSpecsVersion)
       .next(ITW_VERSION)
       .select(selectItwEnv)
@@ -30,8 +33,8 @@ describe("registerStatusListFetchTaskSaga", () => {
   it("waits for wallet activation before registering the fetch task", () => {
     testSaga(registerStatusListFetchTaskSaga)
       .next()
-      .select(itwLifecycleIsITWalletValidSelector)
-      .next(false)
+      .select(itwLifecycleStateSelector)
+      .next(ItwLifecycleState.VALID_DOC_IO)
       .inspect(effect => expect(effect).toMatchObject({ type: "TAKE" }))
       .next()
       .select(selectItwSpecsVersion)
@@ -44,8 +47,8 @@ describe("registerStatusListFetchTaskSaga", () => {
   it("registers the fetch task again after reset and reactivation", () => {
     testSaga(registerStatusListFetchTaskSaga)
       .next()
-      .select(itwLifecycleIsITWalletValidSelector)
-      .next(true)
+      .select(itwLifecycleStateSelector)
+      .next(ItwLifecycleState.VALID_IT_WALLET)
       .select(selectItwSpecsVersion)
       .next(ITW_VERSION)
       .select(selectItwEnv)
@@ -56,8 +59,8 @@ describe("registerStatusListFetchTaskSaga", () => {
       .next()
       .call(unregisterItwStatusListFetchTask)
       .next()
-      .select(itwLifecycleIsITWalletValidSelector)
-      .next(true)
+      .select(itwLifecycleStateSelector)
+      .next(ItwLifecycleState.VALID_IT_WALLET)
       .select(selectItwSpecsVersion)
       .next(ITW_VERSION)
       .select(selectItwEnv)
@@ -68,8 +71,8 @@ describe("registerStatusListFetchTaskSaga", () => {
   it("waits for credential storage when the wallet is still invalid after reset", () => {
     testSaga(registerStatusListFetchTaskSaga)
       .next()
-      .select(itwLifecycleIsITWalletValidSelector)
-      .next(true)
+      .select(itwLifecycleStateSelector)
+      .next(ItwLifecycleState.VALID_IT_WALLET)
       .select(selectItwSpecsVersion)
       .next(ITW_VERSION)
       .select(selectItwEnv)
@@ -80,8 +83,8 @@ describe("registerStatusListFetchTaskSaga", () => {
       .next()
       .call(unregisterItwStatusListFetchTask)
       .next()
-      .select(itwLifecycleIsITWalletValidSelector)
-      .next(false)
+      .select(itwLifecycleStateSelector)
+      .next(ItwLifecycleState.VALID_DOC_IO)
       .inspect(effect => expect(effect).toMatchObject({ type: "TAKE" }))
       .next()
       .select(selectItwSpecsVersion)

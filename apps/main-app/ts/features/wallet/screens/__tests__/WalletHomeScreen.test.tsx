@@ -10,8 +10,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as connectivitySelectors from "../../../connectivity/store/selectors";
 import * as ingressSelectors from "../../../ingress/store/selectors";
-import { itwSetL2Fallback } from "../../../itwallet/common/store/actions/preferences";
-import * as itwSelectors from "../../../itwallet/common/store/selectors";
 import * as lifecycleSelectors from "../../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import * as walletSelectors from "../../store/selectors";
@@ -79,25 +77,22 @@ describe("WalletHomeScreen", () => {
   test.each([
     {
       name: "fallback activation",
-      isL2Fallback: true,
-      isL3Enabled: true,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_FALLBACK,
       expectedScreen: ITW_ROUTES.L3_ONBOARDING
     },
     {
       name: "existing Documenti su IO wallet",
-      isL2Fallback: false,
-      isL3Enabled: true,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
       expectedScreen: ITW_ROUTES.L3_ONBOARDING
     },
     {
       name: "L3 disabled",
-      isL2Fallback: false,
-      isL3Enabled: false,
+      lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO,
       expectedScreen: ITW_ROUTES.ONBOARDING
     }
-  ])(
+  ] as const)(
     "opens the correct catalogue for $name",
-    ({ isL2Fallback, isL3Enabled, expectedScreen }) => {
+    ({ lifecycle, expectedScreen }) => {
       const navigate = jest.fn();
       const navigation = appParamsList.useIONavigation;
       const headerSpy = jest
@@ -111,20 +106,10 @@ describe("WalletHomeScreen", () => {
         .spyOn(connectivitySelectors, "isConnectedSelector")
         .mockReturnValue(true);
       jest
-        .spyOn(itwSelectors, "itwIsL3EnabledSelector")
-        .mockReturnValue(isL3Enabled);
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(true);
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-        .mockReturnValue(false);
-      const state = appReducer(
-        appReducer(undefined, applicationChangeState("active")),
-        itwSetL2Fallback(isL2Fallback)
-      );
+        .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+        .mockReturnValue(lifecycle);
 
-      renderComponent(state);
+      renderComponent();
       const action =
         headerSpy.mock.calls[headerSpy.mock.calls.length - 1][0].headerProps
           .actions?.[0];
@@ -137,9 +122,8 @@ describe("WalletHomeScreen", () => {
   );
 });
 
-const renderComponent = (
-  globalState = appReducer(undefined, applicationChangeState("active"))
-) => {
+const renderComponent = () => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 

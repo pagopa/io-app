@@ -15,7 +15,10 @@ import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector
 } from "../../common/store/selectors/preferences";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { isItwAnalyticsCredential } from "../utils";
 import { MixPanelCredential } from "../utils/types";
 import {
@@ -79,7 +82,7 @@ export const updateItwStatusAndPIDProperties = (state: GlobalState) => {
     ITW_STATUS_V2: computeItwStatus(
       authLevel,
       itwIdentificationModeSelector(state),
-      itwLifecycleIsITWalletValidSelector(state)
+      itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET
     ),
     ...pidProperties
   };

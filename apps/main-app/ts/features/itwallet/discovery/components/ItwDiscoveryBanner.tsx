@@ -19,8 +19,9 @@ import {
   itwIsWalletEmptySelector
 } from "../../credentials/store/selectors";
 import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
+  isWalletActive,
+  ItwLifecycleState,
+  itwLifecycleStateSelector
 } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwIsRemotelyActiveSelector } from "../../walletInstance/store/selectors";
@@ -51,8 +52,9 @@ export const ItwDiscoveryBanner = ({
   const route = useRoute();
 
   const isRemotelyActive = useIOSelector(itwIsRemotelyActiveSelector);
-  const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
-  const hasItwInstance = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const lifecycle = useIOSelector(itwLifecycleStateSelector);
+  const hasActiveWallet = isWalletActive(lifecycle);
+  const hasItwInstance = lifecycle === ItwLifecycleState.VALID_IT_WALLET;
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
   const hasMdl = useIOSelector(itwIsMdlPresentSelector);
 
@@ -60,7 +62,7 @@ export const ItwDiscoveryBanner = ({
     if (isRemotelyActive) {
       return "itwDeviceChangedBannerPid";
     }
-    if (!isWalletActive) {
+    if (!hasActiveWallet) {
       return "itwDiscoveryItWalletNewUser";
     }
     if (isWalletEmpty) {
@@ -70,7 +72,7 @@ export const ItwDiscoveryBanner = ({
       return "itwDiscoveryItWalletDrivingLicenseIsPresent";
     }
     return "itwDiscoveryItWalletGenericCredentials";
-  }, [isWalletActive, isWalletEmpty, hasMdl, isRemotelyActive]);
+  }, [hasActiveWallet, isWalletEmpty, hasMdl, isRemotelyActive]);
 
   const bannerLanding = useMemo(() => {
     if (isRemotelyActive) {
@@ -138,7 +140,7 @@ export const ItwDiscoveryBanner = ({
     );
   }
 
-  if (!isWalletActive) {
+  if (!hasActiveWallet) {
     return (
       <ItwEngagementBanner
         action={I18n.t("features.itWallet.engagementBanner.activation.action")}

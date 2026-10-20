@@ -22,7 +22,10 @@ import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorC
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialType,
@@ -109,7 +112,9 @@ export const ContentView = ({ credentialType }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const markdownContent =
     useIOSelector(itwCredentialIntroContentSelector(credentialType)) ?? "";
   const credentialName = useItwCredentialName(credentialType);

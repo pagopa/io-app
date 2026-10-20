@@ -4,8 +4,11 @@ import { createSelector } from "reselect";
 
 import { GlobalState } from "../../../../../store/reducers/types";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
+import {
+  isItWalletAvailable,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { CURRENT_ITW_SPECS_VERSION } from "../../utils/constants";
-import { itwIsL3EnabledSelector } from "./index";
 
 export const selectItwEnv = (state: GlobalState) =>
   state.features.itWallet.environment.env ?? "prod";
@@ -29,22 +32,22 @@ export const selectItwCieIdEnvironment = (
  * Select the IT-Wallet specification version depending on the user
  * configuration.
  *
- * The version is derived from the whitelist status and the optional presence of
+ * The version is derived from the wallet lifecycle and the optional presence of
  * a PID, and it is used for every API call to the IT-Wallet ecosystem actors.
  */
 export const selectItwSpecsVersion = createSelector(
-  itwIsL3EnabledSelector,
+  itwLifecycleStateSelector,
   itwCredentialsEidSelector,
-  (isWhitelisted, eid): ItwVersion => {
-    // Users that are not whitelisted can only have Documenti su IO 1.0
-    if (!isWhitelisted) {
+  (lifecycle, eid): ItwVersion => {
+    // Users that cannot use IT-Wallet can only have Documenti su IO 1.0
+    if (!isItWalletAvailable(lifecycle)) {
       return "1.0.0";
     }
     // Otherwise the specification version is determined by the current EID
     if (eid) {
       return eid.spec_version as ItwVersion;
     }
-    // Users that are whitelisted and don't have an EID use the latest version by default
+    // Users that can activate IT-Wallet and don't have an EID use the latest version by default
     return CURRENT_ITW_SPECS_VERSION;
   }
 );

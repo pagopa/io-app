@@ -44,11 +44,7 @@ import {
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 import { PoweredByItWalletText } from "../../common/components/PoweredByItWalletText.tsx";
 import { selectItwEnv } from "../../common/store/selectors/environment.ts";
-import {
-  itwIsL2FallbackSelector,
-  itwIsL3EnabledSelector,
-  itwShouldRenderL3UpgradeBannerSelector
-} from "../../common/store/selectors/index.ts";
+import { itwShouldRenderL3UpgradeBannerSelector } from "../../common/store/selectors/index.ts";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/preferences.ts";
 import {
   isL2Credential,
@@ -57,8 +53,10 @@ import {
 import { makeItwCredentialsByPresenceSelector } from "../../credentials/store/selectors";
 import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors";
 import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
+  isItWalletAvailable,
+  isItWalletUnsupported,
+  ItwLifecycleState,
+  itwLifecycleStateSelector
 } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
@@ -135,9 +133,7 @@ const ItwCredentialOnboardingSection = () => {
   const navigation = useIONavigation();
 
   const env = useIOSelector(selectItwEnv);
-  const isWalletEnabled = useIOSelector(itwLifecycleIsValidSelector);
-  const isITWalletEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isL2Fallback = useIOSelector(itwIsL2FallbackSelector);
+  const lifecycle = useIOSelector(itwLifecycleStateSelector);
   const isUpgradeAvailable = useIOSelector(
     itwShouldRenderL3UpgradeBannerSelector
   );
@@ -147,8 +143,11 @@ const ItwCredentialOnboardingSection = () => {
   const catalogueCredentials = useIOSelector(
     itwAvailableCredentialsListSelector
   );
+  // A user without a CIE can upgrade from the fallback as soon as they get one
   const shouldRenderUpgradeBanner =
-    !isItWalletActivationDisabled && isL2Fallback && isUpgradeAvailable;
+    lifecycle === ItwLifecycleState.VALID_DOC_IO_FALLBACK &&
+    !isItWalletActivationDisabled &&
+    isUpgradeAvailable;
 
   useFocusEffect(
     useCallback(() => {
@@ -168,12 +167,11 @@ const ItwCredentialOnboardingSection = () => {
 
   // Show upcoming credentials only if env is "pre"
   const shouldShowUpcoming = env === "pre";
-  const shouldShowL2Credentials = isItWalletActivationDisabled || isL2Fallback;
+  const shouldShowL2Credentials =
+    lifecycle === ItwLifecycleState.VALID_DOC_IO_FALLBACK ||
+    isItWalletUnsupported(lifecycle);
   const shouldShowRestrictedAction =
-    isWalletEnabled &&
-    !isITWalletEnabled &&
-    !isItWalletActivationDisabled &&
-    !isL2Fallback;
+    lifecycle === ItwLifecycleState.VALID_DOC_IO_UPGRADABLE;
 
   const credentialsToDisplay = useMemo(() => {
     if (shouldShowL2Credentials) {
@@ -261,7 +259,9 @@ const OtherCardsOnboardingSection = () => {
 
   const isCgnLoading = useIOSelector(isCgnDetailsLoading);
   const isCgnActive = useIOSelector(isCgnInformationAvailableSelector);
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const isL3Enabled = isItWalletAvailable(
+    useIOSelector(itwLifecycleStateSelector)
+  );
 
   const startCgnActivation = useCallback(() => {
     trackStartAddNewCredential("CGN");

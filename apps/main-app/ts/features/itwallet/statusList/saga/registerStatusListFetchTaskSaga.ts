@@ -7,7 +7,10 @@ import {
   selectItwSpecsVersion
 } from "../../common/store/selectors/environment";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
@@ -16,7 +19,9 @@ import {
 /** Registers the ITW Status List fetch task with expo-background-task. */
 export function* registerStatusListFetchTaskSaga(): SagaIterator {
   while (true) {
-    const isItWalletValid = yield* select(itwLifecycleIsITWalletValidSelector);
+    const isItWalletValid =
+      (yield* select(itwLifecycleStateSelector)) ===
+      ItwLifecycleState.VALID_IT_WALLET;
     if (!isItWalletValid) {
       // If the wallet is not valid or the Status List is not supported, wait
       // for wallet activation before proceeding.

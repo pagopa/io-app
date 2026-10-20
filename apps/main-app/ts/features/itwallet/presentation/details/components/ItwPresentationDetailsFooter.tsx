@@ -10,7 +10,10 @@ import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 import { trackItwCredentialManageConsent } from "../../proximity/analytics";
@@ -30,7 +33,9 @@ const ItwPresentationDetailsFooter = ({
   credential
 }: ItwPresentationDetailFooterProps) => {
   const navigation = useIONavigation();
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const consentsSelector = useMemo(
     () =>
       itwProximityConsentsByCredentialTypeSelector(credential.credentialType),

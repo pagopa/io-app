@@ -13,7 +13,10 @@ import {
   trackItwSurveyRequestDeclined
 } from "../../analytics";
 import { TrackQualtricsSurvey } from "../../analytics/utils/types";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { itwSetActivationExitSurvey } from "../store/actions/ui";
 import { itwActivationExitSurveySelector } from "../store/selectors/ui";
 import { IT_WALLET_SURVEY_EID_ACTIVATION_EXIT } from "../utils/constants";
@@ -42,7 +45,9 @@ const eidActivationExitSession = { shown: false };
 export const useItwActivationExitSurveyBottomSheet = () => {
   const dispatch = useIODispatch();
   const { name: routeName } = useRoute();
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isWalletValid = isWalletActive(
+    useIOSelector(itwLifecycleStateSelector)
+  );
   const activationExitSurveyState = useIOSelector(
     itwActivationExitSurveySelector
   );

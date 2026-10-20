@@ -19,7 +19,10 @@ import {
 } from "../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 
@@ -29,7 +32,9 @@ const ItwSettingsScreen = () => {
   const navigation = useIONavigation();
   const { name: currentScreenName } = useRoute();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItWalletActive =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
 
   useFocusEffect(trackItwSettings);
 
@@ -70,15 +75,17 @@ const ItwSettingsScreen = () => {
   const ctaProps: ButtonBlockProps = useMemo(
     () => ({
       label: I18n.t(
-        isWalletValid
+        isItWalletActive
           ? "features.itWallet.settings.manage.cta.revoke"
           : "features.itWallet.settings.manage.cta.obtain"
       ),
-      testID: isWalletValid ? "itwRevokeButtonTestID" : "itwObtainButtonTestID",
-      onPress: isWalletValid ? handleRevokeOnPress : handleObtainItwOnPress,
-      color: isWalletValid ? "danger" : "primary"
+      testID: isItWalletActive
+        ? "itwRevokeButtonTestID"
+        : "itwObtainButtonTestID",
+      onPress: isItWalletActive ? handleRevokeOnPress : handleObtainItwOnPress,
+      color: isItWalletActive ? "danger" : "primary"
     }),
-    [isWalletValid, handleRevokeOnPress, handleObtainItwOnPress]
+    [isItWalletActive, handleRevokeOnPress, handleObtainItwOnPress]
   );
 
   return (
@@ -93,7 +100,7 @@ const ItwSettingsScreen = () => {
       <ContentWrapper>
         <VStack space={8}>
           <View />
-          {isWalletValid && (
+          {isItWalletActive && (
             <ItwEidLifecycleAlert
               currentScreenName={currentScreenName}
               navigation={navigation}

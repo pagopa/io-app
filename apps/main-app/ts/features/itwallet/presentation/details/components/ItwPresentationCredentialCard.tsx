@@ -16,7 +16,10 @@ import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/p
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { trackWalletShowBack } from "../analytics";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
@@ -34,7 +37,9 @@ type Props = {
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const [isFlipped, setIsFlipped] = useState(false);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const { status: credentialStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );

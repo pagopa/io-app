@@ -25,8 +25,9 @@ import { statusAssertionFailure } from "../../common/utils/itwFailureUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
+  isWalletActive,
+  ItwLifecycleState,
+  itwLifecycleStateSelector
 } from "../../lifecycle/store/selectors";
 import {
   itwCredentialsRefreshStatusByType,
@@ -45,7 +46,9 @@ const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
  * the wallet.
  */
 export function* checkCredentialsStatusAssertion() {
-  const isWalletValid = yield* select(itwLifecycleIsValidSelector);
+  const isWalletValid = isWalletActive(
+    yield* select(itwLifecycleStateSelector)
+  );
   const itwVersion = yield* select(selectItwSpecsVersion);
 
   // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
@@ -127,7 +130,9 @@ export function* updateCredentialStatusAssertionSaga(
 ): Generator<ReduxSagaEffect, CredentialMetadata> {
   const env = yield* select(selectItwEnv);
   const itwVersion = yield* select(selectItwSpecsVersion);
-  const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    (yield* select(itwLifecycleStateSelector)) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const mixpanelCredential = getMixPanelCredential(
     metadata.credentialType,
     isItwL3

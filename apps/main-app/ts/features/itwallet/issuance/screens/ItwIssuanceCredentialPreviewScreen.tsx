@@ -25,7 +25,10 @@ import {
   CredentialMetadata,
   isMultiLevelCredential
 } from "../../common/utils/itwTypesUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { selectCredential } from "../../machine/credential/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -68,7 +71,9 @@ const ContentView = ({ credential }: ContentViewProps) => {
   const dispatch = useIODispatch();
   const route = useRoute();
   const isMultilevel = isMultiLevelCredential(credential);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const credentialName = useItwCredentialName(credential.credentialType);
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credential.credentialType, isItwL3),

@@ -21,10 +21,10 @@ const privacyDisclaimer = (privacyUrl: string) =>
     { privacyUrl }
   );
 
-const mockIsL3Selector = (isL3: boolean) =>
+const mockLifecycleState = (lifecycle: lifecycleSelectors.ItwLifecycleState) =>
   jest
-    .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-    .mockReturnValue(isL3);
+    .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+    .mockReturnValue(lifecycle);
 
 describe("ItwIssuanceMetadata", () => {
   it("displays the hardcoded 'IT Wallet' data source for the proof_of_age credential", () => {
@@ -46,7 +46,7 @@ describe("ItwIssuanceMetadata", () => {
     });
 
     it("keeps the original IPZS privacy policy for Documenti su IO", () => {
-      mockIsL3Selector(false);
+      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
       const { queryByText } = renderComponent(ItwStoredCredentialsMocks.mdl);
 
@@ -56,7 +56,7 @@ describe("ItwIssuanceMetadata", () => {
     });
 
     it("uses the IT-Wallet privacy policy from the remote config for IT-Wallet", () => {
-      mockIsL3Selector(true);
+      mockLifecycleState(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
 
       const { queryByText } = renderComponent(ItwStoredCredentialsMocks.mdl, {
         ipzs_itwallet_privacy_url: ITWALLET_PRIVACY_URL

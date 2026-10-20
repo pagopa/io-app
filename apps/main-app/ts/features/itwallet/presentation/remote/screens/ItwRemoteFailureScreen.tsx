@@ -13,9 +13,12 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { useItwFailureSupportModal } from "../../../common/hooks/useItwFailureSupportModal";
 import { ZendeskSubcategoryValue } from "../../../common/hooks/useItwZendeskSupport";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/index";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
 import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
+import {
+  isItWalletAvailable,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent";
 import {
   trackItwRemoteInvalidAuthResponseBottomSheet,
@@ -48,7 +51,9 @@ export const ItwRemoteFailureScreen = () => {
 type ContentViewProps = { failure: RemoteFailure };
 
 const ContentView = ({ failure }: ContentViewProps) => {
-  const isWhitelisted = useIOSelector(itwIsL3EnabledSelector);
+  const canUseItWallet = isItWalletAvailable(
+    useIOSelector(itwLifecycleStateSelector)
+  );
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const resolveCredentialName = useIOSelector(
     itwCredentialNameResolverSelector
@@ -235,7 +240,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             pictogram: "itWallet",
             action:
               // Prevent non-whitelisted users from activating IT-Wallet
-              isWhitelisted
+              canUseItWallet
                 ? {
                     label: I18n.t(
                       "features.itWallet.presentation.remote.walletInactiveScreen.primaryAction"

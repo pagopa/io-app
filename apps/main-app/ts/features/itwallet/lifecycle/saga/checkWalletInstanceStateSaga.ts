@@ -25,10 +25,7 @@ import {
   trackItwWalletBadState,
   trackItwWalletInstanceRevocation
 } from "../analytics";
-import {
-  itwLifecycleIsOperationalOrValid,
-  itwLifecycleIsValidSelector
-} from "../store/selectors";
+import { isWalletActive, itwLifecycleStateSelector } from "../store/selectors";
 import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
@@ -73,7 +70,9 @@ export function* checkWalletInstanceStateOfflineSaga(): Generator<
   ReduxSagaEffect,
   void
 > {
-  const isWalletInstanceValid = yield* select(itwLifecycleIsValidSelector);
+  const isWalletInstanceValid = isWalletActive(
+    yield* select(itwLifecycleStateSelector)
+  );
   const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
 
   if (!isWalletInstanceValid || integrityKeyTag === undefined) {
@@ -104,13 +103,10 @@ export function* checkWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
   void
 > {
-  const isItwOperationalOrValid = yield* select(
-    itwLifecycleIsOperationalOrValid
-  );
   const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
 
-  // Only operational or valid wallet instances can be revoked.
-  if (!isItwOperationalOrValid || integrityKeyTag === undefined) {
+  // Only registered wallet instances can be revoked.
+  if (integrityKeyTag === undefined) {
     return;
   }
 

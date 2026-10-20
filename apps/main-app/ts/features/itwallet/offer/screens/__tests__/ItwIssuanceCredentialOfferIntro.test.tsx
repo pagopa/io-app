@@ -12,7 +12,6 @@ import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as credentialStatusUtils from "../../../common/utils/itwCredentialStatusUtils";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as catalogSelectors from "../../../credentialsCatalogue/store/selectors";
@@ -63,14 +62,13 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     } as any);
 
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(true);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(
+        lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE
+      );
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
       .mockReturnValue("valid");
-    jest
-      .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
-      .mockReturnValue(true);
     jest
       .spyOn(catalogSelectors, "itwCredentialIntroContentSelector")
       .mockReturnValue(() => undefined);
@@ -111,8 +109,10 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
 
   it("asks to activate the wallet when no wallet instance is active", () => {
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(false);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(
+        lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
+      );
 
     const onDiscoveryParams = jest.fn();
     const { queryByText, getByText } = renderComponent(onDiscoveryParams);
@@ -152,8 +152,10 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
 
   it("tracks cancellation of the wallet activation required to add a credential", () => {
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(false);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(
+        lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
+      );
 
     const { getByText } = renderComponent(jest.fn());
 
@@ -173,8 +175,10 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     "does not track activation while the $name is unresolved",
     ({ unresolvedSelector }) => {
       jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(false);
+        .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+        .mockReturnValue(
+          lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
+        );
       const useSelectorMock = jest.spyOn(
         ItwCredentialIssuanceMachineContext,
         "useSelector"

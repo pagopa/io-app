@@ -9,7 +9,10 @@ import { trackCredentialRenewStart } from "../../../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { useItwRemoveCredentialWithConfirm } from "./useItwRemoveCredentialWithConfirm";
 
@@ -35,7 +38,9 @@ export const useItwExpiredDocumentBottomSheet = ({
   localizedMessage
 }: UseItwExpiredDocumentBottomSheetParams) => {
   const navigation = useIONavigation();
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const { confirmAndRemoveCredential } = useItwRemoveCredentialWithConfirm(
     credential,
     "bottom_sheet"

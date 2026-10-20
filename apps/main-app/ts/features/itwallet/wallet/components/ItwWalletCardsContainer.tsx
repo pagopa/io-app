@@ -32,7 +32,10 @@ import {
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { useItwGuidedTour } from "../../tour/hooks/useItwGuidedTour.ts";
 import {
   ITW_TOUR_GROUP_ID,
@@ -56,7 +59,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const shouldRenderL2EngagementBanner = useIOSelector(
     itwShouldRenderL2EngagementBannerSelector
   );
-  const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItWalletValid =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
 
   const cards = useIOSelector(state =>
     selectWalletCardsByCategory(state, "itw")

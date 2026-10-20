@@ -2,7 +2,10 @@ import { profileFiscalCodeSelector } from "../../../settings/common/store/select
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -45,4 +48,4 @@ export const hasValidWalletInstanceAttestationGuard = ({
 };
 
 export const isWalletValidGuard = ({ context }: GuardArgs) =>
-  itwLifecycleIsValidSelector(context.deps.store.getState());
+  isWalletActive(itwLifecycleStateSelector(context.deps.store.getState()));

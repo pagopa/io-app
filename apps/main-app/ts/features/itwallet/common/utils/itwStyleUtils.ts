@@ -5,7 +5,10 @@ import { ColorSchemeName, StatusBarStyle } from "react-native";
 
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { getCredentialCardConfig } from "../components/ItwCredentialCard/config";
 import { useItwCredentialName } from "../hooks/useItwCredentialName";
 import { CredentialType } from "./itwMocksUtils";
@@ -94,7 +97,9 @@ export const useThemeColorByCredentialType = (
   credentialType: string
 ): CredentialTheme => {
   const { themeType } = useIOThemeContext();
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const withL3Design =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
 
   return useMemo(
     () =>

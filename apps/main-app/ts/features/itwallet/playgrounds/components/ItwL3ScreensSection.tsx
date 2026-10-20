@@ -4,11 +4,14 @@ import { View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { CredentialL3Key } from "../../common/utils/itwMocksUtils";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwL3ScreensSection = () => {
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isItwValid = isWalletActive(useIOSelector(itwLifecycleStateSelector));
   const navigation = useIONavigation();
 
   const handleCredentialPress = (credentialType: CredentialL3Key) => {

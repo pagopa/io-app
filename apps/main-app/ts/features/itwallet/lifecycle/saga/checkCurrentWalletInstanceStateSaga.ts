@@ -10,7 +10,10 @@ import {
 import { getEnv } from "../../common/utils/environment.ts";
 import { getCurrentWalletInstanceStatus } from "../../common/utils/itwAttestationUtils.ts";
 import { itwSetWalletInstanceRemotelyActive } from "../../walletInstance/store/actions";
-import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
+import {
+  isWalletInstanceRegistered,
+  itwLifecycleStateSelector
+} from "../store/selectors";
 
 export function* checkCurrentWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
@@ -23,14 +26,14 @@ export function* checkCurrentWalletInstanceStateSaga(): Generator<
   );
   // An operational local wallet instance can exist even without a PID, for example
   // after a failed activation, and should not be treated as remotely active.
-  const isItwOperationalOrValidLocally = yield* select(
-    itwLifecycleIsOperationalOrValid
+  const hasLocalWalletInstance = isWalletInstanceRegistered(
+    yield* select(itwLifecycleStateSelector)
   );
 
   const itwCanBeReactivated = Boolean(
     remoteWalletInstanceStatus &&
     !remoteWalletInstanceStatus.is_revoked &&
-    !isItwOperationalOrValidLocally
+    !hasLocalWalletInstance
   );
 
   yield* put(itwSetWalletInstanceRemotelyActive(itwCanBeReactivated));

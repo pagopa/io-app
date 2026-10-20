@@ -12,7 +12,10 @@ import {
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemoveByType } from "../../../credentials/store/actions";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { trackItwCredentialDelete } from "../analytics";
 
 /**
@@ -26,7 +29,9 @@ export const useItwRemoveCredentialWithConfirm = (
   const dispatch = useIODispatch();
   const toast = useIOToast();
   const navigation = useIONavigation();
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const { status = "unknown" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );

@@ -4,8 +4,9 @@ import {
   zendeskItWalletCategory
 } from "../../../../../utils/supportAssistance";
 import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
+  isWalletActive,
+  ItwLifecycleState,
+  itwLifecycleStateSelector
 } from "../../../lifecycle/store/selectors";
 
 /** Wallet status values of the Zendesk "Stato wallet" custom field. */
@@ -22,10 +23,11 @@ export enum ItwZendeskWalletStatus {
 export const itwZendeskWalletStatusSelector = (
   state: GlobalState
 ): ItwZendeskWalletStatus => {
-  if (itwLifecycleIsITWalletValidSelector(state)) {
+  const lifecycle = itwLifecycleStateSelector(state);
+  if (lifecycle === ItwLifecycleState.VALID_IT_WALLET) {
     return ItwZendeskWalletStatus.IT_WALLET;
   }
-  return itwLifecycleIsValidSelector(state)
+  return isWalletActive(lifecycle)
     ? ItwZendeskWalletStatus.DOCUMENTI_SU_IO
     : ItwZendeskWalletStatus.NOT_ACTIVE;
 };

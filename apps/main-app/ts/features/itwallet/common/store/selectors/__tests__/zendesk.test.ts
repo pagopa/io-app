@@ -5,34 +5,45 @@ import {
   zendeskItWalletCategory
 } from "../../../../../../utils/supportAssistance";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
+import { ItwLifecycleState } from "../../../../lifecycle/store/selectors";
 import {
   itwZendeskCategorySelector,
   ItwZendeskWalletStatus,
   itwZendeskWalletStatusSelector
 } from "../zendesk";
 
-const scenarios = [
+const scenarios: ReadonlyArray<{
+  expectedCategory: typeof zendeskItWalletCategory;
+  expectedStatus: ItwZendeskWalletStatus;
+  lifecycle: ItwLifecycleState;
+}> = [
   {
-    name: "IT-Wallet is active",
-    isItwValid: true,
-    isValid: true,
+    lifecycle: ItwLifecycleState.VALID_IT_WALLET,
     expectedStatus: ItwZendeskWalletStatus.IT_WALLET,
     expectedCategory: zendeskItWalletCategory
   },
-  {
-    name: "Documenti su IO is active",
-    isItwValid: false,
-    isValid: true,
+  ...(
+    [
+      ItwLifecycleState.VALID_DOC_IO,
+      ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
+      ItwLifecycleState.VALID_DOC_IO_FALLBACK
+    ] as const
+  ).map(lifecycle => ({
+    lifecycle,
     expectedStatus: ItwZendeskWalletStatus.DOCUMENTI_SU_IO,
     expectedCategory: zendeskDocumentiSuIoCategory
-  },
-  {
-    name: "no wallet is active",
-    isItwValid: false,
-    isValid: false,
+  })),
+  ...(
+    [
+      ItwLifecycleState.INSTALLED,
+      ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
+      ItwLifecycleState.INSTALLED_IT_WALLET_UNSUPPORTED
+    ] as const
+  ).map(lifecycle => ({
+    lifecycle,
     expectedStatus: ItwZendeskWalletStatus.NOT_ACTIVE,
     expectedCategory: zendeskDocumentiSuIoCategory
-  }
+  }))
 ];
 
 describe("itwallet Zendesk selectors", () => {
@@ -42,27 +53,18 @@ describe("itwallet Zendesk selectors", () => {
     jest.restoreAllMocks();
   });
 
-  const mockLifecycle = (isItwValid: boolean, isValid: boolean) => {
-    jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(isItwValid);
-    jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(isValid);
-  };
-
-  test.each(scenarios)(
-    "itwZendeskWalletStatusSelector returns $expectedStatus when $name",
-    ({ isItwValid, isValid, expectedStatus }) => {
-      mockLifecycle(isItwValid, isValid);
+  test.each(
+    scenarios.map(row => ({
+      ...row,
+      lifecycleName: ItwLifecycleState[row.lifecycle]
+    }))
+  )(
+    "returns $expectedStatus and $expectedCategory.value with $lifecycleName",
+    ({ lifecycle, expectedStatus, expectedCategory }) => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+        .mockReturnValue(lifecycle);
       expect(itwZendeskWalletStatusSelector(state)).toBe(expectedStatus);
-    }
-  );
-
-  test.each(scenarios)(
-    "itwZendeskCategorySelector returns $expectedCategory.value when $name",
-    ({ isItwValid, isValid, expectedCategory }) => {
-      mockLifecycle(isItwValid, isValid);
       expect(itwZendeskCategorySelector(state)).toBe(expectedCategory);
     }
   );

@@ -12,7 +12,10 @@ import {
   itwCredentialsEidStatusSelector,
   itwCredentialsSelector
 } from "../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { mapPIDStatusToMixpanel } from "../utils";
 import {
   CREDENTIAL_STATUS_MAP,
@@ -34,7 +37,7 @@ export const buildItwBaseProperties = (
     ITW_STATUS_V2: computeItwStatus(
       itwAuthLevelSelector(state),
       itwIdentificationModeSelector(state),
-      itwLifecycleIsITWalletValidSelector(state)
+      itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET
     ),
     ITW_THIRD_PARTY_CREDENTIAL: buildThirdPartyCredentialProperty(state),
     ITW_WALLET_LIST_CREDENTIAL: buildWalletListCredentialProperty(state),
@@ -52,7 +55,8 @@ export const buildItwBaseProperties = (
  *   shoul be "not_available".
  */
 export const buildPidProperties = (state: GlobalState) => {
-  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+  const isItwL3 =
+    itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET;
   const pidStatus = itwCredentialsEidStatusSelector(state);
 
   const v2Props = {
@@ -69,7 +73,8 @@ export const buildPidProperties = (state: GlobalState) => {
 
 /** IT-Wallet (L3) -> V2 properties are not sent to preserve historical data. */
 export const buildCredentialProperties = (state: GlobalState) => {
-  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+  const isItwL3 =
+    itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET;
 
   const v3Props = {
     ITW_PG_V3: getMixpanelCredentialStatus(

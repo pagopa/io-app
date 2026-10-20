@@ -7,7 +7,10 @@ import {
   ZendeskSubcategoryValue
 } from "../../../common/hooks/useItwZendeskSupport";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { trackWalletCredentialSupport } from "../analytics";
 
 const getErrorCodeFromCredential = (
@@ -36,7 +39,9 @@ export const useItwStartCredentialSupportRequest = (
   credential: CredentialMetadata
 ) => {
   const { startItwZendeskSupport } = useItwZendeskSupport();
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
 
   const errorCode = getErrorCodeFromCredential(credential);
 

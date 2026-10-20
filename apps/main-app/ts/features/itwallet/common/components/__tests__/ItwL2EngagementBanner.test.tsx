@@ -8,7 +8,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as connectivitySelectors from "../../../../connectivity/store/selectors";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
-import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
   itwDisableItwActivation,
@@ -32,12 +31,6 @@ describe("ItwL2EngagementBanner", () => {
     jest
       .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
       .mockReturnValue(true);
-    jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(true);
-    jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(false);
   });
 
   test.each([

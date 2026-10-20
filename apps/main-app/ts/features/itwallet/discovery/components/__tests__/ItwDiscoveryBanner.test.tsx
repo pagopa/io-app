@@ -43,51 +43,45 @@ jest.mock("@io-app/design-system", () => ({
 }));
 
 type BannerScenario = {
-  hasItwInstance: boolean;
   hasMdl: boolean;
   isRemotelyActive?: boolean;
-  isWalletActive: boolean;
   isWalletEmpty: boolean;
+  lifecycle: lifecycleSelectors.ItwLifecycleState;
   name: string;
 };
 
 const allScenarios: Array<BannerScenario> = [
   {
     name: "activation banner",
-    isWalletActive: false,
-    hasItwInstance: false,
+    lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
     isRemotelyActive: false,
     isWalletEmpty: true,
     hasMdl: false
   },
   {
     name: "empty wallet banner",
-    isWalletActive: true,
-    hasItwInstance: true,
+    lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
     isRemotelyActive: false,
     isWalletEmpty: true,
     hasMdl: false
   },
   {
     name: "MDL upgrade banner",
-    isWalletActive: true,
-    hasItwInstance: true,
+    lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
     isRemotelyActive: false,
     isWalletEmpty: false,
     hasMdl: true
   },
   {
     name: "default upgrade banner",
-    isWalletActive: true,
-    hasItwInstance: true,
+    lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
     isRemotelyActive: false,
     isWalletEmpty: false,
     hasMdl: false
   },
   {
     name: "reactivation banner",
-    isWalletActive: false,
-    hasItwInstance: false,
+    lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
     isRemotelyActive: true,
     isWalletEmpty: true,
     hasMdl: false
@@ -96,12 +90,8 @@ const allScenarios: Array<BannerScenario> = [
 
 const setupMocks = (scenario: BannerScenario) => {
   jest
-    .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-    .mockReturnValue(scenario.isWalletActive);
-
-  jest
-    .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-    .mockReturnValue(scenario.hasItwInstance);
+    .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+    .mockReturnValue(scenario.lifecycle);
 
   jest
     .spyOn(itwWalletInstanceSelectors, "itwIsRemotelyActiveSelector")
@@ -135,8 +125,7 @@ describe("ItwDiscoveryBanner", () => {
     it("should render skeleton while remote wallet instance state is loading and wallet is not active", () => {
       setupMocks({
         name: "skeleton",
-        isWalletActive: false,
-        hasItwInstance: false,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
         isRemotelyActive: undefined,
         isWalletEmpty: true,
         hasMdl: false
@@ -150,8 +139,7 @@ describe("ItwDiscoveryBanner", () => {
     it("should not render skeleton when wallet is active", () => {
       setupMocks({
         name: "active wallet",
-        isWalletActive: true,
-        hasItwInstance: true,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
         isRemotelyActive: undefined,
         isWalletEmpty: true,
         hasMdl: false
@@ -197,8 +185,7 @@ describe("ItwDiscoveryBanner", () => {
     it("should navigate to discovery screen when reactivation banner action is pressed", () => {
       setupMocks({
         name: "reactivation banner",
-        isWalletActive: false,
-        hasItwInstance: false,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
         isRemotelyActive: true,
         isWalletEmpty: true,
         hasMdl: false
@@ -217,8 +204,7 @@ describe("ItwDiscoveryBanner", () => {
     it("should show an offline toast and block navigation when the empty wallet banner action is pressed offline", () => {
       setupMocks({
         name: "empty wallet banner",
-        isWalletActive: true,
-        hasItwInstance: true,
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
         isRemotelyActive: false,
         isWalletEmpty: true,
         hasMdl: false
@@ -241,11 +227,13 @@ describe("ItwDiscoveryBanner", () => {
 
   describe("dismissal behavior", () => {
     const dismissableScenarios = allScenarios.filter(
-      ({ isWalletActive, isWalletEmpty, isRemotelyActive }) =>
-        !isRemotelyActive && !(isWalletActive && isWalletEmpty)
+      ({ lifecycle, isWalletEmpty, isRemotelyActive }) =>
+        !isRemotelyActive &&
+        !(lifecycleSelectors.isWalletActive(lifecycle) && isWalletEmpty)
     );
     const nonDismissableScenarios = allScenarios.filter(
-      ({ isWalletActive, isWalletEmpty }) => isWalletActive && isWalletEmpty
+      ({ lifecycle, isWalletEmpty }) =>
+        lifecycleSelectors.isWalletActive(lifecycle) && isWalletEmpty
     );
 
     test.each(dismissableScenarios)(

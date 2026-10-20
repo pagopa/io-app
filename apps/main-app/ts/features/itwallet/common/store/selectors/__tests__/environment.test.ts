@@ -1,6 +1,17 @@
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { Action } from "../../../../../../store/actions/types";
+import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../../utils/tests";
+import { itwCredentialsStore } from "../../../../credentials/store/actions";
+import { itwStoreIntegrityKeyTag } from "../../../../issuance/store/actions";
+import { CURRENT_ITW_SPECS_VERSION } from "../../../utils/constants";
 import { CredentialType } from "../../../utils/itwMocksUtils";
-import { CredentialFormat } from "../../../utils/itwTypesUtils";
+import {
+  CredentialFormat,
+  CredentialMetadata
+} from "../../../utils/itwTypesUtils";
+import { itwSetFiscalCodeWhitelisted } from "../../actions/preferences";
 import {
   selectItwCieIdEnvironment,
   selectItwEnv,
@@ -67,38 +78,58 @@ describe("selectItwCieIdEnvironment", () => {
 });
 
 describe("selectItwSpecsVersion", () => {
-  test.each`
-    isWhitelisted | pidSpecVersion | expected
-    ${false}      | ${undefined}   | ${"1.0.0"}
-    ${false}      | ${"1.0.0"}     | ${"1.0.0"}
-    ${true}       | ${undefined}   | ${"1.4.6"}
-    ${true}       | ${"1.0.0"}     | ${"1.0.0"}
-    ${true}       | ${"1.4.6"}     | ${"1.4.6"}
-  `(
-    "Whitelist: $isWhitelisted, PID: $pidSpecVersion -> ITW: $expected",
-    ({ isWhitelisted, pidSpecVersion, expected }) => {
-      const state = {
-        features: {
-          itWallet: {
-            remoteConfig: {},
-            preferences: {
-              isFiscalCodeWhitelisted: isWhitelisted
-            },
-            credentials: {
-              credentials: {
-                ...(pidSpecVersion && {
-                  pid: {
-                    spec_version: pidSpecVersion,
-                    credentialType: CredentialType.PID,
-                    format: CredentialFormat.SD_JWT
-                  }
-                })
-              }
-            }
-          }
-        }
-      } as GlobalState;
-      expect(selectItwSpecsVersion(state)).toBe(expected);
+  const pid = (spec_version: string, verification?: object) =>
+    ({
+      credentialType: CredentialType.PID,
+      credentialId: "dc_sd_jwt_PersonIdentificationData",
+      format: CredentialFormat.SD_JWT,
+      spec_version,
+      verification
+    }) as CredentialMetadata;
+  const l2Pid = pid("1.0.0");
+  const l3Pid = pid("1.4.6", {
+    assurance_level: "high",
+    trust_framework: "it_cie"
+  });
+  const whitelisted = itwSetFiscalCodeWhitelisted(true);
+  const walletInstance = itwStoreIntegrityKeyTag("integrity-key-tag");
+
+  test.each<{
+    actions: ReadonlyArray<Action>;
+    expected: string;
+    name: string;
+  }>([
+    { name: "no wallet, not whitelisted", actions: [], expected: "1.0.0" },
+    {
+      name: "a L2 PID, not whitelisted",
+      actions: [walletInstance, itwCredentialsStore([l2Pid])],
+      expected: "1.0.0"
+    },
+    {
+      name: "no wallet, whitelisted",
+      actions: [whitelisted],
+      expected: CURRENT_ITW_SPECS_VERSION
+    },
+    {
+      name: "a L2 PID, whitelisted",
+      actions: [whitelisted, walletInstance, itwCredentialsStore([l2Pid])],
+      expected: "1.0.0"
+    },
+    {
+      name: "a L3 PID, whitelisted",
+      actions: [whitelisted, walletInstance, itwCredentialsStore([l3Pid])],
+      expected: "1.4.6"
+    },
+    {
+      name: "a L3 PID, no longer whitelisted",
+      actions: [walletInstance, itwCredentialsStore([l3Pid])],
+      expected: "1.4.6"
     }
-  );
+  ])("returns $expected with $name", ({ actions, expected }) => {
+    const state = reproduceSequence({} as GlobalState, appReducer, [
+      applicationChangeState("active"),
+      ...actions
+    ]);
+    expect(selectItwSpecsVersion(state)).toBe(expected);
+  });
 });

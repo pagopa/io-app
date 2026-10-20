@@ -21,7 +21,10 @@ import {
   CredentialMetadata,
   ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { trackCredentialCardModal } from "../analytics";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton.tsx";
@@ -53,7 +56,9 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const [isFlipped, setFlipped] = useState(false);
   const theme = useIOTheme();
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const dispatch = useIODispatch();
 
   usePreventScreenCapture();

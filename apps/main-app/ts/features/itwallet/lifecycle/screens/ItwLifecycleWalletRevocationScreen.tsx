@@ -10,7 +10,10 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { selectIsLoading } from "../../machine/eid/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../store/selectors/index";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../store/selectors";
 
 const RevocationLoadingScreen = () => {
   useItwDisableGestureNavigation();
@@ -19,7 +22,9 @@ const RevocationLoadingScreen = () => {
 
   // During revocation, `isItwL3` turns false so we capture the initial value to prevent the title from flickering.
   const isItwL3 = useMemo(
-    () => itwLifecycleIsITWalletValidSelector(store.getState()),
+    () =>
+      itwLifecycleStateSelector(store.getState()) ===
+      ItwLifecycleState.VALID_IT_WALLET,
     [store]
   );
 

@@ -1,7 +1,10 @@
 import { put, select } from "typed-redux-saga/macro";
 
 import { walletAddCards } from "../../../wallet/store/actions/cards";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { mapCredentialToWalletCard } from "../../wallet/utils";
 import {
   itwCredentialsEidSelector,
@@ -13,12 +16,14 @@ import {
  * invoked as soon as possible to properly sync credentials to the wallet.
  */
 export function* handleWalletCredentialsRehydration() {
-  const isItWalletValid = yield* select(itwLifecycleIsValidSelector);
+  const hasActiveWallet = isWalletActive(
+    yield* select(itwLifecycleStateSelector)
+  );
   const pid = yield* select(itwCredentialsEidSelector);
   const credentials = yield* select(itwCredentialsSelector);
 
   // Only a valid wallet should contain credentials to display
-  if (!isItWalletValid || pid === undefined) {
+  if (!hasActiveWallet || pid === undefined) {
     return;
   }
 

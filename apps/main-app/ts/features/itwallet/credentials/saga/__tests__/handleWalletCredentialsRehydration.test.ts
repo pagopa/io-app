@@ -1,11 +1,22 @@
-import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { Action } from "../../../../../store/actions/types";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../utils/tests";
 import { walletAddCards } from "../../../../wallet/store/actions/cards";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import { itwStoreIntegrityKeyTag } from "../../../issuance/store/actions";
+import { itwCredentialsStore } from "../../store/actions";
 import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
+
+const stateWith = (actions: ReadonlyArray<Action>) =>
+  reproduceSequence({} as GlobalState, appReducer, [
+    applicationChangeState("active"),
+    ...actions
+  ]);
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
   const expirationClaim = { value: "2100-09-04", name: "exp" };
@@ -75,16 +86,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
   };
 
   it("should not rehydrate the eID when the wallet is valid", () => {
-    const store: DeepPartial<GlobalState> = {
-      features: {
-        itWallet: {
-          issuance: { integrityKeyTag: "key-tag" },
-          credentials: {
-            credentials: {}
-          }
-        }
-      }
-    };
+    const store = stateWith([itwStoreIntegrityKeyTag("key-tag")]);
 
     return expectSaga(handleWalletCredentialsRehydration)
       .withState(store)
@@ -103,21 +105,10 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
   });
 
   it("rehydrates other credentials when the wallet is valid", () => {
-    const store: DeepPartial<GlobalState> = {
-      features: {
-        itWallet: {
-          issuance: { integrityKeyTag: "key-tag" },
-          credentials: {
-            credentials: {
-              [mockedEid.credentialId]: mockedEid,
-              [mockedMdl.credentialId]: mockedMdl,
-              [mockedDc.credentialId]: mockedDc,
-              [mockedEd.credentialId]: mockedEd
-            }
-          }
-        }
-      }
-    };
+    const store = stateWith([
+      itwStoreIntegrityKeyTag("key-tag"),
+      itwCredentialsStore([mockedEid, mockedMdl, mockedDc, mockedEd])
+    ]);
 
     return expectSaga(handleWalletCredentialsRehydration)
       .withState(store)
@@ -153,18 +144,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
   });
 
   it("does not rehydrate credentials when the wallet is not valid", () => {
-    const store: DeepPartial<GlobalState> = {
-      features: {
-        itWallet: {
-          issuance: { integrityKeyTag: undefined },
-          credentials: {
-            credentials: {
-              [mockedMdl.credentialId]: mockedMdl
-            }
-          }
-        }
-      }
-    };
+    const store = stateWith([itwCredentialsStore([mockedMdl])]);
 
     return expectSaga(handleWalletCredentialsRehydration)
       .withState(store)

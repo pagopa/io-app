@@ -239,8 +239,8 @@ describe("WalletCardsContainer", () => {
 describe("ItwWalletCardsContainer", () => {
   it("should not render if ITW is not enabled", () => {
     jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
+      .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
     jest
       .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
       .mockImplementation(() => false);
@@ -251,8 +251,8 @@ describe("ItwWalletCardsContainer", () => {
 
   it("should render the wallet ready banner", () => {
     jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(true);
+      .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
     jest
       .spyOn(itwSelectors, "itwShouldRenderUpgradeBannerSelector")
@@ -277,8 +277,8 @@ describe("ItwWalletCardsContainer", () => {
 
   it("should render the L2 engagement banner and hide the wallet ready banner", () => {
     jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(true);
+      .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
     jest
       .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
@@ -302,8 +302,8 @@ describe("ItwWalletCardsContainer", () => {
 
   it("should render credential cards", () => {
     jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
+      .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
     jest
       .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
       .mockImplementation(() => true);
@@ -318,9 +318,9 @@ describe("ItwWalletCardsContainer", () => {
   });
 
   it("should render the eID info CTA for Documenti su IO", () => {
-    const itWalletValidSpy = jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(false);
+    const lifecycleSpy = jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
     const newItWalletSpy = jest
       .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
       .mockReturnValue(false);
@@ -334,14 +334,14 @@ describe("ItwWalletCardsContainer", () => {
     ).not.toBeNull();
     expect(UNSAFE_getByType(ListItemHeader).props.iconName).toBe("legalValue");
 
-    itWalletValidSpy.mockRestore();
+    lifecycleSpy.mockRestore();
     newItWalletSpy.mockRestore();
   });
 
   it("should hide the eID info CTA for the IT-Wallet L3 flow", () => {
-    const itWalletValidSpy = jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(true);
+    const lifecycleSpy = jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
     const newItWalletSpy = jest
       .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
       .mockReturnValue(false);
@@ -354,7 +354,7 @@ describe("ItwWalletCardsContainer", () => {
     expect(queryByTestId("walletCardsCategoryItwActiveBadgeTestID")).toBeNull();
     expect(UNSAFE_getByType(ListItemHeader).props.iconName).toBeUndefined();
 
-    itWalletValidSpy.mockRestore();
+    lifecycleSpy.mockRestore();
     newItWalletSpy.mockRestore();
   });
 

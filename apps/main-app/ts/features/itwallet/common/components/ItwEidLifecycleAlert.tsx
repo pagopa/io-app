@@ -11,7 +11,10 @@ import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
 import {
@@ -45,7 +48,9 @@ export const ItwEidLifecycleAlert = ({
   skipViewTracking
 }: Props) => {
   const eid = useIOSelector(itwCredentialsEidSelector);
-  const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItw =
+    useIOSelector(itwLifecycleStateSelector) ===
+    ItwLifecycleState.VALID_IT_WALLET;
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
   const isOffline = offlineAccessReason !== undefined;

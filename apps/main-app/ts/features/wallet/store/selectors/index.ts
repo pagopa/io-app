@@ -4,10 +4,12 @@ import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
-import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { idPayWalletInitiativeListSelector } from "../../../idpay/wallet/store/reducers";
-import { isItwEnabledSelector } from "../../../itwallet/common/store/selectors/remoteConfig";
-import { itwLifecycleIsValidSelector } from "../../../itwallet/lifecycle/store/selectors";
+import { itwIsWalletEnabledSelector } from "../../../itwallet/common/store/selectors";
+import {
+  isWalletActive,
+  itwLifecycleStateSelector
+} from "../../../itwallet/lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../itwallet/walletInstance/store/selectors";
 import { paymentsWalletUserMethodsSelector } from "../../../payments/wallet/store/selectors";
 import {
@@ -31,8 +33,8 @@ export const selectWalletCards = createSelector(
  */
 export const selectWalletCategories = createSelector(
   selectWalletCards,
-  itwLifecycleIsValidSelector,
-  (cards, isItwValid) => {
+  itwLifecycleStateSelector,
+  (cards, lifecycle) => {
     // Get unique categories from cards
     const cardCategories = new Set(
       cards.map(card =>
@@ -42,7 +44,7 @@ export const selectWalletCategories = createSelector(
     );
 
     // Add ITW category if valid, even if no ITW cards exist
-    if (isItwValid) {
+    if (isWalletActive(lifecycle)) {
       cardCategories.add("itw");
     }
 
@@ -195,11 +197,11 @@ export const shouldRenderWalletCategorySelector = createSelector(
  * Determines whether the IT Wallet cards section is rendered in the wallet
  * screen. The section is rendered if:
  *
- * - The IT Wallet feature flag is enabled OR the app is in offline mode
- * - The IT Wallet is in a valid lifecycle state
+ * - The wallet is enabled (always assumed while offline)
+ * - The wallet is active
  * - The IT Wallet WI does not have an error
  */
 export const shouldRenderItwCardsContainerSelector = (state: GlobalState) =>
-  (isItwEnabledSelector(state) || !isConnectedSelector(state)) &&
-  itwLifecycleIsValidSelector(state) &&
+  itwIsWalletEnabledSelector(state) &&
+  isWalletActive(itwLifecycleStateSelector(state)) &&
   !itwIsWalletInstanceStatusFailureSelector(state);

@@ -6,7 +6,6 @@ import { appReducer } from "../../../../../store/reducers";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwDiscoveryLandingScreen } from "../ItwDiscoveryLandingScreen";
@@ -29,45 +28,60 @@ describe("ItwDiscoveryLandingScreen", () => {
     expect(mockReplace).not.toHaveBeenCalled();
   });
 
-  test.each`
-    isItWalletActive | isWalletActive | isWhitelisted | expectedRoute                                 | expectedParams
-    ${true}          | ${false}       | ${false}      | ${ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN} | ${undefined}
-    ${false}         | ${true}        | ${false}      | ${ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN} | ${undefined}
-    ${false}         | ${false}       | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                  | ${{ animationEnabled: false, level: "l2" }}
-    ${false}         | ${false}       | ${true}       | ${ITW_ROUTES.DISCOVERY.INFO}                  | ${{ animationEnabled: false, level: "l3" }}
-    ${false}         | ${true}        | ${true}       | ${ITW_ROUTES.DISCOVERY.INFO}                  | ${{ animationEnabled: false, level: "l3" }}
-  `(
-    "navigates to $expectedRoute when isItWalletActive=$isItWalletActive, isWalletActive=$isWalletActive, isWhitelisted=$isWhitelisted",
-    ({
-      isItWalletActive,
-      isWalletActive,
-      isWhitelisted,
-      expectedRoute,
-      expectedParams
-    }: {
-      expectedParams: object | undefined;
-      expectedRoute: string;
-      isItWalletActive: boolean;
-      isWalletActive: boolean;
-      isWhitelisted: boolean;
-    }) => {
+  const discoveryInfo = (level: "l2" | "l3") => [
+    ITW_ROUTES.DISCOVERY.INFO,
+    { animationEnabled: false, level }
+  ];
+
+  test.each<{
+    expectedArgs: ReadonlyArray<unknown>;
+    lifecycle: lifecycleSelectors.ItwLifecycleState;
+  }>(
+    [
+      {
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET,
+        expectedArgs: [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]
+      },
+      {
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO,
+        expectedArgs: [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]
+      },
+      {
+        lifecycle: lifecycleSelectors.ItwLifecycleState.INSTALLED,
+        expectedArgs: discoveryInfo("l2")
+      },
+      {
+        lifecycle:
+          lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE,
+        expectedArgs: discoveryInfo("l3")
+      },
+      {
+        lifecycle:
+          lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_UNSUPPORTED,
+        expectedArgs: discoveryInfo("l3")
+      },
+      {
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE,
+        expectedArgs: discoveryInfo("l3")
+      },
+      {
+        lifecycle: lifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_FALLBACK,
+        expectedArgs: discoveryInfo("l3")
+      }
+    ].map(row => ({
+      ...row,
+      lifecycleName: lifecycleSelectors.ItwLifecycleState[row.lifecycle]
+    }))
+  )(
+    "navigates to the expected route when the lifecycle is $lifecycleName",
+    ({ lifecycle, expectedArgs }) => {
       jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-        .mockReturnValue(isItWalletActive);
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(isWalletActive);
-      jest
-        .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
-        .mockReturnValue(isWhitelisted);
+        .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+        .mockReturnValue(lifecycle);
 
       renderComponent();
 
-      if (expectedParams) {
-        expect(mockReplace).toHaveBeenCalledWith(expectedRoute, expectedParams);
-      } else {
-        expect(mockReplace).toHaveBeenCalledWith(expectedRoute);
-      }
+      expect(mockReplace).toHaveBeenCalledWith(...expectedArgs);
     }
   );
 });

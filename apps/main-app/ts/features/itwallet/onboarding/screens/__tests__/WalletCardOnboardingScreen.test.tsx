@@ -4,7 +4,6 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as envSelectors from "../../../common/store/selectors/environment";
 import * as itwRemoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { EnvType } from "../../../common/utils/environment";
@@ -19,8 +18,8 @@ import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
 describe("WalletCardOnboardingScreen", () => {
   it("should render the screen correctly", () => {
     jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(true);
+      .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
     jest
       .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
@@ -32,8 +31,8 @@ describe("WalletCardOnboardingScreen", () => {
 
   it("should render the IT Wallet modules", () => {
     jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(true);
+      .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
     jest
       .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
@@ -56,8 +55,8 @@ describe("WalletCardOnboardingScreen", () => {
 
   it("should not render the IT Wallet modules if ITW is not enabled", () => {
     jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(true);
+      .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
     jest
       .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
@@ -69,8 +68,8 @@ describe("WalletCardOnboardingScreen", () => {
 
   it("should not render the IT Wallet modules if ITW is not in a valid state", () => {
     jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(false);
+      .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.INSTALLED);
 
     jest
       .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
@@ -87,8 +86,8 @@ describe("WalletCardOnboardingScreen", () => {
     "it should hide credential modules when $disabledCredentials are remotely disabled",
     ({ disabledCredentials }) => {
       jest
-        .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(true);
+        .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+        .mockReturnValue(itwLifecycleSelectors.ItwLifecycleState.VALID_DOC_IO);
 
       jest
         .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
@@ -137,16 +136,16 @@ describe("WalletCardOnboardingScreen", () => {
     "DegreeCertificates module: $description",
     ({ isL3Enabled, env, shouldRender }) => {
       jest
-        .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(true);
+        .spyOn(itwLifecycleSelectors, "itwLifecycleStateSelector")
+        .mockReturnValue(
+          isL3Enabled
+            ? itwLifecycleSelectors.ItwLifecycleState.VALID_DOC_IO_UPGRADABLE
+            : itwLifecycleSelectors.ItwLifecycleState.VALID_DOC_IO
+        );
 
       jest
         .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(true);
-
-      jest
-        .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
-        .mockReturnValue(isL3Enabled);
 
       jest.spyOn(envSelectors, "selectItwEnv").mockReturnValue(env as EnvType);
 

@@ -27,10 +27,12 @@ describe("ItwSettingsScreen", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    // By default, wallet invalid
+    // By default, IT-Wallet not active
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(false);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(
+        lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
+      );
 
     // Mock actor ref
     spyUseActorRef.mockReturnValue({ send: jest.fn() } as any);
@@ -70,8 +72,8 @@ describe("ItwSettingsScreen", () => {
 
   it("shows Revoke CTA, opens alert and confirms sends revoke event when wallet is valid", () => {
     jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(true);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(lifecycleSelectors.ItwLifecycleState.VALID_IT_WALLET);
     jest
       .spyOn(credentials, "itwCredentialsEidSelector")
       .mockReturnValue(ItwStoredCredentialsMocks.eid);

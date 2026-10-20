@@ -10,7 +10,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import * as itwCommonSelectors from "../../../../common/store/selectors";
+import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import { testRemoteDeps } from "../../../../machine/utils/testDeps";
 import { RemoteFailure, RemoteFailureType } from "../../machine/failure";
 import { itwRemoteMachine } from "../../machine/machine";
@@ -56,8 +56,10 @@ describe("ItwRemoteFailureScreen", () => {
     }
   ])("should render failure screen for $type", failure => {
     jest
-      .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
-      .mockImplementation(() => true);
+      .spyOn(lifecycleSelectors, "itwLifecycleStateSelector")
+      .mockReturnValue(
+        lifecycleSelectors.ItwLifecycleState.INSTALLED_IT_WALLET_ELIGIBLE
+      );
     expect(renderComponent(failure)).toMatchSnapshot();
   });
 });

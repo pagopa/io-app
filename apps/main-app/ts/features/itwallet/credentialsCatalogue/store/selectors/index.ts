@@ -22,7 +22,10 @@ import {
   upcomingCredentials
 } from "../../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  ItwLifecycleState,
+  itwLifecycleStateSelector
+} from "../../../lifecycle/store/selectors";
 
 export type CredentialsListEntry = {
   name: string;
@@ -179,7 +182,8 @@ export const itwCredentialNameResolverSelector = createSelector(
     itwIsCatalogueEnabledForCredentialsList,
     itwCredentialsCatalogueByTypesSelector,
     itwCatalogueTranslationsByLocaleSelector,
-    itwLifecycleIsITWalletValidSelector
+    (state: GlobalState) =>
+      itwLifecycleStateSelector(state) === ItwLifecycleState.VALID_IT_WALLET
   ],
   (isCatalogueEnabled, catalogue, translations, withL3Design) =>
     (credentialType: string | undefined, withDefault = ""): string => {
