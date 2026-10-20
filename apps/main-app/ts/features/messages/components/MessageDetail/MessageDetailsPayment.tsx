@@ -1,5 +1,5 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
-import { ListItemHeader, useIOTheme, VSpacer } from "@io-app/design-system";
+import { ListItemHeader, useIOColors, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 
 import { useIOSelector } from "../../../../store/hooks";
@@ -16,7 +16,7 @@ export const MessageDetailsPayment = ({
   messageId,
   serviceId
 }: MessageDetailsPaymentProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
@@ -32,7 +32,7 @@ export const MessageDetailsPayment = ({
     <>
       <VSpacer size={16} />
       <ListItemHeader
-        iconColor={theme["italyBrand-default"]}
+        iconColor={colors.brand.pagopa}
         iconName={"productPagoPA"}
         label={I18n.t("features.messages.payments.title")}
       />
