@@ -6,9 +6,9 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
 import {
-  ITW_ISSUER_AUTHORITY_CLAIM_MOCK_LABEL,
+  ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL,
   ItwStoredCredentialsMocks,
-  withIssuerAuthorityClaimMock
+  withIssuingAuthorityClaimMock
 } from "../../../../common/utils/itwMocksUtils.ts";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils.ts";
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
@@ -33,14 +33,14 @@ describe("ItwPresentationPidDetail", () => {
     ).toBe(true);
   });
 
-  it("should not render the issuer_authority claim, already shown by the issuance metadata", () => {
+  it("should not render the issuing_authority claim, already shown by the issuance metadata", () => {
     const { component } = renderComponentWithStore(
       false,
-      withIssuerAuthorityClaimMock(ItwStoredCredentialsMocks.eid)
+      withIssuingAuthorityClaimMock(ItwStoredCredentialsMocks.eid)
     );
 
     expect(
-      component.queryByText(ITW_ISSUER_AUTHORITY_CLAIM_MOCK_LABEL)
+      component.queryByText(ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL)
     ).toBeNull();
   });
 });

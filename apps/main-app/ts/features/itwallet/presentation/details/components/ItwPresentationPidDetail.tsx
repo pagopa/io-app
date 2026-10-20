@@ -42,7 +42,7 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
         exclude: [
           WellKnownClaim.unique_id,
           WellKnownClaim.content,
-          WellKnownClaim.issuer_authority
+          WellKnownClaim.issuing_authority
         ]
       }),
     [credential.parsedCredential]

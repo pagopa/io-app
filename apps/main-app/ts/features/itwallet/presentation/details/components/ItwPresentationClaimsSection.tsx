@@ -35,7 +35,7 @@ export const ItwPresentationClaimsSection = ({
       WellKnownClaim.unique_id,
       WellKnownClaim.content,
       WellKnownClaim.link_qr_code,
-      WellKnownClaim.issuer_authority
+      WellKnownClaim.issuing_authority
     ]
   });
 

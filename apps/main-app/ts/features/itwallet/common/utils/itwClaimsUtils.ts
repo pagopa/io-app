@@ -43,7 +43,7 @@ export enum WellKnownClaim {
    * `ItwIssuanceMetadata`. It must be excluded from claims lists that render
    * the issuance metadata to avoid duplicates.
    */
-  issuer_authority = "issuer_authority",
+  issuing_authority = "issuing_authority",
   /**
    * Claim used to display the QR Code on the back of the European Disability
    * Card. It must be excluded from common claims lists.

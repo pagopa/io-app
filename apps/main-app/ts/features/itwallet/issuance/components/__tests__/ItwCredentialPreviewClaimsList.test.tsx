@@ -5,9 +5,9 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import {
-  ITW_ISSUER_AUTHORITY_CLAIM_MOCK_LABEL,
+  ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL,
   ItwStoredCredentialsMocks,
-  withIssuerAuthorityClaimMock
+  withIssuingAuthorityClaimMock
 } from "../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -21,22 +21,22 @@ describe("ItwCredentialPreviewClaimsList", () => {
 
   test.each([
     {
-      name: "hides the issuer_authority claim when the releaser is visible",
+      name: "hides the issuing_authority claim when the releaser is visible",
       releaserVisible: true,
       issuerAuthorityVisible: false
     },
     {
-      name: "keeps the issuer_authority claim when the releaser is hidden",
+      name: "keeps the issuing_authority claim when the releaser is hidden",
       releaserVisible: false,
       issuerAuthorityVisible: true
     }
   ])("$name", ({ releaserVisible, issuerAuthorityVisible }) => {
     const { queryByText } = renderComponent(
-      withIssuerAuthorityClaimMock(ItwStoredCredentialsMocks.ts),
+      withIssuingAuthorityClaimMock(ItwStoredCredentialsMocks.ts),
       releaserVisible
     );
 
-    expect(queryByText(ITW_ISSUER_AUTHORITY_CLAIM_MOCK_LABEL) !== null).toBe(
+    expect(queryByText(ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL) !== null).toBe(
       issuerAuthorityVisible
     );
   });

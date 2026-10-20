@@ -31,7 +31,7 @@ const ItwCredentialPreviewClaimsList = ({
       WellKnownClaim.link_qr_code,
       // Keep the claim when the releaser metadata is hidden, otherwise it
       // would not be displayed at all
-      ...(releaserVisible ? [WellKnownClaim.issuer_authority] : [])
+      ...(releaserVisible ? [WellKnownClaim.issuing_authority] : [])
     ]
   });
   const { credentialType } = data;

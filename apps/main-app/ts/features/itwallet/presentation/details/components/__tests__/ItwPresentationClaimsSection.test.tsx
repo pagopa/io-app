@@ -7,9 +7,9 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
 import {
-  ITW_ISSUER_AUTHORITY_CLAIM_MOCK_LABEL,
+  ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL,
   ItwStoredCredentialsMocks,
-  withIssuerAuthorityClaimMock
+  withIssuingAuthorityClaimMock
 } from "../../../../common/utils/itwMocksUtils.ts";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils.ts";
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
@@ -51,13 +51,13 @@ describe("ItwPresentationClaimsSection", () => {
     expect(component.queryByLabelText("QR Code")).toBeNull();
   });
 
-  it("should not render the issuer_authority claim, already shown by the issuance metadata", () => {
+  it("should not render the issuing_authority claim, already shown by the issuance metadata", () => {
     const component = renderComponent(
-      withIssuerAuthorityClaimMock(ItwStoredCredentialsMocks.ts)
+      withIssuingAuthorityClaimMock(ItwStoredCredentialsMocks.ts)
     );
 
     expect(
-      component.queryByText(ITW_ISSUER_AUTHORITY_CLAIM_MOCK_LABEL)
+      component.queryByText(ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL)
     ).toBeNull();
     expect(
       component.queryByText(

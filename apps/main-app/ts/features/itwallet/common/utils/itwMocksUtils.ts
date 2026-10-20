@@ -59,24 +59,24 @@ export const ItwStoredCredentialsMocks = {
   }
 };
 
-export const ITW_ISSUER_AUTHORITY_CLAIM_MOCK_LABEL = "Mock issuer authority";
+export const ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL = "Mock issuing authority";
 
 /**
- * Adds the `issuer_authority` claim provided by IPZS to the given credential.
+ * Adds the `issuing_authority` claim provided by IPZS to the given credential.
  * The claim label is the same for every locale, so tests can query it
  * regardless of the current language.
  */
-export const withIssuerAuthorityClaimMock = (
+export const withIssuingAuthorityClaimMock = (
   credential: CredentialMetadata
 ): CredentialMetadata => ({
   ...credential,
   parsedCredential: {
     ...credential.parsedCredential,
-    [WellKnownClaim.issuer_authority]: {
+    [WellKnownClaim.issuing_authority]: {
       value: "Istituto Poligrafico e Zecca dello Stato",
       name: {
-        "it-IT": ITW_ISSUER_AUTHORITY_CLAIM_MOCK_LABEL,
-        "en-US": ITW_ISSUER_AUTHORITY_CLAIM_MOCK_LABEL
+        "it-IT": ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL,
+        "en-US": ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL
       }
     }
   }
