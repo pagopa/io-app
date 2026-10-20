@@ -10,8 +10,12 @@ import { View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { resetTourCompletedAction } from "../../../tour/store/actions";
 import { isTourCompletedSelector } from "../../../tour/store/selectors";
+import { itwSetDiscoverMoreCEDEnabled } from "../../common/store/actions/preferences.ts";
 import { itwSetCatalogueEnabledForCredentialsList } from "../../credentialsCatalogue/store/actions";
-import { itwIsCatalogueEnabledForCredentialsList } from "../../credentialsCatalogue/store/selectors";
+import {
+  itwDiscoverMoreCEDSelector,
+  itwIsCatalogueEnabledForCredentialsList
+} from "../../credentialsCatalogue/store/selectors";
 import { ITW_TOUR_GROUP_ID } from "../../tour/utils/constants";
 
 export const ItwMiscSection = () => {
@@ -19,6 +23,7 @@ export const ItwMiscSection = () => {
   const isCatalogueEnabledForCredentialsList = useIOSelector(
     itwIsCatalogueEnabledForCredentialsList
   );
+  const isDiscoverMoreCEDEnabled = useIOSelector(itwDiscoverMoreCEDSelector);
 
   const isTourCompleted = useIOSelector(state =>
     isTourCompletedSelector(state, ITW_TOUR_GROUP_ID)
@@ -36,6 +41,14 @@ export const ItwMiscSection = () => {
       value: isCatalogueEnabledForCredentialsList,
       onSwitchValueChange: value =>
         dispatch(itwSetCatalogueEnabledForCredentialsList(value))
+    },
+    {
+      label: "Scopri le opportunità della CED",
+      description:
+        "Se abilitato, l'utente visualizza la CTA nel dettaglio della CED per scoprire le opportunità della CED.",
+      value: isDiscoverMoreCEDEnabled,
+      onSwitchValueChange: value =>
+        dispatch(itwSetDiscoverMoreCEDEnabled(value))
     }
   ];
 
