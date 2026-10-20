@@ -6,10 +6,13 @@ import { ServiceDetails } from "@io-app/api-types/generated/definitions/services
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { testSaga } from "redux-saga-test-plan";
+import { ExpectApi, expectSaga, testSaga } from "redux-saga-test-plan";
+import * as matchers from "redux-saga-test-plan/matchers";
+import { dynamic } from "redux-saga-test-plan/providers";
 import { Effect } from "redux-saga/effects";
 import { call, take } from "typed-redux-saga/macro";
 
+import { Action } from "../../../../store/actions/types";
 import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { getServiceDetails } from "../../../services/common/saga/getServiceDetails";
 import { trackMessageDataLoadFailure } from "../../analytics";
@@ -33,6 +36,8 @@ import { handleLoadMessageData, testable } from "../handleLoadMessageData";
 const fimsCTAFrontMatter =
   '---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "iosso://https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "iosso://https://relyingParty.url"\n---';
 
+const OTHER_MESSAGE_ID = "01JZZZZZZZZZZZZZZZZZZZZZZZ";
+
 describe("getPaginatedMessage", () => {
   it("when no paginated message is in store, it should dispatch a loadMessageById.request and retrieve its result from the store if it succeeds", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
@@ -43,7 +48,6 @@ describe("getPaginatedMessage", () => {
       .next(pot.none)
       .put(loadMessageById.request({ id: messageId }))
       .next()
-      .take([loadMessageById.success, loadMessageById.failure])
       .next(loadMessageById.success(paginatedMessage))
       .select(getPaginatedMessageById, messageId)
       .next(pot.some(paginatedMessage))
@@ -58,7 +62,6 @@ describe("getPaginatedMessage", () => {
       .next(pot.noneError)
       .put(loadMessageById.request({ id: messageId }))
       .next()
-      .take([loadMessageById.success, loadMessageById.failure])
       .next(loadMessageById.success(paginatedMessage))
       .select(getPaginatedMessageById, messageId)
       .next(pot.some(paginatedMessage))
@@ -73,7 +76,6 @@ describe("getPaginatedMessage", () => {
       .next(pot.someError(paginatedMessage, new Error()))
       .put(loadMessageById.request({ id: messageId }))
       .next()
-      .take([loadMessageById.success, loadMessageById.failure])
       .next(loadMessageById.success(paginatedMessage))
       .select(getPaginatedMessageById, messageId)
       .next(pot.some(paginatedMessage))
@@ -96,7 +98,6 @@ describe("getPaginatedMessage", () => {
       .next(pot.none)
       .put(loadMessageById.request({ id: messageId }))
       .next()
-      .take([loadMessageById.success, loadMessageById.failure])
       .next(
         loadMessageById.failure({
           id: messageId,
@@ -118,7 +119,6 @@ describe("getMessageDetails", () => {
       .next(pot.none)
       .put(loadMessageDetails.request({ id: messageId }))
       .next()
-      .take([loadMessageDetails.success, loadMessageDetails.failure])
       .next(loadMessageDetails.success(messageDetails))
       .select(messageDetailsByIdSelector, messageId)
       .next(pot.some(messageDetails))
@@ -133,7 +133,6 @@ describe("getMessageDetails", () => {
       .next(pot.noneError)
       .put(loadMessageDetails.request({ id: messageId }))
       .next()
-      .take([loadMessageDetails.success, loadMessageDetails.failure])
       .next(loadMessageDetails.success(messageDetails))
       .select(messageDetailsByIdSelector, messageId)
       .next(pot.some(messageDetails))
@@ -148,7 +147,6 @@ describe("getMessageDetails", () => {
       .next(pot.someError(messageDetails, new Error()))
       .put(loadMessageDetails.request({ id: messageId }))
       .next()
-      .take([loadMessageDetails.success, loadMessageDetails.failure])
       .next(loadMessageDetails.success(messageDetails))
       .select(messageDetailsByIdSelector, messageId)
       .next(pot.some(messageDetails))
@@ -171,7 +169,6 @@ describe("getMessageDetails", () => {
       .next(pot.none)
       .put(loadMessageDetails.request({ id: messageId }))
       .next()
-      .take([loadMessageDetails.success, loadMessageDetails.failure])
       .next(loadMessageDetails.failure({ id: messageId, error: new Error() }))
       .returns(undefined);
   });
@@ -209,7 +206,6 @@ describe("getThirdPartyDataMessage", () => {
         })
       )
       .next()
-      .take([loadThirdPartyMessage.success, loadThirdPartyMessage.failure])
       .next(
         loadThirdPartyMessage.success({
           id: messageId,
@@ -255,7 +251,6 @@ describe("getThirdPartyDataMessage", () => {
         })
       )
       .next()
-      .take([loadThirdPartyMessage.success, loadThirdPartyMessage.failure])
       .next(
         loadThirdPartyMessage.failure({ id: messageId, error: new Error() })
       )
@@ -265,7 +260,10 @@ describe("getThirdPartyDataMessage", () => {
 
 describe("setMessageReadIfNeeded", () => {
   it("should dispatch an upsertMessageStatusAttributes.request to tag the message as read (if not so already) and return true if such operation succeeds", () => {
-    const paginatedMessage = { isRead: false } as UIMessage;
+    const paginatedMessage = {
+      id: "01HGP8EMP365Y7ANBNK8AJ87WD",
+      isRead: false
+    } as UIMessage;
     testSaga(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next()
       .put(
@@ -275,10 +273,6 @@ describe("setMessageReadIfNeeded", () => {
         })
       )
       .next()
-      .take([
-        upsertMessageStatusAttributes.success,
-        upsertMessageStatusAttributes.failure
-      ])
       .next(
         upsertMessageStatusAttributes.success({
           message: paginatedMessage,
@@ -288,7 +282,10 @@ describe("setMessageReadIfNeeded", () => {
       .returns(true);
   });
   it("should return undefined after having dispatched an upsertMessageStatusAttributes.request to tag the message as read (if not so already) but with a failing result", () => {
-    const paginatedMessage = { isRead: false } as UIMessage;
+    const paginatedMessage = {
+      id: "01HGP8EMP365Y7ANBNK8AJ87WD",
+      isRead: false
+    } as UIMessage;
     testSaga(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next()
       .put(
@@ -298,10 +295,6 @@ describe("setMessageReadIfNeeded", () => {
         })
       )
       .next()
-      .take([
-        upsertMessageStatusAttributes.success,
-        upsertMessageStatusAttributes.failure
-      ])
       .next(
         upsertMessageStatusAttributes.failure({
           payload: {
@@ -319,6 +312,206 @@ describe("setMessageReadIfNeeded", () => {
       .next()
       .returns(true);
   });
+});
+
+describe("outcomes of requests about other messages", () => {
+  const MESSAGE_ID = "01HGP8EMP365Y7ANBNK8AJ87WD";
+  const paginatedMessage = { id: MESSAGE_ID, isRead: false } as UIMessage;
+  const otherPaginatedMessage = {
+    id: OTHER_MESSAGE_ID,
+    isRead: false
+  } as UIMessage;
+  const messageDetails = { id: MESSAGE_ID } as UIMessageDetails;
+  const thirdPartyMessage = { kind: "TPM", id: "1" } as ThirdPartyMessageUnion;
+  const service = { id: "01J5WS3X839BXX6R1CMM51AB8R" } as ServiceDetails;
+  const messageCategoryTag = "GENERIC";
+
+  const readingUpdate = (message: UIMessage) => ({
+    message,
+    update: { tag: "reading" as const }
+  });
+  const archivingUpdate = {
+    message: paginatedMessage,
+    update: { tag: "archiving" as const, isArchived: true }
+  };
+
+  /** The store holds the value only once the saga has requested it. */
+  const loadedOnRequest = <T>(value: T) =>
+    dynamic(
+      jest.fn().mockReturnValueOnce(pot.none).mockReturnValue(pot.some(value))
+    );
+
+  type Scenario = {
+    expected: unknown;
+    name: string;
+    outcome: Action;
+    saga: () => ExpectApi;
+    skipped: ReadonlyArray<Action>;
+  };
+
+  const getPaginatedMessageSaga = () =>
+    expectSaga(testable!.getPaginatedMessage, MESSAGE_ID).provide([
+      [
+        matchers.select(getPaginatedMessageById, MESSAGE_ID),
+        loadedOnRequest(paginatedMessage)
+      ]
+    ]);
+  const getMessageDetailsSaga = () =>
+    expectSaga(testable!.getMessageDetails, MESSAGE_ID).provide([
+      [
+        matchers.select(messageDetailsByIdSelector, MESSAGE_ID),
+        loadedOnRequest(messageDetails)
+      ]
+    ]);
+  const getThirdPartyDataMessageSaga = () =>
+    expectSaga(
+      testable!.getThirdPartyDataMessage,
+      MESSAGE_ID,
+      false,
+      service,
+      messageCategoryTag
+    ).provide([
+      [
+        matchers.select(thirdPartyFromIdSelector, MESSAGE_ID),
+        pot.some(thirdPartyMessage)
+      ],
+      [
+        matchers.call.fn(
+          testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded
+        ),
+        O.none
+      ]
+    ]);
+  const setMessageReadIfNeededSaga = () =>
+    expectSaga(testable!.setMessageReadIfNeeded, paginatedMessage);
+
+  // Skipped failures would make the saga fail and skipped successes would make
+  // it succeed, so each scenario tells whether they have been taken
+  const scenarios: ReadonlyArray<Scenario> = [
+    {
+      name: "getPaginatedMessage should take the success of its message only",
+      saga: getPaginatedMessageSaga,
+      skipped: [
+        loadMessageById.failure({
+          id: OTHER_MESSAGE_ID,
+          error: new Error(),
+          kind: "generic"
+        })
+      ],
+      outcome: loadMessageById.success(paginatedMessage),
+      expected: paginatedMessage
+    },
+    {
+      name: "getPaginatedMessage should take the failure of its message only",
+      saga: getPaginatedMessageSaga,
+      skipped: [
+        loadMessageById.success(otherPaginatedMessage),
+        loadMessageDetails.success(messageDetails)
+      ],
+      outcome: loadMessageById.failure({
+        id: MESSAGE_ID,
+        error: new Error(),
+        kind: "generic"
+      }),
+      expected: undefined
+    },
+    {
+      name: "getMessageDetails should take the success of its message only",
+      saga: getMessageDetailsSaga,
+      skipped: [
+        loadMessageDetails.failure({ id: OTHER_MESSAGE_ID, error: new Error() })
+      ],
+      outcome: loadMessageDetails.success(messageDetails),
+      expected: messageDetails
+    },
+    {
+      name: "getMessageDetails should take the failure of its message only",
+      saga: getMessageDetailsSaga,
+      skipped: [
+        loadMessageDetails.success({
+          id: OTHER_MESSAGE_ID
+        } as UIMessageDetails),
+        loadMessageById.success(paginatedMessage)
+      ],
+      outcome: loadMessageDetails.failure({
+        id: MESSAGE_ID,
+        error: new Error()
+      }),
+      expected: undefined
+    },
+    {
+      name: "getThirdPartyDataMessage should take the success of its message only",
+      saga: getThirdPartyDataMessageSaga,
+      skipped: [
+        loadThirdPartyMessage.failure({
+          id: OTHER_MESSAGE_ID,
+          error: new Error()
+        })
+      ],
+      outcome: loadThirdPartyMessage.success({
+        id: MESSAGE_ID,
+        content: thirdPartyMessage
+      }),
+      expected: thirdPartyMessage
+    },
+    {
+      name: "getThirdPartyDataMessage should take the failure of its message only",
+      saga: getThirdPartyDataMessageSaga,
+      skipped: [
+        loadThirdPartyMessage.success({
+          id: OTHER_MESSAGE_ID,
+          content: thirdPartyMessage
+        }),
+        loadMessageDetails.success(messageDetails)
+      ],
+      outcome: loadThirdPartyMessage.failure({
+        id: MESSAGE_ID,
+        error: new Error()
+      }),
+      expected: undefined
+    },
+    {
+      name: "setMessageReadIfNeeded should take the success of its reading update only",
+      saga: setMessageReadIfNeededSaga,
+      skipped: [
+        upsertMessageStatusAttributes.failure({
+          payload: archivingUpdate,
+          error: new Error()
+        }),
+        upsertMessageStatusAttributes.failure({
+          payload: readingUpdate(otherPaginatedMessage),
+          error: new Error()
+        })
+      ],
+      outcome: upsertMessageStatusAttributes.success(
+        readingUpdate(paginatedMessage)
+      ),
+      expected: true
+    },
+    {
+      name: "setMessageReadIfNeeded should take the failure of its reading update only",
+      saga: setMessageReadIfNeededSaga,
+      skipped: [
+        upsertMessageStatusAttributes.request(readingUpdate(paginatedMessage)),
+        upsertMessageStatusAttributes.success(archivingUpdate),
+        upsertMessageStatusAttributes.success(
+          readingUpdate(otherPaginatedMessage)
+        )
+      ],
+      outcome: upsertMessageStatusAttributes.failure({
+        payload: readingUpdate(paginatedMessage),
+        error: new Error()
+      }),
+      expected: undefined
+    }
+  ];
+
+  it.each(scenarios)("$name", ({ saga, skipped, outcome, expected }) =>
+    [...skipped, outcome]
+      .reduce((api, action) => api.dispatch(action), saga())
+      .returns(expected)
+      .run()
+  );
 });
 
 describe("dispatchSuccessAction", () => {
