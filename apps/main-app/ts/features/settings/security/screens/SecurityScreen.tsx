@@ -156,9 +156,6 @@ const SecurityScreen = (): ReactElement => {
       <ContentWrapper>
         {/* Ask for verification and reset unlock code */}
         <ListItemNav
-          accessibilityLabel={I18n.t(
-            "identification.unlockCode.reset.button_short"
-          )}
           description={I18n.t("identification.unlockCode.reset.subtitle")}
           onPress={requestIdentificationAndResetPin}
           testID="reset-unlock-code"
