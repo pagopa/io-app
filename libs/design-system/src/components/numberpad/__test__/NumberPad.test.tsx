@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
-import { AccessibilityInfo } from "react-native";
+import { AccessibilityInfo, Platform } from "react-native";
 
 import { NumberPad } from "../NumberPad";
 
@@ -40,6 +40,7 @@ describe("NumberPad", () => {
     expect(mockOnBiometricPress).not.toHaveBeenCalled();
   });
   it("Should properly call onDeletePress without side effects", () => {
+    jest.spyOn(Platform, "select").mockReturnValue(true);
     const { getByLabelText } = renderNumberPad();
     const deleteButton = getByLabelText("delete");
     const reactCreatElement = jest.spyOn(React, "createElement");
@@ -52,7 +53,7 @@ describe("NumberPad", () => {
 
     expect(mockOnDelete).toHaveBeenCalledTimes(1);
     expect(announceForAccessibility).toHaveBeenCalledWith(
-      "Hai eliminato la cifra 2"
+      "Punto elenco eliminato"
     );
     expect(reactCreatElement).not.toHaveBeenCalled();
     expect(mockOnNumberPress).not.toHaveBeenCalled();
@@ -82,7 +83,7 @@ describe("NumberPad", () => {
     expect(mockOnNumberPress).not.toHaveBeenCalled();
     expect(mockOnDelete).not.toHaveBeenCalled();
   });
-  it("Should announce the pressed number", () => {
+  it("Should not announce the number separately from its button label", () => {
     const { getByText } = renderNumberPad();
     const announceForAccessibility = jest.spyOn(
       AccessibilityInfo,
@@ -91,22 +92,41 @@ describe("NumberPad", () => {
 
     fireEvent.press(getByText("1"));
 
-    expect(announceForAccessibility).toHaveBeenCalledWith("1");
+    expect(announceForAccessibility).not.toHaveBeenCalled();
+  });
+  it("Should announce the PIN digit count on iOS when it changes", () => {
+    jest.spyOn(Platform, "select").mockReturnValue(true);
+    const { rerender } = renderNumberPad("0 di 6 valori inseriti");
+    const announceForAccessibility = jest.spyOn(
+      AccessibilityInfo,
+      "announceForAccessibility"
+    );
+
+    rerender(createNumberPad("1 di 6 valori inseriti"));
+
+    expect(announceForAccessibility).toHaveBeenCalledWith(
+      "1 di 6 valori inseriti"
+    );
   });
 });
 
-function renderNumberPad(
-  deleteAccessibilityAnnouncement = "Hai eliminato la cifra 2"
-) {
-  return render(
+function createNumberPad(accessibilityValueText?: string) {
+  return (
     <NumberPad
+      accessibilityValueText={accessibilityValueText}
       biometricAccessibilityLabel="touch id trigger"
       biometricType="TOUCH_ID"
-      deleteAccessibilityAnnouncement={deleteAccessibilityAnnouncement}
+      deleteAccessibilityAnnouncement={
+        accessibilityValueText ? "Punto elenco eliminato" : undefined
+      }
       deleteAccessibilityLabel="delete"
       onBiometricPress={mockOnBiometricPress}
       onDeletePress={mockOnDelete}
       onNumberPress={mockOnNumberPress}
     />
   );
+}
+
+function renderNumberPad(accessibilityValueText = "1 di 6 valori inseriti") {
+  return render(createNumberPad(accessibilityValueText));
 }

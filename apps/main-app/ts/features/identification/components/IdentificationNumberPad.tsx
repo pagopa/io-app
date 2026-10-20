@@ -108,11 +108,13 @@ export const IdentificationNumberPad = (
       <VSpacer size={48} />
       <View testID="number-pad">
         <NumberPad
+          accessibilityValueText={I18n.t(
+            "global.accessibility.pinInput.valueText",
+            { valueLength: value.length, length: PIN_LENGTH }
+          )}
           deleteAccessibilityAnnouncement={
             value.length > 0
-              ? I18n.t("global.accessibility.deletedDigit", {
-                  digit: value.slice(-1)
-                })
+              ? I18n.t("global.accessibility.pinInput.deletedBullet")
               : undefined
           }
           deleteAccessibilityLabel={I18n.t("global.buttons.delete")}

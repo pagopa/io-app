@@ -1,4 +1,12 @@
-import { ComponentProps, JSX, ReactNode, useCallback, useMemo } from "react";
+import {
+  ComponentProps,
+  JSX,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef
+} from "react";
 import { AccessibilityInfo, StyleSheet, View } from "react-native";
 
 import { BiometricsValidType, Optional } from "../../utils/types";
@@ -30,7 +38,9 @@ type BiometricAuthProps =
     };
 
 type NumberPadProps = BiometricAuthProps & {
-  /** Localized message to announce when the delete button is pressed. */
+  /** Localized text describing the current PIN digit count. */
+  accessibilityValueText?: string;
+  /** Localized announcement used when a PIN digit is deleted. */
   deleteAccessibilityAnnouncement?: string;
   /**
    * This label will be read from ScreenReaders and give informations about
@@ -82,12 +92,26 @@ export const NumberPad = ({
   variant = "primary",
   biometricType,
   biometricAccessibilityLabel,
+  accessibilityValueText,
   deleteAccessibilityLabel,
+  deleteAccessibilityAnnouncement,
   onNumberPress,
   onBiometricPress,
-  onDeletePress,
-  deleteAccessibilityAnnouncement
+  onDeletePress
 }: NumberPadProps): JSX.Element => {
+  const previousAccessibilityValueText = useRef(accessibilityValueText);
+
+  useEffect(() => {
+    if (previousAccessibilityValueText.current === accessibilityValueText) {
+      return;
+    }
+
+    previousAccessibilityValueText.current = accessibilityValueText;
+    if (accessibilityValueText) {
+      AccessibilityInfo.announceForAccessibility(accessibilityValueText);
+    }
+  }, [accessibilityValueText]);
+
   /** Renders the buttons row from a given array. */
 
   const renderButtonsRow = useCallback(

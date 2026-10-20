@@ -115,13 +115,15 @@ export const DSNumberPad = () => {
       <VSpacer size={48} />
       <View>
         <NumberPad
+          accessibilityValueText={I18n.t(
+            "global.accessibility.pinInput.valueText",
+            { valueLength: value.length, length: PIN_LENGTH }
+          )}
           biometricAccessibilityLabel="Face ID"
           biometricType="FACE_ID"
           deleteAccessibilityAnnouncement={
             value.length > 0
-              ? I18n.t("global.accessibility.deletedDigit", {
-                  digit: value.slice(-1)
-                })
+              ? I18n.t("global.accessibility.pinInput.deletedBullet")
               : undefined
           }
           deleteAccessibilityLabel="Delete"

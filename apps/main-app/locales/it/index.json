@@ -3187,7 +3187,6 @@
         }
       },
       "dateFormat": "DD MMMM YYYY",
-      "deletedDigit": "Hai eliminato la cifra {{digit}}",
       "expanded": "Espanso",
       "inputDigitCounter": "{{valueLength}} di {{length}} numeri inseriti",
       "list": {
@@ -3196,6 +3195,10 @@
       "minusSymbol": "meno",
       "otpInput": {
         "valueText": "Hai inserito {{valueLength}} di {{length}} cifre"
+      },
+      "pinInput": {
+        "deletedBullet": "Punto elenco eliminato",
+        "valueText": "{{valueLength}} di {{length}} valori inseriti"
       },
       "progressTracker": "{{index}} di {{total}}",
       "reload": "Ricarica",
