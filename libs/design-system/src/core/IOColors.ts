@@ -94,6 +94,7 @@ export const IOColorsLegacy = asIOColors({
 
 export type IOColorsLegacy = keyof typeof IOColorsLegacy;
 
+/** @deprecated Unused, will be removed in the next major release */
 export const IOColorGradients = asIOColorGradients({
   appLaunch: ["#0C00D3", "#0073E6"],
   appIcon: ["#1D51DF", "#1723D5"],
@@ -112,8 +113,10 @@ export const IOColorGradients = asIOColorGradients({
   cgnTravel: ["#E00F69", "#F8C78C"]
 });
 
+/** @deprecated Unused, will be removed in the next major release */
 export type IOColorGradients = keyof typeof IOColorGradients;
 
+/** @deprecated Unused, will be removed in the next major release */
 export const getGradientColorValues = (
   gradientId: IOColorGradients
 ): ComponentProps<typeof LinearGradient>["colors"] => {
