@@ -76,7 +76,6 @@ describe("watchItwAuthenticatedSaga", () => {
   it("stops after an inconsistent wallet instance", () => {
     testSaga(watchItwAuthenticatedSaga)
       .next()
-      .next()
       .fork(watchItwLifecycleSaga)
       .next()
       .fork(watchItwCredentialsCatalogueSaga)
@@ -94,7 +93,6 @@ describe("watchItwAuthenticatedSaga", () => {
 
   it("checks wallet state and credential status assertions for a consistent wallet", () => {
     testSaga(watchItwAuthenticatedSaga)
-      .next()
       .next()
       .fork(watchItwLifecycleSaga)
       .next()

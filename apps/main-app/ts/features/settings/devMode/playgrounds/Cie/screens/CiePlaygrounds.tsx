@@ -77,7 +77,7 @@ export const CiePlaygrounds = () => {
     },
     {
       label: "Start CIE Auth",
-      icon: "cieLetter",
+      icon: "cie",
       onPress: () => navigation.navigate(CIE_PLAYGROUNDS_ROUTES.AUTHENTICATION)
     },
     {
@@ -138,7 +138,7 @@ export const CiePlaygrounds = () => {
           <>
             <Divider />
             <ListItemNav
-              icon="docAttach"
+              icon="attachment"
               label="View logs"
               onPress={() => void obtainLogs()}
             />

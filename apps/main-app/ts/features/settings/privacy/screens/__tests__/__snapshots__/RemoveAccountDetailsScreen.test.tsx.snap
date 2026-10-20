@@ -224,12 +224,6 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
-                        snapToOffsets={
-                          [
-                            0,
-                            0,
-                          ]
-                        }
                       >
                         <View>
                           <View
@@ -598,7 +592,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                               "width": 36,
                                             }
                                           }
-                                          testID="AnimatedRadioInput"
+                                          testID="RadioInput"
                                         >
                                           <View
                                             style={
@@ -894,7 +888,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                               "width": 36,
                                             }
                                           }
-                                          testID="AnimatedRadioInput"
+                                          testID="RadioInput"
                                         >
                                           <View
                                             style={
@@ -1190,7 +1184,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                               "width": 36,
                                             }
                                           }
-                                          testID="AnimatedRadioInput"
+                                          testID="RadioInput"
                                         >
                                           <View
                                             style={
@@ -1486,7 +1480,7 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                                               "width": 36,
                                             }
                                           }
-                                          testID="AnimatedRadioInput"
+                                          testID="RadioInput"
                                         >
                                           <View
                                             style={

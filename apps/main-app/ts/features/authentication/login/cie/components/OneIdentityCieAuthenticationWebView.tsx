@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
@@ -12,6 +12,7 @@ import {
 
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
@@ -25,6 +26,10 @@ import {
 } from "../../../common/utils";
 import { defaultUserAgent } from "../../../common/utils/cie";
 import { LoginType } from "../../../common/utils/index";
+import {
+  getWebViewFailureData,
+  LoginFailureData
+} from "../../../common/utils/loginErrorDebugInfo";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieIdpId } from "../utils";
 
@@ -61,7 +66,7 @@ export type OneIdentityCieAuthenticationWebViewProps = {
 };
 
 type WebViewState =
-  | { reason: string; status: "failure" }
+  | { failureData: LoginFailureData; status: "failure" }
   | { status: "authenticating" };
 
 export const OneIdentityCieAuthenticationWebView = ({
@@ -79,9 +84,9 @@ export const OneIdentityCieAuthenticationWebView = ({
     status: "authenticating"
   });
 
-  const handleFailure = useCallback((reason: string) => {
-    setWebViewState({ status: "failure", reason });
-    trackLoginError("cie", new Error(reason));
+  const handleFailure = useCallback((failureData: LoginFailureData) => {
+    setWebViewState({ status: "failure", failureData });
+    trackLoginError("cie", new Error(failureData.reason));
   }, []);
 
   const {
@@ -100,7 +105,7 @@ export const OneIdentityCieAuthenticationWebView = ({
     const title = event.nativeEvent.title;
 
     if (isErrorPage(title)) {
-      handleFailure(title);
+      handleFailure({ reason: title });
       return;
     }
   };
@@ -108,7 +113,7 @@ export const OneIdentityCieAuthenticationWebView = ({
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
       const reason = `Login failed with code (${code}) and message (${message})`;
-      handleFailure(reason);
+      handleFailure({ reason });
     },
     [handleFailure]
   );
@@ -160,7 +165,7 @@ export const OneIdentityCieAuthenticationWebView = ({
           ? `HTTP error ${nativeEvent.statusCode} on ${nativeEvent.url}`
           : `WebView error on ${nativeEvent.url}`;
 
-      handleFailure(reason);
+      handleFailure({ ...getWebViewFailureData(event), reason });
     },
     [handleFailure]
   );
@@ -173,6 +178,19 @@ export const OneIdentityCieAuthenticationWebView = ({
   const handleCancel = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
+
+  // Set only on failure, so the debug indicator doesn't show up while
+  // authenticating
+  const debugInfo = useMemo(() => {
+    if (webViewState.status === "failure") {
+      return webViewState.failureData;
+    }
+    if (loginSourceState.status === "failure") {
+      return { reason: loginSourceState.error };
+    }
+    return {};
+  }, [webViewState, loginSourceState]);
+  useDebugInfo(debugInfo);
 
   if (
     loginSourceState.status === "reserving-public-key" ||

@@ -106,7 +106,7 @@ const getVariantProps = (
     case "attachment":
       return {
         color: "grey",
-        name: "attachment"
+        name: "paperclip"
       };
     case "error":
       return {
