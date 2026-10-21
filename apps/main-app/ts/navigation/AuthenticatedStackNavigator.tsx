@@ -148,7 +148,7 @@ const AuthenticatedStackNavigator = () => {
           gestureEnabled: false,
           ...Platform.select({
             ios: {
-              animationEnabled: false
+              animation: "none"
             },
             default: undefined
           })
@@ -168,7 +168,7 @@ const AuthenticatedStackNavigator = () => {
           gestureEnabled: false,
           ...Platform.select({
             ios: {
-              animationEnabled: false
+              animation: "none"
             },
             default: undefined
           })
