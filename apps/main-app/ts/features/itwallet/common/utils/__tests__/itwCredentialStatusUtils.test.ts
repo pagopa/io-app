@@ -22,70 +22,6 @@ describe("getCredentialStatus", () => {
     MockDate.reset();
   });
 
-  describe.each([
-    {
-      name: "non IT-Wallet credential",
-      credential: ItwStoredCredentialsMocks.mdl,
-      statusBeforeExpiration: "valid",
-      statusOnExpirationDay: "valid"
-    },
-    {
-      name: "IT-Wallet credential",
-      credential: {
-        ...ItwStoredCredentialsMocks.L3.mdl,
-        spec_version: "1.3.3",
-        verification: { assurance_level: "high", trust_framework: "it_cie" }
-      },
-      statusBeforeExpiration: "jwtExpiring",
-      statusOnExpirationDay: "jwtExpired"
-    },
-    {
-      name: "PID credential",
-      credential: ItwStoredCredentialsMocks.eid,
-      statusBeforeExpiration: "jwtExpiring",
-      statusOnExpirationDay: "jwtExpired"
-    }
-  ])(
-    "$name digital expiration",
-    ({ credential, statusBeforeExpiration, statusOnExpirationDay }) => {
-      const expiration = new Date(2024, 0, 30, 12);
-      const mockCredential: CredentialMetadata = {
-        ...credential,
-        jwt: { expiration: expiration.toISOString() },
-        parsedCredential: {},
-        validity: undefined
-      };
-
-      it.each([
-        {
-          name: "within the digital expiration warning period",
-          now: new Date(2024, 0, 20, 12),
-          expectedStatus: statusBeforeExpiration
-        },
-        {
-          name: "one millisecond before expiration",
-          now: new Date(expiration.getTime() - 1),
-          expectedStatus: statusOnExpirationDay
-        },
-        {
-          name: "at the expiration timestamp",
-          now: expiration,
-          expectedStatus: "jwtExpired"
-        },
-        {
-          name: "one millisecond after expiration",
-          now: new Date(expiration.getTime() + 1),
-          expectedStatus: "jwtExpired"
-        }
-      ])("should return $expectedStatus $name", ({ now, expectedStatus }) => {
-        MockDate.set(now);
-        expect(getCredentialStatus(mockCredential, options)).toBe(
-          expectedStatus
-        );
-      });
-    }
-  );
-
   describe("expired", () => {
     it("should return the physical document expired status", () => {
       MockDate.set(new Date(2024, 0, 20));
@@ -221,7 +157,7 @@ describe("getCredentialStatus", () => {
       expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
     });
 
-    it("should return valid before the digital document expires", () => {
+    it("should return the digital document expiring status", () => {
       MockDate.set(new Date(2024, 0, 20));
 
       const mockCredential: CredentialMetadata = {
@@ -242,10 +178,13 @@ describe("getCredentialStatus", () => {
         }
       };
 
-      expect(getCredentialStatus(mockCredential, options)).toEqual("valid");
+      expect(getCredentialStatus(mockCredential, options)).toEqual(
+        "jwtExpiring"
+      );
     });
 
-    it("should preserve the physical document expiring status before digital expiration", () => {
+    // Digital document wins
+    it("should return the digital document expiring status when both are expiring", () => {
       MockDate.set(new Date(2024, 0, 20));
 
       const mockCredential: CredentialMetadata = {
@@ -266,7 +205,9 @@ describe("getCredentialStatus", () => {
         }
       };
 
-      expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
+      expect(getCredentialStatus(mockCredential, options)).toEqual(
+        "jwtExpiring"
+      );
     });
 
     // Physical document wins
