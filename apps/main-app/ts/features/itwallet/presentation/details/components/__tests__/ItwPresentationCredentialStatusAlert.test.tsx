@@ -85,58 +85,61 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     MockDate.reset();
   });
 
-  const academicStatusScenarios = [
-    { name: "revoked", status: "invalid", message: mockMessage },
-    { name: "suspended", status: "suspended", message: mockMessage },
-    {
-      name: "expired with issuer message",
-      status: "expired",
-      message: mockMessage
-    },
-    {
-      name: "expired without issuer message",
-      status: "expired",
-      message: undefined
-    },
-    { name: "expiring", status: "expiring", message: mockMessage }
-  ] satisfies ReadonlyArray<{
-    message: typeof mockMessage | undefined;
-    name: string;
-    status: ItwCredentialStatus;
-  }>;
-
   describe.each([
     CredentialType.EDUCATION_DEGREE,
-    CredentialType.EDUCATION_ENROLLMENT
-  ])("academic credential %s", credentialType => {
-    test.each(academicStatusScenarios)(
-      "does not offer a learn-more action when $name",
-      ({ status, message }) => {
-        mockBottomSheetModal();
-        jest
-          .spyOn(selectors, "itwCredentialStatusSelector")
-          .mockReturnValue({ status });
-        mockUseCredentialStatusMessage.mockReturnValue(message);
+    CredentialType.EDUCATION_ENROLLMENT,
+    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+  ])("issuer message for credential %s", credentialType => {
+    const emptyDescriptionScenarios = [
+      { name: "missing", description: undefined },
+      { name: "empty", description: "" },
+      { name: "whitespace-only", description: " \n\t " }
+    ];
 
-        const component = renderComponent({ credentialType });
+    describe.each<ItwCredentialStatus>(["invalid", "suspended", "expired"])(
+      "when status is %s",
+      status => {
+        test.each(emptyDescriptionScenarios)(
+          "shows only the title when the description is $name",
+          ({ description }) => {
+            mockBottomSheetModal();
+            jest
+              .spyOn(selectors, "itwCredentialStatusSelector")
+              .mockReturnValue({ status });
+            mockUseCredentialStatusMessage.mockReturnValue({
+              title: mockMessage.title,
+              description
+            });
 
-        expect(
-          component.queryByText(
-            I18n.t("features.itWallet.presentation.alerts.statusAction")
-          )
-        ).toBeNull();
-        expect(component.queryByRole("button")).toBeNull();
-        expect(bottomSheet.useIOBottomSheetModal).not.toHaveBeenCalled();
-        if (status === "expiring") {
-          expect(component.queryByTestId("itwExpiringBannerTestID")).toBeNull();
-        } else {
-          expect(
+            const component = renderComponent({ credentialType });
+
+            expect(component.getByText(mockMessage.title)).toBeTruthy();
+            expect(
+              component.queryByText(
+                I18n.t("features.itWallet.presentation.alerts.statusAction")
+              )
+            ).toBeNull();
+            expect(component.queryByRole("button")).toBeNull();
+          }
+        );
+
+        it("opens the bottom sheet when the description is populated", () => {
+          mockBottomSheetModal();
+          jest
+            .spyOn(selectors, "itwCredentialStatusSelector")
+            .mockReturnValue({ status });
+          mockUseCredentialStatusMessage.mockReturnValue(mockMessage);
+
+          const component = renderComponent({ credentialType });
+
+          fireEvent.press(
             component.getByText(
-              message?.title ??
-                I18n.t("features.itWallet.presentation.alerts.expired.content")
+              I18n.t("features.itWallet.presentation.alerts.statusAction")
             )
-          ).toBeTruthy();
-        }
+          );
+
+          expect(mockBottomSheetPresent).toHaveBeenCalledTimes(1);
+        });
       }
     );
   });

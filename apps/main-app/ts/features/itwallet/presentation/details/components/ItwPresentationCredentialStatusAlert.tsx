@@ -333,20 +333,6 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
         />
       );
     case CredentialAlertType.ISSUER_DYNAMIC_ERROR:
-      if (
-        // The issuer-provided dynamic error is not provided for these credential types, so we fall back to the generic unknown error message.
-        credential.credentialType === CredentialType.EDUCATION_DEGREE ||
-        credential.credentialType === CredentialType.EDUCATION_ENROLLMENT
-      ) {
-        return (
-          <Alert
-            content={
-              message?.title ?? I18n.t("features.itWallet.card.status.unknown")
-            }
-            variant="error"
-          />
-        );
-      }
       return (
         <IssuerDynamicErrorAlert
           credential={credential}
@@ -570,6 +556,10 @@ const IssuerDynamicErrorAlert = ({
   });
 
   const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
+
+  if (!message?.description?.trim()) {
+    return <Alert content={localizedMessage.title} variant="error" />;
+  }
 
   return (
     <>
