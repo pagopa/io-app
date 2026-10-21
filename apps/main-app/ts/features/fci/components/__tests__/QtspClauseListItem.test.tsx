@@ -101,7 +101,7 @@ describe("Test QtspClauseListItem component", () => {
     };
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
-    const checkbox = component.getByTestId("AnimatedCheckbox");
+    const checkbox = component.getByTestId("Checkbox");
     expect(checkbox).toBeTruthy();
     expect(checkbox).toBeEnabled();
   });

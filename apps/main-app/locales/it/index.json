@@ -3117,7 +3117,11 @@
           "error": {
             "banner": {
               "cta": "Prova di nuovo",
-              "label": "Non siamo riusciti a caricare alcuni elementi della lista."
+              "label": "Non siamo riusciti a caricare alcuni elementi della lista.",
+              "bonus": {
+                "cta": "Vai ai servizi",
+                "label": "Non siamo riusciti a caricare alcuni elementi. Puoi accedere a bonus e iniziative anche dalla sezione Servizi."
+              }
             }
           }
         },

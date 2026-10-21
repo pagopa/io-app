@@ -26,7 +26,10 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () =>
       new Proxy(actualNav.useNavigation?.(), {
-        get: (_target, prop) => {
+        get: (target, prop) => {
+          if (prop === "addListener") {
+            return target.addListener;
+          }
           if (prop === "replace") {
             return mockReplace;
           }

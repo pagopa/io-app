@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
@@ -39,10 +39,16 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
 
   /**
    * Using useLayoutEffect here ensures that trackItwRemoteStart() runs as soon
-   * as the component is mounted, before any effect of its children.
+   * as the component is mounted, before any effect of its children. The ref
+   * guard prevents a second event when `freezeOnBlur` re-runs layout effects on
+   * unfreeze.
    */
+  const hasTrackedStart = useRef(false);
   useLayoutEffect(() => {
-    trackItwRemoteStart();
+    if (!hasTrackedStart.current) {
+      hasTrackedStart.current = true;
+      trackItwRemoteStart();
+    }
   }, []);
 
   /**
