@@ -137,7 +137,8 @@ jest.mock("@io-app/expo-nfc-antenna-info", () => ({
 }));
 
 jest.mock("@io-app/login-utils", () => ({
-  getRedirects: jest.fn()
+  getRedirects: jest.fn(),
+  isLoginUtilsError: jest.fn().mockReturnValue(false)
 }));
 
 /* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.

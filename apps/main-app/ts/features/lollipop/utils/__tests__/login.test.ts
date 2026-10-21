@@ -5,7 +5,8 @@ import { err } from "neverthrow";
 import { followNativeRedirectsAndVerifySaml } from "../login";
 
 jest.mock("@io-app/login-utils", () => ({
-  getRedirects: jest.fn()
+  getRedirects: jest.fn(),
+  isLoginUtilsError: jest.fn().mockReturnValue(false)
 }));
 
 const publicKey: PublicKey = {
