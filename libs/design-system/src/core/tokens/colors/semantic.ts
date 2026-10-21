@@ -4,9 +4,13 @@ One object per mode, from the Figma `Semantics` collection
 (`Color/Text/Content/Error` → `text.content.error`). Values reference the
 palette; `dark` must define every token of `light`.
 Groups are properties shared across components: no component names, no
-states (both live in component configs). A status color at the root of a
-group sits on a neutral background; `onTint` holds the ones on the matching
-`surface` tint, `onColor` the ones on a solid fill.
+states (both live in component configs), except the `action` subgroups
+(`surface.action` fills, `foreground.action` ink) of interactive elements.
+`foreground` is the ink of components whose icon and text share a color
+(buttons, alerts); `icon` and `text` the ones where they differ.
+A status color at the root of a group sits on a neutral background;
+`onTint` holds the ones on the matching `surface` tint, `onColor` the ones
+on a solid fill, `onAction` the ones on the matching `surface.action` fill.
 Product intents (`cgn`, `pagopa`) only for products a DS component or icon
 shows; colors of a single feature live in that feature.
 It also defines the shape every component color config shares.
@@ -59,7 +63,65 @@ export const light = {
     warning: p.yellow[100],
     highlight: p.turquoise[50],
     /* Product */
-    cgn: p.hanPurple[100]
+    cgn: p.hanPurple[100],
+    /* Fill of interactive elements */
+    action: {
+      primary: {
+        default: p.blueIO[500],
+        pressed: p.blueIO[600],
+        disabled: p.greyscale[300]
+      },
+      danger: {
+        default: p.red[600],
+        pressed: p.red[500],
+        disabled: p.greyscale[300]
+      },
+      /* On `background.accent` */
+      inverse: {
+        default: p.greyscale.white,
+        pressed: p.blueIO[50],
+        disabled: p.blueIO[50]
+      }
+    }
+  },
+  foreground: {
+    /* Ink of interactive elements */
+    action: {
+      primary: {
+        default: p.blueIO[500],
+        pressed: p.blueIO[600],
+        disabled: p.greyscale[700]
+      },
+      neutral: {
+        default: p.greyscale.black,
+        pressed: p.greyscale[850],
+        disabled: p.greyscale[700]
+      },
+      danger: {
+        default: p.red[600],
+        pressed: p.red[600],
+        disabled: p.greyscale[700]
+      },
+      /* On `background.accent` */
+      inverse: {
+        default: p.greyscale.white,
+        pressed: p.blueIO[50],
+        disabled: p.greyscale.white
+      }
+    },
+    onTint: {
+      error: p.red[850],
+      info: p.lightBlue[850],
+      success: p.green[850],
+      warning: p.yellow[850]
+    },
+    onColor: { default: p.greyscale.white },
+    onAction: {
+      primary: p.greyscale.white,
+      danger: p.greyscale.white,
+      inverse: p.blueIO[500],
+      disabled: p.greyscale[700]
+    }
   },
   icon: {
     default: p.greyscale[650],
@@ -165,7 +227,63 @@ export const dark = {
     /* Darker than the other tints: keeps `text.content.action` at AA on `background.secondary` too */
     highlight: withAlpha(p.turquoise[600], 0.1),
     /* Product */
-    cgn: withAlpha(p.hanPurple[250], 0.2)
+    cgn: withAlpha(p.hanPurple[250], 0.2),
+    action: {
+      primary: {
+        default: p.blueIO[300],
+        pressed: p.blueIO[400],
+        disabled: p.greyscale[700]
+      },
+      danger: {
+        default: p.red[600],
+        pressed: p.red[500],
+        disabled: p.greyscale[700]
+      },
+      inverse: {
+        default: p.greyscale.white,
+        pressed: p.blueIO[50],
+        disabled: p.blueIO[50]
+      }
+    }
+  },
+  foreground: {
+    action: {
+      primary: {
+        default: p.blueIO[300],
+        pressed: p.blueIO[400],
+        disabled: p.greyscale[300]
+      },
+      neutral: {
+        default: p.greyscale.white,
+        pressed: p.greyscale[100],
+        disabled: p.greyscale[300]
+      },
+      /* Red 400: the fill's red 600 is below AA as ink on black */
+      danger: {
+        default: p.red[400],
+        pressed: p.red[400],
+        disabled: p.greyscale[300]
+      },
+      inverse: {
+        default: p.greyscale.white,
+        pressed: p.blueIO[50],
+        disabled: p.greyscale.white
+      }
+    },
+    onTint: {
+      error: p.red[100],
+      info: p.lightBlue[100],
+      success: p.green[100],
+      warning: p.yellow[100]
+    },
+    onColor: { default: p.greyscale.white },
+    /* Black on primary: the fill is lighter in dark mode */
+    onAction: {
+      primary: p.greyscale.black,
+      danger: p.greyscale.white,
+      inverse: p.blueIO[500],
+      disabled: p.greyscale[300]
+    }
   },
   icon: {
     default: p.greyscale[450],
@@ -211,9 +329,9 @@ export const dark = {
       tertiary: p.greyscale[300],
       action: p.blueIO[300],
       error: p.red[400],
-      info: p.lightBlue[400],
-      success: p.green[400],
-      warning: p.yellow[400],
+      info: p.lightBlue[500],
+      success: p.green[500],
+      warning: p.yellow[500],
       onTint: {
         error: p.red[100],
         info: p.lightBlue[100],
