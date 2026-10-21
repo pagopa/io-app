@@ -1,7 +1,6 @@
 import { useIOThemeContext } from "@io-app/design-system";
 import { DataSourceParam } from "@shopify/react-native-skia";
 import Color from "color";
-import { useMemo } from "react";
 import { ColorSchemeName } from "react-native";
 
 import { useIOSelector } from "../../../../../store/hooks";
@@ -449,15 +448,16 @@ export const getCredentialCardConfig = (
 
 /**
  * Custom hook to retrieve the credential card configuration for a given
- * credential type, based on the current app theme and the credential's taxonomy
- * domain (if available).
+ * credential type, based on the current app theme and the credential's
+ * catalogue metadata (if available).
  *
  * The configuration is retrieved from the static `credentialCardConfigs` if
- * available, or generated dynamically based on the credential type and domain.
+ * available, or generated dynamically from the Authentic Source
+ * `background_color` and the first taxonomy domain.
  *
  * @param credentialType The type of the credential to get the configuration for
- * @param themeOverride An optional color scheme to override the current app t
- *   heme, used to select the appropriate configuration when the static
+ * @param themeOverride An optional color scheme to override the current app
+ *   theme, used to select the appropriate configuration when the static
  *   configuration is theme-aware.
  * @returns The card configuration for the given credential type.
  */
@@ -467,20 +467,12 @@ export const useCredentialCardConfig = (
 ) => {
   const { themeType } = useIOThemeContext();
   const catalogueByType = useIOSelector(itwCredentialsCatalogueByTypesSelector);
-
-  const credentialDomain = useMemo((): string | undefined => {
-    if (catalogueByType) {
-      const credentialMeta = catalogueByType[credentialType];
-      // We only consider the first domain for the credential, if any
-      return credentialMeta?.domains?.[0];
-    }
-    return undefined;
-  }, [credentialType, catalogueByType]);
+  const credentialMeta = catalogueByType?.[credentialType];
 
   return getCredentialCardConfig(
     credentialType,
     themeOverride || themeType,
-    undefined,
-    credentialDomain
+    credentialMeta?.authentic_sources.at(0)?.background_color,
+    credentialMeta?.domains?.[0]
   );
 };
