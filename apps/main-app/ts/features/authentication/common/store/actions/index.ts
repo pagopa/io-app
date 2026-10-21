@@ -38,6 +38,7 @@ export const idpLoginUrlChanged = createStandardAction(
 
 export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<{
   idp: keyof IdpData;
+  isOneIdentityLogin: boolean;
   token: string;
 }>();
 

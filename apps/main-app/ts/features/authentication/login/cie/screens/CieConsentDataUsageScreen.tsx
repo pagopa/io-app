@@ -52,7 +52,8 @@ const CieConsentDataUsageScreen = () => {
   const { showAlert } = useOnboardingAbortAlert();
   const navigation = useIONavigation();
   const loginSuccessDispatch = useCallback(
-    (token: string) => dispatch(loginSuccess({ token, idp: "cie" })),
+    (token: string) =>
+      dispatch(loginSuccess({ token, idp: "cie", isOneIdentityLogin: false })),
     [dispatch]
   );
 
