@@ -120,7 +120,7 @@ export const MessageDetails = ({
                     "messageDetails.accessibilityAttachmentIcon"
                   )}
                   color={theme["icon-default"]}
-                  name="attachment"
+                  name="paperclip"
                   size={16}
                   testID="attachment-tag"
                 />
