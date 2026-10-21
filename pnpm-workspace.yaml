@@ -12,7 +12,7 @@ patchedDependencies:
   # Migrates barcode rendering from ART to SVG and replaces JCenter.
   react-native-barcode-builder@2.0.0: patches/react-native-barcode-builder@2.0.0.patch
   # Adds Android props that deny WebView camera and microphone access despite app permissions.
-  react-native-webview@13.16.0: patches/react-native-webview@13.16.0.patch
+  react-native-webview@14.0.1: patches/react-native-webview@14.0.1.patch
   # Makes iOS PDF annotations read-only, matching Android behaviour.
   react-native-pdf@7.0.3: patches/react-native-pdf@7.0.3.patch
   # Sets accessibility-order starting from the bottom-sheet content instead of the bottom-sheet background layer

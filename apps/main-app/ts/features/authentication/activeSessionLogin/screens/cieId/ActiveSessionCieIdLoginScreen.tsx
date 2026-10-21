@@ -56,7 +56,6 @@ import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNa
 
 const ActiveSessionCieIdLoginScreen = () => {
   const navigation = useIONavigation();
-  const webView = useRef<WebView>(null);
   const dispatch = useIODispatch();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(null);
   const isLoginUrlWithTokenRef = useRef<boolean>(false);
@@ -285,7 +284,6 @@ const ActiveSessionCieIdLoginScreen = () => {
             onLoadEnd={() => setIsLoadingWebView(false)}
             onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
             originWhitelist={originSchemasWhiteList}
-            ref={webView}
             renderLoading={() => (
               <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
             )}

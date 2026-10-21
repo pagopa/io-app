@@ -146,7 +146,7 @@
     "react-native-svg": "catalog:",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-vision-camera": "^4.7.3",
-    "react-native-webview": "^13.16.0",
+    "react-native-webview": "^14.0.1",
     "react-native-worklets": "catalog:",
     "react-native-worklets-core": "^1.6.3",
     "react-native-xml2js": "^1.0.3",

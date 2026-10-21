@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { ComponentProps, createRef } from "react";
+import { ComponentProps } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView, {
@@ -64,8 +64,6 @@ type ItwCieWebViewProps = ComponentProps<typeof WebView> & {
 
 /** Base WebView component used for the CIE flow */
 const ItwCieWebView = ({ onWebViewError, ...props }: ItwCieWebViewProps) => {
-  const webView = createRef<WebView>();
-
   const getWebViewErrorMessage = (
     err: Error | WebViewErrorEvent | WebViewHttpErrorEvent
   ): string => {
@@ -112,7 +110,6 @@ const ItwCieWebView = ({ onWebViewError, ...props }: ItwCieWebViewProps) => {
       onError={handleOnError}
       onHttpError={handleOnError}
       onLoadEnd={handleOnLoadEnd}
-      ref={webView}
       userAgent={defaultUserAgent}
     />
   );
