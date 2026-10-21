@@ -1,5 +1,4 @@
 import { CodeEnum } from "@io-app/api-types/generated/definitions/idpay/AutomatedCriteriaDTO";
-import { FamilyUnitCompositionEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeGeneralDTO";
 import { IOMarkdownLite, ModuleSummary, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment, useState } from "react";
@@ -11,7 +10,7 @@ import { trackIDPayOnboardingPDNDAcceptance } from "../analytics";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
-  familyUnitCompositionCriteriaSelector,
+  informativeCriteriaSelector,
   pdndCriteriaSelector,
   selectInitiative
 } from "../machine/selectors";
@@ -30,36 +29,17 @@ const getPDNDCriteriaCodeLabel = (code: CodeEnum): string => {
   }
 };
 
-const getFamilyUnitCompositionCopy = (
-  familyUnitComposition: FamilyUnitCompositionEnum
-): { description: string; title: string } => {
-  switch (familyUnitComposition) {
-    case FamilyUnitCompositionEnum.ANPR:
-      return {
-        title: I18n.t(
-          "idpay.onboarding.PDNDPrerequisites.familyUnitCode.ANPR.title"
-        ),
-        description: I18n.t(
-          "idpay.onboarding.PDNDPrerequisites.familyUnitCode.ANPR.description"
-        )
-      };
-    case FamilyUnitCompositionEnum.INPS:
-      return {
-        title: I18n.t(
-          "idpay.onboarding.PDNDPrerequisites.familyUnitCode.INPS.title"
-        ),
-        description: I18n.t(
-          "idpay.onboarding.PDNDPrerequisites.familyUnitCode.INPS.description"
-        )
-      };
-  }
-};
-
 const IdPayPDNDPrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
   const [authority, setAuthority] = useState<string | undefined>();
+  // Holds the free-text "value" of an "informative" self-declaration
+  // criteria (BE-provided), shown as-is in the bottom sheet instead of
+  // the generic templated body used for automated/PDND criteria.
+  const [informativeValue, setInformativeValue] = useState<
+    string | undefined
+  >();
 
   const initiative = useSelector(selectInitiative);
 
@@ -75,24 +55,35 @@ const IdPayPDNDPrerequisitesScreen = () => {
     component: (
       <>
         <IOMarkdownLite
-          content={I18n.t(
-            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
-            {
-              provider: authority
-            }
-          )}
+          content={
+            informativeValue ??
+            I18n.t(
+              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
+              {
+                provider: authority
+              }
+            )
+          }
         />
         <VSpacer size={24} />
       </>
     )
   });
 
+  const openPdndInfoBottomSheet = (criteriaAuthority: string | undefined) => {
+    setInformativeValue(undefined);
+    setAuthority(criteriaAuthority);
+    present();
+  };
+
+  const openInformativeBottomSheet = (value: string) => {
+    setAuthority(undefined);
+    setInformativeValue(value);
+    present();
+  };
+
   const pdndCriteria = useSelector(pdndCriteriaSelector);
-  const familyUnitCriteria = useSelector(familyUnitCompositionCriteriaSelector);
-  const familyUnitCopy =
-    familyUnitCriteria !== undefined
-      ? getFamilyUnitCompositionCopy(familyUnitCriteria)
-      : undefined;
+  const informativeCriteria = useSelector(informativeCriteriaSelector);
 
   const initiativeId = initiative?.initiativeId ?? "";
 
@@ -129,28 +120,22 @@ const IdPayPDNDPrerequisitesScreen = () => {
             <ModuleSummary
               description={getPDNDCriteriaDescription(criteria)}
               label={getPDNDCriteriaCodeLabel(criteria.code)}
-              onPress={() => {
-                setAuthority(criteria.authority);
-                present();
-              }}
+              onPress={() => openPdndInfoBottomSheet(criteria.authority)}
             />
           )}
           <VSpacer size={16} />
         </Fragment>
       ))}
-      {familyUnitCopy && (
-        <>
+      {informativeCriteria?.map(criteria => (
+        <Fragment key={criteria.code}>
           <ModuleSummary
-            description={familyUnitCopy.description}
-            label={familyUnitCopy.title}
-            onPress={() => {
-              setAuthority(familyUnitCopy.description);
-              present();
-            }}
+            description={criteria.organization}
+            label={criteria.description}
+            onPress={() => openInformativeBottomSheet(criteria.value)}
           />
           <VSpacer size={16} />
-        </>
-      )}
+        </Fragment>
+      ))}
       {bottomSheet}
     </IOScrollViewWithLargeHeader>
   );

@@ -13,6 +13,7 @@ import { Context, InitialContext } from "./context";
 import { IdPayOnboardingEvents } from "./events";
 import {
   getBooleanSelfDeclarationListFromContext,
+  getInformativeSelfDeclarationListFromContext,
   getInputFormSelfDeclarationFromContext,
   getMultiSelfDeclarationListFromContext
 } from "./selectors";
@@ -65,10 +66,13 @@ export const idPayOnboardingMachine = setup({
     hasPdndCriteria: ({ context }) =>
       (context.requiredCriteria?.beneficiaryRule?.automatedCriteria?.length ??
         0) > 0 ||
-      context.requiredCriteria?.general?.familyUnitComposition !== undefined,
+      getInformativeSelfDeclarationListFromContext(context).length > 0,
+    // Informative criteria are displayed on the PDND prerequisites screen.
     hasSelfDecalrationList: ({ context }) =>
       (context.requiredCriteria?.beneficiaryRule?.selfDeclarationCriteria
-        ?.length ?? 0) > 0,
+        ?.length ?? 0) -
+        getInformativeSelfDeclarationListFromContext(context).length >
+      0,
     hasBooleanSelfDeclarationList: ({ context }) =>
       getBooleanSelfDeclarationListFromContext(context).length > 0,
     hasMultiSelfDeclarationList: ({ context }) =>

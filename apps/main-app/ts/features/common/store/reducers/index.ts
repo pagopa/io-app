@@ -20,6 +20,10 @@ import {
   LoginConfigState
 } from "../../../authentication/common/store/reducers/loginConfig";
 import {
+  loginFlowPersistor,
+  LoginFlowState
+} from "../../../authentication/common/store/reducers/loginFlow";
+import {
   testLoginReducer,
   TestLoginState
 } from "../../../authentication/common/store/reducers/testLogin";
@@ -115,6 +119,7 @@ type LoginFeaturesState = {
   cieLogin: CieLoginState & PersistPartial;
   fastLogin: FastLoginState;
   loginConfig: LoginConfigState & PersistPartial;
+  loginFlow: LoginFlowState & PersistPartial;
   loginInfo: LoginInfoState;
   spidLogin: SpidLoginState;
   testLogin: TestLoginState;
@@ -132,6 +137,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     fastLogin: fastLoginReducer,
     cieLogin: cieLoginPersistor,
     loginConfig: loginConfigPersistor,
+    loginFlow: loginFlowPersistor,
     loginInfo: loginInfoReducer,
     spidLogin: spidLoginReducer,
     activeSessionLogin: activeSessionLoginPersistor

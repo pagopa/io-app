@@ -67,6 +67,18 @@ const FAILURE_EVENTS = new Set<"Function not supported" | CEvent["event"]>([
   "TAG_ERROR_NFC_NOT_SUPPORTED"
 ]);
 
+/**
+ * Decodes the URL returned by the CIE SDK, falling back to the raw value if
+ * malformed.
+ */
+const safeDecodeURIComponent = (url: string): string => {
+  try {
+    return decodeURIComponent(url);
+  } catch {
+    return url;
+  }
+};
+
 export type CieManagerState =
   | { failure: CEvent; status: "failure" }
   | { failure: string; status: "reading-failure" }
@@ -176,7 +188,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
       );
 
       setTimeout(
-        () => onSuccess(url),
+        () => onSuccess(safeDecodeURIComponent(url)),
         isScreenReaderEnabled
           ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
           : WAIT_TIMEOUT_NAVIGATION
@@ -207,7 +219,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
         await cieManager.setPin(pin);
         await cieManager.start(CIE_ALERT_MESSAGES_CONFIG);
         await cieManager.startListeningNFC();
-      } catch (e: unknown) {
+      } catch (e) {
         const errorMessage = unknownToString(e);
         handleError(errorMessage);
       }

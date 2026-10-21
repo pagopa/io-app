@@ -1,7 +1,7 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
-import { err, ok, Result } from "neverthrow";
+import { err, ok } from "neverthrow";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -32,19 +32,10 @@ export function* handleInitiativeInstrumentEnrollment(
       action
     )) as unknown as SagaCallReturnType<typeof enrollInstrument>;
 
-    const result = (
-      "isOk" in updateInstrumentStatusResult
-        ? updateInstrumentStatusResult
-        : "right" in updateInstrumentStatusResult
-          ? ok(updateInstrumentStatusResult.right)
-          : err(updateInstrumentStatusResult.left)
-    ) as Result<
-      Extract<
-        SagaCallReturnType<typeof enrollInstrument>,
-        { right: unknown }
-      >["right"],
-      unknown
-    >;
+    const result =
+      "right" in updateInstrumentStatusResult
+        ? ok(updateInstrumentStatusResult.right)
+        : err(updateInstrumentStatusResult.left);
 
     yield* put(
       result.match(
@@ -54,7 +45,7 @@ export function* handleInitiativeInstrumentEnrollment(
               initiativeId: action.payload.initiativeId
             });
           }
-          IOToast.show(
+          IOToast.error(
             I18n.t("idpay.wallet.initiativePairing.errorToasts.enrollment")
           );
           return idpayInitiativesInstrumentEnroll.failure({
@@ -71,13 +62,7 @@ export function* handleInitiativeInstrumentEnrollment(
           return idpayInitiativesInstrumentEnroll.failure({
             initiativeId: action.payload.initiativeId,
             error: {
-              ...getGenericError(
-                new Error(
-                  readablePrivacyReport(
-                    error as Parameters<typeof readablePrivacyReport>[0]
-                  )
-                )
-              )
+              ...getGenericError(new Error(readablePrivacyReport(error)))
             }
           });
         }
