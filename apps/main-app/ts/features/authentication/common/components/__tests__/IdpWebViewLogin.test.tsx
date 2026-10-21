@@ -5,6 +5,7 @@ import * as IOHooks from "../../../../../store/hooks";
 import * as analyticsUtils from "../../../../../utils/analytics";
 import { SpidIdp } from "../../../../../utils/idps";
 import * as useOneIdentityLoginSourceModule from "../../../../lollipop/hooks/useOneIdentityLoginSource";
+import * as analytics from "../../analytics";
 import * as usePosteIDEducationalModule from "../../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { IdpWebViewLogin } from "../IdpWebViewLogin";
 
@@ -67,6 +68,34 @@ describe("IdpWebViewLogin", () => {
     mockShouldBlockUrlNavigationWhileCheckingLollipop.mockReturnValue(false);
   });
 
+  it.each([
+    { name: "auth", flow: "auth" as const },
+    { name: "reauth", flow: "reauth" as const }
+  ])(
+    "should track One Identity configuration error when is error page ($name)",
+    ({ flow }) => {
+      mockUseOneIdentityLoginSource();
+      const spyTrackLoginOIConfigurationError = jest
+        .spyOn(analytics, "trackLoginOIConfigurationError")
+        .mockImplementation();
+      const errorUrl =
+        "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR";
+      const { getByTestId } = render(
+        <IdpWebViewLogin flow={flow} idp={mockIdp} onEvent={onEvent} />
+      );
+      const webview = getByTestId("webview-idp-login-screen");
+
+      expect(
+        fireEvent(webview, "onShouldStartLoadWithRequest", { url: errorUrl })
+      ).toBe(true);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledTimes(1);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledWith(
+        errorUrl,
+        flow
+      );
+    }
+  );
+
   describe("conditional rendering", () => {
     it.each(["reserving-public-key", "verifying-assertion-ref"] as const)(
       "should render the loading state and no WebView when status is %s",
@@ -124,18 +153,47 @@ describe("IdpWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
     });
 
+    it("should call onEvent with LOGIN_FAILURE and the failure data when the login source fails", () => {
+      render(<IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />);
+      const { onFailure } = jest.mocked(
+        useOneIdentityLoginSourceModule.useOneIdentityLoginSource
+      ).mock.calls[0][0];
+      const failureData = {
+        reason: "Unexpected HTTP status 500",
+        url: "https://example.com/api/auth/v1/reserve"
+      };
+
+      onFailure(failureData);
+
+      expect(onEvent).toHaveBeenCalledWith({
+        type: "LOGIN_FAILURE",
+        payload: { failureData }
+      });
+    });
+
     it("should call onEvent with WEBVIEW_ERROR and track the error when there is a WebViewErrorEvent", () => {
       const { getByTestId } = render(
         <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
       );
 
       const webview = getByTestId("webview-idp-login-screen");
-      const nativeEvent = { url: "https://example.com/error" };
+      const nativeEvent = {
+        url: "https://example.com/error",
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED"
+      };
       fireEvent(webview, "onError", { nativeEvent });
 
       expect(onEvent).toHaveBeenCalledWith({
         type: "WEBVIEW_ERROR",
-        payload: { url: nativeEvent.url }
+        payload: {
+          url: nativeEvent.url,
+          failureData: {
+            description: nativeEvent.description,
+            code: nativeEvent.code,
+            url: nativeEvent.url
+          }
+        }
       });
       expect(analyticsUtils.trackLoginError).toHaveBeenCalledWith(mockIdp.id, {
         nativeEvent
@@ -156,7 +214,15 @@ describe("IdpWebViewLogin", () => {
 
       expect(onEvent).toHaveBeenCalledWith({
         type: "WEBVIEW_HTTP_ERROR",
-        payload: { url: nativeEvent.url, statusCode: nativeEvent.statusCode }
+        payload: {
+          url: nativeEvent.url,
+          statusCode: nativeEvent.statusCode,
+          failureData: {
+            description: `Unexpected HTTP status ${nativeEvent.statusCode}`,
+            code: nativeEvent.statusCode,
+            url: nativeEvent.url
+          }
+        }
       });
       expect(analyticsUtils.trackLoginError).toHaveBeenCalledWith(mockIdp.id, {
         nativeEvent
@@ -242,7 +308,7 @@ describe("IdpWebViewLogin", () => {
           payload: {
             code: "19",
             message: "annullato",
-            reason: expect.any(String)
+            failureData: { reason: expect.any(String) }
           }
         })
       );

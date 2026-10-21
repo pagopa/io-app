@@ -1,8 +1,11 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { act, fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 
+import * as utilsAnalytics from "../../../../../../utils/analytics";
 import { withStore } from "../../../../../../utils/jest/withStore";
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
+import * as analytics from "../../../../common/analytics";
+import { LOGIN_TYPES } from "../../../../common/utils";
 import { OneIdentityCieAuthenticationWebView as OneIdentityCieAuthenticationWebViewComponent } from "../OneIdentityCieAuthenticationWebView";
 
 const mockGoBack = jest.fn();
@@ -33,6 +36,11 @@ const OneIdentityCieAuthenticationWebView = withStore(
   OneIdentityCieAuthenticationWebViewComponent
 );
 
+const mockUseDebugInfo = jest.fn();
+jest.mock("../../../../../../hooks/useDebugInfo", () => ({
+  useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
+}));
+
 const mockShouldBlockUrlNavigationWhileCheckingLollipop = jest.fn(() => false);
 const mockGenerateLoginSource = jest.fn();
 
@@ -62,6 +70,39 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     mockShouldBlockUrlNavigationWhileCheckingLollipop.mockReturnValue(false);
   });
 
+  it.each([
+    { name: "auth", flow: "auth" as const },
+    { name: "reauth", flow: "reauth" as const },
+    { name: "FCI_auth", flow: "FCI_auth" as const }
+  ])(
+    "should track One Identity configuration error when is error page ($name)",
+    ({ flow }) => {
+      mockUseOneIdentityLoginSource();
+      const spyTrackLoginOIConfigurationError = jest
+        .spyOn(analytics, "trackLoginOIConfigurationError")
+        .mockImplementation();
+      const errorUrl =
+        "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR";
+      const { getByTestId } = render(
+        <OneIdentityCieAuthenticationWebView
+          flow={flow}
+          onAuthenticationUrlReceived={onAuthenticationUrlReceived}
+        />
+      );
+      const webview = getByTestId("cie-authentication-webview");
+
+      expect(
+        fireEvent(webview, "onShouldStartLoadWithRequest", { url: errorUrl })
+      ).toBe(true);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledTimes(1);
+      expect(spyTrackLoginOIConfigurationError).toHaveBeenCalledWith(
+        errorUrl,
+        flow
+      );
+      expect(onAuthenticationUrlReceived).not.toHaveBeenCalled();
+    }
+  );
+
   describe("conditional rendering", () => {
     it.each([
       {
@@ -82,6 +123,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
         const { queryByTestId } = render(
           <OneIdentityCieAuthenticationWebView
+            flow={LOGIN_TYPES.AUTH}
             onAuthenticationUrlReceived={onAuthenticationUrlReceived}
           />
         );
@@ -98,6 +140,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -113,6 +156,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByText, queryByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -134,6 +178,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should render the failure screen when the page title matches an error page", () => {
       const { getByTestId, getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -151,6 +196,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should not fail when the page title does not match an error page", () => {
       const { getByTestId, queryByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -174,6 +220,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should render the failure screen on a WebView error", () => {
       const { getByTestId, getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -191,6 +238,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should render the failure screen on an HTTP error", () => {
       const { getByTestId, getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -216,6 +264,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -231,6 +280,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should call onAuthenticationUrlReceived when the URL is an authentication URL", () => {
       const { getByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -247,6 +297,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     it("should render the failure screen on a failed login URL", () => {
       const { getByTestId, getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -271,6 +322,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -287,6 +339,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByText } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -303,6 +356,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       const { getByTestId } = render(
         <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
           onAuthenticationUrlReceived={onAuthenticationUrlReceived}
         />
       );
@@ -311,5 +365,117 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       expect(mockGoBack).toHaveBeenCalledTimes(1);
     });
+  });
+
+  describe("debug info", () => {
+    it("should not set any debug data while authenticating", () => {
+      mockUseOneIdentityLoginSource();
+
+      render(
+        <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
+          onAuthenticationUrlReceived={onAuthenticationUrlReceived}
+        />
+      );
+
+      expect(mockUseDebugInfo).toHaveBeenLastCalledWith({});
+    });
+
+    it("should set the login source error as the failure reason", () => {
+      mockUseOneIdentityLoginSource({
+        loginSourceState: { status: "failure", error: "some error" }
+      });
+
+      render(
+        <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
+          onAuthenticationUrlReceived={onAuthenticationUrlReceived}
+        />
+      );
+
+      expect(mockUseDebugInfo).toHaveBeenLastCalledWith({
+        reason: "some error"
+      });
+    });
+
+    it("should set the failure data of the login source failure, when there is one", () => {
+      mockUseOneIdentityLoginSource();
+
+      render(
+        <OneIdentityCieAuthenticationWebView
+          flow={LOGIN_TYPES.AUTH}
+          onAuthenticationUrlReceived={onAuthenticationUrlReceived}
+        />
+      );
+      const { onFailure } = jest.mocked(
+        useOneIdentityLoginSourceModule.useOneIdentityLoginSource
+      ).mock.calls[0][0];
+      const failureData = {
+        reason: "Unexpected HTTP status 500",
+        url: "https://example.com/api/auth/v1/reserve"
+      };
+
+      act(() => onFailure(failureData));
+
+      expect(mockUseDebugInfo).toHaveBeenLastCalledWith(failureData);
+    });
+
+    it.each([
+      {
+        name: "a WebView error",
+        event: "onError",
+        nativeEvent: {
+          url: "https://example.com/error",
+          code: -2,
+          description: "net::ERR_INTERNET_DISCONNECTED"
+        },
+        expectedFailureData: {
+          description: "net::ERR_INTERNET_DISCONNECTED",
+          code: -2,
+          url: "https://example.com/error",
+          reason: "WebView error on https://example.com/error"
+        }
+      },
+      {
+        name: "an HTTP error",
+        event: "onHttpError",
+        nativeEvent: { url: "https://example.com/error", statusCode: 500 },
+        expectedFailureData: {
+          description: "Unexpected HTTP status 500",
+          code: 500,
+          url: "https://example.com/error",
+          reason: "HTTP error 500 on https://example.com/error"
+        }
+      },
+      {
+        name: "an error page",
+        event: "onLoadEnd",
+        nativeEvent: { title: "Errore" },
+        expectedFailureData: { reason: "Errore" }
+      }
+    ])(
+      "should set the failure data and track its reason on $name",
+      ({ event, nativeEvent, expectedFailureData }) => {
+        jest.spyOn(utilsAnalytics, "trackLoginError").mockImplementation();
+        mockUseOneIdentityLoginSource();
+
+        const { getByTestId } = render(
+          <OneIdentityCieAuthenticationWebView
+            flow={LOGIN_TYPES.AUTH}
+            onAuthenticationUrlReceived={onAuthenticationUrlReceived}
+          />
+        );
+
+        fireEvent(getByTestId("cie-authentication-webview"), event, {
+          nativeEvent
+        });
+
+        expect(mockUseDebugInfo).toHaveBeenLastCalledWith(expectedFailureData);
+        expect(utilsAnalytics.trackLoginError).toHaveBeenCalledWith(
+          "cie",
+          new Error(expectedFailureData.reason)
+        );
+      }
+    );
   });
 });
