@@ -18,7 +18,6 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { identificationRequest } from "../../../../identification/store/actions";
-import { trackCredentialRenewStart } from "../../../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound";
@@ -65,7 +64,6 @@ import {
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
-import { shouldShowMdlUpdateDigitalCredential } from "../utils";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -77,8 +75,10 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 /** Component that renders the credential detail screen. */
-export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
-  const navigation = useIONavigation();
+export const ItwPresentationCredentialDetailScreen = ({
+  navigation,
+  route
+}: Props) => {
   const { credentialType } = route.params;
 
   const isL3 = useIOSelector(itwIsL3EnabledSelector);
@@ -107,11 +107,8 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
             "features.itWallet.issuance.walletInstanceNotActive.primaryAction"
           ),
           onPress: () =>
-            navigation.replace(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.DISCOVERY.INFO,
-              params: {
-                level: isL3 ? "l3" : "l2"
-              }
+            navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
+              level: isL3 ? "l3" : "l2"
             })
         }}
         pictogram="itWallet"
@@ -190,10 +187,6 @@ export const ItwPresentationCredentialDetail = ({
     () => getMixPanelCredential(credential.credentialType, isL3Credential),
     [credential.credentialType, isL3Credential]
   );
-  const shouldShowMdlUpdateCta = shouldShowMdlUpdateDigitalCredential(
-    credential,
-    status
-  );
 
   useDebugInfo(credential);
   usePreventScreenCapture();
@@ -236,29 +229,6 @@ export const ItwPresentationCredentialDetail = ({
   };
 
   const ctaProps = useMemo<Optional<CredentialCtaProps>>(() => {
-    const credentialType = credential.credentialType;
-
-    if (shouldShowMdlUpdateCta) {
-      return {
-        label: I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential"
-        ),
-        onPress: () => {
-          trackCredentialRenewStart(mixPanelCredential, {
-            credential_status: CREDENTIAL_STATUS_MAP[status],
-            position: "screen"
-          });
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
-            params: {
-              credentialType,
-              mode: "reissuance"
-            }
-          });
-        }
-      };
-    }
-
     if (isProximityEnabled && isPresentableCredential) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.present"),
@@ -282,7 +252,7 @@ export const ItwPresentationCredentialDetail = ({
     if (!isL3Credential && contentClaim !== undefined) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
-        icon: "docPaymentTitle",
+        icon: "docTitle",
         onPress: () => {
           if (mixPanelCredential === "ITW_TS_V2") {
             trackWalletCredentialShowFAC_SIMILE();
@@ -297,15 +267,12 @@ export const ItwPresentationCredentialDetail = ({
 
     return undefined;
   }, [
-    credential.credentialType,
-    shouldShowMdlUpdateCta,
     isL3Credential,
     isPresentableCredential,
     isProximityEnabled,
     contentClaim,
     navigation,
-    mixPanelCredential,
-    status
+    mixPanelCredential
   ]);
 
   if (status === "unknown") {

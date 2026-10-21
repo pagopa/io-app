@@ -1,10 +1,12 @@
 import { expectSaga, testSaga } from "redux-saga-test-plan";
-import { fork, race, select, take } from "typed-redux-saga/macro";
+import { call, fork, race, select, take } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { analyticsAuthenticationStarted } from "../../../../store/actions/analytics";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
+import { isOneIdentityLoginEnabledSelector } from "../../common/store/selectors/loginConfig";
 import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
 import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
@@ -54,20 +56,24 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(idpSelectedActiveSessionLoginSelector), mockIdp],
         [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
+        [select(isOneIdentityLoginEnabledSelector), true],
         [
           select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
           AUTH_LEVEL_L2
         ],
-        [select(), mockState]
+        [select(), mockState],
+        [call(updateMixpanelSuperProperties, mockState), undefined]
       ])
       .call(updateLoginSessionProfileAndSuperProperties, mockState, "365")
       .call(updateLoginMethodProfileAndSuperProperties, mockState, mockIdp.id)
+      .call(updateMixpanelSuperProperties, mockState)
       .put(
         consolidateActiveSessionLoginData({
           token: mockToken,
           idp: mockIdp,
           fastLoginOptIn: mockOptIn,
-          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2
+          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2,
+          isOneIdentityLogin: true
         })
       )
       .put(
@@ -94,6 +100,7 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(idpSelectedActiveSessionLoginSelector), undefined],
         [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
+        [select(isOneIdentityLoginEnabledSelector), true],
         [
           select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
           AUTH_LEVEL_L2
@@ -101,12 +108,14 @@ describe("handleActiveSessionLoginSaga", () => {
       ])
       .not.call.fn(updateLoginSessionProfileAndSuperProperties)
       .not.call.fn(updateLoginMethodProfileAndSuperProperties)
+      .not.call.fn(updateMixpanelSuperProperties)
       .not.put(
         consolidateActiveSessionLoginData({
           token: mockToken,
           idp: mockIdp,
           fastLoginOptIn: mockOptIn,
-          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2
+          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2,
+          isOneIdentityLogin: true
         })
       )
       .not.put(
@@ -133,6 +142,7 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(idpSelectedActiveSessionLoginSelector), mockIdp],
         [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
+        [select(isOneIdentityLoginEnabledSelector), true],
         [
           select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
           AUTH_LEVEL_L2
@@ -140,12 +150,14 @@ describe("handleActiveSessionLoginSaga", () => {
       ])
       .not.call.fn(updateLoginSessionProfileAndSuperProperties)
       .not.call.fn(updateLoginMethodProfileAndSuperProperties)
+      .not.call.fn(updateMixpanelSuperProperties)
       .not.put(
         consolidateActiveSessionLoginData({
           token: mockToken,
           idp: mockIdp,
           fastLoginOptIn: mockOptIn,
-          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2
+          cieIDSelectedSecurityLevel: AUTH_LEVEL_L2,
+          isOneIdentityLogin: true
         })
       )
       .not.put(
@@ -172,6 +184,7 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(idpSelectedActiveSessionLoginSelector), undefined],
         [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), undefined],
+        [select(isOneIdentityLoginEnabledSelector), false],
         [
           select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
           undefined

@@ -34,6 +34,7 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
+      addListener: jest.fn(),
       replace: mockReplace
     })
   };
@@ -146,7 +147,11 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
-        authLevel: MOCK_AUTH_LEVEL_L2
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failureData: {
+          reason: expect.stringContaining("(err-code)"),
+          idp: mockIdp.id
+        }
       }
     );
   });
@@ -166,7 +171,11 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       {
         errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
         authMethod: "SPID",
-        authLevel: MOCK_AUTH_LEVEL_L2
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failureData: {
+          reason: expect.stringContaining(AUTH_ERRORS.ERROR_1004),
+          idp: mockIdp.id
+        }
       }
     );
   });
@@ -200,7 +209,13 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: MOCK_AUTH_LEVEL_L2
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failureData: {
+          description: "Unexpected HTTP status 500",
+          code: 500,
+          url: `${MOCK_VALID_CALLBACK_URL}/extra-path`,
+          idp: mockIdp.id
+        }
       }
     );
   });
@@ -230,7 +245,13 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: MOCK_AUTH_LEVEL_L2
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failureData: {
+          description: "Unexpected HTTP status 500",
+          code: 500,
+          url: "https://example.com/some-path",
+          idp: mockIdp.id
+        }
       }
     );
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
@@ -241,7 +262,11 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     const webview = getByTestId("webview-idp-login-screen");
 
     fireEvent(webview, "onError", {
-      nativeEvent: { url: "https://example.com/authorize" }
+      nativeEvent: {
+        url: "https://example.com/authorize",
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED"
+      }
     });
 
     expect(mockReplace).toHaveBeenCalledWith(
@@ -249,7 +274,13 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: MOCK_AUTH_LEVEL_L2
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failureData: {
+          description: "net::ERR_INTERNET_DISCONNECTED",
+          code: -2,
+          url: "https://example.com/authorize",
+          idp: mockIdp.id
+        }
       }
     );
   });

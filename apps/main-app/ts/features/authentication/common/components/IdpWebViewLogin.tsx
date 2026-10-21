@@ -20,19 +20,29 @@ import {
 } from "../../../../utils/supportAssistance";
 import { getUrlBasepath } from "../../../../utils/url";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
-import {
-  LoginType,
-  trackSpidLoginIntent
-} from "../../activeSessionLogin/screens/analytics";
+import { trackSpidLoginIntent } from "../../activeSessionLogin/screens/analytics";
+import { trackLoginOIConfigurationError } from "../../common/analytics";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
 import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { idpLoginUrlChanged } from "../store/actions";
 import {
   AUTH_LEVELS,
   getIntentFallbackUrl,
+  isOneIdentityErrorUrl,
+  LOGIN_TYPES,
+  LoginType,
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../utils";
+import {
+  getWebViewFailureData,
+  LoginFailureData,
+  WebViewFailureData
+} from "../utils/loginErrorDebugInfo";
+
+// To ensure the server recognizes the client as a valid mobile device, we use a custom user agent.
+const defaultUserAgent =
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X; Linux; Android 10) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
 
 export type IdpWebViewLoginProps = {
   /** The login flow this WebView is part of; defaults to a first-time login. */
@@ -45,18 +55,29 @@ export type IdpWebViewLoginProps = {
 
 export type WebViewLoginEvent =
   | {
-      payload: { code?: string; message?: string; reason: string };
+      payload: {
+        code?: string;
+        failureData: LoginFailureData;
+        message?: string;
+      };
       type: "LOGIN_FAILURE";
     }
   | {
-      payload: { statusCode: number; url: string };
+      payload: {
+        failureData: WebViewFailureData;
+        statusCode: number;
+        url: string;
+      };
       type: "WEBVIEW_HTTP_ERROR";
     }
-  | { payload: { token: string }; type: "LOGIN_SUCCESS" }
-  | { payload: { url: string }; type: "WEBVIEW_ERROR" };
+  | {
+      payload: { failureData: WebViewFailureData; url: string };
+      type: "WEBVIEW_ERROR";
+    }
+  | { payload: { token: string }; type: "LOGIN_SUCCESS" };
 
 export const IdpWebViewLogin = memo(
-  ({ idp, flow = "auth", onEvent }: IdpWebViewLoginProps) => {
+  ({ idp, flow = LOGIN_TYPES.AUTH, onEvent }: IdpWebViewLoginProps) => {
     const dispatch = useIODispatch();
 
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
@@ -68,10 +89,10 @@ export const IdpWebViewLogin = memo(
     const lastTrackedUrl = useRef<string | undefined>(undefined);
 
     const handleFailure = useCallback(
-      (reason: string) => {
+      (failureData: LoginFailureData) => {
         onEvent({
           type: "LOGIN_FAILURE",
-          payload: { reason }
+          payload: { failureData }
         });
       },
       [onEvent]
@@ -79,6 +100,7 @@ export const IdpWebViewLogin = memo(
 
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
+        flow,
         idpId: idp.id,
         onFailure: handleFailure,
         minAuthLevel: AUTH_LEVELS.L2
@@ -99,7 +121,8 @@ export const IdpWebViewLogin = memo(
             type: "WEBVIEW_HTTP_ERROR",
             payload: {
               url: nativeEvent.url,
-              statusCode: nativeEvent.statusCode
+              statusCode: nativeEvent.statusCode,
+              failureData: getWebViewFailureData(event)
             }
           });
           return;
@@ -107,7 +130,10 @@ export const IdpWebViewLogin = memo(
 
         onEvent({
           type: "WEBVIEW_ERROR",
-          payload: { url: nativeEvent.url }
+          payload: {
+            url: nativeEvent.url,
+            failureData: getWebViewFailureData(event)
+          }
         });
       },
       [idp.id, onEvent]
@@ -116,7 +142,9 @@ export const IdpWebViewLogin = memo(
     const handleLoginFailure = useCallback(
       (code?: string, message?: string) => {
         const reason = code
-          ? `login failed with code (${code}) : ${getSpidErrorCodeDescription(code)}`
+          ? `login failed with code (${code}) : ${getSpidErrorCodeDescription(
+              code
+            )}`
           : message
             ? `login failed with message ${message}`
             : "login failed with no error code or message available";
@@ -124,7 +152,7 @@ export const IdpWebViewLogin = memo(
 
         onEvent({
           type: "LOGIN_FAILURE",
-          payload: { code, message, reason }
+          payload: { code, message, failureData: { reason } }
         });
       },
       [choosenTool, onEvent]
@@ -141,6 +169,11 @@ export const IdpWebViewLogin = memo(
     const handleShouldStartLoading = useCallback(
       (event: WebViewNavigation): boolean => {
         const url = event.url;
+
+        if (isOneIdentityErrorUrl(url)) {
+          trackLoginOIConfigurationError(url, flow);
+        }
+
         // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
         const idpIntent = getIntentFallbackUrl(url);
         if (idpIntent != null) {
@@ -159,8 +192,7 @@ export const IdpWebViewLogin = memo(
           idp.id as keyof IdpData,
           flow
         )(event);
-        // URL can be loaded if it's not the login URL containing the session token - this avoids
-        // making a (useless) GET request with the session in the URL
+        // URL can be loaded if it's not containing the token
         return !isLoginUrlWithToken;
       },
       [
@@ -185,7 +217,8 @@ export const IdpWebViewLogin = memo(
 
     if (
       loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "verifying-assertion-ref"
+      loginSourceState.status === "verifying-assertion-ref" ||
+      loginSourceState.status === "following-redirects"
     ) {
       return <IdpWebViewLoginLoading />;
     }
@@ -211,6 +244,7 @@ export const IdpWebViewLogin = memo(
           startInLoadingState={true}
           testID="webview-idp-login-screen"
           textZoom={100}
+          userAgent={defaultUserAgent}
         />
         {posteIdBottomSheet}
       </View>

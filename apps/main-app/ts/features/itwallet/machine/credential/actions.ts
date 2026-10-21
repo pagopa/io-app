@@ -19,6 +19,7 @@ import { itwSetCredentialExitSurvey } from "../../common/store/actions/ui";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
+import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
@@ -99,24 +100,20 @@ export const navigateToWalletAction = ({
   context.deps.toast.success(
     I18n.t("features.itWallet.issuance.credentialResult.toast")
   );
-  context.deps.navigation.reset({
-    index: 1,
-    routes: [
-      {
-        name: ROUTES.MAIN,
-        params: {
-          screen: ROUTES.WALLET_HOME
-        }
-      }
-    ]
+  context.deps.navigation.popTo(ROUTES.MAIN, {
+    screen: ROUTES.WALLET_HOME,
+    params: {}
   });
 };
 
 export const navigateToEidVerificationExpiredScreenAction = ({
   context
 }: CredentialIssuanceActionArgs) => {
-  context.deps.navigation.replace(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
+  // Resets only the nested ITW stack, keeping the navigator and its machines mounted
+  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+    state: {
+      routes: [{ name: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED }]
+    }
   });
 };
 
@@ -157,7 +154,7 @@ export const closeIssuanceAction = ({
     );
   }
 
-  navigation.navigate(ROUTES.MAIN, {
+  navigation.popTo(ROUTES.MAIN, {
     screen: ROUTES.WALLET_HOME,
     params: {}
   });
@@ -181,12 +178,7 @@ export const storeCredentialAction = ({
   assert(context.credentialType, "credentialType is undefined");
   assert(context.credentials, "credentials is undefined");
   const { store } = context.deps;
-  // A credential offer (deeplink/QR code) is the only alternative entry point to the
-  // catalogue/list for issuing a credential, so its presence in the context is what
-  // distinguishes the two flows for analytics purposes.
-  const origin: CredentialMetadata["origin"] = context.resolvedCredentialOffer
-    ? "credentialOffer"
-    : "catalogue";
+  const origin = resolveCredentialOrigin(context);
   const credentials = context.credentials.map(bundle => ({
     ...bundle,
     metadata: { ...bundle.metadata, origin }
@@ -199,6 +191,31 @@ export const storeCredentialAction = ({
   if (context.keyAttestations) {
     store.dispatch(itwKeyAttestationsStore(context.keyAttestations));
   }
+};
+
+/**
+ * Resolves how the credential was obtained, for analytics attribution.
+ *
+ * A credential offer (deeplink/QR code) is the only alternative entry point to
+ * the catalogue/list, so its presence in the context marks the third-party
+ * channel. Upgrade and reissuance only renew a credential the user already
+ * owns, so they keep the channel it was originally obtained from.
+ */
+const resolveCredentialOrigin = (
+  context: Context
+): CredentialMetadata["origin"] => {
+  if (context.resolvedCredentialOffer) {
+    return "credentialOffer";
+  }
+
+  if (context.mode !== "issuance" && context.credentialType) {
+    const storedCredential = itwCredentialSelector(context.credentialType)(
+      context.deps.store.getState()
+    );
+    return storedCredential?.origin ?? "catalogue";
+  }
+
+  return "catalogue";
 };
 
 export const trackStartAddCredentialAction = ({

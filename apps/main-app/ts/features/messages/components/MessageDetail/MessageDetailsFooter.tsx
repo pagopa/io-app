@@ -39,7 +39,7 @@ const generateMessageSectionData = (
           accessibilityLabel: I18n.t(
             "messageDetails.showMoreDataBottomSheet.messageIdAccessibility"
           ),
-          icon: "docPaymentTitle",
+          icon: "docTitle",
           label: I18n.t("messageDetails.showMoreDataBottomSheet.messageId"),
           value: messageId
         }
@@ -52,7 +52,7 @@ const generateMessageSectionData = (
           accessibilityLabel: I18n.t(
             "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
           ),
-          icon: "docPaymentCode",
+          icon: "docCode",
           label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
           value: formatPaymentNoticeNumber(noticeNumber),
           valueToCopy: noticeNumber
@@ -119,12 +119,7 @@ export const MessageDetailsFooter = ({
       }}
     >
       <VSpacer size={16} />
-      {(serviceMetadata?.email || serviceMetadata?.phone) && (
-        <ContactsListItem
-          email={serviceMetadata.email}
-          phone={serviceMetadata.phone}
-        />
-      )}
+      {serviceMetadata && <ContactsListItem {...serviceMetadata} />}
       <ShowMoreListItem sections={showMoreSectionData} />
     </ContentWrapper>
   );
