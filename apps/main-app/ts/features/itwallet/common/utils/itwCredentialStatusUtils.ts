@@ -3,6 +3,8 @@ import { differenceInCalendarDays } from "date-fns";
 
 import { getClaimsFullLocale, getCredentialExpireDate } from "./itwClaimsUtils";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
+import { isItwCredential } from "./itwCredentialUtils";
+import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialFormat,
   CredentialMetadata,
@@ -43,6 +45,9 @@ export const getCredentialStatus = (
   const now = Date.now();
 
   const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);
+  const hasDigitalExpirationWarning =
+    isItwCredential(credential) ||
+    credential.credentialType === CredentialType.PID;
 
   // Not all credentials have an expiration date
   const documentExpirationDate = getCredentialExpireDate(parsedCredential);
@@ -69,7 +74,11 @@ export const getCredentialStatus = (
     return "suspended";
   }
 
-  if (jwtExpireDays <= 0) {
+  if (
+    hasDigitalExpirationWarning
+      ? jwtExpireDays <= 0
+      : new Date(jwt.expiration).getTime() <= now
+  ) {
     return "jwtExpired";
   }
 
@@ -77,7 +86,11 @@ export const getCredentialStatus = (
     documentExpireDays === jwtExpireDays && documentExpireDays <= expiringDays;
 
   // When both credentials are expiring the digital one wins unless they expire the same day
-  if (jwtExpireDays <= expiringDays && !isSameDayExpiring) {
+  if (
+    hasDigitalExpirationWarning &&
+    jwtExpireDays <= expiringDays &&
+    !isSameDayExpiring
+  ) {
     return "jwtExpiring";
   }
 

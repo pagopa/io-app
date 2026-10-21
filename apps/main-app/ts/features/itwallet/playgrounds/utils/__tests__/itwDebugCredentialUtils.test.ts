@@ -47,7 +47,8 @@ const baseCredential: CredentialMetadata = {
     }
   },
   spec_version: "1.4.6",
-  validity: baseValidity
+  validity: baseValidity,
+  verification: { assurance_level: "high", trust_framework: "it_cie" }
 };
 
 const statusAssertion: ParsedStatusAssertion = {
@@ -135,6 +136,12 @@ describe("applyStatusToCredential", () => {
       });
     }
   );
+
+  it("keeps legacy credentials valid during the digital expiration warning period", () => {
+    const result = applyStatusToCredential(legacyCredential, "jwtExpiring");
+
+    expect(getCredentialStatus(result)).toBe("valid");
+  });
 
   it("normalizes status-list validity when applying valid", () => {
     const invalidCredential = applyStatusToCredential(
