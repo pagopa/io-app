@@ -208,7 +208,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                   "width": 36,
                 }
               }
-              testID="AnimatedCheckboxInput"
+              testID="CheckboxInput"
             >
               <View
                 style={

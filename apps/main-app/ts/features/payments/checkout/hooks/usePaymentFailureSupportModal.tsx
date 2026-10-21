@@ -223,7 +223,7 @@ const usePaymentFailureSupportModal = ({
         {!isOnboarding && (
           <ListItemInfoCopy
             accessibilityLabel={I18n.t("wallet.payment.support.noticeNumber")}
-            icon="docPaymentCode"
+            icon="docCode"
             label={I18n.t("wallet.payment.support.noticeNumber")}
             onPress={() => clipboardSetStringWithFeedback(paymentNoticeNumber)}
             value={formattedPaymentNoticeNumber}
