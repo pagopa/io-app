@@ -1,4 +1,4 @@
-import * as ioCrypto from "@pagopa/io-react-native-crypto";
+import * as ioCrypto from "@io-app/expo-crypto";
 import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 
@@ -17,7 +17,7 @@ import { handleItwCredentialsReplaceByTypeSaga } from "../handleItwCredentialsRe
 jest.mock("../../utils/vault", () => ({
   CredentialsVault: { removeAll: jest.fn(), storeAll: jest.fn() }
 }));
-jest.mock("@pagopa/io-react-native-crypto", () => ({ deleteKey: jest.fn() }));
+jest.mock("@io-app/expo-crypto", () => ({ deleteKey: jest.fn() }));
 
 const mockRemoveAll = jest.mocked(CredentialsVault.removeAll);
 const mockStoreAll = jest.mocked(CredentialsVault.storeAll);

@@ -1,4 +1,4 @@
-import { verifyCertificateChain } from "@pagopa/io-react-native-crypto";
+import { verifyCertificateChain } from "@io-app/expo-crypto";
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import {
   CredentialStatus,
@@ -12,7 +12,7 @@ import {
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { InvalidTslCredentialStatus } from "../errors";
 
-jest.mock("@pagopa/io-react-native-crypto", () => ({
+jest.mock("@io-app/expo-crypto", () => ({
   verifyCertificateChain: jest.fn()
 }));
 

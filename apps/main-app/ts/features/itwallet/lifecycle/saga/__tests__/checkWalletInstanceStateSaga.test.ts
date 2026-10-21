@@ -22,7 +22,7 @@ import {
 } from "../checkWalletInstanceStateSaga";
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
 
-jest.mock("@pagopa/io-react-native-crypto", () => ({
+jest.mock("@io-app/expo-crypto", () => ({
   deleteKey: jest.fn
 }));
 

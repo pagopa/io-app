@@ -1,5 +1,5 @@
 import { PasswordLogin } from "@io-app/api-types/generated/definitions/session_manager/PasswordLogin";
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import * as reporters from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";

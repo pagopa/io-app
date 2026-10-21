@@ -1,4 +1,4 @@
-import { generate } from "@pagopa/io-react-native-crypto";
+import { generate } from "@io-app/expo-crypto";
 
 import { Env } from "../environment";
 import { getKeyAttestation } from "../itwAttestationUtils";
@@ -17,7 +17,7 @@ import {
   CredentialOfferResolved
 } from "../itwTypesUtils";
 
-jest.mock("@pagopa/io-react-native-crypto", () => ({ generate: jest.fn() }));
+jest.mock("@io-app/expo-crypto", () => ({ generate: jest.fn() }));
 jest.mock("@pagopa/io-react-native-wallet", () => ({
   ...jest.requireActual("@pagopa/io-react-native-wallet"),
   createCryptoContextFor: jest.fn(() => ({

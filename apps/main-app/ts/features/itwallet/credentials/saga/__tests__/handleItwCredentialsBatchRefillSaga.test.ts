@@ -1,4 +1,4 @@
-import { deleteKey } from "@pagopa/io-react-native-crypto";
+import { deleteKey } from "@io-app/expo-crypto";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { dynamic, throwError } from "redux-saga-test-plan/providers";
@@ -34,7 +34,7 @@ jest.mock("../../utils/vault", () => ({
 jest.mock("../../../common/utils/itwIoWallet", () => ({
   getIoWallet: jest.fn()
 }));
-jest.mock("@pagopa/io-react-native-crypto", () => ({
+jest.mock("@io-app/expo-crypto", () => ({
   deleteKey: jest.fn()
 }));
 
