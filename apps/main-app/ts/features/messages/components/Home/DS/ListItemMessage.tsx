@@ -1,5 +1,4 @@
 import {
-  AnimatedMessageCheckbox,
   Avatar,
   BodySmall,
   H6,
@@ -8,6 +7,7 @@ import {
   IOColors,
   IOListItemStyles,
   IOVisualCostants,
+  MessageCheckbox,
   Tag,
   triggerHaptic,
   useIOTheme,
@@ -179,10 +179,7 @@ export const ListItemMessage = ({
                     }
                   ]}
                 >
-                  <AnimatedMessageCheckbox
-                    accessible={false}
-                    checked={selected}
-                  />
+                  <MessageCheckbox accessible={false} checked={selected} />
                 </View>
               </View>
             </View>
