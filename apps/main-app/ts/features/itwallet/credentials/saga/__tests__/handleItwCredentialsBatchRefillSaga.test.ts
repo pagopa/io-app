@@ -34,9 +34,6 @@ jest.mock("../../utils/vault", () => ({
 jest.mock("../../../common/utils/itwIoWallet", () => ({
   getIoWallet: jest.fn()
 }));
-jest.mock("@io-app/expo-crypto", () => ({
-  deleteKey: jest.fn()
-}));
 
 const T_SESSION_TOKEN = "session-token";
 const T_KEY_TAG = "hardware-key-tag";

@@ -41,10 +41,6 @@ const requestInit: RequestInit = {
 const configurationError =
   "Bad input parameters, unable to compose RequestAndKeyInfoForLPFetch";
 
-jest.mock("@io-app/expo-crypto", () => ({
-  sign: jest.fn().mockResolvedValue("MockSignature")
-}));
-
 MockDate.set("2023-01-01T01:00:00");
 const mockTimestamp = 1672534800; // 2023-01-01T01:00:00
 

@@ -24,10 +24,6 @@ jest.mock("../../analytics", () => ({
   trackItwVaultOrphanedCredentialsFound: jest.fn()
 }));
 
-jest.mock("@io-app/expo-crypto", () => ({
-  deleteKey: jest.fn()
-}));
-
 const mockList = jest.mocked(CredentialsVault.list);
 const mockRemoveAll = jest.mocked(CredentialsVault.removeAll);
 const mockDeleteKey = jest.mocked(ioCrypto.deleteKey);

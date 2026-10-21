@@ -22,10 +22,6 @@ import {
 } from "../checkWalletInstanceStateSaga";
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
 
-jest.mock("@io-app/expo-crypto", () => ({
-  deleteKey: jest.fn
-}));
-
 const mockGetStatus = jest.fn();
 const mockPid = {
   credentialType: "pid",

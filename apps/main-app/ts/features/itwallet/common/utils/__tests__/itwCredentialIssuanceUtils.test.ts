@@ -17,7 +17,6 @@ import {
   CredentialOfferResolved
 } from "../itwTypesUtils";
 
-jest.mock("@io-app/expo-crypto", () => ({ generate: jest.fn() }));
 jest.mock("@pagopa/io-react-native-wallet", () => ({
   ...jest.requireActual("@pagopa/io-react-native-wallet"),
   createCryptoContextFor: jest.fn(() => ({
