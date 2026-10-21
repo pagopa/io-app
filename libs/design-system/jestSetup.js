@@ -47,6 +47,8 @@ global.__reanimatedWorkletInit = jest.fn();
 
 jest.mock("./src/utils/accessibility", () => ({
   useBoldTextEnabled: () => false,
+  useScreenReaderEnabled: () => false,
+  useSwitchAccessEnabled: () => false,
   useIOFontDynamicScale: () => ({
     dynamicFontScale: 1,
     spacingScaleMultiplier: 1

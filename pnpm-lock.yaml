@@ -391,6 +391,9 @@ importers:
       '@io-app/expo-pdf-high-res-generator':
         specifier: workspace:*
         version: link:../../libs/expo-pdf-high-res-generator
+      '@io-app/expo-switch-access':
+        specifier: workspace:*
+        version: link:../../libs/expo-switch-access
       '@io-app/expo-zendesk':
         specifier: workspace:*
         version: link:../../libs/expo-zendesk
@@ -963,6 +966,9 @@ importers:
 
   libs/design-system:
     dependencies:
+      '@io-app/expo-switch-access':
+        specifier: workspace:*
+        version: link:../expo-switch-access
       expo-linear-gradient:
         specifier: 'catalog:'
         version: 55.0.16(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
@@ -1128,6 +1134,15 @@ importers:
         version: 6.0.3
 
   libs/expo-pdf-high-res-generator:
+    devDependencies:
+      expo-modules-core:
+        specifier: ^55.0.25
+        version: 55.0.25(react-native-worklets@0.8.3(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  libs/expo-switch-access:
     devDependencies:
       expo-modules-core:
         specifier: ^55.0.25

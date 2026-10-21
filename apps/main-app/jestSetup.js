@@ -130,6 +130,10 @@ jest.mock("@io-app/expo-nfc-antenna-info", () => ({
   isHceSupported: jest.fn()
 }));
 
+jest.mock("@io-app/expo-switch-access", () => ({
+  isSwitchAccessEnabled: () => Promise.resolve(false)
+}));
+
 /* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.
    The `react-native` preset resolves the `.ios` implementations by default, so
    every platform-branched component would otherwise pull in the native views. */
