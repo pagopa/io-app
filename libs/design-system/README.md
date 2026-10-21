@@ -114,7 +114,7 @@ The library is made up of several parts:
 
 Essential core visual attributes of the design language. It includes:
 
-- **`IOColorsLegacy`**: Defines the main color palette, themes (light/dark) and other color-related utilities
+- [**`IOColors`**](./src/core/tokens/colors/README.md): Defines every color token (palette, semantic light/dark and component colors), read with `useIOColors()`
 - [**`IODimensions`**](./src/core/tokens/dimensions/README.md): Defines every dimension token (spacing, padding, radius, stroke, sizes): scales, system and component values
 - **`IOStyles`**: Defines common styles shared across components
 - **`IOTypography`**: Defines the visual attributes of each typographic style

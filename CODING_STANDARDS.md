@@ -34,8 +34,16 @@ Keep each feature self-contained under `apps/main-app/ts/features/<feature>/`, l
 ## UI
 
 - Build UI from `@io-app/design-system` components; write a custom component only when the design system has no suitable primitive.
-- Take every color from the semantic tokens of `useIOTheme()`.
+- Take every color from `useIOColors()`; see [Colors](#colors).
 - Give every interactive element an accessible label.
+
+## Colors
+
+- Read tokens with `useIOColors()`. Don't use `useIOTheme()` or `IOColorsLegacy` in new code: they're deprecated.
+- Don't use the palette (`IOColorPalette`) or a hex value in a component. If no semantic token fits, add one to the design system's semantic layer.
+- A component whose icon and text share a color takes `foreground`; one where they differ takes `icon` and `text`. See `libs/design-system/src/core/tokens/colors/README.md`.
+- In the design system, declare a component's colors in its own `colors.ts`, by variant, role (`background`, `foreground`, `border`) and state.
+- Put colors of a single feature in that feature's own `colors.ts`, built from the palette.
 
 ## I18n
 

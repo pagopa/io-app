@@ -22,8 +22,11 @@ export const bannerColors = (s: IOColorSemantics, mode: IOColorMode) => {
     /* `IconButton` variant, not a color */
     closeButton: isDark ? "contrast" : "neutral"
   } satisfies {
-    background: Record<Banner["color"], IOComponentColor>;
+    background: Record<Banner["color"], IOComponentColor<"background">>;
     closeButton: NonNullable<IconButton["color"]>;
-    foreground: Record<"action" | "content" | "title", IOComponentColor>;
+    foreground: Record<
+      "action" | "content" | "title",
+      IOComponentColor<"foreground">
+    >;
   };
 };

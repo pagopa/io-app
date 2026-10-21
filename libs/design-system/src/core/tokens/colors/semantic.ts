@@ -9,14 +9,20 @@ states (both live in component configs), except the `action` subgroups
 `foreground` is the ink of components whose icon and text share a color
 (buttons, alerts); `icon` and `text` the ones where they differ.
 A status color at the root of a group sits on a neutral background;
-`onTint` holds the ones on the matching `surface` tint, `onColor` the ones
-on a solid fill, `onAction` the ones on the matching `surface.action` fill.
+`on<Background>` names what the ink sits on: `onTint` the matching `surface`
+tint, `onAccent` `background.accent`, `onAction` the matching `surface.action`
+fill.
 Product intents (`cgn`, `pagopa`) only for products a DS component or icon
 shows; colors of a single feature live in that feature.
 It also defines the shape every component color config shares.
 */
 
-import { IOTokenColor, IOColorPalette as p } from "./palette";
+import {
+  IOColorRole,
+  IORoleColor,
+  IOTokenColor,
+  IOColorPalette as p
+} from "./palette";
 import { withAlpha } from "./utils";
 
 export type IOColorMode = "dark" | "light";
@@ -27,24 +33,27 @@ export type IOColorScheme<T> = {
 };
 
 /* State colors of one role: `default` is required */
-export type IOColorStates = Partial<
-  Record<"disabled" | "pressed", IOComponentColor>
-> & { default: IOComponentColor };
+export type IOColorStates<R extends IOColorRole = IOColorRole> = Partial<
+  Record<"disabled" | "pressed", IOComponentColor<R>>
+> & { default: IOComponentColor<R> };
 
-/* A color a component can apply: a token, or none */
-export type IOComponentColor = "transparent" | IOTokenColor;
+/* A color a component can apply: a token of that role, or none */
+export type IOComponentColor<R extends IOColorRole = IOColorRole> =
+  | "transparent"
+  | IORoleColor<R>;
 
 /* Colors of one component variant, by role then state */
 export type IOComponentColors = {
-  background?: IOColorStates;
-  border?: IOColorStates;
+  background?: IOColorStates<"background">;
+  border?: IOColorStates<"stroke">;
   /* Text, icon and spinner */
-  foreground: IOColorStates;
+  foreground: IOColorStates<"foreground">;
 };
 
 export type Named<T> = { [key: string]: Named<T> | T };
 
 export const light = {
+  /** The whole screen. Role: `background` */
   background: {
     default: p.greyscale.white,
     secondary: p.greyscale[50],
@@ -52,6 +61,10 @@ export const light = {
     accent: p.blueIO[500],
     overlay: withAlpha(p.greyscale.black, 0.15)
   },
+  /**
+   * What sits on the background (cards, alerts, tints); `action` holds
+   * interactive fills, with states. Role: `background`
+   */
   surface: {
     default: p.greyscale.white,
     secondary: p.greyscale[50],
@@ -84,6 +97,10 @@ export const light = {
       }
     }
   },
+  /**
+   * Ink of components whose icon and text share a color (buttons, alerts);
+   * `action` holds interactive ink, with states. Role: `foreground`
+   */
   foreground: {
     /* Ink of interactive elements */
     action: {
@@ -115,7 +132,6 @@ export const light = {
       success: p.green[850],
       warning: p.yellow[850]
     },
-    onColor: { default: p.greyscale.white },
     onAction: {
       primary: p.greyscale.white,
       danger: p.greyscale.white,
@@ -123,6 +139,10 @@ export const light = {
       disabled: p.greyscale[700]
     }
   },
+  /**
+   * Ink of icons in components where icon and text differ (list items, tags).
+   * Role: `foreground`
+   */
   icon: {
     default: p.greyscale[650],
     strong: p.greyscale.black,
@@ -140,25 +160,30 @@ export const light = {
       success: p.green[850],
       warning: p.yellow[850]
     },
-    onColor: { default: p.greyscale.white }
+    onAccent: { default: p.greyscale.white }
   },
+  /** Ink of pictograms. Role: `foreground` */
   pictogram: {
     hand: p.blueIO[500],
     fill: p.turquoise[150],
     accent: p.turquoise[500],
     tertiary: p.blueIO[400],
-    onColor: {
+    onAccent: {
       hand: p.greyscale.white,
       fill: p.turquoise[150],
       accent: p.turquoise[500]
     }
   },
+  /**
+   * Ink of text in components where icon and text differ (list items, tags).
+   * Role: `foreground`
+   */
   text: {
     heading: {
       default: p.greyscale.black,
       secondary: p.greyscale[850],
       tertiary: p.greyscale[700],
-      onColor: { default: p.greyscale.white }
+      onAccent: { default: p.greyscale.white }
     },
     content: {
       default: p.greyscale.black,
@@ -176,7 +201,7 @@ export const light = {
         warning: p.yellow[850],
         highlight: p.turquoise[850]
       },
-      onColor: { default: p.greyscale.white }
+      onAccent: { default: p.greyscale.white }
     },
     helper: { default: p.greyscale[700] },
     /* Short labels (badges): more saturated than body text in dark mode */
@@ -192,6 +217,7 @@ export const light = {
       }
     }
   },
+  /** Borders and dividers. Role: `stroke` (the `border` of a component) */
   stroke: {
     default: p.greyscale[100],
     focused: p.blueIO[500],
@@ -201,11 +227,24 @@ export const light = {
     highlight: p.turquoise[850],
     warning: p.yellow[850],
     success: p.green[850],
-    onColor: { default: p.greyscale.white, error: p.red[850] }
+    onAccent: { default: p.greyscale.white, error: p.red[850] }
   }
 } as const satisfies Named<IOTokenColor>;
 
-export type IOColorSemantics = IOColorScheme<typeof light>;
+/* The semantic tokens, each tagged with its group's role */
+export type IOColorSemantics = {
+  [G in keyof typeof light]: IORoleScheme<(typeof light)[G], GroupRole<G>>;
+};
+
+type GroupRole<G> = G extends "background" | "surface"
+  ? "background"
+  : G extends "stroke"
+    ? "stroke"
+    : "foreground";
+
+type IORoleScheme<T, R extends IOColorRole> = {
+  [K in keyof T]: T[K] extends string ? IORoleColor<R> : IORoleScheme<T[K], R>;
+};
 
 export const dark = {
   background: {
@@ -276,7 +315,6 @@ export const dark = {
       success: p.green[100],
       warning: p.yellow[100]
     },
-    onColor: { default: p.greyscale.white },
     /* Black on primary: the fill is lighter in dark mode */
     onAction: {
       primary: p.greyscale.black,
@@ -302,14 +340,14 @@ export const dark = {
       success: p.green[100],
       warning: p.yellow[100]
     },
-    onColor: { default: p.greyscale.white }
+    onAccent: { default: p.greyscale.white }
   },
   pictogram: {
     hand: p.greyscale.white,
     fill: p.turquoise[150],
     accent: p.turquoise[500],
     tertiary: p.blueIO[400],
-    onColor: {
+    onAccent: {
       hand: p.greyscale.white,
       fill: p.turquoise[150],
       accent: p.turquoise[500]
@@ -321,7 +359,7 @@ export const dark = {
       /* Above `text.content.tertiary` (300) */
       secondary: p.greyscale[100],
       tertiary: p.greyscale[450],
-      onColor: { default: p.greyscale.white }
+      onAccent: { default: p.greyscale.white }
     },
     content: {
       default: p.greyscale.white,
@@ -339,7 +377,7 @@ export const dark = {
         warning: p.yellow[100],
         highlight: p.turquoise[100]
       },
-      onColor: { default: p.greyscale.white }
+      onAccent: { default: p.greyscale.white }
     },
     helper: { default: p.greyscale[450] },
     label: {
@@ -363,6 +401,6 @@ export const dark = {
     highlight: p.greyscale.white,
     warning: p.greyscale.white,
     success: p.greyscale.white,
-    onColor: { default: p.greyscale.white, error: p.greyscale.white }
+    onAccent: { default: p.greyscale.white, error: p.greyscale.white }
   }
-} as const satisfies IOColorSemantics;
+} as const satisfies IOColorScheme<typeof light>;

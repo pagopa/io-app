@@ -34,6 +34,10 @@ export type {
 } from "./semantic";
 export { withAlpha } from "./utils";
 
+/* Tags each token with its group's role: types only, values unchanged */
+const withRoles = (s: typeof dark | typeof light) =>
+  s as unknown as IOColorSemantics;
+
 const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
   ...s,
   component: {
@@ -54,6 +58,6 @@ export type IOColorTheme = ReturnType<typeof theme>;
  * colors under `component`.
  */
 export const IOColors: Record<IOColorMode, IOColorTheme> = {
-  light: theme(light, "light"),
-  dark: theme(dark, "dark")
+  light: theme(withRoles(light), "light"),
+  dark: theme(withRoles(dark), "dark")
 };

@@ -101,6 +101,10 @@ const namedOpacity = {
 export const IOOpacity = { scale: opacityScale, ...namedOpacity } as const;
 
 declare const origin: unique symbol;
+declare const role: unique symbol;
+
+/* The component role a semantic token can fill: `background`, `foreground` or a stroke (`border`) */
+export type IOColorRole = "background" | "foreground" | "stroke";
 
 /* One of our colors: declared once, then referenced by name */
 export type IOColorValue = IOCustomColor | IOPaletteColor | IOTranslucentColor;
@@ -115,6 +119,11 @@ export type IOHexColors = {
 
 /* A color of `IOColorPalette` */
 export type IOPaletteColor = IOColor<"palette">;
+
+/* A semantic token, tagged with its role: a background token can't color a foreground */
+export type IORoleColor<R extends IOColorRole> = IOTokenColor & {
+  readonly [role]: R;
+};
 
 /* Same shape as `T`, every color tagged as `C` */
 export type IOTaggedColors<T, C> = {
