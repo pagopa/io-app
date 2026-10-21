@@ -63,8 +63,8 @@ import { DSNativeBottomSheet } from "../core/DSNativeBottomSheet";
 import {
   NativeSheetFitToContents,
   NativeSheetHalf,
-  NativeSheetLongContent,
-  NativeSheetLongContentFit,
+  // NativeSheetLongContent,
+  // NativeSheetLongContentFit,
   NativeSheetTwoDetents
 } from "../core/DSNativeBottomSheetContent";
 import { DSNumberPad } from "../core/DSNumberPad";
@@ -696,6 +696,8 @@ export const DesignSystemNavigator = () => {
               headerShown: false
             }}
           />
+          {/* TODO: Re-enable after bumping react-native-screens to >= 4.26.0 (iOS crash with a ScrollView inside a formSheet) */}
+          {/*
           <Stack.Screen
             component={NativeSheetLongContent}
             name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT.route}
@@ -713,6 +715,7 @@ export const DesignSystemNavigator = () => {
               headerShown: false
             }}
           />
+          */}
         </Stack.Group>
       </Stack.Navigator>
     </ThemeProvider>

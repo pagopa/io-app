@@ -53,8 +53,9 @@ export type DesignSystemParamsList = {
   [DESIGN_SYSTEM_ROUTES.NATIVE.FULL_SCREEN_MODAL.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.FIT_TO_CONTENTS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.HALF_SCREEN.route]: undefined;
-  [DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT.route]: undefined;
-  [DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT_FIT.route]: undefined;
+  // TODO: Re-enable after bumping react-native-screens to >= 4.26.0 (iOS crash with a ScrollView inside a formSheet)
+  // [DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT.route]: undefined;
+  // [DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT_FIT.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.TWO_DETENTS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_ACTIONS.route]: undefined;

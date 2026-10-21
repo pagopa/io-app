@@ -37,21 +37,19 @@ export const NativeSheetFitToContents = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-      <ContentWrapper>
-        <VSpacer size={24} />
-        <H4 color={theme["textHeading-default"]}>Fit to contents</H4>
-        <VSpacer size={8} />
-        <ShortContent />
-        <VSpacer size={16} />
-        <IOButton
-          fullWidth
-          label="Dismiss"
-          onPress={() => navigation.goBack()}
-          variant="solid"
-        />
-      </ContentWrapper>
-    </View>
+    <ContentWrapper>
+      <VSpacer size={24} />
+      <H4 color={theme["textHeading-default"]}>Fit to contents</H4>
+      <VSpacer size={8} />
+      <ShortContent />
+      <VSpacer size={16} />
+      <IOButton
+        fullWidth
+        label="Dismiss"
+        onPress={() => navigation.goBack()}
+        variant="solid"
+      />
+    </ContentWrapper>
   );
 };
 

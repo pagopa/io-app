@@ -136,15 +136,16 @@ const DESIGN_SYSTEM_ROUTES = {
     TWO_DETENTS: {
       route: "DS_NATIVE_SHEET_TWO",
       title: "Two detents"
-    },
-    LONG_CONTENT: {
-      route: "DS_NATIVE_SHEET_LONG",
-      title: "Long scrollable content"
-    },
-    LONG_CONTENT_FIT: {
-      route: "DS_NATIVE_SHEET_LONG_FIT",
-      title: "Long content (fitToContents)"
     }
+    // TODO: Re-enable after bumping react-native-screens to >= 4.26.0 (iOS crash with a ScrollView inside a formSheet)
+    // LONG_CONTENT: {
+    //   route: "DS_NATIVE_SHEET_LONG",
+    //   title: "Long scrollable content"
+    // },
+    // LONG_CONTENT_FIT: {
+    //   route: "DS_NATIVE_SHEET_LONG_FIT",
+    //   title: "Long content (fitToContents)"
+    // }
   },
   DEBUG: {
     SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },
