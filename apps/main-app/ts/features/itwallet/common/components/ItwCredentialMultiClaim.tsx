@@ -4,7 +4,10 @@ import { Fragment } from "react";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils.ts";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
-import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
+import {
+  ItwClaimLongPressHandler,
+  ItwCredentialClaim
+} from "./ItwCredentialClaim.tsx";
 import { ItwNestedClaimsListItem } from "./ItwNestedClaimsListItem.tsx";
 
 interface ItwCredentialMultiClaimProps {
@@ -14,6 +17,7 @@ interface ItwCredentialMultiClaimProps {
   hidden?: boolean;
   isPreview?: boolean;
   nestedClaims: Array<Array<ClaimDisplayFormat>>;
+  onLongPress?: ItwClaimLongPressHandler;
 }
 
 /** Type for the configuration of nested credential summaries. */
@@ -89,6 +93,7 @@ export const getNestedItemSummary = (
  * @param isPreview Indicates if the claims are being rendered in preview mode.
  * @param credentialType Indicates the type of the credential
  * @param credentialStatus Indicates the status of the credential
+ * @param onLongPress Callback invoked when a nested claim value is long pressed
  */
 export const ItwCredentialMultiClaim = ({
   nestedClaims,
@@ -96,7 +101,8 @@ export const ItwCredentialMultiClaim = ({
   hidden,
   isPreview,
   credentialType,
-  credentialStatus
+  credentialStatus,
+  onLongPress
 }: ItwCredentialMultiClaimProps) => {
   // We render the nested claims as a list if there are multiple items
   const shouldRenderAsList = nestedClaims.length > 1;
@@ -121,6 +127,7 @@ export const ItwCredentialMultiClaim = ({
                 isPreview={isPreview}
                 itemClaims={singleItemClaims}
                 itemTitle={displaySummaryValue}
+                onLongPress={onLongPress}
                 summaryLabel={summaryLabel}
                 summaryValue={displaySummaryValue}
               />
@@ -143,6 +150,7 @@ export const ItwCredentialMultiClaim = ({
               hidden={hidden}
               isPreview={isPreview}
               key={nestedClaim.id}
+              onLongPress={onLongPress}
             />
           </Fragment>
         ))}
