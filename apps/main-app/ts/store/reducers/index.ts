@@ -25,7 +25,7 @@ import authenticationReducer, {
   INITIAL_STATE as authenticationInitialState,
   AuthenticationState
 } from "../../features/authentication/common/store/reducers";
-import { loginConfigInitialState } from "../../features/authentication/common/store/reducers/loginConfig";
+import { loginFlowInitialState } from "../../features/authentication/common/store/reducers/loginFlow";
 import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
@@ -66,7 +66,6 @@ import entitiesReducer, {
   EntitiesState
 } from "./entities";
 import installationReducer from "./installation";
-import { navigationReducer } from "./navigation";
 import persistedPreferencesReducer, {
   initialPreferencesState
 } from "./persistedPreferences";
@@ -123,7 +122,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   // ephemeral state
   //
   appState: appStateReducer,
-  navigation: navigationReducer,
   versionInfo: versionInfoReducer,
   remoteConfig: remoteConfigReducer,
   statusMessages: statusMessagesReducer,
@@ -261,11 +259,15 @@ export function createRootReducer(
                   isCieIDTourGuideEnabled:
                     state.features.loginFeatures.cieLogin
                       .isCieIDTourGuideEnabled,
+                  useUat: state.features.loginFeatures.cieLogin.useUat,
                   _persist: state.features.loginFeatures.cieLogin._persist
                 },
                 loginConfig: {
-                  ...loginConfigInitialState,
-                  _persist: state.features.loginFeatures.loginConfig._persist
+                  ...state.features.loginFeatures.loginConfig
+                },
+                loginFlow: {
+                  ...loginFlowInitialState,
+                  _persist: state.features.loginFeatures.loginFlow._persist
                 },
                 activeSessionLogin: {
                   ...activeSessionLoginInitialState,
@@ -330,6 +332,10 @@ export function createRootReducer(
                 .isFingerprintEnabled
                 ? true
                 : undefined
+            },
+            debug: {
+              ...state.debug,
+              debugData: {}
             },
             lollipop: {
               ...initialLollipopState,

@@ -5,6 +5,7 @@ import { CieIdNotInstalledProps } from "../../../login/cie/components/CieIdNotIn
 import { CieCardReaderScreenNavigationParams } from "../../../login/cie/screens/CieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
 import { UrlNotCompliant } from "../../../login/cie/screens/CieIdAuthUrlError";
+import { CieIdErrorScreenParams } from "../../../login/cie/screens/CieIdErrorScreen";
 import { CieWrongCiePinScreenNavigationParams } from "../../../login/cie/screens/CieWrongCiePinScreen";
 import { OneIdentityCieAuthRouteParams } from "../../../login/cie/screens/OneIdentityCieAuthScreen";
 import { ChosenIdentifier } from "../../../login/optIn/screens/OptInScreen";
@@ -24,7 +25,7 @@ export type AuthenticationParamsList = {
   [AUTHENTICATION_ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN]: undefined;
   [AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN]: undefined;
   // CieID sign in Error
-  [AUTHENTICATION_ROUTES.CIE_ID_ERROR]: undefined;
+  [AUTHENTICATION_ROUTES.CIE_ID_ERROR]: CieIdErrorScreenParams | undefined;
   [AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL]: UrlNotCompliant;
   [AUTHENTICATION_ROUTES.CIE_ID_LOGIN]: undefined;
   // Cie wizard screens

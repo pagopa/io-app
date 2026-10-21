@@ -7,6 +7,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import * as activeSessionLoginAnalytics from "../../../../activeSessionLogin/screens/analytics";
 import * as commonAnalytics from "../../../../common/analytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { LOGIN_TYPES, LoginType } from "../../../../common/utils";
 import { OneIdentityIdpSelectionFailureContent } from "../OneIdentityIdpSelectionFailureContent";
 
 const mockDismiss = jest.fn();
@@ -39,16 +40,12 @@ describe("OneIdentityIdpSelectionFailureContent", () => {
       .mockImplementation(jest.fn());
   });
 
-  const renderComponent = (isActiveSessionLogin = false) => {
+  const renderComponent = (flow: LoginType = LOGIN_TYPES.AUTH) => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
     return renderScreenWithNavigationStoreContext(
-      () => (
-        <OneIdentityIdpSelectionFailureContent
-          isActiveSessionLogin={isActiveSessionLogin}
-        />
-      ),
+      () => <OneIdentityIdpSelectionFailureContent flow={flow} />,
       AUTHENTICATION_ROUTES.IDP_SELECTION,
       {},
       store
@@ -85,7 +82,7 @@ describe("OneIdentityIdpSelectionFailureContent", () => {
   });
 
   it("should track trackLoginReauthEngagementCieSelected and request the CIE login when pressing the primary action during an active session", () => {
-    const { getByTestId } = renderComponent(true);
+    const { getByTestId } = renderComponent(LOGIN_TYPES.REAUTH);
 
     fireEvent.press(getByTestId("idp-loading-error-primary-action"));
 
