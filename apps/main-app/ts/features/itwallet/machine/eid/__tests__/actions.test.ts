@@ -1,6 +1,13 @@
+import {
+  CommonActions,
+  ParamListBase,
+  StackNavigationState,
+  StackRouter
+} from "@react-navigation/native";
 import _ from "lodash";
 import { ActionArgs } from "xstate";
 
+import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -14,7 +21,9 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { testEidIssuanceDeps, testMachineStore } from "../../utils/testDeps";
 import {
   closeIssuanceAction,
+  navigateToCiePinPreparationScreenAction,
   navigateToCredentialCatalogAction,
+  navigateToWalletAction,
   storeL2FallbackAction,
   storeWalletActivationFeedbackBannerDataAction
 } from "../actions";
@@ -76,13 +85,63 @@ describe("navigateToCredentialCatalogAction", () => {
     "opens the correct catalogue after $name activation",
     ({ level, expected }) => {
       const { args } = buildArgs({ level, mode: "issuance" });
-      const replace = jest.spyOn(args.context.deps.navigation, "replace");
+      const navigate = jest.spyOn(args.context.deps.navigation, "navigate");
       navigateToCredentialCatalogAction(args);
-      expect(replace).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-        screen: expected
+      expect(navigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+        state: { routes: [{ name: expected }] }
       });
     }
   );
+});
+
+// React Navigation v7 `navigate` pushes a second main navigator instead of popping back to it
+describe("wallet return navigation", () => {
+  test.each([
+    { name: "navigateToWalletAction", action: navigateToWalletAction },
+    { name: "closeIssuanceAction", action: closeIssuanceAction }
+  ])("$name pops back to the existing wallet", ({ action }) => {
+    const { args } = buildArgs({ level: "l3", mode: "issuance" });
+    const { navigation } = args.context.deps;
+    const popTo = jest.spyOn(navigation, "popTo");
+    const navigate = jest.spyOn(navigation, "navigate");
+    action(args);
+    expect(popTo).toHaveBeenCalledWith(
+      ROUTES.MAIN,
+      expect.objectContaining({ screen: ROUTES.WALLET_HOME })
+    );
+    expect(navigate).not.toHaveBeenCalled();
+  });
+});
+
+describe("back target navigation", () => {
+  it("pops back to an existing screen instead of pushing a duplicate", () => {
+    const { PIN_SCREEN, PREPARATION } = ITW_ROUTES.IDENTIFICATION.CIE;
+    const routeNames = [PREPARATION.PIN_SCREEN, PIN_SCREEN];
+    const config = { routeNames, routeParamList: {}, routeGetIdList: {} };
+    const router = StackRouter({});
+    const state = router.getStateForAction(
+      router.getInitialState(config),
+      CommonActions.navigate(PIN_SCREEN),
+      config
+    ) as StackNavigationState<ParamListBase>;
+
+    const { args } = buildArgs({ level: "l3", mode: "issuance" });
+    const navigate = jest.spyOn(args.context.deps.navigation, "navigate");
+    navigateToCiePinPreparationScreenAction(args);
+    const [, { screen, pop }] = navigate.mock.calls[0] as unknown as [
+      string,
+      { pop?: boolean; screen: string }
+    ];
+
+    const nextState = router.getStateForAction(
+      state,
+      { type: "NAVIGATE", payload: { name: screen, pop } },
+      config
+    );
+    expect(nextState?.routes.map(({ name }) => name)).toEqual([
+      PREPARATION.PIN_SCREEN
+    ]);
+  });
 });
 
 describe("storeL2FallbackAction", () => {

@@ -1,0 +1,8 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["ExpoZendeskModule"],
+    "podspecPath": "expo-zendesk.podspec"
+  },
+  "android": { "modules": ["expo.modules.zendesk.ZendeskModule"] }
+}

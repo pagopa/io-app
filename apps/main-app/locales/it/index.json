@@ -3117,7 +3117,11 @@
           "error": {
             "banner": {
               "cta": "Prova di nuovo",
-              "label": "Non siamo riusciti a caricare alcuni elementi della lista."
+              "label": "Non siamo riusciti a caricare alcuni elementi della lista.",
+              "bonus": {
+                "cta": "Vai ai servizi",
+                "label": "Non siamo riusciti a caricare alcuni elementi. Puoi accedere a bonus e iniziative anche dalla sezione Servizi."
+              }
             }
           }
         },
@@ -4991,6 +4995,12 @@
       "title": "Ci dai il tuo consenso?",
       "toast": {
         "emailClientNotFound": "Per ricevere assistenza scrivici a: {{emailAddress}}"
+      },
+      "walletStatus": "Funzionalità documenti digitali",
+      "walletStatusValue": {
+        "documentiSuIo": "Attiva (Documenti su IO)",
+        "itWallet": "Attiva (IT-Wallet)",
+        "notActive": "Non attiva"
       }
     },
     "chooseCategory": {

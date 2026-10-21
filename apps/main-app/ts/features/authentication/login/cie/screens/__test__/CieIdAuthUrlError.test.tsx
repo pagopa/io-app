@@ -24,6 +24,11 @@ jest.mock("@react-navigation/native", () => ({
 
 jest.mock("../../analytics");
 
+const mockUseDebugInfo = jest.fn();
+jest.mock("../../../../../../hooks/useDebugInfo", () => ({
+  useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
+}));
+
 jest.mock("../../../../../../store/hooks", () => ({
   useIODispatch: jest.fn(),
   useIOStore: jest.fn(),
@@ -42,6 +47,14 @@ describe("CieIdAuthUrlError", () => {
       mockUrl,
       "auth"
     );
+  });
+
+  it("Should set the not allowed URL and the login flow as debug data", () => {
+    render(<CieIdAuthUrlError />);
+    expect(mockUseDebugInfo).toHaveBeenLastCalledWith({
+      notAllowedUrl: mockUrl,
+      flow: "auth"
+    });
   });
 
   it("Should render the correct title and subtitle", () => {
