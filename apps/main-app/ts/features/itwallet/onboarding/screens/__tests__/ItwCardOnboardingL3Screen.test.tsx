@@ -3,7 +3,6 @@ import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
 import { createActor } from "xstate";
 
-import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -23,9 +22,22 @@ import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCardOnboardingL3Screen } from "../ItwCardOnboardingL3Screen";
 
+const mockReplace = jest.fn();
+const mockNavigate = jest.fn();
+
+jest.mock("@react-navigation/native", () => {
+  const actual = jest.requireActual("@react-navigation/native");
+  return {
+    ...actual,
+    useNavigation: () => ({
+      ...actual.useNavigation(),
+      replace: mockReplace,
+      navigate: mockNavigate
+    })
+  };
+});
+
 describe("ItwCardOnboardingL3Screen", () => {
-  const replaceMock = jest.fn();
-  const navigateMock = jest.fn();
   const fallbackState = appReducer(
     appReducer(undefined, applicationChangeState("active")),
     itwSetL2Fallback(true)
@@ -72,11 +84,6 @@ describe("ItwCardOnboardingL3Screen", () => {
       .mockReturnValue(false);
 
     jest.spyOn(envSelectors, "selectItwEnv").mockReturnValue("prod" as EnvType);
-
-    jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
-      replace: replaceMock,
-      navigate: navigateMock
-    } as any);
   });
 
   afterEach(() => {
@@ -145,9 +152,7 @@ describe("ItwCardOnboardingL3Screen", () => {
 
     fireEvent.press(button);
 
-    expect(replaceMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.L2_ONBOARDING
-    });
+    expect(mockReplace).toHaveBeenCalledWith(ITW_ROUTES.L2_ONBOARDING);
   });
 
   it("shows the upgrade banner after the three L2 documents for a missing CIE/PIN fallback", () => {
@@ -176,7 +181,7 @@ describe("ItwCardOnboardingL3Screen", () => {
     ).toBeNull();
     expect(queryByTestId("restricted-action-testID")).toBeNull();
     fireEvent.press(getByTestId("itwL2FallbackUpgradeBannerTestID"));
-    expect(navigateMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+    expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { level: "l3" }
     });
@@ -243,7 +248,7 @@ describe("ItwCardOnboardingL3Screen", () => {
       .mockReturnValue(false);
     const { getByTestId } = renderComponent({ page: 0 }, fallbackState);
     fireEvent.press(getByTestId("itwL2FallbackUpgradeBannerTestID"));
-    expect(navigateMock).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 
   it("issues fallback documents directly instead of restarting L3 activation", () => {
@@ -264,7 +269,7 @@ describe("ItwCardOnboardingL3Screen", () => {
       credentialType: CredentialType.DRIVING_LICENSE,
       mode: "issuance"
     });
-    expect(navigateMock).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 
   test.each([

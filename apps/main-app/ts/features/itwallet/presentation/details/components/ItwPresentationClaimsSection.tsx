@@ -14,6 +14,7 @@ import {
 } from "../../../common/utils/itwClaimsUtils.ts";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
+import { useItwCopyClaimValue } from "../hooks/useItwCopyClaimValue.ts";
 
 type ItwPresentationClaimsSectionProps = {
   credential: CredentialMetadata;
@@ -24,6 +25,7 @@ export const ItwPresentationClaimsSection = ({
 }: ItwPresentationClaimsSectionProps) => {
   const theme = useIOTheme();
   const dispatch = useIODispatch();
+  const copyClaimValue = useItwCopyClaimValue(credential.credentialType);
 
   const credentialStatus = useMemo(
     () => getCredentialStatus(credential),
@@ -83,6 +85,7 @@ export const ItwPresentationClaimsSection = ({
             credentialType={credential.credentialType}
             hidden={valuesHidden}
             isPreview={false}
+            onLongPress={copyClaimValue}
           />
         </Fragment>
       ))}
