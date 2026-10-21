@@ -1186,6 +1186,11 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-new-credential" });
 
     expect(navigateToCredentialCatalog).toHaveBeenCalledTimes(1);
+    expect(onInit).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     // entry does not re-fire when resuming from a snapshot, so storeWalletActivationFeedbackBannerData
     // is never called in this path (it only fires on entry when credentialType is set)
     expect(storeWalletActivationFeedbackBannerData).not.toHaveBeenCalled();
@@ -3204,4 +3209,114 @@ describe("itwEidIssuanceMachine itwVersion routing", () => {
       expect(actor.getSnapshot().context.itwVersion).toBe(expected);
     }
   );
+});
+
+describe("itwEidIssuanceMachine credential trigger", () => {
+  const T_CREDENTIAL_OFFER_URI =
+    "openid-credential-offer://?credential_offer_uri=https://issuer.example/offer";
+
+  const mockedMachine = itwEidIssuanceMachine.provide({
+    actions: {
+      onInit: assign(onInit),
+      storeIntegrityKeyTag,
+      storeWalletInstanceAttestation,
+      navigateToIdentificationScreen,
+      navigateToTosScreen,
+      trackIntroScreen
+    },
+    actors: {
+      getCieStatus: fromPromise(getCieStatus),
+      getWalletAttestation: fromPromise(getWalletAttestation),
+      createWalletInstance: fromPromise(createWalletInstance),
+      verifyTrustFederation: fromPromise(verifyTrustFederation)
+    },
+    guards: {
+      hasValidWalletInstanceAttestation
+    }
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    createWalletInstance.mockResolvedValue(T_INTEGRITY_KEY);
+  });
+
+  test.each([
+    {
+      name: "a credential offer",
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI
+    },
+    { name: "the catalogue", credentialOfferUri: undefined }
+  ])(
+    "keeps the credential trigger from $name on start and restart, dropping the offer for 1.0.0 specs",
+    ({ credentialOfferUri }) => {
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
+
+      actor.send({
+        type: "start",
+        mode: "issuance",
+        level: "l3",
+        credentialType: "MDL",
+        credentialOfferUri
+      });
+      expect(actor.getSnapshot().context).toMatchObject({
+        credentialType: "MDL",
+        credentialOfferUri
+      });
+
+      actor.send({
+        type: "restart",
+        mode: "issuance",
+        level: "l2-fallback",
+        credentialType: "MDL",
+        credentialOfferUri
+      });
+      expect(actor.getSnapshot().context).toMatchObject({
+        level: "l2-fallback",
+        itwVersion: "1.0.0",
+        credentialType: "MDL",
+        credentialOfferUri: undefined
+      });
+    }
+  );
+
+  test.each([
+    {
+      name: "keeps the offer for an L3 issuance",
+      mode: "issuance",
+      level: "l3",
+      expected: T_CREDENTIAL_OFFER_URI
+    },
+    {
+      name: "keeps the offer for an upgrade",
+      mode: "upgrade",
+      level: "l2",
+      expected: T_CREDENTIAL_OFFER_URI
+    },
+    {
+      name: "drops the offer for an L2 issuance",
+      mode: "issuance",
+      level: "l2",
+      expected: undefined
+    },
+    {
+      name: "drops the offer for an L2 reissuance",
+      mode: "reissuance",
+      level: "l2",
+      expected: undefined
+    }
+  ] as const)("$name", ({ mode, level, expected }) => {
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+    actor.start();
+
+    actor.send({
+      type: "start",
+      mode,
+      level,
+      credentialType: "MDL",
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI
+    });
+
+    expect(actor.getSnapshot().context.credentialOfferUri).toBe(expected);
+  });
 });

@@ -6,7 +6,7 @@ import { IOSelectionTickVisualParams } from "../../core";
 import { triggerHaptic } from "../../functions/haptic-feedback/hapticFeedback";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { H6 } from "../typography/H6";
-import { AnimatedRadio } from "./AnimatedRadio";
+import { Radio } from "./Radio";
 
 type Props = {
   label: string;
@@ -17,19 +17,16 @@ type Props = {
 const DISABLED_OPACITY = 0.5;
 
 type RadioButtonLabelProps = Pick<
-  ComponentProps<typeof AnimatedRadio>,
-  "checked" | "disabled"
+  ComponentProps<typeof Pressable>,
+  "accessibilityHint" | "accessibilityLabel" | "onPress"
 > &
-  Pick<
-    ComponentProps<typeof Pressable>,
-    "accessibilityHint" | "accessibilityLabel" | "onPress"
-  > &
+  Pick<ComponentProps<typeof Radio>, "checked" | "disabled"> &
   Props;
 
 /**
- * A radio button with the automatic state management that uses a
- * {@link AnimatedRadio} The toggleValue change when a `onPress` event is
- * received and dispatch the `onValueChange`.
+ * A radio button with the automatic state management that uses a {@link Radio}
+ * The toggleValue change when a `onPress` event is received and dispatch the
+ * `onValueChange`.
  *
  * @class
  * @param props
@@ -70,7 +67,7 @@ export const RadioButtonLabel = ({
         alignSelf: "flex-start",
         opacity: disabled ? DISABLED_OPACITY : 1
       }}
-      testID="AnimatedRadioButton"
+      testID="RadioButton"
     >
       <View
         style={{
@@ -86,7 +83,7 @@ export const RadioButtonLabel = ({
           importantForAccessibility="no-hide-descendants"
           pointerEvents="none"
         >
-          <AnimatedRadio
+          <Radio
             checked={checked ?? toggleValue}
             size={IOSelectionTickVisualParams.size * dynamicFontScale}
           />
