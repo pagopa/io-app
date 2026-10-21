@@ -13,6 +13,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import * as urlUtils from "../../../../../../utils/url";
 import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { LOGIN_TYPES } from "../../../../common/utils";
 import * as useCieInfoBottomSheetModule from "../../hooks/useCieInfoBottomSheet";
 import { nfcIsEnabled } from "../../store/actions";
 import { OneIdentityCiePinScreen } from "../OneIdentityCiePinScreen";
@@ -23,6 +24,7 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
+      addListener: jest.fn(),
       navigate: mockNavigate
     })
   };
@@ -96,7 +98,7 @@ describe("OneIdentityCiePinScreen", () => {
     expect(mockDispatch).toHaveBeenCalledWith(nfcIsEnabled.request());
     expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_AUTH_SCREEN,
-      params: { pin: "12345678" }
+      params: { pin: "12345678", flow: LOGIN_TYPES.AUTH }
     });
   });
 

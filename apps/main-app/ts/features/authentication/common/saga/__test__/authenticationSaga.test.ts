@@ -3,12 +3,14 @@ import * as O from "fp-ts/Option";
 import { Task } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
 
+import { updateMixpanelSuperProperties } from "../../../../../mixpanelConfig/superProperties";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../../../store/actions/analytics";
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
+import { GlobalState } from "../../../../../store/reducers/types";
 import * as selectors from "../../../fastLogin/store/selectors";
 import {
   stopCieManager,
@@ -29,6 +31,7 @@ import { authenticationSaga } from "../authenticationSaga";
 import { watchTestLoginRequestSaga } from "../testLoginSaga";
 
 const aSessionToken = "mock-session-token";
+const aState = { some: "state" } as unknown as GlobalState;
 
 jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
@@ -39,6 +42,10 @@ jest.mock("../../analytics", () => ({
   trackCieIDLoginSuccess: jest.fn(),
   trackSpidLoginSuccess: jest.fn(),
   trackLoginFlowStarting: jest.fn()
+}));
+
+jest.mock("../../../../../mixpanelConfig/superProperties", () => ({
+  updateMixpanelSuperProperties: jest.fn()
 }));
 
 describe("authenticationSaga", () => {
@@ -57,7 +64,13 @@ describe("authenticationSaga", () => {
       .fork(watchCieAuthenticationSaga)
       .next(watchCieAuthentication)
       .take(loginSuccess)
-      .next(loginSuccess({ token: aSessionToken, idp: "test" }))
+      .next(
+        loginSuccess({
+          token: aSessionToken,
+          idp: "test",
+          isOneIdentityLogin: false
+        })
+      )
       .cancel(watchCieAuthentication)
       .next()
       .cancel(watchTestLoginRequest)
@@ -66,6 +79,10 @@ describe("authenticationSaga", () => {
       .next()
       .next(false) // fastloginSelector
       .next({ _tag: "some" }) // idpSelector
+      .select()
+      .next(aState)
+      .call(updateMixpanelSuperProperties, aState)
+      .next()
       .put(analyticsAuthenticationCompleted("auth"))
       .next()
       .returns(aSessionToken);
@@ -100,7 +117,13 @@ describe("authenticationSaga 2", () => {
       .fork(watchCieAuthenticationSaga)
       .next(watchCieAuthentication)
       .take(loginSuccess)
-      .next(loginSuccess({ token: aSessionToken, idp: idpMock }))
+      .next(
+        loginSuccess({
+          token: aSessionToken,
+          idp: idpMock,
+          isOneIdentityLogin: false
+        })
+      )
       .cancel(watchCieAuthentication)
       .next()
       .cancel(watchTestLoginRequest)
@@ -118,6 +141,11 @@ describe("authenticationSaga 2", () => {
           profileUrl: "https://fake.url"
         })
       )
+      .select()
+      .next(aState)
+      .call(updateMixpanelSuperProperties, aState)
+      .next()
+      .put(analyticsAuthenticationCompleted("auth"))
       .next()
       .returns(aSessionToken);
 
