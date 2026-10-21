@@ -13,7 +13,6 @@ import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHo
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
 import { WalletHomeScreen } from "../features/wallet/screens/WalletHomeScreen";
-import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle";
 import { useIOSelector } from "../store/hooks";
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences";
 import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
@@ -34,8 +33,6 @@ export const MainTabNavigator = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
   };
 
-  const tabBarStyle = useBottomTabNavigatorStyle();
-
   return (
     <LoadingSpinnerOverlay
       isLoading={startupLoaded === StartupStatusEnum.ONBOARDING}
@@ -44,22 +41,20 @@ export const MainTabNavigator = () => {
       <Tab.Navigator
         labeled
         minimizeBehavior="onScrollDown"
-        screenOptions={{
-          tabBarLabelStyle: makeFontStyleObject(
-            11,
-            typefacePreference === "comfortable"
-              ? "Titillio"
-              : "TitilliumSansPro",
-            14,
-            "Regular"
-          ),
-          tabBarHideOnKeyboard: true,
-          tabBarAllowFontScaling: false,
-          tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],
-          tabBarInactiveTintColor: IOColors[theme["textBody-tertiary"]],
-          tabBarStyle,
-          scrollEdgeAppearance: "opaque"
+        scrollEdgeAppearance="opaque"
+        tabBarActiveTintColor={IOColors[theme["interactiveElem-default"]]}
+        tabBarInactiveTintColor={IOColors[theme["textBody-tertiary"]]}
+        tabBarStyle={{
+          backgroundColor: IOColors[theme["appBackground-primary"]]
         }}
+        tabLabelStyle={makeFontStyleObject(
+          11,
+          typefacePreference === "comfortable"
+            ? "Titillio"
+            : "TitilliumSansPro",
+          14,
+          "Regular"
+        )}
       >
         <Tab.Screen
           component={MessagesHomeScreen}
