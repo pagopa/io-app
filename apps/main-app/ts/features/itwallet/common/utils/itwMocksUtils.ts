@@ -16,6 +16,7 @@ import {
   DigitalCredentialMetadata,
   DigitalCredentialsCatalogue
 } from "./itwCredentialsCatalogueUtils";
+import { WellKnownClaim } from "./itwClaimsUtils";
 import { CredentialMetadata, ParsedStatusAssertion } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
@@ -60,6 +61,29 @@ export const ItwStoredCredentialsMocks = {
     edat: edatL3 as unknown as CredentialMetadata
   }
 };
+
+export const ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL = "Mock issuing authority";
+
+/**
+ * Adds the `issuing_authority` claim provided by IPZS to the given credential.
+ * The claim label is the same for every locale, so tests can query it
+ * regardless of the current language.
+ */
+export const withIssuingAuthorityClaimMock = (
+  credential: CredentialMetadata
+): CredentialMetadata => ({
+  ...credential,
+  parsedCredential: {
+    ...credential.parsedCredential,
+    [WellKnownClaim.issuing_authority]: {
+      value: "Istituto Poligrafico e Zecca dello Stato",
+      name: {
+        "it-IT": ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL,
+        "en-US": ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL
+      }
+    }
+  }
+});
 
 export const ItwStatusAssertionMocks = {
   mdl: statusAssertion as ParsedStatusAssertion
