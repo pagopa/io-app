@@ -1,5 +1,8 @@
 import type { NfcError } from "@io-app/expo-cie";
 
+import { useMemo } from "react";
+
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import CieExpiredOrInvalidScreen from "../screens/CieExpiredOrInvalidScreen";
 import CieExtendedApduNotSupportedScreen from "../screens/CieExtendedApduNotSupportedScreen";
 import CieUnexpectedErrorScreen from "../screens/CieUnexpectedErrorScreen";
@@ -13,6 +16,9 @@ export type OneIdentityCieCardReaderFailureProps = {
 export const OneIdentityCieCardReaderFailure = ({
   failure
 }: OneIdentityCieCardReaderFailureProps) => {
+  const debugInfo = useMemo(() => ({ failure }), [failure]);
+  useDebugInfo(debugInfo);
+
   switch (failure.name) {
     case "APDU_ERROR": {
       return <CieExtendedApduNotSupportedScreen />;

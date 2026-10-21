@@ -2,6 +2,7 @@ import { fireEvent, render } from "@testing-library/react-native";
 
 import { withStore } from "../../../../../../utils/jest/withStore";
 import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
+import { LOGIN_TYPES } from "../../../../common/utils";
 import * as useCieManagerModule from "../../hooks/useCieManager";
 import { OneIdentityCieCardReader as OneIdentityCieCardReaderComponent } from "../OneIdentityCieCardReader";
 
@@ -70,6 +71,7 @@ describe("OneIdentityCieCardReader", () => {
     render(
       <OneIdentityCieCardReader
         authenticationUrl={authenticationUrl}
+        flow={LOGIN_TYPES.AUTH}
         onAuthorizationUrlReceived={jest.fn()}
         pin={pin}
       />
@@ -91,6 +93,7 @@ describe("OneIdentityCieCardReader", () => {
     const { getByTestId, queryByTestId } = render(
       <OneIdentityCieCardReader
         authenticationUrl={authenticationUrl}
+        flow={LOGIN_TYPES.AUTH}
         onAuthorizationUrlReceived={jest.fn()}
         pin={pin}
       />
@@ -108,6 +111,7 @@ describe("OneIdentityCieCardReader", () => {
     const { getByTestId, queryByTestId } = render(
       <OneIdentityCieCardReader
         authenticationUrl={authenticationUrl}
+        flow={LOGIN_TYPES.AUTH}
         onAuthorizationUrlReceived={jest.fn()}
         pin={pin}
       />
@@ -125,6 +129,7 @@ describe("OneIdentityCieCardReader", () => {
     const { getByTestId } = render(
       <OneIdentityCieCardReader
         authenticationUrl={authenticationUrl}
+        flow={LOGIN_TYPES.AUTH}
         onAuthorizationUrlReceived={jest.fn()}
         pin={pin}
       />
@@ -142,6 +147,7 @@ describe("OneIdentityCieCardReader", () => {
     render(
       <OneIdentityCieCardReader
         authenticationUrl={authenticationUrl}
+        flow={LOGIN_TYPES.AUTH}
         onAuthorizationUrlReceived={onAuthorizationUrlReceived}
         pin={pin}
       />

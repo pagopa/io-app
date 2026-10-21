@@ -112,6 +112,43 @@ describe("useCieManager", () => {
     jest.useRealTimers();
   });
 
+  test.each<{ expected: string; name: string; received: string }>([
+    {
+      name: "a percent-encoded URL",
+      received: "https://consent.example.com/%3Fa%3D1%26b%3D2",
+      expected: "https://consent.example.com/?a=1&b=2"
+    },
+    {
+      name: "a malformed URL",
+      received: "https://consent.example.com/?a=100%",
+      expected: "https://consent.example.com/?a=100%"
+    }
+  ])(
+    "should call onSuccess with the decoded URL when the SDK returns $name",
+    async ({ expected, received }) => {
+      jest.useFakeTimers();
+
+      const { result, onSuccess } = setupTest();
+
+      await act(async () => {
+        await result.current.startReading(
+          "12345678",
+          "https://auth.example.com"
+        );
+      });
+      act(() => {
+        emitSuccess(received);
+      });
+      act(() => {
+        jest.runAllTimers();
+      });
+
+      expect(onSuccess).toHaveBeenCalledWith(expected);
+
+      jest.useRealTimers();
+    }
+  );
+
   it("should set an inline reading-failure state for ON_TAG_LOST and dispatch cieAuthenticationError", async () => {
     const store = createTestStore();
     store.dispatch(setStartActiveSessionLogin());

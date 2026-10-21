@@ -13,6 +13,7 @@ import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
+  CredentialBundle,
   CredentialMetadata,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
@@ -24,6 +25,7 @@ import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  ObtainEidStatusListActorInput,
   ObtainStatusListActorInput,
   ObtainStatusListActorOutput,
   RequestAccessTokenActorParams,
@@ -135,6 +137,7 @@ const startAuthFlow = jest.fn();
 const initMrtdPoPChallenge = jest.fn();
 const validateMrtdPoPChallenge = jest.fn();
 const obtainStatusList = jest.fn();
+const obtainEidStatusList = jest.fn();
 const storeEidCredentialActor = jest.fn();
 const waitForSessionRefresh = jest.fn();
 
@@ -218,6 +221,10 @@ describe("itwEidIssuanceMachine", () => {
         ObtainStatusListActorOutput,
         ObtainStatusListActorInput
       >(obtainStatusList),
+      obtainEidStatusList: fromPromise<
+        CredentialBundle,
+        ObtainEidStatusListActorInput
+      >(obtainEidStatusList),
       storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
         storeEidCredentialActor
       ),
@@ -249,6 +256,9 @@ describe("itwEidIssuanceMachine", () => {
     jest.resetAllMocks();
     jest.useFakeTimers();
     obtainStatusList.mockResolvedValue(undefined);
+    obtainEidStatusList.mockImplementation(({ input }) =>
+      Promise.resolve(input.eid)
+    );
     storeEidCredentialActor.mockResolvedValue(undefined);
   });
 
@@ -1176,6 +1186,11 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-new-credential" });
 
     expect(navigateToCredentialCatalog).toHaveBeenCalledTimes(1);
+    expect(onInit).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     // entry does not re-fire when resuming from a snapshot, so storeWalletActivationFeedbackBannerData
     // is never called in this path (it only fires on entry when credentialType is set)
     expect(storeWalletActivationFeedbackBannerData).not.toHaveBeenCalled();
@@ -1644,6 +1659,84 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitForActor(actor, state => state.matches("Failure"));
 
+    expect(actor.getSnapshot().context.failure).toStrictEqual({
+      type: IssuanceFailureType.UNEXPECTED,
+      reason: error
+    });
+  });
+
+  it("Should attach the eID status list before checking the issued eID", async () => {
+    const eidWithStatusList: CredentialBundle = {
+      ...T_EID_REQUEST_OUTPUT.credential,
+      metadata: {
+        ...T_EID_REQUEST_OUTPUT.credential.metadata,
+        validity: {
+          type: "status_list",
+          status: "valid",
+          rawStatus: "0x00",
+          statusList: {
+            uri: "https://pid-provider.example/status-list",
+            idx: 1
+          }
+        }
+      }
+    };
+    requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
+    obtainEidStatusList.mockResolvedValue(eidWithStatusList);
+    issuedEidMatchesAuthenticatedUser.mockReturnValue(true);
+
+    const initialSnapshot = createActor(itwEidIssuanceMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "WaitingForSessionRefresh" },
+      context: { itwVersion: "1.4.6" }
+    });
+
+    const actor = createActor(mockedMachine, {
+      snapshot,
+      input: { deps: T_DEPS }
+    });
+    actor.start();
+    actor.send({ type: "session-refresh-complete" });
+
+    const finalSnapshot = await waitForActor(actor, state =>
+      state.matches({ Issuance: "DisplayingPreview" })
+    );
+
+    expect(obtainEidStatusList).toHaveBeenCalledWith(
+      expect.objectContaining({
+        input: {
+          itwVersion: "1.4.6",
+          eid: T_EID_REQUEST_OUTPUT.credential
+        }
+      })
+    );
+    expect(finalSnapshot.context.eid).toEqual(eidWithStatusList);
+  });
+
+  it("Should fail when obtaining the eID status list fails", async () => {
+    const error = new Error("eID status is not valid");
+    requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
+    obtainEidStatusList.mockRejectedValue(error);
+
+    const initialSnapshot = createActor(itwEidIssuanceMachine, {
+      input: { deps: T_DEPS }
+    }).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "WaitingForSessionRefresh" }
+    });
+
+    const actor = createActor(mockedMachine, {
+      snapshot,
+      input: { deps: T_DEPS }
+    });
+    actor.start();
+    actor.send({ type: "session-refresh-complete" });
+
+    await waitForActor(actor, state => state.matches("Failure"));
+
+    expect(issuedEidMatchesAuthenticatedUser).not.toHaveBeenCalled();
     expect(actor.getSnapshot().context.failure).toStrictEqual({
       type: IssuanceFailureType.UNEXPECTED,
       reason: error
@@ -3116,4 +3209,114 @@ describe("itwEidIssuanceMachine itwVersion routing", () => {
       expect(actor.getSnapshot().context.itwVersion).toBe(expected);
     }
   );
+});
+
+describe("itwEidIssuanceMachine credential trigger", () => {
+  const T_CREDENTIAL_OFFER_URI =
+    "openid-credential-offer://?credential_offer_uri=https://issuer.example/offer";
+
+  const mockedMachine = itwEidIssuanceMachine.provide({
+    actions: {
+      onInit: assign(onInit),
+      storeIntegrityKeyTag,
+      storeWalletInstanceAttestation,
+      navigateToIdentificationScreen,
+      navigateToTosScreen,
+      trackIntroScreen
+    },
+    actors: {
+      getCieStatus: fromPromise(getCieStatus),
+      getWalletAttestation: fromPromise(getWalletAttestation),
+      createWalletInstance: fromPromise(createWalletInstance),
+      verifyTrustFederation: fromPromise(verifyTrustFederation)
+    },
+    guards: {
+      hasValidWalletInstanceAttestation
+    }
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    createWalletInstance.mockResolvedValue(T_INTEGRITY_KEY);
+  });
+
+  test.each([
+    {
+      name: "a credential offer",
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI
+    },
+    { name: "the catalogue", credentialOfferUri: undefined }
+  ])(
+    "keeps the credential trigger from $name on start and restart, dropping the offer for 1.0.0 specs",
+    ({ credentialOfferUri }) => {
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
+
+      actor.send({
+        type: "start",
+        mode: "issuance",
+        level: "l3",
+        credentialType: "MDL",
+        credentialOfferUri
+      });
+      expect(actor.getSnapshot().context).toMatchObject({
+        credentialType: "MDL",
+        credentialOfferUri
+      });
+
+      actor.send({
+        type: "restart",
+        mode: "issuance",
+        level: "l2-fallback",
+        credentialType: "MDL",
+        credentialOfferUri
+      });
+      expect(actor.getSnapshot().context).toMatchObject({
+        level: "l2-fallback",
+        itwVersion: "1.0.0",
+        credentialType: "MDL",
+        credentialOfferUri: undefined
+      });
+    }
+  );
+
+  test.each([
+    {
+      name: "keeps the offer for an L3 issuance",
+      mode: "issuance",
+      level: "l3",
+      expected: T_CREDENTIAL_OFFER_URI
+    },
+    {
+      name: "keeps the offer for an upgrade",
+      mode: "upgrade",
+      level: "l2",
+      expected: T_CREDENTIAL_OFFER_URI
+    },
+    {
+      name: "drops the offer for an L2 issuance",
+      mode: "issuance",
+      level: "l2",
+      expected: undefined
+    },
+    {
+      name: "drops the offer for an L2 reissuance",
+      mode: "reissuance",
+      level: "l2",
+      expected: undefined
+    }
+  ] as const)("$name", ({ mode, level, expected }) => {
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+    actor.start();
+
+    actor.send({
+      type: "start",
+      mode,
+      level,
+      credentialType: "MDL",
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI
+    });
+
+    expect(actor.getSnapshot().context.credentialOfferUri).toBe(expected);
+  });
 });

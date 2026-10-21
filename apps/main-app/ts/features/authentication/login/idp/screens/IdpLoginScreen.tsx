@@ -185,7 +185,7 @@ const IdpLoginScreen = () => {
     (token: string) => {
       handleSendAssistanceLog(choosenTool, `login success`);
       if (idp) {
-        dispatch(loginSuccess({ token, idp }));
+        dispatch(loginSuccess({ token, idp, isOneIdentityLogin: false }));
       }
     },
     [choosenTool, dispatch, idp]

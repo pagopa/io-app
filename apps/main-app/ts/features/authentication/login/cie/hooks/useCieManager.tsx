@@ -59,6 +59,18 @@ const FAILURE_ERRORS = new Set<NfcError["name"]>([
   "WRONG_PIN"
 ]);
 
+/**
+ * Decodes the URL returned by the CIE SDK, falling back to the raw value if
+ * malformed.
+ */
+const safeDecodeURIComponent = (url: string): string => {
+  try {
+    return decodeURIComponent(url);
+  } catch {
+    return url;
+  }
+};
+
 export type CieManagerState =
   | { failure: NfcError; status: "failure" }
   | { failure: string; status: "reading-failure" }
@@ -176,7 +188,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
       );
 
       setTimeout(
-        () => onSuccess(url),
+        () => onSuccess(safeDecodeURIComponent(url)),
         isScreenReaderEnabled
           ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
           : WAIT_TIMEOUT_NAVIGATION
