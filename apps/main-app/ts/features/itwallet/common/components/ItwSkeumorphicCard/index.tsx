@@ -42,6 +42,7 @@ export type ItwSkeumorphicCardProps = {
   credential: CredentialMetadata;
   isFlipped?: boolean;
   onPress?: () => void;
+  rotationAxis?: "x" | "y";
   status: ItwCredentialStatus;
   valuesHidden: boolean;
 };
@@ -50,6 +51,7 @@ export const ItwSkeumorphicCard = ({
   credential,
   status,
   isFlipped = false,
+  rotationAxis,
   onPress,
   valuesHidden
 }: ItwSkeumorphicCardProps) => {
@@ -120,6 +122,7 @@ export const ItwSkeumorphicCard = ({
       containerStyle={[styles.card]}
       FrontComponent={FrontSide}
       isFlipped={isFlipped}
+      rotationAxis={rotationAxis}
     />
   );
 

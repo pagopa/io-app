@@ -117,6 +117,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
               <ItwSkeumorphicCard
                 credential={credential}
                 isFlipped={isFlipped}
+                rotationAxis="x"
                 status={status}
                 valuesHidden={valuesHidden}
               />

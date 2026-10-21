@@ -70,7 +70,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     <VStack space={8}>
       <CardContainer backgroundColor={backgroundColor}>
         <FlipGestureDetector
-          direction="updown"
+          direction="leftright"
           isFlipped={isFlipped}
           setIsFlipped={setIsFlipped}
         >
