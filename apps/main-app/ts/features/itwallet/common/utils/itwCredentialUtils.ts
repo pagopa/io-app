@@ -194,7 +194,7 @@ export const useTagPropsByStatus = (): {
   },
   unknown: {
     variant: "custom",
-    icon: { name: "infoFilled", color: "grey-450" },
+    icon: { name: "infoFilled", color: "grey" },
     text: I18n.t("features.itWallet.card.status.unknown")
   }
 });

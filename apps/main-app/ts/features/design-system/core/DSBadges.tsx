@@ -82,11 +82,14 @@ const renderTag = () => (
     <DSComponentViewerBox name={"Tag · Without icon"}>
       <Tag text={"No icon"} variant="noIcon" />
     </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Tag · Force light mode"}>
+      <Tag forceLightMode text={"Valido"} variant="success" />
+    </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · Custom icon (with custom color)"}>
       <Tag
         icon={{
           name: "categTravel",
-          color: "grey-450"
+          color: "grey"
         }}
         text={"Custom icon"}
         variant="custom"
