@@ -464,7 +464,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": "#2B2E38",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1368,7 +1368,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": "#2B2E38",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -2272,7 +2272,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": "#2B2E38",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",

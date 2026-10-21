@@ -15,6 +15,7 @@ importing this file or the theme context would create a cycle.
 
 import { alertColors } from "../../../components/alert/colors";
 import { badgeColors } from "../../../components/badge/colors";
+import { bannerColors } from "../../../components/banner/colors";
 import { buttonColors } from "../../../components/buttons/IOButton/colors";
 import { tagColors } from "../../../components/tag/colors";
 import { dark, IOColorMode, IOColorSemantics, light } from "./semantic";
@@ -34,6 +35,7 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
   component: {
     alert: alertColors(s),
     badge: badgeColors(s),
+    banner: bannerColors(s, mode),
     button: buttonColors(s, mode),
     tag: tagColors(s)
   }

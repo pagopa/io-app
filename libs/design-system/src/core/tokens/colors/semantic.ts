@@ -162,7 +162,8 @@ export const dark = {
     info: withAlpha(p.lightBlue[400], 0.2),
     success: withAlpha(p.green[400], 0.2),
     warning: withAlpha(p.yellow[400], 0.2),
-    highlight: withAlpha(p.turquoise[300], 0.2),
+    /* Darker than the other tints: keeps `text.content.action` at AA on `background.secondary` too */
+    highlight: withAlpha(p.turquoise[600], 0.1),
     /* Product */
     cgn: withAlpha(p.hanPurple[250], 0.2)
   },
@@ -199,7 +200,8 @@ export const dark = {
   text: {
     heading: {
       default: p.greyscale.white,
-      secondary: p.greyscale[300],
+      /* Above `text.content.tertiary` (300) */
+      secondary: p.greyscale[100],
       tertiary: p.greyscale[450],
       onColor: { default: p.greyscale.white }
     },

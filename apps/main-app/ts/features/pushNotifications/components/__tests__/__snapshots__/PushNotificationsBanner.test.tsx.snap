@@ -466,7 +466,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": "#2B2E38",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",

@@ -465,7 +465,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": "#2B2E38",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1230,7 +1230,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": "#2B2E38",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
