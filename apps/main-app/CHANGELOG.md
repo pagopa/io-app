@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.42.0-rc.5](https://github.com/pagopa/io-app/compare/3.42.0-rc.4...3.42.0-rc.5) (2026-10-21)
+
+### Features
+
+* **IT-Wallet:** [[SIW-5295](https://pagopa.atlassian.net/browse/SIW-5295)] Remove digital version releaser field ([#8737](https://github.com/pagopa/io-app/issues/8737)) ([60b1f7d](https://github.com/pagopa/io-app/commit/60b1f7d2bc957371c34ea14c8a714c710ff81d0c))
+* **IT-Wallet:** [[SIW-5296](https://pagopa.atlassian.net/browse/SIW-5296)] Use the dynamic credentials catalogue ([#8734](https://github.com/pagopa/io-app/issues/8734)) ([e63c5cd](https://github.com/pagopa/io-app/commit/e63c5cd75b55aac0548f63bf5ae416f1fc2db54f))
+* **IT-Wallet:** [[SIW-5363](https://pagopa.atlassian.net/browse/SIW-5363)] Differentiate NFC+BLE and NFC+NFC in proximity_flow ([#8763](https://github.com/pagopa/io-app/issues/8763)) ([b15d628](https://github.com/pagopa/io-app/commit/b15d628f6dbc45946b3676d222065fa8ae07d699))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-5180](https://pagopa.atlassian.net/browse/SIW-5180)] Driver licence flip axis ([#8730](https://github.com/pagopa/io-app/issues/8730)) ([4a37f70](https://github.com/pagopa/io-app/commit/4a37f7061f6191f499bd1f7726450299b7d8a2da))
+* **IT-Wallet:** [[SIW-5182](https://pagopa.atlassian.net/browse/SIW-5182)] Copy date, fiscal code and list claims ([#8724](https://github.com/pagopa/io-app/issues/8724)) ([383a3db](https://github.com/pagopa/io-app/commit/383a3db743c52d5d53d9ed50f4ec4725645a7950))
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4995](https://pagopa.atlassian.net/browse/SIW-4995)] Handle issuer dynamic error for specific credential types ([#8648](https://github.com/pagopa/io-app/issues/8648)) ([3e5e831](https://github.com/pagopa/io-app/commit/3e5e831a5ed55583861f0dbaa7ff1735ee579e52))
+* **IT-Wallet:** [[SIW-5208](https://pagopa.atlassian.net/browse/SIW-5208)] Add skeuomorphic category A on CED ([#8719](https://github.com/pagopa/io-app/issues/8719)) ([5dd8d21](https://github.com/pagopa/io-app/commit/5dd8d2126175b5be99700d141fd960b4c228810d))
 ## [3.42.0-rc.4](https://github.com/pagopa/io-app/compare/3.42.0-rc.3...3.42.0-rc.4) (2026-10-20)
 
 ### Bug Fixes
