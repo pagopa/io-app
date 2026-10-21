@@ -11,23 +11,23 @@ describe("FlippableCard", () => {
   it.each([
     {
       name: "default vertical axis",
-      rotationAxis: undefined,
+      flipAxis: undefined,
       transform: "rotateY"
     },
-    { name: "vertical axis", rotationAxis: "y", transform: "rotateY" },
+    { name: "vertical axis", flipAxis: "y", transform: "rotateY" },
     {
       name: "horizontal axis for the rotated modal",
-      rotationAxis: "x",
+      flipAxis: "x",
       transform: "rotateX"
     }
   ] as const)(
     "flips both sides around the $name",
-    ({ rotationAxis, transform }) => {
+    ({ flipAxis, transform }) => {
       const { getByTestId, rerender } = render(
         <FlippableCard
           BackComponent={<View testID="back" />}
+          flipAxis={flipAxis}
           FrontComponent={<View testID="front" />}
-          rotationAxis={rotationAxis}
         />
       );
 
@@ -45,9 +45,9 @@ describe("FlippableCard", () => {
       rerender(
         <FlippableCard
           BackComponent={<View testID="back" />}
+          flipAxis={flipAxis}
           FrontComponent={<View testID="front" />}
           isFlipped
-          rotationAxis={rotationAxis}
         />
       );
 

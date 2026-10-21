@@ -10,9 +10,9 @@ type FlippableCardProps = {
   BackComponent: ReactElement;
   containerStyle?: StyleProp<ViewStyle>;
   duration?: number;
+  flipAxis?: "x" | "y";
   FrontComponent: ReactElement;
   isFlipped?: boolean;
-  rotationAxis?: "x" | "y";
 };
 
 /**
@@ -25,7 +25,7 @@ const FlippableCard = ({
   containerStyle,
   duration = DEFAULT_DURATION,
   isFlipped,
-  rotationAxis = "y"
+  flipAxis = "y"
 }: FlippableCardProps) => (
   <View style={containerStyle}>
     <CSSAnimatedView
@@ -34,7 +34,7 @@ const FlippableCard = ({
         styles.front,
         {
           transform: [
-            rotationAxis === "x"
+            flipAxis === "x"
               ? { rotateX: isFlipped ? "180deg" : "0deg" }
               : { rotateY: isFlipped ? "180deg" : "0deg" }
           ],
@@ -51,7 +51,7 @@ const FlippableCard = ({
         styles.back,
         {
           transform: [
-            rotationAxis === "x"
+            flipAxis === "x"
               ? { rotateX: isFlipped ? "360deg" : "180deg" }
               : { rotateY: isFlipped ? "360deg" : "180deg" }
           ],
