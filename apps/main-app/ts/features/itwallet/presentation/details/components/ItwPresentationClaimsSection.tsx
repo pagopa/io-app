@@ -36,7 +36,8 @@ export const ItwPresentationClaimsSection = ({
     exclude: [
       WellKnownClaim.unique_id,
       WellKnownClaim.content,
-      WellKnownClaim.link_qr_code
+      WellKnownClaim.link_qr_code,
+      WellKnownClaim.issuing_authority
     ]
   });
 
