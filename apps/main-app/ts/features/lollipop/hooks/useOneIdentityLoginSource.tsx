@@ -205,9 +205,9 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const store = useIOStore();
   const hashedFiscalCode =
-    flow === LOGIN_TYPES.REAUTH
-      ? hashedProfileFiscalCodeSelector(store.getState())
-      : undefined;
+    flow === LOGIN_TYPES.AUTH
+      ? undefined
+      : hashedProfileFiscalCodeSelector(store.getState());
   const isFastLogin =
     flow === LOGIN_TYPES.AUTH
       ? isFastLoginEnabledSelector(store.getState())
