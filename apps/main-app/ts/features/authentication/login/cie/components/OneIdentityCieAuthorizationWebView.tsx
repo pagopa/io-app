@@ -4,11 +4,10 @@ import { useCallback } from "react";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { OneIdentityActiveSessionLoginCieAuthorizationWebView } from "../../../activeSessionLogin/screens/cie/OneIdentityActiveSessionLoginCieAuthorizationWebView";
-import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import {
   trackLoginCieConsentDataUsageScreen,
   trackLoginCieDataSharingError
@@ -20,11 +19,14 @@ import {
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
-import { AUTH_LEVELS } from "../../../common/utils";
+import { AUTH_LEVELS, LOGIN_TYPES } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
+import { LoginType } from "../../../common/utils/index";
+import { LoginFailureData } from "../../../common/utils/loginErrorDebugInfo";
 
 type OneIdentityCieAuthorizationWebViewProps = {
   authorizationUrl: string;
+  flow: LoginType;
 };
 
 /**
@@ -33,11 +35,12 @@ type OneIdentityCieAuthorizationWebViewProps = {
  * content component.
  */
 export const OneIdentityCieAuthorizationWebView = ({
-  authorizationUrl
+  authorizationUrl,
+  flow
 }: OneIdentityCieAuthorizationWebViewProps) => {
-  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-
-  if (isActiveSessionLogin) {
+  // If the login flow is not the standard auth,
+  // render the active session login web view.
+  if (flow !== LOGIN_TYPES.AUTH) {
     return (
       <OneIdentityActiveSessionLoginCieAuthorizationWebView
         authorizationUrl={authorizationUrl}
@@ -82,36 +85,43 @@ const OneIdentityCieAuthorizationWebViewContent = ({
   });
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage?: string) =>
+    (errorCodeOrMessage: string | undefined, failureData: LoginFailureData) =>
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
         errorCodeOrMessage,
         authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3
+        authLevel: AUTH_LEVELS.L3,
+        failureData
       }),
     [navigation]
   );
 
   const handleLoginFailure = useCallback(
-    (reason: string, code?: string, message?: string) => {
+    (failureData: LoginFailureData, code?: string, message?: string) => {
       if (code === AUTH_ERRORS.ERROR_22) {
         trackLoginCieDataSharingError();
       }
 
       dispatch(
         loginFailure({
-          error: new Error(reason),
+          error: new Error(failureData.reason),
           idp: "cie" as keyof IdpData
         })
       );
       const errorCodeOrMessage = code ?? message;
-      navigateToAuthErrorScreen(errorCodeOrMessage);
+      navigateToAuthErrorScreen(errorCodeOrMessage, failureData);
     },
     [dispatch, navigateToAuthErrorScreen]
   );
 
   const handleLoginSuccess = useCallback(
     (token: string) => {
-      dispatch(loginSuccess({ token, idp: "cie" as keyof IdpData }));
+      dispatch(
+        loginSuccess({
+          token,
+          idp: "cie" as keyof IdpData,
+          isOneIdentityLogin: true
+        })
+      );
     },
     [dispatch]
   );
@@ -121,7 +131,7 @@ const OneIdentityCieAuthorizationWebViewContent = ({
       switch (event.type) {
         case "LOGIN_FAILURE": {
           const { code, message, reason } = event.payload;
-          handleLoginFailure(reason, code, message);
+          handleLoginFailure({ reason }, code, message);
           break;
         }
         case "LOGIN_SUCCESS": {
@@ -130,13 +140,19 @@ const OneIdentityCieAuthorizationWebViewContent = ({
           break;
         }
         case "WEBVIEW_ERROR": {
-          const { url } = event.payload;
-          handleLoginFailure(`WebView error for URL ${url}`);
+          const { url, failureData } = event.payload;
+          handleLoginFailure({
+            ...failureData,
+            reason: `WebView error for URL ${url}`
+          });
           break;
         }
         case "WEBVIEW_HTTP_ERROR": {
-          const { statusCode, url } = event.payload;
-          handleLoginFailure(`WebView HTTP error ${statusCode} for URL ${url}`);
+          const { statusCode, url, failureData } = event.payload;
+          handleLoginFailure({
+            ...failureData,
+            reason: `WebView HTTP error ${statusCode} for URL ${url}`
+          });
           break;
         }
         default:

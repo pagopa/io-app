@@ -1,6 +1,6 @@
 import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
-import * as ZendDesk from "@pagopa/io-react-native-zendesk";
+import * as ZendDesk from "@io-app/expo-zendesk";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
