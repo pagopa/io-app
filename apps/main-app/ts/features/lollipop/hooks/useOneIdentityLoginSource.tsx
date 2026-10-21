@@ -204,7 +204,10 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   const maybeEphemeralPublicKey = useIOSelector(ephemeralPublicKeySelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const store = useIOStore();
-  const hashedFiscalCode = hashedProfileFiscalCodeSelector(store.getState());
+  const hashedFiscalCode =
+    flow === LOGIN_TYPES.REAUTH
+      ? hashedProfileFiscalCodeSelector(store.getState())
+      : undefined;
   const isFastLogin =
     flow === LOGIN_TYPES.AUTH
       ? isFastLoginEnabledSelector(store.getState())
