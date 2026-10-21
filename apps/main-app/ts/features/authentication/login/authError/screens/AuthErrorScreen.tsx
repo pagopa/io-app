@@ -16,7 +16,7 @@ import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { AuthLevel } from "../../../common/utils";
-import { getAuthErrorDetails } from "../../../common/utils/authError";
+import { FailureData } from "../../../common/utils/loginErrorDebugInfo";
 import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
@@ -26,6 +26,8 @@ export type AuthErrorScreenProps = {
   authLevel: AuthLevel;
   authMethod: AuthMethod;
   errorCodeOrMessage?: string;
+  /** What went wrong, shown only in debug mode. */
+  failureData?: FailureData;
 };
 export type AuthMethod = "CIE" | "CIE_ID" | "SPID";
 
@@ -42,18 +44,14 @@ const AuthErrorScreen = () => {
         AuthErrorScreenProps
       >
     >();
-  const { errorCodeOrMessage, authMethod, authLevel } = route.params;
+  const { errorCodeOrMessage, authMethod, authLevel, failureData } =
+    route.params;
 
-  const debugInfo = useMemo(() => {
-    const { title } = getAuthErrorDetails(errorCodeOrMessage);
-    return {
-      errorCodeOrMessage,
-      errorTitle: title,
-      authMethod,
-      authLevel
-    };
-  }, [errorCodeOrMessage, authMethod, authLevel]);
-  useDebugInfo(debugInfo);
+  const screenDebugInfo = useMemo(
+    () => ({ errorCodeOrMessage, authMethod, authLevel, ...failureData }),
+    [errorCodeOrMessage, authMethod, authLevel, failureData]
+  );
+  useDebugInfo(screenDebugInfo);
 
   const navigation =
     useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();

@@ -1,5 +1,7 @@
 import { Event as CEvent } from "@pagopa/react-native-cie";
+import { useMemo } from "react";
 
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import CieExpiredOrInvalidScreen from "../screens/CieExpiredOrInvalidScreen";
 import CieExtendedApduNotSupportedScreen from "../screens/CieExtendedApduNotSupportedScreen";
 import CieUnexpectedErrorScreen from "../screens/CieUnexpectedErrorScreen";
@@ -13,6 +15,9 @@ export type OneIdentityCieCardReaderFailureProps = {
 export const OneIdentityCieCardReaderFailure = ({
   failure
 }: OneIdentityCieCardReaderFailureProps) => {
+  const debugInfo = useMemo(() => ({ failure }), [failure]);
+  useDebugInfo(debugInfo);
+
   switch (failure.event) {
     // "Function not supported" seems to be TAG_ERROR_NFC_NOT_SUPPORTED
     // for the iOS SDK

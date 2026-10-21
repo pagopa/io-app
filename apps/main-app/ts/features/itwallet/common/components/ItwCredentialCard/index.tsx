@@ -21,7 +21,7 @@ import {
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import { CredentialType } from "../../utils/itwMocksUtils";
-import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
+import { getLegacyThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { ItWalletIdLogo } from "../ItWalletIdLogo";
 import { CardBackground, LegacyCardBackground } from "./CardBackground";
@@ -182,7 +182,7 @@ export const ItwCredentialCardLegacy = ({
     credentialStatus,
     credentialType
   );
-  const theme = useThemeColorByCredentialType(credentialType);
+  const theme = getLegacyThemeColorByCredentialType(credentialType);
   const credentialName = useItwCredentialName(credentialType);
   const tagPropsByStatus = useTagPropsByStatus();
   const borderColorByStatus = useBorderColorByStatus();
