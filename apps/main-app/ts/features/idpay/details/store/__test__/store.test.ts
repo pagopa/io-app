@@ -17,7 +17,8 @@ import {
   idpayOperationListSelector,
   idpayTimelineCurrentPageSelector,
   idpayTimelineIsLastPageSelector,
-  idpayTimelineLastUpdateSelector
+  idpayTimelineLastUpdateSelector,
+  initiativeNeedsConfigurationSelector
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -115,6 +116,80 @@ const mockTimelineResponseSuccess: TimelineDTO = {
   totalPages: 1,
   totalElements: 1
 } as TimelineDTO;
+
+describe("initiative configuration during timeline loading", () => {
+  const loadedTimeline = { 0: mockTimelineResponseSuccess };
+  it.each([
+    { name: "not requested", timeline: pot.none, needsConfiguration: false },
+    { name: "loading", timeline: pot.noneLoading, needsConfiguration: false },
+    {
+      name: "failed",
+      timeline: pot.noneError(mockFailure),
+      needsConfiguration: false
+    },
+    {
+      name: "loaded with one operation",
+      timeline: pot.some(loadedTimeline),
+      needsConfiguration: true
+    },
+    {
+      name: "loaded with no operations",
+      timeline: pot.some({
+        0: { ...mockTimelineResponseSuccess, operationList: [] }
+      }),
+      needsConfiguration: true
+    },
+    {
+      name: "loaded with multiple operations",
+      timeline: pot.some({
+        0: {
+          ...mockTimelineResponseSuccess,
+          operationList: [
+            ...mockTimelineResponseSuccess.operationList,
+            ...mockTimelineResponseSuccess.operationList
+          ]
+        }
+      }),
+      needsConfiguration: false
+    },
+    {
+      name: "refreshing",
+      timeline: pot.someLoading(loadedTimeline),
+      needsConfiguration: false
+    },
+    {
+      name: "failed with cached data",
+      timeline: pot.someError(loadedTimeline, mockFailure),
+      needsConfiguration: false
+    }
+  ])("handles a $name timeline", ({ timeline, needsConfiguration }) => {
+    const initialState = appReducer(
+      undefined,
+      applicationChangeState("active")
+    );
+    const state: GlobalState = {
+      ...initialState,
+      features: {
+        ...initialState.features,
+        idPay: {
+          ...initialState.features.idPay,
+          initiative: {
+            ...initialState.features.idPay.initiative,
+            details: pot.some({
+              ...mockResponseSuccess,
+              status: InitativeStatusEnum.NOT_REFUNDABLE
+            }),
+            timeline
+          }
+        }
+      }
+    };
+    expect(initiativeNeedsConfigurationSelector(state)).toBe(
+      needsConfiguration
+    );
+  });
+});
+
 describe("test idpay timeline reducer and selectors", () => {
   it("should be pot.noneLoading after the first loading action dispatched, the selector will also return empty array on pot.none states", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
