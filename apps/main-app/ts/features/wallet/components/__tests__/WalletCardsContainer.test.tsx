@@ -32,7 +32,13 @@ import {
   WalletCardsContainer
 } from "../WalletCardsContainer";
 
-jest.spyOn(Alert, "alert");
+beforeEach(() => {
+  jest.spyOn(Alert, "alert");
+});
+
+afterEach(() => {
+  jest.restoreAllMocks();
+});
 
 const mockNavigate = jest.fn();
 const mockAddListener = jest.fn().mockImplementation(_event => jest.fn());
@@ -172,6 +178,9 @@ describe("WalletCardsContainer", () => {
       jest
         .spyOn(walletSelectors, "selectWalletCategoryFilter")
         .mockImplementation(() => categoryFilter);
+      jest
+        .spyOn(walletSelectors, "shouldRenderWalletLoadingStateSelector")
+        .mockImplementation(() => false);
       jest
         .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
         .mockImplementation(() => false);
