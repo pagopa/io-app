@@ -1,4 +1,5 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 import { err, ok } from "neverthrow";
 import { Provider } from "react-redux";
@@ -7,7 +8,9 @@ import URLParse from "url-parse";
 
 import { apiUrlPrefix } from "../../../../config";
 import { applicationChangeState } from "../../../../store/actions/application";
+import { setProfileHashedFiscalCode } from "../../../../store/actions/crossSessions";
 import { appReducer } from "../../../../store/reducers";
+import { hashedProfileFiscalCodeSelector } from "../../../../store/reducers/crossSessions";
 import { SpidIdp } from "../../../../utils/idps";
 import * as authenticationAnalytics from "../../../authentication/common/analytics";
 import { setOneIdentityEnv } from "../../../authentication/common/store/actions/loginConfig";
@@ -477,6 +480,42 @@ describe("useOneIdentityLoginSource", () => {
       );
     });
   });
+
+  it.each([
+    { name: "auth", flow: LOGIN_TYPES.AUTH, sendsCurrentUser: false },
+    { name: "reauth", flow: LOGIN_TYPES.REAUTH, sendsCurrentUser: true }
+  ])(
+    "should send current_user in the reserve body only when re-authenticating ($name)",
+    async ({ flow, sendsCurrentUser }) => {
+      mockRetriableFetch.mockResolvedValue(
+        successResponse(200, reserveResponse)
+      );
+
+      // The stored fiscal code survives logout: it is set in both flows
+      const store = createTestStore();
+      store.dispatch(
+        setProfileHashedFiscalCode("AAAAAA00A00A000A" as FiscalCode)
+      );
+      const hashedFiscalCode = hashedProfileFiscalCodeSelector(
+        store.getState()
+      );
+      expect(hashedFiscalCode).toBeDefined();
+
+      setupTest({ flow, store });
+
+      await waitFor(() => {
+        expect(mockRetriableFetch).toHaveBeenCalledWith(
+          `${apiUrlPrefix}/api/auth/v1/reserve`,
+          expect.anything()
+        );
+      });
+
+      const [, { body }] = mockRetriableFetch.mock.calls[0];
+      expect(JSON.parse(body).current_user).toBe(
+        sendsCurrentUser ? hashedFiscalCode : undefined
+      );
+    }
+  );
 
   describe("shouldBlockUrlNavigationWhileCheckingLollipop", () => {
     const setupReadyState = async () => {
