@@ -68,12 +68,6 @@ describe("Expo crypto", () => {
       call: () => isKeyStrongboxBacked(keyTag),
       args: [keyTag],
       value: true
-    },
-    {
-      name: "verifyCertificateChain",
-      call: () => verifyCertificateChain(["leaf", "issuer"], "anchor", options),
-      args: [["leaf", "issuer"], "anchor", options],
-      value: { isValid: true, status: "VALID", errorMessage: "" }
     }
   ])(
     "forwards $name arguments and results unchanged",
@@ -85,6 +79,27 @@ describe("Expo crypto", () => {
       expect(nativeModule[name]).toHaveBeenCalledTimes(1);
     }
   );
+
+  it("maps native verifyCertificateChain status to validationStatus", async () => {
+    nativeModule.verifyCertificateChain.mockResolvedValueOnce({
+      isValid: false,
+      status: "CERTIFICATE_REVOKED",
+      errorMessage: "revoked"
+    });
+
+    await expect(
+      verifyCertificateChain(["leaf", "issuer"], "anchor", options)
+    ).resolves.toEqual({
+      isValid: false,
+      validationStatus: "CERTIFICATE_REVOKED",
+      errorMessage: "revoked"
+    });
+    expect(nativeModule.verifyCertificateChain).toHaveBeenCalledWith(
+      ["leaf", "issuer"],
+      "anchor",
+      options
+    );
+  });
 
   it("preserves native errors", async () => {
     const error = Object.assign(new Error("KEY_ALREADY_EXISTS"), {

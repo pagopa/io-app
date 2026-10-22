@@ -44,11 +44,13 @@ internal class CryptoEngine {
     promise: Promise
   ) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      threadHandle = Thread {
+      // Start the local reference: a previous worker may clear threadHandle in its finally.
+      val worker = Thread {
         generate(KeyConfig.EC_P_256, true, keyTag, promise)
         return@Thread
       }
-      threadHandle?.start()
+      threadHandle = worker
+      worker.start()
     } else {
       ModuleException.API_LEVEL_NOT_SUPPORTED.reject(promise)
     }
@@ -426,7 +428,8 @@ internal class CryptoEngine {
 
   fun signUTF8Text(message: String, keyTag: String, promise: Promise) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      threadHandle = Thread {
+      // Start the local reference: a previous worker may clear threadHandle in its finally.
+      val worker = Thread {
         try {
           getKeyPair(keyTag)?.private?.let {
             // Unlike iOS this always returns a byte array.
@@ -472,7 +475,8 @@ internal class CryptoEngine {
           threadHandle = null
         }
       }
-      threadHandle?.start()
+      threadHandle = worker
+      worker.start()
     } else {
       ModuleException.API_LEVEL_NOT_SUPPORTED.reject(promise)
     }

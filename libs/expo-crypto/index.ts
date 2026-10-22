@@ -2,6 +2,7 @@ import { requireNativeModule } from "expo-modules-core";
 
 import type {
   CertificateValidationResult,
+  CertificateValidationStatus,
   PublicKey,
   X509CertificateOptions
 } from "./Crypto.types";
@@ -19,7 +20,14 @@ interface CryptoModuleType {
     certChainBase64: Array<string>,
     trustAnchorBase64: string,
     options: X509CertificateOptions
-  ) => NativeResult<CertificateValidationResult>;
+  ) => NativeResult<NativeCertificateValidationResult>;
+}
+
+/** Both native implementations return the validation status as `status`. */
+interface NativeCertificateValidationResult {
+  errorMessage: string;
+  isValid: boolean;
+  status: CertificateValidationStatus;
 }
 
 interface NativeCryptoFailure {
@@ -155,18 +163,19 @@ export function sign(message: string, keyTag: string): Promise<string> {
  * @param options - Options for certificate validation, including timeouts
  * @returns Promise resolving to validation result with detailed status
  */
-export function verifyCertificateChain(
+export async function verifyCertificateChain(
   certChainBase64: Array<string>,
   trustAnchorBase64: string,
   options: X509CertificateOptions
 ): Promise<CertificateValidationResult> {
-  return unwrapNativeResult(
+  const { errorMessage, isValid, status } = await unwrapNativeResult(
     CryptoModule.verifyCertificateChain(
       certChainBase64,
       trustAnchorBase64,
       options
     )
   );
+  return { errorMessage, isValid, validationStatus: status };
 }
 
 function isNativeCryptoFailure(value: unknown): value is NativeCryptoFailure {
