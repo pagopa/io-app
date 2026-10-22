@@ -110,9 +110,7 @@ export const itwIsCredentialsCatalogueLoading = (state: GlobalState) =>
 export const itwIsCredentialsCataloguePending = (state: GlobalState) => {
   const { catalogue, translations } =
     state.features.itWallet.credentialsCatalogue;
-  return [catalogue, translations].some(
-    ({ kind }) => kind === "PotNoneLoading" || kind === "PotSomeLoading"
-  );
+  return pot.isLoading(catalogue) || pot.isLoading(translations);
 };
 
 export const itwIsCredentialsCatalogueUnavailable = (state: GlobalState) =>
