@@ -99,7 +99,7 @@ const EMPTY_EMAIL = "";
  * use this screen, we use this information to disable autofocus on the input
  * field.
  */
-const isScreenZoomed = isDisplayZoomed();
+const isScreenZoomed: boolean = isDisplayZoomed();
 
 /** A screen to allow user to insert an email address. */
 const EmailInsertScreen = () => {
@@ -541,6 +541,7 @@ const EmailInsertScreen = () => {
             <TextInputValidation
               accessibilityErrorLabel={getAccessibilityErrorLabel()}
               accessibilityLabel={I18n.t("email.newinsert.label")}
+              accessibilityValidLabel={validEmailLabel}
               errorMessage={invalidEmailLabel}
               onChangeText={handleOnChangeEmailText}
               onValidate={isValidEmail}

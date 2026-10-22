@@ -1,17 +1,30 @@
+import {
+  CommonActions,
+  ParamListBase,
+  StackNavigationState,
+  StackRouter
+} from "@react-navigation/native";
 import _ from "lodash";
 import { ActionArgs } from "xstate";
 
+import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { itwShowBanner } from "../../../common/store/actions/banners";
+import { itwSetL2Fallback } from "../../../common/store/actions/preferences";
 import {
   itwSetActivationExitSurvey,
   itwSetFeedbackBottomSheetVisible
 } from "../../../common/store/actions/ui";
+import { ITW_ROUTES } from "../../../navigation/routes";
 import { testEidIssuanceDeps, testMachineStore } from "../../utils/testDeps";
 import {
   closeIssuanceAction,
+  navigateToCiePinPreparationScreenAction,
+  navigateToCredentialCatalogAction,
+  navigateToWalletAction,
+  storeL2FallbackAction,
   storeWalletActivationFeedbackBannerDataAction
 } from "../actions";
 import {
@@ -54,6 +67,117 @@ const buildArgs = ({
   } as unknown as EidActionArgs;
   return { args, dispatch };
 };
+
+describe("navigateToCredentialCatalogAction", () => {
+  test.each<{ expected: string; level: EidIssuanceLevel; name: string }>([
+    {
+      name: "L2 fallback",
+      level: "l2-fallback",
+      expected: ITW_ROUTES.L3_ONBOARDING
+    },
+    { name: "IT-Wallet", level: "l3", expected: ITW_ROUTES.L3_ONBOARDING },
+    {
+      name: "legacy Documenti su IO",
+      level: "l2",
+      expected: ITW_ROUTES.ONBOARDING
+    }
+  ])(
+    "opens the correct catalogue after $name activation",
+    ({ level, expected }) => {
+      const { args } = buildArgs({ level, mode: "issuance" });
+      const navigate = jest.spyOn(args.context.deps.navigation, "navigate");
+      navigateToCredentialCatalogAction(args);
+      expect(navigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+        state: { routes: [{ name: expected }] }
+      });
+    }
+  );
+});
+
+// React Navigation v7 `navigate` pushes a second main navigator instead of popping back to it
+describe("wallet return navigation", () => {
+  test.each([
+    { name: "navigateToWalletAction", action: navigateToWalletAction },
+    { name: "closeIssuanceAction", action: closeIssuanceAction }
+  ])("$name pops back to the existing wallet", ({ action }) => {
+    const { args } = buildArgs({ level: "l3", mode: "issuance" });
+    const { navigation } = args.context.deps;
+    const popTo = jest.spyOn(navigation, "popTo");
+    const navigate = jest.spyOn(navigation, "navigate");
+    action(args);
+    expect(popTo).toHaveBeenCalledWith(
+      ROUTES.MAIN,
+      expect.objectContaining({ screen: ROUTES.WALLET_HOME })
+    );
+    expect(navigate).not.toHaveBeenCalled();
+  });
+});
+
+describe("back target navigation", () => {
+  it("pops back to an existing screen instead of pushing a duplicate", () => {
+    const { PIN_SCREEN, PREPARATION } = ITW_ROUTES.IDENTIFICATION.CIE;
+    const routeNames = [PREPARATION.PIN_SCREEN, PIN_SCREEN];
+    const config = { routeNames, routeParamList: {}, routeGetIdList: {} };
+    const router = StackRouter({});
+    const state = router.getStateForAction(
+      router.getInitialState(config),
+      CommonActions.navigate(PIN_SCREEN),
+      config
+    ) as StackNavigationState<ParamListBase>;
+
+    const { args } = buildArgs({ level: "l3", mode: "issuance" });
+    const navigate = jest.spyOn(args.context.deps.navigation, "navigate");
+    navigateToCiePinPreparationScreenAction(args);
+    const [, { screen, pop }] = navigate.mock.calls[0] as unknown as [
+      string,
+      { pop?: boolean; screen: string }
+    ];
+
+    const nextState = router.getStateForAction(
+      state,
+      { type: "NAVIGATE", payload: { name: screen, pop } },
+      config
+    );
+    expect(nextState?.routes.map(({ name }) => name)).toEqual([
+      PREPARATION.PIN_SCREEN
+    ]);
+  });
+});
+
+describe("storeL2FallbackAction", () => {
+  test.each<{
+    expected: boolean;
+    level: EidIssuanceLevel;
+    mode: EidIssuanceMode;
+    name: string;
+  }>([
+    {
+      name: "fallback activation",
+      mode: "issuance",
+      level: "l2-fallback",
+      expected: true
+    },
+    {
+      name: "standard L2 activation",
+      mode: "issuance",
+      level: "l2",
+      expected: false
+    },
+    { name: "L3 activation", mode: "issuance", level: "l3", expected: false },
+    { name: "L3 upgrade", mode: "upgrade", level: "l3", expected: false },
+    { name: "L3 reissuance", mode: "reissuance", level: "l3", expected: false }
+  ])("records fallback provenance for $name", ({ mode, level, expected }) => {
+    const { args, dispatch } = buildArgs({ mode, level });
+    storeL2FallbackAction(args);
+    expect(dispatch).toHaveBeenCalledWith(itwSetL2Fallback(expected));
+  });
+
+  it("preserves fallback provenance during L2 reissuance", () => {
+    const { args, dispatch } = buildArgs({ mode: "reissuance", level: "l2" });
+    storeL2FallbackAction(args);
+    expect(dispatch).not.toHaveBeenCalled();
+  });
+});
 
 describe("closeIssuanceAction", () => {
   // SIW-5129: the reissuance survey is reserved to Documenti su IO (L2) reissuance

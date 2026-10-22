@@ -7,12 +7,14 @@ import { appReducer } from "../../../../../store/reducers";
 import { getNetworkError } from "../../../../../utils/errors";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
+import { CredentialBundle } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
 import { itwFetchCredentialsCatalogue } from "../../../credentialsCatalogue/store/actions";
 import {
   getCredentialStatusFromStatusList,
   getKeysForStatusListToken
 } from "../../../statusList/utils";
+import { InvalidTslCredentialStatus } from "../../../statusList/utils/errors";
 import { StatusListRepository } from "../../../statusList/utils/repository";
 import {
   itwKeyAttestationsStore,
@@ -20,6 +22,7 @@ import {
 } from "../../../walletInstance/store/actions";
 import { testEidIssuanceDeps, testMachineStore } from "../../utils/testDeps";
 import {
+  obtainEidStatusListActor,
   obtainStatusListActor,
   ObtainStatusListActorOutput,
   refreshCredentialsCatalogueActor,
@@ -199,6 +202,107 @@ describe("eID issuance actors", () => {
         keyAttestations: { "ka-1": "ka-1-jwt" }
       })
     ).rejects.toBe(error);
+  });
+
+  describe("obtainEidStatusListActor", () => {
+    const PID_STATUS_LIST_URI = "https://pid-provider.example/status-list/1";
+    const PID_STATUS_LIST_PAYLOAD: CredentialStatus.StatusList = {
+      ...STATUS_LIST_PAYLOAD,
+      sub: PID_STATUS_LIST_URI
+    };
+    const PID_ISSUER_KEYS = [{ kty: "EC" as const, kid: "pid-provider-key" }];
+    const PID: CredentialBundle = {
+      credential: "eid-jwt",
+      metadata: {
+        ...ItwStoredCredentialsMocks.eid,
+        credentialId: "dc_sd_jwt_PersonIdentificationData",
+        format: "dc+sd-jwt",
+        issuerConf: {
+          ...ItwStoredCredentialsMocks.eid.issuerConf,
+          keys: PID_ISSUER_KEYS
+        }
+      }
+    };
+
+    it("attaches the PID status list verified with the PID Provider keys", async () => {
+      mockGetIoWallet.mockReturnValue(createWallet() as never);
+      mockGetCredentialStatus.mockResolvedValue({
+        idx: 42,
+        uri: PID_STATUS_LIST_URI,
+        parsedStatusList: PID_STATUS_LIST_PAYLOAD,
+        rawStatus: "0x00",
+        status: "valid",
+        statusList: "pid-status-list-jwt"
+      });
+
+      const result = await runActor<CredentialBundle>(
+        obtainEidStatusListActor,
+        { itwVersion: ITW_VERSION, eid: PID }
+      );
+
+      expect(mockGetCredentialStatus).toHaveBeenCalledWith(
+        ITW_VERSION,
+        "eid-jwt",
+        "dc_sd_jwt_PersonIdentificationData",
+        "dc+sd-jwt",
+        PID_ISSUER_KEYS
+      );
+      expect(result).toEqual({
+        credential: "eid-jwt",
+        metadata: {
+          ...PID.metadata,
+          validity: {
+            type: "status_list",
+            status: "valid",
+            rawStatus: "0x00",
+            statusList: { uri: PID_STATUS_LIST_URI, idx: 42 }
+          }
+        },
+        statusList: {
+          uri: PID_STATUS_LIST_URI,
+          payload: PID_STATUS_LIST_PAYLOAD
+        }
+      });
+    });
+
+    it("returns the eID untouched when the Status List is not supported", async () => {
+      mockGetIoWallet.mockReturnValue(createWallet(true, false) as never);
+
+      await expect(
+        runActor(obtainEidStatusListActor, {
+          itwVersion: "1.0.0",
+          eid: PID
+        })
+      ).resolves.toBe(PID);
+      expect(mockGetCredentialStatus).not.toHaveBeenCalled();
+    });
+
+    it("fails when the eID is missing", async () => {
+      mockGetIoWallet.mockReturnValue(createWallet() as never);
+
+      await expect(
+        runActor(obtainEidStatusListActor, {
+          itwVersion: ITW_VERSION,
+          eid: undefined
+        })
+      ).rejects.toThrow("eID credential is undefined");
+    });
+
+    it("propagates a non valid PID status", async () => {
+      const error = new InvalidTslCredentialStatus(
+        PID.metadata.credentialId,
+        "0x01"
+      );
+      mockGetIoWallet.mockReturnValue(createWallet() as never);
+      mockGetCredentialStatus.mockRejectedValue(error);
+
+      await expect(
+        runActor(obtainEidStatusListActor, {
+          itwVersion: ITW_VERSION,
+          eid: PID
+        })
+      ).rejects.toBe(error);
+    });
   });
 
   it("persists status lists before KAs and the eID", async () => {

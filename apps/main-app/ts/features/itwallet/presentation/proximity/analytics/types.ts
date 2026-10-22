@@ -6,11 +6,14 @@ export type ItwProximityFailure = {
   type: string;
 };
 
+export type ItwProximityFlowFailure = ItwProximityFailure &
+  ItwProximityFlowProperties;
+
 export type ItwProximityFlowProperties = {
   proximity_flow: ProximityFlow;
 };
 
-export type ItwProximityGenericFailure = ItwProximityFailure & {
+export type ItwProximityGenericFailure = ItwProximityFlowFailure & {
   proximity_sharing_status: "post" | "pre";
 };
 
@@ -45,4 +48,4 @@ export type ItwStartReissuingPID = {
     | "ITW_QR_CODE";
 };
 
-export type ProximityFlow = "nfc" | "qr_code";
+export type ProximityFlow = "nfc_ble" | "nfc_nfc" | "qr_code";

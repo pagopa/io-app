@@ -1,5 +1,5 @@
 import { CieUtils } from "@pagopa/io-react-native-cie";
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
+import { CredentialIssuance, ItwVersion } from "@pagopa/io-react-native-wallet";
 import { fromPromise } from "xstate";
 
 import type {
@@ -79,6 +79,10 @@ export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
   deps: EidIssuanceMachineDeps;
   walletInstanceAttestation: string | undefined;
+}>;
+
+export type ObtainEidStatusListActorInput = WithItwVersion<{
+  eid: CredentialBundle | undefined;
 }>;
 
 export type ObtainStatusListActorInput = Pick<
@@ -477,6 +481,48 @@ export const obtainStatusListActor = fromPromise<
     "dc+sd-jwt",
     keys
   );
+});
+
+/**
+ * Enriches the eID bundle with its own Status List: the validity in the
+ * metadata and the verified token to persist when the eID is stored. The token
+ * is signed by the PID Provider, so its keys are used for verification.
+ *
+ * @throws {InvalidTslCredentialStatus} When the PID status is not valid
+ */
+export const obtainEidStatusListActor = fromPromise<
+  CredentialBundle,
+  ObtainEidStatusListActorInput
+>(async ({ input }) => {
+  const { itwVersion, eid } = input;
+  assert(eid, "eID credential is undefined");
+
+  if (!getIoWallet(itwVersion).CredentialStatus.statusList.isSupported) {
+    return eid;
+  }
+
+  const { status, rawStatus, uri, idx, parsedStatusList } =
+    await getCredentialStatusFromStatusList(
+      itwVersion,
+      eid.credential,
+      eid.metadata.credentialId,
+      eid.metadata.format as CredentialIssuance.CredentialFormat,
+      eid.metadata.issuerConf.keys
+    );
+
+  return {
+    credential: eid.credential,
+    metadata: {
+      ...eid.metadata,
+      validity: {
+        type: "status_list",
+        status,
+        rawStatus,
+        statusList: { uri, idx }
+      }
+    },
+    statusList: { uri, payload: parsedStatusList }
+  };
 });
 
 export const storeEidCredentialActor = fromPromise<

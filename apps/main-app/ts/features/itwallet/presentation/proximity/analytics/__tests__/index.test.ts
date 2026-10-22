@@ -1,6 +1,7 @@
 import * as Mixpanel from "../../../../../../mixpanel";
 import {
   ITW_PROXIMITY_ACTIONS_EVENTS,
+  ITW_PROXIMITY_ERRORS_EVENTS,
   ITW_PROXIMITY_SCREENVIEW_EVENTS,
   ITW_PROXIMITY_TECH_EVENTS
 } from "../enum";
@@ -10,9 +11,14 @@ import {
   trackItwCredentialManageConsent,
   trackItwProximityContinuePresentation,
   trackItwProximityDataShare,
+  trackItwProximityMandatoryCredentialMissing,
   trackItwProximityNfcStart,
   trackItwProximityPresentationCompleted,
+  trackItwProximityRPGenericFailure,
+  trackItwProximityRpNotTrusted,
   trackItwProximityStart,
+  trackItwProximityTimeout,
+  trackItwProximityUnexpectedFailure,
   trackItwRevokeConsent,
   trackItwRevokeConsentOperationBlock,
   trackItwRevokeConsentOperationBlockAction
@@ -37,13 +43,13 @@ describe("proximity analytics", () => {
     },
     {
       name: "trackItwProximityStart with nfc flow",
-      track: () => trackItwProximityStart({ proximity_flow: "nfc" }),
+      track: () => trackItwProximityStart({ proximity_flow: "nfc_ble" }),
       eventName: ITW_PROXIMITY_TECH_EVENTS.ITW_PROXIMITY_START,
       properties: {
         event_category: "TECH",
         event_type: undefined,
         flow: undefined,
-        proximity_flow: "nfc"
+        proximity_flow: "nfc_ble"
       }
     },
     {
@@ -58,13 +64,13 @@ describe("proximity analytics", () => {
     },
     {
       name: "trackItwProximityDataShare",
-      track: () => trackItwProximityDataShare({ proximity_flow: "nfc" }),
+      track: () => trackItwProximityDataShare({ proximity_flow: "nfc_ble" }),
       eventName: ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_DATA_SHARE,
       properties: {
         event_category: "UX",
         event_type: "screen_view",
         flow: undefined,
-        proximity_flow: "nfc"
+        proximity_flow: "nfc_ble"
       }
     },
     {
@@ -82,21 +88,20 @@ describe("proximity analytics", () => {
     {
       name: "trackItwProximityContinuePresentation",
       track: () =>
-        trackItwProximityContinuePresentation({ proximity_flow: "nfc" }),
+        trackItwProximityContinuePresentation({ proximity_flow: "nfc_ble" }),
       eventName: ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UX_CONVERSION,
       properties: {
         event_category: "UX",
         event_type: "action",
         flow: undefined,
-        proximity_flow: "nfc"
+        proximity_flow: "nfc_ble"
       }
     },
     {
       name: "trackItwCredentialManageConsent",
-      track: () => trackItwCredentialManageConsent({ credential: "ITW_PG_V3" }),
+      track: () => trackItwCredentialManageConsent(),
       eventName: ITW_PROXIMITY_ACTIONS_EVENTS.ITW_CREDENTIAL_MANAGE_CONSENT,
       properties: {
-        credential: "ITW_PG_V3",
         event_category: "UX",
         event_type: "action",
         flow: undefined
@@ -104,10 +109,9 @@ describe("proximity analytics", () => {
     },
     {
       name: "trackItwConsentManagement",
-      track: () => trackItwConsentManagement({ credential: "ITW_PG_V3" }),
+      track: () => trackItwConsentManagement(),
       eventName: ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_CONSENT_MANAGEMENT,
       properties: {
-        credential: "ITW_PG_V3",
         event_category: "UX",
         event_type: "screen_view",
         flow: undefined
@@ -142,6 +146,97 @@ describe("proximity analytics", () => {
         event_category: "UX",
         event_type: "screen_view",
         flow: undefined
+      }
+    },
+    {
+      name: "trackItwProximityRPGenericFailure with nfc flow",
+      track: () =>
+        trackItwProximityRPGenericFailure({
+          proximity_flow: "nfc_ble",
+          proximity_sharing_status: "post",
+          reason: "reason",
+          type: "RELYING_PARTY_GENERIC"
+        }),
+      eventName: ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_GENERIC_ERROR,
+      properties: {
+        event_category: "KO",
+        event_type: "screen_view",
+        flow: undefined,
+        proximity_flow: "nfc_ble",
+        proximity_sharing_status: "post",
+        reason: "reason",
+        type: "RELYING_PARTY_GENERIC"
+      }
+    },
+    {
+      name: "trackItwProximityTimeout with qr_code flow",
+      track: () =>
+        trackItwProximityTimeout({
+          proximity_flow: "qr_code",
+          reason: "reason",
+          type: "TIMEOUT"
+        }),
+      eventName: ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_TIMEOUT,
+      properties: {
+        event_category: "KO",
+        event_type: "screen_view",
+        flow: undefined,
+        proximity_flow: "qr_code",
+        reason: "reason",
+        type: "TIMEOUT"
+      }
+    },
+    {
+      name: "trackItwProximityUnexpectedFailure with nfc flow",
+      track: () =>
+        trackItwProximityUnexpectedFailure({
+          origin: "origin",
+          proximity_flow: "nfc_ble",
+          reason: "reason",
+          type: "UNEXPECTED"
+        }),
+      eventName: ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNEXPECTED_FAILURE,
+      properties: {
+        event_category: "KO",
+        event_type: "screen_view",
+        flow: undefined,
+        origin: "origin",
+        proximity_flow: "nfc_ble",
+        reason: "reason",
+        type: "UNEXPECTED"
+      }
+    },
+    {
+      name: "trackItwProximityRpNotTrusted with qr_code flow",
+      track: () =>
+        trackItwProximityRpNotTrusted({
+          proximity_flow: "qr_code",
+          reason: "reason",
+          type: "UNTRUSTED_RP"
+        }),
+      eventName: ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_RP_NOT_TRUSTED,
+      properties: {
+        event_category: "KO",
+        event_type: "screen_view",
+        flow: undefined,
+        proximity_flow: "qr_code",
+        reason: "reason",
+        type: "UNTRUSTED_RP"
+      }
+    },
+    {
+      name: "trackItwProximityMandatoryCredentialMissing with nfc flow",
+      track: () =>
+        trackItwProximityMandatoryCredentialMissing({
+          proximity_flow: "nfc_ble"
+        }),
+      eventName:
+        ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING,
+      properties: {
+        event_category: "KO",
+        event_type: "screen_view",
+        flow: undefined,
+        proximity_flow: "nfc_ble"
       }
     },
     {

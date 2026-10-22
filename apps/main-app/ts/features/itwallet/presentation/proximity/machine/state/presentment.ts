@@ -1,5 +1,5 @@
 import { State } from "react-native-ble-plx";
-import { and, assign, not, or, stateIn } from "xstate";
+import { and, assign, enqueueActions, not, or, stateIn } from "xstate";
 
 import { ProximityFailureType } from "../failure";
 import { itwProximityMachineSetup } from "../setup";
@@ -74,8 +74,7 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       target: "Presentment.Connecting"
     },
     "device-connected": {
-      target: "Presentment.Connected",
-      actions: "trackProximityStart"
+      target: "Presentment.Connected"
     },
     "device-document-request-received": [
       {
@@ -90,11 +89,19 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
         ])
       },
       {
-        actions: assign(({ event }) => ({
-          proximityDetails: event.proximityDetails,
-          verifierRequest: event.verifierRequest,
-          retrievalMethod: event.retrievalMethod
-        })),
+        actions: [
+          assign(({ event }) => ({
+            proximityDetails: event.proximityDetails,
+            verifierRequest: event.verifierRequest,
+            retrievalMethod: event.retrievalMethod
+          })),
+          // Track after the assign so proximity_flow reflects the retrieval method
+          enqueueActions(({ context, enqueue }) => {
+            if (!context.grantedConsentKey) {
+              enqueue("trackProximityStart");
+            }
+          })
+        ],
         target: "Presentment.EvaluatingConsent"
       }
     ],
@@ -229,6 +236,7 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       tags: [ItwPresentationTags.Presenting],
       on: {
         "start-nfc-presentment": {
+          guard: "isNfcPresentmentSupported",
           target: "#itwProximityMachine.Nfc"
         },
         "nfc-stopped": {

@@ -1,1 +1,1 @@
-export * from "./NativeSwitch";
+export * from "./Switch";

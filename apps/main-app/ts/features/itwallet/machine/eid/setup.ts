@@ -36,6 +36,7 @@ import {
   storeAuthLevelAction,
   storeCredentialUpgradeFailuresAction,
   storeIntegrityKeyTagAction,
+  storeL2FallbackAction,
   storeWalletActivationFeedbackBannerDataAction,
   storeWalletInstanceAttestationAction,
   trackIdentificationMethodSelectedAction,
@@ -50,6 +51,7 @@ import {
   getCieStatusActor,
   getWalletAttestationActor,
   initMrtdPoPChallengeActor,
+  obtainEidStatusListActor,
   obtainStatusListActor,
   refreshCredentialsCatalogueActor,
   requestAccessTokenActor,
@@ -118,6 +120,7 @@ export const itwEidIssuanceMachineSetup = setup({
     cleanupIntegrityKeyTag: cleanupIntegrityKeyTagAction,
     storeWalletInstanceAttestation: storeWalletInstanceAttestationAction,
     storeAuthLevel: storeAuthLevelAction,
+    storeL2Fallback: storeL2FallbackAction,
     storeWalletActivationFeedbackBannerData:
       storeWalletActivationFeedbackBannerDataAction,
     storeCredentialUpgradeFailures: storeCredentialUpgradeFailuresAction,
@@ -221,6 +224,7 @@ export const itwEidIssuanceMachineSetup = setup({
     requestAccessToken: requestAccessTokenActor,
     requestEid: requestEidActor,
     obtainStatusList: obtainStatusListActor,
+    obtainEidStatusList: obtainEidStatusListActor,
     storeEidCredential: storeEidCredentialActor,
     waitForSessionRefresh: waitForSessionRefreshActor,
 
