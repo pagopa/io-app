@@ -56,14 +56,12 @@ export const light = {
   /** The whole screen. Role: `background` */
   background: {
     default: p.greyscale.white,
-    secondary: p.greyscale[50],
-    tertiary: p.greyscale[100],
     accent: p.blueIO[500],
     overlay: withAlpha(p.greyscale.black, 0.15)
   },
   /**
-   * What sits on the background (cards, alerts, tints); `action` holds
-   * interactive fills, with states. Role: `background`
+   * What sits on the background (cards, alerts, tints, screen regions);
+   * `action` holds interactive fills, with states. Role: `background`
    */
   surface: {
     default: p.greyscale.white,
@@ -248,8 +246,6 @@ type IORoleScheme<T, R extends IOColorRole> = {
 export const dark = {
   background: {
     default: p.greyscale.black,
-    secondary: p.greyscale[900],
-    tertiary: p.greyscale[700],
     accent: p.blueIO[500],
     overlay: withAlpha(p.greyscale.black, 0.7)
   },
@@ -262,7 +258,7 @@ export const dark = {
     info: withAlpha(p.lightBlue[400], 0.2),
     success: withAlpha(p.green[400], 0.2),
     warning: withAlpha(p.yellow[400], 0.2),
-    /* Darker than the other tints: keeps `text.content.action` at AA on `background.secondary` too */
+    /* Darker than the other tints: keeps `text.content.action` at AA on `surface.secondary` too */
     highlight: withAlpha(p.turquoise[600], 0.1),
     /* Product */
     cgn: withAlpha(p.hanPurple[250], 0.2),
