@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.42.0-canary.8237](https://github.com/pagopa/io-app/compare/3.42.0-rc.5...3.42.0-canary.8237) (2026-10-22)
+
+### Features
+
+* **CryptoEngine:** enhance certificate validation with detailed status mapping ([f9b2584](https://github.com/pagopa/io-app/commit/f9b2584d36e4b5677d41fca9ed6cd70533e813b6))
+
+### Bug Fixes
+
+* [[IOPID-4277](https://pagopa.atlassian.net/browse/IOPID-4277)] Allow another user to log in after logout ([#8776](https://github.com/pagopa/io-app/issues/8776)) ([929d70f](https://github.com/pagopa/io-app/commit/929d70f35ee544d9b12a5ccba92e75cc83009c8f))
+
+### Chores
+
+* [[IOPLT-2197](https://pagopa.atlassian.net/browse/IOPLT-2197)] Add missing `a11y` for `ListItem` with security label ([#8765](https://github.com/pagopa/io-app/issues/8765)) ([67765d2](https://github.com/pagopa/io-app/commit/67765d241be43024ed5cefd330a46c90707bbe40))
+* add ios and android module ([6eec6a3](https://github.com/pagopa/io-app/commit/6eec6a3dc02141f5b90b8a564c82e09cb64e9bb9))
+* expose crypto config ([8c52aec](https://github.com/pagopa/io-app/commit/8c52aec5bcc72514dc2f4f488425bb1021377e6d))
+* lib setup ([b64040f](https://github.com/pagopa/io-app/commit/b64040f2768901535402ca3b3ee5a35c777ff8dc))
+* replace package with expo module ([fed348c](https://github.com/pagopa/io-app/commit/fed348c35028ac21c11d533991eb68effe78de50))
 ## [3.42.0-rc.5](https://github.com/pagopa/io-app/compare/3.42.0-rc.4...3.42.0-rc.5) (2026-10-21)
 
 ### Features
