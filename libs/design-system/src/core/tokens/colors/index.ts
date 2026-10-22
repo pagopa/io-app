@@ -21,6 +21,8 @@ import {
   iconButtonSolidColors
 } from "../../../components/buttons/colors";
 import { buttonColors } from "../../../components/buttons/IOButton/colors";
+import { codeInputColors } from "../../../components/codeInput/colors";
+import { otpInputColors } from "../../../components/otpInput/colors";
 import { pictogramColors } from "../../../components/pictograms/colors";
 import { tagColors } from "../../../components/tag/colors";
 import { dark, IOColorMode, IOColorSemantics, light } from "./semantic";
@@ -46,8 +48,10 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     badge: badgeColors(s),
     banner: bannerColors(s, mode),
     button: buttonColors(s),
+    codeInput: codeInputColors(s),
     iconButton: iconButtonColors(s),
     iconButtonSolid: iconButtonSolidColors(s),
+    otpInput: otpInputColors(s),
     pictogram: pictogramColors(s),
     tag: tagColors(s)
   }
