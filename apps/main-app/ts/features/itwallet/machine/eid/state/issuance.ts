@@ -179,7 +179,7 @@ export const issuanceState = itwEidIssuanceMachineSetup.createStateConfig({
       target: "#itwEidIssuanceMachine.CredentialsUpgrade"
     },
     {
-      target: "#itwEidIssuanceMachine.RefreshingCredentialsCatalogue"
+      target: "#itwEidIssuanceMachine.Success"
     }
   ]
 } as const);

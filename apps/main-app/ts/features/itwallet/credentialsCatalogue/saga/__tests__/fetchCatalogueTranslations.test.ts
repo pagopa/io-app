@@ -56,7 +56,6 @@ describe("fetchCatalogueTranslationsSaga", () => {
       .provide([
         [matchers.call.fn(fetchCatalogueTranslations), mockTranslations]
       ])
-      .put(itwFetchCatalogueTranslations.request())
       .put(itwFetchCatalogueTranslations.success(mockTranslations))
       .run());
 
@@ -69,7 +68,6 @@ describe("fetchCatalogueTranslationsSaga", () => {
           throwError(new Error("network error"))
         ]
       ])
-      .put(itwFetchCatalogueTranslations.request())
       .put.actionType(itwFetchCatalogueTranslations.failure.toString())
       .run());
 
@@ -98,7 +96,6 @@ describe("fetchCatalogueTranslationsSaga", () => {
     return expectSaga(fetchCatalogueTranslationsSaga)
       .withState(v1Store)
       .provide([[matchers.call.fn(fetchCatalogueTranslations), {}]])
-      .put(itwFetchCatalogueTranslations.request())
       .put(itwFetchCatalogueTranslations.success({}))
       .run();
   });

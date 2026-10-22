@@ -29,8 +29,6 @@ export function* fetchCatalogueTranslationsSaga() {
   const preferences = yield* select(persistedPreferencesSelector);
   const locale: Locales = preferences.preferredLanguage ?? "it";
 
-  yield* put(itwFetchCatalogueTranslations.request());
-
   try {
     const translations = yield* call(
       fetchCatalogueTranslations,

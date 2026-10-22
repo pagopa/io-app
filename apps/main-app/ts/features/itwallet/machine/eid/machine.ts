@@ -1,4 +1,12 @@
-import { and, assertEvent, assign, not, or, raise } from "xstate";
+import {
+  and,
+  assertEvent,
+  assign,
+  enqueueActions,
+  not,
+  or,
+  raise
+} from "xstate";
 
 import { CURRENT_ITW_SPECS_VERSION } from "../../common/utils/constants";
 import { ItwTags } from "../tags";
@@ -314,23 +322,14 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
     MrtdPoP: mrtdPoPState,
     Issuance: issuanceState,
     CredentialsUpgrade: credentialsUpgradeState,
-    RefreshingCredentialsCatalogue: {
-      tags: [ItwTags.Loading],
-      invoke: {
-        src: "refreshCredentialsCatalogue",
-        input: ({ context }) => ({ deps: context.deps }),
-        onDone: {
-          target: "Success"
-        },
-        onError: {
-          description:
-            "A catalogue fetch failure does not invalidate the stored eID.",
-          target: "Success"
-        }
-      }
-    },
     Success: {
       entry: [
+        enqueueActions(({ context, enqueue }) => {
+          // Resumed credential issuance owns its refresh; standalone activation still refreshes the list.
+          if (!context.credentialType) {
+            enqueue("refreshCredentialsCatalogue");
+          }
+        }),
         "navigateToSuccessScreen",
         "storeWalletActivationFeedbackBannerData"
       ],

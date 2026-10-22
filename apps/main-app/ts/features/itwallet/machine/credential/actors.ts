@@ -16,6 +16,8 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { CredentialsVault } from "../../credentials/utils/vault";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
+import { itwIsCredentialsCataloguePending } from "../../credentialsCatalogue/store/selectors";
 import {
   trackWalletInstanceRenewalFailure,
   trackWalletInstanceRenewalSuccess
@@ -430,4 +432,36 @@ export const processCredentialOfferActor = fromPromise<
     grantDetails,
     issuerConf
   };
+});
+
+/**
+ * Refreshes the catalogue for the active wallet and waits for its translations.
+ * Fetch failures retain the existing cached/static content fallback.
+ */
+export const refreshCredentialsCatalogueActor = fromPromise<
+  void,
+  { deps: CredentialIssuanceMachineDeps }
+>(({ input, signal }) => {
+  const { store } = input.deps;
+  return new Promise<void>((resolve, reject) => {
+    const checkReadiness = () => {
+      if (!itwIsCredentialsCataloguePending(store.getState())) {
+        cleanup();
+        resolve();
+      }
+    };
+    const unsubscribe = store.subscribe(checkReadiness);
+    const cleanup = () => {
+      unsubscribe();
+      signal.removeEventListener("abort", cleanup);
+    };
+    signal.addEventListener("abort", cleanup, { once: true });
+    try {
+      store.dispatch(itwFetchCredentialsCatalogue.request());
+      checkReadiness();
+    } catch (error) {
+      cleanup();
+      reject(error);
+    }
+  });
 });

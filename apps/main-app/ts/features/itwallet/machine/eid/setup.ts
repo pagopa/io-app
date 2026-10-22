@@ -53,7 +53,6 @@ import {
   initMrtdPoPChallengeActor,
   obtainEidStatusListActor,
   obtainStatusListActor,
-  refreshCredentialsCatalogueActor,
   requestAccessTokenActor,
   requestEidActor,
   revokeWalletInstanceActor,
@@ -200,7 +199,6 @@ export const itwEidIssuanceMachineSetup = setup({
     trackIntroScreen: trackIntroScreenAction
   },
   actors: {
-    refreshCredentialsCatalogue: refreshCredentialsCatalogueActor,
     getCieStatus: getCieStatusActor,
     verifyTrustFederation: verifyTrustFederationActor,
 
