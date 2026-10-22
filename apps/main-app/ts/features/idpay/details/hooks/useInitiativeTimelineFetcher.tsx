@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -13,8 +13,7 @@ import { idpayTimelinePageGet } from "../store/actions";
 
 export const useInitiativeTimelineFetcher = (
   initiativeId: string,
-  pageSize: number,
-  onError: () => void
+  pageSize: number
 ) => {
   const dispatch = useIODispatch();
 
@@ -30,23 +29,27 @@ export const useInitiativeTimelineFetcher = (
   const isError = pot.isError(paginatedTimelinePot);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const requestPending = useRef(false);
 
   useEffect(() => {
-    if (currentPage >= 0 && isRefreshing) {
+    if (!isLoading && !isUpdating) {
+      requestPending.current = false;
       setIsRefreshing(false);
     }
-  }, [currentPage, isRefreshing]);
+  }, [isLoading, isUpdating]);
 
   const refresh = () => {
-    if (!isLoading) {
+    if (!isLoading && !isUpdating && !requestPending.current) {
       setIsRefreshing(true);
       fetchPage(0);
     }
   };
 
-  const fetchPage = (page: number) =>
-    !isUpdating &&
-    !isLoading &&
+  const fetchPage = (page: number) => {
+    if (isUpdating || isLoading || requestPending.current) {
+      return;
+    }
+    requestPending.current = true;
     dispatch(
       idpayTimelinePageGet.request({
         initiativeId,
@@ -54,26 +57,24 @@ export const useInitiativeTimelineFetcher = (
         pageSize
       })
     );
+  };
 
   const fetchNextPage = () => {
-    if (isLastPage || isLoading) {
+    if (isLastPage || isLoading || isUpdating || isError) {
       return;
     }
-    if (isError) {
-      onError();
-    } else {
-      fetchPage(currentPage + 1);
-    }
+    fetchPage(currentPage + 1);
   };
 
   const retryFetchLastPage = () => {
-    fetchPage(currentPage);
+    fetchPage(currentPage + 1);
   };
 
   return {
     isLoading,
     isUpdating,
     isRefreshing,
+    isError,
     timeline,
     fetchPage,
     refresh,
