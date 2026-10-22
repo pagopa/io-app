@@ -8,12 +8,18 @@ import { CieIdWebViewLogin as CieIdWebViewLoginComponent } from "../CieIdWebView
 
 const CieIdWebViewLogin = withStore(CieIdWebViewLoginComponent);
 
+const mockWebViewMount = jest.fn();
+
 jest.mock("react-native-webview", () => {
-  const { forwardRef: reactForwardRef } = jest.requireActual("react");
+  const { forwardRef: reactForwardRef, useEffect: reactUseEffect } =
+    jest.requireActual("react");
   const { View } = jest.requireActual("react-native");
-  const WebView = reactForwardRef((props: object, ref: unknown) => (
-    <View ref={ref as never} {...props} />
-  ));
+  const WebView = reactForwardRef((props: object, ref: unknown) => {
+    reactUseEffect(() => {
+      mockWebViewMount();
+    }, []);
+    return <View ref={ref as never} {...props} />;
+  });
   return {
     WebView,
     default: WebView,
@@ -83,26 +89,106 @@ describe("CieIdWebViewLogin", () => {
   );
 
   describe("conditional rendering", () => {
-    it.each(["reserving-public-key", "verifying-assertion-ref"] as const)(
-      "should render the loading overlay and no WebView when status is %s",
-      status => {
-        mockUseOneIdentityLoginSource({
-          loginSourceState:
-            status === "reserving-public-key"
-              ? { status: "reserving-public-key" }
-              : {
-                  status: "verifying-assertion-ref",
-                  url: "https://example.com"
-                }
-        });
+    it.each([
+      { name: "reserving-public-key", status: "reserving-public-key" as const },
+      { name: "following-redirects", status: "following-redirects" as const }
+    ])(
+      "should render the loading overlay and no WebView when status is $name",
+      ({ status }) => {
+        mockUseOneIdentityLoginSource({ loginSourceState: { status } });
 
-        const { queryByTestId } = render(
+        const { getByTestId, queryByTestId } = render(
           <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
         );
 
+        expect(getByTestId("refreshIndicator")).toBeTruthy();
         expect(queryByTestId("cie-id-webview")).toBeNull();
       }
     );
+
+    it("should render a loading indicator in the WebView's renderLoading content", () => {
+      mockUseOneIdentityLoginSource();
+
+      const { getByTestId } = render(
+        <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+      );
+
+      const webview = getByTestId("cie-id-webview");
+      const { getByTestId: getByTestIdInLoading } = render(
+        webview.props.renderLoading()
+      );
+
+      expect(getByTestIdInLoading("refreshIndicator")).toBeTruthy();
+    });
+
+    it("should keep the WebView mounted under the loading overlay while verifying the assertion-ref", () => {
+      const webviewSource = { uri: "https://example.com/authorize" };
+      mockUseOneIdentityLoginSource({
+        loginSourceState: {
+          status: "verifying-assertion-ref",
+          url: "https://idserver.example.com/sso?SAMLRequest=abc",
+          webviewSource
+        }
+      });
+
+      const { getByTestId } = render(
+        <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+      );
+
+      expect(getByTestId("refreshIndicator")).toBeTruthy();
+      const webview = getByTestId("cie-id-webview");
+      expect(webview.props.source).toEqual(webviewSource);
+      expect(webview.props.accessibilityElementsHidden).toBe(true);
+      expect(webview.props.importantForAccessibility).toBe(
+        "no-hide-descendants"
+      );
+    });
+
+    it("should keep the same WebView instance from the /authorize request to the IDP SSO page", () => {
+      const authorizeSource = { uri: "https://example.com/authorize" };
+      const ssoUrl = "https://idserver.example.com/sso?SAMLRequest=abc";
+      // A new `onEvent` on every step bypasses `memo`, so that the component
+      // re-renders and reads the new mocked login source state
+      const renderStep = () => (
+        <CieIdWebViewLogin isUat={false} onEvent={e => onEvent(e)} />
+      );
+
+      mockUseOneIdentityLoginSource({
+        loginSourceState: {
+          status: "one-identity-authorize",
+          webviewSource: authorizeSource
+        }
+      });
+      const { getByTestId, queryByTestId, rerender } = render(renderStep());
+
+      mockUseOneIdentityLoginSource({
+        loginSourceState: {
+          status: "verifying-assertion-ref",
+          url: ssoUrl,
+          webviewSource: authorizeSource
+        }
+      });
+      rerender(renderStep());
+      expect(getByTestId("refreshIndicator")).toBeTruthy();
+      expect(getByTestId("cie-id-webview").props.source).toEqual(
+        authorizeSource
+      );
+
+      mockUseOneIdentityLoginSource({
+        loginSourceState: {
+          status: "assertion-ref-verified",
+          webviewSource: { uri: ssoUrl }
+        }
+      });
+      rerender(renderStep());
+      expect(queryByTestId("refreshIndicator")).toBeNull();
+      const webview = getByTestId("cie-id-webview");
+      expect(webview.props.source).toEqual({ uri: ssoUrl });
+      expect(webview.props.accessibilityElementsHidden).toBe(false);
+      expect(webview.props.importantForAccessibility).toBe("auto");
+
+      expect(mockWebViewMount).toHaveBeenCalledTimes(1);
+    });
 
     it("should render nothing when status is failure", () => {
       mockUseOneIdentityLoginSource({
@@ -132,6 +218,17 @@ describe("CieIdWebViewLogin", () => {
         expect(webview.props.source).toEqual(webviewSource);
       }
     );
+
+    it("should render the WebView in incognito mode", () => {
+      mockUseOneIdentityLoginSource();
+
+      const { getByTestId } = render(
+        <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+      );
+
+      const webview = getByTestId("cie-id-webview");
+      expect(webview.props.incognito).toBe(true);
+    });
   });
 
   describe("onError / onHttpError", () => {

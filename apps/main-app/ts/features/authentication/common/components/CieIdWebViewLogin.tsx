@@ -7,6 +7,7 @@ import {
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIOStore } from "../../../../store/hooks";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { trackLoginOIConfigurationError } from "../../common/analytics";
@@ -198,7 +199,6 @@ export const CieIdWebViewLogin = memo(
 
     if (
       loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "verifying-assertion-ref" ||
       loginSourceState.status === "following-redirects"
     ) {
       return <LoadingOverlay onCancel={handleCancel} />;
@@ -212,20 +212,36 @@ export const CieIdWebViewLogin = memo(
       ? { uri: authenticatedUrl }
       : loginSourceState.webviewSource;
 
+    // The WebView must stay mounted while the assertion-ref is verified: a new
+    // incognito instance would lose the OneIdentity session cookie.
+    const isVerifyingAssertionRef =
+      loginSourceState.status === "verifying-assertion-ref";
+
     return (
-      <SafeAreaView edges={["bottom"]} style={styles.container}>
-        <WebView
-          onError={handleError}
-          onHttpError={handleError}
-          onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-          originWhitelist={originSchemasWhiteList}
-          renderLoading={() => <LoadingOverlay onCancel={handleCancel} />}
-          source={webviewSource}
-          startInLoadingState={true}
-          testID="cie-id-webview"
-          userAgent={defaultUserAgent}
-        />
-      </SafeAreaView>
+      <LoadingSpinnerOverlay
+        isLoading={isVerifyingAssertionRef}
+        loadingOpacity={1}
+        onCancel={handleCancel}
+      >
+        <SafeAreaView edges={["bottom"]} style={styles.container}>
+          <WebView
+            accessibilityElementsHidden={isVerifyingAssertionRef}
+            importantForAccessibility={
+              isVerifyingAssertionRef ? "no-hide-descendants" : "auto"
+            }
+            incognito
+            onError={handleError}
+            onHttpError={handleError}
+            onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+            originWhitelist={originSchemasWhiteList}
+            renderLoading={() => <LoadingOverlay onCancel={handleCancel} />}
+            source={webviewSource}
+            startInLoadingState={true}
+            testID="cie-id-webview"
+            userAgent={defaultUserAgent}
+          />
+        </SafeAreaView>
+      </LoadingSpinnerOverlay>
     );
   }
 );

@@ -1,7 +1,7 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useRef } from "react";
-import { Linking, StyleSheet, View } from "react-native";
+import { Linking } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -9,7 +9,7 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 
-import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { trackLoginError } from "../../../../utils/analytics";
@@ -22,6 +22,7 @@ import { getUrlBasepath } from "../../../../utils/url";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { trackSpidLoginIntent } from "../../activeSessionLogin/screens/analytics";
 import { trackLoginOIConfigurationError } from "../../common/analytics";
+import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
 import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { idpLoginUrlChanged } from "../store/actions";
@@ -217,29 +218,42 @@ export const IdpWebViewLogin = memo(
 
     if (
       loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "verifying-assertion-ref" ||
       loginSourceState.status === "following-redirects"
     ) {
-      return <IdpWebViewLoginLoading />;
+      return <LoadingOverlay />;
     }
 
     if (loginSourceState.status === "failure") {
       return null;
     }
 
+    // The WebView must stay mounted while the assertion-ref is verified: a new
+    // incognito instance would lose the OneIdentity session cookie.
+    const isVerifyingAssertionRef =
+      loginSourceState.status === "verifying-assertion-ref";
+
     return (
-      <View style={{ flex: 1 }}>
+      <LoadingSpinnerOverlay
+        isLoading={isVerifyingAssertionRef}
+        loadingCaption={I18n.t("global.genericWaiting")}
+        loadingOpacity={1}
+      >
         <WebView
+          accessibilityElementsHidden={isVerifyingAssertionRef}
           androidCameraAccessDisabled
           androidMicrophoneAccessDisabled
           cacheEnabled={false}
+          importantForAccessibility={
+            isVerifyingAssertionRef ? "no-hide-descendants" : "auto"
+          }
+          incognito
           onError={handleError}
           onHttpError={handleError}
           onLoad={presentOncePosteIdBottomSheet}
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
           originWhitelist={originSchemasWhiteList}
-          renderLoading={IdpWebViewLoginLoading}
+          renderLoading={() => <LoadingOverlay />}
           source={loginSourceState.webviewSource}
           startInLoadingState={true}
           testID="webview-idp-login-screen"
@@ -247,13 +261,7 @@ export const IdpWebViewLogin = memo(
           userAgent={defaultUserAgent}
         />
         {posteIdBottomSheet}
-      </View>
+      </LoadingSpinnerOverlay>
     );
   }
-);
-
-const IdpWebViewLoginLoading = () => (
-  <View style={StyleSheet.absoluteFill}>
-    <LoadingScreenContent title={I18n.t("global.genericWaiting")} />
-  </View>
 );
