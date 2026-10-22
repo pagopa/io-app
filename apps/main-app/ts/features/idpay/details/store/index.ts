@@ -101,7 +101,9 @@ const reducer = (
       if (action.payload.page === 0) {
         return {
           ...state,
-          timeline: pot.toLoading(pot.none)
+          timeline: pot.toLoading(
+            action.payload.isRefresh ? state.timeline : pot.none
+          )
         };
       }
       return {
@@ -112,7 +114,8 @@ const reducer = (
         )
       };
     case getType(idpayTimelinePageGet.success):
-      const currentTimeline = pot.getOrElse(state.timeline, []);
+      const currentTimeline =
+        action.payload.page === 0 ? {} : pot.getOrElse(state.timeline, {});
 
       return {
         ...state,
