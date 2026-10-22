@@ -166,12 +166,13 @@ export const light = {
   pictogram: {
     hand: p.blueIO[500],
     fill: p.turquoise[150],
-    accent: p.turquoise[500],
-    tertiary: p.blueIO[400],
+    highlight: p.turquoise[500],
+    accent: p.blueIO[400],
     onAccent: {
       hand: p.greyscale.white,
       fill: p.turquoise[150],
-      accent: p.turquoise[500]
+      highlight: p.turquoise[500],
+      accent: p.blueIO[400]
     }
   },
   /**
@@ -345,12 +346,13 @@ export const dark = {
   pictogram: {
     hand: p.greyscale.white,
     fill: p.turquoise[150],
-    accent: p.turquoise[500],
-    tertiary: p.blueIO[400],
+    highlight: p.turquoise[500],
+    accent: p.blueIO[400],
     onAccent: {
       hand: p.greyscale.white,
       fill: p.turquoise[150],
-      accent: p.turquoise[500]
+      highlight: p.turquoise[500],
+      accent: p.blueIO[400]
     }
   },
   text: {
