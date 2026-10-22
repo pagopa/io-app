@@ -242,7 +242,6 @@ export const OneIdentityCieAuthenticationWebView = ({
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
-          cacheEnabled={false}
           javaScriptEnabled={true}
           onError={handleError}
           onHttpError={handleError}
