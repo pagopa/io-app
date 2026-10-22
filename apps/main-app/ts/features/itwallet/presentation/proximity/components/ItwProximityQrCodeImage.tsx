@@ -9,7 +9,7 @@ import {
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import QRCode, { ShapeOptions } from "react-native-qrcode-skia";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
@@ -23,6 +23,7 @@ import {
   trackItwProximityQrCodeLoadingRetry
 } from "../analytics";
 import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/types";
+import { useHasModalTransitionEnded } from "../hooks/useHasModalTransitionEnded";
 import { ItwProximityMachineContext } from "../machine/provider";
 import { selectFailure, selectQRCodeString } from "../machine/selectors";
 import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/selectors/credentials";
@@ -62,6 +63,7 @@ type Props = {
 export const ItwProximityQrCodeImage = ({ source }: Props) => {
   const theme = useIOTheme();
   const machineRef = ItwProximityMachineContext.useActorRef();
+  const isModalOpened = useHasModalTransitionEnded();
 
   const qrCodeString =
     ItwProximityMachineContext.useSelector(selectQRCodeString);
@@ -70,9 +72,7 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
     shouldShowExpiredProximityCredentialsBannerSelector
   );
 
-  useDebugInfo({
-    qrCodeString
-  });
+  useDebugInfo(useMemo(() => ({ qrCodeString }), [qrCodeString]));
 
   useFocusEffect(
     useCallback(() => {
@@ -111,6 +111,10 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
         iconName="warningFilled"
       />
     );
+  }
+
+  if (!isModalOpened) {
+    return <View style={styles.qrCodeSlot} />;
   }
 
   return (
