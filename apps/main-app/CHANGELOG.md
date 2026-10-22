@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.42.0-canary.8238](https://github.com/pagopa/io-app/compare/3.42.0-rc.5...3.42.0-canary.8238) (2026-10-22)
+
+### Features
+
+* [[IOPLT-2207](https://pagopa.atlassian.net/browse/IOPLT-2207)] Make Expo CLI default tool to build and run the app ([22a1824](https://github.com/pagopa/io-app/commit/22a18242115c99678ff3cfe6ff0505cdf0813ad0))
+
+### Bug Fixes
+
+* [[IOPID-4277](https://pagopa.atlassian.net/browse/IOPID-4277)] Allow another user to log in after logout ([#8776](https://github.com/pagopa/io-app/issues/8776)) ([929d70f](https://github.com/pagopa/io-app/commit/929d70f35ee544d9b12a5ccba92e75cc83009c8f))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Missing generate script in ` update lokalise` workflow ([#8778](https://github.com/pagopa/io-app/issues/8778)) ([2e055ac](https://github.com/pagopa/io-app/commit/2e055ace6c500480004901e17dacf07e6c4e3d1f))
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Add `synchronize` to `update-lokalise-snapshots` ([#8780](https://github.com/pagopa/io-app/issues/8780)) ([977da4e](https://github.com/pagopa/io-app/commit/977da4e0d6ab1cb32647cef8f83789c04dfa8ae0))
+* [[IOPLT-2197](https://pagopa.atlassian.net/browse/IOPLT-2197)] Add missing `a11y` for `ListItem` with security label ([#8765](https://github.com/pagopa/io-app/issues/8765)) ([67765d2](https://github.com/pagopa/io-app/commit/67765d241be43024ed5cefd330a46c90707bbe40))
 ## [3.42.0-rc.5](https://github.com/pagopa/io-app/compare/3.42.0-rc.4...3.42.0-rc.5) (2026-10-21)
 
 ### Features
