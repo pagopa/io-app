@@ -101,6 +101,7 @@ export const ItwProximityPresentmentScreen = ({
       header: () => (
         <HeaderSecondLevel
           animatedRef={animatedScrollViewRef}
+          disablePressAnimation={true}
           enableDiscreteTransition={true}
           firstAction={{
             icon: "closeLarge",
