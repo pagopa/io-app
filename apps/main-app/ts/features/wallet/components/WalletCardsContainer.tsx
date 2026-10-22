@@ -3,6 +3,7 @@ import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import { shallowEqual } from "react-redux";
 
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
@@ -31,6 +32,10 @@ import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
+
+// A new builder on every render would make Reanimated reconfigure the
+// container animation on every render
+const CONTAINER_LAYOUT = LinearTransition.duration(200);
 
 /**
  * A component which renders the wallet cards container It handles the loading
@@ -101,10 +106,7 @@ const WalletCardsContainer = () => {
   ]);
 
   return (
-    <Animated.View
-      layout={LinearTransition.duration(200)}
-      style={styles.container}
-    >
+    <Animated.View layout={CONTAINER_LAYOUT} style={styles.container}>
       <ItwEnvironmentAlert />
       <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
@@ -125,7 +127,7 @@ const WalletCardsContainerSkeleton = () => (
 
 /** Card container for the other cards (payments, bonus, etc.) */
 const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
-  const cards = useIOSelector(selectWalletOtherCards);
+  const cards = useIOSelector(selectWalletOtherCards, shallowEqual);
 
   useDebugInfo({
     other: {

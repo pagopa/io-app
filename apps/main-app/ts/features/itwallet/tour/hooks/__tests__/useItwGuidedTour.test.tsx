@@ -7,6 +7,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
 import * as ingressSelectors from "../../../../ingress/store/selectors";
+import { useGuidedTourRegion } from "../../../../tour/components/useGuidedTourRegion";
 import { startTourAction } from "../../../../tour/store/actions";
 import * as tourSelectors from "../../../../tour/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
@@ -85,6 +86,32 @@ describe("useItwGuidedTour", () => {
     expect(store.getActions()).not.toContainEqual(
       startTourAction({ groupId: ITW_TOUR_GROUP_ID })
     );
+  });
+
+  // Non regression test: a new cutout style on every render re-registers the
+  // tour step, dispatching two actions per render of the wallet cards
+  it("passes the same cutout style to the tour region on every render", () => {
+    const store = configureMockStore<GlobalState>()(
+      appReducer(undefined, applicationChangeState("active"))
+    );
+    const TestComponent = () => {
+      useItwGuidedTour();
+      return null;
+    };
+    const { rerender } = render(
+      <Provider store={store}>
+        <TestComponent />
+      </Provider>
+    );
+
+    rerender(
+      <Provider store={store}>
+        <TestComponent />
+      </Provider>
+    );
+
+    const [first, second] = jest.mocked(useGuidedTourRegion).mock.calls;
+    expect(second[0].cutoutStyle).toBe(first[0].cutoutStyle);
   });
 
   it("does not start the tour when the app is in offline mode", () => {

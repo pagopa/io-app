@@ -14,7 +14,7 @@ import { CredentialCardConfig } from "./config";
  * resulting line passes through the center and is long enough to cover all four
  * corners of the rectangle.
  */
-export const getGradientVectors = (
+const getGradientVectors = (
   angle: number,
   width: number,
   height: number

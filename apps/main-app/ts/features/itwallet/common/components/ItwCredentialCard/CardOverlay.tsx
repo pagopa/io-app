@@ -10,13 +10,7 @@ import { memo, useEffect } from "react";
 import { Easing, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { useCachedImage } from "../../utils/imageCache";
-import { CredentialCardConfig } from "./config";
-
-/**
- * Corner overlay image applied on all credentials that does not have fixed
- * background/ovarlays
- */
-export const CREDENTIAL_CARD_CORNER_OVERLAY = require("../../../../../../img/features/itWallet/cards/overlay/card_corner.png");
+import { CREDENTIAL_CARD_CORNER_OVERLAY, CredentialCardConfig } from "./config";
 
 type CardOverlayProps = Size & { src: DataSourceParam };
 
