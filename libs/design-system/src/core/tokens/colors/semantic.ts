@@ -1,7 +1,7 @@
 /*
 SEMANTIC COLORS
 One object per mode, from the Figma `Semantics` collection
-(`Color/Text/Content/Error` → `text.content.error`). Values reference the
+(`Color/Text/Helper/Error` → `text.helper.error`). Values reference the
 palette; `dark` must define every token of `light`.
 Groups are properties shared across components: no component names, no
 states (both live in component configs), except the `action` subgroups
@@ -56,6 +56,7 @@ export const light = {
   /** The whole screen. Role: `background` */
   background: {
     default: p.greyscale.white,
+    /* `dark` reuses it, and every token on it (`onAccent`, `inverse`) */
     accent: p.blueIO[500],
     overlay: withAlpha(p.greyscale.black, 0.15)
   },
@@ -96,10 +97,15 @@ export const light = {
     }
   },
   /**
-   * Ink of components whose icon and text share a color (buttons, alerts);
-   * `action` holds interactive ink, with states. Role: `foreground`
+   * Ink of components whose icon and text share a color (buttons, alerts), and
+   * of graphics that are neither (dots, indicators); `action` holds interactive
+   * ink, with states. Role: `foreground`
    */
   foreground: {
+    default: p.greyscale.black,
+    error: p.red[600],
+    /* On `background.accent`, not interactive */
+    onAccent: { default: p.greyscale.white, error: p.red[100] },
     /* Ink of interactive elements */
     action: {
       primary: {
@@ -157,8 +163,7 @@ export const light = {
       info: p.lightBlue[850],
       success: p.green[850],
       warning: p.yellow[850]
-    },
-    onAccent: { default: p.greyscale.white }
+    }
   },
   /** Ink of pictograms. Role: `foreground` */
   pictogram: {
@@ -179,28 +184,22 @@ export const light = {
     heading: {
       default: p.greyscale.black,
       secondary: p.greyscale[850],
-      tertiary: p.greyscale[700],
-      onAccent: { default: p.greyscale.white }
+      tertiary: p.greyscale[700]
     },
     content: {
       default: p.greyscale.black,
       secondary: p.greyscale[850],
       tertiary: p.greyscale[700],
       action: p.blueIO[500],
-      error: p.red[600],
-      info: p.lightBlue[700],
-      success: p.green[700],
-      warning: p.yellow[700],
       onTint: {
         error: p.red[850],
         info: p.lightBlue[850],
         success: p.green[850],
         warning: p.yellow[850],
         highlight: p.turquoise[850]
-      },
-      onAccent: { default: p.greyscale.white }
+      }
     },
-    helper: { default: p.greyscale[700] },
+    helper: { default: p.greyscale[700], error: p.red[600] },
     /* Short labels (badges): more saturated than body text in dark mode */
     label: {
       onTint: {
@@ -218,13 +217,13 @@ export const light = {
   stroke: {
     default: p.greyscale[100],
     focused: p.blueIO[500],
-    input: p.greyscale[200],
-    inputStrong: p.greyscale[650],
+    /* At least 3:1 on `background.default` and `surface.secondary`, in both modes (WCAG 1.4.11) */
+    input: p.greyscale[650],
     error: p.red[600],
     highlight: p.turquoise[850],
     warning: p.yellow[850],
     success: p.green[850],
-    onAccent: { default: p.greyscale.white, error: p.red[850] }
+    onAccent: p.greyscale.white
   }
 } as const satisfies Named<IOTokenColor>;
 
@@ -246,7 +245,7 @@ type IORoleScheme<T, R extends IOColorRole> = {
 export const dark = {
   background: {
     default: p.greyscale.black,
-    accent: p.blueIO[500],
+    accent: light.background.accent,
     overlay: withAlpha(p.greyscale.black, 0.7)
   },
   surface: {
@@ -273,14 +272,13 @@ export const dark = {
         pressed: p.red[500],
         disabled: p.greyscale[700]
       },
-      inverse: {
-        default: p.greyscale.white,
-        pressed: p.blueIO[50],
-        disabled: p.blueIO[50]
-      }
+      inverse: light.surface.action.inverse
     }
   },
   foreground: {
+    default: p.greyscale.white,
+    error: p.red[400],
+    onAccent: light.foreground.onAccent,
     action: {
       primary: {
         default: p.blueIO[300],
@@ -298,11 +296,7 @@ export const dark = {
         pressed: p.red[400],
         disabled: p.greyscale[300]
       },
-      inverse: {
-        default: p.greyscale.white,
-        pressed: p.blueIO[50],
-        disabled: p.greyscale.white
-      }
+      inverse: light.foreground.action.inverse
     },
     onTint: {
       error: p.red[100],
@@ -314,7 +308,7 @@ export const dark = {
     onAction: {
       primary: p.greyscale.black,
       danger: p.greyscale.white,
-      inverse: p.blueIO[500],
+      inverse: light.foreground.onAction.inverse,
       disabled: p.greyscale[300]
     }
   },
@@ -334,46 +328,35 @@ export const dark = {
       info: p.lightBlue[100],
       success: p.green[100],
       warning: p.yellow[100]
-    },
-    onAccent: { default: p.greyscale.white }
+    }
   },
   pictogram: {
     hand: p.greyscale.white,
     fill: p.turquoise[150],
     highlight: p.turquoise[500],
-    onAccent: {
-      hand: p.greyscale.white,
-      fill: p.turquoise[150],
-      highlight: p.turquoise[500]
-    }
+    onAccent: light.pictogram.onAccent
   },
   text: {
     heading: {
       default: p.greyscale.white,
       /* Above `text.content.tertiary` (300) */
       secondary: p.greyscale[100],
-      tertiary: p.greyscale[450],
-      onAccent: { default: p.greyscale.white }
+      tertiary: p.greyscale[450]
     },
     content: {
       default: p.greyscale.white,
       secondary: p.greyscale[100],
       tertiary: p.greyscale[300],
       action: p.blueIO[300],
-      error: p.red[400],
-      info: p.lightBlue[500],
-      success: p.green[500],
-      warning: p.yellow[500],
       onTint: {
         error: p.red[100],
         info: p.lightBlue[100],
         success: p.green[100],
         warning: p.yellow[100],
         highlight: p.turquoise[100]
-      },
-      onAccent: { default: p.greyscale.white }
+      }
     },
-    helper: { default: p.greyscale[450] },
+    helper: { default: p.greyscale[450], error: p.red[400] },
     label: {
       onTint: {
         accent: p.blueIO[200],
@@ -389,12 +372,11 @@ export const dark = {
   stroke: {
     default: p.greyscale[850],
     focused: p.blueIO[300],
-    input: p.greyscale[850],
-    inputStrong: p.greyscale[450],
+    input: p.greyscale[650],
     error: p.red[400],
     highlight: p.greyscale.white,
     warning: p.greyscale.white,
     success: p.greyscale.white,
-    onAccent: { default: p.greyscale.white, error: p.greyscale.white }
+    onAccent: light.stroke.onAccent
   }
 } as const satisfies IOColorScheme<typeof light>;
