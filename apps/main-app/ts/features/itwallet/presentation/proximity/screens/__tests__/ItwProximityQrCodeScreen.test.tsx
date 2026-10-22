@@ -1,7 +1,9 @@
+import { act } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor, StateFrom } from "xstate";
 
+import * as appParamsList from "../../../../../../navigation/params/AppParamsList";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
@@ -210,6 +212,31 @@ describe("ItwProximityPresentmentScreen", () => {
       ).toBeTruthy();
     }
   );
+
+  it("should render the QR code only after the modal transition ends", () => {
+    const parentNavigation = { addListener: jest.fn() };
+    const navigation = new Proxy(
+      { getParent: () => parentNavigation } as Record<PropertyKey, unknown>,
+      { get: (target, prop) => target[prop] ?? jest.fn() }
+    );
+    jest
+      .spyOn(appParamsList, "useIONavigation")
+      .mockReturnValue(navigation as any);
+
+    const component = renderComponent(
+      { machineState: "displayQrCode", qrCodeString: "mock-qr-code-string" },
+      { source: "WALLET_HOME" }
+    );
+    expect(component.queryByTestId("qrcode")).toBeNull();
+
+    const [[event, onTransitionEnd]] = parentNavigation.addListener.mock.calls;
+    expect(event).toBe("transitionEnd");
+    act(() => {
+      onTransitionEnd();
+    });
+
+    expect(component.getByTestId("qrcode")).toBeTruthy();
+  });
 });
 
 type RenderOptions =
