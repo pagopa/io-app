@@ -1154,6 +1154,7 @@ Inizia"
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2324,6 +2325,7 @@ Inizia"
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -3494,6 +3496,7 @@ Inizia"
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -5693,6 +5696,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for reactivation ban
                                     },
                                   ]
                                 }
+                                pointerEvents="none"
                                 style={
                                   [
                                     {

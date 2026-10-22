@@ -410,6 +410,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   },
                                 ]
                               }
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -1690,6 +1691,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2303,6 +2305,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   },
                                 ]
                               }
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -4597,6 +4600,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
