@@ -143,4 +143,35 @@ describe("useInitiativeTimelineFetcher", () => {
     expect(result.current.isRefreshing).toBe(false);
     expect(result.current.isUpdating).toBe(true);
   });
+
+  it("retries a failed refresh from page zero and restarts pagination after success", () => {
+    const { result, store, dispatch, succeed } = setup();
+    succeed(0);
+    succeed(1);
+    act(() => result.current.refresh());
+    expect(result.current.currentPage).toBe(1);
+    act(() => {
+      store.dispatch(idpayTimelinePageGet.failure(error));
+    });
+    expect(result.current.isRefreshing).toBe(false);
+    expect(result.current.currentPage).toBe(1);
+    act(() => result.current.retryFetchLastPage());
+    expect(dispatch).toHaveBeenLastCalledWith(
+      idpayTimelinePageGet.request({
+        initiativeId,
+        page: 0,
+        pageSize,
+        isRefresh: true
+      })
+    );
+    expect(result.current.isRefreshing).toBe(true);
+    expect(result.current.currentPage).toBe(1);
+    succeed(0);
+    expect(result.current.isRefreshing).toBe(false);
+    expect(result.current.currentPage).toBe(0);
+    act(() => result.current.fetchNextPage());
+    expect(dispatch).toHaveBeenLastCalledWith(
+      idpayTimelinePageGet.request({ initiativeId, page: 1, pageSize })
+    );
+  });
 });
