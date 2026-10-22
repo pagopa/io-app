@@ -1,6 +1,5 @@
 import { Ref, useCallback, useImperativeHandle, useRef, useState } from "react";
 import {
-  ColorValue,
   Dimensions,
   GestureResponderEvent,
   LayoutChangeEvent,
@@ -22,13 +21,8 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 
-import { useIONewTypeface, useIOTheme } from "../../context";
-import {
-  IOColorsLegacy,
-  IODimensions,
-  IODimensionScale,
-  IOTypography
-} from "../../core";
+import { useIOColors, useIONewTypeface } from "../../context";
+import { IODimensions, IODimensionScale, IOTypography } from "../../core";
 import {
   IOFontSize,
   IOMaxFontSizeMultiplier,
@@ -110,16 +104,13 @@ export const SearchInput = ({
   const { newTypefaceEnabled } = useIONewTypeface();
 
   /* Component visual attributes */
-  const theme = useIOTheme();
-  const inputCaretColor = IOColorsLegacy[theme["interactiveElem-default"]];
+  const searchInputColors = useIOColors().component.searchInput;
+  const inputCaretColor = searchInputColors.caret;
 
-  const inputBgColorDefault: ColorValue =
-    IOColorsLegacy[theme["appBackground-secondary"]];
-  const inputBgColorFocused: ColorValue =
-    IOColorsLegacy[theme["appBackground-tertiary"]];
-  const inputColorPlaceholder: ColorValue =
-    IOColorsLegacy[theme["textBody-tertiary"]];
-  const iconColor: IOColorsLegacy = theme["textBody-tertiary"];
+  const inputBgColorDefault = searchInputColors.background.default;
+  const inputBgColorFocused = searchInputColors.background.focused;
+  const inputColorPlaceholder = searchInputColors.placeholder;
+  const iconColor = searchInputColors.icon;
 
   /* Widths used for the transition:
        - `SearchInput` entire width
@@ -262,7 +253,7 @@ export const SearchInput = ({
           selectionColor={inputCaretColor}
           style={[
             {
-              color: IOColorsLegacy[theme["textBody-default"]],
+              color: searchInputColors.foreground,
               ...makeFontStyleObject(
                 inputFontSizePlaceholder,
                 newTypefaceEnabled ? "Titillio" : "TitilliumSansPro",
@@ -301,7 +292,7 @@ export const SearchInput = ({
           <IOText
             accessibilityElementsHidden
             accessible={false}
-            color={theme["interactiveElem-default"]}
+            color={searchInputColors.cancel}
             importantForAccessibility="no-hide-descendants"
             lineHeight={IOTypography.buttonText.lineHeight}
             numberOfLines={1}

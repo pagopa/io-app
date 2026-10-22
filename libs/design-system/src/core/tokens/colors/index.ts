@@ -24,6 +24,7 @@ import { buttonColors } from "../../../components/buttons/IOButton/colors";
 import { codeInputColors } from "../../../components/codeInput/colors";
 import { otpInputColors } from "../../../components/otpInput/colors";
 import { pictogramColors } from "../../../components/pictograms/colors";
+import { searchInputColors } from "../../../components/searchInput/colors";
 import { tagColors } from "../../../components/tag/colors";
 import { dark, IOColorMode, IOColorSemantics, light } from "./semantic";
 
@@ -53,6 +54,7 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     iconButtonSolid: iconButtonSolidColors(s),
     otpInput: otpInputColors(s),
     pictogram: pictogramColors(s),
+    searchInput: searchInputColors(s),
     tag: tagColors(s)
   }
 });
