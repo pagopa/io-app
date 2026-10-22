@@ -497,7 +497,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                 jestAnimatedStyle={
                                   {
                                     "value": {
-                                      "borderColor": "rgba(99, 107, 130, 1)",
+                                      "borderColor": "#636B82",
                                     },
                                   }
                                 }
@@ -528,7 +528,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                       "top": 0,
                                     },
                                     {
-                                      "borderColor": "rgba(99, 107, 130, 1)",
+                                      "borderColor": "#636B82",
                                     },
                                   ]
                                 }

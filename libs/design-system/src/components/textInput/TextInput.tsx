@@ -4,11 +4,7 @@ import { TextInputBase } from "./TextInputBase";
 
 type TextInputProps = Omit<
   ComponentProps<typeof TextInputBase>,
-  | "bottomMessageColor"
-  | "errorMessage"
-  | "isPassword"
-  | "rightElement"
-  | "status"
+  "errorMessage" | "isPassword" | "rightElement" | "status"
 >;
 
 export const TextInput = (props: TextInputProps) => (
