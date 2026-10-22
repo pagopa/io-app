@@ -1,12 +1,4 @@
-import {
-  and,
-  assertEvent,
-  assign,
-  enqueueActions,
-  not,
-  or,
-  raise
-} from "xstate";
+import { and, assertEvent, assign, not, or, raise } from "xstate";
 
 import { CURRENT_ITW_SPECS_VERSION } from "../../common/utils/constants";
 import { ItwTags } from "../tags";
@@ -324,12 +316,6 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
     CredentialsUpgrade: credentialsUpgradeState,
     Success: {
       entry: [
-        enqueueActions(({ context, enqueue }) => {
-          // Resumed credential issuance owns its refresh; standalone activation still refreshes the list.
-          if (!context.credentialType) {
-            enqueue("refreshCredentialsCatalogue");
-          }
-        }),
         "navigateToSuccessScreen",
         "storeWalletActivationFeedbackBannerData"
       ],
