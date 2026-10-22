@@ -16,6 +16,7 @@ export const idpayInitiativeGet = createAsyncAction(
 
 type IdpayTimelinePageGetPayloadType = {
   initiativeId: string;
+  isRefresh?: boolean;
   page?: number;
   pageSize?: number;
 };

@@ -285,6 +285,68 @@ describe("test idpay timeline reducer and selectors", () => {
 });
 
 describe("test idpay timeline pagination reducer and selectors", () => {
+  it.each([
+    { name: "success", fails: false },
+    { name: "failure", fails: true }
+  ])("preserves cached pages until refresh $name", ({ fails }) => {
+    const initialState = appReducer(
+      undefined,
+      applicationChangeState("active")
+    );
+    const store = createStore(
+      (
+        state: GlobalState = initialState,
+        action: Parameters<typeof appReducer>[1]
+      ) => appReducer(state, action)
+    );
+    const cachedPages = {
+      0: mockTimelineResponseSuccess,
+      1: mockTimelineResponseSuccess
+    };
+    Object.entries(cachedPages).forEach(([page, timeline]) => {
+      store.dispatch(
+        idpayTimelinePageGet.success({ page: Number(page), timeline })
+      );
+    });
+    const cachedOperations = idpayOperationListSelector(store.getState());
+    store.dispatch(
+      idpayTimelinePageGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d",
+        page: 0,
+        isRefresh: true
+      })
+    );
+    expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
+      pot.someLoading(cachedPages)
+    );
+    expect(idpayOperationListSelector(store.getState())).toStrictEqual(
+      cachedOperations
+    );
+
+    if (fails) {
+      store.dispatch(idpayTimelinePageGet.failure(mockFailure));
+      expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
+        pot.someError(cachedPages, mockFailure)
+      );
+      expect(idpayOperationListSelector(store.getState())).toStrictEqual(
+        cachedOperations
+      );
+    } else {
+      const refreshedPage = {
+        ...mockTimelineResponseSuccess,
+        operationList: []
+      };
+      store.dispatch(
+        idpayTimelinePageGet.success({ page: 0, timeline: refreshedPage })
+      );
+      expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
+        pot.some({ 0: refreshedPage })
+      );
+      expect(idpayOperationListSelector(store.getState())).toStrictEqual([]);
+      expect(idpayTimelineCurrentPageSelector(store.getState())).toBe(0);
+    }
+  });
+
   it("should merge the response with the previous one, after the success action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);

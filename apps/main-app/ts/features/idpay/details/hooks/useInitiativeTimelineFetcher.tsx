@@ -30,6 +30,9 @@ export const useInitiativeTimelineFetcher = (
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const requestPending = useRef(false);
+  const lastRequest = useRef<undefined | { isRefresh: boolean; page: number }>(
+    undefined
+  );
 
   useEffect(() => {
     if (!isLoading && !isUpdating) {
@@ -38,26 +41,26 @@ export const useInitiativeTimelineFetcher = (
     }
   }, [isLoading, isUpdating]);
 
-  const refresh = () => {
-    if (!isLoading && !isUpdating && !requestPending.current) {
-      setIsRefreshing(true);
-      fetchPage(0);
-    }
-  };
-
-  const fetchPage = (page: number) => {
+  const fetchPage = (page: number, isRefresh = false) => {
     if (isUpdating || isLoading || requestPending.current) {
       return;
     }
     requestPending.current = true;
+    lastRequest.current = { page, isRefresh };
+    if (isRefresh) {
+      setIsRefreshing(true);
+    }
     dispatch(
       idpayTimelinePageGet.request({
         initiativeId,
         page,
-        pageSize
+        pageSize,
+        ...(isRefresh ? { isRefresh } : {})
       })
     );
   };
+
+  const refresh = () => fetchPage(0, true);
 
   const fetchNextPage = () => {
     if (isLastPage || isLoading || isUpdating || isError) {
@@ -67,7 +70,10 @@ export const useInitiativeTimelineFetcher = (
   };
 
   const retryFetchLastPage = () => {
-    fetchPage(currentPage + 1);
+    fetchPage(
+      lastRequest.current?.page ?? currentPage + 1,
+      lastRequest.current?.isRefresh
+    );
   };
 
   return {
