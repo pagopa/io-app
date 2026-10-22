@@ -11,7 +11,6 @@ exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in s
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -68,7 +67,6 @@ exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in s
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -139,7 +137,6 @@ exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in s
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -210,7 +207,6 @@ exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -267,7 +263,6 @@ exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -338,7 +333,6 @@ exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -411,7 +405,6 @@ exports[`DigitalVersionBadge should render correctly education_degree in state d
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -427,7 +420,26 @@ exports[`DigitalVersionBadge should render correctly education_degree in state d
           "paddingVertical": 4,
         },
         {
-          "backgroundColor": undefined,
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#ECECEC",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#F2F1CE",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "90deg",
+              "type": "linear-gradient",
+            },
+          ],
         },
       ]
     }
@@ -468,7 +480,6 @@ exports[`DigitalVersionBadge should render correctly education_degree in state f
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -484,7 +495,26 @@ exports[`DigitalVersionBadge should render correctly education_degree in state f
           "paddingVertical": 4,
         },
         {
-          "backgroundColor": undefined,
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#ECECEC",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#F2F1CE",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "90deg",
+              "type": "linear-gradient",
+            },
+          ],
         },
       ]
     }
@@ -539,7 +569,6 @@ exports[`DigitalVersionBadge should render correctly education_degree in state g
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -555,7 +584,26 @@ exports[`DigitalVersionBadge should render correctly education_degree in state g
           "paddingVertical": 4,
         },
         {
-          "backgroundColor": undefined,
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#ECECEC",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#EDEDED",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "90deg",
+              "type": "linear-gradient",
+            },
+          ],
         },
       ]
     }
@@ -610,7 +658,6 @@ exports[`DigitalVersionBadge should render correctly education_enrollment in sta
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -626,7 +673,26 @@ exports[`DigitalVersionBadge should render correctly education_enrollment in sta
           "paddingVertical": 4,
         },
         {
-          "backgroundColor": undefined,
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#ECECEC",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#E0F2CE",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "90deg",
+              "type": "linear-gradient",
+            },
+          ],
         },
       ]
     }
@@ -667,7 +733,6 @@ exports[`DigitalVersionBadge should render correctly education_enrollment in sta
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -683,7 +748,26 @@ exports[`DigitalVersionBadge should render correctly education_enrollment in sta
           "paddingVertical": 4,
         },
         {
-          "backgroundColor": undefined,
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#ECECEC",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#E0F2CE",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "90deg",
+              "type": "linear-gradient",
+            },
+          ],
         },
       ]
     }
@@ -738,7 +822,6 @@ exports[`DigitalVersionBadge should render correctly education_enrollment in sta
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -754,7 +837,26 @@ exports[`DigitalVersionBadge should render correctly education_enrollment in sta
           "paddingVertical": 4,
         },
         {
-          "backgroundColor": undefined,
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#ECECEC",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#E9E9E9",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "90deg",
+              "type": "linear-gradient",
+            },
+          ],
         },
       ]
     }
@@ -809,7 +911,6 @@ exports[`DigitalVersionBadge should render correctly mDL in state default 1`] = 
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -866,7 +967,6 @@ exports[`DigitalVersionBadge should render correctly mDL in state faded 1`] = `
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -937,7 +1037,6 @@ exports[`DigitalVersionBadge should render correctly mDL in state greyscale 1`] 
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -1008,7 +1107,6 @@ exports[`DigitalVersionBadge should render correctly residency in state default 
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -1024,7 +1122,26 @@ exports[`DigitalVersionBadge should render correctly residency in state default 
           "paddingVertical": 4,
         },
         {
-          "backgroundColor": undefined,
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#ECECEC",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#F2E4CE",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "90deg",
+              "type": "linear-gradient",
+            },
+          ],
         },
       ]
     }
@@ -1065,7 +1182,6 @@ exports[`DigitalVersionBadge should render correctly residency in state faded 1`
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -1081,7 +1197,26 @@ exports[`DigitalVersionBadge should render correctly residency in state faded 1`
           "paddingVertical": 4,
         },
         {
-          "backgroundColor": undefined,
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#ECECEC",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#F2E4CE",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "90deg",
+              "type": "linear-gradient",
+            },
+          ],
         },
       ]
     }
@@ -1136,7 +1271,6 @@ exports[`DigitalVersionBadge should render correctly residency in state greyscal
   }
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -1152,7 +1286,26 @@ exports[`DigitalVersionBadge should render correctly residency in state greyscal
           "paddingVertical": 4,
         },
         {
-          "backgroundColor": undefined,
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#ECECEC",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#E6E6E6",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "90deg",
+              "type": "linear-gradient",
+            },
+          ],
         },
       ]
     }
