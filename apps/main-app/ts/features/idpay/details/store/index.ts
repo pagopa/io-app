@@ -4,7 +4,6 @@ import {
   StatusEnum as InitiativeStatusEnum
 } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { OnboardingStatusDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
-import { TimelineDTO } from "@io-app/api-types/generated/definitions/idpay/TimelineDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -15,6 +14,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
+import { TimelineDTO } from "../../common/api/timeline";
 import {
   idPayBeneficiaryDetailsGet,
   idpayInitiativeGet,
