@@ -167,12 +167,10 @@ export const light = {
     hand: p.blueIO[500],
     fill: p.turquoise[150],
     highlight: p.turquoise[500],
-    accent: p.blueIO[400],
     onAccent: {
       hand: p.greyscale.white,
       fill: p.turquoise[150],
-      highlight: p.turquoise[500],
-      accent: p.blueIO[400]
+      highlight: p.turquoise[500]
     }
   },
   /**
@@ -347,12 +345,10 @@ export const dark = {
     hand: p.greyscale.white,
     fill: p.turquoise[150],
     highlight: p.turquoise[500],
-    accent: p.blueIO[400],
     onAccent: {
       hand: p.greyscale.white,
       fill: p.turquoise[150],
-      highlight: p.turquoise[500],
-      accent: p.blueIO[400]
+      highlight: p.turquoise[500]
     }
   },
   text: {

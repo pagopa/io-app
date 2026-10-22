@@ -10,14 +10,12 @@ export const pictogramColors = (s: IOColorSemantics) =>
     default: {
       hands: s.pictogram.hand,
       main: s.pictogram.fill,
-      secondary: s.pictogram.highlight,
-      tertiary: s.pictogram.accent
+      secondary: s.pictogram.highlight
     },
     "light-content": {
       hands: s.pictogram.onAccent.hand,
       main: s.pictogram.onAccent.fill,
-      secondary: s.pictogram.onAccent.highlight,
-      tertiary: s.pictogram.onAccent.accent
+      secondary: s.pictogram.onAccent.highlight
     }
   }) satisfies Record<
     Exclude<NonNullable<IOPictogramsProps["pictogramStyle"]>, "dark-content">,

@@ -76,7 +76,6 @@ import PictogramEventClose from "./svg/PictogramEventClose";
 import PictogramFatalError from "./svg/PictogramFatalError";
 import PictogramFeature from "./svg/PictogramFeature";
 import PictogramFeedback from "./svg/PictogramFeedback";
-import PictogramFingerprint from "./svg/PictogramFingerprint";
 import PictogramHello from "./svg/PictogramHello";
 import PictogramHelp from "./svg/PictogramHelp";
 import PictogramIdea from "./svg/PictogramIdea";
@@ -120,7 +119,6 @@ import PictogramTime from "./svg/PictogramTime";
 import PictogramTiming from "./svg/PictogramTiming";
 import PictogramUmbrella from "./svg/PictogramUmbrella";
 import PictogramUpdateOS from "./svg/PictogramUpdateOS";
-import PictogramWalletDoc from "./svg/PictogramWalletDoc";
 import PictogramWorkInProgress from "./svg/PictogramWorkInProgress";
 import { SVGPictogramProps } from "./types";
 
@@ -181,8 +179,6 @@ export const IOPictograms = {
   payments: PictogramPayments,
   workInProgress: PictogramWorkInProgress,
   smile: PictogramSmile,
-  fingerprint: PictogramFingerprint,
-  walletDoc: PictogramWalletDoc,
   emptyWallet: PictogramEmptyWallet,
   meterLimit: PictogramMeterLimit,
   savingMoney: PictogramSavingMoney,
@@ -219,7 +215,6 @@ export type PictogramPalette = {
   hands: ColorValue;
   main: ColorValue;
   secondary: ColorValue;
-  tertiary: ColorValue;
 };
 
 export const Pictogram = ({
