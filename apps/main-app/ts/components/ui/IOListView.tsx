@@ -108,6 +108,8 @@ export const IOListView = <T,>({
   ListEmptyComponent,
   skeleton,
   ItemSeparatorComponent,
+  onEndReached,
+  onEndReachedThreshold,
   testID,
   loading
 }: IOListView<T>) => {
@@ -249,6 +251,8 @@ export const IOListView = <T,>({
         </>
       }
       ListHeaderComponent={ListHeaderComponent}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={onEndReachedThreshold}
       onScroll={handleScroll}
       ref={animatedRef}
       refreshControl={RefreshControlComponent}

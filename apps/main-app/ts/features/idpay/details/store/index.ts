@@ -171,12 +171,16 @@ const idpayOperationListLengthSelector = createSelector(
 export const initiativeNeedsConfigurationSelector = createSelector(
   idpayInitiativeDetailsSelector,
   idpayOperationListLengthSelector,
-  (initiative, timelineLenght) =>
+  idpayPaginatedTimelineSelector,
+  (initiative, timelineLenght, timeline) =>
     pipe(
       initiative,
       pot.toOption,
       O.map(
         initiative =>
+          pot.isSome(timeline) &&
+          !pot.isLoading(timeline) &&
+          !pot.isError(timeline) &&
           initiative.status === InitiativeStatusEnum.NOT_REFUNDABLE &&
           timelineLenght <= 1
       ),
