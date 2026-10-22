@@ -113,7 +113,12 @@ describe("IdPayOperationsListScreen loading", () => {
     expect(dispatch).not.toHaveBeenCalled();
     await fireEventAsync(component.UNSAFE_getByType(RefreshControl), "refresh");
     expect(dispatch).toHaveBeenLastCalledWith(
-      idpayTimelinePageGet.request({ initiativeId, page: 0, pageSize })
+      idpayTimelinePageGet.request({
+        initiativeId,
+        page: 0,
+        pageSize,
+        isRefresh: true
+      })
     );
     expect(component.UNSAFE_getByType(RefreshControl).props.refreshing).toBe(
       true
@@ -150,6 +155,51 @@ describe("IdPayOperationsListScreen loading", () => {
       false
     );
     expect(component.getByText(errorLabel())).toBeTruthy();
+  });
+
+  it("keeps cached operations after a failed refresh and replaces them after retry", async () => {
+    const { component, store, dispatch, succeed } = await setup();
+    await succeed(0);
+    await fireEventAsync(component.UNSAFE_getByType(FlatList), "endReached", {
+      distanceFromEnd: 0
+    });
+    await succeed(1);
+    const cachedOperations = component.UNSAFE_getByType(FlatList).props.data;
+    expect(cachedOperations).toHaveLength(2);
+    await fireEventAsync(component.UNSAFE_getByType(RefreshControl), "refresh");
+    expect(component.UNSAFE_getByType(FlatList).props.data).toEqual(
+      cachedOperations
+    );
+    await act(async () => {
+      store.dispatch(idpayTimelinePageGet.failure(error));
+    });
+    expect(component.UNSAFE_getByType(FlatList).props.data).toEqual(
+      cachedOperations
+    );
+    expect(component.UNSAFE_getByType(RefreshControl).props.refreshing).toBe(
+      false
+    );
+    expect(component.getByText(errorLabel())).toBeTruthy();
+    await fireEventAsync.press(component.getByText(retryLabel()));
+    expect(dispatch).toHaveBeenLastCalledWith(
+      idpayTimelinePageGet.request({
+        initiativeId,
+        page: 0,
+        pageSize,
+        isRefresh: true
+      })
+    );
+    await succeed(0);
+    expect(component.UNSAFE_getByType(FlatList).props.data).toEqual(
+      page(0).operationList
+    );
+    expect(component.queryByText(errorLabel())).toBeNull();
+    await fireEventAsync(component.UNSAFE_getByType(FlatList), "endReached", {
+      distanceFromEnd: 0
+    });
+    expect(dispatch).toHaveBeenLastCalledWith(
+      idpayTimelinePageGet.request({ initiativeId, page: 1, pageSize })
+    );
   });
 
   it("keeps loaded operations on pagination failure and retries the missing page", async () => {
