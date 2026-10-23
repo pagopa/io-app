@@ -1,5 +1,6 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
+import CookieManager from "@react-native-cookies/cookies";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 import { err, ok } from "neverthrow";
 import { Provider } from "react-redux";
@@ -61,6 +62,10 @@ jest.mock("../../utils/login", () => ({
   lollipopSamlVerify: jest.fn()
 }));
 
+jest.mock("@react-native-cookies/cookies", () => ({
+  removeSessionCookies: jest.fn()
+}));
+
 jest.mock("../../../authentication/fastLogin/store/selectors", () => ({
   isFastLoginEnabledSelector: jest.fn(() => false)
 }));
@@ -110,6 +115,7 @@ const abortedResponse: FetchResponse = {
 };
 
 interface SetupOptions {
+  clearSessionCookies?: boolean;
   flow?: LoginType;
   followRedirectsNatively?: boolean;
   minAuthLevel?: AuthLevel;
@@ -122,6 +128,7 @@ const createTestStore = () => {
 };
 
 const setupTest = ({
+  clearSessionCookies,
   flow = LOGIN_TYPES.AUTH,
   followRedirectsNatively,
   minAuthLevel = AUTH_LEVELS.L2,
@@ -132,6 +139,7 @@ const setupTest = ({
   const utils = renderHook(
     () =>
       useOneIdentityLoginSource({
+        clearSessionCookies,
         flow,
         followRedirectsNatively,
         idpId: mockIdp.id,
@@ -433,6 +441,41 @@ describe("useOneIdentityLoginSource", () => {
     expect(onFailure).toHaveBeenCalledWith({
       reason: "Unable to generate ephemeral public key"
     });
+  });
+
+  it("should clear the session cookies before the reserve request when clearSessionCookies is enabled", async () => {
+    jest.mocked(CookieManager.removeSessionCookies).mockResolvedValue(true);
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
+
+    const { result } = setupTest({ clearSessionCookies: true });
+
+    await waitFor(() => {
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+
+    const removeSessionCookies = jest.mocked(
+      CookieManager.removeSessionCookies
+    );
+    expect(removeSessionCookies).toHaveBeenCalledTimes(1);
+    expect(removeSessionCookies.mock.invocationCallOrder[0]).toBeLessThan(
+      mockRetriableFetch.mock.invocationCallOrder[0]
+    );
+  });
+
+  it("should not clear the session cookies by default", async () => {
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
+
+    const { result } = setupTest();
+
+    await waitFor(() => {
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+
+    expect(CookieManager.removeSessionCookies).not.toHaveBeenCalled();
   });
 
   it("should send LV as login_type in the reserve body when fast login is enabled", async () => {
