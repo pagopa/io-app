@@ -2,8 +2,8 @@ import { ComponentProps, memo, useRef, useState } from "react";
 import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 
 import { Icon } from "../../components/icons";
-import { useIOTheme } from "../../context";
-import { hexToRgba, IOColorsLegacy, IODimensions } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { addCacheTimestampToUri } from "../../utils/image";
 import avatarSearchPlaceholder from "./placeholder/avatar-placeholder.png";
 
@@ -12,18 +12,14 @@ type Avatar = {
   size: "medium" | "small";
 };
 
-const avatarBorderLightMode = hexToRgba(IOColorsLegacy.black, 0.1);
-
 const styles = StyleSheet.create({
   avatarWrapper: {
     overflow: "hidden",
-    borderColor: avatarBorderLightMode,
     borderWidth: IODimensions.stroke.default,
     borderCurve: "continuous"
   },
   avatarInnerWrapper: {
     overflow: "hidden",
-    backgroundColor: IOColorsLegacy.white,
     borderCurve: "continuous"
   },
   avatarImage: {
@@ -47,7 +43,7 @@ const styles = StyleSheet.create({
  * @returns
  */
 export const Avatar = ({ logoUri, size }: Avatar) => {
-  const theme = useIOTheme();
+  const avatarColors = useIOColors().component.avatar;
   const indexValue = useRef<number>(0);
 
   const [imageSource, setImageSource] = useState(
@@ -76,10 +72,11 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
           height: avatarSize,
           width: avatarSize,
           borderRadius: avatarRadius,
+          borderColor: avatarColors.border,
           backgroundColor:
             imageSource === undefined
-              ? IOColorsLegacy["grey-50"]
-              : IOColorsLegacy.white,
+              ? avatarColors.background.placeholder
+              : avatarColors.background.logo,
           padding:
             imageSource === undefined
               ? avatarPadding.placeholder
@@ -88,16 +85,15 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
       ]}
     >
       {imageSource === undefined ? (
-        <Icon
-          color={theme["icon-decorative"]}
-          name="institution"
-          size={"100%"}
-        />
+        <Icon color={avatarColors.icon} name="institution" size={"100%"} />
       ) : (
         <View
           style={[
             styles.avatarInnerWrapper,
-            { borderRadius: avatarRadius - avatarPadding.logo }
+            {
+              backgroundColor: avatarColors.background.logo,
+              borderRadius: avatarRadius - avatarPadding.logo
+            }
           ]}
         >
           <Image
@@ -127,6 +123,8 @@ export type AvatarSearchProps = Pick<
  */
 export const AvatarSearch = memo(
   ({ defaultSource, source, onError }: AvatarSearchProps) => {
+    const avatarColors = useIOColors().component.avatar;
+
     // Visual attributes
     const avatarSize = IODimensions.size.avatar.small;
     const borderRadius = IODimensions.radius.avatar.small;
@@ -143,13 +141,20 @@ export const AvatarSearch = memo(
             borderRadius,
             height: avatarSize,
             width: avatarSize,
-            backgroundColor: IOColorsLegacy.white,
+            borderColor: avatarColors.border,
+            backgroundColor: avatarColors.background.logo,
             padding: internalSpace
           }
         ]}
       >
         <View
-          style={[styles.avatarInnerWrapper, { borderRadius: innerRadius }]}
+          style={[
+            styles.avatarInnerWrapper,
+            {
+              backgroundColor: avatarColors.background.logo,
+              borderRadius: innerRadius
+            }
+          ]}
         >
           {source === undefined ? (
             <Image

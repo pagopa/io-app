@@ -28,13 +28,13 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
       style={
         [
           {
-            "borderColor": "rgba(14,15,19,0.1)",
             "borderCurve": "continuous",
             "borderWidth": 1,
             "overflow": "hidden",
           },
           {
             "backgroundColor": "#FFFFFF",
+            "borderColor": "rgba(14,15,19,0.1)",
             "borderRadius": 12,
             "height": 66,
             "padding": 8,
@@ -47,11 +47,11 @@ exports[`ServicesHeader component should match the snapshot 1`] = `
         style={
           [
             {
-              "backgroundColor": "#FFFFFF",
               "borderCurve": "continuous",
               "overflow": "hidden",
             },
             {
+              "backgroundColor": "#FFFFFF",
               "borderRadius": 4,
             },
           ]

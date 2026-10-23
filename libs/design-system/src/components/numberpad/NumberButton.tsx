@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import Animated, {
   interpolateColor,
@@ -6,17 +6,10 @@ import Animated, {
   useReducedMotion
 } from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { hexToRgba, IOColorsLegacy } from "../../core";
+import { useIOColors } from "../../context";
 import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { IOText } from "../typography";
-
-type ColorMapVariant = {
-  background: string;
-  foreground: IOColorsLegacy;
-  pressed: string;
-};
 
 type NumberButtonProps = {
   /** The button value. */
@@ -44,40 +37,18 @@ const numberPadBtnSize = 56;
  */
 export const NumberButton = memo(
   ({ number, variant, onPress }: NumberButtonProps) => {
-    const theme = useIOTheme();
-
     const { progress, onPressIn, onPressOut, scaleAnimatedStyle } =
       useScaleAnimation("medium");
     const reducedMotion = useReducedMotion();
 
-    const colorMap: Record<NumberButtonVariantType, ColorMapVariant> = useMemo(
-      () => ({
-        neutral: {
-          background: hexToRgba(
-            IOColorsLegacy[theme["interactiveElem-default"]],
-            0.1
-          ),
-          pressed: hexToRgba(
-            IOColorsLegacy[theme["interactiveElem-default"]],
-            0.35
-          ),
-          foreground: theme["interactiveElem-default"]
-        },
-        primary: {
-          background: hexToRgba(IOColorsLegacy.white, 0.15),
-          pressed: hexToRgba(IOColorsLegacy.white, 0.5),
-          foreground: "white"
-        }
-      }),
-      [theme]
-    );
+    const variantColors = useIOColors().component.numberButton[variant];
 
     // Interpolate animation values from `isPressed` values
     const pressedAnimationStyle = useAnimatedStyle(() => ({
       backgroundColor: interpolateColor(
         progress.value,
         [0, 1],
-        [colorMap[variant].background, colorMap[variant].pressed]
+        [variantColors.background.default, variantColors.background.pressed]
       )
     }));
 
@@ -103,7 +74,7 @@ export const NumberButton = memo(
           ]}
         >
           <IOText
-            color={colorMap[variant].foreground}
+            color={variantColors.foreground}
             size={22}
             style={{
               // Additional prop for Android

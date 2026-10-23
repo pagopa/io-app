@@ -1,9 +1,9 @@
 import Svg, { Path } from "react-native-svg";
 
-import { IOColorsLegacy } from "../../core";
+import { IOColorPalette } from "../../core";
 
 export const LeftArrow = ({
-  color = IOColorsLegacy.white
+  color = IOColorPalette.greyscale.white
 }: {
   color?: string;
 }) => (
@@ -15,7 +15,7 @@ export const LeftArrow = ({
   </Svg>
 );
 export const RightArrow = ({
-  color = IOColorsLegacy.white
+  color = IOColorPalette.greyscale.white
 }: {
   color?: string;
 }) => (
@@ -27,7 +27,7 @@ export const RightArrow = ({
   </Svg>
 );
 export const BottomArrow = ({
-  color = IOColorsLegacy.white
+  color = IOColorPalette.greyscale.white
 }: {
   color?: string;
 }) => (
@@ -39,7 +39,7 @@ export const BottomArrow = ({
   </Svg>
 );
 export const TopArrow = ({
-  color = IOColorsLegacy.white
+  color = IOColorPalette.greyscale.white
 }: {
   color?: string;
 }) => (

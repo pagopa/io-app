@@ -88,7 +88,7 @@ export const IOColorPalette = tagColors<IOPaletteColor>()({
 });
 
 /* Alphas a token color can take. `0` keeps the hue, so a transition to transparent doesn't pass through grey */
-const opacityScale = [0, 0.1, 0.15, 0.2, 0.5, 0.6, 0.7, 0.85] as const;
+const opacityScale = [0, 0.1, 0.15, 0.2, 0.35, 0.5, 0.6, 0.7, 0.85] as const;
 export type IOOpacity = (typeof opacityScale)[number];
 
 /* Named values of Figma `Color/Opacity`: each one a single value of the scale */

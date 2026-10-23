@@ -3,9 +3,8 @@ import { ReactNode } from "react";
 import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { IODimensions } from "../../core";
-import { hexToRgba, IOColorsLegacy } from "../../core/IOColors";
+import { useIOColors } from "../../context";
+import { IODimensions, withAlpha } from "../../core";
 import { useAccordionAnimation } from "../../hooks/useAccordionAnimation";
 import { Icon, IOIcons } from "../icons/Icon";
 import { HStack } from "../layout";
@@ -26,7 +25,7 @@ export const AccordionItem = ({
   body,
   icon
 }: AccordionItem) => {
-  const theme = useIOTheme();
+  const accordionColors = useIOColors().component.accordion;
 
   const {
     expanded,
@@ -37,18 +36,13 @@ export const AccordionItem = ({
     bodyInnerStyle
   } = useAccordionAnimation();
 
-  // Visual attributes
-  const accordionBackground: IOColorsLegacy = theme["appBackground-primary"];
-  const accordionBorder: IOColorsLegacy = theme["cardBorder-default"];
-  const accordionIconColor: IOColorsLegacy = theme["icon-decorative"];
-
   return (
     <View
       style={[
         styles.accordionWrapper,
         {
-          backgroundColor: IOColorsLegacy[accordionBackground],
-          borderColor: IOColorsLegacy[accordionBorder]
+          backgroundColor: accordionColors.background,
+          borderColor: accordionColors.border
         }
       ]}
     >
@@ -66,7 +60,7 @@ export const AccordionItem = ({
           >
             {icon && (
               <Icon
-                color={accordionIconColor}
+                color={accordionColors.foreground.icon}
                 name={icon}
                 size={IODimensions.size.icon.accordion}
               />
@@ -76,12 +70,12 @@ export const AccordionItem = ({
               importantForAccessibility="no-hide-descendants"
               style={{ flexShrink: 1 }}
             >
-              <H6 color={theme["textBody-default"]}>{title}</H6>
+              <H6 color={accordionColors.foreground.title}>{title}</H6>
             </View>
           </HStack>
           <Animated.View style={iconAnimatedStyle}>
             <Icon
-              color={theme["interactiveElem-default"]}
+              color={accordionColors.foreground.chevron}
               name="chevronBottom"
               size={IODimensions.size.icon.chevron}
             />
@@ -103,8 +97,8 @@ export const AccordionItem = ({
       <LinearGradient
         accessible={false}
         colors={[
-          hexToRgba(IOColorsLegacy[accordionBackground], 0),
-          IOColorsLegacy[accordionBackground]
+          withAlpha(accordionColors.background, 0),
+          accordionColors.background
         ]}
         style={{
           height: accordionPadding,

@@ -2,8 +2,8 @@ import { useMemo } from "react";
 import { ColorValue, DimensionValue, ViewStyle } from "react-native";
 import Animated, { useReducedMotion } from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { IOColorsLegacy, IOEasingCurves } from "../../core";
+import { useIOColors } from "../../context";
+import { IOEasingCurves } from "../../core";
 import { WithTestID } from "../../utils/types";
 
 const ANIMATION_DURATION = 1250;
@@ -47,9 +47,9 @@ export const IOSkeleton = ({
   testID
 }: IOSkeleton) => {
   const reduceMotion = useReducedMotion();
-  const theme = useIOTheme();
+  const skeletonColors = useIOColors().component.skeleton;
 
-  const backgroundColor = color ?? IOColorsLegacy[theme["skeleton-background"]];
+  const backgroundColor = color ?? skeletonColors.background;
 
   const baseStyle: ViewStyle = useMemo(
     () => ({

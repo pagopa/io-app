@@ -68,6 +68,8 @@ export const light = {
     default: p.greyscale.white,
     secondary: p.greyscale[50],
     tertiary: p.greyscale[100],
+    /* Placeholder of loading content */
+    skeleton: p.greyscale[100],
     accent: p.blueIO[50],
     error: p.red[100],
     info: p.lightBlue[100],
@@ -256,6 +258,7 @@ export const dark = {
     default: p.greyscale.black,
     secondary: p.greyscale[900],
     tertiary: p.greyscale[700],
+    skeleton: p.greyscale[850],
     accent: withAlpha(p.blueIO[200], 0.2),
     error: withAlpha(p.red[400], 0.2),
     info: withAlpha(p.lightBlue[400], 0.2),
