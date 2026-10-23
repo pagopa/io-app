@@ -2,8 +2,21 @@ import { StyleSheet, View } from "react-native";
 
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 
-export const LoadingOverlay = ({ onCancel }: { onCancel?: () => void }) => (
+export const LoadingOverlay = ({
+  loadingCaption,
+  loadingOpacity,
+  onCancel
+}: {
+  loadingCaption?: string;
+  loadingOpacity?: number;
+  onCancel?: () => void;
+}) => (
   <View style={StyleSheet.absoluteFill}>
-    <LoadingSpinnerOverlay isLoading onCancel={onCancel} />
+    <LoadingSpinnerOverlay
+      isLoading
+      loadingCaption={loadingCaption}
+      loadingOpacity={loadingOpacity}
+      onCancel={onCancel}
+    />
   </View>
 );

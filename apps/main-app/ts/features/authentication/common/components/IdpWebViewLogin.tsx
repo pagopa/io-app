@@ -220,7 +220,12 @@ export const IdpWebViewLogin = memo(
       loginSourceState.status === "reserving-public-key" ||
       loginSourceState.status === "following-redirects"
     ) {
-      return <LoadingOverlay />;
+      return (
+        <LoadingOverlay
+          loadingCaption={I18n.t("global.genericWaiting")}
+          loadingOpacity={1}
+        />
+      );
     }
 
     if (loginSourceState.status === "failure") {
@@ -253,7 +258,12 @@ export const IdpWebViewLogin = memo(
           onNavigationStateChange={handleNavigationStateChange}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
           originWhitelist={originSchemasWhiteList}
-          renderLoading={() => <LoadingOverlay />}
+          renderLoading={() => (
+            <LoadingOverlay
+              loadingCaption={I18n.t("global.genericWaiting")}
+              loadingOpacity={1}
+            />
+          )}
           source={loginSourceState.webviewSource}
           startInLoadingState={true}
           testID="webview-idp-login-screen"
