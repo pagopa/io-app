@@ -34,8 +34,7 @@ describe("fetchCatalogueTranslationsSaga", () => {
         remoteConfig: {},
         credentialsCatalogue: {
           catalogue: pot.some(mockCatalogue),
-          translations: pot.none,
-          isEnabledForCredentialsList: false
+          translations: pot.none
         },
         environment: {
           env: "pre"
@@ -81,8 +80,7 @@ describe("fetchCatalogueTranslationsSaga", () => {
           remoteConfig: {},
           credentialsCatalogue: {
             catalogue: pot.some(mockCatalogue),
-            translations: pot.none,
-            isEnabledForCredentialsList: false
+            translations: pot.none
           },
           environment: {
             env: "prod"
@@ -112,8 +110,7 @@ describe("fetchCatalogueTranslationsSaga", () => {
           remoteConfig: {},
           credentialsCatalogue: {
             catalogue: pot.none,
-            translations: pot.none,
-            isEnabledForCredentialsList: false
+            translations: pot.none
           },
           environment: {
             env: "pre"
