@@ -14,14 +14,7 @@ import { ItwConsentManagementScreen } from "../ItwConsentManagementScreen";
 
 const mockNavigate = jest.fn();
 const mockNavigationDispatch = jest.fn();
-
-jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
-  ...jest.requireActual("../../../../../../navigation/params/AppParamsList"),
-  useIONavigation: () => ({
-    navigate: mockNavigate,
-    dispatch: mockNavigationDispatch
-  })
-}));
+const mockPopTo = jest.fn();
 
 jest.mock("../../../../common/hooks/useItwCredentialName", () => ({
   useItwCredentialName: () => "Patente di guida"
@@ -57,10 +50,11 @@ describe("ItwConsentManagementScreen", () => {
     const { component } = await renderComponent({});
 
     expect(component.queryByTestId("consent-list")).toBeNull();
-    expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-      params: { credentialType: "mDL" }
-    });
+    expect(mockPopTo).toHaveBeenCalledWith(
+      ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+      { credentialType: "mDL" }
+    );
+    expect(mockNavigate).not.toHaveBeenCalled();
     expect(mockNavigationDispatch).not.toHaveBeenCalled();
     expect(analytics.trackItwConsentManagement).not.toHaveBeenCalled();
   });
@@ -191,7 +185,13 @@ const renderComponent = async (consents: Record<string, StoredConsentData>) => {
     await renderScreenWithNavigationStoreContextAsync<GlobalState>(
       () => (
         <ItwConsentManagementScreen
-          navigation={{} as any}
+          navigation={
+            {
+              dispatch: mockNavigationDispatch,
+              navigate: mockNavigate,
+              popTo: mockPopTo
+            } as any
+          }
           route={{
             key: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
             name: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,

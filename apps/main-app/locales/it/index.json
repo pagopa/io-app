@@ -1530,6 +1530,7 @@
         },
         "credentialAuth": {
           "requiredClaims": "Dati richiesti",
+          "verified": "verificati",
           "subtitle": "Saranno condivisi con **{{organization}}** solo per il tempo necessario al rilascio della versione digitale del documento.",
           "title": "Dati necessari per {{credentialName}}",
           "tos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}})."
@@ -3117,7 +3118,11 @@
           "error": {
             "banner": {
               "cta": "Prova di nuovo",
-              "label": "Non siamo riusciti a caricare alcuni elementi della lista."
+              "label": "Non siamo riusciti a caricare alcuni elementi della lista.",
+              "bonus": {
+                "cta": "Vai ai servizi",
+                "label": "Non siamo riusciti a caricare alcuni elementi. Puoi accedere a bonus e iniziative anche dalla sezione Servizi."
+              }
             }
           }
         },
@@ -4991,6 +4996,12 @@
       "title": "Ci dai il tuo consenso?",
       "toast": {
         "emailClientNotFound": "Per ricevere assistenza scrivici a: {{emailAddress}}"
+      },
+      "walletStatus": "Funzionalità documenti digitali",
+      "walletStatusValue": {
+        "documentiSuIo": "Attiva (Documenti su IO)",
+        "itWallet": "Attiva (IT-Wallet)",
+        "notActive": "Non attiva"
       }
     },
     "chooseCategory": {

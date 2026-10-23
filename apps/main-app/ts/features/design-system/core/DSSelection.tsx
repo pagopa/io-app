@@ -1,5 +1,4 @@
 import {
-  AnimatedMessageCheckbox,
   BodySmall,
   CheckboxLabel,
   Divider,
@@ -9,9 +8,10 @@ import {
   ListItemCheckbox,
   ListItemRadioWithAmount,
   ListItemSwitch,
-  NativeSwitch,
+  MessageCheckbox,
   RadioGroup,
   RadioItem,
+  Switch,
   useIOTheme,
   VStack
 } from "@io-app/design-system";
@@ -41,10 +41,10 @@ export const DSSelection = () => {
           </VStack>
         </VStack>
 
-        {/* AnimatedMessageCheckbox */}
+        {/* MessageCheckbox */}
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Checkbox (Messages)</H4>
-          <AnimatedMessageCheckboxShowroom />
+          <MessageCheckboxShowroom />
         </VStack>
 
         {/* RadioListItem */}
@@ -57,8 +57,8 @@ export const DSSelection = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Switch</H4>
           <VStack space={componentMargin}>
-            {/* Native Switch */}
-            <NativeSwitchShowroom />
+            {/* Switch */}
+            <SwitchShowroom />
             {/* ListItemSwitch */}
             <ListItemSwitchShowroom />
           </VStack>
@@ -300,30 +300,30 @@ const RadioListItemsShowroom = () => {
   );
 };
 
-const AnimatedMessageCheckboxShowroom = () => {
+const MessageCheckboxShowroom = () => {
   const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <DSComponentViewerBox name="AnimatedMessageCheckbox">
+    <DSComponentViewerBox name="MessageCheckbox">
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <AnimatedMessageCheckbox checked={isEnabled} />
+        <MessageCheckbox checked={isEnabled} />
         <HSpacer size={24} />
-        <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
+        <Switch onValueChange={toggleSwitch} value={isEnabled} />
       </View>
     </DSComponentViewerBox>
   );
 };
 
 // SWITCH
-const NativeSwitchShowroom = () => {
+const SwitchShowroom = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <DSComponentViewerBox name="NativeSwitch">
+    <DSComponentViewerBox name="Switch">
       <View style={{ alignSelf: "flex-start" }}>
-        <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
+        <Switch onValueChange={toggleSwitch} value={isEnabled} />
       </View>
     </DSComponentViewerBox>
   );
