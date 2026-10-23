@@ -152,7 +152,7 @@ const EmailInsertScreen = () => {
 
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
-      trackEmailEditing(flow);
+      trackEmailEditing(isFciEditEmailFlow ? "firma con IO" : flow);
       if (isFirstOnboarding) {
         IOToast.info(
           I18n.t("email.newinsert.alert.title", {
