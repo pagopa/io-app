@@ -66,10 +66,10 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
           description={
             <IOSkeleton height={21} radius={4} shape="rectangle" width={100} />
           }
-          onPress={() => null}
-          value={I18n.t(
+          label={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}
+          onPress={() => null}
         />
       ),
       ({ initiativeId, nInstr, status }) => {
@@ -81,7 +81,7 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
           }
         );
         const listItemOptions: ListItemNavAlert = {
-          value: I18n.t(
+          label: I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           ),
           description: methodCountString,
@@ -126,15 +126,15 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
           description={
             <IOSkeleton height={21} radius={4} shape="rectangle" width={270} />
           }
-          onPress={() => null}
-          value={I18n.t(
+          label={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
           )}
+          onPress={() => null}
         />
       ),
       ({ initiativeId, iban, status }) => {
         const listItemOptions: ListItemNavAlert = {
-          value: I18n.t(
+          label: I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
           ),
           description: iban,
