@@ -1,5 +1,4 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
-import I18n from "i18next";
 import { memo, useCallback, useMemo, useRef } from "react";
 import { Linking } from "react-native";
 import { WebView } from "react-native-webview";
@@ -216,61 +215,47 @@ export const IdpWebViewLogin = memo(
       [dispatch]
     );
 
-    if (
-      loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "following-redirects"
-    ) {
-      return (
-        <LoadingOverlay
-          loadingCaption={I18n.t("global.genericWaiting")}
-          loadingOpacity={1}
-        />
-      );
-    }
-
     if (loginSourceState.status === "failure") {
       return null;
     }
 
-    // The WebView must stay mounted while the assertion-ref is verified: a new
+    // The overlay covers the waits before the WebView has a source. The
+    // assertion-ref check is local and takes a few milliseconds, so the overlay
+    // stays off meanwhile to avoid a flash, and the WebView stays mounted: a new
     // incognito instance would lose the OneIdentity session cookie.
-    const isVerifyingAssertionRef =
-      loginSourceState.status === "verifying-assertion-ref";
+    const isLoading =
+      loginSourceState.status === "reserving-public-key" ||
+      loginSourceState.status === "following-redirects";
+
+    const webviewSource = isLoading
+      ? undefined
+      : loginSourceState.webviewSource;
 
     return (
-      <LoadingSpinnerOverlay
-        isLoading={isVerifyingAssertionRef}
-        loadingCaption={I18n.t("global.genericWaiting")}
-        loadingOpacity={1}
-      >
-        <WebView
-          accessibilityElementsHidden={isVerifyingAssertionRef}
-          androidCameraAccessDisabled
-          androidMicrophoneAccessDisabled
-          cacheEnabled={false}
-          importantForAccessibility={
-            isVerifyingAssertionRef ? "no-hide-descendants" : "auto"
-          }
-          incognito
-          onError={handleError}
-          onHttpError={handleError}
-          onLoad={presentOncePosteIdBottomSheet}
-          onNavigationStateChange={handleNavigationStateChange}
-          onShouldStartLoadWithRequest={handleShouldStartLoading}
-          originWhitelist={originSchemasWhiteList}
-          renderLoading={() => (
-            <LoadingOverlay
-              loadingCaption={I18n.t("global.genericWaiting")}
-              loadingOpacity={1}
+      <LoadingSpinnerOverlay isLoading={isLoading}>
+        {webviewSource && (
+          <>
+            <WebView
+              androidCameraAccessDisabled
+              androidMicrophoneAccessDisabled
+              cacheEnabled={false}
+              incognito
+              onError={handleError}
+              onHttpError={handleError}
+              onLoad={presentOncePosteIdBottomSheet}
+              onNavigationStateChange={handleNavigationStateChange}
+              onShouldStartLoadWithRequest={handleShouldStartLoading}
+              originWhitelist={originSchemasWhiteList}
+              renderLoading={() => <LoadingOverlay />}
+              source={webviewSource}
+              startInLoadingState={true}
+              testID="webview-idp-login-screen"
+              textZoom={100}
+              userAgent={defaultUserAgent}
             />
-          )}
-          source={loginSourceState.webviewSource}
-          startInLoadingState={true}
-          testID="webview-idp-login-screen"
-          textZoom={100}
-          userAgent={defaultUserAgent}
-        />
-        {posteIdBottomSheet}
+            {posteIdBottomSheet}
+          </>
+        )}
       </LoadingSpinnerOverlay>
     );
   }

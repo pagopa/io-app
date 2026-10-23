@@ -121,7 +121,7 @@ describe("CieIdWebViewLogin", () => {
       expect(getByTestIdInLoading("refreshIndicator")).toBeTruthy();
     });
 
-    it("should keep the WebView mounted under the loading overlay while verifying the assertion-ref", () => {
+    it("should keep the WebView mounted, without the loading overlay, while verifying the assertion-ref", () => {
       const webviewSource = { uri: "https://example.com/authorize" };
       mockUseOneIdentityLoginSource({
         loginSourceState: {
@@ -131,17 +131,12 @@ describe("CieIdWebViewLogin", () => {
         }
       });
 
-      const { getByTestId } = render(
+      const { getByTestId, queryByTestId } = render(
         <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
       );
 
-      expect(getByTestId("refreshIndicator")).toBeTruthy();
-      const webview = getByTestId("cie-id-webview");
-      expect(webview.props.source).toEqual(webviewSource);
-      expect(webview.props.accessibilityElementsHidden).toBe(true);
-      expect(webview.props.importantForAccessibility).toBe(
-        "no-hide-descendants"
-      );
+      expect(queryByTestId("refreshIndicator")).toBeNull();
+      expect(getByTestId("cie-id-webview").props.source).toEqual(webviewSource);
     });
 
     it("should keep the same WebView instance from the /authorize request to the IDP SSO page", () => {
@@ -169,7 +164,6 @@ describe("CieIdWebViewLogin", () => {
         }
       });
       rerender(renderStep());
-      expect(getByTestId("refreshIndicator")).toBeTruthy();
       expect(getByTestId("cie-id-webview").props.source).toEqual(
         authorizeSource
       );
@@ -182,10 +176,9 @@ describe("CieIdWebViewLogin", () => {
       });
       rerender(renderStep());
       expect(queryByTestId("refreshIndicator")).toBeNull();
-      const webview = getByTestId("cie-id-webview");
-      expect(webview.props.source).toEqual({ uri: ssoUrl });
-      expect(webview.props.accessibilityElementsHidden).toBe(false);
-      expect(webview.props.importantForAccessibility).toBe("auto");
+      expect(getByTestId("cie-id-webview").props.source).toEqual({
+        uri: ssoUrl
+      });
 
       expect(mockWebViewMount).toHaveBeenCalledTimes(1);
     });

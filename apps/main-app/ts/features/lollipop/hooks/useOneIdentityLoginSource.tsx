@@ -62,11 +62,11 @@ const reserveEndpointPath = "/api/auth/v1/reserve";
  * - `reserving-public-key`: `/reserve` (and ephemeral key generation) is in
  *   progress.
  * - `verifying-assertion-ref`: the WebView navigated to the IDP SSO URL and its
- *   lollipop assertion-ref is being verified; the WebView is hidden meanwhile.
- *   `webviewSource` is still the `/authorize` source, so that the WebView can
- *   stay mounted without navigating: OneIdentity binds the flow to a session
- *   cookie set by `/authorize`, which an `incognito` WebView would lose if
- *   remounted.
+ *   lollipop assertion-ref is being verified locally; navigation is blocked
+ *   meanwhile. `webviewSource` is still the `/authorize` source, so that the
+ *   WebView can stay mounted without navigating: OneIdentity binds the flow to
+ *   a session cookie set by `/authorize`, which an `incognito` WebView would
+ *   lose if remounted.
  * - `failure`: The `/reserve` request, ephemeral key generation, or SAML
  *   verification failed.
  */

@@ -1,6 +1,5 @@
 import { memo, useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -197,38 +196,30 @@ export const CieIdWebViewLogin = memo(
       onEvent({ type: "CANCEL" });
     }, [onEvent]);
 
-    if (
-      loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "following-redirects"
-    ) {
-      return <LoadingOverlay onCancel={handleCancel} />;
-    }
-
     if (loginSourceState.status === "failure") {
       return null;
     }
 
-    const webviewSource = authenticatedUrl
-      ? { uri: authenticatedUrl }
-      : loginSourceState.webviewSource;
-
-    // The WebView must stay mounted while the assertion-ref is verified: a new
+    // The overlay covers the waits before the WebView has a source. The
+    // assertion-ref check is local and takes a few milliseconds, so the overlay
+    // stays off meanwhile to avoid a flash, and the WebView stays mounted: a new
     // incognito instance would lose the OneIdentity session cookie.
-    const isVerifyingAssertionRef =
-      loginSourceState.status === "verifying-assertion-ref";
+    const isLoading =
+      loginSourceState.status === "reserving-public-key" ||
+      loginSourceState.status === "following-redirects";
+
+    const webviewSource = isLoading
+      ? undefined
+      : authenticatedUrl
+        ? { uri: authenticatedUrl }
+        : loginSourceState.webviewSource;
 
     return (
-      <LoadingSpinnerOverlay
-        isLoading={isVerifyingAssertionRef}
-        loadingOpacity={1}
-        onCancel={handleCancel}
-      >
-        <SafeAreaView edges={["bottom"]} style={styles.container}>
+      <LoadingSpinnerOverlay isLoading={isLoading} onCancel={handleCancel}>
+        {webviewSource && (
           <WebView
-            accessibilityElementsHidden={isVerifyingAssertionRef}
-            importantForAccessibility={
-              isVerifyingAssertionRef ? "no-hide-descendants" : "auto"
-            }
+            androidCameraAccessDisabled
+            androidMicrophoneAccessDisabled
             incognito
             onError={handleError}
             onHttpError={handleError}
@@ -237,10 +228,11 @@ export const CieIdWebViewLogin = memo(
             renderLoading={() => <LoadingOverlay onCancel={handleCancel} />}
             source={webviewSource}
             startInLoadingState={true}
+            style={styles.container}
             testID="cie-id-webview"
             userAgent={defaultUserAgent}
           />
-        </SafeAreaView>
+        )}
       </LoadingSpinnerOverlay>
     );
   }
@@ -248,8 +240,6 @@ export const CieIdWebViewLogin = memo(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    marginHorizontal: 16
+    flex: 1
   }
 });

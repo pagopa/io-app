@@ -135,7 +135,7 @@ describe("IdpWebViewLogin", () => {
       expect(getByTestIdInLoading("refreshIndicator")).toBeTruthy();
     });
 
-    it("should keep the WebView mounted under the loading state while verifying the assertion-ref", () => {
+    it("should keep the WebView mounted, without the loading state, while verifying the assertion-ref", () => {
       const webviewSource = { uri: "https://example.com/authorize" };
       mockUseOneIdentityLoginSource({
         loginSourceState: {
@@ -145,16 +145,13 @@ describe("IdpWebViewLogin", () => {
         }
       });
 
-      const { getByTestId } = render(
+      const { getByTestId, queryByTestId } = render(
         <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
       );
 
-      expect(getByTestId("refreshIndicator")).toBeTruthy();
-      const webview = getByTestId("webview-idp-login-screen");
-      expect(webview.props.source).toEqual(webviewSource);
-      expect(webview.props.accessibilityElementsHidden).toBe(true);
-      expect(webview.props.importantForAccessibility).toBe(
-        "no-hide-descendants"
+      expect(queryByTestId("refreshIndicator")).toBeNull();
+      expect(getByTestId("webview-idp-login-screen").props.source).toEqual(
+        webviewSource
       );
     });
 
@@ -183,7 +180,6 @@ describe("IdpWebViewLogin", () => {
         }
       });
       rerender(renderStep());
-      expect(getByTestId("refreshIndicator")).toBeTruthy();
       expect(getByTestId("webview-idp-login-screen").props.source).toEqual(
         authorizeSource
       );
@@ -196,10 +192,9 @@ describe("IdpWebViewLogin", () => {
       });
       rerender(renderStep());
       expect(queryByTestId("refreshIndicator")).toBeNull();
-      const webview = getByTestId("webview-idp-login-screen");
-      expect(webview.props.source).toEqual({ uri: ssoUrl });
-      expect(webview.props.accessibilityElementsHidden).toBe(false);
-      expect(webview.props.importantForAccessibility).toBe("auto");
+      expect(getByTestId("webview-idp-login-screen").props.source).toEqual({
+        uri: ssoUrl
+      });
 
       expect(mockWebViewMount).toHaveBeenCalledTimes(1);
     });
