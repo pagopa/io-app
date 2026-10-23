@@ -2410,13 +2410,13 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           "alignSelf": "flex-start",
                                         },
                                         {
-                                          "backgroundColor": "#555C70",
+                                          "backgroundColor": "#636B82",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#555C70"
+                                    tintColor="#636B82"
                                     value={false}
                                   />
                                 </View>
@@ -2665,13 +2665,13 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                               "alignSelf": "flex-start",
                                             },
                                             {
-                                              "backgroundColor": "#555C70",
+                                              "backgroundColor": "#636B82",
                                               "borderRadius": 16,
                                             },
                                           ]
                                         }
                                         thumbTintColor="#FFFFFF"
-                                        tintColor="#555C70"
+                                        tintColor="#636B82"
                                         value={false}
                                       />
                                     </View>
@@ -2828,13 +2828,13 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                               "alignSelf": "flex-start",
                                             },
                                             {
-                                              "backgroundColor": "#555C70",
+                                              "backgroundColor": "#636B82",
                                               "borderRadius": 16,
                                             },
                                           ]
                                         }
                                         thumbTintColor="#FFFFFF"
-                                        tintColor="#555C70"
+                                        tintColor="#636B82"
                                         value={false}
                                       />
                                     </View>
@@ -2991,13 +2991,13 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                               "alignSelf": "flex-start",
                                             },
                                             {
-                                              "backgroundColor": "#555C70",
+                                              "backgroundColor": "#636B82",
                                               "borderRadius": 16,
                                             },
                                           ]
                                         }
                                         thumbTintColor="#FFFFFF"
-                                        tintColor="#555C70"
+                                        tintColor="#636B82"
                                         value={false}
                                       />
                                     </View>
@@ -3423,13 +3423,13 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           "alignSelf": "flex-start",
                                         },
                                         {
-                                          "backgroundColor": "#555C70",
+                                          "backgroundColor": "#636B82",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#555C70"
+                                    tintColor="#636B82"
                                     value={false}
                                   />
                                 </View>
