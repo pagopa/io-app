@@ -14,33 +14,6 @@ import { CREDENTIAL_CARD_CORNER_OVERLAY, CredentialCardConfig } from "./config";
 
 type CardOverlayProps = Size & { src: DataSourceParam };
 
-export const SkiaCardOverlay = memo(
-  ({ src, height, width }: CardOverlayProps) => {
-    const image = useCachedImage(src);
-    const opacity = useSharedValue(0);
-
-    useEffect(() => {
-      if (image) {
-        opacity.set(
-          withTiming(1, { duration: 200, easing: Easing.out(Easing.ease) })
-        );
-      }
-    }, [image, opacity]);
-
-    return (
-      <SkiaImage
-        fit="cover"
-        height={height}
-        image={image}
-        opacity={opacity}
-        width={width}
-        x={0}
-        y={0}
-      />
-    );
-  }
-);
-
 export const SkiaCardPatternOverlay = memo(
   ({ src, height, width }: CardOverlayProps) => {
     const image = useCachedImage(src);

@@ -21,7 +21,7 @@ import { CREDENTIAL_CARD_CORNER_OVERLAY, CredentialCardConfig } from "./config";
 import { SkiaCardBackground } from "./SkiaCardBackground";
 import { CardColorScheme } from "./types";
 
-const canBlendNatively = () =>
+export const canBlendNatively = () =>
   supportsMixBlendMode(Platform.OS, Platform.Version);
 
 const getPatternStyle = (source: ImageRequireSource) => {
@@ -36,6 +36,24 @@ const getPatternStyle = (source: ImageRequireSource) => {
       : scale;
   return getPatternTileStyle(Platform.OS, pixelRatio, decodedAssetScale);
 };
+
+/**
+ * Soft-light pattern drawn with native views. It blends with what its parent
+ * draws before it, so the parent should be layer-backed (see
+ * `renderToHardwareTextureAndroid`). Requires {@link canBlendNatively}.
+ */
+export const CardPattern = ({ source }: { source: ImageRequireSource }) => (
+  <View style={[styles.fill, styles.softLight]}>
+    <Image
+      accessibilityIgnoresInvertColors
+      fadeDuration={0}
+      resizeMode="repeat"
+      source={source}
+      style={getPatternStyle(source)}
+      testID="itwCredentialCardPatternTestID"
+    />
+  </View>
+);
 
 type Props = Pick<CredentialCardConfig, "background" | "color" | "overlay">;
 
@@ -82,16 +100,7 @@ export const CardBackground = memo(({ background, color, overlay }: Props) => {
         />
       )}
       {overlay?.pattern !== undefined && (
-        <View style={[styles.fill, styles.softLight]}>
-          <Image
-            accessibilityIgnoresInvertColors
-            fadeDuration={0}
-            resizeMode="repeat"
-            source={overlay.pattern}
-            style={getPatternStyle(overlay.pattern)}
-            testID="itwCredentialCardPatternTestID"
-          />
-        </View>
+        <CardPattern source={overlay.pattern} />
       )}
       {overlay?.card !== undefined && (
         <Image
