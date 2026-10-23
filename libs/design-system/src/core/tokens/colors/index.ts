@@ -28,6 +28,7 @@ import { otpInputColors } from "../../../components/otpInput/colors";
 import { pictogramColors } from "../../../components/pictograms/colors";
 import { progressLoaderColors } from "../../../components/progressLoader/colors";
 import { searchInputColors } from "../../../components/searchInput/colors";
+import { switchColors } from "../../../components/switch/colors";
 import { tagColors } from "../../../components/tag/colors";
 import { textInputColors } from "../../../components/textInput/colors";
 import { toastColors } from "../../../components/toast/colors";
@@ -66,6 +67,7 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     /* Same look as the checkbox */
     radio: checkboxColors(s),
     searchInput: searchInputColors(s),
+    switch: switchColors(s),
     tag: tagColors(s),
     textInput: textInputColors(s),
     toast: toastColors(withRoles(light), mode)
