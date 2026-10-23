@@ -1256,12 +1256,7 @@ describe("itwEidIssuanceMachine", () => {
       actor.send({ type: "add-to-wallet" });
       await waitForActor(actor, snapshot => snapshot.matches("Success"));
       expect(actor.getSnapshot().hasTag(ItwTags.Loading)).toBe(false);
-      expect(dispatch).toHaveBeenCalledTimes(credentialType ? 0 : 1);
-      if (!credentialType) {
-        expect(dispatch).toHaveBeenCalledWith(
-          itwFetchCredentialsCatalogue.request()
-        );
-      }
+      expect(dispatch).not.toHaveBeenCalled();
       expect(
         pot.isLoading(
           store.getState().features.itWallet.credentialsCatalogue.catalogue
