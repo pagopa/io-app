@@ -3,8 +3,7 @@ import { ColorValue, View } from "react-native";
 import Animated from "react-native-reanimated";
 import Svg, { Defs, G, LinearGradient, Path, Stop } from "react-native-svg";
 
-import { useIOTheme } from "../../context";
-import { IOColorsLegacy } from "../../core/IOColors";
+import { useIOColors } from "../../context";
 import { WithTestID } from "../../utils/types";
 
 /** Size scale */
@@ -36,11 +35,11 @@ export const LoadingSpinner = ({
   accessibilityLabel,
   testID = "LoadingSpinnerTestID"
 }: LoadingSpinner): ReactElement => {
-  const theme = useIOTheme();
+  const loadingSpinnerColors = useIOColors().component.loadingSpinner;
   const id = useId();
   const stroke = strokeMap[size];
 
-  const color = customColor ?? IOColorsLegacy[theme["interactiveElem-default"]];
+  const color = customColor ?? loadingSpinnerColors.foreground;
 
   const secondHalfId = `${id}-secondHalf`;
   const firstHalfId = `${id}-firstHalf`;

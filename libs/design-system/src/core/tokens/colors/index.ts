@@ -22,8 +22,10 @@ import {
 } from "../../../components/buttons/colors";
 import { buttonColors } from "../../../components/buttons/IOButton/colors";
 import { codeInputColors } from "../../../components/codeInput/colors";
+import { loadingSpinnerColors } from "../../../components/loadingSpinner/colors";
 import { otpInputColors } from "../../../components/otpInput/colors";
 import { pictogramColors } from "../../../components/pictograms/colors";
+import { progressLoaderColors } from "../../../components/progressLoader/colors";
 import { searchInputColors } from "../../../components/searchInput/colors";
 import { tagColors } from "../../../components/tag/colors";
 import { textInputColors } from "../../../components/textInput/colors";
@@ -55,8 +57,10 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     codeInput: codeInputColors(s),
     iconButton: iconButtonColors(s),
     iconButtonSolid: iconButtonSolidColors(s),
+    loadingSpinner: loadingSpinnerColors(s),
     otpInput: otpInputColors(s),
     pictogram: pictogramColors(s),
+    progressLoader: progressLoaderColors(s),
     searchInput: searchInputColors(s),
     tag: tagColors(s),
     textInput: textInputColors(s),

@@ -4,6 +4,7 @@ import {
   H4,
   IOColorsLegacy,
   Pictogram,
+  ProgressLoader,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -16,7 +17,6 @@ import {
   CountdownProvider,
   useCountdown
 } from "../../../components/countdown/CountdownProvider";
-import { ProgressIndicator } from "../../../components/ui/ProgressIndicator";
 import { useIODispatch } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { identificationHideLockModal } from "../store/actions";
@@ -53,7 +53,7 @@ const Countdown = (props: CountdownProps) => {
 
   return (
     <>
-      <ProgressIndicator progress={loaderValue} />
+      <ProgressLoader progress={loaderValue} />
       <VSpacer size={8} />
       <View style={{ flexDirection: "row" }}>
         <BodySmall weight="Regular">{waitMessageText}</BodySmall>
