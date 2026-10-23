@@ -1,74 +1,38 @@
-import { useMemo } from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import { useIOThemeContext } from "../../context";
-import { hexToRgba, IOColorsLegacy, IODimensions } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { Icon } from "../icons";
 import { HSpacer } from "../layout";
 import { ButtonText } from "../typography";
-import { Toast, ToastVariant } from "./types";
-
-type ColorVariant = {
-  background: IOColorsLegacy;
-  stroke: IOColorsLegacy;
-};
-
-const toastColorVariants: Record<ToastVariant, ColorVariant> = {
-  error: {
-    background: "error-100",
-    stroke: "error-850"
-  },
-  info: {
-    background: "info-100",
-    stroke: "info-850"
-  },
-  success: {
-    background: "success-100",
-    stroke: "success-850"
-  },
-  warning: {
-    background: "warning-100",
-    stroke: "warning-850"
-  }
-};
+import { Toast } from "./types";
 
 type Props = Pick<Toast, "icon" | "message" | "variant">;
 
 const ToastNotification = ({ message, variant, icon }: Props) => {
-  const colors = toastColorVariants[variant];
-  const { themeType } = useIOThemeContext();
-
-  const dynamicStyle: ViewStyle = useMemo(() => {
-    const borderColor =
-      themeType === "dark"
-        ? hexToRgba(IOColorsLegacy[colors.stroke], 0.25)
-        : hexToRgba(IOColorsLegacy[colors.stroke], 0.5);
-
-    /* Remove border entirely when dark mode is enabled */
-    const borderWidth = themeType === "dark" ? 0 : IODimensions.stroke.default;
-
-    return {
-      backgroundColor: IOColorsLegacy[colors.background],
-      borderColor,
-      borderWidth
-    };
-  }, [colors, themeType]);
+  const toastColors = useIOColors().component.toast[variant];
 
   return (
     <View
       accessibilityLabel={message}
       accessibilityRole={"alert"}
       accessible={true}
-      style={[styles.toast, dynamicStyle]}
+      style={[
+        styles.toast,
+        {
+          backgroundColor: toastColors.background,
+          borderColor: toastColors.border
+        }
+      ]}
     >
-      <ButtonText color={colors.stroke} style={styles.content}>
+      <ButtonText color={toastColors.foreground} style={styles.content}>
         {message}
       </ButtonText>
       {icon && (
         <>
           <HSpacer size={IODimensions.gap.toast.trailing} />
           <Icon
-            color={colors.stroke}
+            color={toastColors.foreground}
             name={icon}
             size={IODimensions.size.icon.toast}
           />
@@ -82,6 +46,7 @@ const styles = StyleSheet.create({
   toast: {
     borderRadius: IODimensions.radius.toast,
     borderCurve: "continuous",
+    borderWidth: IODimensions.stroke.default,
     padding: IODimensions.padding.toast,
     flexDirection: "row",
     alignItems: "center",

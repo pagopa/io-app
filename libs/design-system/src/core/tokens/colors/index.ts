@@ -27,6 +27,7 @@ import { pictogramColors } from "../../../components/pictograms/colors";
 import { searchInputColors } from "../../../components/searchInput/colors";
 import { tagColors } from "../../../components/tag/colors";
 import { textInputColors } from "../../../components/textInput/colors";
+import { toastColors } from "../../../components/toast/colors";
 import { dark, IOColorMode, IOColorSemantics, light } from "./semantic";
 
 export * from "./palette";
@@ -57,7 +58,8 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     pictogram: pictogramColors(s),
     searchInput: searchInputColors(s),
     tag: tagColors(s),
-    textInput: textInputColors(s)
+    textInput: textInputColors(s),
+    toast: toastColors(withRoles(light), mode)
   }
 });
 
