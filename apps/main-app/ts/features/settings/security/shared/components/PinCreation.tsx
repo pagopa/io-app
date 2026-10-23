@@ -195,6 +195,9 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
     [isFirstOnBoarding, isOnboarding, handleSubmit, scrollToCreation]
   );
 
+  const currentPinValue =
+    pinModeRef.current === "creation" ? pin : pinConfirmation;
+
   const data: Array<PinCaouselItemProps> = [
     {
       title: I18n.t("onboarding.pin.title"),
@@ -237,6 +240,15 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
         <VSpacer size={40} />
         <ContentWrapper>
           <NumberPad
+            accessibilityValueText={I18n.t(
+              "global.accessibility.pinInput.valueText",
+              { valueLength: currentPinValue.length, length: PIN_LENGTH_SIX }
+            )}
+            deleteAccessibilityAnnouncement={
+              currentPinValue.length > 0
+                ? I18n.t("global.accessibility.pinInput.deletedBullet")
+                : undefined
+            }
             deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
             onDeletePress={onDeletePress}
             onNumberPress={handlePinChange}
