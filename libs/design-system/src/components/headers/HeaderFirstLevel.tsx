@@ -14,12 +14,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useIOTheme } from "../../context";
-import {
-  alertEdgeToEdgeInsetTransitionConfig,
-  IOColorsLegacy,
-  IODimensions
-} from "../../core";
+import { useIOColors } from "../../context";
+import { alertEdgeToEdgeInsetTransitionConfig, IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons";
 import { HStack } from "../layout";
@@ -73,7 +69,7 @@ export const HeaderFirstLevel = ({
 }: HeaderFirstLevel) => {
   const titleRef = createRef<View>();
   const insets = useSafeAreaInsets();
-  const theme = useIOTheme();
+  const headerColors = useIOColors().component.header;
   const paddingTop = useSharedValue(ignoreSafeAreaMargin ? 0 : insets.top);
   const isPrimary = variant === "primary";
 
@@ -111,8 +107,8 @@ export const HeaderFirstLevel = ({
       style={[
         {
           backgroundColor: isPrimary
-            ? IOColorsLegacy[theme["appBackground-primary"]]
-            : IOColorsLegacy[theme["appBackground-accent"]]
+            ? headerColors.background.default
+            : headerColors.background.accent
         },
         animatedStyle
       ]}
@@ -124,7 +120,7 @@ export const HeaderFirstLevel = ({
           style={[
             {
               ...styles.headerDivider,
-              backgroundColor: IOColorsLegacy[theme["divider-default"]]
+              backgroundColor: headerColors.border
             },
             animatedDivider
           ]}
@@ -136,8 +132,8 @@ export const HeaderFirstLevel = ({
           <H2
             color={
               isPrimary
-                ? theme["textHeading-default"]
-                : theme["textHeading-constrast"]
+                ? headerColors.foreground.default
+                : headerColors.foreground.onAccent
             }
             maxFontSizeMultiplier={1.25}
             numberOfLines={1}

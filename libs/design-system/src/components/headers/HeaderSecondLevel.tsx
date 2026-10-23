@@ -29,16 +29,14 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { scheduleOnRN } from "react-native-worklets";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import {
   alertEdgeToEdgeInsetTransitionConfig,
-  hexToRgba,
-  IOColorsLegacy,
+  IOColors,
   IODimensions,
   IOSpringValues,
-  IOThemeDark,
-  IOThemeLight,
-  IOTypography
+  IOTypography,
+  withAlpha
 } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons/IconButton";
@@ -168,7 +166,8 @@ export const HeaderSecondLevel = ({
 
   const titleRef = createRef<View>();
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
+  const headerColors = colors.component.header;
   const insets = useSafeAreaInsets();
   const isTitleAccessible = useMemo(() => !!title.trim(), [title]);
   const paddingTop = useSharedValue(ignoreSafeAreaMargin ? 0 : insets.top);
@@ -182,29 +181,23 @@ export const HeaderSecondLevel = ({
   to the title color: if variant is set, the color will
   be persistent, otherwise it will vary depending
   on the color scheme. */
-  const titleColorVariant =
-    variant === "contrast"
-      ? IOColorsLegacy[IOThemeDark["textHeading-default"]]
-      : IOColorsLegacy[IOThemeLight["textHeading-default"]];
+  const titleColorScheme = variant
+    ? IOColors[variant === "contrast" ? "dark" : "light"]
+    : colors;
 
-  const titleColor: ColorValue = variant
-    ? titleColorVariant
-    : IOColorsLegacy[theme["textHeading-default"]];
+  const titleColor: ColorValue =
+    titleColorScheme.component.header.foreground.default;
 
   /* Visual attributes when there are transitions between states */
-  const HEADER_DEFAULT_BG_COLOR: IOColorsLegacy =
-    theme["appBackground-primary"];
-
   const headerBgColorSolidState =
-    backgroundColor ?? IOColorsLegacy[HEADER_DEFAULT_BG_COLOR];
+    backgroundColor ?? headerColors.background.default;
 
   const headerBgColorTransparentState = transparent
-    ? hexToRgba(headerBgColorSolidState, 0)
+    ? withAlpha(headerBgColorSolidState, 0)
     : headerBgColorSolidState;
 
-  const borderColorDefault = IOColorsLegacy[theme["divider-default"]];
-  const borderColorSolidState = backgroundColor ?? borderColorDefault;
-  const borderColorTransparentState = hexToRgba(borderColorSolidState, 0);
+  const borderColorSolidState = backgroundColor ?? headerColors.border;
+  const borderColorTransparentState = withAlpha(borderColorSolidState, 0);
 
   useLayoutEffect(() => {
     if (isTitleAccessible) {

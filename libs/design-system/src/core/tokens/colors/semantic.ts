@@ -219,6 +219,7 @@ export const light = {
   /** Borders and dividers. Role: `stroke` (the `border` of a component) */
   stroke: {
     default: p.greyscale[100],
+    divider: p.greyscale[200],
     focused: p.blueIO[500],
     /* At least 3:1 on `background.default` and `surface.secondary`, in both modes (WCAG 1.4.11) */
     input: p.greyscale[650],
@@ -376,6 +377,7 @@ export const dark = {
   },
   stroke: {
     default: p.greyscale[850],
+    divider: p.greyscale[850],
     focused: p.blueIO[300],
     input: p.greyscale[650],
     error: p.red[400],
