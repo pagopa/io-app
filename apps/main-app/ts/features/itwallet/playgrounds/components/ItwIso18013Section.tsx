@@ -27,12 +27,12 @@ export const ItwIso18013Section = () => {
       <ListItemHeader label="ISO 18013" />
       <ListItemNav
         description="Navigate to the ITW proximity flow playground"
+        label="Proximity flow playground"
         onPress={() =>
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.PLAYGROUNDS.ISO_18013_PROXIMITY
           })
         }
-        value="Proximity flow playground"
       />
       <ListItemHeader label="Granted Consents" />
       {consents.length === 0 ? (
