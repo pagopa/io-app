@@ -5,8 +5,6 @@ import {
 } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { OnboardingStatusDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -138,13 +136,7 @@ export const idpayInitiativeDetailsSelector = createSelector(
 
 export const idpayInitiativeIdSelector = createSelector(
   idpayInitiativeDetailsSelector,
-  details =>
-    pipe(
-      details,
-      pot.toOption,
-      O.map(details => details.initiativeId),
-      O.toUndefined
-    )
+  details => pot.toUndefined(details)?.initiativeId
 );
 
 export const idpayPaginatedTimelineSelector = createSelector(
@@ -175,20 +167,17 @@ export const initiativeNeedsConfigurationSelector = createSelector(
   idpayInitiativeDetailsSelector,
   idpayOperationListLengthSelector,
   idpayPaginatedTimelineSelector,
-  (initiative, timelineLenght, timeline) =>
-    pipe(
-      initiative,
-      pot.toOption,
-      O.map(
-        initiative =>
-          pot.isSome(timeline) &&
-          !pot.isLoading(timeline) &&
-          !pot.isError(timeline) &&
-          initiative.status === InitiativeStatusEnum.NOT_REFUNDABLE &&
-          timelineLenght <= 1
-      ),
-      O.getOrElse(() => false)
-    )
+  (initiative, timelineLenght, timeline) => {
+    const initiativeValue = pot.toUndefined(initiative);
+    return (
+      initiativeValue !== undefined &&
+      pot.isSome(timeline) &&
+      !pot.isLoading(timeline) &&
+      !pot.isError(timeline) &&
+      initiativeValue.status === InitiativeStatusEnum.NOT_REFUNDABLE &&
+      timelineLenght <= 1
+    );
+  }
 );
 
 export const idpayTimelineCurrentPageSelector = createSelector(
