@@ -286,22 +286,8 @@ export const itwCredentialStatusSelector = createSelector(
  */
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
-  (eid): ItwEidStatus | undefined => {
-    if (!eid) {
-      return undefined;
-    }
-    if (
-      eid.validity?.type === "status_list" &&
-      eid.validity.status === "invalid"
-    ) {
-      return "invalid";
-    }
-    // eID has no expiry date, so without its validity the status is based on the JWT only
-    return getCredentialStatus({
-      ...eid,
-      validity: undefined
-    }) as ItwJwtCredentialStatus;
-  }
+  (eid): ItwEidStatus | undefined =>
+    eid ? (getCredentialStatus(eid) as ItwJwtCredentialStatus) : undefined
 );
 
 /**

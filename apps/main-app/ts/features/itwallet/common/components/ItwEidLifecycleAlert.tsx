@@ -162,7 +162,10 @@ export const ItwEidLifecycleAlert = ({
                   ? "features.itWallet.presentation.bottomSheets.eidInvalid.alert.action.detail"
                   : "features.itWallet.presentation.bottomSheets.eidInvalid.alert.action.wallet"
               ),
-              onPress: eidInvalidBottomSheet.present
+              onPress: () => {
+                trackAlertTap();
+                eidInvalidBottomSheet.present();
+              }
             }
       };
 
