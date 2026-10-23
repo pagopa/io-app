@@ -1,7 +1,5 @@
 import { Badge, IOToast, VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { View } from "react-native";
@@ -29,11 +27,7 @@ const IdPayEnableNotificationScreen = () => {
   );
   const initiative = useSelector(selectInitiative);
 
-  const initiativeId = pipe(
-    initiative,
-    O.map(i => i.initiativeId),
-    O.getOrElse(() => "")
-  );
+  const initiativeId = initiative?.initiativeId ?? "";
 
   const handleClosePress = () => {
     trackIDPayOnboardingNotificationDenied({

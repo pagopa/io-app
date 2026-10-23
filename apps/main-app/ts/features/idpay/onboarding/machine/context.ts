@@ -3,19 +3,18 @@ import { OnboardingInitiativeDTO } from "@io-app/api-types/generated/definitions
 import { StatusEnum } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
 import { SelfConsentMultiTypeDTO } from "@io-app/api-types/generated/definitions/idpay/SelfConsentMultiTypeDTO";
 import { SelfConsentTextDTO } from "@io-app/api-types/generated/definitions/idpay/SelfConsentTextDTO";
-import * as O from "fp-ts/lib/Option";
 
 import { OnboardingFailure } from "../types/OnboardingFailure";
 
 export type Context = {
   readonly activeTextConsentPage: number;
   readonly currentStep: number;
-  readonly failure: O.Option<OnboardingFailure>;
+  readonly failure: OnboardingFailure | undefined;
   readonly hasInbox: boolean;
-  readonly initiative: O.Option<InitiativeDataDTO>;
+  readonly initiative: InitiativeDataDTO | undefined;
   readonly isPushNotificationsEnabled: boolean;
-  readonly onboardingStatus: O.Option<StatusEnum>;
-  readonly requiredCriteria: O.Option<OnboardingInitiativeDTO>;
+  readonly onboardingStatus: StatusEnum | undefined;
+  readonly requiredCriteria: OnboardingInitiativeDTO | undefined;
   readonly selfDeclarationsBoolAnswers: Record<string, boolean>;
   readonly selfDeclarationsMultiAnswers: Record<
     number,
@@ -28,13 +27,13 @@ export type Context = {
 
 export const InitialContext: Context = {
   serviceId: "",
-  initiative: O.none,
-  onboardingStatus: O.none,
-  requiredCriteria: O.none,
+  initiative: undefined,
+  onboardingStatus: undefined,
+  requiredCriteria: undefined,
   selfDeclarationsMultiPage: 0,
   selfDeclarationsMultiAnswers: {},
   selfDeclarationsBoolAnswers: {},
-  failure: O.none,
+  failure: undefined,
   activeTextConsentPage: 0,
   selfDeclarationsTextAnswers: {},
   isPushNotificationsEnabled: false,

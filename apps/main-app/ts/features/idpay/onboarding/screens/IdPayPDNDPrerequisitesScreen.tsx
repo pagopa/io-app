@@ -1,7 +1,5 @@
 import { CodeEnum } from "@io-app/api-types/generated/definitions/idpay/AutomatedCriteriaDTO";
 import { IOMarkdownLite, ModuleSummary, VSpacer } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Fragment, useState } from "react";
 
@@ -45,11 +43,7 @@ const IdPayPDNDPrerequisitesScreen = () => {
 
   const initiative = useSelector(selectInitiative);
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
+  const initiativeName = initiative?.initiativeName;
 
   const continueOnPress = () => machine.send({ type: "next" });
   const goBackOnPress = () => machine.send({ type: "back" });
@@ -91,11 +85,7 @@ const IdPayPDNDPrerequisitesScreen = () => {
   const pdndCriteria = useSelector(pdndCriteriaSelector);
   const informativeCriteria = useSelector(informativeCriteriaSelector);
 
-  const initiativeId = pipe(
-    initiative,
-    O.map(i => i.initiativeId),
-    O.getOrElse(() => "")
-  );
+  const initiativeId = initiative?.initiativeId ?? "";
 
   useOnFirstRender(() =>
     trackIDPayOnboardingPDNDAcceptance({

@@ -1,6 +1,4 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect } from "react";
 
@@ -45,17 +43,9 @@ const IdPayEnableMessageScreen = () => {
 
   const initiative = useSelector(selectInitiative);
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
+  const initiativeName = initiative?.initiativeName;
 
-  const initiativeId = pipe(
-    initiative,
-    O.map(i => i.initiativeId),
-    O.toUndefined
-  );
+  const initiativeId = initiative?.initiativeId;
 
   const onActivate = () => {
     if (

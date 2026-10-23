@@ -3,8 +3,6 @@ import { SelfCriteriaBoolDTO } from "@io-app/api-types/generated/definitions/idp
 import { SelfCriteriaInformativeDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaInformativeDTO";
 import { SelfCriteriaMultiTypeDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiTypeDTO";
 import { SelfCriteriaTextDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaTextDTO";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 
@@ -35,17 +33,12 @@ export const selectInitiative = (snapshot: MachineSnapshot) =>
 export const selectServiceId = (snapshot: MachineSnapshot) =>
   snapshot.context.serviceId;
 
-const filterMultiCriteria = <T>(criteria: O.Option<OnboardingInitiativeDTO>) =>
-  pipe(
-    criteria,
-    O.fold(
-      () => [],
-      some =>
-        some.beneficiaryRule?.selfDeclarationCriteria?.filter(el =>
-          SelfCriteriaMultiTypeDTO.is(el)
-        )
-    )
-  ) as Array<T>;
+const filterMultiCriteria = <T>(
+  criteria: OnboardingInitiativeDTO | undefined
+) =>
+  (criteria?.beneficiaryRule?.selfDeclarationCriteria?.filter(el =>
+    SelfCriteriaMultiTypeDTO.is(el)
+  ) ?? []) as Array<T>;
 
 export const multiRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
@@ -54,20 +47,14 @@ export const multiRequiredCriteriaSelector = createSelector(
 );
 
 const filterCriteria = <T>(
-  criteria: O.Option<OnboardingInitiativeDTO>,
+  criteria: OnboardingInitiativeDTO | undefined,
   filterFunc:
     | typeof SelfCriteriaBoolDTO
     | typeof SelfCriteriaInformativeDTO
     | typeof SelfCriteriaTextDTO
 ) =>
-  pipe(
-    criteria,
-    O.fold(
-      () => [],
-      some =>
-        some.beneficiaryRule?.selfDeclarationCriteria?.filter(filterFunc.is)
-    )
-  ) as Array<T>;
+  (criteria?.beneficiaryRule?.selfDeclarationCriteria?.filter(filterFunc.is) ??
+    []) as Array<T>;
 
 export const boolRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
@@ -77,14 +64,7 @@ export const boolRequiredCriteriaSelector = createSelector(
 
 export const pdndCriteriaSelector = createSelector(
   selectRequiredCriteria,
-  requiredCriteria =>
-    pipe(
-      requiredCriteria,
-      O.fold(
-        () => [],
-        some => some.beneficiaryRule?.automatedCriteria ?? []
-      )
-    )
+  requiredCriteria => requiredCriteria?.beneficiaryRule?.automatedCriteria ?? []
 );
 
 // Self-declaration criteria of type "informative" carry BE-computed content
