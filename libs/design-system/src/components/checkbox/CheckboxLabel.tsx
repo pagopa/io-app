@@ -1,7 +1,7 @@
 import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions, IOOpacity } from "../../core";
 import { triggerHaptic } from "../../functions/haptic-feedback/hapticFeedback";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -35,7 +35,7 @@ export const CheckboxLabel = ({
   disabled,
   onValueChange
 }: OwnProps) => {
-  const theme = useIOTheme();
+  const checkboxColors = useIOColors().component.checkbox;
   const { dynamicFontScale } = useIOFontDynamicScale();
 
   const [toggleValue, setToggleValue] = useState(checked ?? false);
@@ -84,7 +84,7 @@ export const CheckboxLabel = ({
             size={IODimensions.size.selection.control * dynamicFontScale}
           />
         </View>
-        <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
+        <H6 color={checkboxColors.label} style={{ flexShrink: 1 }}>
           {label}
         </H6>
       </HStack>

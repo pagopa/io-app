@@ -21,6 +21,7 @@ import {
   iconButtonSolidColors
 } from "../../../components/buttons/colors";
 import { buttonColors } from "../../../components/buttons/IOButton/colors";
+import { checkboxColors } from "../../../components/checkbox/colors";
 import { codeInputColors } from "../../../components/codeInput/colors";
 import { loadingSpinnerColors } from "../../../components/loadingSpinner/colors";
 import { otpInputColors } from "../../../components/otpInput/colors";
@@ -54,6 +55,7 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     badge: badgeColors(s),
     banner: bannerColors(s, mode),
     button: buttonColors(s),
+    checkbox: checkboxColors(s),
     codeInput: codeInputColors(s),
     iconButton: iconButtonColors(s),
     iconButtonSolid: iconButtonSolidColors(s),

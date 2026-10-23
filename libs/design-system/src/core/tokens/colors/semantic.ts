@@ -104,6 +104,8 @@ export const light = {
   foreground: {
     default: p.greyscale.black,
     accent: p.blueIO[500],
+    /* A featured option (a featured PSP) */
+    featured: p.hanPurple[500],
     error: p.red[600],
     /* On `background.accent`, not interactive */
     onAccent: { default: p.greyscale.white, error: p.red[100] },
@@ -279,6 +281,7 @@ export const dark = {
   foreground: {
     default: p.greyscale.white,
     accent: p.blueIO[300],
+    featured: p.hanPurple[250],
     error: p.red[400],
     onAccent: light.foreground.onAccent,
     action: {
