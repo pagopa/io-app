@@ -65,9 +65,3 @@ export const navigateToPrivacyScreen = () =>
   );
 
 /** CIE */
-
-/** @deprecated */
-export const navigateToWorkunitGenericFailureScreen = () =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WORKUNIT_GENERIC_FAILURE)
-  );
