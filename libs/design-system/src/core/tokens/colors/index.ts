@@ -63,6 +63,8 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     otpInput: otpInputColors(s),
     pictogram: pictogramColors(s),
     progressLoader: progressLoaderColors(s),
+    /* Same look as the checkbox */
+    radio: checkboxColors(s),
     searchInput: searchInputColors(s),
     tag: tagColors(s),
     textInput: textInputColors(s),

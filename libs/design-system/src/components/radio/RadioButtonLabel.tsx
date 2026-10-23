@@ -1,7 +1,7 @@
 import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions, IOOpacity } from "../../core";
 import { triggerHaptic } from "../../functions/haptic-feedback/hapticFeedback";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -38,7 +38,7 @@ export const RadioButtonLabel = ({
   accessibilityHint
 }: RadioButtonLabelProps) => {
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
-  const theme = useIOTheme();
+  const radioColors = useIOColors().component.radio;
 
   const [toggleValue, setToggleValue] = useState(checked ?? false);
 
@@ -89,7 +89,7 @@ export const RadioButtonLabel = ({
             size={IODimensions.size.selection.control * dynamicFontScale}
           />
         </View>
-        <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
+        <H6 color={radioColors.label} style={{ flexShrink: 1 }}>
           {label}
         </H6>
       </View>
