@@ -50,6 +50,7 @@ exports[`Test Avatar Components - Experimental Enabled Avatar Snapshot 1`] = `
           "width": "100%",
         }
       }
+      testID="avatar_image"
     />
   </View>
 </View>
@@ -159,6 +160,7 @@ exports[`Test Avatar Components Avatar Snapshot 1`] = `
           "width": "100%",
         }
       }
+      testID="avatar_image"
     />
   </View>
 </View>
