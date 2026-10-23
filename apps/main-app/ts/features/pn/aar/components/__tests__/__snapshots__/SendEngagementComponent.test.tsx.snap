@@ -423,6 +423,7 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2147,6 +2148,7 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
