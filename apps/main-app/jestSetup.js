@@ -364,7 +364,7 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
   }
 }));
 
-jest.mock("@pagopa/io-react-native-cie", () => ({
+jest.mock("@io-app/expo-cie", () => ({
   CieManager: jest.fn()
 }));
 
