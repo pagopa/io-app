@@ -341,6 +341,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -574,6 +575,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1784,6 +1786,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2017,6 +2020,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3227,6 +3231,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -3460,6 +3465,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -4670,6 +4676,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -4903,6 +4910,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -6113,6 +6121,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -6346,6 +6355,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -7556,6 +7566,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -7789,6 +7800,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -8999,6 +9011,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -9232,6 +9245,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -10442,6 +10456,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -10675,6 +10690,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -11885,6 +11901,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -12118,6 +12135,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -13328,6 +13346,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -13561,6 +13580,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -14771,6 +14791,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -15004,6 +15025,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -16214,6 +16236,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -16447,6 +16470,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -17657,6 +17681,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -17890,6 +17915,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -19100,6 +19126,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -19333,6 +19360,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -20543,6 +20571,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -20776,6 +20805,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -21986,6 +22016,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -22219,6 +22250,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -23429,6 +23461,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -23662,6 +23695,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -24872,6 +24906,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -25105,6 +25140,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
