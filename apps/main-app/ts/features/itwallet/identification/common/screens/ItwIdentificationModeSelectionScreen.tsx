@@ -42,6 +42,11 @@ export type ItwIdentificationModeSelectionScreenProps =
 
 export type ItwIdentificationNavigationParams = {
   animationEnabled?: boolean;
+  /**
+   * Credential offer URI to resume after the eID reissuance, when the flow was
+   * started from a credential offer (deeplink/QR code).
+   */
+  credentialOfferUri?: string;
   credentialType?: string;
   eidReissuing?: boolean;
   level?: EidIssuanceLevel;
@@ -120,7 +125,8 @@ export const ItwIdentificationModeSelectionScreen = ({
           type: "start",
           mode: "reissuance",
           level: params.level || "l2",
-          credentialType: params.credentialType
+          credentialType: params.credentialType,
+          credentialOfferUri: params.credentialOfferUri
         });
       }
     }, [machineRef, params, mode])

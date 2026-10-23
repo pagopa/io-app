@@ -34,6 +34,7 @@ jest.mock("react-redux", () => ({
 
 const mockNavigate = jest.fn();
 const mockNavigation = {
+  addListener: jest.fn(),
   getState: () => ({
     index: 0,
     routes: [

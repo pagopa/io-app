@@ -163,7 +163,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       expect(queryByTestId("cie-authentication-webview")).toBeNull();
       expect(
-        getByText(I18n.t("authentication.errors.network.title"))
+        getByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeTruthy();
       expect(getByText(I18n.t("global.buttons.retry"))).toBeTruthy();
       expect(getByText(I18n.t("global.buttons.cancel"))).toBeTruthy();
@@ -189,7 +189,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       });
 
       expect(
-        getByText(I18n.t("authentication.errors.network.title"))
+        getByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeTruthy();
     });
 
@@ -207,7 +207,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       });
 
       expect(
-        queryByText(I18n.t("authentication.errors.network.title"))
+        queryByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeNull();
     });
   });
@@ -231,7 +231,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       });
 
       expect(
-        getByText(I18n.t("authentication.errors.network.title"))
+        getByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeTruthy();
     });
 
@@ -249,7 +249,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       });
 
       expect(
-        getByText(I18n.t("authentication.errors.network.title"))
+        getByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeTruthy();
     });
   });
@@ -309,7 +309,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       expect(onAuthenticationUrlReceived).not.toHaveBeenCalled();
       expect(
-        getByText(I18n.t("authentication.errors.network.title"))
+        getByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeTruthy();
     });
   });
