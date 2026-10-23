@@ -80,7 +80,7 @@ export const Alert = ({
     >
       <Icon
         allowFontScaling
-        color={alertColors.foreground.default}
+        color={alertColors.foreground}
         name={variantIcons[variant]}
         size={IODimensions.size.icon.alert}
       />
@@ -98,14 +98,14 @@ export const Alert = ({
         <VStack allowScaleSpacing space={IODimensions.gap.alert.action}>
           <Body
             accessibilityRole="text"
-            color={alertColors.foreground.default}
+            color={alertColors.foreground}
             weight={"Regular"}
           >
             {content}
           </Body>
           {action && (
             <ButtonText
-              color={alertColors.foreground.default}
+              color={alertColors.foreground}
               ellipsizeMode="tail"
               numberOfLines={1}
             >
@@ -125,7 +125,7 @@ export const Alert = ({
       ref={viewRef}
       style={[
         fullWidth ? { padding: paddingFullWidth } : paddingDefaultVariant,
-        { backgroundColor: alertColors.background.default }
+        { backgroundColor: alertColors.background }
       ]}
       testID={testID}
     >
@@ -149,7 +149,7 @@ export const Alert = ({
       <Animated.View
         style={[
           fullWidth ? { padding: paddingFullWidth } : paddingDefaultVariant,
-          { backgroundColor: alertColors.background.default },
+          { backgroundColor: alertColors.background },
           // Disable pressed animation when component is full width
           !fullWidth && scaleAnimatedStyle
         ]}

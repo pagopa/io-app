@@ -2,30 +2,29 @@ import { ComponentProps } from "react";
 
 import type {
   IOColorSemantics,
-  IOComponentColors
+  IOComponentColor
 } from "../../core/tokens/colors/semantic";
 import type { Alert } from "./Alert";
 
+type AlertVariant = ComponentProps<typeof Alert>["variant"];
+
 /* Text and icon on the status tint */
-export const alertColors = (s: IOColorSemantics) =>
-  ({
-    error: {
-      background: { default: s.surface.error },
-      foreground: { default: s.foreground.onTint.error }
-    },
-    warning: {
-      background: { default: s.surface.warning },
-      foreground: { default: s.foreground.onTint.warning }
-    },
-    info: {
-      background: { default: s.surface.info },
-      foreground: { default: s.foreground.onTint.info }
-    },
-    success: {
-      background: { default: s.surface.success },
-      foreground: { default: s.foreground.onTint.success }
+export const alertColors = (s: IOColorSemantics) => {
+  const variant = (status: AlertVariant) => ({
+    background: s.surface[status],
+    foreground: s.foreground.onTint[status]
+  });
+
+  return {
+    error: variant("error"),
+    info: variant("info"),
+    success: variant("success"),
+    warning: variant("warning")
+  } satisfies Record<
+    AlertVariant,
+    {
+      background: IOComponentColor<"background">;
+      foreground: IOComponentColor<"foreground">;
     }
-  }) satisfies Record<
-    ComponentProps<typeof Alert>["variant"],
-    IOComponentColors
   >;
+};
