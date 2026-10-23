@@ -36,9 +36,17 @@ describe("getCredentialStatus", () => {
         spec_version: "1.3.3",
         verification: { assurance_level: "high", trust_framework: "it_cie" }
       },
-      statusBeforeExpiration: "jwtExpiring",
-      statusOnExpirationDay: "jwtExpired"
+      statusBeforeExpiration: "valid",
+      statusOnExpirationDay: "valid"
     },
+    ...Object.entries(ItwStoredCredentialsMocks.L3).map(
+      ([name, credential]) => ({
+        name: `IT-Wallet ${name} credential`,
+        credential,
+        statusBeforeExpiration: "valid",
+        statusOnExpirationDay: "valid"
+      })
+    ),
     {
       name: "PID credential",
       credential: ItwStoredCredentialsMocks.eid,
@@ -57,6 +65,11 @@ describe("getCredentialStatus", () => {
       };
 
       it.each([
+        {
+          name: "outside the default digital expiration warning period",
+          now: new Date(2023, 11, 30, 12),
+          expectedStatus: "valid"
+        },
         {
           name: "within the digital expiration warning period",
           now: new Date(2024, 0, 20, 12),
@@ -82,6 +95,7 @@ describe("getCredentialStatus", () => {
         expect(getCredentialStatus(mockCredential, options)).toBe(
           expectedStatus
         );
+        expect(getCredentialStatus(mockCredential)).toBe(expectedStatus);
       });
     }
   );

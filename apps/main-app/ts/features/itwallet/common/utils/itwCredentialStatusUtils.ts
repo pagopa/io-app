@@ -3,7 +3,6 @@ import { differenceInCalendarDays } from "date-fns";
 
 import { getClaimsFullLocale, getCredentialExpireDate } from "./itwClaimsUtils";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
-import { isItwCredential } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialFormat,
@@ -16,8 +15,8 @@ const DEFAULT_EXPIRING_DAYS = 30;
 
 type GetCredentialStatusOptions = {
   /**
-   * Number of days before expiration required to mark a credential as
-   * "EXPIRING".
+   * Number of days before physical document or PID digital expiration required
+   * to mark a credential as "EXPIRING".
    *
    * @default 30
    */
@@ -45,8 +44,9 @@ export const getCredentialStatus = (
   const now = Date.now();
 
   const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);
+  // Only IT-Wallet ID has a digital expiration warning: renewing it also renews
+  // the other credentials transparently.
   const hasDigitalExpirationWarning =
-    isItwCredential(credential) ||
     credential.credentialType === CredentialType.PID;
 
   // Not all credentials have an expiration date
