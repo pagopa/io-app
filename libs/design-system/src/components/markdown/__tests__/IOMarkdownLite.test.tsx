@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { ComponentProps } from "react";
-import { Linking, Platform } from "react-native";
+import { Linking } from "react-native";
 
 import { IOThemeContextProvider } from "../../../context";
 import { IOColors, IOThemeLight } from "../../../core";
@@ -42,40 +42,6 @@ describe("IOMarkdownLite", () => {
   /* ─── Supported content ─── */
 
   describe("Supported content", () => {
-    it("separates Android paragraph reading from inline link actions", () => {
-      jest.replaceProperty(Platform, "OS", "android");
-      try {
-        const onLinkPress = jest.fn();
-        const { getByLabelText, getByRole, toJSON } = renderComponent({
-          content: "Read the [privacy policy](https://example.com)",
-          onLinkPress
-        });
-
-        const paragraph = getByLabelText("Read the privacy policy");
-        expect(paragraph).toHaveProp("accessible", false);
-        expect(paragraph).toHaveProp("screenReaderFocusable", true);
-        expect(toJSON()).toMatchObject({
-          children: [
-            {
-              children: [
-                {
-                  props: {
-                    accessible: true,
-                    focusable: true,
-                    importantForAccessibility: "no"
-                  }
-                }
-              ]
-            }
-          ]
-        });
-        fireEvent.press(getByRole("link"));
-        expect(onLinkPress).toHaveBeenCalledWith("https://example.com");
-      } finally {
-        jest.restoreAllMocks();
-      }
-    });
-
     it("renders basic paragraph text", () => {
       const { getByText } = renderComponent({ content: "Hello world" });
       expect(getByText("Hello world")).toBeTruthy();

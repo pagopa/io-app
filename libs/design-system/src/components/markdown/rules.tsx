@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Platform, View } from "react-native";
+import { View } from "react-native";
 
 import type {
   MarkdownNode,
@@ -159,12 +159,10 @@ const renderParagraph = (
     italic: false
   });
   const containsLinks = segments.some(segment => segment.style.link);
-  const hasAndroidLinks = Platform.OS === "android" && containsLinks;
 
-  const paragraph = (
+  return (
     <Body
       {...(containsLinks ? { accessible: true, focusable: true } : {})}
-      importantForAccessibility={hasAndroidLinks ? "no" : undefined}
       key={node.key}
       style={{ textAlign: context.textAlign }}
     >
@@ -174,20 +172,6 @@ const renderParagraph = (
         return renderSegment(seg, context, isCode);
       })}
     </Body>
-  );
-
-  return hasAndroidLinks ? (
-    <View
-      accessibilityLabel={segments.map(segment => segment.text).join("")}
-      accessible={false}
-      importantForAccessibility="yes"
-      key={node.key}
-      screenReaderFocusable
-    >
-      {paragraph}
-    </View>
-  ) : (
-    paragraph
   );
 };
 
