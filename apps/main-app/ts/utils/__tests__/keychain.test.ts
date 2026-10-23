@@ -48,6 +48,27 @@ describe("getPin", () => {
     expect(result).toBe(validPin);
   });
 
+  it("should preserve the legacy pin after a failed migration and retry on the next read", async () => {
+    mockGetGenericPassword.mockResolvedValue({
+      username: "PIN",
+      password: validPin,
+      service: "service",
+      storage: "storage"
+    } as unknown as Awaited<ReturnType<typeof Keychain.getGenericPassword>>);
+    mockSetItemAsync.mockRejectedValueOnce(new Error("failed to save"));
+
+    await expect(getPin()).resolves.toBe(validPin);
+    expect(mockSetItemAsync).toHaveBeenCalledWith("PIN", validPin, {
+      keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY
+    });
+    expect(mockResetGenericPassword).not.toHaveBeenCalled();
+
+    await expect(getPin()).resolves.toBe(validPin);
+    expect(mockGetGenericPassword).toHaveBeenCalledTimes(2);
+    expect(mockSetItemAsync).toHaveBeenCalledTimes(2);
+    expect(mockResetGenericPassword).toHaveBeenCalledTimes(1);
+  });
+
   it("should return undefined when the stored password does not match the pin pattern", async () => {
     mockGetGenericPassword.mockResolvedValue({
       username: "PIN",
