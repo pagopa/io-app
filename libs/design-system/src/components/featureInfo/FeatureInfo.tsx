@@ -10,9 +10,8 @@ import {
   Pictogram,
   VStack
 } from "../../components";
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
-import { IOColorsLegacy } from "../../core/IOColors";
 
 type FeatureInfoActionProps =
   | {
@@ -50,32 +49,16 @@ export const FeatureInfo = ({
   pictogramProps,
   variant = "neutral"
 }: FeatureInfoProps) => {
-  const theme = useIOTheme();
+  const variantColors = useIOColors().component.featureInfo[variant];
 
   /* Already defined in the `BodySmall` component as a fallback value,
   but I keep it here to avoid possible future inconsistencies. */
   const accessibilityRole = action?.accessibilityRole ?? "link";
 
-  const variantMap: Record<
-    NonNullable<FeatureInfoProps["variant"]>,
-    { action: IOColorsLegacy; content: IOColorsLegacy }
-  > = {
-    contrast: {
-      action: "white",
-      content: "white"
-    },
-    neutral: {
-      action: theme["interactiveElem-default"],
-      content: theme["textBody-tertiary"]
-    }
-  };
-
-  const { action: actionColor, content: contentColor } = variantMap[variant];
-
   const FeatureInfoContent = () => {
     if (typeof body === "string") {
       return (
-        <Body color={contentColor} testID="infoScreenBody">
+        <Body color={variantColors.content} testID="infoScreenBody">
           {body}
         </Body>
       );
@@ -92,7 +75,7 @@ export const FeatureInfo = ({
       {iconName && (
         <Icon
           allowFontScaling
-          color={theme["icon-decorative"]}
+          color={variantColors.icon}
           name={iconName}
           size={IODimensions.size.icon.featureInfo}
         />
@@ -116,7 +99,7 @@ export const FeatureInfo = ({
             accessibilityRole={accessibilityRole}
             accessible
             asLink
-            color={actionColor}
+            color={variantColors.action}
             importantForAccessibility={"yes"}
             onPress={action.onPress}
             weight="Semibold"
