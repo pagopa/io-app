@@ -48,6 +48,7 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
   ...s,
   component: {
     alert: alertColors(s),
+    alertEdgeToEdge: alertColors(withRoles(light)),
     badge: badgeColors(s),
     banner: bannerColors(s, mode),
     button: buttonColors(s),

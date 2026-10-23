@@ -1,4 +1,4 @@
-import { RefObject, useMemo } from "react";
+import { RefObject } from "react";
 import {
   GestureResponderEvent,
   Pressable,
@@ -9,17 +9,13 @@ import {
 import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { useIOColors } from "../../context";
 import {
   enterTransitionAlertEdgeToEdge,
   enterTransitionAlertEdgeToEdgeContent,
   exitTransitionAlertEdgeToEdge,
   IODimensions
 } from "../../core";
-import {
-  IOColorsLegacy,
-  IOColorsStatusBackground,
-  IOColorsStatusForeground
-} from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { makeFontStyleObject } from "../../utils/fonts";
 import { WithTestID } from "../../utils/types";
@@ -57,38 +53,13 @@ type AlertProps = WithTestID<{
   viewRef?: RefObject<View>;
 }>;
 
-type VariantStates = {
-  background: IOColorsStatusBackground;
-  foreground: IOColorsStatusForeground;
-  icon: IOIcons;
-};
-
 // COMPONENT CONFIGURATION
 
-const mapVariantStates: Record<
-  NonNullable<AlertEdgeToEdgeProps["variant"]>,
-  VariantStates
-> = {
-  error: {
-    icon: "errorFilled",
-    background: "error-100",
-    foreground: "error-850"
-  },
-  warning: {
-    icon: "warningFilled",
-    background: "warning-100",
-    foreground: "warning-850"
-  },
-  info: {
-    icon: "infoFilled",
-    background: "info-100",
-    foreground: "info-850"
-  },
-  success: {
-    icon: "success",
-    background: "success-100",
-    foreground: "success-850"
-  }
+const variantIcons: Record<AlertEdgeToEdgeProps["variant"], IOIcons> = {
+  error: "errorFilled",
+  warning: "warningFilled",
+  info: "infoFilled",
+  success: "success"
 };
 
 export const AlertEdgeToEdge = ({
@@ -102,11 +73,7 @@ export const AlertEdgeToEdge = ({
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("slight");
   const insets = useSafeAreaInsets();
-
-  const backgroundColor = useMemo(
-    () => IOColorsLegacy[mapVariantStates[variant].background],
-    [variant]
-  );
+  const alertColors = useIOColors().component.alertEdgeToEdge[variant];
 
   const renderMainBlock = () => (
     <>
@@ -117,15 +84,15 @@ export const AlertEdgeToEdge = ({
         }}
       >
         <Icon
-          color={mapVariantStates[variant].foreground}
-          name={mapVariantStates[variant].icon}
+          color={alertColors.foreground}
+          name={variantIcons[variant]}
           size={IODimensions.size.icon.alert}
         />
       </View>
       <View style={{ flex: 1 }}>
         <Body
           accessibilityRole="text"
-          color={mapVariantStates[variant].foreground}
+          color={alertColors.foreground}
           weight={"Regular"}
         >
           {content}
@@ -138,7 +105,7 @@ export const AlertEdgeToEdge = ({
                   undefined,
                   "Bold"
                 ),
-                color: IOColorsLegacy[mapVariantStates[variant].foreground]
+                color: alertColors.foreground
               }}
             >
               {` ${action}`}
@@ -189,7 +156,7 @@ export const AlertEdgeToEdge = ({
       exiting={exitTransitionAlertEdgeToEdge}
       style={{
         paddingTop: insets.top,
-        backgroundColor
+        backgroundColor: alertColors.background
       }}
     >
       {action ? PressableButton() : StaticComponent()}
