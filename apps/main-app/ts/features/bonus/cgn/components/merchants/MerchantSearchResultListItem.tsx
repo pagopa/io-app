@@ -39,16 +39,7 @@ export function MerchantSearchResultListItem({
     <ContentWrapper>
       <ListItemNav
         accessibilityLabel={item.name}
-        onPress={() => {
-          navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
-            screen: CGN_ROUTES.DETAILS.MERCHANTS.DETAIL,
-            params: {
-              merchantID: item.id
-            }
-          });
-          Keyboard.dismiss();
-        }}
-        value={
+        label={
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
@@ -80,6 +71,15 @@ export function MerchantSearchResultListItem({
             )}
           </View>
         }
+        onPress={() => {
+          navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
+            screen: CGN_ROUTES.DETAILS.MERCHANTS.DETAIL,
+            params: {
+              merchantID: item.id
+            }
+          });
+          Keyboard.dismiss();
+        }}
       />
     </ContentWrapper>
   );
