@@ -153,7 +153,6 @@ export const light = {
    */
   icon: {
     default: p.greyscale[650],
-    strong: p.greyscale.black,
     decorative: p.greyscale[300],
     action: p.blueIO[500],
     error: p.red[600],
@@ -321,7 +320,6 @@ export const dark = {
   },
   icon: {
     default: p.greyscale[450],
-    strong: p.greyscale.white,
     decorative: p.greyscale[650],
     action: p.blueIO[300],
     error: p.red[400],

@@ -1,6 +1,6 @@
-import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 
-export const useItwStatusIconColor = (expired: boolean): IOColorsLegacy => {
-  const theme = useIOTheme();
-  return expired ? theme["icon-decorative"] : theme["interactiveElem-default"];
+export const useItwStatusIconColor = (expired: boolean) => {
+  const colors = useIOColors();
+  return expired ? colors.icon.decorative : colors.icon.action;
 };

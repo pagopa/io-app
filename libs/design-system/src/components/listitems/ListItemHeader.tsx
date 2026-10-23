@@ -2,7 +2,7 @@ import { ComponentProps, useCallback, useMemo } from "react";
 import { View } from "react-native";
 
 import { useIOColors } from "../../context";
-import { IODimensions, IOListItemStyles } from "../../core";
+import { IODimensions, IOListItemStyles, IORoleColor } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -43,7 +43,8 @@ type IconButtonActionProps = {
 
 type IconProps =
   | {
-      iconColor?: ComponentProps<typeof Icon>["color"];
+      /* A semantic token: it has a value in both modes */
+      iconColor?: IORoleColor<"foreground">;
       iconName: IOIcons;
     }
   | { iconColor?: never; iconName?: never };

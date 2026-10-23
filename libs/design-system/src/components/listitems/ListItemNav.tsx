@@ -3,7 +3,7 @@ import { GestureResponderEvent, Image, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOColors } from "../../context";
-import { IODimensions, IOListItemStyles, IOTokenColor } from "../../core";
+import { IODimensions, IOListItemStyles, IORoleColor } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -27,7 +27,8 @@ export type ListItemNavGraphicProps =
   | {
       avatarProps?: never;
       icon: IOIcons;
-      iconColor?: IOTokenColor;
+      /* A semantic token: it has a value in both modes */
+      iconColor?: IORoleColor<"foreground">;
       paymentLogoUri?: never;
     }
   | {
