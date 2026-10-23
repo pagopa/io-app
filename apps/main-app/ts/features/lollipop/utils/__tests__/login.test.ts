@@ -1,10 +1,10 @@
+import { getRedirects } from "@io-app/login-utils";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { getRedirects } from "@pagopa/io-react-native-login-utils";
 import { err } from "neverthrow";
 
 import { followNativeRedirectsAndVerifySaml } from "../login";
 
-jest.mock("@pagopa/io-react-native-login-utils", () => ({
+jest.mock("@io-app/login-utils", () => ({
   getRedirects: jest.fn(),
   isLoginUtilsError: jest.fn().mockReturnValue(false)
 }));

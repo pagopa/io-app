@@ -1,7 +1,3 @@
-import {
-  isLoginUtilsError,
-  LoginUtilsError
-} from "@pagopa/io-react-native-login-utils";
 import * as B from "fp-ts/lib/boolean";
 import { pipe } from "fp-ts/lib/function";
 import {
@@ -113,6 +109,35 @@ export const trackAppCaughtError = (
   void mixpanelTrack(eventName, properties);
 };
 
+export function extractLoginErrorPayload(
+  error: Error | WebViewErrorEvent | WebViewHttpErrorEvent
+) {
+  if (isWebViewHttpErrorEvent(error)) {
+    const { description, statusCode, url } = error.nativeEvent;
+    return {
+      code: statusCode,
+      description,
+      domain: toUrlWithoutQueryParams(url)
+    };
+  } else if (isWebViewErrorEvent(error)) {
+    const { code, description, domain } = error.nativeEvent;
+    return {
+      code,
+      description,
+      domain
+    };
+  } else if (error.message !== undefined) {
+    return {
+      code: error.message,
+      description: error.message,
+      domain: error.message
+    };
+  }
+
+  const unknownError = unknownToString(error);
+  return { code: "unknown", description: unknownError, domain: "unknown" };
+}
+
 /**
  * Track the event when the user taps on the [Help Center
  * CTA](https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33561#1130270800)
@@ -158,6 +183,21 @@ export function trackKeychainFailures() {
   clearKeychainError();
 }
 
+export function trackLoginError(
+  idpName: string | undefined,
+  error: Error | WebViewErrorEvent | WebViewHttpErrorEvent
+) {
+  const errorPayload = extractLoginErrorPayload(error);
+  if (!errorPayload) {
+    return;
+  }
+
+  void mixpanelTrack("SPID_ERROR", {
+    idp: idpName,
+    ...errorPayload
+  });
+}
+
 export function trackLollipopIdpLoginFailure(reason: string) {
   void mixpanelTrack("LOLLIPOP_IDP_LOGIN_FAILURE", {
     reason
@@ -184,6 +224,8 @@ export function trackLollipopIsKeyStrongboxBackedSuccess(
   );
 }
 
+// End of lollipop events
+
 export function trackLollipopKeyGenerationFailure(reason: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
     reason
@@ -193,60 +235,6 @@ export function trackLollipopKeyGenerationFailure(reason: string) {
 export function trackLollipopKeyGenerationSuccess(keyType?: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
     kty: keyType
-  });
-}
-
-// End of lollipop events
-
-const extractLoginErrorPayload = (
-  error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
-) => {
-  if (isLoginUtilsError(error)) {
-    return {
-      code: error.userInfo?.statusCode,
-      description: error.userInfo?.error,
-      domain: error.userInfo?.url
-    };
-  }
-
-  if (isWebViewHttpErrorEvent(error)) {
-    const { description, statusCode, url } = error.nativeEvent;
-    return {
-      code: statusCode,
-      description,
-      domain: toUrlWithoutQueryParams(url)
-    };
-  }
-
-  if (isWebViewErrorEvent(error)) {
-    const { code, description, domain } = error.nativeEvent;
-    return { code, description, domain };
-  }
-
-  if (error.message !== undefined) {
-    return {
-      code: error.message,
-      description: error.message,
-      domain: error.message
-    };
-  }
-
-  const unknownError = unknownToString(error);
-  return { code: "unknown", description: unknownError, domain: "unknown" };
-};
-
-export function trackLoginError(
-  idpName: string | undefined,
-  error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
-) {
-  const errorPayload = extractLoginErrorPayload(error);
-  if (!errorPayload) {
-    return;
-  }
-
-  void mixpanelTrack("SPID_ERROR", {
-    idp: idpName,
-    ...errorPayload
   });
 }
 

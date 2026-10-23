@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["ExpoLoginUtilsModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.loginutils.ExpoLoginUtilsModule"]
+  }
+}

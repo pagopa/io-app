@@ -1,5 +1,5 @@
 import { Banner, VSpacer } from "@io-app/design-system";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import { openAuthSessionAsync } from "expo-web-browser";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useRef } from "react";
@@ -55,7 +55,7 @@ const WalletPaymentPspBanner = () => {
     mixpanelTrack("VOC_USER_EXIT", {
       screen_name: "PAYMENT_PICK_PSP_SCREEN"
     });
-    return openAuthenticationSession(bannerConfig.action.url, "");
+    return openAuthSessionAsync(bannerConfig.action.url);
   };
 
   const handleBannerClose = () => {
