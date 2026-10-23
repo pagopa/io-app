@@ -4,7 +4,6 @@ import { AccessibilityInfo, HostInstance } from "react-native";
 import {
   formatStringToSpacedString,
   getAccessibleAmountText,
-  getListItemAccessibilityLabelCount,
   isScreenReaderEnabled,
   setAccessibilityFocus
 } from "../accessibility";
@@ -130,19 +129,5 @@ describe("formatStringToSpacedString", () => {
     { input: "A", expected: "A" }
   ])("$input → $expected", ({ input, expected }) => {
     expect(formatStringToSpacedString(input)).toBe(expected);
-  });
-});
-
-describe("getListItemAccessibilityLabelCount", () => {
-  it("should return the correct accessibility label with comma", () => {
-    const result = getListItemAccessibilityLabelCount(10, 2);
-
-    expect(result).toBe(", Elemento 3 di 10");
-  });
-
-  it("should return the correct accessibility label without comma", () => {
-    const result = getListItemAccessibilityLabelCount(10, 2, true);
-
-    expect(result).toBe("Elemento 3 di 10");
   });
 });
