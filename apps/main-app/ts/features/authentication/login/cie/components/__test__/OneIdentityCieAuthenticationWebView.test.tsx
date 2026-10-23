@@ -113,7 +113,8 @@ describe("OneIdentityCieAuthenticationWebView", () => {
         status: "verifying-assertion-ref",
         loginSourceState: {
           status: "verifying-assertion-ref" as const,
-          url: "https://example.com"
+          url: "https://example.com",
+          webviewSource: { uri: "https://example.com/authorize" }
         }
       }
     ])(
