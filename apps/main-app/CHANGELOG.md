@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.42.0-canary.8240](https://github.com/pagopa/io-app/compare/3.42.0-rc.6...3.42.0-canary.8240) (2026-10-23)
+
+### Features
+
+* [[IOPLT-2207](https://pagopa.atlassian.net/browse/IOPLT-2207)] Make Expo CLI default tool to build and run the app ([22a1824](https://github.com/pagopa/io-app/commit/22a18242115c99678ff3cfe6ff0505cdf0813ad0))
 ## [3.42.0-rc.6](https://github.com/pagopa/io-app/compare/3.42.0-rc.5...3.42.0-rc.6) (2026-10-22)
 
 ### Bug Fixes
