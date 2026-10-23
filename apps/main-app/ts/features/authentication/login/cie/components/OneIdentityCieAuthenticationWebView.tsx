@@ -18,7 +18,10 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
 import { useOneIdentityLoginSource } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { trackLoginOIConfigurationError } from "../../../common/analytics";
-import { oneIdentityCieNativeRedirectsEnabledSelector } from "../../../common/store/selectors/remoteConfig";
+import {
+  oneIdentityCieAndroidClearSessionCookiesEnabledSelector,
+  oneIdentityCieNativeRedirectsEnabledSelector
+} from "../../../common/store/selectors/remoteConfig";
 import {
   AUTH_LEVELS,
   isOneIdentityErrorUrl,
@@ -79,6 +82,9 @@ export const OneIdentityCieAuthenticationWebView = ({
   const followRedirectsNatively = useIOSelector(
     oneIdentityCieNativeRedirectsEnabledSelector
   );
+  const isAndroidClearSessionCookiesEnabled = useIOSelector(
+    oneIdentityCieAndroidClearSessionCookiesEnabledSelector
+  );
 
   const [webViewState, setWebViewState] = useState<WebViewState>({
     status: "authenticating"
@@ -96,7 +102,8 @@ export const OneIdentityCieAuthenticationWebView = ({
   } = useOneIdentityLoginSource({
     // On Android, session cookies left by a previous CIE login can invalidate
     // the IDP session: same fix as the legacy flow (IOPID-389, #4755)
-    clearSessionCookies: Platform.OS === "android",
+    clearSessionCookies:
+      Platform.OS === "android" && isAndroidClearSessionCookiesEnabled,
     flow,
     followRedirectsNatively,
     idpId: getCieIdpId(useUat),
