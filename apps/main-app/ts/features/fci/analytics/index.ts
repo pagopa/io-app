@@ -352,6 +352,12 @@ export const trackFciPollingFailureAction = (
     buildEventProperties("UX", "action", { cta_category, cta_id })
   );
 
+export const trackFciAppUpdateRequested = () =>
+  mixpanelTrack(
+    "APP_UPDATE_REQUESTED",
+    buildEventProperties("UX", "screen_view", { flow: "firma con IO" })
+  );
+
 const trackFciAction =
   (environment: string) =>
   (action: Action): void => {
