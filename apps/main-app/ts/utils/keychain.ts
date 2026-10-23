@@ -53,7 +53,9 @@ async function migrateLegacyPin(): Promise<PinString | undefined> {
     return undefined;
   }
   const pin = credentials.password;
-  await setPin(pin);
-  await LegacyKeychain.resetGenericPassword();
+  const migrated = await setPin(pin);
+  if (migrated) {
+    await LegacyKeychain.resetGenericPassword();
+  }
   return pin;
 }
