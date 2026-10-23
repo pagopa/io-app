@@ -100,6 +100,7 @@
     "expo-notifications": "~55.0.23",
     "expo-screen-capture": "~55.0.9",
     "expo-sharing": "~55.0.22",
+    "expo-secure-store": "~55.0.13",
     "expo-store-review": "~55.0.18",
     "expo-task-manager": "~55.0.16",
     "fp-ts": "^2.16.11",
