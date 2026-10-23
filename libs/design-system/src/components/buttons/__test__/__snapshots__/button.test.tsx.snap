@@ -725,6 +725,7 @@ exports[`Test Buttons Components - Experimental Enabled IconButton Snapshot 1`] 
         },
       ]
     }
+    pointerEvents="none"
     style={
       [
         {
@@ -894,6 +895,7 @@ exports[`Test Buttons Components - Experimental Enabled IconButtonSolid Snapshot
         },
       ]
     }
+    pointerEvents="none"
     style={
       [
         {

@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "types": ["jest"]
+  },
+  "include": ["index.ts", "__tests__/**/*.ts"],
+  "exclude": ["node_modules"]
+}

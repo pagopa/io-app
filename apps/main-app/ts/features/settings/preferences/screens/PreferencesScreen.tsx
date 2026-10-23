@@ -158,9 +158,9 @@ const PreferencesScreen = () => {
     <ListItemNav
       accessibilityLabel={`${value} ${description}`}
       description={description}
+      label={value}
       onPress={onPress}
       testID={testID}
-      value={value}
     />
   );
 

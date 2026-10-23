@@ -222,6 +222,9 @@ export const ItwClaimsListSection = () => {
       }}
     >
       <ListItemHeader
+        accessibilityLabel={`${I18n.t(
+          "features.itWallet.issuance.credentialAuth.requiredClaims"
+        )}, ${I18n.t("features.itWallet.issuance.credentialAuth.verified")}`}
         iconColor={colors.icon.default}
         iconName="security"
         label={I18n.t(

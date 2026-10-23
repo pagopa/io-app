@@ -1,25 +1,13 @@
-import {
-  IOButton,
-  ListItemHeader,
-  ListItemInfo,
-  ListItemSwitch,
-  ListItemSwitchProps
-} from "@io-app/design-system";
+import { IOButton, ListItemHeader, ListItemInfo } from "@io-app/design-system";
 import { View } from "react-native";
 
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { resetTourCompletedAction } from "../../../tour/store/actions";
 import { isTourCompletedSelector } from "../../../tour/store/selectors";
-import { itwSetCatalogueEnabledForCredentialsList } from "../../credentialsCatalogue/store/actions";
-import { itwIsCatalogueEnabledForCredentialsList } from "../../credentialsCatalogue/store/selectors";
 import { ITW_TOUR_GROUP_ID } from "../../tour/utils/constants";
 
 export const ItwMiscSection = () => {
   const dispatch = useIODispatch();
-  const isCatalogueEnabledForCredentialsList = useIOSelector(
-    itwIsCatalogueEnabledForCredentialsList
-  );
-
   const isTourCompleted = useIOSelector(state =>
     isTourCompletedSelector(state, ITW_TOUR_GROUP_ID)
   );
@@ -27,17 +15,6 @@ export const ItwMiscSection = () => {
   const resetTourGuide = () => {
     dispatch(resetTourCompletedAction({ groupId: ITW_TOUR_GROUP_ID }));
   };
-
-  const featureFlags: ReadonlyArray<ListItemSwitchProps> = [
-    {
-      label: "Lista credenziali da catalogo",
-      description:
-        "Se abilitato, la lista delle credenziali disponibili è ottenuta dal catalogo; altrimenti è una lista fissa.",
-      value: isCatalogueEnabledForCredentialsList,
-      onSwitchValueChange: value =>
-        dispatch(itwSetCatalogueEnabledForCredentialsList(value))
-    }
-  ];
 
   return (
     <View>
@@ -53,10 +30,6 @@ export const ItwMiscSection = () => {
         onPress={resetTourGuide}
         variant="solid"
       />
-      <ListItemHeader label="Feature flag" />
-      {featureFlags.map(props => (
-        <ListItemSwitch key={props.label} {...props} />
-      ))}
     </View>
   );
 };

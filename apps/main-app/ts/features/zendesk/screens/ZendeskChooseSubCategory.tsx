@@ -83,6 +83,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
     item: subCategory
   }: ListRenderItemInfo<ZendeskSubCategory>) => (
     <ListItemNav
+      label={subCategory.description[locale]}
       onPress={() => {
         selectedSubcategory(subCategory);
         // Set sub-category as custom field
@@ -92,7 +93,6 @@ const ZendeskChooseSubCategory = (props: Props) => {
         });
       }}
       testID={subCategory.value}
-      value={subCategory.description[locale]}
     />
   );
 

@@ -5,7 +5,7 @@ import {
   IOMarkdown,
   VSpacer
 } from "@io-app/design-system";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { Image, StyleSheet, View } from "react-native";
@@ -15,10 +15,7 @@ import { LoadingScreenContent } from "../../../../components/screens/LoadingScre
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import {
-  IOStackNavigationProp,
-  IOStackNavigationRouteProps
-} from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   isStartupLoaded,
@@ -43,7 +40,10 @@ import {
   selectIsLoading,
   selectResolvedCredentialOffer
 } from "../../machine/credential/selectors";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
+import {
+  ItwParamsList,
+  useItwNavigation
+} from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
   trackItwUpgradeL3Mandatory,
@@ -82,7 +82,7 @@ type ContentViewProps = {
 };
 
 const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
-  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const navigation = useItwNavigation();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const resolvedCredentialOffer =
     ItwCredentialIssuanceMachineContext.useSelector(
@@ -184,6 +184,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
             navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
               animationEnabled: false,
               credentialType,
+              credentialOfferUri,
               level: isL3Enabled ? "l3" : "l2"
             });
           }
@@ -222,6 +223,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
             navigation.replace(ITW_ROUTES.IDENTIFICATION.MODE_SELECTION, {
               animationEnabled: false,
               credentialType,
+              credentialOfferUri,
               eidReissuing: true,
               level: isL3Enabled ? "l3" : "l2"
             });

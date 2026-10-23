@@ -13,6 +13,7 @@ import {
   Platform,
   Pressable,
   StyleSheet,
+  Text,
   TextInput,
   View,
   ViewStyle
@@ -217,6 +218,7 @@ const HelperRow = ({
   );
 };
 
+// oxlint-disable-next-line complexity
 export const TextInputBase = ({
   disabled = false,
   placeholder,
@@ -458,6 +460,7 @@ export const TextInputBase = ({
           accessibilityElementsHidden={false}
           accessibilityHint={accessibilityHint}
           accessibilityLabel={accessibilityLabel ?? placeholder}
+          accessibilityLabelledBy={"labelledItem"}
           accessibilityLiveRegion="polite"
           accessibilityState={{ disabled }}
           accessible
@@ -516,7 +519,9 @@ export const TextInputBase = ({
           ]}
         >
           <Animated.Text
+            accessibilityElementsHidden={true}
             accessible={false}
+            importantForAccessibility="no-hide-descendants"
             maxFontSizeMultiplier={IOMaxFontSizeMultiplier}
             numberOfLines={1}
             onLayout={getLabelWidth}
@@ -562,7 +567,14 @@ export const TextInputBase = ({
           </Animated.View>
         )}
       </Pressable>
-
+      {Platform.OS === "android" && (
+        <Text
+          nativeID={"labelledItem"}
+          style={{ height: 0, width: 0, opacity: 0 }}
+        >
+          {accessibilityLabel}
+        </Text>
+      )}
       {(bottomMessage || activeCounterLimit != null) && (
         <HelperRow
           bottomMessage={bottomMessage}

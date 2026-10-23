@@ -58,6 +58,7 @@ export const IconButtonSolid = ({
       testID={testID}
     >
       <Animated.View
+        pointerEvents="none"
         style={[
           IOIconButtonStyles.button,
           IOIconButtonStyles.buttonSizeLarge,

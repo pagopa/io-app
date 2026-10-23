@@ -17,13 +17,13 @@ export type ListItemNavAlert = Pick<
 > &
   WithTestID<{
     description?: ReactNode | string;
+    label: ReactNode | string;
     onPress: (event: GestureResponderEvent) => void;
-    value: ReactNode | string;
     withoutIcon?: boolean;
   }>;
 
 export const ListItemNavAlert = ({
-  value,
+  label,
   description,
   withoutIcon = false,
   onPress,
@@ -43,21 +43,21 @@ export const ListItemNavAlert = ({
     [onPress]
   );
 
-  const componentValueToAccessibility = typeof value === "string" ? value : "";
+  const componentLabelToAccessibility = typeof label === "string" ? label : "";
   const componentDescriptionToAccessibility =
     typeof description === "string" ? description : "";
 
   const listItemAccessibilityLabel =
     accessibilityLabel ??
-    `${componentValueToAccessibility}; ${componentDescriptionToAccessibility}`;
+    `${componentLabelToAccessibility}; ${componentDescriptionToAccessibility}`;
 
   const listItemNavAlertContent = (
     <>
       {/* Let developer using a custom component (e.g: skeleton) */}
-      {typeof value === "string" ? (
-        <H6 color={listItemColors.foreground.label}>{value}</H6>
+      {typeof label === "string" ? (
+        <H6 color={listItemColors.foreground.label}>{label}</H6>
       ) : (
-        value
+        label
       )}
       {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
       {description && (

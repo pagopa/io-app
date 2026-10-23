@@ -21,10 +21,12 @@ import {
 export type ListItemTransaction = WithTestID<
   PressableListItemBaseProps & {
     accessible?: boolean;
+    description: string;
     isLoading?: boolean;
+    label: string;
     loadingAccessibilityLabel?: string;
     /**
-     * The maximum number of lines to display for the title.
+     * The maximum number of lines to display for the label.
      *
      * @default 2
      */
@@ -37,8 +39,6 @@ export type ListItemTransaction = WithTestID<
      */
     paymentLogoIcon?: ListItemTransactionLogo;
     showChevron?: boolean;
-    subtitle: string;
-    title: string;
   } & (
       | {
           transaction: {
@@ -78,8 +78,8 @@ const MUNICIPALITY_LOGO_SIZE = 44;
 const ListItemTransactionContent = ({
   paymentLogoIcon,
   numberOfLines,
-  title,
-  subtitle,
+  label,
+  description,
   badge,
   amountAccessibilityLabel,
   showChevron,
@@ -87,7 +87,7 @@ const ListItemTransactionContent = ({
   refund
 }: Pick<
   ListItemTransaction,
-  "numberOfLines" | "paymentLogoIcon" | "showChevron" | "subtitle" | "title"
+  "description" | "label" | "numberOfLines" | "paymentLogoIcon" | "showChevron"
 > & {
   amount: string | undefined;
   amountAccessibilityLabel: string | undefined;
@@ -123,13 +123,13 @@ const ListItemTransactionContent = ({
             color={listItemColors.foreground.label}
             numberOfLines={numberOfLines}
           >
-            {title}
+            {label}
           </H6>
           <BodySmall
             color={listItemColors.foreground.description}
             weight="Regular"
           >
-            {subtitle}
+            {description}
           </BodySmall>
         </View>
       </HStack>
@@ -184,9 +184,9 @@ export const ListItemTransaction = ({
   isLoading = false,
   paymentLogoIcon,
   onPress,
-  subtitle,
+  description,
   testID,
-  title,
+  label,
   transaction: { amount, amountAccessibilityLabel, badge, refund },
   numberOfLines = 2,
   accessible
@@ -202,8 +202,8 @@ export const ListItemTransaction = ({
   const contentProps = {
     paymentLogoIcon,
     numberOfLines,
-    title,
-    subtitle,
+    label,
+    description,
     badge,
     amountAccessibilityLabel,
     showChevron,

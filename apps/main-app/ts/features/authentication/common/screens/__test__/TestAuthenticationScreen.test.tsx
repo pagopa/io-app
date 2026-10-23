@@ -10,15 +10,15 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { AUTHENTICATION_ROUTES } from "../../navigation/routes";
 import { TestLoginState } from "../../store/reducers/testLogin";
 import TestAuthenticationScreen from "../TestAuthenticationScreen";
-
 const timeoutError = getTimeoutError();
 
-jest.mock("react-native-device-info", () => ({
-  getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
-  getVersion: jest.fn().mockReturnValue("1.2.3.4"),
+jest
+  .spyOn(require("../../../../../utils/device"), "getDeviceAppVersion")
+  .mockReturnValue("1.2.3.4");
+
+jest.mock("@io-app/expo-device-internal", () => ({
   isDisplayZoomed: jest.fn().mockReturnValue(false)
 }));
-
 /*
   With "idle" state, it should provide the ${getAppVersion()} app version,
   the username and password enabled inputs and a disabled confirm button.

@@ -42,11 +42,11 @@ type ListItemRadioProps = Pick<
 
 type Props = WithTestID<{
   description?: ReactNode | string;
+  label: string;
   loadingProps?: ListItemRadioLoadingProps;
   onValueChange?: (newValue: boolean) => void;
   selected: boolean;
   startImage?: ListItemRadioGraphicProps;
-  value: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
  * @param props
  */
 export const ListItemRadio = ({
-  value,
+  label,
   description,
   startImage,
   selected,
@@ -236,7 +236,7 @@ export const ListItemRadio = ({
                 color={listItemColors.foreground.label}
                 style={{ flexShrink: 1 }}
               >
-                {value}
+                {label}
               </H6>
             </View>
             <HSpacer size={IODimensions.gap.selection.control} />

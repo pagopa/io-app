@@ -1,4 +1,5 @@
-import { ReactNode } from "react";
+import Color from "color";
+import { ReactNode, useMemo } from "react";
 import Animated, {
   useAnimatedRef,
   useSharedValue
@@ -12,8 +13,11 @@ import { ButtonBlockProps } from "../../../../../components/ui/utils/buttons.ts"
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
-import { useHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils";
+import { useCredentialCardConfig } from "../../../common/components/ItwCredentialCard/config.ts";
+import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName.ts";
+import { getLegacyThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors/index.ts";
 
 export type CredentialCtaProps = ButtonBlockProps;
 
@@ -32,11 +36,23 @@ const ItwPresentationDetailsScreenBase = ({
   ctaProps,
   headerTransparent = false
 }: ItwPresentationDetailsScreenBaseProps) => {
+  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  // Must match the header card, which is always in light mode
+  const { color } = useCredentialCardConfig(credential.credentialType, "light");
+  const title = useItwCredentialName(credential.credentialType);
+
+  const backgroundColor = withL3Design
+    ? color
+    : getLegacyThemeColorByCredentialType(credential.credentialType)
+        .backgroundColor;
+  const variant = useMemo(
+    () => (Color(backgroundColor).isDark() ? "contrast" : "neutral"),
+    [backgroundColor]
+  );
+
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const scrollTranslationY = useSharedValue(0);
-
-  const headerProps = useHeaderPropsByCredentialType(credential.credentialType);
 
   useHeaderSecondLevel({
     scrollValues: {
@@ -48,7 +64,9 @@ const ItwPresentationDetailsScreenBase = ({
     animatedRef: animatedScrollViewRef,
     transparent: headerTransparent && !screenReaderEnabled,
     ignoreAccessibilityCheck: headerTransparent,
-    ...headerProps
+    title,
+    backgroundColor,
+    variant
   });
 
   const actions: IOScrollViewActions | undefined = ctaProps
