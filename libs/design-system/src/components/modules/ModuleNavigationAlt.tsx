@@ -8,8 +8,8 @@ import {
 } from "react-native";
 import { SvgProps } from "react-native-svg";
 
-import { useIOTheme } from "../../context";
-import { IOColorsLegacy, IODimensions } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IORoleColor } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -26,7 +26,8 @@ import {
 type BaseProps = ImageProps &
   PressableModuleBaseProps & {
     badge?: Badge;
-    iconColor?: IOColorsLegacy;
+    /* A semantic token: it has a value in both modes */
+    iconColor?: IORoleColor<"foreground">;
     isFetching?: boolean;
     isLoading?: false;
     rightIcon?: IOIcons;
@@ -51,7 +52,7 @@ type ModuleNavigationAltProps = BaseProps | LoadingProps;
 export const ModuleNavigationAlt = (
   props: WithTestID<ModuleNavigationAltProps>
 ) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
   const graphicWrapperSize: IOIconSizeScale = 48;
@@ -67,7 +68,7 @@ export const ModuleNavigationAlt = (
   const {
     testID,
     icon,
-    iconColor = theme["interactiveElem-default"],
+    iconColor = moduleColors.foreground.action,
     image,
     title,
     subtitle,
@@ -113,7 +114,7 @@ export const ModuleNavigationAlt = (
     if (onPress) {
       return (
         <Icon
-          color={theme["interactiveElem-default"]}
+          color={moduleColors.foreground.action}
           name={rightIcon ?? "chevronRightListItem"}
           size={IODimensions.size.icon.chevron}
           testID={testID ? `${testID}_icon` : undefined}
@@ -153,7 +154,7 @@ export const ModuleNavigationAlt = (
             {badge ? <Badge {...badge} /> : null}
             <View>
               <BodySmall
-                color={theme["interactiveElem-default"]}
+                color={moduleColors.foreground.action}
                 numberOfLines={2}
                 style={{ flexShrink: 1 }}
                 weight="Semibold"
@@ -161,7 +162,10 @@ export const ModuleNavigationAlt = (
                 {title}
               </BodySmall>
               {subtitle && (
-                <LabelMini color={theme["textBody-tertiary"]} weight="Regular">
+                <LabelMini
+                  color={moduleColors.foreground.description}
+                  weight="Regular"
+                >
                   {subtitle}
                 </LabelMini>
               )}

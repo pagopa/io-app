@@ -63,7 +63,6 @@ export const IOListItemStyles = StyleSheet.create({
 export const IOModuleStyles = StyleSheet.create({
   button: {
     borderWidth: stroke.default,
-    borderColor: IOColorsLegacy["grey-100"],
     borderRadius: radius.module,
     borderCurve: "continuous",
     flexDirection: "row",

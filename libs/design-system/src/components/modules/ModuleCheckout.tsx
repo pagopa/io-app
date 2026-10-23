@@ -6,7 +6,7 @@ import {
   View
 } from "react-native";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
 import { IOButton } from "../buttons";
 import { HStack, VStack } from "../layout";
@@ -44,7 +44,7 @@ const ModuleBaseContent = ({
   subtitle
 }: Pick<BaseProps, "paymentLogo" | "subtitle" | "title"> &
   Pick<ImageProps, "image">) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
 
   return (
     <HStack
@@ -65,9 +65,12 @@ const ModuleBaseContent = ({
       )}
 
       <View style={{ flexGrow: 1, flexShrink: 1 }}>
-        <H6 color={theme["textBody-default"]}>{title}</H6>
+        <H6 color={moduleColors.foreground.label}>{title}</H6>
         {subtitle && (
-          <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+          <BodySmall
+            color={moduleColors.foreground.description}
+            weight="Regular"
+          >
             {subtitle}
           </BodySmall>
         )}
