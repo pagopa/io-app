@@ -6,7 +6,7 @@ import {
   View
 } from "react-native";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions, IOOpacity, IOSelectionListItemStyles } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
@@ -61,7 +61,7 @@ export const ListItemSwitch = memo(
     switchTestID,
     testID
   }: ListItemSwitchProps) => {
-    const theme = useIOTheme();
+    const listItemColors = useIOColors().component.listItem;
     const { dynamicFontScale, spacingScaleMultiplier, hugeFontEnabled } =
       useIOFontDynamicScale();
 
@@ -115,7 +115,7 @@ export const ListItemSwitch = memo(
             {icon && !hugeFontEnabled && (
               <Icon
                 allowFontScaling
-                color={theme["icon-decorative"]}
+                color={listItemColors.icon}
                 name={icon}
                 size={IODimensions.size.icon.selection}
               />
@@ -129,7 +129,7 @@ export const ListItemSwitch = memo(
 
             <H6
               accessible={!canRenderSwitch}
-              color={theme["textBody-default"]}
+              color={listItemColors.label}
               importantForAccessibility={
                 !canRenderSwitch ? "yes" : "no-hide-descendants"
               }
@@ -168,7 +168,7 @@ export const ListItemSwitch = memo(
         {description && (
           <>
             <VSpacer size={IODimensions.gap.selection.description} />
-            <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+            <BodySmall color={listItemColors.description} weight="Regular">
               {description}
             </BodySmall>
           </>

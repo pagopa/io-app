@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { View } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IOColorsLegacy, IODimensions } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { Icon } from "../icons";
 import { HStack } from "../layout";
@@ -44,9 +44,7 @@ export const ListItemRadioWithAmount = ({
       onValueChange(!toggleValue);
     }
   };
-  const theme = useIOTheme();
-
-  const suggestColor: IOColorsLegacy = theme["featured-default"];
+  const listItemColors = useIOColors().component.listItem;
 
   const defaultAccessibilityLabel = `${label} ${formattedAmountString} ${
     suggestReason ?? ""
@@ -62,7 +60,7 @@ export const ListItemRadioWithAmount = ({
       onPress={pressHandler}
     >
       <View style={{ flexShrink: 1 }}>
-        <H6 color={theme["textBody-default"]} numberOfLines={1}>
+        <H6 color={listItemColors.label} numberOfLines={1}>
           {label}
         </H6>
         {isSuggested && (
@@ -71,11 +69,11 @@ export const ListItemRadioWithAmount = ({
             style={{ alignItems: "center" }}
           >
             <Icon
-              color={suggestColor}
+              color={listItemColors.featured}
               name="sparkles"
               size={IODimensions.size.icon.caption}
             />
-            <BodySmall color={suggestColor} weight="Regular">
+            <BodySmall color={listItemColors.featured} weight="Regular">
               {suggestReason}
             </BodySmall>
           </HStack>
@@ -87,9 +85,7 @@ export const ListItemRadioWithAmount = ({
         pointerEvents="none"
         space={IODimensions.gap.selection.control}
       >
-        <H6 color={theme["interactiveElem-default"]}>
-          {formattedAmountString}
-        </H6>
+        <H6 color={listItemColors.amount}>{formattedAmountString}</H6>
         <Radio
           checked={selected ?? toggleValue}
           size={IODimensions.size.selection.control * dynamicFontScale}

@@ -2,7 +2,7 @@ import { ComponentProps, ReactNode, useState } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions, IOOpacity, IOSelectionListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
@@ -82,7 +82,7 @@ export const ListItemRadio = ({
     useIOFontDynamicScale();
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
 
   const toggleRadioItem = () => {
     triggerHaptic("impactLight");
@@ -210,7 +210,7 @@ export const ListItemRadio = ({
               {startImage?.icon && !hugeFontEnabled && (
                 <Icon
                   allowFontScaling
-                  color={theme["icon-decorative"]}
+                  color={listItemColors.icon}
                   name={startImage.icon}
                   size={IODimensions.size.icon.selection}
                 />
@@ -232,7 +232,7 @@ export const ListItemRadio = ({
                   />
                 </View>
               )}
-              <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
+              <H6 color={listItemColors.label} style={{ flexShrink: 1 }}>
                 {value}
               </H6>
             </View>
@@ -252,7 +252,7 @@ export const ListItemRadio = ({
           {description && (
             <View>
               <VSpacer size={IODimensions.gap.selection.description} />
-              <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+              <BodySmall color={listItemColors.description} weight="Regular">
                 {description}
               </BodySmall>
             </View>

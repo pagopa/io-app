@@ -2,7 +2,7 @@ import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions, IOOpacity, IOSelectionListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
@@ -51,8 +51,7 @@ export const ListItemCheckbox = ({
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 
-  // Theme
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
 
   // Accessibility
   // Comma = Small pause when announcing content
@@ -110,12 +109,12 @@ export const ListItemCheckbox = ({
               {icon && !hugeFontEnabled && (
                 <Icon
                   allowFontScaling
-                  color={theme["icon-decorative"]}
+                  color={listItemColors.icon}
                   name={icon}
                   size={IODimensions.size.icon.selection}
                 />
               )}
-              <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
+              <H6 color={listItemColors.label} style={{ flexShrink: 1 }}>
                 {value}
               </H6>
             </View>
@@ -134,7 +133,7 @@ export const ListItemCheckbox = ({
           {description && (
             <View>
               <VSpacer size={IODimensions.gap.selection.description} />
-              <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+              <BodySmall color={listItemColors.description} weight="Regular">
                 {description}
               </BodySmall>
             </View>

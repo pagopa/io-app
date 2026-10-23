@@ -23,6 +23,7 @@ import {
 import { buttonColors } from "../../../components/buttons/IOButton/colors";
 import { checkboxColors } from "../../../components/checkbox/colors";
 import { codeInputColors } from "../../../components/codeInput/colors";
+import { listItemColors } from "../../../components/listitems/colors";
 import { loadingSpinnerColors } from "../../../components/loadingSpinner/colors";
 import { otpInputColors } from "../../../components/otpInput/colors";
 import { pictogramColors } from "../../../components/pictograms/colors";
@@ -60,6 +61,7 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     codeInput: codeInputColors(s),
     iconButton: iconButtonColors(s),
     iconButtonSolid: iconButtonSolidColors(s),
+    listItem: listItemColors(s),
     loadingSpinner: loadingSpinnerColors(s),
     otpInput: otpInputColors(s),
     pictogram: pictogramColors(s),
