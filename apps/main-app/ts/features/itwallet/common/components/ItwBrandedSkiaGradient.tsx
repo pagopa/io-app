@@ -1,5 +1,4 @@
 import {
-  Rect,
   LinearGradient as SkiaLinearGradient,
   vec
 } from "@shopify/react-native-skia";
@@ -7,11 +6,8 @@ import { LayoutRectangle } from "react-native";
 import {
   Extrapolation,
   interpolate,
-  SensorType,
-  useAnimatedReaction,
-  useAnimatedSensor,
-  useDerivedValue,
-  useSharedValue
+  SharedValue,
+  useDerivedValue
 } from "react-native-reanimated";
 
 import {
@@ -22,8 +18,10 @@ import {
 
 export type ItwSkiaBrandedGradientVariant = "default" | "error" | "warning";
 
-type ItwIridescentBorderProps = {
+type ItwBrandedSkiaGradientProps = {
   height: LayoutRectangle["height"];
+  /** Relative device roll; the gradient stays at rest when omitted. */
+  roll?: SharedValue<number>;
   variant?: ItwSkiaBrandedGradientVariant;
   width: LayoutRectangle["width"];
 };
@@ -35,86 +33,39 @@ export const itwBrandedGradientColors = {
   error: ITW_BRAND_GRADIENT_ERROR
 };
 
-/**
- * We don't need to look at the whole quaternion range, just a very small part
- * of it.
- */
-const quaternionRange = 0.5;
+/** Roll range (radians) mapped to the whole gradient movement. */
+const ROLL_RANGE = 0.5;
 
 /**
- * Returns the animated Skia transform that slides the IT-Wallet branded
- * gradient vertically, within `height`, following the device rotation sensor.
+ * WARNING: this component must be the child of a Skia drawing (e.g. `Rect`).
+ *
+ * Shades its parent with the IT-Wallet branded gradient, which slides
+ * vertically with the device roll.
  */
-export const useItwBrandedGradientTransform = (
-  height: LayoutRectangle["height"]
-) => {
-  const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
-
-  const currentRoll = useSharedValue(0);
-  const initialRoll = useSharedValue(0);
-
-  useAnimatedReaction(
-    () => rotationSensor.sensor.value,
-    s => {
-      if (initialRoll.value === 0) {
-        initialRoll.value = s.roll;
-      }
-      currentRoll.value = s.roll;
-    },
-    []
-  );
-
-  /**
-   * Not all devices are in an initial flat position on a surface (e.g. a table)
-   * then we use a relative rotation value, not an absolute one
-   */
-  const relativeRoll = useDerivedValue(
-    () => initialRoll.value - currentRoll.value
-  );
-
-  return useDerivedValue(() => [
+export const ItwBrandedSkiaGradient = ({
+  width,
+  height,
+  variant = "default",
+  roll
+}: ItwBrandedSkiaGradientProps) => {
+  const transform = useDerivedValue(() => [
     {
       translateY: interpolate(
-        relativeRoll.value,
-        [-quaternionRange, quaternionRange],
+        roll?.value ?? 0,
+        [-ROLL_RANGE, ROLL_RANGE],
         [-height, height],
         Extrapolation.CLAMP
       )
     }
   ]);
-};
-
-/**
- * WARNING: this component must be placed inside a {@link Canvas} component.
- *
- * Renders an animated IT-Wallet branded border using Skia and device rotation
- * sensor data.
- */
-export const ItwBrandedSkiaGradient = ({
-  width,
-  height,
-  variant = "default"
-}: ItwIridescentBorderProps) => {
-  const skiaGradientTransform = useItwBrandedGradientTransform(height);
-
-  /* Makes gradient slightly bigger to handle animation overflow */
-  const gradientY = -height;
-  const gradientHeight = height * 3;
 
   return (
-    <Rect
-      height={gradientHeight}
-      transform={skiaGradientTransform}
-      width={width}
-      x={0}
-      y={gradientY}
-    >
-      <SkiaLinearGradient
-        colors={itwBrandedGradientColors[variant]}
-        end={vec(width / 3, width)}
-        mode="mirror"
-        start={vec(0, 0)}
-      />
-    </Rect>
+    <SkiaLinearGradient
+      colors={itwBrandedGradientColors[variant]}
+      end={vec(width / 3, width)}
+      mode="mirror"
+      start={vec(0, 0)}
+      transform={transform}
+    />
   );
 };
