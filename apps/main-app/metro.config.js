@@ -45,8 +45,7 @@ const config = {
     rewriteRequestUrl: getRewriteRequestUrl(projectRoot)
   },
   transformer: {
-    babelTransformerPath:
-      require.resolve("react-native-svg-transformer/react-native")
+    babelTransformerPath: require.resolve("react-native-svg-transformer/expo")
   },
   resolver: {
     sourceExts: [...sourceExts, "svg"],
