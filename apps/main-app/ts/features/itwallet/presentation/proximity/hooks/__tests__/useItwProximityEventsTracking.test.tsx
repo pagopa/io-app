@@ -21,11 +21,14 @@ import { useItwProximityEventsTracking } from "../useItwProximityEventsTracking"
 type EngagementScenario = {
   engagementMode: "nfc" | "qrcode";
   proximityFlow: ProximityFlow;
+  retrievalMethod?: "ble" | "nfc";
 };
 
 const engagementScenarios: ReadonlyArray<EngagementScenario> = [
   { engagementMode: "qrcode", proximityFlow: "qr_code" },
-  { engagementMode: "nfc", proximityFlow: "nfc" }
+  { engagementMode: "nfc", proximityFlow: "nfc_ble" },
+  { engagementMode: "nfc", proximityFlow: "nfc_ble", retrievalMethod: "ble" },
+  { engagementMode: "nfc", proximityFlow: "nfc_nfc", retrievalMethod: "nfc" }
 ];
 
 const failureScenarios = [
@@ -89,10 +92,10 @@ describe("useItwProximityEventsTracking", () => {
 
   test.each(scenarios)(
     "tracks $name with proximity_flow $proximityFlow",
-    ({ failure, trackFn, engagementMode, proximityFlow }) => {
+    ({ failure, trackFn, engagementMode, proximityFlow, retrievalMethod }) => {
       const track = jest.spyOn(analytics, trackFn).mockImplementation();
 
-      renderTrackingHook(failure, engagementMode);
+      renderTrackingHook(failure, engagementMode, retrievalMethod);
 
       expect(track).toHaveBeenCalledTimes(1);
       expect(track).toHaveBeenCalledWith(
@@ -104,7 +107,8 @@ describe("useItwProximityEventsTracking", () => {
 
 const renderTrackingHook = (
   failure: ProximityFailure,
-  engagementMode: EngagementScenario["engagementMode"]
+  engagementMode: EngagementScenario["engagementMode"],
+  retrievalMethod?: EngagementScenario["retrievalMethod"]
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
@@ -115,7 +119,12 @@ const renderTrackingHook = (
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
     value: { Failure: "Idle" },
-    context: { ...initialSnapshot.context, engagementMode, failure }
+    context: {
+      ...initialSnapshot.context,
+      engagementMode,
+      retrievalMethod,
+      failure
+    }
   };
 
   const wrapper = ({ children }: PropsWithChildren) => (

@@ -423,6 +423,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
