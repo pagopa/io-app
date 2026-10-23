@@ -4,12 +4,10 @@ import {
   BannerErrorState,
   FeatureInfo,
   H4,
-  IOColorTheme,
-  useIOColors,
   useIOTheme,
   VStack
 } from "@io-app/design-system";
-import { Alert, View } from "react-native";
+import { Alert } from "react-native";
 
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -29,14 +27,13 @@ const componentInnerMargin = 16;
 
 export const DSAdvice = () => {
   const theme = useIOTheme();
-  const colors = useIOColors();
 
   return (
     <DesignSystemScreen title={"Advice & Banners"}>
       <VStack space={blockMargin}>
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>FeatureInfo</H4>
-          {renderFeatureInfo(colors)}
+          {renderFeatureInfo()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
@@ -73,7 +70,7 @@ const renderBannerErrorState = () => (
   </VStack>
 );
 
-const renderFeatureInfo = (colors: IOColorTheme) => (
+const renderFeatureInfo = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="FeatureInfo · with Icon">
       <VStack space={componentInnerMargin}>
@@ -131,39 +128,6 @@ const renderFeatureInfo = (colors: IOColorTheme) => (
         />
       </VStack>
     </DSComponentViewerBox>
-    <View
-      style={{
-        backgroundColor: colors.background.accent,
-        padding: 16,
-        borderRadius: 16
-      }}
-    >
-      <DSComponentViewerBox
-        colorMode="dark"
-        name="FeatureInfo · contrast variant"
-      >
-        <VStack space={componentInnerMargin}>
-          <FeatureInfo
-            body={
-              "Dopo questo passaggio non sarà più possibile annullare il pagamento"
-            }
-            iconName="info"
-            variant="contrast"
-          />
-          <FeatureInfo
-            action={{
-              label: "Scopri di più",
-              onPress: onLinkPress
-            }}
-            body={
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
-            }
-            iconName="security"
-            variant="contrast"
-          />
-        </VStack>
-      </DSComponentViewerBox>
-    </View>
   </VStack>
 );
 

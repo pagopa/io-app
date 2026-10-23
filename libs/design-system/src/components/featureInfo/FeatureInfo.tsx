@@ -39,17 +39,15 @@ type FeatureInfoProps = FeatureInfoActionProps &
 type PartialFeatureInfo = {
   // Necessary to render main body with different formatting
   body?: ReactNode | string;
-  variant?: "contrast" | "neutral";
 };
 
 export const FeatureInfo = ({
   action,
   body,
   iconName,
-  pictogramProps,
-  variant = "neutral"
+  pictogramProps
 }: FeatureInfoProps) => {
-  const variantColors = useIOColors().component.featureInfo[variant];
+  const colors = useIOColors().component.featureInfo;
 
   /* Already defined in the `BodySmall` component as a fallback value,
   but I keep it here to avoid possible future inconsistencies. */
@@ -58,7 +56,7 @@ export const FeatureInfo = ({
   const FeatureInfoContent = () => {
     if (typeof body === "string") {
       return (
-        <Body color={variantColors.content} testID="infoScreenBody">
+        <Body color={colors.content} testID="infoScreenBody">
           {body}
         </Body>
       );
@@ -75,7 +73,7 @@ export const FeatureInfo = ({
       {iconName && (
         <Icon
           allowFontScaling
-          color={variantColors.icon}
+          color={colors.icon}
           name={iconName}
           size={IODimensions.size.icon.featureInfo}
         />
@@ -99,7 +97,7 @@ export const FeatureInfo = ({
             accessibilityRole={accessibilityRole}
             accessible
             asLink
-            color={variantColors.action}
+            color={colors.action}
             importantForAccessibility={"yes"}
             onPress={action.onPress}
             weight="Semibold"
