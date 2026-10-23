@@ -3,13 +3,12 @@ import {
   BodySmall,
   CodeInput,
   H2,
-  hexToRgba,
   IOButton,
-  IOColors,
   IODimensions,
   ListItemSwitch,
   NumberPad,
   Pictogram,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
@@ -24,6 +23,17 @@ export const DSNumberPad = () => {
   const [primaryBackground, setPrimaryBackground] = useState(false);
 
   const insets = useSafeAreaInsets();
+  const colors = useIOColors();
+
+  const backgroundColor = primaryBackground
+    ? colors.background.accent
+    : colors.background.default;
+  const headingColor = primaryBackground
+    ? colors.foreground.onAccent.default
+    : colors.text.heading.default;
+  const textColor = primaryBackground
+    ? colors.foreground.onAccent.default
+    : colors.text.content.default;
 
   const navigation = useNavigation();
 
@@ -37,13 +47,9 @@ export const DSNumberPad = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerStyle: {
-        backgroundColor: primaryBackground
-          ? IOColors["blueIO-500"]
-          : IOColors.white
-      }
+      headerStyle: { backgroundColor }
     });
-  }, [primaryBackground, navigation]);
+  }, [backgroundColor, navigation]);
   return (
     <View
       style={[
@@ -54,19 +60,15 @@ export const DSNumberPad = () => {
           paddingBottom: insets.bottom,
           paddingHorizontal: IODimensions.padding.screen.default
         },
-        {
-          backgroundColor: primaryBackground
-            ? IOColors["blueIO-500"]
-            : IOColors.white
-        }
+        { backgroundColor }
       ]}
     >
       <View
         style={{
-          backgroundColor: IOColors.white,
+          backgroundColor: colors.surface.default,
           borderRadius: 16,
           paddingHorizontal: 16,
-          borderColor: hexToRgba(IOColors.black, 0.2),
+          borderColor: colors.stroke.default,
           borderWidth: 1
         }}
       >
@@ -80,9 +82,9 @@ export const DSNumberPad = () => {
         <VSpacer size={16} />
         <Pictogram name="key" size={64} />
         <VSpacer size={8} />
-        <H2 color={primaryBackground ? "white" : "black"}>Ciao {`{name}`},</H2>
+        <H2 color={headingColor}>Ciao {`{name}`},</H2>
         <VSpacer size={8} />
-        <Body color={primaryBackground ? "white" : "black"}>
+        <Body color={textColor}>
           {"per accedere usa il volto o il codice di sblocco"}
         </Body>
       </View>
@@ -96,10 +98,7 @@ export const DSNumberPad = () => {
             bottom: -32
           }}
         >
-          <BodySmall
-            color={primaryBackground ? "white" : "black"}
-            weight="Semibold"
-          >
+          <BodySmall color={textColor} weight="Semibold">
             {value}
           </BodySmall>
         </View>

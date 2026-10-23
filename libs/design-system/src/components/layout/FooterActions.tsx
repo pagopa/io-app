@@ -11,7 +11,12 @@ import {
 import Animated, { AnimatedStyle } from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { footerBoxShadow, hexToRgba, IOColors, IODimensions } from "../../core";
+import {
+  footerBoxShadow,
+  hexToRgba,
+  IOColorsLegacy,
+  IODimensions
+} from "../../core";
 import { WithTestID } from "../../utils/types";
 import {
   IOButton,
@@ -99,7 +104,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 8,
     top: -16,
-    color: IOColors.black,
+    color: IOColorsLegacy.black,
     fontSize: 9,
     opacity: 0.75
   }
@@ -128,7 +133,8 @@ export const FooterActions = ({
 
   /* Background color should be app main background
      (both light and dark themes) */
-  const HEADER_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
+  const HEADER_BG_COLOR: ColorValue =
+    IOColorsLegacy[theme["appBackground-primary"]];
   const TRANSPARENT_BG_COLOR: ColorValue = "transparent";
 
   /* Safe background block. Cover everything until it reaches
@@ -158,7 +164,7 @@ export const FooterActions = ({
           ? { position: "absolute", bottom: 0 }
           : { marginTop: IODimensions.padding.screen.end },
         debugMode && {
-          backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
+          backgroundColor: hexToRgba(IOColorsLegacy["error-500"], 0.15)
         },
         animatedStyles?.mainBlock
       ]}

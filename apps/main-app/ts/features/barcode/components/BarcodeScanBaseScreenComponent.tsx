@@ -2,7 +2,7 @@ import {
   HeaderActionProps,
   HStack,
   IconButton,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   LoadingSpinner,
   TabItem,
@@ -317,7 +317,7 @@ const BarcodeScanBaseScreenComponent = ({
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: IOColors["blueIO-850"]
+    backgroundColor: IOColorsLegacy["blueIO-850"]
   },
   headerContainer: {
     flex: 1,

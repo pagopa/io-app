@@ -1,7 +1,7 @@
 import {
   HeaderSecondLevel,
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
@@ -42,7 +42,8 @@ export const useScrollHeaderAnimation = ({
   const { isAlertVisible } = useIOAlertVisible();
   const navigation = useNavigation();
 
-  const HEADER_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
+  const HEADER_BG_COLOR: ColorValue =
+    IOColorsLegacy[theme["appBackground-primary"]];
 
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {

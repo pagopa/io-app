@@ -10,6 +10,7 @@ import {
 import { Appearance, ColorSchemeName } from "react-native";
 
 import { IOTheme, IOThemeDark, IOThemeLight } from "../core/IOColors";
+import { IOColors, IOColorTheme } from "../core/tokens";
 
 export const IOThemes = {
   light: IOThemeLight,
@@ -17,6 +18,8 @@ export const IOThemes = {
 };
 
 type IOThemeContextType = {
+  /* Color tokens of the resolved mode */
+  colors: IOColorTheme;
   setTheme: (theme: ColorSchemeName) => void;
   theme: IOTheme;
   themeType: ColorSchemeName;
@@ -25,6 +28,8 @@ type IOThemeContextType = {
 export const IOThemeContext: Context<IOThemeContextType> =
   createContext<IOThemeContextType>({
     themeType: Appearance.getColorScheme() ?? "unspecified",
+    colors:
+      Appearance.getColorScheme() === "dark" ? IOColors.dark : IOColors.light,
     theme:
       Appearance.getColorScheme() === "dark" ? IOThemes.dark : IOThemes.light,
     setTheme: () => void 0
@@ -32,7 +37,10 @@ export const IOThemeContext: Context<IOThemeContextType> =
 
 export const useIOThemeContext = () => useContext(IOThemeContext);
 
+/** @deprecated Use `useIOColors`, will be removed in the next major release */
 export const useIOTheme = () => useIOThemeContext().theme;
+
+export const useIOColors = () => useIOThemeContext().colors;
 
 type IOThemeContextProviderProps = {
   theme?: ColorSchemeName;
@@ -59,6 +67,7 @@ export const IOThemeContextProvider = ({
     () => ({
       themeType: currentTheme,
       theme: resolvedTheme === "dark" ? IOThemes.dark : IOThemes.light,
+      colors: resolvedTheme === "dark" ? IOColors.dark : IOColors.light,
       setTheme: handleThemeChange
     }),
     [currentTheme, resolvedTheme, handleThemeChange]

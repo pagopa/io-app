@@ -13,7 +13,7 @@ import {
   H6,
   Hero,
   HStack,
-  IOColors,
+  IOColorsLegacy,
   LabelMini,
   MdH1,
   MdH2,
@@ -93,7 +93,9 @@ const H3Row = () => {
       <H3>Header H3</H3>
       <H3 color={theme["interactiveElem-default"]}>Header H3</H3>
       <View
-        style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+        style={{
+          backgroundColor: IOColorsLegacy[theme["appBackground-accent"]]
+        }}
       >
         <H3 color={"white"}>Header H3</H3>
       </View>
@@ -110,7 +112,9 @@ const H4Row = () => {
       <H4>Header H4</H4>
       <H4 color={theme["interactiveElem-default"]}>Header H4</H4>
       <View
-        style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+        style={{
+          backgroundColor: IOColorsLegacy[theme["appBackground-accent"]]
+        }}
       >
         <H4 color={"white"}>Header H4</H4>
       </View>
@@ -152,7 +156,9 @@ const ButtonTextRow = () => {
         ButtonText
       </ButtonText>
       <View
-        style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+        style={{
+          backgroundColor: IOColorsLegacy[theme["appBackground-accent"]]
+        }}
       >
         <ButtonText>ButtonText</ButtonText>
       </View>
@@ -198,7 +204,9 @@ export const BodySmallRow = () => {
         <BodySmall>Body small</BodySmall>
         <BodySmall color={theme.errorText}>Body small</BodySmall>
         <View
-          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+          style={{
+            backgroundColor: IOColorsLegacy[theme["appBackground-accent"]]
+          }}
         >
           <BodySmall color={"white"}>Body small</BodySmall>
         </View>
@@ -212,7 +220,9 @@ export const BodySmallRow = () => {
           Body small SB
         </BodySmall>
         <View
-          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+          style={{
+            backgroundColor: IOColorsLegacy[theme["appBackground-accent"]]
+          }}
         >
           <BodySmall color={"white"} weight="Semibold">
             Body small SB
@@ -228,7 +238,9 @@ export const BodySmallRow = () => {
           Body small Regular
         </BodySmall>
         <View
-          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+          style={{
+            backgroundColor: IOColorsLegacy[theme["appBackground-accent"]]
+          }}
         >
           <BodySmall color={"white"} weight="Regular">
             Body small Regular
@@ -251,7 +263,9 @@ export const LabelMiniRow = () => {
         <LabelMini>Label mini</LabelMini>
         <LabelMini color={theme.errorText}>Label mini</LabelMini>
         <View
-          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+          style={{
+            backgroundColor: IOColorsLegacy[theme["appBackground-accent"]]
+          }}
         >
           <LabelMini color={"white"}>Label mini</LabelMini>
         </View>
@@ -262,7 +276,9 @@ export const LabelMiniRow = () => {
           Label mini SB
         </LabelMini>
         <View
-          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+          style={{
+            backgroundColor: IOColorsLegacy[theme["appBackground-accent"]]
+          }}
         >
           <LabelMini color={"white"} weight="Semibold">
             Label mini SB
@@ -275,7 +291,9 @@ export const LabelMiniRow = () => {
           Label mini Regular
         </LabelMini>
         <View
-          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+          style={{
+            backgroundColor: IOColorsLegacy[theme["appBackground-accent"]]
+          }}
         >
           <LabelMini color={"white"} weight="Regular">
             Label mini Regular

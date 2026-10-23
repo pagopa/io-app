@@ -1,7 +1,7 @@
 import {
   hexToRgba,
   Icon,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOSkeleton,
   LabelMini,
@@ -32,15 +32,16 @@ const usePaymentCardStyles = () => {
   const isDarkMode = themeType === "dark";
 
   const textColorDefault = theme["textHeading-default"];
-  const textColorError: IOColors = isDarkMode ? "error-100" : "error-850";
-  const backgroundColorDefault = IOColors[theme["appBackground-tertiary"]];
+  const textColorError: IOColorsLegacy = isDarkMode ? "error-100" : "error-850";
+  const backgroundColorDefault =
+    IOColorsLegacy[theme["appBackground-tertiary"]];
   const backgroundColorError = isDarkMode
-    ? hexToRgba(IOColors["error-400"], 0.2)
-    : IOColors["error-100"];
+    ? hexToRgba(IOColorsLegacy["error-400"], 0.2)
+    : IOColorsLegacy["error-100"];
 
   const skeletonColor = isDarkMode
-    ? hexToRgba(IOColors["grey-450"], 0.5)
-    : IOColors["grey-200"];
+    ? hexToRgba(IOColorsLegacy["grey-450"], 0.5)
+    : IOColorsLegacy["grey-200"];
 
   return {
     textColorDefault,

@@ -2,7 +2,7 @@ import {
   H4,
   hexToRgba,
   HSpacer,
-  IOColors,
+  IOColorsLegacy,
   IOPictograms,
   IOPictogramsBleed,
   IOPictogramsObject,
@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   agnosticPictogramWrapperBlue: {
-    backgroundColor: IOColors["blueIO-500"]
+    backgroundColor: IOColorsLegacy["blueIO-500"]
   },
   agnosticPictogramWrapperWhite: {
-    backgroundColor: IOColors.white,
-    borderColor: hexToRgba(IOColors.black, 0.1),
+    backgroundColor: IOColorsLegacy.white,
+    borderColor: hexToRgba(IOColorsLegacy.black, 0.1),
     borderWidth: 1
   }
 });

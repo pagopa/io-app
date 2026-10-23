@@ -1,7 +1,7 @@
 import {
   H4,
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   LoadingSpinner,
   Pictogram,
   ProgressLoader,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: hexToRgba(IOColors.black, 0.15),
+    borderColor: hexToRgba(IOColorsLegacy.black, 0.15),
     padding: 16,
     overflow: "hidden"
   },
@@ -46,7 +46,7 @@ type SpinnerViewerBox = {
 
 const viewerBackgroundMap: Record<
   NonNullable<SpinnerViewerBox["variant"]>,
-  IOColors
+  IOColorsLegacy
 > = {
   default: "white",
   primary: "blueIO-500"
@@ -61,7 +61,7 @@ const SpinnerViewerBox = ({
     <View
       style={[
         styles.spinnerOuter,
-        { backgroundColor: IOColors[viewerBackgroundMap[variant]] }
+        { backgroundColor: IOColorsLegacy[viewerBackgroundMap[variant]] }
       ]}
     >
       {children}
@@ -90,8 +90,8 @@ const CircularProgressViewerBox = () => {
       progress={10}
       radius={imgDimension / 2}
       size={imgDimension}
-      strokeBgColor={IOColors[theme["appBackground-tertiary"]]}
-      strokeColor={IOColors[theme["interactiveElem-default"]]}
+      strokeBgColor={IOColorsLegacy[theme["appBackground-tertiary"]]}
+      strokeColor={IOColorsLegacy[theme["interactiveElem-default"]]}
       strokeWidth={circleBorderWidth}
     >
       <View style={styles.imgWrapper}>
@@ -123,7 +123,7 @@ export const DSLoaders = () => {
                 )}
                 accessible={true}
                 animating={true}
-                color={IOColors[theme["interactiveElem-default"]]}
+                color={IOColorsLegacy[theme["interactiveElem-default"]]}
                 importantForAccessibility={"no-hide-descendants"}
                 size={"large"}
                 testID={"activityIndicator"}
@@ -144,7 +144,7 @@ export const DSLoaders = () => {
           <VStack space={16}>
             <SpinnerViewerBox name="LoadingSpinner · Size 24, primary color">
               <LoadingSpinner
-                color={IOColors[theme["interactiveElem-default"]]}
+                color={IOColorsLegacy[theme["interactiveElem-default"]]}
               />
             </SpinnerViewerBox>
             <SpinnerViewerBox

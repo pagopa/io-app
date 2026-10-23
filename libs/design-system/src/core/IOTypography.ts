@@ -11,7 +11,7 @@ placeholder — can read the same attributes.
 import { TextProps, TextStyle } from "react-native";
 
 import { IOFontFamily, IOFontSize, IOFontWeight } from "../utils/fonts";
-import { IOColors, IOTheme } from "./IOColors";
+import { IOColorsLegacy, IOTheme } from "./IOColors";
 
 export type IOTypographicStyle = IOTypographicAttributes & IOTypographicColor;
 
@@ -47,7 +47,7 @@ type IOTypographicAttributes = {
  * theme token for every style but `ButtonText`, which pins a static value.
  */
 type IOTypographicColor =
-  | { color: IOColors; colorToken?: never }
+  | { color: IOColorsLegacy; colorToken?: never }
   | { color?: never; colorToken: keyof IOTheme };
 
 /* Default color for any text rendered as a link, whatever its style */

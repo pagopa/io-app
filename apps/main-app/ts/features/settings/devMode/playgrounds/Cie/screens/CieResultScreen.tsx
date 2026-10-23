@@ -1,4 +1,4 @@
-import { IOColors, IOText } from "@io-app/design-system";
+import { IOColorsLegacy, IOText } from "@io-app/design-system";
 import * as Clipboard from "expo-clipboard";
 import { Alert, Platform, Share, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     paddingBottom: 128
   },
   content: {
-    backgroundColor: IOColors["grey-50"],
+    backgroundColor: IOColorsLegacy["grey-50"],
     padding: 8
   }
 });

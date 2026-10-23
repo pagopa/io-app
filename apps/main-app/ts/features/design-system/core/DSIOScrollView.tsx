@@ -2,7 +2,7 @@ import {
   Body,
   H2,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -42,7 +42,7 @@ export const DSIOScrollView = () => {
           width: "100%",
           aspectRatio: 16 / 9,
           borderRadius: 32,
-          backgroundColor: IOColors["blueIO-850"]
+          backgroundColor: IOColorsLegacy["blueIO-850"]
         }}
       />
       <VSpacer />

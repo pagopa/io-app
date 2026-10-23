@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { ColorValue, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOThemeContext } from "../../context";
-import { hexToRgba, IOColors, IODimensions } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, withAlpha } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useErrorShakeAnimation } from "../../utils/hooks/useErrorShakeAnimation";
 import { HStack } from "../layout";
+
+export type CodeInputStatus = "default" | "error";
 
 type CodeInputProps = {
   length: number;
@@ -31,7 +33,7 @@ const EmptyDot = ({ color: borderColor }: { color: ColorValue }) => (
       styles.dotShape,
       {
         borderColor,
-        backgroundColor: hexToRgba(borderColor, 0)
+        backgroundColor: withAlpha(borderColor, 0)
       }
     ]}
   />
@@ -50,38 +52,13 @@ export const CodeInput = ({
   variant = "primary",
   onValidate
 }: CodeInputProps) => {
-  const [status, setStatus] = useState<"default" | "error">("default");
-  const { themeType, theme } = useIOThemeContext();
+  const [status, setStatus] = useState<CodeInputStatus>("default");
+  const codeInputColors = useIOColors().component.codeInput[variant];
 
   const { translate, animatedStyle, shakeAnimation } = useErrorShakeAnimation();
 
-  /* Empty Dot
-  - Right color depending on both theme and variant */
-  const emptyDotColorLightBg = IOColors["grey-650"];
-  const emptyDotColorDarkBg = IOColors["grey-300"];
-  const emptyDotColorAccentBg = hexToRgba(IOColors.white, 0.75);
-
-  const emptyDotColorThemeBased =
-    themeType === "light" ? emptyDotColorLightBg : emptyDotColorDarkBg;
-
-  const emptyDotColor =
-    variant === "primary" ? emptyDotColorAccentBg : emptyDotColorThemeBased;
-
-  /* Filled Dot
-  - Right color depending on theme, variant and status */
-  const filledDotColorLightBg = IOColors.black;
-  const filledDotColorDarkBg = IOColors.white;
-  const filledDotColorError =
-    variant === "primary" ? IOColors["error-400"] : IOColors[theme.errorText];
-  const filledDotColorThemeBased =
-    themeType === "light" ? filledDotColorLightBg : filledDotColorDarkBg;
-
-  const filledDotColor =
-    status === "error"
-      ? filledDotColorError
-      : variant === "primary"
-        ? filledDotColorDarkBg
-        : filledDotColorThemeBased;
+  const emptyDotColor = codeInputColors.border;
+  const filledDotColor = codeInputColors.foreground[status];
 
   useEffect(() => {
     if (value.length === length) {

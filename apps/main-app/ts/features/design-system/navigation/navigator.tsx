@@ -1,6 +1,6 @@
 import {
   IconButton,
-  IOColors,
+  IOColorsLegacy,
   makeFontStyleObject,
   useIOExperimentalDesign,
   useIOTheme,
@@ -114,7 +114,7 @@ export const DesignSystemNavigator = () => {
         isExperimental ? "Regular" : "Semibold",
         undefined
       ),
-      color: IOColors[theme["textHeading-default"]]
+      color: IOColorsLegacy[theme["textHeading-default"]]
     }
   };
 
@@ -127,7 +127,7 @@ export const DesignSystemNavigator = () => {
       <Stack.Navigator
         initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
         screenOptions={{
-          headerTintColor: IOColors[theme["interactiveElem-default"]],
+          headerTintColor: IOColorsLegacy[theme["interactiveElem-default"]],
           headerTitleStyle: {
             ...makeFontStyleObject(
               14,
@@ -136,7 +136,7 @@ export const DesignSystemNavigator = () => {
               isExperimental ? "Regular" : "Semibold",
               undefined
             ),
-            color: IOColors[theme["textHeading-default"]]
+            color: IOColorsLegacy[theme["textHeading-default"]]
           },
           headerTitleAlign: "center",
           headerBackButtonDisplayMode: "minimal",

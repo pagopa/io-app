@@ -1,4 +1,4 @@
-import { IOColors, IOSkeleton } from "@io-app/design-system";
+import { IOColorsLegacy, IOSkeleton } from "@io-app/design-system";
 import { useEffect, useState } from "react";
 import { Image } from "react-native";
 
@@ -8,7 +8,7 @@ type BankLogoOrSkeletonProps = {
   abiCode?: string;
   dimensions: { height: number; width: number };
   imageA11yLabel?: string;
-  placeHolderColor?: IOColors;
+  placeHolderColor?: IOColorsLegacy;
 };
 
 /**
@@ -62,7 +62,7 @@ export const BankLogoOrSkeleton = ({
     />
   ) : (
     <IOSkeleton
-      color={IOColors[placeHolderColor]}
+      color={IOColorsLegacy[placeHolderColor]}
       height={height}
       radius={8}
       shape="rectangle"

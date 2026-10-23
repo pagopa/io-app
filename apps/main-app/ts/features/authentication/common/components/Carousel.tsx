@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme, VSpacer } from "@io-app/design-system";
+import { IOColorsLegacy, useIOTheme, VSpacer } from "@io-app/design-system";
 import { ComponentProps, Ref, useCallback, useRef } from "react";
 import {
   Animated,
@@ -15,7 +15,7 @@ import { trackCarousel } from "../analytics/carouselAnalytics";
 const styles = StyleSheet.create({
   normalDot: {
     borderRadius: 20,
-    borderColor: IOColors["grey-650"],
+    borderColor: IOColorsLegacy["grey-650"],
     marginHorizontal: 4
   },
   indicatorContainer: {
@@ -39,8 +39,8 @@ const CarouselDots = (props: CarouselDotsProps) => {
 
   const theme = useIOTheme();
 
-  const primaryColor = IOColors[theme["interactiveElem-default"]];
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
+  const primaryColor = IOColorsLegacy[theme["interactiveElem-default"]];
+  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
 
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;

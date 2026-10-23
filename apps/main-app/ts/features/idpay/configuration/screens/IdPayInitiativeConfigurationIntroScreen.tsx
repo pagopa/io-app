@@ -2,7 +2,7 @@ import {
   BodySmall,
   H6,
   Icon,
-  IOColors,
+  IOColorsLegacy,
   IOIcons,
   useIOTheme,
   VSpacer
@@ -111,7 +111,7 @@ const RequiredDataItem = (props: RequiredDataItemProps) => {
         flexDirection: "row",
         paddingVertical: 16,
         borderBottomWidth: 1,
-        borderBottomColor: IOColors[theme["divider-default"]]
+        borderBottomColor: IOColorsLegacy[theme["divider-default"]]
       }}
     >
       {!!props.icon && (

@@ -1,7 +1,7 @@
 import {
   FooterActions,
   FooterActionsInline,
-  IOColors,
+  IOColorsLegacy,
   IOToast
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -27,7 +27,7 @@ import LoadingComponent from "./LoadingComponent";
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors["grey-700"]
+    backgroundColor: IOColorsLegacy["grey-700"]
   }
 });
 

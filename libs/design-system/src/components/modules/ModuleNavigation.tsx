@@ -6,7 +6,7 @@ import {
   View
 } from "react-native";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
@@ -41,7 +41,7 @@ type LoadingProps = {
 type ModuleNavigationProps = BaseProps | LoadingProps;
 
 export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
   if (props.isLoading) {
@@ -57,7 +57,7 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
 
   const iconComponent = icon && !hugeFontEnabled && (
     <Icon
-      color={theme["icon-decorative"]}
+      color={moduleColors.foreground.icon}
       name={icon}
       size={IODimensions.size.icon.module.leading}
     />
@@ -85,7 +85,7 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
 
           <View style={{ flexShrink: 1 }}>
             <BodySmall
-              color={theme["interactiveElem-default"]}
+              color={moduleColors.foreground.action}
               numberOfLines={2}
               style={{ flexShrink: 1 }}
               weight="Semibold"
@@ -93,7 +93,10 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
               {title}
             </BodySmall>
             {subtitle && (
-              <LabelMini color={theme["textBody-tertiary"]} weight="Regular">
+              <LabelMini
+                color={moduleColors.foreground.description}
+                weight="Regular"
+              >
                 {subtitle}
               </LabelMini>
             )}
@@ -103,7 +106,7 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
           <Badge {...badge} />
         ) : onPress ? (
           <Icon
-            color={theme["interactiveElem-default"]}
+            color={moduleColors.foreground.action}
             name="chevronRightListItem"
             size={IODimensions.size.icon.chevron}
           />

@@ -14,7 +14,13 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { hexToRgba, IOColors, IODimensions, IOSpringValues } from "../../core";
+import {
+  hexToRgba,
+  IOColorsLegacy,
+  IODimensions,
+  IOOpacity,
+  IOSpringValues
+} from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
@@ -49,15 +55,13 @@ type ColorStates = {
     selected: string;
   };
   foreground: {
-    default: IOColors;
-    disabled: IOColors;
-    selected: IOColors;
+    default: IOColorsLegacy;
+    disabled: IOColorsLegacy;
+    selected: IOColorsLegacy;
   };
 };
 
 type TabItemState = "default" | "disabled" | "selected";
-
-const DISABLED_OPACITY = 0.5;
 
 const TabItem = ({
   label,
@@ -84,22 +88,22 @@ const TabItem = ({
     () => ({
       light: {
         border: {
-          default: IOColors[theme["tab-item-border-default"]],
+          default: IOColorsLegacy[theme["tab-item-border-default"]],
           selected: hexToRgba(
-            IOColors[theme["tab-item-foreground-selected"]],
+            IOColorsLegacy[theme["tab-item-foreground-selected"]],
             0.5
           )
         },
         background: {
           default: hexToRgba(
-            IOColors[theme["tab-item-background-selected"]],
+            IOColorsLegacy[theme["tab-item-background-selected"]],
             0
           ),
           selected: hexToRgba(
-            IOColors[theme["tab-item-background-selected"]],
+            IOColorsLegacy[theme["tab-item-background-selected"]],
             0.25
           ),
-          pressed: IOColors[theme["appBackground-primary"]]
+          pressed: IOColorsLegacy[theme["appBackground-primary"]]
         },
         foreground: {
           default: theme["tab-item-foreground-default"],
@@ -109,13 +113,13 @@ const TabItem = ({
       },
       dark: {
         border: {
-          default: hexToRgba(IOColors.white, 0),
-          selected: IOColors.white
+          default: hexToRgba(IOColorsLegacy.white, 0),
+          selected: IOColorsLegacy.white
         },
         background: {
-          default: hexToRgba(IOColors.white, 0.1),
-          selected: IOColors.white,
-          pressed: IOColors.white
+          default: hexToRgba(IOColorsLegacy.white, 0.1),
+          selected: IOColorsLegacy.white,
+          pressed: IOColorsLegacy.white
         },
         foreground: {
           default: "white",
@@ -191,7 +195,7 @@ const TabItem = ({
           { columnGap: IODimensions.gap.tab.icon },
           !disabled && !reducedMotion && scaleAnimatedStyle,
           animatedStyle,
-          disabled && { opacity: DISABLED_OPACITY }
+          disabled && { opacity: IOOpacity.disabled }
         ]}
       >
         {activeIcon && (

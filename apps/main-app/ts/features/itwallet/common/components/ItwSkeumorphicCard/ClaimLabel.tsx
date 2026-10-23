@@ -1,5 +1,5 @@
 import {
-  IOColors,
+  IOColorsLegacy,
   IOFontWeight,
   makeFontStyleObject
 } from "@io-app/design-system";
@@ -58,7 +58,7 @@ export const ClaimLabel: FunctionComponent<
         ),
         // Skeumorphic MUST NOT change appearance based on the current theme (both system and app theme)
         // so it is safe to force the text color and make sure it is readable
-        color: IOColors["grey-900"],
+        color: IOColorsLegacy["grey-900"],
         textTransform
       }}
     >

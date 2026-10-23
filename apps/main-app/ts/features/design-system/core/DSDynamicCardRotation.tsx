@@ -1,4 +1,4 @@
-import { H6, hexToRgba, IOColors, VSpacer } from "@io-app/design-system";
+import { H6, hexToRgba, IOColorsLegacy, VSpacer } from "@io-app/design-system";
 import {
   Canvas,
   Color,
@@ -62,8 +62,8 @@ const visibleLightPercentage = 0.25;
 const cardAspectRatio: ViewStyle["aspectRatio"] = 7 / 4;
 const cardBorderRadius = 24;
 const cardBorderWidth = 1;
-const cardBorderColor: ColorValue = IOColors["hanPurple-500"];
-const cardBorderHighlighted: ColorValue = IOColors.white;
+const cardBorderColor: ColorValue = IOColorsLegacy["hanPurple-500"];
+const cardBorderHighlighted: ColorValue = IOColorsLegacy.white;
 const cardBorderOpacity = 0.65;
 // Drivers' License
 const cardGradient: Array<Color> = ["#F4ACD5", "#FCE6F2"];
@@ -196,7 +196,7 @@ export const DSDynamicCardRotation = () => {
   // Inner card (border excluded)
   const CardInnerMask = () => (
     <RoundedRect
-      color={IOColors.black}
+      color={IOColorsLegacy.black}
       height={(cardSize?.height ?? 0) - cardBorderWidth * 2}
       r={cardBorderRadius - cardBorderWidth}
       width={(cardSize?.width ?? 0) - cardBorderWidth * 2}
@@ -361,7 +361,7 @@ export const DSDynamicCardRotation = () => {
         }}
       >
         <RoundedRect
-          color={hexToRgba(IOColors["hanPurple-250"], 1)}
+          color={hexToRgba(IOColorsLegacy["hanPurple-250"], 1)}
           height={cardSize?.height ?? 0}
           r={cardBorderRadius}
           width={cardSize?.width ?? 0}
@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
     aspectRatio: cardAspectRatio,
     borderRadius: 24,
     borderCurve: "continuous",
-    backgroundColor: IOColors["hanPurple-250"]
+    backgroundColor: IOColorsLegacy["hanPurple-250"]
   },
   debugInfo: {
     alignSelf: "flex-start",

@@ -2,7 +2,7 @@ import {
   Body,
   ListItemHeader,
   ListItemSwitch,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import { Canvas } from "@shopify/react-native-skia";
@@ -192,7 +192,7 @@ const ItwSkeumorphicCredentialItem = ({
 };
 
 export const ItwClaimsListSection = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const mock = [
     {
@@ -225,7 +225,7 @@ export const ItwClaimsListSection = () => {
         accessibilityLabel={`${I18n.t(
           "features.itWallet.issuance.credentialAuth.requiredClaims"
         )}, ${I18n.t("features.itWallet.issuance.credentialAuth.verified")}`}
-        iconColor={theme["icon-default"]}
+        iconColor={colors.icon.default}
         iconName="security"
         label={I18n.t(
           "features.itWallet.issuance.credentialAuth.requiredClaims"

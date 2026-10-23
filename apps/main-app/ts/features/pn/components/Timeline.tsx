@@ -1,4 +1,4 @@
-import { Caption, H6, IOColors, VSpacer } from "@io-app/design-system";
+import { Caption, H6, IOColorsLegacy, VSpacer } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -59,32 +59,32 @@ const styles = StyleSheet.create({
   rectangle: {
     flexGrow: 1,
     width: 2,
-    backgroundColor: IOColors["grey-200"]
+    backgroundColor: IOColorsLegacy["grey-200"]
   },
   dot: {
     marginVertical: 4,
     width: 14,
     height: 14,
     borderRadius: 14 / 2,
-    borderColor: IOColors.white
+    borderColor: IOColorsLegacy.white
   }
 });
 
 const mapColorStatus: Record<NonNullable<TimelineStatus>, ColorStates> = {
   cancelled: {
-    background: IOColors["warning-500"]
+    background: IOColorsLegacy["warning-500"]
   },
   default: {
-    background: IOColors["grey-300"]
+    background: IOColorsLegacy["grey-300"]
   },
   effective: {
-    background: IOColors["info-500"]
+    background: IOColorsLegacy["info-500"]
   },
   unreachable: {
-    background: IOColors["error-500"]
+    background: IOColorsLegacy["error-500"]
   },
   viewed: {
-    background: IOColors["success-500"]
+    background: IOColorsLegacy["success-500"]
   }
 };
 

@@ -2,7 +2,7 @@ import {
   Body,
   ContentWrapper,
   ForceScrollDownView,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   VStack
 } from "@io-app/design-system";
@@ -36,7 +36,7 @@ export const DSForceScrollDownViewCustomSlot = () => (
       <View
         style={{
           height: CUSTOM_SLOT_HEIGHT,
-          backgroundColor: IOColors["success-100"]
+          backgroundColor: IOColorsLegacy["success-100"]
         }}
       />
     </VStack>

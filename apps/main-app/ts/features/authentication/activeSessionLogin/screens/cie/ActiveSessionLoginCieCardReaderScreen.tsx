@@ -10,7 +10,7 @@ import {
   ContentWrapper,
   H3,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IOPictograms,
   triggerHaptic,
   useIOTheme,
@@ -416,7 +416,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         >
           <ContentWrapper>
             <CieCardReadingAnimation
-              circleColor={IOColors[theme["interactiveElem-default"]]}
+              circleColor={IOColorsLegacy[theme["interactiveElem-default"]]}
               pictogramName={getPictogramName(readingState)}
               readingState={readingState}
             />

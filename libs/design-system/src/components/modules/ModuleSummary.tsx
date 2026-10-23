@@ -1,6 +1,6 @@
 import { View } from "react-native";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
 import { Icon, IOIcons } from "../icons";
 import { BodySmall, H6 } from "../typography";
@@ -22,20 +22,23 @@ export const ModuleSummary = ({
   onPress,
   icon = "info"
 }: Props) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
 
   return (
     <PressableModuleBase onPress={onPress}>
       <View style={{ flexGrow: 1, flexShrink: 1 }}>
-        <H6 color={theme["textBody-default"]}>{label}</H6>
+        <H6 color={moduleColors.foreground.label}>{label}</H6>
         {description && (
-          <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+          <BodySmall
+            color={moduleColors.foreground.description}
+            weight="Regular"
+          >
             {description}
           </BodySmall>
         )}
       </View>
       <View style={{ marginLeft: IODimensions.gap.module.trailing }}>
-        <Icon color={theme["interactiveElem-default"]} name={icon} size={24} />
+        <Icon color={moduleColors.foreground.action} name={icon} size={24} />
       </View>
     </PressableModuleBase>
   );

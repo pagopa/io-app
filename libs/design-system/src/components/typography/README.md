@@ -35,7 +35,7 @@ const {
 // { dynamicTypeRamp: "largeTitle", lineHeight: 42, size: 28, weight: "Semibold" }
 ```
 
-Like `IOColors`, the name doubles as the type of its own keys, so a component can take a style by name:
+Like `IOColorsLegacy`, the name doubles as the type of its own keys, so a component can take a style by name:
 
 ```tsx
 type Props = { typographicStyle?: IOTypography }; // "hero" | "h1" | …

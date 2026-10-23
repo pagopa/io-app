@@ -6,7 +6,7 @@ import {
   BodySmall,
   HStack,
   IconButton,
-  IOColors,
+  IOColorsLegacy,
   IOText,
   useIOToast
 } from "@io-app/design-system";
@@ -138,14 +138,14 @@ const styles = StyleSheet.create({
     marginVertical: 4
   },
   header: {
-    backgroundColor: IOColors["error-600"],
+    backgroundColor: IOColorsLegacy["error-600"],
     padding: 12,
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between"
   },
   content: {
-    backgroundColor: IOColors["grey-50"],
+    backgroundColor: IOColorsLegacy["grey-50"],
     padding: 8
   }
 });

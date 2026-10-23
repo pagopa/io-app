@@ -2,7 +2,7 @@ import {
   BodySmall,
   H3,
   HeaderSecondLevel,
-  IOColors,
+  IOColorsLegacy,
   IODimensions
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -113,10 +113,10 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
             {nameSurname}
           </BodySmall>
           <Barcode
-            background={IOColors.white}
+            background={IOColorsLegacy.white}
             format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
             height={barcodeWidth} // and the width as height
-            lineColor={IOColors.black}
+            lineColor={IOColorsLegacy.black}
             value={fiscalCode}
             width={barcodeHeigth} // Since it is rotated by 90 degrees, we use the height as width
           />
@@ -137,9 +137,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 32,
     rowGap: 4,
-    borderColor: IOColors["grey-100"],
+    borderColor: IOColorsLegacy["grey-100"],
     // Always white regardless of the theme
-    backgroundColor: IOColors.white,
+    backgroundColor: IOColorsLegacy.white,
     borderWidth: 1,
     borderRadius: 8
   },
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   text: {
     alignSelf: "center",
     // Always black regardless of the theme
-    color: IOColors.black
+    color: IOColorsLegacy.black
   }
 });
 

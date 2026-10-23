@@ -1,4 +1,4 @@
-import { hexToRgba, IOColors, useIOTheme } from "@io-app/design-system";
+import { hexToRgba, IOColorsLegacy, useIOTheme } from "@io-app/design-system";
 /* Fake Transparent BG */
 import { ReactNode } from "react";
 import {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    borderColor: hexToRgba(IOColors.black, 0.1),
+    borderColor: hexToRgba(IOColorsLegacy.black, 0.1),
     borderWidth: 1
   },
   assetItemSpacingSmall: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   assetItemDark: {
-    backgroundColor: IOColors.black
+    backgroundColor: IOColorsLegacy.black
   },
   pill: {
     position: "absolute",
@@ -76,12 +76,12 @@ const styles = StyleSheet.create({
     top: 4
   },
   pillRaster: {
-    backgroundColor: IOColors["warning-500"],
-    color: IOColors.black
+    backgroundColor: IOColorsLegacy["warning-500"],
+    color: IOColorsLegacy.black
   },
   pillBleed: {
-    backgroundColor: IOColors["success-500"],
-    color: IOColors.white
+    backgroundColor: IOColorsLegacy["success-500"],
+    color: IOColorsLegacy.white
   }
 });
 
@@ -175,7 +175,7 @@ export const DSAssetViewerBox = ({
             numberOfLines={1}
             style={[
               styles.assetLabel,
-              { color: IOColors[theme["textBody-tertiary"]] }
+              { color: IOColorsLegacy[theme["textBody-tertiary"]] }
             ]}
           >
             {name}

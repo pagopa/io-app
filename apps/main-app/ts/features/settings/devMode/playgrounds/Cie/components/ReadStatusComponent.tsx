@@ -1,5 +1,5 @@
 import {
-  IOColors,
+  IOColorsLegacy,
   IOPictograms,
   IOText,
   Pictogram
@@ -17,7 +17,7 @@ const pictogramMap: Record<ReadStatus, IOPictograms> = {
   error: "fatalError"
 };
 
-const statusColorMap: Record<ReadStatus, IOColors> = {
+const statusColorMap: Record<ReadStatus, IOColorsLegacy> = {
   idle: "blueIO-500",
   reading: "blueIO-500",
   success: "success-500",
@@ -40,8 +40,8 @@ export const ReadStatusComponent = ({
       progress={progress * 100}
       radius={125}
       size={250}
-      strokeBgColor={IOColors["grey-100"]}
-      strokeColor={IOColors[statusColorMap[status]]}
+      strokeBgColor={IOColorsLegacy["grey-100"]}
+      strokeColor={IOColorsLegacy[statusColorMap[status]]}
       strokeWidth={8}
     >
       <>

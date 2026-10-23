@@ -2,8 +2,8 @@ import { ComponentProps, ReactNode } from "react";
 import { GestureResponderEvent, Image, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { IOColors, IODimensions, IOListItemStyles } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOListItemStyles, IORoleColor } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -27,7 +27,8 @@ export type ListItemNavGraphicProps =
   | {
       avatarProps?: never;
       icon: IOIcons;
-      iconColor?: IOColors;
+      /* A semantic token: it has a value in both modes */
+      iconColor?: IORoleColor<"foreground">;
       paymentLogoUri?: never;
     }
   | {
@@ -87,10 +88,10 @@ export const ListItemNav = ({
 }: ListItemNav) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
 
-  const defaultIconColor = iconColor ?? theme["icon-decorative"];
-  const interactiveColor = theme["interactiveElem-default"];
+  const defaultIconColor = iconColor ?? listItemColors.foreground.icon;
+  const interactiveColor = listItemColors.foreground.action.primary;
 
   const { dynamicFontScale, hugeFontEnabled } = useIOFontDynamicScale();
 
@@ -111,12 +112,12 @@ export const ListItemNav = ({
               <View style={{ alignSelf: "flex-start", flexDirection: "row" }}>
                 <Icon
                   allowFontScaling
-                  color={theme["icon-decorative"]}
+                  color={listItemColors.foreground.icon}
                   name="calendar"
                   size={IODimensions.size.icon.caption}
                 />
                 <HSpacer size={IODimensions.gap.listItem.default.caption} />
-                <Caption color={theme["textBody-tertiary"]}>
+                <Caption color={listItemColors.foreground.caption}>
                   {topElement.dateValue}
                 </Caption>
               </View>
@@ -127,7 +128,10 @@ export const ListItemNav = ({
       )}
       {/* Let developer using a custom component (e.g: skeleton) */}
       {typeof label === "string" ? (
-        <H6 color={theme["textBody-default"]} numberOfLines={numberOfLines}>
+        <H6
+          color={listItemColors.foreground.label}
+          numberOfLines={numberOfLines}
+        >
           {label}
         </H6>
       ) : (
@@ -137,7 +141,10 @@ export const ListItemNav = ({
       {description && (
         <>
           {typeof description === "string" ? (
-            <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+            <BodySmall
+              color={listItemColors.foreground.description}
+              weight="Regular"
+            >
               {description}
             </BodySmall>
           ) : (
@@ -222,7 +229,7 @@ export const ListItemNav = ({
           <View style={{ flexGrow: 1, flexShrink: 1 }}>
             {listItemNavContent}
           </View>
-          {loading && <LoadingSpinner color={IOColors[interactiveColor]} />}
+          {loading && <LoadingSpinner color={interactiveColor} />}
           {!loading && !hideChevron && (
             <Icon
               allowFontScaling

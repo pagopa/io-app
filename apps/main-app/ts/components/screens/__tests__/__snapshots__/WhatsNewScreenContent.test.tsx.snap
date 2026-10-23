@@ -256,7 +256,7 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                     "paddingVertical": 6,
                   },
                   {
-                    "backgroundColor": "rgba(97,220,223,0.2)",
+                    "backgroundColor": "#DBF9FA",
                   },
                 ]
               }
@@ -270,7 +270,7 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                   [
                     {},
                     {
-                      "color": "#61DCDF",
+                      "color": "#003B3D",
                       "fontFamily": "Titillio",
                       "fontSize": 12,
                       "fontStyle": "normal",

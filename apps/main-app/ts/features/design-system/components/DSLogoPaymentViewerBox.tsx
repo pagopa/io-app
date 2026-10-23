@@ -1,4 +1,4 @@
-import { hexToRgba, IOColors, useIOTheme } from "@io-app/design-system";
+import { hexToRgba, IOColorsLegacy, useIOTheme } from "@io-app/design-system";
 /* Fake Transparent BG */
 import { ReactNode } from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
     justifyContent: "center",
-    borderColor: hexToRgba(IOColors.black, 0.1),
+    borderColor: hexToRgba(IOColorsLegacy.black, 0.1),
     borderWidth: 1
   },
   logoItemLarge: {
@@ -110,7 +110,7 @@ export const DSLogoPaymentViewerBox = ({
             numberOfLines={1}
             style={[
               styles.iconLabel,
-              { color: IOColors[theme["textBody-tertiary"]] }
+              { color: IOColorsLegacy[theme["textBody-tertiary"]] }
             ]}
           >
             {name}

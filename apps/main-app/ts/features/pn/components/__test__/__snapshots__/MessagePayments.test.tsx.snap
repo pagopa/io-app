@@ -762,7 +762,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -780,7 +779,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -1047,7 +1045,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -1065,7 +1062,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -1332,7 +1328,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -1350,7 +1345,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -1617,7 +1611,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -1635,7 +1628,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -1902,7 +1894,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -1920,7 +1911,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -2187,7 +2177,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -2205,7 +2194,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -2472,7 +2460,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -2490,7 +2477,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -3140,7 +3126,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -3158,7 +3143,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -3425,7 +3409,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -3443,7 +3426,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -3710,7 +3692,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -3728,7 +3709,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -3995,7 +3975,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -4013,7 +3992,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -4280,7 +4258,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -4298,7 +4275,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -4565,7 +4541,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -4583,7 +4558,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -4850,7 +4824,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -4868,7 +4841,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -5838,7 +5810,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -5856,7 +5827,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -6074,7 +6044,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -6092,7 +6061,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -6358,7 +6326,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -6376,7 +6343,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -6642,7 +6608,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -6660,7 +6625,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -6926,7 +6890,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -6944,7 +6907,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -7586,7 +7548,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -7604,7 +7565,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -7822,7 +7782,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -7840,7 +7799,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -8106,7 +8064,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -8124,7 +8081,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -8390,7 +8346,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -8408,7 +8363,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -8674,7 +8628,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -8692,7 +8645,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -9334,7 +9286,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -9352,7 +9303,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -9570,7 +9520,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -9588,7 +9537,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -9854,7 +9802,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -9872,7 +9819,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -10138,7 +10084,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -10156,7 +10101,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -10422,7 +10366,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -10440,7 +10383,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -11323,7 +11265,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -11341,7 +11282,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -11559,7 +11499,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -11577,7 +11516,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -11843,7 +11781,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -11861,7 +11798,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -12127,7 +12063,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -12145,7 +12080,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -12411,7 +12345,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -12429,7 +12362,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -13312,7 +13244,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -13330,7 +13261,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -13924,7 +13854,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -13942,7 +13871,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,

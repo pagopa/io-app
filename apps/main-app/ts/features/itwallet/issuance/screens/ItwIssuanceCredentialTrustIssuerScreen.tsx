@@ -3,7 +3,7 @@ import {
   ForceScrollDownView,
   H2,
   ListItemHeader,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
@@ -144,7 +144,7 @@ const ContentView = ({
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const eidCredentialName = useItwCredentialName(eid.credentialType);
   const credentialName = useItwCredentialName(credentialType);
 
@@ -243,7 +243,7 @@ const ContentView = ({
           accessibilityLabel={`${I18n.t(
             "features.itWallet.issuance.credentialAuth.requiredClaims"
           )}, ${I18n.t("features.itWallet.issuance.credentialAuth.verified")}`}
-          iconColor={theme["icon-default"]}
+          iconColor={colors.icon.default}
           iconName="security"
           label={I18n.t(
             "features.itWallet.issuance.credentialAuth.requiredClaims"

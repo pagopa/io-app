@@ -25,7 +25,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useIOTheme } from "../../context";
 import {
   footerBoxShadow,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IODimensionScale
 } from "../../core";
@@ -85,7 +85,7 @@ export const ScrollViewWithStickyFooterActions = ({
     placeholderY - scrollViewHeight + placeholderHeight;
   const backgroundColor = transparent
     ? "transparent"
-    : IOColors[theme["appBackground-primary"]];
+    : IOColorsLegacy[theme["appBackground-primary"]];
 
   const handleScroll = useAnimatedScrollHandler(({ contentOffset }) => {
     scrollY.set(contentOffset.y);

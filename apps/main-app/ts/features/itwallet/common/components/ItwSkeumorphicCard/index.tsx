@@ -1,6 +1,6 @@
 import {
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   Tag,
   useScaleAnimation
 } from "@io-app/design-system";
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 8,
     overflow: "hidden",
-    boxShadow: `0px 4px 24px ${hexToRgba(IOColors.black, 0.1)}`
+    boxShadow: `0px 4px 24px ${hexToRgba(IOColorsLegacy.black, 0.1)}`
   },
   card: {
     aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO

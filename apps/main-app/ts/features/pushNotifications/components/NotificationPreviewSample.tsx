@@ -3,7 +3,7 @@ import {
   H6,
   HSpacer,
   Icon,
-  IOColors,
+  IOColorsLegacy,
   IODimensionScale,
   useIOTheme
 } from "@io-app/design-system";
@@ -92,8 +92,8 @@ export const NotificationPreviewSample = ({
       style={[
         styles.notification,
         {
-          backgroundColor: IOColors[theme["appBackground-primary"]],
-          borderColor: IOColors[theme["cardBorder-default"]]
+          backgroundColor: IOColorsLegacy[theme["appBackground-primary"]],
+          borderColor: IOColorsLegacy[theme["cardBorder-default"]]
         }
       ]}
     >

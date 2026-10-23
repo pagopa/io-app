@@ -14,6 +14,7 @@ import delegateEffectsRule from "./scripts/eslint/delegate-effects.js";
 import noDynamicI18nKeysRule from "./scripts/eslint/no-dynamic-i18n-keys.js";
 import noUnusedI18nKeysRule from "./scripts/eslint/no-unused-i18n-keys.js";
 import noFpTsRule from "./scripts/eslint/no-fp-ts.js";
+import noHardcodedColorsRule from "./scripts/eslint/no-hardcoded-colors.js";
 import jsonParser from "./scripts/eslint/json-parser.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -100,7 +101,8 @@ export default defineConfig([
       "@io-app": {
         rules: {
           "i18n-no-dynamic-keys": noDynamicI18nKeysRule,
-          "no-fp-ts": noFpTsRule
+          "no-fp-ts": noFpTsRule,
+          "no-hardcoded-colors": noHardcodedColorsRule
         }
       },
       "typed-redux-saga": { rules: { "delegate-effects": delegateEffectsRule } }
@@ -404,7 +406,10 @@ export default defineConfig([
       ],
 
       // Remove this after the migration of fp-ts is being completed and replaced by neverthrow;
-      "@io-app/no-fp-ts": "warn"
+      "@io-app/no-fp-ts": "warn",
+
+      // Turn into an error once the existing hardcoded colors are migrated
+      "@io-app/no-hardcoded-colors": "warn"
     },
 
     settings: {
@@ -423,7 +428,21 @@ export default defineConfig([
       "@typescript-eslint/no-empty-function": "off",
       "i18next/no-literal-string": "off",
       "no-restricted-imports": "off",
-      "react/jsx-no-constructed-context-values": "off"
+      "react/jsx-no-constructed-context-values": "off",
+      "@io-app/no-hardcoded-colors": "off"
+    }
+  },
+  {
+    // Color sources: generated SVG assets, third-party logos, the palettes
+    files: [
+      "**/src/components/{icons,pictograms}/svg/**/*.tsx",
+      "**/src/components/logos/**/*.tsx",
+      "**/src/core/IOColors.ts",
+      "**/src/core/tokens/colors/palette.ts"
+    ],
+
+    rules: {
+      "@io-app/no-hardcoded-colors": "off"
     }
   },
   {
@@ -461,12 +480,14 @@ export default defineConfig([
     }
   },
   {
+    // Dev-only screens: the Design System showcase, playgrounds, debug tools
     files: [
       "**/{design-system,playgrounds,devMode,debug,__mocks__}/**/*.{ts,tsx}"
     ],
 
     rules: {
-      "i18next/no-literal-string": "off"
+      "i18next/no-literal-string": "off",
+      "@io-app/no-hardcoded-colors": "off"
     }
   },
   {

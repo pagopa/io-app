@@ -2,8 +2,8 @@ import {
   H3,
   H6,
   hexToRgba,
-  IOColors,
   IOColorsExtra,
+  IOColorsLegacy,
   IOColorsNeutral,
   IOColorsStatus,
   IOColorsTints,
@@ -24,10 +24,10 @@ const sectionTitleMargin = 16;
 const colorItemGutter = 32;
 const colorItemPadding = 8;
 const colorItemMargin = 16;
-const colorItemBorderLightMode = hexToRgba(IOColors.black, 0.1);
-const colorItemBorderDarkMode = hexToRgba(IOColors.white, 0.25);
+const colorItemBorderLightMode = hexToRgba(IOColorsLegacy.black, 0.1);
+const colorItemBorderDarkMode = hexToRgba(IOColorsLegacy.white, 0.25);
 
-const colorPillBg = hexToRgba(IOColors.black, 0.2);
+const colorPillBg = hexToRgba(IOColorsLegacy.black, 0.2);
 
 const styles = StyleSheet.create({
   colorItemsWrapper: {
@@ -53,10 +53,10 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   smallCapsLightMode: {
-    color: IOColors["grey-700"]
+    color: IOColorsLegacy["grey-700"]
   },
   smallCapsDarkMode: {
-    color: IOColors["grey-450"]
+    color: IOColorsLegacy["grey-450"]
   },
   colorModeWrapper: {
     position: "absolute",
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     right: 0,
     marginRight: IODimensions.padding.screen.default * -1,
     marginLeft: IODimensions.padding.screen.default * -1,
-    backgroundColor: IOColors.black,
+    backgroundColor: IOColorsLegacy.black,
     borderTopLeftRadius: 24,
     borderBottomLeftRadius: 24
   },
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     left: 0,
     marginRight: IODimensions.padding.screen.default * -1,
     marginLeft: IODimensions.padding.screen.default * -1,
-    backgroundColor: IOColors.white,
+    backgroundColor: IOColorsLegacy.white,
     borderTopRightRadius: 24,
     borderBottomRightRadius: 24
   },
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   colorPill: {
     overflow: "hidden",
-    color: IOColors.white,
+    color: IOColorsLegacy.white,
     fontSize: 9,
     backgroundColor: colorPillBg,
     padding: 4,
@@ -289,7 +289,7 @@ const ColorBox = ({
             ? styles.colorItemDarkMode
             : styles.colorItemLightMode,
           themeVariable
-            ? { backgroundColor: IOColors[color as IOColors] }
+            ? { backgroundColor: IOColorsLegacy[color as IOColorsLegacy] }
             : { backgroundColor: color }
         ]}
       >
@@ -304,9 +304,9 @@ const ColorBox = ({
             fontSize: 10,
             color: isThemeColor
               ? mode === "dark"
-                ? IOColors["grey-450"]
-                : IOColors["grey-700"]
-              : IOColors[theme["textBody-tertiary"]]
+                ? IOColorsLegacy["grey-450"]
+                : IOColorsLegacy["grey-700"]
+              : IOColorsLegacy[theme["textBody-tertiary"]]
           }}
         >
           {name}

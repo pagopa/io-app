@@ -1,6 +1,6 @@
 import {
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   useIOThemeContext
 } from "@io-app/design-system";
@@ -20,17 +20,17 @@ export const useBottomTabNavigatorStyle = () => {
   const tabBarStyle: BottomTabNavigationOptions["tabBarStyle"] = useMemo(
     () => [
       {
-        backgroundColor: IOColors[theme["appBackground-primary"]],
+        backgroundColor: IOColorsLegacy[theme["appBackground-primary"]],
         paddingLeft: 3,
         paddingRight: 3,
         borderTopWidth: 0,
         paddingTop: 3,
         zIndex: 1,
-        boxShadow: `0px 4px 32px ${hexToRgba(IOColors.black, 0.1)}`
+        boxShadow: `0px 4px 32px ${hexToRgba(IOColorsLegacy.black, 0.1)}`
       },
       { height: tabBarHeight + bottomInset },
       themeType === "dark" && {
-        borderTopColor: IOColors[theme["divider-default"]],
+        borderTopColor: IOColorsLegacy[theme["divider-default"]],
         borderTopWidth: 1,
         boxShadow: "none"
       },

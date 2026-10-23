@@ -1,6 +1,6 @@
 import { GestureResponderEvent, StyleSheet, View } from "react-native";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -67,7 +67,7 @@ const AmountOrBadgeComponent = ({
   badgeText: string;
   status: PaymentNoticeStatus;
 }) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
 
   switch (status) {
     case "canceled":
@@ -79,7 +79,7 @@ const AmountOrBadgeComponent = ({
       return (
         <H6
           accessibilityLabel={amountAccessibilityLabel}
-          color={theme["interactiveElem-default"]}
+          color={moduleColors.foreground.action}
           numberOfLines={1}
         >
           {amount}
@@ -98,14 +98,14 @@ const ModulePaymentNoticeContent = ({
   paymentNotice: { status, amount, amountAccessibilityLabel },
   badgeText = ""
 }: Omit<ModulePaymentNoticeProps, "isLoading" | "onPress" | "testID">) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
 
   return (
     <HStack space={IODimensions.gap.module.trailing}>
       <View style={{ flexGrow: 1, flexShrink: 1 }}>
         {title && (
           <BodySmall
-            color={theme["textBody-tertiary"]}
+            color={moduleColors.foreground.description}
             numberOfLines={1}
             weight="Regular"
           >
@@ -114,7 +114,7 @@ const ModulePaymentNoticeContent = ({
         )}
         {subtitle && (
           <Body
-            color={theme["interactiveElem-default"]}
+            color={moduleColors.foreground.action}
             numberOfLines={2}
             weight="Semibold"
           >
@@ -130,7 +130,7 @@ const ModulePaymentNoticeContent = ({
           status={status}
         />
         <Icon
-          color={theme["interactiveElem-default"]}
+          color={moduleColors.foreground.action}
           name="chevronRightListItem"
           size={IODimensions.size.icon.chevron}
         />

@@ -1,6 +1,6 @@
 import {
   FooterActions,
-  IOColors,
+  IOColorsLegacy,
   useFooterActionsMeasurements,
   useIOTheme,
   VSpacer
@@ -30,10 +30,15 @@ export const DSFooterActions = () => {
             <View
               style={[
                 styles.block,
-                { backgroundColor: IOColors[theme["appBackground-secondary"]] }
+                {
+                  backgroundColor:
+                    IOColorsLegacy[theme["appBackground-secondary"]]
+                }
               ]}
             >
-              <Text style={{ color: IOColors[theme["textBody-tertiary"]] }}>
+              <Text
+                style={{ color: IOColorsLegacy[theme["textBody-tertiary"]] }}
+              >
                 {`Block ${i}`}
               </Text>
             </View>

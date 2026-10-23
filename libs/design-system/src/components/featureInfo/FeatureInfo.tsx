@@ -10,9 +10,8 @@ import {
   Pictogram,
   VStack
 } from "../../components";
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
-import { IOColors } from "../../core/IOColors";
 
 type FeatureInfoActionProps =
   | {
@@ -40,42 +39,24 @@ type FeatureInfoProps = FeatureInfoActionProps &
 type PartialFeatureInfo = {
   // Necessary to render main body with different formatting
   body?: ReactNode | string;
-  variant?: "contrast" | "neutral";
 };
 
 export const FeatureInfo = ({
   action,
   body,
   iconName,
-  pictogramProps,
-  variant = "neutral"
+  pictogramProps
 }: FeatureInfoProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors().component.featureInfo;
 
   /* Already defined in the `BodySmall` component as a fallback value,
   but I keep it here to avoid possible future inconsistencies. */
   const accessibilityRole = action?.accessibilityRole ?? "link";
 
-  const variantMap: Record<
-    NonNullable<FeatureInfoProps["variant"]>,
-    { action: IOColors; content: IOColors }
-  > = {
-    contrast: {
-      action: "white",
-      content: "white"
-    },
-    neutral: {
-      action: theme["interactiveElem-default"],
-      content: theme["textBody-tertiary"]
-    }
-  };
-
-  const { action: actionColor, content: contentColor } = variantMap[variant];
-
   const FeatureInfoContent = () => {
     if (typeof body === "string") {
       return (
-        <Body color={contentColor} testID="infoScreenBody">
+        <Body color={colors.content} testID="infoScreenBody">
           {body}
         </Body>
       );
@@ -92,7 +73,7 @@ export const FeatureInfo = ({
       {iconName && (
         <Icon
           allowFontScaling
-          color={theme["icon-decorative"]}
+          color={colors.icon}
           name={iconName}
           size={IODimensions.size.icon.featureInfo}
         />
@@ -116,7 +97,7 @@ export const FeatureInfo = ({
             accessibilityRole={accessibilityRole}
             accessible
             asLink
-            color={actionColor}
+            color={colors.action}
             importantForAccessibility={"yes"}
             onPress={action.onPress}
             weight="Semibold"

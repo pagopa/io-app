@@ -6,7 +6,7 @@ import {
   H3,
   hexToRgba,
   HStack,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   RadioGroup,
   useIOTheme,
@@ -174,10 +174,10 @@ export const DSDynamicBackground = () => {
             style={{
               borderRadius: IODimensions.radius.avatar.medium,
               borderCurve: "continuous",
-              backgroundColor: IOColors[theme["appBackground-primary"]],
+              backgroundColor: IOColorsLegacy[theme["appBackground-primary"]],
               borderWidth: 1,
               borderColor: hexToRgba(
-                IOColors[theme["textBody-secondary"]],
+                IOColorsLegacy[theme["textBody-secondary"]],
                 0.1
               ),
               padding: 24
@@ -197,8 +197,8 @@ export const DSDynamicBackground = () => {
 
         <LinearGradient
           colors={[
-            IOColors[theme["appBackground-primary"]],
-            hexToRgba(IOColors[theme["appBackground-primary"]], 0)
+            IOColorsLegacy[theme["appBackground-primary"]],
+            hexToRgba(IOColorsLegacy[theme["appBackground-primary"]], 0)
           ]}
           style={{
             height: scrollGradientHeight,

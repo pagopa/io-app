@@ -2,7 +2,7 @@ import {
   H3,
   HStack,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOText,
   IOTypography,
@@ -89,7 +89,7 @@ export const DSAnimatedNumericText = () => {
             <View
               style={{
                 ...blockStyle,
-                borderColor: IOColors[theme["cardBorder-default"]]
+                borderColor: IOColorsLegacy[theme["cardBorder-default"]]
               }}
             >
               <HStack space={16}>
@@ -152,7 +152,7 @@ export const DSAnimatedNumericText = () => {
             <View
               style={{
                 ...blockStyle,
-                borderColor: IOColors[theme["cardBorder-default"]]
+                borderColor: IOColorsLegacy[theme["cardBorder-default"]]
               }}
             >
               <HStack space={16}>

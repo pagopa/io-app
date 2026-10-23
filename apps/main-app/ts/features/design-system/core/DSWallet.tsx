@@ -1,4 +1,4 @@
-import { ListItemHeader, VStack } from "@io-app/design-system";
+import { ListItemHeader, useIOColors, VStack } from "@io-app/design-system";
 
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { WalletCardsCategoryContainer } from "../../wallet/components/WalletCardsCategoryContainer";
@@ -7,6 +7,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
 
 export const DSWallet = () => {
+  const colors = useIOColors();
   const cardsByCategory = {
     bonus: [
       {
@@ -110,7 +111,7 @@ export const DSWallet = () => {
       <VStack space={blockMargin}>
         <DesignSystemSection title="With Documenti su IO">
           <ListItemHeader
-            iconColor="blueIO-500"
+            iconColor={colors.icon.action}
             iconName="legalValue"
             label="Documenti"
           />

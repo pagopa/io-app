@@ -10,7 +10,7 @@ import {
   ContentWrapper,
   H3,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IOPictograms,
   triggerHaptic,
   useIOTheme,
@@ -118,7 +118,7 @@ const CieCardReaderScreen = () => {
   const route =
     useRoute<RouteProp<AuthenticationParamsList, "CIE_CARD_READER_SCREEN">>();
   const theme = useIOTheme();
-  const circleColor = IOColors[theme["interactiveElem-default"]];
+  const circleColor = IOColorsLegacy[theme["interactiveElem-default"]];
 
   const dispatch = useIODispatch();
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);

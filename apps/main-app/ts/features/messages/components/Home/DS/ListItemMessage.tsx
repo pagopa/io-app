@@ -4,7 +4,7 @@ import {
   H6,
   hexToRgba,
   HStack,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOListItemStyles,
   MessageCheckbox,
@@ -131,11 +131,11 @@ export const ListItemMessage = ({
   );
 
   // Component colors
-  const unreadBadgeColor = IOColors[theme["interactiveElem-default"]];
+  const unreadBadgeColor = IOColorsLegacy[theme["interactiveElem-default"]];
   const selectedBgColor =
     themeType === "dark"
-      ? hexToRgba(IOColors["blueIO-300"], 0.1)
-      : IOColors["blueIO-50"];
+      ? hexToRgba(IOColorsLegacy["blueIO-300"], 0.1)
+      : IOColorsLegacy["blueIO-50"];
 
   return (
     <Pressable

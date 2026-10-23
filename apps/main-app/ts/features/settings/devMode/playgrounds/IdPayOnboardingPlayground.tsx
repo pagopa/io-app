@@ -3,7 +3,7 @@ import {
   BodyMonospace,
   BodySmall,
   H4,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   PressableListItemBase,
   TextInput,
@@ -201,7 +201,7 @@ const TestServiceItem = (props: TestServiceItemProps) => {
     <View
       style={{
         borderBottomWidth: 1,
-        borderBottomColor: IOColors["grey-100"]
+        borderBottomColor: IOColorsLegacy["grey-100"]
       }}
     >
       <PressableListItemBase onPress={props.onPress}>

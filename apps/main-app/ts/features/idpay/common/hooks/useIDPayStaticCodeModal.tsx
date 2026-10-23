@@ -6,7 +6,7 @@ import {
   H2,
   Icon,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IOSkeleton,
   IOText,
   IOTypography,
@@ -231,7 +231,7 @@ export const useIDPayStaticCodeModal = (
 
 const styles = StyleSheet.create({
   barcodeContainer: {
-    borderColor: IOColors["grey-100"],
+    borderColor: IOColorsLegacy["grey-100"],
     borderWidth: 1,
     padding: 16,
     borderRadius: 8
