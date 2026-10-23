@@ -37,10 +37,13 @@ jest.mock("../../../../../utils/analytics", () => ({
   trackAppCaughtError: jest.fn()
 }));
 
-jest.mock("react-native-device-info", () => ({
-  getReadableVersion: () => "2.0.0.0",
-  getVersion: () => "2.0.0.0",
+jest.mock("@io-app/expo-device-internal", () => ({
   isDisplayZoomed: () => false
+}));
+
+jest.mock("expo-application", () => ({
+  nativeApplicationVersion: "2.0.0.0",
+  nativeBuildVersion: "0"
 }));
 
 const serviceId = "01JRAEYE4SKF5BEW41J9H9NWFM" as ServiceId;

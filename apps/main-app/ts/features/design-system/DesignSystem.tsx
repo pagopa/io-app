@@ -130,8 +130,8 @@ export const DesignSystem = () => {
   }) => (
     <ListItemNav
       accessibilityLabel={`Go to the ${title} page`}
+      label={title}
       onPress={() => navigation.navigate(route as any)}
-      value={title}
     />
   );
 

@@ -297,10 +297,10 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
             : ""
         }`}
         description={description}
+        label={value}
         onPress={onPress}
         testID={testID}
         topElement={topElement}
-        value={value}
       />
     ),
     []

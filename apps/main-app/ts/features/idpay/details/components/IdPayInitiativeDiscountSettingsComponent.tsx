@@ -55,10 +55,10 @@ const IdPayInitiativeDiscountSettingsComponent = (props: Props) => {
           description={
             <IOSkeleton height={21} radius={4} shape="rectangle" width={100} />
           }
-          onPress={() => null}
-          value={I18n.t(
+          label={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}
+          onPress={() => null}
         />
       ),
       ({ nInstr }) => {
@@ -75,10 +75,10 @@ const IdPayInitiativeDiscountSettingsComponent = (props: Props) => {
             )}
          ${methodCountString}`}
             description={methodCountString}
-            onPress={() => navigateToInstrumentsConfiguration(initiative)}
-            value={I18n.t(
+            label={I18n.t(
               "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
             )}
+            onPress={() => navigateToInstrumentsConfiguration(initiative)}
           />
         );
       }

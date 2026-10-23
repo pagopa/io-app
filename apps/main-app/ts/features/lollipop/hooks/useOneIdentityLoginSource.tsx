@@ -1,4 +1,5 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import CookieManager from "@react-native-cookies/cookies";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
@@ -150,6 +151,12 @@ const buildWebviewSource = (
 });
 
 export type UseOneIdentityLoginSource = (params: {
+  /**
+   * When `true`, the WebView session cookies are removed before every login
+   * attempt, so that stale cookies left by a previous session cannot break the
+   * IDP session. Defaults to `false`.
+   */
+  clearSessionCookies?: boolean;
   /** The login flow this source is generated for. */
   flow: LoginType;
   /**
@@ -187,6 +194,7 @@ export type UseOneIdentityLoginSource = (params: {
 };
 
 export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
+  clearSessionCookies = false,
   followRedirectsNatively = false,
   flow,
   idpId,
@@ -204,7 +212,10 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   const maybeEphemeralPublicKey = useIOSelector(ephemeralPublicKeySelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const store = useIOStore();
-  const hashedFiscalCode = hashedProfileFiscalCodeSelector(store.getState());
+  const hashedFiscalCode =
+    flow === LOGIN_TYPES.AUTH
+      ? undefined
+      : hashedProfileFiscalCodeSelector(store.getState());
   const isFastLogin =
     flow === LOGIN_TYPES.AUTH
       ? isFastLoginEnabledSelector(store.getState())
@@ -267,6 +278,12 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     abortControllerRef.current = controller;
 
     setLoginSourceState({ status: "reserving-public-key" });
+
+    if (clearSessionCookies) {
+      // Best effort: a failure here must not block the login, at worst the
+      // flow runs with the cookies already stored.
+      await CookieManager.removeSessionCookies().catch(() => undefined);
+    }
 
     // A new ephemeral key pair is generated to guarantee
     // the public key uniqueness on every request.
@@ -357,6 +374,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       webviewSource: buildWebviewSource(authorizationUrl, publicKey)
     });
   }, [
+    clearSessionCookies,
     followRedirectsNatively,
     idpId,
     ephemeralKeyTag,

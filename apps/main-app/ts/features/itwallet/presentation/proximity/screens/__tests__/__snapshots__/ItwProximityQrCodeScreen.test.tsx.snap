@@ -10,6 +10,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -21,15 +22,32 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
+      <View
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "end": 0,
+                "position": "absolute",
+                "start": 0,
+                "top": 0,
+              },
+            ],
+          ]
+        }
+      />
       <RNSScreenContainer
         onLayout={[Function]}
         style={
@@ -74,32 +92,11 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -107,35 +104,22 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -153,6 +137,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -188,10 +173,367 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
+                    <View
+                      pointerEvents="box-none"
+                      style={
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
+                      }
+                    >
+                      <View
+                        aria-hidden={false}
+                        pointerEvents="box-none"
+                        style={
+                          [
+                            {
+                              "end": 0,
+                              "position": "absolute",
+                              "start": 0,
+                              "top": 0,
+                            },
+                            {
+                              "minHeight": 44,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          onLayout={[Function]}
+                          pointerEvents="box-none"
+                        >
+                          <View
+                            accessibilityRole="header"
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(255, 255, 255, 0)",
+                                  "borderColor": "rgba(210, 214, 227, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "borderBottomWidth": 1,
+                                  "borderColor": "rgba(210,214,227,0)",
+                                },
+                                {},
+                              ]
+                            }
+                            style={
+                              [
+                                {
+                                  "borderBottomWidth": 1,
+                                  "borderColor": "rgba(210,214,227,0)",
+                                },
+                                {},
+                                {
+                                  "backgroundColor": "rgba(255, 255, 255, 0)",
+                                  "borderColor": "rgba(210, 214, 227, 0)",
+                                },
+                              ]
+                            }
+                          >
+                            <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "marginTop": 0,
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "flexGrow": 1,
+                                    "height": 56,
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 24,
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "marginTop": 0,
+                                  },
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "flexGrow": 1,
+                                    "height": 56,
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              <View
+                                style={
+                                  {
+                                    "width": 24,
+                                  }
+                                }
+                              />
+                              <View
+                                accessibilityElementsHidden={true}
+                                accessibilityLabel=""
+                                accessibilityRole="header"
+                                accessible={false}
+                                importantForAccessibility="yes"
+                                style={
+                                  {
+                                    "flexGrow": 1,
+                                    "flexShrink": 1,
+                                    "marginHorizontal": 16,
+                                  }
+                                }
+                              >
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "opacity": 0,
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                    ]
+                                  }
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": undefined,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": undefined,
+                                      },
+                                      [
+                                        {
+                                          "color": "#0E0F13",
+                                          "textAlign": "center",
+                                        },
+                                        {
+                                          "opacity": 0,
+                                        },
+                                      ],
+                                    ]
+                                  }
+                                />
+                              </View>
+                              <View
+                                style={
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "row",
+                                    "flexShrink": 0,
+                                    "gap": 24,
+                                  }
+                                }
+                              >
+                                <View
+                                  accessibilityLabel="Chiudi"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": false,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  hitSlop={8}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                >
+                                  <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                      ]
+                                    }
+                                    pointerEvents="none"
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                        {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <RNSVGSvgView
+                                      accessibilityElementsHidden={true}
+                                      accessibilityLabel=""
+                                      accessible={false}
+                                      align="xMidYMid"
+                                      bbHeight={36}
+                                      bbWidth={36}
+                                      collapsable={false}
+                                      color="#0E0F13"
+                                      focusable={false}
+                                      height={36}
+                                      importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {
+                                            "color": "rgba(14, 15, 19, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      pointerEvents="none"
+                                      style={
+                                        [
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          {
+                                            "flex": 0,
+                                            "height": 36,
+                                            "width": 36,
+                                          },
+                                        ]
+                                      }
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={36}
+                                    >
+                                      <RNSVGGroup
+                                        fill={
+                                          {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                      >
+                                        <RNSVGPath
+                                          clipRule={0}
+                                          d="M21.7071 3.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 3.70711 2.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-8.29291 8.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l8.2929 8.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l8.2929-8.29289Z"
+                                          fill={
+                                            {
+                                              "type": 2,
+                                            }
+                                          }
+                                          fillRule={0}
+                                          propList={
+                                            [
+                                              "fill",
+                                              "fillRule",
+                                            ]
+                                          }
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
                     <View
                       style={
                         {
@@ -1464,6 +1806,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                           },
                                         ]
                                       }
+                                      pointerEvents="none"
                                       style={
                                         [
                                           {
@@ -1564,348 +1907,6 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                         </View>
                       </RCTScrollView>
                     </View>
-                    <View
-                      collapsable={false}
-                      pointerEvents="box-none"
-                    >
-                      <View
-                        accessibilityElementsHidden={false}
-                        importantForAccessibility="auto"
-                        onLayout={[Function]}
-                        pointerEvents="box-none"
-                        style={
-                          {
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      >
-                        <View
-                          accessibilityRole="header"
-                          collapsable={false}
-                          jestAnimatedProps={
-                            {
-                              "value": {},
-                            }
-                          }
-                          jestAnimatedStyle={
-                            {
-                              "value": {
-                                "backgroundColor": "rgba(255, 255, 255, 0)",
-                                "borderColor": "rgba(210, 214, 227, 0)",
-                              },
-                            }
-                          }
-                          jestInlineStyle={
-                            [
-                              {
-                                "borderBottomWidth": 1,
-                                "borderColor": "rgba(210,214,227,0)",
-                              },
-                              {},
-                            ]
-                          }
-                          style={
-                            [
-                              {
-                                "borderBottomWidth": 1,
-                                "borderColor": "rgba(210,214,227,0)",
-                              },
-                              {},
-                              {
-                                "backgroundColor": "rgba(255, 255, 255, 0)",
-                                "borderColor": "rgba(210, 214, 227, 0)",
-                              },
-                            ]
-                          }
-                        >
-                          <View
-                            collapsable={false}
-                            jestAnimatedProps={
-                              {
-                                "value": {},
-                              }
-                            }
-                            jestAnimatedStyle={
-                              {
-                                "value": {
-                                  "marginTop": 0,
-                                },
-                              }
-                            }
-                            jestInlineStyle={
-                              [
-                                {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "flexGrow": 1,
-                                  "height": 56,
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 24,
-                                },
-                              ]
-                            }
-                            style={
-                              [
-                                {
-                                  "marginTop": 0,
-                                },
-                                {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "flexGrow": 1,
-                                  "height": 56,
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 24,
-                                },
-                              ]
-                            }
-                          >
-                            <View
-                              style={
-                                {
-                                  "width": 24,
-                                }
-                              }
-                            />
-                            <View
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessibilityRole="header"
-                              accessible={false}
-                              importantForAccessibility="yes"
-                              style={
-                                {
-                                  "flexGrow": 1,
-                                  "flexShrink": 1,
-                                  "marginHorizontal": 16,
-                                }
-                              }
-                            >
-                              <Text
-                                accessible={false}
-                                allowFontScaling={true}
-                                collapsable={false}
-                                jestAnimatedProps={
-                                  {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {
-                                      "opacity": 0,
-                                    },
-                                  }
-                                }
-                                jestInlineStyle={
-                                  [
-                                    {
-                                      "color": "#0E0F13",
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                                maxFontSizeMultiplier={1.5}
-                                numberOfLines={1}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": undefined,
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": undefined,
-                                    },
-                                    [
-                                      {
-                                        "color": "#0E0F13",
-                                        "textAlign": "center",
-                                      },
-                                      {
-                                        "opacity": 0,
-                                      },
-                                    ],
-                                  ]
-                                }
-                              />
-                            </View>
-                            <View
-                              style={
-                                {
-                                  "display": "flex",
-                                  "flexDirection": "row",
-                                  "flexShrink": 0,
-                                  "gap": 24,
-                                }
-                              }
-                            >
-                              <View
-                                accessibilityLabel="Chiudi"
-                                accessibilityRole="button"
-                                accessibilityState={
-                                  {
-                                    "busy": undefined,
-                                    "checked": undefined,
-                                    "disabled": false,
-                                    "expanded": undefined,
-                                    "selected": undefined,
-                                  }
-                                }
-                                accessibilityValue={
-                                  {
-                                    "max": undefined,
-                                    "min": undefined,
-                                    "now": undefined,
-                                    "text": undefined,
-                                  }
-                                }
-                                accessible={true}
-                                collapsable={false}
-                                focusable={true}
-                                hitSlop={8}
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                onResponderGrant={[Function]}
-                                onResponderMove={[Function]}
-                                onResponderRelease={[Function]}
-                                onResponderTerminate={[Function]}
-                                onResponderTerminationRequest={[Function]}
-                                onStartShouldSetResponder={[Function]}
-                              >
-                                <View
-                                  collapsable={false}
-                                  jestAnimatedProps={
-                                    {
-                                      "value": {},
-                                    }
-                                  }
-                                  jestAnimatedStyle={
-                                    {
-                                      "value": {
-                                        "transform": [
-                                          {
-                                            "scale": 1,
-                                          },
-                                        ],
-                                      },
-                                    }
-                                  }
-                                  jestInlineStyle={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "justifyContent": "center",
-                                      },
-                                      {
-                                        "height": 24,
-                                        "width": 24,
-                                      },
-                                    ]
-                                  }
-                                  style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "justifyContent": "center",
-                                      },
-                                      {
-                                        "height": 24,
-                                        "width": 24,
-                                      },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": 1,
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                >
-                                  <RNSVGSvgView
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel=""
-                                    accessible={false}
-                                    align="xMidYMid"
-                                    bbHeight={36}
-                                    bbWidth={36}
-                                    collapsable={false}
-                                    color="#0E0F13"
-                                    focusable={false}
-                                    height={36}
-                                    importantForAccessibility="no-hide-descendants"
-                                    jestAnimatedProps={
-                                      {
-                                        "value": {
-                                          "color": "rgba(14, 15, 19, 1)",
-                                        },
-                                      }
-                                    }
-                                    jestAnimatedStyle={
-                                      {
-                                        "value": {},
-                                      }
-                                    }
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    pointerEvents="none"
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 36,
-                                          "width": 36,
-                                        },
-                                      ]
-                                    }
-                                    vbHeight={24}
-                                    vbWidth={24}
-                                    width={36}
-                                  >
-                                    <RNSVGGroup
-                                      fill={
-                                        {
-                                          "payload": 4278190080,
-                                          "type": 0,
-                                        }
-                                      }
-                                    >
-                                      <RNSVGPath
-                                        clipRule={0}
-                                        d="M21.7071 3.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 3.70711 2.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-8.29291 8.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l8.2929 8.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l8.2929-8.29289Z"
-                                        fill={
-                                          {
-                                            "type": 2,
-                                          }
-                                        }
-                                        fillRule={0}
-                                        propList={
-                                          [
-                                            "fill",
-                                            "fillRule",
-                                          ]
-                                        }
-                                      />
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
-                                </View>
-                              </View>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
                   </View>
                 </View>
               </View>
@@ -1913,20 +1914,6 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
           </View>
         </RNSScreen>
       </RNSScreenContainer>
-      <View
-        collapsable={false}
-        pointerEvents="box-none"
-        style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
-        }
-      />
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1942,6 +1929,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -1953,15 +1941,32 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
+      <View
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "end": 0,
+                "position": "absolute",
+                "start": 0,
+                "top": 0,
+              },
+            ],
+          ]
+        }
+      />
       <RNSScreenContainer
         onLayout={[Function]}
         style={
@@ -2006,32 +2011,11 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -2039,35 +2023,22 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -2085,6 +2056,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -2120,10 +2092,367 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
+                    <View
+                      pointerEvents="box-none"
+                      style={
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
+                      }
+                    >
+                      <View
+                        aria-hidden={false}
+                        pointerEvents="box-none"
+                        style={
+                          [
+                            {
+                              "end": 0,
+                              "position": "absolute",
+                              "start": 0,
+                              "top": 0,
+                            },
+                            {
+                              "minHeight": 44,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          onLayout={[Function]}
+                          pointerEvents="box-none"
+                        >
+                          <View
+                            accessibilityRole="header"
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(255, 255, 255, 0)",
+                                  "borderColor": "rgba(210, 214, 227, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "borderBottomWidth": 1,
+                                  "borderColor": "rgba(210,214,227,0)",
+                                },
+                                {},
+                              ]
+                            }
+                            style={
+                              [
+                                {
+                                  "borderBottomWidth": 1,
+                                  "borderColor": "rgba(210,214,227,0)",
+                                },
+                                {},
+                                {
+                                  "backgroundColor": "rgba(255, 255, 255, 0)",
+                                  "borderColor": "rgba(210, 214, 227, 0)",
+                                },
+                              ]
+                            }
+                          >
+                            <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "marginTop": 0,
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "flexGrow": 1,
+                                    "height": 56,
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 24,
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "marginTop": 0,
+                                  },
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "flexGrow": 1,
+                                    "height": 56,
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              <View
+                                style={
+                                  {
+                                    "width": 24,
+                                  }
+                                }
+                              />
+                              <View
+                                accessibilityElementsHidden={true}
+                                accessibilityLabel=""
+                                accessibilityRole="header"
+                                accessible={false}
+                                importantForAccessibility="yes"
+                                style={
+                                  {
+                                    "flexGrow": 1,
+                                    "flexShrink": 1,
+                                    "marginHorizontal": 16,
+                                  }
+                                }
+                              >
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "opacity": 0,
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                    ]
+                                  }
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": undefined,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": undefined,
+                                      },
+                                      [
+                                        {
+                                          "color": "#0E0F13",
+                                          "textAlign": "center",
+                                        },
+                                        {
+                                          "opacity": 0,
+                                        },
+                                      ],
+                                    ]
+                                  }
+                                />
+                              </View>
+                              <View
+                                style={
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "row",
+                                    "flexShrink": 0,
+                                    "gap": 24,
+                                  }
+                                }
+                              >
+                                <View
+                                  accessibilityLabel="Chiudi"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": false,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  hitSlop={8}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                >
+                                  <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                      ]
+                                    }
+                                    pointerEvents="none"
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                        {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <RNSVGSvgView
+                                      accessibilityElementsHidden={true}
+                                      accessibilityLabel=""
+                                      accessible={false}
+                                      align="xMidYMid"
+                                      bbHeight={36}
+                                      bbWidth={36}
+                                      collapsable={false}
+                                      color="#0E0F13"
+                                      focusable={false}
+                                      height={36}
+                                      importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {
+                                            "color": "rgba(14, 15, 19, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      pointerEvents="none"
+                                      style={
+                                        [
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          {
+                                            "flex": 0,
+                                            "height": 36,
+                                            "width": 36,
+                                          },
+                                        ]
+                                      }
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={36}
+                                    >
+                                      <RNSVGGroup
+                                        fill={
+                                          {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                      >
+                                        <RNSVGPath
+                                          clipRule={0}
+                                          d="M21.7071 3.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 3.70711 2.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-8.29291 8.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l8.2929 8.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l8.2929-8.29289Z"
+                                          fill={
+                                            {
+                                              "type": 2,
+                                            }
+                                          }
+                                          fillRule={0}
+                                          propList={
+                                            [
+                                              "fill",
+                                              "fillRule",
+                                            ]
+                                          }
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
                     <View
                       style={
                         {
@@ -3633,6 +3962,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                           },
                                         ]
                                       }
+                                      pointerEvents="none"
                                       style={
                                         [
                                           {
@@ -3733,348 +4063,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                         </View>
                       </RCTScrollView>
                     </View>
-                    <View
-                      collapsable={false}
-                      pointerEvents="box-none"
-                    >
-                      <View
-                        accessibilityElementsHidden={false}
-                        importantForAccessibility="auto"
-                        onLayout={[Function]}
-                        pointerEvents="box-none"
-                        style={
-                          {
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      >
-                        <View
-                          accessibilityRole="header"
-                          collapsable={false}
-                          jestAnimatedProps={
-                            {
-                              "value": {},
-                            }
-                          }
-                          jestAnimatedStyle={
-                            {
-                              "value": {
-                                "backgroundColor": "rgba(255, 255, 255, 0)",
-                                "borderColor": "rgba(210, 214, 227, 0)",
-                              },
-                            }
-                          }
-                          jestInlineStyle={
-                            [
-                              {
-                                "borderBottomWidth": 1,
-                                "borderColor": "rgba(210,214,227,0)",
-                              },
-                              {},
-                            ]
-                          }
-                          style={
-                            [
-                              {
-                                "borderBottomWidth": 1,
-                                "borderColor": "rgba(210,214,227,0)",
-                              },
-                              {},
-                              {
-                                "backgroundColor": "rgba(255, 255, 255, 0)",
-                                "borderColor": "rgba(210, 214, 227, 0)",
-                              },
-                            ]
-                          }
-                        >
-                          <View
-                            collapsable={false}
-                            jestAnimatedProps={
-                              {
-                                "value": {},
-                              }
-                            }
-                            jestAnimatedStyle={
-                              {
-                                "value": {
-                                  "marginTop": 0,
-                                },
-                              }
-                            }
-                            jestInlineStyle={
-                              [
-                                {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "flexGrow": 1,
-                                  "height": 56,
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 24,
-                                },
-                              ]
-                            }
-                            style={
-                              [
-                                {
-                                  "marginTop": 0,
-                                },
-                                {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "flexGrow": 1,
-                                  "height": 56,
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 24,
-                                },
-                              ]
-                            }
-                          >
-                            <View
-                              style={
-                                {
-                                  "width": 24,
-                                }
-                              }
-                            />
-                            <View
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessibilityRole="header"
-                              accessible={false}
-                              importantForAccessibility="yes"
-                              style={
-                                {
-                                  "flexGrow": 1,
-                                  "flexShrink": 1,
-                                  "marginHorizontal": 16,
-                                }
-                              }
-                            >
-                              <Text
-                                accessible={false}
-                                allowFontScaling={true}
-                                collapsable={false}
-                                jestAnimatedProps={
-                                  {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {
-                                      "opacity": 0,
-                                    },
-                                  }
-                                }
-                                jestInlineStyle={
-                                  [
-                                    {
-                                      "color": "#0E0F13",
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                                maxFontSizeMultiplier={1.5}
-                                numberOfLines={1}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": undefined,
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": undefined,
-                                    },
-                                    [
-                                      {
-                                        "color": "#0E0F13",
-                                        "textAlign": "center",
-                                      },
-                                      {
-                                        "opacity": 0,
-                                      },
-                                    ],
-                                  ]
-                                }
-                              />
-                            </View>
-                            <View
-                              style={
-                                {
-                                  "display": "flex",
-                                  "flexDirection": "row",
-                                  "flexShrink": 0,
-                                  "gap": 24,
-                                }
-                              }
-                            >
-                              <View
-                                accessibilityLabel="Chiudi"
-                                accessibilityRole="button"
-                                accessibilityState={
-                                  {
-                                    "busy": undefined,
-                                    "checked": undefined,
-                                    "disabled": false,
-                                    "expanded": undefined,
-                                    "selected": undefined,
-                                  }
-                                }
-                                accessibilityValue={
-                                  {
-                                    "max": undefined,
-                                    "min": undefined,
-                                    "now": undefined,
-                                    "text": undefined,
-                                  }
-                                }
-                                accessible={true}
-                                collapsable={false}
-                                focusable={true}
-                                hitSlop={8}
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                onResponderGrant={[Function]}
-                                onResponderMove={[Function]}
-                                onResponderRelease={[Function]}
-                                onResponderTerminate={[Function]}
-                                onResponderTerminationRequest={[Function]}
-                                onStartShouldSetResponder={[Function]}
-                              >
-                                <View
-                                  collapsable={false}
-                                  jestAnimatedProps={
-                                    {
-                                      "value": {},
-                                    }
-                                  }
-                                  jestAnimatedStyle={
-                                    {
-                                      "value": {
-                                        "transform": [
-                                          {
-                                            "scale": 1,
-                                          },
-                                        ],
-                                      },
-                                    }
-                                  }
-                                  jestInlineStyle={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "justifyContent": "center",
-                                      },
-                                      {
-                                        "height": 24,
-                                        "width": 24,
-                                      },
-                                    ]
-                                  }
-                                  style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "justifyContent": "center",
-                                      },
-                                      {
-                                        "height": 24,
-                                        "width": 24,
-                                      },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": 1,
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                >
-                                  <RNSVGSvgView
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel=""
-                                    accessible={false}
-                                    align="xMidYMid"
-                                    bbHeight={36}
-                                    bbWidth={36}
-                                    collapsable={false}
-                                    color="#0E0F13"
-                                    focusable={false}
-                                    height={36}
-                                    importantForAccessibility="no-hide-descendants"
-                                    jestAnimatedProps={
-                                      {
-                                        "value": {
-                                          "color": "rgba(14, 15, 19, 1)",
-                                        },
-                                      }
-                                    }
-                                    jestAnimatedStyle={
-                                      {
-                                        "value": {},
-                                      }
-                                    }
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    pointerEvents="none"
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 36,
-                                          "width": 36,
-                                        },
-                                      ]
-                                    }
-                                    vbHeight={24}
-                                    vbWidth={24}
-                                    width={36}
-                                  >
-                                    <RNSVGGroup
-                                      fill={
-                                        {
-                                          "payload": 4278190080,
-                                          "type": 0,
-                                        }
-                                      }
-                                    >
-                                      <RNSVGPath
-                                        clipRule={0}
-                                        d="M21.7071 3.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 3.70711 2.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-8.29291 8.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l8.2929 8.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l8.2929-8.29289Z"
-                                        fill={
-                                          {
-                                            "type": 2,
-                                          }
-                                        }
-                                        fillRule={0}
-                                        propList={
-                                          [
-                                            "fill",
-                                            "fillRule",
-                                          ]
-                                        }
-                                      />
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
-                                </View>
-                              </View>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
                   </View>
                 </View>
               </View>
@@ -4082,20 +4070,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
           </View>
         </RNSScreen>
       </RNSScreenContainer>
-      <View
-        collapsable={false}
-        pointerEvents="box-none"
-        style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
-        }
-      />
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -4111,6 +4085,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -4122,15 +4097,32 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
+      <View
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "end": 0,
+                "position": "absolute",
+                "start": 0,
+                "top": 0,
+              },
+            ],
+          ]
+        }
+      />
       <RNSScreenContainer
         onLayout={[Function]}
         style={
@@ -4175,32 +4167,11 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -4208,35 +4179,22 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -4254,6 +4212,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -4289,10 +4248,367 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
+                    <View
+                      pointerEvents="box-none"
+                      style={
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
+                      }
+                    >
+                      <View
+                        aria-hidden={false}
+                        pointerEvents="box-none"
+                        style={
+                          [
+                            {
+                              "end": 0,
+                              "position": "absolute",
+                              "start": 0,
+                              "top": 0,
+                            },
+                            {
+                              "minHeight": 44,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          onLayout={[Function]}
+                          pointerEvents="box-none"
+                        >
+                          <View
+                            accessibilityRole="header"
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(255, 255, 255, 0)",
+                                  "borderColor": "rgba(210, 214, 227, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "borderBottomWidth": 1,
+                                  "borderColor": "rgba(210,214,227,0)",
+                                },
+                                {},
+                              ]
+                            }
+                            style={
+                              [
+                                {
+                                  "borderBottomWidth": 1,
+                                  "borderColor": "rgba(210,214,227,0)",
+                                },
+                                {},
+                                {
+                                  "backgroundColor": "rgba(255, 255, 255, 0)",
+                                  "borderColor": "rgba(210, 214, 227, 0)",
+                                },
+                              ]
+                            }
+                          >
+                            <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "marginTop": 0,
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "flexGrow": 1,
+                                    "height": 56,
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 24,
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "marginTop": 0,
+                                  },
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "flexGrow": 1,
+                                    "height": 56,
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              <View
+                                style={
+                                  {
+                                    "width": 24,
+                                  }
+                                }
+                              />
+                              <View
+                                accessibilityElementsHidden={true}
+                                accessibilityLabel=""
+                                accessibilityRole="header"
+                                accessible={false}
+                                importantForAccessibility="yes"
+                                style={
+                                  {
+                                    "flexGrow": 1,
+                                    "flexShrink": 1,
+                                    "marginHorizontal": 16,
+                                  }
+                                }
+                              >
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "opacity": 0,
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                    ]
+                                  }
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": undefined,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": undefined,
+                                      },
+                                      [
+                                        {
+                                          "color": "#0E0F13",
+                                          "textAlign": "center",
+                                        },
+                                        {
+                                          "opacity": 0,
+                                        },
+                                      ],
+                                    ]
+                                  }
+                                />
+                              </View>
+                              <View
+                                style={
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "row",
+                                    "flexShrink": 0,
+                                    "gap": 24,
+                                  }
+                                }
+                              >
+                                <View
+                                  accessibilityLabel="Chiudi"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": false,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  hitSlop={8}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                >
+                                  <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                      ]
+                                    }
+                                    pointerEvents="none"
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                        {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <RNSVGSvgView
+                                      accessibilityElementsHidden={true}
+                                      accessibilityLabel=""
+                                      accessible={false}
+                                      align="xMidYMid"
+                                      bbHeight={36}
+                                      bbWidth={36}
+                                      collapsable={false}
+                                      color="#0E0F13"
+                                      focusable={false}
+                                      height={36}
+                                      importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {
+                                            "color": "rgba(14, 15, 19, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      pointerEvents="none"
+                                      style={
+                                        [
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          {
+                                            "flex": 0,
+                                            "height": 36,
+                                            "width": 36,
+                                          },
+                                        ]
+                                      }
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={36}
+                                    >
+                                      <RNSVGGroup
+                                        fill={
+                                          {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                      >
+                                        <RNSVGPath
+                                          clipRule={0}
+                                          d="M21.7071 3.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 3.70711 2.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-8.29291 8.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l8.2929 8.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l8.2929-8.29289Z"
+                                          fill={
+                                            {
+                                              "type": 2,
+                                            }
+                                          }
+                                          fillRule={0}
+                                          propList={
+                                            [
+                                              "fill",
+                                              "fillRule",
+                                            ]
+                                          }
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
                     <View
                       style={
                         {
@@ -5591,6 +5907,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                           },
                                         ]
                                       }
+                                      pointerEvents="none"
                                       style={
                                         [
                                           {
@@ -5691,348 +6008,6 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                         </View>
                       </RCTScrollView>
                     </View>
-                    <View
-                      collapsable={false}
-                      pointerEvents="box-none"
-                    >
-                      <View
-                        accessibilityElementsHidden={false}
-                        importantForAccessibility="auto"
-                        onLayout={[Function]}
-                        pointerEvents="box-none"
-                        style={
-                          {
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      >
-                        <View
-                          accessibilityRole="header"
-                          collapsable={false}
-                          jestAnimatedProps={
-                            {
-                              "value": {},
-                            }
-                          }
-                          jestAnimatedStyle={
-                            {
-                              "value": {
-                                "backgroundColor": "rgba(255, 255, 255, 0)",
-                                "borderColor": "rgba(210, 214, 227, 0)",
-                              },
-                            }
-                          }
-                          jestInlineStyle={
-                            [
-                              {
-                                "borderBottomWidth": 1,
-                                "borderColor": "rgba(210,214,227,0)",
-                              },
-                              {},
-                            ]
-                          }
-                          style={
-                            [
-                              {
-                                "borderBottomWidth": 1,
-                                "borderColor": "rgba(210,214,227,0)",
-                              },
-                              {},
-                              {
-                                "backgroundColor": "rgba(255, 255, 255, 0)",
-                                "borderColor": "rgba(210, 214, 227, 0)",
-                              },
-                            ]
-                          }
-                        >
-                          <View
-                            collapsable={false}
-                            jestAnimatedProps={
-                              {
-                                "value": {},
-                              }
-                            }
-                            jestAnimatedStyle={
-                              {
-                                "value": {
-                                  "marginTop": 0,
-                                },
-                              }
-                            }
-                            jestInlineStyle={
-                              [
-                                {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "flexGrow": 1,
-                                  "height": 56,
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 24,
-                                },
-                              ]
-                            }
-                            style={
-                              [
-                                {
-                                  "marginTop": 0,
-                                },
-                                {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "flexGrow": 1,
-                                  "height": 56,
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 24,
-                                },
-                              ]
-                            }
-                          >
-                            <View
-                              style={
-                                {
-                                  "width": 24,
-                                }
-                              }
-                            />
-                            <View
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessibilityRole="header"
-                              accessible={false}
-                              importantForAccessibility="yes"
-                              style={
-                                {
-                                  "flexGrow": 1,
-                                  "flexShrink": 1,
-                                  "marginHorizontal": 16,
-                                }
-                              }
-                            >
-                              <Text
-                                accessible={false}
-                                allowFontScaling={true}
-                                collapsable={false}
-                                jestAnimatedProps={
-                                  {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {
-                                      "opacity": 0,
-                                    },
-                                  }
-                                }
-                                jestInlineStyle={
-                                  [
-                                    {
-                                      "color": "#0E0F13",
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                                maxFontSizeMultiplier={1.5}
-                                numberOfLines={1}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": undefined,
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": undefined,
-                                    },
-                                    [
-                                      {
-                                        "color": "#0E0F13",
-                                        "textAlign": "center",
-                                      },
-                                      {
-                                        "opacity": 0,
-                                      },
-                                    ],
-                                  ]
-                                }
-                              />
-                            </View>
-                            <View
-                              style={
-                                {
-                                  "display": "flex",
-                                  "flexDirection": "row",
-                                  "flexShrink": 0,
-                                  "gap": 24,
-                                }
-                              }
-                            >
-                              <View
-                                accessibilityLabel="Chiudi"
-                                accessibilityRole="button"
-                                accessibilityState={
-                                  {
-                                    "busy": undefined,
-                                    "checked": undefined,
-                                    "disabled": false,
-                                    "expanded": undefined,
-                                    "selected": undefined,
-                                  }
-                                }
-                                accessibilityValue={
-                                  {
-                                    "max": undefined,
-                                    "min": undefined,
-                                    "now": undefined,
-                                    "text": undefined,
-                                  }
-                                }
-                                accessible={true}
-                                collapsable={false}
-                                focusable={true}
-                                hitSlop={8}
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                onResponderGrant={[Function]}
-                                onResponderMove={[Function]}
-                                onResponderRelease={[Function]}
-                                onResponderTerminate={[Function]}
-                                onResponderTerminationRequest={[Function]}
-                                onStartShouldSetResponder={[Function]}
-                              >
-                                <View
-                                  collapsable={false}
-                                  jestAnimatedProps={
-                                    {
-                                      "value": {},
-                                    }
-                                  }
-                                  jestAnimatedStyle={
-                                    {
-                                      "value": {
-                                        "transform": [
-                                          {
-                                            "scale": 1,
-                                          },
-                                        ],
-                                      },
-                                    }
-                                  }
-                                  jestInlineStyle={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "justifyContent": "center",
-                                      },
-                                      {
-                                        "height": 24,
-                                        "width": 24,
-                                      },
-                                    ]
-                                  }
-                                  style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "justifyContent": "center",
-                                      },
-                                      {
-                                        "height": 24,
-                                        "width": 24,
-                                      },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": 1,
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                >
-                                  <RNSVGSvgView
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel=""
-                                    accessible={false}
-                                    align="xMidYMid"
-                                    bbHeight={36}
-                                    bbWidth={36}
-                                    collapsable={false}
-                                    color="#0E0F13"
-                                    focusable={false}
-                                    height={36}
-                                    importantForAccessibility="no-hide-descendants"
-                                    jestAnimatedProps={
-                                      {
-                                        "value": {
-                                          "color": "rgba(14, 15, 19, 1)",
-                                        },
-                                      }
-                                    }
-                                    jestAnimatedStyle={
-                                      {
-                                        "value": {},
-                                      }
-                                    }
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    pointerEvents="none"
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 36,
-                                          "width": 36,
-                                        },
-                                      ]
-                                    }
-                                    vbHeight={24}
-                                    vbWidth={24}
-                                    width={36}
-                                  >
-                                    <RNSVGGroup
-                                      fill={
-                                        {
-                                          "payload": 4278190080,
-                                          "type": 0,
-                                        }
-                                      }
-                                    >
-                                      <RNSVGPath
-                                        clipRule={0}
-                                        d="M21.7071 3.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 3.70711 2.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-8.29291 8.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l8.2929 8.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l8.2929-8.29289Z"
-                                        fill={
-                                          {
-                                            "type": 2,
-                                          }
-                                        }
-                                        fillRule={0}
-                                        propList={
-                                          [
-                                            "fill",
-                                            "fillRule",
-                                          ]
-                                        }
-                                      />
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
-                                </View>
-                              </View>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
                   </View>
                 </View>
               </View>
@@ -6040,20 +6015,6 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
           </View>
         </RNSScreen>
       </RNSScreenContainer>
-      <View
-        collapsable={false}
-        pointerEvents="box-none"
-        style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
-        }
-      />
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -6069,6 +6030,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -6080,15 +6042,32 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
+      <View
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "end": 0,
+                "position": "absolute",
+                "start": 0,
+                "top": 0,
+              },
+            ],
+          ]
+        }
+      />
       <RNSScreenContainer
         onLayout={[Function]}
         style={
@@ -6133,32 +6112,11 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -6166,35 +6124,22 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -6212,6 +6157,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -6247,10 +6193,367 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
+                    <View
+                      pointerEvents="box-none"
+                      style={
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
+                      }
+                    >
+                      <View
+                        aria-hidden={false}
+                        pointerEvents="box-none"
+                        style={
+                          [
+                            {
+                              "end": 0,
+                              "position": "absolute",
+                              "start": 0,
+                              "top": 0,
+                            },
+                            {
+                              "minHeight": 44,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          onLayout={[Function]}
+                          pointerEvents="box-none"
+                        >
+                          <View
+                            accessibilityRole="header"
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(255, 255, 255, 0)",
+                                  "borderColor": "rgba(210, 214, 227, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "borderBottomWidth": 1,
+                                  "borderColor": "rgba(210,214,227,0)",
+                                },
+                                {},
+                              ]
+                            }
+                            style={
+                              [
+                                {
+                                  "borderBottomWidth": 1,
+                                  "borderColor": "rgba(210,214,227,0)",
+                                },
+                                {},
+                                {
+                                  "backgroundColor": "rgba(255, 255, 255, 0)",
+                                  "borderColor": "rgba(210, 214, 227, 0)",
+                                },
+                              ]
+                            }
+                          >
+                            <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "marginTop": 0,
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "flexGrow": 1,
+                                    "height": 56,
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 24,
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "marginTop": 0,
+                                  },
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "flexGrow": 1,
+                                    "height": 56,
+                                    "justifyContent": "space-between",
+                                    "paddingHorizontal": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              <View
+                                style={
+                                  {
+                                    "width": 24,
+                                  }
+                                }
+                              />
+                              <View
+                                accessibilityElementsHidden={true}
+                                accessibilityLabel=""
+                                accessibilityRole="header"
+                                accessible={false}
+                                importantForAccessibility="yes"
+                                style={
+                                  {
+                                    "flexGrow": 1,
+                                    "flexShrink": 1,
+                                    "marginHorizontal": 16,
+                                  }
+                                }
+                              >
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "opacity": 0,
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                    ]
+                                  }
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": undefined,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": undefined,
+                                      },
+                                      [
+                                        {
+                                          "color": "#0E0F13",
+                                          "textAlign": "center",
+                                        },
+                                        {
+                                          "opacity": 0,
+                                        },
+                                      ],
+                                    ]
+                                  }
+                                />
+                              </View>
+                              <View
+                                style={
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "row",
+                                    "flexShrink": 0,
+                                    "gap": 24,
+                                  }
+                                }
+                              >
+                                <View
+                                  accessibilityLabel="Chiudi"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": false,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  hitSlop={8}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                >
+                                  <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                      ]
+                                    }
+                                    pointerEvents="none"
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                        {
+                                          "transform": [
+                                            {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <RNSVGSvgView
+                                      accessibilityElementsHidden={true}
+                                      accessibilityLabel=""
+                                      accessible={false}
+                                      align="xMidYMid"
+                                      bbHeight={36}
+                                      bbWidth={36}
+                                      collapsable={false}
+                                      color="#0E0F13"
+                                      focusable={false}
+                                      height={36}
+                                      importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {
+                                            "color": "rgba(14, 15, 19, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      pointerEvents="none"
+                                      style={
+                                        [
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          {
+                                            "flex": 0,
+                                            "height": 36,
+                                            "width": 36,
+                                          },
+                                        ]
+                                      }
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={36}
+                                    >
+                                      <RNSVGGroup
+                                        fill={
+                                          {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                      >
+                                        <RNSVGPath
+                                          clipRule={0}
+                                          d="M21.7071 3.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 3.70711 2.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-8.29291 8.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l8.2929 8.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l8.2929-8.29289Z"
+                                          fill={
+                                            {
+                                              "type": 2,
+                                            }
+                                          }
+                                          fillRule={0}
+                                          propList={
+                                            [
+                                              "fill",
+                                              "fillRule",
+                                            ]
+                                          }
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
                     <View
                       style={
                         {
@@ -7773,6 +8076,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                           },
                                         ]
                                       }
+                                      pointerEvents="none"
                                       style={
                                         [
                                           {
@@ -7873,348 +8177,6 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                         </View>
                       </RCTScrollView>
                     </View>
-                    <View
-                      collapsable={false}
-                      pointerEvents="box-none"
-                    >
-                      <View
-                        accessibilityElementsHidden={false}
-                        importantForAccessibility="auto"
-                        onLayout={[Function]}
-                        pointerEvents="box-none"
-                        style={
-                          {
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      >
-                        <View
-                          accessibilityRole="header"
-                          collapsable={false}
-                          jestAnimatedProps={
-                            {
-                              "value": {},
-                            }
-                          }
-                          jestAnimatedStyle={
-                            {
-                              "value": {
-                                "backgroundColor": "rgba(255, 255, 255, 0)",
-                                "borderColor": "rgba(210, 214, 227, 0)",
-                              },
-                            }
-                          }
-                          jestInlineStyle={
-                            [
-                              {
-                                "borderBottomWidth": 1,
-                                "borderColor": "rgba(210,214,227,0)",
-                              },
-                              {},
-                            ]
-                          }
-                          style={
-                            [
-                              {
-                                "borderBottomWidth": 1,
-                                "borderColor": "rgba(210,214,227,0)",
-                              },
-                              {},
-                              {
-                                "backgroundColor": "rgba(255, 255, 255, 0)",
-                                "borderColor": "rgba(210, 214, 227, 0)",
-                              },
-                            ]
-                          }
-                        >
-                          <View
-                            collapsable={false}
-                            jestAnimatedProps={
-                              {
-                                "value": {},
-                              }
-                            }
-                            jestAnimatedStyle={
-                              {
-                                "value": {
-                                  "marginTop": 0,
-                                },
-                              }
-                            }
-                            jestInlineStyle={
-                              [
-                                {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "flexGrow": 1,
-                                  "height": 56,
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 24,
-                                },
-                              ]
-                            }
-                            style={
-                              [
-                                {
-                                  "marginTop": 0,
-                                },
-                                {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "flexGrow": 1,
-                                  "height": 56,
-                                  "justifyContent": "space-between",
-                                  "paddingHorizontal": 24,
-                                },
-                              ]
-                            }
-                          >
-                            <View
-                              style={
-                                {
-                                  "width": 24,
-                                }
-                              }
-                            />
-                            <View
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessibilityRole="header"
-                              accessible={false}
-                              importantForAccessibility="yes"
-                              style={
-                                {
-                                  "flexGrow": 1,
-                                  "flexShrink": 1,
-                                  "marginHorizontal": 16,
-                                }
-                              }
-                            >
-                              <Text
-                                accessible={false}
-                                allowFontScaling={true}
-                                collapsable={false}
-                                jestAnimatedProps={
-                                  {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {
-                                      "opacity": 0,
-                                    },
-                                  }
-                                }
-                                jestInlineStyle={
-                                  [
-                                    {
-                                      "color": "#0E0F13",
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                                maxFontSizeMultiplier={1.5}
-                                numberOfLines={1}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": undefined,
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": undefined,
-                                    },
-                                    [
-                                      {
-                                        "color": "#0E0F13",
-                                        "textAlign": "center",
-                                      },
-                                      {
-                                        "opacity": 0,
-                                      },
-                                    ],
-                                  ]
-                                }
-                              />
-                            </View>
-                            <View
-                              style={
-                                {
-                                  "display": "flex",
-                                  "flexDirection": "row",
-                                  "flexShrink": 0,
-                                  "gap": 24,
-                                }
-                              }
-                            >
-                              <View
-                                accessibilityLabel="Chiudi"
-                                accessibilityRole="button"
-                                accessibilityState={
-                                  {
-                                    "busy": undefined,
-                                    "checked": undefined,
-                                    "disabled": false,
-                                    "expanded": undefined,
-                                    "selected": undefined,
-                                  }
-                                }
-                                accessibilityValue={
-                                  {
-                                    "max": undefined,
-                                    "min": undefined,
-                                    "now": undefined,
-                                    "text": undefined,
-                                  }
-                                }
-                                accessible={true}
-                                collapsable={false}
-                                focusable={true}
-                                hitSlop={8}
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                onResponderGrant={[Function]}
-                                onResponderMove={[Function]}
-                                onResponderRelease={[Function]}
-                                onResponderTerminate={[Function]}
-                                onResponderTerminationRequest={[Function]}
-                                onStartShouldSetResponder={[Function]}
-                              >
-                                <View
-                                  collapsable={false}
-                                  jestAnimatedProps={
-                                    {
-                                      "value": {},
-                                    }
-                                  }
-                                  jestAnimatedStyle={
-                                    {
-                                      "value": {
-                                        "transform": [
-                                          {
-                                            "scale": 1,
-                                          },
-                                        ],
-                                      },
-                                    }
-                                  }
-                                  jestInlineStyle={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "justifyContent": "center",
-                                      },
-                                      {
-                                        "height": 24,
-                                        "width": 24,
-                                      },
-                                    ]
-                                  }
-                                  style={
-                                    [
-                                      {
-                                        "alignItems": "center",
-                                        "justifyContent": "center",
-                                      },
-                                      {
-                                        "height": 24,
-                                        "width": 24,
-                                      },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": 1,
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                >
-                                  <RNSVGSvgView
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel=""
-                                    accessible={false}
-                                    align="xMidYMid"
-                                    bbHeight={36}
-                                    bbWidth={36}
-                                    collapsable={false}
-                                    color="#0E0F13"
-                                    focusable={false}
-                                    height={36}
-                                    importantForAccessibility="no-hide-descendants"
-                                    jestAnimatedProps={
-                                      {
-                                        "value": {
-                                          "color": "rgba(14, 15, 19, 1)",
-                                        },
-                                      }
-                                    }
-                                    jestAnimatedStyle={
-                                      {
-                                        "value": {},
-                                      }
-                                    }
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    pointerEvents="none"
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 36,
-                                          "width": 36,
-                                        },
-                                      ]
-                                    }
-                                    vbHeight={24}
-                                    vbWidth={24}
-                                    width={36}
-                                  >
-                                    <RNSVGGroup
-                                      fill={
-                                        {
-                                          "payload": 4278190080,
-                                          "type": 0,
-                                        }
-                                      }
-                                    >
-                                      <RNSVGPath
-                                        clipRule={0}
-                                        d="M21.7071 3.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 3.70711 2.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-8.29291 8.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l8.2929 8.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l8.2929-8.29289Z"
-                                        fill={
-                                          {
-                                            "type": 2,
-                                          }
-                                        }
-                                        fillRule={0}
-                                        propList={
-                                          [
-                                            "fill",
-                                            "fillRule",
-                                          ]
-                                        }
-                                      />
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
-                                </View>
-                              </View>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
                   </View>
                 </View>
               </View>
@@ -8222,20 +8184,6 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
           </View>
         </RNSScreen>
       </RNSScreenContainer>
-      <View
-        collapsable={false}
-        pointerEvents="box-none"
-        style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
-        }
-      />
     </View>
   </RNCSafeAreaProvider>
 </View>

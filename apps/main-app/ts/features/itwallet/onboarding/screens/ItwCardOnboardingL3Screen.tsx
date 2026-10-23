@@ -60,7 +60,10 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
+import {
+  ItwParamsList,
+  useItwNavigation
+} from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
@@ -132,7 +135,7 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
 
 const ItwCredentialOnboardingSection = () => {
   const theme = useIOTheme();
-  const navigation = useIONavigation();
+  const navigation = useItwNavigation();
 
   const env = useIOSelector(selectItwEnv);
   const isWalletEnabled = useIOSelector(itwLifecycleIsValidSelector);
@@ -224,11 +227,7 @@ const ItwCredentialOnboardingSection = () => {
               )}
               label={I18n.t("features.wallet.onboarding.cta.addRestricted")}
               numberOfLines={2}
-              onPress={() =>
-                navigation.replace(ITW_ROUTES.MAIN, {
-                  screen: ITW_ROUTES.L2_ONBOARDING
-                })
-              }
+              onPress={() => navigation.replace(ITW_ROUTES.L2_ONBOARDING)}
               testID={"restricted-action-testID"}
               variant="link"
             />

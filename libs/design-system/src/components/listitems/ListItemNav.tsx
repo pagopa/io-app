@@ -50,12 +50,12 @@ type ListItemNavPartialProps = WithTestID<
   > & {
     description?: ReactNode | string;
     hideChevron?: boolean;
+    label: ReactNode | string;
     loading?: boolean;
-    /** The maximum number of lines to display for the value. */
+    /** The maximum number of lines to display for the label. */
     numberOfLines?: number;
     onPress: (event: GestureResponderEvent) => void;
     topElement?: ListItemTopElementProps;
-    value: ReactNode | string;
   }
 >;
 
@@ -70,7 +70,7 @@ type ListItemTopElementProps =
     };
 
 export const ListItemNav = ({
-  value,
+  label,
   description,
   onPress,
   icon,
@@ -126,12 +126,12 @@ export const ListItemNav = ({
         </>
       )}
       {/* Let developer using a custom component (e.g: skeleton) */}
-      {typeof value === "string" ? (
+      {typeof label === "string" ? (
         <H6 color={theme["textBody-default"]} numberOfLines={numberOfLines}>
-          {value}
+          {label}
         </H6>
       ) : (
-        value
+        label
       )}
       {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
       {description && (

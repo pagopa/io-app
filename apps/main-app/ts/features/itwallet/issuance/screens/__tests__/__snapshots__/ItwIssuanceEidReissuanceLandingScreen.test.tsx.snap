@@ -10,6 +10,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -21,92 +22,41 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
-          onLayout={[Function]}
+          aria-hidden={false}
           pointerEvents="box-none"
           style={null}
         >
           <View
-            collapsable={false}
+            onLayout={[Function]}
             pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
           >
             <View
               collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
-            }
-          >
-            <View
-              pointerEvents="none"
-              style={
-                {
-                  "height": 0,
-                }
-              }
-            />
-            <View
               pointerEvents="box-none"
               style={
                 {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
                 }
               }
             >
@@ -115,58 +65,118 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginStart": 0,
+                    "bottom": 0,
+                    "left": 0,
                     "opacity": 1,
-                  }
-                }
-              />
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "justifyContent": "center",
-                    "marginHorizontal": 16,
-                    "maxWidth": 718,
-                    "opacity": 1,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
                   }
                 }
               >
-                <Text
-                  accessibilityRole="header"
-                  aria-level="1"
+                <View
                   collapsable={false}
-                  numberOfLines={1}
-                  onLayout={[Function]}
+                  pointerEvents="auto"
                   style={
                     {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
+                      "backgroundColor": "#FFFFFF",
+                      "borderBottomColor": "rgb(216, 216, 216)",
+                      "flex": 1,
+                      "shadowColor": "rgba(0, 0, 0, 1)",
+                      "shadowOffset": {
+                        "height": 0.5,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.3,
+                      "shadowRadius": 0,
                     }
                   }
-                >
-                  ITW_LANDING_SCREEN_EID_REISSUANCE
-                </Text>
+                />
               </View>
               <View
-                collapsable={false}
-                pointerEvents="box-none"
+                pointerEvents="none"
                 style={
                   {
-                    "alignItems": "flex-end",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginEnd": 0,
-                    "opacity": 1,
+                    "height": 0,
                   }
                 }
               />
+              <View
+                pointerEvents="box-none"
+                style={
+                  [
+                    {
+                      "alignItems": "stretch",
+                      "flex": 1,
+                      "flexDirection": "row",
+                    },
+                    {
+                      "marginHorizontal": 5,
+                    },
+                  ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-start",
+                      "marginStart": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "justifyContent": "center",
+                      "marginHorizontal": 16,
+                      "maxWidth": 718,
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <Text
+                    aria-level="1"
+                    collapsable={false}
+                    numberOfLines={1}
+                    onLayout={[Function]}
+                    role="heading"
+                    style={
+                      {
+                        "color": "rgb(28, 28, 30)",
+                        "fontFamily": "System",
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    ITW_LANDING_SCREEN_EID_REISSUANCE
+                  </Text>
+                </View>
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-end",
+                      "marginEnd": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -215,32 +225,11 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -248,35 +237,22 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -294,6 +270,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -329,7 +306,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -362,6 +338,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -373,92 +350,41 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
-          onLayout={[Function]}
+          aria-hidden={false}
           pointerEvents="box-none"
           style={null}
         >
           <View
-            collapsable={false}
+            onLayout={[Function]}
             pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
           >
             <View
               collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
-            }
-          >
-            <View
-              pointerEvents="none"
-              style={
-                {
-                  "height": 0,
-                }
-              }
-            />
-            <View
               pointerEvents="box-none"
               style={
                 {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
                 }
               }
             >
@@ -467,58 +393,118 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginStart": 0,
+                    "bottom": 0,
+                    "left": 0,
                     "opacity": 1,
-                  }
-                }
-              />
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "justifyContent": "center",
-                    "marginHorizontal": 16,
-                    "maxWidth": 718,
-                    "opacity": 1,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
                   }
                 }
               >
-                <Text
-                  accessibilityRole="header"
-                  aria-level="1"
+                <View
                   collapsable={false}
-                  numberOfLines={1}
-                  onLayout={[Function]}
+                  pointerEvents="auto"
                   style={
                     {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
+                      "backgroundColor": "#FFFFFF",
+                      "borderBottomColor": "rgb(216, 216, 216)",
+                      "flex": 1,
+                      "shadowColor": "rgba(0, 0, 0, 1)",
+                      "shadowOffset": {
+                        "height": 0.5,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.3,
+                      "shadowRadius": 0,
                     }
                   }
-                >
-                  ITW_LANDING_SCREEN_EID_REISSUANCE
-                </Text>
+                />
               </View>
               <View
-                collapsable={false}
-                pointerEvents="box-none"
+                pointerEvents="none"
                 style={
                   {
-                    "alignItems": "flex-end",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginEnd": 0,
-                    "opacity": 1,
+                    "height": 0,
                   }
                 }
               />
+              <View
+                pointerEvents="box-none"
+                style={
+                  [
+                    {
+                      "alignItems": "stretch",
+                      "flex": 1,
+                      "flexDirection": "row",
+                    },
+                    {
+                      "marginHorizontal": 5,
+                    },
+                  ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-start",
+                      "marginStart": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "justifyContent": "center",
+                      "marginHorizontal": 16,
+                      "maxWidth": 718,
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <Text
+                    aria-level="1"
+                    collapsable={false}
+                    numberOfLines={1}
+                    onLayout={[Function]}
+                    role="heading"
+                    style={
+                      {
+                        "color": "rgb(28, 28, 30)",
+                        "fontFamily": "System",
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    ITW_LANDING_SCREEN_EID_REISSUANCE
+                  </Text>
+                </View>
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-end",
+                      "marginEnd": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -567,32 +553,11 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -600,35 +565,22 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -646,6 +598,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -681,7 +634,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -1453,6 +1405,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -1464,92 +1417,41 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
-          onLayout={[Function]}
+          aria-hidden={false}
           pointerEvents="box-none"
           style={null}
         >
           <View
-            collapsable={false}
+            onLayout={[Function]}
             pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
           >
             <View
               collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
-            }
-          >
-            <View
-              pointerEvents="none"
-              style={
-                {
-                  "height": 0,
-                }
-              }
-            />
-            <View
               pointerEvents="box-none"
               style={
                 {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
                 }
               }
             >
@@ -1558,58 +1460,118 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginStart": 0,
+                    "bottom": 0,
+                    "left": 0,
                     "opacity": 1,
-                  }
-                }
-              />
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "justifyContent": "center",
-                    "marginHorizontal": 16,
-                    "maxWidth": 718,
-                    "opacity": 1,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
                   }
                 }
               >
-                <Text
-                  accessibilityRole="header"
-                  aria-level="1"
+                <View
                   collapsable={false}
-                  numberOfLines={1}
-                  onLayout={[Function]}
+                  pointerEvents="auto"
                   style={
                     {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
+                      "backgroundColor": "#FFFFFF",
+                      "borderBottomColor": "rgb(216, 216, 216)",
+                      "flex": 1,
+                      "shadowColor": "rgba(0, 0, 0, 1)",
+                      "shadowOffset": {
+                        "height": 0.5,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.3,
+                      "shadowRadius": 0,
                     }
                   }
-                >
-                  ITW_LANDING_SCREEN_EID_REISSUANCE
-                </Text>
+                />
               </View>
               <View
-                collapsable={false}
-                pointerEvents="box-none"
+                pointerEvents="none"
                 style={
                   {
-                    "alignItems": "flex-end",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginEnd": 0,
-                    "opacity": 1,
+                    "height": 0,
                   }
                 }
               />
+              <View
+                pointerEvents="box-none"
+                style={
+                  [
+                    {
+                      "alignItems": "stretch",
+                      "flex": 1,
+                      "flexDirection": "row",
+                    },
+                    {
+                      "marginHorizontal": 5,
+                    },
+                  ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-start",
+                      "marginStart": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "justifyContent": "center",
+                      "marginHorizontal": 16,
+                      "maxWidth": 718,
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <Text
+                    aria-level="1"
+                    collapsable={false}
+                    numberOfLines={1}
+                    onLayout={[Function]}
+                    role="heading"
+                    style={
+                      {
+                        "color": "rgb(28, 28, 30)",
+                        "fontFamily": "System",
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    ITW_LANDING_SCREEN_EID_REISSUANCE
+                  </Text>
+                </View>
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-end",
+                      "marginEnd": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -1658,32 +1620,11 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -1691,35 +1632,22 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -1737,6 +1665,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -1772,7 +1701,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -2544,6 +2472,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -2555,92 +2484,41 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
-          onLayout={[Function]}
+          aria-hidden={false}
           pointerEvents="box-none"
           style={null}
         >
           <View
-            collapsable={false}
+            onLayout={[Function]}
             pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
           >
             <View
               collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
-            }
-          >
-            <View
-              pointerEvents="none"
-              style={
-                {
-                  "height": 0,
-                }
-              }
-            />
-            <View
               pointerEvents="box-none"
               style={
                 {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
                 }
               }
             >
@@ -2649,58 +2527,118 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginStart": 0,
+                    "bottom": 0,
+                    "left": 0,
                     "opacity": 1,
-                  }
-                }
-              />
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "justifyContent": "center",
-                    "marginHorizontal": 16,
-                    "maxWidth": 718,
-                    "opacity": 1,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
                   }
                 }
               >
-                <Text
-                  accessibilityRole="header"
-                  aria-level="1"
+                <View
                   collapsable={false}
-                  numberOfLines={1}
-                  onLayout={[Function]}
+                  pointerEvents="auto"
                   style={
                     {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
+                      "backgroundColor": "#FFFFFF",
+                      "borderBottomColor": "rgb(216, 216, 216)",
+                      "flex": 1,
+                      "shadowColor": "rgba(0, 0, 0, 1)",
+                      "shadowOffset": {
+                        "height": 0.5,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.3,
+                      "shadowRadius": 0,
                     }
                   }
-                >
-                  ITW_LANDING_SCREEN_EID_REISSUANCE
-                </Text>
+                />
               </View>
               <View
-                collapsable={false}
-                pointerEvents="box-none"
+                pointerEvents="none"
                 style={
                   {
-                    "alignItems": "flex-end",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginEnd": 0,
-                    "opacity": 1,
+                    "height": 0,
                   }
                 }
               />
+              <View
+                pointerEvents="box-none"
+                style={
+                  [
+                    {
+                      "alignItems": "stretch",
+                      "flex": 1,
+                      "flexDirection": "row",
+                    },
+                    {
+                      "marginHorizontal": 5,
+                    },
+                  ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-start",
+                      "marginStart": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "justifyContent": "center",
+                      "marginHorizontal": 16,
+                      "maxWidth": 718,
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <Text
+                    aria-level="1"
+                    collapsable={false}
+                    numberOfLines={1}
+                    onLayout={[Function]}
+                    role="heading"
+                    style={
+                      {
+                        "color": "rgb(28, 28, 30)",
+                        "fontFamily": "System",
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    ITW_LANDING_SCREEN_EID_REISSUANCE
+                  </Text>
+                </View>
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-end",
+                      "marginEnd": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -2749,32 +2687,11 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -2782,35 +2699,22 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -2828,6 +2732,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -2863,7 +2768,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -3562,6 +3466,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -3573,92 +3478,41 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
-          onLayout={[Function]}
+          aria-hidden={false}
           pointerEvents="box-none"
           style={null}
         >
           <View
-            collapsable={false}
+            onLayout={[Function]}
             pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
           >
             <View
               collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
-            }
-          >
-            <View
-              pointerEvents="none"
-              style={
-                {
-                  "height": 0,
-                }
-              }
-            />
-            <View
               pointerEvents="box-none"
               style={
                 {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
                 }
               }
             >
@@ -3667,58 +3521,118 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginStart": 0,
+                    "bottom": 0,
+                    "left": 0,
                     "opacity": 1,
-                  }
-                }
-              />
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "justifyContent": "center",
-                    "marginHorizontal": 16,
-                    "maxWidth": 718,
-                    "opacity": 1,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
                   }
                 }
               >
-                <Text
-                  accessibilityRole="header"
-                  aria-level="1"
+                <View
                   collapsable={false}
-                  numberOfLines={1}
-                  onLayout={[Function]}
+                  pointerEvents="auto"
                   style={
                     {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
+                      "backgroundColor": "#FFFFFF",
+                      "borderBottomColor": "rgb(216, 216, 216)",
+                      "flex": 1,
+                      "shadowColor": "rgba(0, 0, 0, 1)",
+                      "shadowOffset": {
+                        "height": 0.5,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.3,
+                      "shadowRadius": 0,
                     }
                   }
-                >
-                  ITW_LANDING_SCREEN_EID_REISSUANCE
-                </Text>
+                />
               </View>
               <View
-                collapsable={false}
-                pointerEvents="box-none"
+                pointerEvents="none"
                 style={
                   {
-                    "alignItems": "flex-end",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginEnd": 0,
-                    "opacity": 1,
+                    "height": 0,
                   }
                 }
               />
+              <View
+                pointerEvents="box-none"
+                style={
+                  [
+                    {
+                      "alignItems": "stretch",
+                      "flex": 1,
+                      "flexDirection": "row",
+                    },
+                    {
+                      "marginHorizontal": 5,
+                    },
+                  ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-start",
+                      "marginStart": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "justifyContent": "center",
+                      "marginHorizontal": 16,
+                      "maxWidth": 718,
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <Text
+                    aria-level="1"
+                    collapsable={false}
+                    numberOfLines={1}
+                    onLayout={[Function]}
+                    role="heading"
+                    style={
+                      {
+                        "color": "rgb(28, 28, 30)",
+                        "fontFamily": "System",
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    ITW_LANDING_SCREEN_EID_REISSUANCE
+                  </Text>
+                </View>
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-end",
+                      "marginEnd": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -3767,32 +3681,11 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -3800,35 +3693,22 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -3846,6 +3726,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -3881,7 +3762,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -3914,6 +3794,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -3925,92 +3806,41 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
-          onLayout={[Function]}
+          aria-hidden={false}
           pointerEvents="box-none"
           style={null}
         >
           <View
-            collapsable={false}
+            onLayout={[Function]}
             pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
           >
             <View
               collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
-            }
-          >
-            <View
-              pointerEvents="none"
-              style={
-                {
-                  "height": 0,
-                }
-              }
-            />
-            <View
               pointerEvents="box-none"
               style={
                 {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
                 }
               }
             >
@@ -4019,58 +3849,118 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginStart": 0,
+                    "bottom": 0,
+                    "left": 0,
                     "opacity": 1,
-                  }
-                }
-              />
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "justifyContent": "center",
-                    "marginHorizontal": 16,
-                    "maxWidth": 718,
-                    "opacity": 1,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
                   }
                 }
               >
-                <Text
-                  accessibilityRole="header"
-                  aria-level="1"
+                <View
                   collapsable={false}
-                  numberOfLines={1}
-                  onLayout={[Function]}
+                  pointerEvents="auto"
                   style={
                     {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
+                      "backgroundColor": "#FFFFFF",
+                      "borderBottomColor": "rgb(216, 216, 216)",
+                      "flex": 1,
+                      "shadowColor": "rgba(0, 0, 0, 1)",
+                      "shadowOffset": {
+                        "height": 0.5,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.3,
+                      "shadowRadius": 0,
                     }
                   }
-                >
-                  ITW_LANDING_SCREEN_EID_REISSUANCE
-                </Text>
+                />
               </View>
               <View
-                collapsable={false}
-                pointerEvents="box-none"
+                pointerEvents="none"
                 style={
                   {
-                    "alignItems": "flex-end",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginEnd": 0,
-                    "opacity": 1,
+                    "height": 0,
                   }
                 }
               />
+              <View
+                pointerEvents="box-none"
+                style={
+                  [
+                    {
+                      "alignItems": "stretch",
+                      "flex": 1,
+                      "flexDirection": "row",
+                    },
+                    {
+                      "marginHorizontal": 5,
+                    },
+                  ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-start",
+                      "marginStart": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "justifyContent": "center",
+                      "marginHorizontal": 16,
+                      "maxWidth": 718,
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <Text
+                    aria-level="1"
+                    collapsable={false}
+                    numberOfLines={1}
+                    onLayout={[Function]}
+                    role="heading"
+                    style={
+                      {
+                        "color": "rgb(28, 28, 30)",
+                        "fontFamily": "System",
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    ITW_LANDING_SCREEN_EID_REISSUANCE
+                  </Text>
+                </View>
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-end",
+                      "marginEnd": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -4119,32 +4009,11 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -4152,35 +4021,22 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -4198,6 +4054,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -4233,7 +4090,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >

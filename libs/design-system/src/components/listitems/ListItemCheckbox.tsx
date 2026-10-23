@@ -15,9 +15,9 @@ import { BodySmall, H6 } from "../typography";
 type Props = {
   description?: string;
   icon?: IOIcons;
+  label: string;
   onValueChange?: (newValue: boolean) => void;
   selected?: boolean;
-  value: string;
 };
 
 const DISABLED_OPACITY = 0.5;
@@ -37,7 +37,7 @@ type ListItemCheckboxProps = Pick<
  * @param props
  */
 export const ListItemCheckbox = ({
-  value,
+  label,
   description,
   icon,
   selected,
@@ -59,8 +59,8 @@ export const ListItemCheckbox = ({
   // Accessibility
   // Comma = Small pause when announcing content
   const fallbackAccessibilityLabel = description
-    ? `${value}, ${description}`
-    : value;
+    ? `${label}, ${description}`
+    : label;
 
   const toggleCheckbox = () => {
     triggerHaptic("impactLight");
@@ -118,7 +118,7 @@ export const ListItemCheckbox = ({
                 />
               )}
               <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
-                {value}
+                {label}
               </H6>
             </View>
             <HSpacer size={IODimensions.gap.selection.control} />
