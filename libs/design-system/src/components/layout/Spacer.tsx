@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { View } from "react-native";
 
-import { hexToRgba, IOColorsLegacy, IOSpace } from "../../core";
+import { IOColorPalette, IOSpace, withAlpha } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 
 type BaseSpacerProps = {
@@ -19,7 +19,7 @@ const DEFAULT_SIZE: IOSpace = 16;
 
 /* Debug Mode */
 const debugMode = false;
-const debugBg = hexToRgba(IOColorsLegacy["error-600"], 0.2);
+const debugBg = withAlpha(IOColorPalette.red[600], 0.2);
 
 /**
  * Native `Spacer` component

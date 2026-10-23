@@ -27,6 +27,7 @@ import { checkboxColors } from "../../../components/checkbox/colors";
 import { codeInputColors } from "../../../components/codeInput/colors";
 import { featureInfoColors } from "../../../components/featureInfo/colors";
 import { headerColors } from "../../../components/headers/colors";
+import { dividerColors, footerColors } from "../../../components/layout/colors";
 import { listItemColors } from "../../../components/listitems/colors";
 import { loadingSpinnerColors } from "../../../components/loadingSpinner/colors";
 import { moduleColors } from "../../../components/modules/colors";
@@ -70,7 +71,9 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     button: buttonColors(s),
     checkbox: checkboxColors(s),
     codeInput: codeInputColors(s),
+    divider: dividerColors(s),
     featureInfo: featureInfoColors(s),
+    footer: footerColors(s),
     header: headerColors(s),
     iconButton: iconButtonColors(s),
     iconButtonSolid: iconButtonSolidColors(s),

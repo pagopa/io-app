@@ -4,19 +4,13 @@ import {
   LayoutChangeEvent,
   LayoutRectangle,
   StyleSheet,
-  Text,
   View,
   ViewStyle
 } from "react-native";
 import Animated, { AnimatedStyle } from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import {
-  footerBoxShadow,
-  hexToRgba,
-  IOColorsLegacy,
-  IODimensions
-} from "../../core";
+import { useIOColors } from "../../context";
+import { footerBoxShadow, IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import {
   IOButton,
@@ -45,10 +39,6 @@ type FooterActionsProps = WithTestID<
   PropsWithChildren<{
     actions?: FooterActions;
     animatedStyles?: FooterAnimatedStyles;
-    /* Show the following elements:
-       - Opaque red background to show the component boundaries
-       - Height of the component */
-    debugMode?: boolean;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
     /* Fixed at the bottom of the screen */
@@ -99,14 +89,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: IODimensions.padding.screen.default,
     width: "100%",
     flexShrink: 0
-  },
-  debugText: {
-    position: "absolute",
-    right: 8,
-    top: -16,
-    color: IOColorsLegacy.black,
-    fontSize: 9,
-    opacity: 0.75
   }
 });
 
@@ -117,10 +99,9 @@ export const FooterActions = ({
   fixed = true,
   transparent = false,
   onMeasure,
-  testID,
-  debugMode = false
+  testID
 }: FooterActionsProps) => {
-  const theme = useIOTheme();
+  const footerColors = useIOColors().component.footer;
 
   const { bottomMargin, extraBottomMargin } = useBottomMargins(
     !!actions?.secondary,
@@ -133,8 +114,7 @@ export const FooterActions = ({
 
   /* Background color should be app main background
      (both light and dark themes) */
-  const HEADER_BG_COLOR: ColorValue =
-    IOColorsLegacy[theme["appBackground-primary"]];
+  const HEADER_BG_COLOR: ColorValue = footerColors.background;
   const TRANSPARENT_BG_COLOR: ColorValue = "transparent";
 
   /* Safe background block. Cover everything until it reaches
@@ -163,9 +143,6 @@ export const FooterActions = ({
         fixed
           ? { position: "absolute", bottom: 0 }
           : { marginTop: IODimensions.padding.screen.end },
-        debugMode && {
-          backgroundColor: hexToRgba(IOColorsLegacy["error-500"], 0.15)
-        },
         animatedStyles?.mainBlock
       ]}
       testID={testID}
@@ -197,10 +174,6 @@ export const FooterActions = ({
         pointerEvents="box-none"
         style={styles.buttonContainer}
       >
-        {debugMode && (
-          <Text style={styles.debugText}>{`Height: ${actionBlockHeight}`}</Text>
-        )}
-
         {renderActions(actions, extraBottomMargin)}
       </View>
     </Animated.View>
