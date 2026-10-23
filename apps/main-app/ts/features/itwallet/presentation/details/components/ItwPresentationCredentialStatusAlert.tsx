@@ -557,6 +557,10 @@ const IssuerDynamicErrorAlert = ({
 
   const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
 
+  if (!message?.description?.trim()) {
+    return <Alert content={localizedMessage.title} variant="error" />;
+  }
+
   return (
     <>
       <Alert
