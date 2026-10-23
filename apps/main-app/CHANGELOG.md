@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.42.0-rc.6](https://github.com/pagopa/io-app/compare/3.42.0-rc.5...3.42.0-rc.6) (2026-10-22)
+
+### Bug Fixes
+
+* [[ENGQATM-1004](https://pagopa.atlassian.net/browse/ENGQATM-1004)] Update error message in `OneIdentityCieAuthenticationWebView` ([#8779](https://github.com/pagopa/io-app/issues/8779)) ([24fc974](https://github.com/pagopa/io-app/commit/24fc9745bdf45e1784c29e381c8b5f3c02a0abed))
+* [[IOPID-4277](https://pagopa.atlassian.net/browse/IOPID-4277)] Allow another user to log in after logout ([#8776](https://github.com/pagopa/io-app/issues/8776)) ([929d70f](https://github.com/pagopa/io-app/commit/929d70f35ee544d9b12a5ccba92e75cc83009c8f))
+* [[IOPID-4279](https://pagopa.atlassian.net/browse/IOPID-4279)] Clear session cookies at OI CIE login on Android ([#8787](https://github.com/pagopa/io-app/issues/8787)) ([70b4fec](https://github.com/pagopa/io-app/commit/70b4fec98eb40fcd93b703496980dd1d6a3f025b)), references [#4755](https://github.com/pagopa/io-app/issues/4755)
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Missing generate script in ` update lokalise` workflow ([#8778](https://github.com/pagopa/io-app/issues/8778)) ([2e055ac](https://github.com/pagopa/io-app/commit/2e055ace6c500480004901e17dacf07e6c4e3d1f))
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Add `synchronize` to `update-lokalise-snapshots` ([#8780](https://github.com/pagopa/io-app/issues/8780)) ([977da4e](https://github.com/pagopa/io-app/commit/977da4e0d6ab1cb32647cef8f83789c04dfa8ae0))
+* [[IOPLT-2197](https://pagopa.atlassian.net/browse/IOPLT-2197)] Add missing `a11y` for `ListItem` with security label ([#8765](https://github.com/pagopa/io-app/issues/8765)) ([67765d2](https://github.com/pagopa/io-app/commit/67765d241be43024ed5cefd330a46c90707bbe40))
+* **IT-Wallet:** [[SIW-5367](https://pagopa.atlassian.net/browse/SIW-5367)] Enhance accessibility controls and improve playback overlay for GIFs ([#8775](https://github.com/pagopa/io-app/issues/8775)) ([4ba62cb](https://github.com/pagopa/io-app/commit/4ba62cb3bef80ef2c76b1bbcbd800b7c096fe5b0))
+* Update translations from Lokalise ([#8785](https://github.com/pagopa/io-app/issues/8785)) ([e4ae7a7](https://github.com/pagopa/io-app/commit/e4ae7a7eec09ccca6966f341d14b437927644a1b))
 ## [3.42.0-rc.5](https://github.com/pagopa/io-app/compare/3.42.0-rc.4...3.42.0-rc.5) (2026-10-21)
 
 ### Features

@@ -266,10 +266,10 @@
         "loadingAccessibilityLabel": "Caricamento Identity Provider"
       },
       "loadingError": {
-        "description": "Riprova più tardi oppure entra su IO con la tua Carta d’Identità Elettronica (CIE).",
+        "description": "Puoi entrare subito con la tua Carta di Identità Elettronica (CIE) o riprovare tra un po’.",
         "primaryAction": "Entra con CIE",
         "secondaryAction": "Chiudi",
-        "title": "Non riusciamo a caricare la lista dei gestori SPID"
+        "title": "Non riusciamo a mostrarti i fornitori SPID"
       }
     },
     "landing": {
@@ -1530,10 +1530,10 @@
         },
         "credentialAuth": {
           "requiredClaims": "Dati richiesti",
-          "verified": "verificati",
           "subtitle": "Saranno condivisi con **{{organization}}** solo per il tempo necessario al rilascio della versione digitale del documento.",
           "title": "Dati necessari per {{credentialName}}",
-          "tos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}})."
+          "tos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}}).",
+          "verified": "verificati"
         },
         "credentialIntroduction": {
           "dismissalDialog": {
@@ -2479,8 +2479,8 @@
           "closeButtonAlt": "Ho capito",
           "cta": "Scopri di più",
           "newWalletInstanceCreated": {
-            "content": "Puoi usare i documenti digitali su un solo dispositivo alla volta per ragioni di sicurezza.",
-            "title": "La funzionalità Documenti è stata disattivata su questo dispositivo"
+            "content": "Puoi usare i documenti su un solo dispositivo alla volta per ragioni di sicurezza.",
+            "title": "I tuoi documenti digitali sono stati rimossi da questo dispositivo"
           },
           "revokedByUser": {
             "content": "Se cambi idea, potrai riattivare la funzionalità in futuro.",
@@ -3117,12 +3117,12 @@
         "otherMethods": {
           "error": {
             "banner": {
-              "cta": "Prova di nuovo",
-              "label": "Non siamo riusciti a caricare alcuni elementi della lista.",
               "bonus": {
                 "cta": "Vai ai servizi",
                 "label": "Non siamo riusciti a caricare alcuni elementi. Puoi accedere a bonus e iniziative anche dalla sezione Servizi."
-              }
+              },
+              "cta": "Prova di nuovo",
+              "label": "Non siamo riusciti a caricare alcuni elementi della lista."
             }
           }
         },

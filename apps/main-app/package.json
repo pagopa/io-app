@@ -1,12 +1,12 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.42.0-rc.5",
+  "version": "3.42.0-rc.6",
   "private": true,
   "scripts": {
-    "start": "react-native start",
+    "start": "expo start",
     "sync": "pnpm install && bundle && pnpm dev-pod-install && pnpm generate",
-    "run-ios": "react-native run-ios",
-    "run-android": "react-native run-android",
+    "run-ios": "expo run:ios",
+    "run-android": "expo run:android",
     "dev-run-android": "pnpm run-android --mode=productionDebug --active-arch-only",
     "push-hint": "echo \"To publish changes without checks run:\ngit push --no-verify --follow-tags origin $(git rev-parse --abbrev-ref HEAD)\"",
     "pre-cycle": "scripts/changelog/check_git_status.sh && node scripts/changelog/prepare_to_new_cycle.js",
