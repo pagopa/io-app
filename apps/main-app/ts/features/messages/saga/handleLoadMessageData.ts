@@ -5,10 +5,6 @@ import { ServiceDetails } from "@io-app/api-types/generated/definitions/services
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as B from "fp-ts/lib/boolean";
-import * as E from "fp-ts/lib/Either";
-import { constUndefined, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 
@@ -75,13 +71,10 @@ function* dispatchSuccessAction(
   thirdPartyMessage: ThirdPartyMessageWithContent | undefined
 ) {
   const isPNMessageCategory = paginatedMessage.category.tag === TagEnum.PN;
-  const containsPayment = pipe(
-    isPNMessageCategory,
-    B.fold(
-      () => pipe(messageDetails.paymentData, O.fromNullable, O.isSome),
-      constUndefined
-    )
-  );
+  const containsPayment = isPNMessageCategory
+    ? undefined
+    : messageDetails.paymentData !== undefined;
+
   const attachmentCount =
     thirdPartyMessage?.third_party_message.attachments?.length ?? 0;
 
@@ -363,33 +356,30 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
   thirdPartyMessageOrUndefined: ThirdPartyMessageWithContent | undefined,
   service: ServiceDetails,
   tag: string
-) =>
-  pipe(
-    thirdPartyMessageOrUndefined,
-    O.fromNullable,
-    O.filter(_ => !isPNMessage),
-    O.chainNullableK(
-      thirdPartyMessage => thirdPartyMessage.third_party_message.details
-    ),
-    O.map(details =>
-      pipe(
-        details,
-        RemoteContentDetails.decode,
-        E.mapLeft(errors =>
-          pipe(errors, readableReport, reason =>
-            trackRemoteContentMessageDecodingWarning(
-              service.id,
-              service.name,
-              service.organization.name,
-              service.organization.fiscal_code,
-              tag,
-              reason
-            )
-          )
-        )
-      )
-    )
-  );
+) => {
+  if (isPNMessage) {
+    return;
+  }
+
+  const messageDetails =
+    thirdPartyMessageOrUndefined?.third_party_message.details;
+  if (messageDetails === undefined) {
+    return;
+  }
+
+  const decodedDetalis = RemoteContentDetails.decode(messageDetails);
+
+  if ("left" in decodedDetalis) {
+    trackRemoteContentMessageDecodingWarning(
+      service.id,
+      service.name,
+      service.organization.name,
+      service.organization.fiscal_code,
+      tag,
+      readableReport(decodedDetalis.left)
+    );
+  }
+};
 
 const computeHasFIMSCTA = (
   messageDetails: UIMessageDetails,
