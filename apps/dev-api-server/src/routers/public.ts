@@ -100,10 +100,10 @@ addHandler(
   }
 );
 
-/** Prefix of the SPID ACR values, followed by the auth level (e.g. `SpidL2`) */
-const SPID_ACR_VALUES_PREFIX = "https://www.spid.gov.it/";
-/** SPID auth level used when the `/reserve` request does not specify one */
-const DEFAULT_SPID_AUTH_LEVEL = "SpidL2";
+/** Prefix of the ACR values, followed by the auth level (e.g. `SpidL2`) */
+const ACR_VALUES_PREFIX = "https://www.spid.gov.it/";
+/** Min auth level used when the `/reserve` request does not specify one */
+const DEFAULT_MIN_AUTH_LEVEL = "SpidL2";
 
 addHandler(
   publicRouter,
@@ -130,9 +130,9 @@ addHandler(
     const nonce = uuidv4();
     const clientId = uuidv4();
     const baseUrl = `${req.protocol}://${req.get("host")}`;
-    const minAuthLevel = req.body.min_auth_level ?? DEFAULT_SPID_AUTH_LEVEL;
+    const minAuthLevel = req.body.min_auth_level ?? DEFAULT_MIN_AUTH_LEVEL;
     res.json({
-      acr_values: `${SPID_ACR_VALUES_PREFIX}${minAuthLevel}`,
+      acr_values: `${ACR_VALUES_PREFIX}${minAuthLevel}`,
       client_id: clientId,
       redirect_uri: `${baseUrl}${ioRedirectPath}`,
       authorization_endpoint: `${baseUrl}${authorizePath}`,
