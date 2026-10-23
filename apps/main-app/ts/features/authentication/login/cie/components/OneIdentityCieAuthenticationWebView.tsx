@@ -94,6 +94,9 @@ export const OneIdentityCieAuthenticationWebView = ({
     shouldBlockUrlNavigationWhileCheckingLollipop,
     generateLoginSource
   } = useOneIdentityLoginSource({
+    // On Android, session cookies left by a previous CIE login can invalidate
+    // the IDP session: same fix as the legacy flow (IOPID-389, #4755)
+    clearSessionCookies: Platform.OS === "android",
     flow,
     followRedirectsNatively,
     idpId: getCieIdpId(useUat),
@@ -223,7 +226,8 @@ export const OneIdentityCieAuthenticationWebView = ({
           accessibilityLabel: I18n.t("global.buttons.cancel"),
           onPress: handleCancel
         }}
-        title={I18n.t("authentication.errors.network.title")}
+        subtitle={I18n.t("authentication.auth_errors.generic.subtitle")}
+        title={I18n.t("authentication.auth_errors.generic.title")}
       />
     );
   }
