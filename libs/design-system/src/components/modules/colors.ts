@@ -1,6 +1,7 @@
 import type {
   IOColorSemantics,
-  IOComponentColor
+  IOComponentColor,
+  Named
 } from "../../core/tokens/colors/semantic";
 
 export const moduleColors = (s: IOColorSemantics) =>
@@ -15,8 +16,5 @@ export const moduleColors = (s: IOColorSemantics) =>
     }
   }) satisfies {
     border: IOComponentColor<"stroke">;
-    foreground: Record<
-      "action" | "description" | "icon" | "label",
-      IOComponentColor<"foreground">
-    >;
+    foreground: Named<IOComponentColor<"foreground">>;
   };
