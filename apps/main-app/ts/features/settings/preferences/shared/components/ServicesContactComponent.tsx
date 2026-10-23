@@ -17,7 +17,7 @@ const ServicesContactComponent = (props: Props): ReactElement => {
   // or is different between the device and the app.
   const options = [
     {
-      value: I18n.t("services.optIn.preferences.quickConfig.title"),
+      label: I18n.t("services.optIn.preferences.quickConfig.title"),
       id: ServicesPreferencesModeEnum.AUTO,
       description: (
         <IOMarkdownLite
@@ -27,7 +27,7 @@ const ServicesContactComponent = (props: Props): ReactElement => {
       )
     },
     {
-      value: I18n.t("services.optIn.preferences.manualConfig.title"),
+      label: I18n.t("services.optIn.preferences.manualConfig.title"),
       id: ServicesPreferencesModeEnum.MANUAL,
       description: I18n.t("services.optIn.preferences.manualConfig.body.text1")
     }
