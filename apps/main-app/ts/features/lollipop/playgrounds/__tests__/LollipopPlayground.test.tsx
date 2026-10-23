@@ -1,4 +1,4 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import { render, waitFor } from "@testing-library/react-native";
 import * as E from "fp-ts/lib/Either";
 

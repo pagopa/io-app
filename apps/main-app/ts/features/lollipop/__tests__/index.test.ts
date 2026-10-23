@@ -1,5 +1,5 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
-import * as global from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
+import * as global from "@io-app/expo-crypto";
 import URLParse from "url-parse";
 
 import {

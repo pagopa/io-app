@@ -1,8 +1,4 @@
-import {
-  type CryptoError,
-  deleteKey,
-  generate
-} from "@pagopa/io-react-native-crypto";
+import { type CryptoError, deleteKey, generate } from "@io-app/expo-crypto";
 import {
   CBOR,
   COSE,

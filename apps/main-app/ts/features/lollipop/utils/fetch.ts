@@ -1,4 +1,4 @@
-import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
+import { PublicKey, sign } from "@io-app/expo-crypto";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import URLParse from "url-parse";
 
