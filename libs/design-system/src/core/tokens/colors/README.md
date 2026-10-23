@@ -50,5 +50,6 @@ A pale tint needs a dark ink of its own hue (`onTint`), the blue screen needs wh
 - Each token is tagged with the component role it can fill: `background` (`background`, `surface`), `foreground` (`foreground`, `text`, `icon`, `pictogram`) or `stroke` (`stroke`, for a component's `border`). The types enforce it: `foreground: { default: colors.surface.default }` doesn't compile
 - A component whose icon and text share a color takes `foreground`; one where they differ takes `icon` and `text`
 - Components never use the palette. If no token fits, add one to the semantic layer
+- Read tokens through their object, never destructured: `colors.text.content.default`, `listItemColors.label`. Every use reads as a token (review only, no lint rule)
 - Alpha only through `withAlpha(token, opacity)`, with `opacity` from `IOOpacity.scale`: the result keeps the token's role
 - Colors of a single feature live in that feature's own `colors.ts`, built from the palette
