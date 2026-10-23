@@ -1,4 +1,4 @@
-import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
+import { CieManager, NfcError, NfcEvent } from "@io-app/expo-cie";
 import { act, renderHook } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
@@ -10,20 +10,14 @@ import { trackLoginCieCardReadingError } from "../../../../common/analytics/cieA
 import { cieAuthenticationError } from "../../store/actions";
 import { useCieManager } from "../useCieManager";
 
-jest.mock("@pagopa/react-native-cie", () => ({
-  __esModule: true,
-  default: {
-    removeAllListeners: jest.fn(),
-    onEvent: jest.fn(),
-    onError: jest.fn(),
-    onSuccess: jest.fn(),
-    enableLog: jest.fn(),
+jest.mock("@io-app/expo-cie", () => ({
+  CieLogger: { setLogMode: jest.fn() },
+  CieManager: {
+    addListener: jest.fn(),
+    setAlertMessage: jest.fn(),
     setCustomIdpUrl: jest.fn(),
-    setAuthenticationUrl: jest.fn(),
-    setPin: jest.fn(async () => undefined),
-    start: jest.fn(async () => undefined),
-    startListeningNFC: jest.fn(async () => undefined),
-    stopListeningNFC: jest.fn(async () => undefined)
+    startReading: jest.fn(async () => undefined),
+    stopReading: jest.fn(async () => undefined)
   }
 }));
 
@@ -32,7 +26,7 @@ jest.mock("../../../../common/analytics/cieAnalytics", () => ({
   trackLoginCieCardReadingSuccess: jest.fn()
 }));
 
-const mockedCieManager = jest.mocked(cieManager);
+const mockedCieManager = jest.mocked(CieManager);
 const mockedTrackLoginCieCardReadingError = jest.mocked(
   trackLoginCieCardReadingError
 );
@@ -54,23 +48,24 @@ const setupTest = ({
 
 describe("useCieManager", () => {
   // eslint-disable-next-line functional/no-let
-  let emitEvent: (event: CEvent) => void;
+  let emitEvent: (event: NfcEvent) => void;
   // eslint-disable-next-line functional/no-let
-  let emitError: (error: Error) => void;
+  let emitError: (error: NfcError) => void;
   // eslint-disable-next-line functional/no-let
   let emitSuccess: (url: string) => void;
 
   beforeEach(() => {
     jest.clearAllMocks();
 
-    mockedCieManager.onEvent.mockImplementation(cb => {
-      emitEvent = cb;
-    });
-    mockedCieManager.onError.mockImplementation(cb => {
-      emitError = cb;
-    });
-    mockedCieManager.onSuccess.mockImplementation(cb => {
-      emitSuccess = cb;
+    mockedCieManager.addListener.mockImplementation((event, callback) => {
+      if (event === "onEvent") {
+        emitEvent = callback as (event: NfcEvent) => void;
+      } else if (event === "onError") {
+        emitError = callback as (error: NfcError) => void;
+      } else if (event === "onSuccess") {
+        emitSuccess = callback as (url: string) => void;
+      }
+      return jest.fn();
     });
   });
 
@@ -87,7 +82,7 @@ describe("useCieManager", () => {
     });
 
     act(() => {
-      emitEvent({ event: "ON_TAG_DISCOVERED", attemptsLeft: 3 } as CEvent);
+      emitEvent({ name: "ON_TAG_DISCOVERED", progress: 0.2 });
     });
 
     expect(result.current.state).toEqual({ status: "reading" });
@@ -165,7 +160,7 @@ describe("useCieManager", () => {
     });
 
     act(() => {
-      emitEvent({ event: "ON_TAG_LOST", attemptsLeft: 0 } as CEvent);
+      emitError({ name: "TAG_LOST" });
     });
 
     expect(result.current.state.status).toBe("reading-failure");
@@ -173,7 +168,7 @@ describe("useCieManager", () => {
     expect(dispatchSpy).toHaveBeenCalledWith(
       cieAuthenticationError(
         expect.objectContaining({
-          reason: "ON_TAG_LOST",
+          reason: "TAG_LOST",
           flow: "reauth"
         })
       )
@@ -188,7 +183,7 @@ describe("useCieManager", () => {
     });
 
     act(() => {
-      emitError(new Error("native error"));
+      emitError({ name: "GENERIC_ERROR", message: "native error" });
     });
 
     expect(result.current.state).toEqual({
@@ -201,14 +196,11 @@ describe("useCieManager", () => {
     "AUTHENTICATION_ERROR",
     "CERTIFICATE_EXPIRED",
     "CERTIFICATE_REVOKED",
-    "EXTENDED_APDU_NOT_SUPPORTED",
-    "ON_CARD_PIN_LOCKED",
-    "ON_NO_INTERNET_CONNECTION",
-    "ON_PIN_ERROR",
-    "ON_TAG_DISCOVERED_NOT_CIE",
-    "PIN Locked",
-    "TAG_ERROR_NFC_NOT_SUPPORTED",
-    "Function not supported"
+    "APDU_ERROR",
+    "CARD_BLOCKED",
+    "NO_INTERNET_CONNECTION",
+    "WRONG_PIN",
+    "NOT_A_CIE"
   ] as const)(
     "should set a dedicated failure state for the %s error event",
     async failureEvent => {
@@ -222,12 +214,18 @@ describe("useCieManager", () => {
       });
 
       act(() => {
-        emitEvent({ event: failureEvent, attemptsLeft: 0 } as CEvent);
+        emitError({
+          name: failureEvent,
+          ...(failureEvent === "WRONG_PIN" ? { attemptsLeft: 0 } : {})
+        } as NfcError);
       });
 
       expect(result.current.state).toEqual({
         status: "failure",
-        failure: { event: failureEvent, attemptsLeft: 0 }
+        failure: {
+          name: failureEvent,
+          ...(failureEvent === "WRONG_PIN" ? { attemptsLeft: 0 } : {})
+        }
       });
       expect(mockedTrackLoginCieCardReadingError).toHaveBeenCalled();
     }
@@ -252,9 +250,9 @@ describe("useCieManager", () => {
 
       act(() => {
         emitEvent({
-          event: unhandledEvent as unknown as CEvent["event"],
-          attemptsLeft: 0
-        } as CEvent);
+          name: unhandledEvent,
+          progress: 0
+        });
       });
 
       expect(result.current.state).toEqual({ status: "idle" });
@@ -263,7 +261,7 @@ describe("useCieManager", () => {
   );
 
   it("should set a failure state when starting the reading fails", async () => {
-    mockedCieManager.setPin.mockRejectedValueOnce(new Error("boom"));
+    mockedCieManager.startReading.mockRejectedValueOnce(new Error("boom"));
 
     const { result } = setupTest();
 

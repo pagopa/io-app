@@ -1,4 +1,4 @@
-import cieManager from "@pagopa/react-native-cie";
+import { CieManager, CieUtils } from "@io-app/expo-cie";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 
@@ -12,12 +12,12 @@ import {
   watchCieAuthenticationSaga
 } from "../cie";
 
-jest.mock("@pagopa/react-native-cie", () => ({
-  stopListeningNFC: jest.fn(),
-  isCIEAuthenticationSupported: jest.fn(),
-  hasApiLevelSupport: jest.fn(),
-  hasNFCFeature: jest.fn(),
-  isNFCEnabled: jest.fn()
+jest.mock("@io-app/expo-cie", () => ({
+  CieManager: { stopReading: jest.fn() },
+  CieUtils: {
+    isCieAuthenticationSupported: jest.fn(),
+    isNfcEnabled: jest.fn()
+  }
 }));
 
 jest.mock("../../../../../../utils/timer", () => ({
@@ -32,12 +32,12 @@ describe("CIE saga", () => {
   describe("checkCieAvailabilitySaga", () => {
     it("should dispatch success", () => {
       (
-        cieManager.isCIEAuthenticationSupported as jest.Mock
+        CieUtils.isCieAuthenticationSupported as jest.Mock
       ).mockResolvedValueOnce(true);
 
       return expectSaga(
         checkCieAvailabilitySaga,
-        cieManager.isCIEAuthenticationSupported
+        CieUtils.isCieAuthenticationSupported
       )
         .put(cieIsSupported.success(true))
         .run();
@@ -57,12 +57,12 @@ describe("CIE saga", () => {
     it("should dispatch success after retries", () => {
       // eslint-disable-next-line functional/no-let
       let attempt = 0;
-      jest.spyOn(cieManager, "isNFCEnabled").mockImplementation(() => {
+      jest.spyOn(CieUtils, "isNfcEnabled").mockImplementation(() => {
         attempt++;
         return Promise.resolve(attempt >= 3);
       });
 
-      (cieManager.isNFCEnabled as jest.Mock)
+      (CieUtils.isNfcEnabled as jest.Mock)
         .mockResolvedValueOnce(false)
         .mockResolvedValueOnce(true);
 
@@ -75,7 +75,7 @@ describe("CIE saga", () => {
 
     it("should dispatch failure on error", () => {
       const error = new Error("nfc check failed");
-      (cieManager.isNFCEnabled as jest.Mock).mockRejectedValueOnce(error);
+      (CieUtils.isNfcEnabled as jest.Mock).mockRejectedValueOnce(error);
 
       return expectSaga(checkNfcEnablementSaga)
         .put(nfcIsEnabled.failure(convertUnknownToError(error)))
@@ -87,7 +87,7 @@ describe("CIE saga", () => {
 
       return expectSaga(checkNfcEnablementSaga)
         .provide([
-          [matchers.call.fn(cieManager.isNFCEnabled), Promise.reject(error)],
+          [matchers.call.fn(CieUtils.isNfcEnabled), Promise.reject(error)],
           [matchers.call.fn(startTimer), undefined],
           [matchers.call.fn(convertUnknownToError), error]
         ])
@@ -100,20 +100,18 @@ describe("CIE saga", () => {
     it("should call all checks and dispatch successes", () =>
       expectSaga(watchCieAuthenticationSaga)
         .provide([
-          [matchers.call.fn(cieManager.isCIEAuthenticationSupported), true],
-          [matchers.call.fn(cieManager.hasApiLevelSupport), true],
-          [matchers.call.fn(cieManager.hasNFCFeature), true]
+          [matchers.call.fn(CieUtils.isCieAuthenticationSupported), true]
         ])
         .put(cieIsSupported.success(true))
         .run());
   });
 
   describe("stopCieManager", () => {
-    it("should call cieManager.stopListeningNFC", () => {
-      const stopListeningMock = cieManager.stopListeningNFC as jest.Mock;
-      stopListeningMock.mockResolvedValueOnce(undefined);
+    it("should call CieManager.stopReading", () => {
+      const stopReadingMock = CieManager.stopReading as jest.Mock;
+      stopReadingMock.mockResolvedValueOnce(undefined);
 
-      return expectSaga(stopCieManager).call(cieManager.stopListeningNFC).run();
+      return expectSaga(stopCieManager).call(CieManager.stopReading).run();
     });
   });
 });

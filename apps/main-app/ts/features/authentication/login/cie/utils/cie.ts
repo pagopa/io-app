@@ -1,10 +1,10 @@
-import cieSdk from "@pagopa/react-native-cie";
+import { CieUtils } from "@io-app/expo-cie";
 import { Platform } from "react-native";
 
-const realIsNfcEnabled = () => cieSdk.isNFCEnabled();
+const realIsNfcEnabled = () => CieUtils.isNfcEnabled();
 const mockIsNfcEnabled = () => Promise.resolve(true);
 
-const realOpenNfcSettings = cieSdk.openNFCSettings;
+const realOpenNfcSettings = CieUtils.openNfcSettings;
 const mockOpenNfcSettings = () => Promise.resolve();
 
 const test = Platform.OS !== "android";

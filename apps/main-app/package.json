@@ -26,13 +26,12 @@
     "lint-locales": "eslint --no-cache locales/it/index.json",
     "locale-audit": "python3 scripts/locale/locale_audit.py",
     "unused-locales": "python3 scripts/locale/find_unused_locales.py",
-    "cie-ios": "./scripts/configure-cie-ios.sh",
     "bundle:android-release": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "generate": "pnpm --filter @io-app/api-types run generate",
     "lollipop_checks-comment": "./scripts/toggle-comments-on-lollipop-checks.sh comment ./ts/sagas/startup.ts",
     "lollipop_checks-uncomment": "./scripts/toggle-comments-on-lollipop-checks.sh uncomment ./ts/sagas/startup.ts",
-    "dev-pod-install": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod install && cd ..",
-    "dev-pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
+    "dev-pod-install": "cd ios && bundle exec pod install && cd ..",
+    "dev-pod-update": "cd ios && bundle exec pod update && cd .."
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
@@ -60,7 +59,6 @@
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
     "@pagopa/io-react-native-wallet": "3.8.3",
     "@io-app/expo-zendesk": "workspace:*",
-    "@pagopa/react-native-cie": "^1.5.0",
     "@pagopa/ts-commons": "^10.15.0",
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@react-native-community/netinfo": "11.4.1",

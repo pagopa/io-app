@@ -421,9 +421,6 @@ importers:
       '@pagopa/io-react-native-wallet':
         specifier: 3.8.3
         version: 3.8.3(1980c7d3d346854dd414a200c92bb934)
-      '@pagopa/react-native-cie':
-        specifier: ^1.5.0
-        version: 1.5.0
       '@pagopa/ts-commons':
         specifier: ^10.15.0
         version: 10.15.0(supports-color@8.1.1)
@@ -3851,9 +3848,6 @@ packages:
     peerDependencies:
       fp-ts: ^2.16.5
       io-ts: ^2.2.21
-
-  '@pagopa/react-native-cie@1.5.0':
-    resolution: {integrity: sha512-bY4LyYGVANhYHliOLGaXQgtAfBgPy1VyQ8uOM2PGx37QrCAI3ICKFm/Lmi+mwBWf6vCc9iX8Pzg0Gm7/dd5CcA==}
 
   '@pagopa/ts-commons@10.15.0':
     resolution: {integrity: sha512-MTmD0geIN9L9vnEYjPTE7v6Bu+IRTFMre+3K4LWYjy1AaRmYcpSrc9HTZgyCRW8uLCvw1BmDKcKtSiETM817kw==}
@@ -17165,8 +17159,6 @@ snapshots:
       - chokidar
       - encoding
       - supports-color
-
-  '@pagopa/react-native-cie@1.5.0': {}
 
   '@pagopa/ts-commons@10.15.0(supports-color@7.2.0)':
     dependencies:

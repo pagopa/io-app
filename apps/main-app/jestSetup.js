@@ -365,7 +365,23 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
 }));
 
 jest.mock("@io-app/expo-cie", () => ({
-  CieManager: jest.fn()
+  CieManager: {
+    addListener: jest.fn(() => jest.fn()),
+    removeAllListeners: jest.fn(),
+    setAlertMessage: jest.fn(),
+    setCurrentAlertMessage: jest.fn(),
+    setCustomIdpUrl: jest.fn(),
+    startReading: jest.fn(),
+    stopReading: jest.fn(() => Promise.resolve())
+  },
+  CieUtils: {
+    isCieAuthenticationSupported: jest.fn(() => Promise.resolve(true)),
+    isNfcEnabled: jest.fn(() => Promise.resolve(true)),
+    openNfcSettings: jest.fn(() => Promise.resolve(true))
+  },
+  CieLogger: {
+    setLogMode: jest.fn()
+  }
 }));
 
 jest.mock("react-native-keyboard-controller", () =>
