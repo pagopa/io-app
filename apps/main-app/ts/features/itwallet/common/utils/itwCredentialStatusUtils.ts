@@ -74,6 +74,8 @@ export const getCredentialStatus = (
     return "suspended";
   }
 
+  // Preserve IT-Wallet ID's calendar-day expiration. Other digital credentials
+  // expire at their exact timestamp, including equality.
   if (
     hasDigitalExpirationWarning
       ? jwtExpireDays <= 0

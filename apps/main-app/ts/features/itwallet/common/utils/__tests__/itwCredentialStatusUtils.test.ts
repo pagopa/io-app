@@ -76,6 +76,11 @@ describe("getCredentialStatus", () => {
           expectedStatus: statusBeforeExpiration
         },
         {
+          name: "at the start of the expiration day before the timestamp",
+          now: new Date(2024, 0, 30),
+          expectedStatus: statusOnExpirationDay
+        },
+        {
           name: "one millisecond before expiration",
           now: new Date(expiration.getTime() - 1),
           expectedStatus: statusOnExpirationDay
