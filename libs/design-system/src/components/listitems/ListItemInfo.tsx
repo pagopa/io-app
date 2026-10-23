@@ -2,7 +2,7 @@ import { ComponentProps, ReactNode } from "react";
 import { AccessibilityRole, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions, IOListItemStyles } from "../../core";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -110,7 +110,7 @@ const ListItemInfoContent = ({
   hasInteractiveElements: boolean;
   listItemAccessibilityLabel?: string;
 }) => {
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
   return (
@@ -118,7 +118,7 @@ const ListItemInfoContent = ({
       {icon && !hugeFontEnabled && (
         <Icon
           allowFontScaling
-          color={theme["icon-decorative"]}
+          color={listItemColors.foreground.icon}
           name={icon}
           size={IODimensions.size.icon.listItem}
         />
@@ -150,13 +150,19 @@ const ListItemInfoContent = ({
           )}
 
           {label && (
-            <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+            <BodySmall
+              color={listItemColors.foreground.description}
+              weight="Regular"
+            >
               {label}
             </BodySmall>
           )}
 
           {typeof value === "string" ? (
-            <H6 color={theme["textBody-default"]} numberOfLines={numberOfLines}>
+            <H6
+              color={listItemColors.foreground.label}
+              numberOfLines={numberOfLines}
+            >
               {value}
             </H6>
           ) : (

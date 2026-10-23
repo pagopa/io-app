@@ -60,7 +60,7 @@ export const ListItemRadioWithAmount = ({
       onPress={pressHandler}
     >
       <View style={{ flexShrink: 1 }}>
-        <H6 color={listItemColors.label} numberOfLines={1}>
+        <H6 color={listItemColors.foreground.label} numberOfLines={1}>
           {label}
         </H6>
         {isSuggested && (
@@ -69,11 +69,14 @@ export const ListItemRadioWithAmount = ({
             style={{ alignItems: "center" }}
           >
             <Icon
-              color={listItemColors.featured}
+              color={listItemColors.foreground.featured}
               name="sparkles"
               size={IODimensions.size.icon.caption}
             />
-            <BodySmall color={listItemColors.featured} weight="Regular">
+            <BodySmall
+              color={listItemColors.foreground.featured}
+              weight="Regular"
+            >
               {suggestReason}
             </BodySmall>
           </HStack>
@@ -85,7 +88,9 @@ export const ListItemRadioWithAmount = ({
         pointerEvents="none"
         space={IODimensions.gap.selection.control}
       >
-        <H6 color={listItemColors.amount}>{formattedAmountString}</H6>
+        <H6 color={listItemColors.foreground.amount}>
+          {formattedAmountString}
+        </H6>
         <Radio
           checked={selected ?? toggleValue}
           size={IODimensions.size.selection.control * dynamicFontScale}

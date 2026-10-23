@@ -107,6 +107,7 @@ export const light = {
     /* A featured option (a featured PSP) */
     featured: p.hanPurple[500],
     error: p.red[600],
+    success: p.green[700],
     /* On `background.accent`, not interactive */
     onAccent: { default: p.greyscale.white, error: p.red[100] },
     /* Ink of interactive elements */
@@ -283,6 +284,7 @@ export const dark = {
     accent: p.blueIO[300],
     featured: p.hanPurple[250],
     error: p.red[400],
+    success: p.green[500],
     onAccent: light.foreground.onAccent,
     action: {
       primary: {

@@ -115,7 +115,7 @@ export const ListItemSwitch = memo(
             {icon && !hugeFontEnabled && (
               <Icon
                 allowFontScaling
-                color={listItemColors.icon}
+                color={listItemColors.foreground.icon}
                 name={icon}
                 size={IODimensions.size.icon.selection}
               />
@@ -129,7 +129,7 @@ export const ListItemSwitch = memo(
 
             <H6
               accessible={!canRenderSwitch}
-              color={listItemColors.label}
+              color={listItemColors.foreground.label}
               importantForAccessibility={
                 !canRenderSwitch ? "yes" : "no-hide-descendants"
               }
@@ -168,7 +168,10 @@ export const ListItemSwitch = memo(
         {description && (
           <>
             <VSpacer size={IODimensions.gap.selection.description} />
-            <BodySmall color={listItemColors.description} weight="Regular">
+            <BodySmall
+              color={listItemColors.foreground.description}
+              weight="Regular"
+            >
               {description}
             </BodySmall>
           </>

@@ -109,12 +109,15 @@ export const ListItemCheckbox = ({
               {icon && !hugeFontEnabled && (
                 <Icon
                   allowFontScaling
-                  color={listItemColors.icon}
+                  color={listItemColors.foreground.icon}
                   name={icon}
                   size={IODimensions.size.icon.selection}
                 />
               )}
-              <H6 color={listItemColors.label} style={{ flexShrink: 1 }}>
+              <H6
+                color={listItemColors.foreground.label}
+                style={{ flexShrink: 1 }}
+              >
                 {value}
               </H6>
             </View>
@@ -133,7 +136,10 @@ export const ListItemCheckbox = ({
           {description && (
             <View>
               <VSpacer size={IODimensions.gap.selection.description} />
-              <BodySmall color={listItemColors.description} weight="Regular">
+              <BodySmall
+                color={listItemColors.foreground.description}
+                weight="Regular"
+              >
                 {description}
               </BodySmall>
             </View>

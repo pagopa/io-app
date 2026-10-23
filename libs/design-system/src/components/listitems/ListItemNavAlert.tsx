@@ -2,7 +2,7 @@ import { ComponentProps, ReactNode, useCallback } from "react";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions, IOListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
@@ -31,7 +31,7 @@ export const ListItemNavAlert = ({
   accessibilityHint,
   testID
 }: ListItemNavAlert) => {
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 
@@ -55,7 +55,7 @@ export const ListItemNavAlert = ({
     <>
       {/* Let developer using a custom component (e.g: skeleton) */}
       {typeof value === "string" ? (
-        <H6 color={theme["textBody-default"]}>{value}</H6>
+        <H6 color={listItemColors.foreground.label}>{value}</H6>
       ) : (
         value
       )}
@@ -63,7 +63,10 @@ export const ListItemNavAlert = ({
       {description && (
         <>
           {typeof description === "string" ? (
-            <BodySmall color={theme.errorText} weight="Semibold">
+            <BodySmall
+              color={listItemColors.foreground.error}
+              weight="Semibold"
+            >
               {description}
             </BodySmall>
           ) : (
@@ -74,7 +77,7 @@ export const ListItemNavAlert = ({
     </>
   );
 
-  const iconColor = theme["interactiveElem-default"];
+  const iconColor = listItemColors.foreground.action.primary;
 
   return (
     <Pressable
@@ -100,7 +103,7 @@ export const ListItemNavAlert = ({
             <>
               <Icon
                 allowFontScaling
-                color={theme.errorIcon}
+                color={listItemColors.foreground.error}
                 name="errorFilled"
                 size={IODimensions.size.icon.listItem}
               />

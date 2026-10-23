@@ -1,8 +1,8 @@
 import { isValidElement, ReactNode } from "react";
 import { ImageURISource, View } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IOColorsLegacy, IODimensions, IOListItemStyles } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOListItemStyles } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { isImageUri } from "../../utils/url";
 import { Avatar } from "../avatar/Avatar";
@@ -94,11 +94,11 @@ const ListItemTransactionContent = ({
   badge: ListItemTransactionBadge | undefined;
   refund: boolean | undefined;
 }) => {
-  const theme = useIOTheme();
-  const interactiveColor: IOColorsLegacy = theme["interactiveElem-default"];
-  const amountColor: IOColorsLegacy = refund
-    ? theme.successText
-    : theme["textBody-default"];
+  const listItemColors = useIOColors().component.listItem;
+  const interactiveColor = listItemColors.foreground.action.primary;
+  const amountColor = refund
+    ? listItemColors.foreground.success
+    : listItemColors.foreground.label;
 
   return (
     <>
@@ -119,10 +119,16 @@ const ListItemTransactionContent = ({
           </View>
         )}
         <View style={{ flexShrink: 1 }}>
-          <H6 color={theme["textBody-default"]} numberOfLines={numberOfLines}>
+          <H6
+            color={listItemColors.foreground.label}
+            numberOfLines={numberOfLines}
+          >
             {title}
           </H6>
-          <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+          <BodySmall
+            color={listItemColors.foreground.description}
+            weight="Regular"
+          >
             {subtitle}
           </BodySmall>
         </View>

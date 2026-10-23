@@ -3,6 +3,7 @@ import {
   IOToast,
   ListItemNav,
   triggerHaptic,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
@@ -50,6 +51,7 @@ import {
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 
 const BarcodeScanScreen = () => {
+  const colors = useIOColors();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabledInScanScreen = useIOSelector(
@@ -247,7 +249,7 @@ const BarcodeScanScreen = () => {
       <ListItemNav
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
         icon="productPagoPA"
-        iconColor="blueItalia-500"
+        iconColor={colors.icon.pagopa}
         onPress={handlePagoPACodeInput}
         value={I18n.t("barcodeScan.manual.notice")}
       />
