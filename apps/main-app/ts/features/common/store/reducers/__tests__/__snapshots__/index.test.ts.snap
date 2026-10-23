@@ -151,7 +151,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "catalogue": {
         "kind": "PotNone",
       },
-      "isEnabledForCredentialsList": false,
       "translations": {
         "kind": "PotNone",
       },
