@@ -4,14 +4,12 @@ import {
   GestureResponderEvent,
   Pressable,
   StyleSheet,
-  View,
-  ViewStyle
+  View
 } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
-import { useIOTheme, useIOThemeContext } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
-import { hexToRgba, IOColorsLegacy } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import { IOButton } from "../buttons";
@@ -69,19 +67,10 @@ export const BannerErrorState = ({
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
 
-  const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
-
-  /* Styles */
-  const foregroundColor: IOColorsLegacy = theme["textBody-tertiary"];
-  const backgroundColor: IOColorsLegacy = "grey-50";
-
-  const dynamicContainerStyles: ViewStyle = {
-    backgroundColor:
-      themeType === "dark"
-        ? hexToRgba(IOColorsLegacy[backgroundColor], 0.1)
-        : IOColorsLegacy[backgroundColor]
-  };
+  /* The `neutral` `Banner` */
+  const bannerColors = useIOColors().component.banner;
+  const foregroundColor = bannerColors.foreground.content;
+  const backgroundStyle = { backgroundColor: bannerColors.background.neutral };
 
   const renderMainBlock = () => (
     <View
@@ -142,7 +131,7 @@ export const BannerErrorState = ({
       testID={testID}
     >
       <Animated.View
-        style={[styles.container, dynamicContainerStyles, scaleAnimatedStyle]}
+        style={[styles.container, backgroundStyle, scaleAnimatedStyle]}
       >
         {renderMainBlock()}
       </Animated.View>
@@ -157,7 +146,7 @@ export const BannerErrorState = ({
       // A11y related props
       accessible={false}
       ref={viewRef}
-      style={[styles.container, dynamicContainerStyles]}
+      style={[styles.container, backgroundStyle]}
       testID={testID}
     >
       {renderMainBlock()}
