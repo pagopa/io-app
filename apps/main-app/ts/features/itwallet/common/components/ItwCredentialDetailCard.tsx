@@ -4,6 +4,8 @@ import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { RotationSensor } from "../../../../components/RotationSensor";
+import { useRotationEffectEnabled } from "../../../../hooks/useRotationSensor";
 import { useLayoutSize } from "../hooks/useLayoutSize";
 import { borderVariantByStatus } from "../utils/itwCredentialUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
@@ -38,6 +40,7 @@ export const ItwCredentialDetailCard = ({
 }: ItwCredentialDetailCardProps) => {
   const safeAreaInsets = useSafeAreaInsets();
   const { size, onLayout } = useLayoutSize();
+  const isRotationEffectEnabled = useRotationEffectEnabled();
 
   // Credential's header card is always in light mode
   const { color, background, overlay } = useCredentialCardConfig(
@@ -56,28 +59,37 @@ export const ItwCredentialDetailCard = ({
   return (
     <View onLayout={onLayout} style={[styles.container, { paddingTop }]}>
       {size && (
-        <Canvas style={StyleSheet.absoluteFill}>
-          {overlay?.header && (
-            <>
-              <SkiaGradientBackground bg={background} {...size} />
-              <SkiaCardOverlay src={overlay.header} {...size} />
-            </>
-          )}
-          {overlay?.pattern && (
-            <>
-              {/* Pattern should have a solid background */}
-              <Rect color={color} {...size} />
-              <SkiaCardPatternOverlay src={overlay.pattern} {...size} />
-            </>
-          )}
-
-          <ItwBrandedSkiaBorder
-            borderRadius={CARD_BORDER_RADIUS}
-            height={size.height}
-            variant={borderVariantByStatus[credentialStatus]}
-            width={size.width}
-          />
-        </Canvas>
+        <>
+          <Canvas style={StyleSheet.absoluteFill}>
+            {overlay?.header && (
+              <>
+                <SkiaGradientBackground bg={background} {...size} />
+                <SkiaCardOverlay src={overlay.header} {...size} />
+              </>
+            )}
+            {overlay?.pattern && (
+              <>
+                {/* Pattern should have a solid background */}
+                <Rect color={color} {...size} />
+                <SkiaCardPatternOverlay src={overlay.pattern} {...size} />
+              </>
+            )}
+          </Canvas>
+          {/* Separate canvas so the animated border does not redraw the artwork */}
+          <Canvas style={StyleSheet.absoluteFill}>
+            <RotationSensor enabled={isRotationEffectEnabled}>
+              {roll => (
+                <ItwBrandedSkiaBorder
+                  borderRadius={CARD_BORDER_RADIUS}
+                  height={size.height}
+                  roll={roll}
+                  variant={borderVariantByStatus[credentialStatus]}
+                  width={size.width}
+                />
+              )}
+            </RotationSensor>
+          </Canvas>
+        </>
       )}
       <View style={styles.content}>{children}</View>
     </View>

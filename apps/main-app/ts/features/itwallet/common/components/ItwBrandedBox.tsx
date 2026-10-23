@@ -12,13 +12,12 @@ import { LayoutRectangle, StyleSheet, View } from "react-native";
 import {
   Extrapolation,
   interpolate,
-  SensorType,
-  useAnimatedReaction,
-  useAnimatedSensor,
-  useDerivedValue,
-  useSharedValue
+  SharedValue,
+  useDerivedValue
 } from "react-native-reanimated";
 
+import { RotationSensor } from "../../../../components/RotationSensor";
+import { useRotationEffectEnabled } from "../../../../hooks/useRotationSensor";
 import { useLayoutSize } from "../hooks/useLayoutSize";
 import { useItWalletTheme } from "../utils/theme";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
@@ -64,89 +63,7 @@ export const ItwBrandedBox = ({
   /* Styles */
   const lightSkiaOpacity = isLightMode ? 0.4 : 0.05;
 
-  /* Sensors */
-  const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
-  const currentRoll = useSharedValue(0);
-  const initialRoll = useSharedValue(0);
-
-  useAnimatedReaction(
-    () => rotationSensor.sensor.value,
-    s => {
-      if (initialRoll.value === 0) {
-        initialRoll.value = s.roll;
-      }
-      currentRoll.value = s.roll;
-    },
-    []
-  );
-
-  /* Not all devices are in an initial flat position on a surface
-        (e.g. a table) then we use a relative rotation value,
-        not an absolute one  */
-  const relativeRoll = useDerivedValue(
-    () => initialRoll.value - currentRoll.value
-  );
-
-  /* Set translate boundaries for the main light */
-  const maxTranslateX =
-    (size.width - (lightSize ?? 0) * visibleLightPercentage) / 2;
-
-  /* We don't need to look at the whole quaternion range,
-      just a very small part of it. */
-  const quaternionRange = 0.5;
-
-  const skiaLightTranslateX = useDerivedValue(() => {
-    const translateX = interpolate(
-      relativeRoll.value,
-      [quaternionRange, -quaternionRange],
-      [maxTranslateX, -maxTranslateX],
-      Extrapolation.CLAMP
-    );
-
-    return [{ translateX }, { scale: lightScaleMultiplier }];
-  });
-
-  const SkiaLight = () => (
-    <SkiaGroup
-      opacity={lightSkiaOpacity}
-      origin={vec(size.width / 2, size.height / 2)}
-    >
-      <SkiaCircle
-        cx={(size.width ?? 0) / 2}
-        cy={(size.height ?? 0) / 2}
-        r={lightSize / 2}
-        transform={skiaLightTranslateX}
-      >
-        <SkiaRadialGradient
-          c={vec((size.width ?? 0) / 2, (size.height ?? 0) / 2)}
-          colors={[
-            "rgba(255,255,255,1)",
-            "rgba(255,255,255,0.987)",
-            "rgba(255,255,255,0.95)",
-            "rgba(255,255,255,0.89)",
-            "rgba(255,255,255,0.825)",
-            "rgba(255,255,255,0.74)",
-            "rgba(255,255,255,0.65)",
-            "rgba(255,255,255,0.55)",
-            "rgba(255,255,255,0.45)",
-            "rgba(255,255,255,0.35)",
-            "rgba(255,255,255,0.26)",
-            "rgba(255,255,255,0.175)",
-            "rgba(255,255,255,0.1)",
-            "rgba(255,255,255,0.05)",
-            "rgba(255,255,255,0.01)",
-            "rgba(255,255,255,0)"
-          ]}
-          /* There are many stops because it's an easing gradient. */
-          positions={[
-            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
-            0.647, 0.71, 0.775, 0.845, 0.919, 1
-          ]}
-          r={lightSize / 2}
-        />
-      </SkiaCircle>
-    </SkiaGroup>
-  );
+  const isRotationEffectEnabled = useRotationEffectEnabled();
 
   return (
     <View
@@ -178,23 +95,101 @@ export const ItwBrandedBox = ({
           width: size.width
         }}
       >
-        {/* Animated light effect */}
-        <SkiaLight />
+        <RotationSensor enabled={isRotationEffectEnabled}>
+          {roll => (
+            <>
+              {/* Animated light effect */}
+              <SkiaLight
+                height={size.height}
+                opacity={lightSkiaOpacity}
+                roll={roll}
+                width={size.width}
+              />
 
-        {/* Animated gradient border */}
-        <ItwBrandedSkiaBorder
-          borderRadius={borderRadius}
-          height={size.height}
-          themeType={themeType}
-          thickness={borderThickness}
-          variant={variant}
-          width={size.width}
-        />
+              {/* Animated gradient border */}
+              <ItwBrandedSkiaBorder
+                borderRadius={borderRadius}
+                height={size.height}
+                roll={roll}
+                themeType={themeType}
+                thickness={borderThickness}
+                variant={variant}
+                width={size.width}
+              />
+            </>
+          )}
+        </RotationSensor>
       </Canvas>
 
       {/* Box content */}
       {children}
     </View>
+  );
+};
+
+type SkiaLightProps = {
+  height: LayoutRectangle["height"];
+  opacity: number;
+  roll?: SharedValue<number>;
+  width: LayoutRectangle["width"];
+};
+
+/* We don't need to look at the whole quaternion range,
+    just a very small part of it. */
+const quaternionRange = 0.5;
+
+const SkiaLight = ({ width, height, opacity, roll }: SkiaLightProps) => {
+  /* Set translate boundaries for the main light */
+  const maxTranslateX = (width - lightSize * visibleLightPercentage) / 2;
+
+  const skiaLightTranslateX = useDerivedValue(() => {
+    const translateX = interpolate(
+      roll?.value ?? 0,
+      [quaternionRange, -quaternionRange],
+      [maxTranslateX, -maxTranslateX],
+      Extrapolation.CLAMP
+    );
+
+    return [{ translateX }, { scale: lightScaleMultiplier }];
+  });
+
+  return (
+    <SkiaGroup opacity={opacity} origin={vec(width / 2, height / 2)}>
+      <SkiaCircle
+        cx={width / 2}
+        cy={height / 2}
+        r={lightSize / 2}
+        transform={skiaLightTranslateX}
+      >
+        <SkiaRadialGradient
+          c={vec(width / 2, height / 2)}
+          colors={[
+            "rgba(255,255,255,1)",
+            "rgba(255,255,255,0.987)",
+            "rgba(255,255,255,0.95)",
+            "rgba(255,255,255,0.89)",
+            "rgba(255,255,255,0.825)",
+            "rgba(255,255,255,0.74)",
+            "rgba(255,255,255,0.65)",
+            "rgba(255,255,255,0.55)",
+            "rgba(255,255,255,0.45)",
+            "rgba(255,255,255,0.35)",
+            "rgba(255,255,255,0.26)",
+            "rgba(255,255,255,0.175)",
+            "rgba(255,255,255,0.1)",
+            "rgba(255,255,255,0.05)",
+            "rgba(255,255,255,0.01)",
+            "rgba(255,255,255,0)"
+          ]}
+          /* There are many stops because it's an easing gradient. */
+          positions={[
+            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
+            0.647, 0.71, 0.775, 0.845, 0.919, 1
+          ]}
+          r={lightSize / 2}
+        />
+      </SkiaCircle>
+    </SkiaGroup>
   );
 };
 
