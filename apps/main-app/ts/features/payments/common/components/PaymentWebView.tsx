@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { ComponentRef, useRef, useState } from "react";
 import { Linking } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
@@ -36,7 +36,7 @@ const PaymentWebView = <T,>({
   originWhiteList
 }: PaymentWebViewProps<T>) => {
   const [canGoBack, setCanGoBack] = useState<boolean>(false);
-  const webViewRef = useRef<WebView>(null);
+  const webViewRef = useRef<ComponentRef<typeof WebView>>(null);
 
   useHardwareBackButton(() => {
     if (canGoBack) {
