@@ -3,9 +3,10 @@ import {
   decodeAssertion,
   generateHardwareKey,
   generateHardwareSignatureWithAssertion,
+  getAttestationAssertion,
   getAttestation as getAttestationIntegrity,
+  getHardwareAttestationCapabilities,
   isAttestationServiceAvailable,
-  isPlayServicesAvailable,
   prepareIntegrityToken,
   requestIntegrityToken
 } from "@pagopa/io-react-native-integrity";
@@ -19,12 +20,48 @@ import { Env } from "./environment";
 
 /**
  * Type returned by the getHardwareSignatureWithAuthData function of
- * {@link IntegrityContext}. It contains the signature and the authenticator
- * data.
+ * {@link IntegrityContext}. It contains the signature and the integrity proofs:
+ * the authenticator data (iOS assertion or Android Play Integrity token) and,
+ * on Android, a fresh hardware key attestation.
  */
 type HardwareSignatureWithAuthData = {
-  authenticatorData: string;
+  authenticatorData?: string;
+  hardwareKeyAttestation?: string;
   signature: string;
+};
+
+/**
+ * Requests both the Android integrity proofs for the given client data hash:
+ * the Play Integrity token and a fresh key attestation pinned to the attest key
+ * of the hardware key. The Wallet Provider verifies the Play Integrity token
+ * and, as fallback, the key attestation, which allows devices running
+ * GrapheneOS with a locked bootloader, where Play Integrity is not available.
+ *
+ * @param clientDataHash - The SHA-256 hex digest of the client data
+ * @param hardwareKeyTag - The hardware key tag
+ * @returns The available proofs, it rejects with the Play Integrity error when
+ *   none is available
+ */
+const getAndroidIntegrityProofs = async (
+  clientDataHash: string,
+  hardwareKeyTag: string
+) => {
+  const [integrityToken, keyAttestation] = await Promise.allSettled([
+    requestIntegrityToken(clientDataHash),
+    getAttestationAssertion(clientDataHash, hardwareKeyTag)
+  ]);
+  if (
+    integrityToken.status === "rejected" &&
+    keyAttestation.status === "rejected"
+  ) {
+    throw integrityToken.reason;
+  }
+  return {
+    authenticatorData:
+      integrityToken.status === "fulfilled" ? integrityToken.value : undefined,
+    hardwareKeyAttestation:
+      keyAttestation.status === "fulfilled" ? keyAttestation.value : undefined
+  };
 };
 
 /**
@@ -41,7 +78,7 @@ const getHardwareSignatureWithAuthData = (
   hardwareKeyTag: string,
   clientData: string
 ): Promise<HardwareSignatureWithAuthData> =>
-  Platform.select({
+  Platform.select<() => Promise<HardwareSignatureWithAuthData>>({
     ios: async () => {
       const base64KeyTag = addPadding(hardwareKeyTag);
       const assertion = await generateHardwareSignatureWithAssertion(
@@ -53,8 +90,11 @@ const getHardwareSignatureWithAuthData = (
     android: async () => {
       const signature = await sign(clientData, hardwareKeyTag);
       const clientDataHash = sha("sha256").update(clientData).digest("hex");
-      const authenticatorData = await requestIntegrityToken(clientDataHash);
-      return { signature, authenticatorData };
+      const proofs = await getAndroidIntegrityProofs(
+        clientDataHash,
+        hardwareKeyTag
+      );
+      return { signature, ...proofs };
     },
     default: async () => Promise.reject(new Error("Unsupported platform"))
   })();
@@ -81,6 +121,11 @@ const generateIntegrityHardwareKeyTag = () =>
 /**
  * Ensures the integrity service is ready on the device.
  *
+ * On Android the service is ready when Google Play Services is available or the
+ * device supports hardware key attestation (launched with Android 8.0 or
+ * later), which is used as fallback when Play Integrity is not available, e.g.
+ * on devices running GrapheneOS.
+ *
  * @param env - The environment to use for the Google Cloud Project Number
  * @returns A promise with resolves with a boolean value indicating whether the
  *   integrity service is available.
@@ -89,12 +134,18 @@ const ensureIntegrityServiceIsReady = ({ GOOGLE_CLOUD_PROJECT_NUMBER }: Env) =>
   Platform.select({
     ios: async () => await isAttestationServiceAvailable(),
     android: async () => {
-      const res = await isPlayServicesAvailable();
-      if (!res) {
-        return false;
+      const { isHardwareAttestationSupported, isPlayServicesAvailable } =
+        await getHardwareAttestationCapabilities();
+      if (isPlayServicesAvailable) {
+        try {
+          await prepareIntegrityToken(GOOGLE_CLOUD_PROJECT_NUMBER);
+        } catch (e) {
+          if (!isHardwareAttestationSupported) {
+            throw e;
+          }
+        }
       }
-      await prepareIntegrityToken(GOOGLE_CLOUD_PROJECT_NUMBER);
-      return true;
+      return isPlayServicesAvailable || isHardwareAttestationSupported;
     },
     default: () => Promise.reject(new Error("Unsupported platform"))
   })();
@@ -106,7 +157,12 @@ const ensureIntegrityServiceIsReady = ({ GOOGLE_CLOUD_PROJECT_NUMBER }: Env) =>
 const getAttestation = (challenge: string, hardwareKeyTag: string) =>
   Platform.select({
     ios: () => getAttestationIntegrity(challenge, addPadding(hardwareKeyTag)),
-    android: () => getAttestationIntegrity(challenge, hardwareKeyTag),
+    // The attest key allows the Wallet Provider to pin the device and to verify
+    // the fresh key attestations sent with each assertion
+    android: () =>
+      getAttestationIntegrity(challenge, hardwareKeyTag, {
+        useAttestKey: true
+      }),
     default: () => Promise.reject(new Error("Unsupported platform"))
   })();
 
