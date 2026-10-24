@@ -133,8 +133,13 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
         onDone: [
           {
             // When no integrity hardware key exists or the user is upgrading to IT-Wallet
-            // we need to create a new integrity key tag and a new wallet instance
-            guard: or([not("hasIntegrityKeyTag"), "isUpgrade"]),
+            // we need to create a new integrity key tag and a new wallet instance.
+            // A valid attestation for the upgrade specs means the wallet instance
+            // was already renewed by a previous upgrade attempt, so it is reused.
+            guard: or([
+              not("hasIntegrityKeyTag"),
+              and(["isUpgrade", not("hasValidWalletInstanceAttestation")])
+            ]),
             target: "WalletInstanceCreation"
           },
           {

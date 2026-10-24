@@ -3075,6 +3075,22 @@ describe("itwEidIssuanceMachine", () => {
     expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(true);
   });
 
+  it("Should reuse the Wallet Instance renewed by an abandoned upgrade", async () => {
+    onInit.mockImplementation(() => ({
+      integrityKeyTag: T_INTEGRITY_KEY,
+      credentialsToUpgrade: {}
+    }));
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+    actor.start();
+    actor.send({ type: "start", mode: "upgrade", level: "l3" });
+    actor.send({ type: "accept-tos" });
+
+    await waitForActor(actor, s => s.matches("IpzsPrivacyAcceptance"));
+    expect(createWalletInstance).not.toHaveBeenCalled();
+  });
+
   it("Should NOT re-create the Wallet Instance in the regular flow (no upgrade)", async () => {
     onInit.mockImplementation(() => ({
       integrityKeyTag: T_INTEGRITY_KEY,
