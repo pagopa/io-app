@@ -1,10 +1,10 @@
 import { InitiativeDetailDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDetailDTO";
 import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { OnboardingStatusDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
-import { TimelineDTO } from "@io-app/api-types/generated/definitions/idpay/TimelineDTO";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
 import { NetworkError } from "../../../../../utils/errors";
+import { TimelineDTO } from "../../../common/api/timeline";
 
 type IdPayInitiativeGetPayloadType = { initiativeId: string };
 
@@ -16,6 +16,7 @@ export const idpayInitiativeGet = createAsyncAction(
 
 type IdpayTimelinePageGetPayloadType = {
   initiativeId: string;
+  isRefresh?: boolean;
   page?: number;
   pageSize?: number;
 };
