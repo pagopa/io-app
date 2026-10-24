@@ -1,64 +1,117 @@
 import { IOColors } from "@io-app/design-system";
+import { memo } from "react";
 import {
-  BlendColor,
-  Canvas,
-  LinearGradient,
-  RoundedRect,
-  Image as SkiaImage,
-  vec
-} from "@shopify/react-native-skia";
-import { memo, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming
-} from "react-native-reanimated";
+  Image,
+  ImageRequireSource,
+  PixelRatio,
+  Platform,
+  StyleSheet,
+  View
+} from "react-native";
 
-import { useIsScreenFocused } from "../../hooks/useIsScreenFocused";
-import { useLayoutSize } from "../../hooks/useLayoutSize";
-import { useCachedImage } from "../../utils/imageCache";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import {
-  SkiaCardCornerOverlay,
-  SkiaCardOverlay,
-  SkiaCardPatternOverlay
-} from "./CardOverlay";
-import { CredentialCardConfig } from "./config";
-import { SkiaGradientBackground } from "./GradientBackground";
+  CREDENTIAL_CARD_ASPECT_RATIO,
+  getCardBackgroundImage,
+  getDecodedAndroidAssetScale,
+  getPatternTileStyle,
+  supportsMixBlendMode
+} from "./backgroundUtils";
+import { CREDENTIAL_CARD_CORNER_OVERLAY, CredentialCardConfig } from "./config";
+import { SkiaCardBackground } from "./SkiaCardBackground";
 import { CardColorScheme } from "./types";
+
+export const canBlendNatively = () =>
+  supportsMixBlendMode(Platform.OS, Platform.Version);
+
+const getPatternStyle = (source: ImageRequireSource) => {
+  const pixelRatio = PixelRatio.get();
+  const { uri = "", scale = 1 } = Image.resolveAssetSource(source) ?? {};
+  const decodedAssetScale =
+    Platform.OS === "android"
+      ? getDecodedAndroidAssetScale(Platform.Version, pixelRatio, {
+          scale,
+          uri
+        })
+      : scale;
+  return getPatternTileStyle(Platform.OS, pixelRatio, decodedAssetScale);
+};
+
+/**
+ * Soft-light pattern drawn with native views. It blends with what its parent
+ * draws before it, so the parent should be layer-backed (see
+ * `renderToHardwareTextureAndroid`). Requires {@link canBlendNatively}.
+ */
+export const CardPattern = ({ source }: { source: ImageRequireSource }) => (
+  <View style={[styles.fill, styles.softLight]}>
+    <Image
+      accessibilityIgnoresInvertColors
+      fadeDuration={0}
+      resizeMode="repeat"
+      source={source}
+      style={getPatternStyle(source)}
+      testID="itwCredentialCardPatternTestID"
+    />
+  </View>
+);
 
 type Props = Pick<CredentialCardConfig, "background" | "color" | "overlay">;
 
+/**
+ * Credential card background drawn with native views: a gradient, an optional
+ * tinted corner, an optional soft-light pattern and an optional artwork.
+ */
 export const CardBackground = memo(({ background, color, overlay }: Props) => {
-  const { size, onLayout } = useLayoutSize();
-  // Skia's Canvas can fail to paint its first frame when it mounts while the
-  // screen is mid-transition (e.g. switching to the Wallet tab right after a
-  // keyboard dismissal), leaving the card with only its white base color.
-  // Keying the Canvas on the focus state forces a remount when the screen
-  // regains focus, guaranteeing a fresh surface that repaints correctly.
-  const isFocused = useIsScreenFocused();
+  if (overlay?.pattern !== undefined && !canBlendNatively()) {
+    return (
+      <SkiaCardBackground
+        background={background}
+        color={color}
+        pattern={overlay.pattern}
+        showCornerOverlay={overlay.showCornerOverlay}
+      />
+    );
+  }
+
+  const hasBlend = overlay?.pattern !== undefined;
 
   return (
     <View
-      onLayout={onLayout}
-      style={[StyleSheet.absoluteFill, { backgroundColor: IOColors.white }]}
+      pointerEvents="none"
+      // Caches the soft-light blend in a texture, so it is not recomputed on
+      // every frame and it fades as a whole with the card
+      renderToHardwareTextureAndroid={hasBlend}
+      shouldRasterizeIOS={hasBlend}
+      style={[
+        styles.fill,
+        styles.base,
+        { experimental_backgroundImage: getCardBackgroundImage(background) }
+      ]}
+      testID="itwCredentialCardBackgroundTestID"
     >
-      <Canvas
-        key={isFocused ? "focused" : "unfocused"}
-        pointerEvents="none"
-        style={StyleSheet.absoluteFill}
-      >
-        <SkiaGradientBackground bg={background} {...size} />
-        {overlay?.showCornerOverlay && (
-          <SkiaCardCornerOverlay color={color} {...size} />
-        )}
-        {overlay?.pattern && (
-          <SkiaCardPatternOverlay src={overlay.pattern} {...size} />
-        )}
-        {overlay?.card && <SkiaCardOverlay src={overlay.card} {...size} />}
-      </Canvas>
+      {overlay?.showCornerOverlay && (
+        <Image
+          accessibilityIgnoresInvertColors
+          fadeDuration={0}
+          resizeMode="stretch"
+          source={CREDENTIAL_CARD_CORNER_OVERLAY}
+          style={styles.fill}
+          tintColor={color}
+        />
+      )}
+      {overlay?.pattern !== undefined && (
+        <CardPattern source={overlay.pattern} />
+      )}
+      {overlay?.card !== undefined && (
+        <Image
+          accessibilityIgnoresInvertColors
+          fadeDuration={0}
+          resizeMode="cover"
+          source={overlay.card}
+          style={styles.fill}
+          testID="itwCredentialCardArtworkTestID"
+        />
+      )}
     </View>
   );
 });
@@ -67,11 +120,12 @@ export const CardBackground = memo(({ background, color, overlay }: Props) => {
  * @deprecated Only used for the older Documenti su IO, will be removed in the
  *   future
  */
-const legacyCredentialCardBackgrounds: { [type: string]: number } = {
-  [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../../img/features/itWallet/cards/dc.png"),
-  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: require("../../../../../../img/features/itWallet/cards/ts.png"),
-  [CredentialType.DRIVING_LICENSE]: require("../../../../../../img/features/itWallet/cards/mdl.png")
-};
+const legacyCredentialCardBackgrounds: { [type: string]: ImageRequireSource } =
+  {
+    [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../../img/features/itWallet/cards/dc.png"),
+    [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: require("../../../../../../img/features/itWallet/cards/ts.png"),
+    [CredentialType.DRIVING_LICENSE]: require("../../../../../../img/features/itWallet/cards/mdl.png")
+  };
 
 /**
  * @deprecated Only used for the older Documenti su IO, will be removed in the
@@ -85,6 +139,18 @@ const legacyCredentialGradientColors: { [type: string]: Array<string> } = {
   [CredentialType.EDUCATION_ATTENDANCE]: ["#F2F1CE", "#ECECEC"]
 };
 
+const LEGACY_DEFAULT_GRADIENT_COLORS = [
+  IOColors["grey-100"],
+  IOColors["grey-200"]
+];
+
+/** CSS angle of the gradient line from the top-left to the bottom-right corner */
+const LEGACY_GRADIENT_ANGLE =
+  180 - (Math.atan(CREDENTIAL_CARD_ASPECT_RATIO) * 180) / Math.PI;
+const LEGACY_GRADIENT_BORDER_RADIUS = 16;
+/** Opacity of the artwork of a credential that is not valid */
+const LEGACY_FADED_OPACITY = 0.4;
+
 type LegacyProps = {
   colorScheme: CardColorScheme;
   credentialType: string;
@@ -94,77 +160,94 @@ type LegacyProps = {
  * @deprecated Only used for the older Documenti su IO, will be removed in the
  *   future
  */
-export const LegacyCardBackground = ({
-  credentialType,
-  colorScheme
-}: LegacyProps) => {
-  const { size, onLayout } = useLayoutSize();
-  const image = useCachedImage(legacyCredentialCardBackgrounds[credentialType]);
-  const loadingOverlayOpacity = useSharedValue(1);
-  // See CardBackground: remount the Skia Canvas on focus to avoid a blank
-  // (white) background when it fails to paint its first frame mid-transition.
-  const isFocused = useIsScreenFocused();
+export const LegacyCardBackground = memo(
+  ({ credentialType, colorScheme }: LegacyProps) => {
+    const image = legacyCredentialCardBackgrounds[credentialType];
 
-  // Read the shared value directly; animation is driven from useEffect below
-  const loadingOverlayOpacityTransition = useAnimatedStyle(() => ({
-    opacity: loadingOverlayOpacity.value
-  }));
-
-  useEffect(() => {
-    if (image && size.width > 0 && size.height > 0) {
-      loadingOverlayOpacity.value = withTiming(0, {
-        duration: 200,
-        easing: Easing.ease
-      });
+    if (image === undefined) {
+      const [from, to] =
+        legacyCredentialGradientColors[credentialType] ??
+        LEGACY_DEFAULT_GRADIENT_COLORS;
+      return (
+        <View style={[styles.fill, styles.legacyGradientContainer]}>
+          <View
+            style={[
+              styles.fill,
+              styles.legacyGradient,
+              {
+                experimental_backgroundImage: getCardBackgroundImage({
+                  type: "linear",
+                  angle: LEGACY_GRADIENT_ANGLE,
+                  colors: [from, to]
+                })
+              }
+            ]}
+          />
+        </View>
+      );
     }
-  }, [image, loadingOverlayOpacity, size]);
 
-  const gradientColors = legacyCredentialGradientColors[credentialType] || [
-    IOColors["grey-100"],
-    IOColors["grey-200"]
-  ];
+    const isGreyscale = colorScheme === "greyscale";
+    const blendsGreyscale = isGreyscale && canBlendNatively();
 
-  return (
-    <View
-      onLayout={onLayout}
-      style={[StyleSheet.absoluteFill, { backgroundColor: IOColors.white }]}
-    >
-      <Animated.View
-        style={[
-          loadingOverlayOpacityTransition,
-          StyleSheet.absoluteFill,
-          { backgroundColor: IOColors["grey-100"] }
-        ]}
-      />
-      <Canvas key={isFocused ? "focused" : "unfocused"} style={{ flex: 1 }}>
-        {image ? (
-          <SkiaImage
-            fit="fill"
-            height={size.height}
-            image={image}
-            opacity={colorScheme === "default" ? 1 : 0.4}
-            width={size.width}
-          >
-            {colorScheme === "greyscale" && (
-              <BlendColor color="white" mode="color" />
-            )}
-          </SkiaImage>
-        ) : (
-          <RoundedRect
-            height={size.height}
-            r={16}
-            width={size.width}
-            x={0}
-            y={0}
-          >
-            <LinearGradient
-              colors={gradientColors}
-              end={vec(size.width, size.height)}
-              start={vec(0, 0)}
-            />
-          </RoundedRect>
+    return (
+      <View
+        // Keeps the greyscale blend correct while the card fades
+        renderToHardwareTextureAndroid={blendsGreyscale}
+        shouldRasterizeIOS={blendsGreyscale}
+        style={[styles.fill, styles.base]}
+      >
+        <View
+          style={[
+            styles.fill,
+            colorScheme !== "default" && styles.legacyFaded,
+            isGreyscale && !blendsGreyscale && styles.legacyGrayscaleFilter
+          ]}
+        >
+          <Image
+            accessibilityIgnoresInvertColors
+            fadeDuration={0}
+            resizeMode="stretch"
+            source={image}
+            style={styles.fill}
+          />
+        </View>
+        {blendsGreyscale && (
+          <View style={[styles.fill, styles.legacyGrayscaleBlend]} />
         )}
-      </Canvas>
-    </View>
-  );
-};
+      </View>
+    );
+  }
+);
+
+const styles = StyleSheet.create({
+  // Images from require() get the asset size, which would win over absoluteFill
+  fill: {
+    ...StyleSheet.absoluteFill,
+    width: "100%",
+    height: "100%"
+  },
+  base: {
+    backgroundColor: IOColors.white
+  },
+  softLight: {
+    mixBlendMode: "soft-light"
+  },
+  legacyGradientContainer: {
+    backgroundColor: IOColors["grey-100"]
+  },
+  legacyGradient: {
+    borderRadius: LEGACY_GRADIENT_BORDER_RADIUS,
+    overflow: "hidden"
+  },
+  legacyFaded: {
+    opacity: LEGACY_FADED_OPACITY
+  },
+  legacyGrayscaleBlend: {
+    backgroundColor: IOColors.white,
+    mixBlendMode: "color"
+  },
+  legacyGrayscaleFilter: {
+    filter: [{ grayscale: 1 }]
+  }
+});

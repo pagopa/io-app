@@ -1,7 +1,7 @@
 import { useIOThemeContext } from "@io-app/design-system";
-import { DataSourceParam } from "@shopify/react-native-skia";
 import Color from "color";
-import { ColorSchemeName } from "react-native";
+import { useMemo } from "react";
+import { ColorSchemeName, ImageRequireSource } from "react-native";
 
 import { useIOSelector } from "../../../../../store/hooks";
 import { XOR } from "../../../../../types/utils";
@@ -20,12 +20,10 @@ export const ACCOMPANYING_PERSON_BACKGROUND_COLOR = "#EAF2F9";
  * Colors from which random configurations will be generated, based on the
  * provided seed.
  */
-export const CREDENTIAL_BASE_COLORS = [
-  "#FFB357",
-  "#CDD2FC",
-  "#7AC1FA",
-  "#003366"
-];
+const CREDENTIAL_BASE_COLORS = ["#FFB357", "#CDD2FC", "#7AC1FA", "#003366"];
+
+/** Corner overlay image applied to credentials without a fixed overlay image */
+export const CREDENTIAL_CARD_CORNER_OVERLAY: ImageRequireSource = require("../../../../../../img/features/itWallet/cards/overlay/card_corner.png");
 
 /** Pattern overlay images by credential taxonomy domain */
 export const CREDENTIAL_CARD_PATTERN_OVERLAYS = {
@@ -105,16 +103,16 @@ export type CredentialCardConfig = {
 export type CredentialCardOverlay = XOR<
   {
     /** A fixed overlay image applied to the credential card */
-    card: DataSourceParam;
+    card: ImageRequireSource;
     /**
      * Optional fixed overlay image applied to the credential detail header. If
      * not provided, the card overlay will be used in the header as well.
      */
-    header?: DataSourceParam;
+    header?: ImageRequireSource;
   },
   {
     /** A pattern overlay applied to the credential card and header */
-    pattern: DataSourceParam;
+    pattern: ImageRequireSource;
     /** Whether to apply the corner overlay on top of the background */
     showCornerOverlay?: boolean;
   }
@@ -133,7 +131,7 @@ type ThemeAwareCredentialCardConfig = Record<
  * Type guard to determine if a credential card configuration is theme-aware or
  * not.
  */
-export const isThemeAwareCredentialCardConfig = (
+const isThemeAwareCredentialCardConfig = (
   config: CredentialCardConfig | ThemeAwareCredentialCardConfig
 ): config is ThemeAwareCredentialCardConfig =>
   "light" in config && "dark" in config;
@@ -145,7 +143,7 @@ export const isThemeAwareCredentialCardConfig = (
  *
  * ADD MORE CONFIGURATIONS HERE IF NEEDED, ONLY FOR STATIC CREDENTIALS
  */
-export const credentialCardConfigs: Partial<
+const credentialCardConfigs: Partial<
   Record<string, CredentialCardConfig | ThemeAwareCredentialCardConfig>
 > = {
   [CredentialType.PID]: {
@@ -327,7 +325,7 @@ const generateBaseColorFromCredentialType = (
 const getOverlayPatterForCredentialType = (
   credentialType: string,
   credentialDomain?: string
-): DataSourceParam => {
+): ImageRequireSource => {
   if (
     credentialDomain &&
     credentialDomain in CREDENTIAL_CARD_PATTERN_OVERLAYS
@@ -468,11 +466,21 @@ export const useCredentialCardConfig = (
   const { themeType } = useIOThemeContext();
   const catalogueByType = useIOSelector(itwCredentialsCatalogueByTypesSelector);
   const credentialMeta = catalogueByType?.[credentialType];
+  const colorScheme = themeOverride || themeType;
+  const credentialColor =
+    credentialMeta?.authentic_sources.at(0)?.background_color;
+  const credentialDomain = credentialMeta?.domains?.[0];
 
-  return getCredentialCardConfig(
-    credentialType,
-    themeOverride || themeType,
-    credentialMeta?.authentic_sources.at(0)?.background_color,
-    credentialMeta?.domains?.[0]
+  // Generated configs are new objects on every call: memoizing them keeps the
+  // card background props stable across catalogue updates and re-renders.
+  return useMemo(
+    () =>
+      getCredentialCardConfig(
+        credentialType,
+        colorScheme,
+        credentialColor,
+        credentialDomain
+      ),
+    [credentialType, colorScheme, credentialColor, credentialDomain]
   );
 };
