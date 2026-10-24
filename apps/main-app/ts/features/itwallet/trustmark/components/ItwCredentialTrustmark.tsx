@@ -36,22 +36,17 @@ import {
 import Animated, {
   Extrapolation,
   interpolate,
-  SensorType,
-  useAnimatedSensor,
+  SharedValue,
   useDerivedValue,
-  useReducedMotion,
-  useSharedValue
+  useReducedMotion
 } from "react-native-reanimated";
 
+import { RotationSensor } from "../../../../components/RotationSensor";
+import { useRotationEffectEnabled } from "../../../../hooks/useRotationSensor";
 import { useIOSelector } from "../../../../store/hooks";
 import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
-
-type ButtonSize = {
-  height: LayoutRectangle["height"];
-  width: LayoutRectangle["width"];
-};
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: CredentialMetadata;
@@ -92,8 +87,6 @@ export const ItwCredentialTrustmark = ({
   const enableIridescence = !reduceMotion;
 
   /* Styles */
-  const trustmarkTickOpacity = isLightMode ? 1 : 0.8;
-  const lightSkiaOpacity = isLightMode ? 0.7 : 0.25;
   const buttonInnerBorderOpacity = isLightMode ? 0.35 : 0.25;
   const buttonInnerBorderColorValue: ColorValue = "#CCCCCC";
   const buttonBackgroundGradientOpacity = isLightMode ? 1 : 0.25;
@@ -115,175 +108,13 @@ export const ItwCredentialTrustmark = ({
     buttonInnerBorderOpacity
   );
 
-  const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
+  /* Get button width to set the basic boundaries */
+  const [buttonWidth, setButtonWidth] = useState(0);
 
-  // Store initial roll value on first sensor reading
-  const initialRoll = useSharedValue<null | number>(null);
+  const getButtonWidth = (event: LayoutChangeEvent) =>
+    setButtonWidth(event.nativeEvent.layout.width);
 
-  /* Not all devices are in an initial flat position on a surface
-    (e.g. a table) then we use a relative rotation value,
-    not an absolute one. Initial value is captured on first read. */
-  const relativeRoll = useDerivedValue(() => {
-    const { roll } = rotationSensor.sensor.value;
-    return (initialRoll.value ??= roll) - roll;
-  });
-
-  /* Get button size to set the basic boundaries */
-  const [buttonSize, setButtonSize] = useState<ButtonSize>();
-
-  const getButtonSize = (event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    setButtonSize({ width, height });
-  };
-
-  /* Set translate boundaries for the main light */
-  const maxTranslateX =
-    ((buttonSize?.width ?? 0) - (lightSize ?? 0) * visibleLightPercentage) / 2;
-
-  /* We don't need to look at the whole quaternion range,
-  just a very small part of it. */
-  const quaternionRange = 0.1;
-
-  const skiaLightTranslateX = useDerivedValue(() => {
-    const translateX = interpolate(
-      relativeRoll.value,
-      [quaternionRange, -quaternionRange],
-      [maxTranslateX, -maxTranslateX],
-      Extrapolation.CLAMP
-    );
-
-    return [{ translateX }, { scale: lightScaleMultiplier }];
-  });
-
-  const skiaGradientRainbowTranslateY = useDerivedValue(() => [
-    {
-      translateY: interpolate(
-        relativeRoll.value,
-        [-quaternionRange, quaternionRange],
-        [-TRUSTMARK_GRADIENT_HEIGHT + TRUSTMARK_STAMP_SIZE, 0],
-        Extrapolation.CLAMP
-      )
-    }
-  ]);
-
-  const ButtonLight = () => (
-    <SkiaGroup
-      opacity={lightSkiaOpacity}
-      origin={vec((buttonSize?.width ?? 0) / 2, (buttonSize?.height ?? 0) / 2)}
-    >
-      <SkiaCircle
-        cx={(buttonSize?.width ?? 0) / 2}
-        cy={(buttonSize?.height ?? 0) / 2}
-        r={lightSize / 2}
-        transform={skiaLightTranslateX}
-      >
-        <SkiaRadialGradient
-          c={vec((buttonSize?.width ?? 0) / 2, (buttonSize?.height ?? 0) / 2)}
-          colors={[
-            "rgba(255,255,255,1)",
-            "rgba(255,255,255,0.987)",
-            "rgba(255,255,255,0.95)",
-            "rgba(255,255,255,0.89)",
-            "rgba(255,255,255,0.825)",
-            "rgba(255,255,255,0.74)",
-            "rgba(255,255,255,0.65)",
-            "rgba(255,255,255,0.55)",
-            "rgba(255,255,255,0.45)",
-            "rgba(255,255,255,0.35)",
-            "rgba(255,255,255,0.26)",
-            "rgba(255,255,255,0.175)",
-            "rgba(255,255,255,0.1)",
-            "rgba(255,255,255,0.05)",
-            "rgba(255,255,255,0.01)",
-            "rgba(255,255,255,0)"
-          ]}
-          /* There are many stops because it's an easing gradient. */
-          positions={[
-            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
-            0.647, 0.71, 0.775, 0.845, 0.919, 1
-          ]}
-          r={lightSize / 2}
-        />
-      </SkiaCircle>
-    </SkiaGroup>
-  );
-
-  const TrustmarkRainbowGradient = () => (
-    <SkiaGroup blendMode={"colorDodge"}>
-      <Rect
-        height={TRUSTMARK_GRADIENT_HEIGHT}
-        transform={skiaGradientRainbowTranslateY}
-        width={buttonSize?.width ?? 0}
-        x={0}
-        y={0}
-      >
-        <SkiaLinearGradient
-          colors={[
-            "rgba(255, 119, 115,1)",
-            "rgba(255, 237, 95, 1)",
-            "rgba(168, 255, 95, 1)",
-            "rgba(131, 255, 247,1)",
-            "rgba(120, 148, 255, 1)",
-            "rgba(216, 117, 255, 1)",
-            "rgba(255, 119, 115, 1)"
-          ]}
-          end={vec(0, TRUSTMARK_GRADIENT_HEIGHT)}
-          mode="decal"
-          positions={[0, 0.2, 0.4, 0.6, 0.8, 0.9, 1]}
-          start={vec(0, 0)}
-        />
-      </Rect>
-    </SkiaGroup>
-  );
-
-  const trustMarkStampSVG = useSVG(
-    /* We use the `html` extension to avoid the `svg-transformer` to render
-    local SVG files, as it causes conflicts with the `skia` library.
-    To learn more: https://github.com/Shopify/react-native-skia/issues/1335#issuecomment-2088240523 */
-
-    require("../../../../../img/features/itWallet/credential/trustmark-stamp.svg.html")
-  );
-
-  const SkiaIridescentTrustmark = () => (
-    <Canvas
-      style={{
-        position: "absolute",
-        height: TRUSTMARK_HEIGHT,
-        width: "100%"
-      }}
-    >
-      <ButtonLight />
-
-      <SkiaGroup blendMode={"colorBurn"} opacity={0.05}>
-        <TrustmarkRainbowGradient />
-      </SkiaGroup>
-
-      <Mask
-        mask={
-          <SkiaGroup blendMode={"colorDodge"} opacity={0.8}>
-            <TrustmarkRainbowGradient />
-          </SkiaGroup>
-        }
-        mode="alpha"
-      >
-        <Group
-          layer={
-            <Paint>
-              <ColorMatrix matrix={OpacityMatrix(trustmarkTickOpacity)} />
-            </Paint>
-          }
-        >
-          <ImageSVG
-            height={TRUSTMARK_STAMP_SIZE}
-            svg={trustMarkStampSVG}
-            width={TRUSTMARK_STAMP_SIZE}
-            x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
-            y={-TRUSTMARK_STAMP_SIZE * 0.18}
-          />
-        </Group>
-      </Mask>
-    </Canvas>
-  );
+  const isRotationEffectEnabled = useRotationEffectEnabled();
 
   const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
 
@@ -306,7 +137,7 @@ export const ItwCredentialTrustmark = ({
       testID={testID}
     >
       <Animated.View
-        onLayout={getButtonSize}
+        onLayout={getButtonWidth}
         style={[styles.container, scaleAnimatedStyle]}
       >
         <LinearGradient
@@ -342,11 +173,219 @@ export const ItwCredentialTrustmark = ({
             />
           )}
         </View>
-        {enableIridescence && <SkiaIridescentTrustmark />}
+        {enableIridescence && (
+          <SkiaIridescentTrustmark
+            animated={isRotationEffectEnabled}
+            isLightMode={isLightMode}
+            width={buttonWidth}
+          />
+        )}
       </Animated.View>
     </Pressable>
   );
 };
+
+/* We don't need to look at the whole quaternion range,
+just a very small part of it. */
+const quaternionRange = 0.1;
+
+type SkiaIridescentTrustmarkProps = {
+  animated: boolean;
+  isLightMode: boolean;
+  width: LayoutRectangle["width"];
+};
+
+const SkiaIridescentTrustmark = ({
+  animated,
+  isLightMode,
+  width
+}: SkiaIridescentTrustmarkProps) => {
+  const trustMarkStampSVG = useSVG(
+    /* We use the `html` extension to avoid the `svg-transformer` to render
+    local SVG files, as it causes conflicts with the `skia` library.
+    To learn more: https://github.com/Shopify/react-native-skia/issues/1335#issuecomment-2088240523 */
+
+    require("../../../../../img/features/itWallet/credential/trustmark-stamp.svg.html")
+  );
+
+  return (
+    <Canvas
+      style={{
+        position: "absolute",
+        height: TRUSTMARK_HEIGHT,
+        width: "100%"
+      }}
+    >
+      <RotationSensor enabled={animated}>
+        {roll => (
+          <TrustmarkEffects
+            isLightMode={isLightMode}
+            roll={roll}
+            svg={trustMarkStampSVG}
+            width={width}
+          />
+        )}
+      </RotationSensor>
+    </Canvas>
+  );
+};
+
+type TrustmarkEffectsProps = {
+  isLightMode: boolean;
+  roll?: SharedValue<number>;
+  svg: ReturnType<typeof useSVG>;
+  width: LayoutRectangle["width"];
+};
+
+const TrustmarkEffects = ({
+  isLightMode,
+  roll,
+  svg,
+  width
+}: TrustmarkEffectsProps) => {
+  const trustmarkTickOpacity = isLightMode ? 1 : 0.8;
+  const lightSkiaOpacity = isLightMode ? 0.7 : 0.25;
+
+  /* Set translate boundaries for the main light */
+  const maxTranslateX = (width - lightSize * visibleLightPercentage) / 2;
+
+  const skiaLightTranslateX = useDerivedValue(() => {
+    const translateX = interpolate(
+      roll?.value ?? 0,
+      [quaternionRange, -quaternionRange],
+      [maxTranslateX, -maxTranslateX],
+      Extrapolation.CLAMP
+    );
+
+    return [{ translateX }, { scale: lightScaleMultiplier }];
+  });
+
+  const skiaGradientRainbowTranslateY = useDerivedValue(() => [
+    {
+      translateY: interpolate(
+        roll?.value ?? 0,
+        [-quaternionRange, quaternionRange],
+        [-TRUSTMARK_GRADIENT_HEIGHT + TRUSTMARK_STAMP_SIZE, 0],
+        Extrapolation.CLAMP
+      )
+    }
+  ]);
+
+  return (
+    <>
+      <SkiaGroup
+        opacity={lightSkiaOpacity}
+        origin={vec(width / 2, TRUSTMARK_HEIGHT / 2)}
+      >
+        <SkiaCircle
+          cx={width / 2}
+          cy={TRUSTMARK_HEIGHT / 2}
+          r={lightSize / 2}
+          transform={skiaLightTranslateX}
+        >
+          <SkiaRadialGradient
+            c={vec(width / 2, TRUSTMARK_HEIGHT / 2)}
+            colors={[
+              "rgba(255,255,255,1)",
+              "rgba(255,255,255,0.987)",
+              "rgba(255,255,255,0.95)",
+              "rgba(255,255,255,0.89)",
+              "rgba(255,255,255,0.825)",
+              "rgba(255,255,255,0.74)",
+              "rgba(255,255,255,0.65)",
+              "rgba(255,255,255,0.55)",
+              "rgba(255,255,255,0.45)",
+              "rgba(255,255,255,0.35)",
+              "rgba(255,255,255,0.26)",
+              "rgba(255,255,255,0.175)",
+              "rgba(255,255,255,0.1)",
+              "rgba(255,255,255,0.05)",
+              "rgba(255,255,255,0.01)",
+              "rgba(255,255,255,0)"
+            ]}
+            /* There are many stops because it's an easing gradient. */
+            positions={[
+              0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
+              0.647, 0.71, 0.775, 0.845, 0.919, 1
+            ]}
+            r={lightSize / 2}
+          />
+        </SkiaCircle>
+      </SkiaGroup>
+
+      <SkiaGroup blendMode={"colorBurn"} opacity={0.05}>
+        <TrustmarkRainbowGradient
+          transform={skiaGradientRainbowTranslateY}
+          width={width}
+        />
+      </SkiaGroup>
+
+      <Mask
+        mask={
+          <SkiaGroup blendMode={"colorDodge"} opacity={0.8}>
+            <TrustmarkRainbowGradient
+              transform={skiaGradientRainbowTranslateY}
+              width={width}
+            />
+          </SkiaGroup>
+        }
+        mode="alpha"
+      >
+        <Group
+          layer={
+            <Paint>
+              <ColorMatrix matrix={OpacityMatrix(trustmarkTickOpacity)} />
+            </Paint>
+          }
+        >
+          <ImageSVG
+            height={TRUSTMARK_STAMP_SIZE}
+            svg={svg}
+            width={TRUSTMARK_STAMP_SIZE}
+            x={width - TRUSTMARK_HEIGHT - 24}
+            y={-TRUSTMARK_STAMP_SIZE * 0.18}
+          />
+        </Group>
+      </Mask>
+    </>
+  );
+};
+
+type TrustmarkRainbowGradientProps = {
+  transform: SharedValue<Array<{ translateY: number }>>;
+  width: LayoutRectangle["width"];
+};
+
+const TrustmarkRainbowGradient = ({
+  transform,
+  width
+}: TrustmarkRainbowGradientProps) => (
+  <SkiaGroup blendMode={"colorDodge"}>
+    <Rect
+      height={TRUSTMARK_GRADIENT_HEIGHT}
+      transform={transform}
+      width={width}
+      x={0}
+      y={0}
+    >
+      <SkiaLinearGradient
+        colors={[
+          "rgba(255, 119, 115,1)",
+          "rgba(255, 237, 95, 1)",
+          "rgba(168, 255, 95, 1)",
+          "rgba(131, 255, 247,1)",
+          "rgba(120, 148, 255, 1)",
+          "rgba(216, 117, 255, 1)",
+          "rgba(255, 119, 115, 1)"
+        ]}
+        end={vec(0, TRUSTMARK_GRADIENT_HEIGHT)}
+        mode="decal"
+        positions={[0, 0.2, 0.4, 0.6, 0.8, 0.9, 1]}
+        start={vec(0, 0)}
+      />
+    </Rect>
+  </SkiaGroup>
+);
 
 const styles = StyleSheet.create({
   container: {
