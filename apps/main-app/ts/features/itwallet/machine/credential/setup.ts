@@ -26,6 +26,7 @@ import {
   obtainCredentialActor,
   obtainCredentialStatusActor,
   processCredentialOfferActor,
+  refreshCredentialsCatalogueActor,
   requestCredentialActor,
   verifyTrustFederationActor
 } from "./actors";
@@ -86,6 +87,7 @@ export const itwCredentialSetup = setup({
       trackCredentialIssuingDataShareAcceptedAction
   },
   actors: {
+    refreshCredentialsCatalogue: refreshCredentialsCatalogueActor,
     verifyTrustFederation: verifyTrustFederationActor,
     getWalletAttestation: getWalletAttestationActor,
     requestCredential: requestCredentialActor,

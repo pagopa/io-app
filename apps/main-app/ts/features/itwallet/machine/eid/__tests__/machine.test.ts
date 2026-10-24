@@ -1,5 +1,7 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
+import { createStore } from "redux";
 import {
   assign,
   createActor,
@@ -9,6 +11,8 @@ import {
   waitFor as waitForActor
 } from "xstate";
 
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
@@ -17,10 +21,12 @@ import {
   CredentialMetadata,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
+import { itwFetchCredentialsCatalogue } from "../../../credentialsCatalogue/store/actions";
 import { CieWarningType } from "../../../identification/cie/utils/types";
 import { ItwTags } from "../../tags";
 import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
 import { testEidIssuanceDeps } from "../../utils/testDeps";
+import { refreshCredentialsCatalogueAction } from "../actions";
 import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
@@ -1195,6 +1201,71 @@ describe("itwEidIssuanceMachine", () => {
     // is never called in this path (it only fires on entry when credentialType is set)
     expect(storeWalletActivationFeedbackBannerData).not.toHaveBeenCalled();
   });
+
+  test.each([
+    {
+      name: "credential-triggered issuance",
+      upgrade: false,
+      credentialType: "mDL"
+    },
+    { name: "credential upgrade", upgrade: true, credentialType: "mDL" },
+    { name: "standalone activation", upgrade: false, credentialType: undefined }
+  ])(
+    "reaches success with the catalogue still loading after $name",
+    async ({ upgrade, credentialType }) => {
+      const store = createStore(appReducer);
+      store.dispatch(applicationChangeState("active"));
+      store.dispatch(itwFetchCredentialsCatalogue.request());
+      const deps = testEidIssuanceDeps({ store });
+      const machine = mockedMachine.provide({
+        actions: {
+          refreshCredentialsCatalogue: refreshCredentialsCatalogueAction
+        },
+        actors: {
+          credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
+            actors: {
+              loadContext: fromPromise(async () => ({
+                integrityKeyTag: T_INTEGRITY_KEY,
+                pid: T_EID_REQUEST_OUTPUT.credential,
+                walletInstanceAttestation: { jwt: T_WIA }
+              }))
+            },
+            guards: { hasMoreCredentials: () => false }
+          })
+        }
+      });
+      const actor = createActor(machine, {
+        input: { deps },
+        snapshot: machine.resolveState({
+          value: { Issuance: "DisplayingPreview" },
+          context: {
+            ...InitialContext,
+            deps,
+            mode: upgrade ? "upgrade" : "issuance",
+            level: "l2-fallback",
+            credentialType,
+            credentialsToUpgrade: upgrade
+              ? [ItwStoredCredentialsMocks.mdl]
+              : [],
+            eid: T_EID_REQUEST_OUTPUT.credential
+          }
+        })
+      });
+      const dispatch = jest.spyOn(store, "dispatch");
+      actor.start();
+      actor.send({ type: "add-to-wallet" });
+      await waitForActor(actor, snapshot => snapshot.matches("Success"));
+      expect(actor.getSnapshot().hasTag(ItwTags.Loading)).toBe(false);
+      expect(dispatch).not.toHaveBeenCalled();
+      expect(
+        pot.isLoading(
+          store.getState().features.itWallet.credentialsCatalogue.catalogue
+        )
+      ).toBe(true);
+      expect(navigateToSuccessScreen).toHaveBeenCalled();
+      actor.stop();
+    }
+  );
 
   it("Should store banner data on entering Success when EID activation was triggered by a credential request", async () => {
     storeEidCredentialActor.mockResolvedValue(undefined);

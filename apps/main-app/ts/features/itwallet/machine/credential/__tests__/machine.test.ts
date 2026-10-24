@@ -1,5 +1,7 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
+import { applyMiddleware, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
 import {
   assign,
   createActor,
@@ -9,16 +11,30 @@ import {
   waitFor as waitForActor
 } from "xstate";
 
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { getNetworkError } from "../../../../../utils/errors";
+import { itwSetFiscalCodeWhitelisted } from "../../../common/store/actions/preferences";
 import * as envSelectors from "../../../common/store/selectors/environment";
+import { getEnv } from "../../../common/utils/environment";
+import * as catalogueUtils from "../../../common/utils/itwCredentialsCatalogueUtils";
+import { DigitalCredentialsCatalogue } from "../../../common/utils/itwCredentialsCatalogueUtils";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
   CredentialMetadata,
+  CredentialOfferResolved,
   EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject
 } from "../../../common/utils/itwTypesUtils";
+import { itwCredentialsStore } from "../../../credentials/store/actions";
+import { watchItwCredentialsCatalogueSaga } from "../../../credentialsCatalogue/saga";
+import {
+  itwFetchCatalogueTranslations,
+  itwFetchCredentialsCatalogue
+} from "../../../credentialsCatalogue/store/actions";
 import { ItwTags } from "../../tags";
 import { testCredentialIssuanceDeps } from "../../utils/testDeps";
 import { onInitAction } from "../actions";
@@ -37,6 +53,7 @@ import {
 } from "../actors";
 import { Context, InitialContext } from "../context";
 import { CredentialIssuanceFailureType } from "../failure";
+import { hasCredentialIntroContentGuard } from "../guards";
 import {
   ItwCredentialIssuanceMachine,
   itwCredentialIssuanceMachine
@@ -94,8 +111,36 @@ const T_VALIDITY: CredentialMetadata["validity"] = {
 const T_OFFER_URI =
   "openid-credential-offer://?credential_offer_uri=https://eaa.wallet.ipzs.it/offers/123";
 const T_CREDENTIAL_TYPE = "education_degree";
+const T_CATALOGUE: DigitalCredentialsCatalogue = {
+  taxonomy_uri: "",
+  exp: 1700000000,
+  iat: 1600000000,
+  credentials: [
+    {
+      credential_type: T_CREDENTIAL_TYPE,
+      authentic_sources: [
+        {
+          id: "source",
+          organization_country: "IT",
+          organization_type: "public",
+          user_information_l10n_id: "source.intro"
+        }
+      ],
+      issuers: [],
+      legal_type: "public",
+      purposes: [],
+      validity_info: {
+        allowed_states: [],
+        max_validity_days: 365,
+        status_methods: []
+      },
+      version: "1"
+    }
+  ]
+};
+const T_TRANSLATIONS = { it: { "source.intro": "Credential introduction" } };
 const T_TRUST_ISSUER_BASE_URL = "https://eaa.wallet.ipzs.it";
-const T_RESOLVED_CREDENTIAL_OFFER = {
+const T_RESOLVED_CREDENTIAL_OFFER: CredentialOfferResolved = {
   offer: {
     credential_issuer: T_TRUST_ISSUER_BASE_URL,
     credential_configuration_ids: ["EducationDegreeCredential"],
@@ -216,6 +261,299 @@ describe("itwCredentialIssuanceMachine", () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
+
+  test.each([
+    { name: "credential selection", offer: false },
+    { name: "confirmed credential offer", offer: true }
+  ])(
+    "refreshes catalogue and waits for translations on $name",
+    async ({ offer }) => {
+      const store = createStore(appReducer);
+      store.dispatch(applicationChangeState("active"));
+      const dispatch = jest.spyOn(store, "dispatch");
+      const machine = mockedMachine.provide({
+        guards: { hasCredentialIntroContent: hasCredentialIntroContentGuard }
+      });
+      const actor = createActor(machine, {
+        input: { deps: testCredentialIssuanceDeps({ store }) },
+        ...(offer
+          ? {
+              snapshot: machine.resolveState({
+                value: "CredentialOfferResolved",
+                context: {
+                  ...InitialContext,
+                  deps: testCredentialIssuanceDeps({ store }),
+                  resolvedCredentialOffer: T_RESOLVED_CREDENTIAL_OFFER
+                }
+              })
+            }
+          : {})
+      });
+      actor.start();
+      actor.send(
+        offer
+          ? { type: "confirm-credential-offer" }
+          : {
+              type: "select-credential",
+              credentialType: T_CREDENTIAL_TYPE,
+              mode: "issuance"
+            }
+      );
+      expect(
+        actor.getSnapshot().matches("WaitingForCredentialsCatalogue")
+      ).toBe(true);
+      expect(actor.getSnapshot().hasTag(ItwTags.Loading)).toBe(true);
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith(
+        itwFetchCredentialsCatalogue.request()
+      );
+      expect(hasCredentialIntroContent).not.toHaveBeenCalled();
+
+      store.dispatch(itwFetchCatalogueTranslations.request());
+      store.dispatch(itwFetchCredentialsCatalogue.success(T_CATALOGUE));
+      expect(
+        actor.getSnapshot().matches("WaitingForCredentialsCatalogue")
+      ).toBe(true);
+      store.dispatch(itwFetchCatalogueTranslations.success(T_TRANSLATIONS));
+      await waitForActor(actor, snapshot =>
+        snapshot.matches(
+          offer ? "TrustFederationVerification" : "CredentialIntroduction"
+        )
+      );
+      actor.stop();
+    }
+  );
+
+  test.each([
+    {
+      name: "waiting for the catalogue",
+      settled: false,
+      hasIntro: true,
+      continued: false,
+      expectedState: "Idle"
+    },
+    {
+      name: "displaying the introduction",
+      settled: true,
+      hasIntro: true,
+      continued: false,
+      expectedState: "Idle"
+    },
+    {
+      name: "issuance has moved on",
+      settled: true,
+      hasIntro: false,
+      continued: false,
+      expectedState: "TrustFederationVerification"
+    },
+    {
+      name: "continuing from the introduction",
+      settled: true,
+      hasIntro: true,
+      continued: true,
+      expectedState: "TrustFederationVerification"
+    }
+  ])(
+    "handles leaving the introduction when $name",
+    async ({ settled, hasIntro, continued, expectedState }) => {
+      verifyTrustFederation.mockImplementation(
+        () => new Promise<void>(() => undefined)
+      );
+      const store = createStore(appReducer);
+      store.dispatch(applicationChangeState("active"));
+      hasCredentialIntroContent.mockReturnValue(hasIntro);
+      const actor = createActor(mockedMachine, {
+        input: { deps: testCredentialIssuanceDeps({ store }) }
+      }).start();
+      actor.send({
+        type: "select-credential",
+        credentialType: T_CREDENTIAL_TYPE,
+        mode: "issuance"
+      });
+      const finishRefresh = () => {
+        store.dispatch(itwFetchCatalogueTranslations.request());
+        store.dispatch(itwFetchCredentialsCatalogue.success(T_CATALOGUE));
+        store.dispatch(itwFetchCatalogueTranslations.success(T_TRANSLATIONS));
+      };
+      if (settled) {
+        finishRefresh();
+        await waitForActor(actor, snapshot =>
+          snapshot.matches(
+            hasIntro ? "CredentialIntroduction" : "TrustFederationVerification"
+          )
+        );
+      }
+      if (continued) {
+        actor.send({ type: "continue" });
+      }
+      actor.send({ type: "back" });
+      if (!settled) {
+        finishRefresh();
+      }
+      expect(actor.getSnapshot().value).toBe(expectedState);
+      expect(actor.getSnapshot().context.credentialType).toBe(
+        expectedState === "Idle" ? undefined : T_CREDENTIAL_TYPE
+      );
+      expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(
+        settled && hasIntro ? 1 : 0
+      );
+      actor.stop();
+    }
+  );
+
+  test.each([
+    {
+      name: "catalogue failure without cache",
+      translations: false,
+      cached: false
+    },
+    { name: "catalogue failure with cache", translations: false, cached: true },
+    { name: "translation failure", translations: true, cached: true }
+  ])(
+    "continues with the existing fallback after $name",
+    async ({ translations, cached }) => {
+      const store = createStore(appReducer);
+      store.dispatch(applicationChangeState("active"));
+      if (cached) {
+        store.dispatch(itwFetchCredentialsCatalogue.success(T_CATALOGUE));
+        store.dispatch(itwFetchCatalogueTranslations.success(T_TRANSLATIONS));
+      }
+      store.dispatch(
+        translations
+          ? itwFetchCatalogueTranslations.request()
+          : itwFetchCredentialsCatalogue.request()
+      );
+      const machine = mockedMachine.provide({
+        guards: { hasCredentialIntroContent: hasCredentialIntroContentGuard }
+      });
+      const actor = createActor(machine, {
+        input: { deps: testCredentialIssuanceDeps({ store }) }
+      });
+      actor.start();
+      actor.send({
+        type: "select-credential",
+        credentialType: T_CREDENTIAL_TYPE,
+        mode: "issuance"
+      });
+      expect(
+        actor.getSnapshot().matches("WaitingForCredentialsCatalogue")
+      ).toBe(true);
+      if (translations) {
+        store.dispatch(itwFetchCredentialsCatalogue.success(T_CATALOGUE));
+      }
+      const error = getNetworkError(new Error("Unavailable"));
+      store.dispatch(
+        translations
+          ? itwFetchCatalogueTranslations.failure(error)
+          : itwFetchCredentialsCatalogue.failure(error)
+      );
+      await waitForActor(actor, snapshot =>
+        snapshot.matches(
+          cached ? "CredentialIntroduction" : "TrustFederationVerification"
+        )
+      );
+      expect(navigateToFailureScreen).not.toHaveBeenCalled();
+      actor.stop();
+    }
+  );
+
+  it.each([
+    { name: "no introduction", content: {}, showsIntroduction: false },
+    {
+      name: "inline introduction",
+      content: { user_information: "Credential introduction" },
+      showsIntroduction: true
+    },
+    {
+      name: "translated introduction",
+      content: { user_information_l10n_id: "source.intro" },
+      showsIntroduction: true
+    }
+  ])(
+    "uses the L2 catalogue with $name after CieID fallback",
+    async ({ content, showsIntroduction }) => {
+      const sagaMiddleware = createSagaMiddleware();
+      const store = createStore(appReducer, applyMiddleware(sagaMiddleware));
+      store.dispatch(applicationChangeState("active"));
+      store.dispatch(itwSetFiscalCodeWhitelisted(true));
+      store.dispatch(
+        itwCredentialsStore([
+          { ...ItwStoredCredentialsMocks.eid, spec_version: "1.0.0" }
+        ])
+      );
+      const catalogue = {
+        ...T_CATALOGUE,
+        credentials: T_CATALOGUE.credentials.map(credential => ({
+          ...credential,
+          credential_type: "mDL",
+          authentic_sources: [
+            {
+              id: "source",
+              organization_country: "IT",
+              organization_type: "public" as const,
+              ...content
+            }
+          ]
+        }))
+      };
+      // A stale introduction must not survive a refresh that provides none.
+      store.dispatch(
+        itwFetchCredentialsCatalogue.success({
+          ...catalogue,
+          credentials: catalogue.credentials.map(credential => ({
+            ...credential,
+            authentic_sources: T_CATALOGUE.credentials[0].authentic_sources
+          }))
+        })
+      );
+      store.dispatch(itwFetchCatalogueTranslations.success(T_TRANSLATIONS));
+      const fetchCatalogue = jest
+        .spyOn(catalogueUtils, "fetchCredentialsCatalogue")
+        .mockResolvedValue(catalogue);
+      const fetchTranslations = jest
+        .spyOn(catalogueUtils, "fetchCatalogueTranslations")
+        .mockResolvedValue(T_TRANSLATIONS);
+      const task = sagaMiddleware.run(watchItwCredentialsCatalogueSaga);
+      const machine = mockedMachine.provide({
+        actions: { onInit: onInitAction },
+        guards: { hasCredentialIntroContent: hasCredentialIntroContentGuard }
+      });
+      const actor = createActor(machine, {
+        input: { deps: testCredentialIssuanceDeps({ store }) }
+      });
+      try {
+        actor.start();
+        actor.send({
+          type: "select-credential",
+          credentialType: "mDL",
+          mode: "issuance"
+        });
+        await waitForActor(actor, snapshot =>
+          snapshot.matches(
+            showsIntroduction
+              ? "CredentialIntroduction"
+              : "TrustFederationVerification"
+          )
+        );
+        expect(fetchCatalogue).toHaveBeenCalledWith(getEnv("prod"), "1.0.0");
+        expect(fetchTranslations).toHaveBeenCalledWith("1.0.0", catalogue, [
+          "it"
+        ]);
+        expect(actor.getSnapshot().context.deps.itwVersion).toBe("1.0.0");
+        expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(
+          showsIntroduction ? 1 : 0
+        );
+        expect(verifyTrustFederation).toHaveBeenCalledTimes(
+          showsIntroduction ? 0 : 1
+        );
+      } finally {
+        actor.stop();
+        task.cancel();
+        fetchCatalogue.mockRestore();
+        fetchTranslations.mockRestore();
+      }
+    }
+  );
 
   // The machine may be idle with a stale itwVersion from its input.
   // When the issuance flow actually starts, we must ensure the itwVersion is updated.
@@ -785,8 +1123,8 @@ describe("itwCredentialIssuanceMachine", () => {
       mode: "issuance"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "TrustFederationVerification"
+    await waitForActor(actor, snapshot =>
+      snapshot.matches("TrustFederationVerification")
     );
 
     jest.advanceTimersByTime(4000);
@@ -824,8 +1162,8 @@ describe("itwCredentialIssuanceMachine", () => {
       mode: "issuance"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "TrustFederationVerification"
+    await waitForActor(actor, snapshot =>
+      snapshot.matches("TrustFederationVerification")
     );
 
     jest.advanceTimersByTime(5000);
