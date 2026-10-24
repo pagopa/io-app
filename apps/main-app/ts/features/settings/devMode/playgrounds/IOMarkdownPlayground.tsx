@@ -3,7 +3,7 @@ import {
   HSpacer,
   IconButton,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   ListItemSwitch,
   VSpacer
 } from "@io-app/design-system";
@@ -173,7 +173,7 @@ export const IOMarkdownPlayground = () => {
     <View style={{ flex: 1 }}>
       <ScrollView
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault,
+          paddingHorizontal: IODimensions.padding.screen.default,
           flexGrow: 1
         }}
       >

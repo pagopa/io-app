@@ -418,30 +418,40 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               {
                                 "alignSelf": "center",
                                 "flex": 1,
-                                "gap": 4,
+                                "gap": 12,
                               }
                             }
                           >
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 14,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 21,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 4,
+                                }
                               }
                             >
-                              Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate.
-                            </Text>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="footnote"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 14,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 21,
+                                    },
+                                  ]
+                                }
+                              >
+                                Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate.
+                              </Text>
+                            </View>
                             <View
                               accessibilityElementsHidden={true}
                               accessibilityLabel="Scopri di più"
@@ -478,13 +488,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               onStartShouldSetResponder={[Function]}
                               pointerEvents="none"
                             >
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}

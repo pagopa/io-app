@@ -336,7 +336,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
                 "backgroundColor": "#FFFFFF",
                 "borderRadius": 12,
                 "height": 66,
-                "padding": 9,
+                "padding": 8,
                 "width": 66,
               },
             ]
@@ -351,7 +351,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
                   "overflow": "hidden",
                 },
                 {
-                  "borderRadius": 3,
+                  "borderRadius": 4,
                 },
               ]
             }

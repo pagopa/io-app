@@ -4,7 +4,7 @@ import {
   Body,
   BodySmall,
   IOColors,
-  IOSpacingScale,
+  IODimensionScale,
   useIOTheme
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -27,7 +27,7 @@ export type OrganizationHeaderProps = {
   thirdPartySenderDenomination?: string;
 };
 
-const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
+const ITEM_PADDING_VERTICAL: IODimensionScale = 6;
 
 const styles = StyleSheet.create({
   item: {

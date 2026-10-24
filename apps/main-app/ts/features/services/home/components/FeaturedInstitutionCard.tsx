@@ -1,9 +1,9 @@
 import {
   Avatar,
   H6,
+  IODimensions,
+  IODimensionScale,
   IOSkeleton,
-  IOSpacingScale,
-  IOVisualCostants,
   VSpacer
 } from "@io-app/design-system";
 import { Dimensions, StyleSheet, View } from "react-native";
@@ -22,20 +22,16 @@ export type FeaturedInstitutionCardProps = WithTestID<{
 }>;
 
 export const CARD_WIDTH =
-  Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
+  Dimensions.get("window").width - IODimensions.padding.screen.default * 2;
 
-const cardPaddingHorizontal: IOSpacingScale = 12;
-const cardBorderRadius = 8;
-const cardAvatarMargin: IOSpacingScale = 8;
+const cardPaddingHorizontal: IODimensionScale = 12;
+const cardAvatarMargin: IODimensionScale = 8;
 
 const styles = StyleSheet.create({
   cardContainer: {
     height: 72,
     width: CARD_WIDTH,
     paddingHorizontal: cardPaddingHorizontal,
-    borderRadius: cardBorderRadius,
-    borderCurve: "continuous",
-    borderWidth: 1,
     flexDirection: "row",
     alignItems: "center"
   },
@@ -111,9 +107,9 @@ const FeaturedInstitutionCardSkeleton = ({ testID }: WithTestID<unknown>) => {
         <View style={styles.cardAvatar}>
           <IOSkeleton
             color={skeletonColor}
-            radius={IOVisualCostants.avatarRadiusSizeSmall}
+            radius={IODimensions.radius.avatar.small}
             shape="square"
-            size={IOVisualCostants.avatarSizeSmall}
+            size={IODimensions.size.avatar.small}
           />
         </View>
         <View style={styles.cardLabel}>

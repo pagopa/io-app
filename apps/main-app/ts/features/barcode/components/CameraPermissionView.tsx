@@ -3,6 +3,7 @@ import {
   H6,
   IOButton,
   IOButtonBlockSpecificProps,
+  IODimensions,
   IOPictograms,
   Pictogram,
   VSpacer
@@ -43,7 +44,7 @@ const CameraPermissionView = (props: Props) => (
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 32,
+    marginHorizontal: IODimensions.padding.screen.centred,
     alignItems: "center"
   },
   text: {

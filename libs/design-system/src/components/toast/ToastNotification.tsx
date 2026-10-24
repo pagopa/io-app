@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 
 import { useIOThemeContext } from "../../context";
-import { hexToRgba, IOAlertRadius, IOColors } from "../../core";
+import { hexToRgba, IOColors, IODimensions } from "../../core";
 import { Icon } from "../icons";
 import { HSpacer } from "../layout";
 import { ButtonText } from "../typography";
@@ -45,7 +45,7 @@ const ToastNotification = ({ message, variant, icon }: Props) => {
         : hexToRgba(IOColors[colors.stroke], 0.5);
 
     /* Remove border entirely when dark mode is enabled */
-    const borderWidth = themeType === "dark" ? 0 : 1;
+    const borderWidth = themeType === "dark" ? 0 : IODimensions.stroke.default;
 
     return {
       backgroundColor: IOColors[colors.background],
@@ -66,8 +66,12 @@ const ToastNotification = ({ message, variant, icon }: Props) => {
       </ButtonText>
       {icon && (
         <>
-          <HSpacer size={16} />
-          <Icon color={colors.stroke} name={icon} size={24} />
+          <HSpacer size={IODimensions.gap.toast.trailing} />
+          <Icon
+            color={colors.stroke}
+            name={icon}
+            size={IODimensions.size.icon.toast}
+          />
         </>
       )}
     </View>
@@ -76,16 +80,15 @@ const ToastNotification = ({ message, variant, icon }: Props) => {
 
 const styles = StyleSheet.create({
   toast: {
-    borderRadius: IOAlertRadius,
+    borderRadius: IODimensions.radius.toast,
     borderCurve: "continuous",
-    padding: 16,
+    padding: IODimensions.padding.toast,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
   },
   content: {
-    flexShrink: 1,
-    paddingVertical: 2
+    flexShrink: 1
   }
 });
 

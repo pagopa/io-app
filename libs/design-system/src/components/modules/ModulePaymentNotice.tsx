@@ -1,7 +1,7 @@
 import { GestureResponderEvent, StyleSheet, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOListItemVisualParams, IOSpacer } from "../../core";
+import { IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
 import { Icon } from "../icons";
@@ -101,7 +101,7 @@ const ModulePaymentNoticeContent = ({
   const theme = useIOTheme();
 
   return (
-    <HStack space={IOListItemVisualParams.iconMargin as IOSpacer}>
+    <HStack space={IODimensions.gap.module.trailing}>
       <View style={{ flexGrow: 1, flexShrink: 1 }}>
         {title && (
           <BodySmall
@@ -132,7 +132,7 @@ const ModulePaymentNoticeContent = ({
         <Icon
           color={theme["interactiveElem-default"]}
           name="chevronRightListItem"
-          size={IOListItemVisualParams.chevronSize}
+          size={IODimensions.size.icon.chevron}
         />
       </View>
     </HStack>
@@ -191,8 +191,18 @@ const ModulePaymentNoticeSkeleton = ({
     }
     startBlock={
       <VStack space={4}>
-        <IOSkeleton height={12} radius={8} shape="rectangle" width={120} />
-        <IOSkeleton height={16} radius={8} shape="rectangle" width={180} />
+        <IOSkeleton
+          height={12}
+          radius={IODimensions.radius.default}
+          shape="rectangle"
+          width={120}
+        />
+        <IOSkeleton
+          height={16}
+          radius={IODimensions.radius.default}
+          shape="rectangle"
+          width={180}
+        />
       </VStack>
     }
   />

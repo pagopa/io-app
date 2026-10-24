@@ -787,9 +787,6 @@ exports[`Test List Item Components - Experimental Enabled ListItemNavAlert Snaps
             "flexDirection": "row",
             "justifyContent": "space-between",
           },
-          {
-            "columnGap": 12,
-          },
         ]
       }
       style={
@@ -798,9 +795,6 @@ exports[`Test List Item Components - Experimental Enabled ListItemNavAlert Snaps
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
-          },
-          {
-            "columnGap": 12,
           },
           {
             "transform": [
@@ -870,6 +864,13 @@ exports[`Test List Item Components - Experimental Enabled ListItemNavAlert Snaps
           />
         </RNSVGGroup>
       </RNSVGSvgView>
+      <View
+        style={
+          {
+            "width": 12,
+          }
+        }
+      />
       <View
         style={
           {
@@ -2913,9 +2914,6 @@ exports[`Test List Item Components ListItemNavAlert Snapshot 1`] = `
             "flexDirection": "row",
             "justifyContent": "space-between",
           },
-          {
-            "columnGap": 12,
-          },
         ]
       }
       style={
@@ -2924,9 +2922,6 @@ exports[`Test List Item Components ListItemNavAlert Snapshot 1`] = `
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
-          },
-          {
-            "columnGap": 12,
           },
           {
             "transform": [
@@ -2996,6 +2991,13 @@ exports[`Test List Item Components ListItemNavAlert Snapshot 1`] = `
           />
         </RNSVGGroup>
       </RNSVGSvgView>
+      <View
+        style={
+          {
+            "width": 12,
+          }
+        }
+      />
       <View
         style={
           {

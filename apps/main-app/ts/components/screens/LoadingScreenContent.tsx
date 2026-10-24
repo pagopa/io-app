@@ -6,6 +6,7 @@ import {
   IOButton,
   IOButtonProps,
   IOColors,
+  IODimensions,
   IOMarkdownLite,
   useIOTheme,
   VSpacer,
@@ -91,7 +92,7 @@ export const LoadingScreenContent = ({
               <AnimatedPictogram
                 loop={true}
                 name={animatedPictogramSource}
-                size={120}
+                size={IODimensions.size.pictogram.screen}
               />
             ) : (
               <LoadingIndicator />

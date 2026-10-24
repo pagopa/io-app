@@ -1,6 +1,6 @@
 import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
 import { NotificationStatusHistory } from "@io-app/api-types/generated/definitions/pn/NotificationStatusHistory";
-import { IOColors, IOVisualCostants, useIOTheme } from "@io-app/design-system";
+import { IOColors, IODimensions, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
   container: {
     paddingBottom: "95%",
     marginBottom: "-95%",
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    paddingTop: IOVisualCostants.appMarginDefault
+    paddingHorizontal: IODimensions.padding.screen.default,
+    paddingTop: IODimensions.padding.screen.default
   }
 });
 

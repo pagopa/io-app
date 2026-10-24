@@ -4,8 +4,8 @@ import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/
 import {
   Divider,
   H3,
+  IODimensionScale,
   IOMarkdown,
-  IOSpacingScale,
   ListItemInfo,
   ListItemInfoCopy,
   VSpacer
@@ -365,7 +365,7 @@ const WalletPaymentDetailContent = ({
   );
 };
 
-const loadingContainerHorizontalMargin: IOSpacingScale = 48;
+const loadingContainerHorizontalMargin: IODimensionScale = 48;
 
 const styles = StyleSheet.create({
   loadingContainer: {

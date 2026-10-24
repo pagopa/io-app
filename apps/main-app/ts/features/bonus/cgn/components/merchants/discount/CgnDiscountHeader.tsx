@@ -3,7 +3,7 @@ import {
   Badge,
   H3,
   HStack,
-  IOVisualCostants,
+  IODimensions,
   VSpacer
 } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -40,7 +40,7 @@ export const CgnDiscountHeader = ({
   return (
     <View
       style={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        paddingHorizontal: IODimensions.padding.screen.default,
         backgroundColor,
         paddingBottom: 24
       }}

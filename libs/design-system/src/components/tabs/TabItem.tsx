@@ -14,7 +14,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { hexToRgba, IOColors, IOSpringValues } from "../../core";
+import { hexToRgba, IOColors, IODimensions, IOSpringValues } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
@@ -188,14 +188,18 @@ const TabItem = ({
       <Animated.View
         style={[
           styles.container,
-          { columnGap: 4 },
+          { columnGap: IODimensions.gap.tab.icon },
           !disabled && !reducedMotion && scaleAnimatedStyle,
           animatedStyle,
           disabled && { opacity: DISABLED_OPACITY }
         ]}
       >
         {activeIcon && (
-          <Icon color={foregroundColor} name={activeIcon} size={16} />
+          <Icon
+            color={foregroundColor}
+            name={activeIcon}
+            size={IODimensions.size.icon.tab}
+          />
         )}
         <IOText color={foregroundColor} size={14} weight="Semibold">
           {label}
@@ -209,10 +213,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderRadius: 64,
+    paddingHorizontal: IODimensions.padding.tab.horizontal,
+    paddingVertical: IODimensions.padding.tab.vertical,
+    borderWidth: IODimensions.stroke.default,
+    borderRadius: IODimensions.radius.tab,
     borderCurve: "continuous",
     justifyContent: "center",
     alignSelf: "flex-start"

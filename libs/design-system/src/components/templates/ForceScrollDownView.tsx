@@ -19,7 +19,7 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { scheduleOnRN, scheduleOnUI } from "react-native-worklets";
 
-import { IOSpringValues, IOVisualCostants } from "../../core";
+import { IODimensions, IOSpringValues } from "../../core";
 import { IconButtonSolid } from "../buttons";
 import { FooterActions, useFooterActionsInlineMeasurements } from "../layout";
 
@@ -172,7 +172,7 @@ const ForceScrollDownView = ({
   const buttonTransitionStyle = useAnimatedStyle(() => {
     const androidEdgeToEdgeMargin = Platform.OS === "ios" ? 0 : insets.bottom;
     return {
-      bottom: IOVisualCostants.scrollDownButtonBottom + androidEdgeToEdgeMargin,
+      bottom: IODimensions.offset.scrollDown.bottom + androidEdgeToEdgeMargin,
       opacity: isButtonVisible.value,
       transform: [
         { scale: interpolate(isButtonVisible.value, [0, 1], [0.5, 1]) }
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
   scrollDownButton: {
     position: "absolute",
     zIndex: 10,
-    right: IOVisualCostants.scrollDownButtonRight
+    right: IODimensions.offset.scrollDown.right
   }
 });
 
