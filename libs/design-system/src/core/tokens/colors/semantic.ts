@@ -162,13 +162,7 @@ export const light = {
     success: p.green[700],
     warning: p.yellow[700],
     /* Product */
-    pagopa: p.blueItalia[500],
-    onTint: {
-      error: p.red[850],
-      info: p.lightBlue[850],
-      success: p.green[850],
-      warning: p.yellow[850]
-    }
+    pagopa: p.blueItalia[500]
   },
   /** Ink of pictograms. Role: `foreground` */
   pictogram: {
@@ -195,14 +189,7 @@ export const light = {
       default: p.greyscale.black,
       secondary: p.greyscale[850],
       tertiary: p.greyscale[700],
-      action: p.blueIO[500],
-      onTint: {
-        error: p.red[850],
-        info: p.lightBlue[850],
-        success: p.green[850],
-        warning: p.yellow[850],
-        highlight: p.turquoise[850]
-      }
+      action: p.blueIO[500]
     },
     helper: { default: p.greyscale[700], error: p.red[600] },
     /* Short labels (badges): more saturated than body text in dark mode */
@@ -226,9 +213,6 @@ export const light = {
     /* At least 3:1 on `background.default` and `surface.secondary`, in both modes (WCAG 1.4.11) */
     input: p.greyscale[650],
     error: p.red[600],
-    highlight: p.turquoise[850],
-    warning: p.yellow[850],
-    success: p.green[850],
     onAccent: p.greyscale.white
   }
 } as const satisfies Named<IOTokenColor>;
@@ -331,13 +315,7 @@ export const dark = {
     success: p.green[500],
     warning: p.yellow[500],
     /* Product */
-    pagopa: p.blueItalia[300],
-    onTint: {
-      error: p.red[100],
-      info: p.lightBlue[100],
-      success: p.green[100],
-      warning: p.yellow[100]
-    }
+    pagopa: p.blueItalia[300]
   },
   pictogram: {
     hand: p.greyscale.white,
@@ -356,14 +334,7 @@ export const dark = {
       default: p.greyscale.white,
       secondary: p.greyscale[100],
       tertiary: p.greyscale[300],
-      action: p.blueIO[300],
-      onTint: {
-        error: p.red[100],
-        info: p.lightBlue[100],
-        success: p.green[100],
-        warning: p.yellow[100],
-        highlight: p.turquoise[100]
-      }
+      action: p.blueIO[300]
     },
     helper: { default: p.greyscale[450], error: p.red[400] },
     label: {
@@ -384,9 +355,6 @@ export const dark = {
     focused: p.blueIO[300],
     input: p.greyscale[650],
     error: p.red[400],
-    highlight: p.greyscale.white,
-    warning: p.greyscale.white,
-    success: p.greyscale.white,
     onAccent: light.stroke.onAccent
   }
 } as const satisfies IOColorScheme<typeof light>;
