@@ -13,6 +13,23 @@ index 1b5c4c9f83159f15f710851e52558944b592d113..804192233c20e54f3bac8542757684d8
                      grantedPermissions.add(requestedResource);
                  } else {
                      requestedAndroidPermissions.add(androidPermission);
+@@ -276,14 +280,14 @@
+             }
+ 
+             if (permission.equals(Manifest.permission.RECORD_AUDIO)) {
+-                if (granted && grantedPermissions != null) {
++                if (granted && grantedPermissions != null && !this.mWebView.getCustomSettings().getMicrophoneAccessDisabled()) {
+                     grantedPermissions.add(PermissionRequest.RESOURCE_AUDIO_CAPTURE);
+                 }
+                 shouldAnswerToPermissionRequest = true;
+             }
+ 
+             if (permission.equals(Manifest.permission.CAMERA)) {
+-                if (granted && grantedPermissions != null) {
++                if (granted && grantedPermissions != null && !this.mWebView.getCustomSettings().getCameraAccessDisabled()) {
+                     grantedPermissions.add(PermissionRequest.RESOURCE_VIDEO_CAPTURE);
+                 }
+                 shouldAnswerToPermissionRequest = true;
 diff --git a/android/src/main/java/com/reactnativecommunity/webview/RNCWebView.java b/android/src/main/java/com/reactnativecommunity/webview/RNCWebView.java
 index 80c68034b193a47bedb56ca527352de9548e8ac6..bb12b08e89a40d7f19864b5d95267a22ed935b73 100644
 --- a/android/src/main/java/com/reactnativecommunity/webview/RNCWebView.java
