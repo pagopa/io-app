@@ -16,6 +16,32 @@ const onButtonPress = () => {
 };
 
 describe("Test List Item Components", () => {
+  it("keeps informational content out of keyboard focus", () => {
+    const { getByLabelText } = render(
+      <ListItemInfo accessibilityLabel="Information" value="Value" />
+    );
+
+    const information = getByLabelText("Information");
+    expect(information).toHaveProp("accessible", false);
+    expect(information).toHaveProp("screenReaderFocusable", true);
+  });
+
+  it("keeps end actions separate from informational content", () => {
+    const { getByLabelText } = render(
+      <ListItemInfo
+        accessibilityLabel="Information"
+        endElement={{
+          type: "buttonLink",
+          componentProps: { label: "Action", onPress: onButtonPress }
+        }}
+        value="Value"
+      />
+    );
+
+    expect(getByLabelText("Information")).toHaveProp("accessible", false);
+    expect(getByLabelText("Action")).toHaveProp("accessibilityRole", "button");
+  });
+
   it("ListItemInfo Snapshot", () => {
     const { toJSON } = render(
       <ListItemInfo

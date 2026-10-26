@@ -63,6 +63,15 @@ describe("CieWebViewLogin", () => {
     expect(webview.props.source).toEqual({ uri: url });
   });
 
+  it("should not render the WebView in incognito mode, as the CIE+PIN flow relies on cookies shared across WebViews", () => {
+    const { getByTestId } = render(
+      <CieWebViewLogin onEvent={onEvent} url={url} />
+    );
+
+    const webview = getByTestId("cie-webview");
+    expect(webview.props.incognito).toBeUndefined();
+  });
+
   it("should render a loading indicator in the WebView's renderLoading content", () => {
     const { getByTestId } = render(
       <CieWebViewLogin onEvent={onEvent} url={url} />
