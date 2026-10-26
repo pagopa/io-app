@@ -1,7 +1,6 @@
 import { BoxShadowValue, StyleSheet } from "react-native";
 
-import { hexToRgba, IOColorsLegacy } from "./IOColors";
-import { IODimensions } from "./tokens";
+import { IOColorPalette, IODimensions, withAlpha } from "./tokens";
 
 const { padding, radius, size, stroke } = IODimensions;
 
@@ -12,21 +11,8 @@ export const footerBoxShadow = {
   offsetX: 0,
   offsetY: 0,
   blurRadius: 32,
-  color: hexToRgba(IOColorsLegacy.black, 0.1)
+  color: withAlpha(IOColorPalette.greyscale.black, 0.1)
 } satisfies BoxShadowValue;
-
-export const IOStyles = StyleSheet.create({
-  // The following styles come from the original
-  // NativeBase's `View`. They are moved here to
-  // prevent UI regressions.
-  footer: {
-    backgroundColor: IOColorsLegacy.white,
-    paddingBottom: padding.footer.vertical,
-    paddingHorizontal: padding.screen.default,
-    paddingTop: padding.footer.vertical,
-    boxShadow: [footerBoxShadow]
-  }
-});
 
 export const IOIconButtonStyles = StyleSheet.create({
   /* IconButton */
