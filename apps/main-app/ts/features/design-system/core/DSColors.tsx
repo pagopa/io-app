@@ -241,14 +241,20 @@ type ColorGroupProps = {
   name: string;
 };
 
+/* `Object.entries` lists numeric keys first: `white` goes before the steps, `black` after */
+const stepRank = (step: string) =>
+  step === "white" ? -Infinity : step === "black" ? Infinity : Number(step);
+
 const ColorGroup = ({ name, colorObject }: ColorGroupProps) => (
   <VStack space={sectionTitleMargin}>
     <H6>{name}</H6>
 
     <VStack space={colorItemMargin}>
-      {Object.entries(colorObject).map(([colorName, colorValue]) => (
-        <ColorBox color={colorValue} key={colorName} name={colorName} />
-      ))}
+      {Object.entries(colorObject)
+        .sort(([a], [b]) => stepRank(a) - stepRank(b))
+        .map(([colorName, colorValue]) => (
+          <ColorBox color={colorValue} key={colorName} name={colorName} />
+        ))}
     </VStack>
   </VStack>
 );
