@@ -1,20 +1,13 @@
 /*
 SEMANTIC COLORS
-One object per mode, from the Figma `Semantics` collection
-(`Color/Text/Helper/Error` → `text.helper.error`). Values reference the
-palette; `dark` must define every token of `light`.
-Groups are properties shared across components: no component names, no
-states (both live in component configs), except the `action` subgroups
-(`surface.action` fills, `foreground.action` ink) of interactive elements.
-`foreground` is the ink of components whose icon and text share a color
-(buttons, alerts); `icon` and `text` the ones where they differ.
-A status color at the root of a group sits on a neutral background;
-`on<Background>` names what the ink sits on: `onTint` the matching `surface`
-tint, `onAccent` `background.accent`, `onAction` the matching `surface.action`
-fill.
-Product intents (`cgn`, `pagopa`) only for products a DS component or icon
-shows; colors of a single feature live in that feature.
-It also defines the shape every component color config shares.
+One object per mode, mirroring the design tool's semantic variables
+(`Text/Helper/Error` → `text.helper.error`). Values reference the palette;
+`dark` must define every token of `light`.
+Groups are roles shared across components: no component names, no states
+except the `action` subgroups of interactive elements.
+`foreground` is the ink shared by icon and text, `icon` and `text` the ones
+where they differ. `on<Background>` names what the ink sits on: `onTint`,
+`onAccent`, `onAction`.
 */
 
 import {
@@ -46,7 +39,6 @@ export type IOComponentColor<R extends IOColorRole = IOColorRole> =
 export type IOComponentColors = {
   background?: IOColorStates<"background">;
   border?: IOColorStates<"stroke">;
-  /* Text, icon and spinner */
   foreground: IOColorStates<"foreground">;
 };
 
@@ -56,19 +48,17 @@ export const light = {
   /** The whole screen. Role: `background` */
   background: {
     default: p.greyscale.white,
-    /* `dark` reuses it, and every token on it (`onAccent`, `inverse`) */
     accent: p.blueIO[500],
     overlay: withAlpha(p.greyscale.black, 0.15)
   },
   /**
    * What sits on the background (cards, alerts, tints, screen regions);
-   * `action` holds interactive fills, with states. Role: `background`
+   * `action` holds interactive fills, with states.
    */
   surface: {
     default: p.greyscale.white,
     secondary: p.greyscale[50],
     tertiary: p.greyscale[100],
-    /* Placeholder of loading content */
     skeleton: p.greyscale[100],
     accent: p.blueIO[50],
     error: p.red[100],
@@ -101,7 +91,7 @@ export const light = {
   /**
    * Ink of components whose icon and text share a color (buttons, alerts), and
    * of graphics that are neither (dots, indicators); `action` holds interactive
-   * ink, with states. Role: `foreground`
+   * ink, with states.
    */
   foreground: {
     default: p.greyscale.black,
@@ -149,10 +139,7 @@ export const light = {
       disabled: p.greyscale[700]
     }
   },
-  /**
-   * Ink of icons in components where icon and text differ (list items, tags).
-   * Role: `foreground`
-   */
+  /** Ink of icons in components where icon and text differ (list items, tags). */
   icon: {
     default: p.greyscale[650],
     decorative: p.greyscale[300],
@@ -164,7 +151,6 @@ export const light = {
     /* Product */
     pagopa: p.blueItalia[500]
   },
-  /** Ink of pictograms. Role: `foreground` */
   pictogram: {
     hand: p.blueIO[500],
     fill: p.turquoise[150],
@@ -175,10 +161,7 @@ export const light = {
       highlight: p.turquoise[500]
     }
   },
-  /**
-   * Ink of text in components where icon and text differ (list items, tags).
-   * Role: `foreground`
-   */
+  /** Ink of text in components where icon and text differ (list items, tags). */
   text: {
     heading: {
       default: p.greyscale.black,
@@ -205,12 +188,11 @@ export const light = {
       }
     }
   },
-  /** Borders and dividers. Role: `stroke` (the `border` of a component) */
+  /** Borders and dividers */
   stroke: {
     default: p.greyscale[100],
     divider: p.greyscale[200],
     focused: p.blueIO[500],
-    /* At least 3:1 on `background.default` and `surface.secondary`, in both modes (WCAG 1.4.11) */
     input: p.greyscale[650],
     error: p.red[600],
     onAccent: p.greyscale.white
@@ -284,7 +266,6 @@ export const dark = {
         pressed: p.greyscale[100],
         disabled: p.greyscale[300]
       },
-      /* Red 400: the fill's red 600 is below AA as ink on black */
       danger: {
         default: p.red[400],
         pressed: p.red[400],
@@ -326,7 +307,6 @@ export const dark = {
   text: {
     heading: {
       default: p.greyscale.white,
-      /* Above `text.content.tertiary` (300) */
       secondary: p.greyscale[100],
       tertiary: p.greyscale[450]
     },
