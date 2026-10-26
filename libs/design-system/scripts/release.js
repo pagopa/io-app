@@ -5,6 +5,7 @@ const path = require("path");
 const projectRoot = path.resolve(__dirname, "..");
 const repositoryRoot = path.resolve(projectRoot, "../..");
 const previousVersion = require(path.join(projectRoot, "package.json")).version;
+const [specifier] = process.argv.slice(2);
 
 const run = (command, args) =>
   execFileSync(command, args, { cwd: repositoryRoot, stdio: "inherit" });
@@ -14,7 +15,6 @@ const read = (command, args) =>
 
 const previousTagCandidates = [
   `design-system-v${previousVersion}`,
-  `v${previousVersion}`,
   previousVersion
 ];
 const availableTags = read("git", ["tag", "--list"])
@@ -33,7 +33,7 @@ const fromRef =
     "libs/design-system/CHANGELOG.md"
   ]);
 
-run("pnpm", ["nx", "release", "version", "--group=design-system"]);
+run("pnpm", ["nx", "release", "version", specifier, "--group=design-system"]);
 
 const version = JSON.parse(
   fs.readFileSync(path.join(projectRoot, "package.json"), "utf8")
@@ -45,5 +45,5 @@ run("pnpm", [
   version,
   `--from=${fromRef}`,
   "--group=design-system",
-  "--git-commit-message=chore: release {version}"
+  "--git-commit-message=chore: Design-system release {version}"
 ]);
