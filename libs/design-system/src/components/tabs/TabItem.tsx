@@ -1,4 +1,4 @@
-import { Ref, useCallback, useMemo } from "react";
+import { Ref, useCallback } from "react";
 import {
   GestureResponderEvent,
   Pressable,
@@ -13,14 +13,8 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import {
-  hexToRgba,
-  IOColorsLegacy,
-  IODimensions,
-  IOOpacity,
-  IOSpringValues
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOOpacity, IOSpringValues } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
@@ -31,7 +25,7 @@ export type TabItem = WithTestID<{
   accessibilityHint?: string;
   // Accessibility
   accessibilityLabel: string;
-  color?: ColorMode;
+  color?: TabItemColor;
   disabled?: boolean;
   // Icons
   icon?: IOIcons;
@@ -43,29 +37,14 @@ export type TabItem = WithTestID<{
   selected?: boolean;
 }>;
 
-type ColorMode = "dark" | "light";
-
-type ColorStates = {
-  background: {
-    default: string;
-    selected: string;
-  };
-  border: {
-    default: string;
-    selected: string;
-  };
-  foreground: {
-    default: IOColorsLegacy;
-    disabled: IOColorsLegacy;
-    selected: IOColorsLegacy;
-  };
-};
+/* `contrast` on a dark or accent background */
+type TabItemColor = "contrast" | "primary";
 
 type TabItemState = "default" | "disabled" | "selected";
 
 const TabItem = ({
   label,
-  color = "light",
+  color = "primary",
   selected = false,
   accessibilityLabel,
   accessibilityHint,
@@ -78,58 +57,9 @@ const TabItem = ({
 }: TabItem) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
-  const theme = useIOTheme();
   const reducedMotion = useReducedMotion();
 
-  const mapColorStates: Record<
-    NonNullable<TabItem["color"]>,
-    ColorStates
-  > = useMemo(
-    () => ({
-      light: {
-        border: {
-          default: IOColorsLegacy[theme["tab-item-border-default"]],
-          selected: hexToRgba(
-            IOColorsLegacy[theme["tab-item-foreground-selected"]],
-            0.5
-          )
-        },
-        background: {
-          default: hexToRgba(
-            IOColorsLegacy[theme["tab-item-background-selected"]],
-            0
-          ),
-          selected: hexToRgba(
-            IOColorsLegacy[theme["tab-item-background-selected"]],
-            0.25
-          ),
-          pressed: IOColorsLegacy[theme["appBackground-primary"]]
-        },
-        foreground: {
-          default: theme["tab-item-foreground-default"],
-          selected: theme["tab-item-foreground-selected"],
-          disabled: "grey-700"
-        }
-      },
-      dark: {
-        border: {
-          default: hexToRgba(IOColorsLegacy.white, 0),
-          selected: IOColorsLegacy.white
-        },
-        background: {
-          default: hexToRgba(IOColorsLegacy.white, 0.1),
-          selected: IOColorsLegacy.white,
-          pressed: IOColorsLegacy.white
-        },
-        foreground: {
-          default: "white",
-          selected: "black",
-          disabled: "white"
-        }
-      }
-    }),
-    [theme]
-  );
+  const tabColors = useIOColors().component.tabItem[color];
 
   const itemState: TabItemState = selected
     ? "selected"
@@ -137,7 +67,7 @@ const TabItem = ({
       ? "disabled"
       : "default";
 
-  const foregroundColor = mapColorStates[color].foreground[itemState];
+  const foregroundColor = tabColors.foreground[itemState];
 
   const selectedStateTransition = useDerivedValue(() =>
     withSpring(selected ? 1 : 0, IOSpringValues.selection)
@@ -148,18 +78,12 @@ const TabItem = ({
     backgroundColor: interpolateColor(
       selectedStateTransition.value,
       [0, 1],
-      [
-        mapColorStates[color].background.default,
-        mapColorStates[color].background.selected
-      ]
+      [tabColors.background.default, tabColors.background.selected]
     ),
     borderColor: interpolateColor(
       selectedStateTransition.value,
       [0, 1],
-      [
-        mapColorStates[color].border.default,
-        mapColorStates[color].border.selected
-      ]
+      [tabColors.border.default, tabColors.border.selected]
     )
   }));
 

@@ -40,6 +40,7 @@ import { searchInputColors } from "../../../components/searchInput/colors";
 import { skeletonColors } from "../../../components/skeleton/colors";
 import { stepperColors } from "../../../components/stepper/colors";
 import { switchColors } from "../../../components/switch/colors";
+import { tabItemColors } from "../../../components/tabs/colors";
 import { tagColors } from "../../../components/tag/colors";
 import { textInputColors } from "../../../components/textInput/colors";
 import { toastColors } from "../../../components/toast/colors";
@@ -93,6 +94,7 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     skeleton: skeletonColors(s),
     stepper: stepperColors(s, mode),
     switch: switchColors(s),
+    tabItem: tabItemColors(s, mode),
     tag: tagColors(s),
     textInput: textInputColors(s),
     toast: toastColors(withRoles(light), mode),
