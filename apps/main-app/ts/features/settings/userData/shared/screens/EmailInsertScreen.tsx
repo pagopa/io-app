@@ -138,6 +138,7 @@ const EmailInsertScreen = () => {
   );
 
   const flow = getFlowType(isOnboarding, isFirstOnboarding);
+  const editingFlow = isFciEditEmailFlow ? "firma con IO" : flow;
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   // This reference is used to prevent the refresh visual glitch
   // caused by the polling stop in the email validation screen.
@@ -152,7 +153,7 @@ const EmailInsertScreen = () => {
 
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
-      trackEmailEditing(isFciEditEmailFlow ? "firma con IO" : flow);
+      trackEmailEditing(editingFlow);
       if (isFirstOnboarding) {
         IOToast.info(
           I18n.t("email.newinsert.alert.title", {
@@ -164,7 +165,7 @@ const EmailInsertScreen = () => {
         );
       }
     } else {
-      trackEmailDuplicateEditing(flow);
+      trackEmailDuplicateEditing(editingFlow);
     }
   });
 
