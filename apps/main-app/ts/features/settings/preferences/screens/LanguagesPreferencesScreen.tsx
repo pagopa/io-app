@@ -96,7 +96,7 @@ const LanguagesPreferencesScreen = () => {
   const renderedItem: Array<RadioItem<string>> = useMemo(
     () =>
       availableTranslations.map(item => ({
-        value: getLocaleNativeName(item),
+        label: getLocaleNativeName(item),
         id: item,
         techName: `${item}-${item.toUpperCase()}`
       })),
@@ -129,7 +129,7 @@ const LanguagesPreferencesScreen = () => {
           ...[...availableTranslations].sort((a, b) => a.localeCompare(b))
         ])
       ].map(locale => ({
-        value: getLocaleNativeName(locale),
+        label: getLocaleNativeName(locale),
         id: `app-locale-${locale}`
       })),
     []
