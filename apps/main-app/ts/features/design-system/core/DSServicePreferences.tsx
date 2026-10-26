@@ -2,11 +2,10 @@ import {
   Body,
   Divider,
   IOButton,
-  IOColorsLegacy,
   IOSpringValues,
   ListItemHeader,
   ListItemSwitch,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import { ComponentProps, useCallback, useState } from "react";
@@ -89,7 +88,7 @@ const PlaceholderBox = ({
   label: string;
   layout?: ComponentProps<typeof Animated.View>["layout"];
 }) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <Animated.View
@@ -98,10 +97,10 @@ const PlaceholderBox = ({
       layout={layout}
       style={[
         styles.placeholder,
-        { backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]] }
+        { backgroundColor: colors.surface.secondary }
       ]}
     >
-      <Body color={theme["textBody-tertiary"]}>{label}</Body>
+      <Body>{label}</Body>
     </Animated.View>
   );
 };

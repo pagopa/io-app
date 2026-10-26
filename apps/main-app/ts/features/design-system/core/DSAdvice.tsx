@@ -4,7 +4,6 @@ import {
   BannerErrorState,
   FeatureInfo,
   H4,
-  useIOTheme,
   VStack
 } from "@io-app/design-system";
 import { Alert } from "react-native";
@@ -25,30 +24,26 @@ const blockMargin = 40;
 const componentMargin = 40;
 const componentInnerMargin = 16;
 
-export const DSAdvice = () => {
-  const theme = useIOTheme();
-
-  return (
-    <DesignSystemScreen title={"Advice & Banners"}>
-      <VStack space={blockMargin}>
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>FeatureInfo</H4>
-          {renderFeatureInfo()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>BannerErrorState</H4>
-          {renderBannerErrorState()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Banner</H4>
-          {renderBanner()}
-        </VStack>
+export const DSAdvice = () => (
+  <DesignSystemScreen title={"Advice & Banners"}>
+    <VStack space={blockMargin}>
+      <VStack space={sectionTitleMargin}>
+        <H4>FeatureInfo</H4>
+        {renderFeatureInfo()}
       </VStack>
-    </DesignSystemScreen>
-  );
-};
+
+      <VStack space={sectionTitleMargin}>
+        <H4>BannerErrorState</H4>
+        {renderBannerErrorState()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>Banner</H4>
+        {renderBanner()}
+      </VStack>
+    </VStack>
+  </DesignSystemScreen>
+);
 
 const renderBannerErrorState = () => (
   <VStack space={componentMargin}>

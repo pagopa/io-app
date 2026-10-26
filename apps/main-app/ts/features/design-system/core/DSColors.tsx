@@ -1,7 +1,7 @@
 import {
   H3,
   H6,
-  hexToRgba,
+  IOColorPalette,
   IOColorsExtra,
   IOColorsLegacy,
   IOColorsNeutral,
@@ -12,8 +12,9 @@ import {
   IOThemeLight,
   themeStatusColorsDarkMode,
   themeStatusColorsLightMode,
-  useIOTheme,
-  VStack
+  useIOColors,
+  VStack,
+  withAlpha
 } from "@io-app/design-system";
 import { ColorValue, Dimensions, StyleSheet, Text, View } from "react-native";
 
@@ -24,10 +25,10 @@ const sectionTitleMargin = 16;
 const colorItemGutter = 32;
 const colorItemPadding = 8;
 const colorItemMargin = 16;
-const colorItemBorderLightMode = hexToRgba(IOColorsLegacy.black, 0.1);
-const colorItemBorderDarkMode = hexToRgba(IOColorsLegacy.white, 0.25);
+const colorItemBorderLightMode = withAlpha(IOColorPalette.greyscale.black, 0.1);
+const colorItemBorderDarkMode = withAlpha(IOColorPalette.greyscale.white, 0.25);
 
-const colorPillBg = hexToRgba(IOColorsLegacy.black, 0.2);
+const colorPillBg = withAlpha(IOColorPalette.greyscale.black, 0.2);
 
 const styles = StyleSheet.create({
   colorItemsWrapper: {
@@ -53,10 +54,10 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   smallCapsLightMode: {
-    color: IOColorsLegacy["grey-700"]
+    color: IOColorPalette.greyscale[700]
   },
   smallCapsDarkMode: {
-    color: IOColorsLegacy["grey-450"]
+    color: IOColorPalette.greyscale[450]
   },
   colorModeWrapper: {
     position: "absolute",
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     right: 0,
     marginRight: IODimensions.padding.screen.default * -1,
     marginLeft: IODimensions.padding.screen.default * -1,
-    backgroundColor: IOColorsLegacy.black,
+    backgroundColor: IOColorPalette.greyscale.black,
     borderTopLeftRadius: 24,
     borderBottomLeftRadius: 24
   },
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     left: 0,
     marginRight: IODimensions.padding.screen.default * -1,
     marginLeft: IODimensions.padding.screen.default * -1,
-    backgroundColor: IOColorsLegacy.white,
+    backgroundColor: IOColorPalette.greyscale.white,
     borderTopRightRadius: 24,
     borderBottomRightRadius: 24
   },
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
   },
   colorPill: {
     overflow: "hidden",
-    color: IOColorsLegacy.white,
+    color: IOColorPalette.greyscale.white,
     fontSize: 9,
     backgroundColor: colorPillBg,
     padding: 4,
@@ -114,8 +115,6 @@ const ColorThemeGroup = ({
   colorObjectLightMode,
   colorObjectDarkMode
 }: ColorThemeGroupProps) => {
-  const theme = useIOTheme();
-
   const colorArrayLightMode = Object.entries(colorObjectLightMode);
   const colorArrayDarkMode = Object.entries(colorObjectDarkMode);
 
@@ -123,7 +122,7 @@ const ColorThemeGroup = ({
 
   return (
     <VStack space={sectionTitleMargin}>
-      {name && <H6 color={theme["textHeading-default"]}>{name}</H6>}
+      {name && <H6>{name}</H6>}
       {/* Show the two different columns
       with both light and dark modes */}
       <View style={{ flexDirection: "row" }}>
@@ -201,65 +200,57 @@ type ColorGroupProps = {
   name: string;
 };
 
-const ColorGroup = ({ name, colorObject }: ColorGroupProps) => {
-  const theme = useIOTheme();
+const ColorGroup = ({ name, colorObject }: ColorGroupProps) => (
+  <VStack space={sectionTitleMargin}>
+    {name && <H6>{name}</H6>}
 
-  return (
-    <VStack space={sectionTitleMargin}>
-      {name && <H6 color={theme["textHeading-default"]}>{name}</H6>}
+    <VStack space={colorItemMargin}>
+      {Object.entries(colorObject).map(([colorName, colorValue]) => (
+        <ColorBox color={colorValue} key={colorName} name={colorName} />
+      ))}
+    </VStack>
+  </VStack>
+);
 
-      <VStack space={colorItemMargin}>
-        {Object.entries(colorObject).map(([colorName, colorValue]) => (
-          <ColorBox color={colorValue} key={colorName} name={colorName} />
-        ))}
+export const DSColors = () => (
+  <DesignSystemScreen title={"Colors"}>
+    <VStack space={macroSectionMargin}>
+      {/* COLOR SCALES */}
+      <VStack space={sectionTitleMargin}>
+        <H3>Color scales</H3>
+
+        <VStack space={32}>
+          {/* Neutrals */}
+          <ColorGroup colorObject={IOColorsNeutral} name="Neutrals" />
+          {/* Tints */}
+          <ColorGroup colorObject={IOColorsTints} name="Main tints" />
+          {/* Status */}
+          <ColorGroup colorObject={IOColorsStatus} name="Status" />
+          {/* Extra */}
+          <ColorGroup colorObject={IOColorsExtra} name="Extra" />
+        </VStack>
+      </VStack>
+
+      {/* THEME */}
+      <VStack space={sectionTitleMargin}>
+        <H3>Theme</H3>
+
+        <VStack space={40}>
+          <ColorThemeGroup
+            colorObjectDarkMode={IOThemeDark}
+            colorObjectLightMode={IOThemeLight}
+            name="Main"
+          />
+          <ColorThemeGroup
+            colorObjectDarkMode={themeStatusColorsDarkMode}
+            colorObjectLightMode={themeStatusColorsLightMode}
+            name="Status"
+          />
+        </VStack>
       </VStack>
     </VStack>
-  );
-};
-
-export const DSColors = () => {
-  const theme = useIOTheme();
-
-  return (
-    <DesignSystemScreen title={"Colors"}>
-      <VStack space={macroSectionMargin}>
-        {/* COLOR SCALES */}
-        <VStack space={sectionTitleMargin}>
-          <H3 color={theme["textHeading-default"]}>Color scales</H3>
-
-          <VStack space={32}>
-            {/* Neutrals */}
-            <ColorGroup colorObject={IOColorsNeutral} name="Neutrals" />
-            {/* Tints */}
-            <ColorGroup colorObject={IOColorsTints} name="Main tints" />
-            {/* Status */}
-            <ColorGroup colorObject={IOColorsStatus} name="Status" />
-            {/* Extra */}
-            <ColorGroup colorObject={IOColorsExtra} name="Extra" />
-          </VStack>
-        </VStack>
-
-        {/* THEME */}
-        <VStack space={sectionTitleMargin}>
-          <H3 color={theme["textHeading-default"]}>Theme</H3>
-
-          <VStack space={40}>
-            <ColorThemeGroup
-              colorObjectDarkMode={IOThemeDark}
-              colorObjectLightMode={IOThemeLight}
-              name="Main"
-            />
-            <ColorThemeGroup
-              colorObjectDarkMode={themeStatusColorsDarkMode}
-              colorObjectLightMode={themeStatusColorsLightMode}
-              name="Status"
-            />
-          </VStack>
-        </VStack>
-      </VStack>
-    </DesignSystemScreen>
-  );
-};
+  </DesignSystemScreen>
+);
 
 type ColorBoxProps = {
   color: ColorValue;
@@ -278,7 +269,7 @@ const ColorBox = ({
   ghostMode,
   themeVariable
 }: ColorBoxProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View style={[styles.colorWrapper, ghostMode && { opacity: 0 }]}>
@@ -304,9 +295,9 @@ const ColorBox = ({
             fontSize: 10,
             color: isThemeColor
               ? mode === "dark"
-                ? IOColorsLegacy["grey-450"]
-                : IOColorsLegacy["grey-700"]
-              : IOColorsLegacy[theme["textBody-tertiary"]]
+                ? IOColorPalette.greyscale[450]
+                : IOColorPalette.greyscale[700]
+              : colors.text.content.tertiary
           }}
         >
           {name}

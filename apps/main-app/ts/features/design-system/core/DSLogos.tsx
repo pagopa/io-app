@@ -2,10 +2,9 @@ import {
   Avatar,
   AvatarSearch,
   H4,
-  hexToRgba,
   HSpacer,
   HStack,
-  IOColorsLegacy,
+  IOColorPalette,
   IODimensions,
   IOLogoPaymentCardType,
   IOLogoPaymentExtType,
@@ -16,9 +15,9 @@ import {
   LogoPayment,
   LogoPaymentCard,
   LogoPaymentExt,
-  useIOTheme,
   VSpacer,
-  VStack
+  VStack,
+  withAlpha
 } from "@io-app/design-system";
 import { ScrollView, StyleSheet, View } from "react-native";
 
@@ -51,40 +50,36 @@ const styles = StyleSheet.create({
 const sectionMargin = 40;
 const sectionTitleMargin = 16;
 
-export const DSLogos = () => {
-  const theme = useIOTheme();
-
-  return (
-    <DesignSystemScreen title={"Logos"}>
-      <VStack space={sectionMargin}>
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Avatar</H4>
-          {renderAvatar()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Payment Networks (Small)</H4>
-          {renderPaymentLogosSmall()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Payment Networks (Big)</H4>
-          {renderPaymentLogosBig()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Banks (Extended)</H4>
-          {renderLogoPaymentExtended()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Payment Networks (Card)</H4>
-          {renderPaymentLogosCard()}
-        </VStack>
+export const DSLogos = () => (
+  <DesignSystemScreen title={"Logos"}>
+    <VStack space={sectionMargin}>
+      <VStack space={sectionTitleMargin}>
+        <H4>Avatar</H4>
+        {renderAvatar()}
       </VStack>
-    </DesignSystemScreen>
-  );
-};
+
+      <VStack space={sectionTitleMargin}>
+        <H4>Payment Networks (Small)</H4>
+        {renderPaymentLogosSmall()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>Payment Networks (Big)</H4>
+        {renderPaymentLogosBig()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>Banks (Extended)</H4>
+        {renderLogoPaymentExtended()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>Payment Networks (Card)</H4>
+        {renderPaymentLogosCard()}
+      </VStack>
+    </VStack>
+  </DesignSystemScreen>
+);
 
 const cdnPath = `${DEFAULT_CONTENT_REPO_URL}/logos/organizations/`;
 
@@ -259,8 +254,8 @@ const renderPaymentLogosCard = () => (
         style={{
           borderRadius: 16,
           padding: 16,
-          backgroundColor: IOColorsLegacy.white,
-          borderColor: hexToRgba(IOColorsLegacy.black, 0.15),
+          backgroundColor: IOColorPalette.greyscale.white,
+          borderColor: withAlpha(IOColorPalette.greyscale.black, 0.15),
           borderWidth: 1
         }}
       >

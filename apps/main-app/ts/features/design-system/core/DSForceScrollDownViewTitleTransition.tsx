@@ -2,8 +2,8 @@ import {
   Body,
   ContentWrapper,
   ForceScrollDownView,
-  IOColorsLegacy,
   IODimensions,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import { View } from "react-native";
@@ -15,6 +15,7 @@ const CUSTOM_SLOT_HEIGHT = 150;
 
 export const DSForceScrollDownViewTitleTransition = () => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
+  const colors = useIOColors();
 
   useHeaderSecondLevel({
     title: "ForceScrollDownView w/ Title transition",
@@ -49,7 +50,7 @@ export const DSForceScrollDownViewTitleTransition = () => {
         <View
           style={{
             height: CUSTOM_SLOT_HEIGHT,
-            backgroundColor: IOColorsLegacy["success-100"]
+            backgroundColor: colors.surface.success
           }}
         />
       </VStack>

@@ -9,7 +9,6 @@ import {
   ModulePaymentNotice,
   ModuleSummary,
   PaymentNoticeStatus,
-  useIOTheme,
   VStack
 } from "@io-app/design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
@@ -43,54 +42,51 @@ const sectionMargin = 48;
 const componentMargin = 24;
 const componentInnerMargin = 8;
 
-export const DSModules = () => {
-  const theme = useIOTheme();
-  return (
-    <DesignSystemScreen title="Modules">
-      <VStack space={sectionMargin}>
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ModuleAttachment</H4>
-          {renderModuleAttachment()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ModulePaymentNotice</H4>
-          {renderModulePaymentNotice()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ModuleCheckout</H4>
-          {renderModuleCheckout()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ModuleCredential</H4>
-          {renderModuleCredential()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ModuleNavigation</H4>
-          {renderModuleNavigation()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ModuleSummary</H4>
-          {renderModuleSummary()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ModuleCgnDiscount</H4>
-          {renderModuleCgnDiscount()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ModuleIDP</H4>
-          {renderModuleIDP()}
-        </VStack>
+export const DSModules = () => (
+  <DesignSystemScreen title="Modules">
+    <VStack space={sectionMargin}>
+      <VStack space={sectionTitleMargin}>
+        <H4>ModuleAttachment</H4>
+        {renderModuleAttachment()}
       </VStack>
-    </DesignSystemScreen>
-  );
-};
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ModulePaymentNotice</H4>
+        {renderModulePaymentNotice()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ModuleCheckout</H4>
+        {renderModuleCheckout()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ModuleCredential</H4>
+        {renderModuleCredential()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ModuleNavigation</H4>
+        {renderModuleNavigation()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ModuleSummary</H4>
+        {renderModuleSummary()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ModuleCgnDiscount</H4>
+        {renderModuleCgnDiscount()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ModuleIDP</H4>
+        {renderModuleIDP()}
+      </VStack>
+    </VStack>
+  </DesignSystemScreen>
+);
 
 const renderModuleAttachment = () => (
   <VStack space={componentMargin}>

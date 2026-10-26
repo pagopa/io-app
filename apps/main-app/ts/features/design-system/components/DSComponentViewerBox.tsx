@@ -1,4 +1,4 @@
-import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
+import { IOColorPalette, useIOColors } from "@io-app/design-system";
 import { ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     fontSize: 10
   },
   componenentLabelDark: {
-    color: IOColorsLegacy["grey-100"]
+    color: IOColorPalette.greyscale[100]
   }
 });
 
@@ -40,7 +40,7 @@ export const DSComponentViewerBox = ({
   reverse = false,
   children
 }: DSComponentViewerBoxProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View
@@ -67,7 +67,7 @@ export const DSComponentViewerBox = ({
             style={[
               styles.componentLabel,
               colorMode === "light"
-                ? { color: IOColorsLegacy[theme["textBody-tertiary"]] }
+                ? { color: colors.text.content.tertiary }
                 : styles.componenentLabelDark
             ]}
           >

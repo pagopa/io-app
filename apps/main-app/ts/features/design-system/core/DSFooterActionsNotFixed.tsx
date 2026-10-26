@@ -1,9 +1,4 @@
-import {
-  FooterActions,
-  IOColorsLegacy,
-  useIOTheme,
-  VSpacer
-} from "@io-app/design-system";
+import { FooterActions, useIOColors, VSpacer } from "@io-app/design-system";
 import { Fragment } from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -12,7 +7,7 @@ const onButtonPress = () => {
 };
 
 export const DSFooterActionsNotFixed = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View style={styles.container}>
@@ -23,14 +18,11 @@ export const DSFooterActionsNotFixed = () => {
               style={[
                 styles.block,
                 {
-                  backgroundColor:
-                    IOColorsLegacy[theme["appBackground-secondary"]]
+                  backgroundColor: colors.surface.secondary
                 }
               ]}
             >
-              <Text
-                style={{ color: IOColorsLegacy[theme["textBody-tertiary"]] }}
-              >
+              <Text style={{ color: colors.text.content.tertiary }}>
                 {`Block ${i}`}
               </Text>
             </View>

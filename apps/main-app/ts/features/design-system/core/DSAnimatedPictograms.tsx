@@ -1,11 +1,10 @@
 import {
   ContentWrapper,
-  hexToRgba,
-  IOColorsLegacy,
   IODimensions,
   IOPictogramSizeScale,
   RadioGroup,
-  useIOTheme
+  useIOColors,
+  withAlpha
 } from "@io-app/design-system";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useState } from "react";
@@ -24,7 +23,7 @@ type AnimatedPictogramType = {
 
 export const DSAnimatedPictograms = () => {
   const insets = useSafeAreaInsets();
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const scrollGradientHeight = 32;
   const pictogramSize: IOPictogramSizeScale = 180;
@@ -78,7 +77,7 @@ export const DSAnimatedPictograms = () => {
           width: "100%",
           zIndex: 1,
           minHeight: pictogramAreaHeight,
-          backgroundColor: IOColorsLegacy[theme["appBackground-primary"]],
+          backgroundColor: colors.background.default,
           position: "absolute",
           alignItems: "center"
         }}
@@ -93,8 +92,8 @@ export const DSAnimatedPictograms = () => {
 
         <LinearGradient
           colors={[
-            IOColorsLegacy[theme["appBackground-primary"]],
-            hexToRgba(IOColorsLegacy[theme["appBackground-primary"]], 0)
+            colors.background.default,
+            withAlpha(colors.background.default, 0)
           ]}
           style={{
             height: scrollGradientHeight,

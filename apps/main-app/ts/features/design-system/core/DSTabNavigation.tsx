@@ -4,10 +4,9 @@ import {
   H4,
   H6,
   HStack,
-  IOColorsLegacy,
+  IOColorPalette,
   TabItem,
   TabNavigation,
-  useIOTheme,
   VStack
 } from "@io-app/design-system";
 import { useState } from "react";
@@ -24,120 +23,116 @@ const sectionTitleMargin = 16;
 const blockTitleMargin = 24;
 const blockMargin = 48;
 
-const blueBackground = IOColorsLegacy["blueIO-850"];
+const blueBackground = IOColorPalette.blueIO[850];
 
-export const DSTabNavigation = () => {
-  const theme = useIOTheme();
-
-  return (
-    <DesignSystemScreen
-      noMargin={true}
-      title={DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title}
-    >
-      <VStack space={blockMargin}>
-        <ContentWrapper>
-          <VStack space={blockTitleMargin}>
-            <H4 color={theme["textHeading-default"]}>Tab Item</H4>
-
-            <VStack space={innerBlockMargin}>
-              <VStack space={sectionTitleMargin}>
-                <H6 color={theme["textHeading-default"]}>Primary</H6>
-                {renderTabItemPrimary()}
-              </VStack>
-
-              <VStack space={sectionTitleMargin}>
-                <H6 color={theme["textHeading-default"]}>Contrast</H6>
-                {renderTabItemContrast()}
-              </VStack>
-            </VStack>
-          </VStack>
-        </ContentWrapper>
-
+export const DSTabNavigation = () => (
+  <DesignSystemScreen
+    noMargin={true}
+    title={DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title}
+  >
+    <VStack space={blockMargin}>
+      <ContentWrapper>
         <VStack space={blockTitleMargin}>
-          <ContentWrapper>
-            <H4 color={theme["textHeading-default"]}>Tab Navigation</H4>
-          </ContentWrapper>
+          <H4>Tab Item</H4>
 
           <VStack space={innerBlockMargin}>
             <VStack space={sectionTitleMargin}>
-              <ContentWrapper>
-                <H6 color={theme["textHeading-default"]}>Primary</H6>
-              </ContentWrapper>
-              {renderTabNavigationPrimary()}
+              <H6>Primary</H6>
+              {renderTabItemPrimary()}
             </VStack>
 
             <VStack space={sectionTitleMargin}>
-              <ContentWrapper>
-                <H6 color={theme["textHeading-default"]}>Contrast</H6>
-              </ContentWrapper>
-              {renderTabNavigationContrast()}
+              <H6>Contrast</H6>
+              {renderTabItemContrast()}
             </VStack>
           </VStack>
         </VStack>
+      </ContentWrapper>
 
-        <VStack space={blockTitleMargin}>
-          <ContentWrapper>
-            <H4 color={theme["textHeading-default"]}>Tab Alignment</H4>
-          </ContentWrapper>
+      <VStack space={blockTitleMargin}>
+        <ContentWrapper>
+          <H4>Tab Navigation</H4>
+        </ContentWrapper>
 
-          <VStack space={innerBlockMargin}>
-            <VStack space={sectionTitleMargin}>
-              <ContentWrapper>
-                <BodyMonospace style={{ alignSelf: "center" }}>
-                  center (default)
-                </BodyMonospace>
-              </ContentWrapper>
-              <TabNavigationWithState>
-                <TabItem accessibilityLabel="Long label" label="Long label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-              </TabNavigationWithState>
-            </VStack>
+        <VStack space={innerBlockMargin}>
+          <VStack space={sectionTitleMargin}>
+            <ContentWrapper>
+              <H6>Primary</H6>
+            </ContentWrapper>
+            {renderTabNavigationPrimary()}
+          </VStack>
 
-            <VStack space={sectionTitleMargin}>
-              <ContentWrapper>
-                <BodyMonospace style={{ alignSelf: "flex-start" }}>
-                  start
-                </BodyMonospace>
-              </ContentWrapper>
-              <TabNavigationWithState tabAlignment="start">
-                <TabItem accessibilityLabel="Long label" label="Long label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-              </TabNavigationWithState>
-            </VStack>
-
-            <VStack space={sectionTitleMargin}>
-              <ContentWrapper>
-                <BodyMonospace style={{ alignSelf: "flex-end" }}>
-                  end
-                </BodyMonospace>
-              </ContentWrapper>
-              <TabNavigationWithState tabAlignment="end">
-                <TabItem accessibilityLabel="Long label" label="Long label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-              </TabNavigationWithState>
-            </VStack>
-
-            <VStack space={sectionTitleMargin}>
-              <ContentWrapper>
-                <BodyMonospace style={{ alignSelf: "flex-start" }}>
-                  stretch
-                </BodyMonospace>
-              </ContentWrapper>
-              <TabNavigationWithState tabAlignment="stretch">
-                <TabItem accessibilityLabel="Long label" label="Long label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-              </TabNavigationWithState>
-            </VStack>
+          <VStack space={sectionTitleMargin}>
+            <ContentWrapper>
+              <H6>Contrast</H6>
+            </ContentWrapper>
+            {renderTabNavigationContrast()}
           </VStack>
         </VStack>
       </VStack>
-    </DesignSystemScreen>
-  );
-};
+
+      <VStack space={blockTitleMargin}>
+        <ContentWrapper>
+          <H4>Tab Alignment</H4>
+        </ContentWrapper>
+
+        <VStack space={innerBlockMargin}>
+          <VStack space={sectionTitleMargin}>
+            <ContentWrapper>
+              <BodyMonospace style={{ alignSelf: "center" }}>
+                center (default)
+              </BodyMonospace>
+            </ContentWrapper>
+            <TabNavigationWithState>
+              <TabItem accessibilityLabel="Long label" label="Long label" />
+              <TabItem accessibilityLabel="Label" label="Label" />
+              <TabItem accessibilityLabel="Label" label="Label" />
+            </TabNavigationWithState>
+          </VStack>
+
+          <VStack space={sectionTitleMargin}>
+            <ContentWrapper>
+              <BodyMonospace style={{ alignSelf: "flex-start" }}>
+                start
+              </BodyMonospace>
+            </ContentWrapper>
+            <TabNavigationWithState tabAlignment="start">
+              <TabItem accessibilityLabel="Long label" label="Long label" />
+              <TabItem accessibilityLabel="Label" label="Label" />
+              <TabItem accessibilityLabel="Label" label="Label" />
+            </TabNavigationWithState>
+          </VStack>
+
+          <VStack space={sectionTitleMargin}>
+            <ContentWrapper>
+              <BodyMonospace style={{ alignSelf: "flex-end" }}>
+                end
+              </BodyMonospace>
+            </ContentWrapper>
+            <TabNavigationWithState tabAlignment="end">
+              <TabItem accessibilityLabel="Long label" label="Long label" />
+              <TabItem accessibilityLabel="Label" label="Label" />
+              <TabItem accessibilityLabel="Label" label="Label" />
+            </TabNavigationWithState>
+          </VStack>
+
+          <VStack space={sectionTitleMargin}>
+            <ContentWrapper>
+              <BodyMonospace style={{ alignSelf: "flex-start" }}>
+                stretch
+              </BodyMonospace>
+            </ContentWrapper>
+            <TabNavigationWithState tabAlignment="stretch">
+              <TabItem accessibilityLabel="Long label" label="Long label" />
+              <TabItem accessibilityLabel="Label" label="Label" />
+              <TabItem accessibilityLabel="Label" label="Label" />
+            </TabNavigationWithState>
+          </VStack>
+        </VStack>
+      </VStack>
+    </VStack>
+  </DesignSystemScreen>
+);
 
 const TabNavigationWithState = (props: TabNavigation) => {
   const [index, setIndex] = useState(0);

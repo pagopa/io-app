@@ -1,9 +1,10 @@
 import {
   Body,
   H4,
-  hexToRgba,
-  IOColorsLegacy,
-  IODimensions
+  IOColorPalette,
+  IODimensions,
+  useIOColors,
+  withAlpha
 } from "@io-app/design-system";
 import { ScrollView, Text, View } from "react-native";
 import {
@@ -16,12 +17,13 @@ const topBarHeight = 55;
 
 export const DSEdgeToEdgeArea = () => {
   const insets = useSafeAreaInsets();
+  const colors = useIOColors();
 
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: IOColorsLegacy.white
+        backgroundColor: colors.background.default
       }}
     >
       <SafeAreaView edges={["left", "right"]} style={{ flex: 1 }}>
@@ -29,7 +31,7 @@ export const DSEdgeToEdgeArea = () => {
           contentContainerStyle={{
             paddingTop: insets.top + topBarHeight,
             paddingBottom: insets.bottom + bottomBarHeight,
-            backgroundColor: IOColorsLegacy.white
+            backgroundColor: colors.background.default
           }}
         >
           <H4>Start</H4>
@@ -44,20 +46,22 @@ export const DSEdgeToEdgeArea = () => {
             position: "absolute",
             top: 0,
             width: "100%",
-            backgroundColor: hexToRgba(IOColorsLegacy["blueIO-500"], 0.7),
+            backgroundColor: withAlpha(IOColorPalette.blueIO[500], 0.7),
             paddingTop: insets.top
           }}
         >
           <View
             style={{
-              backgroundColor: IOColorsLegacy.black,
+              backgroundColor: IOColorPalette.greyscale.black,
               height: topBarHeight,
               width: "100%",
               alignItems: "center",
               justifyContent: "center"
             }}
           >
-            <Text style={{ color: IOColorsLegacy.white }}>Header</Text>
+            <Text style={{ color: IOColorPalette.greyscale.white }}>
+              Header
+            </Text>
           </View>
         </View>
         {/* TOP BAR: End */}
@@ -68,20 +72,22 @@ export const DSEdgeToEdgeArea = () => {
             bottom: 0,
             width: "100%",
             paddingHorizontal: IODimensions.padding.screen.default,
-            backgroundColor: hexToRgba(IOColorsLegacy["blueIO-500"], 0.7),
+            backgroundColor: withAlpha(IOColorPalette.blueIO[500], 0.7),
             paddingBottom: insets.bottom
           }}
         >
           <View
             style={{
-              backgroundColor: IOColorsLegacy.black,
+              backgroundColor: IOColorPalette.greyscale.black,
               height: bottomBarHeight,
               width: "100%",
               alignItems: "center",
               justifyContent: "center"
             }}
           >
-            <Text style={{ color: IOColorsLegacy.white }}>Fixed component</Text>
+            <Text style={{ color: IOColorPalette.greyscale.white }}>
+              Fixed component
+            </Text>
           </View>
         </View>
         {/* BOTTOM BAR: End */}

@@ -1,7 +1,7 @@
 import {
-  IOColorsLegacy,
+  IOColorPalette,
   ScrollViewWithStickyFooterActions,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { Fragment } from "react";
@@ -12,7 +12,7 @@ const onButtonPress = () => {
 };
 
 export const DSFooterActionsSticky = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <ScrollViewWithStickyFooterActions
@@ -27,12 +27,11 @@ export const DSFooterActionsSticky = () => {
             style={[
               styles.block,
               {
-                backgroundColor:
-                  IOColorsLegacy[theme["appBackground-secondary"]]
+                backgroundColor: colors.surface.secondary
               }
             ]}
           >
-            <Text style={{ color: IOColorsLegacy[theme["textBody-tertiary"]] }}>
+            <Text style={{ color: colors.text.content.tertiary }}>
               {`Block ${i}`}
             </Text>
           </View>
@@ -63,6 +62,6 @@ const styles = StyleSheet.create({
     aspectRatio: 16 / 10
   },
   footer: {
-    backgroundColor: IOColorsLegacy["success-100"]
+    backgroundColor: IOColorPalette.green[100]
   }
 });
