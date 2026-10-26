@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.42.0-rc.7](https://github.com/pagopa/io-app/compare/3.42.0-rc.6...3.42.0-rc.7) (2026-10-23)
+
+### Features
+
+* [[IOPID-4283](https://pagopa.atlassian.net/browse/IOPID-4283)] Put OI CIE cookies cleanup on Android behind a flag ([#8793](https://github.com/pagopa/io-app/issues/8793)) ([6c5986d](https://github.com/pagopa/io-app/commit/6c5986daa48d77b2ceb8fba89c778916713bdfc6)), references [#8787](https://github.com/pagopa/io-app/issues/8787) [#8787](https://github.com/pagopa/io-app/issues/8787)
+* [[IOPLT-2207](https://pagopa.atlassian.net/browse/IOPLT-2207)] Make Expo CLI default tool to build and run the app ([#8782](https://github.com/pagopa/io-app/issues/8782)) ([4349e2b](https://github.com/pagopa/io-app/commit/4349e2b516407d5d6898a22ffefb07f0f9ce668f))
+
+### Bug Fixes
+
+* [[IOPID-4270](https://pagopa.atlassian.net/browse/IOPID-4270)] Open One Identity SPID/CieID login in incognito ([#8790](https://github.com/pagopa/io-app/issues/8790)) ([57316f6](https://github.com/pagopa/io-app/commit/57316f61937633748073e7e8f72057dbd6095eef))
+* [[IOPID-4281](https://pagopa.atlassian.net/browse/IOPID-4281)] Return acr_values from dev server /reserve ([#8791](https://github.com/pagopa/io-app/issues/8791)) ([1bdacb3](https://github.com/pagopa/io-app/commit/1bdacb358d57214e2113f12b14fd869786d65a32)), references [#8729](https://github.com/pagopa/io-app/issues/8729)
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Expo `Android` script ([#8794](https://github.com/pagopa/io-app/issues/8794)) ([b862671](https://github.com/pagopa/io-app/commit/b86267152410f4659c76c5373e333f14d7a014af))
+* [[IOPLT-2209](https://pagopa.atlassian.net/browse/IOPLT-2209)] Adjust `Animated.View` interaction behavior ([#8786](https://github.com/pagopa/io-app/issues/8786)) ([b25d50e](https://github.com/pagopa/io-app/commit/b25d50ef1cd8cc489f4870271673b7dff094a34d))
+
+### Chores
+
+* [[IOPLT-2194](https://pagopa.atlassian.net/browse/IOPLT-2194)] Add missing `a11y` role for pin components ([#8758](https://github.com/pagopa/io-app/issues/8758)) ([13902de](https://github.com/pagopa/io-app/commit/13902de9ed8592a971868e876b5e57c4042b7853))
+* [[SIW-3784](https://pagopa.atlassian.net/browse/SIW-3784)] Improve accessibility for BottomSheet component ([#8549](https://github.com/pagopa/io-app/issues/8549)) ([7ac27d8](https://github.com/pagopa/io-app/commit/7ac27d8be3ec99e0737b72bda2fe2468bc29b003))
 ## [3.42.0-rc.6](https://github.com/pagopa/io-app/compare/3.42.0-rc.5...3.42.0-rc.6) (2026-10-22)
 
 ### Bug Fixes
