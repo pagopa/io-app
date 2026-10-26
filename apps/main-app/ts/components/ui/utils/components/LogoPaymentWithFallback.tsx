@@ -1,6 +1,5 @@
 import {
   Icon,
-  IOColorsLegacy,
   IOIconSizeScale,
   IOLogoPaymentExtType,
   IOLogoPaymentType,
@@ -8,16 +7,16 @@ import {
   IOPaymentLogos,
   LogoPayment,
   LogoPaymentExt,
-  useIOTheme
+  useIOColors
 } from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 
+// TODO: Delete this copy for the DS `LogoPaymentWithFallback` once exported (adds font scaling)
 export type LogoPaymentWithFallback = {
   brand?: string;
-  fallbackIconColor?: IOColorsLegacy;
   isExtended?: boolean;
   size?: IOIconSizeScale;
 };
@@ -29,18 +28,16 @@ export type LogoPaymentWithFallback = {
  *
  * @param cardIcon: IOLogoPaymentType icon
  * @param size: The size of the icon (standard is 24/48)
- * @param fallbackIconColor: Default icon color (standard is grey-700)
  * @param isExtended: If true, renders a LogoPaymentExt component
  * @returns A LogoPayment/LogopaymentExt component if the cardIcon is supported,
  *   a default credit card icon otherwise
  */
 export const LogoPaymentWithFallback = ({
   brand,
-  fallbackIconColor,
   isExtended = false,
   size = isExtended ? 48 : 24
 }: LogoPaymentWithFallback) => {
-  const theme = useIOTheme();
+  const fallbackIconColor = useIOColors().icon.default;
 
   const logos = isExtended ? IOPaymentExtLogos : IOPaymentLogos;
 
@@ -50,13 +47,7 @@ export const LogoPaymentWithFallback = ({
     O.chain(findFirstCaseInsensitive(logos)),
     O.map(([brand]) => brand),
     O.fold(
-      () => (
-        <Icon
-          color={fallbackIconColor ?? theme["icon-default"]}
-          name="creditCard"
-          size={size}
-        />
-      ),
+      () => <Icon color={fallbackIconColor} name="creditCard" size={size} />,
       brand =>
         isExtended ? (
           <LogoPaymentExt name={brand as IOLogoPaymentExtType} size={size} />
