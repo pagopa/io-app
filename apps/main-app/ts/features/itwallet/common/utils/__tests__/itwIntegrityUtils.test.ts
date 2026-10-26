@@ -38,11 +38,12 @@ const clientDataHash = sha("sha256").update(clientData).digest("hex");
 
 const mockCapabilities = (
   isPlayServicesAvailable: boolean,
-  isHardwareAttestationSupported: boolean
+  isHardwareAttestationSupported: boolean,
+  hasAttestKey = true
 ) =>
   jest.mocked(getHardwareAttestationCapabilities).mockResolvedValue({
     firstApiLevel: 33,
-    hasAttestKey: true,
+    hasAttestKey,
     hasStrongBox: true,
     isHardwareAttestationSupported,
     isPlayServicesAvailable,
@@ -88,11 +89,25 @@ describe("itwIntegrityUtils on Android", () => {
         hardwareAttestation: false,
         prepareFails: false,
         expected: false
+      },
+      {
+        name: "hardware attestation without attest key (e.g. Android 8-11 without Play Services)",
+        playServices: false,
+        hardwareAttestation: true,
+        attestKey: false,
+        prepareFails: false,
+        expected: false
       }
     ])(
       "should resolve to $expected with $name",
-      async ({ playServices, hardwareAttestation, prepareFails, expected }) => {
-        mockCapabilities(playServices, hardwareAttestation);
+      async ({
+        playServices,
+        hardwareAttestation,
+        attestKey = true,
+        prepareFails,
+        expected
+      }) => {
+        mockCapabilities(playServices, hardwareAttestation, attestKey);
         jest
           .mocked(prepareIntegrityToken)
           .mockImplementation(() =>
@@ -110,19 +125,37 @@ describe("itwIntegrityUtils on Android", () => {
       }
     );
 
-    it("should reject when Play Integrity preparation fails without hardware attestation", async () => {
-      mockCapabilities(true, false);
-      jest
-        .mocked(prepareIntegrityToken)
-        .mockRejectedValue(new Error("PREPARE_FAILED"));
+    test.each([
+      {
+        name: "without hardware attestation",
+        hardwareAttestation: false,
+        attestKey: true
+      },
+      {
+        name: "without attest key",
+        hardwareAttestation: true,
+        attestKey: false
+      }
+    ])(
+      "should reject when Play Integrity preparation fails $name",
+      async ({ hardwareAttestation, attestKey }) => {
+        mockCapabilities(true, hardwareAttestation, attestKey);
+        jest
+          .mocked(prepareIntegrityToken)
+          .mockRejectedValue(new Error("PREPARE_FAILED"));
 
-      await expect(ensureIntegrityServiceIsReady(env)).rejects.toThrow(
-        "PREPARE_FAILED"
-      );
-    });
+        await expect(ensureIntegrityServiceIsReady(env)).rejects.toThrow(
+          "PREPARE_FAILED"
+        );
+      }
+    );
   });
 
   describe("getIntegrityContext", () => {
+    beforeEach(() => {
+      mockCapabilities(true, true);
+    });
+
     it("should generate the key attestation with an attest key", async () => {
       jest.mocked(getAttestation).mockResolvedValue("attestation");
 
@@ -185,6 +218,39 @@ describe("itwIntegrityUtils on Android", () => {
         );
       }
     );
+
+    it("should not request the key attestation without attest key", async () => {
+      mockCapabilities(true, true, false);
+      jest.mocked(sign).mockResolvedValue("signature");
+      jest.mocked(requestIntegrityToken).mockResolvedValue("token");
+
+      const result =
+        await getIntegrityContext(
+          hardwareKeyTag
+        ).getHardwareSignatureWithAuthData(clientData);
+
+      expect(result).toEqual({
+        authenticatorData: "token",
+        hardwareKeyAttestation: undefined,
+        signature: "signature"
+      });
+      expect(getAttestationAssertion).not.toHaveBeenCalled();
+    });
+
+    it("should reject with the Play Integrity error without attest key", async () => {
+      mockCapabilities(false, true, false);
+      jest.mocked(sign).mockResolvedValue("signature");
+      jest
+        .mocked(requestIntegrityToken)
+        .mockRejectedValue(new Error("REQUEST_TOKEN_FAILED"));
+
+      await expect(
+        getIntegrityContext(hardwareKeyTag).getHardwareSignatureWithAuthData(
+          clientData
+        )
+      ).rejects.toThrow("REQUEST_TOKEN_FAILED");
+      expect(getAttestationAssertion).not.toHaveBeenCalled();
+    });
 
     it("should reject with the Play Integrity error when no proof is available", async () => {
       jest.mocked(sign).mockResolvedValue("signature");
