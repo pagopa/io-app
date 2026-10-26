@@ -62,7 +62,9 @@ export const useItwEidLifecycleAlertTracking = ({
 }: Props) => {
   const hasTrackedRef = useRef(false);
   const isEidInvalid =
-    maybeEidStatus === "jwtExpiring" || maybeEidStatus === "jwtExpired";
+    maybeEidStatus === "jwtExpiring" ||
+    maybeEidStatus === "jwtExpired" ||
+    (maybeEidStatus === "invalid" && isItwCredential);
 
   const shouldTrackVisualization = !skipViewTracking && isEidInvalid;
 
