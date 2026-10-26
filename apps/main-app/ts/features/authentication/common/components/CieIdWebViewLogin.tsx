@@ -1,12 +1,12 @@
 import { memo, useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIOStore } from "../../../../store/hooks";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { trackLoginOIConfigurationError } from "../../common/analytics";
@@ -196,44 +196,50 @@ export const CieIdWebViewLogin = memo(
       onEvent({ type: "CANCEL" });
     }, [onEvent]);
 
-    if (
-      loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "verifying-assertion-ref" ||
-      loginSourceState.status === "following-redirects"
-    ) {
-      return <LoadingOverlay onCancel={handleCancel} />;
-    }
-
     if (loginSourceState.status === "failure") {
       return null;
     }
 
-    const webviewSource = authenticatedUrl
-      ? { uri: authenticatedUrl }
-      : loginSourceState.webviewSource;
+    // The overlay covers the waits before the WebView has a source. The
+    // assertion-ref check is local and takes a few milliseconds, so the overlay
+    // stays off meanwhile to avoid a flash, and the WebView stays mounted: a new
+    // incognito instance would lose the OneIdentity session cookie.
+    const isLoading =
+      loginSourceState.status === "reserving-public-key" ||
+      loginSourceState.status === "following-redirects";
+
+    const webviewSource = isLoading
+      ? undefined
+      : authenticatedUrl
+        ? { uri: authenticatedUrl }
+        : loginSourceState.webviewSource;
 
     return (
-      <SafeAreaView edges={["bottom"]} style={styles.container}>
-        <WebView
-          onError={handleError}
-          onHttpError={handleError}
-          onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-          originWhitelist={originSchemasWhiteList}
-          renderLoading={() => <LoadingOverlay onCancel={handleCancel} />}
-          source={webviewSource}
-          startInLoadingState={true}
-          testID="cie-id-webview"
-          userAgent={defaultUserAgent}
-        />
-      </SafeAreaView>
+      <LoadingSpinnerOverlay isLoading={isLoading} onCancel={handleCancel}>
+        {webviewSource && (
+          <WebView
+            androidCameraAccessDisabled
+            androidMicrophoneAccessDisabled
+            incognito
+            onError={handleError}
+            onHttpError={handleError}
+            onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+            originWhitelist={originSchemasWhiteList}
+            renderLoading={() => <LoadingOverlay onCancel={handleCancel} />}
+            source={webviewSource}
+            startInLoadingState={true}
+            style={styles.container}
+            testID="cie-id-webview"
+            userAgent={defaultUserAgent}
+          />
+        )}
+      </LoadingSpinnerOverlay>
     );
   }
 );
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    marginHorizontal: 16
+    flex: 1
   }
 });

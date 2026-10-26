@@ -115,6 +115,9 @@ export type ItwCredentialStatus =
   | "valid"
   | ItwJwtCredentialStatus;
 
+// eID status: the JWT status, or "invalid" when revoked by the PID Status List
+export type ItwEidStatus = "invalid" | ItwJwtCredentialStatus;
+
 // Digital credential status
 export type ItwJwtCredentialStatus = "jwtExpired" | "jwtExpiring" | "valid";
 
