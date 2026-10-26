@@ -3,6 +3,7 @@ import {
   isItwProximityEnabledSelector,
   itwIsL2FallbackSelector,
   itwOfflineAccessAvailableSelector,
+  itwShouldHideEidLifecycleAlert,
   itwShouldRenderDiscoveryBannerSelector,
   itwShouldRenderInboxDiscoveryBannerSelector,
   itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
@@ -664,6 +665,21 @@ describe("isItwProximityEnabledSelector", () => {
 
       expect(isItwProximityEnabledSelector({} as unknown as GlobalState)).toBe(
         expected
+      );
+    }
+  );
+});
+
+describe("itwShouldHideEidLifecycleAlert", () => {
+  test.each(["jwtExpired", "invalid"] as const)(
+    "should never hide the alert when the eID is %s",
+    eidStatus => {
+      jest
+        .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+        .mockReturnValue(eidStatus);
+
+      expect(itwShouldHideEidLifecycleAlert({} as unknown as GlobalState)).toBe(
+        false
       );
     }
   );

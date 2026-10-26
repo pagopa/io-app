@@ -1,11 +1,14 @@
-import { render } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import * as credentialStatusMessage from "../../../credentials/hooks/useCredentialStatusMessage";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../../navigation/routes";
 import * as alertTracking from "../../hooks/useItwEidLifecycleAlertTracking";
 import { ItwStoredCredentialsMocks } from "../../utils/itwMocksUtils";
 import { ItwEidLifecycleAlert } from "../ItwEidLifecycleAlert";
@@ -35,16 +38,7 @@ describe("ItwEidLifecycleAlert", () => {
       .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
       .mockReturnValue(true);
 
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
-    expect(() =>
-      render(
-        <Provider store={store}>
-          <ItwEidLifecycleAlert navigation={mockNavigation} />
-        </Provider>
-      )
-    ).not.toThrow();
+    expect(() => renderComponent()).not.toThrow();
   });
 
   it("should forward currentScreenName to the tracking hook", () => {
@@ -123,7 +117,123 @@ describe("ItwEidLifecycleAlert", () => {
 
     expect(queryByTestId("itwEidLifecycleAlertTestID")).toBeNull();
   });
+
+  describe("when the eID is invalid", () => {
+    beforeEach(() => {
+      jest
+        .spyOn(credentialsSelectors, "itwCredentialsEidSelector")
+        .mockReturnValue(ItwStoredCredentialsMocks.eid);
+      jest
+        .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+        .mockReturnValue("invalid");
+    });
+
+    test.each([
+      {
+        name: "PID detail screen",
+        currentScreenName: ITW_ROUTES.PRESENTATION.PID_DETAIL,
+        action: "Scopri di più"
+      },
+      {
+        name: "wallet screen",
+        currentScreenName: "WALLET_HOME",
+        action: "Rivedi i dati"
+      }
+    ])(
+      "should render the invalid alert on the $name",
+      ({ currentScreenName, action }) => {
+        jest
+          .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+          .mockReturnValue(true);
+
+        const { getByTestId, getByText } = renderComponent({
+          currentScreenName,
+          lifecycleStatus: ["invalid"]
+        });
+
+        expect(getByTestId("itwEidLifecycleAlertTestID_invalid")).toBeTruthy();
+        expect(getByText(action)).toBeTruthy();
+      }
+    );
+
+    it("should start the eID reissuance from the bottom sheet", () => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(true);
+
+      const { getByTestId } = renderComponent({
+        lifecycleStatus: ["invalid"]
+      });
+      fireEvent.press(
+        getByTestId("itwEidInvalidBottomSheetUpdateButtonTestID")
+      );
+
+      expect(mockNavigation.navigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+        params: { eidReissuing: true, level: "l3" }
+      });
+    });
+
+    it("should render the catalogue message in the bottom sheet", () => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(true);
+      jest
+        .spyOn(credentialStatusMessage, "useCredentialStatusMessage")
+        .mockReturnValue({
+          title: "Conferma identità",
+          description: "Conferma la tua identità per continuare."
+        });
+
+      const { getByText } = renderComponent({
+        lifecycleStatus: ["invalid"]
+      });
+
+      expect(
+        getByText("Conferma la tua identità per continuare.")
+      ).toBeTruthy();
+    });
+
+    it("should start the eID reissuance from the alert when all credentials are expired", () => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(true);
+      jest
+        .spyOn(credentialsSelectors, "itwAreAllCredentialsExpiredSelector")
+        .mockReturnValue(true);
+
+      const { getByText } = renderComponent({ lifecycleStatus: ["invalid"] });
+      expect(
+        getByText(
+          "Conferma la tua identità per continuare a usare il tuo portafoglio IT-Wallet."
+        )
+      ).toBeTruthy();
+      fireEvent.press(getByText("Conferma identità"));
+
+      expect(mockNavigation.navigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+        params: { eidReissuing: true, level: "l3" }
+      });
+    });
+
+    it("should not render the alert for Documenti su IO", () => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(false);
+
+      const { queryByTestId } = renderComponent({
+        lifecycleStatus: ["invalid"]
+      });
+
+      expect(queryByTestId("itwEidLifecycleAlertTestID")).toBeNull();
+    });
+  });
 });
+
+const safeAreaMetrics = {
+  frame: { x: 0, y: 0, width: 0, height: 0 },
+  insets: { top: 0, left: 0, right: 0, bottom: 0 }
+};
 
 const renderComponent = (
   props: Partial<React.ComponentProps<typeof ItwEidLifecycleAlert>> = {}
@@ -132,8 +242,10 @@ const renderComponent = (
   const store = createStore(appReducer, globalState as any);
 
   return render(
-    <Provider store={store}>
-      <ItwEidLifecycleAlert navigation={mockNavigation} {...props} />
-    </Provider>
+    <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+      <Provider store={store}>
+        <ItwEidLifecycleAlert navigation={mockNavigation} {...props} />
+      </Provider>
+    </SafeAreaProvider>
   );
 };
