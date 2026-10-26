@@ -90,16 +90,17 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       },
       {
         actions: [
-          enqueueActions(({ context, enqueue }) => {
-            if (!context.grantedConsentKey) {
-              enqueue("trackProximityStart");
-            }
-          }),
           assign(({ event }) => ({
             proximityDetails: event.proximityDetails,
             verifierRequest: event.verifierRequest,
             retrievalMethod: event.retrievalMethod
-          }))
+          })),
+          // Track after the assign so proximity_flow reflects the retrieval method
+          enqueueActions(({ context, enqueue }) => {
+            if (!context.grantedConsentKey) {
+              enqueue("trackProximityStart");
+            }
+          })
         ],
         target: "Presentment.EvaluatingConsent"
       }

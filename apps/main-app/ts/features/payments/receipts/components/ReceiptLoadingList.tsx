@@ -26,9 +26,9 @@ export const ReceiptLoadingList = ({
     {Array.from({ length: 5 }).map((_, index) => (
       <ReceiptFadeInOutAnimationView key={index}>
         <ListItemTransaction
+          description=""
           isLoading={true}
-          subtitle=""
-          title=""
+          label=""
           transaction={{
             amount: "",
             amountAccessibilityLabel: ""

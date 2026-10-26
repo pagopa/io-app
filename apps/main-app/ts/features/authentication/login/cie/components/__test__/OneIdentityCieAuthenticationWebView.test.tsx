@@ -1,10 +1,12 @@
 import { act, fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
+import { Platform } from "react-native";
 
 import * as utilsAnalytics from "../../../../../../utils/analytics";
 import { withStore } from "../../../../../../utils/jest/withStore";
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
 import * as analytics from "../../../../common/analytics";
+import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig";
 import { LOGIN_TYPES } from "../../../../common/utils";
 import { OneIdentityCieAuthenticationWebView as OneIdentityCieAuthenticationWebViewComponent } from "../OneIdentityCieAuthenticationWebView";
 
@@ -103,6 +105,42 @@ describe("OneIdentityCieAuthenticationWebView", () => {
     }
   );
 
+  describe("clearSessionCookies", () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it.each([
+      { platform: "android" as const, flag: true, expected: true },
+      { platform: "android" as const, flag: false, expected: false },
+      { platform: "ios" as const, flag: true, expected: false },
+      { platform: "ios" as const, flag: false, expected: false }
+    ])(
+      "should pass clearSessionCookies $expected on $platform when the remote flag is $flag",
+      ({ platform, flag, expected }) => {
+        jest.replaceProperty(Platform, "OS", platform);
+        jest
+          .spyOn(
+            remoteConfigSelectors,
+            "oneIdentityCieAndroidClearSessionCookiesEnabledSelector"
+          )
+          .mockReturnValue(flag);
+        const spyUseOneIdentityLoginSource = mockUseOneIdentityLoginSource();
+
+        render(
+          <OneIdentityCieAuthenticationWebView
+            flow={LOGIN_TYPES.AUTH}
+            onAuthenticationUrlReceived={onAuthenticationUrlReceived}
+          />
+        );
+
+        expect(spyUseOneIdentityLoginSource).toHaveBeenCalledWith(
+          expect.objectContaining({ clearSessionCookies: expected })
+        );
+      }
+    );
+  });
+
   describe("conditional rendering", () => {
     it.each([
       {
@@ -113,7 +151,8 @@ describe("OneIdentityCieAuthenticationWebView", () => {
         status: "verifying-assertion-ref",
         loginSourceState: {
           status: "verifying-assertion-ref" as const,
-          url: "https://example.com"
+          url: "https://example.com",
+          webviewSource: { uri: "https://example.com/authorize" }
         }
       }
     ])(
@@ -163,7 +202,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       expect(queryByTestId("cie-authentication-webview")).toBeNull();
       expect(
-        getByText(I18n.t("authentication.errors.network.title"))
+        getByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeTruthy();
       expect(getByText(I18n.t("global.buttons.retry"))).toBeTruthy();
       expect(getByText(I18n.t("global.buttons.cancel"))).toBeTruthy();
@@ -189,7 +228,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       });
 
       expect(
-        getByText(I18n.t("authentication.errors.network.title"))
+        getByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeTruthy();
     });
 
@@ -207,7 +246,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       });
 
       expect(
-        queryByText(I18n.t("authentication.errors.network.title"))
+        queryByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeNull();
     });
   });
@@ -231,7 +270,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       });
 
       expect(
-        getByText(I18n.t("authentication.errors.network.title"))
+        getByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeTruthy();
     });
 
@@ -249,7 +288,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
       });
 
       expect(
-        getByText(I18n.t("authentication.errors.network.title"))
+        getByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeTruthy();
     });
   });
@@ -309,7 +348,7 @@ describe("OneIdentityCieAuthenticationWebView", () => {
 
       expect(onAuthenticationUrlReceived).not.toHaveBeenCalled();
       expect(
-        getByText(I18n.t("authentication.errors.network.title"))
+        getByText(I18n.t("authentication.auth_errors.generic.title"))
       ).toBeTruthy();
     });
   });

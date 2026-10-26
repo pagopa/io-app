@@ -304,12 +304,12 @@ const DesignSystemSection = () => {
 
       <ListItemNav
         accessibilityLabel={I18n.t("profile.main.designSystem")}
+        label={I18n.t("profile.main.designSystem")}
         onPress={() =>
           navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
             screen: SETTINGS_ROUTES.DESIGN_SYSTEM
           })
         }
-        value={I18n.t("profile.main.designSystem")}
       />
       <Divider />
       <ExperimentalDesignEnableSwitch />
@@ -444,9 +444,9 @@ const PlaygroundsSection = () => {
       return (
         <ListItemNav
           accessibilityLabel={value}
+          label={value}
           onPress={onPress}
           testID={testID}
-          value={value}
         />
       );
     } else {
