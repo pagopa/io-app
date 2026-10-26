@@ -437,7 +437,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                           <View>
                             <View
                               accessibilityLabel="Step 1; Apri “Impostazioni”"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -533,7 +535,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                           <View>
                             <View
                               accessibilityLabel="Step 2; Cerca la funzionalità “NFC”"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -629,7 +633,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                           <View>
                             <View
                               accessibilityLabel="Step 3; Attiva la funzionalità"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,

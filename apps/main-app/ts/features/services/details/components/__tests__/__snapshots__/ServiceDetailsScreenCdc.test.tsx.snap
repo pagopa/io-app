@@ -341,6 +341,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -572,6 +573,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1082,6 +1084,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1313,6 +1316,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

@@ -1,4 +1,5 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import CookieManager from "@react-native-cookies/cookies";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
@@ -61,7 +62,11 @@ const reserveEndpointPath = "/api/auth/v1/reserve";
  * - `reserving-public-key`: `/reserve` (and ephemeral key generation) is in
  *   progress.
  * - `verifying-assertion-ref`: the WebView navigated to the IDP SSO URL and its
- *   lollipop assertion-ref is being verified; the WebView is hidden meanwhile.
+ *   lollipop assertion-ref is being verified locally; navigation is blocked
+ *   meanwhile. `webviewSource` is still the `/authorize` source, so that the
+ *   WebView can stay mounted without navigating: OneIdentity binds the flow to
+ *   a session cookie set by `/authorize`, which an `incognito` WebView would
+ *   lose if remounted.
  * - `failure`: The `/reserve` request, ephemeral key generation, or SAML
  *   verification failed.
  */
@@ -73,7 +78,11 @@ type LoginSourceState =
     }
   | { status: "following-redirects" }
   | { status: "reserving-public-key" }
-  | { status: "verifying-assertion-ref"; url: string };
+  | {
+      status: "verifying-assertion-ref";
+      url: string;
+      webviewSource: WebViewSourceUri;
+    };
 
 /** Builds the request body for the `/reserve` endpoint. */
 const buildReserveRequestBody = (
@@ -150,6 +159,12 @@ const buildWebviewSource = (
 });
 
 export type UseOneIdentityLoginSource = (params: {
+  /**
+   * When `true`, the WebView session cookies are removed before every login
+   * attempt, so that stale cookies left by a previous session cannot break the
+   * IDP session. Defaults to `false`.
+   */
+  clearSessionCookies?: boolean;
   /** The login flow this source is generated for. */
   flow: LoginType;
   /**
@@ -187,6 +202,7 @@ export type UseOneIdentityLoginSource = (params: {
 };
 
 export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
+  clearSessionCookies = false,
   followRedirectsNatively = false,
   flow,
   idpId,
@@ -204,7 +220,10 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   const maybeEphemeralPublicKey = useIOSelector(ephemeralPublicKeySelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const store = useIOStore();
-  const hashedFiscalCode = hashedProfileFiscalCodeSelector(store.getState());
+  const hashedFiscalCode =
+    flow === LOGIN_TYPES.AUTH
+      ? undefined
+      : hashedProfileFiscalCodeSelector(store.getState());
   const isFastLogin =
     flow === LOGIN_TYPES.AUTH
       ? isFastLoginEnabledSelector(store.getState())
@@ -233,7 +252,8 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
         // intercept the flow to verify the lollipop assertion-ref.
         setLoginSourceState({
           status: "verifying-assertion-ref",
-          url
+          url,
+          webviewSource: loginSourceState.webviewSource
         });
         lollipopSamlVerify(
           urlEncodedSamlRequest,
@@ -258,7 +278,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
       return false;
     },
-    [loginSourceState.status, maybeEphemeralPublicKey, onFailure]
+    [loginSourceState, maybeEphemeralPublicKey, onFailure]
   );
 
   const generateLoginSource = useCallback(async () => {
@@ -267,6 +287,12 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     abortControllerRef.current = controller;
 
     setLoginSourceState({ status: "reserving-public-key" });
+
+    if (clearSessionCookies) {
+      // Best effort: a failure here must not block the login, at worst the
+      // flow runs with the cookies already stored.
+      await CookieManager.removeSessionCookies().catch(() => undefined);
+    }
 
     // A new ephemeral key pair is generated to guarantee
     // the public key uniqueness on every request.
@@ -357,6 +383,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       webviewSource: buildWebviewSource(authorizationUrl, publicKey)
     });
   }, [
+    clearSessionCookies,
     followRedirectsNatively,
     idpId,
     ephemeralKeyTag,

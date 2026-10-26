@@ -43,7 +43,7 @@ export const ItwConsentManagementListItem = ({ consent, onPress }: Props) => (
     )}
     description={getConsentSavedAtDescription(consent.savedAt)}
     icon="institution"
+    label={consent.rpDisplayName ?? consent.rpId}
     onPress={onPress}
-    value={consent.rpDisplayName ?? consent.rpId}
   />
 );

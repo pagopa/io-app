@@ -341,6 +341,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -3215,6 +3216,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -5760,6 +5762,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -8101,6 +8104,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -10463,6 +10467,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -12840,6 +12845,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -15428,6 +15434,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -18322,6 +18329,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -20684,6 +20692,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -22996,6 +23005,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -25459,6 +25469,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -27964,6 +27975,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -30673,6 +30685,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -33261,6 +33274,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -35888,6 +35902,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -38474,6 +38489,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -40878,6 +40894,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -43254,6 +43271,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -46240,6 +46258,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -49031,6 +49050,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -51449,6 +51469,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -54518,6 +54539,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -57176,6 +57198,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -59538,6 +59561,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -61942,6 +61966,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -64318,6 +64343,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {

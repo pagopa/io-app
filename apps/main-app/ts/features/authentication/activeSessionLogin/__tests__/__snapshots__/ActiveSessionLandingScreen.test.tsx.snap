@@ -422,6 +422,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
