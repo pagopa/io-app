@@ -39,6 +39,10 @@ export const itwCredentialUpgradeFailedSelector = (state: GlobalState) =>
 export const itwIdentificationModeSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.identificationMode;
 
+/** Returns whether NFC engagement in Proximity is locally enabled. */
+export const itwIsProximityNfcLocallyEnabledSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isProximityNfcLocallyEnabled ?? false;
+
 /** Returns whether IT Wallet activation is disabled (no nfc). */
 export const itwIsActivationDisabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isItwActivationDisabled ?? false;
