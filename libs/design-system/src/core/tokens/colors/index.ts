@@ -46,6 +46,7 @@ import { textInputColors } from "../../../components/textInput/colors";
 import { toastColors } from "../../../components/toast/colors";
 import { tooltipColors } from "../../../components/tooltip/colors";
 import { typographyColors } from "../../../components/typography/colors";
+import { IOColorPalette } from "./palette";
 import { dark, IOColorMode, IOColorSemantics, light } from "./semantic";
 
 export * from "./palette";
@@ -109,7 +110,10 @@ export type IOColorTheme = ReturnType<typeof theme>;
  * Color tokens of each mode: the design tool's semantic tokens, plus the
  * component colors under `component`.
  */
-export const IOColors: Record<IOColorMode, IOColorTheme> = {
+export const IOColors: Record<IOColorMode, IOColorTheme> & {
+  palette: typeof IOColorPalette;
+} = {
+  palette: IOColorPalette,
   light: theme(withRoles(light), "light"),
   dark: theme(withRoles(dark), "dark")
 };
