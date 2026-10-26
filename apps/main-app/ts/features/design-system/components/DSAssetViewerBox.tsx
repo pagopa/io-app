@@ -1,4 +1,4 @@
-import { hexToRgba, IOColors, useIOTheme } from "@io-app/design-system";
+import { IOColorPalette, useIOColors, withAlpha } from "@io-app/design-system";
 /* Fake Transparent BG */
 import { ReactNode } from "react";
 import {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    borderColor: hexToRgba(IOColors.black, 0.1),
+    borderColor: withAlpha(IOColorPalette.greyscale.black, 0.1),
     borderWidth: 1
   },
   assetItemSpacingSmall: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   assetItemDark: {
-    backgroundColor: IOColors.black
+    backgroundColor: IOColorPalette.greyscale.black
   },
   pill: {
     position: "absolute",
@@ -76,12 +76,12 @@ const styles = StyleSheet.create({
     top: 4
   },
   pillRaster: {
-    backgroundColor: IOColors["warning-500"],
-    color: IOColors.black
+    backgroundColor: IOColorPalette.yellow[500],
+    color: IOColorPalette.greyscale.black
   },
   pillBleed: {
-    backgroundColor: IOColors["success-500"],
-    color: IOColors.white
+    backgroundColor: IOColorPalette.green[500],
+    color: IOColorPalette.greyscale.white
   }
 });
 
@@ -124,7 +124,7 @@ export const DSAssetViewerBox = ({
   spacing = "large",
   colorMode = "light"
 }: DSAssetViewerBoxProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View
@@ -173,10 +173,7 @@ export const DSAssetViewerBox = ({
           <Text
             ellipsizeMode="tail"
             numberOfLines={1}
-            style={[
-              styles.assetLabel,
-              { color: IOColors[theme["textBody-tertiary"]] }
-            ]}
+            style={[styles.assetLabel, { color: colors.text.content.tertiary }]}
           >
             {name}
           </Text>

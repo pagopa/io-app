@@ -34,7 +34,6 @@ exports[`FooterActions - Snapshot SingleButton 1`] = `
           "bottom": 0,
           "position": "absolute",
         },
-        false,
         undefined,
       ]
     }
@@ -48,7 +47,6 @@ exports[`FooterActions - Snapshot SingleButton 1`] = `
           "bottom": 0,
           "position": "absolute",
         },
-        false,
         undefined,
       ]
     }
@@ -372,7 +370,6 @@ exports[`FooterActions - Snapshot ThreeButtons 1`] = `
           "bottom": 0,
           "position": "absolute",
         },
-        false,
         undefined,
       ]
     }
@@ -386,7 +383,6 @@ exports[`FooterActions - Snapshot ThreeButtons 1`] = `
           "bottom": 0,
           "position": "absolute",
         },
-        false,
         undefined,
       ]
     }
@@ -1169,7 +1165,6 @@ exports[`FooterActions - Snapshot TwoButtons 1`] = `
           "bottom": 0,
           "position": "absolute",
         },
-        false,
         undefined,
       ]
     }
@@ -1183,7 +1178,6 @@ exports[`FooterActions - Snapshot TwoButtons 1`] = `
           "bottom": 0,
           "position": "absolute",
         },
-        false,
         undefined,
       ]
     }

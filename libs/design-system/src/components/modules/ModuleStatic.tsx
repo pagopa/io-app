@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 import { PressableProps, View, ViewProps } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IOColors, IODimensions, IOModuleStyles } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOModuleStyles, IOOpacity } from "../../core";
 import { HStack } from "../layout";
 
 type ModuleStaticMultipleBlockProps = {
@@ -25,8 +25,6 @@ type ModuleStaticSingleBlockProps = {
   startBlock?: never;
 };
 
-const DISABLED_OPACITY = 0.5;
-
 export const ModuleStatic = ({
   disabled = false,
   startBlock,
@@ -36,7 +34,7 @@ export const ModuleStatic = ({
   accessibilityLabel,
   accessibilityState
 }: ModuleStaticProps) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
 
   return (
     <View
@@ -46,8 +44,8 @@ export const ModuleStatic = ({
       style={[
         IOModuleStyles.button,
         {
-          borderColor: IOColors[theme["cardBorder-default"]],
-          opacity: disabled ? DISABLED_OPACITY : 1
+          borderColor: moduleColors.border,
+          opacity: disabled ? IOOpacity.disabled : 1
         }
       ]}
     >

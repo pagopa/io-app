@@ -1,4 +1,4 @@
-import { IOColors } from "@io-app/design-system";
+import { IOColorsLegacy } from "@io-app/design-system";
 import { memo } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
@@ -42,7 +42,7 @@ const assetsMap: Record<string, CardAssets> = {
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: IOColors["grey-100"],
+    backgroundColor: IOColorsLegacy["grey-100"],
     borderRadius: 8
   },
   background: {

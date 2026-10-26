@@ -1,6 +1,6 @@
 import {
   H6,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   useIOThemeContext
 } from "@io-app/design-system";
@@ -92,8 +92,8 @@ export const ItwCredentialClaimsCard = ({
       style={[
         styles.card,
         {
-          backgroundColor: IOColors[theme["appBackground-primary"]],
-          borderColor: IOColors[theme["cardBorder-default"]]
+          backgroundColor: IOColorsLegacy[theme["appBackground-primary"]],
+          borderColor: IOColorsLegacy[theme["cardBorder-default"]]
         }
       ]}
     >

@@ -1,4 +1,4 @@
-import { IOColors } from "@io-app/design-system";
+import { IOColorsLegacy } from "@io-app/design-system";
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { createStore, Store } from "redux";
@@ -15,7 +15,7 @@ describe("Test BonusCardCounter", () => {
         const { queryByTestId } = renderComponent({
           isLoading: true,
           type: "Value",
-          skeletonColor: IOColors["blueItalia-100"]
+          skeletonColor: IOColorsLegacy["blueItalia-100"]
         });
         expect(queryByTestId("BonusCardCounterSkeletonTestID")).not.toBeNull();
         expect(queryByTestId("BonusCardCounterTestID")).toBeNull();
@@ -47,7 +47,7 @@ describe("Test BonusCardCounter", () => {
         const { queryByTestId } = renderComponent({
           isLoading: true,
           type: "ValueWithProgress",
-          skeletonColor: IOColors["blueItalia-100"]
+          skeletonColor: IOColorsLegacy["blueItalia-100"]
         });
         expect(queryByTestId("BonusCardCounterSkeletonTestID")).not.toBeNull();
         expect(queryByTestId("BonusCardCounterTestID")).toBeNull();

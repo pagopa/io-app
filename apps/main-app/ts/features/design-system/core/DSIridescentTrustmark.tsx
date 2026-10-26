@@ -1,20 +1,16 @@
-import { H4, useIOTheme, VSpacer } from "@io-app/design-system";
+import { H4, VSpacer } from "@io-app/design-system";
 
 import { ItwStoredCredentialsMocks } from "../../itwallet/common/utils/itwMocksUtils";
 import { ItwCredentialTrustmark } from "../../itwallet/trustmark/components/ItwCredentialTrustmark";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
-export const DSIridescentTrustmark = () => {
-  const theme = useIOTheme();
-
-  return (
-    <DesignSystemScreen
-      title={DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title}
-    >
-      <H4 color={theme["textHeading-default"]}>Trustmark</H4>
-      <VSpacer />
-      <ItwCredentialTrustmark credential={ItwStoredCredentialsMocks.mdl} />
-    </DesignSystemScreen>
-  );
-};
+export const DSIridescentTrustmark = () => (
+  <DesignSystemScreen
+    title={DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title}
+  >
+    <H4>Trustmark</H4>
+    <VSpacer />
+    <ItwCredentialTrustmark credential={ItwStoredCredentialsMocks.mdl} />
+  </DesignSystemScreen>
+);

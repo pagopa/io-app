@@ -446,13 +446,13 @@ exports[`OrganizationHeader component should match the snapshot for a TPM denomi
                             style={
                               [
                                 {
-                                  "borderColor": "rgba(14,15,19,0.1)",
                                   "borderCurve": "continuous",
                                   "borderWidth": 1,
                                   "overflow": "hidden",
                                 },
                                 {
                                   "backgroundColor": "#FFFFFF",
+                                  "borderColor": "rgba(14,15,19,0.1)",
                                   "borderRadius": 8,
                                   "height": 44,
                                   "padding": 6,
@@ -465,11 +465,11 @@ exports[`OrganizationHeader component should match the snapshot for a TPM denomi
                               style={
                                 [
                                   {
-                                    "backgroundColor": "#FFFFFF",
                                     "borderCurve": "continuous",
                                     "overflow": "hidden",
                                   },
                                   {
+                                    "backgroundColor": "#FFFFFF",
                                     "borderRadius": 2,
                                   },
                                 ]
@@ -934,13 +934,13 @@ exports[`OrganizationHeader component should match the snapshot for a non third-
                             style={
                               [
                                 {
-                                  "borderColor": "rgba(14,15,19,0.1)",
                                   "borderCurve": "continuous",
                                   "borderWidth": 1,
                                   "overflow": "hidden",
                                 },
                                 {
                                   "backgroundColor": "#FFFFFF",
+                                  "borderColor": "rgba(14,15,19,0.1)",
                                   "borderRadius": 8,
                                   "height": 44,
                                   "padding": 6,
@@ -953,11 +953,11 @@ exports[`OrganizationHeader component should match the snapshot for a non third-
                               style={
                                 [
                                   {
-                                    "backgroundColor": "#FFFFFF",
                                     "borderCurve": "continuous",
                                     "overflow": "hidden",
                                   },
                                   {
+                                    "backgroundColor": "#FFFFFF",
                                     "borderRadius": 2,
                                   },
                                 ]

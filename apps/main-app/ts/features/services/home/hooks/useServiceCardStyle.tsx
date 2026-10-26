@@ -1,6 +1,6 @@
 import {
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   useIOTheme,
   useIOThemeContext
@@ -11,15 +11,15 @@ type ServiceCardStyleProps = {
   default: {
     card: ViewStyle;
     foreground: {
-      primary: IOColors;
-      secondary: IOColors;
+      primary: IOColorsLegacy;
+      secondary: IOColorsLegacy;
     };
   };
   new: {
     card: ViewStyle;
     foreground: {
-      primary: IOColors;
-      secondary: IOColors;
+      primary: IOColorsLegacy;
+      secondary: IOColorsLegacy;
     };
   };
   skeletonColor: ColorValue;
@@ -36,8 +36,8 @@ export const useServiceCardStyle = (): ServiceCardStyleProps => {
         borderRadius: IODimensions.radius.card,
         borderCurve: "continuous",
         borderWidth: IODimensions.stroke.default,
-        borderColor: IOColors[theme["cardBorder-default"]],
-        backgroundColor: IOColors[theme["appBackground-secondary"]]
+        borderColor: IOColorsLegacy[theme["cardBorder-default"]],
+        backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]]
       },
       foreground: {
         primary: theme["textHeading-secondary"],
@@ -48,12 +48,12 @@ export const useServiceCardStyle = (): ServiceCardStyleProps => {
       card: {
         borderColor:
           themeType === "light"
-            ? IOColors["hanPurple-100"]
-            : hexToRgba(IOColors["hanPurple-250"], 0.3),
+            ? IOColorsLegacy["hanPurple-100"]
+            : hexToRgba(IOColorsLegacy["hanPurple-250"], 0.3),
         backgroundColor:
           themeType === "light"
-            ? IOColors["hanPurple-50"]
-            : hexToRgba(IOColors["hanPurple-250"], 0.2)
+            ? IOColorsLegacy["hanPurple-50"]
+            : hexToRgba(IOColorsLegacy["hanPurple-250"], 0.2)
       },
       foreground: {
         primary: themeType === "light" ? "hanPurple-850" : "hanPurple-50",
@@ -61,6 +61,8 @@ export const useServiceCardStyle = (): ServiceCardStyleProps => {
       }
     },
     skeletonColor:
-      themeType === "light" ? IOColors["grey-200"] : IOColors["grey-850"]
+      themeType === "light"
+        ? IOColorsLegacy["grey-200"]
+        : IOColorsLegacy["grey-850"]
   };
 };

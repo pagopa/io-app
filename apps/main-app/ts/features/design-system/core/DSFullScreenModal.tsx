@@ -2,9 +2,10 @@ import {
   Body,
   ContentWrapper,
   H4,
-  hexToRgba,
-  IOColors,
-  IODimensions
+  IOColorPalette,
+  IODimensions,
+  useIOColors,
+  withAlpha
 } from "@io-app/design-system";
 import { ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -13,17 +14,18 @@ const bottomBarHeight = 70;
 
 export const DSFullScreenModal = () => {
   const insets = useSafeAreaInsets();
+  const colors = useIOColors();
 
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: IOColors.white
+        backgroundColor: colors.background.default
       }}
     >
       <ScrollView
         contentContainerStyle={{
-          backgroundColor: IOColors.white,
+          backgroundColor: colors.background.default,
           paddingVertical: IODimensions.padding.screen.default
         }}
       >
@@ -46,20 +48,22 @@ export const DSFullScreenModal = () => {
           bottom: 0,
           width: "100%",
           paddingHorizontal: IODimensions.padding.screen.default,
-          backgroundColor: hexToRgba(IOColors["blueIO-500"], 0.7),
+          backgroundColor: withAlpha(IOColorPalette.blueIO[500], 0.7),
           paddingBottom: insets.bottom
         }}
       >
         <View
           style={{
-            backgroundColor: hexToRgba(IOColors.black, 0.5),
+            backgroundColor: withAlpha(IOColorPalette.greyscale.black, 0.5),
             height: bottomBarHeight,
             width: "100%",
             alignItems: "center",
             justifyContent: "center"
           }}
         >
-          <Text style={{ color: IOColors.white }}>Fixed component</Text>
+          <Text style={{ color: IOColorPalette.greyscale.white }}>
+            Fixed component
+          </Text>
         </View>
       </View>
       {/* BOTTOM BAR: End */}

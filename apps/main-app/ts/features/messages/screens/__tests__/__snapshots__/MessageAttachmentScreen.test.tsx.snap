@@ -1005,7 +1005,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }
@@ -1019,7 +1018,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }

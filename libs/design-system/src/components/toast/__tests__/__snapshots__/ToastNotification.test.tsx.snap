@@ -11,6 +11,7 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -18,7 +19,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
       {
         "backgroundColor": "#E1F5FE",
         "borderColor": "rgba(33,92,118,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -124,6 +124,7 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -131,7 +132,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
       {
         "backgroundColor": "#FFD9D9",
         "borderColor": "rgba(93,19,19,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -172,6 +172,7 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -179,7 +180,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
       {
         "backgroundColor": "#E1F5FE",
         "borderColor": "rgba(33,92,118,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -220,6 +220,7 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -227,7 +228,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
       {
         "backgroundColor": "#E1F4E1",
         "borderColor": "rgba(34,64,33,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -268,6 +268,7 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -275,7 +276,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
       {
         "backgroundColor": "#FFF5DA",
         "borderColor": "rgba(97,76,21,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -316,6 +316,7 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -323,7 +324,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
       {
         "backgroundColor": "#E1F5FE",
         "borderColor": "rgba(33,92,118,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -429,6 +429,7 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -436,7 +437,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
       {
         "backgroundColor": "#FFD9D9",
         "borderColor": "rgba(93,19,19,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -477,6 +477,7 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -484,7 +485,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
       {
         "backgroundColor": "#E1F5FE",
         "borderColor": "rgba(33,92,118,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -525,6 +525,7 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -532,7 +533,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
       {
         "backgroundColor": "#E1F4E1",
         "borderColor": "rgba(34,64,33,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -573,6 +573,7 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -580,7 +581,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
       {
         "backgroundColor": "#FFF5DA",
         "borderColor": "rgba(97,76,21,0.5)",
-        "borderWidth": 1,
       },
     ]
   }

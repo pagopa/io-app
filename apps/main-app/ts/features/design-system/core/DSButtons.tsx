@@ -2,19 +2,19 @@ import {
   H2,
   H3,
   H4,
-  hexToRgba,
   HStack,
   IconButton,
   IconButtonSolid,
   IOButton,
   IOButtonColor,
   IOButtonVariant,
+  IOColorPalette,
   IOColors,
   IOIcons,
   ListItemSwitch,
-  useIOTheme,
   VSpacer,
-  VStack
+  VStack,
+  withAlpha
 } from "@io-app/design-system";
 import { Fragment, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
@@ -24,14 +24,14 @@ import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 const styles = StyleSheet.create({
   primaryBlock: {
-    backgroundColor: IOColors["blueIO-500"],
+    backgroundColor: IOColors.light.background.accent,
     padding: 16,
     borderRadius: 16
   },
   neutralBlock: {
     borderWidth: 1,
-    borderColor: hexToRgba(IOColors.black, 0.1),
-    backgroundColor: IOColors.white,
+    borderColor: withAlpha(IOColorPalette.greyscale.black, 0.1),
+    backgroundColor: IOColorPalette.greyscale.white,
     padding: 16,
     borderRadius: 16
   }
@@ -62,32 +62,28 @@ const buttonBlockMargin = 24;
 const buttonBlockMarginLoose = 40;
 const buttonBlockInnerSpacing = 12;
 
-export const DSButtons = () => {
-  const theme = useIOTheme();
-
-  return (
-    <DesignSystemScreen title={"Buttons"}>
-      <VStack space={sectionMargin}>
-        <VStack space={sectionTitleMargin}>
-          <H2 color={theme["textHeading-default"]}>IOButton</H2>
-          {renderSolidOutlineButton()}
-          <VSpacer size={buttonBlockMargin} />
-          {renderLinkButton()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>IconButton</H4>
-          {renderIconButton()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>IconButtonSolid</H4>
-          {renderIconButtonSolid()}
-        </VStack>
+export const DSButtons = () => (
+  <DesignSystemScreen title={"Buttons"}>
+    <VStack space={sectionMargin}>
+      <VStack space={sectionTitleMargin}>
+        <H2>IOButton</H2>
+        {renderSolidOutlineButton()}
+        <VSpacer size={buttonBlockMargin} />
+        {renderLinkButton()}
       </VStack>
-    </DesignSystemScreen>
-  );
-};
+
+      <VStack space={sectionTitleMargin}>
+        <H4>IconButton</H4>
+        {renderIconButton()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>IconButtonSolid</H4>
+        {renderIconButtonSolid()}
+      </VStack>
+    </VStack>
+  </DesignSystemScreen>
+);
 
 const renderSolidOutlineButton = () => (
   <VStack space={sectionMargin}>

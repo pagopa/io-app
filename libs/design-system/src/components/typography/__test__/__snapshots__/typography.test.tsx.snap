@@ -230,7 +230,7 @@ exports[`Test Typography Components ButtonText Snapshot 1`] = `
     [
       {},
       {
-        "color": "#FFFFFF",
+        "color": "#0B3EE3",
         "fontFamily": "Titillio",
         "fontSize": 16,
         "fontStyle": "normal",

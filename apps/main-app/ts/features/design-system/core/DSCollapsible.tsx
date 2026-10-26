@@ -2,7 +2,6 @@ import {
   AccordionItem,
   Body,
   H4,
-  useIOTheme,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -47,11 +46,9 @@ const assistanceData: Array<AccordionItem> = [
 ];
 
 export const DSCollapsible = () => {
-  const theme = useIOTheme();
-
   const renderAccordionHeader = () => (
     <View style={{ marginBottom: 24 }}>
-      <H4 color={theme["textHeading-default"]}>AccordionItem</H4>
+      <H4>AccordionItem</H4>
     </View>
   );
 

@@ -2,7 +2,7 @@ import { CartItem } from "@io-app/api-types/generated/definitions/pagopa/biz-eve
 import { NoticeDetailResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeDetailResponse";
 import {
   ContentWrapper,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   VStack
 } from "@io-app/design-system";
@@ -26,7 +26,7 @@ export const ReceiptHeadingSection = ({ transaction, isLoading }: Props) => {
   const navigation = useNavigation<ReceiptStackNavigation>();
 
   const theme = useIOTheme();
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
+  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
 
   const transactionInfo = transaction?.infoNotice;
 

@@ -3,7 +3,6 @@ import {
   HapticType,
   IOButton,
   triggerHaptic,
-  useIOTheme,
   VStack
 } from "@io-app/design-system";
 
@@ -21,24 +20,21 @@ const hapticFeedbacks: Array<HapticType> = [
   "selection"
 ];
 
-export const DSHapticFeedback = () => {
-  const theme = useIOTheme();
-  return (
-    <DesignSystemScreen title={"Haptic Feedback"}>
+export const DSHapticFeedback = () => (
+  <DesignSystemScreen title={"Haptic Feedback"}>
+    <VStack space={16}>
+      <H4>Feedback</H4>
       <VStack space={16}>
-        <H4 color={theme["textHeading-default"]}>Feedback</H4>
-        <VStack space={16}>
-          {hapticFeedbacks.map(feedback => (
-            <IOButton
-              fullWidth
-              key={feedback}
-              label={feedback}
-              onPress={() => triggerHaptic(feedback)}
-              variant="solid"
-            />
-          ))}
-        </VStack>
+        {hapticFeedbacks.map(feedback => (
+          <IOButton
+            fullWidth
+            key={feedback}
+            label={feedback}
+            onPress={() => triggerHaptic(feedback)}
+            variant="solid"
+          />
+        ))}
       </VStack>
-    </DesignSystemScreen>
-  );
-};
+    </VStack>
+  </DesignSystemScreen>
+);

@@ -404,7 +404,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                   jestAnimatedStyle={
                                     {
                                       "value": {
-                                        "backgroundColor": "rgba(157, 178, 244, 0)",
+                                        "backgroundColor": "rgba(11, 62, 227, 0)",
                                         "borderColor": "rgba(187, 194, 214, 1)",
                                         "transform": [
                                           {
@@ -457,7 +457,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         ],
                                       },
                                       {
-                                        "backgroundColor": "rgba(157, 178, 244, 0)",
+                                        "backgroundColor": "rgba(11, 62, 227, 0)",
                                         "borderColor": "rgba(187, 194, 214, 1)",
                                       },
                                       false,
@@ -615,7 +615,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                   jestAnimatedStyle={
                                     {
                                       "value": {
-                                        "backgroundColor": "rgba(157, 178, 244, 0.251)",
+                                        "backgroundColor": "rgba(11, 62, 227, 0.102)",
                                         "borderColor": "rgba(11, 62, 227, 0.502)",
                                         "transform": [
                                           {
@@ -668,7 +668,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         ],
                                       },
                                       {
-                                        "backgroundColor": "rgba(157, 178, 244, 0.251)",
+                                        "backgroundColor": "rgba(11, 62, 227, 0.102)",
                                         "borderColor": "rgba(11, 62, 227, 0.502)",
                                       },
                                       false,
@@ -1175,7 +1175,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                   jestAnimatedStyle={
                                     {
                                       "value": {
-                                        "backgroundColor": "rgba(157, 178, 244, 0.251)",
+                                        "backgroundColor": "rgba(11, 62, 227, 0.102)",
                                         "borderColor": "rgba(11, 62, 227, 0.502)",
                                         "transform": [
                                           {
@@ -1228,7 +1228,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         ],
                                       },
                                       {
-                                        "backgroundColor": "rgba(157, 178, 244, 0.251)",
+                                        "backgroundColor": "rgba(11, 62, 227, 0.102)",
                                         "borderColor": "rgba(11, 62, 227, 0.502)",
                                       },
                                       false,
@@ -1399,7 +1399,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                   jestAnimatedStyle={
                                     {
                                       "value": {
-                                        "backgroundColor": "rgba(157, 178, 244, 0)",
+                                        "backgroundColor": "rgba(11, 62, 227, 0)",
                                         "borderColor": "rgba(187, 194, 214, 1)",
                                         "transform": [
                                           {
@@ -1452,7 +1452,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         ],
                                       },
                                       {
-                                        "backgroundColor": "rgba(157, 178, 244, 0)",
+                                        "backgroundColor": "rgba(11, 62, 227, 0)",
                                         "borderColor": "rgba(187, 194, 214, 1)",
                                       },
                                       false,

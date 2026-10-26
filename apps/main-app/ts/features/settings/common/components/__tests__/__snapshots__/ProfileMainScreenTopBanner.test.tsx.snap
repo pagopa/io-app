@@ -132,7 +132,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               [
                 {},
                 {
-                  "color": "#0E0F13",
+                  "color": "#2B2E38",
                   "fontFamily": "Titillio",
                   "fontSize": 16,
                   "fontStyle": "normal",
@@ -591,7 +591,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             "padding": 16,
           },
           {
-            "backgroundColor": "rgba(255,102,102,0.2)",
+            "backgroundColor": "#FFD9D9",
           },
         ]
       }
@@ -603,7 +603,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             "padding": 16,
           },
           {
-            "backgroundColor": "rgba(255,102,102,0.2)",
+            "backgroundColor": "#FFD9D9",
           },
           {
             "transform": [
@@ -632,7 +632,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           align="xMidYMid"
           bbHeight={36}
           bbWidth={36}
-          color="#FFD9D9"
+          color="#5D1313"
           focusable={false}
           height={36}
           importantForAccessibility="no-hide-descendants"
@@ -709,7 +709,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 [
                   {},
                   {
-                    "color": "#FFD9D9",
+                    "color": "#5D1313",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
@@ -730,7 +730,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 [
                   {},
                   {
-                    "color": "#FFD9D9",
+                    "color": "#5D1313",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",

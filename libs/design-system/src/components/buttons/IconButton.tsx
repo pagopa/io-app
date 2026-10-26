@@ -5,13 +5,8 @@ import Animated, {
   useReducedMotion
 } from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import {
-  hexToRgba,
-  IOColors,
-  IOIconButtonStyles,
-  IOThemeLight
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IOColors, IOIconButtonStyles, IOOpacity } from "../../core";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import {
@@ -32,14 +27,6 @@ export type IconButton = WithTestID<{
   persistentColorMode?: boolean;
 }>;
 
-type ColorStates = {
-  icon: {
-    default: string;
-    disabled: string;
-    pressed: string;
-  };
-};
-
 export const IconButton = ({
   color = "primary",
   persistentColorMode = false,
@@ -51,53 +38,22 @@ export const IconButton = ({
   accessibilityHint,
   testID
 }: IconButton) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const { progress, onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("exaggerated");
   const reducedMotion = useReducedMotion();
 
-  const mapColorStates: Record<
-    NonNullable<IconButton["color"]>,
-    ColorStates
-  > = {
-    // Primary button
-    primary: {
-      icon: {
-        default: IOColors[theme["interactiveElem-default"]],
-        pressed: IOColors[theme["interactiveElem-pressed"]],
-        disabled: IOColors[theme["interactiveElem-disabled"]]
-      }
-    },
-    // Neutral button
-    neutral: {
-      icon: {
-        default: persistentColorMode
-          ? IOColors[IOThemeLight["neutralButton-default"]]
-          : IOColors[theme["neutralButton-default"]],
-        pressed: persistentColorMode
-          ? IOColors[IOThemeLight["neutralButton-pressed"]]
-          : IOColors[theme["neutralButton-pressed"]],
-        disabled: persistentColorMode
-          ? IOColors[IOThemeLight["neutralButton-disabled"]]
-          : IOColors[theme["neutralButton-disabled"]]
-      }
-    },
-    // Contrast button
-    contrast: {
-      icon: {
-        default: IOColors.white,
-        pressed: hexToRgba(IOColors.white, 0.85),
-        disabled: hexToRgba(IOColors.white, 0.25)
-      }
-    }
-  };
+  /* Legacy behavior: only `neutral` keeps the light colors */
+  const iconColors = (
+    persistentColorMode && color === "neutral" ? IOColors.light : colors
+  ).component.iconButton[color].foreground;
 
   // Animate the <Icon> color prop
   const animatedColor = useAnimatedProps(() => {
     const iconColor = interpolateColor(
       progress.value,
       [0, 1],
-      [mapColorStates[color].icon.default, mapColorStates[color].icon.pressed]
+      [iconColors.default, iconColors.pressed]
     );
     return { color: iconColor };
   });
@@ -126,21 +82,24 @@ export const IconButton = ({
         style={[
           IOIconButtonStyles.button,
           IOIconButtonStyles.buttonSizeSmall,
-          !disabled && !reducedMotion && scaleAnimatedStyle
+          // TODO: split into `disabled && { opacity }` when snapshots can be updated (folded to avoid churn)
+          disabled
+            ? { opacity: IOOpacity.disabled }
+            : !reducedMotion && scaleAnimatedStyle
         ]}
       >
         {!disabled ? (
           <AnimatedIconWithColorTransition
             allowFontScaling
             animatedProps={animatedColor}
-            color={mapColorStates[color]?.icon?.default}
+            color={iconColors.default}
             name={icon}
             size={iconSize}
           />
         ) : (
           <AnimatedIcon
             allowFontScaling
-            color={mapColorStates[color]?.icon?.disabled}
+            color={iconColors.disabled}
             name={icon}
             size={iconSize}
           />

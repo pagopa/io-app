@@ -1,4 +1,8 @@
-import { IOColors, IODimensions, ListItemHeader } from "@io-app/design-system";
+import {
+  IOColorsLegacy,
+  IODimensions,
+  ListItemHeader
+} from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { View } from "react-native";
 
@@ -23,7 +27,7 @@ export const DebugView = ({
       style={{
         paddingHorizontal: 24,
         paddingBottom: 12,
-        backgroundColor: IOColors["grey-100"],
+        backgroundColor: IOColorsLegacy["grey-100"],
         marginHorizontal: ignoreHorizontalMargins
           ? -IODimensions.padding.screen.default
           : 0

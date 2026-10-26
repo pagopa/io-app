@@ -2,7 +2,7 @@ import {
   hexToRgba,
   HStack,
   Icon,
-  IOColors,
+  IOColorsLegacy,
   IOText
 } from "@io-app/design-system";
 import _ from "lodash";
@@ -49,8 +49,8 @@ export const DebugDataIndicator = (props: DebugDataIndicatorProps) => {
   );
 };
 
-const debugItemBgColor = hexToRgba(IOColors["warning-500"], 0.4);
-const debugItemBorderColor = hexToRgba(IOColors["warning-850"], 0.1);
+const debugItemBgColor = hexToRgba(IOColorsLegacy["warning-500"], 0.4);
+const debugItemBorderColor = hexToRgba(IOColorsLegacy["warning-850"], 0.1);
 
 const styles = StyleSheet.create({
   wrapper: {

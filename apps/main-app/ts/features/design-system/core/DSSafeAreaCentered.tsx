@@ -1,10 +1,11 @@
 import {
   Body,
   H4,
-  hexToRgba,
-  IOColors,
+  IOColorPalette,
   IODimensions,
-  VStack
+  useIOColors,
+  VStack,
+  withAlpha
 } from "@io-app/design-system";
 import { Platform, ScrollView, Text, View } from "react-native";
 import {
@@ -14,13 +15,14 @@ import {
 
 export const DSSafeAreaCentered = () => {
   const insets = useSafeAreaInsets();
+  const colors = useIOColors();
   const fixedBottomBarHeight = 70;
 
   return (
     <SafeAreaView
       style={{
         flexGrow: 1,
-        backgroundColor: IOColors["error-100"],
+        backgroundColor: IOColorPalette.red[100],
         paddingBottom: fixedBottomBarHeight
       }}
     >
@@ -28,7 +30,7 @@ export const DSSafeAreaCentered = () => {
         alwaysBounceVertical={false}
         centerContent
         contentContainerStyle={[
-          { backgroundColor: IOColors.white },
+          { backgroundColor: colors.background.default },
           /* Android fallback because `centerContent`
               is only an iOS property */
           Platform.OS === "android" && {
@@ -54,7 +56,7 @@ export const DSSafeAreaCentered = () => {
           width: "100%",
           paddingBottom: insets.bottom,
           paddingHorizontal: IODimensions.padding.screen.default,
-          backgroundColor: hexToRgba(IOColors["blueIO-500"], 0.5)
+          backgroundColor: withAlpha(IOColorPalette.blueIO[500], 0.5)
         }}
       >
         <View
@@ -64,10 +66,12 @@ export const DSSafeAreaCentered = () => {
             justifyContent: "center",
             height: fixedBottomBarHeight,
             width: "100%",
-            backgroundColor: hexToRgba(IOColors.black, 0.8)
+            backgroundColor: withAlpha(IOColorPalette.greyscale.black, 0.8)
           }}
         >
-          <Text style={{ color: IOColors.white }}>Fixed component</Text>
+          <Text style={{ color: IOColorPalette.greyscale.white }}>
+            Fixed component
+          </Text>
         </View>
       </View>
       {/* Fixed Component: End */}

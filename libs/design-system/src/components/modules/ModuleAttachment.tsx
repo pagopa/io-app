@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { GestureResponderEvent, PressableProps } from "react-native";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -38,7 +38,7 @@ const ModuleAttachmentContent = ({
   ModuleAttachmentProps,
   "format" | "isFetching" | "testID" | "title"
 >) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
 
   return (
     <HStack
@@ -50,7 +50,7 @@ const ModuleAttachmentContent = ({
         style={{ alignItems: "flex-start", flexShrink: 1, flexGrow: 1 }}
       >
         <Body
-          color={theme["interactiveElem-default"]}
+          color={moduleColors.foreground.action}
           numberOfLines={2}
           weight="Semibold"
         >
@@ -64,7 +64,7 @@ const ModuleAttachmentContent = ({
         />
       ) : (
         <Icon
-          color={theme["interactiveElem-default"]}
+          color={moduleColors.foreground.action}
           name="chevronRightListItem"
           size={IODimensions.size.icon.chevron}
         />

@@ -2,7 +2,7 @@ import {
   Body,
   H6,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -33,8 +33,8 @@ export const GuidedTourPlayground = () => {
   const theme = useIOTheme();
   const { registerScrollRef, unregisterScrollRef } = useTourContext();
 
-  const cardBgColor = IOColors[theme["appBackground-secondary"]];
-  const fillerBgColor = IOColors[theme["appBackground-primary"]];
+  const cardBgColor = IOColorsLegacy[theme["appBackground-secondary"]];
+  const fillerBgColor = IOColorsLegacy[theme["appBackground-primary"]];
   const isCompleted = useIOSelector(state =>
     isTourCompletedSelector(state, PLAYGROUND_GROUP_ID)
   );

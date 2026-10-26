@@ -4,13 +4,12 @@ import {
   BodySmall,
   ContentWrapper,
   H3,
-  hexToRgba,
   HStack,
-  IOColors,
   IODimensions,
   RadioGroup,
-  useIOTheme,
-  VStack
+  useIOColors,
+  VStack,
+  withAlpha
 } from "@io-app/design-system";
 import {
   Blur,
@@ -71,7 +70,7 @@ const organizationsURIs = [
  */
 export const DSDynamicBackground = () => {
   const insets = useSafeAreaInsets();
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const screenSize = Dimensions.get("screen").width;
   const heroHeight: number = 350 + insets.top;
@@ -159,9 +158,9 @@ export const DSDynamicBackground = () => {
               size="medium"
             />
             <View style={{ alignSelf: "center", flexShrink: 1 }}>
-              <H3 color={theme["textBody-secondary"]}>{entityData?.name}</H3>
+              <H3 color={colors.text.content.secondary}>{entityData?.name}</H3>
               <BodySmall
-                color={theme["textBody-secondary"]}
+                color={colors.text.content.secondary}
                 style={{ opacity: 0.8 }}
                 weight="Regular"
               >
@@ -174,16 +173,13 @@ export const DSDynamicBackground = () => {
             style={{
               borderRadius: IODimensions.radius.avatar.medium,
               borderCurve: "continuous",
-              backgroundColor: IOColors[theme["appBackground-primary"]],
+              backgroundColor: colors.background.default,
               borderWidth: 1,
-              borderColor: hexToRgba(
-                IOColors[theme["textBody-secondary"]],
-                0.1
-              ),
+              borderColor: withAlpha(colors.text.content.secondary, 0.1),
               padding: 24
             }}
           >
-            <Body color={theme["textBody-secondary"]}>
+            <Body color={colors.text.content.secondary}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
               interdum fringilla ex id viverra. In fringilla, orci sed placerat
               egestas, nibh ligula pellentesque ex, ac ultrices orci massa
@@ -197,8 +193,8 @@ export const DSDynamicBackground = () => {
 
         <LinearGradient
           colors={[
-            IOColors[theme["appBackground-primary"]],
-            hexToRgba(IOColors[theme["appBackground-primary"]], 0)
+            colors.background.default,
+            withAlpha(colors.background.default, 0)
           ]}
           style={{
             height: scrollGradientHeight,

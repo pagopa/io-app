@@ -11,13 +11,13 @@ import {
 } from "@expo/ui/swift-ui/modifiers";
 import {
   getBolderFontWeight,
-  IOColors,
+  getTextColorValue,
   IOMaxFontSizeMultiplier,
   IOTypography,
   makeFontPostScriptName,
   useBoldTextEnabled,
-  useIONewTypeface,
-  useIOTheme
+  useIOColors,
+  useIONewTypeface
 } from "@io-app/design-system";
 import { useMemo } from "react";
 import { Platform, useWindowDimensions } from "react-native";
@@ -59,7 +59,7 @@ const SwiftUINumericText = ({
   value,
   weight = h1.weight
 }: AnimatedNumericTextProps) => {
-  const theme = useIOTheme();
+  const typographyColors = useIOColors().component.typography;
   const { newTypefaceEnabled } = useIONewTypeface();
   const boldEnabled = useBoldTextEnabled();
   const { fontScale } = useWindowDimensions();
@@ -74,7 +74,7 @@ const SwiftUINumericText = ({
   const computedWeight = boldEnabled ? getBolderFontWeight(weight) : weight;
 
   /* Unlike the other attributes, the default is only known at runtime */
-  const computedColor = color ?? theme[h1.colorToken];
+  const computedColor = color ?? typographyColors.h1;
 
   const modifiers = useMemo(
     () => [
@@ -87,7 +87,7 @@ const SwiftUINumericText = ({
         ),
         size: scaledSize
       }),
-      foregroundStyle(IOColors[computedColor]),
+      foregroundStyle(getTextColorValue(computedColor)),
       accessibilityLabelModifier(accessibilityLabel),
       contentTransition("numericText", { countsDown }),
       animation(Animation.spring(TRANSITION_SPRING), value),

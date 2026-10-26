@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme } from "@io-app/design-system";
+import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { Platform } from "react-native";
@@ -267,7 +267,7 @@ export const SendAarCieCardReadingComponent = ({
     <SafeAreaView
       style={[
         { flex: 1 },
-        { backgroundColor: IOColors[theme["appBackground-primary"]] }
+        { backgroundColor: IOColorsLegacy[theme["appBackground-primary"]] }
       ]}
     >
       <CieCardReadContent

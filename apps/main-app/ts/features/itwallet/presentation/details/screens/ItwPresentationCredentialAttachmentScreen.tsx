@@ -1,7 +1,7 @@
 import {
   FooterActions,
   FooterActionsMeasurements,
-  IOColors,
+  IOColorsLegacy,
   useIOToast
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -211,6 +211,6 @@ const styles = StyleSheet.create({
   pdfContainer: {
     flexGrow: 1,
     // TODO: Dark mode: Replace with theme values
-    backgroundColor: IOColors["grey-700"]
+    backgroundColor: IOColorsLegacy["grey-700"]
   }
 });

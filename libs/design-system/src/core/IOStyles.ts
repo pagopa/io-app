@@ -1,7 +1,6 @@
 import { BoxShadowValue, StyleSheet } from "react-native";
 
-import { hexToRgba, IOColors } from "./IOColors";
-import { IODimensions } from "./tokens";
+import { IOColorPalette, IODimensions, withAlpha } from "./tokens";
 
 const { padding, radius, size, stroke } = IODimensions;
 
@@ -12,21 +11,8 @@ export const footerBoxShadow = {
   offsetX: 0,
   offsetY: 0,
   blurRadius: 32,
-  color: hexToRgba(IOColors.black, 0.1)
+  color: withAlpha(IOColorPalette.greyscale.black, 0.1)
 } satisfies BoxShadowValue;
-
-export const IOStyles = StyleSheet.create({
-  // The following styles come from the original
-  // NativeBase's `View`. They are moved here to
-  // prevent UI regressions.
-  footer: {
-    backgroundColor: IOColors.white,
-    paddingBottom: padding.footer.vertical,
-    paddingHorizontal: padding.screen.default,
-    paddingTop: padding.footer.vertical,
-    boxShadow: [footerBoxShadow]
-  }
-});
 
 export const IOIconButtonStyles = StyleSheet.create({
   /* IconButton */
@@ -37,11 +23,6 @@ export const IOIconButtonStyles = StyleSheet.create({
   buttonSizeSmall: {
     width: size.iconButton.small,
     height: size.iconButton.small
-  },
-  buttonSizeDefault: {
-    width: size.iconButton.default,
-    height: size.iconButton.default,
-    borderRadius: size.iconButton.default
   },
   buttonSizeLarge: {
     width: size.iconButton.large,
@@ -68,7 +49,6 @@ export const IOListItemStyles = StyleSheet.create({
 export const IOModuleStyles = StyleSheet.create({
   button: {
     borderWidth: stroke.default,
-    borderColor: IOColors["grey-100"],
     borderRadius: radius.module,
     borderCurve: "continuous",
     flexDirection: "row",

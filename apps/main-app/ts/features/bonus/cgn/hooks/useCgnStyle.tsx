@@ -1,6 +1,6 @@
 import {
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   useIOThemeContext
 } from "@io-app/design-system";
@@ -11,11 +11,11 @@ type CgnStyleProps = {
     // It should be `ColorValue`, but we need to adapt the `useHeaderSecondLevel` hook first
     default: {
       backgroundColor: string;
-      foreground: IOColors;
+      foreground: IOColorsLegacy;
     };
     new: {
       backgroundColor: string;
-      foreground: IOColors;
+      foreground: IOColorsLegacy;
     };
   };
   module: {
@@ -42,28 +42,30 @@ export const useCgnStyle = (): CgnStyleProps => {
   return {
     module: {
       default: {
-        borderColor: IOColors[theme["cardBorder-default"]],
-        backgroundColor: IOColors[theme["appBackground-secondary"]]
+        borderColor: IOColorsLegacy[theme["cardBorder-default"]],
+        backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]]
       },
       new: {
         borderColor:
           themeType === "light"
-            ? IOColors["hanPurple-250"]
-            : hexToRgba(IOColors["hanPurple-250"], 0.35),
+            ? IOColorsLegacy["hanPurple-250"]
+            : hexToRgba(IOColorsLegacy["hanPurple-250"], 0.35),
         backgroundColor:
           themeType === "light"
-            ? IOColors["hanPurple-50"]
-            : hexToRgba(IOColors["hanPurple-250"], 0.2)
+            ? IOColorsLegacy["hanPurple-50"]
+            : hexToRgba(IOColorsLegacy["hanPurple-250"], 0.2)
       }
     },
     header: {
       default: {
-        backgroundColor: IOColors[theme["appBackground-secondary"]],
+        backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]],
         foreground: theme["textHeading-default"]
       },
       new: {
         backgroundColor:
-          themeType === "light" ? IOColors["hanPurple-50"] : hanPurple250_20,
+          themeType === "light"
+            ? IOColorsLegacy["hanPurple-50"]
+            : hanPurple250_20,
         foreground: theme["textHeading-default"]
       }
     }

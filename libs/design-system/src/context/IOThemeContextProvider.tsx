@@ -9,7 +9,8 @@ import {
 } from "react";
 import { Appearance, ColorSchemeName } from "react-native";
 
-import { IOTheme, IOThemeDark, IOThemeLight } from "../core/IOColors";
+import { IOTheme, IOThemeDark, IOThemeLight } from "../core/IOColorsLegacy";
+import { IOColorMode, IOColors, IOColorTheme } from "../core/tokens";
 
 export const IOThemes = {
   light: IOThemeLight,
@@ -17,14 +18,19 @@ export const IOThemes = {
 };
 
 type IOThemeContextType = {
+  /* Color tokens of the resolved mode */
+  colors: IOColorTheme;
   setTheme: (theme: ColorSchemeName) => void;
   theme: IOTheme;
-  themeType: ColorSchemeName;
+  /* The resolved mode: setting "unspecified" follows the system */
+  themeType: IOColorMode;
 };
 
 export const IOThemeContext: Context<IOThemeContextType> =
   createContext<IOThemeContextType>({
-    themeType: Appearance.getColorScheme() ?? "unspecified",
+    themeType: Appearance.getColorScheme() === "dark" ? "dark" : "light",
+    colors:
+      Appearance.getColorScheme() === "dark" ? IOColors.dark : IOColors.light,
     theme:
       Appearance.getColorScheme() === "dark" ? IOThemes.dark : IOThemes.light,
     setTheme: () => void 0
@@ -32,7 +38,10 @@ export const IOThemeContext: Context<IOThemeContextType> =
 
 export const useIOThemeContext = () => useContext(IOThemeContext);
 
+/** @deprecated Use `useIOColors`, will be removed in the next major release */
 export const useIOTheme = () => useIOThemeContext().theme;
+
+export const useIOColors = () => useIOThemeContext().colors;
 
 type IOThemeContextProviderProps = {
   theme?: ColorSchemeName;
@@ -55,13 +64,14 @@ export const IOThemeContextProvider = ({
     setCurrentTheme(newTheme);
   }, []);
 
-  const value = useMemo(
+  const value = useMemo<IOThemeContextType>(
     () => ({
-      themeType: currentTheme,
+      themeType: resolvedTheme === "dark" ? "dark" : "light",
       theme: resolvedTheme === "dark" ? IOThemes.dark : IOThemes.light,
+      colors: resolvedTheme === "dark" ? IOColors.dark : IOColors.light,
       setTheme: handleThemeChange
     }),
-    [currentTheme, resolvedTheme, handleThemeChange]
+    [resolvedTheme, handleThemeChange]
   );
 
   return (

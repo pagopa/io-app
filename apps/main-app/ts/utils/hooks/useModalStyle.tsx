@@ -1,10 +1,10 @@
-import { IOColors, useIOTheme, useIOThemeContext } from "@io-app/design-system";
-import { ColorValue, ViewStyle } from "react-native";
+import { IOColorsLegacy, useIOColors, useIOTheme } from "@io-app/design-system";
+import { ColorValue } from "react-native";
 
 type ModalStyleProps = {
   backdrop: {
+    /* Translucent: apply it at full opacity */
     backgroundColor: ColorValue;
-    opacity: number;
   };
   modal: {
     backgroundColor: ColorValue;
@@ -13,19 +13,15 @@ type ModalStyleProps = {
 
 /** Returns the common style used for modals */
 export const useModalStyle = (): ModalStyleProps => {
+  const colors = useIOColors();
   const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
-
-  const backdropOpacity: ViewStyle["opacity"] =
-    themeType === "light" ? 0.15 : 0.7;
 
   return {
     backdrop: {
-      opacity: backdropOpacity,
-      backgroundColor: IOColors.black
+      backgroundColor: colors.background.overlay
     },
     modal: {
-      backgroundColor: IOColors[theme["appBackground-primary"]]
+      backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
     }
   };
 };

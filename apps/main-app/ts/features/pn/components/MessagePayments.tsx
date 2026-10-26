@@ -5,7 +5,7 @@ import {
   IOSkeleton,
   ListItemHeader,
   ModulePaymentNotice,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { CommonActions, useNavigation } from "@react-navigation/native";
@@ -110,9 +110,9 @@ export const MessagePayments = ({
   sendUserType
 }: MessagePaymentsProps) => {
   const navigation = useNavigation();
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
-  const pagoPAIconColor = theme["italyBrand-default"];
+  const pagoPAIconColor = colors.icon.pagopa;
 
   const paymentsButtonStatus = useIOSelector(state =>
     paymentsButtonStateSelector(

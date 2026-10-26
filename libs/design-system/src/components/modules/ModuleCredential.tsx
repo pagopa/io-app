@@ -6,7 +6,7 @@ import {
   StyleSheet
 } from "react-native";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
@@ -64,7 +64,7 @@ const ModuleContent = ({
   Pick<ImageProps, "icon" | "image"> & {
     endComponent: ReactNode;
   }) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
   return (
@@ -80,7 +80,7 @@ const ModuleContent = ({
         {icon && !hugeFontEnabled ? (
           <Icon
             allowFontScaling
-            color={theme["icon-decorative"]}
+            color={moduleColors.foreground.icon}
             name={icon}
             size={IODimensions.size.icon.module.leading}
           />
@@ -95,7 +95,7 @@ const ModuleContent = ({
         )}
 
         <BodySmall
-          color={theme["interactiveElem-default"]}
+          color={moduleColors.foreground.action}
           numberOfLines={2}
           style={{ flexShrink: 1 }}
           weight="Semibold"
@@ -118,7 +118,7 @@ const ModuleCredentialContent = ({
   isFetching,
   ...pressableProps
 }: WithTestID<ModuleCredentialProps>) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
 
   const endComponent = useMemo(() => {
     const activityIndicatorTestID = testID
@@ -139,7 +139,7 @@ const ModuleCredentialContent = ({
             </>
           ) : (
             <Icon
-              color={theme["interactiveElem-default"]}
+              color={moduleColors.foreground.action}
               name="chevronRightListItem"
               size={IODimensions.size.icon.chevron}
               testID={chevronTestID}
@@ -147,7 +147,7 @@ const ModuleCredentialContent = ({
           ))}
       </HStack>
     ) : null;
-  }, [testID, theme, isFetching, badge, onPress]);
+  }, [testID, moduleColors, isFetching, badge, onPress]);
 
   return onPress ? (
     <PressableModuleBase {...pressableProps} onPress={onPress} testID={testID}>
