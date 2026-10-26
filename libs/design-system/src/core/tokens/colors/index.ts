@@ -30,6 +30,7 @@ import { headerColors } from "../../../components/headers/colors";
 import { dividerColors, footerColors } from "../../../components/layout/colors";
 import { listItemColors } from "../../../components/listitems/colors";
 import { loadingSpinnerColors } from "../../../components/loadingSpinner/colors";
+import { codeBlockColors } from "../../../components/markdown/colors";
 import { moduleColors } from "../../../components/modules/colors";
 import { numberButtonColors } from "../../../components/numberpad/colors";
 import { otpInputColors } from "../../../components/otpInput/colors";
@@ -71,6 +72,7 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     banner: bannerColors(s, mode),
     button: buttonColors(s),
     checkbox: checkboxColors(s),
+    codeBlock: codeBlockColors(s),
     codeInput: codeInputColors(s),
     divider: dividerColors(s),
     featureInfo: featureInfoColors(s),
