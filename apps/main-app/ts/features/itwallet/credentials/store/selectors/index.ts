@@ -286,19 +286,8 @@ export const itwCredentialStatusSelector = createSelector(
  */
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
-  (eid): ItwEidStatus | undefined => {
-    if (!eid) {
-      return undefined;
-    }
-    if (getCredentialStatus(eid) === "invalid") {
-      return "invalid";
-    }
-    // Other Status List statuses (e.g. suspended) don't apply to the eID
-    return getCredentialStatus({
-      ...eid,
-      validity: undefined
-    }) as ItwJwtCredentialStatus;
-  }
+  (eid): ItwEidStatus | undefined =>
+    eid ? (getCredentialStatus(eid) as ItwJwtCredentialStatus) : undefined
 );
 
 /**
