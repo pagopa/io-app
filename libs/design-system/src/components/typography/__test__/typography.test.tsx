@@ -2,14 +2,10 @@ import { render } from "@testing-library/react-native";
 import { ComponentProps } from "react";
 import { Alert } from "react-native";
 
-import type { IOColorsLegacy } from "../../../core/IOColors";
-
-import { IOFontWeight } from "../../../utils/fonts";
 import { Body } from "../Body";
 import { BodyMonospace } from "../BodyMonospace";
 import { BodySmall } from "../BodySmall";
 import { ButtonText } from "../ButtonText";
-import { calculateWeightColor } from "../common";
 import { H1 } from "../H1";
 import { H2 } from "../H2";
 import { H3 } from "../H3";
@@ -103,31 +99,5 @@ describe("Test Typography Components", () => {
       <BodyMonospace>Text</BodyMonospace>
     );
     expect(BodyMonospaceDefault()).toMatchSnapshot();
-  });
-});
-
-describe("Test Typography common", () => {
-  it("Test calculateWeightColor behaviour", () => {
-    const noValues = calculateWeightColor<IOFontWeight, IOColorsLegacy>(
-      "Bold",
-      "error-600"
-    );
-    expect(noValues.color).toBe("error-600");
-    expect(noValues.weight).toBe("Bold");
-
-    const weightProvided = calculateWeightColor<IOFontWeight, IOColorsLegacy>(
-      "Bold",
-      "error-600",
-      "Regular"
-    );
-    expect(weightProvided.color).toBe("error-600");
-    expect(weightProvided.weight).toBe("Regular");
-
-    const allValuesProvided = calculateWeightColor<
-      IOFontWeight,
-      IOColorsLegacy
-    >("Bold", "error-600", "Regular", "grey-700");
-    expect(allValuesProvided.color).toBe("grey-700");
-    expect(allValuesProvided.weight).toBe("Regular");
   });
 });

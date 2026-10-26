@@ -18,6 +18,7 @@ import {
   MdH1,
   MdH2,
   MdH3,
+  useIOColors,
   useIOTheme,
   VSpacer,
   VStack
@@ -148,6 +149,7 @@ const H6Row = () => {
 
 const ButtonTextRow = () => {
   const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <HStack space={16} style={{ flexWrap: "wrap" }}>
@@ -160,7 +162,9 @@ const ButtonTextRow = () => {
           backgroundColor: IOColorsLegacy[theme["appBackground-accent"]]
         }}
       >
-        <ButtonText>ButtonText</ButtonText>
+        <ButtonText color={colors.foreground.onAccent.default}>
+          ButtonText
+        </ButtonText>
       </View>
     </HStack>
   );

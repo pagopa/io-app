@@ -1,7 +1,7 @@
 import type React from "react";
 import type { TextStyle } from "react-native";
 
-import type { IOColorsLegacy } from "../../core";
+import type { IORoleColor } from "../../core";
 
 /** Partial record of render rules. Only the provided keys override the defaults. */
 export type IOMarkdownRenderRules = Partial<
@@ -55,7 +55,7 @@ export type RenderContext = {
   /** Applied to paragraph segments */
   fontSize: TextStyle["fontSize"];
   lineHeight: TextStyle["lineHeight"];
-  linkColor: IOColorsLegacy;
+  linkColor: IORoleColor<"foreground">;
   onLinkPress?: (url: string) => void;
   /** Applied to paragraph */
   textAlign: TextStyle["textAlign"];

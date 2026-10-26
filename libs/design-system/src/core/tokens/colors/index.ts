@@ -43,6 +43,7 @@ import { tagColors } from "../../../components/tag/colors";
 import { textInputColors } from "../../../components/textInput/colors";
 import { toastColors } from "../../../components/toast/colors";
 import { tooltipColors } from "../../../components/tooltip/colors";
+import { typographyColors } from "../../../components/typography/colors";
 import { dark, IOColorMode, IOColorSemantics, light } from "./semantic";
 
 export * from "./palette";
@@ -93,7 +94,8 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     tag: tagColors(s),
     textInput: textInputColors(s),
     toast: toastColors(withRoles(light), mode),
-    tooltip: tooltipColors(s)
+    tooltip: tooltipColors(s),
+    typography: typographyColors(s)
   }
 });
 
