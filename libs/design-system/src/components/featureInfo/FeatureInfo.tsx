@@ -1,17 +1,12 @@
 import { ReactNode } from "react";
 import { AccessibilityRole, GestureResponderEvent } from "react-native";
 
-import {
-  Body,
-  HStack,
-  Icon,
-  IOIcons,
-  IOPictogramsProps,
-  Pictogram,
-  VStack
-} from "../../components";
 import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
+import { Icon, IOIcons } from "../icons";
+import { HStack, VStack } from "../layout";
+import { IOPictogramsProps, Pictogram } from "../pictograms";
+import { Body } from "../typography";
 
 type FeatureInfoActionProps =
   | {

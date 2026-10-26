@@ -1,6 +1,6 @@
 import type { ColorValue } from "react-native";
 
-import {
+import type {
   IOColorRole,
   IOColorValue,
   IOHexColors,
