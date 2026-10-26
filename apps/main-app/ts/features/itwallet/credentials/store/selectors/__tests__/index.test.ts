@@ -149,7 +149,7 @@ describe("itwCredentialsEidStatusSelector", () => {
   test.each([
     { name: "valid", status: "valid", expected: "valid" },
     { name: "invalid", status: "invalid", expected: "invalid" },
-    { name: "suspended", status: "suspended", expected: "valid" }
+    { name: "suspended", status: "suspended", expected: "suspended" }
   ])(
     "should map the $name PID Status List status to $expected",
     ({ status, expected }) => {
