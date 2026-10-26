@@ -2,7 +2,7 @@ import { Component } from "react";
 import { ColorValue } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { IOColorsLegacy } from "../../core/IOColors";
+import { IOColorsLegacy } from "../../core/IOColorsLegacy";
 import { IODimensions, IOTokenColor } from "../../core/tokens";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 /* Icons */

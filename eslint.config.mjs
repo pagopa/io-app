@@ -437,7 +437,7 @@ export default defineConfig([
     files: [
       "**/src/components/{icons,pictograms}/svg/**/*.tsx",
       "**/src/components/logos/**/*.tsx",
-      "**/src/core/IOColors.ts",
+      "**/src/core/IOColorsLegacy.ts",
       "**/src/core/tokens/colors/palette.ts"
     ],
 

@@ -106,8 +106,8 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
 export type IOColorTheme = ReturnType<typeof theme>;
 
 /**
- * Color tokens of each mode: the Figma semantic tokens, plus the component
- * colors under `component`.
+ * Color tokens of each mode: the design tool's semantic tokens, plus the
+ * component colors under `component`.
  */
 export const IOColors: Record<IOColorMode, IOColorTheme> = {
   light: theme(withRoles(light), "light"),

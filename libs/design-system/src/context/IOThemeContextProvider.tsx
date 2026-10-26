@@ -9,7 +9,7 @@ import {
 } from "react";
 import { Appearance, ColorSchemeName } from "react-native";
 
-import { IOTheme, IOThemeDark, IOThemeLight } from "../core/IOColors";
+import { IOTheme, IOThemeDark, IOThemeLight } from "../core/IOColorsLegacy";
 import { IOColors, IOColorTheme } from "../core/tokens";
 
 export const IOThemes = {
