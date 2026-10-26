@@ -27,7 +27,7 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
   CredentialMetadata,
   ItwCredentialStatus,
-  ItwJwtCredentialStatus
+  ItwEidStatus
 } from "../../../common/utils/itwTypesUtils.ts";
 import { useCredentialStatusMessage } from "../../../credentials/hooks/useCredentialStatusMessage";
 import {
@@ -66,7 +66,7 @@ type CredentialAlertEvents = "open_bottom_sheet" | "press_cta" | "tap_banner";
 
 type CredentialAlertProps = {
   credentialStatus: ItwCredentialStatus | undefined;
-  eidStatus: ItwJwtCredentialStatus | undefined;
+  eidStatus: ItwEidStatus | undefined;
   isItwL3: boolean;
   isMdlSuspended?: boolean;
   isOffline: boolean;
@@ -556,6 +556,10 @@ const IssuerDynamicErrorAlert = ({
   });
 
   const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
+
+  if (!message?.description?.trim()) {
+    return <Alert content={localizedMessage.title} variant="error" />;
+  }
 
   return (
     <>

@@ -1,13 +1,6 @@
 import { SagaIterator } from "redux-saga";
-import {
-  call,
-  fork,
-  put,
-  select,
-  take,
-  takeLatest
-} from "typed-redux-saga/macro";
-import { Action, ActionType, isActionOf } from "typesafe-actions";
+import { call, fork, select, take } from "typed-redux-saga/macro";
+import { Action, isActionOf } from "typesafe-actions";
 
 import { setConnectionStatus } from "../../../connectivity/store/actions";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
@@ -23,7 +16,6 @@ import { handleItwCredentialsVaultCoherenceSaga } from "../../credentials/saga/h
 import { handleItwCredentialsVaultMigrationSaga } from "../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
 import { handleKeyAttestationsCleanUp } from "../../credentials/saga/handleKeyAttestationsCleanUp";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors/index";
 import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index";
 import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
@@ -39,20 +31,31 @@ import {
   watchItwStatusListAuthenticatedSaga
 } from "../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
-import {
-  itwSetAuthLevel,
-  itwSetFiscalCodeWhitelisted
-} from "../store/actions/preferences";
-import { isItwCredential } from "../utils/itwCredentialUtils";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineSaga } from "./offlineAccess";
 
+/**
+ * Waits for an internet connection to be established before proceeding. If the
+ * app is already connected, it returns immediately. Otherwise, it waits for a
+ * `setConnectionStatus` action with a payload of `true`.
+ *
+ * @returns A generator that yields until an internet connection is available.
+ */
+export function* waitForConnection() {
+  const isConnected = yield* select(isConnectedSelector);
+
+  if (isConnected) {
+    return;
+  }
+
+  yield* take(
+    (action: Action): action is ReturnType<typeof setConnectionStatus> =>
+      isActionOf(setConnectionStatus, action) && action.payload === true
+  );
+}
+
 /** Watcher for ITW sagas that require internet connection and a valid session */
 export function* watchItwAuthenticatedSaga(): SagaIterator {
-  yield* takeLatest(
-    itwSetFiscalCodeWhitelisted,
-    handleAuthLevelSanitizationSaga
-  );
   // Watch for changes in the ITW lifecycle to keep the wallet in sync
   yield* fork(watchItwLifecycleSaga);
   // Fetch and process the Digital Credentials Catalogue
@@ -118,60 +121,4 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(warmUpIntegrityServiceSaga);
   // Run Status List check and refresh sagas
   yield* call(handleItwStatusListSaga);
-}
-
-/**
- * Sanitizes the authentication level to fix an inconsistency introduced by a
- * regression in app version 3.21.
- *
- * This saga ensures that users with an L3 PID credential (assurance_level =
- * high) have their `auth_level` correctly set to 'L3'.
- *
- * The sanitization is skipped for whitelisted users (when `action.payload` is
- * `true`).
- *
- * @param action - The action dispatched when the fiscal code whitelist status
- *   changes.
- *
- *   TODO: This check can be safely removed once the minimum supported app
- *   version is greater than 3.21
- */
-const handleAuthLevelSanitizationSaga = function* (
-  action: ActionType<typeof itwSetFiscalCodeWhitelisted>
-): SagaIterator {
-  if (action.payload) {
-    // Skip the sanitization for whitelisted users
-    return;
-  }
-
-  // Check whether the user has an IT-Wallet PID credential
-  const eid = yield* select(itwCredentialsEidSelector);
-  const hasItwPID = eid !== undefined && isItwCredential(eid);
-
-  if (!hasItwPID) {
-    // No L3 PID found, no need to sanitize
-    return;
-  }
-
-  yield* put(itwSetAuthLevel("L3"));
-};
-
-/**
- * Waits for an internet connection to be established before proceeding. If the
- * app is already connected, it returns immediately. Otherwise, it waits for a
- * `setConnectionStatus` action with a payload of `true`.
- *
- * @returns A generator that yields until an internet connection is available.
- */
-export function* waitForConnection() {
-  const isConnected = yield* select(isConnectedSelector);
-
-  if (isConnected) {
-    return;
-  }
-
-  yield* take(
-    (action: Action): action is ReturnType<typeof setConnectionStatus> =>
-      isActionOf(setConnectionStatus, action) && action.payload === true
-  );
 }

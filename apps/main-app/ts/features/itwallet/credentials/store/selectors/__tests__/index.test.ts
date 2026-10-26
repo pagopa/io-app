@@ -10,6 +10,7 @@ import {
 import {
   itwCredentialsByTypeSelector,
   itwCredentialsEidSelector,
+  itwCredentialsEidStatusSelector,
   itwCredentialSelector,
   itwCredentialsListByTypeSelector,
   itwCredentialsSelector,
@@ -136,6 +137,43 @@ describe("itwCredentialsEidSelector", () => {
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense
     });
     expect(itwCredentialsEidSelector(state)).toBeUndefined();
+  });
+});
+
+describe("itwCredentialsEidStatusSelector", () => {
+  const validJwt = {
+    issuedAt: "2024-09-30T07:32:49.000Z",
+    expiration: "2999-09-30T07:32:50.000Z"
+  };
+
+  test.each([
+    { name: "valid", status: "valid", expected: "valid" },
+    { name: "invalid", status: "invalid", expected: "invalid" },
+    { name: "suspended", status: "suspended", expected: "suspended" }
+  ])(
+    "should map the $name PID Status List status to $expected",
+    ({ status, expected }) => {
+      const state = getStateWithCredentials({
+        [mockedEid.credentialId]: {
+          ...mockedEid,
+          jwt: validJwt,
+          validity: {
+            type: "status_list",
+            status,
+            rawStatus: "0x00",
+            statusList: { uri: "https://status.list", idx: 1 }
+          }
+        }
+      });
+      expect(itwCredentialsEidStatusSelector(state)).toBe(expected);
+    }
+  );
+
+  it("should fall back to the JWT status without a Status List", () => {
+    const state = getStateWithCredentials({
+      [mockedEid.credentialId]: mockedEid
+    });
+    expect(itwCredentialsEidStatusSelector(state)).toBe("jwtExpired");
   });
 });
 

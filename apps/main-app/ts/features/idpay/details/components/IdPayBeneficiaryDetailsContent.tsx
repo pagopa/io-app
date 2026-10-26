@@ -317,7 +317,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             {initiativeDetails.voucherStatus !== VoucherStatusEnum.USED &&
               initiativeDetails.voucherStatus !== VoucherStatusEnum.EXPIRED && (
                 <ListItemAction
-                  icon="docAttach"
+                  icon="attachment"
                   label={I18n.t(
                     "idpay.initiative.beneficiaryDetails.buttons.staticCode"
                   )}
@@ -380,9 +380,9 @@ const BeneficiaryDetailsContentSkeleton = () => (
         {Array.from({ length: 2 }).map((_, j) => (
           <View key={j}>
             <ListItemTransaction
+              description=""
               isLoading
-              subtitle=""
-              title=""
+              label=""
               transaction={{
                 amountAccessibilityLabel: "",
                 amount: "0"

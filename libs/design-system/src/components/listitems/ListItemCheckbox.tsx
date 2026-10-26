@@ -11,7 +11,7 @@ import {
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
-import { AnimatedCheckbox } from "../checkbox/AnimatedCheckbox";
+import { Checkbox } from "../checkbox/Checkbox";
 import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
@@ -19,9 +19,9 @@ import { BodySmall, H6 } from "../typography";
 type Props = {
   description?: string;
   icon?: IOIcons;
+  label: string;
   onValueChange?: (newValue: boolean) => void;
   selected?: boolean;
-  value: string;
 };
 
 const DISABLED_OPACITY = 0.5;
@@ -41,7 +41,7 @@ type ListItemCheckboxProps = Pick<
  * @param props
  */
 export const ListItemCheckbox = ({
-  value,
+  label,
   description,
   icon,
   selected,
@@ -63,8 +63,8 @@ export const ListItemCheckbox = ({
   // Accessibility
   // Comma = Small pause when announcing content
   const fallbackAccessibilityLabel = description
-    ? `${value}, ${description}`
-    : value;
+    ? `${label}, ${description}`
+    : label;
 
   const toggleCheckbox = () => {
     triggerHaptic("impactLight");
@@ -122,7 +122,7 @@ export const ListItemCheckbox = ({
                 />
               )}
               <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
-                {value}
+                {label}
               </H6>
             </View>
             <HSpacer size={8} />
@@ -131,7 +131,7 @@ export const ListItemCheckbox = ({
               importantForAccessibility="no-hide-descendants"
               pointerEvents="none"
             >
-              <AnimatedCheckbox
+              <Checkbox
                 checked={selected ?? toggleValue}
                 size={IOSelectionTickVisualParams.size * dynamicFontScale}
               />
