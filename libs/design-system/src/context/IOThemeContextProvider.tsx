@@ -18,19 +18,17 @@ export const IOThemes = {
 };
 
 type IOThemeContextType = {
-  /* The resolved mode: `themeType` can be "unspecified" */
-  colorMode: IOColorMode;
   /* Color tokens of the resolved mode */
   colors: IOColorTheme;
   setTheme: (theme: ColorSchemeName) => void;
   theme: IOTheme;
-  themeType: ColorSchemeName;
+  /* The resolved mode: setting "unspecified" follows the system */
+  themeType: IOColorMode;
 };
 
 export const IOThemeContext: Context<IOThemeContextType> =
   createContext<IOThemeContextType>({
-    themeType: Appearance.getColorScheme() ?? "unspecified",
-    colorMode: Appearance.getColorScheme() === "dark" ? "dark" : "light",
+    themeType: Appearance.getColorScheme() === "dark" ? "dark" : "light",
     colors:
       Appearance.getColorScheme() === "dark" ? IOColors.dark : IOColors.light,
     theme:
@@ -44,9 +42,6 @@ export const useIOThemeContext = () => useContext(IOThemeContext);
 export const useIOTheme = () => useIOThemeContext().theme;
 
 export const useIOColors = () => useIOThemeContext().colors;
-
-/* The resolved mode, unlike `themeType`: use it instead of `themeType === "dark"` */
-export const useIOColorMode = () => useIOThemeContext().colorMode;
 
 type IOThemeContextProviderProps = {
   theme?: ColorSchemeName;
@@ -71,13 +66,12 @@ export const IOThemeContextProvider = ({
 
   const value = useMemo<IOThemeContextType>(
     () => ({
-      themeType: currentTheme,
-      colorMode: resolvedTheme === "dark" ? "dark" : "light",
+      themeType: resolvedTheme === "dark" ? "dark" : "light",
       theme: resolvedTheme === "dark" ? IOThemes.dark : IOThemes.light,
       colors: resolvedTheme === "dark" ? IOColors.dark : IOColors.light,
       setTheme: handleThemeChange
     }),
-    [currentTheme, resolvedTheme, handleThemeChange]
+    [resolvedTheme, handleThemeChange]
   );
 
   return (
