@@ -71,9 +71,7 @@ const OneIdentityCieAuthorizationWebViewContent = ({
   const handleGoBack = useCallback(
     () =>
       showAlert(() => {
-        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-          screen: AUTHENTICATION_ROUTES.LANDING
-        });
+        navigation.popTo(AUTHENTICATION_ROUTES.LANDING);
       }),
     [showAlert, navigation]
   );
