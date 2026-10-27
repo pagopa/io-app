@@ -1,4 +1,3 @@
-import { StackActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
@@ -9,7 +8,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import CieExpiredOrInvalidScreen from "../CieExpiredOrInvalidScreen";
 
-const mockDispatch = jest.fn();
+const mockPopToTop = jest.fn();
 
 jest.mock("../../../../../../navigation/params/AppParamsList", () => {
   const actual = jest.requireActual(
@@ -18,7 +17,7 @@ jest.mock("../../../../../../navigation/params/AppParamsList", () => {
   return {
     ...actual,
     useIONavigation: () => ({
-      dispatch: mockDispatch
+      popToTop: mockPopToTop
     })
   };
 });
@@ -45,13 +44,11 @@ describe("CieExpiredOrInvalidScreen", () => {
     expect(getByText(I18n.t("global.buttons.close"))).toBeTruthy();
   });
 
-  it("should navigate to LANDING screen when pressing close", () => {
+  it("should pop to top when pressing close", () => {
     const { getByText } = renderComponent();
     fireEvent.press(getByText(I18n.t("global.buttons.close")));
 
-    expect(mockDispatch).toHaveBeenCalledWith(
-      StackActions.popTo(AUTHENTICATION_ROUTES.LANDING)
-    );
+    expect(mockPopToTop).toHaveBeenCalledTimes(1);
   });
 });
 

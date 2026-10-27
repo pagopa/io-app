@@ -1,4 +1,3 @@
-import { StackActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
@@ -21,10 +20,10 @@ jest.mock("../../../../common/hooks/useCieLoginMethodSelection", () => ({
   })
 }));
 
-const mockDispatch = jest.fn();
+const mockPopToTop = jest.fn();
 jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
   ...jest.requireActual("../../../../../../navigation/params/AppParamsList"),
-  useIONavigation: () => ({ dispatch: mockDispatch })
+  useIONavigation: () => ({ popToTop: mockPopToTop })
 }));
 
 describe("OneIdentityIdpSelectionFailureContent", () => {
@@ -60,14 +59,12 @@ describe("OneIdentityIdpSelectionFailureContent", () => {
     expect(queryByTestId("idp-loading-error-secondary-action")).toBeTruthy();
   });
 
-  it("should navigate to the landing screen when pressing the secondary action", () => {
+  it("should pop to top when pressing the secondary action", () => {
     const { getByTestId } = renderComponent();
 
     fireEvent.press(getByTestId("idp-loading-error-secondary-action"));
 
-    expect(mockDispatch).toHaveBeenCalledWith(
-      StackActions.popTo(AUTHENTICATION_ROUTES.LANDING)
-    );
+    expect(mockPopToTop).toHaveBeenCalledTimes(1);
   });
 
   it("should track trackCieLoginSelected and request the CIE login when pressing the primary action while not in an active session", () => {
