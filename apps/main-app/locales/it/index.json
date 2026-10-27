@@ -4168,10 +4168,12 @@
       "message": {
         "archive": "archiviare",
         "description": "{{newMessage}} {{selected}}, ricevuto da {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}",
+        "deselectAction": "Deseleziona messaggio",
         "deselectInstructions": "Tieni premuto per deselezionare",
         "read": "Messaggio",
         "received_at": "ricevuto alle ore",
         "received_on": "ricevuto il",
+        "selectAction": "Seleziona messaggio",
         "selectInstructions": "Tieni premuto per selezionare e in seguito",
         "selected": "selezionato",
         "unarchive": "disarchiviare",
