@@ -845,7 +845,8 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                     }
                                     accessible={false}
                                     collapsable={false}
-                                    focusable={true}
+                                    focusable={false}
+                                    importantForAccessibility="no"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
@@ -913,9 +914,6 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                       }
                                     >
                                       <View
-                                        accessibilityLabel="Come si accede? Abbiamo preparato una guida per aiutarti passo passo. Leggi come fare"
-                                        accessibilityRole="link"
-                                        accessible={true}
                                         style={
                                           {
                                             "alignSelf": "center",
@@ -924,50 +922,62 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                           }
                                         }
                                       >
-                                        <Text
-                                          allowFontScaling={true}
-                                          dynamicTypeRamp="headline"
-                                          maxFontSizeMultiplier={1.5}
-                                          style={
-                                            [
-                                              {},
-                                              {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                                "lineHeight": 24,
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          Come si accede?
-                                        </Text>
-                                        <Text
-                                          allowFontScaling={true}
-                                          dynamicTypeRamp="footnote"
-                                          maxFontSizeMultiplier={1.5}
-                                          style={
-                                            [
-                                              {},
-                                              {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 14,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                                "lineHeight": 21,
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          Abbiamo preparato una guida per aiutarti passo passo.
-                                        </Text>
                                         <View
-                                          accessibilityElementsHidden={true}
+                                          accessibilityLabel="Come si accede? Abbiamo preparato una guida per aiutarti passo passo."
+                                          accessibilityRole="text"
+                                          accessible={true}
+                                          style={
+                                            {
+                                              "gap": 4,
+                                            }
+                                          }
+                                        >
+                                          <Text
+                                            accessible={false}
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="headline"
+                                            maxFontSizeMultiplier={1.5}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#0E0F13",
+                                                  "fontFamily": "Titillio",
+                                                  "fontSize": 16,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 24,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            Come si accede?
+                                          </Text>
+                                          <Text
+                                            accessible={false}
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="footnote"
+                                            maxFontSizeMultiplier={1.5}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#555C70",
+                                                  "fontFamily": "Titillio",
+                                                  "fontSize": 14,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "400",
+                                                  "lineHeight": 21,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            Abbiamo preparato una guida per aiutarti passo passo.
+                                          </Text>
+                                        </View>
+                                        <View
                                           accessibilityLabel="Leggi come fare"
-                                          accessibilityRole="button"
+                                          accessibilityRole="link"
                                           accessibilityState={
                                             {
                                               "busy": undefined,
@@ -988,7 +998,6 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                           accessible={true}
                                           collapsable={false}
                                           focusable={true}
-                                          importantForAccessibility="no-hide-descendants"
                                           onBlur={[Function]}
                                           onClick={[Function]}
                                           onFocus={[Function]}
@@ -998,7 +1007,6 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                           onResponderTerminate={[Function]}
                                           onResponderTerminationRequest={[Function]}
                                           onStartShouldSetResponder={[Function]}
-                                          pointerEvents="none"
                                         >
                                           <View
                                             style={

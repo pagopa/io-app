@@ -1408,7 +1408,8 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                               }
                               accessible={false}
                               collapsable={false}
-                              focusable={true}
+                              focusable={false}
+                              importantForAccessibility="no"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -1476,9 +1477,6 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
-                                  accessibilityRole="button"
-                                  accessible={true}
                                   style={
                                     {
                                       "alignSelf": "center",
@@ -1487,48 +1485,60 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     }
                                   }
                                 >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#0E0F13",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Come funziona la verifica?
-                                  </Text>
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
-                                  </Text>
                                   <View
-                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio."
+                                    accessibilityRole="text"
+                                    accessible={true}
+                                    style={
+                                      {
+                                        "gap": 4,
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      accessible={false}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="headline"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#0E0F13",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Come funziona la verifica?
+                                    </Text>
+                                    <Text
+                                      accessible={false}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
+                                    </Text>
+                                  </View>
+                                  <View
                                     accessibilityLabel="Scopri di più"
                                     accessibilityRole="button"
                                     accessibilityState={
@@ -1551,7 +1561,6 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     accessible={true}
                                     collapsable={false}
                                     focusable={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
@@ -1561,7 +1570,6 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     onResponderTerminate={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    pointerEvents="none"
                                   >
                                     <View
                                       style={
@@ -3561,7 +3569,8 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                               }
                               accessible={false}
                               collapsable={false}
-                              focusable={true}
+                              focusable={false}
+                              importantForAccessibility="no"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -3629,9 +3638,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
-                                  accessibilityRole="button"
-                                  accessible={true}
                                   style={
                                     {
                                       "alignSelf": "center",
@@ -3640,48 +3646,60 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     }
                                   }
                                 >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#0E0F13",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Come funziona la verifica?
-                                  </Text>
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
-                                  </Text>
                                   <View
-                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio."
+                                    accessibilityRole="text"
+                                    accessible={true}
+                                    style={
+                                      {
+                                        "gap": 4,
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      accessible={false}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="headline"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#0E0F13",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Come funziona la verifica?
+                                    </Text>
+                                    <Text
+                                      accessible={false}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
+                                    </Text>
+                                  </View>
+                                  <View
                                     accessibilityLabel="Scopri di più"
                                     accessibilityRole="button"
                                     accessibilityState={
@@ -3704,7 +3722,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     accessible={true}
                                     collapsable={false}
                                     focusable={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
@@ -3714,7 +3731,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     onResponderTerminate={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    pointerEvents="none"
                                   >
                                     <View
                                       style={
@@ -5503,7 +5519,8 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                               }
                               accessible={false}
                               collapsable={false}
-                              focusable={true}
+                              focusable={false}
+                              importantForAccessibility="no"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -5571,9 +5588,6 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
-                                  accessibilityRole="button"
-                                  accessible={true}
                                   style={
                                     {
                                       "alignSelf": "center",
@@ -5582,48 +5596,60 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     }
                                   }
                                 >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#0E0F13",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Come funziona la verifica?
-                                  </Text>
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
-                                  </Text>
                                   <View
-                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio."
+                                    accessibilityRole="text"
+                                    accessible={true}
+                                    style={
+                                      {
+                                        "gap": 4,
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      accessible={false}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="headline"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#0E0F13",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Come funziona la verifica?
+                                    </Text>
+                                    <Text
+                                      accessible={false}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
+                                    </Text>
+                                  </View>
+                                  <View
                                     accessibilityLabel="Scopri di più"
                                     accessibilityRole="button"
                                     accessibilityState={
@@ -5646,7 +5672,6 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     accessible={true}
                                     collapsable={false}
                                     focusable={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
@@ -5656,7 +5681,6 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     onResponderTerminate={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    pointerEvents="none"
                                   >
                                     <View
                                       style={
@@ -7669,7 +7693,8 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                               }
                               accessible={false}
                               collapsable={false}
-                              focusable={true}
+                              focusable={false}
+                              importantForAccessibility="no"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -7737,9 +7762,6 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
-                                  accessibilityRole="button"
-                                  accessible={true}
                                   style={
                                     {
                                       "alignSelf": "center",
@@ -7748,48 +7770,60 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     }
                                   }
                                 >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#0E0F13",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Come funziona la verifica?
-                                  </Text>
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
-                                  </Text>
                                   <View
-                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio."
+                                    accessibilityRole="text"
+                                    accessible={true}
+                                    style={
+                                      {
+                                        "gap": 4,
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      accessible={false}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="headline"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#0E0F13",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Come funziona la verifica?
+                                    </Text>
+                                    <Text
+                                      accessible={false}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
+                                    </Text>
+                                  </View>
+                                  <View
                                     accessibilityLabel="Scopri di più"
                                     accessibilityRole="button"
                                     accessibilityState={
@@ -7812,7 +7846,6 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     accessible={true}
                                     collapsable={false}
                                     focusable={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
@@ -7822,7 +7855,6 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     onResponderTerminate={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    pointerEvents="none"
                                   >
                                     <View
                                       style={

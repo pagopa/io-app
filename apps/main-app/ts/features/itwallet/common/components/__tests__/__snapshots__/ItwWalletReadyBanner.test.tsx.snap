@@ -344,7 +344,8 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
+                          importantForAccessibility="no"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -413,9 +414,6 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                             }
                           >
                             <View
-                              accessibilityLabel="È tutto pronto! Ora puoi aggiungere il primo documento al Portafoglio di IO. Aggiungi documento"
-                              accessibilityRole="button"
-                              accessible={true}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -424,48 +422,60 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                È tutto pronto!
-                              </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
-                                }
-                              >
-                                Ora puoi aggiungere il primo documento al Portafoglio di IO.
-                              </Text>
                               <View
-                                accessibilityElementsHidden={true}
+                                accessibilityLabel="È tutto pronto! Ora puoi aggiungere il primo documento al Portafoglio di IO."
+                                accessibilityRole="text"
+                                accessible={true}
+                                style={
+                                  {
+                                    "gap": 4,
+                                  }
+                                }
+                              >
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  È tutto pronto!
+                                </Text>
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Ora puoi aggiungere il primo documento al Portafoglio di IO.
+                                </Text>
+                              </View>
+                              <View
                                 accessibilityLabel="Aggiungi documento"
                                 accessibilityRole="button"
                                 accessibilityState={
@@ -488,7 +498,6 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}
@@ -498,7 +507,6 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 onResponderTerminate={[Function]}
                                 onResponderTerminationRequest={[Function]}
                                 onStartShouldSetResponder={[Function]}
-                                pointerEvents="none"
                               >
                                 <View
                                   style={
@@ -1082,7 +1090,8 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
+                          importantForAccessibility="no"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -1151,9 +1160,6 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                             }
                           >
                             <View
-                              accessibilityLabel="Aggiungi il tuo primo documento Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano! Aggiungi documento"
-                              accessibilityRole="button"
-                              accessible={true}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -1162,48 +1168,60 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                Aggiungi il tuo primo documento
-                              </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
-                                }
-                              >
-                                Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano!
-                              </Text>
                               <View
-                                accessibilityElementsHidden={true}
+                                accessibilityLabel="Aggiungi il tuo primo documento Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano!"
+                                accessibilityRole="text"
+                                accessible={true}
+                                style={
+                                  {
+                                    "gap": 4,
+                                  }
+                                }
+                              >
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Aggiungi il tuo primo documento
+                                </Text>
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano!
+                                </Text>
+                              </View>
+                              <View
                                 accessibilityLabel="Aggiungi documento"
                                 accessibilityRole="button"
                                 accessibilityState={
@@ -1226,7 +1244,6 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}
@@ -1236,7 +1253,6 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 onResponderTerminate={[Function]}
                                 onResponderTerminationRequest={[Function]}
                                 onStartShouldSetResponder={[Function]}
-                                pointerEvents="none"
                               >
                                 <View
                                   style={

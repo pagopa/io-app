@@ -1244,9 +1244,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                               }
                             >
                               <View
-                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
-                                accessibilityRole="text"
-                                accessible={true}
                                 style={
                                   {
                                     "alignSelf": "center",
@@ -1255,26 +1252,38 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
+                                  accessibilityRole="text"
+                                  accessible={true}
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "gap": 4,
+                                    }
                                   }
                                 >
-                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                                </Text>
+                                  <Text
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                                  </Text>
+                                </View>
                               </View>
                               <View
                                 style={
