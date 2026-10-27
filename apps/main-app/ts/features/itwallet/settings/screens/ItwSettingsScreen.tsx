@@ -1,4 +1,4 @@
-import { ContentWrapper, IOMarkdownLite, VStack } from "@io-app/design-system";
+import { ContentWrapper, IOMarkdown, VStack } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
@@ -95,7 +95,7 @@ const ItwSettingsScreen = () => {
               navigation={navigation}
             />
           )}
-          <IOMarkdownLite
+          <IOMarkdown
             content={I18n.t("features.itWallet.settings.manage.content")}
           />
         </VStack>
