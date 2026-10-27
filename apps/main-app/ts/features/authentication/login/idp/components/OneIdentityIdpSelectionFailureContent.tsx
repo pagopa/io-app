@@ -1,4 +1,4 @@
-import { useFocusEffect } from "@react-navigation/core";
+import { StackActions, useFocusEffect } from "@react-navigation/core";
 import I18n from "i18next";
 import { useCallback, useRef } from "react";
 import { View } from "react-native";
@@ -46,9 +46,7 @@ export const OneIdentityIdpSelectionFailureContent = ({
   }, [flow, handleCieLoginRequested]);
 
   const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    navigation.dispatch(StackActions.popTo(AUTHENTICATION_ROUTES.LANDING));
   }, [navigation]);
 
   return (
@@ -61,6 +59,7 @@ export const OneIdentityIdpSelectionFailureContent = ({
           onPress: navigateToCiePinScreen,
           testID: "idp-loading-error-primary-action"
         }}
+        isHeaderVisible={true}
         pictogram="umbrella"
         ref={accessibilityFirstFocuseViewRef}
         secondaryAction={{

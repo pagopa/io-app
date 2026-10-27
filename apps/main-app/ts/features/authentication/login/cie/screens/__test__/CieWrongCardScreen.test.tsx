@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
@@ -8,14 +9,14 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import CieWrongCardScreen from "../CieWrongCardScreen";
 
-const mockNavigate = jest.fn();
+const mockDispatch = jest.fn();
 const mockReset = jest.fn();
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
   useNavigation: () => ({
     addListener: jest.fn(),
-    navigate: mockNavigate,
+    dispatch: mockDispatch,
     reset: mockReset
   })
 }));
@@ -30,12 +31,12 @@ describe("CieWrongCardScreen", () => {
     expect(toJSON()).toMatchSnapshot();
   });
 
-  it("calls navigate to CiePinScreen on retry", () => {
+  it("pops to CiePinScreen on retry", () => {
     const { getByText } = renderComponent();
     fireEvent.press(getByText(I18n.t("global.buttons.retry")));
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
-    });
+    expect(mockDispatch).toHaveBeenCalledWith(
+      StackActions.popTo(AUTHENTICATION_ROUTES.CIE_PIN_SCREEN)
+    );
   });
 
   it("calls reset to Landing on close", () => {

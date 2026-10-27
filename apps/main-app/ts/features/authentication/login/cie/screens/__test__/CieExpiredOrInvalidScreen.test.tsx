@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
@@ -8,7 +9,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import CieExpiredOrInvalidScreen from "../CieExpiredOrInvalidScreen";
 
-const mockNavigate = jest.fn();
+const mockDispatch = jest.fn();
 
 jest.mock("../../../../../../navigation/params/AppParamsList", () => {
   const actual = jest.requireActual(
@@ -17,7 +18,7 @@ jest.mock("../../../../../../navigation/params/AppParamsList", () => {
   return {
     ...actual,
     useIONavigation: () => ({
-      navigate: mockNavigate
+      dispatch: mockDispatch
     })
   };
 });
@@ -48,9 +49,9 @@ describe("CieExpiredOrInvalidScreen", () => {
     const { getByText } = renderComponent();
     fireEvent.press(getByText(I18n.t("global.buttons.close")));
 
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    expect(mockDispatch).toHaveBeenCalledWith(
+      StackActions.popTo(AUTHENTICATION_ROUTES.LANDING)
+    );
   });
 });
 

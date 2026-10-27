@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
 
@@ -9,9 +10,7 @@ const CieExpiredOrInvalidScreen = () => {
   const navigation = useIONavigation();
 
   const handleClose = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    navigation.dispatch(StackActions.popTo(AUTHENTICATION_ROUTES.LANDING));
   }, [navigation]);
 
   return (
