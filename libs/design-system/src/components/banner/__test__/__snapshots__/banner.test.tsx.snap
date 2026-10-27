@@ -96,30 +96,40 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
         {
           "alignSelf": "center",
           "flex": 1,
-          "gap": 4,
+          "gap": 12,
         }
       }
     >
-      <Text
-        allowFontScaling={true}
-        dynamicTypeRamp="headline"
-        maxFontSizeMultiplier={1.5}
+      <View
         style={
-          [
-            {},
-            {
-              "color": "#0E0F13",
-              "fontFamily": "Titillio",
-              "fontSize": 16,
-              "fontStyle": "normal",
-              "fontWeight": "600",
-              "lineHeight": 24,
-            },
-          ]
+          {
+            "display": "flex",
+            "flexDirection": "column",
+            "gap": 4,
+          }
         }
       >
-        Banner title
-      </Text>
+        <Text
+          allowFontScaling={true}
+          dynamicTypeRamp="headline"
+          maxFontSizeMultiplier={1.5}
+          style={
+            [
+              {},
+              {
+                "color": "#0E0F13",
+                "fontFamily": "Titillio",
+                "fontSize": 16,
+                "fontStyle": "normal",
+                "fontWeight": "600",
+                "lineHeight": 24,
+              },
+            ]
+          }
+        >
+          Banner title
+        </Text>
+      </View>
       <View
         accessibilityElementsHidden={true}
         accessibilityLabel="Action text"
@@ -156,13 +166,6 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
         onStartShouldSetResponder={[Function]}
         pointerEvents="none"
       >
-        <View
-          style={
-            {
-              "height": 8,
-            }
-          }
-        />
         <Text
           accessibilityElementsHidden={true}
           accessible={false}
@@ -422,30 +425,40 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
         {
           "alignSelf": "center",
           "flex": 1,
-          "gap": 4,
+          "gap": 12,
         }
       }
     >
-      <Text
-        allowFontScaling={true}
-        dynamicTypeRamp="headline"
-        maxFontSizeMultiplier={1.5}
+      <View
         style={
-          [
-            {},
-            {
-              "color": "#0E0F13",
-              "fontFamily": "Titillio",
-              "fontSize": 16,
-              "fontStyle": "normal",
-              "fontWeight": "600",
-              "lineHeight": 24,
-            },
-          ]
+          {
+            "display": "flex",
+            "flexDirection": "column",
+            "gap": 4,
+          }
         }
       >
-        Banner title
-      </Text>
+        <Text
+          allowFontScaling={true}
+          dynamicTypeRamp="headline"
+          maxFontSizeMultiplier={1.5}
+          style={
+            [
+              {},
+              {
+                "color": "#0E0F13",
+                "fontFamily": "Titillio",
+                "fontSize": 16,
+                "fontStyle": "normal",
+                "fontWeight": "600",
+                "lineHeight": 24,
+              },
+            ]
+          }
+        >
+          Banner title
+        </Text>
+      </View>
       <View
         accessibilityElementsHidden={true}
         accessibilityLabel="Action text"
@@ -482,13 +495,6 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
         onStartShouldSetResponder={[Function]}
         pointerEvents="none"
       >
-        <View
-          style={
-            {
-              "height": 8,
-            }
-          }
-        />
         <Text
           accessibilityElementsHidden={true}
           accessible={false}

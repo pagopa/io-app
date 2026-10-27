@@ -4,8 +4,8 @@ import {
   ContentWrapper,
   Divider,
   HSpacer,
+  IODimensionScale,
   IOSkeleton,
-  IOSpacingScale,
   IOToast,
   ListItemAction,
   VSpacer
@@ -43,8 +43,8 @@ type RenderableCategory = {
 };
 
 const CATEGORY_CARDS_PER_ROW = 2;
-const CATEGORY_CARD_SPACING: IOSpacingScale = 8;
-const CATEGORY_LIST_BOTTOM_SPACING: IOSpacingScale = 32;
+const CATEGORY_CARD_SPACING: IODimensionScale = 8;
+const CATEGORY_LIST_BOTTOM_SPACING: IODimensionScale = 32;
 const CATEGORY_CARD_SKELETON_ROWS = 3;
 const CATEGORY_CARD_SKELETON_HEIGHT = 116;
 const CATEGORY_CARD_SKELETON_RADIUS = 8;

@@ -6,7 +6,7 @@ import {
   hexToRgba,
   IOButton,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -137,7 +137,7 @@ export const ItwProximityPresentmentScreen = ({
     <IOScrollView
       animatedRef={animatedScrollViewRef}
       contentContainerStyle={{
-        marginTop: safeAreaInsets.top + IOVisualCostants.headerHeight
+        marginTop: safeAreaInsets.top + IODimensions.height.header
       }}
     >
       {shouldShowExpiredCredentialsBanner && (

@@ -2,7 +2,7 @@ import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOSelectionTickVisualParams } from "../../core";
+import { IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions/haptic-feedback/hapticFeedback";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { H6 } from "../typography/H6";
@@ -75,7 +75,10 @@ export const RadioButtonLabel = ({
           alignItems: "flex-start",
           flexShrink: 1,
           width: "100%",
-          columnGap: 8 * dynamicFontScale * spacingScaleMultiplier
+          columnGap:
+            IODimensions.gap.selection.control *
+            dynamicFontScale *
+            spacingScaleMultiplier
         }}
       >
         <View
@@ -85,7 +88,7 @@ export const RadioButtonLabel = ({
         >
           <Radio
             checked={checked ?? toggleValue}
-            size={IOSelectionTickVisualParams.size * dynamicFontScale}
+            size={IODimensions.size.selection.control * dynamicFontScale}
           />
         </View>
         <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>

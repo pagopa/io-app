@@ -6,7 +6,7 @@ import {
   hexToRgba,
   IOButton,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   ListItemSwitch,
   NumberPad,
   Pictogram,
@@ -52,7 +52,7 @@ export const DSNumberPad = () => {
           justifyContent: "flex-end",
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         },
         {
           backgroundColor: primaryBackground

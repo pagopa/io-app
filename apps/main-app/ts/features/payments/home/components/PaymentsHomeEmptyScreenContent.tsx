@@ -2,7 +2,7 @@ import {
   Body,
   H4,
   IOButton,
-  IOVisualCostants,
+  IODimensions,
   Pictogram,
   VSpacer
 } from "@io-app/design-system";
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexGrow: 1,
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     alignItems: "center",
     justifyContent: "center"
   },

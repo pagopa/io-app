@@ -1,6 +1,6 @@
 import {
   H4,
-  IOVisualCostants,
+  IODimensions,
   Stepper,
   useIOTheme,
   VStack
@@ -18,7 +18,9 @@ export const DSStepper = () => {
   return (
     <DesignSystemScreen noMargin title={"Stepper"}>
       <VStack space={sectionTitleMargin}>
-        <View style={{ paddingHorizontal: IOVisualCostants.appMarginDefault }}>
+        <View
+          style={{ paddingHorizontal: IODimensions.padding.screen.default }}
+        >
           <H4 color={theme["textHeading-default"]}>Stepper</H4>
         </View>
         <VStack space={componentMargin}>

@@ -2,9 +2,8 @@ import {
   BodySmall,
   H3,
   HeaderSecondLevel,
-  IOAppMargin,
   IOColors,
-  IOVisualCostants
+  IODimensions
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
@@ -44,9 +43,9 @@ const { height: windowHeight, width: windowWidth } = Dimensions.get("window");
  */
 const availableHeight =
   windowHeight - // Start with the height of the screen
-  IOVisualCostants.headerHeight - // Removes the height of the header
-  IOAppMargin[2] - // Removes the vertical padding of the fiscal code container
-  IOAppMargin[4]; // Removes the vertical padding of the screen
+  IODimensions.height.header - // Removes the height of the header
+  IODimensions.padding.screen.default * 2 - // Screen margin, top and bottom
+  IODimensions.padding.screen.default; // Room around the fiscal code container
 
 /** For aesthetics, we take the 90% of the available height. */
 const barcodeTotalHeight = availableHeight * 0.9;

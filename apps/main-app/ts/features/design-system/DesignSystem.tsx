@@ -2,7 +2,7 @@ import {
   BodySmall,
   Divider,
   H2,
-  IOVisualCostants,
+  IODimensions,
   ListItemNav,
   useIOTheme,
   VSpacer,
@@ -187,8 +187,8 @@ export const DesignSystem = () => {
   return (
     <SectionList
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault,
-        paddingTop: IOVisualCostants.appMarginDefault,
+        paddingHorizontal: IODimensions.padding.screen.default,
+        paddingTop: IODimensions.padding.screen.default,
         paddingBottom: screenEndMargin
       }}
       contentInsetAdjustmentBehavior="automatic"

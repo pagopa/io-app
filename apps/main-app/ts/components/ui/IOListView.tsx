@@ -1,8 +1,8 @@
 import {
   hexToRgba,
   IOColors,
-  IOSpacingScale,
-  IOVisualCostants,
+  IODimensions,
+  IODimensionScale,
   useIOTheme
 } from "@io-app/design-system";
 import { LinearGradient } from "expo-linear-gradient";
@@ -33,12 +33,7 @@ type IOListView<T> = ComponentProps<typeof Animated.FlatList<T>> &
   };
 
 /* Extended gradient area above the actions */
-const gradientSafeAreaHeight: IOSpacingScale = 96;
-/* End content margin before the actions */
-const contentEndMargin: IOSpacingScale = 32;
-/* Extra bottom margin for iPhone bottom handle because
-  Link variant doesn't have a fixed height */
-const extraSafeAreaMargin: IOSpacingScale = 8;
+const gradientSafeAreaHeight: IODimensionScale = 96;
 
 const styles = StyleSheet.create({
   gradientBottomActions: {
@@ -51,7 +46,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill
   },
   buttonContainer: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     width: "100%",
     flexShrink: 0
   },
@@ -133,7 +128,9 @@ export const IOListView = <T,>({
   /* When the secondary action is visible, add extra margin
        to avoid little space from iPhone bottom handle */
   const extraBottomMargin =
-    actions?.secondary && needSafeAreaMargin ? extraSafeAreaMargin : 0;
+    actions?.secondary && needSafeAreaMargin
+      ? IODimensions.padding.footer.homeIndicator
+      : 0;
 
   /* Safe background block. Cover at least 85% of the space
        to avoid glitchy elements underneath */
@@ -146,7 +143,7 @@ export const IOListView = <T,>({
   /* Height of the safe bottom area, applied to the ScrollView:
        Actions + Content end margin */
   const safeBottomAreaHeight =
-    bottomMargin + actionBlockHeight + contentEndMargin;
+    bottomMargin + actionBlockHeight + IODimensions.padding.screen.end;
 
   const { colors, handleScroll, locations, opacityTransition } =
     useScrollHeaderAnimation({ snapOffset, headerConfig });
@@ -164,9 +161,9 @@ export const IOListView = <T,>({
             ? 0
             : actions
               ? safeBottomAreaHeight
-              : bottomMargin + contentEndMargin,
+              : bottomMargin + IODimensions.padding.screen.end,
           paddingHorizontal: includeContentMargins
-            ? IOVisualCostants.appMarginDefault
+            ? IODimensions.padding.screen.default
             : 0,
           ...(contentContainerStyle || {})
         },

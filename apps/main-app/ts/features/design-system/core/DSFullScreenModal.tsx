@@ -4,7 +4,7 @@ import {
   H4,
   hexToRgba,
   IOColors,
-  IOVisualCostants
+  IODimensions
 } from "@io-app/design-system";
 import { ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -24,7 +24,7 @@ export const DSFullScreenModal = () => {
       <ScrollView
         contentContainerStyle={{
           backgroundColor: IOColors.white,
-          paddingVertical: IOVisualCostants.appMarginDefault
+          paddingVertical: IODimensions.padding.screen.default
         }}
       >
         {/* This extra View is required because ScrollView
@@ -45,7 +45,7 @@ export const DSFullScreenModal = () => {
           position: "absolute",
           bottom: 0,
           width: "100%",
-          paddingHorizontal: IOVisualCostants.appMarginDefault,
+          paddingHorizontal: IODimensions.padding.screen.default,
           backgroundColor: hexToRgba(IOColors["blueIO-500"], 0.7),
           paddingBottom: insets.bottom
         }}

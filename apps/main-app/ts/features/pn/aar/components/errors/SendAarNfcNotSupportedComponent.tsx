@@ -1,4 +1,4 @@
-import { FeatureInfo, VSpacer } from "@io-app/design-system";
+import { FeatureInfo, IODimensions, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
 
@@ -47,7 +47,7 @@ export const SendAarNfcNotSupportedComponent = () => {
         }
       }}
       contentContainerStyle={{
-        paddingHorizontal: 32
+        paddingHorizontal: IODimensions.padding.screen.centred
       }}
       description={I18n.t(
         "features.pn.aar.flow.delegated.nfcNotSupported.body"

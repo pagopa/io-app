@@ -3,6 +3,7 @@ import {
   BodySmall,
   H2,
   HSpacer,
+  IODimensions,
   IOSkeleton,
   VSpacer
 } from "@io-app/design-system";
@@ -214,7 +215,7 @@ const BonusCardSkeleton = (props: BonusCardWithColorSchemeValues) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 8,
+    marginHorizontal: IODimensions.padding.screen.heroCard,
     paddingBottom: 24,
     overflow: "hidden"
   },

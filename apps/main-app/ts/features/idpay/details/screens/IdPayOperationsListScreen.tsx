@@ -3,9 +3,9 @@ import {
   Body,
   Divider,
   HSpacer,
+  IODimensions,
   IOSkeleton,
   IOToast,
-  IOVisualCostants,
   LoadingSpinner,
   VSpacer
 } from "@io-app/design-system";
@@ -100,7 +100,7 @@ export const IdPayOperationsListScreen = () => {
     <IOListViewWithLargeHeader
       contentContainerStyle={{
         paddingBottom: 120,
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
       data={timeline}
       ItemSeparatorComponent={() => <Divider />}

@@ -3,7 +3,7 @@ import { Dimensions, Image } from "react-native";
 
 import type { MarkdownNode } from "./types";
 
-import { IOVisualCostants } from "../../core";
+import { IODimensions } from "../../core";
 
 type ImageRendererProps = {
   node: MarkdownNode;
@@ -24,7 +24,7 @@ export const ImageRenderer = ({ node }: ImageRendererProps) => {
   });
 
   const screenWidth =
-    Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
+    Dimensions.get("window").width - IODimensions.padding.screen.default * 2;
 
   useLayoutEffect(() => {
     if (!src) {

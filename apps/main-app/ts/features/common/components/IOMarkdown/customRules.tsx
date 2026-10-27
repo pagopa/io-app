@@ -1,6 +1,6 @@
 import {
   Body,
-  IOSpacer,
+  IOSpace,
   IOToast,
   MdH1,
   MdH2,
@@ -39,8 +39,8 @@ import { handleInternalLink } from "../../../../utils/internalLink";
 import { openWebUrl } from "../../../../utils/url";
 
 type HeadingMargins = {
-  marginEnd: IOSpacer;
-  marginStart: IOSpacer;
+  marginEnd: IOSpace;
+  marginStart: IOSpace;
 };
 
 const HEADINGS_MAP = {

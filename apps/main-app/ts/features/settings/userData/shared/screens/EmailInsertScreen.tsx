@@ -7,8 +7,8 @@ import {
   ContentWrapper,
   H1,
   IOButton,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   TextInputValidation,
   VSpacer
 } from "@io-app/design-system";
@@ -568,7 +568,7 @@ const EmailInsertScreen = () => {
             behavior={Platform.OS === "android" ? undefined : "padding"}
             keyboardVerticalOffset={Platform.select({
               ios: 110 + 16,
-              android: IOVisualCostants.appMarginDefault
+              android: IODimensions.padding.screen.default
             })}
           >
             <ContinueButton onContinue={continueOnPress} />

@@ -6,7 +6,7 @@ import {
   HStack,
   IconButton,
   IOButton,
-  IOVisualCostants,
+  IODimensions,
   OTPInput,
   OTPInputProps,
   RadioGroup,
@@ -199,7 +199,7 @@ export const DSOTPInput = () => {
             >
               <H4
                 color={theme["textHeading-default"]}
-                style={{ marginVertical: IOVisualCostants.appMarginDefault }}
+                style={{ marginVertical: IODimensions.padding.screen.default }}
               >
                 OTP Input with length of {otpConfig.otpLength}
               </H4>

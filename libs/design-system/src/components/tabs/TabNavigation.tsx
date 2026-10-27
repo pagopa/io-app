@@ -2,7 +2,7 @@ import { cloneElement, ReactElement, useState } from "react";
 import { FlexStyle, LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { IOVisualCostants } from "../../core";
+import { IODimensions } from "../../core";
 import { TabItem } from "./TabItem";
 
 type TabAlignment = "center" | "end" | "start" | "stretch";
@@ -74,12 +74,12 @@ const TabNavigation = ({
       centerContent={true}
       contentContainerStyle={[
         includeContentMargins
-          ? { paddingHorizontal: IOVisualCostants.appMarginDefault }
+          ? { paddingHorizontal: IODimensions.padding.screen.default }
           : {},
         {
           flexGrow: 1,
           justifyContent: itemsJustify[tabAlignment],
-          gap: 8
+          gap: IODimensions.gap.tab.items
         }
       ]}
       horizontal={true}

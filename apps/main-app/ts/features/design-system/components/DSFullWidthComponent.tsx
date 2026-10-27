@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@io-app/design-system";
+import { IODimensions } from "@io-app/design-system";
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -8,8 +8,8 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: IOVisualCostants.appMarginDefault * -1,
-    marginRight: IOVisualCostants.appMarginDefault * -1
+    marginLeft: IODimensions.padding.screen.default * -1,
+    marginRight: IODimensions.padding.screen.default * -1
   }
 });
 

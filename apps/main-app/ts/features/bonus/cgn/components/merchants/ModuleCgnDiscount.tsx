@@ -5,6 +5,7 @@ import {
   H6,
   HStack,
   Icon,
+  IODimensions,
   IOModuleStyles,
   Tag,
   useIOTheme,
@@ -68,7 +69,6 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
     >
       <Animated.View
         style={[
-          { borderWidth: 1 },
           IOModuleStyles.button,
           discount.isNew ? moduleStyle.new : moduleStyle.default,
           scaleAnimatedStyle
@@ -115,7 +115,7 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
           <Icon
             color={theme["interactiveElem-default"]}
             name="chevronRightListItem"
-            size={24}
+            size={IODimensions.size.icon.chevron}
           />
         </View>
       </Animated.View>
