@@ -78,8 +78,7 @@ export const setupAndroidNotificationChannel = async (): Promise<void> => {
     {
       name: "IO default notification channel",
       importance: Notifications.AndroidImportance.HIGH,
-      vibrationPattern: [0, 250, 250, 250],
-      sound: "default"
+      vibrationPattern: [0, 250, 250, 250]
     }
   );
 };
