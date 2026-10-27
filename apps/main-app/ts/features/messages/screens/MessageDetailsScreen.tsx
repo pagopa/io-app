@@ -171,12 +171,18 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   return (
     <ScrollViewWithStickyFooterActions
       afterPlaceholder={
-        <MessageDetailsFooter
-          messageId={messageId}
-          noticeNumber={messageDetails.paymentData?.noticeNumber}
-          payeeFiscalCode={messageDetails.paymentData?.payee.fiscalCode}
-          serviceId={serviceId}
-        />
+        <>
+          <ContentWrapper>
+            {hasRemoteContent && <RemoteContentBanner />}
+            <StandardMessageSurveyBanner message={message} />
+          </ContentWrapper>
+          <MessageDetailsFooter
+            messageId={messageId}
+            noticeNumber={messageDetails.paymentData?.noticeNumber}
+            payeeFiscalCode={messageDetails.paymentData?.payee.fiscalCode}
+            serviceId={serviceId}
+          />
+        </>
       }
       beforePlaceholder={
         <View style={styles.container}>
@@ -220,8 +226,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               sendUserType={"not_set"}
               serviceId={serviceId}
             />
-            {hasRemoteContent && <RemoteContentBanner />}
-            <StandardMessageSurveyBanner message={message} />
           </ContentWrapper>
         </View>
       }

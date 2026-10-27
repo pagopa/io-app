@@ -4,14 +4,19 @@ import { ComponentProps } from "react";
 import configureMockStore from "redux-mock-store";
 
 import { applicationChangeState } from "../../../../store/actions/application";
+import { backendStatusLoadSuccess } from "../../../../store/actions/backendStatus";
+import { type Action } from "../../../../store/actions/types";
 import { appReducer } from "../../../../store/reducers";
+import { baseRawBackendStatus } from "../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { service_1 } from "../../../messages/__mocks__/messages";
 import * as MSG_DETAILS_HEADER from "../../../messages/components/MessageDetail/MessageDetailsHeader";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import PN_ROUTES from "../../navigation/routes";
 import { toSENDMessage } from "../../store/types/transformers";
@@ -30,6 +35,26 @@ jest.mock("../MessagePaymentBottomSheet");
 
 const mockMessageId = "messageId1";
 const mockServiceId = "serviceId" as ServiceId;
+const QUALTRICS_URI = "https://pagopa.qualtrics.com/jfe/form/TEST_FORM";
+const SCROLL_VIEW_TEST_ID = "MessageDetailsScrollView";
+const PLACEHOLDER_TEST_ID = "ScrollViewWithStickyFooterActionsPlaceholder";
+const MESSAGE_SURVEY_BANNER_TEST_ID = "message-survey-banner";
+const MESSAGE_BOTTOM_MENU_TEST_ID = "MessageBottomMenu";
+
+const backendStatusWithSurveyUri = () =>
+  backendStatusLoadSuccess({
+    ...baseRawBackendStatus,
+    config: {
+      ...baseRawBackendStatus.config,
+      messages_feedback_banner: {
+        feedback_uri: QUALTRICS_URI,
+        min_app_version: {
+          android: "0.0.1",
+          ios: "0.0.1"
+        }
+      }
+    }
+  });
 
 const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
   "aar",
@@ -115,28 +140,47 @@ describe("MessageDetails component", () => {
     );
   });
 
-  it("places the sticky footer placeholder before the message bottom menu", () => {
-    const sendMessage = toSENDMessage(thirdPartyMessage)!;
-    const props = generateComponentProperties(
-      mockMessageId,
-      sendMessage,
-      mockServiceId,
-      "message",
-      "recipient"
-    );
-    const { component } = renderComponent(props);
-    const scrollView = component.getByTestId("MessageDetailsScrollView");
-    const expectedTestIDs = [
-      "ScrollViewWithStickyFooterActionsPlaceholder",
-      "MessageBottomMenu"
-    ];
-    const renderedTestIDs = scrollView
-      .findAll(node => expectedTestIDs.includes(node.props.testID))
-      .map(node => node.props.testID)
-      .filter((testID, index, testIDs) => testIDs.indexOf(testID) === index);
+  const placementScenarios = [
+    {
+      name: "without the survey banner",
+      actions: [],
+      expectedTestIDs: [PLACEHOLDER_TEST_ID, MESSAGE_BOTTOM_MENU_TEST_ID]
+    },
+    {
+      name: "with the survey banner",
+      actions: [
+        backendStatusWithSurveyUri(),
+        loadServiceDetail.success(service_1)
+      ],
+      expectedTestIDs: [
+        PLACEHOLDER_TEST_ID,
+        MESSAGE_SURVEY_BANNER_TEST_ID,
+        MESSAGE_BOTTOM_MENU_TEST_ID
+      ]
+    }
+  ];
 
-    expect(renderedTestIDs).toEqual(expectedTestIDs);
-  });
+  test.each(placementScenarios)(
+    "places the sticky footer placeholder before the message bottom menu $name",
+    ({ actions, expectedTestIDs }) => {
+      const sendMessage = toSENDMessage(thirdPartyMessage)!;
+      const props = generateComponentProperties(
+        mockMessageId,
+        sendMessage,
+        service_1.id,
+        "message",
+        "recipient"
+      );
+      const { component } = renderComponent(props, actions);
+      const scrollView = component.getByTestId(SCROLL_VIEW_TEST_ID);
+      const renderedTestIDs = scrollView
+        .findAll(node => expectedTestIDs.includes(node.props.testID))
+        .map(node => node.props.testID)
+        .filter((testID, index, testIDs) => testIDs.indexOf(testID) === index);
+
+      expect(renderedTestIDs).toEqual(expectedTestIDs);
+    }
+  );
 });
 
 const generateComponentProperties = (
@@ -155,8 +199,14 @@ const generateComponentProperties = (
   sendUserType
 });
 
-const renderComponent = (props: ComponentProps<typeof MessageDetails>) => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
+const renderComponent = (
+  props: ComponentProps<typeof MessageDetails>,
+  actions: ReadonlyArray<Action> = []
+) => {
+  const globalState = actions.reduce(
+    appReducer,
+    appReducer(undefined, applicationChangeState("active"))
+  );
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 

@@ -317,13 +317,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                       }
                     >
                       <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
-                      <View
                         accessibilityState={
                           {
                             "busy": undefined,
@@ -353,6 +346,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                         onResponderTerminate={[Function]}
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
+                        testID="remote-content-banner"
                       >
                         <View
                           collapsable={false}
@@ -702,6 +696,13 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                           </View>
                         </View>
                       </View>
+                      <View
+                        style={
+                          {
+                            "height": 24,
+                          }
+                        }
+                      />
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}

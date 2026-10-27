@@ -3,7 +3,9 @@ import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/defini
 import { Action, createStore, Store } from "redux";
 
 import { applicationChangeState } from "../../../../store/actions/application";
+import { backendStatusLoadSuccess } from "../../../../store/actions/backendStatus";
 import { appReducer } from "../../../../store/reducers";
+import { baseRawBackendStatus } from "../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
@@ -28,6 +30,28 @@ import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
 jest.mock("../../components/MessageDetail/MessageDetailsAttachments");
+
+const QUALTRICS_URI = "https://pagopa.qualtrics.com/jfe/form/TEST_FORM";
+const SCROLL_VIEW_TEST_ID = "MessageDetailsScrollView";
+const PLACEHOLDER_TEST_ID = "ScrollViewWithStickyFooterActionsPlaceholder";
+const REMOTE_CONTENT_BANNER_TEST_ID = "remote-content-banner";
+const MESSAGE_SURVEY_BANNER_TEST_ID = "message-survey-banner";
+const MESSAGE_FOOTER_TEST_ID = "show-more-data-action";
+
+const backendStatusWithSurveyUri = () =>
+  backendStatusLoadSuccess({
+    ...baseRawBackendStatus,
+    config: {
+      ...baseRawBackendStatus.config,
+      messages_feedback_banner: {
+        feedback_uri: QUALTRICS_URI,
+        min_app_version: {
+          android: "0.0.1",
+          ios: "0.0.1"
+        }
+      }
+    }
+  });
 
 const thirdPartyMessage: ThirdPartyMessageWithContent = {
   ...message_1,
@@ -153,32 +177,53 @@ describe("MessageDetailsScreen", () => {
     expect(component.queryByTestId("due-date-alert")).toBeNull();
   });
 
-  it("places the sticky footer placeholder before the message footer", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(messageWithValidPayment))
-    ];
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const store: Store<GlobalState> = createStore(appReducer, state as any);
-    const { component } = renderComponent(store);
-    const scrollView = component.getByTestId("MessageDetailsScrollView");
-    const expectedTestIDs = [
-      "ScrollViewWithStickyFooterActionsPlaceholder",
-      "show-more-data-action"
-    ];
-    const renderedTestIDs = scrollView
-      .findAll(node => expectedTestIDs.includes(node.props.testID))
-      .map(node => node.props.testID)
-      .filter((testID, index, testIDs) => testIDs.indexOf(testID) === index);
+  const placementScenarios = [
+    {
+      name: "without banners",
+      hasRemoteContent: false,
+      remoteConfigActions: [],
+      expectedTestIDs: [PLACEHOLDER_TEST_ID, MESSAGE_FOOTER_TEST_ID]
+    },
+    {
+      name: "with the remote content and survey banners",
+      hasRemoteContent: true,
+      remoteConfigActions: [backendStatusWithSurveyUri()],
+      expectedTestIDs: [
+        PLACEHOLDER_TEST_ID,
+        REMOTE_CONTENT_BANNER_TEST_ID,
+        MESSAGE_SURVEY_BANNER_TEST_ID,
+        MESSAGE_FOOTER_TEST_ID
+      ]
+    }
+  ];
 
-    expect(renderedTestIDs).toEqual(expectedTestIDs);
-  });
+  test.each(placementScenarios)(
+    "places the sticky footer placeholder before the message footer $name",
+    ({ expectedTestIDs, hasRemoteContent, remoteConfigActions }) => {
+      const state = reproduceSequence(
+        appReducer(undefined, applicationChangeState("active")),
+        appReducer,
+        [
+          ...remoteConfigActions,
+          loadMessageById.success(toUIMessage(message_1)),
+          loadServiceDetail.success(service_1),
+          loadMessageDetails.success({
+            ...toUIMessageDetails(messageWithValidPayment),
+            hasRemoteContent
+          })
+        ]
+      );
+      const store: Store<GlobalState> = createStore(appReducer, state as any);
+      const { component } = renderComponent(store);
+      const scrollView = component.getByTestId(SCROLL_VIEW_TEST_ID);
+      const renderedTestIDs = scrollView
+        .findAll(node => expectedTestIDs.includes(node.props.testID))
+        .map(node => node.props.testID)
+        .filter((testID, index, testIDs) => testIDs.indexOf(testID) === index);
+
+      expect(renderedTestIDs).toEqual(expectedTestIDs);
+    }
+  );
 });
 
 const renderComponent = (store: Store<GlobalState>) => {

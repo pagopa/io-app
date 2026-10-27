@@ -1,9 +1,8 @@
 import { act, fireEvent, render } from "@testing-library/react-native";
-import { useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { type Metrics, SafeAreaProvider } from "react-native-safe-area-context";
 
-import { IOSpacing } from "../../../core";
+import { IOSpacing, IOVisualCostants } from "../../../core";
 import { ScrollViewWithStickyFooterActions } from "../ScrollViewWithStickyFooterActions";
 
 /* The component and FooterActions read safe-area insets, so every case uses
@@ -14,25 +13,19 @@ const metrics: Metrics = {
 };
 const placeholderTestID = "ScrollViewWithStickyFooterActionsPlaceholder";
 const endSpacerTestID = "ScrollViewWithStickyFooterActionsEndSpacer";
+const dockedActionsTestID = "ScrollViewWithStickyFooterActionsDockedActions";
 const scrollViewTestID = "sticky-scroll-view";
 const footerTestID = "sticky-footer-actions";
-
-const renderComponent = (
-  props: Partial<
-    React.ComponentProps<typeof ScrollViewWithStickyFooterActions>
-  > = {},
-  initialMetrics: Metrics = metrics
-) =>
-  render(
-    <SafeAreaProvider initialMetrics={initialMetrics}>
-      <ScrollViewWithStickyFooterActions
-        afterPlaceholder={<View />}
-        beforePlaceholder={<View />}
-        footerActionProps={{}}
-        {...props}
-      />
-    </SafeAreaProvider>
-  );
+const singleButtonActions = {
+  type: "SingleButton",
+  primary: { label: "Primary", onPress: jest.fn() }
+} as const;
+/* Mirrors the opacity the component gives the docked actions while the sticky
+   footer covers them. */
+const hiddenDockedActionsOpacity = 0.01;
+const scrollViewHeight = 600;
+const scrollPastDocking = 16;
+const scrollFarBeyondContent = 10000;
 
 describe("ScrollViewWithStickyFooterActions", () => {
   afterEach(() => jest.useRealTimers());
@@ -41,13 +34,7 @@ describe("ScrollViewWithStickyFooterActions", () => {
     const { getByLabelText, getByTestId } = renderComponent({
       afterPlaceholder: <View testID="after-placeholder" />,
       beforePlaceholder: <View testID="before-placeholder" />,
-      footerActionProps: {
-        actions: {
-          type: "SingleButton",
-          primary: { label: "Primary", onPress: jest.fn() }
-        },
-        testID: footerTestID
-      },
+      footerActionProps: { actions: singleButtonActions, testID: footerTestID },
       scrollViewProps: {
         scrollEventThrottle: 16,
         testID: scrollViewTestID
@@ -72,7 +59,9 @@ describe("ScrollViewWithStickyFooterActions", () => {
     expect(scrollView).toHaveProp("scrollEventThrottle", 16);
     expect(renderedSlotTestIDs).toEqual(slotTestIDs);
     expect(getByLabelText("Primary")).toBeTruthy();
-    expect(getByTestId(footerTestID)).toHaveStyle({
+    expect(
+      getByTestId(footerTestID, { includeHiddenElements: true })
+    ).toHaveStyle({
       paddingBottom: metrics.insets.bottom
     });
     expect(getByTestId(endSpacerTestID)).toHaveStyle({
@@ -81,11 +70,9 @@ describe("ScrollViewWithStickyFooterActions", () => {
   });
 
   it("renders only the screen-end placeholder when actions are absent", () => {
-    const onMeasure = jest.fn();
-    const { getByTestId, queryByRole } = renderComponent({
-      footerActionProps: { onMeasure }
-    });
+    const { getByTestId, queryByRole, queryByTestId } = renderComponent();
 
+    expect(queryByTestId(dockedActionsTestID)).toBeNull();
     expect(getByTestId(placeholderTestID)).toHaveStyle({
       height: IOSpacing.screenEndMargin
     });
@@ -93,90 +80,96 @@ describe("ScrollViewWithStickyFooterActions", () => {
       height: IOSpacing.screenEndMargin + metrics.insets.bottom
     });
     expect(queryByRole("button")).toBeNull();
-    expect(onMeasure).toHaveBeenCalledWith({
-      actionBlockHeight: 0,
-      safeBottomAreaHeight: 32
-    });
   });
 
-  it("does not measure absent actions again when an inline callback rerenders", () => {
-    const onMeasure = jest.fn();
-    const Consumer = () => {
-      const [safeBottomAreaHeight, setSafeBottomAreaHeight] = useState(0);
-      return (
-        <>
-          <Text testID="safe-bottom-area-height">{safeBottomAreaHeight}</Text>
-          <ScrollViewWithStickyFooterActions
-            afterPlaceholder={<View />}
-            beforePlaceholder={<View />}
-            footerActionProps={{
-              onMeasure: measurements => {
-                onMeasure(measurements);
-                setSafeBottomAreaHeight(measurements.safeBottomAreaHeight);
-              }
-            }}
-          />
-        </>
-      );
-    };
-    const { getByTestId } = render(
-      <SafeAreaProvider initialMetrics={metrics}>
-        <Consumer />
-      </SafeAreaProvider>
-    );
-
-    expect(getByTestId("safe-bottom-area-height")).toHaveTextContent("32");
-    expect(onMeasure).toHaveBeenCalledTimes(1);
-  });
-
-  it("keeps the footer fixed until its placeholder and then moves it upward", () => {
+  it("keeps the footer fixed until its placeholder and then swaps it with the docked actions", () => {
     jest.useFakeTimers();
     const actionBlockHeight = 48;
-    const scrollViewHeight = 600;
-    const placeholderHeight =
+    const stickyFooterHeight =
       actionBlockHeight + metrics.insets.bottom + IOSpacing.screenEndMargin;
     const placeholderY = 1000;
-    const placeholderTopEdge =
-      placeholderY - scrollViewHeight + placeholderHeight;
-    const { getByTestId } = renderComponent({
-      footerActionProps: {
-        actions: {
-          type: "SingleButton",
-          primary: { label: "Primary", onPress: jest.fn() }
-        },
-        testID: footerTestID
-      },
-      scrollViewProps: { testID: scrollViewTestID }
-    });
-    const footer = getByTestId(footerTestID);
-    const actionContainer = footer.findByProps({ pointerEvents: "box-none" });
-    const placeholder = getByTestId(placeholderTestID);
-    const scrollView = getByTestId(scrollViewTestID);
+    const dockingScrollY = placeholderY - scrollViewHeight + stickyFooterHeight;
+    const { footer, dockedActions, placeholder, scrollView } =
+      renderMeasuredComponent();
 
-    fireEvent(actionContainer, "layout", layoutEvent(actionBlockHeight));
     fireEvent(scrollView, "layout", layoutEvent(scrollViewHeight));
     fireEvent(
-      placeholder,
+      footer.findByProps({ pointerEvents: "box-none" }),
       "layout",
-      layoutEvent(placeholderHeight, placeholderY)
+      layoutEvent(actionBlockHeight)
     );
+    fireEvent(placeholder, "layout", layoutEvent(0, placeholderY));
     // Reanimated registers its Jest mapper on a zero-delay timer.
     act(() => jest.runOnlyPendingTimers());
 
-    expect(placeholder).toHaveStyle({ height: placeholderHeight });
-
-    fireEvent.scroll(scrollView, {
-      nativeEvent: { contentOffset: { x: 0, y: placeholderTopEdge } }
-    });
+    scrollTo(scrollView, dockingScrollY);
     expect(footer).toHaveAnimatedStyle({
+      opacity: 1,
       transform: [{ translateY: 0 }]
     });
-
-    fireEvent.scroll(scrollView, {
-      nativeEvent: { contentOffset: { x: 0, y: placeholderTopEdge + 16 } }
+    expect(dockedActions).toHaveAnimatedStyle({
+      opacity: hiddenDockedActionsOpacity
     });
+
+    scrollTo(scrollView, dockingScrollY + scrollPastDocking);
     expect(footer).toHaveAnimatedStyle({
-      transform: [{ translateY: -16 }]
+      opacity: 0,
+      transform: [{ translateY: stickyFooterHeight }]
+    });
+    expect(dockedActions).toHaveAnimatedStyle({ opacity: 1 });
+  });
+
+  it("keeps the footer fixed until it's measured", () => {
+    jest.useFakeTimers();
+    const { footer, dockedActions, scrollView } = renderMeasuredComponent();
+
+    fireEvent(scrollView, "layout", layoutEvent(scrollViewHeight));
+    act(() => jest.runOnlyPendingTimers());
+    scrollTo(scrollView, scrollFarBeyondContent);
+
+    expect(footer).toHaveAnimatedStyle({
+      opacity: 1,
+      transform: [{ translateY: 0 }]
+    });
+    expect(dockedActions).toHaveAnimatedStyle({
+      opacity: hiddenDockedActionsOpacity
+    });
+  });
+
+  it("exposes the docked actions to screen readers, hiding the sticky footer", () => {
+    const onPress = jest.fn();
+    const { getByLabelText, getByTestId } = renderComponent({
+      footerActionProps: {
+        actions: {
+          type: "SingleButton",
+          primary: { label: "Primary", onPress }
+        },
+        testID: footerTestID
+      }
+    });
+
+    const placeholder = getByTestId(placeholderTestID);
+    const dockedActions = getByTestId(dockedActionsTestID);
+    const accessibleButton = getByLabelText("Primary");
+
+    expect(placeholder).toContainElement(dockedActions);
+    expect(dockedActions).toContainElement(accessibleButton);
+    expect(
+      getByTestId(footerTestID, { includeHiddenElements: true })
+    ).not.toBeVisible();
+
+    fireEvent.press(accessibleButton);
+    expect(onPress).toHaveBeenCalledTimes(1);
+  });
+
+  it("leaves a regular margin below the docked actions instead of the safe area", () => {
+    const { getByTestId } = renderComponent({
+      footerActionProps: { actions: singleButtonActions }
+    });
+
+    expect(getByTestId(dockedActionsTestID)).toHaveStyle({
+      marginTop: IOSpacing.screenEndMargin,
+      paddingBottom: IOVisualCostants.appMarginDefault
     });
   });
 
@@ -193,8 +186,46 @@ describe("ScrollViewWithStickyFooterActions", () => {
   });
 });
 
+const renderMeasuredComponent = () => {
+  const { getByTestId } = renderComponent({
+    footerActionProps: { actions: singleButtonActions, testID: footerTestID },
+    scrollViewProps: { testID: scrollViewTestID }
+  });
+  return {
+    dockedActions: getByTestId(dockedActionsTestID),
+    footer: getByTestId(footerTestID, { includeHiddenElements: true }),
+    placeholder: getByTestId(placeholderTestID),
+    scrollView: getByTestId(scrollViewTestID)
+  };
+};
+
 const layoutEvent = (height: number, y = 0) => ({
   nativeEvent: {
     layout: { height, width: metrics.frame.width, x: 0, y }
   }
 });
+
+const scrollTo = (
+  scrollView: ReturnType<typeof renderMeasuredComponent>["scrollView"],
+  y: number
+) =>
+  fireEvent.scroll(scrollView, {
+    nativeEvent: { contentOffset: { x: 0, y } }
+  });
+
+const renderComponent = (
+  props: Partial<
+    React.ComponentProps<typeof ScrollViewWithStickyFooterActions>
+  > = {},
+  initialMetrics: Metrics = metrics
+) =>
+  render(
+    <SafeAreaProvider initialMetrics={initialMetrics}>
+      <ScrollViewWithStickyFooterActions
+        afterPlaceholder={<View />}
+        beforePlaceholder={<View />}
+        footerActionProps={{}}
+        {...props}
+      />
+    </SafeAreaProvider>
+  );

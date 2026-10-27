@@ -89,16 +89,24 @@ export const MessageDetails = ({
     <>
       <ScrollViewWithStickyFooterActions
         afterPlaceholder={
-          <MessageBottomMenu
-            history={message.notificationStatusHistory}
-            isCancelled={message.isCancelled}
-            iun={message.iun}
-            messageId={messageId}
-            paidNoticeCodes={completedPaymentNoticeCodes}
-            payments={payments}
-            sendOpeningSource={sendOpeningSource}
-            sendUserType={sendUserType}
-          />
+          <>
+            <ContentWrapper>
+              <SendMessageSurveyBanner
+                message={message}
+                serviceId={serviceId}
+              />
+            </ContentWrapper>
+            <MessageBottomMenu
+              history={message.notificationStatusHistory}
+              isCancelled={message.isCancelled}
+              iun={message.iun}
+              messageId={messageId}
+              paidNoticeCodes={completedPaymentNoticeCodes}
+              payments={payments}
+              sendOpeningSource={sendOpeningSource}
+              sendUserType={sendUserType}
+            />
+          </>
         }
         beforePlaceholder={
           <ContentWrapper>
@@ -165,7 +173,6 @@ export const MessageDetails = ({
               sendUserType={sendUserType}
               serviceId={serviceId}
             />
-            <SendMessageSurveyBanner message={message} serviceId={serviceId} />
             <VSpacer size={16} />
           </ContentWrapper>
         }
