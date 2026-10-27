@@ -1,26 +1,13 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
+import { ComponentProps } from "react";
 
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as analytics from "../../analytics";
-import CieIdAuthUrlError from "../CieIdAuthUrlError";
+import CieIdAuthUrlErrorScreen from "../CieIdAuthUrlError";
 
-const mockNavigate = jest.fn();
-const mockReplace = jest.fn();
+const mockPopTo = jest.fn();
 const mockUrl = "https://unauthorized-url.com";
-
-jest.mock("@react-navigation/native", () => ({
-  ...jest.requireActual("@react-navigation/native"),
-  useRoute: () => ({
-    params: {
-      url: mockUrl
-    }
-  }),
-  useNavigation: () => ({
-    navigate: mockNavigate,
-    replace: mockReplace
-  })
-}));
 
 jest.mock("../../analytics");
 
@@ -35,14 +22,19 @@ jest.mock("../../../../../../store/hooks", () => ({
   useIOSelector: jest.fn()
 }));
 
+const screenProps = {
+  navigation: { popTo: mockPopTo },
+  route: { params: { url: mockUrl } }
+} as unknown as ComponentProps<typeof CieIdAuthUrlErrorScreen>;
+
 describe("CieIdAuthUrlError", () => {
   it("Should match the snapshot", () => {
-    const component = render(<CieIdAuthUrlError />);
+    const component = render(<CieIdAuthUrlErrorScreen {...screenProps} />);
     expect(component).toMatchSnapshot();
   });
 
   it("Should call trackCieIdNoWhitelistUrl on first render", () => {
-    render(<CieIdAuthUrlError />);
+    render(<CieIdAuthUrlErrorScreen {...screenProps} />);
     expect(analytics.trackCieIdNoWhitelistUrl).toHaveBeenCalledWith(
       mockUrl,
       "auth"
@@ -50,7 +42,7 @@ describe("CieIdAuthUrlError", () => {
   });
 
   it("Should set the not allowed URL and the login flow as debug data", () => {
-    render(<CieIdAuthUrlError />);
+    render(<CieIdAuthUrlErrorScreen {...screenProps} />);
     expect(mockUseDebugInfo).toHaveBeenLastCalledWith({
       notAllowedUrl: mockUrl,
       flow: "auth"
@@ -58,7 +50,7 @@ describe("CieIdAuthUrlError", () => {
   });
 
   it("Should render the correct title and subtitle", () => {
-    const { getByText } = render(<CieIdAuthUrlError />);
+    const { getByText } = render(<CieIdAuthUrlErrorScreen {...screenProps} />);
 
     expect(
       getByText(I18n.t("authentication.cieidUrlErrorScreen.title"))
@@ -68,14 +60,12 @@ describe("CieIdAuthUrlError", () => {
     ).toBeTruthy();
   });
 
-  it("Should call navigate to AUTHENTICATION_LANDING when close button is pressed", () => {
-    const { getByText } = render(<CieIdAuthUrlError />);
+  it("Should pop to AUTHENTICATION_LANDING when close button is pressed", () => {
+    const { getByText } = render(<CieIdAuthUrlErrorScreen {...screenProps} />);
 
     const closeButton = getByText(I18n.t("global.buttons.close"));
     fireEvent.press(closeButton);
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    expect(mockPopTo).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.LANDING);
   });
 });
