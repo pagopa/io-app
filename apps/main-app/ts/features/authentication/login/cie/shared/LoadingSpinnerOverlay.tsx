@@ -1,13 +1,15 @@
+import { ComponentProps } from "react";
 import { StyleSheet, View } from "react-native";
 
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 
-export const LoadingOverlay = ({ onCancel }: { onCancel: () => void }) => (
-  <View style={styles.loader}>
-    <LoadingSpinnerOverlay isLoading onCancel={onCancel} />
+type LoadingOverlayProps = Omit<
+  ComponentProps<typeof LoadingSpinnerOverlay>,
+  "children" | "isLoading"
+>;
+
+export const LoadingOverlay = (props: LoadingOverlayProps) => (
+  <View style={StyleSheet.absoluteFill}>
+    <LoadingSpinnerOverlay isLoading {...props} />
   </View>
 );
-
-const styles = StyleSheet.create({
-  loader: { position: "absolute", width: "100%", height: "100%" }
-});

@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+      <string>com.expo.modules.backgroundtask.processing</string>
+    </array>
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
     <key>CFBundleDevelopmentRegion</key>
@@ -40,7 +44,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>5</string>
+    <string>8</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -76,13 +80,9 @@
     <string>IO richiede l'accesso al Bluetooth per completare la verifica dei documenti</string>
     <key>NSBluetoothPeripheralUsageDescription</key>
     <string>IO richiede l'accesso al Bluetooth per completare la verifica dei documenti</string>
-    <key>NSCalendarsUsageDescription</key>
-    <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
     <key>NSCalendarsFullAccessUsageDescription</key>
     <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
-    <key>NSRemindersUsageDescription</key>
-    <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
-    <key>NSRemindersFullAccessUsageDescription</key>
+    <key>NSCalendarsUsageDescription</key>
     <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
     <key>NSCameraUsageDescription</key>
     <string>You’ll be able to read QR codes and pay pagoPA notices.</string>
@@ -104,6 +104,10 @@
     <string>You will be able to save pictures from the app to your device.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>You’ll be able to save bonuses, certificates and upload screenshots or payment notices.</string>
+    <key>NSRemindersFullAccessUsageDescription</key>
+    <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
+    <key>NSRemindersUsageDescription</key>
+    <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>The app needs NSSpeechRecognitionUsageDescription permission</string>
     <key>RCTNewArchEnabled</key>
@@ -140,12 +144,6 @@
       <string>Titillio-ThinItalic.otf</string>
       <string>FiraCode-Medium.ttf</string>
     </array>
-    <key>UIBackgroundModes</key>
-    <array>
-      <string>processing</string>
-      <string>fetch</string>
-      <string>remote-notification</string>
-    </array>
     <key>UIApplicationSceneManifest</key>
     <dict>
       <key>UIApplicationSupportsMultipleScenes</key>
@@ -163,9 +161,11 @@
         </array>
       </dict>
     </dict>
-    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <key>UIBackgroundModes</key>
     <array>
-      <string>com.expo.modules.backgroundtask.processing</string>
+      <string>processing</string>
+      <string>fetch</string>
+      <string>remote-notification</string>
     </array>
     <key>UIFileSharingEnabled</key>
     <true/>

@@ -380,9 +380,9 @@ const BeneficiaryDetailsContentSkeleton = () => (
         {Array.from({ length: 2 }).map((_, j) => (
           <View key={j}>
             <ListItemTransaction
+              description=""
               isLoading
-              subtitle=""
-              title=""
+              label=""
               transaction={{
                 amountAccessibilityLabel: "",
                 amount: "0"

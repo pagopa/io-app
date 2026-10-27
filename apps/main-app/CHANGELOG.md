@@ -1,7 +1,60 @@
+## 3.42.0-rc.8 (2026-10-26)
+
+### Features
+
+- **IT-Wallet:** [[SIW-5293](https://pagopa.atlassian.net/browse/SIW-5293)] Implement PID invalid status UI ([#8754](https://github.com/pagopa/io-app/pull/8754))
+
+### Bug Fixes
+
+- [[IOCOM-3383](https://pagopa.atlassian.net/browse/IOCOM-3383)] app crash while showing SEND preconditions bottomSheet ([#8796](https://github.com/pagopa/io-app/pull/8796))
+
+### Chores
+
+- [[IEL-908](https://pagopa.atlassian.net/browse/IEL-908)] added FCI flow value to APP_UPDATE_REQUESTED MP event ([#8772](https://github.com/pagopa/io-app/pull/8772))
+
+### ❤️ Thank You
+
+- Federico Mastrini @mastro993
+- Martino Cesari Tomba @forrest57
+- Pawel @soixdev91
+
 # Changelog
 
-All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+All notable changes to this project will be documented in this file. This changelog is generated with Nx Release from Conventional Commits.
 
+## [3.42.0-rc.7](https://github.com/pagopa/io-app/compare/3.42.0-rc.6...3.42.0-rc.7) (2026-10-23)
+
+### Features
+
+* [[IOPID-4283](https://pagopa.atlassian.net/browse/IOPID-4283)] Put OI CIE cookies cleanup on Android behind a flag ([#8793](https://github.com/pagopa/io-app/issues/8793)) ([6c5986d](https://github.com/pagopa/io-app/commit/6c5986daa48d77b2ceb8fba89c778916713bdfc6)), references [#8787](https://github.com/pagopa/io-app/issues/8787) [#8787](https://github.com/pagopa/io-app/issues/8787)
+* [[IOPLT-2207](https://pagopa.atlassian.net/browse/IOPLT-2207)] Make Expo CLI default tool to build and run the app ([#8782](https://github.com/pagopa/io-app/issues/8782)) ([4349e2b](https://github.com/pagopa/io-app/commit/4349e2b516407d5d6898a22ffefb07f0f9ce668f))
+
+### Bug Fixes
+
+* [[IOPID-4270](https://pagopa.atlassian.net/browse/IOPID-4270)] Open One Identity SPID/CieID login in incognito ([#8790](https://github.com/pagopa/io-app/issues/8790)) ([57316f6](https://github.com/pagopa/io-app/commit/57316f61937633748073e7e8f72057dbd6095eef))
+* [[IOPID-4281](https://pagopa.atlassian.net/browse/IOPID-4281)] Return acr_values from dev server /reserve ([#8791](https://github.com/pagopa/io-app/issues/8791)) ([1bdacb3](https://github.com/pagopa/io-app/commit/1bdacb358d57214e2113f12b14fd869786d65a32)), references [#8729](https://github.com/pagopa/io-app/issues/8729)
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Expo `Android` script ([#8794](https://github.com/pagopa/io-app/issues/8794)) ([b862671](https://github.com/pagopa/io-app/commit/b86267152410f4659c76c5373e333f14d7a014af))
+* [[IOPLT-2209](https://pagopa.atlassian.net/browse/IOPLT-2209)] Adjust `Animated.View` interaction behavior ([#8786](https://github.com/pagopa/io-app/issues/8786)) ([b25d50e](https://github.com/pagopa/io-app/commit/b25d50ef1cd8cc489f4870271673b7dff094a34d))
+
+### Chores
+
+* [[IOPLT-2194](https://pagopa.atlassian.net/browse/IOPLT-2194)] Add missing `a11y` role for pin components ([#8758](https://github.com/pagopa/io-app/issues/8758)) ([13902de](https://github.com/pagopa/io-app/commit/13902de9ed8592a971868e876b5e57c4042b7853))
+* [[SIW-3784](https://pagopa.atlassian.net/browse/SIW-3784)] Improve accessibility for BottomSheet component ([#8549](https://github.com/pagopa/io-app/issues/8549)) ([7ac27d8](https://github.com/pagopa/io-app/commit/7ac27d8be3ec99e0737b72bda2fe2468bc29b003))
+## [3.42.0-rc.6](https://github.com/pagopa/io-app/compare/3.42.0-rc.5...3.42.0-rc.6) (2026-10-22)
+
+### Bug Fixes
+
+* [[ENGQATM-1004](https://pagopa.atlassian.net/browse/ENGQATM-1004)] Update error message in `OneIdentityCieAuthenticationWebView` ([#8779](https://github.com/pagopa/io-app/issues/8779)) ([24fc974](https://github.com/pagopa/io-app/commit/24fc9745bdf45e1784c29e381c8b5f3c02a0abed))
+* [[IOPID-4277](https://pagopa.atlassian.net/browse/IOPID-4277)] Allow another user to log in after logout ([#8776](https://github.com/pagopa/io-app/issues/8776)) ([929d70f](https://github.com/pagopa/io-app/commit/929d70f35ee544d9b12a5ccba92e75cc83009c8f))
+* [[IOPID-4279](https://pagopa.atlassian.net/browse/IOPID-4279)] Clear session cookies at OI CIE login on Android ([#8787](https://github.com/pagopa/io-app/issues/8787)) ([70b4fec](https://github.com/pagopa/io-app/commit/70b4fec98eb40fcd93b703496980dd1d6a3f025b)), references [#4755](https://github.com/pagopa/io-app/issues/4755)
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Missing generate script in ` update lokalise` workflow ([#8778](https://github.com/pagopa/io-app/issues/8778)) ([2e055ac](https://github.com/pagopa/io-app/commit/2e055ace6c500480004901e17dacf07e6c4e3d1f))
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Add `synchronize` to `update-lokalise-snapshots` ([#8780](https://github.com/pagopa/io-app/issues/8780)) ([977da4e](https://github.com/pagopa/io-app/commit/977da4e0d6ab1cb32647cef8f83789c04dfa8ae0))
+* [[IOPLT-2197](https://pagopa.atlassian.net/browse/IOPLT-2197)] Add missing `a11y` for `ListItem` with security label ([#8765](https://github.com/pagopa/io-app/issues/8765)) ([67765d2](https://github.com/pagopa/io-app/commit/67765d241be43024ed5cefd330a46c90707bbe40))
+* **IT-Wallet:** [[SIW-5367](https://pagopa.atlassian.net/browse/SIW-5367)] Enhance accessibility controls and improve playback overlay for GIFs ([#8775](https://github.com/pagopa/io-app/issues/8775)) ([4ba62cb](https://github.com/pagopa/io-app/commit/4ba62cb3bef80ef2c76b1bbcbd800b7c096fe5b0))
+* Update translations from Lokalise ([#8785](https://github.com/pagopa/io-app/issues/8785)) ([e4ae7a7](https://github.com/pagopa/io-app/commit/e4ae7a7eec09ccca6966f341d14b437927644a1b))
 ## [3.42.0-rc.5](https://github.com/pagopa/io-app/compare/3.42.0-rc.4...3.42.0-rc.5) (2026-10-21)
 
 ### Features

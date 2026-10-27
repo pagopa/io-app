@@ -422,6 +422,7 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
