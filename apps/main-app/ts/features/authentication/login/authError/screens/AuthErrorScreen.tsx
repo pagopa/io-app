@@ -84,9 +84,8 @@ const AuthErrorScreen = ({ navigation, route }: AuthErrorScreenProps) => {
   const handleCancel = useCallback(() => {
     if (isActiveSessionLogin) {
       dispatch(setFinishedActiveSessionLoginFlow());
-      // Navigating back to the Messages home collapses the whole pushed
-      // Settings/Authentication stack in one step, since it's already
-      // mounted below it: no explicit reset is needed here.
+      // Navigating back to the main route of the app,
+      // specifically to the Messages home.
       navigation.popTo(ROUTES.MAIN, {
         screen: MESSAGES_ROUTES.MESSAGES_HOME
       });
