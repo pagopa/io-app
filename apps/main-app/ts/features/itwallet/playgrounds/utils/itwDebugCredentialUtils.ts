@@ -8,7 +8,7 @@ import {
   CredentialMetadata,
   CredentialValidity,
   ItwCredentialStatus,
-  ItwJwtCredentialStatus
+  ItwEidStatus
 } from "../../common/utils/itwTypesUtils";
 
 const EXPIRING_DAYS = 15;
@@ -54,13 +54,14 @@ const normalizeCredentialAsValid = (
 };
 
 /**
- * Statuses available for the PID — only JWT-based, since the wallet card does
- * not support status assertions on the eID.
+ * Statuses available for the PID — the JWT-based ones and "invalid", since the
+ * wallet card does not support status assertions on the eID.
  */
-export const PID_OVERRIDE_STATUSES: ReadonlyArray<ItwJwtCredentialStatus> = [
+export const PID_OVERRIDE_STATUSES: ReadonlyArray<ItwEidStatus> = [
   "valid",
   "jwtExpiring",
-  "jwtExpired"
+  "jwtExpired",
+  "invalid"
 ];
 
 /** Regular credentials have no advance digital expiration warning. */

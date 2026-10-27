@@ -232,11 +232,12 @@ describe("applyStatusToCredential", () => {
 });
 
 describe("getAvailableStatusOverrides", () => {
-  it("only returns JWT statuses for the PID", () => {
+  it("returns JWT statuses and invalid for the PID", () => {
     expect(getAvailableStatusOverrides("pid")).toEqual([
       "valid",
       "jwtExpiring",
-      "jwtExpired"
+      "jwtExpired",
+      "invalid"
     ]);
   });
 
