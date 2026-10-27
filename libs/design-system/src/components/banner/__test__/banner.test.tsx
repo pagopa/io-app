@@ -1,5 +1,5 @@
-import { fireEvent, render } from "@testing-library/react-native";
-import { Alert } from "react-native";
+import { act, fireEvent, render } from "@testing-library/react-native";
+import { AccessibilityInfo, Alert } from "react-native";
 
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
 import { Banner } from "../Banner";
@@ -7,6 +7,12 @@ import { Banner } from "../Banner";
 const onLinkPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
+
+beforeEach(() => {
+  jest
+    .spyOn(AccessibilityInfo, "isScreenReaderEnabled")
+    .mockResolvedValue(false);
+});
 
 describe("Test Banner Components", () => {
   it("Banner Snapshot", () => {
@@ -39,6 +45,102 @@ describe("Test Banner Components - Experimental Enabled", () => {
 });
 
 describe("Banner accessibility", () => {
+  test.each([
+    { name: "enabled", enabled: true, expectedTextPresses: 0 },
+    { name: "disabled", enabled: false, expectedTextPresses: 1 }
+  ])(
+    "handles text and CTA presses with the screen reader $name",
+    async ({ enabled, expectedTextPresses }) => {
+      jest
+        .mocked(AccessibilityInfo.isScreenReaderEnabled)
+        .mockResolvedValue(enabled);
+      const onPress = jest.fn();
+      const onClose = jest.fn();
+      const { getByRole } = render(
+        <Banner
+          action="Action text"
+          color="neutral"
+          content="Banner content"
+          labelClose="Close banner"
+          onClose={onClose}
+          onPress={onPress}
+          pictogramName="charity"
+          title="Banner title"
+        />
+      );
+      await act(() => Promise.resolve());
+
+      fireEvent(
+        getByRole("text", { name: "Banner title Banner content" }),
+        "click",
+        { nativeEvent: {} }
+      );
+      expect(onPress).toHaveBeenCalledTimes(expectedTextPresses);
+
+      fireEvent(getByRole("button", { name: "Action text" }), "click", {
+        nativeEvent: {}
+      });
+      expect(onPress).toHaveBeenCalledTimes(expectedTextPresses + 1);
+      expect(onClose).not.toHaveBeenCalled();
+
+      fireEvent(getByRole("button", { name: "Close banner" }), "click", {
+        nativeEvent: {}
+      });
+      expect(onClose).toHaveBeenCalledTimes(1);
+      expect(onPress).toHaveBeenCalledTimes(expectedTextPresses + 1);
+    }
+  );
+
+  it("updates the text press target when the screen reader changes", async () => {
+    const screenReaderAccessibilityInfo: {
+      addEventListener: (
+        event: "screenReaderChanged",
+        listener: (enabled: boolean) => void
+      ) => ReturnType<typeof AccessibilityInfo.addEventListener>;
+    } = AccessibilityInfo;
+    const listenerSpy = jest.spyOn(
+      screenReaderAccessibilityInfo,
+      "addEventListener"
+    );
+    listenerSpy.mockClear();
+    const onPress = jest.fn();
+    const { getByRole, unmount } = render(
+      <Banner
+        action="Action text"
+        color="neutral"
+        onPress={onPress}
+        pictogramName="charity"
+        title="Banner title"
+      />
+    );
+    await act(() => Promise.resolve());
+
+    const listener = listenerSpy.mock.calls.find(
+      ([event]) => event === "screenReaderChanged"
+    )?.[1];
+    expect(listener).toBeDefined();
+
+    fireEvent(getByRole("text", { name: "Banner title" }), "click", {
+      nativeEvent: {}
+    });
+    expect(onPress).toHaveBeenCalledTimes(1);
+
+    act(() => listener?.(true));
+    fireEvent(getByRole("text", { name: "Banner title" }), "click", {
+      nativeEvent: {}
+    });
+    expect(onPress).toHaveBeenCalledTimes(1);
+
+    act(() => listener?.(false));
+    fireEvent(getByRole("text", { name: "Banner title" }), "click", {
+      nativeEvent: {}
+    });
+    expect(onPress).toHaveBeenCalledTimes(2);
+
+    unmount();
+    expect(listenerSpy.mock.results[0].value.remove).toHaveBeenCalledTimes(1);
+  });
+
   test.each([
     { name: "title only", title: "Banner title", content: undefined },
     { name: "content only", title: undefined, content: "Banner content" },

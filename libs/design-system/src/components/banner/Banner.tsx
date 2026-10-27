@@ -1,5 +1,6 @@
-import { Ref } from "react";
+import { Ref, useEffect, useState } from "react";
 import {
+  AccessibilityInfo,
   AccessibilityRole,
   GestureResponderEvent,
   Pressable,
@@ -140,6 +141,29 @@ export const Banner = ({
   ref: viewRef,
   testID
 }: Banner) => {
+  const [screenReaderEnabled, setScreenReaderEnabled] = useState(false);
+
+  useEffect(() => {
+    const initialQuery = new AbortController();
+    const subscription = AccessibilityInfo.addEventListener(
+      "screenReaderChanged",
+      enabled => {
+        initialQuery.abort();
+        setScreenReaderEnabled(enabled);
+      }
+    );
+    void AccessibilityInfo.isScreenReaderEnabled().then(enabled => {
+      if (!initialQuery.signal.aborted) {
+        setScreenReaderEnabled(enabled);
+      }
+    });
+
+    return () => {
+      initialQuery.abort();
+      subscription.remove();
+    };
+  }, []);
+
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
   const { themeType } = useIOThemeContext();
@@ -230,14 +254,16 @@ export const Banner = ({
     </>
   );
 
+  const BannerContainer = screenReaderEnabled ? View : Pressable;
+
   const PressableButton = () => (
-    <Pressable
+    <BannerContainer
       accessible={false}
       focusable={false}
       importantForAccessibility="no"
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
+      onPress={screenReaderEnabled ? undefined : onPress}
+      onPressIn={screenReaderEnabled ? undefined : onPressIn}
+      onPressOut={screenReaderEnabled ? undefined : onPressOut}
       ref={viewRef}
       testID={testID}
     >
@@ -246,7 +272,7 @@ export const Banner = ({
       >
         {renderMainBlock()}
       </Animated.View>
-    </Pressable>
+    </BannerContainer>
   );
 
   const StaticComponent = () => (
