@@ -1,0 +1,40 @@
+name: Publish Expo Crypto to npm registry
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  npm-release:
+    if: startsWith(github.event.release.tag_name, 'expo-crypto-v')
+    runs-on: ubuntu-latest
+    environment: prod-libs
+    permissions:
+      contents: read
+      id-token: write
+    concurrency:
+      group: expo-crypto-npm-${{ github.event.release.tag_name }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - uses: ./.github/actions/setup-pnpm
+      - name: Install npm 11
+        run: npm install -g npm@11.7.0
+      - name: Publish package to npm
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          VERSION=$(node -p "require('./libs/expo-crypto/package.json').version")
+          if [[ "$RELEASE_TAG" != "expo-crypto-v$VERSION" ]]; then
+            echo "::error::Release tag '$RELEASE_TAG' does not match package version '$VERSION'"
+            exit 1
+          fi
+          if [[ "$VERSION" == *-* ]]; then
+            DIST_TAG=next
+          else
+            DIST_TAG=latest
+          fi
+          pnpm nx release publish --group=expo-crypto --tag="$DIST_TAG"
