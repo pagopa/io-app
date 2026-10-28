@@ -1,0 +1,92 @@
+name: Release libraries
+on:
+  workflow_dispatch:
+    inputs:
+      library:
+        description: Library to release
+        required: true
+        type: choice
+        default: design-system
+        options:
+          - design-system
+          - expo-crypto
+      releaseLevel:
+        description: Version increment (ignored for the first Expo Crypto release)
+        required: true
+        type: choice
+        default: minor
+        options:
+          - major
+          - minor
+          - patch
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: library-release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+      - uses: ./.github/actions/setup-pnpm
+      - name: Create library release
+        id: release
+        env:
+          LIBRARY: ${{ inputs.library }}
+          RELEASE_LEVEL: ${{ inputs.releaseLevel }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          case "$LIBRARY" in
+            design-system) PACKAGE_JSON=libs/design-system/package.json ;;
+            expo-crypto) PACKAGE_JSON=libs/expo-crypto/package.json ;;
+            *)
+              echo "::error::Unsupported library '$LIBRARY'"
+              exit 1
+              ;;
+          esac
+          case "$RELEASE_LEVEL" in
+            major|minor|patch) ;;
+            *)
+              echo "::error::Unsupported version increment '$RELEASE_LEVEL'"
+              exit 1
+              ;;
+          esac
+
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          if [[ "$LIBRARY" == "design-system" ]]; then
+            pnpm nx run @pagopa/io-app-design-system:release "$RELEASE_LEVEL"
+          elif [[ -z "$(git tag --list 'expo-crypto-v*')" ]]; then
+            VERSION=$(node -p "require('./$PACKAGE_JSON').version")
+            pnpm nx release "$VERSION" --group=expo-crypto --first-release --skip-publish
+          else
+            pnpm nx release "$RELEASE_LEVEL" --group=expo-crypto --skip-publish
+          fi
+
+          VERSION=$(node -p "require('./$PACKAGE_JSON').version")
+          echo "tag=$LIBRARY-v$VERSION" >> "$GITHUB_OUTPUT"
+
+      # Release events created with GITHUB_TOKEN do not trigger other workflows.
+      - name: Start npm publishing workflow
+        env:
+          LIBRARY: ${{ inputs.library }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          case "$LIBRARY" in
+            design-system) WORKFLOW=design-system-release.yml ;;
+            expo-crypto) WORKFLOW=expo-crypto-release.yml ;;
+            *)
+              echo "::error::Unsupported library '$LIBRARY'"
+              exit 1
+              ;;
+          esac
+          gh workflow run "$WORKFLOW" --ref "$RELEASE_TAG"
