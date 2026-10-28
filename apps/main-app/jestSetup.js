@@ -1,3 +1,14 @@
+jest.mock("@io-app/expo-crypto", () => ({
+  ...jest.requireActual("../../libs/expo-crypto/Crypto.types"),
+  generate: jest.fn(),
+  getPublicKey: jest.fn(),
+  getPublicKeyFixed: jest.fn(),
+  deleteKey: jest.fn(),
+  sign: jest.fn(),
+  isKeyStrongboxBacked: jest.fn(),
+  verifyCertificateChain: jest.fn()
+}));
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* globals jest, require, global */
 /** Set up of the testing environment */

@@ -1,4 +1,4 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 /** A reducer for lollipop. */
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
