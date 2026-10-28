@@ -1,5 +1,5 @@
-import { render } from "@testing-library/react-native";
-import { Alert } from "react-native";
+import { fireEvent, render } from "@testing-library/react-native";
+import { Alert, Image, View } from "react-native";
 
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
 import { ListItemAction } from "../ListItemAction";
@@ -16,6 +16,84 @@ const onButtonPress = () => {
 };
 
 describe("Test List Item Components", () => {
+  it.each([
+    { name: "plain content", withAction: false, withLongPress: false },
+    { name: "an end action", withAction: true, withLongPress: false },
+    { name: "long press", withAction: true, withLongPress: true }
+  ])(
+    "displays a decorative image with $name",
+    ({ withAction, withLongPress }) => {
+      const imageSource = { uri: "https://example.com/image.png" };
+      const onPress = jest.fn();
+      const {
+        UNSAFE_getByType,
+        UNSAFE_getAllByType,
+        UNSAFE_queryByType,
+        getByText,
+        getByLabelText
+      } = render(
+        <ListItemInfo
+          accessibilityLabel="Information"
+          endElement={
+            withAction
+              ? {
+                  type: "iconButton",
+                  componentProps: {
+                    icon: "info",
+                    accessibilityLabel: "Details",
+                    onPress
+                  }
+                }
+              : undefined
+          }
+          imageSource={imageSource}
+          label="Label"
+          onLongPress={withLongPress ? onButtonPress : undefined}
+          value="Value"
+        />
+      );
+
+      const image = UNSAFE_getByType(Image);
+      expect(image.props.source).toEqual(imageSource);
+      expect(
+        UNSAFE_getAllByType(View).some(
+          view =>
+            view.props.importantForAccessibility === "no-hide-descendants" &&
+            view.findAllByType(Image).length === 1
+        )
+      ).toBe(true);
+      expect(getByText("Label", { includeHiddenElements: true })).toBeTruthy();
+      expect(getByText("Value", { includeHiddenElements: true })).toBeTruthy();
+      if (withAction) {
+        fireEvent.press(getByLabelText("Details"));
+        expect(onPress).toHaveBeenCalledTimes(1);
+      }
+
+      fireEvent(image, "error");
+      expect(UNSAFE_queryByType(Image)).toBeNull();
+      expect(getByText("Value", { includeHiddenElements: true })).toBeTruthy();
+      if (withAction) {
+        fireEvent.press(getByLabelText("Details"));
+        expect(onPress).toHaveBeenCalledTimes(2);
+      }
+    }
+  );
+
+  it("displays a new image after a previous source failed", () => {
+    const { UNSAFE_getByType, rerender } = render(
+      <ListItemInfo
+        imageSource={{ uri: "https://example.com/old.png" }}
+        value="Value"
+      />
+    );
+    fireEvent(UNSAFE_getByType(Image), "error");
+
+    const imageSource = { uri: "https://example.com/new.png" };
+    rerender(<ListItemInfo imageSource={imageSource} value="Value" />);
+
+    expect(UNSAFE_getByType(Image).props.source).toEqual(imageSource);
+  });
+
   it("keeps informational content out of keyboard focus", () => {
     const { getByLabelText } = render(
       <ListItemInfo accessibilityLabel="Information" value="Value" />

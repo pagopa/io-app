@@ -1,6 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import {
+  itwAuthenticSourceLogoIntegritySelector,
+  itwAuthenticSourceLogoSelector,
   itwAvailableCredentialsListSelector,
   itwCatalogueTranslationsByLocaleSelector,
   itwCredentialIntroContentSelector,
@@ -25,7 +27,13 @@ const mockCatalogue = {
       name: "Credential 1",
       description: "Description for Credential 1",
       authentic_sources: [
-        { id: "as-1", user_information_l10n_id: "as-1.userinfo" }
+        {
+          id: "as-1",
+          user_information_l10n_id: "as-1.userinfo",
+          logo_uri: "https://example.com/organization-logo.png",
+          dataset_logo_uri: "https://example.com/logo.png",
+          "dataset_logo_uri#integrity": "sha-256-dataset-hash"
+        }
       ]
     },
     {
@@ -33,7 +41,9 @@ const mockCatalogue = {
       name: "Credential 2",
       name_l10n_id: "cred2.name",
       description: "Description for Credential 2",
-      authentic_sources: [{ id: "as-2" }]
+      authentic_sources: [
+        { id: "as-2", logo_uri: "https://example.com/organization-only.png" }
+      ]
     }
   ] as DigitalCredentialsCatalogue["credentials"]
 };
@@ -106,7 +116,13 @@ describe("itwCredentialsCatalogueByTypesSelector", () => {
         name: "Credential 1",
         description: "Description for Credential 1",
         authentic_sources: [
-          { id: "as-1", user_information_l10n_id: "as-1.userinfo" }
+          {
+            id: "as-1",
+            user_information_l10n_id: "as-1.userinfo",
+            logo_uri: "https://example.com/organization-logo.png",
+            dataset_logo_uri: "https://example.com/logo.png",
+            "dataset_logo_uri#integrity": "sha-256-dataset-hash"
+          }
         ]
       },
       cred2: {
@@ -114,7 +130,9 @@ describe("itwCredentialsCatalogueByTypesSelector", () => {
         name: "Credential 2",
         name_l10n_id: "cred2.name",
         description: "Description for Credential 2",
-        authentic_sources: [{ id: "as-2" }]
+        authentic_sources: [
+          { id: "as-2", logo_uri: "https://example.com/organization-only.png" }
+        ]
       }
     });
   });
@@ -375,6 +393,64 @@ describe("itwAvailableCredentialsListSelector", () => {
       "education_diploma",
       "education_attendance"
     ]);
+  });
+});
+
+describe("itwAuthenticSourceLogoIntegritySelector", () => {
+  it.each([
+    {
+      name: "matching dataset",
+      credentialType: "cred1",
+      expected: "sha-256-dataset-hash"
+    },
+    { name: "missing integrity", credentialType: "cred2", expected: undefined },
+    {
+      name: "unknown credential",
+      credentialType: "unknown",
+      expected: undefined
+    }
+  ])("resolves the hash for $name", ({ credentialType, expected }) => {
+    const state = buildState({ catalogue: pot.some(mockCatalogue) });
+    expect(itwAuthenticSourceLogoIntegritySelector(credentialType)(state)).toBe(
+      expected
+    );
+  });
+
+  it("returns undefined without a catalogue", () => {
+    expect(
+      itwAuthenticSourceLogoIntegritySelector("cred1")(buildState())
+    ).toBeUndefined();
+  });
+});
+
+describe("itwAuthenticSourceLogoSelector", () => {
+  it.each([
+    {
+      name: "matching credential",
+      credentialType: "cred1",
+      expected: "https://example.com/logo.png"
+    },
+    {
+      name: "organization logo without a dataset logo",
+      credentialType: "cred2",
+      expected: undefined
+    },
+    {
+      name: "unknown credential",
+      credentialType: "unknown",
+      expected: undefined
+    }
+  ])("resolves the logo for $name", ({ credentialType, expected }) => {
+    const state = buildState({ catalogue: pot.some(mockCatalogue) });
+    expect(itwAuthenticSourceLogoSelector(credentialType)(state)).toBe(
+      expected
+    );
+  });
+
+  it("returns undefined when the catalogue is unavailable", () => {
+    expect(
+      itwAuthenticSourceLogoSelector("cred1")(buildState())
+    ).toBeUndefined();
   });
 });
 
