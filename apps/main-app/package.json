@@ -5,7 +5,7 @@
   "scripts": {
     "start": "expo start",
     "sync": "pnpm install && bundle && pnpm dev-pod-install && pnpm generate",
-    "run-ios": "expo run:ios",
+    "run-ios": "NO_INTERNAL_MODULE=1 expo run:ios",
     "run-android": "expo run:android",
     "dev-run-android": "pnpm run-android --variant productionDebug",
     "push-hint": "echo \"To publish changes without checks run:\ngit push --no-verify --follow-tags origin $(git rev-parse --abbrev-ref HEAD)\"",
