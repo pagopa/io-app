@@ -16,8 +16,8 @@ export const DSNativeBottomSheet = () => {
             <View key={item.route}>
               <ListItemNav
                 accessibilityLabel={item.title}
+                label={item.title}
                 onPress={() => navigation.navigate(item.route as any)}
-                value={item.title}
               />
               {index < arr.length - 1 && <Divider />}
             </View>
