@@ -1,8 +1,17 @@
 {
-  "name": "@io-app/expo-crypto",
+  "name": "@pagopa/expo-crypto",
   "version": "1.0.0",
   "description": "Hardware-backed cryptography and X.509 validation for io-app",
-  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pagopa/io-app.git",
+    "directory": "libs/expo-crypto"
+  },
+  "homepage": "https://github.com/pagopa/io-app/tree/master/libs/expo-crypto#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "index.ts",
   "types": "index.ts",
   "react-native": "index.ts",
@@ -10,8 +19,12 @@
   "files": [
     "index.ts",
     "Crypto.types.ts",
-    "android",
-    "ios",
+    "android/build.gradle",
+    "android/src",
+    "ios/*.h",
+    "ios/*.mm",
+    "ios/*.podspec",
+    "ios/*.swift",
     "expo-module.config.json"
   ],
   "scripts": {
@@ -22,5 +35,10 @@
     "expo-modules-core": "^55.0.25",
     "react-native": "catalog:",
     "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "expo-modules-core": "^55.0.25",
+    "react": "*",
+    "react-native": "*"
   }
 }
