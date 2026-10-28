@@ -3,29 +3,30 @@ name: Publish Expo Crypto to npm registry
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 jobs:
   npm-release:
-    if: startsWith(github.event.release.tag_name, 'expo-crypto-v')
+    if: startsWith(github.event.release.tag_name || github.ref_name, 'expo-crypto-v')
     runs-on: ubuntu-latest
     environment: prod-libs
     permissions:
       contents: read
       id-token: write
     concurrency:
-      group: expo-crypto-npm-${{ github.event.release.tag_name }}
+      group: expo-crypto-npm-${{ github.event.release.tag_name || github.ref_name }}
       cancel-in-progress: false
     steps:
       - name: Checkout release tag
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ github.event.release.tag_name || github.ref_name }}
       - uses: ./.github/actions/setup-pnpm
       - name: Install npm 11
         run: npm install -g npm@11.7.0
       - name: Publish package to npm
         env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name || github.ref_name }}
         run: |
           VERSION=$(node -p "require('./libs/expo-crypto/package.json').version")
           if [[ "$RELEASE_TAG" != "expo-crypto-v$VERSION" ]]; then
