@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { View } from "react-native";
@@ -24,7 +25,7 @@ const mockedUseIONavigation = useIONavigation as jest.Mock;
 
 describe("UnlockAccessComponent", () => {
   const mockNavigation = {
-    navigate: jest.fn()
+    dispatch: jest.fn()
   };
 
   beforeEach(() => {
@@ -59,17 +60,14 @@ describe("UnlockAccessComponent", () => {
     expect(mockedOpenWebUrl).toHaveBeenCalledWith("https://ioapp.it/");
   });
 
-  it("calls navigation.navigate when action button is pressed with authLevel L2", () => {
+  it("dispatches popTo LANDING when action button is pressed with authLevel L2", () => {
     const { getByTestId } = renderComponent("L2");
     const button = getByTestId("button-link-test");
 
     fireEvent.press(button);
 
-    expect(mockNavigation.navigate).toHaveBeenCalledWith(
-      AUTHENTICATION_ROUTES.MAIN,
-      {
-        screen: AUTHENTICATION_ROUTES.LANDING
-      }
+    expect(mockNavigation.dispatch).toHaveBeenCalledWith(
+      StackActions.popTo(AUTHENTICATION_ROUTES.LANDING)
     );
   });
 

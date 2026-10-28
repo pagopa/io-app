@@ -3,7 +3,7 @@ import { Platform } from "react-native";
 
 import { withStore } from "../../../../../../utils/jest/withStore";
 import * as urlUtils from "../../../../../../utils/url";
-import CieIdNotInstalled, {
+import CieIdNotInstalledScreen, {
   CIE_ID_ANDROID_COLL_LINK,
   CIE_ID_ANDROID_LINK,
   CIE_ID_IOS_LINK
@@ -16,7 +16,7 @@ const mockOpenUrl = jest.spyOn(urlUtils, "openWebUrl");
 const anyFunction = expect.any(Function);
 
 // Wrap the component with store
-const CieIdNotInstalledWithStore = withStore(CieIdNotInstalled);
+const CieIdNotInstalledWithStore = withStore(CieIdNotInstalledScreen);
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
@@ -25,7 +25,7 @@ jest.mock("@react-navigation/native", () => ({
   })
 }));
 
-describe(CieIdNotInstalled, () => {
+describe(CieIdNotInstalledScreen, () => {
   afterEach(jest.clearAllMocks);
   it("Should match the snapshot", () => {
     const component = render(<CieIdNotInstalledWithStore isUat={false} />);
