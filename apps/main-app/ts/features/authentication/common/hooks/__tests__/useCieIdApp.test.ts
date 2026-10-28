@@ -136,9 +136,9 @@ describe("useCieIdApp", () => {
       );
     });
 
-    it("should call openCieIdApp with the preprod environment when useUat is true", () => {
+    it("should call openCieIdApp with the preprod environment when cieEnv is preprod", () => {
       const { result } = renderHook(() =>
-        useCieIdApp({ onFailure, onSuccess, useUat: true })
+        useCieIdApp({ onFailure, onSuccess, cieEnv: "preprod" })
       );
 
       result.current.startCieIdApp("https://example.com/auth");

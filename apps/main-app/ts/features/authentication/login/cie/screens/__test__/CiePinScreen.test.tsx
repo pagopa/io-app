@@ -63,8 +63,8 @@ describe("CiePinScreen", () => {
       if (selector.name === "isFastLoginEnabledSelector") {
         return false;
       }
-      if (selector.name === "isCieLoginUatEnabledSelector") {
-        return false;
+      if (selector.name === "isCieProdSelector") {
+        return true;
       }
       if (selector.name === "isNfcEnabledSelector") {
         return pot.some(true);
@@ -102,7 +102,7 @@ describe("CiePinScreen", () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it("should render title with emoji if UAT is enabled", () => {
+  it("should render title with emoji if the CIE environment is not production", () => {
     const { getByText } = renderComponent();
     expect(
       getByText(I18n.t("authentication.cie.pin.pinCardTitle"))

@@ -61,16 +61,10 @@ import { AuthenticationParamsList } from "../../../common/navigation/params/Auth
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginSuccess } from "../../../common/store/actions";
 import { AUTH_LEVELS, getIdpLoginUri } from "../../../common/utils";
-import {
-  CieEntityIds,
-  CieRequestAuthenticationOverlay
-} from "../components/CieRequestAuthenticationOverlay";
+import { CieRequestAuthenticationOverlay } from "../components/CieRequestAuthenticationOverlay";
 import { nfcIsEnabled } from "../store/actions";
-import {
-  isCieLoginUatEnabledSelector,
-  isNfcEnabledSelector
-} from "../store/selectors";
-import { cieFlowForDevServerEnabled } from "../utils";
+import { isCieProdSelector, isNfcEnabledSelector } from "../store/selectors";
+import { CIE_ENVS, cieFlowForDevServerEnabled, getCieEntityId } from "../utils";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -153,7 +147,7 @@ const CiePinScreen = () => {
     if (authUrlGenerated !== undefined) {
       if (cieFlowForDevServerEnabled) {
         const loginUri = getIdpLoginUri(
-          CieEntityIds.PROD,
+          getCieEntityId(CIE_ENVS.PROD),
           AUTH_LEVELS.L3,
           remoteApiLoginUrlPrefix
         );
@@ -214,10 +208,10 @@ const CiePinScreen = () => {
     }, [])
   );
 
-  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const isCieProd = useIOSelector(isCieProdSelector);
 
   useHeaderSecondLevel({
-    title: withTrailingPoliceCarLightEmojii("", useCieUat),
+    title: withTrailingPoliceCarLightEmojii("", !isCieProd),
     supportRequest: true
   });
 

@@ -33,7 +33,7 @@ import {
   getWebViewFailureData,
   LoginFailureData
 } from "../../../common/utils/loginErrorDebugInfo";
-import { isCieLoginUatEnabledSelector } from "../store/selectors";
+import { cieEnvSelector } from "../store/selectors";
 import { getCieIdpId } from "../utils";
 
 /**
@@ -78,7 +78,7 @@ export const OneIdentityCieAuthenticationWebView = ({
 }: OneIdentityCieAuthenticationWebViewProps) => {
   const navigation = useIONavigation();
 
-  const useUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const cieEnv = useIOSelector(cieEnvSelector);
   const followRedirectsNatively = useIOSelector(
     oneIdentityCieNativeRedirectsEnabledSelector
   );
@@ -106,7 +106,7 @@ export const OneIdentityCieAuthenticationWebView = ({
       Platform.OS === "android" && isAndroidClearSessionCookiesEnabled,
     flow,
     followRedirectsNatively,
-    idpId: getCieIdpId(useUat),
+    idpId: getCieIdpId(cieEnv),
     onFailure: handleFailure,
     minAuthLevel: AUTH_LEVELS.L3
   });

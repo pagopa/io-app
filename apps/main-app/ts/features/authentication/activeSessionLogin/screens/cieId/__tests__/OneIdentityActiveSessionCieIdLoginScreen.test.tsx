@@ -289,7 +289,7 @@ const renderComponent = (
       />
     ),
     AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN,
-    { spidLevel: MOCK_AUTH_LEVEL_L2, isUat: false },
+    { spidLevel: MOCK_AUTH_LEVEL_L2 },
     store
   );
 };

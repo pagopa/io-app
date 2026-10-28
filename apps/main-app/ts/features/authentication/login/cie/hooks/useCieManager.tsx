@@ -24,8 +24,8 @@ import {
   WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
 } from "../../../common/utils/constants";
 import { cieAuthenticationError } from "../store/actions";
-import { isCieLoginUatEnabledSelector } from "../store/selectors";
-import { getCieUatEndpoint } from "../utils/endpoints";
+import { cieEnvSelector } from "../store/selectors";
+import { getCieIdpUrl } from "../utils/endpoints";
 
 const CIE_ALERT_MESSAGES_CONFIG = Platform.select<
   Parameters<typeof cieManager.start>[0]
@@ -207,11 +207,8 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
       cieManager.onSuccess(handleSuccess);
 
       cieManager.enableLog(isDevEnv);
-      // Set the IDP URL based on the environment:
-      // Uses the UAT endpoint for Pre-production or null to fallback to PROD (default).
-      const idpUrl = isCieLoginUatEnabledSelector(store.getState())
-        ? getCieUatEndpoint()
-        : null;
+      // Set the IDP URL based on the environment (null falls back to PROD)
+      const idpUrl = getCieIdpUrl(cieEnvSelector(store.getState()));
       cieManager.setCustomIdpUrl(idpUrl);
       cieManager.setAuthenticationUrl(authUrl);
 

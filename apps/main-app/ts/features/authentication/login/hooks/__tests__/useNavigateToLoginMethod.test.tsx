@@ -7,10 +7,10 @@ import { withStore } from "../../../../../utils/jest/withStore";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { AUTH_LEVELS, AuthLevel } from "../../../common/utils";
 import * as fastLoginSelector from "../../../fastLogin/store/selectors";
+import { cieEnvSelector } from "../../cie/store/selectors";
 import { Identifier } from "../../optIn/screens/OptInScreen";
 import useNavigateToLoginMethod from "../useNavigateToLoginMethod";
 
-const IS_UAT = false;
 const AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
 
 const mockNavigate = jest.fn();
@@ -24,16 +24,20 @@ jest.mock("@react-navigation/native", () => ({
 
 jest.mock("../../cie/store/selectors", () => ({
   isCieSupportedSelector: () => true,
-  isCieLoginUatEnabledSelector: () => IS_UAT
+  cieEnvSelector: jest.fn()
 }));
 
 describe(useNavigateToLoginMethod, () => {
-  afterEach(jest.clearAllMocks);
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    jest.mocked(cieEnvSelector).mockReturnValue("production");
+    jest.spyOn(rnCieId, "isCieIdAvailable").mockReturnValue(true);
+  });
 
   describe("Login flow WITHOUT OptIn", () => {
     it("Should navigate to the Cie + Pin screen", () => {
       const { getByTestId } = render(<TestComponent />);
-
       const navigateToCiePin = getByTestId("navigate-to-cie-pin");
       fireEvent.press(navigateToCiePin);
 
@@ -41,6 +45,7 @@ describe(useNavigateToLoginMethod, () => {
         screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
       });
     });
+
     it("Should navigate to idp selection", () => {
       const { getByTestId } = render(<TestComponent />);
 
@@ -51,8 +56,8 @@ describe(useNavigateToLoginMethod, () => {
         screen: AUTHENTICATION_ROUTES.IDP_SELECTION
       });
     });
+
     it("Should navigate to the CieID screen", () => {
-      jest.spyOn(rnCieId, "isCieIdAvailable").mockImplementation(() => true);
       const { getByTestId } = render(<TestComponent />);
 
       const navigateToCieIdScreen = getByTestId("navigate-to-cie-id");
@@ -62,18 +67,34 @@ describe(useNavigateToLoginMethod, () => {
         screen: AUTHENTICATION_ROUTES.CIE_ID_LOGIN
       });
     });
-    it(
-      "Should navigate to the CieID not installed screen",
-      navigateToCieIdNotInstalled
+
+    it.each(["production", "preprod"] as const)(
+      "Should navigate to the CieID not installed screen (%s)",
+      env => {
+        jest.mocked(cieEnvSelector).mockReturnValue(env);
+        jest.spyOn(rnCieId, "isCieIdAvailable").mockReturnValue(false);
+
+        const { getByTestId } = render(<TestComponent />);
+        fireEvent.press(getByTestId("navigate-to-cie-id"));
+
+        expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.CIE_NOT_INSTALLED,
+          params: { cieEnv: env }
+        });
+      }
     );
   });
+
   describe("Login flow WITH OptIn", () => {
     beforeAll(() => {
       jest
         .spyOn(fastLoginSelector, "fastLoginOptInFFEnabled")
-        .mockImplementation(() => true);
+        .mockReturnValue(true);
     });
-    afterAll(jest.clearAllMocks);
+
+    afterAll(() => {
+      jest.restoreAllMocks();
+    });
 
     it(`Should navigate to the OptIn screen with ${Identifier.CIE} as identifier`, () => {
       const { getByTestId } = render(<TestComponent />);
@@ -83,11 +104,10 @@ describe(useNavigateToLoginMethod, () => {
 
       expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
         screen: AUTHENTICATION_ROUTES.OPT_IN,
-        params: {
-          identifier: Identifier.CIE
-        }
+        params: { identifier: Identifier.CIE }
       });
     });
+
     it(`Should navigate to the OptIn screen with ${Identifier.SPID} as identifier`, () => {
       const { getByTestId } = render(<TestComponent />);
 
@@ -96,13 +116,11 @@ describe(useNavigateToLoginMethod, () => {
 
       expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
         screen: AUTHENTICATION_ROUTES.OPT_IN,
-        params: {
-          identifier: Identifier.SPID
-        }
+        params: { identifier: Identifier.SPID }
       });
     });
+
     it(`Should navigate to the OptIn screen with ${Identifier.CIE_ID} as identifier`, () => {
-      jest.spyOn(rnCieId, "isCieIdAvailable").mockImplementation(() => true);
       const { getByTestId } = render(<TestComponent />);
 
       const navigateToCieIdScreen = getByTestId("navigate-to-cie-id");
@@ -110,14 +128,24 @@ describe(useNavigateToLoginMethod, () => {
 
       expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
         screen: AUTHENTICATION_ROUTES.OPT_IN,
-        params: {
-          identifier: Identifier.CIE_ID
-        }
+        params: { identifier: Identifier.CIE_ID }
       });
     });
-    it(
-      "Should navigate to the CieID not installed screen",
-      navigateToCieIdNotInstalled
+
+    it.each(["production", "preprod"] as const)(
+      "Should navigate to the CieID not installed screen (%s)",
+      env => {
+        jest.mocked(cieEnvSelector).mockReturnValue(env);
+        jest.spyOn(rnCieId, "isCieIdAvailable").mockReturnValue(false);
+
+        const { getByTestId } = render(<TestComponent />);
+        fireEvent.press(getByTestId("navigate-to-cie-id"));
+
+        expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.CIE_NOT_INSTALLED,
+          params: { cieEnv: env }
+        });
+      }
     );
   });
 });
@@ -151,18 +179,3 @@ const TestComponent = withStore(() => {
     </View>
   );
 });
-
-function navigateToCieIdNotInstalled() {
-  jest.spyOn(rnCieId, "isCieIdAvailable").mockImplementation(() => false);
-  const { getByTestId } = render(<TestComponent />);
-
-  const navigateToCieIdScreen = getByTestId("navigate-to-cie-id");
-  fireEvent.press(navigateToCieIdScreen);
-
-  expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-    screen: AUTHENTICATION_ROUTES.CIE_NOT_INSTALLED,
-    params: {
-      isUat: IS_UAT
-    }
-  });
-}

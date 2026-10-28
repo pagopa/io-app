@@ -15,7 +15,7 @@ import { lollipopKeyTagSelector } from "../../../../../lollipop/store/reducers/l
 import * as LollipopLoginUtils from "../../../../../lollipop/utils/login";
 import { selectedIdentityProviderSelector } from "../../../../common/store/selectors";
 import { isFastLoginEnabledSelector } from "../../../../fastLogin/store/selectors";
-import { isCieLoginUatEnabledSelector } from "../../store/selectors";
+import { cieEnvSelector } from "../../store/selectors";
 import { CieRequestAuthenticationOverlay } from "../CieRequestAuthenticationOverlay";
 
 jest.spyOn(AnalyticsUtils, "trackLoginError").mockImplementation(() => null);
@@ -51,8 +51,8 @@ jest.mock("../../../../../../store/hooks", () => ({
   if (selector === isFastLoginEnabledSelector) {
     return false;
   }
-  if (selector === isCieLoginUatEnabledSelector) {
-    return false;
+  if (selector === cieEnvSelector) {
+    return "prod";
   }
   if (selector === selectedIdentityProviderSelector) {
     return {

@@ -3,7 +3,7 @@ import { useCallback, useEffect } from "react";
 import { Linking } from "react-native";
 
 import { isAndroid, isIos } from "../../../../utils/platform";
-import { getCieIdEnvironment } from "../../login/cie/utils";
+import { CIE_ENVS, CieEnv } from "../../login/cie/utils";
 import {
   CIE_ID_ERROR,
   CIE_ID_ERROR_MESSAGE,
@@ -27,18 +27,18 @@ const extractCieIdErrorFromUrl = (url: string): string | undefined => {
 };
 
 type UseCieIdApp = (params: {
+  /** CIE environment targeted by the CieID app. Defaults to production. */
+  cieEnv?: CieEnv;
   /** Handler called upon failure of the CIE authentication flow. */
   onFailure: (error: string) => void;
   /** Handler called upon successful CIE authentication flow. */
   onSuccess: (authenticationUrl: string) => void;
-  /** Wether to use UAT endpoints for CIE auth operations. */
-  useUat?: boolean;
 }) => {
   startCieIdApp: (url: string) => void;
 };
 
 export const useCieIdApp: UseCieIdApp = ({
-  useUat = false,
+  cieEnv = CIE_ENVS.PROD,
   onFailure,
   onSuccess
 }) => {
@@ -78,7 +78,7 @@ export const useCieIdApp: UseCieIdApp = ({
               onFailure(result.code);
             }
           },
-          getCieIdEnvironment(useUat)
+          cieEnv
         );
       }
 
@@ -89,7 +89,7 @@ export const useCieIdApp: UseCieIdApp = ({
         ).catch(onFailure);
       }
     },
-    [useUat, onFailure, onSuccess]
+    [cieEnv, onFailure, onSuccess]
   );
 
   return {
