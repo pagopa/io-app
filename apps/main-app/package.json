@@ -5,7 +5,7 @@
   "scripts": {
     "start": "expo start",
     "sync": "pnpm install && bundle && pnpm dev-pod-install && pnpm generate",
-    "run-ios": "expo run:ios",
+    "run-ios": "NO_INTERNAL_MODULE=1 expo run:ios",
     "run-android": "expo run:android",
     "dev-run-android": "pnpm run-android --variant productionDebug",
     "push-hint": "echo \"To publish changes without checks run:\ngit push --no-verify --follow-tags origin $(git rev-parse --abbrev-ref HEAD)\"",
@@ -57,7 +57,7 @@
     "@pagopa/io-react-native-jwt": "^2.2.5",
     "@pagopa/io-react-native-login-utils": "1.2.0",
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
-    "@pagopa/io-react-native-wallet": "3.8.3",
+    "@pagopa/io-react-native-wallet": "3.8.4",
     "@io-app/expo-zendesk": "workspace:*",
     "@pagopa/react-native-cie": "^1.5.0",
     "@pagopa/ts-commons": "^10.15.0",
