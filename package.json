@@ -12,7 +12,7 @@
     "postinstall": "nx prepack io-app-design-system"
   },
   "devDependencies": {
-    "@pagopa/io-react-native-crypto": "workspace:@io-app/expo-crypto@*",
+    "@pagopa/io-react-native-crypto": "workspace:@pagopa/expo-crypto@*",
     "@babel/core": "^7.26.0",
     "@babel/plugin-transform-export-namespace-from": "^7.27.1",
     "@babel/plugin-transform-regenerator": "^7.18.6",
