@@ -110,7 +110,7 @@ catalogs:
       version: 5.32.6
 
 overrides:
-  '@pagopa/io-react-native-crypto': workspace:@io-app/expo-crypto@*
+  '@pagopa/io-react-native-crypto': workspace:@pagopa/expo-crypto@*
   pretty-format>react-is: 19.0.0
 
 patchedDependencies:
@@ -158,7 +158,7 @@ importers:
         specifier: 'catalog:'
         version: 23.2.1(@babel/traverse@7.29.8(supports-color@7.2.0))(@swc-node/register@1.11.1(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(supports-color@8.1.1)(typescript@6.0.3))(@swc/core@1.15.33(@swc/helpers@0.5.21))(@typescript-eslint/parser@8.70.0(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3))(eslint-config-prettier@10.1.8(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0)))(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0))(nx@23.2.1(@swc-node/register@1.11.1(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(supports-color@8.1.1)(typescript@6.0.3))(@swc/core@1.15.33(@swc/helpers@0.5.21)))(oxlint@1.83.0)(supports-color@7.2.0)(typescript@6.0.3)
       '@pagopa/io-react-native-crypto':
-        specifier: workspace:@io-app/expo-crypto@*
+        specifier: workspace:@pagopa/expo-crypto@*
         version: link:libs/expo-crypto
       '@react-native/metro-config':
         specifier: 0.83.10
@@ -378,7 +378,7 @@ importers:
         specifier: workspace:@pagopa/io-app-design-system@*
         version: link:../../libs/design-system
       '@io-app/expo-crypto':
-        specifier: workspace:*
+        specifier: workspace:@pagopa/expo-crypto@*
         version: link:../../libs/expo-crypto
       '@io-app/expo-device-internal':
         specifier: workspace:*
@@ -1075,6 +1075,10 @@ importers:
         version: 6.0.3
 
   libs/expo-crypto:
+    dependencies:
+      react:
+        specifier: '*'
+        version: 19.2.0
     devDependencies:
       '@types/jest':
         specifier: 'catalog:'
@@ -3593,7 +3597,7 @@ packages:
   '@pagopa/io-react-native-wallet@3.8.3':
     resolution: {integrity: sha512-JmJshp5HaH7SqyT6A+BdKUQcTDKBE/vabPgJbt+5D8f4/UiO/5LQOUwYT7tlu7XNKOH+EQWP8z7xm9YOu0T5vg==}
     peerDependencies:
-      '@pagopa/io-react-native-crypto': workspace:@io-app/expo-crypto@*
+      '@pagopa/io-react-native-crypto': workspace:@pagopa/expo-crypto@*
       '@pagopa/io-react-native-iso18013': '*'
       '@pagopa/io-react-native-jwt': '*'
       react: 19.2.3
