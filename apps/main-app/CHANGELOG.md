@@ -1,3 +1,14 @@
+## 3.42.0-rc.11 (2026-10-28)
+
+### Features
+
+- **IT-Wallet:** [[SIW-5207](https://pagopa.atlassian.net/browse/SIW-5207)] CED opportunities ([#8707](https://github.com/pagopa/io-app/pull/8707))
+
+### ❤️ Thank You
+
+- Emilio Di Mari
+- Riccardo Sacco
+
 ## 3.42.0-rc.10 (2026-10-28)
 
 ### Bug Fixes
