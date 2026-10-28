@@ -4,6 +4,7 @@ import {
   IOMarkdownLite,
   VSpacer
 } from "@io-app/design-system";
+import { StackActions } from "@react-navigation/native";
 import I18n from "i18next";
 import { View } from "react-native";
 
@@ -74,9 +75,7 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
 
   const onPressActionButton = () => {
     if (isL2) {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.LANDING
-      });
+      navigation.dispatch(StackActions.popTo(AUTHENTICATION_ROUTES.LANDING));
     }
     // for the future developement: add here
     // the navigation to continue the flow

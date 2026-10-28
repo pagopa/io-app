@@ -1,3 +1,43 @@
+## 3.42.0-rc.9 (2026-10-27)
+
+### Features
+
+- [[SIW-5434](https://pagopa.atlassian.net/browse/SIW-5434)] Add local feature flag for proximity NFC ([#8799](https://github.com/pagopa/io-app/pull/8799))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-2632](https://pagopa.atlassian.net/browse/SIW-2632)] remove link rule from ITW settings ([#8803](https://github.com/pagopa/io-app/pull/8803))
+- **IT-Wallet:** [[SIW-5381](https://pagopa.atlassian.net/browse/SIW-5381)] recreate wallet instance after abandoned Documenti su IO ([#8770](https://github.com/pagopa/io-app/pull/8770))
+- **IT-Wallet:** [[SIW-5387](https://pagopa.atlassian.net/browse/SIW-5387)] Apply cached status lists validity offline ([#8755](https://github.com/pagopa/io-app/pull/8755))
+
+### Chores
+
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Replace discovery screen pictograms ([#8804](https://github.com/pagopa/io-app/pull/8804))
+
+### ❤️ Thank You
+
+- Federico Mastrini @mastro993
+
+## 3.42.0-rc.8 (2026-10-26)
+
+### Features
+
+- **IT-Wallet:** [[SIW-5293](https://pagopa.atlassian.net/browse/SIW-5293)] Implement PID invalid status UI ([#8754](https://github.com/pagopa/io-app/pull/8754))
+
+### Bug Fixes
+
+- [[IOCOM-3383](https://pagopa.atlassian.net/browse/IOCOM-3383)] app crash while showing SEND preconditions bottomSheet ([#8796](https://github.com/pagopa/io-app/pull/8796))
+
+### Chores
+
+- [[IEL-908](https://pagopa.atlassian.net/browse/IEL-908)] added FCI flow value to APP_UPDATE_REQUESTED MP event ([#8772](https://github.com/pagopa/io-app/pull/8772))
+
+### ❤️ Thank You
+
+- Federico Mastrini @mastro993
+- Martino Cesari Tomba @forrest57
+- Pawel @soixdev91
+
 # Changelog
 
 All notable changes to this project will be documented in this file. This changelog is generated with Nx Release from Conventional Commits.

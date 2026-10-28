@@ -11,6 +11,7 @@ import useActiveSessionLoginNavigation from "../utils/useActiveSessionLoginNavig
 const mockPopToTop = jest.fn();
 const mockReset = jest.fn();
 const mockNavigate = jest.fn();
+const mockPopTo = jest.fn();
 const mockDispatch = jest.fn();
 const mockSelector = jest.fn();
 
@@ -18,7 +19,8 @@ jest.mock("../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => ({
     popToTop: mockPopToTop,
     reset: mockReset,
-    navigate: mockNavigate
+    navigate: mockNavigate,
+    popTo: mockPopTo
   })
 }));
 
@@ -44,7 +46,7 @@ describe("useActiveSessionLoginNavigation", () => {
     expect(mockDispatch).toHaveBeenCalledWith(
       setFinishedActiveSessionLoginFlow()
     );
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MAIN, {
+    expect(mockPopTo).toHaveBeenCalledWith(ROUTES.MAIN, {
       screen: MESSAGES_ROUTES.MESSAGES_HOME
     });
     expect(mockReset).not.toHaveBeenCalled();
@@ -60,7 +62,6 @@ describe("useActiveSessionLoginNavigation", () => {
     });
 
     expect(mockDispatch).not.toHaveBeenCalled();
-    expect(mockNavigate).not.toHaveBeenCalled();
     expect(mockReset).toHaveBeenCalledWith({
       index: 0,
       routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
