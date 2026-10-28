@@ -40,6 +40,11 @@ export const itwSetIdentificationMode = createStandardAction(
   "ITW_SET_IDENTIFICATION_MODE"
 )<IdentificationContext["mode"] | undefined>();
 
+/** Local override enabling NFC engagement in the Proximity presentation. */
+export const itwSetProximityNfcLocallyEnabled = createStandardAction(
+  "ITW_SET_PROXIMITY_NFC_LOCALLY_ENABLED"
+)<boolean>();
+
 export type ItwWalletActivationFeedbackBannerData = {
   authMethod: string;
   docStatus: "active" | "not_active";
@@ -64,4 +69,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetIdentificationMode>
   | ActionType<typeof itwSetL2Fallback>
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
+  | ActionType<typeof itwSetProximityNfcLocallyEnabled>
   | ActionType<typeof itwSetWalletActivationFeedbackBannerData>;

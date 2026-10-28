@@ -15,6 +15,7 @@ import {
   itwSetIdentificationMode,
   itwSetL2Fallback,
   itwSetPidReissuingSurveyHidden,
+  itwSetProximityNfcLocallyEnabled,
   itwSetWalletActivationFeedbackBannerData,
   ItwWalletActivationFeedbackBannerData
 } from "../actions/preferences";
@@ -41,6 +42,8 @@ export type ItwPreferencesState = {
   // Indicates whether the bottom sheet survey is visible when the user quits
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
+  // Local feature flag enabling NFC engagement in the Proximity presentation
+  isProximityNfcLocallyEnabled?: boolean;
   // Set when a credential is successfully added together with an IT Wallet eID activation.
   // Holds the data needed to render the credential success survey banner in WALLET_HOME;
   walletActivationFeedbackBannerData?: ItwWalletActivationFeedbackBannerData;
@@ -79,18 +82,21 @@ const reducer = (
       // - isFiscalCodeWhitelisted: avoids to have the value undefined after a wallet reset
       // - isItwActivationDisabled: should persist across wallet resets
       // - isL2Fallback: preserves the restricted experience during reissuance
+      // - isProximityNfcLocallyEnabled: local feature flag
       const {
         claimValuesHidden,
         isFiscalCodeWhitelisted,
         isItwActivationDisabled,
-        isL2Fallback
+        isL2Fallback,
+        isProximityNfcLocallyEnabled
       } = state;
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
         isFiscalCodeWhitelisted,
         isItwActivationDisabled,
-        isL2Fallback
+        isL2Fallback,
+        isProximityNfcLocallyEnabled
       };
 
     case getType(itwSetAuthLevel): {
@@ -135,6 +141,9 @@ const reducer = (
         isPidReissuingSurveyHidden: action.payload
       };
     }
+
+    case getType(itwSetProximityNfcLocallyEnabled):
+      return { ...state, isProximityNfcLocallyEnabled: action.payload };
 
     case getType(itwSetWalletActivationFeedbackBannerData): {
       return {
