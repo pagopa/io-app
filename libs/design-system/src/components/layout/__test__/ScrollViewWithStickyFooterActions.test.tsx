@@ -1,4 +1,4 @@
-import { act, fireEvent, render } from "@testing-library/react-native";
+import { act, fireEvent, render, within } from "@testing-library/react-native";
 import { View } from "react-native";
 import { type Metrics, SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -16,14 +16,13 @@ const endSpacerTestID = "ScrollViewWithStickyFooterActionsEndSpacer";
 const dockedActionsTestID = "ScrollViewWithStickyFooterActionsDockedActions";
 const scrollViewTestID = "sticky-scroll-view";
 const footerTestID = "sticky-footer-actions";
-const singleButtonActions = {
-  type: "SingleButton",
-  primary: { label: "Primary", onPress: jest.fn() }
-} as const;
-/* Mirrors the opacity the component gives the docked actions while the sticky
-   footer covers them. */
-const hiddenDockedActionsOpacity = 0.01;
+const invisibleButAccessibleOpacity = 0.01;
+const actionBlockHeight = 48;
+const floatingActionsHeight =
+  actionBlockHeight + metrics.insets.bottom + IOSpacing.screenEndMargin;
+const placeholderY = 1000;
 const scrollViewHeight = 600;
+const dockingScrollY = placeholderY - scrollViewHeight + floatingActionsHeight;
 const scrollPastDocking = 16;
 const scrollFarBeyondContent = 10000;
 
@@ -34,7 +33,10 @@ describe("ScrollViewWithStickyFooterActions", () => {
     const { getByLabelText, getByTestId } = renderComponent({
       afterPlaceholder: <View testID="after-placeholder" />,
       beforePlaceholder: <View testID="before-placeholder" />,
-      footerActionProps: { actions: singleButtonActions, testID: footerTestID },
+      footerActionProps: {
+        actions: singleButtonActions(),
+        testID: footerTestID
+      },
       scrollViewProps: {
         scrollEventThrottle: 16,
         testID: scrollViewTestID
@@ -61,9 +63,7 @@ describe("ScrollViewWithStickyFooterActions", () => {
     expect(getByLabelText("Primary")).toBeTruthy();
     expect(
       getByTestId(footerTestID, { includeHiddenElements: true })
-    ).toHaveStyle({
-      paddingBottom: metrics.insets.bottom
-    });
+    ).toHaveStyle({ paddingBottom: metrics.insets.bottom });
     expect(getByTestId(endSpacerTestID)).toHaveStyle({
       height: IOSpacing.screenEndMargin + metrics.insets.bottom
     });
@@ -79,80 +79,88 @@ describe("ScrollViewWithStickyFooterActions", () => {
     expect(getByTestId(endSpacerTestID)).toHaveStyle({
       height: IOSpacing.screenEndMargin + metrics.insets.bottom
     });
-    expect(queryByRole("button")).toBeNull();
+    expect(queryByRole("button", { includeHiddenElements: true })).toBeNull();
   });
 
-  it("keeps the footer fixed until its placeholder and then swaps it with the docked actions", () => {
+  it("shows the floating actions until the placeholder is reached, then swaps them with the docked ones", () => {
     jest.useFakeTimers();
-    const actionBlockHeight = 48;
-    const stickyFooterHeight =
-      actionBlockHeight + metrics.insets.bottom + IOSpacing.screenEndMargin;
-    const placeholderY = 1000;
-    const dockingScrollY = placeholderY - scrollViewHeight + stickyFooterHeight;
-    const { footer, dockedActions, placeholder, scrollView } =
+    const { dockedActions, floatingActions, scrollTo } =
       renderMeasuredComponent();
 
-    fireEvent(scrollView, "layout", layoutEvent(scrollViewHeight));
-    fireEvent(
-      footer.findByProps({ pointerEvents: "box-none" }),
-      "layout",
-      layoutEvent(actionBlockHeight)
-    );
-    fireEvent(placeholder, "layout", layoutEvent(0, placeholderY));
-    // Reanimated registers its Jest mapper on a zero-delay timer.
-    act(() => jest.runOnlyPendingTimers());
-
-    scrollTo(scrollView, dockingScrollY);
-    expect(footer).toHaveAnimatedStyle({
-      opacity: 1,
-      transform: [{ translateY: 0 }]
-    });
+    scrollTo(dockingScrollY);
+    expect(floatingActions).toHaveAnimatedStyle({ opacity: 1 });
     expect(dockedActions).toHaveAnimatedStyle({
-      opacity: hiddenDockedActionsOpacity
+      opacity: invisibleButAccessibleOpacity
     });
 
-    scrollTo(scrollView, dockingScrollY + scrollPastDocking);
-    expect(footer).toHaveAnimatedStyle({
-      opacity: 0,
-      transform: [{ translateY: stickyFooterHeight }]
-    });
+    scrollTo(dockingScrollY + scrollPastDocking);
+    expect(floatingActions).toHaveAnimatedStyle({ opacity: 0 });
     expect(dockedActions).toHaveAnimatedStyle({ opacity: 1 });
-  });
 
-  it("keeps the footer fixed until it's measured", () => {
-    jest.useFakeTimers();
-    const { footer, dockedActions, scrollView } = renderMeasuredComponent();
-
-    fireEvent(scrollView, "layout", layoutEvent(scrollViewHeight));
-    act(() => jest.runOnlyPendingTimers());
-    scrollTo(scrollView, scrollFarBeyondContent);
-
-    expect(footer).toHaveAnimatedStyle({
-      opacity: 1,
-      transform: [{ translateY: 0 }]
-    });
+    scrollTo(dockingScrollY);
+    expect(floatingActions).toHaveAnimatedStyle({ opacity: 1 });
     expect(dockedActions).toHaveAnimatedStyle({
-      opacity: hiddenDockedActionsOpacity
+      opacity: invisibleButAccessibleOpacity
     });
   });
 
-  it("exposes the docked actions to screen readers, hiding the sticky footer", () => {
+  it("lets touches reach the floating actions only until they're docked", () => {
+    jest.useFakeTimers();
+    const onPress = jest.fn();
+    const { floatingActions, scrollTo } = renderMeasuredComponent(onPress);
+    const floatingButton = within(floatingActions).getByLabelText("Primary", {
+      includeHiddenElements: true
+    });
+
+    fireEvent.press(floatingButton);
+    expect(onPress).toHaveBeenCalledTimes(1);
+
+    scrollTo(dockingScrollY + scrollPastDocking);
+    fireEvent.press(floatingButton);
+    expect(onPress).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps the floating actions until they're measured", () => {
+    jest.useFakeTimers();
+    const { getByTestId } = renderComponent({
+      footerActionProps: {
+        actions: singleButtonActions(),
+        testID: footerTestID
+      },
+      scrollViewProps: { testID: scrollViewTestID }
+    });
+
+    fireEvent(
+      getByTestId(scrollViewTestID),
+      "layout",
+      layoutEvent(scrollViewHeight)
+    );
+    act(() => jest.runOnlyPendingTimers());
+    fireEvent.scroll(getByTestId(scrollViewTestID), {
+      nativeEvent: { contentOffset: { x: 0, y: scrollFarBeyondContent } }
+    });
+
+    expect(
+      getByTestId(footerTestID, { includeHiddenElements: true })
+    ).toHaveAnimatedStyle({ opacity: 1 });
+    expect(getByTestId(dockedActionsTestID)).toHaveAnimatedStyle({
+      opacity: invisibleButAccessibleOpacity
+    });
+  });
+
+  it("exposes the docked actions to screen readers, hiding the floating ones", () => {
     const onPress = jest.fn();
     const { getByLabelText, getByTestId } = renderComponent({
       footerActionProps: {
-        actions: {
-          type: "SingleButton",
-          primary: { label: "Primary", onPress }
-        },
+        actions: singleButtonActions(onPress),
         testID: footerTestID
       }
     });
 
-    const placeholder = getByTestId(placeholderTestID);
     const dockedActions = getByTestId(dockedActionsTestID);
     const accessibleButton = getByLabelText("Primary");
 
-    expect(placeholder).toContainElement(dockedActions);
+    expect(getByTestId(placeholderTestID)).toContainElement(dockedActions);
     expect(dockedActions).toContainElement(accessibleButton);
     expect(
       getByTestId(footerTestID, { includeHiddenElements: true })
@@ -164,7 +172,7 @@ describe("ScrollViewWithStickyFooterActions", () => {
 
   it("leaves a regular margin below the docked actions instead of the safe area", () => {
     const { getByTestId } = renderComponent({
-      footerActionProps: { actions: singleButtonActions }
+      footerActionProps: { actions: singleButtonActions() }
     });
 
     expect(getByTestId(dockedActionsTestID)).toHaveStyle({
@@ -186,18 +194,11 @@ describe("ScrollViewWithStickyFooterActions", () => {
   });
 });
 
-const renderMeasuredComponent = () => {
-  const { getByTestId } = renderComponent({
-    footerActionProps: { actions: singleButtonActions, testID: footerTestID },
-    scrollViewProps: { testID: scrollViewTestID }
-  });
-  return {
-    dockedActions: getByTestId(dockedActionsTestID),
-    footer: getByTestId(footerTestID, { includeHiddenElements: true }),
-    placeholder: getByTestId(placeholderTestID),
-    scrollView: getByTestId(scrollViewTestID)
-  };
-};
+const singleButtonActions = (onPress = jest.fn()) =>
+  ({
+    type: "SingleButton",
+    primary: { label: "Primary", onPress }
+  }) as const;
 
 const layoutEvent = (height: number, y = 0) => ({
   nativeEvent: {
@@ -205,13 +206,46 @@ const layoutEvent = (height: number, y = 0) => ({
   }
 });
 
-const scrollTo = (
-  scrollView: ReturnType<typeof renderMeasuredComponent>["scrollView"],
-  y: number
-) =>
-  fireEvent.scroll(scrollView, {
-    nativeEvent: { contentOffset: { x: 0, y } }
+const renderMeasuredComponent = (onPress = jest.fn()) => {
+  const { getByTestId } = renderComponent({
+    footerActionProps: {
+      actions: singleButtonActions(onPress),
+      testID: footerTestID
+    },
+    scrollViewProps: { testID: scrollViewTestID }
   });
+  const floatingActions = getByTestId(footerTestID, {
+    includeHiddenElements: true
+  });
+  const scrollView = getByTestId(scrollViewTestID);
+
+  fireEvent(scrollView, "layout", layoutEvent(scrollViewHeight));
+  fireEvent(
+    floatingActions.findByProps({ pointerEvents: "box-none" }),
+    "layout",
+    layoutEvent(actionBlockHeight)
+  );
+  fireEvent(
+    getByTestId(placeholderTestID),
+    "layout",
+    layoutEvent(0, placeholderY)
+  );
+  // Reanimated registers its Jest mapper on a zero-delay timer.
+  act(() => jest.runOnlyPendingTimers());
+
+  const scrollTo = (y: number) => {
+    fireEvent.scroll(scrollView, {
+      nativeEvent: { contentOffset: { x: 0, y } }
+    });
+    act(() => jest.runOnlyPendingTimers());
+  };
+
+  return {
+    dockedActions: getByTestId(dockedActionsTestID),
+    floatingActions,
+    scrollTo
+  };
+};
 
 const renderComponent = (
   props: Partial<

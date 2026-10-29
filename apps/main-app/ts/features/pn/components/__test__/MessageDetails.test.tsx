@@ -18,6 +18,7 @@ import {
 } from "../../../pushNotifications/analytics";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
+import * as FOOTER_ACTIONS_HOOK from "../../hooks/useMessageFooterActions";
 import PN_ROUTES from "../../navigation/routes";
 import { toSENDMessage } from "../../store/types/transformers";
 import { PNMessage } from "../../store/types/types";
@@ -40,6 +41,13 @@ const SCROLL_VIEW_TEST_ID = "MessageDetailsScrollView";
 const PLACEHOLDER_TEST_ID = "ScrollViewWithStickyFooterActionsPlaceholder";
 const MESSAGE_SURVEY_BANNER_TEST_ID = "message-survey-banner";
 const MESSAGE_BOTTOM_MENU_TEST_ID = "MessageBottomMenu";
+const FOOTER_ACTION_LABEL = "Footer action";
+const footerActions: ReturnType<
+  typeof FOOTER_ACTIONS_HOOK.useMessageFooterActions
+> = {
+  type: "SingleButton",
+  primary: { label: FOOTER_ACTION_LABEL, onPress: jest.fn() }
+};
 
 const backendStatusWithSurveyUri = () =>
   backendStatusLoadSuccess({
@@ -181,6 +189,29 @@ describe("MessageDetails component", () => {
       expect(renderedTestIDs).toEqual(expectedTestIDs);
     }
   );
+
+  it("exposes the footer actions to screen readers once, in place of the placeholder", () => {
+    jest
+      .spyOn(FOOTER_ACTIONS_HOOK, "useMessageFooterActions")
+      .mockReturnValue(footerActions);
+    const sendMessage = toSENDMessage(thirdPartyMessage)!;
+    const props = generateComponentProperties(
+      mockMessageId,
+      sendMessage,
+      service_1.id,
+      "message",
+      "recipient"
+    );
+    const { component } = renderComponent(props);
+    const accessibleActions = component.getAllByLabelText(FOOTER_ACTION_LABEL, {
+      includeHiddenElements: false
+    });
+
+    expect(accessibleActions).toHaveLength(1);
+    expect(component.getByTestId(PLACEHOLDER_TEST_ID)).toContainElement(
+      accessibleActions[0]
+    );
+  });
 });
 
 const generateComponentProperties = (

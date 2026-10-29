@@ -25,6 +25,7 @@ import {
   toUIMessageDetails
 } from "../../../messages/store/reducers/transformers";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import * as FOOTER_ACTIONS_HOOK from "../../hooks/useMessageDetailsFooterActions";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
@@ -37,6 +38,13 @@ const PLACEHOLDER_TEST_ID = "ScrollViewWithStickyFooterActionsPlaceholder";
 const REMOTE_CONTENT_BANNER_TEST_ID = "remote-content-banner";
 const MESSAGE_SURVEY_BANNER_TEST_ID = "message-survey-banner";
 const MESSAGE_FOOTER_TEST_ID = "show-more-data-action";
+const FOOTER_ACTION_LABEL = "Footer action";
+const footerActions: ReturnType<
+  typeof FOOTER_ACTIONS_HOOK.useMessageDetailsFooterActions
+> = {
+  type: "SingleButton",
+  primary: { label: FOOTER_ACTION_LABEL, onPress: jest.fn() }
+};
 
 const backendStatusWithSurveyUri = () =>
   backendStatusLoadSuccess({
@@ -77,6 +85,10 @@ const thirdPartyMessage: ThirdPartyMessageWithContent = {
 };
 
 describe("MessageDetailsScreen", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it("should display the attachment tag if there are attachments", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
@@ -224,6 +236,31 @@ describe("MessageDetailsScreen", () => {
       expect(renderedTestIDs).toEqual(expectedTestIDs);
     }
   );
+
+  it("exposes the footer actions to screen readers once, in place of the placeholder", () => {
+    jest
+      .spyOn(FOOTER_ACTIONS_HOOK, "useMessageDetailsFooterActions")
+      .mockReturnValue(footerActions);
+    const state = reproduceSequence(
+      appReducer(undefined, applicationChangeState("active")),
+      appReducer,
+      [
+        loadMessageById.success(toUIMessage(message_1)),
+        loadServiceDetail.success(service_1),
+        loadMessageDetails.success(toUIMessageDetails(messageWithValidPayment))
+      ]
+    );
+    const store: Store<GlobalState> = createStore(appReducer, state as any);
+    const { component } = renderComponent(store);
+    const accessibleActions = component.getAllByLabelText(FOOTER_ACTION_LABEL, {
+      includeHiddenElements: false
+    });
+
+    expect(accessibleActions).toHaveLength(1);
+    expect(component.getByTestId(PLACEHOLDER_TEST_ID)).toContainElement(
+      accessibleActions[0]
+    );
+  });
 });
 
 const renderComponent = (store: Store<GlobalState>) => {

@@ -214,16 +214,15 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               messageMarkdown={messageMarkdown}
               serviceId={serviceId}
             />
-            <MessageDetailsPayment
-              messageId={messageId}
-              serviceId={serviceId}
-            />
-            <VSpacer size={16} />
             <MessageDetailsAttachments
               banner={<MessageAttachmentsAlert />}
               messageId={messageId}
               sendOpeningSource={"not_set"}
               sendUserType={"not_set"}
+              serviceId={serviceId}
+            />
+            <MessageDetailsPayment
+              messageId={messageId}
               serviceId={serviceId}
             />
           </ContentWrapper>

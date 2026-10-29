@@ -144,7 +144,6 @@ export const MessageDetails = ({
               message={message}
               sendUserType={sendUserType}
             />
-            <VSpacer size={16} />
             <MessageDetailsAttachments
               banner={<BannerAttachments />}
               disabled={message.isCancelled}
@@ -153,7 +152,6 @@ export const MessageDetails = ({
               sendUserType={sendUserType}
               serviceId={serviceId}
             />
-            <VSpacer size={16} />
             <MessagePayments
               completedPaymentNoticeCodes={completedPaymentNoticeCodes}
               isCancelled={isCancelled}
@@ -165,7 +163,6 @@ export const MessageDetails = ({
               sendUserType={sendUserType}
               serviceId={serviceId}
             />
-            <VSpacer size={16} />
             <F24Section
               isCancelled={message.isCancelled}
               messageId={messageId}
@@ -173,7 +170,6 @@ export const MessageDetails = ({
               sendUserType={sendUserType}
               serviceId={serviceId}
             />
-            <VSpacer size={16} />
           </ContentWrapper>
         }
         footerActionProps={{ actions: footerActions }}
