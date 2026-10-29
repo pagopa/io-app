@@ -6456,7 +6456,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             />
                             <View
                               accessibilityLabel="Patente di guida"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -8005,7 +8007,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             />
                             <View
                               accessibilityLabel="Patente di guida"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -8079,7 +8083,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             />
                             <View
                               accessibilityLabel="Carta Europea della Disabilità"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,

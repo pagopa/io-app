@@ -266,10 +266,10 @@
         "loadingAccessibilityLabel": "Loading Identity Provider"
       },
       "loadingError": {
-        "description": "Please try again later, or log in to IO using your Electronic ID Card (CIE).",
+        "description": "You can log with your Electronic ID Card (CIE) or try again later.",
         "primaryAction": "Log in with CIE",
         "secondaryAction": "Close",
-        "title": "We are unable to load the list of SPID providers"
+        "title": "We are unable to show you the SPID providers"
       }
     },
     "landing": {
@@ -1056,7 +1056,7 @@
           "button": {
             "label": "Continue"
           },
-          "title": "Your Documents on IO are safe",
+          "title": "Your Documenti su IO are safe",
           "titleL3": "IT-Wallet: Privacy Policy and Terms and Conditions of Use",
           "warning": "By clicking **Continue**, you acknowledge that you have read and understood the **Privacy Policy**."
         },
@@ -2007,7 +2007,7 @@
         "eid": {
           "verificationExpired": {
             "primaryAction": "Get started",
-            "subtitle": "This is a necessary step to continue using **Documents on IO** without restrictions.",
+            "subtitle": "This is a necessary step to continue using **Documenti su IO** without restrictions.",
             "title": "Verify your identity"
           }
         },
@@ -2478,8 +2478,8 @@
           "closeButtonAlt": "Got it",
           "cta": "Learn more",
           "newWalletInstanceCreated": {
-            "content": "For security reasons, you can use digital documents on only one device at a time.",
-            "title": "The Documents feature has been disabled on this device"
+            "content": "For security reasons, you can use the documents on only one device at a time.",
+            "title": "Your digital documents have been removed from this device"
           },
           "revokedByUser": {
             "content": "If you change your mind, you can re-enable the feature in the future.",
@@ -3116,6 +3116,10 @@
         "otherMethods": {
           "error": {
             "banner": {
+              "bonus": {
+                "cta": "Go to Services",
+                "label": "We couldn't load some of the elements. You can also access bonuses and initiatives from the 'Services' section."
+              },
               "cta": "Try again",
               "label": "We were unable to load some items from the list."
             }
@@ -3824,6 +3828,10 @@
             "subtitle": "The verification checks have already failed.\nIf you think there is an error, contact the issuing institution.",
             "title": "You do not meet the requirements to participate in this program"
           },
+          "USER_BONUS_ALREADY_USED": {
+            "subtitle": "We have found that you have already used it once before",
+            "title": "You have already used this bonus before"
+          },
           "USER_NOT_IN_WHITELIST": {
             "subtitle": "Your Fiscal Code is not included in the list of those eligible for the funds provided under this initiative. For more information, please contact the organizing body.",
             "title": "This program is not intended for you"
@@ -3998,16 +4006,20 @@
       },
       "initiativeOnboardedStatus": {
         "ON_EVALUATION": {
+          "bottomSheet": {
+            "content": "We have sent your request for {{initiativeName}} to the institution, which is verifying your information and eligibility for the bonus.\nThis may take some time.\n\n\n###### ***What happens next?***\n\nYou don’t need to do anything. You’ll receive a message on IO with the outcome of your request.\n\n\n###### ***Have you enabled notifications?***\n\nIf you haven’t already, enable push notifications so you don’t miss any messages.\n[How to do it](https:\/\/assistenza.ioapp.it\/hc\/it\/articles\/39312288127377-Come-attivare-le-notifiche-push-su-IO)",
+            "title": "Verifying…"
+          },
           "label": "Checking..."
         },
         "ON_WAITING_LIST": {
-          "accessibilityInfoLabel": "Information button",
           "bottomSheet": {
             "content": "Your request for {{initiativeName}} has been placed **on the waiting list**, as there are currently no funds available.\n\n\n###### ***What happens next?***\n\nYou don’t need to do anything—your request remains valid. You’ll receive a message with the outcome if new resources become available.\n\n\n###### ***Have you enabled notifications?***\n\nIf you haven’t already, enable push notifications so you don’t miss any messages.\n[Learn how](https:\/\/assistenza.ioapp.it\/hc\/it\/articles\/39312288127377-Come-attivare-le-notifiche-push-su-IO)",
             "title": "You're on the waiting list"
           },
           "label": "On the waiting list"
         },
+        "accessibilityInfoLabel": "Information button",
         "header": "My requests"
       },
       "initiativePairing": {
@@ -4740,15 +4752,15 @@
   "services": {
     "contacts": {
       "a11y": {
-        "website": "Visit the institution's website"
+        "website": "Go to institution's website"
       },
       "downloadApp": "Download the app",
       "email": "Send an email",
       "pec": "Send a certified email (PEC)",
-      "website": "Visit the website"
+      "phone": "Call",
+      "support": "Get support",
+      "website": "Go to website"
     },
-    "contextualHelpContent": "**In the Services section, you can view the list of agencies that offer their services on IO, as well as the list of services associated with each institution.** Services are divided into local services—where you can select institution of interest based on the geographic area where you live—national services—that is, central government institution offering services to all Italian citizens—and finally, all services, where you can find the complete list of all services available on IO (both local and national).   \nWe invite you to use this section to explore the services made available by IO, set up your list of local services, and view the details of individual services. Whenever a new local or national service is added to IO, you’ll receive a notification so you can immediately check what it is and whether it’s useful to you.\n",
-    "contextualHelpTitle": "What you can do in your Services",
     "details": {
       "failure": {
         "back": "Back",
@@ -4983,6 +4995,12 @@
       "title": "Do you agree?",
       "toast": {
         "emailClientNotFound": "For assistance, please write to us at: {{emailAddress}}"
+      },
+      "walletStatus": "Digital Document Feature",
+      "walletStatusValue": {
+        "documentiSuIo": "Active (Documenti su IO)",
+        "itWallet": "Active (IT-Wallet)",
+        "notActive": "Not active"
       }
     },
     "chooseCategory": {
