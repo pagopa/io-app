@@ -42,6 +42,16 @@ export const trackItwCredentialBottomSheet = (
 
 // Actions events
 
+/** Tracks a tap on the CED opportunities CTA, including taps while offline. */
+export const trackWalletCredentialOpportunities = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_PRESENTATION_DETAILS_ACTIONS_EVENTS.ITW_CREDENTIAL_OPPORTUNITIES,
+    buildEventProperties("UX", "action", { credential })
+  );
+};
+
 export const trackItwCredentialDelete = (
   credential: MixPanelCredential,
   properties?: Omit<TrackCredentialAction, "credential">

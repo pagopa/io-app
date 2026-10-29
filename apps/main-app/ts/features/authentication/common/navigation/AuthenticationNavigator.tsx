@@ -22,7 +22,7 @@ import CieCardReaderScreen from "../../login/cie/screens/CieCardReaderScreen";
 import CieConsentDataUsageScreen from "../../login/cie/screens/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../../login/cie/screens/CieExpiredOrInvalidScreen";
 import CieExtendedApduNotSupportedScreen from "../../login/cie/screens/CieExtendedApduNotSupportedScreen";
-import CieIdAuthUrlError from "../../login/cie/screens/CieIdAuthUrlError";
+import CieIdAuthUrlErrorScreen from "../../login/cie/screens/CieIdAuthUrlError";
 import CieIdErrorScreen from "../../login/cie/screens/CieIdErrorScreen";
 import CieIdLoginScreen from "../../login/cie/screens/CieIdLoginScreen";
 import CieIdNotInstalledScreen from "../../login/cie/screens/CieIdNotInstalledScreen";
@@ -248,7 +248,7 @@ const AuthenticationStackNavigator = () => {
           name={AUTHENTICATION_ROUTES.CIE_ID_ERROR}
         />
         <Stack.Screen
-          component={CieIdAuthUrlError}
+          component={CieIdAuthUrlErrorScreen}
           name={AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL}
         />
         <Stack.Screen
