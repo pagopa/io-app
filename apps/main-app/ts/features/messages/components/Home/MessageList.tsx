@@ -111,6 +111,7 @@ export const MessageList = ({ ref, category }: MessageListProps) => {
   return (
     <FlatList
       contentContainerStyle={styles.contentContainer}
+      contentInsetAdjustmentBehavior="automatic"
       data={(messageList ?? loadingList) as Readonly<Array<number | UIMessage>>}
       getItemLayout={getItemLayoutCallback}
       ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}

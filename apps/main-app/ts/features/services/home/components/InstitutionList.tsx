@@ -194,6 +194,7 @@ export const InstitutionList = ({
         flexGrow: 1,
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
+      contentInsetAdjustmentBehavior="automatic"
       data={data?.institutions}
       ItemSeparatorComponent={Divider}
       ListEmptyComponent={ListEmptyComponent}
