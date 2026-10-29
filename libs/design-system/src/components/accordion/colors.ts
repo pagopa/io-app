@@ -9,7 +9,7 @@ export const accordionColors = (s: IOColorSemantics) =>
     background: s.surface.default,
     border: s.stroke.default,
     foreground: {
-      title: s.text.content.default,
+      title: s.text.heading.default,
       icon: s.icon.decorative,
       chevron: s.foreground.action.primary.default
     }
