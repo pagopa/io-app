@@ -1,6 +1,6 @@
 import type { CredentialOffer } from "@pagopa/io-react-native-wallet";
 
-import { fromPromise } from "xstate";
+import { fromCallback, fromPromise } from "xstate";
 
 import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -27,6 +27,7 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { Context } from "./context";
+import { CredentialIssuanceEvents } from "./events";
 import { CredentialIssuanceMachineDeps } from "./input";
 
 export type GetWalletAttestationActorInput = {
@@ -438,30 +439,23 @@ export const processCredentialOfferActor = fromPromise<
  * Refreshes the catalogue for the active wallet and waits for its translations.
  * Fetch failures retain the existing cached/static content fallback.
  */
-export const refreshCredentialsCatalogueActor = fromPromise<
-  void,
+export const refreshCredentialsCatalogueActor = fromCallback<
+  CredentialIssuanceEvents,
   { deps: CredentialIssuanceMachineDeps }
->(({ input, signal }) => {
+>(({ input, sendBack }) => {
   const { store } = input.deps;
-  return new Promise<void>((resolve, reject) => {
-    const checkReadiness = () => {
-      if (!itwIsCredentialsCataloguePending(store.getState())) {
-        cleanup();
-        resolve();
-      }
-    };
-    const unsubscribe = store.subscribe(checkReadiness);
-    const cleanup = () => {
-      unsubscribe();
-      signal.removeEventListener("abort", cleanup);
-    };
-    signal.addEventListener("abort", cleanup, { once: true });
-    try {
-      store.dispatch(itwFetchCredentialsCatalogue.request());
-      checkReadiness();
-    } catch (error) {
-      cleanup();
-      reject(error);
+  const checkReadiness = () => {
+    if (!itwIsCredentialsCataloguePending(store.getState())) {
+      sendBack({ type: "credentials-catalogue-ready" });
     }
-  });
+  };
+  const unsubscribe = store.subscribe(checkReadiness);
+  try {
+    store.dispatch(itwFetchCredentialsCatalogue.request());
+    checkReadiness();
+  } catch (error) {
+    unsubscribe();
+    throw error;
+  }
+  return unsubscribe;
 });

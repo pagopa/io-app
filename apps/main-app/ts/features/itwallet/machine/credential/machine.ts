@@ -95,10 +95,10 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
       invoke: {
         src: "refreshCredentialsCatalogue",
         input: ({ context }) => ({ deps: context.deps }),
-        onDone: { target: "EvaluateFlow" },
         onError: { target: "EvaluateFlow" }
       },
       on: {
+        "credentials-catalogue-ready": { target: "EvaluateFlow" },
         back: {
           target: "Idle",
           actions: assign({ credentialType: undefined })

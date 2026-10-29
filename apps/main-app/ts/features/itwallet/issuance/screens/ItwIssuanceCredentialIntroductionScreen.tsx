@@ -22,10 +22,7 @@ import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import {
-  itwCredentialIntroContentSelector,
-  itwIsCredentialsCataloguePending
-} from "../../credentialsCatalogue/store/selectors";
+import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
@@ -58,7 +55,8 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isWaitingForCatalogue = useIOSelector(itwIsCredentialsCataloguePending);
+  const isLoading =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const machineCredentialType =
     ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
   const introductionContent = useIOSelector(
@@ -102,10 +100,7 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
     }, [credentialType, machineRef, mode])
   );
 
-  if (
-    isWaitingForCatalogue ||
-    (machineCredentialType && !introductionContent)
-  ) {
+  if (isLoading || (machineCredentialType && !introductionContent)) {
     return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 

@@ -8,12 +8,12 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { DigitalCredentialsCatalogue } from "../../../common/utils/itwCredentialsCatalogueUtils";
-import {
-  itwFetchCatalogueTranslations,
-  itwFetchCredentialsCatalogue
-} from "../../../credentialsCatalogue/store/actions";
+import { itwFetchCredentialsCatalogue } from "../../../credentialsCatalogue/store/actions";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
-import { selectCredentialType } from "../../../machine/credential/selectors";
+import {
+  selectCredentialType,
+  selectIsLoading
+} from "../../../machine/credential/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialIntroductionScreen } from "../ItwIssuanceCredentialIntroductionScreen";
@@ -123,41 +123,27 @@ describe("ItwIssuanceCredentialIntroductionScreen", () => {
   };
 
   test.each([
-    {
-      name: "catalogue",
-      request: itwFetchCredentialsCatalogue.request(),
-      success: itwFetchCredentialsCatalogue.success(catalogue)
-    },
-    {
-      name: "translations",
-      request: itwFetchCatalogueTranslations.request(),
-      success: itwFetchCatalogueTranslations.success({})
-    }
+    { name: "loading", isLoading: true },
+    { name: "ready", isLoading: false }
   ])(
-    "hides cached introduction content while $name are loading",
-    ({ request, success }) => {
+    "uses the machine loading tag when the catalogue is $name",
+    ({ isLoading }) => {
       spyUseSelector.mockImplementation(selector =>
-        selector === selectCredentialType ? ("mDL" as any) : false
+        selector === selectCredentialType ? ("mDL" as any) : isLoading
       );
       const store = createStore(
         appReducer,
         appReducer(undefined, applicationChangeState("active")) as any
       );
       store.dispatch(itwFetchCredentialsCatalogue.success(catalogue));
-      store.dispatch(request);
-      const { getByText, queryByText } = renderComponent(
-        { credentialType: "mDL" },
-        store
+      const { queryByText } = renderComponent({ credentialType: "mDL" }, store);
+      expect(spyUseSelector).toHaveBeenCalledWith(selectIsLoading);
+      expect(Boolean(queryByText(I18n.t("global.genericWaiting")))).toBe(
+        isLoading
       );
-      expect(getByText(I18n.t("global.genericWaiting"))).toBeTruthy();
-      expect(queryByText("Credential introduction")).toBeNull();
-      expect(queryByText(I18n.t("global.buttons.continue"))).toBeNull();
-
-      act(() => {
-        store.dispatch(success);
-      });
-      expect(queryByText(I18n.t("global.genericWaiting"))).toBeNull();
-      expect(getByText(I18n.t("global.buttons.continue"))).toBeTruthy();
+      expect(Boolean(queryByText(I18n.t("global.buttons.continue")))).toBe(
+        !isLoading
+      );
     }
   );
 
