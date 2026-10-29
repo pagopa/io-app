@@ -100,9 +100,11 @@ export const IOListView = <T,>({
   includeContentMargins = true,
   debugMode = false,
   animatedRef,
+  bottomInset,
   centerContent,
   refreshControlProps,
   contentContainerStyle,
+  contentInsetAdjustmentBehavior,
   ListHeaderComponent,
   ListFooterComponent,
   ListEmptyComponent,
@@ -121,9 +123,11 @@ export const IOListView = <T,>({
     setActionBlockHeight(event.nativeEvent.layout.height);
   };
 
-  const { bottomMargin, needSafeAreaMargin } = useFooterActionsMargin(
-    excludeSafeAreaMargins
-  );
+  const { bottomMargin, contentBottomMargin, needSafeAreaMargin } =
+    useFooterActionsMargin(excludeSafeAreaMargins, {
+      bottomInset,
+      contentInsetAdjustmentBehavior
+    });
 
   /* GENERATE EASING GRADIENT
        Background color should be app main background
@@ -146,7 +150,7 @@ export const IOListView = <T,>({
   /* Height of the safe bottom area, applied to the ScrollView:
        Actions + Content end margin */
   const safeBottomAreaHeight =
-    bottomMargin + actionBlockHeight + contentEndMargin;
+    contentBottomMargin + actionBlockHeight + contentEndMargin;
 
   const { colors, handleScroll, locations, opacityTransition } =
     useScrollHeaderAnimation({ snapOffset, headerConfig });
@@ -164,7 +168,7 @@ export const IOListView = <T,>({
             ? 0
             : actions
               ? safeBottomAreaHeight
-              : bottomMargin + contentEndMargin,
+              : contentBottomMargin + contentEndMargin,
           paddingHorizontal: includeContentMargins
             ? IOVisualCostants.appMarginDefault
             : 0,
@@ -172,6 +176,7 @@ export const IOListView = <T,>({
         },
         centerContent ? styles.centerContentWrapper : {}
       ]}
+      contentInsetAdjustmentBehavior={contentInsetAdjustmentBehavior}
       data={data}
       decelerationRate="normal"
       ItemSeparatorComponent={ItemSeparatorComponent}
