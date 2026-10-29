@@ -60,6 +60,7 @@ const TabItem = ({
   const reducedMotion = useReducedMotion();
 
   const tabColors = useIOColors().component.tabItem[color];
+  const border = "border" in tabColors ? tabColors.border : undefined;
 
   const itemState: TabItemState = selected
     ? "selected"
@@ -80,11 +81,13 @@ const TabItem = ({
       [0, 1],
       [tabColors.background.default, tabColors.background.selected]
     ),
-    borderColor: interpolateColor(
-      selectedStateTransition.value,
-      [0, 1],
-      [tabColors.border.default, tabColors.border.selected]
-    )
+    ...(border != null && {
+      borderColor: interpolateColor(
+        selectedStateTransition.value,
+        [0, 1],
+        [border.default, border.selected]
+      )
+    })
   }));
 
   const activeIcon = selected ? (iconSelected ?? icon) : icon;
@@ -117,6 +120,7 @@ const TabItem = ({
         style={[
           styles.container,
           { columnGap: IODimensions.gap.tab.icon },
+          border != null && { borderWidth: IODimensions.stroke.default },
           !disabled && !reducedMotion && scaleAnimatedStyle,
           animatedStyle,
           disabled && { opacity: IOOpacity.disabled }
@@ -143,7 +147,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: IODimensions.padding.tab.horizontal,
     paddingVertical: IODimensions.padding.tab.vertical,
-    borderWidth: IODimensions.stroke.default,
     borderRadius: IODimensions.radius.tab,
     borderCurve: "continuous",
     justifyContent: "center",

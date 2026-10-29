@@ -421,7 +421,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "alignSelf": "flex-start",
                                         "borderCurve": "continuous",
                                         "borderRadius": 24,
-                                        "borderWidth": 1,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "paddingHorizontal": 16,
@@ -429,6 +428,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       },
                                       {
                                         "columnGap": 4,
+                                      },
+                                      {
+                                        "borderWidth": 1,
                                       },
                                       false,
                                     ]
@@ -440,7 +442,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "alignSelf": "flex-start",
                                         "borderCurve": "continuous",
                                         "borderRadius": 24,
-                                        "borderWidth": 1,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "paddingHorizontal": 16,
@@ -448,6 +449,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       },
                                       {
                                         "columnGap": 4,
+                                      },
+                                      {
+                                        "borderWidth": 1,
                                       },
                                       {
                                         "transform": [
@@ -632,7 +636,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "alignSelf": "flex-start",
                                         "borderCurve": "continuous",
                                         "borderRadius": 24,
-                                        "borderWidth": 1,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "paddingHorizontal": 16,
@@ -640,6 +643,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       },
                                       {
                                         "columnGap": 4,
+                                      },
+                                      {
+                                        "borderWidth": 1,
                                       },
                                       false,
                                     ]
@@ -651,7 +657,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "alignSelf": "flex-start",
                                         "borderCurve": "continuous",
                                         "borderRadius": 24,
-                                        "borderWidth": 1,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "paddingHorizontal": 16,
@@ -659,6 +664,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       },
                                       {
                                         "columnGap": 4,
+                                      },
+                                      {
+                                        "borderWidth": 1,
                                       },
                                       {
                                         "transform": [
@@ -1192,7 +1200,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "alignSelf": "flex-start",
                                         "borderCurve": "continuous",
                                         "borderRadius": 24,
-                                        "borderWidth": 1,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "paddingHorizontal": 16,
@@ -1200,6 +1207,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       },
                                       {
                                         "columnGap": 4,
+                                      },
+                                      {
+                                        "borderWidth": 1,
                                       },
                                       false,
                                     ]
@@ -1211,7 +1221,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "alignSelf": "flex-start",
                                         "borderCurve": "continuous",
                                         "borderRadius": 24,
-                                        "borderWidth": 1,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "paddingHorizontal": 16,
@@ -1219,6 +1228,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       },
                                       {
                                         "columnGap": 4,
+                                      },
+                                      {
+                                        "borderWidth": 1,
                                       },
                                       {
                                         "transform": [
@@ -1416,7 +1428,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "alignSelf": "flex-start",
                                         "borderCurve": "continuous",
                                         "borderRadius": 24,
-                                        "borderWidth": 1,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "paddingHorizontal": 16,
@@ -1424,6 +1435,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       },
                                       {
                                         "columnGap": 4,
+                                      },
+                                      {
+                                        "borderWidth": 1,
                                       },
                                       false,
                                     ]
@@ -1435,7 +1449,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "alignSelf": "flex-start",
                                         "borderCurve": "continuous",
                                         "borderRadius": 24,
-                                        "borderWidth": 1,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "paddingHorizontal": 16,
@@ -1443,6 +1456,9 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       },
                                       {
                                         "columnGap": 4,
+                                      },
+                                      {
+                                        "borderWidth": 1,
                                       },
                                       {
                                         "transform": [

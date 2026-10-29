@@ -13,7 +13,7 @@ import { withAlpha } from "../../core/tokens/colors/utils";
 
 type TabItemColors = {
   background: Record<"default" | "selected", IOComponentColor<"background">>;
-  border: { default: IOTokenColor; selected: IOComponentColor<"stroke"> };
+  border?: { default: IOTokenColor; selected: IOComponentColor<"stroke"> };
   foreground: Record<"default" | "disabled", IOComponentColor<"foreground">> & {
     selected: IOTokenColor;
   };
@@ -42,15 +42,11 @@ export const tabItemColors = (s: IOColorSemantics, mode: IOColorMode) => {
         disabled: s.foreground.action.neutral.disabled
       }
     },
-    /* On a dark or accent background, in both modes: the `inverse` tokens are the same in both */
+    /* On a dark or accent background, in both modes: the `inverse` tokens are the same in both. No border: selected, it would match the fill */
     contrast: {
       background: {
         default: withAlpha(s.surface.action.inverse.default, 0.1),
         selected: s.surface.action.inverse.default
-      },
-      border: {
-        default: withAlpha(s.stroke.onAccent, 0),
-        selected: s.stroke.onAccent
       },
       foreground: {
         default: s.foreground.action.inverse.default,
