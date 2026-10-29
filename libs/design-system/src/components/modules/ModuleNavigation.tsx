@@ -57,7 +57,7 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
 
   const iconComponent = icon && !hugeFontEnabled && (
     <Icon
-      color={moduleColors.foreground.icon}
+      color={moduleColors.foreground.icon.decorative}
       name={icon}
       size={IODimensions.size.icon.module.leading}
     />
@@ -106,7 +106,7 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
           <Badge {...badge} />
         ) : onPress ? (
           <Icon
-            color={moduleColors.foreground.action}
+            color={moduleColors.foreground.icon.action}
             name="chevronRightListItem"
             size={IODimensions.size.icon.chevron}
           />

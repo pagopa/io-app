@@ -8,11 +8,14 @@ export const moduleColors = (s: IOColorSemantics) =>
   ({
     border: s.stroke.default,
     foreground: {
-      label: s.text.content.default,
+      title: s.text.heading.default,
       description: s.text.content.tertiary,
-      icon: s.icon.decorative,
-      /* Interactive ink (titles, amounts, chevrons) */
-      action: s.foreground.action.primary.default
+      icon: {
+        decorative: s.icon.decorative,
+        action: s.icon.action
+      },
+      /* Interactive ink (titles, amounts) */
+      action: s.text.content.action
     }
   }) satisfies {
     border: IOComponentColor<"stroke">;

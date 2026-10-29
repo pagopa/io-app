@@ -65,7 +65,7 @@ const ModuleBaseContent = ({
       )}
 
       <View style={{ flexGrow: 1, flexShrink: 1 }}>
-        <H6 color={moduleColors.foreground.label}>{title}</H6>
+        <H6 color={moduleColors.foreground.title}>{title}</H6>
         {subtitle && (
           <BodySmall
             color={moduleColors.foreground.description}

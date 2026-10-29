@@ -130,7 +130,7 @@ const ModulePaymentNoticeContent = ({
           status={status}
         />
         <Icon
-          color={moduleColors.foreground.action}
+          color={moduleColors.foreground.icon.action}
           name="chevronRightListItem"
           size={IODimensions.size.icon.chevron}
         />

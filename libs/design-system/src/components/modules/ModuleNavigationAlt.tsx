@@ -68,7 +68,7 @@ export const ModuleNavigationAlt = (
   const {
     testID,
     icon,
-    iconColor = moduleColors.foreground.action,
+    iconColor = moduleColors.foreground.icon.action,
     image,
     title,
     subtitle,
@@ -114,7 +114,7 @@ export const ModuleNavigationAlt = (
     if (onPress) {
       return (
         <Icon
-          color={moduleColors.foreground.action}
+          color={moduleColors.foreground.icon.action}
           name={rightIcon ?? "chevronRightListItem"}
           size={IODimensions.size.icon.chevron}
           testID={testID ? `${testID}_icon` : undefined}

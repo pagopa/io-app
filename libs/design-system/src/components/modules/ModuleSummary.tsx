@@ -27,7 +27,7 @@ export const ModuleSummary = ({
   return (
     <PressableModuleBase onPress={onPress}>
       <View style={{ flexGrow: 1, flexShrink: 1 }}>
-        <H6 color={moduleColors.foreground.label}>{label}</H6>
+        <H6 color={moduleColors.foreground.title}>{label}</H6>
         {description && (
           <BodySmall
             color={moduleColors.foreground.description}
@@ -38,7 +38,11 @@ export const ModuleSummary = ({
         )}
       </View>
       <View style={{ marginLeft: IODimensions.gap.module.trailing }}>
-        <Icon color={moduleColors.foreground.action} name={icon} size={24} />
+        <Icon
+          color={moduleColors.foreground.icon.action}
+          name={icon}
+          size={24}
+        />
       </View>
     </PressableModuleBase>
   );

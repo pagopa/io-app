@@ -80,7 +80,7 @@ const ModuleContent = ({
         {icon && !hugeFontEnabled ? (
           <Icon
             allowFontScaling
-            color={moduleColors.foreground.icon}
+            color={moduleColors.foreground.icon.decorative}
             name={icon}
             size={IODimensions.size.icon.module.leading}
           />
@@ -139,7 +139,7 @@ const ModuleCredentialContent = ({
             </>
           ) : (
             <Icon
-              color={moduleColors.foreground.action}
+              color={moduleColors.foreground.icon.action}
               name="chevronRightListItem"
               size={IODimensions.size.icon.chevron}
               testID={chevronTestID}
