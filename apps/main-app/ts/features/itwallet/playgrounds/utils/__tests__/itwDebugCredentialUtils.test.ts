@@ -146,11 +146,11 @@ describe("applyStatusToCredential", () => {
     { name: "IT-Wallet", credential: baseCredential },
     { name: "legacy", credential: legacyCredential }
   ])(
-    "keeps $name credentials valid during the digital expiration warning period",
+    "calculates the digital expiration warning for $name credentials",
     ({ credential }) => {
       const result = applyStatusToCredential(credential, "jwtExpiring");
 
-      expect(getCredentialStatus(result)).toBe("valid");
+      expect(getCredentialStatus(result)).toBe("jwtExpiring");
     }
   );
 

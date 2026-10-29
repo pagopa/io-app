@@ -26,7 +26,7 @@ describe("getCredentialStatus", () => {
     {
       name: "non IT-Wallet credential",
       credential: ItwStoredCredentialsMocks.mdl,
-      statusBeforeExpiration: "valid"
+      statusBeforeExpiration: "jwtExpiring"
     },
     {
       name: "IT-Wallet credential",
@@ -35,13 +35,13 @@ describe("getCredentialStatus", () => {
         spec_version: "1.3.3",
         verification: { assurance_level: "high", trust_framework: "it_cie" }
       },
-      statusBeforeExpiration: "valid"
+      statusBeforeExpiration: "jwtExpiring"
     },
     ...Object.entries(ItwStoredCredentialsMocks.L3).map(
       ([name, credential]) => ({
         name: `IT-Wallet ${name} credential`,
         credential,
-        statusBeforeExpiration: "valid"
+        statusBeforeExpiration: "jwtExpiring"
       })
     ),
     {
@@ -236,7 +236,7 @@ describe("getCredentialStatus", () => {
       expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
     });
 
-    it("should return valid before the digital document expires", () => {
+    it("should return jwtExpiring before the digital document expires", () => {
       MockDate.set(new Date(2024, 0, 20));
 
       const mockCredential: CredentialMetadata = {
@@ -257,10 +257,12 @@ describe("getCredentialStatus", () => {
         }
       };
 
-      expect(getCredentialStatus(mockCredential, options)).toEqual("valid");
+      expect(getCredentialStatus(mockCredential, options)).toEqual(
+        "jwtExpiring"
+      );
     });
 
-    it("should preserve the physical document expiring status before digital expiration", () => {
+    it("should prioritize digital expiration when the physical document expires on a different day", () => {
       MockDate.set(new Date(2024, 0, 20));
 
       const mockCredential: CredentialMetadata = {
@@ -281,7 +283,9 @@ describe("getCredentialStatus", () => {
         }
       };
 
-      expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
+      expect(getCredentialStatus(mockCredential, options)).toEqual(
+        "jwtExpiring"
+      );
     });
 
     // Physical document wins

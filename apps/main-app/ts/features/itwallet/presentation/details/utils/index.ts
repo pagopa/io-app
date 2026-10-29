@@ -1,3 +1,5 @@
+import { getCredentialExpireDays } from "../../../common/utils/itwClaimsUtils";
+import { DEFAULT_EXPIRING_DAYS } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialMetadata,
@@ -24,20 +26,40 @@ const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
  * Offline: - Show "jwtExpired" only if eID is valid. - Otherwise, show
  * "valid".
  *
+ * - Non-PID digital expiration warnings are hidden, preserving physical
+ *   expiration.
  * - Online + valid eID → show actual credential status.
  *
  * @param credentialStatus The actual credential status
  * @param eidStatus The current eID status
  * @param isOffline Whether the app is operating offline
  * @param isEid Whether the status belongs to the eID itself
+ * @param credential The credential used to preserve physical expiration and
+ *   unknown status
  * @returns {ItwCredentialStatus} The status to display in the UI
  */
 export const getItwDisplayCredentialStatus = (
   credentialStatus: ItwCredentialStatus,
   eidStatus: ItwEidStatus | undefined,
   isOffline: boolean,
-  isEid: boolean
+  isEid: boolean,
+  credential?: CredentialMetadata
 ): ItwCredentialStatus => {
+  // Only the PID requires advance digital renewal; the other credentials
+  // renew transparently. Preserve any physical expiration or unknown status.
+  if (!isEid && credentialStatus === "jwtExpiring") {
+    const documentExpireDays = credential
+      ? getCredentialExpireDays(credential.parsedCredential)
+      : undefined;
+    if (
+      documentExpireDays !== undefined &&
+      documentExpireDays <= DEFAULT_EXPIRING_DAYS
+    ) {
+      return "expiring";
+    }
+    return credential?.validity?.status === "unknown" ? "unknown" : "valid";
+  }
+
   // Excluded statuses are never overridden
   if (EXCLUDED_CREDENTIAL_STATUSES.includes(credentialStatus)) {
     return credentialStatus;
