@@ -1,5 +1,10 @@
-import { ComponentProps, ReactNode } from "react";
-import { AccessibilityRole, Pressable, View } from "react-native";
+import { ComponentProps, ReactNode, useState } from "react";
+import {
+  AccessibilityRole,
+  ImageSourcePropType,
+  Pressable,
+  View
+} from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
@@ -7,6 +12,7 @@ import { IOListItemStyles, IOListItemVisualParams } from "../../core";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
+import { AvatarSearch } from "../avatar";
 import { Badge } from "../badge";
 import { IconButton, IOButton, IOButtonLinkSpecificProps } from "../buttons";
 import { LogoPaymentWithFallback } from "../common/LogoPaymentWithFallback";
@@ -21,6 +27,11 @@ export type ListItemInfo = GraphicProps &
     accessibilityLabel?: string;
     accessibilityRole?: AccessibilityRole;
     endElement?: EndElementProps;
+    /**
+     * Decorative image displayed between the content and the optional end
+     * element.
+     */
+    imageSource?: ImageSourcePropType;
     label?: string;
     numberOfLines?: number;
     reversed?: boolean;
@@ -94,12 +105,14 @@ const ListItemInfoContent = ({
   reversed,
   topElement,
   endElement,
+  imageSource,
   hasInteractiveElements,
   listItemAccessibilityLabel
 }: Pick<
   ListItemInfo,
   | "endElement"
   | "icon"
+  | "imageSource"
   | "label"
   | "numberOfLines"
   | "paymentLogoIcon"
@@ -112,6 +125,8 @@ const ListItemInfoContent = ({
 }) => {
   const theme = useIOTheme();
   const { hugeFontEnabled } = useIOFontDynamicScale();
+  const [failedImageSource, setFailedImageSource] =
+    useState<ImageSourcePropType>();
 
   return (
     <>
@@ -166,6 +181,18 @@ const ListItemInfoContent = ({
         </View>
       </View>
 
+      {imageSource && imageSource !== failedImageSource && (
+        <View
+          accessible={false}
+          importantForAccessibility="no-hide-descendants"
+        >
+          <AvatarSearch
+            onError={() => setFailedImageSource(imageSource)}
+            source={imageSource}
+          />
+        </View>
+      )}
+
       {endElement && (
         <View
           accessible={false}
@@ -182,7 +209,8 @@ const ListItemInfoContent = ({
 
 /**
  * ListItemInfo component displays information in a list item format with
- * optional icons, labels, values, and end elements (buttons, badges).
+ * optional icons, labels, values, decorative images, and end elements (buttons,
+ * badges).
  *
  * @remarks
  *   **Accessibility for Interactive Elements:** When using interactive end
@@ -218,6 +246,7 @@ export const ListItemInfo = ({
   icon,
   paymentLogoIcon,
   endElement,
+  imageSource,
   topElement,
   accessibilityLabel,
   accessibilityRole,
@@ -278,6 +307,7 @@ export const ListItemInfo = ({
     reversed,
     topElement,
     endElement,
+    imageSource,
     hasInteractiveElements,
     listItemAccessibilityLabel
   } as const;

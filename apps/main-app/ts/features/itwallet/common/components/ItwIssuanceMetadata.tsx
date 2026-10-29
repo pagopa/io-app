@@ -10,9 +10,14 @@ import {
   trackWalletCredentialShowIssuer
 } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
+import {
+  itwAuthenticSourceLogoIntegritySelector,
+  itwAuthenticSourceLogoSelector
+} from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwAuthSourceName } from "../hooks/useItwAuthSourceName";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
+import { useItwVerifiedImage } from "../hooks/useItwVerifiedImage";
 import { itwIpzsItwalletPrivacyUrlSelector } from "../store/selectors/remoteConfig";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
@@ -31,12 +36,14 @@ type ItwMetadataIssuanceListItemProps = {
   };
   isPreview?: boolean;
   label: string;
+  logoUri?: string;
   value: string;
 };
 
 const ItwMetadataIssuanceListItem = ({
   label,
   value,
+  logoUri,
   bottomSheet: bottomSheetProps,
   isPreview
 }: ItwMetadataIssuanceListItemProps) => {
@@ -73,6 +80,7 @@ const ItwMetadataIssuanceListItem = ({
       <ListItemInfo
         accessibilityLabel={`${label} ${value}`}
         endElement={endElement}
+        imageSource={logoUri ? { uri: logoUri } : undefined}
         label={label}
         value={value}
       />
@@ -112,7 +120,16 @@ export const ItwIssuanceMetadata = ({
     credential.credentialType,
     credential
   );
-
+  const authSourceLogo = useIOSelector(
+    itwAuthenticSourceLogoSelector(credential.credentialType)
+  );
+  const authSourceLogoIntegrity = useIOSelector(
+    itwAuthenticSourceLogoIntegritySelector(credential.credentialType)
+  );
+  const verifiedAuthSourceLogo = useItwVerifiedImage(
+    authSourceLogo,
+    authSourceLogoIntegrity
+  );
   const releasedByPid =
     itwCredential && credential.credentialType === CredentialType.PID;
 
@@ -164,6 +181,7 @@ export const ItwIssuanceMetadata = ({
           label={I18n.t(
             "features.itWallet.verifiableCredentials.claims.authenticSource"
           )}
+          logoUri={verifiedAuthSourceLogo}
           value={authSource}
         />
       )}

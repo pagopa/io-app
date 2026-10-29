@@ -319,3 +319,15 @@ export const itwAuthenticSourceContactsSelector =
     }
     return catalogue[credentialType].authentic_sources.at(0)?.contacts;
   };
+
+export const itwAuthenticSourceLogoSelector =
+  (credentialType: string) => (state: GlobalState) =>
+    itwCredentialsCatalogueByTypesSelector(state)?.[
+      credentialType
+    ]?.authentic_sources.at(0)?.dataset_logo_uri;
+
+export const itwAuthenticSourceLogoIntegritySelector =
+  (credentialType: string) => (state: GlobalState) =>
+    itwCredentialsCatalogueByTypesSelector(state)?.[
+      credentialType
+    ]?.authentic_sources.at(0)?.["dataset_logo_uri#integrity"];
