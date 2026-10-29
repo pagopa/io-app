@@ -11,7 +11,7 @@ export const accordionColors = (s: IOColorSemantics) =>
     foreground: {
       title: s.text.heading.default,
       icon: s.icon.decorative,
-      chevron: s.foreground.action.primary.default
+      chevron: s.icon.action
     }
   }) satisfies {
     background: IOComponentColor<"background">;
