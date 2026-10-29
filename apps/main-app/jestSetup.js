@@ -398,3 +398,7 @@ jest.mock("@bottom-tabs/react-navigation", () => ({
     Group: ({ children }) => children
   }))
 }));
+
+jest.mock("react-native-bottom-tabs", () => ({
+  useBottomTabBarHeight: jest.fn(() => 0)
+}));
