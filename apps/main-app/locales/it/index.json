@@ -4425,7 +4425,11 @@
       "list": {
         "email": "Indirizzo email",
         "fiscalCode": "Codice Fiscale",
-        "nameSurname": "Nome e cognome"
+        "nameSurname": "Nome e cognome",
+        "accessibility": {
+          "fiscalCode": "Mostra codice fiscale",
+          "email": "Modifica indirizzo email"
+        }
       },
       "subtitle": "Qui trovi i tuoi dati anagrafici e di contatto utilizzati dall'app IO",
       "title": "I tuoi dati"
