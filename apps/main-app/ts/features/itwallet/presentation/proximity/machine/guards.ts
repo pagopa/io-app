@@ -1,4 +1,4 @@
-import { isItwProximityNfcMinAppVersionSupportedSelector } from "../../../common/store/selectors/remoteConfig";
+import { isItwProximityNfcEnabledSelector } from "../../../common/store/selectors";
 import { itwProximityConsentExistsSelector } from "../store/selectors/consents";
 import {
   generateConsentKey,
@@ -10,11 +10,9 @@ type GuardArgs = {
   context: Context;
 };
 
-/** Gates contactless engagement against the current remote configuration. */
+/** Gates contactless engagement against the remote config or the local flag. */
 export const isNfcPresentmentSupportedGuard = ({ context }: GuardArgs) =>
-  isItwProximityNfcMinAppVersionSupportedSelector(
-    context.deps.store.getState()
-  );
+  isItwProximityNfcEnabledSelector(context.deps.store.getState());
 
 export const hasGrantedConsentGuard = ({ context }: GuardArgs) => {
   if (!context.proximityDetails) {

@@ -138,6 +138,27 @@ export const isWalletInstanceAttestationValid = (
 };
 
 /**
+ * Checks if the Wallet Instance Attestation was issued for the given specs
+ * version, regardless of its expiry date. Since each specs version has its own
+ * attestation format, this tells which specs the Wallet Instance belongs to.
+ *
+ * @param itwVersion - IT-Wallet technical specs version
+ * @param attestation - The Wallet Instance Attestation to check
+ * @returns True if the attestation can be decoded with the given specs version
+ */
+export const isWalletInstanceAttestationForSpecs = (
+  itwVersion: ItwVersion,
+  attestation: string
+): boolean => {
+  try {
+    getIoWallet(itwVersion).WalletInstanceAttestation.decode(attestation);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+/**
  * Get the wallet instance status from the Wallet Provider. This operation is
  * more lightweight than getting a new attestation to check the status.
  *
