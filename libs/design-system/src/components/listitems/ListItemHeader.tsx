@@ -108,7 +108,7 @@ export const ListItemHeader = ({
           >
             <Icon
               allowFontScaling
-              color={iconColor ?? listItemColors.foreground.icon}
+              color={iconColor ?? listItemColors.foreground.icon.decorative}
               name={iconName}
               size={IODimensions.size.icon.listItem}
             />

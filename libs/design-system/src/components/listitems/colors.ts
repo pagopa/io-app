@@ -17,7 +17,10 @@ export const listItemColors = (s: IOColorSemantics) =>
       label: s.text.content.default,
       description: s.text.content.tertiary,
       caption: s.text.content.tertiary,
-      icon: s.icon.decorative,
+      icon: {
+        decorative: s.icon.decorative,
+        action: s.icon.action
+      },
       /* Interactive ink (values, chevrons) */
       action: {
         primary: s.foreground.action.primary.default,

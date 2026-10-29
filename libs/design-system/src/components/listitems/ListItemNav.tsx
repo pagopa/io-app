@@ -90,8 +90,9 @@ export const ListItemNav = ({
     useListItemAnimation();
   const listItemColors = useIOColors().component.listItem;
 
-  const defaultIconColor = iconColor ?? listItemColors.foreground.icon;
-  const interactiveColor = listItemColors.foreground.action.primary;
+  const defaultIconColor =
+    iconColor ?? listItemColors.foreground.icon.decorative;
+  const interactiveColor = listItemColors.foreground.icon.action;
 
   const { dynamicFontScale, hugeFontEnabled } = useIOFontDynamicScale();
 
@@ -112,7 +113,7 @@ export const ListItemNav = ({
               <View style={{ alignSelf: "flex-start", flexDirection: "row" }}>
                 <Icon
                   allowFontScaling
-                  color={listItemColors.foreground.icon}
+                  color={listItemColors.foreground.icon.decorative}
                   name="calendar"
                   size={IODimensions.size.icon.caption}
                 />

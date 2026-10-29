@@ -115,7 +115,7 @@ export const ListItemSwitch = memo(
             {icon && !hugeFontEnabled && (
               <Icon
                 allowFontScaling
-                color={listItemColors.foreground.icon}
+                color={listItemColors.foreground.icon.decorative}
                 name={icon}
                 size={IODimensions.size.icon.selection}
               />
