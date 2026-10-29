@@ -89,16 +89,24 @@ export const MessageDetails = ({
     <>
       <ScrollViewWithStickyFooterActions
         afterPlaceholder={
-          <MessageBottomMenu
-            history={message.notificationStatusHistory}
-            isCancelled={message.isCancelled}
-            iun={message.iun}
-            messageId={messageId}
-            paidNoticeCodes={completedPaymentNoticeCodes}
-            payments={payments}
-            sendOpeningSource={sendOpeningSource}
-            sendUserType={sendUserType}
-          />
+          <>
+            <ContentWrapper>
+              <SendMessageSurveyBanner
+                message={message}
+                serviceId={serviceId}
+              />
+            </ContentWrapper>
+            <MessageBottomMenu
+              history={message.notificationStatusHistory}
+              isCancelled={message.isCancelled}
+              iun={message.iun}
+              messageId={messageId}
+              paidNoticeCodes={completedPaymentNoticeCodes}
+              payments={payments}
+              sendOpeningSource={sendOpeningSource}
+              sendUserType={sendUserType}
+            />
+          </>
         }
         beforePlaceholder={
           <ContentWrapper>
@@ -136,7 +144,6 @@ export const MessageDetails = ({
               message={message}
               sendUserType={sendUserType}
             />
-            <VSpacer size={16} />
             <MessageDetailsAttachments
               banner={<BannerAttachments />}
               disabled={message.isCancelled}
@@ -145,7 +152,6 @@ export const MessageDetails = ({
               sendUserType={sendUserType}
               serviceId={serviceId}
             />
-            <VSpacer size={16} />
             <MessagePayments
               completedPaymentNoticeCodes={completedPaymentNoticeCodes}
               isCancelled={isCancelled}
@@ -157,7 +163,6 @@ export const MessageDetails = ({
               sendUserType={sendUserType}
               serviceId={serviceId}
             />
-            <VSpacer size={16} />
             <F24Section
               isCancelled={message.isCancelled}
               messageId={messageId}
@@ -165,8 +170,6 @@ export const MessageDetails = ({
               sendUserType={sendUserType}
               serviceId={serviceId}
             />
-            <SendMessageSurveyBanner message={message} serviceId={serviceId} />
-            <VSpacer size={16} />
           </ContentWrapper>
         }
         footerActionProps={{ actions: footerActions }}

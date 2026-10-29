@@ -134,6 +134,7 @@ export const MessagePayments = ({
   if (isCancelled) {
     return (
       <>
+        <VSpacer size={16} />
         <ListItemHeader
           iconColor={pagoPAIconColor}
           iconName={"productPagoPA"}
@@ -175,6 +176,7 @@ export const MessagePayments = ({
     : "";
   return (
     <>
+      <VSpacer size={16} />
       <ListItemHeader
         iconColor={pagoPAIconColor}
         iconName={"productPagoPA"}

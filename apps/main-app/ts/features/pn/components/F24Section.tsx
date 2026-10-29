@@ -40,6 +40,7 @@ export const F24Section = ({
 
   return (
     <>
+      <VSpacer size={16} />
       <ListItemHeader
         iconName={"folder"}
         label={I18n.t("features.pn.details.f24Section.title")}
@@ -64,7 +65,6 @@ export const F24Section = ({
           serviceId={serviceId}
         />
       )}
-      <VSpacer size={16} />
     </>
   );
 };

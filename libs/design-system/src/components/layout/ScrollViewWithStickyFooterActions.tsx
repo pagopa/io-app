@@ -1,13 +1,6 @@
-import {
-  ComponentProps,
-  ReactNode,
-  useEffect,
-  useEffectEvent,
-  useState
-} from "react";
+import { ComponentProps, ReactNode, useState } from "react";
 import {
   LayoutChangeEvent,
-  LayoutRectangle,
   ScrollViewProps,
   StyleProp,
   StyleSheet,
@@ -16,11 +9,14 @@ import {
 } from "react-native";
 import Animated, {
   interpolateColor,
+  useAnimatedReaction,
   useAnimatedScrollHandler,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { scheduleOnRN } from "react-native-worklets";
 
 import { useIOTheme } from "../../context";
 import {
@@ -31,27 +27,20 @@ import {
 } from "../../core";
 import { FooterActions, FooterActionsMeasurements } from "./FooterActions";
 
-const shadowTransitionDistance: IOSpacingScale = 24;
 const defaultScrollEventThrottle = 8;
+const placeholderTestID = "ScrollViewWithStickyFooterActionsPlaceholder";
+const dockedActionsTestID = "ScrollViewWithStickyFooterActionsDockedActions";
 
 export type ScrollViewWithStickyFooterActionsProps = {
-  /** Content rendered after the point where the footer stops being fixed. */
   afterPlaceholder: ReactNode;
-  /** Content rendered before the point where the footer stops being fixed. */
   beforePlaceholder: ReactNode;
-  /** Style applied to the component container. */
   containerStyle?: StyleProp<ViewStyle>;
 
-  footerActionProps: Omit<
+  footerActionProps: Pick<
     ComponentProps<typeof FooterActions>,
-    "animatedStyles" | "children" | "fixed"
+    "actions" | "testID" | "transparent"
   >;
 
-  /**
-   * Props applied to the internal vertical scroll view. `horizontal`,
-   * `onLayout` and `onScroll` are managed internally to keep the footer aligned
-   * with its placeholder.
-   */
   scrollViewProps?: Omit<
     ScrollViewProps,
     "children" | "horizontal" | "onLayout" | "onScroll"
@@ -72,75 +61,21 @@ export const ScrollViewWithStickyFooterActions = ({
 }: ScrollViewWithStickyFooterActionsProps) => {
   const theme = useIOTheme();
   const { bottom: safeAreaBottom } = useSafeAreaInsets();
-  const scrollY = useSharedValue(0);
-  const [scrollViewHeight, setScrollViewHeight] = useState(0);
-  const [footerHeight, setFooterHeight] = useState(0);
-  const [placeholderY, setPlaceholderY] = useState<LayoutRectangle["y"]>(0);
-  const { actions, onMeasure, transparent } = footerActionProps;
-  const placeholderHeight = actions ? footerHeight : IOSpacing.screenEndMargin;
+  const { actions, testID, transparent } = footerActionProps;
 
-  const placeholderTopEdge =
-    placeholderY - scrollViewHeight + placeholderHeight;
   const backgroundColor = transparent
     ? "transparent"
     : IOColors[theme["appBackground-primary"]];
 
-  const handleScroll = useAnimatedScrollHandler(({ contentOffset }) => {
-    scrollY.set(contentOffset.y);
-  });
-
-  const handleScrollViewLayout = (event: LayoutChangeEvent) => {
-    setScrollViewHeight(event.nativeEvent.layout.height);
-  };
-
-  const handlePlaceholderLayout = (event: LayoutChangeEvent) => {
-    setPlaceholderY(event.nativeEvent.layout.y);
-  };
-
-  const handleFooterActionsMeasure = (
-    measurements: FooterActionsMeasurements
-  ) => {
-    setFooterHeight(measurements.safeBottomAreaHeight);
-    onMeasure?.(measurements);
-  };
-
-  const notifyActionsAbsent = useEffectEvent(() => {
-    onMeasure?.({
-      actionBlockHeight: 0,
-      safeBottomAreaHeight: IOSpacing.screenEndMargin
-    });
-  });
-
-  useEffect(() => {
-    if (!actions) {
-      notifyActionsAbsent();
-    }
-  }, [actions]);
-
-  const actionBlockAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateY: Math.min(0, placeholderTopEdge - scrollY.get())
-      }
-    ]
-  }));
-
-  const backgroundAnimatedStyle = useAnimatedStyle(() => {
-    const scrollPosition = scrollY.get();
-    const isAttachedToPlaceholder = placeholderTopEdge < scrollPosition;
-    const shadowColor = interpolateColor(
-      scrollPosition,
-      [placeholderTopEdge - shadowTransitionDistance, placeholderTopEdge],
-      [footerBoxShadow.color, "transparent"]
-    );
-
-    return {
-      backgroundColor: isAttachedToPlaceholder
-        ? "transparent"
-        : backgroundColor,
-      boxShadow: [{ ...footerBoxShadow, color: shadowColor }]
-    };
-  });
+  const {
+    dockedActionsStyle,
+    floatingActionsPointerEvents,
+    floatingActionsStyles,
+    handleFloatingActionsMeasure,
+    handlePlaceholderLayout,
+    handleScroll,
+    handleScrollViewLayout
+  } = useFooterActionsDocking();
 
   return (
     <View style={[styles.container, containerStyle]}>
@@ -155,9 +90,22 @@ export const ScrollViewWithStickyFooterActions = ({
         {beforePlaceholder}
         <View
           onLayout={handlePlaceholderLayout}
-          style={{ height: placeholderHeight, backgroundColor }}
-          testID="ScrollViewWithStickyFooterActionsPlaceholder"
-        />
+          style={[
+            { backgroundColor },
+            !actions && { height: IOSpacing.screenEndMargin }
+          ]}
+          testID={placeholderTestID}
+        >
+          {actions && (
+            <FooterActions
+              actions={actions}
+              animatedStyles={{ mainBlock: dockedActionsStyle }}
+              excludeSafeAreaMargins
+              fixed={false}
+              testID={dockedActionsTestID}
+            />
+          )}
+        </View>
         {afterPlaceholder}
         <View
           style={{ height: IOSpacing.screenEndMargin + safeAreaBottom }}
@@ -165,18 +113,112 @@ export const ScrollViewWithStickyFooterActions = ({
         />
       </Animated.ScrollView>
       {actions && (
-        <FooterActions
-          {...footerActionProps}
-          animatedStyles={{
-            background: backgroundAnimatedStyle,
-            mainBlock: actionBlockAnimatedStyle
-          }}
-          onMeasure={handleFooterActionsMeasure}
-          transparent={transparent}
-        />
+        <View
+          // since this view sits outside the ScrollView,
+          // to ensure correct screenReader order a11y is handled by the docked clone
+          accessibilityElementsHidden
+          importantForAccessibility="no-hide-descendants"
+          pointerEvents={floatingActionsPointerEvents}
+          style={StyleSheet.absoluteFill}
+        >
+          <FooterActions
+            actions={actions}
+            animatedStyles={floatingActionsStyles}
+            onMeasure={handleFloatingActionsMeasure}
+            testID={testID}
+            transparent={transparent}
+          />
+        </View>
       )}
     </View>
   );
+};
+
+const shadowTransitionDistance: IOSpacingScale = 24;
+const invisibleButAccessibleOpacity = 0.01;
+
+const useFooterActionsDocking = () => {
+  const scrollY = useSharedValue(0);
+  const scrollViewHeight = useSharedValue(0);
+  const placeholderY = useSharedValue(0);
+  const floatingActionsHeight = useSharedValue(0);
+  const [floatingActionsPointerEvents, setFloatingActionsPointerEvents] =
+    useState<"box-none" | "none">("box-none"); // the floating footer sits above the docked one, so its pointer events are disabled once docked
+
+  const dockingScrollY = useDerivedValue(
+    () =>
+      placeholderY.get() + floatingActionsHeight.get() - scrollViewHeight.get()
+  );
+  // ------------------ handlers --------------------------
+
+  const handleScroll = useAnimatedScrollHandler(({ contentOffset }) => {
+    scrollY.set(contentOffset.y);
+  });
+
+  const handleScrollViewLayout = (event: LayoutChangeEvent) => {
+    scrollViewHeight.set(event.nativeEvent.layout.height);
+  };
+
+  const handlePlaceholderLayout = (event: LayoutChangeEvent) => {
+    placeholderY.set(event.nativeEvent.layout.y);
+  };
+
+  const handleFloatingActionsMeasure = ({
+    safeBottomAreaHeight
+  }: FooterActionsMeasurements) => {
+    floatingActionsHeight.set(safeBottomAreaHeight);
+  };
+
+  // ---------- docking/floating logic --------------------
+
+  const isDocked = useDerivedValue(() => {
+    const isMeasured = floatingActionsHeight.get() > 0;
+    return isMeasured && scrollY.get() > dockingScrollY.get();
+  });
+
+  const floatingActionsStyle = useAnimatedStyle(() => ({
+    opacity: isDocked.get() ? 0 : 1
+  }));
+
+  const floatingShadowStyle = useAnimatedStyle(() => {
+    const dockingPoint = dockingScrollY.get();
+    const shadowColor = interpolateColor(
+      scrollY.get(),
+      [dockingPoint - shadowTransitionDistance, dockingPoint],
+      [footerBoxShadow.color, "transparent"]
+    );
+
+    return { boxShadow: [{ ...footerBoxShadow, color: shadowColor }] };
+  });
+
+  const dockedActionsStyle = useAnimatedStyle(() => ({
+    opacity: isDocked.get() ? 1 : invisibleButAccessibleOpacity
+  }));
+
+  useAnimatedReaction(
+    () => isDocked.get(),
+    (docked, wasDocked) => {
+      if (docked !== wasDocked) {
+        scheduleOnRN(
+          setFloatingActionsPointerEvents,
+          docked ? "none" : "box-none"
+        );
+      }
+    }
+  );
+
+  return {
+    dockedActionsStyle,
+    floatingActionsPointerEvents,
+    floatingActionsStyles: {
+      background: floatingShadowStyle,
+      mainBlock: floatingActionsStyle
+    },
+    handleFloatingActionsMeasure,
+    handlePlaceholderLayout,
+    handleScroll,
+    handleScrollViewLayout
+  };
 };
 
 const styles = StyleSheet.create({

@@ -98,7 +98,6 @@ const MessageSurveyBanner = (props: QualtricsParameters) => {
 
   return (
     <>
-      <VSpacer size={16} />
       <Banner
         action={I18n.t("messageDetails.surveyBanner.action")}
         color="neutral"
@@ -107,6 +106,7 @@ const MessageSurveyBanner = (props: QualtricsParameters) => {
         pictogramName="feedback"
         testID="message-survey-banner"
       />
+      <VSpacer size={24} />
     </>
   );
 };
