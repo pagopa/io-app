@@ -1966,7 +1966,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               </View>
                               <View
                                 accessibilityElementsHidden={false}
-                                accessibilityLabel="IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso"
+                                accessibilityLabel="IT-⁠Wallet: Informativa Privacy e Termini e Condizioni d’uso"
                                 accessibilityRole="header"
                                 accessible={true}
                                 importantForAccessibility="yes"
@@ -2027,7 +2027,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                     ]
                                   }
                                 >
-                                  IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso
+                                  IT-⁠Wallet: Informativa Privacy e Termini e Condizioni d’uso
                                 </Text>
                               </View>
                               <View
@@ -2549,7 +2549,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   }
                                 >
                                   <Text
-                                    accessibilityLabel="IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso"
+                                    accessibilityLabel="IT-⁠Wallet: Informativa Privacy e Termini e Condizioni d’uso"
                                     accessibilityRole="header"
                                     allowFontScaling={true}
                                     dynamicTypeRamp="title1"
@@ -2568,7 +2568,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                       ]
                                     }
                                   >
-                                    IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso
+                                    IT-⁠Wallet: Informativa Privacy e Termini e Condizioni d’uso
                                   </Text>
                                 </View>
                               </View>

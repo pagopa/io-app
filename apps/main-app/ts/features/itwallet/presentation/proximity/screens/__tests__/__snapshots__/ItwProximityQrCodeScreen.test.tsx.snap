@@ -6802,7 +6802,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                           ]
                                         }
                                       >
-                                        Conferma la tua identità per continuare a usare il tuo portafoglio IT-Wallet.
+                                        Conferma la tua identità per continuare a usare il tuo portafoglio IT-⁠Wallet.
                                       </Text>
                                       <Text
                                         allowFontScaling={true}
