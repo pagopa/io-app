@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import {
   call,
   fork,
@@ -155,9 +156,12 @@ export function* handleNavigateAfterFinishedStandardActiveSessionLoginFlow(
     // If the user is logging in from the active session login flow, we can be sure that the session is valid
     // and we can directly navigate him to the home screen, skipping all the checks about pending background
     // actions and session expiration blocking screen.
-    yield* call(NavigationService.navigate, ROUTES.MAIN, {
-      screen: MESSAGES_ROUTES.MESSAGES_HOME
-    });
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.popTo(ROUTES.MAIN, {
+        screen: MESSAGES_ROUTES.MESSAGES_HOME
+      })
+    );
   }
   return;
 }

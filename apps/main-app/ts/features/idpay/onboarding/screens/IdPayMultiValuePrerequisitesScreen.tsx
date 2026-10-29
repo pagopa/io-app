@@ -154,7 +154,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
         items={
           selfDeclaration?.value?.map((answer, index) => ({
             id: index,
-            value: answer.description,
+            label: answer.description,
             description: answer.subDescription
           })) || []
         }

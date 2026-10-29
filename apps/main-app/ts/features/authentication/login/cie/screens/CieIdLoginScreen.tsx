@@ -15,13 +15,14 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { remoteApiLoginUrlPrefixSelector } from "../../../activeSessionLogin/store/selectors";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
@@ -52,8 +53,12 @@ import {
   IO_LOGIN_CIE_URL_SCHEME
 } from "../utils/cie";
 
-const CieIdLoginScreen = () => {
-  const navigation = useIONavigation();
+type CieIdLoginScreenProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  typeof AUTHENTICATION_ROUTES.CIE_ID_LOGIN
+>;
+
+const CieIdLoginScreen = ({ navigation }: CieIdLoginScreenProps) => {
   const webView = useRef<WebView>(null);
   const dispatch = useIODispatch();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(null);
@@ -68,26 +73,22 @@ const CieIdLoginScreen = () => {
     useIOSelector(cieIDSelectedSecurityLevelSelector) ?? AUTH_LEVELS.L2;
   const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
   const [isLoadingWebView, setIsLoadingWebView] = useState(true);
+
   const navigateToCieIdAuthenticationError = useCallback(() => {
-    navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
-    });
+    navigation.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR);
   }, [navigation]);
 
   const navigateToCieIdAuthUrlError = useCallback(
     (url: string) => {
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
-        params: { url }
+      navigation.replace(AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL, {
+        url
       });
     },
     [navigation]
   );
 
   const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    navigation.popTo(AUTHENTICATION_ROUTES.LANDING);
   }, [navigation]);
 
   const checkIfUrlIsWhitelisted = useCallback(

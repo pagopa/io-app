@@ -4,7 +4,7 @@ import {
   trackItwBannerTap,
   trackItwBannerVisualized
 } from "../../../analytics";
-import { ItwJwtCredentialStatus } from "../../utils/itwTypesUtils";
+import { ItwEidStatus } from "../../utils/itwTypesUtils";
 import { useItwEidLifecycleAlertTracking } from "../useItwEidLifecycleAlertTracking";
 
 jest.mock("../../../analytics", () => ({
@@ -16,7 +16,7 @@ type Scenario = {
   bannerId: string;
   isItwCredential: boolean;
   name: string;
-  status: ItwJwtCredentialStatus;
+  status: ItwEidStatus;
 };
 
 const scenarios: ReadonlyArray<Scenario> = [
@@ -29,6 +29,12 @@ const scenarios: ReadonlyArray<Scenario> = [
   {
     name: "expired PID",
     status: "jwtExpired",
+    isItwCredential: true,
+    bannerId: "itwExpiredPidBanner"
+  },
+  {
+    name: "invalid PID",
+    status: "invalid",
     isItwCredential: true,
     bannerId: "itwExpiredPidBanner"
   },

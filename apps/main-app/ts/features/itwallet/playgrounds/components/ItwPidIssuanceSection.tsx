@@ -68,17 +68,18 @@ export const ItwPidIssuanceSection = () => {
       <ListItemHeader label="PID issuance" />
       <ListItemNav
         description="Start L2 PID (Documenti su IO) issuance"
+        label="Start L2 issuance"
         onPress={startIssuance("l2")}
-        value="Start L2 issuance"
       />
       <ListItemNav
         description="Start L3 PID (IT Wallet) issuance"
+        label="Start L3 issuance"
         onPress={startIssuance("l3")}
-        value="Start L3 issuance"
       />
       <ListItemHeader label="PID issuance from add credential" />
       <ListItemNav
         description="Simulate PID issuance triggered by selecting mDL (skips catalog)"
+        label="Start credential-triggered issuance"
         onPress={() =>
           machineRef.send({
             type: "start",
@@ -87,30 +88,29 @@ export const ItwPidIssuanceSection = () => {
             credentialType: "mDL"
           })
         }
-        value="Start credential-triggered issuance"
       />
       <ListItemHeader label="PID upgrade" />
       <ListItemNav
         description="Start L3 PID (IT Wallet) upgrade from L2"
+        label="Start L3 upgrade"
         onPress={startUpgrade("l3")}
-        value="Start L3 upgrade"
       />
       <ListItemHeader label="PID reissuance" />
       <ListItemNav
         description="Start L2 PID (Documenti su IO) reissuance"
+        label="Start L2 reissuance"
         onPress={startReissuance("l2")}
-        value="Start L2 reissuance"
       />
       <ListItemNav
         description="Start L3 PID (IT Wallet) reissuance"
+        label="Start L3 reissuance"
         onPress={startReissuance("l3")}
-        value="Start L3 reissuance"
       />
       <ListItemHeader label="Failure simulation" />
       <ListItemNav
         description="Simulate GENERATION_ASSERTION_FAILED"
+        label="Simulate hardware key invalid error"
         onPress={simulateHardwareKeyInvalidError}
-        value="Simulate hardware key invalid error"
       />
     </View>
   );
