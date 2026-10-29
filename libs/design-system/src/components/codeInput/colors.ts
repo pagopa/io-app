@@ -8,10 +8,10 @@ import type { CodeInput, CodeInputStatus } from "./CodeInput";
 
 import { withAlpha } from "../../core/tokens/colors/utils";
 
-/* Empty dots take `border`, filled dots `foreground` by status; `primary` sits on `background.accent` */
+/* Empty dots take `border`, filled dots `foreground` by status; `contrast` sits on `background.accent` */
 export const codeInputColors = (s: IOColorSemantics) =>
   ({
-    primary: {
+    contrast: {
       border: withAlpha(s.stroke.onAccent, 0.7),
       foreground: {
         default: s.foreground.onAccent.default,

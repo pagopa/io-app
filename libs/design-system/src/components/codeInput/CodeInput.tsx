@@ -15,7 +15,7 @@ type CodeInputProps = {
   onValidate: (value: string) => boolean;
   onValueChange: (value: string) => void;
   value: string;
-  variant?: "neutral" | "primary";
+  variant?: "contrast" | "neutral";
 };
 
 const styles = StyleSheet.create({
@@ -49,7 +49,7 @@ export const CodeInput = ({
   length,
   value,
   onValueChange,
-  variant = "primary",
+  variant = "contrast",
   onValidate
 }: CodeInputProps) => {
   const [status, setStatus] = useState<CodeInputStatus>("default");

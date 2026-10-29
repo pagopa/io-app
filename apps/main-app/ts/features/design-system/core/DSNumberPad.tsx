@@ -20,18 +20,18 @@ const PIN_LENGTH = 6;
 
 export const DSNumberPad = () => {
   const [value, setValue] = useState("");
-  const [primaryBackground, setPrimaryBackground] = useState(false);
+  const [accentBackground, setAccentBackground] = useState(false);
 
   const insets = useSafeAreaInsets();
   const colors = useIOColors();
 
-  const backgroundColor = primaryBackground
+  const backgroundColor = accentBackground
     ? colors.background.accent
     : colors.background.default;
-  const headingColor = primaryBackground
+  const headingColor = accentBackground
     ? colors.foreground.onAccent.default
     : colors.text.heading.default;
-  const textColor = primaryBackground
+  const textColor = accentBackground
     ? colors.foreground.onAccent.default
     : colors.text.content.default;
 
@@ -74,8 +74,8 @@ export const DSNumberPad = () => {
       >
         <ListItemSwitch
           label="Attiva sfondo blu"
-          onSwitchValueChange={() => setPrimaryBackground(v => !v)}
-          value={primaryBackground}
+          onSwitchValueChange={() => setAccentBackground(v => !v)}
+          value={accentBackground}
         />
       </View>
       <View style={{ alignItems: "center" }}>
@@ -107,7 +107,7 @@ export const DSNumberPad = () => {
           onValidate={v => v === "123456"}
           onValueChange={setValue}
           value={value}
-          variant={primaryBackground ? "primary" : "neutral"}
+          variant={accentBackground ? "contrast" : "neutral"}
         />
       </View>
       <VSpacer size={48} />
@@ -119,12 +119,12 @@ export const DSNumberPad = () => {
           onBiometricPress={() => Alert.alert("biometric")}
           onDeletePress={onDeletePress}
           onNumberPress={onValueChange}
-          variant={primaryBackground ? "primary" : "neutral"}
+          variant={accentBackground ? "contrast" : "primary"}
         />
         <VSpacer size={32} />
         <View style={{ alignSelf: "center" }}>
           <IOButton
-            color={primaryBackground ? "contrast" : "primary"}
+            color={accentBackground ? "contrast" : "primary"}
             label="Hai dimenticato il codice di sblocco?"
             onPress={() => Alert.alert("Forgot unlock code")}
             variant="link"

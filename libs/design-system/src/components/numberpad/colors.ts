@@ -6,17 +6,17 @@ import type {
 
 import { withAlpha } from "../../core/tokens/colors/utils";
 
-/* Fills are the action hue faded; `primary` sits on `background.accent` */
+/* Fills are the action hue faded; `contrast` sits on `background.accent` */
 export const numberButtonColors = (s: IOColorSemantics) =>
   ({
-    neutral: {
+    primary: {
       background: {
         default: withAlpha(s.surface.action.primary.default, 0.1),
         pressed: withAlpha(s.surface.action.primary.default, 0.35)
       },
       foreground: s.foreground.action.primary.default
     },
-    primary: {
+    contrast: {
       background: {
         default: withAlpha(s.surface.action.inverse.default, 0.15),
         pressed: withAlpha(s.surface.action.inverse.default, 0.5)
@@ -24,7 +24,7 @@ export const numberButtonColors = (s: IOColorSemantics) =>
       foreground: s.foreground.action.inverse.default
     }
   }) satisfies Record<
-    "neutral" | "primary",
+    "contrast" | "primary",
     {
       background: IOColorStates<"background">;
       foreground: IOComponentColor<"foreground">;

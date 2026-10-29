@@ -21,11 +21,14 @@ type NumberButtonProps = {
    * @returns Void
    */
   onPress: (number: number) => void;
-  /** Used to choose the component color variant between `neutral` and `primary`. */
+  /**
+   * Used to choose the component color variant between `primary` and
+   * `contrast`.
+   */
   variant: NumberButtonVariantType;
 };
 
-type NumberButtonVariantType = "neutral" | "primary";
+type NumberButtonVariantType = "contrast" | "primary";
 
 const numberPadBtnSize = 56;
 

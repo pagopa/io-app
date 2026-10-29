@@ -265,7 +265,7 @@ export const IdentificationModal = () => {
   const NumberPad = memo(() => (
     <IdentificationNumberPad
       biometricsConfig={biometricsConfig}
-      numberPadVariant={"primary"}
+      numberPadVariant={"contrast"}
       pin={pin}
       pinValidation={onPinValidated}
     />
