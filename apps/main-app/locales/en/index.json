@@ -1947,6 +1947,7 @@
         },
         "credentialDetails": {
           "actions": {
+            "discoverOpportunities": "Discover the opportunities",
             "hideClaimValues": "Hide document properties",
             "openIPatente": "Go to your driver's license point balance",
             "removeFromWallet": "Remove from Wallet",

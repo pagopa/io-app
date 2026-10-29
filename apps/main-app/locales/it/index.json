@@ -1947,9 +1947,9 @@
         },
         "credentialDetails": {
           "actions": {
+            "discoverOpportunities": "Scopri le opportunità",
             "hideClaimValues": "Nascondi gli attributi del documento",
             "openIPatente": "Vai al saldo punti patente",
-            "discoverOpportunities": "Scopri le opportunità",
             "removeFromWallet": "Rimuovi dal Portafoglio",
             "requestAssistance": "Qualcosa non torna?",
             "updateDigitalCredential": "Aggiorna il documento digitale"
@@ -2044,7 +2044,7 @@
             }
           },
           "listItemHeader": "Dati del tuo IT-Wallet ID",
-          "listItemHeaderHideValues": "Nascondi dati del tuo IT-Wallet ID",
+          "listItemHeaderHideValues": "Nascondi dati del tuo IT-⁠Wallet ID",
           "listItemHeaderShowValues": "Mostra dati del tuo IT-Wallet ID"
         },
         "missingCredentials": {
@@ -2471,7 +2471,7 @@
           "primaryAction": "Chiudi",
           "secondaryAction": "Scopri di più",
           "subtitle": "Questo dispositivo non ha i requisiti di sicurezza necessari per il suo funzionamento.",
-          "title": "Il tuo dispositivo non supporta IT Wallet"
+          "title": "Il tuo dispositivo non supporta IT-Wallet"
         }
       },
       "verifiableCredentials": {
