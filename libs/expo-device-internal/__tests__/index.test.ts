@@ -1,5 +1,8 @@
 jest.mock("expo-modules-core", () => {
-  const nativeModule = { getUniqueIdSync: jest.fn() };
+  const nativeModule = {
+    getUniqueIdSync: jest.fn(),
+    isHapticFeedbackEnabled: jest.fn()
+  };
   return {
     requireNativeModule: jest.fn(() => nativeModule)
   };
@@ -7,7 +10,7 @@ jest.mock("expo-modules-core", () => {
 
 import { requireNativeModule } from "expo-modules-core";
 
-import { getUniqueIdSync } from "../index";
+import { getUniqueIdSync, isHapticFeedbackEnabled } from "../index";
 
 const mockGetUniqueIdSync = jest.mocked(
   requireNativeModule<{ getUniqueIdSync: () => string }>("DeviceInternal")
@@ -40,5 +43,46 @@ describe("getUniqueIdSync", () => {
     });
 
     expect(getUniqueIdSync).toThrow(error);
+  });
+});
+
+describe("isHapticFeedbackEnabled", () => {
+  const mockIsHapticFeedbackEnabled = jest.mocked(
+    requireNativeModule<{ isHapticFeedbackEnabled: () => boolean }>(
+      "DeviceInternal"
+    ).isHapticFeedbackEnabled
+  );
+
+  beforeEach(() => {
+    mockIsHapticFeedbackEnabled.mockReset();
+  });
+
+  test.each([
+    { name: "enabled", enabled: true },
+    { name: "disabled", enabled: false }
+  ])("returns the $name native preference synchronously", ({ enabled }) => {
+    mockIsHapticFeedbackEnabled.mockReturnValue(enabled);
+
+    expect(isHapticFeedbackEnabled()).toBe(enabled);
+    expect(mockIsHapticFeedbackEnabled).toHaveBeenCalledTimes(1);
+  });
+
+  it("reads the current preference on every call", () => {
+    mockIsHapticFeedbackEnabled
+      .mockReturnValueOnce(true)
+      .mockReturnValueOnce(false);
+
+    expect(isHapticFeedbackEnabled()).toBe(true);
+    expect(isHapticFeedbackEnabled()).toBe(false);
+    expect(mockIsHapticFeedbackEnabled).toHaveBeenCalledTimes(2);
+  });
+
+  it("propagates native settings failures", () => {
+    const error = new Error("Android audio service is unavailable");
+    mockIsHapticFeedbackEnabled.mockImplementation(() => {
+      throw error;
+    });
+
+    expect(isHapticFeedbackEnabled).toThrow(error);
   });
 });
