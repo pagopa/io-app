@@ -1,4 +1,4 @@
-import { CieIdEnvironment } from "@pagopa/io-react-native-cieid";
+import { CieIdEnvironment } from "@io-app/expo-cieid";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { createSelector } from "reselect";
 

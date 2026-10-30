@@ -1,0 +1,5 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": { "modules": ["ExpoCieIdModule"] },
+  "android": { "modules": ["expo.modules.cieid.ExpoCieIdModule"] }
+}
