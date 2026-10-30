@@ -1,5 +1,6 @@
 import { Body, VStack } from "@io-app/design-system";
 import I18n from "i18next";
+import { memo } from "react";
 import { View } from "react-native";
 
 import { renderActionButtons } from "../../../../components/ui/IOScrollView";
@@ -26,15 +27,40 @@ export type ItwCredentialWalletCardProps = ItwCredentialCard & {
   withItwDesign?: boolean;
 };
 
-const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
-  const { credentialType, issuedAt, onPress } = props;
+type PressableCredentialCardProps = ItwCredentialCard & {
+  accessibilityLabel: string;
+  onPress: () => void;
+  withItwDesign: boolean;
+};
+
+const PressableCredentialCard = ({
+  accessibilityLabel,
+  onPress,
+  withItwDesign,
+  ...cardProps
+}: PressableCredentialCardProps) => (
+  <WalletCardPressableBase
+    accessibilityLabel={accessibilityLabel}
+    onPress={onPress}
+    testID="ItwCredentialWalletCardTestID"
+  >
+    {withItwDesign ? (
+      <ItwCredentialCard {...cardProps} />
+    ) : (
+      <ItwCredentialCardLegacy {...cardProps} />
+    )}
+  </WalletCardPressableBase>
+);
+
+/**
+ * Card of a credential that must be upgraded to IT-Wallet: pressing it opens
+ * the upgrade bottom sheet, mounted only for these cards.
+ */
+const UpgradeRequiredCredentialCard = (
+  props: Omit<PressableCredentialCardProps, "onPress">
+) => {
+  const { credentialType } = props;
   const navigation = useIONavigation();
-  const credentialName = useItwCredentialName(credentialType);
-  const needsItwUpgrade = useIOSelector(
-    itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
-  );
-  const withItwDesign =
-    useIOSelector(itwLifecycleIsITWalletValidSelector) || props.withItwDesign;
 
   const handleCredentialUpgrade = useOfflineToastGuard(() =>
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -88,6 +114,28 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
     )
   });
 
+  return (
+    <>
+      <PressableCredentialCard {...props} onPress={upgradeModal.present} />
+      {upgradeModal.bottomSheet}
+    </>
+  );
+};
+
+const WrappedItwCredentialCard = ({
+  onPress,
+  withItwDesign: forceItwDesign,
+  ...cardProps
+}: ItwCredentialWalletCardProps) => {
+  const { credentialType, issuedAt } = cardProps;
+  const navigation = useIONavigation();
+  const credentialName = useItwCredentialName(credentialType);
+  const needsItwUpgrade = useIOSelector(
+    itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
+  );
+  const withItwDesign =
+    useIOSelector(itwLifecycleIsITWalletValidSelector) || !!forceItwDesign;
+
   // The PID card displays the IT-Wallet ID logo instead of a textual title,
   // so its name must be exposed explicitly to screen readers
   const accessibilityLabel =
@@ -95,36 +143,31 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
       ? I18n.t("features.itWallet.credentialName.pid")
       : credentialName;
 
-  const handleOnPress = () => {
-    if (onPress) {
-      onPress();
-    } else if (needsItwUpgrade) {
-      upgradeModal.present();
-    } else {
-      navigation.navigate(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-        params: {
-          credentialType
-        }
-      });
-    }
-  };
+  if (!onPress && needsItwUpgrade) {
+    return (
+      <UpgradeRequiredCredentialCard
+        {...cardProps}
+        accessibilityLabel={accessibilityLabel}
+        withItwDesign={withItwDesign}
+      />
+    );
+  }
+
+  const navigateToDetails = () =>
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+      params: {
+        credentialType
+      }
+    });
 
   return (
-    <>
-      <WalletCardPressableBase
-        accessibilityLabel={accessibilityLabel}
-        onPress={handleOnPress}
-        testID="ItwCredentialWalletCardTestID"
-      >
-        {withItwDesign ? (
-          <ItwCredentialCard {...props} />
-        ) : (
-          <ItwCredentialCardLegacy {...props} />
-        )}
-      </WalletCardPressableBase>
-      {needsItwUpgrade && upgradeModal.bottomSheet}
-    </>
+    <PressableCredentialCard
+      {...cardProps}
+      accessibilityLabel={accessibilityLabel}
+      onPress={onPress ?? navigateToDetails}
+      withItwDesign={withItwDesign}
+    />
   );
 };
 
@@ -133,5 +176,6 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
  * component
  */
 export const ItwCredentialWalletCard = withWalletCardBaseComponent(
-  WrappedItwCredentialCard
+  // Wallet lists render cards with new but shallowly equal props on every render
+  memo(WrappedItwCredentialCard)
 );

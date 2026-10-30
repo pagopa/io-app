@@ -3,6 +3,7 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import { shallowEqual } from "react-redux";
 
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -59,9 +60,12 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   );
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
-  const cards = useIOSelector(state =>
-    selectWalletCardsByCategory(state, "itw")
+  // Cards of other categories rebuild this array even when ITW cards are unchanged
+  const cards = useIOSelector(
+    state => selectWalletCardsByCategory(state, "itw"),
+    shallowEqual
   );
+  const hasCards = cards.length > 0;
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const eidExpiration = useIOSelector(itwCredentialsEidExpirationSelector);
   const isEidExpired = eidStatus === "jwtExpired";
@@ -125,7 +129,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           />
           {/* IT-Wallet renders the PID card below the header */}
           <View style={styles.cardsWrapper}>
-            <ItwWalletIdCard isStacked={cards.length > 0} />
+            <ItwWalletIdCard isStacked={hasCards} />
           </View>
         </>
       );
@@ -138,7 +142,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       />
     );
   }, [
-    cards,
+    hasCards,
     eidInfoBottomSheet.present,
     iconColor,
     isItWalletValid,
@@ -164,7 +168,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           <ItwDiscoveryBanner flow="wallet" style={{ marginHorizontal: 8 }} />
         )}
 
-        {cards.length > 0 && (
+        {hasCards && (
           <GuidedTour
             description={I18n.t(
               "features.itWallet.tour.credentials.description"
@@ -193,8 +197,5 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 const styles = StyleSheet.create({
   cardsWrapper: {
     marginHorizontal: -8
-  },
-  bannersWrapper: {
-    marginHorizontal: 8
   }
 });

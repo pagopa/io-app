@@ -20,6 +20,12 @@ export type WalletCardsCategoryContainerProps = WithTestID<{
 const itemLayoutAnimation =
   Platform.OS !== "android" ? LinearTransition.duration(200) : undefined;
 
+// Shared animation builders: a new builder on every render would make
+// Reanimated reconfigure the list animations on every render
+const LIST_ENTERING = FadeInDown.duration(150);
+const LIST_EXITING = FadeOutDown.duration(150);
+const LIST_LAYOUT = LinearTransition.duration(200);
+
 /**
  * This component handles the rendering of cards of a specific category. The
  * component also handles logic behind card stacking and animations
@@ -31,10 +37,10 @@ export const WalletCardsCategoryContainer = ({
   <Animated.FlatList
     contentContainerStyle={styles.container}
     data={cards}
-    entering={FadeInDown.duration(150)}
-    exiting={FadeOutDown.duration(150)}
+    entering={LIST_ENTERING}
+    exiting={LIST_EXITING}
     itemLayoutAnimation={itemLayoutAnimation}
-    layout={LinearTransition.duration(200)}
+    layout={LIST_LAYOUT}
     renderItem={({ index, item }) =>
       renderWalletCardFn(item, index < cards.length - 1)
     }
