@@ -1,12 +1,10 @@
 import { IOButton } from "@io-app/design-system";
 import I18n from "i18next";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useBottomTabNavigatorStyle } from "../../../../hooks/useBottomTabNavigatorStyle";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import { useIOTabNavigation } from "../../../../navigation/params/AppParamsList";
 import {
   useIODispatch,
   useIOSelector,
@@ -46,9 +44,6 @@ type ArchiveRestoreCTAsProps = {
 
 export const ArchiveRestoreBar = () => {
   const store = useIOStore();
-  const tabNavigation = useIOTabNavigation();
-
-  const tabBarStyle = useBottomTabNavigatorStyle();
 
   const isArchivingDisabled = useIOSelector(isArchivingDisabledSelector);
   const shownCategory = useIOSelector(shownMessageCategorySelector);
@@ -59,17 +54,6 @@ export const ArchiveRestoreBar = () => {
     return isArchivingInProcessingModeSelector(state);
   }, [store]);
   useHardwareBackButton(androidBackButtonCallback);
-
-  useEffect(() => {
-    tabNavigation.setOptions({
-      tabBarStyle: [
-        tabBarStyle,
-        {
-          display: isArchivingDisabled ? "flex" : "none"
-        }
-      ]
-    });
-  }, [isArchivingDisabled, tabBarStyle, tabNavigation]);
 
   if (isArchivingDisabled) {
     return null;

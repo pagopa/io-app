@@ -9,6 +9,7 @@ import I18n from "i18next";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
+import { isArchivingDisabledSelector } from "../features/messages/store/reducers/archiving";
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
@@ -28,6 +29,7 @@ export const MainTabNavigator = () => {
 
   const startupLoaded = useIOSelector(isStartupLoaded);
   const typefacePreference = useIOSelector(fontPreferenceSelector);
+  const isArchivingDisabled = useIOSelector(isArchivingDisabledSelector);
 
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
@@ -43,6 +45,7 @@ export const MainTabNavigator = () => {
         minimizeBehavior="onScrollDown"
         scrollEdgeAppearance="opaque"
         tabBarActiveTintColor={IOColors[theme["interactiveElem-default"]]}
+        tabBarHidden={!isArchivingDisabled}
         tabBarInactiveTintColor={IOColors[theme["textBody-tertiary"]]}
         tabBarStyle={{
           backgroundColor: IOColors[theme["appBackground-primary"]]
