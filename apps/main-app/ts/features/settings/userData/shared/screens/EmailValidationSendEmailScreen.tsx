@@ -25,6 +25,7 @@ import SectionStatusComponent from "../../../../../components/SectionStatus";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { getFlowType } from "../../../../../utils/analytics";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -82,6 +83,7 @@ const EmailValidationSendEmailScreen = () => {
   const emailValidation = useIOSelector(emailValidationSelector, _.isEqual);
   const prevEmailValidation = usePrevious(emailValidation);
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const flow = getFlowType(!!isOnboarding, isFirstOnBoarding);
   const [showCountdown, setShowCountdown] = useState(true);
   const email = pipe(
@@ -121,7 +123,13 @@ const EmailValidationSendEmailScreen = () => {
     [dispatch]
   );
 
-  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
+  useFocusEffect(
+    useCallback(() => {
+      if (screenReaderEnabled) {
+        setAccessibilityFocus(accessibilityFirstFocuseViewRef);
+      }
+    }, [screenReaderEnabled])
+  );
 
   useOnFirstRender(() => {
     // polling starts every time the user land on this screen
@@ -271,11 +279,17 @@ const EmailValidationSendEmailScreen = () => {
           </View>
           <VSpacer size={24} />
           <View
-            accessible={true}
+            accessibilityElementsHidden={!screenReaderEnabled}
+            accessibilityRespondsToUserInteraction={false}
+            accessible={screenReaderEnabled}
+            focusable={false}
+            importantForAccessibility={
+              screenReaderEnabled ? "auto" : "no-hide-descendants"
+            }
             ref={accessibilityFirstFocuseViewRef}
             style={{ alignItems: "center" }}
           >
-            <H3 testID="title-test">
+            <H3 accessible={false} testID="title-test">
               {I18n.t(
                 isEmailValidated
                   ? "email.newvalidemail.title"
