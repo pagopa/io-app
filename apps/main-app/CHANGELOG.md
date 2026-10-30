@@ -1,3 +1,13 @@
+## 3.43.0-rc.1 (2026-10-30)
+
+### Chores
+
+- [[IEL-880](https://pagopa.atlassian.net/browse/IEL-880)] EMAIL_EDITING MP event now tracks FCI flow ([#8771](https://github.com/pagopa/io-app/pull/8771))
+
+### ❤️ Thank You
+
+- Pawel @soixdev91
+
 ## 3.43.0-rc.0 (2026-10-28)
 
 This was a version bump only for @io-app/main-app to align it with other projects, there were no code changes.
