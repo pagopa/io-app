@@ -119,6 +119,8 @@ PODS:
     - ExpoModulesCore
   - ExpoScreenCapture (55.0.14):
     - ExpoModulesCore
+  - ExpoSecureStore (55.0.16):
+    - ExpoModulesCore
   - ExpoSharing (55.0.22):
     - ExpoModulesCore
   - ExpoStoreReview (55.0.18):
@@ -3892,6 +3894,7 @@ DEPENDENCIES:
   - ExpoNotifications (from `../../../node_modules/expo-notifications/ios`)
   - ExpoPdfHighResGenerator (from `../../../libs/expo-pdf-high-res-generator/ios`)
   - ExpoScreenCapture (from `../../../node_modules/expo-screen-capture/ios`)
+  - ExpoSecureStore (from `../../../node_modules/expo-secure-store/ios`)
   - ExpoSharing (from `../../../node_modules/expo-sharing/ios`)
   - ExpoStoreReview (from `../../../node_modules/expo-store-review/ios`)
   - ExpoTaskManager (from `../../../node_modules/expo-task-manager/ios`)
@@ -4100,6 +4103,8 @@ EXTERNAL SOURCES:
     :path: "../../../libs/expo-pdf-high-res-generator/ios"
   ExpoScreenCapture:
     :path: "../../../node_modules/expo-screen-capture/ios"
+  ExpoSecureStore:
+    :path: "../../../node_modules/expo-secure-store/ios"
   ExpoSharing:
     :path: "../../../node_modules/expo-sharing/ios"
   ExpoStoreReview:
@@ -4378,6 +4383,7 @@ SPEC CHECKSUMS:
   ExpoNotifications: 61c46aa5df088ff0ad41de0504a86a92333aec55
   ExpoPdfHighResGenerator: 5ada09b2f144ceebbd9b9ed1766596ec462cc41c
   ExpoScreenCapture: aefcd749919380ee0b4d59bb60c1a150aac201c6
+  ExpoSecureStore: b63bbffacf76f64413ecadd3007de3fc8e39de02
   ExpoSharing: 40cd8fd65209bc35adc710ff7e42dd35913d2a0f
   ExpoStoreReview: 660b3f001bc09d41a3f3c277b1e0f10337bf9ea8
   ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
