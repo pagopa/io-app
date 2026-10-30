@@ -1,4 +1,4 @@
-import { IntegrityError } from "@pagopa/io-react-native-integrity";
+import { IntegrityError } from "@io-app/expo-integrity";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";

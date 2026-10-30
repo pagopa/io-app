@@ -1,4 +1,4 @@
-import { type IntegrityError } from "@pagopa/io-react-native-integrity";
+import { type IntegrityError } from "@io-app/expo-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 
 import { WithCredentialMetadata } from "../../common/utils/ItwFailureTypes.ts";

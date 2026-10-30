@@ -1,5 +1,5 @@
 import { ListItemHeader, ListItemNav } from "@io-app/design-system";
-import { IntegrityError } from "@pagopa/io-react-native-integrity";
+import { IntegrityError } from "@io-app/expo-integrity";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Alert, View } from "react-native";

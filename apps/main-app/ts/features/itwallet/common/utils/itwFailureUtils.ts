@@ -1,8 +1,5 @@
+import { IntegrityError, IntegrityErrorCodes } from "@io-app/expo-integrity";
 import { CryptoErrorCodes } from "@pagopa/io-react-native-crypto";
-import {
-  IntegrityError,
-  IntegrityErrorCodes
-} from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import { z } from "zod";
 

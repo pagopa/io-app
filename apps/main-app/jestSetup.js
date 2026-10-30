@@ -106,6 +106,17 @@ jest.mock("@io-app/expo-navigation-bar-manager", () => ({
   setNavigationBarColor: jest.fn().mockResolvedValue(true)
 }));
 
+jest.mock("@io-app/expo-integrity", () => ({
+  isAttestationServiceAvailable: jest.fn(),
+  generateHardwareKey: jest.fn(),
+  getAttestation: jest.fn(),
+  generateHardwareSignatureWithAssertion: jest.fn(),
+  decodeAssertion: jest.fn(),
+  isPlayServicesAvailable: jest.fn(),
+  prepareIntegrityToken: jest.fn(),
+  requestIntegrityToken: jest.fn()
+}));
+
 // Mock DeviceInfo for version checks
 jest.mock("@io-app/expo-device-internal", () => ({
   getUniqueIdSync: jest.fn(() => "SOME-UNIQUE-ID"),
