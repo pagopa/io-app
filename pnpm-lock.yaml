@@ -113,7 +113,7 @@ overrides:
   pretty-format>react-is: 19.0.0
 
 patchedDependencies:
-  '@gorhom/bottom-sheet@5.2.8': 9995dc509367cbc5391cc76916a68192588c5aec4321e7f54ff69a8a3662ee98
+  '@gorhom/bottom-sheet@5.2.8': 092ef12d10e173e6078014eb803564f15b173e3d13d267f084fd5653f409a7c8
   '@react-native-community/art@^1.2.0': b8245151d6696043e5ddf6a574e70ea4ab756bd718a162025b9bcaf83ee5a2ea
   '@react-native-cookies/cookies@^6.2.1': ec064f4a202698a202758abc5b5d8deafb70ffb31585c78608d257295d731b9a
   '@react-navigation/core@7.21.12': 1bad9284072e46cab2d133dfa0da9cad9aaf6f50e42853051f6373c245123600
@@ -366,7 +366,7 @@ importers:
         version: 55.0.17(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@gorhom/bottom-sheet':
         specifier: ^5.2.8
-        version: 5.2.8(patch_hash=9995dc509367cbc5391cc76916a68192588c5aec4321e7f54ff69a8a3662ee98)(3eb64d95b246210b5c896eaded8f4b12)
+        version: 5.2.8(patch_hash=092ef12d10e173e6078014eb803564f15b173e3d13d267f084fd5653f409a7c8)(3eb64d95b246210b5c896eaded8f4b12)
       '@io-app/api-types':
         specifier: workspace:*
         version: link:../../libs/api-types
@@ -14863,7 +14863,7 @@ snapshots:
 
   '@faker-js/faker@9.9.0': {}
 
-  '@gorhom/bottom-sheet@5.2.8(patch_hash=9995dc509367cbc5391cc76916a68192588c5aec4321e7f54ff69a8a3662ee98)(3eb64d95b246210b5c896eaded8f4b12)':
+  '@gorhom/bottom-sheet@5.2.8(patch_hash=092ef12d10e173e6078014eb803564f15b173e3d13d267f084fd5653f409a7c8)(3eb64d95b246210b5c896eaded8f4b12)':
     dependencies:
       '@gorhom/portal': 1.0.14(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       invariant: 2.2.4
