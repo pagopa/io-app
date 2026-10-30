@@ -2434,7 +2434,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-bottom-tabs (1.4.0):
+  - react-native-bottom-tabs (1.5.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -2452,7 +2452,7 @@ PODS:
     - React-graphics
     - React-ImageManager
     - React-jsi
-    - react-native-bottom-tabs/common (= 1.4.0)
+    - react-native-bottom-tabs/common (= 1.5.0)
     - React-NativeModulesApple
     - React-RCTFabric
     - React-renderercss
@@ -2464,7 +2464,7 @@ PODS:
     - SocketRocket
     - SwiftUIIntrospect (~> 1.0)
     - Yoga
-  - react-native-bottom-tabs/common (1.4.0):
+  - react-native-bottom-tabs/common (1.5.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -4511,7 +4511,7 @@ SPEC CHECKSUMS:
   react-native-background-timer: 007ff829f79644caf2ed013e22f0563560336f86
   react-native-ble-plx: 152b07bdf772c95e30c0251649d462b5154a0e13
   react-native-blob-util: 04189c38b188b2b76ee453be34765241c552547f
-  react-native-bottom-tabs: 06b42b859c694efc650c3057d6d20b485eb3797d
+  react-native-bottom-tabs: 4ad99ec451a9ba8bce3461e44ab9357c0b0d111c
   react-native-config: 2249b7e68644c86ea68358f5a0d746d1c648f900
   react-native-cookies: d648ab7025833b977c0b19e142503034f5f29411
   react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba

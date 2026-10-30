@@ -5,6 +5,7 @@ import {
   useIOTheme
 } from "@io-app/design-system";
 import I18n from "i18next";
+import { Platform } from "react-native";
 
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -22,6 +23,7 @@ import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
 const Tab = createNativeBottomTabNavigator<MainTabParamsList>();
+const LIQUID_GLASS_IOS_VERSION = 26;
 
 export const MainTabNavigator = () => {
   const theme = useIOTheme();
@@ -41,6 +43,10 @@ export const MainTabNavigator = () => {
       loadingOpacity={1}
     >
       <Tab.Navigator
+        disablePageAnimations={
+          Platform.OS === "ios" &&
+          parseInt(String(Platform.Version), 10) < LIQUID_GLASS_IOS_VERSION
+        }
         labeled
         minimizeBehavior="onScrollDown"
         scrollEdgeAppearance="opaque"
