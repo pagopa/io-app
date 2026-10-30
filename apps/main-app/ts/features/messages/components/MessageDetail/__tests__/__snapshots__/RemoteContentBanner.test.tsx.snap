@@ -343,7 +343,8 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                         }
                         accessible={false}
                         collapsable={false}
-                        focusable={true}
+                        focusable={false}
+                        importantForAccessibility="no"
                         onBlur={[Function]}
                         onClick={[Function]}
                         onFocus={[Function]}
@@ -411,9 +412,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate. Scopri di più"
-                            accessibilityRole="button"
-                            accessible={true}
                             style={
                               {
                                 "alignSelf": "center",
@@ -422,28 +420,39 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               }
                             }
                           >
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.5}
+                            <View
+                              accessibilityLabel="Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate."
+                              accessibilityRole="text"
+                              accessible={true}
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 14,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 21,
-                                  },
-                                ]
+                                {
+                                  "gap": 4,
+                                }
                               }
                             >
-                              Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate.
-                            </Text>
+                              <Text
+                                accessible={false}
+                                allowFontScaling={true}
+                                dynamicTypeRamp="footnote"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 14,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 21,
+                                    },
+                                  ]
+                                }
+                              >
+                                Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate.
+                              </Text>
+                            </View>
                             <View
-                              accessibilityElementsHidden={true}
                               accessibilityLabel="Scopri di più"
                               accessibilityRole="button"
                               accessibilityState={
@@ -466,7 +475,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               accessible={true}
                               collapsable={false}
                               focusable={true}
-                              importantForAccessibility="no-hide-descendants"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -476,7 +484,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
-                              pointerEvents="none"
                             >
                               <View
                                 style={

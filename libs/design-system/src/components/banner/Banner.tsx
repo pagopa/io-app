@@ -1,5 +1,6 @@
-import { Ref } from "react";
+import { Ref, useEffect, useState } from "react";
 import {
+  AccessibilityInfo,
   AccessibilityRole,
   GestureResponderEvent,
   Pressable,
@@ -140,6 +141,29 @@ export const Banner = ({
   ref: viewRef,
   testID
 }: Banner) => {
+  const [screenReaderEnabled, setScreenReaderEnabled] = useState(false);
+
+  useEffect(() => {
+    const initialQuery = new AbortController();
+    const subscription = AccessibilityInfo.addEventListener(
+      "screenReaderChanged",
+      enabled => {
+        initialQuery.abort();
+        setScreenReaderEnabled(enabled);
+      }
+    );
+    void AccessibilityInfo.isScreenReaderEnabled().then(enabled => {
+      if (!initialQuery.signal.aborted) {
+        setScreenReaderEnabled(enabled);
+      }
+    });
+
+    return () => {
+      initialQuery.abort();
+      subscription.remove();
+    };
+  }, []);
+
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
   const { themeType } = useIOThemeContext();
@@ -160,39 +184,42 @@ export const Banner = ({
         : IOColors[mapBackgroundColorLightMode[color]]
   };
 
-  /* Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
-   if they are present. */
-  const fallbackAccessibilityLabel = [title, content, action]
-    .filter(Boolean)
-    .join(" ");
+  const fallbackAccessibilityLabel = [title, content].filter(Boolean).join(" ");
 
   const renderMainBlock = () => (
     <>
-      <View
-        accessibilityHint={accessibilityHint}
-        // A11y related props
-        accessibilityLabel={accessibilityLabel ?? fallbackAccessibilityLabel}
-        accessibilityRole={action !== undefined ? accessibilityRole : "text"}
-        accessible={true}
-        style={{ flex: 1, alignSelf: "center", gap: 4 }}
-      >
-        {title && <H6 color={colorTitle}>{title}</H6>}
-        {content && (
-          <BodySmall color={theme["textBody-tertiary"]} weight={"Regular"}>
-            {content}
-          </BodySmall>
-        )}
+      <View style={{ flex: 1, alignSelf: "center", gap: 4 }}>
+        <View
+          accessibilityHint={action ? undefined : accessibilityHint}
+          accessibilityLabel={accessibilityLabel ?? fallbackAccessibilityLabel}
+          accessibilityRole="text"
+          accessible={true}
+          style={{ gap: 4 }}
+        >
+          {title && (
+            <H6 accessible={false} color={colorTitle}>
+              {title}
+            </H6>
+          )}
+          {content && (
+            <BodySmall
+              accessible={false}
+              color={theme["textBody-tertiary"]}
+              weight={"Regular"}
+            >
+              {content}
+            </BodySmall>
+          )}
+        </View>
         {action && (
-          /* Disable pointer events to avoid
-             pressed state on the button */
           <Pressable
-            accessibilityElementsHidden
+            accessibilityHint={accessibilityHint}
             accessibilityLabel={action}
-            accessibilityRole="button"
+            accessibilityRole={accessibilityRole}
             accessible={true}
-            importantForAccessibility="no-hide-descendants"
             onPress={onPress}
-            pointerEvents="none"
+            onPressIn={onPressIn}
+            onPressOut={onPressOut}
           >
             <VSpacer size={8} />
             <IOText
@@ -227,12 +254,16 @@ export const Banner = ({
     </>
   );
 
+  const BannerContainer = screenReaderEnabled ? View : Pressable;
+
   const PressableButton = () => (
-    <Pressable
+    <BannerContainer
       accessible={false}
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
+      focusable={false}
+      importantForAccessibility="no"
+      onPress={screenReaderEnabled ? undefined : onPress}
+      onPressIn={screenReaderEnabled ? undefined : onPressIn}
+      onPressOut={screenReaderEnabled ? undefined : onPressOut}
       ref={viewRef}
       testID={testID}
     >
@@ -241,7 +272,7 @@ export const Banner = ({
       >
         {renderMainBlock()}
       </Animated.View>
-    </Pressable>
+    </BannerContainer>
   );
 
   const StaticComponent = () => (

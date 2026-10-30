@@ -21,7 +21,8 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
   }
   accessible={false}
   collapsable={false}
-  focusable={true}
+  focusable={false}
+  importantForAccessibility="no"
   onBlur={[Function]}
   onClick={[Function]}
   onFocus={[Function]}
@@ -89,9 +90,6 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
     }
   >
     <View
-      accessibilityLabel="Action text"
-      accessibilityRole="button"
-      accessible={true}
       style={
         {
           "alignSelf": "center",
@@ -100,28 +98,39 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
         }
       }
     >
-      <Text
-        allowFontScaling={true}
-        dynamicTypeRamp="headline"
-        maxFontSizeMultiplier={1.5}
+      <View
+        accessibilityLabel="Banner title"
+        accessibilityRole="text"
+        accessible={true}
         style={
-          [
-            {},
-            {
-              "color": "#0E0F13",
-              "fontFamily": "Titillio",
-              "fontSize": 16,
-              "fontStyle": "normal",
-              "fontWeight": "600",
-              "lineHeight": 24,
-            },
-          ]
+          {
+            "gap": 4,
+          }
         }
       >
-        Banner title
-      </Text>
+        <Text
+          accessible={false}
+          allowFontScaling={true}
+          dynamicTypeRamp="headline"
+          maxFontSizeMultiplier={1.5}
+          style={
+            [
+              {},
+              {
+                "color": "#0E0F13",
+                "fontFamily": "Titillio",
+                "fontSize": 16,
+                "fontStyle": "normal",
+                "fontWeight": "600",
+                "lineHeight": 24,
+              },
+            ]
+          }
+        >
+          Banner title
+        </Text>
+      </View>
       <View
-        accessibilityElementsHidden={true}
         accessibilityLabel="Action text"
         accessibilityRole="button"
         accessibilityState={
@@ -144,7 +153,6 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        importantForAccessibility="no-hide-descendants"
         onBlur={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
@@ -154,7 +162,6 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        pointerEvents="none"
       >
         <View
           style={
@@ -347,7 +354,8 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
   }
   accessible={false}
   collapsable={false}
-  focusable={true}
+  focusable={false}
+  importantForAccessibility="no"
   onBlur={[Function]}
   onClick={[Function]}
   onFocus={[Function]}
@@ -415,9 +423,6 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
     }
   >
     <View
-      accessibilityLabel="Action text"
-      accessibilityRole="button"
-      accessible={true}
       style={
         {
           "alignSelf": "center",
@@ -426,28 +431,39 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
         }
       }
     >
-      <Text
-        allowFontScaling={true}
-        dynamicTypeRamp="headline"
-        maxFontSizeMultiplier={1.5}
+      <View
+        accessibilityLabel="Banner title"
+        accessibilityRole="text"
+        accessible={true}
         style={
-          [
-            {},
-            {
-              "color": "#0E0F13",
-              "fontFamily": "Titillio",
-              "fontSize": 16,
-              "fontStyle": "normal",
-              "fontWeight": "600",
-              "lineHeight": 24,
-            },
-          ]
+          {
+            "gap": 4,
+          }
         }
       >
-        Banner title
-      </Text>
+        <Text
+          accessible={false}
+          allowFontScaling={true}
+          dynamicTypeRamp="headline"
+          maxFontSizeMultiplier={1.5}
+          style={
+            [
+              {},
+              {
+                "color": "#0E0F13",
+                "fontFamily": "Titillio",
+                "fontSize": 16,
+                "fontStyle": "normal",
+                "fontWeight": "600",
+                "lineHeight": 24,
+              },
+            ]
+          }
+        >
+          Banner title
+        </Text>
+      </View>
       <View
-        accessibilityElementsHidden={true}
         accessibilityLabel="Action text"
         accessibilityRole="button"
         accessibilityState={
@@ -470,7 +486,6 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        importantForAccessibility="no-hide-descendants"
         onBlur={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
@@ -480,7 +495,6 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        pointerEvents="none"
       >
         <View
           style={
