@@ -13,6 +13,7 @@ import { Image, StyleSheet, View } from "react-native";
 import type { CredentialIssuanceMode } from "../../machine/credential/context";
 
 import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -21,7 +22,10 @@ import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
+import {
+  itwCredentialIntroContentSelector,
+  itwIsCredentialsCataloguePending
+} from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
@@ -54,8 +58,12 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isWaitingForCatalogue = useIOSelector(itwIsCredentialsCataloguePending);
   const machineCredentialType =
     ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
+  const introductionContent = useIOSelector(
+    itwCredentialIntroContentSelector(machineCredentialType)
+  );
 
   // The issuance was triggered by a credential request that required the wallet
   // activation first: in this case going back interrupts the whole operation,
@@ -90,8 +98,16 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
           mode: mode ?? "issuance"
         });
       }
+      return () => machineRef.send({ type: "back" });
     }, [credentialType, machineRef, mode])
   );
+
+  if (
+    isWaitingForCatalogue ||
+    (machineCredentialType && !introductionContent)
+  ) {
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  }
 
   // A missing credential type should never happen at this point
   return machineCredentialType ? (

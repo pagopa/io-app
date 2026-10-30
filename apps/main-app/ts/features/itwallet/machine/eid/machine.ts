@@ -322,7 +322,6 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
     CredentialsUpgrade: credentialsUpgradeState,
     Success: {
       entry: [
-        "refreshCredentialsCatalogue",
         "navigateToSuccessScreen",
         "storeWalletActivationFeedbackBannerData"
       ],
