@@ -4,8 +4,11 @@ import { Wallets } from "@io-app/api-types/generated/definitions/pagopa/walletv3
 import { WalletStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
+import { Platform } from "react-native";
+import * as bottomTabs from "react-native-bottom-tabs";
 import configureMockStore from "redux-mock-store";
 
+import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -43,6 +46,35 @@ const MOCK_WALLET: WalletInfo = {
 };
 
 describe("PaymentsHomeScreen", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
+    jest.useRealTimers();
+    jest.restoreAllMocks();
+  });
+
+  test.each([
+    { name: "empty", transactions: [] },
+    { name: "populated", transactions: [validTransaction] }
+  ])(
+    "insets $name content and actions using the native tab height",
+    ({ transactions }) => {
+      jest.replaceProperty(Platform, "OS", "ios");
+      jest.spyOn(bottomTabs, "useBottomTabBarHeight").mockReturnValue(83);
+
+      const { UNSAFE_getByType } = renderComponent({
+        transactions: pot.some(transactions),
+        userMethods: pot.some({ wallets: [MOCK_WALLET] })
+      });
+      const scrollView = UNSAFE_getByType(IOScrollView);
+      expect(scrollView.props.contentInsetAdjustmentBehavior).toBe("automatic");
+      expect(scrollView.props.bottomInset).toBe(83);
+    }
+  );
+
   it("should render loading screen", () => {
     const { queryByTestId } = renderComponent({
       transactions: pot.toLoading(pot.none),

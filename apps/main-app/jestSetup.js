@@ -390,3 +390,15 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
   CBOR: {},
   COSE: {}
 }));
+
+jest.mock("@bottom-tabs/react-navigation", () => ({
+  createNativeBottomTabNavigator: jest.fn(() => ({
+    Navigator: ({ children }) => children,
+    Screen: ({ children }) => children,
+    Group: ({ children }) => children
+  }))
+}));
+
+jest.mock("react-native-bottom-tabs", () => ({
+  useBottomTabBarHeight: jest.fn(() => 0)
+}));

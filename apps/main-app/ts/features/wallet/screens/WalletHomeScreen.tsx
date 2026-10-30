@@ -2,6 +2,8 @@ import { IOToast } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Platform } from "react-native";
+import { useBottomTabBarHeight } from "react-native-bottom-tabs";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
 import {
@@ -64,6 +66,7 @@ type ScreenProps = IOStackNavigationRouteProps<
 const WalletHomeScreen = ({ route }: ScreenProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const tabBarHeight = useBottomTabBarHeight();
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
   const mixPanelCredentialDetails = useIOSelector(
     itwMixPanelCredentialDetailsSelector
@@ -222,7 +225,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
             : undefined
         }
         animatedRef={scrollViewContentRef}
+        bottomInset={Platform.OS === "ios" ? tabBarHeight : undefined}
         centerContent={shouldRenderEmptyState}
+        contentInsetAdjustmentBehavior="automatic"
         excludeSafeAreaMargins={true}
         refreshControlProps={{
           tintColor: undefined,
