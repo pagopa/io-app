@@ -55,7 +55,7 @@ describe("LandingBannerPicker", () => {
   it("should correctly render a banner if passed a valid id", () => {
     jest
       .spyOn(SELECTORS, "landingScreenBannerToRenderSelector")
-      .mockImplementation(_ => bannerId);
+      .mockImplementation(_ => ({ type: "banner", id: bannerId }));
     jest.spyOn(useIO, "useIODispatch").mockImplementation(() => jest.fn());
 
     const component = renderComponent();
@@ -66,17 +66,27 @@ describe("LandingBannerPicker", () => {
   it("should not render a banner if no id is passed", () => {
     jest
       .spyOn(SELECTORS, "landingScreenBannerToRenderSelector")
-      .mockImplementation(_ => undefined);
+      .mockImplementation(_ => ({ type: "none" }));
 
     const component = renderComponent();
     expect(component).toBeDefined();
 
     expect(component.toJSON()).toMatchSnapshot("noBanner");
   });
+  it("should render the skeleton while a higher priority banner is loading", () => {
+    jest
+      .spyOn(SELECTORS, "landingScreenBannerToRenderSelector")
+      .mockImplementation(_ => ({ type: "loading" }));
+
+    const component = renderComponent();
+
+    expect(component.getByTestId("landingScreenBannerSkeleton")).toBeTruthy();
+    expect(component.queryByTestId("button-test")).toBeNull();
+  });
   it("should correctly dispatch updateLandingScreenBannerVisibility on press", async () => {
     jest
       .spyOn(SELECTORS, "landingScreenBannerToRenderSelector")
-      .mockImplementation(_ => bannerId);
+      .mockImplementation(_ => ({ type: "banner", id: bannerId }));
     const testDispatch = jest.fn();
     jest.spyOn(useIO, "useIODispatch").mockImplementation(() => testDispatch);
 
@@ -91,6 +101,9 @@ describe("LandingBannerPicker", () => {
     );
   });
   it("should include 'usePushNotificationsBannerTracking'", () => {
+    jest
+      .spyOn(SELECTORS, "landingScreenBannerToRenderSelector")
+      .mockImplementation(_ => ({ type: "none" }));
     const spyUsePushNotificationsBannerTracking = jest.spyOn(
       hooks,
       "usePushNotificationsBannerTracking"

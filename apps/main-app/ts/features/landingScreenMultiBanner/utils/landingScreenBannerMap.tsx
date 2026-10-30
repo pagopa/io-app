@@ -28,7 +28,11 @@ export type LandingScreenBannerId =
 
 type ComponentAndLogic = {
   component: ComponentWithCloseHandler;
-  isRenderableSelector: (state: GlobalState) => boolean;
+  /**
+   * Returns `undefined` while the data the banner depends on is still loading,
+   * so that lower priority banners are not shown and then swapped out.
+   */
+  isRenderableSelector: (state: GlobalState) => boolean | undefined;
 };
 type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
 
