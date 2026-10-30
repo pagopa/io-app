@@ -2,7 +2,7 @@ import { MessageBodyMarkdown } from "@io-app/api-types/generated/definitions/com
 import { MessageSubject } from "@io-app/api-types/generated/definitions/communication/MessageSubject";
 import { MandateCreationResponse } from "@io-app/api-types/generated/definitions/pn/aar/MandateCreationResponse";
 import { ThirdPartyMessage } from "@io-app/api-types/generated/definitions/pn/aar/ThirdPartyMessage";
-import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
+import { InternalAuthAndMrtdResponse } from "@io-app/expo-cie";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import {
   ActionType,

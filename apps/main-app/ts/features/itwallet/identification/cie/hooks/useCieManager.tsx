@@ -5,7 +5,7 @@ import {
   InternalAuthAndMrtdResponse,
   NfcError,
   NfcEvent
-} from "@pagopa/io-react-native-cie";
+} from "@io-app/expo-cie";
 import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 
