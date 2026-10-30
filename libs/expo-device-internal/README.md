@@ -1,8 +1,8 @@
-# Expo device identity
+# Expo device internals
 
-An app-owned Expo module exposing only `getUniqueIdSync()`. It preserves the
-successful identity lookup behavior of `react-native-device-info` without
-including its other device APIs.
+An app-owned Expo module exposing `getUniqueIdSync()`, `isDisplayZoomed()`, and
+Android's `isHapticFeedbackEnabled()`. It preserves the successful identity lookup
+behavior of `react-native-device-info` without including its other device APIs.
 
 ## Integration
 
@@ -38,6 +38,33 @@ or remove `react-native-device-info`.
 - The value is not a hardware serial number or an authentication credential.
   Consumers remain responsible for analytics consent and privacy disclosures.
   The bundled privacy manifest declares app-local UserDefaults access.
+
+## Android haptic feedback
+
+`isHapticFeedbackEnabled()` synchronously reads Android's
+`Settings.System.HAPTIC_FEEDBACK_ENABLED` and the current ringer mode. It returns
+`false` when touch feedback is disabled, the preference is absent, or the phone
+is in silent mode. Vibrate mode remains eligible for haptics when touch feedback
+is enabled. Native context or audio-service failures propagate to the caller.
+This method is Android-only and requires rebuilding the native app.
+
+The main app applies this value to Pulsar on mount and whenever it returns to
+the foreground, using `useHapticFeedbackConfiguration`. The preference is not
+cached, and iOS behavior is unchanged.
+
+To validate on Android, disable touch feedback in system settings, return to IO,
+and verify that Pulsar receives `enableHaptics(false)`. Enable touch feedback
+with the ringer in normal or vibrate mode and verify `enableHaptics(true)`.
+Repeat with silent mode and expect `false`, including after restarting the app.
+The touch feedback value can be inspected with:
+
+```sh
+adb shell settings get system haptic_feedback_enabled
+```
+
+Jest covers the native bridge delegation and mount/foreground synchronization
+without requiring a vibration motor. An emulator can validate the native
+preference lookup; perceived strength still requires a physical device.
 
 ## Validation
 
