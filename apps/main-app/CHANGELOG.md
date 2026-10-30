@@ -1,3 +1,34 @@
+## 3.43.0-rc.0 (2026-10-28)
+
+This was a version bump only for @io-app/main-app to align it with other projects, there were no code changes.
+
+## 3.42.0-rc.11 (2026-10-28)
+
+### Features
+
+- **IT-Wallet:** [[SIW-5207](https://pagopa.atlassian.net/browse/SIW-5207)] CED opportunities ([#8707](https://github.com/pagopa/io-app/pull/8707))
+
+### ❤️ Thank You
+
+- Emilio Di Mari
+- Riccardo Sacco
+
+## 3.42.0-rc.10 (2026-10-28)
+
+### Bug Fixes
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Solves configuration to install cie SDK on prod environment ([#8807](https://github.com/pagopa/io-app/pull/8807))
+
+### Chores
+
+- Update translations from Lokalise ([#8811](https://github.com/pagopa/io-app/pull/8811))
+- **IT-Wallet:** [[SIW-5438](https://pagopa.atlassian.net/browse/SIW-5438)] Bump `io-react-native-wallet` to 3.8.4 ([#8808](https://github.com/pagopa/io-app/pull/8808))
+
+### ❤️ Thank You
+
+- Cristiano Tofani
+- Gianluca Spada
+
 ## 3.42.0-rc.9 (2026-10-27)
 
 ### Features
