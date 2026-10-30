@@ -1,7 +1,7 @@
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { StackActions } from "@react-navigation/native";
 import _isEqual from "lodash/isEqual";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Linking, Platform, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { URL } from "react-native-url-polyfill";
@@ -59,7 +59,6 @@ type CieIdLoginScreenProps = IOStackNavigationRouteProps<
 >;
 
 const CieIdLoginScreen = ({ navigation }: CieIdLoginScreenProps) => {
-  const webView = useRef<WebView>(null);
   const dispatch = useIODispatch();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(null);
   const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
@@ -283,7 +282,6 @@ const CieIdLoginScreen = ({ navigation }: CieIdLoginScreenProps) => {
           onLoadEnd={() => setIsLoadingWebView(false)}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
           originWhitelist={originSchemasWhiteList}
-          ref={webView}
           renderLoading={() => (
             <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
           )}
