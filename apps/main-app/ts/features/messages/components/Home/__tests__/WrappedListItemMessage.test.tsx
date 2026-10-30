@@ -1,6 +1,8 @@
 import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryBase";
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { AccessibilityInfo } from "react-native";
 import { createStore } from "redux";
 
@@ -15,7 +17,9 @@ import {
   scheduledPreconditionStatusAction,
   toScheduledPayload
 } from "../../../store/actions/preconditions";
+import { ArchivingStatus } from "../../../store/reducers/archiving";
 import { UIMessage } from "../../../types";
+import * as listItemMessage from "../DS/ListItemMessage";
 import * as homeUtils from "../homeUtils";
 import { WrappedListItemMessage } from "../WrappedListItemMessage";
 
@@ -229,31 +233,133 @@ describe("WrappedListItemMessage", () => {
         ));
     })
   );
+
+  describe.each([
+    { name: "Android", isAndroid: true },
+    { name: "iOS", isAndroid: false }
+  ])("$name switch navigation", ({ isAndroid }) => {
+    beforeEach(() => {
+      mockIsAndroid = isAndroid;
+      jest
+        .spyOn(listItemMessage, "ListItemMessage")
+        .mockImplementation(
+          jest.requireActual<typeof import("../DS/ListItemMessage")>(
+            "../DS/ListItemMessage"
+          ).ListItemMessage
+        );
+    });
+
+    test.each([
+      { name: "select for archiving", source: "INBOX", selected: false },
+      { name: "deselect for archiving", source: "INBOX", selected: true },
+      { name: "select for restoring", source: "ARCHIVE", selected: false },
+      { name: "deselect for restoring", source: "ARCHIVE", selected: true }
+    ] as const)(
+      "should $name through the accessibility action",
+      ({ source, selected }) => {
+        const message = generateMessage({ tag: TagEnum.GENERIC }, false, false);
+        const component = renderComponent(0, message, selected, source);
+        mockDispatch.mockImplementation(component.store.dispatch);
+        const item = component.getByTestId("wrapped_message_list_item_0");
+
+        const label = I18n.t(
+          selected
+            ? "messages.accessibility.message.deselectAction"
+            : "messages.accessibility.message.selectAction"
+        );
+        const actionName = isAndroid ? "longpress" : label;
+        expect(item.props.accessibilityActions).toEqual([
+          { name: actionName, label }
+        ]);
+        fireEvent(item, "accessibilityAction", {
+          nativeEvent: { actionName }
+        });
+
+        expect(mockDispatch).toHaveBeenCalledTimes(1);
+        expect(mockDispatch).toHaveBeenCalledWith(
+          toggleScheduledMessageArchivingAction({
+            messageId: message.id,
+            fromInboxToArchive: source === "INBOX"
+          })
+        );
+        const archiving =
+          component.store.getState().entities.messages.archiving;
+        const selectedMessages =
+          source === "INBOX"
+            ? archiving.fromInboxToArchive
+            : archiving.fromArchiveToInbox;
+        expect(selectedMessages).toEqual(new Set(selected ? [] : [message.id]));
+        const updatedLabel = I18n.t(
+          selected
+            ? "messages.accessibility.message.selectAction"
+            : "messages.accessibility.message.deselectAction"
+        );
+        expect(
+          component.getByTestId("wrapped_message_list_item_0").props
+            .accessibilityActions
+        ).toEqual([
+          {
+            name: isAndroid ? "longpress" : updatedLabel,
+            label: updatedLabel
+          }
+        ]);
+        expect(mockNavigate).not.toHaveBeenCalled();
+      }
+    );
+
+    test.each([
+      { name: "search results", source: "SEARCH", status: "disabled" },
+      { name: "archiving in progress", source: "INBOX", status: "processing" },
+      { name: "restoring in progress", source: "ARCHIVE", status: "processing" }
+    ] as const)(
+      "should not expose selection for $name",
+      ({ source, status }) => {
+        const message = generateMessage({ tag: TagEnum.GENERIC }, false, false);
+        const component = renderComponent(
+          0,
+          message,
+          false,
+          source,
+          false,
+          status
+        );
+        const item = component.getByTestId("wrapped_message_list_item_0");
+
+        expect(item.props.accessibilityActions).toBeUndefined();
+        expect(item.props.onAccessibilityAction).toBeUndefined();
+        fireEvent(item, "longPress");
+        expect(mockDispatch).not.toHaveBeenCalled();
+        expect(mockNavigate).not.toHaveBeenCalled();
+      }
+    );
+  });
 });
 
 const generateMessage = (
   category: MessageCategory,
   hasPrecondition: boolean,
   isRead: boolean
-): UIMessage =>
-  ({
-    createdAt: new Date(1990, 0, 2, 3, 4),
-    isRead,
-    organizationName: "Organization name",
-    organizationFiscalCode: "RGNFSCCDO",
-    serviceId: "01HYFJYTXYHPJTNKP60MRCYRMV" as ServiceId,
-    serviceName: "Service name",
-    title: "Message title",
-    category,
-    hasPrecondition
-  }) as UIMessage;
+): UIMessage => ({
+  createdAt: new Date(1990, 0, 2, 3, 4),
+  id: "message-id",
+  isArchived: false,
+  isRead,
+  organizationName: "Organization name",
+  organizationFiscalCode: "RGNFSCCDO",
+  serviceId: "01HYFJYTXYHPJTNKP60MRCYRMV" as ServiceId,
+  serviceName: "Service name",
+  title: "Message title",
+  category,
+  hasPrecondition
+});
 
 const renderComponent = (
   index: number,
   message: UIMessage,
   isArchiving: boolean,
   source: "ARCHIVE" | "INBOX" | "SEARCH",
-  screenReaderEnabled = false
+  screenReaderEnabled = false,
+  archivingStatus: ArchivingStatus = isArchiving ? "enabled" : "disabled"
 ) => {
   const paymentId = "00112233445566778899001122334";
   const initialState = appReducer(undefined, applicationChangeState("active"));
@@ -265,9 +371,13 @@ const renderComponent = (
         ...initialState.entities.messages,
         archiving: {
           ...initialState.entities.messages.archiving,
-          status: isArchiving ? "enabled" : "disabled",
-          fromInboxToArchive: new Set([message.id]),
-          fromArchiveToInbox: new Set()
+          status: archivingStatus,
+          fromInboxToArchive: new Set(
+            isArchiving && source !== "ARCHIVE" ? [message.id] : []
+          ),
+          fromArchiveToInbox: new Set(
+            isArchiving && source === "ARCHIVE" ? [message.id] : []
+          )
         }
       },
       paymentByRptId: {
@@ -284,7 +394,7 @@ const renderComponent = (
     }
   } as GlobalState;
   const store = createStore(appReducer, stateWithPayment as any);
-  return renderScreenWithNavigationStoreContext(
+  const component = renderScreenWithNavigationStoreContext(
     () => (
       <WrappedListItemMessage index={index} message={message} source={source} />
     ),
@@ -292,4 +402,5 @@ const renderComponent = (
     {},
     store
   );
+  return { ...component, store };
 };
