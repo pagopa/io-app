@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import I18n from "i18next";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
@@ -205,7 +206,9 @@ describe("ItwEidLifecycleAlert", () => {
       const { getByText } = renderComponent({ lifecycleStatus: ["invalid"] });
       expect(
         getByText(
-          "Conferma la tua identità per continuare a usare il tuo portafoglio IT-Wallet."
+          I18n.t(
+            "features.itWallet.presentation.bottomSheets.eidInvalid.alert.allExpired.content"
+          )
         )
       ).toBeTruthy();
       fireEvent.press(getByText("Conferma identità"));
