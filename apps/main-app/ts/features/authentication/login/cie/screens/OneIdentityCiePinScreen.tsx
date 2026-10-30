@@ -43,7 +43,7 @@ import { trackLoginCiePinScreen } from "../../../common/analytics/cieAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 import { nfcIsEnabled } from "../store/actions";
-import { isCieLoginUatEnabledSelector } from "../store/selectors";
+import { isCieProdSelector } from "../store/selectors";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -61,7 +61,7 @@ export const OneIdentityCiePinScreen = () => {
   const navigation = useIONavigation();
 
   const loginFlow = cieLoginFlowSelector(store.getState());
-  const useUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const isCieProd = useIOSelector(isCieProdSelector);
 
   const [pin, setPin] = useState("");
   const pinPadViewRef = useRef<View>(null);
@@ -74,7 +74,7 @@ export const OneIdentityCiePinScreen = () => {
   );
 
   useHeaderSecondLevel({
-    title: withTrailingPoliceCarLightEmojii("", useUat),
+    title: withTrailingPoliceCarLightEmojii("", !isCieProd),
     supportRequest: true
   });
 

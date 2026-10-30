@@ -95,7 +95,7 @@ describe("index", () => {
           features: {
             loginFeatures: {
               cieLogin: {
-                useUat: true,
+                cieEnv: "preprod",
                 cieIDSelectedSecurityLevel: "L3",
                 _persist: cieLoginPersist
               },
@@ -121,13 +121,15 @@ describe("index", () => {
         });
       });
 
-      it(`should keep 'cieLogin.useUat' and reset the other session related fields when receiving an action of type '${action.type}'`, () => {
+      it(`should keep 'cieLogin.cieEnv' and reset the other session related fields when receiving an action of type '${action.type}'`, () => {
         const outputState = createRootReducer([])(
           buildDeveloperConfigState(),
           action
         );
 
-        expect(outputState.features.loginFeatures.cieLogin.useUat).toBe(true);
+        expect(outputState.features.loginFeatures.cieLogin.cieEnv).toBe(
+          "preprod"
+        );
         expect(
           outputState.features.loginFeatures.cieLogin.cieIDSelectedSecurityLevel
         ).toBeUndefined();
