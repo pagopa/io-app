@@ -16,7 +16,7 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 
-import { useIsScreenFocused } from "../../hooks/useIsScreenFocused";
+import { useIsScreenFocused } from "../../../../../hooks/useIsScreenFocused";
 import { useLayoutSize } from "../../hooks/useLayoutSize";
 import { useCachedImage } from "../../utils/imageCache";
 import { CredentialType } from "../../utils/itwMocksUtils";
