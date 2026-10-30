@@ -1,4 +1,5 @@
 import { renderHook } from "@testing-library/react-native";
+import MockDate from "mockdate";
 import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
@@ -8,7 +9,10 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
 import * as ingressSelectors from "../../../../../ingress/store/selectors";
-import { CredentialType } from "../../../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ItwStoredCredentialsMocks
+} from "../../../../common/utils/itwMocksUtils";
 import {
   ItwCredentialStatus,
   ItwJwtCredentialStatus
@@ -26,6 +30,7 @@ type RenderHookParams = {
 describe("useItwDisplayCredentialStatus", () => {
   afterEach(() => {
     jest.restoreAllMocks();
+    MockDate.reset();
   });
 
   // The PID shares its status with the eID, so both are set to the same value
@@ -54,12 +59,32 @@ describe("useItwDisplayCredentialStatus", () => {
   it("treats an undefined offline access reason as online", () => {
     const result = renderDisplayStatusHook({
       credentialStatus: "jwtExpiring",
-      credentialType: CredentialType.DRIVING_LICENSE,
+      credentialType: CredentialType.PID,
       eidStatus: "valid",
       offlineAccessReason: undefined
     });
 
     expect(result).toBe("jwtExpiring");
+  });
+
+  it("preserves physical expiration when masking the digital warning from stored credentials", () => {
+    MockDate.set(new Date(2024, 0, 20));
+    jest.spyOn(credentialSelectors, "itwCredentialsSelector").mockReturnValue({
+      [CredentialType.DRIVING_LICENSE]: {
+        ...ItwStoredCredentialsMocks.mdl,
+        parsedCredential: {
+          expiry_date: { name: "Expiry date", value: "2024-02-10" }
+        }
+      }
+    });
+
+    const result = renderDisplayStatusHook({
+      credentialStatus: "jwtExpiring",
+      credentialType: CredentialType.DRIVING_LICENSE,
+      eidStatus: "valid"
+    });
+
+    expect(result).toBe("expiring");
   });
 
   it("keeps the expiring status of the PID when the eID is expiring", () => {

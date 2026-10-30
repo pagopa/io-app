@@ -10,7 +10,7 @@ import {
   ItwCredentialStatus
 } from "./itwTypesUtils";
 
-const DEFAULT_EXPIRING_DAYS = 30;
+export const DEFAULT_EXPIRING_DAYS = 30;
 
 type GetCredentialStatusOptions = {
   /**

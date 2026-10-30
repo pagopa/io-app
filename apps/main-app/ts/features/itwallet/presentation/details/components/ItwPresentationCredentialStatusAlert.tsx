@@ -44,7 +44,10 @@ import {
 } from "../analytics";
 import { useItwExpiredDocumentBottomSheet } from "../hooks/useItwExpiredDocumentBottomSheet.tsx";
 import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
-import { isMdlSuspendedIssuerError } from "../utils";
+import {
+  getItwDisplayCredentialStatus,
+  isMdlSuspendedIssuerError
+} from "../utils";
 
 type Props = {
   credential: CredentialMetadata;
@@ -268,9 +271,16 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     }
   };
 
+  const displayStatus = getItwDisplayCredentialStatus(
+    status ?? "valid",
+    eidStatus,
+    offlineAccessReason !== undefined,
+    credential.credentialType === CredentialType.PID,
+    credential
+  );
   const alertType = deriveCredentialAlertType({
     eidStatus,
-    credentialStatus: status,
+    credentialStatus: status === "jwtExpiring" ? displayStatus : status,
     message,
     isOffline: offlineAccessReason !== undefined,
     isItwL3,

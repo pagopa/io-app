@@ -144,6 +144,40 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     );
   });
 
+  it.each([
+    {
+      name: "valid physical document",
+      expiryDate: "2100-09-04",
+      showBanner: false
+    },
+    {
+      name: "expiring physical document",
+      expiryDate: "2025-02-10",
+      showBanner: true
+    }
+  ])(
+    "hides digital expiration but preserves $name",
+    ({ expiryDate, showBanner }) => {
+      jest.spyOn(selectors, "itwCredentialStatusSelector").mockReturnValue({
+        status: "jwtExpiring"
+      });
+      jest
+        .spyOn(selectors, "itwCredentialsEidStatusSelector")
+        .mockReturnValue("valid");
+      mockUseCredentialStatusMessage.mockReturnValue(undefined);
+
+      const component = renderComponent({
+        parsedCredential: {
+          expiry_date: { name: "Expiry date", value: expiryDate }
+        }
+      });
+
+      expect(component.queryByTestId("itwExpiringBannerTestID") !== null).toBe(
+        showBanner
+      );
+    }
+  );
+
   test.each([
     ["jwtExpiring", undefined],
     ["jwtExpired", undefined],
