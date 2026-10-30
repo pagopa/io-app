@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { ComponentProps } from "react";
-import { Linking } from "react-native";
+import { Linking, View } from "react-native";
 
 import { IOThemeContextProvider } from "../../../context";
 import { IOColors, IOThemeLight } from "../../../core";
@@ -273,11 +273,58 @@ describe("IOMarkdown", () => {
       expect(getAllByText("\u25E6").length).toBe(1);
     });
 
-    it("renders list with accessibilityRole 'list'", () => {
-      const content = `- Item one\n- Item two`;
-      const { getAllByRole } = renderComponent({ content });
-      expect(getAllByRole("list").length).toBeGreaterThanOrEqual(1);
-    });
+    it.each([
+      {
+        name: "unordered",
+        content: "- Item one\n- Item two",
+        labels: ["\u2022 Item one", "\u2022 Item two"]
+      },
+      {
+        name: "ordered",
+        content: "1. Item one\n2. Item two",
+        labels: ["1. Item one", "2. Item two"]
+      },
+      {
+        name: "nested unordered",
+        content: "- Item one\n    - Nested item\n- Item two",
+        labels: ["\u2022 Item one", "\u25E6 Nested item", "\u2022 Item two"]
+      },
+      {
+        name: "nested ordered",
+        content: "1. Item one\n    1. Nested item\n2. Item two",
+        labels: ["1. Item one", "i. Nested item", "2. Item two"]
+      }
+    ])(
+      "groups $name markers and text in accessible rows without an accessible list container",
+      ({ content, labels }) => {
+        const { UNSAFE_getAllByProps, getByText, getAllByText } =
+          renderComponent({
+            content
+          });
+        const lists = UNSAFE_getAllByProps({ accessibilityRole: "list" });
+
+        expect(lists.length).toBeGreaterThanOrEqual(1);
+        lists.forEach(list => {
+          expect(list.props.accessible).toBe(false);
+        });
+        const rows = UNSAFE_getAllByProps({ accessible: true }).filter(
+          node => node.type === View
+        );
+        expect(rows).toHaveLength(labels.length);
+        rows.forEach(row => {
+          expect(row.props.style.flexDirection).toBe("row");
+          expect(row.props.accessibilityLabel).toBeUndefined();
+        });
+        labels.forEach(label => {
+          const [marker, ...text] = label.split(" ");
+          expect(getByText(text.join(" "))).toBeOnTheScreen();
+          getAllByText(marker).forEach(element => {
+            expect(element.props.accessibilityElementsHidden).toBeUndefined();
+            expect(element.props.importantForAccessibility).toBeUndefined();
+          });
+        });
+      }
+    );
 
     it("renders bold text inside list items", () => {
       const content = `- **bold item**`;
