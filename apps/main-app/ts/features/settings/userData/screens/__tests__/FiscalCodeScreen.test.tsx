@@ -3,6 +3,7 @@ import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definit
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
+import { Platform } from "react-native";
 import { createStore, PreloadedState } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -23,6 +24,10 @@ describe(FiscalCodeScreen, () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   afterAll(() => {
@@ -48,6 +53,40 @@ describe(FiscalCodeScreen, () => {
     expect(barcode).toBeDefined();
     expect(taxCode).toHaveTextContent(FISCAL_CODE_TEST);
   });
+
+  it.each([
+    {
+      name: "iOS",
+      os: "ios",
+      respondsToUserInteraction: false,
+      role: "text"
+    },
+    {
+      name: "Android",
+      os: "android",
+      respondsToUserInteraction: undefined,
+      role: undefined
+    }
+  ] as const)(
+    "preserves the barcode label on $name and only excludes iOS from switch scanning",
+    ({ os, respondsToUserInteraction, role }) => {
+      jest.replaceProperty(Platform, "OS", os);
+      const { component } = renderComponent();
+      const barcode = component.getByTestId("barcode-box");
+
+      expect(barcode.props.accessibilityRespondsToUserInteraction).toBe(
+        respondsToUserInteraction
+      );
+      expect(barcode.props.accessibilityRole).toBe(role);
+      expect(barcode.props.accessible).toBe(true);
+      expect(barcode.props.accessibilityElementsHidden).not.toBe(true);
+      expect(barcode.props.accessibilityLabel).toBe(
+        I18n.t("profile.fiscalCode.accessibility.fiscalCodeHint", {
+          fiscalCode: FISCAL_CODE_TEST
+        })
+      );
+    }
+  );
 
   it("Should copy the tax code to the clipboard", async () => {
     const { component } = renderComponent();
