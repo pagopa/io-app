@@ -1,7 +1,9 @@
+import { act } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor, StateFrom } from "xstate";
 
+import * as appParamsList from "../../../../../../navigation/params/AppParamsList";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
@@ -25,11 +27,15 @@ jest.mock("../../analytics", () => ({
   trackItwProximityQrCode: jest.fn()
 }));
 
+const mockQRCode = jest.fn();
 jest.mock("react-native-qrcode-skia", () => {
   const React = jest.requireActual("react");
   return {
     __esModule: true,
-    default: () => React.createElement("View", { testID: "qrcode" })
+    default: (props: unknown) => {
+      mockQRCode(props);
+      return React.createElement("View", { testID: "qrcode" });
+    }
   };
 });
 
@@ -73,6 +79,23 @@ describe("ItwProximityPresentmentScreen", () => {
       )
     ).toBeTruthy();
     expect(component).toMatchSnapshot();
+  });
+
+  it("should pass stable shape and logo props so QRCode does not regenerate its path", () => {
+    const options = {
+      machineState: "displayQrCode",
+      qrCodeString: "mock-qr-code-string"
+    } as const;
+    renderComponent(options, { source: "WALLET_HOME" });
+    renderComponent(options, { source: "WALLET_HOME" });
+
+    const [first, last] = [
+      mockQRCode.mock.calls[0][0],
+      mockQRCode.mock.calls.at(-1)[0]
+    ];
+    expect(mockQRCode.mock.calls.length).toBeGreaterThan(1);
+    expect(last.shapeOptions).toBe(first.shapeOptions);
+    expect(last.logo).toBe(first.logo);
   });
 
   it("should render error state when QR code generation fails", () => {
@@ -189,6 +212,31 @@ describe("ItwProximityPresentmentScreen", () => {
       ).toBeTruthy();
     }
   );
+
+  it("should render the QR code only after the modal transition ends", () => {
+    const parentNavigation = { addListener: jest.fn() };
+    const navigation = new Proxy(
+      { getParent: () => parentNavigation } as Record<PropertyKey, unknown>,
+      { get: (target, prop) => target[prop] ?? jest.fn() }
+    );
+    jest
+      .spyOn(appParamsList, "useIONavigation")
+      .mockReturnValue(navigation as any);
+
+    const component = renderComponent(
+      { machineState: "displayQrCode", qrCodeString: "mock-qr-code-string" },
+      { source: "WALLET_HOME" }
+    );
+    expect(component.queryByTestId("qrcode")).toBeNull();
+
+    const [[event, onTransitionEnd]] = parentNavigation.addListener.mock.calls;
+    expect(event).toBe("transitionEnd");
+    act(() => {
+      onTransitionEnd();
+    });
+
+    expect(component.getByTestId("qrcode")).toBeTruthy();
+  });
 });
 
 type RenderOptions =

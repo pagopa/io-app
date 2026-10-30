@@ -74,6 +74,8 @@ interface Base extends CommonProps {
 
 type CommonProps = WithTestID<{
   backgroundColor?: string;
+  /** Disables the actions' press animation. See `IconButton`. */
+  disablePressAnimation?: boolean;
   // Prevents screen readers from focusing on the title when other elements are focused
   // (e.g. when an input text is throwing an error)
   ignoreAccessibilityCheck?: boolean;
@@ -157,6 +159,7 @@ export const HeaderSecondLevel = ({
   type,
   variant,
   backgroundColor,
+  disablePressAnimation = false,
   transparent = false,
   ignoreSafeAreaMargin = false,
   enableDiscreteTransition = false,
@@ -319,6 +322,7 @@ export const HeaderSecondLevel = ({
           <IconButton
             accessibilityLabel={backAccessibilityLabel}
             color={defaultIconColor}
+            disablePressAnimation={disablePressAnimation}
             icon={Platform.select({
               android: "backAndroid",
               default: "backiOS"
@@ -359,6 +363,7 @@ export const HeaderSecondLevel = ({
             <IconButton
               {...thirdAction}
               color={defaultIconColor}
+              disablePressAnimation={disablePressAnimation}
               persistentColorMode={!!variant}
             />
           )}
@@ -366,6 +371,7 @@ export const HeaderSecondLevel = ({
             <IconButton
               {...secondAction}
               color={defaultIconColor}
+              disablePressAnimation={disablePressAnimation}
               persistentColorMode={!!variant}
             />
           )}
@@ -373,6 +379,7 @@ export const HeaderSecondLevel = ({
             <IconButton
               {...firstAction}
               color={defaultIconColor}
+              disablePressAnimation={disablePressAnimation}
               persistentColorMode={!!variant}
             />
           ) : (
