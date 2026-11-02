@@ -187,7 +187,12 @@ const ModulePaymentNoticeSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     endBlock={
-      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
+      <IOSkeleton
+        height={24}
+        radius={IODimensions.radius.badge}
+        shape="rectangle"
+        width={64}
+      />
     }
     startBlock={
       <VStack space={4}>
