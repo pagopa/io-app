@@ -132,7 +132,10 @@ const ListItemTransactionContent = ({
           </BodySmall>
         </View>
       </HStack>
-      <HStack space={4} style={{ alignItems: "center" }}>
+      <HStack
+        space={IODimensions.gap.listItem.transaction.chevron}
+        style={{ alignItems: "center" }}
+      >
         {badge ? (
           <Badge text={badge?.text} variant={badge?.variant} />
         ) : (

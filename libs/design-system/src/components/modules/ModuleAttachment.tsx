@@ -46,7 +46,7 @@ const ModuleAttachmentContent = ({
       style={{ alignItems: "center" }}
     >
       <VStack
-        space={4}
+        space={IODimensions.gap.module.description}
         style={{ alignItems: "flex-start", flexShrink: 1, flexGrow: 1 }}
       >
         <Body
@@ -158,7 +158,7 @@ const ModuleAttachmentSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     startBlock={
-      <VStack space={4}>
+      <VStack space={IODimensions.gap.module.description}>
         <IOSkeleton
           height={IOTypography.body.size}
           radius={IODimensions.radius.skeleton.text}

@@ -94,7 +94,10 @@ export const ModuleCheckout = (props: ModuleCheckoutProps) => {
       }
       onPress={onPress}
     >
-      <HStack space={4} style={{ alignItems: "center" }}>
+      <HStack
+        space={IODimensions.gap.module.trailing}
+        style={{ alignItems: "center" }}
+      >
         <ModuleBaseContent
           image={image}
           paymentLogo={paymentLogo}

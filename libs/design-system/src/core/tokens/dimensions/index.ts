@@ -145,11 +145,14 @@ const componentGap = {
       topElement: system.gap.topElement
     },
     /* `trailing`: before the date and the unread dot; `tag`: above and between tags */
-    messages: { leading: 8, trailing: system.gap.trailing, tag: 8 }
+    messages: { leading: 8, trailing: system.gap.trailing, tag: 8 },
+    /* `chevron`: between the amount or badge and the chevron */
+    transaction: { chevron: 4 }
   },
   module: {
     leading: system.gap.leading,
     trailing: system.gap.trailing,
+    description: system.gap.description,
     topElement: system.gap.topElement
   },
   /* `items`: between the boxes; `error`: above the error message */
