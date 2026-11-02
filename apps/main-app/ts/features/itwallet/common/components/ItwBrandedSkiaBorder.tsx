@@ -1,14 +1,14 @@
 import {
-  ColorMatrix,
-  Mask,
-  OpacityMatrix,
-  Paint,
   RoundedRect,
-  Group as SkiaGroup
+  LinearGradient as SkiaLinearGradient,
+  vec
 } from "@shopify/react-native-skia";
 import { ColorSchemeName, LayoutRectangle } from "react-native";
 
-import { ItwBrandedSkiaGradient } from "./ItwBrandedSkiaGradient";
+import {
+  itwBrandedGradientColors,
+  useItwBrandedGradientTransform
+} from "./ItwBrandedSkiaGradient";
 
 export type ItwIridescentBorderVariant = "default" | "error" | "warning";
 
@@ -21,11 +21,19 @@ type ItwIridescentBorderProps = {
   width: LayoutRectangle["width"];
 };
 
+/* Opacity of the gradient and of the stroke in dark mode */
+const DARK_GRADIENT_OPACITY = 0.8;
+const DARK_TICK_OPACITY = 0.8;
+
 /**
  * WARNING: this component must be placed inside a {@link Canvas} component.
  *
  * Renders an animated IT-Wallet branded gradient using Skia and device rotation
  * sensor data.
+ *
+ * The stroke is painted with the gradient directly. This draws the same pixels
+ * as masking the stroke with the gradient, without the offscreen layers the
+ * mask needs on every frame.
  */
 export const ItwBrandedSkiaBorder = ({
   width,
@@ -35,43 +43,29 @@ export const ItwBrandedSkiaBorder = ({
   variant = "default",
   themeType = "light"
 }: ItwIridescentBorderProps) => {
-  const isLightMode = themeType === "light";
-
-  /* Styles */
-  const gradientTickOpacity = isLightMode ? 1 : 0.8;
-  const gradientBorderOpacity = isLightMode ? 1.0 : 0.8;
+  const gradientTransform = useItwBrandedGradientTransform(height);
+  const opacity =
+    themeType === "light" ? 1 : DARK_GRADIENT_OPACITY * DARK_TICK_OPACITY;
 
   return (
-    <Mask
-      mask={
-        <SkiaGroup blendMode={"colorDodge"} opacity={gradientBorderOpacity}>
-          <ItwBrandedSkiaGradient
-            height={height}
-            variant={variant}
-            width={width}
-          />
-        </SkiaGroup>
-      }
-      mode="alpha"
+    <RoundedRect
+      height={height}
+      opacity={opacity}
+      r={borderRadius}
+      strokeJoin={"round"}
+      strokeWidth={thickness}
+      style={"stroke"}
+      width={width}
+      x={0}
+      y={0}
     >
-      <SkiaGroup
-        layer={
-          <Paint>
-            <ColorMatrix matrix={OpacityMatrix(gradientTickOpacity)} />
-          </Paint>
-        }
-      >
-        <RoundedRect
-          height={height}
-          r={borderRadius}
-          strokeJoin={"round"}
-          strokeWidth={thickness}
-          style={"stroke"}
-          width={width}
-          x={0}
-          y={0}
-        />
-      </SkiaGroup>
-    </Mask>
+      <SkiaLinearGradient
+        colors={itwBrandedGradientColors[variant]}
+        end={vec(width / 3, width)}
+        mode="mirror"
+        start={vec(0, 0)}
+        transform={gradientTransform}
+      />
+    </RoundedRect>
   );
 };
