@@ -39,6 +39,12 @@ export enum WellKnownClaim {
   /** Claim that contains the first name, if applicable for the credential */
   given_name = "given_name",
   /**
+   * Claim with the digital version releaser, already rendered by
+   * `ItwIssuanceMetadata`. It must be excluded from claims lists that render
+   * the issuance metadata to avoid duplicates.
+   */
+  issuing_authority = "issuing_authority",
+  /**
    * Claim used to display the QR Code on the back of the European Disability
    * Card. It must be excluded from common claims lists.
    */

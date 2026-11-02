@@ -434,6 +434,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1802,6 +1803,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                           },
                                         ]
                                       }
+                                      pointerEvents="none"
                                       style={
                                         [
                                           {
@@ -2348,6 +2350,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3953,6 +3956,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                           },
                                         ]
                                       }
+                                      pointerEvents="none"
                                       style={
                                         [
                                           {
@@ -4499,6 +4503,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -5893,6 +5898,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                           },
                                         ]
                                       }
+                                      pointerEvents="none"
                                       style={
                                         [
                                           {
@@ -6439,6 +6445,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -8057,6 +8064,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                           },
                                         ]
                                       }
+                                      pointerEvents="none"
                                       style={
                                         [
                                           {

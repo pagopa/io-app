@@ -31,8 +31,8 @@ import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import {
-  PinCaouselItemProps,
-  PinCarouselItem
+  PinCarouselItem,
+  PinCarouselItemProps
 } from "../../components/PinCarouselItem";
 import { useCreatePin } from "../../hooks/useCreatePin";
 import usePinValidationBottomSheet from "../../hooks/usePinValidationBottomSheet";
@@ -198,7 +198,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   const currentPinValue =
     pinModeRef.current === "creation" ? pin : pinConfirmation;
 
-  const data: Array<PinCaouselItemProps> = [
+  const data: Array<PinCarouselItemProps> = [
     {
       title: I18n.t("onboarding.pin.title"),
       titleRef: titleCreationRef,

@@ -411,6 +411,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 },
               ]
             }
+            pointerEvents="none"
             style={
               [
                 {

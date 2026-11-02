@@ -1,8 +1,120 @@
+# 9.0.0 (2026-10-26)
+
+### Features
+
+- [IOPLT-2207] Make Expo CLI default tool to build and run the app ([#8782](https://github.com/pagopa/io-app/pull/8782))
+- [IOCOM-3127] sticky footer in messages' details screens ([#8424](https://github.com/pagopa/io-app/pull/8424))
+- [IOPLT-2042] Add `AnimatedNumericText` component for iOS, thx to `@expo/ui` ([#8528](https://github.com/pagopa/io-app/pull/8528))
+- [IOPID-4119] Add One Identity Idp selection screen ([#8426](https://github.com/pagopa/io-app/pull/8426))
+- [SIW-4810] Implement CieID environment selection logic and updated related components ([#8420](https://github.com/pagopa/io-app/pull/8420))
+- **IT-Wallet:** [SIW-4704] Add informational banner for MDL details and update related components ([#8367](https://github.com/pagopa/io-app/pull/8367))
+- **CI:** [IOAPPX-517] Add ESLint plugin for i18n hygiene ([#8229](https://github.com/pagopa/io-app/pull/8229))
+- [IOAPPX-000] remove @ChrisMattew from codeowners ([#8225](https://github.com/pagopa/io-app/pull/8225))
+- [IOPID-4088] Add Alessandra Lerteri to codeowners ([#8295](https://github.com/pagopa/io-app/pull/8295))
+
+### Bug Fixes
+
+- [IOPLT-2209] Adjust `Animated.View` interaction behavior ([#8786](https://github.com/pagopa/io-app/pull/8786))
+- [IOPLT-000] Missing generate script in ` update lokalise` workflow ([#8778](https://github.com/pagopa/io-app/pull/8778))
+- **IT-Wallet:** [SIW-000] Include Authentic Source's `credential_background` to card configuration ([#8742](https://github.com/pagopa/io-app/pull/8742))
+- [IOPLT-2187] `IOButton` border radius when `link` type ([#8743](https://github.com/pagopa/io-app/pull/8743))
+- [IOPLT-2181] Add dark mode support to missing elements ([#8727](https://github.com/pagopa/io-app/pull/8727))
+- [IOPLT-2165] Use default heading color for `Banner` title ([#8710](https://github.com/pagopa/io-app/pull/8710))
+- [IOPLT-2096] Fix missing `i18n` strings + Enforce relative `eslint` rule ([#8626](https://github.com/pagopa/io-app/pull/8626))
+- [IOPLT-2048] Design system icon generator script ([#8535](https://github.com/pagopa/io-app/pull/8535))
+- [IOPLT-000] Missing lefthook `eslint` update ([#8517](https://github.com/pagopa/io-app/pull/8517))
+- **IT-Wallet:** [SIW-4836] Get Authentic Source data origin from the correct field ([#8482](https://github.com/pagopa/io-app/pull/8482))
+- [IOPLT-2006] `hermes-engine` checksums in `Podfile.lock` ([#8447](https://github.com/pagopa/io-app/pull/8447))
+- [IOPLT-1985] Fix all ESLint warnings in the DS library ([#8379](https://github.com/pagopa/io-app/pull/8379))
+- **IT-Wallet:** [SIW-3670,SIW-3780] Fix a11y proximity disclosure screen ([#8362](https://github.com/pagopa/io-app/pull/8362))
+
+### Chores
+
+- [SIW-3784] Improve accessibility for BottomSheet component ([#8549](https://github.com/pagopa/io-app/pull/8549))
+- [IOPLT-000] Add `synchronize` to `update-lokalise-snapshots` ([#8780](https://github.com/pagopa/io-app/pull/8780))
+- [IOPLT-2200] Adjust `accessibilityState` prop for `TabItem` ([#8768](https://github.com/pagopa/io-app/pull/8768))
+- [IOPLT-1967] Solves accessibility issues on common components ([#8373](https://github.com/pagopa/io-app/pull/8373))
+- [IOPLT-1579] Migrate react-native-device-info ([#8733](https://github.com/pagopa/io-app/pull/8733))
+- **deps:** [IOPLT-2111] Update dev server `uuid` dependency ([#8644](https://github.com/pagopa/io-app/pull/8644))
+- [IOCOM-3367] addition of s-bartolini to CODEOWNERS ([#8739](https://github.com/pagopa/io-app/pull/8739))
+- [IOPLT-2182] Add Device Hub support from CLI ([#8728](https://github.com/pagopa/io-app/pull/8728))
+- [SIW-5230] Update io-react-native-iso18013 ([#8692](https://github.com/pagopa/io-app/pull/8692))
+- **IT-Wallet:** [SIW-5110] Support legacy config to display the issuer localized messages ([#8676](https://github.com/pagopa/io-app/pull/8676))
+- [IOAPPX-000] Update permissions for release workflows ([#8678](https://github.com/pagopa/io-app/pull/8678))
+- [IOAPPX-000] Notify publishing workflow failure on Slack ([#8677](https://github.com/pagopa/io-app/pull/8677))
+- [IOPLT-2093] Xcode 27 compatibility ([#8617](https://github.com/pagopa/io-app/pull/8617))
+- [IOPLT-2091] Remove unused locales and enforce no unused keys ([#8616](https://github.com/pagopa/io-app/pull/8616))
+- [IOPLT-2086] Enforce static `i18n` keys and `I18n` import name ([#8615](https://github.com/pagopa/io-app/pull/8615))
+- [IOPLT-2068] Enable `jsdoc` formatting in `oxfmt` ([#8583](https://github.com/pagopa/io-app/pull/8583))
+- [IOPLT-000] Omit wrong deprecated todo ([#8640](https://github.com/pagopa/io-app/pull/8640))
+- [IOPLT-1738] Add `oxlint` alongside `eslint` ([#7989](https://github.com/pagopa/io-app/pull/7989))
+- [IOPLT-1737] Replace `prettier` with `oxfmt` ([#7972](https://github.com/pagopa/io-app/pull/7972))
+- [IOPLT-2069] Upgrade `Nx` to `23.2.1` ([#8586](https://github.com/pagopa/io-app/pull/8586))
+- **IT-Wallet:** [SIW-5011] Replace PID with NPID—`urn:it-wallet:eid:1` ([#8592](https://github.com/pagopa/io-app/pull/8592))
+- [IOPLT-2078] Add dev server debug extension ([#8601](https://github.com/pagopa/io-app/pull/8601))
+- [IOPLT-2077] Add `i18n Ally` conf for the IDE ([#8599](https://github.com/pagopa/io-app/pull/8599))
+- [IOPLT-2067] Adopt official `jest` mock for `pulsar` library ([#8582](https://github.com/pagopa/io-app/pull/8582))
+- **IT-Wallet:** [SIW-000] remove `minimumReleaseAgeExclude` ([#8594](https://github.com/pagopa/io-app/pull/8594))
+- **IT-Wallet:** [SIW-5014] Bump `io-react-native-wallet` from `3.7.1` to `3.7.2` ([#8591](https://github.com/pagopa/io-app/pull/8591))
+- **IT-Wallet:** [SIW-4542] Verify Status List JWTs ([#8484](https://github.com/pagopa/io-app/pull/8484))
+- [SIW-4365] Bump `xstate` and `@xstate/react` versions ([#8490](https://github.com/pagopa/io-app/pull/8490))
+- **IT-Wallet:** [SIW-4552] Update IT-Wallet specification to version 1.4 LTS ([#8487](https://github.com/pagopa/io-app/pull/8487))
+- [IOPLT-1972] Remove `react-native-crypto` from dependencies ([#8346](https://github.com/pagopa/io-app/pull/8346))
+- [IOPLT-1990] Remove or de-export unused types ([#8385](https://github.com/pagopa/io-app/pull/8385))
+- **deps:** [IOPLT-2018] Add `neverthrow` to main app ([#8479](https://github.com/pagopa/io-app/pull/8479))
+- [IOPLT-1980] Extend `jest` lint rules to `tsx` test files ([#8364](https://github.com/pagopa/io-app/pull/8364))
+- [IOPLT-2017] Updating the lint configuration for compatibility with ESLint 10 ([#8473](https://github.com/pagopa/io-app/pull/8473))
+- [IOPLT-1983] Replace deprecated `standard-version` with `commit-and-tag-version` ([#8371](https://github.com/pagopa/io-app/pull/8371))
+- [IOPLT-2005] Bump `@xstate/react` to v5 ([#8446](https://github.com/pagopa/io-app/pull/8446))
+- **IT-Wallet:** [SIW-3706] Enhance accessibility for markdown links ([#8235](https://github.com/pagopa/io-app/pull/8235))
+- [IOPLT-2013] Removed unused dependencies from `dev-server` ([#8471](https://github.com/pagopa/io-app/pull/8471))
+- [IOPLT-2016] Removed unused dependencies from `api-types` library ([#8472](https://github.com/pagopa/io-app/pull/8472))
+- **deps:** [IOPLT-000] Update `nx` version to 23 ([#8464](https://github.com/pagopa/io-app/pull/8464))
+- [IOPLT-000] Update release-it ([#8437](https://github.com/pagopa/io-app/pull/8437))
+- [IOPLT-2002] Migrate dev server in monorepo ([#8432](https://github.com/pagopa/io-app/pull/8432))
+- [IOPLT-000] Remove @types/node-fetch ([#8438](https://github.com/pagopa/io-app/pull/8438))
+- [IOPLT-000] Update mockhttp ([#8435](https://github.com/pagopa/io-app/pull/8435))
+- [IOPLT-000] Update pnpm to version 11 ([#8429](https://github.com/pagopa/io-app/pull/8429))
+- [IOPLT-1978] Align `eslint` plugins between DS and main app ([#8358](https://github.com/pagopa/io-app/pull/8358))
+- [IOPLT-2000] Bump `i18next` and `react-i18next` to ensure full TS compatibility ([#8416](https://github.com/pagopa/io-app/pull/8416))
+- [IOPLT-1977] Allow ref and `SharedValue` mutation by type ([#8357](https://github.com/pagopa/io-app/pull/8357))
+- [IOPLT-1973] Replace `react-native-haptic-feedback` with `pulsar` + Extend haptic feedback ([#8350](https://github.com/pagopa/io-app/pull/8350))
+- [IOPLT-1971] Fix some `pnpm install` dependency warnings ([#8342](https://github.com/pagopa/io-app/pull/8342))
+- [IOAPPX-527] migrate Git hooks from Husky to Lefthook ([#8345](https://github.com/pagopa/io-app/pull/8345))
+- [IOPLT-1975] Upgrade `ts` from `5.x` to `6.x` ([#8353](https://github.com/pagopa/io-app/pull/8353))
+- [IOPLT-1968] Remove inert `lineBreakMode` prop applied to `Text` ([#8332](https://github.com/pagopa/io-app/pull/8332))
+- [IOPLT-1945] Enforce ESLint `no-dynamic-delete` rule as error ([#8244](https://github.com/pagopa/io-app/pull/8244))
+- [IOCOM-3130] removal of `MessageMarkdown` ([#8319](https://github.com/pagopa/io-app/pull/8319))
+- **IT-Wallet:** [SIW-0000] Update `io-react-native-wallet` to v3.6.3 ([#8324](https://github.com/pagopa/io-app/pull/8324))
+- [IOAPPX-520] Tidy up fastlane files ([#8318](https://github.com/pagopa/io-app/pull/8318))
+- [IOAPPX-519] Remove cie button check script ([#8301](https://github.com/pagopa/io-app/pull/8301))
+- [IOPLT-1777] Add new `eslint` rules ([#8038](https://github.com/pagopa/io-app/pull/8038))
+- [IOPLT-1906] Replace legacy shadow with `boxShadow` in the DS components ([#8221](https://github.com/pagopa/io-app/pull/8221))
+- [IOPLT-1927] Enable `perfectionist` rules included in `@pagopa/eslint-config` ([#8210](https://github.com/pagopa/io-app/pull/8210))
+- [SIW-3657] `@pagopa/io-app-design-system` bump 8.1.0 + fix OTPInput value accessibility across the app ([#8231](https://github.com/pagopa/io-app/pull/8231))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste
+- Alessandro Mazzon
+- Alice Di Rico @Ladirico
+- Andrea
+- Angelo Sanfilippo
+- Copilot Autofix powered by AI @github-advanced-security[bot]
+- Cristiano Tofani
+- Damiano Plebani
+- DavideOnano @DavideOnano
+- Emanuele Dall'Ara @LeleDallas
+- Federico Mastrini
+- Gianluca Spada
+- LazyAfternoons @LazyAfternoons
+- Martino Cesari Tomba @forrest57
+
 ### Changelog
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
-Generated by [`auto-changelog`](https://github.com/CookPete/auto-changelog).
+Generated by Nx Release from Conventional Commits.
 
 #### [v8.1.0](https://github.com/pagopa/io-app-design-system/compare/v8.0.1...v8.1.0)
 

@@ -341,6 +341,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -572,6 +573,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1082,6 +1084,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1313,6 +1316,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2204,6 +2208,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2435,6 +2440,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

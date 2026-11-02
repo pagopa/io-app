@@ -90,13 +90,13 @@ const renderListItemCheckbox = () => (
     <DSComponentViewerBox name="ListItemCheckbox">
       <ListItemCheckbox
         accessibilityLabel={""}
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
         accessibilityLabel={""}
         icon="coggle"
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
@@ -104,7 +104,7 @@ const renderListItemCheckbox = () => (
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
@@ -112,7 +112,7 @@ const renderListItemCheckbox = () => (
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
-        value="Questa è un'altra prova ancora più lunga per andare su due righe"
+        label="Questa è un'altra prova ancora più lunga per andare su due righe"
       />
       <Divider />
       <ListItemCheckbox
@@ -121,7 +121,7 @@ const renderListItemCheckbox = () => (
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
         icon="bonus"
-        value="Let's try with a loooong loooooong looooooong title + icon"
+        label="Let's try with a loooong loooooong looooooong title + icon"
       />
       <Divider />
       <ListItemCheckbox
@@ -130,14 +130,14 @@ const renderListItemCheckbox = () => (
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
         }
         icon="coggle"
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemCheckbox (disabled)">
       <ListItemCheckbox
         accessibilityLabel={""}
         disabled
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
@@ -147,15 +147,15 @@ const renderListItemCheckbox = () => (
         }
         disabled
         icon="coggle"
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
         accessibilityLabel={""}
         disabled
         icon="coggle"
+        label="Usa configurazione rapida"
         selected={true}
-        value="Usa configurazione rapida"
       />
     </DSComponentViewerBox>
   </VStack>
@@ -166,13 +166,13 @@ const renderListItemCheckbox = () => (
 const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
   {
     startImage: { icon: "coggle" },
-    value: "Let's try with a basic title",
+    label: "Let's try with a basic title",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano.",
     id: "example-1"
   },
   {
-    value: "Let's try with JSX description",
+    label: "Let's try with JSX description",
     description: (
       <BodySmall color="grey-700" weight="Regular">
         Ti contatteranno solo i servizi che hanno qualcosa di importante da
@@ -186,23 +186,23 @@ const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
   },
   {
     startImage: { paymentLogo: "myBank" },
-    value: "Payment method item",
+    label: "Payment method item",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano.",
     id: "example-paymentLogo"
   },
   {
-    value: "Let's try with a basic title",
+    label: "Let's try with a basic title",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-2"
   },
   {
-    value: "Let's try with a very looong loooooong title instead",
+    label: "Let's try with a very looong loooooong title instead",
     id: "example-3"
   },
   {
-    value: "Let's try with a disabled item",
+    label: "Let's try with a disabled item",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-disabled",
@@ -212,7 +212,7 @@ const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
 
 const mockRadioItemsSkeleton = (): ReadonlyArray<RadioItem<string>> => [
   {
-    value: "Skeleton example",
+    label: "Skeleton example",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-loading",
@@ -223,7 +223,7 @@ const mockRadioItemsSkeleton = (): ReadonlyArray<RadioItem<string>> => [
     }
   },
   {
-    value: "Skeleton example",
+    label: "Skeleton example",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-loading-withIcon",
@@ -234,7 +234,7 @@ const mockRadioItemsSkeleton = (): ReadonlyArray<RadioItem<string>> => [
     }
   },
   {
-    value: "Skeleton example",
+    label: "Skeleton example",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-loading-withDescription",
@@ -245,7 +245,7 @@ const mockRadioItemsSkeleton = (): ReadonlyArray<RadioItem<string>> => [
     }
   },
   {
-    value: "Skeleton example",
+    label: "Skeleton example",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-loading-withIcon-withDescription",

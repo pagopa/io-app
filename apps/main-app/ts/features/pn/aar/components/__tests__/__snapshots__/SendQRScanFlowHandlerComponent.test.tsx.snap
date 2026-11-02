@@ -423,6 +423,7 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
