@@ -1,5 +1,4 @@
-import cieSdk from "@pagopa/react-native-cie";
-import { constNull } from "fp-ts/lib/function";
+import { CieUtils } from "@io-app/expo-cie";
 import { useCallback, useState } from "react";
 import { Platform } from "react-native";
 
@@ -10,8 +9,7 @@ export const useIsNfcFeatureEnabled = () => {
     if (Platform.OS === "android") {
       setIsChecking(true);
 
-      return cieSdk
-        .isNFCEnabled()
+      return CieUtils.isNfcEnabled()
         .catch(() => false)
         .finally(() => {
           setIsChecking(false);
@@ -23,7 +21,7 @@ export const useIsNfcFeatureEnabled = () => {
 
   const openNFCSettings = useCallback(() => {
     if (Platform.OS === "android") {
-      void cieSdk.openNFCSettings().catch(constNull);
+      void CieUtils.openNfcSettings().catch(() => undefined);
     }
   }, []);
 
