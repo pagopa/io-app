@@ -32,8 +32,20 @@ describe("convertDateToWordDistance", () => {
     ).toBe("Custom invalid label");
   });
 
-  it("should be the invalid date message defined in locales.'", () => {
+  it("should be the invalid date message defined in locales if invalidDateLabel is undefined.'", () => {
     expect(convertDateToWordDistance(new Date(NaN), "")).toBe(
+      I18n.t("datetimes.notValid")
+    );
+  });
+
+  it("should be the invalid date message defined in locales if invalidDateLabel is empty string.'", () => {
+    expect(convertDateToWordDistance(new Date(NaN), "", "")).toBe(
+      I18n.t("datetimes.notValid")
+    );
+  });
+
+  it("should be the invalid date message defined in locales if invalidDateLabel is a string with only spaces.'", () => {
+    expect(convertDateToWordDistance(new Date(NaN), "", " ")).toBe(
       I18n.t("datetimes.notValid")
     );
   });
