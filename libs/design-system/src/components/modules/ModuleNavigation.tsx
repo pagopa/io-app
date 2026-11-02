@@ -59,7 +59,7 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
     <Icon
       color={theme["icon-decorative"]}
       name={icon}
-      size={IODimensions.size.icon.module.leading}
+      size={IODimensions.size.icon.module.default}
     />
   );
 
@@ -122,7 +122,7 @@ const ModuleNavigationSkeleton = ({
     accessible={true}
     endBlock={
       <IOSkeleton
-        height={24}
+        height={IODimensions.height.badge}
         radius={IODimensions.radius.badge}
         shape="rectangle"
         width={64}
@@ -136,7 +136,7 @@ const ModuleNavigationSkeleton = ({
         <IOSkeleton
           radius={IODimensions.radius.default}
           shape="square"
-          size={IODimensions.size.icon.module.leading}
+          size={IODimensions.size.icon.module.default}
         />
         <VStack space={4}>
           <IOSkeleton
@@ -159,8 +159,8 @@ const ModuleNavigationSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: IODimensions.size.icon.module.leading,
-    height: IODimensions.size.icon.module.leading,
+    width: IODimensions.size.icon.module.default,
+    height: IODimensions.size.icon.module.default,
     resizeMode: "contain"
   }
 });

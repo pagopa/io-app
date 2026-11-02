@@ -506,7 +506,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                   {
                                     "backgroundColor": "#E8EBF1",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 16,
+                                    "borderRadius": 24,
                                     "height": 24,
                                     "width": 64,
                                   },
@@ -535,7 +535,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                   {
                                     "backgroundColor": "#E8EBF1",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 16,
+                                    "borderRadius": 24,
                                     "height": 24,
                                     "width": 64,
                                   },

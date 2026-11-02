@@ -13,7 +13,7 @@ import { IOColors, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
-import { Icon, IOIcons, IOIconSizeScale } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HStack, VStack } from "../layout";
 import { LoadingSpinner } from "../loadingSpinner";
 import { IOSkeleton } from "../skeleton";
@@ -54,8 +54,6 @@ export const ModuleNavigationAlt = (
   const theme = useIOTheme();
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
-  const graphicWrapperSize: IOIconSizeScale = 48;
-
   if (props.isLoading) {
     return (
       <ModuleNavigationAltSkeleton
@@ -79,7 +77,11 @@ export const ModuleNavigationAlt = (
   } = props;
 
   const iconComponent = icon && (
-    <Icon color={iconColor} name={icon} size={32} />
+    <Icon
+      color={iconColor}
+      name={icon}
+      size={IODimensions.size.icon.module.large}
+    />
   );
 
   const imageComponent = () => {
@@ -138,8 +140,8 @@ export const ModuleNavigationAlt = (
               style={{
                 alignItems: "center",
                 justifyContent: "center",
-                width: graphicWrapperSize,
-                height: graphicWrapperSize
+                width: IODimensions.size.module.graphic,
+                height: IODimensions.size.module.graphic
               }}
             >
               {iconComponent ?? imageComponent()}
@@ -181,14 +183,6 @@ const ModuleNavigationAltSkeleton = ({
     accessibilityLabel={loadingAccessibilityLabel}
     accessibilityState={{ busy: true }}
     accessible={true}
-    endBlock={
-      <IOSkeleton
-        height={24}
-        radius={IODimensions.radius.badge}
-        shape="rectangle"
-        width={64}
-      />
-    }
     startBlock={
       <HStack
         space={IODimensions.gap.module.leading}
@@ -197,15 +191,9 @@ const ModuleNavigationAltSkeleton = ({
         <IOSkeleton
           radius={IODimensions.radius.default}
           shape="square"
-          size={32}
+          size={IODimensions.size.module.graphic}
         />
         <VStack space={4}>
-          <IOSkeleton
-            height={12}
-            radius={IODimensions.radius.default}
-            shape="rectangle"
-            width={52}
-          />
           <IOSkeleton
             height={16}
             radius={IODimensions.radius.default}
@@ -226,8 +214,8 @@ const ModuleNavigationAltSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: "100%",
-    height: "auto",
+    width: IODimensions.size.module.graphic,
+    height: IODimensions.size.module.graphic,
     resizeMode: "contain"
   }
 });

@@ -188,7 +188,7 @@ const ModulePaymentNoticeSkeleton = ({
     accessible={true}
     endBlock={
       <IOSkeleton
-        height={24}
+        height={IODimensions.height.badge}
         radius={IODimensions.radius.badge}
         shape="rectangle"
         width={64}

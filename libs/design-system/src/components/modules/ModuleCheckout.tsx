@@ -145,7 +145,7 @@ const ModuleCheckoutSkeleton = ({
         <IOSkeleton
           radius={IODimensions.radius.default}
           shape="square"
-          size={IODimensions.size.icon.module.leading}
+          size={IODimensions.size.icon.module.default}
         />
         <VStack space={8}>
           <IOSkeleton
@@ -168,8 +168,8 @@ const ModuleCheckoutSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: IODimensions.size.icon.module.leading,
-    height: IODimensions.size.icon.module.leading,
+    width: IODimensions.size.icon.module.default,
+    height: IODimensions.size.icon.module.default,
     resizeMode: "contain"
   }
 });

@@ -82,7 +82,7 @@ const ModuleContent = ({
             allowFontScaling
             color={theme["icon-decorative"]}
             name={icon}
-            size={IODimensions.size.icon.module.leading}
+            size={IODimensions.size.icon.module.default}
           />
         ) : (
           image != null && (
@@ -179,7 +179,7 @@ const ModuleCredentialSkeleton = ({
     accessible={true}
     endBlock={
       <IOSkeleton
-        height={24}
+        height={IODimensions.height.badge}
         radius={IODimensions.radius.badge}
         shape="rectangle"
         width={64}
@@ -193,7 +193,7 @@ const ModuleCredentialSkeleton = ({
         <IOSkeleton
           radius={IODimensions.radius.default}
           shape="square"
-          size={IODimensions.size.icon.module.leading}
+          size={IODimensions.size.icon.module.default}
         />
         <IOSkeleton
           height={16}
@@ -208,8 +208,8 @@ const ModuleCredentialSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: IODimensions.size.icon.module.leading,
-    height: IODimensions.size.icon.module.leading,
+    width: IODimensions.size.icon.module.default,
+    height: IODimensions.size.icon.module.default,
     resizeMode: "contain"
   }
 });

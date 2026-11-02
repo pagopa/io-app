@@ -888,7 +888,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   {
                                     "backgroundColor": "#E8EBF1",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 16,
+                                    "borderRadius": 24,
                                     "height": 24,
                                     "width": 64,
                                   },
@@ -917,7 +917,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   {
                                     "backgroundColor": "#E8EBF1",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 16,
+                                    "borderRadius": 24,
                                     "height": 24,
                                     "width": 64,
                                   },

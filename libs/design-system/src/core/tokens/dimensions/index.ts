@@ -248,7 +248,8 @@ const componentIconSize = {
   button: { default: 20, link: 24 },
   featureInfo: system.size.icon.leading,
   listItem: system.size.icon.leading,
-  module: { leading: system.size.icon.leading },
+  /* `large`: `ModuleNavigationAlt`, centred in `size.module.graphic` */
+  module: { default: system.size.icon.leading, large: 32 },
   selection: system.size.icon.leading,
   tab: 16,
   tag: 16,
@@ -266,11 +267,13 @@ const componentSize = {
   avatar: { xsmall: 30, small: 44, medium: 66 },
   codeInput: { dot: 16 },
   iconButton: { small: 24, default: 48, large: 56 },
+  module: { graphic: 48 } /* used in `ModuleNavigationAlt` (icon or image) */,
   /* Checkbox and radio control */
   selection: { control: 24 }
 } as const;
 
 const componentHeight = {
+  badge: 24 /* for skeletons only */,
   button: 48,
   header: 56,
   textInput: 60
