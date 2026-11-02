@@ -6,6 +6,7 @@ import {
   ModuleCredential,
   ModuleIDP,
   ModuleNavigation,
+  ModuleNavigationAlt,
   ModulePaymentNotice,
   ModuleSummary,
   PaymentNoticeStatus,
@@ -71,6 +72,11 @@ export const DSModules = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ModuleNavigation</H4>
           {renderModuleNavigation()}
+        </VStack>
+
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ModuleNavigationAlt</H4>
+          {renderModuleNavigationAlt()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
@@ -492,6 +498,74 @@ const renderModuleNavigation = () => (
         onPress={onButtonPress}
         subtitle="Usa credenziali e app (o SMS), ma anche qui il testo è molto lungo"
         title="Testo relativo allo SPID davvero molto lungo"
+      />
+    </DSComponentViewerBox>
+  </VStack>
+);
+
+const renderModuleNavigationAlt = () => (
+  <VStack space={componentMargin}>
+    <DSComponentViewerBox name="ModuleNavigationAlt, loading">
+      <ModuleNavigationAlt isLoading={true} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigationAlt">
+      <ModuleNavigationAlt
+        icon="spid"
+        onPress={onButtonPress}
+        subtitle="Usa credenziali e app (o SMS)"
+        title="SPID"
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigationAlt, with Image">
+      <ModuleNavigationAlt
+        image={CgnLogo}
+        onPress={onButtonPress}
+        subtitle="Usa credenziali e app (o SMS)"
+        title="Carta Giovani Nazionale"
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigationAlt, with Badge">
+      <ModuleNavigationAlt
+        badge={{
+          text: "In arrivo",
+          variant: "default",
+          outline: true
+        }}
+        icon="spid"
+        onPress={onButtonPress}
+        subtitle="Usa credenziali e app (o SMS)"
+        title="SPID"
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigationAlt, with Badge, stress test">
+      <ModuleNavigationAlt
+        badge={{
+          text: "In arrivo",
+          variant: "default",
+          outline: true
+        }}
+        icon="spid"
+        onPress={onButtonPress}
+        subtitle="Usa credenziali e app (o SMS), ma anche qui il testo è molto lungo"
+        title="Testo relativo allo SPID davvero molto lungo"
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigationAlt, fetching">
+      <ModuleNavigationAlt
+        icon="spid"
+        isFetching={true}
+        onPress={onButtonPress}
+        subtitle="Usa credenziali e app (o SMS)"
+        title="SPID"
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleNavigationAlt, custom right icon">
+      <ModuleNavigationAlt
+        icon="spid"
+        onPress={onButtonPress}
+        rightIcon="externalLinkSmall"
+        subtitle="Usa credenziali e app (o SMS)"
+        title="SPID"
       />
     </DSComponentViewerBox>
   </VStack>
