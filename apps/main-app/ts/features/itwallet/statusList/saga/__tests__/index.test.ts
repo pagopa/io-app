@@ -1,8 +1,9 @@
 import { testSaga } from "redux-saga-test-plan";
 
 import {
-  watchItwStatusListAuthenticatedSaga,
-  watchItwStatusListSaga
+  handleItwOfflineStatusListSaga,
+  handleItwStatusListSaga,
+  watchItwStatusListAuthenticatedSaga
 } from "..";
 import {
   selectItwEnv,
@@ -28,24 +29,44 @@ describe("watchItwStatusListAuthenticatedSaga", () => {
   });
 });
 
-describe("watchItwStatusListSaga", () => {
+describe("handleItwOfflineStatusListSaga", () => {
   it("stops when Status List is unsupported", () => {
-    testSaga(watchItwStatusListSaga)
+    testSaga(handleItwOfflineStatusListSaga)
       .next()
       .select(selectItwSpecsVersion)
       .next("1.0.0")
       .isDone();
   });
 
-  it("runs Status List startup checks when supported", () => {
-    testSaga(watchItwStatusListSaga)
+  it("prunes the cache and applies cached Status Lists when supported", () => {
+    testSaga(handleItwOfflineStatusListSaga)
+      .next()
+      .select(selectItwSpecsVersion)
+      .next("1.4.6")
+      .call(checkStatusListCoherenceSaga)
+      .next()
+      .call(updateCredentialsStatusSaga, { itwVersion: "1.4.6" })
+      .next()
+      .isDone();
+  });
+});
+
+describe("handleItwStatusListSaga", () => {
+  it("stops when Status List is unsupported", () => {
+    testSaga(handleItwStatusListSaga)
+      .next()
+      .select(selectItwSpecsVersion)
+      .next("1.0.0")
+      .isDone();
+  });
+
+  it("refreshes stale Status Lists and applies them when supported", () => {
+    testSaga(handleItwStatusListSaga)
       .next()
       .select(selectItwSpecsVersion)
       .next("1.4.6")
       .select(selectItwEnv)
       .next("prod")
-      .call(checkStatusListCoherenceSaga)
-      .next()
       .call(refreshStaleEntries, {
         itwVersion: "1.4.6",
         x509CertRoot: getEnv("prod").X509_CERT_ROOT

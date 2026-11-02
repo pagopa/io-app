@@ -91,4 +91,4 @@ catalog:
   react-native-svg: "^15.14.0"
 
 minimumReleaseAgeExclude:
-  - "@pagopa/io-react-native-wallet@3.8.3"
+  - "@pagopa/io-react-native-wallet@3.8.4"
