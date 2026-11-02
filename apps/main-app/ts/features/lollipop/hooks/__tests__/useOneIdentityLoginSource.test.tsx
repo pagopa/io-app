@@ -619,6 +619,27 @@ describe("useOneIdentityLoginSource", () => {
       expect(onFailure).not.toHaveBeenCalled();
     });
 
+    it("should keep the /authorize webviewSource while the assertion-ref is being verified", async () => {
+      jest.mocked(lollipopSamlVerify).mockImplementation(() => undefined);
+
+      const { result } = await setupReadyState();
+      const authorizeState = result.current.loginSourceState;
+      const url = "https://idp.example.com/sso?SAMLRequest=encoded-request";
+
+      act(() => {
+        result.current.shouldBlockUrlNavigationWhileCheckingLollipop(url);
+      });
+
+      expect(result.current.loginSourceState).toEqual({
+        status: "verifying-assertion-ref",
+        url,
+        webviewSource:
+          authorizeState.status === "one-identity-authorize"
+            ? authorizeState.webviewSource
+            : undefined
+      });
+    });
+
     it("should call onFailure with the reason when LolliPOP verification fails", async () => {
       jest
         .mocked(lollipopSamlVerify)

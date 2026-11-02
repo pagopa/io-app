@@ -1100,7 +1100,7 @@
                 "title": "Facile, sicuro, ufficiale"
               },
               "2": {
-                "content": "Titoli di studio, attestato di residenza e altri: potrai aggiungere all’app IO nuovi documenti ufficiali.",
+                "content": "Potrai aggiungere all’app IO nuovi documenti ufficiali.",
                 "title": "Nuovi documenti in arrivo"
               },
               "3": {
@@ -1123,13 +1123,13 @@
               "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?"
             },
             "features": {
-              "1": "Usi la tua Patente su IO come documento di riconoscimento",
-              "2": "Ti basta il tuo telefono per dimostrare la tua identità",
-              "3": "Hai tutto ciò che ti serve anche se lasci a casa il portafoglio",
-              "4": "I nuovi documenti digitali ufficiali, solo sull’app IO",
-              "5": "Accedi in pochi tocchi ai servizi digitali della PA"
+              "1": "Nuovi documenti digitali ufficiali, solo sull’app IO",
+              "2": "La tua Patente su IO è valida come documento di riconoscimento",
+              "3": "Ti basta il tuo telefono per dimostrare la tua identità",
+              "4": "Potrai accedere in pochi tocchi ai servizi digitali della PA",
+              "5": "Un aiuto nel tuo quotidiano, sempre a portata di mano"
             },
-            "privacyAndTos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
+            "privacyAndTos": "Premendo **Continua** dichiari di aver preso visione dell'[Informativa Privacy]({{privacyUrl}}) e accetti i [Termini e Condizioni d'uso]({{tosUrl}}).",
             "title": "I tuoi documenti digitali con IT-Wallet: sicuri, ufficiali e sempre con te"
           },
           "legacy": {
@@ -1149,7 +1149,7 @@
         "activation": {
           "action": "Inizia",
           "description": "Con piena validità ufficiale, digitali e sempre a portata di mano!",
-          "title": "Porta su IO i tuoi documenti digitali"
+          "title": "Porta su IO i tuoi documenti"
         },
         "l2_banner": {
           "cta": "Aggiungi documento",
@@ -1658,7 +1658,7 @@
           "title": "Un problema non permette di continuare"
         },
         "notEntitledCredentialError": {
-          "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
+          "body": "Assicurati di avere il documento fisico valido, o di possedere i requisiti per ottenerlo, prima di richiedere la sua versione digitale.",
           "primaryAction": "Ho capito",
           "title": "Non è possibile aggiungere il documento"
         },
@@ -1873,8 +1873,8 @@
         "bottomSheets": {
           "EuropeanDisabilityCard": {
             "expiring": {
-              "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio.",
-              "title": "Carta europea della disabilità su IO: documento in scadenza"
+              "content": "Puoi richiedere il rinnovo della tua Carta Europea della Disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio.",
+              "title": "Carta Europea della Disabilità su IO: documento in scadenza"
             }
           },
           "eidInfo": {
@@ -1899,6 +1899,20 @@
             "titleExpired": "Documenti su IO:\nverifica la tua identità",
             "triggerLabel": "Cos'è?"
           },
+          "eidInvalid": {
+            "alert": {
+              "action": {
+                "detail": "Scopri di più",
+                "wallet": "Rivedi i dati"
+              },
+              "allExpired": {
+                "action": "Conferma identità",
+                "content": "Conferma la tua identità per continuare a usare il tuo portafoglio IT-Wallet."
+              },
+              "content": "Abbiamo rilevato modifiche ai tuoi dati anagrafici."
+            },
+            "cta": "Aggiorna IT-Wallet ID"
+          },
           "generic": {
             "expired": {
               "content": "Rimuovilo dal Portafoglio. Quando lo avrai rinnovato potrai aggiungere la versione digitale aggiornata.",
@@ -1914,11 +1928,11 @@
           "mDL": {
             "expired": {
               "content": "###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO.",
-              "contentNew": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente perché questa è scaduta.\n\nRinnova il documento presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO.",
+              "contentNew": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente perché questa è scaduta. \n\nRinnova la tua Patente di guida: verifica i tuoi requisiti di idoneità con un visita presso un medico (o un ente autorizzato) e procedi al pagamento dei bollettini richiesti.\n\nIn alcuni casi - dopo la visita medica - è necessario completare il rinnovo presso un Ufficio della Motorizzazione Civile. Se sono passati più di 5 anni dalla scadenza, dovrai sostenere di nuovo l'esame pratico di guida.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida scaduta, un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO.\n\n###### Buono a sapersi\n\nPuoi continuare a usare la Patente digitale come documento di riconoscimento.",
               "title": "La tua Patente di guida risulta non valida"
             },
             "expiring": {
-              "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
+              "content": "Rinnova la tua Patente di guida: verifica i tuoi requisiti di idoneità con un visita presso un medico (o un ente autorizzato) e procedi al pagamento dei bollettini richiesti.\n\nIn alcuni casi - dopo la visita medica - è necessario completare il rinnovo presso un Ufficio della Motorizzazione Civile. \n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
               "cta": "Scopri di più",
               "title": "Patente su IO: documento in scadenza"
             },
@@ -1935,6 +1949,7 @@
           "actions": {
             "hideClaimValues": "Nascondi gli attributi del documento",
             "openIPatente": "Vai al saldo punti patente",
+            "discoverOpportunities": "Scopri le opportunità",
             "removeFromWallet": "Rimuovi dal Portafoglio",
             "requestAssistance": "Qualcosa non torna?",
             "updateDigitalCredential": "Aggiorna il documento digitale"
@@ -1982,7 +1997,7 @@
             "content": {
               "education_attendance": "La tua iscrizione scolastica digitale ha piena validità ufficiale.",
               "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
-              "education_diploma": "I tuoi Titoli di studio scolastici digitali hanno piena validità ufficiale.",
+              "education_diploma": "I tuoi titoli di studio scolastici digitali hanno piena validità ufficiale.",
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
               "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
             },
@@ -2393,7 +2408,7 @@
           "title": "IT-Wallet"
         },
         "manage": {
-          "content": "###### Cosa puoi fare con il portafoglio IT-Wallet di IO?\n - Ottieni la versione digitale dei tuoi documenti personali, titoli, attestati\n - Dimostri identità e idoneità alla guida con la Patente digitale\n - Accedi ai servizi digitali della PA in pochi passaggi\n - Usi la Tessera Sanitaria per acquistare farmaci e prenotare visite mediche\n Per saperne di più, [visita il sito IT-Wallet]()",
+          "content": "###### Cosa puoi fare con il portafoglio IT-Wallet di IO?\n - Ottieni la versione digitale dei tuoi documenti personali, titoli, attestati\n - Dimostri identità e idoneità alla guida con la Patente digitale\n - Accedi ai servizi digitali della PA in pochi passaggi\n - Usi la Tessera Sanitaria per acquistare farmaci e prenotare visite mediche\n Per saperne di più, [visita il sito IT-Wallet](https:\/\/www.wallet.gov.it)",
           "cta": {
             "obtain": "Attiva IT-Wallet",
             "revoke": "Disattiva IT-Wallet"
@@ -3751,7 +3766,7 @@
       },
       "beforeContinue": {
         "requestBonus": "Richiedi il bonus",
-        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}})."
+        "text": "Premendo 'Richiedi il bonus' dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}})."
       },
       "boolPrerequisites": {
         "emptyValueError": "Seleziona un’opzione per continuare",

@@ -17,6 +17,7 @@ import {
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import {
   JSX,
+  PropsWithChildren,
   ReactElement,
   ReactNode,
   useCallback,
@@ -105,6 +106,15 @@ export const useIOBottomSheetModal = ({
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
 
+  const AndroidModalContainer = useCallback(
+    ({ children }: PropsWithChildren) => (
+      <Modal onRequestClose={dismissAll} transparent>
+        {children}
+      </Modal>
+    ),
+    [dismissAll]
+  );
+
   const {
     backdrop: { opacity: backdropOpacity },
     modal: { backgroundColor }
@@ -183,6 +193,11 @@ export const useIOBottomSheetModal = ({
         accessible={false}
         backdropComponent={BackdropElement}
         backgroundStyle={{ backgroundColor }}
+        containerComponent={
+          Platform.OS === "android" && !screenReaderEnabled && !forceFullscreen
+            ? AndroidModalContainer
+            : undefined
+        }
         enableDismissOnClose={true}
         enableDynamicSizing={!snapPoint}
         footerComponent={(props: BottomSheetFooterProps) =>
