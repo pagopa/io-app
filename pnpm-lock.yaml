@@ -419,8 +419,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-wallet':
-        specifier: 3.8.3
-        version: 3.8.3(1980c7d3d346854dd414a200c92bb934)
+        specifier: 3.8.4
+        version: 3.8.4(1980c7d3d346854dd414a200c92bb934)
       '@pagopa/react-native-cie':
         specifier: ^1.5.0
         version: 1.5.0
@@ -3578,8 +3578,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@pagopa/io-react-native-wallet@3.8.3':
-    resolution: {integrity: sha512-JmJshp5HaH7SqyT6A+BdKUQcTDKBE/vabPgJbt+5D8f4/UiO/5LQOUwYT7tlu7XNKOH+EQWP8z7xm9YOu0T5vg==}
+  '@pagopa/io-react-native-wallet@3.8.4':
+    resolution: {integrity: sha512-5Aga+PlmBM/NCOrgH13q827SjmXxfzGQ1oxUiciVsSxHp1qn4C+471YK7khotlUZ5ntzxqDRe8fwd19iwUJUHA==}
     peerDependencies:
       '@pagopa/io-react-native-crypto': '*'
       '@pagopa/io-react-native-iso18013': '*'
@@ -16217,7 +16217,7 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
 
-  '@pagopa/io-react-native-wallet@3.8.3(1980c7d3d346854dd414a200c92bb934)':
+  '@pagopa/io-react-native-wallet@3.8.4(1980c7d3d346854dd414a200c92bb934)':
     dependencies:
       '@owf/crypto': 0.4.2
       '@owf/token-status-list': 0.4.2
@@ -16251,7 +16251,7 @@ snapshots:
       '@openid4vc/utils': 0.4.3
       '@pagopa/io-wallet-oid-federation': 1.5.8
       '@pagopa/io-wallet-utils': 1.5.8
-      js-base64: 3.7.8
+      js-base64: 3.9.4
       zod: 4.3.6
 
   '@pagopa/io-wallet-oid-federation@1.5.8':

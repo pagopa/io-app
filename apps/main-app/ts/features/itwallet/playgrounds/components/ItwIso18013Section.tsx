@@ -3,12 +3,15 @@ import {
   ListItemHeader,
   ListItemInfo,
   ListItemNav,
+  ListItemSwitch,
   VStack
 } from "@io-app/design-system";
 import { Alert, View } from "react-native";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { itwSetProximityNfcLocallyEnabled } from "../../common/store/actions/preferences";
+import { itwIsProximityNfcLocallyEnabledSelector } from "../../common/store/selectors/preferences";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwRevokeProximityConsentByKey } from "../../presentation/proximity/store/actions";
 import { itwProximityConsentsEntriesSelector } from "../../presentation/proximity/store/selectors/consents";
@@ -17,6 +20,9 @@ export const ItwIso18013Section = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const consents = useIOSelector(itwProximityConsentsEntriesSelector);
+  const isNfcLocallyEnabled = useIOSelector(
+    itwIsProximityNfcLocallyEnabledSelector
+  );
 
   const handleRevokeConsent = (key: string) => {
     dispatch(itwRevokeProximityConsentByKey(key));
@@ -25,6 +31,14 @@ export const ItwIso18013Section = () => {
   return (
     <View>
       <ListItemHeader label="ISO 18013" />
+      <ListItemSwitch
+        description="Enable NFC engagement in proximity, regardless of the remote config"
+        label="Proximity NFC"
+        onSwitchValueChange={value =>
+          dispatch(itwSetProximityNfcLocallyEnabled(value))
+        }
+        value={isNfcLocallyEnabled}
+      />
       <ListItemNav
         description="Navigate to the ITW proximity flow playground"
         label="Proximity flow playground"
