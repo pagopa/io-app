@@ -6,11 +6,11 @@ import {
   SharedValue,
   useAnimatedReaction,
   useAnimatedSensor,
-  useReducedMotion,
   useSharedValue
 } from "react-native-reanimated";
 
 import { useIsScreenFocused } from "./useIsScreenFocused";
+import { useReduceMotionEnabled } from "./useReduceMotionEnabled";
 
 /**
  * Every rotation sensor user must pass this config: Reanimated shares one
@@ -64,7 +64,7 @@ export const useRotationSensor = (): SharedValue<number> => {
  */
 export const useRotationEffectEnabled = (): boolean => {
   const isFocused = useIsScreenFocused();
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReduceMotionEnabled();
   const [appState, setAppState] = useState(AppState.currentState);
 
   useEffect(() => {

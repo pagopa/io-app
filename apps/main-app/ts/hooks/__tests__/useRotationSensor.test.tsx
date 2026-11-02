@@ -1,9 +1,10 @@
 import { act, render, renderHook } from "@testing-library/react-native";
 import { AppState, AppStateStatus } from "react-native";
-import { useAnimatedSensor, useReducedMotion } from "react-native-reanimated";
+import { useAnimatedSensor } from "react-native-reanimated";
 
 import { RotationSensor } from "../../components/RotationSensor";
 import { useIsScreenFocused } from "../useIsScreenFocused";
+import { useReduceMotionEnabled } from "../useReduceMotionEnabled";
 import { useRotationEffectEnabled } from "../useRotationSensor";
 
 jest.mock("react-native-reanimated", () => {
@@ -15,13 +16,16 @@ jest.mock("react-native-reanimated", () => {
       unregister: jest.fn(),
       isAvailable: true,
       config: {}
-    })),
-    useReducedMotion: jest.fn(() => false)
+    }))
   };
 });
 
 jest.mock("../useIsScreenFocused", () => ({
   useIsScreenFocused: jest.fn(() => true)
+}));
+
+jest.mock("../useReduceMotionEnabled", () => ({
+  useReduceMotionEnabled: jest.fn(() => false)
 }));
 
 describe("useRotationEffectEnabled", () => {
@@ -46,14 +50,14 @@ describe("useRotationEffectEnabled", () => {
     }
   ])("returns $expected when $name", ({ focused, reduceMotion, expected }) => {
     jest.mocked(useIsScreenFocused).mockReturnValue(focused);
-    jest.mocked(useReducedMotion).mockReturnValue(reduceMotion);
+    jest.mocked(useReduceMotionEnabled).mockReturnValue(reduceMotion);
     const { result } = renderHook(useRotationEffectEnabled);
     expect(result.current).toBe(expected);
   });
 
   it("is disabled while the app is in the background", () => {
     jest.mocked(useIsScreenFocused).mockReturnValue(true);
-    jest.mocked(useReducedMotion).mockReturnValue(false);
+    jest.mocked(useReduceMotionEnabled).mockReturnValue(false);
     const addEventListener = jest
       .spyOn(AppState, "addEventListener")
       .mockReturnValue({ remove: jest.fn() });

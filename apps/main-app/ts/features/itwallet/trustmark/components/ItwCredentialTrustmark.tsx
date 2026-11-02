@@ -37,11 +37,11 @@ import Animated, {
   Extrapolation,
   interpolate,
   SharedValue,
-  useDerivedValue,
-  useReducedMotion
+  useDerivedValue
 } from "react-native-reanimated";
 
 import { RotationSensor } from "../../../../components/RotationSensor";
+import { useReduceMotionEnabled } from "../../../../hooks/useReduceMotionEnabled";
 import { useRotationEffectEnabled } from "../../../../hooks/useRotationSensor";
 import { useIOSelector } from "../../../../store/hooks";
 import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils";
@@ -72,7 +72,7 @@ export const ItwCredentialTrustmark = ({
   credential,
   onPress
 }: ItwCredentialTrustmarkProps) => {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReduceMotionEnabled();
   const { themeType } = useIOThemeContext();
 
   const isLightMode = themeType === "light";
