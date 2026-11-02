@@ -5,20 +5,24 @@ import { StatusListRepository } from "../utils/repository";
 
 /**
  * Runs startup coherence for the Status List Token cache pruning stored entries
- * no longer referenced by any owner
+ * no longer referenced by any owner. Errors are ignored to not block startup.
  */
 export function* checkStatusListCoherenceSaga() {
-  const referencedUris = yield* select(itwStatusListReferencedUrisSelector);
-  const cached = yield* call(StatusListRepository.list);
+  try {
+    const referencedUris = yield* select(itwStatusListReferencedUrisSelector);
+    const cached = yield* call(StatusListRepository.list);
 
-  const uniqueRefs = new Set(referencedUris);
+    const uniqueRefs = new Set(referencedUris);
 
-  // Remove unreferenced: cached but not referenced by any owner
-  const unreferenced = cached
-    .map(payload => payload.sub)
-    .filter(uri => !uniqueRefs.has(uri));
+    // Remove unreferenced: cached but not referenced by any owner
+    const unreferenced = cached
+      .map(payload => payload.sub)
+      .filter(uri => !uniqueRefs.has(uri));
 
-  if (unreferenced.length > 0) {
-    yield* call(StatusListRepository.removeMany, unreferenced);
+    if (unreferenced.length > 0) {
+      yield* call(StatusListRepository.removeMany, unreferenced);
+    }
+  } catch {
+    // Pruning is best-effort: a malformed cache entry must not block startup.
   }
 }

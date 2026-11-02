@@ -145,10 +145,11 @@ describe("OneIdentityCieIdLoginScreen", () => {
       .calls[0][0];
     onSuccess("https://not-whitelisted.example.com");
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
-      params: { url: "https://not-whitelisted.example.com" }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL, {
+        url: "https://not-whitelisted.example.com"
+      })
+    );
   });
 
   it("should navigate to CIE_ID_ERROR on a generic WebView error", () => {
@@ -163,16 +164,15 @@ describe("OneIdentityCieIdLoginScreen", () => {
       }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
-      params: {
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, {
         failureData: {
           description: "net::ERR_INTERNET_DISCONNECTED",
           code: -2,
           url: "https://example.com/authorize"
         }
-      }
-    });
+      })
+    );
   });
 });
 
