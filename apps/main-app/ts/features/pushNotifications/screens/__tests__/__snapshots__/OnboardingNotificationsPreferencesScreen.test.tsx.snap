@@ -422,6 +422,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2065,6 +2066,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3709,6 +3711,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -5353,6 +5356,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -6997,6 +7001,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

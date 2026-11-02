@@ -756,6 +756,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {

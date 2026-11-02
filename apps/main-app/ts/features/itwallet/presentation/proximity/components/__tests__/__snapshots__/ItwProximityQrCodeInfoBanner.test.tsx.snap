@@ -731,6 +731,7 @@ exports[`ItwProximityQrCodeInfoBanner should match snapshot 1`] = `
                                     },
                                   ]
                                 }
+                                pointerEvents="none"
                                 style={
                                   [
                                     {

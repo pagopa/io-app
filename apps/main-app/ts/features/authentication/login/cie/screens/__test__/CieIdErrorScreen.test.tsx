@@ -9,19 +9,9 @@ jest.mock("../../../../../../hooks/useDebugInfo", () => ({
   useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
 }));
 
-const mockReplace = jest.fn();
-const mockNavigate = jest.fn();
+const mockPopTo = jest.fn();
+const mockPopToTop = jest.fn();
 
-jest.mock("@react-navigation/native", () => {
-  const actualNav = jest.requireActual("@react-navigation/native");
-  return {
-    ...actualNav,
-    useNavigation: () => ({
-      replace: mockReplace,
-      navigate: mockNavigate
-    })
-  };
-});
 // const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
@@ -55,12 +45,11 @@ describe("CieIdErrorScreen where device supports NFC", () => {
 
     // expect(mockDispatch).toHaveBeenCalled();
 
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
-    });
-    expect(mockReplace).not.toHaveBeenCalled();
+    expect(mockPopTo).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
+    );
   });
-  it("Should properly call replace", testReplace);
+  it("Should pop to LANDING on secondary action", testPopToLanding);
 });
 describe("CieIdErrorScreen where device doesn't support NFC", () => {
   afterEach(jest.clearAllMocks);
@@ -79,12 +68,9 @@ describe("CieIdErrorScreen where device doesn't support NFC", () => {
 
     fireEvent.press(primaryAction);
 
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.IDP_SELECTION
-    });
-    expect(mockReplace).not.toHaveBeenCalled();
+    expect(mockPopTo).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.IDP_SELECTION);
   });
-  it("Should properly call pop-to-top", testReplace);
+  it("Should pop to LANDING on secondary action", testPopToLanding);
 });
 
 describe("CieIdErrorScreen debug info", () => {
@@ -128,8 +114,12 @@ function renderScreen(params?: CieIdErrorScreenParams) {
   };
   return render(
     <CieIdErrorScreen
-      // The screen reads navigation from useIONavigation, mocked above
-      navigation={{} as Props["navigation"]}
+      navigation={
+        {
+          popTo: mockPopTo,
+          popToTop: mockPopToTop
+        } as unknown as Props["navigation"]
+      }
       route={route}
     />
   );
@@ -147,12 +137,12 @@ function testMatchSnapshot() {
   expect(component).toMatchSnapshot();
 }
 
-function testReplace() {
+function testPopToLanding() {
   const { getByTestId } = renderScreen();
   const primaryAction = getByTestId("cie-id-error-secondary-action");
 
   fireEvent.press(primaryAction);
 
-  expect(mockNavigate).not.toHaveBeenCalled();
-  expect(mockReplace).toHaveBeenCalled();
+  expect(mockPopTo).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.LANDING);
+  expect(mockPopToTop).not.toHaveBeenCalled();
 }
