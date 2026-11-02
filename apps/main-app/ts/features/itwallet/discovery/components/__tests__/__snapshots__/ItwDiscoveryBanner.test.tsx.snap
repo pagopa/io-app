@@ -1871,7 +1871,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for activation banne
                       }
                     >
                       <View
-                        accessibilityLabel="Porta su IO i tuoi documenti digitali
+                        accessibilityLabel="Porta su IO i tuoi documenti
 Con piena validità ufficiale, digitali e sempre a portata di mano!
 Inizia"
                         accessibilityRole="button"
@@ -2258,7 +2258,7 @@ Inizia"
                                   ]
                                 }
                               >
-                                Porta su IO i tuoi documenti digitali
+                                Porta su IO i tuoi documenti
                               </Text>
                               <View
                                 accessibilityLabel="Chiudi"
