@@ -1,5 +1,6 @@
 import { and, assertEvent, assign, not, or, raise } from "xstate";
 
+import { CURRENT_ITW_SPECS_VERSION } from "../../common/utils/constants";
 import { ItwTags } from "../tags";
 import { getIssuanceItwVersion, InitialContext } from "./context";
 import { IssuanceFailureType } from "./failure";
@@ -70,10 +71,7 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
             // This is necessary because a user might use a different IT-Wallet version outside this machine:
             // - User has 1.0 PID and is upgrading (1.0 -> 1.4)
             // - User is whitelisted but falls back to L2 (1.4 -> 1.0)
-            const itwVersion =
-              event.mode === "upgrade" || event.level === "l3"
-                ? CURRENT_ITW_SPECS_VERSION
-                : "1.0.0";
+            const itwVersion = getIssuanceItwVersion(event.mode, event.level);
 
             return {
               mode: event.mode,
