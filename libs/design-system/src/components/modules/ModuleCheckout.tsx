@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IODimensions } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { IOButton } from "../buttons";
 import { HStack, VStack } from "../layout";
 import { IOLogoPaymentType, LogoPayment } from "../logos";
@@ -131,8 +131,8 @@ const ModuleCheckoutSkeleton = ({
     accessible={true}
     endBlock={
       <IOSkeleton
-        height={16}
-        radius={IODimensions.radius.default}
+        height={IOTypography.buttonText.size}
+        radius={IODimensions.radius.skeleton.text}
         shape="rectangle"
         width={64}
       />
@@ -143,20 +143,20 @@ const ModuleCheckoutSkeleton = ({
         style={{ alignItems: "center" }}
       >
         <IOSkeleton
-          radius={IODimensions.radius.default}
+          radius={IODimensions.radius.skeleton.graphic}
           shape="square"
           size={IODimensions.size.icon.module.default}
         />
-        <VStack space={8}>
+        <VStack space={IODimensions.gap.skeleton.items}>
           <IOSkeleton
-            height={20}
-            radius={IODimensions.radius.default}
+            height={IOTypography.h6.size}
+            radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
             width={170}
           />
           <IOSkeleton
-            height={16}
-            radius={IODimensions.radius.default}
+            height={IOTypography.bodySmall.size}
+            radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
             width={110}
           />

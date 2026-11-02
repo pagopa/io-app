@@ -111,7 +111,7 @@ const ModuleIDPSkeleton = ({
     endBlock={
       <IOSkeleton
         height={IDP_LOGO_SIZE.height}
-        radius={IODimensions.radius.default}
+        radius={IODimensions.radius.skeleton.graphic}
         shape="rectangle"
         width={IDP_LOGO_SIZE.width}
       />
@@ -119,7 +119,7 @@ const ModuleIDPSkeleton = ({
     startBlock={
       <IOSkeleton
         height={IOTypography.caption.size}
-        radius={IODimensions.radius.default}
+        radius={IODimensions.radius.skeleton.text}
         shape="rectangle"
         width="50%"
       />

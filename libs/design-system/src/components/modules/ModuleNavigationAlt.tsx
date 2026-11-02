@@ -9,7 +9,7 @@ import {
 import { SvgProps } from "react-native-svg";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IODimensions } from "../../core";
+import { IOColors, IODimensions, IOTypography } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -189,20 +189,20 @@ const ModuleNavigationAltSkeleton = ({
         style={{ alignItems: "center" }}
       >
         <IOSkeleton
-          radius={IODimensions.radius.default}
+          radius={IODimensions.radius.skeleton.graphic}
           shape="square"
           size={IODimensions.size.module.graphic}
         />
-        <VStack space={4}>
+        <VStack space={IODimensions.gap.skeleton.items}>
           <IOSkeleton
-            height={16}
-            radius={IODimensions.radius.default}
+            height={IOTypography.bodySmall.size}
+            radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
             width={96}
           />
           <IOSkeleton
-            height={12}
-            radius={IODimensions.radius.default}
+            height={IOTypography.labelMini.size}
+            radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
             width={160}
           />

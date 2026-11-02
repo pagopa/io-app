@@ -162,6 +162,7 @@ const componentGap = {
     description: system.gap.description,
     caption: system.gap.caption
   },
+  skeleton: { items: 8 },
   /* `items`: between the step bars */
   stepper: { items: 4 },
   /* `icon`: between the icon and the label; `items`: between tabs */
@@ -216,6 +217,8 @@ const componentRadius = {
   badge: 24,
   otpInput: system.radius.default,
   selection: { control: 6 },
+  /* `text`: bars for text; `graphic`: boxes for icons, images and logos */
+  skeleton: { text: system.radius.default, graphic: system.radius.default },
   /* Pill: above half the tab height */
   tab: 24,
   tag: 6,

@@ -2,7 +2,12 @@ import { isValidElement, ReactNode } from "react";
 import { ImageURISource, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IODimensions, IOListItemStyles } from "../../core";
+import {
+  IOColors,
+  IODimensions,
+  IOListItemStyles,
+  IOTypography
+} from "../../core";
 import { WithTestID } from "../../utils/types";
 import { isImageUri } from "../../utils/url";
 import { Avatar } from "../avatar/Avatar";
@@ -253,24 +258,24 @@ const ListItemTransactionSkeleton = ({
           size={IODimensions.size.avatar.small}
         />
       </View>
-      <VStack space={4} style={{ flexGrow: 1 }}>
+      <VStack space={IODimensions.gap.skeleton.items} style={{ flexGrow: 1 }}>
         <IOSkeleton
-          height={16}
-          radius={IODimensions.radius.default}
+          height={IOTypography.h6.size}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
           width={62}
         />
         <IOSkeleton
-          height={16}
-          radius={IODimensions.radius.default}
+          height={IOTypography.bodySmall.size}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
           width={107}
         />
       </VStack>
       <View style={{ marginLeft: IODimensions.gap.listItem.default.leading }}>
         <IOSkeleton
-          height={24}
-          radius={IODimensions.radius.default}
+          height={IOTypography.h6.lineHeight}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
           width={70}
         />

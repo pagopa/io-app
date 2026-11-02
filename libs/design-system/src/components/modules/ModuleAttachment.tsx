@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { GestureResponderEvent, PressableProps } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IODimensions } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
 import { Icon } from "../icons";
@@ -160,8 +160,8 @@ const ModuleAttachmentSkeleton = ({
     startBlock={
       <VStack space={4}>
         <IOSkeleton
-          height={16}
-          radius={IODimensions.radius.default}
+          height={IOTypography.body.size}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
           width={114}
         />

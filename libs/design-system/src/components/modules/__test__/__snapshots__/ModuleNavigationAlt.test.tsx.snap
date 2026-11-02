@@ -120,7 +120,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Loading state 1`]
             {
               "display": "flex",
               "flexDirection": "column",
-              "gap": 4,
+              "gap": 8,
             }
           }
         >
@@ -142,7 +142,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Loading state 1`]
                   "backgroundColor": "#E8EBF1",
                   "borderCurve": "continuous",
                   "borderRadius": 8,
-                  "height": 16,
+                  "height": 14,
                   "width": 96,
                 },
                 {
@@ -171,7 +171,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Loading state 1`]
                   "backgroundColor": "#E8EBF1",
                   "borderCurve": "continuous",
                   "borderRadius": 8,
-                  "height": 16,
+                  "height": 14,
                   "width": 96,
                 },
                 {},
@@ -1485,7 +1485,7 @@ exports[`ModuleNavigationAlt - Snapshot Loading state 1`] = `
             {
               "display": "flex",
               "flexDirection": "column",
-              "gap": 4,
+              "gap": 8,
             }
           }
         >
@@ -1507,7 +1507,7 @@ exports[`ModuleNavigationAlt - Snapshot Loading state 1`] = `
                   "backgroundColor": "#E8EBF1",
                   "borderCurve": "continuous",
                   "borderRadius": 8,
-                  "height": 16,
+                  "height": 14,
                   "width": 96,
                 },
                 {
@@ -1536,7 +1536,7 @@ exports[`ModuleNavigationAlt - Snapshot Loading state 1`] = `
                   "backgroundColor": "#E8EBF1",
                   "borderCurve": "continuous",
                   "borderRadius": 8,
-                  "height": 16,
+                  "height": 14,
                   "width": 96,
                 },
                 {},

@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IODimensions } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -191,13 +191,13 @@ const ModuleCredentialSkeleton = ({
         style={{ alignItems: "center" }}
       >
         <IOSkeleton
-          radius={IODimensions.radius.default}
+          radius={IODimensions.radius.skeleton.graphic}
           shape="square"
           size={IODimensions.size.icon.module.default}
         />
         <IOSkeleton
-          height={16}
-          radius={IODimensions.radius.default}
+          height={IOTypography.bodySmall.size}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
           width={96}
         />
