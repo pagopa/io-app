@@ -188,133 +188,110 @@ describe("decodeAndTrackThirdPartyMessageDetailsIfNeeded", () => {
   } as ServiceDetails;
   const messageCategoryTag = "GENERIC";
 
+  const thirdPartyMessage = {
+    kind: "TPM",
+    id: "1",
+    third_party_message: {} as ThirdPartyMessage
+  } as ThirdPartyMessageUnion;
+
+  const thirdPartyMessageWithValidDetails = {
+    ...thirdPartyMessage,
+    third_party_message: {
+      details: {
+        // string of length >= 80 and < 10001
+        markdown:
+          "12345678901234567890123456789012345678901234567890123456789012345678901234567890",
+        // string of length >= 10 and < 121
+        subject: "1234567890"
+      }
+    }
+  };
+
+  const thirdPartyMessageWithInvalidDetails = {
+    ...thirdPartyMessage,
+    third_party_message: {
+      details: {
+        markdown: "1",
+        subject: "1"
+      }
+    }
+  };
+
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  it("should not call trackRemoteContentMessageDecodingWarning if it is a PN message", () => {
+  test.each<{
+    description: string;
+    isPnMessage: boolean;
+    shouldBeCalled: boolean;
+    thirdPartyMessage: ThirdPartyMessageUnion | undefined;
+  }>([
+    {
+      description:
+        "should not call trackRemoteContentMessageDecodingWarning if it is a PN message",
+      isPnMessage: true,
+      thirdPartyMessage: thirdPartyMessageWithValidDetails,
+      shouldBeCalled: false
+    },
+    {
+      description:
+        "should not call trackRemoteContentMessageDecodingWarning if there is no third party message",
+      isPnMessage: false,
+      thirdPartyMessage: undefined,
+      shouldBeCalled: false
+    },
+    {
+      description:
+        "should not call trackRemoteContentMessageDecodingWarning if there are no details for the third party message",
+      isPnMessage: false,
+      thirdPartyMessage,
+      shouldBeCalled: false
+    },
+    {
+      description:
+        "should not call trackRemoteContentMessageDecodingWarning if there are details for the third party message and they pass validation",
+      isPnMessage: false,
+      thirdPartyMessage: thirdPartyMessageWithValidDetails,
+      shouldBeCalled: false
+    },
+    {
+      description:
+        "should call trackRemoteContentMessageDecodingWarning if there are details for the third party message and they do not pass validation",
+      isPnMessage: false,
+      thirdPartyMessage: thirdPartyMessageWithInvalidDetails,
+      shouldBeCalled: true
+    }
+  ])("$description", ({ isPnMessage, thirdPartyMessage, shouldBeCalled }) => {
     const trackRemoteContentMessageDecodingWarningSpy = jest
       .spyOn(analytics, "trackRemoteContentMessageDecodingWarning")
       .mockImplementation(() => {});
 
-    const thirdPartyMessage = {
-      kind: "TPM",
-      id: "1",
-      third_party_message: {
-        details: {
-          markdown:
-            "12345678901234567890123456789012345678901234567890123456789012345678901234567890",
-          subject: "1234567890"
-        }
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageUnion;
-
     testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded(
-      true,
+      isPnMessage,
       thirdPartyMessage,
       service,
       messageCategoryTag
     );
 
-    expect(trackRemoteContentMessageDecodingWarningSpy).not.toHaveBeenCalled();
-  });
-  it("should not call trackRemoteContentMessageDecodingWarning if there is no third party message", () => {
-    const trackRemoteContentMessageDecodingWarningSpy = jest
-      .spyOn(analytics, "trackRemoteContentMessageDecodingWarning")
-      .mockImplementation(() => {});
+    if (!shouldBeCalled) {
+      expect(
+        trackRemoteContentMessageDecodingWarningSpy
+      ).not.toHaveBeenCalled();
+    } else {
+      expect(trackRemoteContentMessageDecodingWarningSpy).toHaveBeenCalledTimes(
+        1
+      );
 
-    testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded(
-      false,
-      undefined,
-      service,
-      messageCategoryTag
-    );
-
-    expect(trackRemoteContentMessageDecodingWarningSpy).not.toHaveBeenCalled();
-  });
-  it("should not call trackRemoteContentMessageDecodingWarning if there are no details for the third party message", () => {
-    const trackRemoteContentMessageDecodingWarningSpy = jest
-      .spyOn(analytics, "trackRemoteContentMessageDecodingWarning")
-      .mockImplementation(() => {});
-
-    const thirdPartyMessage = {
-      kind: "TPM",
-      id: "1",
-      third_party_message: {} as ThirdPartyMessage
-    } as ThirdPartyMessageUnion;
-
-    testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded(
-      false,
-      thirdPartyMessage,
-      service,
-      messageCategoryTag
-    );
-
-    expect(trackRemoteContentMessageDecodingWarningSpy).not.toHaveBeenCalled();
-  });
-  it("should not call trackRemoteContentMessageDecodingWarning if there are details for the third party message an they pass validation", () => {
-    const trackRemoteContentMessageDecodingWarningSpy = jest
-      .spyOn(analytics, "trackRemoteContentMessageDecodingWarning")
-      .mockImplementation(() => {});
-
-    const thirdPartyMessage = {
-      kind: "TPM",
-      id: "1",
-      third_party_message: {
-        details: {
-          // string of length >= 80 and < 10001
-          markdown:
-            "12345678901234567890123456789012345678901234567890123456789012345678901234567890",
-          // string of length >= 10 and < 121
-          subject: "1234567890"
-        }
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageUnion;
-
-    testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded(
-      false,
-      thirdPartyMessage,
-      service,
-      messageCategoryTag
-    );
-
-    expect(trackRemoteContentMessageDecodingWarningSpy).not.toHaveBeenCalled();
-  });
-  it("should call trackRemoteContentMessageDecodingWarning if there are details for the third party message and they do not pass validation", () => {
-    const trackRemoteContentMessageDecodingWarningSpy = jest
-      .spyOn(analytics, "trackRemoteContentMessageDecodingWarning")
-      .mockImplementation(() => {});
-
-    const thirdPartyMessage = {
-      kind: "TPM",
-      id: "1",
-      third_party_message: {
-        details: {
-          markdown: "1",
-          subject: "1"
-        }
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageUnion;
-
-    testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded(
-      false,
-      thirdPartyMessage,
-      service,
-      messageCategoryTag
-    );
-
-    expect(trackRemoteContentMessageDecodingWarningSpy).toHaveBeenCalledTimes(
-      1
-    );
-
-    expect(trackRemoteContentMessageDecodingWarningSpy).toHaveBeenCalledWith(
-      service.id,
-      service.name,
-      service.organization.name,
-      service.organization.fiscal_code,
-      messageCategoryTag,
-      expect.any(String)
-    );
+      expect(trackRemoteContentMessageDecodingWarningSpy).toHaveBeenCalledWith(
+        service.id,
+        service.name,
+        service.organization.name,
+        service.organization.fiscal_code,
+        messageCategoryTag,
+        expect.any(String)
+      );
+    }
   });
 });
 
