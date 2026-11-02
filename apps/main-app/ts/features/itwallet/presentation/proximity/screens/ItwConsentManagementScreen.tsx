@@ -11,14 +11,9 @@ import { useCallback, useMemo, useRef } from "react";
 import { Alert, View } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { getMixPanelCredential } from "../../../analytics/utils";
 import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
@@ -41,37 +36,29 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 /** Lists the saved proximity consents involving a specific credential type. */
-export const ItwConsentManagementScreen = ({ route }: Props) => {
+export const ItwConsentManagementScreen = ({ navigation, route }: Props) => {
   const { credentialType } = route.params;
-  const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isRevoking = useRef(false);
   const credentialName = useItwCredentialName(credentialType);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const consentsSelector = useMemo(
     () => itwProximityConsentsEntriesByCredentialTypeSelector(credentialType),
     [credentialType]
   );
   const entries = useIOSelector(consentsSelector);
 
-  const mixPanelCredential = useMemo(
-    () => getMixPanelCredential(credentialType, isItwL3),
-    [credentialType, isItwL3]
-  );
-
   useFocusEffect(
     useCallback(() => {
       if (entries.length === 0) {
         if (!isRevoking.current) {
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-            params: { credentialType }
+          navigation.popTo(ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL, {
+            credentialType
           });
         }
         return;
       }
-      trackItwConsentManagement({ credential: mixPanelCredential });
-    }, [credentialType, entries.length, mixPanelCredential, navigation])
+      trackItwConsentManagement();
+    }, [credentialType, entries.length, navigation])
   );
 
   const navigateToDetail = useCallback(

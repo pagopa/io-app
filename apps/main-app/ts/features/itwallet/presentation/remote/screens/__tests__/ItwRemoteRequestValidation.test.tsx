@@ -1,4 +1,5 @@
 import { act } from "@testing-library/react-native";
+import { ReactNode, Suspense, useState } from "react";
 import { Action, createStore } from "redux";
 import { fromPromise } from "xstate";
 
@@ -12,6 +13,7 @@ import { reproduceSequence } from "../../../../../../utils/tests.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
 import { identificationSuccess } from "../../../../../identification/store/actions/index.ts";
 import { testRemoteDeps } from "../../../../machine/utils/testDeps";
+import * as analytics from "../../analytics";
 import { itwRemoteMachine } from "../../machine/machine.ts";
 import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../../navigation/ItwRemoteParamsList.ts";
@@ -25,6 +27,21 @@ import { ItwRemoteRequestValidationScreen } from "../ItwRemoteRequestValidationS
 type ActorRef = ReturnType<typeof ItwRemoteMachineContext.useActorRef>;
 
 jest.useFakeTimers();
+
+// Same mechanism `freezeOnBlur` uses (react-freeze): suspend on a promise that never resolves
+const neverResolves = new Promise<never>(() => undefined);
+const Frozen = ({
+  children,
+  frozen
+}: {
+  children: ReactNode;
+  frozen: boolean;
+}) => {
+  if (frozen) {
+    throw neverResolves;
+  }
+  return children;
+};
 
 describe("ItwRemoteRequestValidationScreen", () => {
   it("should render the screen correctly", () => {
@@ -109,6 +126,30 @@ describe("ItwRemoteRequestValidationScreen", () => {
     });
   });
 
+  it("should track the remote start once across freezeOnBlur cycles", () => {
+    const trackStart = jest.spyOn(analytics, "trackItwRemoteStart");
+    const onSetFrozen = jest.fn();
+    const FreezeToggle = ({ children }: { children: ReactNode }) => {
+      const [frozen, setFrozen] = useState(false);
+      onSetFrozen(setFrozen);
+      return (
+        <Suspense fallback={null}>
+          <Frozen frozen={frozen}>{children}</Frozen>
+        </Suspense>
+      );
+    };
+
+    renderComponent({}, true, "same-device", FreezeToggle);
+    act(() => {
+      onSetFrozen.mock.lastCall[0](true);
+    });
+    act(() => {
+      onSetFrozen.mock.lastCall[0](false);
+    });
+
+    expect(trackStart).toHaveBeenCalledTimes(1);
+  });
+
   it("should change the loading text after timeout", async () => {
     const validPayload: ItwRemoteRequestPayload = {
       client_id: "abc123xy",
@@ -138,7 +179,9 @@ describe("ItwRemoteRequestValidationScreen", () => {
 const renderComponent = (
   payload: Partial<ItwRemoteRequestPayload> = {},
   isAuthenticated = true,
-  flowType: ItwRemoteFlowType
+  flowType: ItwRemoteFlowType,
+  Wrapper: (props: { children: ReactNode }) => ReactNode = ({ children }) =>
+    children
 ) => {
   const sequenceOfActions: ReadonlyArray<Action> = [
     applicationChangeState("active"),
@@ -196,10 +239,12 @@ const renderComponent = (
         logic={logic}
         options={{ input: { deps: testRemoteDeps() } }}
       >
-        <ItwRemoteRequestValidationScreen
-          navigation={mockNavigation}
-          route={route}
-        />
+        <Wrapper>
+          <ItwRemoteRequestValidationScreen
+            navigation={mockNavigation}
+            route={route}
+          />
+        </Wrapper>
       </ItwRemoteMachineContext.Provider>
     ),
     ITW_REMOTE_ROUTES.REQUEST_VALIDATION,

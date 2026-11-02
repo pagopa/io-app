@@ -20,16 +20,17 @@ import { ItwIssuanceCredentialLandingScreen } from "../ItwIssuanceCredentialLand
 const mockReplace = jest.fn();
 const mockNavigate = jest.fn();
 const mockPopToTop = jest.fn();
-const mockReset = jest.fn();
+const mockPopTo = jest.fn();
 const mockTrackItwAlreadyHasCredential = jest.fn();
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
   useNavigation: () => ({
+    addListener: jest.fn(),
     replace: mockReplace,
     navigate: mockNavigate,
     popToTop: mockPopToTop,
-    reset: mockReset
+    popTo: mockPopTo
   })
 }));
 
@@ -122,16 +123,9 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
         )
       );
 
-      expect(mockReset).toHaveBeenCalledWith({
-        index: 1,
-        routes: [
-          {
-            name: ROUTES.MAIN,
-            params: {
-              screen: ROUTES.WALLET_HOME
-            }
-          }
-        ]
+      expect(mockPopTo).toHaveBeenCalledWith(ROUTES.MAIN, {
+        screen: ROUTES.WALLET_HOME,
+        params: {}
       });
     });
 

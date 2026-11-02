@@ -31,9 +31,19 @@ export const itwDisableItwActivation = createStandardAction(
   "ITW_DISABLE_ITW_ACTIVATION"
 )();
 
+/** Records a successful activation through an IT-Wallet fallback. */
+export const itwSetL2Fallback = createStandardAction(
+  "ITW_SET_L2_FALLBACK"
+)<boolean>();
+
 export const itwSetIdentificationMode = createStandardAction(
   "ITW_SET_IDENTIFICATION_MODE"
 )<IdentificationContext["mode"] | undefined>();
+
+/** Local override enabling NFC engagement in the Proximity presentation. */
+export const itwSetProximityNfcLocallyEnabled = createStandardAction(
+  "ITW_SET_PROXIMITY_NFC_LOCALLY_ENABLED"
+)<boolean>();
 
 export type ItwWalletActivationFeedbackBannerData = {
   authMethod: string;
@@ -48,6 +58,10 @@ export const itwClearWalletActivationFeedbackBannerData = createStandardAction(
   "ITW_CLEAR_WALLET_ACTIVATION_FEEDBACK_BANNER_DATA"
 )<void>();
 
+export const itwSetDiscoverMoreCEDEnabled = createStandardAction(
+  "ITW_SET_DISCOVER_MORE_CED_ENABLED"
+)<boolean>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwClearCredentialUpgradeFailed>
   | ActionType<typeof itwClearWalletActivationFeedbackBannerData>
@@ -55,7 +69,10 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
   | ActionType<typeof itwSetCredentialUpgradeFailed>
+  | ActionType<typeof itwSetDiscoverMoreCEDEnabled>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwSetIdentificationMode>
+  | ActionType<typeof itwSetL2Fallback>
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
+  | ActionType<typeof itwSetProximityNfcLocallyEnabled>
   | ActionType<typeof itwSetWalletActivationFeedbackBannerData>;

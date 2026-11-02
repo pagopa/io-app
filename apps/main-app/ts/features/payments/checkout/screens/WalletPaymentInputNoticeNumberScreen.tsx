@@ -92,7 +92,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
           errorMessage={I18n.t(
             "wallet.payment.manual.noticeNumber.validationError"
           )}
-          icon="docPaymentCode"
+          icon="docCode"
           onChangeText={value => {
             const normalizedValue = trimAndLimitValue(
               value,

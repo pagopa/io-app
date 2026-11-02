@@ -19,6 +19,7 @@ import { WalletPaymentHeader } from "../WalletPaymentHeader";
 const mockSetOptions = jest.fn();
 const mockGoBack = jest.fn();
 const mockNavigate = {
+  addListener: jest.fn(),
   navigate: jest.fn(),
   goBack: mockGoBack,
   getParent: jest.fn().mockReturnValue({

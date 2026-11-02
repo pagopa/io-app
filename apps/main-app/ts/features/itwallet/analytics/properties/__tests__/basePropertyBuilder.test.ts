@@ -15,15 +15,21 @@ import {
 const expirationClaim = { value: "2100-09-04", name: "exp" };
 const jwtExpiration = "2100-09-04T00:00:00.000Z";
 
-const getStateWithCredentials = (credentials: {
-  [key: string]: CredentialMetadata;
-}) => {
+const getStateWithCredentials = (
+  credentials: {
+    [key: string]: CredentialMetadata;
+  },
+  credentialUpgradeFailed?: ReadonlyArray<string>
+) => {
   const defaultState = appReducer(undefined, applicationChangeState("active"));
   return _.merge(undefined, defaultState, {
     features: {
       itWallet: {
         credentials: {
           credentials
+        },
+        preferences: {
+          credentialUpgradeFailed
         }
       }
     }
@@ -139,13 +145,34 @@ describe("buildThirdPartyCredentialProperty", () => {
 
 describe("buildWalletListCredentialProperty", () => {
   it("returns not_available when no catalogue credential is present", () => {
-    const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE);
-    const state = getStateWithCredentials({
-      [credential.credentialId]: credential
-    });
+    const state = getStateWithCredentials({});
 
     expect(buildWalletListCredentialProperty(state)).toBe("not_available");
   });
+
+  // Credentials whose channel is unknown (e.g. stored without origin by older
+  // app versions) are attributed to the wallet list, never to the third-party channel
+  test.each([
+    { name: "valid", validity: undefined, expected: "valid" },
+    {
+      name: "not valid",
+      validity: { type: "status_assertion", status: "invalid" } as const,
+      expected: "not_valid"
+    }
+  ])(
+    "attributes a $name credential with unknown origin to the wallet list",
+    ({ validity, expected }) => {
+      const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
+        validity
+      });
+      const state = getStateWithCredentials({
+        [credential.credentialId]: credential
+      });
+
+      expect(buildWalletListCredentialProperty(state)).toBe(expected);
+      expect(buildThirdPartyCredentialProperty(state)).toBe("not_available");
+    }
+  );
 
   it("returns valid when at least one credential obtained via the catalogue is valid", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
@@ -247,6 +274,83 @@ describe("Documenti su IO aggregate credential properties", () => {
       });
     }
   );
+});
+
+describe("aggregate credential properties with credentials that need the IT-Wallet upgrade", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  const mdlFromCatalogue = getMockedCredential(CredentialType.DRIVING_LICENSE, {
+    origin: "catalogue"
+  });
+  const tsFromCatalogue = getMockedCredential(
+    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+    { origin: "catalogue" }
+  );
+  const mdlFromOffer = getMockedCredential(CredentialType.DRIVING_LICENSE, {
+    origin: "credentialOffer"
+  });
+
+  test.each([
+    {
+      name: "the only wallet list credential failed the upgrade",
+      credentials: [mdlFromCatalogue],
+      failed: [CredentialType.DRIVING_LICENSE],
+      expectedWalletList: "not_valid",
+      expectedThirdParty: "not_available"
+    },
+    {
+      name: "one wallet list credential failed the upgrade and another one is valid",
+      credentials: [mdlFromCatalogue, tsFromCatalogue],
+      failed: [CredentialType.DRIVING_LICENSE],
+      expectedWalletList: "valid",
+      expectedThirdParty: "not_available"
+    },
+    {
+      name: "all wallet list credentials failed the upgrade",
+      credentials: [mdlFromCatalogue, tsFromCatalogue],
+      failed: [
+        CredentialType.DRIVING_LICENSE,
+        CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+      ],
+      expectedWalletList: "not_valid",
+      expectedThirdParty: "not_available"
+    },
+    {
+      name: "the only third-party credential failed the upgrade",
+      credentials: [mdlFromOffer],
+      failed: [CredentialType.DRIVING_LICENSE],
+      expectedWalletList: "not_available",
+      expectedThirdParty: "not_valid"
+    }
+  ])(
+    "returns wallet list $expectedWalletList and third-party $expectedThirdParty when $name",
+    ({ credentials, failed, expectedWalletList, expectedThirdParty }) => {
+      const state = getStateWithCredentials(
+        Object.fromEntries(credentials.map(c => [c.credentialId, c])),
+        failed
+      );
+
+      expect(buildWalletListCredentialProperty(state)).toBe(expectedWalletList);
+      expect(buildThirdPartyCredentialProperty(state)).toBe(expectedThirdParty);
+    }
+  );
+
+  it("does not count as valid a credential issued before the IT-Wallet PID, i.e. not upgraded yet", () => {
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(true);
+    const pid = getMockedCredential(CredentialType.PID, {
+      jwt: { issuedAt: "2025-01-01T00:00:00.000Z", expiration: jwtExpiration }
+    });
+    const state = getStateWithCredentials({
+      [pid.credentialId]: pid,
+      [mdlFromCatalogue.credentialId]: mdlFromCatalogue
+    });
+
+    expect(buildWalletListCredentialProperty(state)).toBe("not_valid");
+  });
 });
 
 describe("computeItwStatus", () => {

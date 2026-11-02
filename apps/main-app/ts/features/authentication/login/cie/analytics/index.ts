@@ -2,8 +2,8 @@ import { mixpanelTrack } from "../../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../../utils/analytics";
-import { LoginType } from "../../../activeSessionLogin/screens/analytics";
 import { AuthLevel } from "../../../common/utils";
+import { LoginType } from "../../../common/utils/index";
 import { IdpCIE, IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 
 export const trackCieIdNoWhitelistUrl = (

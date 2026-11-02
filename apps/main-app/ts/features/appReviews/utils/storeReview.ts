@@ -1,3 +1,16 @@
-import AppReviewModule from "../native/AppReview";
+import * as StoreReview from "expo-store-review";
 
-export const requestAppReview = () => AppReviewModule.requestReview();
+import {
+  trackAppReviewRequestAttempt,
+  trackAppReviewRequestFailure
+} from "../analytics";
+
+export const requestAppReview = async () => {
+  trackAppReviewRequestAttempt();
+
+  try {
+    await StoreReview.requestReview();
+  } catch {
+    trackAppReviewRequestFailure();
+  }
+};

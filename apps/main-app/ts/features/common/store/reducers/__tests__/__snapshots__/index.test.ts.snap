@@ -151,7 +151,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "catalogue": {
         "kind": "PotNone",
       },
-      "isEnabledForCredentialsList": false,
       "translations": {
         "kind": "PotNone",
       },
@@ -238,6 +237,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "loginConfig": {
       "oneIdentityEnv": "prod",
       "oneIdentityLocalFeatureFlag": undefined,
+    },
+    "loginFlow": {
+      "isOneIdentityLogin": undefined,
     },
     "loginInfo": {
       "userFromSuccessLogin": false,

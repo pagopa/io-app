@@ -11,11 +11,10 @@ import {
   showSessionExpirationBannerSelector
 } from "../store/selectors";
 
-// Mock DeviceInfo for version checks
-jest.mock("react-native-device-info", () => ({
-  getVersion: jest.fn(() => "3.2.1.0"),
-  getReadableVersion: jest.fn(() => "3.2.1.0")
-}));
+// Mock AppVersion retrieval for version checks
+jest
+  .spyOn(require("../../../../utils/device"), "getDeviceAppVersion")
+  .mockReturnValue("3.2.1.0");
 
 describe("isActiveSessionLoginRemotelyEnabledSelector", () => {
   const getState = (loginConfig: object | undefined) =>

@@ -15,8 +15,8 @@ import {
   updateThirdPartyCredentialProperty
 } from "../../properties/propertyUpdaters";
 import {
+  handleAggregateCredentialPropertiesRefresh,
   handleCredentialRemovedAnalytics,
-  handleCredentialsCatalogueLoadedAnalytics,
   handleCredentialStoredAnalytics
 } from "../credentialAnalyticsHandlers";
 
@@ -136,8 +136,8 @@ describe("credentialAnalyticsHandlers", () => {
     expect(updateThirdPartyCredentialProperty).not.toHaveBeenCalled();
   });
 
-  it("updates aggregate credential properties when the catalogue is loaded", async () => {
-    await expectSaga(handleCredentialsCatalogueLoadedAnalytics)
+  it("recomputes the aggregate credential properties from the current state", async () => {
+    await expectSaga(handleAggregateCredentialPropertiesRefresh)
       .withState(store)
       .provide([[matchers.select(), store]])
       .run();

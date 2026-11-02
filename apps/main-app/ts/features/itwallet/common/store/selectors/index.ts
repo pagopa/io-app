@@ -28,12 +28,14 @@ import {
 import {
   itwCredentialUpgradeFailedSelector,
   itwIsActivationDisabledSelector,
-  itwIsFiscalCodeWhitelisted
+  itwIsFiscalCodeWhitelisted,
+  itwIsProximityNfcLocallyEnabledSelector
 } from "./preferences";
 import {
   isItwEnabledSelector,
   isItwMinAppVersionSupportedSelector,
-  isItwProximityMinAppVersionSupportedSelector
+  isItwProximityMinAppVersionSupportedSelector,
+  isItwProximityNfcMinAppVersionSupportedSelector
 } from "./remoteConfig";
 
 /**
@@ -44,6 +46,15 @@ import {
 export const itwIsL3EnabledSelector = (state: GlobalState) =>
   !!itwIsFiscalCodeWhitelisted(state) ||
   isItwMinAppVersionSupportedSelector(state);
+
+/**
+ * Identifies an active Documenti su IO wallet obtained through an IT-Wallet
+ * fallback.
+ */
+export const itwIsL2FallbackSelector = (state: GlobalState) =>
+  itwLifecycleIsValidSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
+  state.features.itWallet.preferences.isL2Fallback === true;
 
 /**
  * Returns if the discovery banner should be rendered. The banner is rendered
@@ -188,19 +199,21 @@ export const itwShouldRenderAgeVerificationUsageDetailsBannerSelector = (
  * ITW upgrade banner is displayed, the eID lifecycle alert is hidden so that
  * the user does not need to perform eID reissuance. The alert is hidden if:
  *
- * - The new IT Wallet design is being rendered (unless the eID is expired)
- * - The L3 upgrade banner is being displayed (unless the eID is expired)
+ * - The new IT Wallet design is being rendered (unless the eID is expired or
+ *   invalid)
+ * - The L3 upgrade banner is being displayed (unless the eID is expired or
+ *   invalid)
  * - The eID is expiring and the device is offline
  */
 export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean => {
-  if (itwCredentialsEidStatusSelector(state) === "jwtExpired") {
+  const eidStatus = itwCredentialsEidStatusSelector(state);
+  if (eidStatus === "jwtExpired" || eidStatus === "invalid") {
     return false;
   }
   return (
     itwShouldRenderNewItWalletSelector(state) ||
     itwShouldRenderL3UpgradeBannerSelector(state) ||
-    (itwCredentialsEidStatusSelector(state) === "jwtExpiring" &&
-      !isConnectedSelector(state))
+    (eidStatus === "jwtExpiring" && !isConnectedSelector(state))
   );
 };
 
@@ -256,6 +269,7 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
  * - The wallet is active but not an IT Wallet instance
  * - The banner was not dismissed by the user
  * - The activation is not disabled
+ * - The user did not activate Documenti su IO through a fallback
  */
 export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
@@ -263,7 +277,8 @@ export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   itwIsWalletDiscoveryBannerVisibleSelector(state) &&
-  !itwIsActivationDisabledSelector(state);
+  !itwIsActivationDisabledSelector(state) &&
+  !itwIsL2FallbackSelector(state);
 
 /**
  * Returns whether the l2 restricted mode banner should be rendered.
@@ -283,12 +298,16 @@ export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
   !itwLifecycleIsValidSelector(state) &&
   itwIsActivationDisabledSelector(state);
 
+/**
+ * Offers restricted documents after fallback activation or when NFC is
+ * unsupported.
+ */
 export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
   offlineAccessReasonSelector(state) === undefined &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   itwLifecycleIsValidSelector(state) &&
-  itwIsActivationDisabledSelector(state);
+  (itwIsActivationDisabledSelector(state) || itwIsL2FallbackSelector(state));
 
 /**
  * Returns whether the IT Wallet proximity presentation feature is enabled: the
@@ -299,3 +318,11 @@ export const isItwProximityEnabledSelector = (state: GlobalState) =>
   itwLifecycleIsITWalletValidSelector(state) &&
   isItwProximityMinAppVersionSupportedSelector(state) &&
   hasPresentableCredentialsSelector(state);
+
+/**
+ * Returns whether NFC engagement in the Proximity presentation is enabled,
+ * either remotely or through the local feature flag.
+ */
+export const isItwProximityNfcEnabledSelector = (state: GlobalState) =>
+  isItwProximityNfcMinAppVersionSupportedSelector(state) ||
+  itwIsProximityNfcLocallyEnabledSelector(state);

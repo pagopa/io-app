@@ -30,11 +30,11 @@ const SignatureFieldItem = (props: Props) => {
       <ListItemCheckbox
         accessibilityLabel={props.title}
         disabled={props.disabled}
+        label={props.title}
         onValueChange={() => {
           onChange(!checked);
         }}
         selected={checked}
-        value={props.title}
       />
       <View style={{ flexDirection: "row", paddingTop: 4, paddingBottom: 8 }}>
         <Body

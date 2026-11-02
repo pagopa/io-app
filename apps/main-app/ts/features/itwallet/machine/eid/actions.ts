@@ -21,6 +21,7 @@ import {
   itwSetAuthLevel,
   itwSetCredentialUpgradeFailed,
   itwSetIdentificationMode,
+  itwSetL2Fallback,
   itwSetWalletActivationFeedbackBannerData
 } from "../../common/store/actions/preferences";
 import {
@@ -70,6 +71,7 @@ export const onInitAction = assign<
 export const navigateToTosScreenAction = ({ context }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
     screen: ITW_ROUTES.DISCOVERY.INFO,
+    pop: true,
     params: { level: context.level }
   });
 };
@@ -78,7 +80,8 @@ export const navigateToIpzsPrivacyScreenAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.DISCOVERY.IPZS_PRIVACY
+    screen: ITW_ROUTES.DISCOVERY.IPZS_PRIVACY,
+    pop: true
   });
 };
 
@@ -87,6 +90,7 @@ export const navigateToIdentificationScreenAction = ({
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
     screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+    pop: true,
     params: { eidReissuing: context.mode === "reissuance" }
   });
 };
@@ -95,13 +99,15 @@ export const navigateToIdpSelectionScreenAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.IDENTIFICATION.IDP_SELECTION
+    screen: ITW_ROUTES.IDENTIFICATION.IDP_SELECTION,
+    pop: true
   });
 };
 
 export const navigateToSpidLoginScreenAction = ({ context }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.IDENTIFICATION.SPID.LOGIN
+    screen: ITW_ROUTES.IDENTIFICATION.SPID.LOGIN,
+    pop: true
   });
 };
 
@@ -109,7 +115,8 @@ export const navigateToCieIdLoginScreenAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN
+    screen: ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN,
+    pop: true
   });
 };
 
@@ -117,19 +124,22 @@ export const navigateToEidPreviewScreenAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW
+    screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW,
+    pop: true
   });
 };
 
 export const navigateToSuccessScreenAction = ({ context }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.ISSUANCE.EID_RESULT
+    screen: ITW_ROUTES.ISSUANCE.EID_RESULT,
+    pop: true
   });
 };
 
 export const navigateToFailureScreenAction = ({ context }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.ISSUANCE.EID_FAILURE
+    screen: ITW_ROUTES.ISSUANCE.EID_FAILURE,
+    pop: true
   });
 };
 
@@ -137,33 +147,40 @@ export const navigateToNfcInstructionsScreenAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC
+    screen: ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC,
+    pop: true
   });
 };
 
 export const navigateToWalletAction = ({ context }: EidActionArgs) => {
-  const { toast, navigation } = context.deps;
-  toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
-  // Navigate instead of resetting: the main navigator is already mounted at
-  // the bottom of the stack, so this pops the whole issuance flow and reuses
-  // it. A reset would assign it a new key, remounting the tab navigator and
-  // flashing a blank screen before the wallet appears.
-  navigation.navigate(ROUTES.MAIN, {
+  context.deps.toast.success(
+    I18n.t("features.itWallet.issuance.credentialResult.toast")
+  );
+  context.deps.navigation.popTo(ROUTES.MAIN, {
     screen: ROUTES.WALLET_HOME,
     params: {}
   });
 };
 
+/**
+ * Fallback activations share the IT-Wallet catalogue; legacy L2 keeps its
+ * original catalogue.
+ */
 export const navigateToCredentialCatalogAction = ({
   context
 }: EidActionArgs) => {
-  context.deps.navigation.replace(ITW_ROUTES.MAIN, {
-    screen:
-      context.level === "l3"
-        ? ITW_ROUTES.L3_ONBOARDING
-        : context.level === "l2-fallback"
-          ? ITW_ROUTES.L2_ONBOARDING
-          : ITW_ROUTES.ONBOARDING
+  // Resets only the nested ITW stack, keeping the navigator and its machines mounted
+  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+    state: {
+      routes: [
+        {
+          name:
+            context.level === "l2"
+              ? ITW_ROUTES.ONBOARDING
+              : ITW_ROUTES.L3_ONBOARDING
+        }
+      ]
+    }
   });
 };
 
@@ -171,7 +188,8 @@ export const navigateToCieNfcPreparationScreenAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN
+    screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN,
+    pop: true
   });
 };
 
@@ -179,13 +197,15 @@ export const navigateToCiePinPreparationScreenAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN
+    screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN,
+    pop: true
   });
 };
 
 export const navigateToCiePinScreenAction = ({ context }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN
+    screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN,
+    pop: true
   });
 };
 
@@ -193,7 +213,8 @@ export const navigateToCieCardPreparationScreenAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN
+    screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN,
+    pop: true
   });
 };
 
@@ -201,13 +222,15 @@ export const navigateToCieCanPreparationScreenAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN
+    screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN,
+    pop: true
   });
 };
 
 export const navigateToCieCanScreenAction = ({ context }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN
+    screen: ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN,
+    pop: true
   });
 };
 
@@ -215,7 +238,8 @@ export const navigateToCieAuthenticationScreenAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN
+    screen: ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN,
+    pop: true
   });
 };
 
@@ -227,6 +251,7 @@ export const navigateToCieInternalAuthAndMrtdScreenAction = ({
 
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
     screen: ITW_ROUTES.IDENTIFICATION.CIE.INTERNAL_AUTH_MRTD_SCREEN,
+    pop: true,
     params: {
       can: context.mrtdContext.can,
       challenge: context.mrtdContext.challenge
@@ -238,7 +263,8 @@ export const navigateToWalletRevocationScreenAction = ({
   context
 }: EidActionArgs) => {
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
+    screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN,
+    pop: true
   });
 };
 
@@ -250,6 +276,7 @@ export const navigateToCieWarningScreenAction = ({
 
   context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
     screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
+    pop: true,
     params: {
       type: event.warning,
       routeName: event.routeName
@@ -287,7 +314,7 @@ export const closeIssuanceAction = ({ context, event }: EidActionArgs) => {
     store.dispatch(itwSetActivationExitSurvey({ step: surveyStep }));
   }
 
-  navigation.navigate(ROUTES.MAIN, {
+  navigation.popTo(ROUTES.MAIN, {
     screen: ROUTES.WALLET_HOME,
     params: {}
   });
@@ -333,6 +360,18 @@ export const storeAuthLevelAction = ({ context }: EidActionArgs) => {
   // Save the auth level in the preferences
   store.dispatch(itwSetAuthLevel(context.identification?.level));
   store.dispatch(itwSetIdentificationMode(context.identification?.mode));
+};
+
+/**
+ * Updates fallback provenance only after storing the eID, preserving it during
+ * L2 reissuance.
+ */
+export const storeL2FallbackAction = ({ context }: EidActionArgs) => {
+  if (context.mode !== "reissuance" || context.level === "l3") {
+    context.deps.store.dispatch(
+      itwSetL2Fallback(context.level === "l2-fallback")
+    );
+  }
 };
 
 export const storeWalletActivationFeedbackBannerDataAction = ({

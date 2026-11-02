@@ -30,6 +30,7 @@ jest.mock("../../../../../utils/analytics");
 jest.mock("../../../../../utils/url");
 
 const mockNavigation = {
+  addListener: jest.fn(),
   pop: jest.fn(),
   setOptions: jest.fn()
 };

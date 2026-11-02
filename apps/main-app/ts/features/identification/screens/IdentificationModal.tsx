@@ -67,7 +67,6 @@ const A11Y_FOCUS_DELAY = 1000 as Millisecond;
 export const IdentificationModal = () => {
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
   const showRetryText = useRef(false);
-  const headerRef = useRef<View>(null);
   const errorStatusRef = useRef<View>(null);
 
   const theme = useIOTheme();
@@ -437,9 +436,14 @@ export const IdentificationModal = () => {
                   />
                 </View>
               )}
-              <View accessible ref={headerRef} style={{ alignItems: "center" }}>
+              <View style={{ alignItems: "center" }}>
                 <VSpacer size={8} />
-                <H2 color={"white"} style={{ textAlign: "center" }}>
+                <H2
+                  accessibilityRole="header"
+                  accessible
+                  color={"white"}
+                  style={{ textAlign: "center" }}
+                >
                   {titleLabel}
                 </H2>
                 <VSpacer size={8} />

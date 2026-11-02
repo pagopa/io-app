@@ -90,6 +90,15 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
 );
 
 /**
+ * Return the remote config about the IPZS privacy url shown during the
+ * IT-Wallet (L3) activation.
+ */
+export const itwIpzsItwalletPrivacyUrlSelector = createSelector(
+  itwRemoteConfigSelector,
+  ({ ipzs_itwallet_privacy_url }) => ipzs_itwallet_privacy_url
+);
+
+/**
  * Returns whether the current app version meets the minimum required to use IT
  * Wallet.
  */
@@ -115,6 +124,29 @@ export const isItwProximityMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
   ({ proximity }): boolean => {
     const version = proximity?.min_app_version;
+    if (!version) {
+      return false;
+    }
+    return isVersionSupported(
+      Platform.OS === "ios" ? version.ios : version.android,
+      getAppVersion()
+    );
+  }
+);
+
+/**
+ * Returns whether the current app version meets the minimum required to use NFC
+ * engagement in the Proximity presentation.
+ */
+export const isItwProximityNfcMinAppVersionSupportedSelector = createSelector(
+  itwRemoteConfigSelector,
+  isItwProximityMinAppVersionSupportedSelector,
+  ({ proximity_nfc }, proximityEnabled): boolean => {
+    if (!proximityEnabled) {
+      return false;
+    }
+
+    const version = proximity_nfc?.min_app_version;
     if (!version) {
       return false;
     }

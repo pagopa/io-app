@@ -10,7 +10,10 @@ import { CREDENTIALS_MAP } from "../../analytics/utils/types.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
-import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
+import {
+  ItwClaimLongPressHandler,
+  ItwCredentialClaim
+} from "./ItwCredentialClaim.tsx";
 
 type ItwNestedClaimsListItemProps = {
   credentialStatus?: ItwCredentialStatus;
@@ -19,6 +22,7 @@ type ItwNestedClaimsListItemProps = {
   isPreview?: boolean;
   itemClaims: Array<ClaimDisplayFormat>;
   itemTitle?: string;
+  onLongPress?: ItwClaimLongPressHandler;
   summaryLabel?: string;
   summaryValue?: string;
 };
@@ -38,6 +42,8 @@ type ItwNestedClaimsListItemProps = {
  *   date claims
  * @param credentialType - The type of the credential, used for analytics
  *   tracking
+ * @param onLongPress - Callback invoked when a claim value in the bottom sheet
+ *   is long pressed
  */
 export const ItwNestedClaimsListItem = ({
   itemTitle,
@@ -47,7 +53,8 @@ export const ItwNestedClaimsListItem = ({
   hidden,
   isPreview,
   credentialStatus,
-  credentialType
+  credentialType,
+  onLongPress
 }: ItwNestedClaimsListItemProps) => {
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const itemBottomSheet = useIOBottomSheetModal({
@@ -63,6 +70,7 @@ export const ItwNestedClaimsListItem = ({
               credentialType={credentialType}
               hidden={hidden}
               isPreview={isPreview}
+              onLongPress={onLongPress}
             />
           </Fragment>
         ))}

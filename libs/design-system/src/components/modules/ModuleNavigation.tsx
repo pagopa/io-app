@@ -62,7 +62,7 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
 
   const iconComponent = icon && !hugeFontEnabled && (
     <Icon
-      color="grey-300"
+      color={theme["icon-decorative"]}
       name={icon}
       size={IOSelectionListItemVisualParams.iconSize}
     />

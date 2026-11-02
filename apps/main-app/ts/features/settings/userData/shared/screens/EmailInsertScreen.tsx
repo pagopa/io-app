@@ -99,7 +99,7 @@ const EMPTY_EMAIL = "";
  * use this screen, we use this information to disable autofocus on the input
  * field.
  */
-const isScreenZoomed = isDisplayZoomed();
+const isScreenZoomed: boolean = isDisplayZoomed();
 
 /** A screen to allow user to insert an email address. */
 const EmailInsertScreen = () => {
@@ -138,6 +138,7 @@ const EmailInsertScreen = () => {
   );
 
   const flow = getFlowType(isOnboarding, isFirstOnboarding);
+  const editingFlow = isFciEditEmailFlow ? "firma con IO" : flow;
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   // This reference is used to prevent the refresh visual glitch
   // caused by the polling stop in the email validation screen.
@@ -152,7 +153,7 @@ const EmailInsertScreen = () => {
 
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
-      trackEmailEditing(flow);
+      trackEmailEditing(editingFlow);
       if (isFirstOnboarding) {
         IOToast.info(
           I18n.t("email.newinsert.alert.title", {
@@ -164,7 +165,7 @@ const EmailInsertScreen = () => {
         );
       }
     } else {
-      trackEmailDuplicateEditing(flow);
+      trackEmailDuplicateEditing(editingFlow);
     }
   });
 
@@ -541,6 +542,7 @@ const EmailInsertScreen = () => {
             <TextInputValidation
               accessibilityErrorLabel={getAccessibilityErrorLabel()}
               accessibilityLabel={I18n.t("email.newinsert.label")}
+              accessibilityValidLabel={validEmailLabel}
               errorMessage={invalidEmailLabel}
               onChangeText={handleOnChangeEmailText}
               onValidate={isValidEmail}

@@ -8,6 +8,8 @@ import {
   itwSetClaimValuesHidden,
   itwSetCredentialUpgradeFailed,
   itwSetIdentificationMode,
+  itwSetL2Fallback,
+  itwSetProximityNfcLocallyEnabled,
   itwSetWalletActivationFeedbackBannerData,
   ItwWalletActivationFeedbackBannerData
 } from "../../actions/preferences";
@@ -63,6 +65,30 @@ describe("IT Wallet preferences reducer", () => {
       ...newState,
       identificationMode: "cieId"
     });
+  });
+
+  test.each([
+    { name: "fallback activation", isL2Fallback: true },
+    { name: "upgrade from fallback", isL2Fallback: false }
+  ])("stores the preference for $name", ({ isL2Fallback }) => {
+    const state = reducer(
+      { isL2Fallback: true },
+      itwSetL2Fallback(isL2Fallback)
+    );
+    expect(state.isL2Fallback).toBe(isL2Fallback);
+  });
+
+  it("preserves fallback provenance through wallet resets for reissuance", () => {
+    const state = reducer({ isL2Fallback: true }, itwLifecycleStoresReset());
+    expect(state.isL2Fallback).toBe(true);
+  });
+
+  it("preserves the local proximity NFC flag through wallet resets", () => {
+    const state = reducer(
+      reducer(INITIAL_STATE, itwSetProximityNfcLocallyEnabled(true)),
+      itwLifecycleStoresReset()
+    );
+    expect(state.isProximityNfcLocallyEnabled).toBe(true);
   });
 
   it("should handle itwSetClaimValuesHidden action", () => {

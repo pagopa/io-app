@@ -2,6 +2,7 @@ import { fakerIT as faker } from "@faker-js/faker";
 import { Request } from "express";
 
 import { ioDevServerConfig } from "../config";
+import { oneIdentityCieIdpIds } from "../payloads/login";
 import { AuthenticationProvider } from "../payloads/profile";
 import { createOrRefreshSessionTokens } from "../payloads/session";
 import { isFeatureFlagWithMinVersionEnabled } from "../routers/features/featureFlagUtils";
@@ -60,12 +61,36 @@ export const setSessionLoginType = (req: Request) => {
     | undefined;
 };
 
+/**
+ * Sets the login type from the `login_type` of the OneIdentity `/reserve` body,
+ * where anything but `LV` (i.e. `LEGACY`) is a standard login.
+ */
+export const setSessionLoginTypeFromReserve = (loginType: unknown) => {
+  // eslint-disable-next-line functional/immutable-data
+  loginSessionTokenInfo.loginType =
+    loginType === LoginEnum.fastLogin
+      ? LoginEnum.fastLogin
+      : LoginEnum.standard;
+};
+
 export const setSessionAuthenticationProvider = (req: Request) => {
   const idpId = req.get("x-pagopa-idp-id") === "cie" ? "cie" : "spid";
   // eslint-disable-next-line functional/immutable-data
   loginSessionTokenInfo.authenticationProvider = idpId as
     | AuthenticationProvider
     | undefined;
+};
+
+/**
+ * Sets the authentication provider from the `idp` of the OneIdentity
+ * `/authorize` query, where anything but a CIE identity provider is SPID.
+ */
+export const setSessionAuthenticationProviderFromIdp = (idp: unknown) => {
+  // eslint-disable-next-line functional/immutable-data
+  loginSessionTokenInfo.authenticationProvider =
+    typeof idp === "string" && oneIdentityCieIdpIds.includes(idp)
+      ? "cie"
+      : "spid";
 };
 
 export const isSessionTokenValid = (requestOrUndefined?: Request) => {

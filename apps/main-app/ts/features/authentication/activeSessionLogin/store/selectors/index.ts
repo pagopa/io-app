@@ -8,8 +8,8 @@ import { remoteConfigSelector } from "../../../../../store/reducers/backendStatu
 import { isMinAppVersionSupported } from "../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { sessionInfoSelector } from "../../../common/store/selectors";
+import { LoginType } from "../../../common/utils";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
-import { LoginType } from "../../screens/analytics";
 
 export const isActiveSessionLoginLocallyEnabledSelector = (
   state: GlobalState

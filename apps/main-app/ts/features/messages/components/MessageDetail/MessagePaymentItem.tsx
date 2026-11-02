@@ -7,13 +7,11 @@ import {
   useIOToast,
   VSpacer
 } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { View } from "react-native";
 
-import { fold, RemoteValue } from "../../../../common/model/RemoteValue";
+import { RemoteValue } from "../../../../common/model/RemoteValue";
 import {
   useIODispatch,
   useIOSelector,
@@ -92,74 +90,27 @@ const paymentNoticeStatusFromPaymentError = (
 
 const processedUIPaymentFromPaymentError = (
   reason: MessagePaymentError
-): ProcessedPaymentUIData =>
-  pipe(reason, paymentNoticeStatusFromPaymentError, paymentNoticeStatus => ({
+): ProcessedPaymentUIData => {
+  const paymentNoticeStatus = paymentNoticeStatusFromPaymentError(reason);
+  const badgeText = getBadgeTextByPaymentNoticeStatus(paymentNoticeStatus);
+  return {
     paymentNoticeStatus,
-    badgeText: getBadgeTextByPaymentNoticeStatus(paymentNoticeStatus)
-  }));
-
-const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
-  <ModulePaymentNotice
-    badgeText={""}
-    isLoading={true}
-    onPress={_ => undefined}
-    paymentNotice={{
-      status: "error"
-    }}
-    subtitle={""}
-    title={""}
-  />
-);
+    badgeText
+  };
+};
 
 const modulePaymentNoticeFromPaymentStatus = (
   hideExpirationDate: boolean,
   noticeNumber: string,
   paymentStatus: RemoteValue<PaymentInfoResponse, MessagePaymentError>,
   paymentCallback: () => void
-) =>
-  fold(
-    paymentStatus,
-    modulePaymentNoticeForUndefinedOrLoadingPayment,
-    modulePaymentNoticeForUndefinedOrLoadingPayment,
-    payablePayment => {
-      const dueDateOrUndefined = pipe(
-        payablePayment.dueDate,
-        O.fromNullable,
-        O.filter(_ => !hideExpirationDate),
-        O.chainNullableK(formatAndValidateDueDate),
-        O.map(
-          dueDate =>
-            `${I18n.t("wallet.firstTransactionSummary.dueDate")} ${dueDate}`
-        ),
-        O.toUndefined
-      );
-      const description = cleanTransactionDescription(
-        payablePayment.description
-      );
-      const formattedAmount = pipe(
-        payablePayment.amount,
-        centsToAmount,
-        formatNumberAmount,
-        formattedAmountNumber => `${formattedAmountNumber} €`
-      );
-      return (
-        <ModulePaymentNotice
-          onPress={paymentCallback}
-          paymentNotice={{
-            status: "default",
-            amount: formattedAmount,
-            amountAccessibilityLabel: formattedAmount
-          }}
-          subtitle={description}
-          title={dueDateOrUndefined}
-        />
-      );
-    },
-    processedPaymentDetails => {
+) => {
+  switch (paymentStatus.kind) {
+    case "error": {
       const formattedPaymentNoticeNumber =
         formatPaymentNoticeNumber(noticeNumber);
       const { paymentNoticeStatus, badgeText } =
-        processedUIPaymentFromPaymentError(processedPaymentDetails);
+        processedUIPaymentFromPaymentError(paymentStatus.error);
       return (
         <ModulePaymentNotice
           badgeText={badgeText}
@@ -172,7 +123,48 @@ const modulePaymentNoticeFromPaymentStatus = (
         />
       );
     }
-  );
+    case "loading":
+    case "undefined":
+      return (
+        <ModulePaymentNotice
+          badgeText={""}
+          isLoading={true}
+          onPress={_ => undefined}
+          paymentNotice={{
+            status: "error"
+          }}
+          subtitle={""}
+          title={""}
+        />
+      );
+    case "ready": {
+      const dueDate: string | undefined = paymentStatus.value.dueDate;
+      const maybeDate = hideExpirationDate ? undefined : dueDate;
+      const formattedDueDate = maybeDate && formatAndValidateDueDate(maybeDate);
+      const dueDateOrUndefined =
+        formattedDueDate &&
+        `${I18n.t("wallet.firstTransactionSummary.dueDate")} ${formattedDueDate}`;
+
+      const description = cleanTransactionDescription(
+        paymentStatus.value.description
+      );
+      const amount = centsToAmount(paymentStatus.value.amount);
+      const formattedAmount = `${formatNumberAmount(amount)} €`;
+      return (
+        <ModulePaymentNotice
+          onPress={paymentCallback}
+          paymentNotice={{
+            status: "default",
+            amount: formattedAmount,
+            amountAccessibilityLabel: formattedAmount
+          }}
+          subtitle={description}
+          title={dueDateOrUndefined}
+        />
+      );
+    }
+  }
+};
 
 export const MessagePaymentItem = ({
   hideExpirationDate = false,

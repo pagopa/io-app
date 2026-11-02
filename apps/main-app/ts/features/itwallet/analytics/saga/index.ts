@@ -4,6 +4,7 @@ import { call, fork, select, takeEvery } from "typed-redux-saga/macro";
 import { registerSuperProperties } from "../../../../mixpanel.ts";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getNfcAntennaInfo, isHceSupported } from "../../../../utils/nfc";
+import { itwSetCredentialUpgradeFailed } from "../../common/store/actions/preferences";
 import {
   itwCredentialsRemove,
   itwCredentialsStore
@@ -11,8 +12,8 @@ import {
 import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import { updateItwAnalyticsProperties } from "../properties/propertyUpdaters";
 import {
+  handleAggregateCredentialPropertiesRefresh,
   handleCredentialRemovedAnalytics,
-  handleCredentialsCatalogueLoadedAnalytics,
   handleCredentialStoredAnalytics
 } from "./credentialAnalyticsHandlers";
 
@@ -73,7 +74,7 @@ export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
   yield* takeEvery(itwCredentialsStore, handleCredentialStoredAnalytics);
   yield* takeEvery(itwCredentialsRemove, handleCredentialRemovedAnalytics);
   yield* takeEvery(
-    itwFetchCredentialsCatalogue.success,
-    handleCredentialsCatalogueLoadedAnalytics
+    [itwFetchCredentialsCatalogue.success, itwSetCredentialUpgradeFailed],
+    handleAggregateCredentialPropertiesRefresh
   );
 }

@@ -1,30 +1,25 @@
 import { Tuple3 } from "@pagopa/ts-commons/lib/tuples";
 
-jest.mock("react-native-device-info", () => ({
-  getReadableVersion: jest
-    .fn()
-    .mockReturnValueOnce("1.1.3")
-    .mockReturnValueOnce("1.1.9")
-    .mockReturnValueOnce("1.2.3.4"),
-  getVersion: jest
-    .fn()
-    .mockReturnValueOnce("1.1.3")
-    .mockReturnValueOnce("1.1.9")
-    .mockReturnValueOnce("1.2.3.4"),
-  getBuildNumber: () => 3
-}));
 import { getAppVersion, isVersionSupported } from "../appVersion";
-
 describe("check if getVersion works properly", () => {
   it("should be 1.1.3", () => {
+    jest
+      .spyOn(require("../device"), "getDeviceAppVersion")
+      .mockReturnValueOnce("1.1.3");
     expect(getAppVersion()).toEqual("1.1.3");
   });
 
   it("should be 1.1.9", () => {
+    jest
+      .spyOn(require("../device"), "getDeviceAppVersion")
+      .mockReturnValueOnce("1.1.9");
     expect(getAppVersion()).toEqual("1.1.9");
   });
 
   it("should be 1.2.3.4", () => {
+    jest
+      .spyOn(require("../device"), "getDeviceAppVersion")
+      .mockReturnValueOnce("1.2.3.4");
     expect(getAppVersion()).toEqual("1.2.3.4");
   });
 });

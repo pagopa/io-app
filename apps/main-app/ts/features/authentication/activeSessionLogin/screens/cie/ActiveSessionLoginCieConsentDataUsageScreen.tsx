@@ -30,6 +30,7 @@ import {
   originSchemasWhiteList
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
+import { ReauthLoginType } from "../../../common/utils/index";
 import { LoaderComponent } from "../../shared/components/LoaderComponent";
 import { ACS_PATH } from "../../shared/utils";
 import {
@@ -38,7 +39,6 @@ import {
   setFinishedActiveSessionLoginFlow
 } from "../../store/actions";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
-import { ReauthLoginType } from "../analytics";
 
 export type ActiveSessionLoginCieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -81,7 +81,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
 
   const navigateBack = () => {
     dispatch(setFinishedActiveSessionLoginFlow());
-    navigation.navigate(ROUTES.MAIN, {
+    navigation.popTo(ROUTES.MAIN, {
       screen: MESSAGES_ROUTES.MESSAGES_HOME
     });
   };

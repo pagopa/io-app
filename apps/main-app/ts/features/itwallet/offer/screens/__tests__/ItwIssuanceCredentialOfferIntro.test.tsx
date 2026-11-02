@@ -24,10 +24,22 @@ import {
 } from "../../../machine/credential/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import {
+  trackItwUpgradeL3Mandatory,
+  trackItwUpgradeL3MandatoryCancel,
+  trackItwUpgradeL3MandatoryConfirm
+} from "../../../presentation/remote/analytics";
+import { ItwL3UpgradeTrigger } from "../../../presentation/remote/analytics/utils/types";
 import { ItwIssuanceCredentialOfferIntroScreen } from "../ItwIssuanceCredentialOfferIntro";
 
 jest.mock("../../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
+}));
+
+jest.mock("../../../presentation/remote/analytics", () => ({
+  trackItwUpgradeL3Mandatory: jest.fn(),
+  trackItwUpgradeL3MandatoryCancel: jest.fn(),
+  trackItwUpgradeL3MandatoryConfirm: jest.fn()
 }));
 
 const T_CREDENTIAL_OFFER_URI =
@@ -113,6 +125,10 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     expect(machineSend).not.toHaveBeenCalledWith({
       type: "confirm-credential-offer"
     });
+    expect(trackItwUpgradeL3Mandatory).toHaveBeenCalledTimes(1);
+    expect(trackItwUpgradeL3Mandatory).toHaveBeenCalledWith(
+      ItwL3UpgradeTrigger.ADD_CREDENTIAL
+    );
 
     fireEvent.press(
       getByText(
@@ -122,13 +138,65 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       )
     );
 
+    expect(trackItwUpgradeL3MandatoryConfirm).toHaveBeenCalledWith(
+      ItwL3UpgradeTrigger.ADD_CREDENTIAL
+    );
+    expect(trackItwUpgradeL3MandatoryCancel).not.toHaveBeenCalled();
     expect(machineSend).toHaveBeenCalledWith({ type: "close" });
     expect(onDiscoveryParams).toHaveBeenCalledWith({
       animationEnabled: false,
       credentialType: T_CREDENTIAL_TYPE,
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI,
       level: "l3"
     });
   });
+
+  it("tracks cancellation of the wallet activation required to add a credential", () => {
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(false);
+
+    const { getByText } = renderComponent(jest.fn());
+
+    fireEvent.press(getByText(I18n.t("global.buttons.cancel")));
+
+    expect(trackItwUpgradeL3MandatoryCancel).toHaveBeenCalledWith(
+      ItwL3UpgradeTrigger.ADD_CREDENTIAL
+    );
+    expect(trackItwUpgradeL3MandatoryConfirm).not.toHaveBeenCalled();
+    expect(machineSend).toHaveBeenCalledWith({ type: "close" });
+  });
+
+  it.each([
+    { name: "offer", unresolvedSelector: selectResolvedCredentialOffer },
+    { name: "credential type", unresolvedSelector: selectCredentialType }
+  ])(
+    "does not track activation while the $name is unresolved",
+    ({ unresolvedSelector }) => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(false);
+      const useSelectorMock = jest.spyOn(
+        ItwCredentialIssuanceMachineContext,
+        "useSelector"
+      );
+      const resolvedImplementation = useSelectorMock.getMockImplementation();
+      useSelectorMock.mockImplementation(selector =>
+        selector === unresolvedSelector
+          ? undefined
+          : resolvedImplementation?.(selector)
+      );
+
+      const { queryByText } = renderComponent(jest.fn());
+
+      expect(
+        queryByText(
+          I18n.t("features.itWallet.issuance.credentialOffer.activation.title")
+        )
+      ).toBeNull();
+      expect(trackItwUpgradeL3Mandatory).not.toHaveBeenCalled();
+    }
+  );
 
   it.each(["jwtExpired", "jwtExpiring"])(
     "asks to confirm the identity when the eID is %s",
@@ -149,8 +217,33 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       expect(machineSend).not.toHaveBeenCalledWith({
         type: "confirm-credential-offer"
       });
+      expect(trackItwUpgradeL3Mandatory).not.toHaveBeenCalled();
     }
   );
+
+  it("forwards the credential offer to the eID reissuance so it can be resumed afterwards", () => {
+    jest
+      .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+      .mockReturnValue("jwtExpired");
+
+    const onModeSelectionParams = jest.fn();
+    const { getByText } = renderComponent(jest.fn(), onModeSelectionParams);
+
+    fireEvent.press(
+      getByText(
+        I18n.t("features.itWallet.issuance.confirmIdentity.primaryAction")
+      )
+    );
+
+    expect(machineSend).toHaveBeenCalledWith({ type: "close" });
+    expect(onModeSelectionParams).toHaveBeenCalledWith({
+      animationEnabled: false,
+      credentialType: T_CREDENTIAL_TYPE,
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI,
+      eidReissuing: true,
+      level: "l3"
+    });
+  });
 
   it("auto-confirms the offer when the credential is not in the wallet and there is no introduction content", () => {
     const { queryByText } = renderComponent(jest.fn());
@@ -163,6 +256,36 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     expect(machineSend).toHaveBeenCalledWith({
       type: "confirm-credential-offer"
     });
+    expect(trackItwUpgradeL3Mandatory).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    {
+      name: "the credential name from the catalogue",
+      catalogueName: "Laurea dal catalogo",
+      expectedTitle: "Laurea dal catalogo"
+    },
+    {
+      name: "the fallback title when the catalogue cannot resolve the name",
+      catalogueName: undefined,
+      expectedTitle: I18n.t(
+        "features.itWallet.issuance.credentialOffer.intro.fallbackTitle"
+      )
+    }
+  ])("shows $name as title", ({ catalogueName, expectedTitle }) => {
+    jest
+      .spyOn(catalogSelectors, "itwCredentialIntroContentSelector")
+      .mockReturnValue(() => "Introduction content");
+    jest
+      .spyOn(catalogSelectors, "itwCredentialNameResolverSelector")
+      .mockReturnValue(
+        (_type: string | undefined, withDefault = "") =>
+          catalogueName ?? withDefault
+      );
+
+    const { queryByText } = renderComponent(jest.fn());
+
+    expect(queryByText(expectedTitle)).not.toBeNull();
   });
 
   it("blocks the flow when the offered credential is already in the wallet and valid", () => {
@@ -183,6 +306,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     expect(machineSend).not.toHaveBeenCalledWith({
       type: "confirm-credential-offer"
     });
+    expect(trackItwUpgradeL3Mandatory).not.toHaveBeenCalled();
   });
 
   it("continues the flow when the stored credential is no longer valid", () => {
@@ -209,7 +333,12 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
 const renderComponent = (
   onDiscoveryParams: (
     params: ItwParamsList[typeof ITW_ROUTES.DISCOVERY.INFO] | undefined
-  ) => void
+  ) => void,
+  onModeSelectionParams: (
+    params:
+      | ItwParamsList[typeof ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]
+      | undefined
+  ) => void = jest.fn()
 ) => {
   const sequenceOfActions: ReadonlyArray<Action> = [
     applicationChangeState("active"),
@@ -223,7 +352,7 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <Stack.Navigator screenOptions={{ animationEnabled: false }}>
+      <Stack.Navigator screenOptions={{ animation: "none" }}>
         <Stack.Screen
           component={ItwIssuanceCredentialOfferIntroScreen}
           initialParams={{ itwCredentialOfferUri: T_CREDENTIAL_OFFER_URI }}
@@ -233,6 +362,12 @@ const renderComponent = (
           {({ route }) => {
             onDiscoveryParams(route.params);
             return <Text testID="DiscoveryInfoScreenTestID" />;
+          }}
+        </Stack.Screen>
+        <Stack.Screen name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}>
+          {({ route }) => {
+            onModeSelectionParams(route.params);
+            return <Text testID="ModeSelectionScreenTestID" />;
           }}
         </Stack.Screen>
       </Stack.Navigator>

@@ -16,12 +16,108 @@ import {
 import {
   areAllPresentableCredentialsExpired,
   isPresentableCredentialSelector,
+  itwPresentableCredentialsByDocTypeSelector,
+  itwPresentableCredentialsSelector,
   shouldShowExpiredProximityCredentialsBannerSelector
 } from "../credentials";
 
 describe("proximity selectors", () => {
   afterEach(() => {
     MockDate.reset();
+  });
+
+  describe("presentable credentials selectors", () => {
+    const mdlMdoc: CredentialMetadata = {
+      ...ItwStoredCredentialsMocks.mdl,
+      format: CredentialFormat.MDOC,
+      issuerConf: {
+        ...ItwStoredCredentialsMocks.mdl.issuerConf,
+        credential_configurations_supported: {
+          [ItwStoredCredentialsMocks.mdl.credentialId]: {
+            format: CredentialFormat.MDOC,
+            doctype: "org.iso.18013.5.1.mDL",
+            claims: [],
+            display: [],
+            scope: CredentialType.DRIVING_LICENSE
+          }
+        }
+      }
+    };
+    const ehicMdoc: CredentialMetadata = {
+      ...ItwStoredCredentialsMocks.ts,
+      credentialId: "mso_mdoc_EHIC",
+      format: CredentialFormat.MDOC,
+      issuerConf: {
+        ...ItwStoredCredentialsMocks.ts.issuerConf,
+        credential_configurations_supported: {
+          mso_mdoc_EHIC: {
+            format: CredentialFormat.MDOC,
+            doctype: "eu.europa.ec.eudi.ehic.1",
+            claims: [],
+            display: [],
+            scope: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+          }
+        }
+      }
+    };
+    const scenarios = [
+      {
+        name: "only allowed credentials are present",
+        credentials: [mdlMdoc],
+        expected: { "org.iso.18013.5.1.mDL": mdlMdoc }
+      },
+      {
+        name: "allowed and excluded credentials are present",
+        credentials: [mdlMdoc, ehicMdoc],
+        expected: { "org.iso.18013.5.1.mDL": mdlMdoc }
+      },
+      {
+        name: "only excluded credentials are present",
+        credentials: [ehicMdoc],
+        expected: {}
+      },
+      {
+        name: "no credentials are present",
+        credentials: [],
+        expected: {}
+      }
+    ];
+
+    test.each(scenarios)(
+      "returns only allowed credentials by type and doc type when $name",
+      ({ credentials, expected }) => {
+        const initialState = appReducer(
+          undefined,
+          applicationChangeState("active")
+        );
+        const state: GlobalState = _.merge({}, initialState, {
+          features: {
+            itWallet: {
+              credentials: {
+                credentials: Object.fromEntries(
+                  credentials.map(credential => [
+                    credential.credentialId,
+                    credential
+                  ])
+                )
+              }
+            }
+          }
+        });
+
+        expect(itwPresentableCredentialsSelector(state)).toEqual(
+          Object.fromEntries(
+            Object.values(expected).map(credential => [
+              credential.credentialType,
+              credential
+            ])
+          )
+        );
+        expect(itwPresentableCredentialsByDocTypeSelector(state)).toEqual(
+          expected
+        );
+      }
+    );
   });
 
   describe("isPresentableCredentialSelector", () => {

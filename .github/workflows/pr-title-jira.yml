@@ -13,6 +13,8 @@ permissions:
 
 jobs:
   lint:
+    # Renovate security PRs are automated and have no Jira issue or conventional title
+    if: github.event.pull_request.user.login != 'renovate-pagopa[bot]'
     runs-on: ubuntu-22.04
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -27,7 +29,7 @@ jobs:
         id: lint
         run: |
           BRANCH_NAME="$BRANCH_NAME"
-          if [[ "$BRANCH_NAME" =~ ^lok_master_ ]]; then
+          if [[ "$BRANCH_NAME" =~ ^lok_ ]]; then
             echo "Branch created from lokalise pull action, skipping PR title validation."
             echo "VALIDATION_RESULT=success" >> $GITHUB_ENV
             exit 0
