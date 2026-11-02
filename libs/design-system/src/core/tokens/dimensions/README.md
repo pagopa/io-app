@@ -26,6 +26,8 @@ A component value is assigned in one of two ways:
 | **System reference** | Points to a system value: the component follows a design choice shared with other components | `radius.tooltip: system.radius.default` |
 | **Direct value**     | A number: a deliberate exception, where the component needs its own dimension                | `radius.bottomSheet: 24`                |
 
+A skeleton shape follows the element it stands in for: it reads that element's token when there is one (`radius.badge`, `radius.avatar.small`), and `radius.skeleton.text` or `radius.skeleton.graphic` when the element has no radius of its own.
+
 ## Glossary
 
 ### Properties
@@ -60,6 +62,7 @@ Read along the reading direction of a row or a column.
 | `leading`     | The leading graphic (icon, logo, avatar, pictogram) and the content | ✓      |
 | `trailing`    | The content and a trailing element on the same row                  | ✓      |
 | `control`     | The label and a selection control (checkbox, radio, switch)         |        |
+| `chevron`     | An element and the chevron next to it                               |        |
 | `description` | A label and its description below                                   | ✓      |
 | `caption`     | A caption icon and its small text                                   | ✓      |
 | `topElement`  | An element above the content (e.g. a badge) and the content         | ✓      |
@@ -85,11 +88,12 @@ Where the value applies: a component name (`tooltip`, `listItem`, `textInput`), 
 
 Which version of the context the value belongs to. `default` is the standard one of each kind.
 
-| Kind   | Names                                | Meaning                                                                  |
-| ------ | ------------------------------------ | ------------------------------------------------------------------------ |
-| Size   | `xsmall`, `small`, `medium`, `large` | The size variant of the component (`avatar`, `iconButton`)               |
-| Layout | `default`, `fullWidth`, `messages`   | Standard, spanning the whole screen width, denser for the messages inbox |
-| State  | `default`, `focused`                 | Resting and focused state of an input                                    |
+| Kind    | Names                                | Meaning                                                                  |
+| ------- | ------------------------------------ | ------------------------------------------------------------------------ |
+| Size    | `xsmall`, `small`, `medium`, `large` | The size variant of the component (`avatar`, `iconButton`)               |
+| Layout  | `default`, `fullWidth`, `messages`   | Standard, spanning the whole screen width, denser for the messages inbox |
+| State   | `default`, `focused`                 | Resting and focused state of an input                                    |
+| Content | `transaction`                        | A list item showing an amount or a badge                                 |
 
 ### Elements
 
@@ -101,10 +105,12 @@ The part of the component the value applies to, when it isn't the component as a
 | `control`       | The checkbox or radio control                          |
 | `dot`           | A single dot of the code input                         |
 | `floatingLabel` | The label of a text input, raised above the typed text |
+| `graphic`       | The leading graphic: an icon, an image or a logo       |
 | `homeIndicator` | The space left above the iPhone home indicator         |
 | `logo`          | The logo inside an avatar                              |
 | `placeholder`   | The placeholder icon inside an avatar                  |
 | `outline`       | The border of an outline button                        |
+| `text`          | The text a skeleton bar stands in for                  |
 
 ### Axes
 
