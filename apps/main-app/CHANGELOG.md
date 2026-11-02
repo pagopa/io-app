@@ -1,3 +1,28 @@
+## 3.43.0-rc.1 (2026-10-30)
+
+### Chores
+
+- [[IEL-880](https://pagopa.atlassian.net/browse/IEL-880)] EMAIL_EDITING MP event now tracks FCI flow ([#8771](https://github.com/pagopa/io-app/pull/8771))
+
+### ❤️ Thank You
+
+- Pawel @soixdev91
+
+## 3.43.0-rc.0 (2026-10-28)
+
+This was a version bump only for @io-app/main-app to align it with other projects, there were no code changes.
+
+## 3.42.0-rc.11 (2026-10-28)
+
+### Features
+
+- **IT-Wallet:** [[SIW-5207](https://pagopa.atlassian.net/browse/SIW-5207)] CED opportunities ([#8707](https://github.com/pagopa/io-app/pull/8707))
+
+### ❤️ Thank You
+
+- Emilio Di Mari
+- Riccardo Sacco
+
 ## 3.42.0-rc.10 (2026-10-28)
 
 ### Bug Fixes

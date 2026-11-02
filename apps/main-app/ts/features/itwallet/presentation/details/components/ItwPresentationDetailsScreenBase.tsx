@@ -17,14 +17,21 @@ import { useCredentialCardConfig } from "../../../common/components/ItwCredentia
 import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName.ts";
 import { getLegacyThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
+import { itwDiscoverMoreCEDSelector } from "../../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors/index.ts";
 
 export type CredentialCtaProps = ButtonBlockProps;
+
+export type CredentialDiscoverMoreProps = Extract<
+  IOScrollViewActions,
+  { type: "TwoButtons" }
+>["secondary"];
 
 type ItwPresentationDetailsScreenBaseProps = {
   children?: ReactNode;
   credential: CredentialMetadata;
   ctaProps?: CredentialCtaProps;
+  discoverMoreProps?: CredentialDiscoverMoreProps;
   headerTransparent?: boolean;
 };
 
@@ -34,6 +41,7 @@ const ItwPresentationDetailsScreenBase = ({
   credential,
   children,
   ctaProps,
+  discoverMoreProps,
   headerTransparent = false
 }: ItwPresentationDetailsScreenBaseProps) => {
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -51,6 +59,7 @@ const ItwPresentationDetailsScreenBase = ({
   );
 
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
+  const isEnabled = useIOSelector(itwDiscoverMoreCEDSelector);
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const scrollTranslationY = useSharedValue(0);
 
@@ -69,9 +78,28 @@ const ItwPresentationDetailsScreenBase = ({
     variant
   });
 
-  const actions: IOScrollViewActions | undefined = ctaProps
-    ? { type: "SingleButton", primary: ctaProps }
-    : undefined;
+  const check = (): IOScrollViewActions | undefined => {
+    if (!ctaProps) {
+      return undefined;
+    }
+
+    if (!isEnabled) {
+      return { type: "SingleButton", primary: ctaProps };
+    }
+
+    return discoverMoreProps
+      ? {
+          type: "TwoButtons",
+          primary: ctaProps,
+          secondary: discoverMoreProps
+        }
+      : {
+          type: "SingleButton",
+          primary: ctaProps
+        };
+  };
+
+  const actions: IOScrollViewActions | undefined = check();
 
   return (
     <IOScrollView
