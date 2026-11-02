@@ -26,6 +26,7 @@ import {
   zendeskSelectedSubcategory,
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
+import { trackFciAppUpdateRequested } from "../../analytics";
 import SignatureRequestItem from "../../components/SignatureRequestItem";
 import { fciSignaturesListRequest } from "../../store/actions";
 import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";
@@ -116,7 +117,14 @@ const FciSignatureRequestsScreenComponent = () => {
 const FciSignatureRequestsScreen = () => {
   const requiresUpdate = useAppRequiredUpdate("fci");
   if (requiresUpdate) {
-    return <UpdateAppAlert />;
+    return (
+      <UpdateAppAlert
+        mixPanelTracking={{
+          onLanding: trackFciAppUpdateRequested,
+          onConfirm: () => undefined
+        }}
+      />
+    );
   }
   return <FciSignatureRequestsScreenComponent />;
 };

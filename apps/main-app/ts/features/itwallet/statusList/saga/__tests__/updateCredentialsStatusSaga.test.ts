@@ -109,6 +109,46 @@ describe("updateCredentialsStatusSaga", () => {
       .isDone();
   });
 
+  it("skips credentials whose status cannot be read and updates the others", () => {
+    const credential = makeCredential();
+    const otherValidity: CredentialValidity = {
+      type: "status_list",
+      status: "valid",
+      rawStatus: "0x00",
+      statusList: { idx: 2, uri: URI }
+    };
+    const otherCredential = {
+      ...credential,
+      credentialId: "credential-2",
+      validity: otherValidity
+    };
+    mockGetStatus
+      .mockImplementationOnce(() => {
+        throw new Error("Unsupported credential status bit: 0x04");
+      })
+      .mockReturnValueOnce({ status: "SUSPENDED", rawStatus: "0x02" });
+
+    testSaga(updateCredentialsStatusSaga, { itwVersion: "1.4.6" })
+      .next()
+      .select(itwAllStoredCredentialsSelector)
+      .next([credential, otherCredential])
+      .next([makeStatusList(), makeStatusList()])
+      .put(
+        itwCredentialsStore([
+          {
+            ...otherCredential,
+            validity: {
+              ...otherValidity,
+              status: "suspended",
+              rawStatus: "0x02"
+            }
+          }
+        ])
+      )
+      .next()
+      .isDone();
+  });
+
   it("skips credentials whose status list is not cached", () => {
     const credential = makeCredential();
 

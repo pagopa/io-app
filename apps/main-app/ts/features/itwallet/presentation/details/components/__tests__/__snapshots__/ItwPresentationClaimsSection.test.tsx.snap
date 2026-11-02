@@ -507,7 +507,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         </View>
                         <View
                           accessibilityLabel="Luogo di Nascita Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -601,7 +603,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Numero identificativo dell'istituzione (TEAM) Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -695,7 +699,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Nascita Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -789,7 +795,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Provincia Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -883,7 +891,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Nazione Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -977,7 +987,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Sesso Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1071,7 +1083,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Scadenza Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1165,7 +1179,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Numero identificativo della tessera (TEAM) Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1259,7 +1275,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Nome Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1353,7 +1371,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Codice Fiscale Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1447,7 +1467,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Cognome Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1572,8 +1594,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             >
                               <View
                                 accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
-                                accessible={true}
+                                accessible={false}
                                 importantForAccessibility="yes"
+                                screenReaderFocusable={true}
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -2402,7 +2425,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         </View>
                         <View
                           accessibilityLabel="Luogo di Nascita Rome (IT)"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -4481,8 +4506,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             >
                               <View
                                 accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
-                                accessible={true}
+                                accessible={false}
                                 importantForAccessibility="yes"
+                                screenReaderFocusable={true}
                                 style={
                                   {
                                     "flexDirection": "column",
