@@ -367,16 +367,16 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
     return;
   }
 
-  const decodedDetalis = RemoteContentDetails.decode(messageDetails);
+  const decodedDetails = RemoteContentDetails.decode(messageDetails);
 
-  if ("left" in decodedDetalis) {
+  if ("left" in decodedDetails) {
     trackRemoteContentMessageDecodingWarning(
       service.id,
       service.name,
       service.organization.name,
       service.organization.fiscal_code,
       tag,
-      readableReport(decodedDetalis.left)
+      readableReport(decodedDetails.left)
     );
   }
 };
