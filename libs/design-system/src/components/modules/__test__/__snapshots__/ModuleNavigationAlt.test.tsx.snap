@@ -35,6 +35,8 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Loading state 1`]
         "alignItems": "center",
         "display": "flex",
         "flexDirection": "row",
+        "flexGrow": 1,
+        "flexShrink": 1,
         "gap": 8,
       }
     }
@@ -45,6 +47,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Loading state 1`]
           "alignItems": "center",
           "flexDirection": "row",
           "flexGrow": 1,
+          "flexShrink": 1,
         }
       }
     >
@@ -1397,6 +1400,8 @@ exports[`ModuleNavigationAlt - Snapshot Loading state 1`] = `
         "alignItems": "center",
         "display": "flex",
         "flexDirection": "row",
+        "flexGrow": 1,
+        "flexShrink": 1,
         "gap": 8,
       }
     }
@@ -1407,6 +1412,7 @@ exports[`ModuleNavigationAlt - Snapshot Loading state 1`] = `
           "alignItems": "center",
           "flexDirection": "row",
           "flexGrow": 1,
+          "flexShrink": 1,
         }
       }
     >

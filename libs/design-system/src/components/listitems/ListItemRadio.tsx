@@ -134,7 +134,11 @@ export const ListItemRadio = ({
       accessibilityLabel={loadingAccessibilityLabel}
       accessibilityState={{ busy: true }}
       accessible={true}
-      style={[IOSelectionListItemStyles.listItem, { rowGap: 8 }]}
+      style={[
+        IOSelectionListItemStyles.listItem,
+        // Double the row gap for better spacing
+        { rowGap: IODimensions.gap.selection.description * 2 }
+      ]}
     >
       <View style={IOSelectionListItemStyles.listItemInner}>
         <View

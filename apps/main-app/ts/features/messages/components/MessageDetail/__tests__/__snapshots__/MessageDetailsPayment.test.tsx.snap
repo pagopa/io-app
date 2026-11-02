@@ -739,6 +739,8 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "flexGrow": 1,
+                                "flexShrink": 1,
                                 "gap": 8,
                               }
                             }
@@ -749,6 +751,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >

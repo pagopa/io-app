@@ -357,6 +357,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "flexGrow": 1,
+                                "flexShrink": 1,
                                 "gap": 8,
                               }
                             }
@@ -367,6 +369,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >

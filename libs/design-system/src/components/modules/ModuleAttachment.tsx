@@ -166,7 +166,7 @@ const ModuleAttachmentSkeleton = ({
           width={114}
         />
         <IOSkeleton
-          height={20}
+          height={IODimensions.height.badge}
           radius={IODimensions.radius.badge}
           shape="rectangle"
           width={42}

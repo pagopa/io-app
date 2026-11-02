@@ -362,6 +362,9 @@ const renderModuleIDP = () => {
 
   return (
     <VStack space={componentMargin}>
+      <DSComponentViewerBox name="ModuleIDP, loading">
+        <ModuleIDP isLoading={true} />
+      </DSComponentViewerBox>
       <DSComponentViewerBox name="ModuleIDP, default variant">
         <ModuleIDP
           logo={{

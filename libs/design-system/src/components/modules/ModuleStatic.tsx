@@ -55,10 +55,15 @@ export const ModuleStatic = ({
       {startBlock && (
         <HStack
           space={IODimensions.gap.module.trailing}
-          style={{ alignItems: "center" }}
+          style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
         >
           <View
-            style={{ flexDirection: "row", alignItems: "center", flexGrow: 1 }}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              flexGrow: 1,
+              flexShrink: 1
+            }}
           >
             {startBlock}
           </View>

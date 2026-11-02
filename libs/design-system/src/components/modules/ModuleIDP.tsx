@@ -1,9 +1,8 @@
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
-import { IODimensions } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { addCacheTimestampToUri } from "../../utils/image";
-import { VStack } from "../layout";
 import { IOSkeleton } from "../skeleton";
 import { IOText } from "../typography";
 import { ModuleStatic } from "./ModuleStatic";
@@ -31,11 +30,12 @@ type ModuleIDPLoadingProps = {
 
 type ModuleIDPProps = ModuleIDPContentProps | ModuleIDPLoadingProps;
 
+const IDP_LOGO_SIZE = { width: 120, height: 28 };
+
 const styles = StyleSheet.create({
   idpLogo: {
+    ...IDP_LOGO_SIZE,
     marginStart: IODimensions.gap.module.trailing,
-    width: 120,
-    height: 28,
     resizeMode: "contain"
   }
 });
@@ -110,20 +110,19 @@ const ModuleIDPSkeleton = ({
     accessible={true}
     endBlock={
       <IOSkeleton
+        height={IDP_LOGO_SIZE.height}
         radius={IODimensions.radius.default}
-        shape="square"
-        size={24}
+        shape="rectangle"
+        width={IDP_LOGO_SIZE.width}
       />
     }
     startBlock={
-      <VStack space={4}>
-        <IOSkeleton
-          height={10}
-          radius={IODimensions.radius.default}
-          shape="rectangle"
-          width={100}
-        />
-      </VStack>
+      <IOSkeleton
+        height={IOTypography.caption.size}
+        radius={IODimensions.radius.default}
+        shape="rectangle"
+        width="50%"
+      />
     }
   />
 );
