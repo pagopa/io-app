@@ -47,11 +47,7 @@ export const OneIdentityCieIdLoginScreen = ({
   const { showAlert } = useOnboardingAbortAlert();
 
   const handleGoBack = useCallback(() => {
-    showAlert(() => {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.LANDING
-      });
-    });
+    showAlert(() => navigation.popTo(AUTHENTICATION_ROUTES.LANDING));
   }, [showAlert, navigation]);
 
   const headerProps: HeaderSecondLevelHookProps = useMemo(() => {
