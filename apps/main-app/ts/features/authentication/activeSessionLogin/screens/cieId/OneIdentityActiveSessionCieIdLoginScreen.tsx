@@ -12,8 +12,13 @@ import {
 import { useCieIdWebViewLoginNavigation } from "../../../common/hooks/useCieIdWebViewLoginNavigation";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { AUTH_LEVELS, isValidCallbackUrl } from "../../../common/utils";
+import {
+  AUTH_LEVELS,
+  isValidCallbackUrl,
+  LOGIN_TYPES
+} from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
+import { CANCELLED_LOGIN_FAILURE_DATA } from "../../../common/utils/loginErrorDebugInfo";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
 import {
@@ -60,13 +65,13 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
         dispatch(activeSessionLoginFailure());
       }
 
-      trackLoginFailure({ reason, idp: "cieid", flow: "reauth" });
+      trackLoginFailure({ reason, idp: "cieid", flow: LOGIN_TYPES.REAUTH });
       trackLoginSpidError(errorCodeOrMessage, {
         idp: IdpCIE_ID.id,
-        flow: "reauth",
+        flow: LOGIN_TYPES.REAUTH,
         "error message": message
       });
-      navigateToAuthErrorScreen(errorCodeOrMessage);
+      navigateToAuthErrorScreen(errorCodeOrMessage, { reason });
     },
     [dispatch, navigateToAuthErrorScreen]
   );
@@ -81,10 +86,8 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
   const handleEvent = useCallback(
     (event: CieIdWebViewLoginEvent) => {
       switch (event.type) {
-        case "CANCEL":
-        case "ONE_IDENTITY_LOGIN_FAILURE":
-        case "WEBVIEW_ERROR": {
-          navigateToCieIdAuthenticationError();
+        case "CANCEL": {
+          navigateToCieIdAuthenticationError(CANCELLED_LOGIN_FAILURE_DATA);
           break;
         }
         case "LOGIN_FAILURE": {
@@ -102,6 +105,11 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
           navigateToCieIdAuthUrlError(url);
           break;
         }
+        case "ONE_IDENTITY_LOGIN_FAILURE":
+        case "WEBVIEW_ERROR": {
+          navigateToCieIdAuthenticationError(event.payload.failureData);
+          break;
+        }
         case "WEBVIEW_HTTP_ERROR": {
           const { url, statusCode } = event.payload;
 
@@ -109,7 +117,7 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
           } else if (statusCode !== 403) {
-            navigateToAuthErrorScreen();
+            navigateToAuthErrorScreen(undefined, event.payload.failureData);
           }
           break;
         }
@@ -138,6 +146,10 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
   });
 
   return (
-    <CieIdWebViewLogin flow="reauth" isUat={isUat} onEvent={handleEvent} />
+    <CieIdWebViewLogin
+      flow={LOGIN_TYPES.REAUTH}
+      isUat={isUat}
+      onEvent={handleEvent}
+    />
   );
 };

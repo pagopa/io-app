@@ -102,7 +102,8 @@ describe("activeSessionLoginReducer", () => {
         consolidateActiveSessionLoginData({
           token: modifiedState.loginInfo.token,
           idp: modifiedState.loginInfo.idp,
-          fastLoginOptIn: modifiedState.loginInfo.fastLoginOptIn
+          fastLoginOptIn: modifiedState.loginInfo.fastLoginOptIn,
+          isOneIdentityLogin: false
         })
       );
       expect(state).toEqual(testableInitialState);

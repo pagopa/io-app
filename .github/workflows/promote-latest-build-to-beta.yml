@@ -29,7 +29,7 @@ jobs:
   distribute-ios:
     name: Distribute iOS build to TestFlight external testers
     environment: prod
-    runs-on: macos-26-xlarge
+    runs-on: xcode-27-xlarge
     steps:
       - id: checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2

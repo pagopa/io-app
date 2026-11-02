@@ -1,13 +1,12 @@
 import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
 import * as O from "fp-ts/lib/Option";
-import DeviceInfo from "react-native-device-info";
 
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
 
 describe("backend service Feature Flag (fastLogin example) with min app version --- with optional config (opt_in example)", () => {
-  jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("2.0.0.0");
-  jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("2.0.0.0");
-
+  jest
+    .spyOn(require("../../../utils/device"), "getDeviceAppVersion")
+    .mockReturnValue("2.0.0.0");
   const customConfigFastLogin = (
     fastLoginConfig: object
   ): O.Option<BackendStatus["config"]> =>

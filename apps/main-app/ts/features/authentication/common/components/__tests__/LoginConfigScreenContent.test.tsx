@@ -2,6 +2,7 @@ import { fireEvent } from "@testing-library/react-native";
 import { ComponentProps } from "react";
 import { createStore } from "redux";
 
+import { updateMixpanelSuperProperties } from "../../../../../mixpanelConfig/superProperties";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug";
@@ -14,7 +15,15 @@ import {
 } from "../../store/selectors/loginConfig";
 import { LoginConfigScreenContent } from "../LoginConfigScreenContent";
 
+jest.mock("../../../../../mixpanelConfig/superProperties", () => ({
+  updateMixpanelSuperProperties: jest.fn()
+}));
+
 describe("LoginConfigScreenContent", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should render all controls as disabled when disabled is true", () => {
     const { getByLabelText } = renderComponent({ disabled: true });
 
@@ -73,6 +82,17 @@ describe("LoginConfigScreenContent", () => {
     expect(
       oneIdentityLocalFeatureFlagSelector(store.getState())
     ).toBeUndefined();
+  });
+
+  it("should update the Mixpanel super properties with the updated state when a radio option is selected", () => {
+    const { store, getByLabelText } = renderComponent();
+
+    fireEvent.press(getByLabelText("Usa solo OneIdentity"));
+
+    expect(updateMixpanelSuperProperties).toHaveBeenCalledTimes(1);
+    const [state] = (updateMixpanelSuperProperties as jest.Mock).mock.calls[0];
+    expect(state).toBe(store.getState());
+    expect(oneIdentityLocalFeatureFlagSelector(state)).toBe(true);
   });
 
   it("should dispatch the debug mode action when the switch is toggled", () => {

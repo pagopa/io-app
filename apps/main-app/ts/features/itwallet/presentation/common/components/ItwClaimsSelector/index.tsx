@@ -12,8 +12,8 @@ import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
 import { getCredentialCardConfig } from "../../../../common/components/ItwCredentialCard/config";
 import { ItwCredentialClaimsCard } from "../../../../common/components/ItwCredentialClaimsCard";
+import { useItwCredentialName } from "../../../../common/hooks/useItwCredentialName";
 import { ClaimDisplayFormat } from "../../../../common/utils/itwClaimsUtils";
-import { getCredentialNameFromType } from "../../../../common/utils/itwCredentialUtils";
 import { useClaimsDetailsBottomSheet } from "../../hooks/useClaimsDetailsBottomSheet";
 import { ClaimItem } from "./ClaimItem";
 
@@ -77,7 +77,7 @@ export const ItwClaimsSelector = ({
     defaultExpanded
   });
 
-  const title = getCredentialNameFromType(credentialType);
+  const title = useItwCredentialName(credentialType);
   const { background } = getCredentialCardConfig(credentialType, themeType);
 
   const onItemPress = () => {

@@ -1,28 +1,27 @@
 import { useCallback } from "react";
 
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { cieLoginFlowSelector } from "../../../activeSessionLogin/store/selectors";
 import { trackLoginCieCardReaderScreen } from "../../../common/analytics/cieAnalytics";
+import { LoginType } from "../../../common/utils/index";
 import { useCieManager } from "../hooks/useCieManager";
 import { OneIdentityCieCardReaderFailure } from "./OneIdentityCieCardReaderFailure";
 import { OneIdentityCieCardReaderProgress } from "./OneIdentityCieCardReaderProgress";
 
 type OneIdentityCieCardReaderProps = {
   authenticationUrl: string;
+  flow: LoginType;
   onAuthorizationUrlReceived: (authorizationUrl: string) => void;
   pin: string;
 };
 
 export const OneIdentityCieCardReader = ({
+  flow,
   onAuthorizationUrlReceived,
   pin,
   authenticationUrl
 }: OneIdentityCieCardReaderProps) => {
   const navigation = useIONavigation();
-  const store = useIOStore();
-  const loginFlow = cieLoginFlowSelector(store.getState());
 
   const { startReading, state } = useCieManager({
     onSuccess: onAuthorizationUrlReceived
@@ -36,7 +35,7 @@ export const OneIdentityCieCardReader = ({
   );
 
   useOnFirstRender(() => {
-    void trackLoginCieCardReaderScreen(loginFlow);
+    void trackLoginCieCardReaderScreen(flow);
     void startReading(pin, authenticationUrl);
   });
 

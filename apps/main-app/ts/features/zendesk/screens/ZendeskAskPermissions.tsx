@@ -55,7 +55,10 @@ import {
   zendeskTokenSelector
 } from "../../authentication/common/store/selectors";
 import { isLoggedIn } from "../../authentication/common/store/utils/guards";
-import { itwZendeskWalletStatusSelector } from "../../itwallet/common/store/selectors/zendesk";
+import {
+  ItwZendeskWalletStatus,
+  itwZendeskWalletStatusSelector
+} from "../../itwallet/common/store/selectors/zendesk";
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
@@ -78,6 +81,21 @@ import {
 
 /** Transform an array of string into a Zendesk value to display. */
 const arrayToZendeskValue = (arr: Array<string>) => arr.join(", ");
+
+/**
+ * Human readable label shown to the user for the wallet status shared with
+ * Zendesk. The raw enum value is what is actually sent in the ticket.
+ */
+const getWalletStatusLabel = (walletStatus: ItwZendeskWalletStatus) => {
+  switch (walletStatus) {
+    case ItwZendeskWalletStatus.DOCUMENTI_SU_IO:
+      return I18n.t("support.askPermissions.walletStatusValue.documentiSuIo");
+    case ItwZendeskWalletStatus.IT_WALLET:
+      return I18n.t("support.askPermissions.walletStatusValue.itWallet");
+    case ItwZendeskWalletStatus.NOT_ACTIVE:
+      return I18n.t("support.askPermissions.walletStatusValue.notActive");
+  }
+};
 
 export type ItemPermissionProps = Pick<
   ComponentProps<typeof ListItemInfo>,
@@ -215,6 +233,12 @@ const ZendeskAskPermissions = () => {
       } ${getSystemVersion()}`,
       zendeskID: zendeskDeviceAndOSId,
       testID: "deviceAndOS"
+    },
+    {
+      icon: "navWallet",
+      label: I18n.t("support.askPermissions.walletStatus"),
+      value: getWalletStatusLabel(walletStatus),
+      testID: "walletStatus"
     },
     {
       icon: "battery",

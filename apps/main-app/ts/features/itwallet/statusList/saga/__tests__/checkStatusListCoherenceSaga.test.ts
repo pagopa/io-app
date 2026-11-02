@@ -49,4 +49,14 @@ describe("checkStatusListCoherenceSaga", () => {
       .next()
       .isDone();
   });
+
+  it("ignores errors when the cache cannot be read", () => {
+    testSaga(checkStatusListCoherenceSaga)
+      .next()
+      .select(itwStatusListReferencedUrisSelector)
+      .next([])
+      .call(StatusListRepository.list)
+      .throw(new Error("Malformed cache entry"))
+      .isDone();
+  });
 });

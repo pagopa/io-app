@@ -52,7 +52,8 @@ const CieConsentDataUsageScreen = () => {
   const { showAlert } = useOnboardingAbortAlert();
   const navigation = useIONavigation();
   const loginSuccessDispatch = useCallback(
-    (token: string) => dispatch(loginSuccess({ token, idp: "cie" })),
+    (token: string) =>
+      dispatch(loginSuccess({ token, idp: "cie", isOneIdentityLogin: false })),
     [dispatch]
   );
 
@@ -62,9 +63,7 @@ const CieConsentDataUsageScreen = () => {
   );
 
   const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    navigation.dispatch(StackActions.popTo(AUTHENTICATION_ROUTES.LANDING));
   }, [navigation]);
 
   const showAbortAlert = useCallback((): boolean => {

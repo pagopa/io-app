@@ -9,9 +9,18 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
-import { LoginType } from "../../activeSessionLogin/screens/analytics";
-import { onLoginUriChanged } from "../utils";
+import { trackLoginOIConfigurationError } from "../../common/analytics";
+import {
+  isOneIdentityErrorUrl,
+  LOGIN_TYPES,
+  onLoginUriChanged
+} from "../utils";
 import { defaultUserAgent, originSchemasWhiteList } from "../utils/cie";
+import { LoginType } from "../utils/index";
+import {
+  getWebViewFailureData,
+  WebViewFailureData
+} from "../utils/loginErrorDebugInfo";
 
 export type CieWebViewLoginEvent =
   | {
@@ -19,11 +28,18 @@ export type CieWebViewLoginEvent =
       type: "LOGIN_FAILURE";
     }
   | {
-      payload: { statusCode: number; url: string };
+      payload: {
+        failureData: WebViewFailureData;
+        statusCode: number;
+        url: string;
+      };
       type: "WEBVIEW_HTTP_ERROR";
     }
-  | { payload: { token: string }; type: "LOGIN_SUCCESS" }
-  | { payload: { url: string }; type: "WEBVIEW_ERROR" };
+  | {
+      payload: { failureData: WebViewFailureData; url: string };
+      type: "WEBVIEW_ERROR";
+    }
+  | { payload: { token: string }; type: "LOGIN_SUCCESS" };
 
 export type CieWebViewLoginProps = {
   /** The login flow this WebView is part of. */
@@ -35,7 +51,7 @@ export type CieWebViewLoginProps = {
 };
 
 export const CieWebViewLogin = memo(
-  ({ url, onEvent, flow = "auth" }: CieWebViewLoginProps) => {
+  ({ url, onEvent, flow = LOGIN_TYPES.AUTH }: CieWebViewLoginProps) => {
     const handleLoginSuccess = useCallback(
       (token: string) => {
         onEvent({ type: "LOGIN_SUCCESS", payload: { token } });
@@ -56,6 +72,10 @@ export const CieWebViewLogin = memo(
 
     const handleOnShouldStartLoadWithRequest = useCallback(
       (event: WebViewNavigation): boolean => {
+        if (isOneIdentityErrorUrl(event.url)) {
+          trackLoginOIConfigurationError(event.url, flow);
+        }
+
         const bearerTokenFoundInUrl = onLoginUriChanged(
           handleLoginFailure,
           handleLoginSuccess,
@@ -78,7 +98,8 @@ export const CieWebViewLogin = memo(
             type: "WEBVIEW_HTTP_ERROR",
             payload: {
               url: nativeEvent.url,
-              statusCode: nativeEvent.statusCode
+              statusCode: nativeEvent.statusCode,
+              failureData: getWebViewFailureData(event)
             }
           });
           return;
@@ -86,7 +107,10 @@ export const CieWebViewLogin = memo(
 
         onEvent({
           type: "WEBVIEW_ERROR",
-          payload: { url: nativeEvent.url }
+          payload: {
+            url: nativeEvent.url,
+            failureData: getWebViewFailureData(event)
+          }
         });
       },
       [onEvent]

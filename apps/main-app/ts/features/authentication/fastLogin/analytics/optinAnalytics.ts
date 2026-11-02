@@ -3,7 +3,7 @@ import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/prof
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { LoginType } from "../../activeSessionLogin/screens/analytics";
+import { LoginType } from "../../common/utils/index";
 
 export type LoginSessionDuration = "30" | "365" | "not set";
 

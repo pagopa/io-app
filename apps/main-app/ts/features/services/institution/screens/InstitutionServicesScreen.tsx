@@ -137,8 +137,8 @@ export const InstitutionServicesScreen = ({
       return (
         <ListItemNav
           accessibilityLabel={accessibilityLabel}
+          label={item.name}
           onPress={() => navigateToServiceDetails(item)}
-          value={item.name}
         />
       );
     },

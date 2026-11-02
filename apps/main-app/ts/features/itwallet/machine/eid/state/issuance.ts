@@ -88,6 +88,24 @@ export const issuanceState = itwEidIssuanceMachineSetup.createStateConfig({
           actions: assign(({ event }) => ({
             walletInstanceStatusList: event.output
           })),
+          target: "ObtainingEidStatusList"
+        },
+        onError: {
+          target: "#itwEidIssuanceMachine.Failure",
+          actions: "setFailure"
+        }
+      }
+    },
+    ObtainingEidStatusList: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "obtainEidStatusList",
+        input: ({ context }) => ({
+          itwVersion: context.itwVersion,
+          eid: context.eid
+        }),
+        onDone: {
+          actions: assign(({ event }) => ({ eid: event.output })),
           target: "CheckingIdentityMatch"
         },
         onError: {

@@ -42,7 +42,7 @@ export const AppFeedbackContext = createContext<AppFeedbackContextType>({
 export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
   const [topic, setTopic] = useState<TopicKeys | undefined>();
   const dispatch = useIODispatch();
-  const { show } = useIOToast();
+  const { info } = useIOToast();
   const surveyUrl = useIOSelector(appFeedbackUriConfigSelector(topic));
   const appFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
   const canAskFeedback = useIOSelector(canAskFeedbackSelector(topic));
@@ -73,7 +73,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
           secondary: {
             label: I18n.t("appFeedback.bottomSheet.discard"),
             onPress: () => {
-              show(I18n.t("appFeedback.toast.negativeFeedback"));
+              info(I18n.t("appFeedback.toast.negativeFeedback"));
               setTopic(undefined);
               dismiss();
             }

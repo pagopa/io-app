@@ -27,7 +27,7 @@ jobs:
         id: lint
         run: |
           BRANCH_NAME="$BRANCH_NAME"
-          if [[ "$BRANCH_NAME" =~ ^lok_master_ ]]; then
+          if [[ "$BRANCH_NAME" =~ ^lok_ ]]; then
             echo "Branch created from lokalise pull action, skipping PR title validation."
             echo "VALIDATION_RESULT=success" >> $GITHUB_ENV
             exit 0

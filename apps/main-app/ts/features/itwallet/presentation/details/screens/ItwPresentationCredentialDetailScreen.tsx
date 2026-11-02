@@ -11,12 +11,14 @@ import { View } from "react-native";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
+import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
+import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { identificationRequest } from "../../../../identification/store/actions";
 import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types";
@@ -46,6 +48,7 @@ import { ITW_PROXIMITY_ROUTES } from "../../proximity/navigation/routes";
 import { isPresentableCredentialSelector } from "../../proximity/store/selectors/credentials";
 import {
   trackCredentialDetail,
+  trackWalletCredentialOpportunities,
   trackWalletCredentialShowFAC_SIMILE,
   trackWalletCredentialShowTrustmark
 } from "../analytics";
@@ -61,6 +64,7 @@ import {
 } from "../components/ItwPresentationDetailsHeader";
 import {
   CredentialCtaProps,
+  CredentialDiscoverMoreProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
@@ -75,8 +79,10 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 /** Component that renders the credential detail screen. */
-export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
-  const navigation = useIONavigation();
+export const ItwPresentationCredentialDetailScreen = ({
+  navigation,
+  route
+}: Props) => {
   const { credentialType } = route.params;
 
   const isL3 = useIOSelector(itwIsL3EnabledSelector);
@@ -105,11 +111,8 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
             "features.itWallet.issuance.walletInstanceNotActive.primaryAction"
           ),
           onPress: () =>
-            navigation.replace(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.DISCOVERY.INFO,
-              params: {
-                level: isL3 ? "l3" : "l2"
-              }
+            navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
+              level: isL3 ? "l3" : "l2"
             })
         }}
         pictogram="itWallet"
@@ -157,12 +160,17 @@ type ItwPresentationCredentialDetailProps = {
   credential: CredentialMetadata;
 };
 
+const discoverMoreURL =
+  "iosso://https://api.ced.pagopa.it/api/ced-card/v1/fauth";
+
 /** Component that renders the credential detail content. */
 export const ItwPresentationCredentialDetail = ({
   credential
 }: ItwPresentationCredentialDetailProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const { startFIMSAuthenticationFlow } =
+    useFIMSRemoteServiceConfiguration("ced-opportunities");
 
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -253,7 +261,7 @@ export const ItwPresentationCredentialDetail = ({
     if (!isL3Credential && contentClaim !== undefined) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
-        icon: "docPaymentTitle",
+        icon: "docTitle",
         onPress: () => {
           if (mixPanelCredential === "ITW_TS_V2") {
             trackWalletCredentialShowFAC_SIMILE();
@@ -275,6 +283,26 @@ export const ItwPresentationCredentialDetail = ({
     navigation,
     mixPanelCredential
   ]);
+
+  const discoverOpportunitiesLabel = I18n.t(
+    "features.itWallet.presentation.credentialDetails.actions.discoverOpportunities"
+  );
+  const startOpportunitiesFims = useOfflineToastGuard(() =>
+    startFIMSAuthenticationFlow(discoverOpportunitiesLabel, discoverMoreURL)
+  );
+
+  const handleDiscoverMoreOpportunities = () => {
+    trackWalletCredentialOpportunities(mixPanelCredential);
+    startOpportunitiesFims();
+  };
+
+  const discoverMoreProps: CredentialDiscoverMoreProps | undefined =
+    credential.credentialType === CredentialType.EUROPEAN_DISABILITY_CARD
+      ? {
+          label: discoverOpportunitiesLabel,
+          onPress: handleDiscoverMoreOpportunities
+        }
+      : undefined;
 
   if (status === "unknown") {
     return <ItwPresentationCredentialUnknownStatus credential={credential} />;
@@ -304,6 +332,7 @@ export const ItwPresentationCredentialDetail = ({
     <ItwPresentationDetailsScreenBase
       credential={credential}
       ctaProps={ctaProps}
+      discoverMoreProps={discoverMoreProps}
       headerTransparent={isL3Credential}
     >
       {itwFeaturesEnabled ? (

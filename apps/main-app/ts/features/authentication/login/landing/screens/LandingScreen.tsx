@@ -54,6 +54,7 @@ import {
   isSessionCorruptedSelector,
   isSessionExpiredSelector
 } from "../../../common/store/selectors";
+import { LOGIN_TYPES } from "../../../common/utils";
 import { isCieLoginUatEnabledSelector } from "../../cie/store/selectors";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
@@ -80,7 +81,7 @@ export const LandingScreen = () => {
     bottomSheet,
     dismiss: dismissBottomSheet,
     handleCieLoginRequested
-  } = useCieLoginMethodSelection({ flow: "auth" });
+  } = useCieLoginMethodSelection({ flow: LOGIN_TYPES.AUTH });
 
   const { presentInfoBottomsheet, infoBottomsheetComponent } =
     useInfoBottomsheetComponent();
@@ -288,7 +289,7 @@ export const LandingScreen = () => {
           <IOButton
             color={isCieUatEnabled ? "danger" : "primary"}
             fullWidth
-            icon="cieLetter"
+            icon="cie"
             label={I18n.t("authentication.landing.loginCie")}
             onPress={navigateToCiePinScreen}
             testID="landing-button-login-cie"

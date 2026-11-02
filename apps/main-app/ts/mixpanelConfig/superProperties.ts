@@ -28,6 +28,7 @@ import {
   authSecurityLevelHandler,
   cdcStatusHandler,
   cgnStatusHandler,
+  loginFlowIsOneIdentityHandler,
   loginMethodHandler,
   loginSessionConfigHandler,
   notificationConfigurationHandler,
@@ -51,6 +52,7 @@ type SuperProperties = {
   fontScale: number;
   isScreenLockSet: boolean;
   isScreenReaderEnabled: boolean;
+  LOGIN_FLOW_IS_OI: boolean;
   LOGIN_METHOD: string;
   LOGIN_SESSION: LoginSessionDuration;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
@@ -69,10 +71,11 @@ export const updateMixpanelSuperProperties = async (
       return;
     }
     const screenReaderEnabled: boolean = await isScreenReaderEnabled();
-    const fontScale = await getFontScale();
+    const fontScale = getFontScale();
     const biometricTechnology = await getBiometricsType(false);
     const isScreenLockSet = await isScreenLockSetFunc();
     const AUTH_SECURITY_LEVEL = authSecurityLevelHandler(state);
+    const LOGIN_FLOW_IS_OI = loginFlowIsOneIdentityHandler(state);
     const LOGIN_METHOD = loginMethodHandler(state);
     const LOGIN_SESSION = loginSessionConfigHandler(state);
     const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
@@ -92,6 +95,7 @@ export const updateMixpanelSuperProperties = async (
       biometricTechnology,
       isScreenLockSet,
       AUTH_SECURITY_LEVEL,
+      LOGIN_FLOW_IS_OI,
       LOGIN_METHOD,
       LOGIN_SESSION,
       NOTIFICATION_CONFIGURATION,

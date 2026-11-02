@@ -101,7 +101,7 @@ const CiePinScreen = () => {
 
   const doLoginSuccess = useCallback(
     (token: string, idp: keyof IdpData) =>
-      dispatch(loginSuccess({ token, idp })),
+      dispatch(loginSuccess({ token, idp, isOneIdentityLogin: false })),
     [dispatch]
   );
 

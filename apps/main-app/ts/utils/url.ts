@@ -1,10 +1,13 @@
 import * as E from "fp-ts/lib/Either";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
+import { err, ok } from "neverthrow";
 import { ImageURISource, Linking } from "react-native";
+import URLParse from "url-parse";
 
 import { storeUrl, webStoreURL } from "./appVersion";
 import { clipboardSetStringWithFeedback } from "./clipboard";
+import { unknownToString } from "./errors";
 import { openMaps } from "./openMaps";
 import { splitAndTakeFirst } from "./strings";
 
@@ -174,3 +177,18 @@ export function extractPathFromURL(
  */
 export const isImageUri = (value: unknown): value is ImageURISource =>
   typeof value === "object" && value !== null && "uri" in value;
+
+/**
+ * Parses a URL without throwing: parsing failures are returned as an `Err` with
+ * a description of the cause, so that callers can decide the fallback.
+ *
+ * @param url The URL to parse
+ * @returns The parsed URL, with the query string parsed into an object
+ */
+export const safeUrlParse = (url: string) => {
+  try {
+    return ok(new URLParse(url, true));
+  } catch (error) {
+    return err(unknownToString(error));
+  }
+};

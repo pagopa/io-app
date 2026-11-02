@@ -51,6 +51,7 @@ import {
   getCieStatusActor,
   getWalletAttestationActor,
   initMrtdPoPChallengeActor,
+  obtainEidStatusListActor,
   obtainStatusListActor,
   requestAccessTokenActor,
   requestEidActor,
@@ -65,6 +66,7 @@ import { EidIssuanceEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 import {
   hasValidWalletInstanceAttestationGuard,
+  hasWalletInstanceForSpecsGuard,
   isSessionExpiredGuard,
   issuedEidMatchesAuthenticatedUserGuard,
   isWalletValidGuard
@@ -221,6 +223,7 @@ export const itwEidIssuanceMachineSetup = setup({
     requestAccessToken: requestAccessTokenActor,
     requestEid: requestEidActor,
     obtainStatusList: obtainStatusListActor,
+    obtainEidStatusList: obtainEidStatusListActor,
     storeEidCredential: storeEidCredentialActor,
     waitForSessionRefresh: waitForSessionRefreshActor,
 
@@ -233,6 +236,7 @@ export const itwEidIssuanceMachineSetup = setup({
     isSessionExpired: isSessionExpiredGuard,
     hasIntegrityKeyTag: ({ context }) => context.integrityKeyTag !== undefined,
     hasValidWalletInstanceAttestation: hasValidWalletInstanceAttestationGuard,
+    hasWalletInstanceForSpecs: hasWalletInstanceForSpecsGuard,
     hasCredentialsToUpgrade: ({ context }) =>
       context.credentialsToUpgrade.length > 0,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,

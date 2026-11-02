@@ -57,7 +57,8 @@ describe("handleTestLogin saga", () => {
       .put(
         loginSuccess({
           token: mockToken,
-          idp: "test"
+          idp: "test",
+          isOneIdentityLogin: false
         })
       )
       .next()
@@ -156,7 +157,8 @@ describe("handleTestLogin saga", () => {
       .put(
         loginSuccess({
           token: mockToken,
-          idp: "test"
+          idp: "test",
+          isOneIdentityLogin: false
         })
       )
       .next()

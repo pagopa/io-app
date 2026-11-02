@@ -14,7 +14,6 @@ import FocusAwareStatusBar from "../components/ui/FocusAwareStatusBar";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
-import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { itwLinkingOptions } from "../features/itwallet/navigation/linking";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { ITW_CREDENTIAL_OFFER_LINKING_PREFIXES } from "../features/itwallet/offer/utils";
@@ -25,7 +24,6 @@ import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 import { processUtmLink } from "../features/utmLink";
 import { startApplicationInitialization } from "../store/actions/application";
-import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
@@ -38,9 +36,11 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
+import IngressStackNavigator from "./IngressStackNavigator";
 import { linkingSubscription } from "./linkingSubscription";
 import NavigationService, {
   navigationRef,
+  notifyCurrentRouteChanged,
   setMainNavigatorReady
 } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
@@ -81,7 +81,7 @@ export const AppStackNavigator = (): ReactElement => {
   }
 
   if (startupStatus === StartupStatusEnum.INITIAL) {
-    return <IngressScreen />;
+    return <IngressStackNavigator />;
   }
 
   return <AuthenticatedStackNavigator />;
@@ -195,8 +195,8 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         }
         const previousRouteName = routeNameRef.current;
         const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
+        notifyCurrentRouteChanged();
         if (currentRouteName !== undefined) {
-          dispatch(setDebugCurrentRouteName(currentRouteName));
           trackScreen(previousRouteName, currentRouteName);
         }
         routeNameRef.current = currentRouteName;

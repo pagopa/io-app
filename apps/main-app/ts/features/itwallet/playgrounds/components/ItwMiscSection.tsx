@@ -10,15 +10,13 @@ import { View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { resetTourCompletedAction } from "../../../tour/store/actions";
 import { isTourCompletedSelector } from "../../../tour/store/selectors";
-import { itwSetCatalogueEnabledForCredentialsList } from "../../credentialsCatalogue/store/actions";
-import { itwIsCatalogueEnabledForCredentialsList } from "../../credentialsCatalogue/store/selectors";
+import { itwSetDiscoverMoreCEDEnabled } from "../../common/store/actions/preferences.ts";
+import { itwDiscoverMoreCEDSelector } from "../../credentialsCatalogue/store/selectors";
 import { ITW_TOUR_GROUP_ID } from "../../tour/utils/constants";
 
 export const ItwMiscSection = () => {
   const dispatch = useIODispatch();
-  const isCatalogueEnabledForCredentialsList = useIOSelector(
-    itwIsCatalogueEnabledForCredentialsList
-  );
+  const isDiscoverMoreCEDEnabled = useIOSelector(itwDiscoverMoreCEDSelector);
 
   const isTourCompleted = useIOSelector(state =>
     isTourCompletedSelector(state, ITW_TOUR_GROUP_ID)
@@ -30,12 +28,12 @@ export const ItwMiscSection = () => {
 
   const featureFlags: ReadonlyArray<ListItemSwitchProps> = [
     {
-      label: "Lista credenziali da catalogo",
+      label: "Scopri le opportunità della CED",
       description:
-        "Se abilitato, la lista delle credenziali disponibili è ottenuta dal catalogo; altrimenti è una lista fissa.",
-      value: isCatalogueEnabledForCredentialsList,
+        "Se abilitato, l'utente visualizza la CTA nel dettaglio della CED per scoprire le opportunità della CED.",
+      value: isDiscoverMoreCEDEnabled,
       onSwitchValueChange: value =>
-        dispatch(itwSetCatalogueEnabledForCredentialsList(value))
+        dispatch(itwSetDiscoverMoreCEDEnabled(value))
     }
   ];
 

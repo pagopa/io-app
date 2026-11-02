@@ -25,8 +25,9 @@ import {
   checkWalletInstanceStateSaga
 } from "../../../lifecycle/saga/checkWalletInstanceStateSaga";
 import {
-  watchItwStatusListAuthenticatedSaga,
-  watchItwStatusListSaga
+  handleItwOfflineStatusListSaga,
+  handleItwStatusListSaga,
+  watchItwStatusListAuthenticatedSaga
 } from "../../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
 import { watchItwEnvironment } from "../environment";
@@ -39,7 +40,7 @@ type TakeEffect<TAction> = {
 };
 
 describe("watchItwSaga", () => {
-  it("starts offline-safe watchers and waits for connectivity before Status List checks", () => {
+  it("applies cached Status Lists before waiting for connectivity", () => {
     testSaga(watchItwSaga)
       .next()
       .fork(watchItwOfflineSaga)
@@ -54,6 +55,8 @@ describe("watchItwSaga", () => {
       .next()
       .call(handleItwCredentialsVaultCoherenceSaga)
       .next()
+      .call(handleItwOfflineStatusListSaga)
+      .next()
       .fork(handleWalletCredentialsRehydration)
       .next()
       .fork(handleKeyAttestationsCleanUp)
@@ -66,7 +69,7 @@ describe("watchItwSaga", () => {
       .next(true)
       .fork(warmUpIntegrityServiceSaga)
       .next()
-      .call(watchItwStatusListSaga)
+      .call(handleItwStatusListSaga)
       .next()
       .isDone();
   });
@@ -75,7 +78,6 @@ describe("watchItwSaga", () => {
 describe("watchItwAuthenticatedSaga", () => {
   it("stops after an inconsistent wallet instance", () => {
     testSaga(watchItwAuthenticatedSaga)
-      .next()
       .next()
       .fork(watchItwLifecycleSaga)
       .next()
@@ -94,7 +96,6 @@ describe("watchItwAuthenticatedSaga", () => {
 
   it("checks wallet state and credential status assertions for a consistent wallet", () => {
     testSaga(watchItwAuthenticatedSaga)
-      .next()
       .next()
       .fork(watchItwLifecycleSaga)
       .next()
