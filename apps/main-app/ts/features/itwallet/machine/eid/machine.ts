@@ -1,8 +1,9 @@
 import { and, assertEvent, assign, not, or, raise } from "xstate";
 
 import { CURRENT_ITW_SPECS_VERSION } from "../../common/utils/constants";
+import { getIssuanceItwVersion } from "../../common/utils/itwIssuanceUtils";
 import { ItwTags } from "../tags";
-import { getIssuanceItwVersion, InitialContext } from "./context";
+import { InitialContext } from "./context";
 import { IssuanceFailureType } from "./failure";
 import { itwEidIssuanceMachineSetup } from "./setup";
 import { credentialsUpgradeState } from "./state/credentialsUpgrade";

@@ -13,7 +13,6 @@ import type {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 
-import { CURRENT_ITW_SPECS_VERSION } from "../../common/utils/constants";
 import { IssuanceFailure } from "./failure";
 import { EidIssuanceMachineDeps } from "./input";
 
@@ -148,19 +147,6 @@ export type EidIssuanceLevel = "l2" | "l2-fallback" | "l3";
  *   process.
  */
 export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
-
-/**
- * Returns the IT-Wallet specs version to use for the given issuance mode and
- * level. A user might use a different version outside the issuance machine:
- *
- * - A user with a 1.0 PID who upgrades to IT-Wallet uses the current version.
- * - A whitelisted user who falls back to Documenti su IO uses 1.0.
- */
-export const getIssuanceItwVersion = (
-  mode: EidIssuanceMode,
-  level: EidIssuanceLevel
-): ItwVersion =>
-  mode === "upgrade" || level === "l3" ? CURRENT_ITW_SPECS_VERSION : "1.0.0";
 
 export type IdentificationContext =
   | { idpId: string; level: "L2"; mode: "spid" }
