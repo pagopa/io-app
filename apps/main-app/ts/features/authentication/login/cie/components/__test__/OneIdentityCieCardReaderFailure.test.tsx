@@ -109,14 +109,12 @@ describe("OneIdentityCieCardReaderFailure", () => {
     expect(wrongPinElement.props.remainingCount).toBe(2);
   });
 
-  it.each<{ event: CEvent["event"]; name: string }>([
-    { name: "a wrong PIN", event: "ON_PIN_ERROR" },
-    { name: "a wrong card", event: "ON_TAG_DISCOVERED_NOT_CIE" },
-    { name: "an expired card", event: "CERTIFICATE_EXPIRED" },
-    { name: "an unhandled event", event: "Transmission Error" }
-  ])("should set the failure event as debug data on $name", ({ event }) => {
-    const failure = { event, attemptsLeft: 1 } as unknown as CEvent;
-
+  it.each<{ failure: NfcError; name: string }>([
+    { name: "a wrong PIN", failure: { name: "WRONG_PIN", attemptsLeft: 1 } },
+    { name: "a wrong card", failure: { name: "NOT_A_CIE" } },
+    { name: "an expired card", failure: { name: "CERTIFICATE_EXPIRED" } },
+    { name: "an unhandled event", failure: { name: "TAG_LOST" } }
+  ])("should set the failure event as debug data on $name", ({ failure }) => {
     render(<OneIdentityCieCardReaderFailure failure={failure} />);
 
     expect(mockUseDebugInfo).toHaveBeenLastCalledWith({ failure });
