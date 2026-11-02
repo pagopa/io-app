@@ -266,13 +266,13 @@ const ListItemTransactionSkeleton = ({
           height={IOTypography.h6.size}
           radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={62}
+          width="30%"
         />
         <IOSkeleton
           height={IOTypography.bodySmall.size}
           radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={107}
+          width="50%"
         />
       </VStack>
       <View style={{ marginLeft: IODimensions.gap.listItem.default.leading }}>

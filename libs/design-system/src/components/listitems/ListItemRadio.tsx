@@ -152,13 +152,20 @@ export const ListItemRadio = ({
             alignItems: "center"
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              flexGrow: 1,
+              flexShrink: 1
+            }}
+          >
             {loadingProps?.skeletonIcon && <SkeletonIcon />}
             <IOSkeleton
               height={IOTypography.h6.size}
               radius={IODimensions.radius.skeleton.text}
               shape="rectangle"
-              width={180}
+              width="60%"
             />
           </View>
           <HSpacer size={IODimensions.gap.selection.control} />

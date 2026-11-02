@@ -1847,7 +1847,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {
               "animationDuration": "1250ms",
@@ -1876,7 +1876,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {},
           ]
@@ -1901,7 +1901,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 14,
-              "width": 107,
+              "width": "50%",
             },
             {
               "animationDuration": "1250ms",
@@ -1930,7 +1930,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 14,
-              "width": 107,
+              "width": "50%",
             },
             {},
           ]
@@ -3974,7 +3974,7 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {
               "animationDuration": "1250ms",
@@ -4003,7 +4003,7 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {},
           ]
@@ -4028,7 +4028,7 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 14,
-              "width": 107,
+              "width": "50%",
             },
             {
               "animationDuration": "1250ms",
@@ -4057,7 +4057,7 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 14,
-              "width": 107,
+              "width": "50%",
             },
             {},
           ]

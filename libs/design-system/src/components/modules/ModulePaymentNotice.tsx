@@ -195,18 +195,21 @@ const ModulePaymentNoticeSkeleton = ({
       />
     }
     startBlock={
-      <VStack space={IODimensions.gap.skeleton.items}>
+      <VStack
+        space={IODimensions.gap.skeleton.items}
+        style={{ flexGrow: 1, flexShrink: 1 }}
+      >
         <IOSkeleton
           height={IOTypography.bodySmall.size}
           radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={120}
+          width="50%"
         />
         <IOSkeleton
           height={IOTypography.body.size}
           radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={180}
+          width="75%"
         />
       </VStack>
     }

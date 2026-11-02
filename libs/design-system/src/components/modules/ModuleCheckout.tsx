@@ -143,25 +143,28 @@ const ModuleCheckoutSkeleton = ({
     startBlock={
       <HStack
         space={IODimensions.gap.module.leading}
-        style={{ alignItems: "center" }}
+        style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
       >
         <IOSkeleton
           radius={IODimensions.radius.skeleton.graphic}
           shape="square"
           size={IODimensions.size.icon.module.default}
         />
-        <VStack space={IODimensions.gap.skeleton.items}>
+        <VStack
+          space={IODimensions.gap.skeleton.items}
+          style={{ flexGrow: 1, flexShrink: 1 }}
+        >
           <IOSkeleton
             height={IOTypography.h6.size}
             radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
-            width={170}
+            width="85%"
           />
           <IOSkeleton
             height={IOTypography.bodySmall.size}
             radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
-            width={110}
+            width="55%"
           />
         </VStack>
       </HStack>

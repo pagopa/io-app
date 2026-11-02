@@ -378,6 +378,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                   {
                                     "display": "flex",
                                     "flexDirection": "column",
+                                    "flexGrow": 1,
+                                    "flexShrink": 1,
                                     "gap": 8,
                                   }
                                 }
@@ -401,7 +403,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "height": 14,
-                                        "width": 120,
+                                        "width": "50%",
                                       },
                                       {
                                         "animationDuration": "1250ms",
@@ -430,7 +432,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "height": 14,
-                                        "width": 120,
+                                        "width": "50%",
                                       },
                                       {},
                                     ]
@@ -455,7 +457,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "height": 16,
-                                        "width": 180,
+                                        "width": "75%",
                                       },
                                       {
                                         "animationDuration": "1250ms",
@@ -484,7 +486,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "height": 16,
-                                        "width": 180,
+                                        "width": "75%",
                                       },
                                       {},
                                     ]

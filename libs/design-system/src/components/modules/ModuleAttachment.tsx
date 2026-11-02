@@ -158,17 +158,21 @@ const ModuleAttachmentSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     startBlock={
-      <VStack space={IODimensions.gap.module.description}>
+      <VStack
+        space={IODimensions.gap.module.description}
+        style={{ flexGrow: 1, flexShrink: 1 }}
+      >
         <IOSkeleton
           height={IOTypography.body.size}
           radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={114}
+          width="35%"
         />
         <IOSkeleton
           height={IODimensions.height.badge}
           radius={IODimensions.radius.badge}
           shape="rectangle"
+          // About a three-letter badge (PDF, DOC, etc…)
           width={42}
         />
       </VStack>

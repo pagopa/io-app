@@ -188,7 +188,7 @@ const ModuleCredentialSkeleton = ({
     startBlock={
       <HStack
         space={IODimensions.gap.module.leading}
-        style={{ alignItems: "center" }}
+        style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
       >
         <IOSkeleton
           radius={IODimensions.radius.skeleton.graphic}
@@ -199,7 +199,7 @@ const ModuleCredentialSkeleton = ({
           height={IOTypography.bodySmall.size}
           radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={96}
+          width="40%"
         />
       </HStack>
     }
