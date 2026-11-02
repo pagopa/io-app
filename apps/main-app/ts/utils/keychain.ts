@@ -8,7 +8,9 @@
 import * as SecureStore from "expo-secure-store";
 import * as LegacyKeychain from "react-native-keychain";
 
+import { mixpanelTrack } from "../mixpanel";
 import { PinString } from "../types/PinString";
+import { buildEventProperties } from "./analytics";
 
 const PIN_KEY = "PIN";
 
@@ -18,30 +20,57 @@ const DEFAULT_OPTIONS: SecureStore.SecureStoreOptions = {
   keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY
 };
 
+const trackPinOperation = (
+  operation: "GET" | "REMOVE" | "SET",
+  succeeded: boolean
+) => {
+  const result = succeeded ? "SUCCESS" : "FAILURE";
+  void mixpanelTrack(
+    `PIN_KEYCHAIN_${operation}_${result}`,
+    buildEventProperties(
+      succeeded ? "TECH" : "KO",
+      succeeded ? undefined : "error"
+    )
+  );
+};
+
 /** Removes the unlock code from the secure store. */
 export async function deletePin(): Promise<boolean> {
-  await SecureStore.deleteItemAsync(PIN_KEY, DEFAULT_OPTIONS);
-  // TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
-  // clears the legacy entry too, in case migration never completed (e.g. after a write failure)
-  await LegacyKeychain.resetGenericPassword();
-  return true;
+  try {
+    await SecureStore.deleteItemAsync(PIN_KEY, DEFAULT_OPTIONS);
+    // TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
+    // clears the legacy entry too, in case migration never completed (e.g. after a write failure)
+    await LegacyKeychain.resetGenericPassword();
+    trackPinOperation("REMOVE", true);
+    return true;
+  } catch (error) {
+    trackPinOperation("REMOVE", false);
+    throw error;
+  }
 }
 
 /** Returns the unlock code from the secure store. */
 export async function getPin(): Promise<PinString | undefined> {
-  const value = await SecureStore.getItemAsync(PIN_KEY, DEFAULT_OPTIONS);
-  if (value !== null && PinString.is(value)) {
-    return value;
+  try {
+    const value = await SecureStore.getItemAsync(PIN_KEY, DEFAULT_OPTIONS);
+    const pin =
+      value !== null && PinString.is(value) ? value : await migrateLegacyPin();
+    trackPinOperation("GET", true);
+    return pin;
+  } catch (error) {
+    trackPinOperation("GET", false);
+    throw error;
   }
-  return await migrateLegacyPin();
 }
 
 /** Saves the provided unlock code in the secure store. */
 export async function setPin(pin: PinString): Promise<boolean> {
   try {
     await SecureStore.setItemAsync(PIN_KEY, pin, DEFAULT_OPTIONS);
+    trackPinOperation("SET", true);
     return true;
   } catch {
+    trackPinOperation("SET", false);
     return false;
   }
 }
@@ -52,10 +81,23 @@ async function migrateLegacyPin(): Promise<PinString | undefined> {
   if (typeof credentials === "boolean" || !PinString.is(credentials.password)) {
     return undefined;
   }
+  void mixpanelTrack(
+    "PIN_KEYCHAIN_MIGRATION_REQUEST",
+    buildEventProperties("TECH", undefined)
+  );
   const pin = credentials.password;
   const migrated = await setPin(pin);
   if (migrated) {
     await LegacyKeychain.resetGenericPassword();
+    void mixpanelTrack(
+      "PIN_KEYCHAIN_MIGRATION_SUCCESS",
+      buildEventProperties("TECH", undefined)
+    );
+  } else {
+    void mixpanelTrack(
+      "PIN_KEYCHAIN_MIGRATION_FAILURE",
+      buildEventProperties("KO", "error")
+    );
   }
   return pin;
 }
