@@ -64,15 +64,15 @@ export const IdPayCodePlayGround = () => {
           description={
             "IdPay code generation and enrollment (if Initiative ID is configured)"
           }
+          label={"Code Onboarding"}
           onPress={navigateToOnboarding}
-          value={"Code Onboarding"}
         />
         <Divider />
         <ListItemNav
           accessibilityLabel="Code Renew Screen"
           description={"IdPay Code is generated again"}
+          label={"Code Renew"}
           onPress={navigateToRenew}
-          value={"Code Renew"}
         />
       </ContentWrapper>
     </ScrollView>

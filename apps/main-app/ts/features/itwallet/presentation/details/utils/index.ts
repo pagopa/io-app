@@ -2,7 +2,7 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialMetadata,
   ItwCredentialStatus,
-  ItwJwtCredentialStatus
+  ItwEidStatus
 } from "../../../common/utils/itwTypesUtils";
 
 const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
@@ -34,7 +34,7 @@ const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
  */
 export const getItwDisplayCredentialStatus = (
   credentialStatus: ItwCredentialStatus,
-  eidStatus: ItwJwtCredentialStatus | undefined,
+  eidStatus: ItwEidStatus | undefined,
   isOffline: boolean,
   isEid: boolean
 ): ItwCredentialStatus => {
@@ -74,9 +74,9 @@ export const getItwDisplayCredentialStatus = (
 };
 
 /**
- * Returns whether the stored status list/assertion reports a suspended driving
+ * Returns whether the stored status assertion reports a suspended driving
  * licence, a case with dedicated static copy that must not fall back to the
- * issuer-provided dynamic error.
+ * issuer-provided dynamic error (Documenti su IO only).
  */
 export const isMdlSuspendedIssuerError = ({
   credentialType,
@@ -86,10 +86,9 @@ export const isMdlSuspendedIssuerError = ({
     return false;
   }
   return (
-    (validity?.type === "status_list" && validity.status === "suspended") ||
-    (validity?.type === "status_assertion" &&
-      validity.status === "invalid" &&
-      validity?.errorCode === "credential_suspended")
+    validity?.type === "status_assertion" &&
+    validity.status === "invalid" &&
+    validity?.errorCode === "credential_suspended"
   );
 };
 

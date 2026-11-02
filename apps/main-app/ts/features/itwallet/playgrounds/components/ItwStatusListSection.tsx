@@ -120,8 +120,8 @@ export const ItwStatusListSection = () => {
         <ListItemHeader label="Status List" />
         <ListItemNav
           description={formatDate(timestamps?.at(-1))}
+          label="Last check"
           onPress={() => modal.present()}
-          value="Last check"
         />
         <VSpacer size={16} />
         <BackgroundTaskSection />
@@ -135,11 +135,11 @@ export const ItwStatusListSection = () => {
               accessibilityLabel={tsl.sub}
               description={`Expires ${formatTslTimestamp(tsl.exp)}`}
               key={tsl.sub}
+              label={tsl.sub}
               onPress={() => {
                 setSelectedTsl(tsl);
                 parsedTslModal.present();
               }}
-              value={tsl.sub}
             />
           ))
         )}
@@ -179,7 +179,7 @@ const BackgroundTaskSection = () => {
   const triggerTaskWorker = useCallback(async () => {
     try {
       await BackgroundTask.triggerTaskWorkerForTestingAsync();
-      toast.show("Background task worker triggered");
+      toast.info("Background task worker triggered");
     } catch (error) {
       toast.error(`Background task test failed: ${getAlertMessage(error)}`);
     }

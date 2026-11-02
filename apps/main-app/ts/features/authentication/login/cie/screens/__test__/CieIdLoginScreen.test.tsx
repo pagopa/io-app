@@ -1,5 +1,7 @@
 import { SpidLevelEnum } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
+import { StackActions } from "@react-navigation/native";
 import { act, fireEvent, render } from "@testing-library/react-native";
+import { ComponentProps } from "react";
 import { EmitterSubscription, Linking } from "react-native";
 
 import { withStore } from "../../../../../../utils/jest/withStore";
@@ -7,6 +9,7 @@ import * as loginHooks from "../../../../../lollipop/hooks/useLollipopLoginSourc
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../../common/store/actions";
 import * as authSelectors from "../../../../common/store/selectors";
+import { AUTH_LEVELS } from "../../../../common/utils";
 import CieIdLoginScreen from "../CieIdLoginScreen";
 
 const API_PREFIX_URL = "http://example.com";
@@ -20,12 +23,16 @@ const authLoggedIn = {
 } as ReturnType<typeof authSelectors.loggedInAuthSelector>;
 
 const mockReplace = jest.fn();
+const mockPopTo = jest.fn();
+const mockNavigationDispatch = jest.fn();
 const mockDispatch = jest.fn();
 
 jest.mock("@react-navigation/stack", () => ({ createStackNavigator: jest.fn }));
 jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
   useNavigation: () => ({
-    replace: mockReplace
+    replace: mockReplace,
+    dispatch: mockNavigationDispatch
   })
 }));
 jest.mock("../../../../../../config", () => ({
@@ -84,9 +91,9 @@ describe(CieIdLoginScreen, () => {
       fireEvent.press(cancelButton);
     });
     expect(mockReplace).toHaveBeenCalledTimes(1);
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
-    });
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.CIE_ID_ERROR
+    );
   });
   it("Should display the IdpSuccessfulAuthentication screen", () => {
     jest
@@ -112,9 +119,9 @@ describe(CieIdLoginScreen, () => {
       fireEvent(webView, "error", { nativeEvent: {} });
     });
     expect(mockReplace).toHaveBeenCalledTimes(1);
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
-    });
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.CIE_ID_ERROR
+    );
   });
   it("Should trigger onHttpError and execute navigation to error screen", () => {
     // @ts-expect-error partial mock return value
@@ -134,9 +141,9 @@ describe(CieIdLoginScreen, () => {
       });
     });
     expect(mockReplace).toHaveBeenCalledTimes(1);
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
-    });
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.CIE_ID_ERROR
+    );
   });
   it("Should trigger onHttpError without navigating to the error screen", () => {
     // @ts-expect-error partial mock return value
@@ -155,9 +162,6 @@ describe(CieIdLoginScreen, () => {
       });
     });
     expect(mockReplace).toHaveBeenCalledTimes(0);
-    expect(mockReplace).not.toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
-    });
   });
   it("Should trigger onHttpError and navigate to the error screen", () => {
     // @ts-expect-error partial mock return value
@@ -176,9 +180,9 @@ describe(CieIdLoginScreen, () => {
       });
     });
     expect(mockReplace).toHaveBeenCalledTimes(1);
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
-    });
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.CIE_ID_ERROR
+    );
   });
   it("Should trigger an authentication error", () => {
     // @ts-expect-error partial mock return value
@@ -196,19 +200,14 @@ describe(CieIdLoginScreen, () => {
         url: `${API_PREFIX_URL}/error.html?errorCode=generic`
       });
     });
-    expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
       loginFailure({ idp: "cieid", error: expect.any(Error) })
     );
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage: "generic",
-        authMethod: "CIE_ID",
-        authLevel: "L2"
-      }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction("generic")
+    );
+    expect(mockReplace).not.toHaveBeenCalled();
   });
   it("Should execute the login", () => {
     // @ts-expect-error partial mock return value
@@ -229,7 +228,11 @@ describe(CieIdLoginScreen, () => {
     expect(mockReplace).toHaveBeenCalledTimes(0);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginSuccess({ idp: "cieid", token: "my-token" })
+      loginSuccess({
+        idp: "cieid",
+        token: "my-token",
+        isOneIdentityLogin: false
+      })
     );
   });
   it("Shouldn't execute the login because of missing token", () => {
@@ -248,19 +251,14 @@ describe(CieIdLoginScreen, () => {
         url: `${API_PREFIX_URL}/profile.html?token=`
       });
     });
-    expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
       loginFailure({ idp: "cieid", error: expect.any(Error) })
     );
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCode: undefined,
-        authMethod: "CIE_ID",
-        authLevel: "L2"
-      }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction(undefined)
+    );
+    expect(mockReplace).not.toHaveBeenCalled();
   });
   it("Should set authenticatedUrl if URL is whitelisted", () => {
     const url = "https://idserver.servizicie.interno.gov.it/profile";
@@ -290,14 +288,10 @@ describe(CieIdLoginScreen, () => {
       );
 
     renderComponent();
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage: undefined,
-        authMethod: "CIE_ID",
-        authLevel: "L2"
-      }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction(undefined)
+    );
+    expect(mockReplace).not.toHaveBeenCalled();
   });
 
   it("Should call navigateToCieIdAuthUrlError if URL is malformed", () => {
@@ -314,13 +308,35 @@ describe(CieIdLoginScreen, () => {
 
     renderComponent();
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
-      params: { url: "not-a-valid-url" }
-    });
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
+      {
+        url: "not-a-valid-url"
+      }
+    );
   });
 });
 
+const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
+  StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+    errorCodeOrMessage,
+    authMethod: "CIE_ID",
+    authLevel: AUTH_LEVELS.L2
+  });
+
 function renderComponent() {
-  return render(withStore(CieIdLoginScreen)({}));
+  const navigation = {
+    replace: mockReplace,
+    popTo: mockPopTo,
+    dispatch: mockNavigationDispatch
+  } as unknown as ComponentProps<typeof CieIdLoginScreen>["navigation"];
+  return render(
+    withStore(CieIdLoginScreen)({
+      navigation,
+      route: {
+        key: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
+        name: AUTHENTICATION_ROUTES.CIE_ID_LOGIN
+      }
+    })
+  );
 }

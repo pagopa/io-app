@@ -4,6 +4,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { getClaimsFullLocale, getCredentialExpireDate } from "./itwClaimsUtils";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
 import {
+  CredentialFormat,
   CredentialMetadata,
   IssuerConfiguration,
   ItwCredentialStatus
@@ -140,7 +141,8 @@ export const getCredentialStatusMessageFromCatalog = ({
 
 /**
  * Extract the status message from the Issuer's EC for the provided error code.
- * This function is meant to be used for status assertions codes.
+ * This function is meant to be used for status assertion or issuance error
+ * codes.
  *
  * @param errorCode - The raw error code, e.g. `credential_suspended`
  * @param issuerConf - The Issuer's Entity Configuration to extract the message
@@ -153,20 +155,33 @@ export const getCredentialStatusMessageFromIssuerConf = ({
   credentialId,
   issuerConf
 }: {
-  credentialId?: string;
+  credentialId: string;
   errorCode?: string;
   issuerConf?: IssuerConfiguration;
 }): CredentialStatusMessage | undefined => {
-  if (!errorCode || !credentialId || !issuerConf) {
+  if (!errorCode || !issuerConf) {
     return undefined;
   }
+
+  const credentialType =
+    issuerConf.credential_configurations_supported[credentialId]?.scope;
+
+  // Some credentials only contain the error messages in the SD-JWT configuration. To avoid
+  // inconsistencies we always use the SD-JWT credential configuration ID to extract the message.
+  const sdJwtConfig = Object.entries(
+    issuerConf.credential_configurations_supported
+  ).find(
+    ([, config]) =>
+      config.scope === credentialType &&
+      config.format === CredentialFormat.SD_JWT
+  );
 
   try {
     const messagesByLocale = Errors.extractErrorMessageFromIssuerConf(
       errorCode,
       {
         issuerConf,
-        credentialType: credentialId // Legacy mismatch: the param `credentialType` was not renamed
+        credentialType: sdJwtConfig?.[0] ?? credentialId // Legacy mismatch: the param `credentialType` was not renamed
       }
     );
     return messagesByLocale?.[getClaimsFullLocale()];

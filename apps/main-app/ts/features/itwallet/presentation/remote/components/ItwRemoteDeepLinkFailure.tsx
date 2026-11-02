@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { zendeskItWalletCategory } from "../../../../../utils/supportAssistance";
 import { trackItwKoStateAction } from "../../../analytics";
 import { useItwFailureSupportModal } from "../../../common/hooks/useItwFailureSupportModal.tsx";
 import { ZendeskSubcategoryValue } from "../../../common/hooks/useItwZendeskSupport";
@@ -41,6 +42,8 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   const supportModal = useItwFailureSupportModal({
     failure: itwFailure,
     supportChatEnabled: true,
+    // Remote presentation is an IT-Wallet feature, regardless of the wallet status
+    zendeskCategory: zendeskItWalletCategory,
     zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA
   });
 

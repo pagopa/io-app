@@ -1,4 +1,5 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
+import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
@@ -7,7 +8,7 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SpidIdp } from "../../../../../utils/idps";
 import { trackLoginFailure } from "../../../common/analytics";
@@ -15,9 +16,18 @@ import {
   IdpWebViewLogin,
   WebViewLoginEvent
 } from "../../../common/components/IdpWebViewLogin";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { AUTH_LEVELS, isValidCallbackUrl } from "../../../common/utils";
+import {
+  AUTH_LEVELS,
+  isValidCallbackUrl,
+  LOGIN_TYPES
+} from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
+import {
+  FailureData,
+  LoginFailureData
+} from "../../../common/utils/loginErrorDebugInfo";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
@@ -66,37 +76,36 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
   idp
 }: OneIdentityActiveSessionIdpLoginScreenContentProps) => {
   const dispatch = useIODispatch();
-  const navigation = useIONavigation();
+  const navigation =
+    useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();
 
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage?: string) => {
-      // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
-      // ensuring the re-execution of the `useLollipopLoginSource` hook.
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        params: {
-          errorCodeOrMessage,
-          authMethod: "SPID",
-          authLevel: AUTH_LEVELS.L2
-        }
+    (errorCodeOrMessage: string | undefined, failureData: FailureData) => {
+      // `replace` drops the failed login webview, so it doesn't stay
+      // mounted behind the error screen.
+      navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+        errorCodeOrMessage,
+        authMethod: "SPID",
+        authLevel: AUTH_LEVELS.L2,
+        failureData: { ...failureData, idp: idp.id }
       });
     },
-    [navigation]
+    [navigation, idp.id]
   );
 
   const handleLoginFailure = useCallback(
-    (reason: string, code?: string, message?: string) => {
+    (failureData: LoginFailureData, code?: string, message?: string) => {
       if (code !== AUTH_ERRORS.ERROR_1004) {
         dispatch(activeSessionLoginFailure());
       }
       trackLoginFailure({
-        reason,
+        reason: failureData.reason,
         idp: idp.id as keyof IdpData,
-        flow: "reauth"
+        flow: LOGIN_TYPES.REAUTH
       });
-      navigateToAuthErrorScreen(code || message);
+      navigateToAuthErrorScreen(code || message, failureData);
     },
     [dispatch, idp.id, navigateToAuthErrorScreen]
   );
@@ -112,8 +121,8 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
     (event: WebViewLoginEvent) => {
       switch (event.type) {
         case "LOGIN_FAILURE": {
-          const { code, message, reason } = event.payload;
-          handleLoginFailure(reason, code, message);
+          const { code, message, failureData } = event.payload;
+          handleLoginFailure(failureData, code, message);
           break;
         }
         case "LOGIN_SUCCESS": {
@@ -122,7 +131,7 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
           break;
         }
         case "WEBVIEW_ERROR": {
-          navigateToAuthErrorScreen();
+          navigateToAuthErrorScreen(undefined, event.payload.failureData);
           break;
         }
         case "WEBVIEW_HTTP_ERROR": {
@@ -132,7 +141,7 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
           } else if (statusCode !== 403) {
-            navigateToAuthErrorScreen();
+            navigateToAuthErrorScreen(undefined, event.payload.failureData);
           }
           break;
         }
@@ -148,6 +157,11 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
     ]
   );
 
-  // TODO: Remove flow to keep IdpWebViewLogin agnostic
-  return <IdpWebViewLogin flow="reauth" idp={idp} onEvent={handleEvent} />;
+  return (
+    <IdpWebViewLogin
+      flow={LOGIN_TYPES.REAUTH}
+      idp={idp}
+      onEvent={handleEvent}
+    />
+  );
 };

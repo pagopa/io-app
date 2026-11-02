@@ -2,7 +2,7 @@
  * A screen to display, by a webview, the consent to send user sensitive data to
  * backend and proceed with the onboarding process
  */
-import { Route, useRoute } from "@react-navigation/native";
+import { Route, StackActions, useRoute } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
@@ -30,6 +30,7 @@ import {
   originSchemasWhiteList
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
+import { ReauthLoginType } from "../../../common/utils/index";
 import { LoaderComponent } from "../../shared/components/LoaderComponent";
 import { ACS_PATH } from "../../shared/utils";
 import {
@@ -38,7 +39,6 @@ import {
   setFinishedActiveSessionLoginFlow
 } from "../../store/actions";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
-import { ReauthLoginType } from "../analytics";
 
 export type ActiveSessionLoginCieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -68,21 +68,20 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
 
   const navigateToErrorScreen = useCallback(
     (errorCodeOrMessageProp?: string) => {
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        params: {
+      navigation.dispatch(
+        StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
           errorCodeOrMessage: errorCodeOrMessageProp,
           authMethod: "CIE",
           authLevel: AUTH_LEVELS.L3
-        }
-      });
+        })
+      );
     },
     [navigation]
   );
 
   const navigateBack = () => {
     dispatch(setFinishedActiveSessionLoginFlow());
-    navigation.navigate(ROUTES.MAIN, {
+    navigation.popTo(ROUTES.MAIN, {
       screen: MESSAGES_ROUTES.MESSAGES_HOME
     });
   };
@@ -158,7 +157,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   }
   if (!hasError) {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}

@@ -26,6 +26,7 @@ jest.mock("../../analytics");
 const ASSISTANCE_URL =
   "https://assistenza.ioapp.it/hc/it/articles/35337442750225-Non-riesco-ad-aggiungere-un-metodo-di-pagamento";
 const mockNavigation = {
+  addListener: jest.fn(),
   popToTop: jest.fn(),
   reset: jest.fn(),
   getParent: jest.fn(() => ({ setOptions: jest.fn() }))

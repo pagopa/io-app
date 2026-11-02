@@ -1,4 +1,5 @@
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
+import { StackActions } from "@react-navigation/native";
 import _isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Linking, Platform, StyleSheet } from "react-native";
@@ -14,13 +15,14 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { remoteApiLoginUrlPrefixSelector } from "../../../activeSessionLogin/store/selectors";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
@@ -51,8 +53,12 @@ import {
   IO_LOGIN_CIE_URL_SCHEME
 } from "../utils/cie";
 
-const CieIdLoginScreen = () => {
-  const navigation = useIONavigation();
+type CieIdLoginScreenProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  typeof AUTHENTICATION_ROUTES.CIE_ID_LOGIN
+>;
+
+const CieIdLoginScreen = ({ navigation }: CieIdLoginScreenProps) => {
   const webView = useRef<WebView>(null);
   const dispatch = useIODispatch();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(null);
@@ -67,26 +73,22 @@ const CieIdLoginScreen = () => {
     useIOSelector(cieIDSelectedSecurityLevelSelector) ?? AUTH_LEVELS.L2;
   const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
   const [isLoadingWebView, setIsLoadingWebView] = useState(true);
+
   const navigateToCieIdAuthenticationError = useCallback(() => {
-    navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
-    });
+    navigation.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR);
   }, [navigation]);
 
   const navigateToCieIdAuthUrlError = useCallback(
     (url: string) => {
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
-        params: { url }
+      navigation.replace(AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL, {
+        url
       });
     },
     [navigation]
   );
 
   const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    navigation.popTo(AUTHENTICATION_ROUTES.LANDING);
   }, [navigation]);
 
   const checkIfUrlIsWhitelisted = useCallback(
@@ -131,17 +133,17 @@ const CieIdLoginScreen = () => {
           idp: "cieid"
         })
       );
-      // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
-      // because on `navigation.replace` this screen will be unmounted and a further navigation to this screen
-      // will mount it again and the `useLollipopLoginSource` hook will be re-executed.
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        params: {
+      // `replace` drops the failed login screen, so retrying mounts a new
+      // one, with a new Lollipop key, instead of popping back to it.
+      // Dispatched as an action because `navigation` is typed on the root
+      // params list.
+      navigation.dispatch(
+        StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
           errorCodeOrMessage: code || message,
           authMethod: "CIE_ID",
           authLevel: AUTH_LEVELS.L2
-        }
-      });
+        })
+      );
     },
     [dispatch, navigation]
   );
@@ -181,7 +183,9 @@ const CieIdLoginScreen = () => {
 
   const handleLoginSuccess = useCallback(
     (token: string) => {
-      dispatch(loginSuccess({ token, idp: "cieid" }));
+      dispatch(
+        loginSuccess({ token, idp: "cieid", isOneIdentityLogin: false })
+      );
     },
     [dispatch]
   );

@@ -30,7 +30,10 @@ import {
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
-import { hasGrantedConsentGuard } from "./guards";
+import {
+  hasGrantedConsentGuard,
+  isNfcPresentmentSupportedGuard
+} from "./guards";
 import { Input } from "./input";
 
 /**
@@ -90,6 +93,7 @@ export const itwProximityMachineSetup = setup({
     hasFailure: ({ context }) => !!context.failure,
     isNfcRetrieval: ({ context }) => context.retrievalMethod === "nfc",
     isNfcEngagement: ({ context }) => context.engagementMode === "nfc",
+    isNfcPresentmentSupported: isNfcPresentmentSupportedGuard,
     hasTerminatedSession: ({ context }) => context.sessionTerminated,
     hasGrantedConsent: hasGrantedConsentGuard
   }

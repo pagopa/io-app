@@ -34,6 +34,10 @@ const getBleManager = () => {
   return bleManager;
 };
 
+/** Observes adapter changes, including its current state, until removed. */
+export const subscribeBluetoothState = (listener: (state: State) => void) =>
+  getBleManager().onStateChange(listener, true);
+
 /**
  * Checks and requests necessary Bluetooth permissions based on the platform and
  * OS version.
@@ -105,13 +109,14 @@ export const checkBluetoothActivation = async () => {
 };
 
 /**
- * Opens the Bluetooth settings page on the device. On iOS, it attempts to open
- * the Bluetooth settings directly, while on Android it opens the Bluetooth
- * settings screen.
+ * Opens the device settings so the user can turn Bluetooth on. On iOS, it opens
+ * the Settings home, since third-party apps can no longer deep link to Settings >
+ * Bluetooth (`App-Prefs:Bluetooth` lands on Settings > Apps). On Android, it
+ * opens the Bluetooth settings screen.
  */
 export const openBluetoothPreferences = () => {
   if (Platform.OS === "ios") {
-    Linking.openURL("App-Prefs:Bluetooth").catch(() => null);
+    Linking.openURL("App-Prefs:").catch(() => null);
   } else {
     AndroidOpenSettings.bluetoothSettings();
   }

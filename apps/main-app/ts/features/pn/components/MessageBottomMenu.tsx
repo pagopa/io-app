@@ -55,7 +55,7 @@ const generateMessageSectionData = (
             "features.pn.details.infoSection.iunAccessibility",
             { iun }
           ),
-          icon: "docPaymentTitle",
+          icon: "docTitle",
           label: I18n.t("features.pn.details.infoSection.iun"),
           value: iun
         }
@@ -72,7 +72,7 @@ const generateMessageSectionData = (
             "messageDetails.showMoreDataBottomSheet.messageIdAccessibility",
             { messageId }
           ),
-          icon: "docPaymentTitle",
+          icon: "docTitle",
           label: I18n.t("messageDetails.showMoreDataBottomSheet.messageId"),
           value: messageId
         }
@@ -95,7 +95,7 @@ const generateMessageSectionData = (
               "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility",
               { paymentNoticeNumber }
             ),
-            icon: "docPaymentCode",
+            icon: "docCode",
             label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
             value: paymentNoticeNumber,
             valueToCopy: paidNoticeCode
@@ -122,7 +122,7 @@ const generateMessageSectionData = (
               "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility",
               { paymentNoticeNumber }
             ),
-            icon: "docPaymentCode",
+            icon: "docCode",
             label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
             value: paymentNoticeNumber,
             valueToCopy: payment.noticeCode

@@ -7,6 +7,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import * as activeSessionLoginAnalytics from "../../../../activeSessionLogin/screens/analytics";
 import * as commonAnalytics from "../../../../common/analytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { LOGIN_TYPES, LoginType } from "../../../../common/utils";
 import { OneIdentityIdpSelectionFailureContent } from "../OneIdentityIdpSelectionFailureContent";
 
 const mockDismiss = jest.fn();
@@ -19,10 +20,10 @@ jest.mock("../../../../common/hooks/useCieLoginMethodSelection", () => ({
   })
 }));
 
-const mockNavigate = jest.fn();
+const mockPopToTop = jest.fn();
 jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
   ...jest.requireActual("../../../../../../navigation/params/AppParamsList"),
-  useIONavigation: () => ({ navigate: mockNavigate })
+  useIONavigation: () => ({ popToTop: mockPopToTop })
 }));
 
 describe("OneIdentityIdpSelectionFailureContent", () => {
@@ -39,16 +40,12 @@ describe("OneIdentityIdpSelectionFailureContent", () => {
       .mockImplementation(jest.fn());
   });
 
-  const renderComponent = (isActiveSessionLogin = false) => {
+  const renderComponent = (flow: LoginType = LOGIN_TYPES.AUTH) => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
     return renderScreenWithNavigationStoreContext(
-      () => (
-        <OneIdentityIdpSelectionFailureContent
-          isActiveSessionLogin={isActiveSessionLogin}
-        />
-      ),
+      () => <OneIdentityIdpSelectionFailureContent flow={flow} />,
       AUTHENTICATION_ROUTES.IDP_SELECTION,
       {},
       store
@@ -62,14 +59,12 @@ describe("OneIdentityIdpSelectionFailureContent", () => {
     expect(queryByTestId("idp-loading-error-secondary-action")).toBeTruthy();
   });
 
-  it("should navigate to the landing screen when pressing the secondary action", () => {
+  it("should pop to top when pressing the secondary action", () => {
     const { getByTestId } = renderComponent();
 
     fireEvent.press(getByTestId("idp-loading-error-secondary-action"));
 
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    expect(mockPopToTop).toHaveBeenCalledTimes(1);
   });
 
   it("should track trackCieLoginSelected and request the CIE login when pressing the primary action while not in an active session", () => {
@@ -85,7 +80,7 @@ describe("OneIdentityIdpSelectionFailureContent", () => {
   });
 
   it("should track trackLoginReauthEngagementCieSelected and request the CIE login when pressing the primary action during an active session", () => {
-    const { getByTestId } = renderComponent(true);
+    const { getByTestId } = renderComponent(LOGIN_TYPES.REAUTH);
 
     fireEvent.press(getByTestId("idp-loading-error-primary-action"));
 

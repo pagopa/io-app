@@ -471,6 +471,7 @@ describe("getCredentialStatusMessageFromCatalog", () => {
 
 describe("getCredentialStatusMessageFromIssuerConf", () => {
   const CREDENTIAL_ID = "dc_sd_jwt_mDL";
+  const CREDENTIAL_TYPE = "mDL";
   const ERROR_CODE = "credential_suspended";
 
   const italianMessage = {
@@ -487,7 +488,13 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
   ) =>
     ({
       credential_configurations_supported: {
+        mso_mdoc_mDL: {
+          format: "mso_mdoc",
+          scope: CREDENTIAL_TYPE
+        },
         [CREDENTIAL_ID]: {
+          format: "dc+sd-jwt",
+          scope: CREDENTIAL_TYPE,
           issuance_errors_supported: {
             [ERROR_CODE]: { display }
           }
@@ -512,10 +519,10 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
 
   it.each([
     {
-      name: "errorCode, credentialId and issuerConf are missing",
+      name: "errorCode and issuerConf are missing",
       params: {
+        credentialId: CREDENTIAL_ID,
         errorCode: undefined,
-        credentialId: undefined,
         issuerConf: undefined
       }
     },
@@ -545,5 +552,15 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
     }
   ])("should return undefined when $name", ({ params }) => {
     expect(getCredentialStatusMessageFromIssuerConf(params)).toBeUndefined();
+  });
+
+  it("should return the message of the sd-jwt configuration for mdoc credentials", () => {
+    expect(
+      getCredentialStatusMessageFromIssuerConf({
+        errorCode: ERROR_CODE,
+        credentialId: "mso_mdoc_mDL",
+        issuerConf
+      })
+    ).toEqual(italianMessage);
   });
 });

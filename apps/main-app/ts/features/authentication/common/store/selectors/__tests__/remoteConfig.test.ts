@@ -5,6 +5,8 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { ONE_IDENTITY_ENVS, OneIdentityEnv } from "../../reducers/loginConfig";
 import {
   oneIdentityAllowedCieOriginsSelector,
+  oneIdentityCieAndroidClearSessionCookiesEnabledSelector,
+  oneIdentityCieNativeRedirectsEnabledSelector,
   oneIdentityIdpFriendlyNamesUrlSelector,
   oneIdentityIdpsUrlSelector,
   oneIdentityRolloutPercentageSelector,
@@ -66,6 +68,68 @@ describe("oneIdentityAllowedCieOriginsSelector", () => {
       oneIdentityAllowedCieOriginsSelector(makeState({}))
     );
   });
+});
+
+describe("oneIdentityCieNativeRedirectsEnabledSelector", () => {
+  const scenarios = [
+    { name: "remoteConfig is none", statePayload: undefined, expected: false },
+    {
+      name: "cieNativeRedirectsEnabled is absent",
+      statePayload: {},
+      expected: false
+    },
+    {
+      name: "cieNativeRedirectsEnabled is false",
+      statePayload: { cieNativeRedirectsEnabled: false },
+      expected: false
+    },
+    {
+      name: "cieNativeRedirectsEnabled is true",
+      statePayload: { cieNativeRedirectsEnabled: true },
+      expected: true
+    }
+  ];
+
+  it.each(scenarios)(
+    "should return $expected when $name",
+    ({ statePayload, expected }) => {
+      expect(
+        oneIdentityCieNativeRedirectsEnabledSelector(makeState(statePayload))
+      ).toBe(expected);
+    }
+  );
+});
+
+describe("oneIdentityCieAndroidClearSessionCookiesEnabledSelector", () => {
+  const scenarios = [
+    { name: "remoteConfig is none", statePayload: undefined, expected: false },
+    {
+      name: "cieAndroidClearSessionCookiesEnabled is absent",
+      statePayload: {},
+      expected: false
+    },
+    {
+      name: "cieAndroidClearSessionCookiesEnabled is false",
+      statePayload: { cieAndroidClearSessionCookiesEnabled: false },
+      expected: false
+    },
+    {
+      name: "cieAndroidClearSessionCookiesEnabled is true",
+      statePayload: { cieAndroidClearSessionCookiesEnabled: true },
+      expected: true
+    }
+  ];
+
+  it.each(scenarios)(
+    "should return $expected when $name",
+    ({ statePayload, expected }) => {
+      expect(
+        oneIdentityCieAndroidClearSessionCookiesEnabledSelector(
+          makeState(statePayload)
+        )
+      ).toBe(expected);
+    }
+  );
 });
 
 describe("oneIdentityIdpsUrlSelector", () => {

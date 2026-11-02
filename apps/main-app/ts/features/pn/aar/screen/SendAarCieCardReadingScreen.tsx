@@ -1,4 +1,4 @@
-import i18n from "i18next";
+import I18n from "i18next";
 import { useEffect } from "react";
 
 import type { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -70,7 +70,7 @@ export const SendAarCieCardReadingScreen = ({
       return (
         <LoadingScreenContent
           testID="LoadingScreenContent"
-          title={i18n.t("features.pn.aar.flow.validatingMandate.loadingText")}
+          title={I18n.t("features.pn.aar.flow.validatingMandate.loadingText")}
         />
       );
     default:

@@ -81,7 +81,8 @@ export function* handleTestLogin({
         yield* put(
           loginSuccess({
             token: testLoginResponse.right.value.token,
-            idp: "test"
+            idp: "test",
+            isOneIdentityLogin: false
           })
         );
         return;

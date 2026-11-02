@@ -1,7 +1,6 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
-import I18n from "i18next";
 import { memo, useCallback, useMemo, useRef } from "react";
-import { Linking, StyleSheet, View } from "react-native";
+import { Linking } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -9,7 +8,7 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 
-import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { trackLoginError } from "../../../../utils/analytics";
@@ -20,18 +19,30 @@ import {
 } from "../../../../utils/supportAssistance";
 import { getUrlBasepath } from "../../../../utils/url";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
-import {
-  LoginType,
-  trackSpidLoginIntent
-} from "../../activeSessionLogin/screens/analytics";
+import { trackSpidLoginIntent } from "../../activeSessionLogin/screens/analytics";
+import { trackLoginOIConfigurationError } from "../../common/analytics";
+import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
+import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { idpLoginUrlChanged } from "../store/actions";
 import {
   AUTH_LEVELS,
   getIntentFallbackUrl,
+  isOneIdentityErrorUrl,
+  LOGIN_TYPES,
+  LoginType,
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../utils";
+import {
+  getWebViewFailureData,
+  LoginFailureData,
+  WebViewFailureData
+} from "../utils/loginErrorDebugInfo";
+
+// To ensure the server recognizes the client as a valid mobile device, we use a custom user agent.
+const defaultUserAgent =
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X; Linux; Android 10) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
 
 export type IdpWebViewLoginProps = {
   /** The login flow this WebView is part of; defaults to a first-time login. */
@@ -44,18 +55,29 @@ export type IdpWebViewLoginProps = {
 
 export type WebViewLoginEvent =
   | {
-      payload: { code?: string; message?: string; reason: string };
+      payload: {
+        code?: string;
+        failureData: LoginFailureData;
+        message?: string;
+      };
       type: "LOGIN_FAILURE";
     }
   | {
-      payload: { statusCode: number; url: string };
+      payload: {
+        failureData: WebViewFailureData;
+        statusCode: number;
+        url: string;
+      };
       type: "WEBVIEW_HTTP_ERROR";
     }
-  | { payload: { token: string }; type: "LOGIN_SUCCESS" }
-  | { payload: { url: string }; type: "WEBVIEW_ERROR" };
+  | {
+      payload: { failureData: WebViewFailureData; url: string };
+      type: "WEBVIEW_ERROR";
+    }
+  | { payload: { token: string }; type: "LOGIN_SUCCESS" };
 
 export const IdpWebViewLogin = memo(
-  ({ idp, flow = "auth", onEvent }: IdpWebViewLoginProps) => {
+  ({ idp, flow = LOGIN_TYPES.AUTH, onEvent }: IdpWebViewLoginProps) => {
     const dispatch = useIODispatch();
 
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
@@ -67,10 +89,10 @@ export const IdpWebViewLogin = memo(
     const lastTrackedUrl = useRef<string | undefined>(undefined);
 
     const handleFailure = useCallback(
-      (reason: string) => {
+      (failureData: LoginFailureData) => {
         onEvent({
           type: "LOGIN_FAILURE",
-          payload: { reason }
+          payload: { failureData }
         });
       },
       [onEvent]
@@ -78,10 +100,16 @@ export const IdpWebViewLogin = memo(
 
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
+        flow,
         idpId: idp.id,
         onFailure: handleFailure,
         minAuthLevel: AUTH_LEVELS.L2
       });
+
+    const {
+      bottomSheet: posteIdBottomSheet,
+      presentOnce: presentOncePosteIdBottomSheet
+    } = useOneIdentityPosteIDApp2AppEducational(idp);
 
     const handleError = useCallback(
       (event: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
@@ -93,7 +121,8 @@ export const IdpWebViewLogin = memo(
             type: "WEBVIEW_HTTP_ERROR",
             payload: {
               url: nativeEvent.url,
-              statusCode: nativeEvent.statusCode
+              statusCode: nativeEvent.statusCode,
+              failureData: getWebViewFailureData(event)
             }
           });
           return;
@@ -101,7 +130,10 @@ export const IdpWebViewLogin = memo(
 
         onEvent({
           type: "WEBVIEW_ERROR",
-          payload: { url: nativeEvent.url }
+          payload: {
+            url: nativeEvent.url,
+            failureData: getWebViewFailureData(event)
+          }
         });
       },
       [idp.id, onEvent]
@@ -110,7 +142,9 @@ export const IdpWebViewLogin = memo(
     const handleLoginFailure = useCallback(
       (code?: string, message?: string) => {
         const reason = code
-          ? `login failed with code (${code}) : ${getSpidErrorCodeDescription(code)}`
+          ? `login failed with code (${code}) : ${getSpidErrorCodeDescription(
+              code
+            )}`
           : message
             ? `login failed with message ${message}`
             : "login failed with no error code or message available";
@@ -118,7 +152,7 @@ export const IdpWebViewLogin = memo(
 
         onEvent({
           type: "LOGIN_FAILURE",
-          payload: { code, message, reason }
+          payload: { code, message, failureData: { reason } }
         });
       },
       [choosenTool, onEvent]
@@ -135,6 +169,11 @@ export const IdpWebViewLogin = memo(
     const handleShouldStartLoading = useCallback(
       (event: WebViewNavigation): boolean => {
         const url = event.url;
+
+        if (isOneIdentityErrorUrl(url)) {
+          trackLoginOIConfigurationError(url, flow);
+        }
+
         // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
         const idpIntent = getIntentFallbackUrl(url);
         if (idpIntent != null) {
@@ -153,8 +192,7 @@ export const IdpWebViewLogin = memo(
           idp.id as keyof IdpData,
           flow
         )(event);
-        // URL can be loaded if it's not the login URL containing the session token - this avoids
-        // making a (useless) GET request with the session in the URL
+        // URL can be loaded if it's not containing the token
         return !isLoginUrlWithToken;
       },
       [
@@ -177,41 +215,48 @@ export const IdpWebViewLogin = memo(
       [dispatch]
     );
 
-    if (
-      loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "verifying-assertion-ref"
-    ) {
-      return <IdpWebViewLoginLoading />;
-    }
-
     if (loginSourceState.status === "failure") {
       return null;
     }
 
+    // The overlay covers the waits before the WebView has a source. The
+    // assertion-ref check is local and takes a few milliseconds, so the overlay
+    // stays off meanwhile to avoid a flash, and the WebView stays mounted: a new
+    // incognito instance would lose the OneIdentity session cookie.
+    const isLoading =
+      loginSourceState.status === "reserving-public-key" ||
+      loginSourceState.status === "following-redirects";
+
+    const webviewSource = isLoading
+      ? undefined
+      : loginSourceState.webviewSource;
+
     return (
-      <View style={{ flex: 1 }}>
-        <WebView
-          androidCameraAccessDisabled
-          androidMicrophoneAccessDisabled
-          cacheEnabled={false}
-          onError={handleError}
-          onHttpError={handleError}
-          onNavigationStateChange={handleNavigationStateChange}
-          onShouldStartLoadWithRequest={handleShouldStartLoading}
-          originWhitelist={originSchemasWhiteList}
-          renderLoading={IdpWebViewLoginLoading}
-          source={loginSourceState.webviewSource}
-          startInLoadingState={true}
-          testID="webview-idp-login-screen"
-          textZoom={100}
-        />
-      </View>
+      <LoadingSpinnerOverlay isLoading={isLoading}>
+        {webviewSource && (
+          <>
+            <WebView
+              androidCameraAccessDisabled
+              androidMicrophoneAccessDisabled
+              cacheEnabled={false}
+              incognito
+              onError={handleError}
+              onHttpError={handleError}
+              onLoad={presentOncePosteIdBottomSheet}
+              onNavigationStateChange={handleNavigationStateChange}
+              onShouldStartLoadWithRequest={handleShouldStartLoading}
+              originWhitelist={originSchemasWhiteList}
+              renderLoading={() => <LoadingOverlay />}
+              source={webviewSource}
+              startInLoadingState={true}
+              testID="webview-idp-login-screen"
+              textZoom={100}
+              userAgent={defaultUserAgent}
+            />
+            {posteIdBottomSheet}
+          </>
+        )}
+      </LoadingSpinnerOverlay>
     );
   }
-);
-
-const IdpWebViewLoginLoading = () => (
-  <View style={StyleSheet.absoluteFill}>
-    <LoadingScreenContent title={I18n.t("global.genericWaiting")} />
-  </View>
 );

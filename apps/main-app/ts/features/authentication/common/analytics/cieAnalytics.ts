@@ -1,6 +1,6 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { LoginType } from "../../activeSessionLogin/screens/analytics";
+import { LoginType } from "../utils/index";
 
 export function trackLoginCieCardReaderScreen(flow: LoginType = "auth") {
   void mixpanelTrack(

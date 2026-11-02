@@ -14,6 +14,7 @@ export type MachineNavigation = Pick<
   | "goBack"
   | "navigate"
   | "pop"
+  | "popTo"
   | "popToTop"
   | "replace"
   | "reset"

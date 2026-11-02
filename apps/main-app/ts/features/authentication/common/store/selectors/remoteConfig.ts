@@ -38,6 +38,30 @@ export const oneIdentityAllowedCieOriginsSelector = (state: GlobalState) => {
   return oneIdentityConfig?.allowedCieOrigins ?? EMPTY_ALLOWED_CIE_ORIGINS;
 };
 
+/**
+ * Whether the OneIdentity CIE + PIN login follows the `/authorize` redirects up
+ * to the CIE IDP `SAMLRequest` natively instead of inside the WebView.
+ *
+ * Defaults to `false` (WebView) if the remote configuration is not yet loaded
+ * or if the field is missing.
+ */
+export const oneIdentityCieNativeRedirectsEnabledSelector = (
+  state: GlobalState
+) => oneIdentityRemoteConfigSelector(state)?.cieNativeRedirectsEnabled ?? false;
+
+/**
+ * Whether the OneIdentity CIE + PIN login on Android removes the WebView
+ * session cookies before every login attempt.
+ *
+ * Defaults to `false` (cookies kept) if the remote configuration is not yet
+ * loaded or if the field is missing.
+ */
+export const oneIdentityCieAndroidClearSessionCookiesEnabledSelector = (
+  state: GlobalState
+) =>
+  oneIdentityRemoteConfigSelector(state)
+    ?.cieAndroidClearSessionCookiesEnabled ?? false;
+
 type OneIdentityEnvConfig = {
   idpFriendlyNamesUrl: string;
   idpsUrl: string;

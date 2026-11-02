@@ -3,7 +3,7 @@ import {
   NavigationContainerRef
 } from "@react-navigation/native";
 import { Route } from "@react-navigation/routers";
-import { createRef, RefObject } from "react";
+import { createRef, RefObject, useSyncExternalStore } from "react";
 
 import { mixpanelTrack } from "../mixpanel";
 import { AppParamsList } from "./params/AppParamsList";
@@ -76,6 +76,28 @@ const getCurrentRoute = (): Route<string> | undefined =>
   navigationRef.current?.getCurrentRoute();
 
 const getCurrentState = () => navigationRef?.current?.getState();
+
+// Notifies components outside the navigation context (e.g. debug overlay,
+// status message/contextual-help selectors) that the current route may have changed.
+const currentRouteListeners = new Set<() => void>();
+
+export const notifyCurrentRouteChanged = () => {
+  currentRouteListeners.forEach(listener => listener());
+};
+
+const subscribeToCurrentRoute = (listener: () => void) => {
+  currentRouteListeners.add(listener);
+  return () => {
+    currentRouteListeners.delete(listener);
+  };
+};
+
+export const useCurrentRouteName = (): string =>
+  useSyncExternalStore(
+    subscribeToCurrentRoute,
+    getCurrentRouteName,
+    getCurrentRouteName
+  ) ?? "UNKNOWN";
 
 // add other navigation functions that you need and export them
 export default {

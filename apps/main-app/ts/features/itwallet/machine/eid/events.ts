@@ -23,7 +23,6 @@ export type EidIssuanceEvents =
   | ErrorActorEvent
   | ExternalErrorEvent
   | GoToCieWarning
-  | GoToIpzsPrivacy
   | GoToWallet
   | MrtdChallengedSigned
   | MrtdPoPVerificationCompleted
@@ -100,10 +99,6 @@ type GoToCieWarning = {
   warning: CieWarningType;
 };
 
-type GoToIpzsPrivacy = {
-  type: "go-to-ipzs-privacy";
-};
-
 type GoToWallet = {
   type: "go-to-wallet";
 };
@@ -169,6 +164,7 @@ type SimulateFailure = {
  *   from the beginning.
  */
 type Start = {
+  credentialOfferUri?: string;
   credentialType?: string;
   level: EidIssuanceLevel;
   mode: EidIssuanceMode;

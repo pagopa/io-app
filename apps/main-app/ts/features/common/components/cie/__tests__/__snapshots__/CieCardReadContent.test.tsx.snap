@@ -364,7 +364,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -395,7 +395,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -1093,7 +1093,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -1124,7 +1124,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                 {
                   "backgroundColor": "transparent",
                   "borderColor": "#0B3EE3",
-                  "borderRadius": 8,
+                  "borderRadius": 0,
                   "borderWidth": 0,
                   "height": undefined,
                 },
@@ -1900,7 +1900,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               {
                 "backgroundColor": "transparent",
                 "borderColor": "#0B3EE3",
-                "borderRadius": 8,
+                "borderRadius": 0,
                 "borderWidth": 0,
                 "height": undefined,
               },
@@ -1931,7 +1931,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               {
                 "backgroundColor": "transparent",
                 "borderColor": "#0B3EE3",
-                "borderRadius": 8,
+                "borderRadius": 0,
                 "borderWidth": 0,
                 "height": undefined,
               },
@@ -2614,7 +2614,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               {
                 "backgroundColor": "transparent",
                 "borderColor": "#0B3EE3",
-                "borderRadius": 8,
+                "borderRadius": 0,
                 "borderWidth": 0,
                 "height": undefined,
               },
@@ -2645,7 +2645,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               {
                 "backgroundColor": "transparent",
                 "borderColor": "#0B3EE3",
-                "borderRadius": 8,
+                "borderRadius": 0,
                 "borderWidth": 0,
                 "height": undefined,
               },

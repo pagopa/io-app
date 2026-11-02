@@ -146,7 +146,8 @@ export const Banner = ({
   const theme = useIOTheme();
 
   // Dynamic colors
-  const colorTitle: IOColors = themeType === "dark" ? "grey-50" : "blueIO-850";
+  const colorTitle: IOColors =
+    themeType === "dark" ? "grey-50" : theme["textHeading-default"];
   const colorCloseButton: IconButton["color"] =
     themeType === "dark" ? "contrast" : "neutral";
   const colorMainButton =

@@ -28,7 +28,7 @@ export const ONE_IDENTITY_ENVS = {
 export type OneIdentityEnv =
   (typeof ONE_IDENTITY_ENVS)[keyof typeof ONE_IDENTITY_ENVS];
 
-export const loginConfigInitialState: LoginConfigState = {
+const loginConfigInitialState: LoginConfigState = {
   oneIdentityLocalFeatureFlag: undefined,
   oneIdentityEnv: ONE_IDENTITY_ENVS.PROD
 };

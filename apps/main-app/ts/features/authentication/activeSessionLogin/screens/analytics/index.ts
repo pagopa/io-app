@@ -1,9 +1,7 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { SpidIdp } from "../../../../../utils/idps";
-
-export type LoginType = "auth" | ReauthLoginType;
-export type ReauthLoginType = "FCI_auth" | "reauth";
+import { LoginType } from "../../../common/utils";
 
 export function trackLoginReauthEngagement() {
   void mixpanelTrack(

@@ -68,6 +68,11 @@ if (project.hasProperty(bundleInDebugPropertyName)) {
 
     /* Autolinking */
     autolinkLibrariesWithApp()
+
+    // Added by install-expo-modules
+    entryFile = file(["node", "-e", "require('expo/scripts/resolveAppEntry')", rootDir.getAbsoluteFile().getParentFile().getAbsolutePath(), "android", "absolute"].execute(null, rootDir).text.trim())
+    cliFile = new File(["node", "--print", "require.resolve('@expo/cli')"].execute(null, rootDir).text.trim())
+    bundleCommand = "export:embed"
 }
 
 /**
@@ -118,8 +123,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100155284
-        versionName "3.40.0.6"
+        versionCode 100155314
+        versionName "3.43.0.1"
         multiDexEnabled true
         manifestPlaceholders = [usesCleartextTraffic: "true"]
         // The resConfigs attribute will remove all not required localized resources while building the application,
@@ -206,10 +211,6 @@ dependencies {
     // Required by expo-image-picker because we target a minSdkVersion < 30. Can be removed when we target minSdkVersion >= 30.
     implementation("androidx.activity:activity:1.9.+")
 
-    // Google Play In-App Review API (Requires google() Maven repository)  
-    implementation 'com.google.android.play:review:2.0.2'  
-    // Kotlin extensions for Play In-App Review API  
-    implementation 'com.google.android.play:review-ktx:2.0.2'  
     // Required for gif on Android
     implementation 'com.facebook.fresco:animated-gif:3.6.0'
 }

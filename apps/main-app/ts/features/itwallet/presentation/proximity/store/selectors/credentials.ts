@@ -3,10 +3,11 @@ import { createSelector } from "reselect";
 import type { GlobalState } from "../../../../../../store/reducers/types";
 
 import { getCredentialStatus } from "../../../../common/utils/itwCredentialStatusUtils";
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   CredentialFormat,
   CredentialMetadata,
-  ItwJwtCredentialStatus,
+  ItwEidStatus,
   MdocSupportedCredentialConfiguration
 } from "../../../../common/utils/itwTypesUtils";
 import {
@@ -28,6 +29,29 @@ const itwCredentialsAsMdocSelector = makeSelectAllCredentials(
 );
 
 /**
+ * Array of credential types that should be excluded from presentable
+ * credentials.
+ */
+const excludedCredentialTypes: ReadonlyArray<string> = [
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+];
+
+/**
+ * Returns presentable MDOC credentials keyed by credential type, excluding
+ * those listed in `excludedCredentialTypes`.
+ */
+export const itwPresentableCredentialsSelector = createSelector(
+  itwCredentialsAsMdocSelector,
+  (credentials): Record<string, CredentialMetadata> =>
+    Object.fromEntries(
+      Object.entries(credentials).filter(
+        ([, { credentialType }]) =>
+          !excludedCredentialTypes.includes(credentialType)
+      )
+    )
+);
+
+/**
  * Returns the credentials object by doc type. Only MDOC credentials are
  * returned.
  *
@@ -35,7 +59,7 @@ const itwCredentialsAsMdocSelector = makeSelectAllCredentials(
  * @returns The credentials object by doc type.
  */
 export const itwPresentableCredentialsByDocTypeSelector = createSelector(
-  itwCredentialsAsMdocSelector,
+  itwPresentableCredentialsSelector,
   (credentials): Record<string, CredentialMetadata> =>
     Object.values(credentials).reduce<Record<string, CredentialMetadata>>(
       (acc, credential) => {
@@ -105,10 +129,7 @@ export const shouldShowExpiredProximityCredentialsBannerSelector =
   createSelector(
     itwCredentialsEidStatusSelector,
     itwPresentableCredentialsByDocTypeSelector,
-    (
-      pidStatus: ItwJwtCredentialStatus | undefined,
-      presentableCredentialsByDocType
-    ) =>
+    (pidStatus: ItwEidStatus | undefined, presentableCredentialsByDocType) =>
       pidStatus === "jwtExpired" &&
       areAllPresentableCredentialsExpired(presentableCredentialsByDocType)
   );
@@ -123,4 +144,4 @@ export const shouldShowExpiredProximityCredentialsBannerSelector =
  */
 export const isPresentableCredentialSelector =
   (credentialType: string) => (state: GlobalState) =>
-    itwCredentialsAsMdocSelector(state)[credentialType] !== undefined;
+    itwPresentableCredentialsSelector(state)[credentialType] !== undefined;

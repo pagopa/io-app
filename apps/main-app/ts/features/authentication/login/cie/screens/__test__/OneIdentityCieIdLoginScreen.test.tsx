@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
@@ -27,12 +28,15 @@ jest.mock("react-native-webview", () => {
 });
 
 const mockReplace = jest.fn();
+const mockNavigationDispatch = jest.fn();
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
     useNavigation: () => ({
+      addListener: jest.fn(),
       replace: mockReplace,
+      dispatch: mockNavigationDispatch,
       navigate: jest.fn()
     })
   };
@@ -103,7 +107,11 @@ describe("OneIdentityCieIdLoginScreen", () => {
     });
 
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginSuccess({ token: "session-token", idp: "cieid" })
+      loginSuccess({
+        token: "session-token",
+        idp: "cieid",
+        isOneIdentityLogin: true
+      })
     );
   });
 
@@ -122,14 +130,12 @@ describe("OneIdentityCieIdLoginScreen", () => {
       })
     );
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage: "err-code",
-        authMethod: "CIE_ID",
-        authLevel: AUTH_LEVELS.L2
-      }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      authErrorReplaceAction("err-code", {
+        reason: expect.stringContaining("err-code")
+      })
+    );
+    expect(mockReplace).not.toHaveBeenCalled();
   });
 
   it("should navigate to CIE_ID_INCORRECT_URL when the CieID app returns an untrusted URL", () => {
@@ -139,10 +145,11 @@ describe("OneIdentityCieIdLoginScreen", () => {
       .calls[0][0];
     onSuccess("https://not-whitelisted.example.com");
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
-      params: { url: "https://not-whitelisted.example.com" }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL, {
+        url: "https://not-whitelisted.example.com"
+      })
+    );
   });
 
   it("should navigate to CIE_ID_ERROR on a generic WebView error", () => {
@@ -150,14 +157,35 @@ describe("OneIdentityCieIdLoginScreen", () => {
     const webview = getByTestId("cie-id-webview");
 
     fireEvent(webview, "onError", {
-      nativeEvent: { url: "https://example.com/authorize" }
+      nativeEvent: {
+        url: "https://example.com/authorize",
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED"
+      }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, {
+        failureData: {
+          description: "net::ERR_INTERNET_DISCONNECTED",
+          code: -2,
+          url: "https://example.com/authorize"
+        }
+      })
+    );
   });
 });
+
+const authErrorReplaceAction = (
+  errorCodeOrMessage: string | undefined,
+  failureData: Record<string, unknown>
+) =>
+  StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+    errorCodeOrMessage,
+    authMethod: "CIE_ID",
+    authLevel: AUTH_LEVELS.L2,
+    failureData
+  });
 
 const renderComponent = () => {
   const initialState = appReducer(undefined, applicationChangeState("active"));

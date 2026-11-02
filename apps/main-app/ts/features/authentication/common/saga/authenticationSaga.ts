@@ -1,12 +1,14 @@
 import * as O from "fp-ts/lib/Option";
 import { call, cancel, fork, put, select, take } from "typed-redux-saga/macro";
 
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../../store/actions/analytics";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
+import { GlobalState } from "../../../../store/reducers/types";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 import {
@@ -72,6 +74,10 @@ export function* authenticationSaga(): Generator<ReduxSagaEffect, string> {
         );
     }
   }
+  // Update Mixpanel super properties with the current state
+  // before completing the authentication process.
+  const state: GlobalState = yield* select();
+  yield* call(updateMixpanelSuperProperties, state);
   // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.
   // FIXME: what's the difference between AUTHENTICATION_COMPLETED and
   //        LOGIN_SUCCESS?

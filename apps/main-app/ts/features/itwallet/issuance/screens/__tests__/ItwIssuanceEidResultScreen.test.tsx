@@ -1,4 +1,4 @@
-import { fireEvent, waitFor } from "@testing-library/react-native";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor } from "xstate";
@@ -22,7 +22,22 @@ import { ItwIssuanceEidResultScreen } from "../ItwIssuanceEidResultScreen";
 
 const mockSend = jest.fn();
 const mockCredentialSend = jest.fn();
-const mockHasResolvedCredentialOffer = jest.fn();
+const mockAddListener = jest.fn();
+const mockNavigate = jest.fn();
+
+jest.mock("../../../../../navigation/params/AppParamsList", () => {
+  const actual = jest.requireActual(
+    "../../../../../navigation/params/AppParamsList"
+  );
+  return {
+    ...actual,
+    useIONavigation: () => ({
+      ...actual.useIONavigation(),
+      addListener: mockAddListener,
+      navigate: mockNavigate
+    })
+  };
+});
 
 jest.mock("../../analytics", () => ({
   trackAddFirstCredential: jest.fn(),
@@ -52,16 +67,24 @@ jest.mock("../../../machine/credential/provider", () => {
     ...actual,
     ItwCredentialIssuanceMachineContext: {
       ...actual.ItwCredentialIssuanceMachineContext,
-      useActorRef: () => ({ send: mockCredentialSend }),
-      useSelector: () => mockHasResolvedCredentialOffer()
+      useActorRef: () => ({ send: mockCredentialSend })
     }
   };
 });
 
 describe("ItwIssuanceEidResultScreen", () => {
+  // eslint-disable-next-line functional/no-let
+  let navigationListeners: Record<string, () => void> = {};
+
   beforeEach(() => {
     jest.clearAllMocks();
-    mockHasResolvedCredentialOffer.mockReturnValue(false);
+    navigationListeners = {};
+    mockAddListener.mockImplementation(
+      (event: string, callback: () => void) => {
+        navigationListeners = { ...navigationListeners, [event]: callback };
+        return jest.fn();
+      }
+    );
   });
 
   describe("IT-Wallet (L3) flow", () => {
@@ -323,25 +346,100 @@ describe("ItwIssuanceEidResultScreen", () => {
     ).toBeNull();
   });
 
-  describe("credential offer flow", () => {
-    it("resumes the resolved credential offer after eID issuance completes", async () => {
-      mockHasResolvedCredentialOffer.mockReturnValue(true);
+  describe("credential-triggered flow", () => {
+    beforeEach(() => {
       jest
         .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
         .mockReturnValue(false);
+    });
 
+    it("resumes the credential offer when the eID issuance was triggered by a credential offer", async () => {
+      renderComponent("l3", {
+        credentialType: "education_degree",
+        credentialOfferUri: "openid-credential-offer://?credential_offer=abc"
+      });
+
+      await waitFor(() =>
+        expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
+          params: {
+            itwCredentialOfferUri:
+              "openid-credential-offer://?credential_offer=abc"
+          }
+        })
+      );
+      expect(mockCredentialSend).not.toHaveBeenCalled();
+    });
+
+    it("starts the catalogue issuance when the eID issuance was triggered by a catalogue credential", async () => {
       renderComponent("l3", { credentialType: "education_degree" });
 
       await waitFor(() =>
         expect(mockCredentialSend).toHaveBeenCalledWith({
-          type: "confirm-credential-offer"
+          type: "select-credential",
+          mode: "issuance",
+          credentialType: "education_degree"
         })
       );
-      expect(mockCredentialSend).not.toHaveBeenCalledWith({
-        type: "select-credential",
-        mode: "issuance",
-        credentialType: "education_degree"
+      expect(mockNavigate).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("when the credential issuance flow is aborted", () => {
+    beforeEach(() => {
+      jest
+        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
+        .mockReturnValue(false);
+    });
+
+    test.each([
+      { name: "the catalogue", credentialOfferUri: undefined },
+      {
+        name: "a credential offer",
+        credentialOfferUri: "openid-credential-offer://?credential_offer=abc"
+      }
+    ])(
+      "navigates back to the wallet when the user returns to this screen from $name",
+      async ({ credentialOfferUri }) => {
+        renderComponent("l3", {
+          credentialType: "education_degree",
+          credentialOfferUri
+        });
+
+        await waitFor(() => expect(navigationListeners.blur).toBeDefined());
+
+        act(() => {
+          navigationListeners.blur();
+          navigationListeners.focus();
+        });
+
+        expect(mockSend).toHaveBeenCalledWith({ type: "go-to-wallet" });
+      }
+    );
+
+    it("does not navigate to the wallet on the first focus", async () => {
+      renderComponent("l3", { credentialType: "education_degree" });
+
+      await waitFor(() => expect(navigationListeners.focus).toBeDefined());
+
+      act(() => {
+        navigationListeners.focus();
       });
+
+      expect(mockSend).not.toHaveBeenCalledWith({ type: "go-to-wallet" });
+    });
+
+    it("does not navigate to the wallet when the flow is not credential driven", async () => {
+      renderComponent("l3");
+
+      await waitFor(() => expect(navigationListeners.blur).toBeDefined());
+
+      act(() => {
+        navigationListeners.blur();
+        navigationListeners.focus();
+      });
+
+      expect(mockSend).not.toHaveBeenCalledWith({ type: "go-to-wallet" });
     });
   });
 });

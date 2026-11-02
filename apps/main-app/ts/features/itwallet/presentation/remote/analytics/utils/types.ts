@@ -5,6 +5,7 @@
  * require L3 upgrade.
  */
 export enum ItwL3UpgradeTrigger {
+  ADD_CREDENTIAL = "add_credential",
   REMOTE_QR_CODE = "remote_qr_code"
 }
 

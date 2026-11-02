@@ -1,5 +1,6 @@
 import { BackendStatusMessage } from "@io-app/api-types/generated/definitions/content/BackendStatusMessage";
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/session_manager/PreferredLanguage";
+// eslint-disable-next-line no-restricted-syntax -- setup module: `I18n.use(plugin)` would be flagged as a React hook
 import i18next from "i18next";
 // import i18next, {
 //   BackendModule,

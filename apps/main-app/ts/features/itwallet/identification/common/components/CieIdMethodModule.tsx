@@ -31,7 +31,7 @@ export const CieIdMethodModule = ({
     return (
       <>
         <ModuleNavigationAlt
-          icon="cie"
+          icon="cieID"
           onPress={() => {
             trackItWalletIDMethodSelected({
               ITW_ID_method: "cieId",
@@ -58,7 +58,7 @@ export const CieIdMethodModule = ({
 
   return (
     <ModuleNavigationAlt
-      icon="cie"
+      icon="cieID"
       onPress={handleOnPress}
       subtitle={I18n.t(
         `features.itWallet.identification.modeSelection.mode.cieId.subtitle.default`

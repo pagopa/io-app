@@ -10,6 +10,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -21,92 +22,41 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
-          onLayout={[Function]}
+          aria-hidden={false}
           pointerEvents="box-none"
           style={null}
         >
           <View
-            collapsable={false}
+            onLayout={[Function]}
             pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
           >
             <View
               collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
-            }
-          >
-            <View
-              pointerEvents="none"
-              style={
-                {
-                  "height": 0,
-                }
-              }
-            />
-            <View
               pointerEvents="box-none"
               style={
                 {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
                 }
               }
             >
@@ -115,58 +65,118 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginStart": 0,
+                    "bottom": 0,
+                    "left": 0,
                     "opacity": 1,
-                  }
-                }
-              />
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "justifyContent": "center",
-                    "marginHorizontal": 16,
-                    "maxWidth": 718,
-                    "opacity": 1,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
                   }
                 }
               >
-                <Text
-                  accessibilityRole="header"
-                  aria-level="1"
+                <View
                   collapsable={false}
-                  numberOfLines={1}
-                  onLayout={[Function]}
+                  pointerEvents="auto"
                   style={
                     {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
+                      "backgroundColor": "#FFFFFF",
+                      "borderBottomColor": "rgb(216, 216, 216)",
+                      "flex": 1,
+                      "shadowColor": "rgba(0, 0, 0, 1)",
+                      "shadowOffset": {
+                        "height": 0.5,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.3,
+                      "shadowRadius": 0,
                     }
                   }
-                >
-                  ITW_PRESENTATION_CREDENTIAL_DETAIL
-                </Text>
+                />
               </View>
               <View
-                collapsable={false}
-                pointerEvents="box-none"
+                pointerEvents="none"
                 style={
                   {
-                    "alignItems": "flex-end",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginEnd": 0,
-                    "opacity": 1,
+                    "height": 0,
                   }
                 }
               />
+              <View
+                pointerEvents="box-none"
+                style={
+                  [
+                    {
+                      "alignItems": "stretch",
+                      "flex": 1,
+                      "flexDirection": "row",
+                    },
+                    {
+                      "marginHorizontal": 5,
+                    },
+                  ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-start",
+                      "marginStart": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "justifyContent": "center",
+                      "marginHorizontal": 16,
+                      "maxWidth": 718,
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <Text
+                    aria-level="1"
+                    collapsable={false}
+                    numberOfLines={1}
+                    onLayout={[Function]}
+                    role="heading"
+                    style={
+                      {
+                        "color": "rgb(28, 28, 30)",
+                        "fontFamily": "System",
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    ITW_PRESENTATION_CREDENTIAL_DETAIL
+                  </Text>
+                </View>
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-end",
+                      "marginEnd": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -215,32 +225,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -248,35 +237,22 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -294,6 +270,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -329,7 +306,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -434,6 +410,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   },
                                 ]
                               }
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -530,7 +507,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         </View>
                         <View
                           accessibilityLabel="Luogo di Nascita Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -624,7 +603,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Numero identificativo dell'istituzione (TEAM) Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -718,7 +699,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Nascita Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -812,7 +795,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Provincia Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -906,7 +891,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Nazione Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1000,7 +987,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Sesso Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1094,7 +1083,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Scadenza Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1188,7 +1179,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Numero identificativo della tessera (TEAM) Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1282,7 +1275,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Nome Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1376,7 +1371,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Codice Fiscale Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1470,7 +1467,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Cognome Nascosto"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1595,8 +1594,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             >
                               <View
                                 accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
-                                accessible={true}
+                                accessible={false}
                                 importantForAccessibility="yes"
+                                screenReaderFocusable={true}
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -1714,6 +1714,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1927,6 +1928,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -1938,92 +1940,41 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
-          onLayout={[Function]}
+          aria-hidden={false}
           pointerEvents="box-none"
           style={null}
         >
           <View
-            collapsable={false}
+            onLayout={[Function]}
             pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
           >
             <View
               collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
-            }
-          >
-            <View
-              pointerEvents="none"
-              style={
-                {
-                  "height": 0,
-                }
-              }
-            />
-            <View
               pointerEvents="box-none"
               style={
                 {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
                 }
               }
             >
@@ -2032,58 +1983,118 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginStart": 0,
+                    "bottom": 0,
+                    "left": 0,
                     "opacity": 1,
-                  }
-                }
-              />
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "justifyContent": "center",
-                    "marginHorizontal": 16,
-                    "maxWidth": 718,
-                    "opacity": 1,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
                   }
                 }
               >
-                <Text
-                  accessibilityRole="header"
-                  aria-level="1"
+                <View
                   collapsable={false}
-                  numberOfLines={1}
-                  onLayout={[Function]}
+                  pointerEvents="auto"
                   style={
                     {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
+                      "backgroundColor": "#FFFFFF",
+                      "borderBottomColor": "rgb(216, 216, 216)",
+                      "flex": 1,
+                      "shadowColor": "rgba(0, 0, 0, 1)",
+                      "shadowOffset": {
+                        "height": 0.5,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.3,
+                      "shadowRadius": 0,
                     }
                   }
-                >
-                  ITW_PRESENTATION_CREDENTIAL_DETAIL
-                </Text>
+                />
               </View>
               <View
-                collapsable={false}
-                pointerEvents="box-none"
+                pointerEvents="none"
                 style={
                   {
-                    "alignItems": "flex-end",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginEnd": 0,
-                    "opacity": 1,
+                    "height": 0,
                   }
                 }
               />
+              <View
+                pointerEvents="box-none"
+                style={
+                  [
+                    {
+                      "alignItems": "stretch",
+                      "flex": 1,
+                      "flexDirection": "row",
+                    },
+                    {
+                      "marginHorizontal": 5,
+                    },
+                  ]
+                }
+              >
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-start",
+                      "marginStart": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "justifyContent": "center",
+                      "marginHorizontal": 16,
+                      "maxWidth": 718,
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <Text
+                    aria-level="1"
+                    collapsable={false}
+                    numberOfLines={1}
+                    onLayout={[Function]}
+                    role="heading"
+                    style={
+                      {
+                        "color": "rgb(28, 28, 30)",
+                        "fontFamily": "System",
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    ITW_PRESENTATION_CREDENTIAL_DETAIL
+                  </Text>
+                </View>
+                <View
+                  collapsable={false}
+                  pointerEvents="box-none"
+                  style={
+                    {
+                      "alignItems": "center",
+                      "flexBasis": 0,
+                      "flexDirection": "row",
+                      "flexGrow": 1,
+                      "justifyContent": "flex-end",
+                      "marginEnd": 0,
+                      "opacity": 1,
+                    }
+                  }
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -2132,32 +2143,11 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -2165,35 +2155,22 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -2211,6 +2188,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
@@ -2246,7 +2224,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -2351,6 +2328,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   },
                                 ]
                               }
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -2447,7 +2425,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         </View>
                         <View
                           accessibilityLabel="Luogo di Nascita Rome (IT)"
-                          accessible={true}
+                          accessible={false}
+                          importantForAccessibility="yes"
+                          screenReaderFocusable={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -2731,86 +2711,182 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Nascita; 06/01/1991"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
-                              style={
+                              collapsable={false}
+                              jestAnimatedProps={
                                 {
-                                  "flex": 1,
+                                  "value": {},
                                 }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={false}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
-                                    "flexDirection": "column",
+                                    "flex": 1,
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "flexDirection": "column",
+                                    }
                                   }
                                 >
-                                  Data di Nascita
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  06/01/1991
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Data di Nascita
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    06/01/1991
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -3395,140 +3471,236 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Scadenza; 22/02/2025; Scaduta"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
-                              style={
+                              collapsable={false}
+                              jestAnimatedProps={
                                 {
-                                  "flex": 1,
+                                  "value": {},
                                 }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={false}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
-                                    "flexDirection": "column",
+                                    "flex": 1,
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "flexDirection": "column",
+                                    }
                                   }
                                 >
-                                  Data di Scadenza
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  22/02/2025
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Data di Scadenza
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={2}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    22/02/2025
+                                  </Text>
+                                </View>
                               </View>
-                            </View>
-                            <View
-                              accessible={false}
-                              importantForAccessibility="no-hide-descendants"
-                            >
                               <View
-                                accessible={true}
-                                style={
-                                  [
-                                    {
-                                      "alignItems": "center",
-                                      "borderCurve": "continuous",
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                      "overflow": "hidden",
-                                    },
-                                    {
-                                      "borderRadius": 36,
-                                      "paddingHorizontal": 12,
-                                      "paddingVertical": 6,
-                                    },
-                                    {
-                                      "backgroundColor": "#FFD9D9",
-                                    },
-                                  ]
-                                }
+                                accessible={false}
+                                importantForAccessibility="no-hide-descendants"
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  ellipsizeMode="tail"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
+                                <View
+                                  accessible={true}
                                   style={
                                     [
-                                      {},
                                       {
-                                        "color": "#5D1313",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 12,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 16,
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
-                                        "alignSelf": "center",
-                                        "letterSpacing": 0.5,
-                                        "textTransform": "uppercase",
+                                        "borderRadius": 36,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
+                                        "backgroundColor": "#FFD9D9",
                                       },
                                     ]
                                   }
                                 >
-                                  Scaduta
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#5D1313",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Scaduta
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -3923,86 +4095,182 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Codice Fiscale RSSMRA80A10H501A"
-                          accessible={true}
-                          style={
+                          accessibilityRole="button"
+                          accessibilityState={
                             {
-                              "marginHorizontal": -24,
-                              "paddingHorizontal": 24,
-                              "paddingVertical": 12,
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
                             }
                           }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onFocus={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 },
                                 {
-                                  "columnGap": 18,
+                                  "backgroundColor": "rgba(244, 245, 248, 0)",
                                 },
                               ]
                             }
                           >
                             <View
-                              style={
+                              collapsable={false}
+                              jestAnimatedProps={
                                 {
-                                  "flex": 1,
+                                  "value": {},
                                 }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  },
+                                  {
+                                    "columnGap": 18,
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessible={false}
-                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   {
-                                    "flexDirection": "column",
+                                    "flex": 1,
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessible={false}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "flexDirection": "column",
+                                    }
                                   }
                                 >
-                                  Codice Fiscale
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={4}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  RSSMRA80A10H501A
-                                </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Codice Fiscale
+                                  </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={4}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    RSSMRA80A10H501A
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -4238,8 +4506,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                             >
                               <View
                                 accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
-                                accessible={true}
+                                accessible={false}
                                 importantForAccessibility="yes"
+                                screenReaderFocusable={true}
                                 style={
                                   {
                                     "flexDirection": "column",
@@ -4357,6 +4626,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {

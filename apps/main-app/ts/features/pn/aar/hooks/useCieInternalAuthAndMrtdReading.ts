@@ -6,7 +6,7 @@ import {
   ResultEncoding
 } from "@pagopa/io-react-native-cie";
 import { constNull } from "fp-ts/lib/function";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
 
@@ -111,13 +111,13 @@ export const useCieInternalAuthAndMrtdReading = () => {
     if (Platform.OS === "ios") {
       CieManager.setAlertMessage(
         "readingInstructions",
-        `${getProgressEmojis(0)}\n${i18n.t(
+        `${getProgressEmojis(0)}\n${I18n.t(
           "features.pn.aar.flow.cieScanning.idle.status"
         )}`
       );
       CieManager.setAlertMessage(
         "readingSuccess",
-        `${getProgressEmojis(1)}\n${i18n.t(
+        `${getProgressEmojis(1)}\n${I18n.t(
           "features.pn.aar.flow.cieScanning.success.status"
         )}`
       );
@@ -132,7 +132,7 @@ export const useCieInternalAuthAndMrtdReading = () => {
   useEffect(() => {
     if (Platform.OS === "ios" && statusIsReading) {
       CieManager.setCurrentAlertMessage(
-        `${progressDots}\n${i18n.t(
+        `${progressDots}\n${I18n.t(
           "features.pn.aar.flow.cieScanning.reading.status"
         )}`
       );

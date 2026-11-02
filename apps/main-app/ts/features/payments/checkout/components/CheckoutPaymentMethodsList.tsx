@@ -220,7 +220,7 @@ const mapPaymentMethodToRadioItem = (
 
   return {
     id: method.id,
-    value: method.description,
+    label: method.description,
     disabled,
     startImage: method.asset ? { uri: method.asset } : { icon: "creditCard" }
   };
@@ -240,7 +240,7 @@ const mapUserWalletToRadioItem = (
   if (details.lastFourDigits !== undefined) {
     return {
       id: method.walletId,
-      value: `${capitalize(details.brand)} ••${details.lastFourDigits}`,
+      label: `${capitalize(details.brand)} ••${details.lastFourDigits}`,
       startImage
     };
   } else if (details.maskedEmail !== undefined) {
@@ -251,14 +251,14 @@ const mapUserWalletToRadioItem = (
         : undefined;
     return {
       id: method.walletId,
-      value: I18n.t("wallet.payment.methodType.fastPayPalPayment"),
+      label: I18n.t("wallet.payment.methodType.fastPayPalPayment"),
       startImage,
       description
     };
   } else if (details.maskedNumber !== undefined) {
     return {
       id: method.walletId,
-      value: "BANCOMAT Pay",
+      label: "BANCOMAT Pay",
       startImage
     };
   }
@@ -272,7 +272,7 @@ const CheckoutPaymentMethodsListSkeleton = () => (
       id: id.toString(),
       disabled: true,
       loadingProps: { state: true, skeletonIcon: true },
-      value: ""
+      label: ""
     }))}
     onPress={() => null}
     type="radioListItem"
