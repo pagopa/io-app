@@ -26,7 +26,7 @@ import {
   itwShouldRenderNewItWalletSelector,
   itwShouldRenderUpgradeBannerSelector
 } from "../../common/store/selectors";
-import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
+import { ItwEidStatus } from "../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialsEidExpirationSelector,
   itwCredentialsEidStatusSelector
@@ -40,9 +40,10 @@ import {
 } from "../../tour/utils/constants.ts";
 import { ItwWalletIdCard } from "./ItwWalletIdCard.tsx";
 
-const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
+const LIFECYCLE_STATUS: Array<ItwEidStatus> = [
   "jwtExpiring",
-  "jwtExpired"
+  "jwtExpired",
+  "invalid"
 ];
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {

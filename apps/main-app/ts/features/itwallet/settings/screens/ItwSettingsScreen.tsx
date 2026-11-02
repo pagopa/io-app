@@ -1,13 +1,9 @@
-import { ContentWrapper, IOToast, VStack } from "@io-app/design-system";
+import { ContentWrapper, IOMarkdown, VStack } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { TxtLinkNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Alert, View } from "react-native";
 
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { linkNodeToReactNative } from "../../../../components/IOMarkdown/renderRules";
-import { Renderer } from "../../../../components/IOMarkdown/types";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { ButtonBlockProps } from "../../../../components/ui/utils/buttons";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -101,31 +97,11 @@ const ItwSettingsScreen = () => {
           )}
           <IOMarkdown
             content={I18n.t("features.itWallet.settings.manage.content")}
-            // TODO [SIW-2632] remove this rule and add IT Wallet url to I18n locales
-            rules={generateLinkRuleWithCallback()}
           />
         </VStack>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
 };
-
-// Dummy rule to display "Feature not available" toast when a link is pressed
-// TODO Should be removed after [SIW-2632]
-export const generateLinkRuleWithCallback = () => ({
-  Link(link: TxtLinkNode, render: Renderer) {
-    return linkNodeToReactNative(
-      link,
-      {
-        onPress: () => {
-          IOToast.info(
-            I18n.t("features.itWallet.generic.featureUnavailable.title")
-          );
-        }
-      },
-      render
-    );
-  }
-});
 
 export { ItwSettingsScreen };
