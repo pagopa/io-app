@@ -30,15 +30,10 @@ jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
 
 describe("MessageList", () => {
   beforeEach(() => {
-    jest.useFakeTimers();
     jest.resetAllMocks();
     jest.clearAllMocks();
     jest.restoreAllMocks();
     mockAccessibilityInfo(false);
-  });
-  afterEach(() => {
-    jest.clearAllTimers();
-    jest.useRealTimers();
   });
   test.each([
     { name: "inbox", category: "INBOX" as const },

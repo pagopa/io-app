@@ -46,13 +46,7 @@ const MOCK_WALLET: WalletInfo = {
 };
 
 describe("PaymentsHomeScreen", () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
-    jest.clearAllTimers();
-    jest.useRealTimers();
     jest.restoreAllMocks();
   });
 
