@@ -240,6 +240,9 @@ const ContentView = ({
         />
         <VSpacer size={24} />
         <ListItemHeader
+          accessibilityLabel={`${I18n.t(
+            "features.itWallet.issuance.credentialAuth.requiredClaims"
+          )}, ${I18n.t("features.itWallet.issuance.credentialAuth.verified")}`}
           iconColor={theme["icon-default"]}
           iconName="security"
           label={I18n.t(

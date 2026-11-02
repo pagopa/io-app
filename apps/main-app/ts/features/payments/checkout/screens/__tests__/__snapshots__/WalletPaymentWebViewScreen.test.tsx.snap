@@ -422,6 +422,7 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

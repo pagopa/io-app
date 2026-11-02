@@ -422,6 +422,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -579,6 +580,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

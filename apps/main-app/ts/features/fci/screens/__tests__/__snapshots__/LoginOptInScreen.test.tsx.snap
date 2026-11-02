@@ -353,6 +353,7 @@ exports[`LoginOptInScreen should match the snapshot 1`] = `
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -584,6 +585,7 @@ exports[`LoginOptInScreen should match the snapshot 1`] = `
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

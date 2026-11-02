@@ -40,6 +40,7 @@ import { FlippableCard } from "./FlippableCard";
 
 export type ItwSkeumorphicCardProps = {
   credential: CredentialMetadata;
+  flipAxis?: "x" | "y";
   isFlipped?: boolean;
   onPress?: () => void;
   status: ItwCredentialStatus;
@@ -50,6 +51,7 @@ export const ItwSkeumorphicCard = ({
   credential,
   status,
   isFlipped = false,
+  flipAxis,
   onPress,
   valuesHidden
 }: ItwSkeumorphicCardProps) => {
@@ -118,6 +120,7 @@ export const ItwSkeumorphicCard = ({
     <FlippableCard
       BackComponent={BackSide}
       containerStyle={[styles.card]}
+      flipAxis={flipAxis}
       FrontComponent={FrontSide}
       isFlipped={isFlipped}
     />

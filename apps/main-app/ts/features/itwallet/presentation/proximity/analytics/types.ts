@@ -48,4 +48,4 @@ export type ItwStartReissuingPID = {
     | "ITW_QR_CODE";
 };
 
-export type ProximityFlow = "nfc" | "qr_code";
+export type ProximityFlow = "nfc_ble" | "nfc_nfc" | "qr_code";

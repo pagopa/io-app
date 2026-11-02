@@ -344,6 +344,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -501,6 +502,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -658,6 +660,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
