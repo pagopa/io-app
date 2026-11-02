@@ -51,6 +51,100 @@
       "outputs": []
     }
   },
+  "release": {
+    "groups": {
+      "main-app": {
+        "projects": ["main-app"],
+        "projectsRelationship": "fixed",
+        "version": {
+          "specifierSource": "prompt",
+          "conventionalCommits": false,
+          "updateDependents": "never"
+        },
+        "releaseTag": {
+          "pattern": "{version}",
+          "checkAllBranchesWhen": true,
+          "strictPreid": true
+        },
+        "changelog": {
+          "createRelease": false
+        }
+      },
+      "design-system": {
+        "projects": ["io-app-design-system"],
+        "projectsRelationship": "fixed",
+        "version": {
+          "specifierSource": "prompt",
+          "conventionalCommits": false,
+          "updateDependents": "never"
+        },
+        "releaseTag": {
+          "pattern": "design-system-v{version}",
+          "checkAllBranchesWhen": true,
+          "strictPreid": true
+        },
+        "changelog": {
+          "createRelease": "github"
+        }
+      }
+    },
+    "changelog": {
+      "workspaceChangelog": false,
+      "projectChangelogs": true
+    },
+    "conventionalCommits": {
+      "types": {
+        "feat": {
+          "semverBump": "minor",
+          "changelog": {
+            "title": "Features"
+          }
+        },
+        "fix": {
+          "semverBump": "patch",
+          "changelog": {
+            "title": "Bug Fixes"
+          }
+        },
+        "chore": {
+          "semverBump": "none",
+          "changelog": {
+            "title": "Chores"
+          }
+        },
+        "docs": {
+          "semverBump": "none",
+          "changelog": {
+            "hidden": true
+          }
+        },
+        "style": {
+          "semverBump": "none",
+          "changelog": {
+            "hidden": true
+          }
+        },
+        "refactor": {
+          "semverBump": "none",
+          "changelog": {
+            "hidden": true
+          }
+        },
+        "perf": {
+          "semverBump": "none",
+          "changelog": {
+            "hidden": true
+          }
+        },
+        "test": {
+          "semverBump": "none",
+          "changelog": {
+            "hidden": true
+          }
+        }
+      }
+    }
+  },
   "plugins": [
     {
       "plugin": "@nx/jest/plugin",

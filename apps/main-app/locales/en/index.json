@@ -1100,7 +1100,7 @@
                 "title": "Easy, secure, official"
               },
               "2": {
-                "content": "Degrees, certificates of residence, and more: you’ll be able to add new official documents to the IO app.",
+                "content": "You'll be able to add new official documents to the IO app.",
                 "title": "New documents coming soon"
               },
               "3": {
@@ -1123,13 +1123,13 @@
               "title": "Do you want to opt out of IT-Wallet benefits?"
             },
             "features": {
-              "1": "Use your Driver's License in IO as an identity document.",
-              "2": "All you need is your phone to prove your identity",
-              "3": "You have everything you need, even if you leave your wallet at home",
-              "4": "The new official digital documents are available exclusively on the IO app",
-              "5": "Access public administration digital services in just a few taps"
+              "1": "New official digital documents, available only on the IO app",
+              "2": "Your driving licence on IO is valid as proof of identity",
+              "3": "All you need is your phone to prove your identity",
+              "4": "With just a few taps, you'll be able to access the government's digital services",
+              "5": "Help for your everyday life, always at your fingertips"
             },
-            "privacyAndTos": "By clicking **Continue**, you acknowledge that you have read and understood the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of Use]({{tosUrl}}).",
+            "privacyAndTos": "By clicking **Continue**, you acknowledge that you have read the [Privacy Policy]({{privacyUrl}}) and agree to the [Terms and Conditions of Use]({{tosUrl}}).",
             "title": "Your digital documents with IT-Wallet: secure, official and always with you"
           },
           "legacy": {
@@ -1149,7 +1149,7 @@
         "activation": {
           "action": "Get started",
           "description": "Fully valid, digital, and always at your fingertips!",
-          "title": "Upload your digital documents to IO"
+          "title": "Get your documents onto IO"
         },
         "l2_banner": {
           "cta": "Add document",
@@ -1532,7 +1532,8 @@
           "requiredClaims": "Required information",
           "subtitle": "They will be shared with **{{organization}}** only for the time necessary to release the digital version of the document.",
           "title": "Information required for {{credentialName}}",
-          "tos": "Your data will be processed securely. By clicking **Continue**, you confirm that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{privacyUrl}})."
+          "tos": "Your data will be processed securely. By clicking **Continue**, you confirm that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{privacyUrl}}).",
+          "verified": "verified"
         },
         "credentialIntroduction": {
           "dismissalDialog": {
@@ -1657,7 +1658,7 @@
           "title": "A problem is preventing you from continuing."
         },
         "notEntitledCredentialError": {
-          "body": "Make sure you have the valid physical document before requesting its digital version.",
+          "body": "Make sure you have a valid physical document—or that you meet the requirements to obtain one—before requesting its digital version.",
           "primaryAction": "Got it",
           "title": "You cannot add the document"
         },
@@ -1872,8 +1873,8 @@
         "bottomSheets": {
           "EuropeanDisabilityCard": {
             "expiring": {
-              "content": "You can request a renewal of your European Disability Card (EDC) by contacting the issuing authority.\n\nCheck the procedures and required documents on the official INPS website, or by contacting your local ASL, as the renewal process may vary depending on the type of disability and the regulations in your area.",
-              "title": "European Disability Charter on IO: document about to expire"
+              "content": "You can request a renewal of your European Disability Card (CED) by contacting the istitution that issued it.\n\nCheck the procedures and required documents on the official INPS website or by contacting your local ASL, as the renewal process may vary depending on the type of disability and the regulations in your area.",
+              "title": "The European Disability Charter on IO :is about to expire"
             }
           },
           "eidInfo": {
@@ -1898,6 +1899,20 @@
             "titleExpired": "Documenti su IO:\nverify your identity",
             "triggerLabel": "What is it?"
           },
+          "eidInvalid": {
+            "alert": {
+              "action": {
+                "detail": "Learn more",
+                "wallet": "Review the data"
+              },
+              "allExpired": {
+                "action": "Confirm identity",
+                "content": "Confirm your identity to continue using your IT-Wallet."
+              },
+              "content": "We have detected changes to your personal information."
+            },
+            "cta": "Update IT-Wallet ID"
+          },
           "generic": {
             "expired": {
               "content": "Remove it from your Wallet. Once you've renewed it, you can add the updated digital version.",
@@ -1913,11 +1928,11 @@
           "mDL": {
             "expired": {
               "content": "###### What documents do I need to prepare?\n\nYour driver’s license (about to expire or already expired), a form of identification, your fiscal code, and a recent photo (ID-sized).\n\n###### Have you already renewed your license?\n\nIf you’ve already renewed your physical driver’s license, update your digital document to access it on IO as well.",
-              "contentNew": "At this time, you cannot drive the categories of vehicles associated with your driver’s license because it has expired.\n\nRenew your license at the offices of the Motorizzazione Civile or an authorized agency in your area.\n\n###### What documents do I need to bring?\n\nYour driver’s license (about to expire or already expired), a form of identification, your tax ID number, and a recent photo (passport-sized).\n\n###### Have you already renewed your license?\n\nIf you’ve already renewed your physical driver’s license, update your digital license to access it on IO as well.",
+              "contentNew": "At the moment, you can't drive the categories of vehicle associated with your driving licence because it has expired.\n\nRenew your driving licence: make sure you meet the eligibility requirements by visiting a doctor (or an authorised institution) and pay the required fees.\n\nIn some cases, you will need to complete the renewal process at a Motorizzazione Civile following the medical examination. If more than five years have passed since your licence expired, you will need to retake the practical driving test.\n\n###### What documents do I need to prepare?\n\nYour expired driver’s license, a document proving your identity, your fiscal code, and a recent photo (ID-sized).\n\n###### Have you already renewed your license?\n\nIf you’ve already renewed your physical driver’s license, update your digital version to access it on the IO app as well.\n\n###### Good to know\n\nYou can continue to use your digital driver’s license as a form of identification.",
               "title": "Your driver's license is invalid."
             },
             "expiring": {
-              "content": "Renew your driver’s license at the offices of the Motorizzazione Civile or an authorized institution in your area.\n\nYou must undergo a medical examination with an authorized doctor and pay the relevant payment slips.\n\n###### What documents do I need to bring?\n\nYour driver’s license (about to expire or already expired), a valid ID, your fiscal code, and a recent passport-sized photo.",
+              "content": "Renew your driving licence: make sure you meet the eligibility requirements by visiting a doctor (or an authorised institution) and pay the required fees.\n\nIn some cases, you will need to complete the renewal process at a Motorizzazione Civile following the medical examination. \n\n###### What documents do I need to prepare?\n\nYour driver’s license (about to expire or already expired), a document proving your identity, your fiscal code, and a recent photo (ID-sized).",
               "cta": "Learn more",
               "title": "Driver's License on IO: about to expire"
             },
@@ -1981,7 +1996,7 @@
             "content": {
               "education_attendance": "Your digital school enrollment is fully valid and official.",
               "education_degree": "Your digital academic credentials are fully recognized.",
-              "education_diploma": "Your digital educational qualifications are fully valid and officially recognized.",
+              "education_diploma": "Your digital school transcripts are fully valid and officially recognized.",
               "education_enrollment": "Your digital academic records are fully valid and officially recognized.",
               "residency": "Your digital certificate of residence is fully valid for official purposes."
             },
@@ -2392,7 +2407,7 @@
           "title": "IT-Wallet"
         },
         "manage": {
-          "content": "###### What can you do with IO’s IT-Wallet?\n - Get digital versions of your personal documents, certificates and qualifications\n - Prove your identity and eligibility to drive with your digital driving licence\n - Access public administration digital services in just a few steps\n - Use your Health Insurance Card to buy medicines and book medical appointments\n To find out more, [visit the IT-Wallet website]",
+          "content": "###### What can you do with IO’s IT-Wallet?\n - Get digital versions of your personal documents, certificates and qualifications\n - Prove your identity and driving eligibility with your digital driving licence\n - Access public administration digital services in just a few steps\n - Use your Health Insurance Card to buy medicines and schedule medical appointments\n To find out more, [visit the IT-Wallet website](https:\/\/www.wallet.gov.it)",
           "cta": {
             "obtain": "Activate IT-Wallet",
             "revoke": "Disable IT-Wallet"
@@ -3750,7 +3765,7 @@
       },
       "beforeContinue": {
         "requestBonus": "Claim the bonus",
-        "text": "By clicking \"Continue,\" you acknowledge that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of Use]({{tosUrl}})."
+        "text": "By clicking \"Request the Bonus,\" you acknowledge that you have read, understood, and agree to the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of Use]({{tosUrl}})."
       },
       "boolPrerequisites": {
         "emptyValueError": "Select an option to continue",

@@ -108,7 +108,7 @@ export type ItwCredentialMixpanelStatus =
 // Assuming that the eID status is the same as the PID status
 export type ItwPIDStatus = Extract<
   ItwCredentialMixpanelStatus,
-  "expired" | "expiring" | "not_available" | "valid"
+  "expired" | "expiring" | "not_available" | "not_valid" | "valid"
 >;
 
 export type ItwStatus =

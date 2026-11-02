@@ -46,9 +46,9 @@ export const DSAnimatedPictograms = () => {
 
   const renderedPictogramsRefs: Array<{
     id: string;
-    value: string;
+    label: string;
   }> = pictogramsRefs.map(item => ({
-    value: item.label,
+    label: item.label,
     id: item.label
   }));
 

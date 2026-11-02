@@ -100,24 +100,23 @@ export const DSListItems = () => {
 const renderListItemNav = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemNav">
-      <ListItemNav onPress={onButtonPress} value={"Value"} />
+      <ListItemNav label={"Value"} onPress={onButtonPress} />
       <Divider />
       <ListItemNav
         description="Description"
+        label={"Value"}
         onPress={onButtonPress}
-        value={"Value"}
       />
       <Divider />
       <ListItemNav
         description="Description"
+        label="A looong looooong looooooooooong loooooooooooooong title"
         onPress={onButtonPress}
-        value="A looong looooong looooooooooong loooooooooooooong title"
       />
       <Divider />
       <ListItemNav
         icon={"categLearning"}
-        onPress={onButtonPress}
-        value={
+        label={
           <View
             style={{
               flexDirection: "row",
@@ -129,6 +128,7 @@ const renderListItemNav = () => (
             <Badge text={"3"} variant="cgn" />
           </View>
         }
+        onPress={onButtonPress}
       />
       <Divider />
       <ListItemNav
@@ -138,21 +138,22 @@ const renderListItemNav = () => (
           }
         }}
         description="Description"
+        label={"Value"}
         onPress={onButtonPress}
-        value={"Value"}
       />
       <Divider />
-      <ListItemNav icon="gallery" onPress={onButtonPress} value={"Value"} />
+      <ListItemNav icon="gallery" label={"Value"} onPress={onButtonPress} />
       <Divider />
       <ListItemNav
         description="Description"
         icon="gallery"
+        label={"Value"}
         onPress={onButtonPress}
-        value={"Value"}
       />
       <Divider />
       <ListItemNav
         description="This is a list item nav with badge"
+        label={"Value"}
         onPress={onButtonPress}
         topElement={{
           badgeProps: {
@@ -160,20 +161,20 @@ const renderListItemNav = () => (
             variant: "default"
           }
         }}
-        value={"Value"}
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNav, without chevron">
       <ListItemNav
         description="This is a list item nav without chevron icon"
         hideChevron
+        label={"Value"}
         onPress={onButtonPress}
-        value={"Value"}
       />
       <Divider />
       <ListItemNav
         description="This is a list item nav with badge without chevron"
         hideChevron
+        label={"Value"}
         onPress={onButtonPress}
         topElement={{
           badgeProps: {
@@ -181,38 +182,37 @@ const renderListItemNav = () => (
             variant: "default"
           }
         }}
-        value={"Value"}
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNav, with image chevron">
       <ListItemNav
         avatarProps={{ logoUri: { uri: `${cdnPath}643280639.png` } }}
+        label={"Comune di Ischia"}
         onPress={onButtonPress}
-        value={"Comune di Ischia"}
       />
       <Divider />
       <ListItemNav
         avatarProps={{ logoUri: { uri: `${cdnPath}643280639.png` } }}
         description="This is a description"
+        label={"Comune di Ischia"}
         onPress={onButtonPress}
-        value={"Comune di Ischia"}
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNavAlert">
-      <ListItemNavAlert onPress={onButtonPress} value={"Value"} />
+      <ListItemNavAlert label={"Value"} onPress={onButtonPress} />
       <Divider />
       <ListItemNavAlert
         description="Description"
+        label={"Value"}
         onPress={onButtonPress}
-        value={"Value"}
       />
       <Divider />
-      <ListItemNavAlert onPress={onButtonPress} value={"Value"} withoutIcon />
+      <ListItemNavAlert label={"Value"} onPress={onButtonPress} withoutIcon />
       <Divider />
       <ListItemNavAlert
         description="Description"
+        label={"Value"}
         onPress={onButtonPress}
-        value={"Value"}
         withoutIcon
       />
     </DSComponentViewerBox>
@@ -606,10 +606,10 @@ const renderListItemTransaction = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemTransaction, loading variant">
       <ListItemTransaction
+        description="subtitle"
         isLoading={true}
+        label="Title"
         onPress={onButtonPress}
-        subtitle="subtitle"
-        title="Title"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "1000 euro"
@@ -622,10 +622,10 @@ const renderListItemTransaction = () => (
         ({ status, asset }: mockTransactionStatusData, i) => (
           <Fragment key={`transactionStatus-${status}`}>
             <ListItemTransaction
+              description="subtitle"
+              label="Title"
               onPress={onButtonPress}
               paymentLogoIcon={asset}
-              subtitle="subtitle"
-              title="Title"
               transaction={{
                 badge: getBadgePropsByTransactionStatus(status)
               }}
@@ -638,9 +638,9 @@ const renderListItemTransaction = () => (
 
     <DSComponentViewerBox name="ListItemTransaction, with amount">
       <ListItemTransaction
+        description="subtitle"
+        label="Title"
         onPress={onButtonPress}
-        subtitle="subtitle"
-        title="Title"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "1000 euro"
@@ -650,10 +650,10 @@ const renderListItemTransaction = () => (
       <Divider />
 
       <ListItemTransaction
+        description="subtitle"
+        label="Title"
         onPress={onButtonPress}
         paymentLogoIcon={"mastercard"}
-        subtitle="subtitle"
-        title="Title"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "1000 euro"
@@ -663,10 +663,10 @@ const renderListItemTransaction = () => (
       <Divider />
 
       <ListItemTransaction
+        description="subtitle"
+        label="Title"
         onPress={onButtonPress}
         showChevron
-        subtitle="subtitle"
-        title="Title"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "1000 euro"
@@ -676,10 +676,10 @@ const renderListItemTransaction = () => (
 
     <DSComponentViewerBox name="ListItemTransaction, refunded">
       <ListItemTransaction
+        description="This one has a custom icon and transaction amount with a green color"
+        label="Refunded transaction"
         onPress={onButtonPress}
         paymentLogoIcon={<Icon name="refund" />}
-        subtitle="This one has a custom icon and transaction amount with a green color"
-        title="Refunded transaction"
         transaction={{
           badge: getBadgePropsByTransactionStatus("refunded")
         }}
@@ -688,9 +688,9 @@ const renderListItemTransaction = () => (
 
     <DSComponentViewerBox name="ListItemTransaction, clickable and not clickable">
       <ListItemTransaction
+        description="subtitle"
+        label="This one is not clickable"
         paymentLogoIcon={"postepay"}
-        subtitle="subtitle"
-        title="This one is not clickable"
         transaction={{
           badge: getBadgePropsByTransactionStatus("failure")
         }}
@@ -699,10 +699,10 @@ const renderListItemTransaction = () => (
       <Divider />
 
       <ListItemTransaction
+        description="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
+        label="This one is clickable but has a very long title"
         onPress={onButtonPress}
         paymentLogoIcon={"postepay"}
-        subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
-        title="This one is clickable but has a very long title"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "1000 euro"
@@ -712,10 +712,10 @@ const renderListItemTransaction = () => (
 
     <DSComponentViewerBox name="ListItemTransaction, custom icon">
       <ListItemTransaction
+        description="This one has a custom icon on the left"
+        label="Custom icon"
         onPress={onButtonPress}
         paymentLogoIcon={<Icon color="error-500" name="notice" />}
-        subtitle="This one has a custom icon on the left"
-        title="Custom icon"
         transaction={{
           amount: "",
           amountAccessibilityLabel: ""
