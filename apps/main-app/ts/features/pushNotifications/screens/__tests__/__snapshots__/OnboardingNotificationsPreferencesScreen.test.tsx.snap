@@ -1323,6 +1323,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -2967,6 +2968,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -4612,6 +4614,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -6257,6 +6260,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -8258,6 +8262,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",

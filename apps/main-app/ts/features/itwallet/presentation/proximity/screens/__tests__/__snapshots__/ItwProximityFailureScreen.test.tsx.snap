@@ -747,6 +747,7 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -1624,6 +1625,7 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -2760,6 +2762,7 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
