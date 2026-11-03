@@ -695,15 +695,50 @@ describe("isItwProximityNfcEnabledSelector", () => {
 });
 
 describe("itwShouldHideEidLifecycleAlert", () => {
-  test.each(["jwtExpired", "invalid"] as const)(
-    "should never hide the alert when the eID is %s",
-    eidStatus => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it("should never hide the alert when the eID is invalid", () => {
+    jest
+      .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+      .mockReturnValue("invalid");
+
+    expect(itwShouldHideEidLifecycleAlert({} as unknown as GlobalState)).toBe(
+      false
+    );
+  });
+
+  it.each`
+    isItWalletValid | areSomeCredentialsExpired | expected
+    ${true}         | ${false}                  | ${false}
+    ${true}         | ${true}                   | ${false}
+    ${false}        | ${false}                  | ${true}
+    ${false}        | ${true}                   | ${false}
+  `(
+    "should return $expected when the eID is expired, isItWalletValid=$isItWalletValid and areSomeCredentialsExpired=$areSomeCredentialsExpired",
+    ({ isItWalletValid, areSomeCredentialsExpired, expected }) => {
       jest
         .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
-        .mockReturnValue(eidStatus);
+        .mockReturnValue("jwtExpired");
+      jest
+        .spyOn(
+          credentialsSelectors,
+          "itwAreSomeDigitalCredentialsExpiredSelector"
+        )
+        .mockReturnValue(areSomeCredentialsExpired);
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(undefined);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
+        .mockReturnValue(true);
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(isItWalletValid);
 
       expect(itwShouldHideEidLifecycleAlert({} as unknown as GlobalState)).toBe(
-        false
+        expected
       );
     }
   );
