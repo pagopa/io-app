@@ -28,12 +28,14 @@ import {
 import {
   itwCredentialUpgradeFailedSelector,
   itwIsActivationDisabledSelector,
-  itwIsFiscalCodeWhitelisted
+  itwIsFiscalCodeWhitelisted,
+  itwIsProximityNfcLocallyEnabledSelector
 } from "./preferences";
 import {
   isItwEnabledSelector,
   isItwMinAppVersionSupportedSelector,
-  isItwProximityMinAppVersionSupportedSelector
+  isItwProximityMinAppVersionSupportedSelector,
+  isItwProximityNfcMinAppVersionSupportedSelector
 } from "./remoteConfig";
 
 /**
@@ -316,3 +318,11 @@ export const isItwProximityEnabledSelector = (state: GlobalState) =>
   itwLifecycleIsITWalletValidSelector(state) &&
   isItwProximityMinAppVersionSupportedSelector(state) &&
   hasPresentableCredentialsSelector(state);
+
+/**
+ * Returns whether NFC engagement in the Proximity presentation is enabled,
+ * either remotely or through the local feature flag.
+ */
+export const isItwProximityNfcEnabledSelector = (state: GlobalState) =>
+  isItwProximityNfcMinAppVersionSupportedSelector(state) ||
+  itwIsProximityNfcLocallyEnabledSelector(state);

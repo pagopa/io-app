@@ -1,3 +1,86 @@
+## 3.43.0-rc.2 (2026-11-02)
+
+### Features
+
+- [[IOPLT-1655](https://pagopa.atlassian.net/browse/IOPLT-1655)] Add native bottom sheet components via `react-native-screens` ([#7902](https://github.com/pagopa/io-app/pull/7902))
+- **IT-Wallet:** [[SIW-5383](https://pagopa.atlassian.net/browse/SIW-5383)] Add tracking to wallet ready banner ([#8814](https://github.com/pagopa/io-app/pull/8814))
+
+### Bug Fixes
+
+- [[IOPLT-2115](https://pagopa.atlassian.net/browse/IOPLT-2115)] Skip PR title checks for Renovate PRs ([#8654](https://github.com/pagopa/io-app/pull/8654))
+
+### Chores
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Remove unused postinstall scripts ([#8450](https://github.com/pagopa/io-app/pull/8450))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+- Emanuele Dall'Ara @LeleDallas
+- LazyAfternoons @LazyAfternoons
+- Riccardo Sacco @riccardosacco99
+
+## 3.43.0-rc.1 (2026-10-30)
+
+### Chores
+
+- [[IEL-880](https://pagopa.atlassian.net/browse/IEL-880)] EMAIL_EDITING MP event now tracks FCI flow ([#8771](https://github.com/pagopa/io-app/pull/8771))
+
+### ❤️ Thank You
+
+- Pawel @soixdev91
+
+## 3.43.0-rc.0 (2026-10-28)
+
+This was a version bump only for @io-app/main-app to align it with other projects, there were no code changes.
+
+## 3.42.0-rc.11 (2026-10-28)
+
+### Features
+
+- **IT-Wallet:** [[SIW-5207](https://pagopa.atlassian.net/browse/SIW-5207)] CED opportunities ([#8707](https://github.com/pagopa/io-app/pull/8707))
+
+### ❤️ Thank You
+
+- Emilio Di Mari
+- Riccardo Sacco
+
+## 3.42.0-rc.10 (2026-10-28)
+
+### Bug Fixes
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Solves configuration to install cie SDK on prod environment ([#8807](https://github.com/pagopa/io-app/pull/8807))
+
+### Chores
+
+- Update translations from Lokalise ([#8811](https://github.com/pagopa/io-app/pull/8811))
+- **IT-Wallet:** [[SIW-5438](https://pagopa.atlassian.net/browse/SIW-5438)] Bump `io-react-native-wallet` to 3.8.4 ([#8808](https://github.com/pagopa/io-app/pull/8808))
+
+### ❤️ Thank You
+
+- Cristiano Tofani
+- Gianluca Spada
+
+## 3.42.0-rc.9 (2026-10-27)
+
+### Features
+
+- [[SIW-5434](https://pagopa.atlassian.net/browse/SIW-5434)] Add local feature flag for proximity NFC ([#8799](https://github.com/pagopa/io-app/pull/8799))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-2632](https://pagopa.atlassian.net/browse/SIW-2632)] remove link rule from ITW settings ([#8803](https://github.com/pagopa/io-app/pull/8803))
+- **IT-Wallet:** [[SIW-5381](https://pagopa.atlassian.net/browse/SIW-5381)] recreate wallet instance after abandoned Documenti su IO ([#8770](https://github.com/pagopa/io-app/pull/8770))
+- **IT-Wallet:** [[SIW-5387](https://pagopa.atlassian.net/browse/SIW-5387)] Apply cached status lists validity offline ([#8755](https://github.com/pagopa/io-app/pull/8755))
+
+### Chores
+
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Replace discovery screen pictograms ([#8804](https://github.com/pagopa/io-app/pull/8804))
+
+### ❤️ Thank You
+
+- Federico Mastrini @mastro993
+
 ## 3.42.0-rc.8 (2026-10-26)
 
 ### Features
