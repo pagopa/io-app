@@ -71,7 +71,11 @@ describe("getPin", () => {
     await expect(getPin()).rejects.toThrow("failed to read");
     expect(mixpanelTrackSpy).toHaveBeenCalledWith(
       "PIN_KEYCHAIN_GET_FAILURE",
-      expect.objectContaining({ event_category: "KO", event_type: "error" })
+      expect.objectContaining({
+        event_category: "KO",
+        event_type: "error",
+        reason: expect.stringContaining("Error: failed to read")
+      })
     );
   });
 
@@ -165,7 +169,11 @@ describe("getPin", () => {
     expect(mixpanelTrackSpy).toHaveBeenNthCalledWith(
       2,
       "PIN_KEYCHAIN_SET_FAILURE",
-      expect.objectContaining({ event_category: "KO", event_type: "error" })
+      expect.objectContaining({
+        event_category: "KO",
+        event_type: "error",
+        reason: expect.stringContaining("Error: failed to save")
+      })
     );
     expect(mixpanelTrackSpy).toHaveBeenNthCalledWith(
       3,
@@ -173,7 +181,8 @@ describe("getPin", () => {
       {
         event_category: "KO",
         event_type: "error",
-        flow: undefined
+        flow: undefined,
+        reason: expect.stringContaining("Error: failed to save")
       }
     );
     expect(mixpanelTrackSpy).toHaveBeenNthCalledWith(
@@ -235,19 +244,42 @@ describe("setPin", () => {
     );
   });
 
-  it("should return false when saving the pin fails", async () => {
-    mockSetItemAsync.mockRejectedValue(new Error("failed to save"));
-    const mixpanelTrackSpy = jest
-      .spyOn(Mixpanel, "mixpanelTrack")
-      .mockImplementation();
+  it.each([
+    {
+      name: "an Error",
+      error: new Error("failed to save"),
+      reason: "Error: failed to save"
+    },
+    {
+      name: "a string",
+      error: "failed to save",
+      reason: "failed to save"
+    },
+    {
+      name: "an object",
+      error: { code: "ERR_SECURE_STORE_WRITE" },
+      reason: '{"code":"ERR_SECURE_STORE_WRITE"}'
+    }
+  ])(
+    "should return false and track $name when saving fails",
+    async ({ error, reason }) => {
+      mockSetItemAsync.mockRejectedValue(error);
+      const mixpanelTrackSpy = jest
+        .spyOn(Mixpanel, "mixpanelTrack")
+        .mockImplementation();
 
-    const result = await setPin(validPin);
-    expect(result).toBe(false);
-    expect(mixpanelTrackSpy).toHaveBeenCalledWith(
-      "PIN_KEYCHAIN_SET_FAILURE",
-      expect.objectContaining({ event_category: "KO", event_type: "error" })
-    );
-  });
+      const result = await setPin(validPin);
+      expect(result).toBe(false);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "PIN_KEYCHAIN_SET_FAILURE",
+        expect.objectContaining({
+          event_category: "KO",
+          event_type: "error",
+          reason: expect.stringContaining(reason)
+        })
+      );
+    }
+  );
 });
 
 describe("deletePin", () => {
@@ -280,7 +312,11 @@ describe("deletePin", () => {
     await expect(deletePin()).rejects.toThrow("failed to remove");
     expect(mixpanelTrackSpy).toHaveBeenCalledWith(
       "PIN_KEYCHAIN_REMOVE_FAILURE",
-      expect.objectContaining({ event_category: "KO", event_type: "error" })
+      expect.objectContaining({
+        event_category: "KO",
+        event_type: "error",
+        reason: expect.stringContaining("Error: failed to remove")
+      })
     );
   });
 });

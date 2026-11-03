@@ -294,14 +294,16 @@ export const trackContentNotAvailable = (content: string) => {
 
 export const trackPinOperation = (
   operation: "GET" | "REMOVE" | "SET",
-  succeeded: boolean
+  succeeded: boolean,
+  error?: unknown
 ) => {
   const result = succeeded ? "SUCCESS" : "FAILURE";
   void mixpanelTrack(
     `PIN_KEYCHAIN_${operation}_${result}`,
     buildEventProperties(
       succeeded ? "TECH" : "KO",
-      succeeded ? undefined : "error"
+      succeeded ? undefined : "error",
+      succeeded ? {} : { reason: unknownToString(error) }
     )
   );
 };
