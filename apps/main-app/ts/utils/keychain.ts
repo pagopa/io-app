@@ -11,6 +11,7 @@ import * as LegacyKeychain from "react-native-keychain";
 import { mixpanelTrack } from "../mixpanel";
 import { PinString } from "../types/PinString";
 import { buildEventProperties, trackPinOperation } from "./analytics";
+import { unknownToString } from "./errors";
 
 const PIN_KEY = "PIN";
 
@@ -30,7 +31,7 @@ export async function deletePin(): Promise<boolean> {
     trackPinOperation("REMOVE", true);
     return true;
   } catch (error) {
-    trackPinOperation("REMOVE", false);
+    trackPinOperation("REMOVE", false, error);
     throw error;
   }
 }
@@ -44,21 +45,15 @@ export async function getPin(): Promise<PinString | undefined> {
     trackPinOperation("GET", true);
     return pin;
   } catch (error) {
-    trackPinOperation("GET", false);
+    trackPinOperation("GET", false, error);
     throw error;
   }
 }
 
 /** Saves the provided unlock code in the secure store. */
 export async function setPin(pin: PinString): Promise<boolean> {
-  try {
-    await SecureStore.setItemAsync(PIN_KEY, pin, DEFAULT_OPTIONS);
-    trackPinOperation("SET", true);
-    return true;
-  } catch {
-    trackPinOperation("SET", false);
-    return false;
-  }
+  const result = await savePin(pin);
+  return result.success;
 }
 
 // TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
@@ -72,8 +67,8 @@ async function migrateLegacyPin(): Promise<PinString | undefined> {
     buildEventProperties("TECH", undefined)
   );
   const pin = credentials.password;
-  const migrated = await setPin(pin);
-  if (migrated) {
+  const migrated = await savePin(pin);
+  if (migrated.success) {
     await LegacyKeychain.resetGenericPassword();
     void mixpanelTrack(
       "PIN_KEYCHAIN_MIGRATION_SUCCESS",
@@ -82,8 +77,23 @@ async function migrateLegacyPin(): Promise<PinString | undefined> {
   } else {
     void mixpanelTrack(
       "PIN_KEYCHAIN_MIGRATION_FAILURE",
-      buildEventProperties("KO", "error")
+      buildEventProperties("KO", "error", {
+        reason: unknownToString(migrated.error)
+      })
     );
   }
   return pin;
+}
+
+async function savePin(
+  pin: PinString
+): Promise<{ error: unknown; success: false; } | { success: true }> {
+  try {
+    await SecureStore.setItemAsync(PIN_KEY, pin, DEFAULT_OPTIONS);
+    trackPinOperation("SET", true);
+    return { success: true };
+  } catch (error) {
+    trackPinOperation("SET", false, error);
+    return { success: false, error };
+  }
 }
