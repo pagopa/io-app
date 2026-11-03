@@ -10,7 +10,7 @@ import * as LegacyKeychain from "react-native-keychain";
 
 import { mixpanelTrack } from "../mixpanel";
 import { PinString } from "../types/PinString";
-import { buildEventProperties } from "./analytics";
+import { buildEventProperties, trackPinOperation } from "./analytics";
 
 const PIN_KEY = "PIN";
 
@@ -18,20 +18,6 @@ const PIN_KEY = "PIN";
 // accessible while the device is unlocked by the user.
 const DEFAULT_OPTIONS: SecureStore.SecureStoreOptions = {
   keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY
-};
-
-const trackPinOperation = (
-  operation: "GET" | "REMOVE" | "SET",
-  succeeded: boolean
-) => {
-  const result = succeeded ? "SUCCESS" : "FAILURE";
-  void mixpanelTrack(
-    `PIN_KEYCHAIN_${operation}_${result}`,
-    buildEventProperties(
-      succeeded ? "TECH" : "KO",
-      succeeded ? undefined : "error"
-    )
-  );
 };
 
 /** Removes the unlock code from the secure store. */
