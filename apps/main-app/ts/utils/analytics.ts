@@ -27,6 +27,7 @@ const isWebViewHttpErrorEvent = (
 
 export type FlowType =
   | "browsing"
+  | "firma con IO"
   | "firstOnboarding"
   | "onBoarding"
   | "preferenze";

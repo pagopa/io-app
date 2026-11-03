@@ -30,7 +30,7 @@ jobs:
           set -euo pipefail
 
           BASE_REF="origin/${BRANCH_NAME}"
-          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          LAST_TAG=$(git describe --tags --abbrev=0 --match '[0-9]*' 2>/dev/null || echo "")
 
           echo "Last tag: ${LAST_TAG}"
 

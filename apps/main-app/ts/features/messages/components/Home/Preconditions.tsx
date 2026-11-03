@@ -1,3 +1,4 @@
+import { useLinkTo } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
 import { Keyboard } from "react-native";
 
@@ -30,6 +31,7 @@ import { PreconditionsTitle } from "./PreconditionsTitle";
 export const Preconditions = () => {
   const [footerHeight, setFooterHeight] = useState<number>(0);
   const navigation = useIONavigation();
+  const linkTo = useLinkTo();
   const dispatch = useIODispatch();
   const store = useIOStore();
   const onDismissCallback = useCallback(() => {
@@ -50,7 +52,9 @@ export const Preconditions = () => {
   const modal = useIOBottomSheetModal({
     snapPoint: [550],
     title: <PreconditionsTitle />,
-    component: <PreconditionsContent footerHeight={footerHeight} />,
+    component: (
+      <PreconditionsContent footerHeight={footerHeight} linkTo={linkTo} />
+    ),
     footer: (
       <PreconditionsFooter
         onDismiss={() => modal.dismiss()}

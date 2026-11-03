@@ -145,6 +145,7 @@ const waitForSessionRefresh = jest.fn();
 const issuedEidMatchesAuthenticatedUser = jest.fn();
 const isSessionExpired = jest.fn();
 const hasValidWalletInstanceAttestation = jest.fn();
+const hasWalletInstanceForSpecs = jest.fn();
 const revokeWalletInstance = jest.fn();
 const isWalletValid = jest.fn();
 
@@ -247,6 +248,7 @@ describe("itwEidIssuanceMachine", () => {
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
       hasValidWalletInstanceAttestation,
+      hasWalletInstanceForSpecs,
       isWalletValid
     }
   });
@@ -255,6 +257,7 @@ describe("itwEidIssuanceMachine", () => {
     jest.clearAllMocks();
     jest.resetAllMocks();
     jest.useFakeTimers();
+    hasWalletInstanceForSpecs.mockReturnValue(true);
     obtainStatusList.mockResolvedValue(undefined);
     obtainEidStatusList.mockImplementation(({ input }) =>
       Promise.resolve(input.eid)
@@ -3073,6 +3076,24 @@ describe("itwEidIssuanceMachine", () => {
     await waitForActor(actor, s => s.matches("WalletInstanceCreation"));
     expect(createWalletInstance).toHaveBeenCalledTimes(1);
     expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(true);
+  });
+
+  it("Should re-create the Wallet Instance without an eID when it belongs to different specs", async () => {
+    onInit.mockImplementation(() => ({
+      integrityKeyTag: T_INTEGRITY_KEY,
+      walletInstanceAttestation: { jwt: T_WIA },
+      credentialsToUpgrade: {}
+    }));
+    hasWalletInstanceForSpecs.mockReturnValue(false);
+
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+    actor.start();
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    actor.send({ type: "accept-tos" });
+
+    await waitForActor(actor, s => s.matches("WalletInstanceCreation"));
+    expect(createWalletInstance).toHaveBeenCalledTimes(1);
+    expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(false);
   });
 
   it("Should NOT re-create the Wallet Instance in the regular flow (no upgrade)", async () => {
