@@ -1,3 +1,4 @@
+import { Mutex } from "async-mutex";
 import * as SecureStore from "expo-secure-store";
 import * as LegacyKeychain from "react-native-keychain";
 import { Storage } from "redux-persist";
@@ -14,27 +15,17 @@ const CHUNK_SIZE = 1800;
 
 const chunkKey = (base: string, index: number) => `${base}.c${index}`;
 const metaKey = (base: string) => `${base}.n`;
+const activeKey = (base: string) => `${base}.active`;
+const slotKey = (base: string, slot: string) => `${base}.s${slot}`;
+const storageMutex = new Mutex();
 
 const OPTIONS: SecureStore.SecureStoreOptions = {
   keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY
 };
 
 async function getChunked(base: string): Promise<string | undefined> {
-  const countStr = await SecureStore.getItemAsync(metaKey(base), OPTIONS);
-  if (countStr === null) {
-    return undefined;
-  }
-  const count = parseInt(countStr, 10);
-  const chunks: ReadonlyArray<null | string> = await Promise.all(
-    Array.from({ length: count }, (_, i) =>
-      SecureStore.getItemAsync(chunkKey(base, i), OPTIONS)
-    )
-  );
-  const complete = chunks.filter((c): c is string => c !== null);
-  if (complete.length !== count) {
-    return undefined;
-  }
-  return complete.join("");
+  const active = await SecureStore.getItemAsync(activeKey(base), OPTIONS);
+  return readChunks(active === null ? base : slotKey(base, active));
 }
 
 // TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
@@ -57,32 +48,60 @@ async function migrateLegacyItem(
   return legacy.password;
 }
 
+async function readChunks(base: string): Promise<string | undefined> {
+  const countStr = await SecureStore.getItemAsync(metaKey(base), OPTIONS);
+  if (countStr === null) {
+    return undefined;
+  }
+  const count = parseInt(countStr, 10);
+  const chunks: ReadonlyArray<null | string> = await Promise.all(
+    Array.from({ length: count }, (_, i) =>
+      SecureStore.getItemAsync(chunkKey(base, i), OPTIONS)
+    )
+  );
+  const complete = chunks.filter((c): c is string => c !== null);
+  if (complete.length !== count) {
+    return undefined;
+  }
+  return complete.join("");
+}
+
 async function removeChunked(base: string): Promise<void> {
   const countStr = await SecureStore.getItemAsync(metaKey(base), OPTIONS);
   if (countStr === null) {
     return;
   }
   const count = parseInt(countStr, 10);
-  await Promise.all(
-    Array.from({ length: count }, (_, i) =>
-      SecureStore.deleteItemAsync(chunkKey(base, i), OPTIONS)
-    )
-  );
+  for (const index of Array.from(
+    { length: count },
+    (_, chunkIndex) => chunkIndex
+  )) {
+    await SecureStore.deleteItemAsync(chunkKey(base, index), OPTIONS);
+  }
   await SecureStore.deleteItemAsync(metaKey(base), OPTIONS);
 }
 
 async function setChunked(base: string, value: string): Promise<void> {
-  await removeChunked(base);
+  const active = await SecureStore.getItemAsync(activeKey(base), OPTIONS);
+  const nextSlot = active === "0" ? "1" : "0";
+  const nextBase = slotKey(base, nextSlot);
+  if (active !== null) {
+    await removeChunked(base);
+  }
+  await removeChunked(nextBase);
   const chunks = Array.from(
     { length: Math.ceil(value.length / CHUNK_SIZE) },
     (_, i) => value.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE)
   );
-  await SecureStore.setItemAsync(metaKey(base), String(chunks.length), OPTIONS);
-  await Promise.all(
-    chunks.map((chunk, i) =>
-      SecureStore.setItemAsync(chunkKey(base, i), chunk, OPTIONS)
-    )
+  await SecureStore.setItemAsync(
+    metaKey(nextBase),
+    String(chunks.length),
+    OPTIONS
   );
+  for (const [index, chunk] of chunks.entries()) {
+    await SecureStore.setItemAsync(chunkKey(nextBase, index), chunk, OPTIONS);
+  }
+  await SecureStore.setItemAsync(activeKey(base), nextSlot, OPTIONS);
 }
 
 // eslint-disable-next-line functional/no-let
@@ -94,40 +113,49 @@ export let removeKeychainError: string | undefined;
 
 export default function createSecureStorage(): Storage {
   return {
-    getItem: async key => {
-      try {
-        const value = await getChunked(sanitizeKey(key));
-        if (value !== undefined) {
-          return value;
+    getItem: key =>
+      storageMutex.runExclusive(async () => {
+        try {
+          const value = await getChunked(sanitizeKey(key));
+          if (value !== undefined) {
+            return value;
+          }
+          return await migrateLegacyItem(sanitizeKey(key), key);
+        } catch (err) {
+          getKeychainError = JSON.stringify(err);
+          return undefined;
         }
-        return await migrateLegacyItem(sanitizeKey(key), key);
-      } catch (err) {
-        getKeychainError = JSON.stringify(err);
-        return undefined;
-      }
-    },
+      }),
 
-    setItem: async (key, value) => {
-      try {
-        return await setChunked(sanitizeKey(key), value);
-      } catch (err) {
-        setKeychainError = JSON.stringify(err);
-        return false;
-      }
-    },
+    setItem: (key, value) =>
+      storageMutex.runExclusive(async () => {
+        try {
+          return await setChunked(sanitizeKey(key), value);
+        } catch (err) {
+          setKeychainError = JSON.stringify(err);
+          return false;
+        }
+      }),
 
-    removeItem: async key => {
-      try {
-        await removeChunked(sanitizeKey(key));
-        // TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
-        // clears the legacy entry too, in case migration never completed (e.g. after a write failure)
-        await LegacyKeychain.resetGenericPassword({ service: key });
-        return true;
-      } catch (err) {
-        removeKeychainError = JSON.stringify(err);
-        return false;
-      }
-    }
+    removeItem: key =>
+      storageMutex.runExclusive(async () => {
+        try {
+          await removeChunked(slotKey(sanitizeKey(key), "0"));
+          await removeChunked(slotKey(sanitizeKey(key), "1"));
+          await removeChunked(sanitizeKey(key));
+          // TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
+          // clears the legacy entry too, in case migration never completed (e.g. after a write failure)
+          await LegacyKeychain.resetGenericPassword({ service: key });
+          await SecureStore.deleteItemAsync(
+            activeKey(sanitizeKey(key)),
+            OPTIONS
+          );
+          return true;
+        } catch (err) {
+          removeKeychainError = JSON.stringify(err);
+          return false;
+        }
+      })
   };
 }
 
