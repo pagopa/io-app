@@ -1,3 +1,25 @@
+## 3.43.0-rc.2 (2026-11-02)
+
+### Features
+
+- [[IOPLT-1655](https://pagopa.atlassian.net/browse/IOPLT-1655)] Add native bottom sheet components via `react-native-screens` ([#7902](https://github.com/pagopa/io-app/pull/7902))
+- **IT-Wallet:** [[SIW-5383](https://pagopa.atlassian.net/browse/SIW-5383)] Add tracking to wallet ready banner ([#8814](https://github.com/pagopa/io-app/pull/8814))
+
+### Bug Fixes
+
+- [[IOPLT-2115](https://pagopa.atlassian.net/browse/IOPLT-2115)] Skip PR title checks for Renovate PRs ([#8654](https://github.com/pagopa/io-app/pull/8654))
+
+### Chores
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Remove unused postinstall scripts ([#8450](https://github.com/pagopa/io-app/pull/8450))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+- Emanuele Dall'Ara @LeleDallas
+- LazyAfternoons @LazyAfternoons
+- Riccardo Sacco @riccardosacco99
+
 ## 3.43.0-rc.1 (2026-10-30)
 
 ### Chores
