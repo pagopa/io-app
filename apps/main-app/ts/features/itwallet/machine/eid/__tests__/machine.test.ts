@@ -1214,11 +1214,10 @@ describe("itwEidIssuanceMachine", () => {
     { name: "credential upgrade", upgrade: true, credentialType: "mDL" },
     { name: "standalone activation", upgrade: false, credentialType: undefined }
   ])(
-    "reaches success with the catalogue still loading after $name",
+    "refreshes the catalogue without blocking success after $name",
     async ({ upgrade, credentialType }) => {
       const store = createStore(appReducer);
       store.dispatch(applicationChangeState("active"));
-      store.dispatch(itwFetchCredentialsCatalogue.request());
       const deps = testEidIssuanceDeps({ store });
       const machine = mockedMachine.provide({
         actions: {
@@ -1259,7 +1258,10 @@ describe("itwEidIssuanceMachine", () => {
       actor.send({ type: "add-to-wallet" });
       await waitForActor(actor, snapshot => snapshot.matches("Success"));
       expect(actor.getSnapshot().hasTag(ItwTags.Loading)).toBe(false);
-      expect(dispatch).not.toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith(
+        itwFetchCredentialsCatalogue.request()
+      );
       expect(
         pot.isLoading(
           store.getState().features.itWallet.credentialsCatalogue.catalogue

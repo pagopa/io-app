@@ -93,7 +93,7 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
     WaitingForCredentialsCatalogue: {
       tags: [ItwTags.Loading],
       invoke: {
-        src: "refreshCredentialsCatalogue",
+        src: "waitForCredentialsCatalogue",
         input: ({ context }) => ({ deps: context.deps }),
         onError: { target: "EvaluateFlow" }
       },

@@ -16,7 +16,6 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { CredentialsVault } from "../../credentials/utils/vault";
-import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import { itwIsCredentialsCataloguePending } from "../../credentialsCatalogue/store/selectors";
 import {
   trackWalletInstanceRenewalFailure,
@@ -436,10 +435,10 @@ export const processCredentialOfferActor = fromPromise<
 });
 
 /**
- * Refreshes the catalogue for the active wallet and waits for its translations.
+ * Waits for any ongoing catalogue and translation requests without refetching.
  * Fetch failures retain the existing cached/static content fallback.
  */
-export const refreshCredentialsCatalogueActor = fromCallback<
+export const waitForCredentialsCatalogueActor = fromCallback<
   CredentialIssuanceEvents,
   { deps: CredentialIssuanceMachineDeps }
 >(({ input, sendBack }) => {
@@ -450,12 +449,6 @@ export const refreshCredentialsCatalogueActor = fromCallback<
     }
   };
   const unsubscribe = store.subscribe(checkReadiness);
-  try {
-    store.dispatch(itwFetchCredentialsCatalogue.request());
-    checkReadiness();
-  } catch (error) {
-    unsubscribe();
-    throw error;
-  }
+  checkReadiness();
   return unsubscribe;
 });

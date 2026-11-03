@@ -266,10 +266,11 @@ describe("itwCredentialIssuanceMachine", () => {
     { name: "credential selection", offer: false },
     { name: "confirmed credential offer", offer: true }
   ])(
-    "refreshes catalogue and waits for translations on $name",
+    "waits for the ongoing catalogue request and its translations on $name",
     async ({ offer }) => {
       const store = createStore(appReducer);
       store.dispatch(applicationChangeState("active"));
+      store.dispatch(itwFetchCredentialsCatalogue.request());
       const dispatch = jest.spyOn(store, "dispatch");
       const machine = mockedMachine.provide({
         guards: { hasCredentialIntroContent: hasCredentialIntroContentGuard }
@@ -303,10 +304,7 @@ describe("itwCredentialIssuanceMachine", () => {
         actor.getSnapshot().matches("WaitingForCredentialsCatalogue")
       ).toBe(true);
       expect(actor.getSnapshot().hasTag(ItwTags.Loading)).toBe(true);
-      expect(dispatch).toHaveBeenCalledTimes(1);
-      expect(dispatch).toHaveBeenCalledWith(
-        itwFetchCredentialsCatalogue.request()
-      );
+      expect(dispatch).not.toHaveBeenCalled();
       expect(hasCredentialIntroContent).not.toHaveBeenCalled();
 
       store.dispatch(itwFetchCatalogueTranslations.request());
@@ -323,6 +321,36 @@ describe("itwCredentialIssuanceMachine", () => {
       actor.stop();
     }
   );
+
+  it("reuses the cached catalogue and translations across credential issuances", () => {
+    const store = createStore(appReducer);
+    store.dispatch(applicationChangeState("active"));
+    store.dispatch(itwFetchCredentialsCatalogue.success(T_CATALOGUE));
+    store.dispatch(itwFetchCatalogueTranslations.success(T_TRANSLATIONS));
+    const dispatch = jest.spyOn(store, "dispatch");
+    const machine = mockedMachine.provide({
+      guards: { hasCredentialIntroContent: hasCredentialIntroContentGuard }
+    });
+    const actor = createActor(machine, {
+      input: { deps: testCredentialIssuanceDeps({ store }) }
+    }).start();
+
+    actor.send({
+      type: "select-credential",
+      credentialType: T_CREDENTIAL_TYPE,
+      mode: "issuance"
+    });
+    expect(actor.getSnapshot().matches("CredentialIntroduction")).toBe(true);
+    actor.send({ type: "back" });
+    actor.send({
+      type: "select-credential",
+      credentialType: T_CREDENTIAL_TYPE,
+      mode: "issuance"
+    });
+    expect(actor.getSnapshot().matches("CredentialIntroduction")).toBe(true);
+    expect(dispatch).not.toHaveBeenCalled();
+    actor.stop();
+  });
 
   test.each([
     {
@@ -361,6 +389,7 @@ describe("itwCredentialIssuanceMachine", () => {
       );
       const store = createStore(appReducer);
       store.dispatch(applicationChangeState("active"));
+      store.dispatch(itwFetchCredentialsCatalogue.request());
       hasCredentialIntroContent.mockReturnValue(hasIntro);
       const actor = createActor(mockedMachine, {
         input: { deps: testCredentialIssuanceDeps({ store }) }
@@ -522,6 +551,8 @@ describe("itwCredentialIssuanceMachine", () => {
         input: { deps: testCredentialIssuanceDeps({ store }) }
       });
       try {
+        // eID completion refreshes the catalogue after the wallet version changes.
+        store.dispatch(itwFetchCredentialsCatalogue.request());
         actor.start();
         actor.send({
           type: "select-credential",
@@ -536,6 +567,7 @@ describe("itwCredentialIssuanceMachine", () => {
           )
         );
         expect(fetchCatalogue).toHaveBeenCalledWith(getEnv("prod"), "1.0.0");
+        expect(fetchCatalogue).toHaveBeenCalledTimes(1);
         expect(fetchTranslations).toHaveBeenCalledWith("1.0.0", catalogue, [
           "it"
         ]);

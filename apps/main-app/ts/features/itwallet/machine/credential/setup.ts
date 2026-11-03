@@ -26,9 +26,9 @@ import {
   obtainCredentialActor,
   obtainCredentialStatusActor,
   processCredentialOfferActor,
-  refreshCredentialsCatalogueActor,
   requestCredentialActor,
-  verifyTrustFederationActor
+  verifyTrustFederationActor,
+  waitForCredentialsCatalogueActor
 } from "./actors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -87,7 +87,7 @@ export const itwCredentialSetup = setup({
       trackCredentialIssuingDataShareAcceptedAction
   },
   actors: {
-    refreshCredentialsCatalogue: refreshCredentialsCatalogueActor,
+    waitForCredentialsCatalogue: waitForCredentialsCatalogueActor,
     verifyTrustFederation: verifyTrustFederationActor,
     getWalletAttestation: getWalletAttestationActor,
     requestCredential: requestCredentialActor,
