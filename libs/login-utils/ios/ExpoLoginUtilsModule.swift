@@ -14,7 +14,7 @@ public class ExpoLoginUtilsModule: Module {
   func getRedirects(for url: String, headers:[String: String],callbackUrlParameter: String,promise: Promise) -> Void {
         var session: URLSession
         guard let parsedUrl = URL(string: url) else {
-            promise.reject("NativeRedirectError", generateErrorObject(error: "InvalidURL", responseCode: nil, url: nil, parameters: nil))
+            promise.reject("NativeRedirectError", "See user info", generateErrorObject(error: "InvalidURL", responseCode: nil, url: nil, parameters: nil))
             return
         }
         let delegate = RedirectDelegate(callback: callbackUrlParameter, promise: promise)
@@ -32,18 +32,18 @@ public class ExpoLoginUtilsModule: Module {
             // Invalidate the session when we exit the function scope
             defer { session.finishTasksAndInvalidate() }
             if (error != nil) {
-                promise.reject("NativeRedirectError", generateErrorObject(error: "RequestError", responseCode: nil, url: nil, parameters: nil))
+                promise.reject("NativeRedirectError", "See user info", generateErrorObject(error: "RequestError", responseCode: nil, url: nil, parameters: nil))
                 return
             }
             guard let httpResponse = response as? HTTPURLResponse else {
-                promise.reject("NativeRedirectError", generateErrorObject(error: "InvalidResponse", responseCode: nil, url: nil, parameters: nil))
+                promise.reject("NativeRedirectError", "See user info", generateErrorObject(error: "InvalidResponse", responseCode: nil, url: nil, parameters: nil))
                     return
                 }
             if httpResponse.statusCode >= 400 {
                 let urlParameters = getUrlQueryParameters(url: parsedUrl.absoluteString)
                 let urlNoQuery = getUrlNoQuery(url: parsedUrl.absoluteString)
                 let errorObject = generateErrorObject(error: "RedirectingError", responseCode: httpResponse.statusCode, url: urlNoQuery, parameters: urlParameters)
-                promise.reject("NativeRedirectError", errorObject)
+                promise.reject("NativeRedirectError", "See user info", errorObject)
                 return
             }
             promise.resolve(delegate.redirects)
@@ -73,7 +73,7 @@ class RedirectDelegate: NSObject, URLSessionTaskDelegate {
         if response.statusCode >= 300 && response.statusCode <= 399 {
             guard let newUrl = request.url?.absoluteString else {
                 let errorObject = generateErrorObject(error: "RedirectingErrorMissingURL", responseCode: nil, url: nil, parameters: nil)
-                promise.reject("NativeRedirectError", errorObject)
+                promise.reject("NativeRedirectError", "See user info",errorObject)
                 completionHandler(nil)
                 return
             }
@@ -125,7 +125,7 @@ class RedirectDelegate: NSObject, URLSessionTaskDelegate {
             let urlParameters = getUrlQueryParameters(url: redirects.last ?? "")
             let urlNoQuery = getUrlNoQuery(url: redirects.last ?? "")
             let errorObject = generateErrorObject(error: "RedirectingError", responseCode: response.statusCode, url: urlNoQuery, parameters: urlParameters)
-            promise.reject("NativeRedirectError", errorObject)
+            promise.reject("NativeRedirectError", "See user info", errorObject)
             completionHandler(nil)
             return
         }

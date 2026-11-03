@@ -57,8 +57,8 @@ class ExpoLoginUtilsModule : Module() {
     } catch (e: IOException) {
       promise.reject(
         "NativeRedirectError",
-        generateErrorUserInfo(IoLoginError.Type.FIRST_REQUEST_ERROR),
-        e
+        "See user info",
+        generateErrorUserInfo(IoLoginError.Type.FIRST_REQUEST_ERROR)
       )
       return
     }
@@ -82,8 +82,8 @@ class ExpoLoginUtilsModule : Module() {
     } catch (e: Exception) {
       promise.reject(
         "NativeRedirectError",
+        "See user info",
         generateErrorUserInfo(IoLoginError.Type.CONNECTION_REDIRECT_ERROR),
-        e
       )
       return
     }
@@ -132,8 +132,8 @@ class ExpoLoginUtilsModule : Module() {
         if (location == null) {
           promise.reject(
             "NativeRedirectError",
+            "See user info",
             generateErrorUserInfo(IoLoginError.Type.REDIRECTING_ERROR, responseCode),
-            null
           )
           return@syncCookies
         }
@@ -142,6 +142,7 @@ class ExpoLoginUtilsModule : Module() {
         if (callbackURLParameter == null) {
           promise.reject(
             "NativeRedirectError",
+            "See user info",
             generateErrorUserInfo(IoLoginError.Type.CONNECTION_REDIRECT_ERROR), null
           )
           return@syncCookies
@@ -156,13 +157,13 @@ class ExpoLoginUtilsModule : Module() {
       } else if (responseCode >= 400) {
         promise.reject(
           "NativeRedirectError",
+          "See user info",
           generateErrorUserInfo(
             IoLoginError.Type.REDIRECTING_ERROR,
             responseCode,
             url = getUrlWithoutQuery(url),
             parameters = getUrlParameter(url)
-          ),
-          null
+          )
         )
         return@syncCookies
       } else {
