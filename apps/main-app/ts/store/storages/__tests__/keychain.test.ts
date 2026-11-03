@@ -163,6 +163,26 @@ describe("keychain", () => {
     await expect(storage.getItem("mykey")).resolves.toBe("legacy value");
   });
 
+  it("should continue queued operations after a failed write", async () => {
+    const storage = createSecureStorage();
+    const otherStorage = createSecureStorage();
+    await storage.setItem("mykey", "previous value");
+    jest
+      .mocked(SecureStore.setItemAsync)
+      .mockRejectedValueOnce(new Error("failed write"));
+
+    const results = await Promise.all([
+      storage.setItem("mykey", "failed value"),
+      otherStorage.getItem("mykey"),
+      otherStorage.setItem("mykey", "next value"),
+      storage.getItem("mykey")
+    ]);
+
+    expect(results[0]).toBe(false);
+    expect(results[1]).toBe("previous value");
+    expect(results[3]).toBe("next value");
+  });
+
   it("should serialize operations across storage instances", async () => {
     const storage = createSecureStorage();
     const otherStorage = createSecureStorage();

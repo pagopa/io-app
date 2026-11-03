@@ -1,4 +1,3 @@
-import { Mutex } from "async-mutex";
 import * as SecureStore from "expo-secure-store";
 import * as LegacyKeychain from "react-native-keychain";
 import { Storage } from "redux-persist";
@@ -17,7 +16,19 @@ const chunkKey = (base: string, index: number) => `${base}.c${index}`;
 const metaKey = (base: string) => `${base}.n`;
 const activeKey = (base: string) => `${base}.active`;
 const slotKey = (base: string, slot: string) => `${base}.s${slot}`;
-const storageMutex = new Mutex();
+const storageQueue = { pending: Promise.resolve() };
+
+function enqueueStorageOperation<Result>(
+  operation: () => Promise<Result>
+): Promise<Result> {
+  const result = storageQueue.pending.then(operation);
+  // eslint-disable-next-line functional/immutable-data
+  storageQueue.pending = result.then(
+    () => undefined,
+    () => undefined
+  );
+  return result;
+}
 
 const OPTIONS: SecureStore.SecureStoreOptions = {
   keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY
@@ -114,7 +125,7 @@ export let removeKeychainError: string | undefined;
 export default function createSecureStorage(): Storage {
   return {
     getItem: key =>
-      storageMutex.runExclusive(async () => {
+      enqueueStorageOperation(async () => {
         try {
           const value = await getChunked(sanitizeKey(key));
           if (value !== undefined) {
@@ -128,7 +139,7 @@ export default function createSecureStorage(): Storage {
       }),
 
     setItem: (key, value) =>
-      storageMutex.runExclusive(async () => {
+      enqueueStorageOperation(async () => {
         try {
           return await setChunked(sanitizeKey(key), value);
         } catch (err) {
@@ -138,7 +149,7 @@ export default function createSecureStorage(): Storage {
       }),
 
     removeItem: key =>
-      storageMutex.runExclusive(async () => {
+      enqueueStorageOperation(async () => {
         try {
           await removeChunked(slotKey(sanitizeKey(key), "0"));
           await removeChunked(slotKey(sanitizeKey(key), "1"));
