@@ -229,6 +229,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
         </View>
       }
       footerActionProps={{ actions: footerActions }}
+      placeholderFallback={<VSpacer size={24} />}
       scrollViewProps={{
         contentContainerStyle: styles.scrollContentContainer,
         testID: "MessageDetailsScrollView"

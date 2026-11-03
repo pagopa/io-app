@@ -2,7 +2,7 @@ import { act, fireEvent, render, within } from "@testing-library/react-native";
 import { View } from "react-native";
 import { type Metrics, SafeAreaProvider } from "react-native-safe-area-context";
 
-import { IOSpacing, IOVisualCostants } from "../../../core";
+import { IOSpacing } from "../../../core";
 import { ScrollViewWithStickyFooterActions } from "../ScrollViewWithStickyFooterActions";
 
 /* The component and FooterActions read safe-area insets, so every case uses
@@ -69,17 +69,49 @@ describe("ScrollViewWithStickyFooterActions", () => {
     });
   });
 
-  it("renders only the screen-end placeholder when actions are absent", () => {
+  it("renders no placeholder when actions are absent", () => {
     const { getByTestId, queryByRole, queryByTestId } = renderComponent();
 
     expect(queryByTestId(dockedActionsTestID)).toBeNull();
-    expect(getByTestId(placeholderTestID)).toHaveStyle({
-      height: IOSpacing.screenEndMargin
-    });
+    expect(queryByTestId(placeholderTestID)).toBeNull();
     expect(getByTestId(endSpacerTestID)).toHaveStyle({
       height: IOSpacing.screenEndMargin + metrics.insets.bottom
     });
     expect(queryByRole("button", { includeHiddenElements: true })).toBeNull();
+  });
+
+  it("renders the placeholder fallback in place of the placeholder when actions are absent", () => {
+    const { getByTestId, queryByTestId } = renderComponent({
+      afterPlaceholder: <View testID="after-placeholder" />,
+      beforePlaceholder: <View testID="before-placeholder" />,
+      placeholderFallback: <View testID="placeholder-fallback" />,
+      scrollViewProps: { testID: scrollViewTestID }
+    });
+    const slotTestIDs = [
+      "before-placeholder",
+      "placeholder-fallback",
+      "after-placeholder"
+    ];
+    const renderedSlotTestIDs = getByTestId(scrollViewTestID)
+      .findAll(
+        node =>
+          typeof node.type === "string" &&
+          slotTestIDs.includes(node.props.testID)
+      )
+      .map(node => node.props.testID);
+
+    expect(queryByTestId(placeholderTestID)).toBeNull();
+    expect(renderedSlotTestIDs).toEqual(slotTestIDs);
+  });
+
+  it("ignores the placeholder fallback when actions are provided", () => {
+    const { getByTestId, queryByTestId } = renderComponent({
+      footerActionProps: { actions: singleButtonActions() },
+      placeholderFallback: <View testID="placeholder-fallback" />
+    });
+
+    expect(queryByTestId("placeholder-fallback")).toBeNull();
+    expect(getByTestId(dockedActionsTestID)).toBeTruthy();
   });
 
   it("shows the floating actions until the placeholder is reached, then swaps them with the docked ones", () => {
@@ -170,14 +202,18 @@ describe("ScrollViewWithStickyFooterActions", () => {
     expect(onPress).toHaveBeenCalledTimes(1);
   });
 
-  it("leaves a regular margin below the docked actions instead of the safe area", () => {
+  it("lets the placeholder own the spacing around the docked actions", () => {
     const { getByTestId } = renderComponent({
       footerActionProps: { actions: singleButtonActions() }
     });
 
+    expect(getByTestId(placeholderTestID)).toHaveStyle({
+      paddingTop: IOSpacing.screenEndMargin,
+      paddingBottom: IOSpacing.screenEndMargin
+    });
     expect(getByTestId(dockedActionsTestID)).toHaveStyle({
-      marginTop: IOSpacing.screenEndMargin,
-      paddingBottom: IOVisualCostants.appMarginDefault
+      marginTop: 0,
+      paddingBottom: 0
     });
   });
 

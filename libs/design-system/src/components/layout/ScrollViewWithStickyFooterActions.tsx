@@ -32,8 +32,11 @@ const placeholderTestID = "ScrollViewWithStickyFooterActionsPlaceholder";
 const dockedActionsTestID = "ScrollViewWithStickyFooterActionsDockedActions";
 
 export type ScrollViewWithStickyFooterActionsProps = {
+  /** Content rendered after the point where the footer stops being fixed. */
   afterPlaceholder: ReactNode;
+  /** Content rendered before the point where the footer stops being fixed. */
   beforePlaceholder: ReactNode;
+  /** Style applied to the component container. */
   containerStyle?: StyleProp<ViewStyle>;
 
   footerActionProps: Pick<
@@ -41,6 +44,17 @@ export type ScrollViewWithStickyFooterActionsProps = {
     "actions" | "testID" | "transparent"
   >;
 
+  /**
+   * Rendered in place of the footer actions placeholder when `actions` is not
+   * provided.
+   */
+  placeholderFallback?: ReactNode;
+
+  /**
+   * Props applied to the internal vertical scroll view. `horizontal`,
+   * `onLayout` and `onScroll` are managed internally to keep the footer aligned
+   * with its placeholder.
+   */
   scrollViewProps?: Omit<
     ScrollViewProps,
     "children" | "horizontal" | "onLayout" | "onScroll"
@@ -57,6 +71,7 @@ export const ScrollViewWithStickyFooterActions = ({
   beforePlaceholder,
   containerStyle,
   footerActionProps,
+  placeholderFallback,
   scrollViewProps
 }: ScrollViewWithStickyFooterActionsProps) => {
   const theme = useIOTheme();
@@ -88,24 +103,23 @@ export const ScrollViewWithStickyFooterActions = ({
         }
       >
         {beforePlaceholder}
-        <View
-          onLayout={handlePlaceholderLayout}
-          style={[
-            { backgroundColor },
-            !actions && { height: IOSpacing.screenEndMargin }
-          ]}
-          testID={placeholderTestID}
-        >
-          {actions && (
+        {actions ? (
+          <View
+            onLayout={handlePlaceholderLayout}
+            style={[{ backgroundColor }, styles.dockedActionsPlaceholder]}
+            testID={placeholderTestID}
+          >
             <FooterActions
               actions={actions}
               animatedStyles={{ mainBlock: dockedActionsStyle }}
-              excludeSafeAreaMargins
+              excludeVerticalMargins
               fixed={false}
               testID={dockedActionsTestID}
             />
-          )}
-        </View>
+          </View>
+        ) : (
+          placeholderFallback
+        )}
         {afterPlaceholder}
         <View
           style={{ height: IOSpacing.screenEndMargin + safeAreaBottom }}
@@ -224,5 +238,10 @@ const useFooterActionsDocking = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1
+  },
+  dockedActionsPlaceholder: {
+    // the docking point assumes the floating actions' content end margin above the docked ones
+    paddingTop: IOSpacing.screenEndMargin,
+    paddingBottom: IOSpacing.screenEndMargin
   }
 });

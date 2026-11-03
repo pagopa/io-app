@@ -173,6 +173,7 @@ export const MessageDetails = ({
           </ContentWrapper>
         }
         footerActionProps={{ actions: footerActions }}
+        placeholderFallback={<VSpacer size={24} />}
         scrollViewProps={{ testID: "MessageDetailsScrollView" }}
       />
       {shouldUseBottomSheetForPayments(isCancelled, payments) && (

@@ -261,6 +261,60 @@ describe("MessageDetailsScreen", () => {
       accessibleActions[0]
     );
   });
+
+  const snapshotScenarios = [
+    {
+      name: "with footer actions and without banners",
+      actions: footerActions,
+      hasBanners: false
+    },
+    {
+      name: "with footer actions and banners",
+      actions: footerActions,
+      hasBanners: true
+    },
+    {
+      name: "without footer actions and banners",
+      actions: undefined,
+      hasBanners: false
+    },
+    {
+      name: "without footer actions and with banners",
+      actions: undefined,
+      hasBanners: true
+    }
+  ];
+
+  test.each(snapshotScenarios)(
+    "should match the snapshot $name",
+    ({ actions, hasBanners }) => {
+      jest
+        .spyOn(FOOTER_ACTIONS_HOOK, "useMessageDetailsFooterActions")
+        .mockReturnValue(actions);
+      const state = reproduceSequence(
+        appReducer(undefined, applicationChangeState("active")),
+        appReducer,
+        [
+          ...(hasBanners ? [backendStatusWithSurveyUri()] : []),
+          loadMessageById.success(
+            toUIMessage({
+              ...message_1,
+              created_at: new Date("2020-01-01T12:00:00.000Z")
+            })
+          ),
+          loadServiceDetail.success(service_1),
+          loadMessageDetails.success({
+            ...toUIMessageDetails(messageWithValidPayment),
+            hasRemoteContent: hasBanners
+          })
+        ]
+      );
+      const store: Store<GlobalState> = createStore(appReducer, state as any);
+      const { component } = renderComponent(store);
+
+      expect(component.toJSON()).toMatchSnapshot();
+    }
+  );
 });
 
 const renderComponent = (store: Store<GlobalState>) => {

@@ -171,6 +171,9 @@ describe("MessageDetails component", () => {
   test.each(placementScenarios)(
     "places the sticky footer placeholder before the message bottom menu $name",
     ({ actions, expectedTestIDs }) => {
+      jest
+        .spyOn(FOOTER_ACTIONS_HOOK, "useMessageFooterActions")
+        .mockReturnValue(footerActions);
       const sendMessage = toSENDMessage(thirdPartyMessage)!;
       const props = generateComponentProperties(
         mockMessageId,
@@ -189,6 +192,28 @@ describe("MessageDetails component", () => {
       expect(renderedTestIDs).toEqual(expectedTestIDs);
     }
   );
+
+  it("renders no sticky footer placeholder when there are no footer actions", () => {
+    jest
+      .spyOn(FOOTER_ACTIONS_HOOK, "useMessageFooterActions")
+      .mockReturnValue(undefined);
+    const sendMessage = toSENDMessage(thirdPartyMessage)!;
+    const props = generateComponentProperties(
+      mockMessageId,
+      sendMessage,
+      service_1.id,
+      "message",
+      "recipient"
+    );
+    const { component } = renderComponent(props);
+    const scrollView = component.getByTestId(SCROLL_VIEW_TEST_ID);
+
+    expect(component.queryByTestId(PLACEHOLDER_TEST_ID)).toBeNull();
+    expect(component.queryByLabelText(FOOTER_ACTION_LABEL)).toBeNull();
+    expect(scrollView).toContainElement(
+      component.getByTestId(MESSAGE_BOTTOM_MENU_TEST_ID)
+    );
+  });
 
   it("exposes the footer actions to screen readers once, in place of the placeholder", () => {
     jest
@@ -212,6 +237,55 @@ describe("MessageDetails component", () => {
       accessibleActions[0]
     );
   });
+
+  const snapshotScenarios = [
+    {
+      name: "with footer actions and without the survey banner",
+      actions: footerActions,
+      storeActions: []
+    },
+    {
+      name: "with footer actions and the survey banner",
+      actions: footerActions,
+      storeActions: [
+        backendStatusWithSurveyUri(),
+        loadServiceDetail.success(service_1)
+      ]
+    },
+    {
+      name: "without footer actions and the survey banner",
+      actions: undefined,
+      storeActions: []
+    },
+    {
+      name: "without footer actions and with the survey banner",
+      actions: undefined,
+      storeActions: [
+        backendStatusWithSurveyUri(),
+        loadServiceDetail.success(service_1)
+      ]
+    }
+  ];
+
+  test.each(snapshotScenarios)(
+    "should match the snapshot $name",
+    ({ actions, storeActions }) => {
+      jest
+        .spyOn(FOOTER_ACTIONS_HOOK, "useMessageFooterActions")
+        .mockReturnValue(actions);
+      const sendMessage = toSENDMessage(thirdPartyMessage)!;
+      const props = generateComponentProperties(
+        mockMessageId,
+        sendMessage,
+        service_1.id,
+        "message",
+        "recipient"
+      );
+      const { component } = renderComponent(props, storeActions);
+
+      expect(component.toJSON()).toMatchSnapshot();
+    }
+  );
 });
 
 const generateComponentProperties = (

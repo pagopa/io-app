@@ -1,9 +1,13 @@
 import { render } from "@testing-library/react-native";
+import { StyleSheet } from "react-native";
 import { type Metrics, SafeAreaProvider } from "react-native-safe-area-context";
 
+import { IOSpacing } from "../../../core";
 import { FooterActions } from "../FooterActions";
 
 const onPress = () => undefined;
+/* Extra margin added below the link button on devices with a bottom inset */
+const extraSafeAreaMargin = 8;
 
 /* `FooterActions` reads the safe area insets to compute its bottom margins,
    so every case has to be rendered inside a provider with fixed metrics. */
@@ -111,4 +115,62 @@ describe("FooterActions - rendering rules", () => {
     expect(queryByLabelText("Primary")).toBeTruthy();
     expect(getAllByRole("button")).toHaveLength(1);
   });
+});
+
+const findLinkWrappers = (
+  root: ReturnType<ReturnType<typeof render>["getByTestId"]>
+) =>
+  root.findAll(
+    node =>
+      typeof node.type === "string" &&
+      StyleSheet.flatten(node.props.style)?.alignSelf === "center"
+  );
+
+describe("FooterActions - vertical margins", () => {
+  const footerTestID = "footer-actions";
+  const [, twoButtons, threeButtons] = cases;
+
+  it.each([twoButtons, threeButtons])(
+    "$name adds the safe area spacing by default",
+    ({ actions }) => {
+      const { getByTestId } = render(
+        <SafeAreaProvider initialMetrics={metrics}>
+          <FooterActions
+            actions={actions}
+            fixed={false}
+            testID={footerTestID}
+          />
+        </SafeAreaProvider>
+      );
+      const footer = getByTestId(footerTestID);
+
+      expect(footer).toHaveStyle({
+        marginTop: IOSpacing.screenEndMargin,
+        paddingBottom: metrics.insets.bottom
+      });
+      expect(findLinkWrappers(footer)[0]).toHaveStyle({
+        marginBottom: extraSafeAreaMargin
+      });
+    }
+  );
+
+  it.each([twoButtons, threeButtons])(
+    "$name adds no vertical spacing with `excludeVerticalMargins`",
+    ({ actions }) => {
+      const { getByTestId } = render(
+        <SafeAreaProvider initialMetrics={metrics}>
+          <FooterActions
+            actions={actions}
+            excludeVerticalMargins
+            fixed={false}
+            testID={footerTestID}
+          />
+        </SafeAreaProvider>
+      );
+      const footer = getByTestId(footerTestID);
+
+      expect(footer).toHaveStyle({ marginTop: 0, paddingBottom: 0 });
+      expect(findLinkWrappers(footer)[0]).toHaveStyle({ marginBottom: 0 });
+    }
+  );
 });
