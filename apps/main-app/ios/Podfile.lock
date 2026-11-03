@@ -3847,7 +3847,7 @@ DEPENDENCIES:
   - EXConstants (from `../../../node_modules/expo-constants/ios`)
   - Expo (from `../../../node_modules/expo`)
   - expo-zendesk (from `../../../libs/expo-zendesk`)
-  - ExpoAsset (from `../../../node_modules/expo/node_modules/expo-asset/ios`)
+  - ExpoAsset (from `../../../node_modules/expo-asset/ios`)
   - ExpoBackgroundTask (from `../../../node_modules/expo-background-task/ios`)
   - ExpoBrightness (from `../../../node_modules/expo-brightness/ios`)
   - ExpoCalendar (from `../../../node_modules/expo-calendar/ios`)
@@ -3855,14 +3855,14 @@ DEPENDENCIES:
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
   - ExpoDeviceInternal (from `../../../libs/expo-device-internal/ios`)
   - ExpoDocumentPicker (from `../../../node_modules/expo-document-picker/ios`)
-  - "ExpoDomWebView (from `../../../node_modules/expo/node_modules/@expo/dom-webview/ios`)"
+  - "ExpoDomWebView (from `../../../node_modules/@expo/dom-webview/ios`)"
   - ExpoFileSystem (from `../../../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../../../node_modules/expo-font/ios`)
   - ExpoImagePicker (from `../../../node_modules/expo-image-picker/ios`)
-  - ExpoKeepAwake (from `../../../node_modules/expo/node_modules/expo-keep-awake/ios`)
+  - ExpoKeepAwake (from `../../../node_modules/expo-keep-awake/ios`)
   - ExpoLinearGradient (from `../../../node_modules/expo-linear-gradient/ios`)
   - ExpoLocalAuthentication (from `../../../node_modules/expo-local-authentication/ios`)
-  - "ExpoLogBox (from `../../../node_modules/expo/node_modules/@expo/log-box`)"
+  - "ExpoLogBox (from `../../../node_modules/@expo/log-box`)"
   - ExpoLoginUtils (from `../../../libs/login-utils/ios`)
   - ExpoModulesCore (from `../../../node_modules/expo-modules-core`)
   - ExpoModulesJSI (from `../../../node_modules/expo-modules-core`)
@@ -4036,7 +4036,7 @@ EXTERNAL SOURCES:
   expo-zendesk:
     :path: "../../../libs/expo-zendesk"
   ExpoAsset:
-    :path: "../../../node_modules/expo/node_modules/expo-asset/ios"
+    :path: "../../../node_modules/expo-asset/ios"
   ExpoBackgroundTask:
     :path: "../../../node_modules/expo-background-task/ios"
   ExpoBrightness:
@@ -4052,7 +4052,7 @@ EXTERNAL SOURCES:
   ExpoDocumentPicker:
     :path: "../../../node_modules/expo-document-picker/ios"
   ExpoDomWebView:
-    :path: "../../../node_modules/expo/node_modules/@expo/dom-webview/ios"
+    :path: "../../../node_modules/@expo/dom-webview/ios"
   ExpoFileSystem:
     :path: "../../../node_modules/expo-file-system/ios"
   ExpoFont:
@@ -4060,13 +4060,13 @@ EXTERNAL SOURCES:
   ExpoImagePicker:
     :path: "../../../node_modules/expo-image-picker/ios"
   ExpoKeepAwake:
-    :path: "../../../node_modules/expo/node_modules/expo-keep-awake/ios"
+    :path: "../../../node_modules/expo-keep-awake/ios"
   ExpoLinearGradient:
     :path: "../../../node_modules/expo-linear-gradient/ios"
   ExpoLocalAuthentication:
     :path: "../../../node_modules/expo-local-authentication/ios"
   ExpoLogBox:
-    :path: "../../../node_modules/expo/node_modules/@expo/log-box"
+    :path: "../../../node_modules/@expo/log-box"
   ExpoLoginUtils:
     :path: "../../../libs/login-utils/ios"
   ExpoModulesCore:

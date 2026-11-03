@@ -159,9 +159,7 @@ func getUrlQueryParameters(url: String) -> [String] {
     return parameters
 }
 
-/// Builds a JSON-encoded string describing the redirect error, so it can be passed as the
-/// `description` argument of `Promise.reject(_:_:)`, which only accepts `String` parameters.
-func generateErrorObject(error: String, responseCode: Int?, url: String?, parameters: [String]?) -> String {
+func generateErrorObject(error: String, responseCode: Int?, url: String?, parameters: [String]?) -> NSError {
     var errorObject = [String: Any]()
     errorObject["error"] = error
     if let responseCode = responseCode {
@@ -170,13 +168,17 @@ func generateErrorObject(error: String, responseCode: Int?, url: String?, parame
     if let url = url {
         errorObject["url"] = url
         if let parameters = parameters {
-            errorObject["parameters"] = parameters
+            var writableArray = [String]()
+            for str in parameters {
+                writableArray.append(str)
+            }
+            errorObject["parameters"] = writableArray
         }
     }
+    
+    return nativeRedirectError(errorObject: errorObject)
+}
 
-    guard let data = try? JSONSerialization.data(withJSONObject: errorObject),
-          let jsonString = String(data: data, encoding: .utf8) else {
-        return error
-    }
-    return jsonString
+func nativeRedirectError(errorObject: [String:Any]) -> NSError {
+    return NSError(domain: "", code: -1, userInfo: errorObject)
 }
