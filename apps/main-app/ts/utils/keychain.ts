@@ -87,7 +87,7 @@ async function migrateLegacyPin(): Promise<PinString | undefined> {
 
 async function savePin(
   pin: PinString
-): Promise<{ error: unknown; success: false; } | { success: true }> {
+): Promise<{ error: unknown; success: false } | { success: true }> {
   try {
     await SecureStore.setItemAsync(PIN_KEY, pin, DEFAULT_OPTIONS);
     trackPinOperation("SET", true);
