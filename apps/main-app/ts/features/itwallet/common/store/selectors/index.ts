@@ -216,7 +216,7 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean => {
   const isNewItWalletRenderable = itwShouldRenderNewItWalletSelector(state);
   if (eidStatus === "jwtExpired") {
     return (
-      isNewItWalletRenderable ||
+      !isNewItWalletRenderable &&
       !itwAreSomeDigitalCredentialsExpiredSelector(state)
     );
   }
@@ -272,19 +272,18 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
   itwIsBannerVisibleSelector("discovery_wallet")(state);
 
 /**
- * Returns whether the new IT-Wallet upgrade banner should be rendered.
+ * Returns whether the user can be offered the IT-Wallet upgrade in the wallet
+ * screen, regardless of the upgrade banner being dismissed.
  *
  * - The IT Wallet feature flag is enabled
  * - The wallet is not offline
  * - The L3 feature flag is enabled
  * - The wallet is active but not an IT Wallet instance
  * - The L2 eID and at least one digital credential are not expired
- * - The banner was not dismissed by the user
  * - The activation is not disabled
  * - The user did not activate Documenti su IO through a fallback
  */
-
-export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
+const itwIsUpgradeBannerEligibleSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   offlineAccessReasonSelector(state) === undefined &&
   itwIsL3EnabledSelector(state) &&
@@ -293,25 +292,36 @@ export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
     itwCredentialsEidStatusSelector(state) === "jwtExpired" &&
     itwAreSomeDigitalCredentialsExpiredSelector(state)
   ) &&
-  itwIsWalletDiscoveryBannerVisibleSelector(state) &&
   !itwIsActivationDisabledSelector(state) &&
   !itwIsL2FallbackSelector(state);
+
+/**
+ * Returns whether the new IT-Wallet upgrade banner should be rendered.
+ *
+ * - The user is eligible for the upgrade (see
+ *   {@link itwIsUpgradeBannerEligibleSelector})
+ * - The banner was not dismissed by the user
+ */
+export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
+  itwIsUpgradeBannerEligibleSelector(state) &&
+  itwIsWalletDiscoveryBannerVisibleSelector(state);
 
 /**
  * Returns whether the IT-Wallet non-dismissible upgrade banner should be
  * rendered.
  *
- * - The preconditions for the L3 upgrade banner still apply
- * - The eID is expired and no digital credentials are expired
- * - The upgrade banner has been dismissed and it's not visibile
+ * - The user is eligible for the upgrade (see
+ *   {@link itwIsUpgradeBannerEligibleSelector})
+ * - The upgrade banner has been dismissed and it's not visible
+ * - The eID is expired (no digital credentials are expired, as required by the
+ *   eligibility)
  */
 export const itwShouldRenderNonDismissibleUpgradeBannerSelector = (
   state: GlobalState
 ) =>
-  itwShouldRenderL3UpgradeBannerSelector(state) &&
-  itwCredentialsEidStatusSelector(state) === "jwtExpired" &&
-  !itwAreSomeDigitalCredentialsExpiredSelector(state) &&
-  !itwIsWalletDiscoveryBannerVisibleSelector(state);
+  itwIsUpgradeBannerEligibleSelector(state) &&
+  !itwIsWalletDiscoveryBannerVisibleSelector(state) &&
+  itwCredentialsEidStatusSelector(state) === "jwtExpired";
 
 /**
  * Returns whether the l2 restricted mode banner should be rendered.
