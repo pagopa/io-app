@@ -162,6 +162,39 @@ describe("WrappedItwCredentialCard", () => {
         expect(mockToastError).not.toHaveBeenCalled();
       }
     );
+
+    it("should call onPress instead of opening the upgrade bottom sheet", () => {
+      const onPress = jest.fn();
+      const { getByTestId } = renderComponent({ ...credentialProps, onPress });
+
+      fireEvent.press(getByTestId("ItwCredentialWalletCardTestID"));
+
+      expect(onPress).toHaveBeenCalledTimes(1);
+      expect(mockBottomSheetPresent).not.toHaveBeenCalled();
+      expect(bottomSheet.useIOBottomSheetModal).not.toHaveBeenCalled();
+    });
+
+    it.each([
+      {
+        name: "issued before the PID",
+        issuedAt: credentialProps.issuedAt,
+        mountsSheet: true
+      },
+      {
+        name: "issued after the PID",
+        issuedAt: "2025-11-01T08:00:00.000Z",
+        mountsSheet: false
+      }
+    ])(
+      "should mount the upgrade bottom sheet only for a credential $name",
+      ({ issuedAt, mountsSheet }) => {
+        renderComponent({ ...credentialProps, issuedAt });
+
+        expect(
+          jest.mocked(bottomSheet.useIOBottomSheetModal).mock.calls.length > 0
+        ).toBe(mountsSheet);
+      }
+    );
   });
 
   const accessibilityScenarios = [

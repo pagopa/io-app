@@ -28,33 +28,30 @@ type ItwIridescentBorderProps = {
   width: LayoutRectangle["width"];
 };
 
+/* Maps variants to gradient colors */
+export const itwBrandedGradientColors = {
+  default: ITW_BRAND_GRADIENT,
+  warning: ITW_BRAND_GRADIENT_WARNING,
+  error: ITW_BRAND_GRADIENT_ERROR
+};
+
 /**
- * WARNING: this component must be placed inside a {@link Canvas} component.
- *
- * Renders an animated IT-Wallet branded border using Skia and device rotation
- * sensor data.
+ * We don't need to look at the whole quaternion range, just a very small part
+ * of it.
  */
-export const ItwBrandedSkiaGradient = ({
-  width,
-  height,
-  variant = "default"
-}: ItwIridescentBorderProps) => {
-  /* Sensors */
+const quaternionRange = 0.5;
+
+/**
+ * Returns the animated Skia transform that slides the IT-Wallet branded
+ * gradient vertically, within `height`, following the device rotation sensor.
+ */
+export const useItwBrandedGradientTransform = (
+  height: LayoutRectangle["height"]
+) => {
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
 
   const currentRoll = useSharedValue(0);
   const initialRoll = useSharedValue(0);
-
-  /* Maps variants to gradient colors */
-  const gradientByVariant = {
-    default: ITW_BRAND_GRADIENT,
-    warning: ITW_BRAND_GRADIENT_WARNING,
-    error: ITW_BRAND_GRADIENT_ERROR
-  };
-
-  /* Makes gradient slightly bigger to handle animation overflow */
-  const gradientY = -height;
-  const gradientHeight = height * 3;
 
   useAnimatedReaction(
     () => rotationSensor.sensor.value,
@@ -75,13 +72,7 @@ export const ItwBrandedSkiaGradient = ({
     () => initialRoll.value - currentRoll.value
   );
 
-  /**
-   * We don't need to look at the whole quaternion range, just a very small part
-   * of it.
-   */
-  const quaternionRange = 0.5;
-
-  const skiaGradientTransform = useDerivedValue(() => [
+  return useDerivedValue(() => [
     {
       translateY: interpolate(
         relativeRoll.value,
@@ -91,6 +82,24 @@ export const ItwBrandedSkiaGradient = ({
       )
     }
   ]);
+};
+
+/**
+ * WARNING: this component must be placed inside a {@link Canvas} component.
+ *
+ * Renders an animated IT-Wallet branded border using Skia and device rotation
+ * sensor data.
+ */
+export const ItwBrandedSkiaGradient = ({
+  width,
+  height,
+  variant = "default"
+}: ItwIridescentBorderProps) => {
+  const skiaGradientTransform = useItwBrandedGradientTransform(height);
+
+  /* Makes gradient slightly bigger to handle animation overflow */
+  const gradientY = -height;
+  const gradientHeight = height * 3;
 
   return (
     <Rect
@@ -101,7 +110,7 @@ export const ItwBrandedSkiaGradient = ({
       y={gradientY}
     >
       <SkiaLinearGradient
-        colors={gradientByVariant[variant]}
+        colors={itwBrandedGradientColors[variant]}
         end={vec(width / 3, width)}
         mode="mirror"
         start={vec(0, 0)}

@@ -3,10 +3,7 @@ import { useEffect, useMemo } from "react";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
 import {
@@ -41,11 +38,11 @@ type CieIdErrorScreenProps = IOStackNavigationRouteProps<
   typeof AUTHENTICATION_ROUTES.CIE_ID_ERROR
 >;
 
-const CieIdErrorScreen = ({ route }: CieIdErrorScreenProps) => {
+const CieIdErrorScreen = ({ navigation, route }: CieIdErrorScreenProps) => {
   const { isCieSupported } = useNavigateToLoginMethod();
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-  const { replace, navigate, popToTop } = useIONavigation();
+
   const failureData = route.params?.failureData;
 
   const screenDebugInfo = useMemo(
@@ -87,15 +84,14 @@ const CieIdErrorScreen = ({ route }: CieIdErrorScreenProps) => {
   const secondaryActionLabel = I18n.t(
     "authentication.cie_id.error_screen.secondary_action_label"
   );
+
   const navigateToLandingScreen = () => {
     if (isActiveSessionLogin) {
       dispatch(setFinishedActiveSessionLoginFlow());
       // allows the user to return to the screen from which the flow began
-      popToTop();
+      navigation.popToTop();
     } else {
-      replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.LANDING
-      });
+      navigation.popTo(AUTHENTICATION_ROUTES.LANDING);
     }
   };
 
@@ -117,18 +113,14 @@ const CieIdErrorScreen = ({ route }: CieIdErrorScreenProps) => {
             }
             // Since this screen will only be accessible after the user has already
             // made their choice on the Opt-In screen, we can navigate directly to it
-            navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
-            });
+            navigation.popTo(AUTHENTICATION_ROUTES.CIE_PIN_SCREEN);
           } else {
             void trackCieIdErrorSpidSelected(
               isActiveSessionLogin ? "reauth" : "auth"
             );
             // Since this screen will only be accessible after the user has already
             // made their choice on the Opt-In screen, we can navigate directly to it
-            navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.IDP_SELECTION
-            });
+            navigation.popTo(AUTHENTICATION_ROUTES.IDP_SELECTION);
           }
         }
       }}

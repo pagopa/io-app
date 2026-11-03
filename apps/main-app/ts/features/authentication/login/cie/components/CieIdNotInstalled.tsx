@@ -20,8 +20,8 @@ export type CieIdNotInstalledProps = {
 };
 
 const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
-  const { popToTop } = useIONavigation();
-  const { error } = useIOToast();
+  const navigation = useIONavigation();
+  const toast = useIOToast();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   return (
@@ -42,7 +42,7 @@ const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
               default: ""
             }),
             () => {
-              error(
+              toast.error(
                 I18n.t("authentication.cie_id.cie_not_installed.link_error")
               );
             }
@@ -53,7 +53,7 @@ const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
       secondaryAction={{
         testID: "cie-id-not-installed-pop-to-top",
         label: I18n.t("global.buttons.close"),
-        onPress: popToTop
+        onPress: navigation.popToTop
       }}
       subtitle={I18n.t("authentication.cie_id.cie_not_installed.description")}
       title={I18n.t("authentication.cie_id.cie_not_installed.title")}
