@@ -4,6 +4,7 @@ import * as LegacyKeychain from "react-native-keychain";
 import createSecureStorage from "../keychain";
 
 jest.mock("react-native-keychain", () => ({
+  STORAGE_TYPE: { AES_GCM_NO_AUTH: "KeystoreAESGCM_NoAuth" },
   getGenericPassword: jest.fn().mockResolvedValue(false),
   resetGenericPassword: jest.fn().mockResolvedValue(true)
 }));
@@ -129,8 +130,8 @@ describe("keychain", () => {
       username: "mykey",
       password: "legacy value",
       service: "mykey",
-      storage: "storage"
-    } as Awaited<ReturnType<typeof LegacyKeychain.getGenericPassword>>;
+      storage: LegacyKeychain.STORAGE_TYPE.AES_GCM_NO_AUTH
+    };
     jest
       .mocked(LegacyKeychain.getGenericPassword)
       .mockResolvedValueOnce(credentials)
@@ -151,8 +152,8 @@ describe("keychain", () => {
       username: "mykey",
       password: "legacy value",
       service: "mykey",
-      storage: "storage"
-    } as Awaited<ReturnType<typeof LegacyKeychain.getGenericPassword>>);
+      storage: LegacyKeychain.STORAGE_TYPE.AES_GCM_NO_AUTH
+    });
     const storage = createSecureStorage();
 
     await expect(storage.getItem("mykey")).resolves.toBe("legacy value");
