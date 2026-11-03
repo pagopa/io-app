@@ -4,18 +4,19 @@ import {
   HStack,
   Icon,
   IOButton,
+  IOMarkdown,
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment, memo, useEffect } from "react";
 import { View } from "react-native";
 
-import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { trackItwStartDeactivation } from "../../analytics";
 import { mapPIDStatusToMixpanel } from "../../analytics/utils";
 import {
+  itwAreSomeDigitalCredentialsExpiredSelector,
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
@@ -57,6 +58,10 @@ type ItwEidInfoBottomSheetContentProps = {
   navigation: ReturnType<typeof useIONavigation>;
 };
 
+/**
+ * The bottom sheet content with the eID details, shown only for "Documenti su
+ * IO". The IT-Wallet ID details are shown in another dedicated screen.
+ */
 const ItwEidInfoBottomSheetContent = ({
   navigation,
   currentScreenName
@@ -64,6 +69,12 @@ const ItwEidInfoBottomSheetContent = ({
   const eid = useIOSelector(itwCredentialsEidSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const areSomeCredentialsExpired = useIOSelector(
+    itwAreSomeDigitalCredentialsExpiredSelector
+  );
+
+  const lifecycleAlertShown =
+    eidStatus !== "jwtExpired" || areSomeCredentialsExpired;
 
   const Content = ({ credential }: { credential: CredentialMetadata }) => {
     const claims = parseClaims(credential.parsedCredential, {
@@ -97,11 +108,13 @@ const ItwEidInfoBottomSheetContent = ({
             "features.itWallet.presentation.bottomSheets.eidInfo.contentTop"
           )}
         />
-        <ItwEidLifecycleAlert
-          currentScreenName={currentScreenName}
-          navigation={navigation}
-          skipViewTracking={true}
-        />
+        {lifecycleAlertShown && (
+          <ItwEidLifecycleAlert
+            currentScreenName={currentScreenName}
+            navigation={navigation}
+            skipViewTracking={true}
+          />
+        )}
         <View>
           {claims.map((claim, index) => (
             <Fragment key={index}>
