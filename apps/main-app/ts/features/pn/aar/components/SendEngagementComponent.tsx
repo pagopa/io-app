@@ -1,6 +1,7 @@
 import {
   FeatureInfo,
   H3,
+  IODimensions,
   IOMarkdownLite,
   IOMaxFontSizeMultiplier,
   Pictogram,
@@ -66,7 +67,7 @@ export const SendEngagementComponent = ({
     >
       {!isDeviceScreenSmall && !isFontTooBig && (
         <View style={{ alignSelf: "center" }} testID="pictogram-test">
-          <Pictogram name="message" size={120} />
+          <Pictogram name="message" size={IODimensions.size.pictogram.screen} />
         </View>
       )}
       <VSpacer size={24} />

@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOSelectionListItemVisualParams, IOSpacer } from "../../core";
+import { IODimensions } from "../../core";
 import { IOButton } from "../buttons";
 import { HStack, VStack } from "../layout";
 import { IOLogoPaymentType, LogoPayment } from "../logos";
@@ -37,8 +37,6 @@ type LoadingProps = {
   loadingAccessibilityLabel?: string;
 };
 
-const IMAGE_MARGIN: IOSpacer = 12;
-
 const ModuleBaseContent = ({
   paymentLogo,
   image,
@@ -50,7 +48,7 @@ const ModuleBaseContent = ({
 
   return (
     <HStack
-      space={IMAGE_MARGIN}
+      space={IODimensions.gap.module.leading}
       style={{ alignItems: "center", flexShrink: 1 }}
     >
       {/* Graphical elements */}
@@ -132,14 +130,36 @@ const ModuleCheckoutSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     endBlock={
-      <IOSkeleton height={16} radius={8} shape="rectangle" width={64} />
+      <IOSkeleton
+        height={16}
+        radius={IODimensions.radius.default}
+        shape="rectangle"
+        width={64}
+      />
     }
     startBlock={
-      <HStack space={8} style={{ alignItems: "center" }}>
-        <IOSkeleton radius={8} shape="square" size={24} />
+      <HStack
+        space={IODimensions.gap.module.leading}
+        style={{ alignItems: "center" }}
+      >
+        <IOSkeleton
+          radius={IODimensions.radius.default}
+          shape="square"
+          size={IODimensions.size.icon.module.leading}
+        />
         <VStack space={8}>
-          <IOSkeleton height={20} radius={8} shape="rectangle" width={170} />
-          <IOSkeleton height={16} radius={8} shape="rectangle" width={110} />
+          <IOSkeleton
+            height={20}
+            radius={IODimensions.radius.default}
+            shape="rectangle"
+            width={170}
+          />
+          <IOSkeleton
+            height={16}
+            radius={IODimensions.radius.default}
+            shape="rectangle"
+            width={110}
+          />
         </VStack>
       </HStack>
     }
@@ -148,8 +168,8 @@ const ModuleCheckoutSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: IOSelectionListItemVisualParams.iconSize,
-    height: IOSelectionListItemVisualParams.iconSize,
+    width: IODimensions.size.icon.module.leading,
+    height: IODimensions.size.icon.module.leading,
     resizeMode: "contain"
   }
 });

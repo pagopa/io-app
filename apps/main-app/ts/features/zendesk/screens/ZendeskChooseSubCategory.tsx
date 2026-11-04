@@ -3,7 +3,7 @@ import {
   Banner,
   ContentWrapper,
   Divider,
-  IOVisualCostants,
+  IODimensions,
   ListItemNav,
   useIOToast,
   VSpacer
@@ -135,7 +135,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
       )}
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
         data={subCategories}
         ItemSeparatorComponent={Divider}

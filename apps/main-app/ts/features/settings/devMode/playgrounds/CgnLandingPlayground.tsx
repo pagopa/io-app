@@ -1,7 +1,7 @@
 import {
   ContentWrapper,
   FooterActionsInline,
-  IOSpacing,
+  IODimensions,
   TextInput,
   useFooterActionsInlineMeasurements,
   VSpacer,
@@ -70,7 +70,7 @@ const CgnLandingPlayground = () => {
           flex: 1,
           marginBottom:
             footerActionsInlineMeasurements.safeBottomAreaHeight -
-            IOSpacing.screenEndMargin
+            IODimensions.padding.screen.end
         }}
       >
         {source && (

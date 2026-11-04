@@ -412,7 +412,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title + Subtitle 
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
@@ -431,7 +430,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title + Subtitle 
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -540,7 +538,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title + Subtitle 
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >
@@ -665,7 +663,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title only + chev
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
@@ -684,7 +681,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title only + chev
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -793,7 +789,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title only + chev
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >
@@ -956,7 +952,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Badge (badge
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
@@ -975,7 +970,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Badge (badge
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -1084,7 +1078,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Badge (badge
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >
@@ -1296,7 +1290,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Image (no ic
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
@@ -1315,7 +1308,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Image (no ic
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -1383,7 +1375,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Image (no ic
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >
@@ -1890,7 +1882,6 @@ exports[`ModuleNavigationAlt - Snapshot Title + Subtitle 1`] = `
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
@@ -1909,7 +1900,6 @@ exports[`ModuleNavigationAlt - Snapshot Title + Subtitle 1`] = `
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -2018,7 +2008,7 @@ exports[`ModuleNavigationAlt - Snapshot Title + Subtitle 1`] = `
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >
@@ -2143,7 +2133,6 @@ exports[`ModuleNavigationAlt - Snapshot Title only + chevron (onPress) 1`] = `
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
@@ -2162,7 +2151,6 @@ exports[`ModuleNavigationAlt - Snapshot Title only + chevron (onPress) 1`] = `
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -2271,7 +2259,7 @@ exports[`ModuleNavigationAlt - Snapshot Title only + chevron (onPress) 1`] = `
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >
@@ -2434,7 +2422,6 @@ exports[`ModuleNavigationAlt - Snapshot With Badge (badge + chevron) 1`] = `
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
@@ -2453,7 +2440,6 @@ exports[`ModuleNavigationAlt - Snapshot With Badge (badge + chevron) 1`] = `
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -2562,7 +2548,7 @@ exports[`ModuleNavigationAlt - Snapshot With Badge (badge + chevron) 1`] = `
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >
@@ -2774,7 +2760,6 @@ exports[`ModuleNavigationAlt - Snapshot With Image (no icon) + chevron (onPress)
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
@@ -2793,7 +2778,6 @@ exports[`ModuleNavigationAlt - Snapshot With Image (no icon) + chevron (onPress)
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -2861,7 +2845,7 @@ exports[`ModuleNavigationAlt - Snapshot With Image (no icon) + chevron (onPress)
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >

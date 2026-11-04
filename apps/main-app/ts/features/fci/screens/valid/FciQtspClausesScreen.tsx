@@ -1,5 +1,5 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
-import { Divider, IOVisualCostants, VSpacer } from "@io-app/design-system";
+import { Divider, IODimensions, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StackActions } from "@react-navigation/native";
 import I18n from "i18next";
@@ -107,7 +107,7 @@ const FciQtspClausesScreen = () => {
   const renderClausesFields = () => (
     <FlatList
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
       data={qtspClausesSelector}
       ItemSeparatorComponent={() => <Divider />}

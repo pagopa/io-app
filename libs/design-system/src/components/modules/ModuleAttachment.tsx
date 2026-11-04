@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { GestureResponderEvent, PressableProps } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOListItemVisualParams } from "../../core";
+import { IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
 import { Icon } from "../icons";
@@ -41,7 +41,10 @@ const ModuleAttachmentContent = ({
   const theme = useIOTheme();
 
   return (
-    <HStack space={8} style={{ alignItems: "center" }}>
+    <HStack
+      space={IODimensions.gap.module.trailing}
+      style={{ alignItems: "center" }}
+    >
       <VStack
         space={4}
         style={{ alignItems: "flex-start", flexShrink: 1, flexGrow: 1 }}
@@ -63,7 +66,7 @@ const ModuleAttachmentContent = ({
         <Icon
           color={theme["interactiveElem-default"]}
           name="chevronRightListItem"
-          size={IOListItemVisualParams.chevronSize}
+          size={IODimensions.size.icon.chevron}
         />
       )}
     </HStack>
@@ -156,7 +159,12 @@ const ModuleAttachmentSkeleton = ({
     accessible={true}
     startBlock={
       <VStack space={4}>
-        <IOSkeleton height={16} radius={8} shape="rectangle" width={114} />
+        <IOSkeleton
+          height={16}
+          radius={IODimensions.radius.default}
+          shape="rectangle"
+          width={114}
+        />
         <IOSkeleton height={20} radius={16} shape="rectangle" width={42} />
       </VStack>
     }

@@ -7,12 +7,7 @@ import {
 } from "react-native";
 
 import { useIOTheme } from "../../context";
-import {
-  IOListItemVisualParams,
-  IOSelectionListItemVisualParams,
-  IOSpacer,
-  IOVisualCostants
-} from "../../core";
+import { IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -73,9 +68,12 @@ const ModuleContent = ({
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
   return (
-    <HStack space={8} style={{ alignItems: "center" }}>
+    <HStack
+      space={IODimensions.gap.module.trailing}
+      style={{ alignItems: "center" }}
+    >
       <HStack
-        space={IOVisualCostants.iconMargin as IOSpacer}
+        space={IODimensions.gap.module.leading}
         style={{ flexGrow: 1, flexShrink: 1, alignItems: "center" }}
       >
         {/* Graphical assets */}
@@ -84,7 +82,7 @@ const ModuleContent = ({
             allowFontScaling
             color={theme["icon-decorative"]}
             name={icon}
-            size={IOSelectionListItemVisualParams.iconSize}
+            size={IODimensions.size.icon.module.leading}
           />
         ) : (
           image != null && (
@@ -135,14 +133,15 @@ const ModuleCredentialContent = ({
         {onPress &&
           (isFetching ? (
             <>
-              <HSpacer size={8} />
+              {/* The chevron glyph has built-in side bearing, the spinner does not */}
+              <HSpacer size={IODimensions.gap.module.trailing} />
               <LoadingSpinner testID={activityIndicatorTestID} />
             </>
           ) : (
             <Icon
               color={theme["interactiveElem-default"]}
               name="chevronRightListItem"
-              size={IOListItemVisualParams.chevronSize}
+              size={IODimensions.size.icon.chevron}
               testID={chevronTestID}
             />
           ))}
@@ -183,11 +182,20 @@ const ModuleCredentialSkeleton = ({
     }
     startBlock={
       <HStack
-        space={IOVisualCostants.iconMargin as IOSpacer}
+        space={IODimensions.gap.module.leading}
         style={{ alignItems: "center" }}
       >
-        <IOSkeleton radius={8} shape="square" size={24} />
-        <IOSkeleton height={16} radius={8} shape="rectangle" width={96} />
+        <IOSkeleton
+          radius={IODimensions.radius.default}
+          shape="square"
+          size={IODimensions.size.icon.module.leading}
+        />
+        <IOSkeleton
+          height={16}
+          radius={IODimensions.radius.default}
+          shape="rectangle"
+          width={96}
+        />
       </HStack>
     }
   />
@@ -195,8 +203,8 @@ const ModuleCredentialSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: IOSelectionListItemVisualParams.iconSize,
-    height: IOSelectionListItemVisualParams.iconSize,
+    width: IODimensions.size.icon.module.leading,
+    height: IODimensions.size.icon.module.leading,
     resizeMode: "contain"
   }
 });

@@ -419,50 +419,60 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                                 {
                                   "alignSelf": "center",
                                   "flex": 1,
-                                  "gap": 4,
+                                  "gap": 12,
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.5}
+                              <View
                                 style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "gap": 4,
+                                  }
                                 }
                               >
-                                Puoi dirci com’è andata?
-                              </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
-                                }
-                              >
-                                Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.
-                              </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Puoi dirci com’è andata?
+                                </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.
+                                </Text>
+                              </View>
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
@@ -499,13 +509,6 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                                 onStartShouldSetResponder={[Function]}
                                 pointerEvents="none"
                               >
-                                <View
-                                  style={
-                                    {
-                                      "height": 8,
-                                    }
-                                  }
-                                />
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
@@ -698,8 +701,8 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                                 {
                                   "opacity": 0.6,
                                   "position": "absolute",
-                                  "right": 10,
-                                  "top": 10,
+                                  "right": 8,
+                                  "top": 8,
                                 }
                               }
                             >
@@ -1297,50 +1300,60 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 {
                                   "alignSelf": "center",
                                   "flex": 1,
-                                  "gap": 4,
+                                  "gap": 12,
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.5}
+                              <View
                                 style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "gap": 4,
+                                  }
                                 }
                               >
-                                Puoi dirci com’è andata?
-                              </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
-                                }
-                              >
-                                Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.
-                              </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Puoi dirci com’è andata?
+                                </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.
+                                </Text>
+                              </View>
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
@@ -1377,13 +1390,6 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 onStartShouldSetResponder={[Function]}
                                 pointerEvents="none"
                               >
-                                <View
-                                  style={
-                                    {
-                                      "height": 8,
-                                    }
-                                  }
-                                />
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
@@ -1576,8 +1582,8 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 {
                                   "opacity": 0.6,
                                   "position": "absolute",
-                                  "right": 10,
-                                  "top": 10,
+                                  "right": 8,
+                                  "top": 8,
                                 }
                               }
                             >
@@ -2175,50 +2181,60 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 {
                                   "alignSelf": "center",
                                   "flex": 1,
-                                  "gap": 4,
+                                  "gap": 12,
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.5}
+                              <View
                                 style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "gap": 4,
+                                  }
                                 }
                               >
-                                Puoi dirci com’è andata?
-                              </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
-                                }
-                              >
-                                Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.
-                              </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Puoi dirci com’è andata?
+                                </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.
+                                </Text>
+                              </View>
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
@@ -2255,13 +2271,6 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 onStartShouldSetResponder={[Function]}
                                 pointerEvents="none"
                               >
-                                <View
-                                  style={
-                                    {
-                                      "height": 8,
-                                    }
-                                  }
-                                />
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
@@ -2454,8 +2463,8 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 {
                                   "opacity": 0.6,
                                   "position": "absolute",
-                                  "right": 10,
-                                  "top": 10,
+                                  "right": 8,
+                                  "top": 8,
                                 }
                               }
                             >
