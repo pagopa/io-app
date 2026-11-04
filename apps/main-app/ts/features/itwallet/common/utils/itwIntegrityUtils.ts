@@ -1,6 +1,5 @@
 import { sign } from "@pagopa/io-react-native-crypto";
 import {
-  decodeAssertion,
   generateHardwareKey,
   generateHardwareSignatureWithAssertion,
   getAttestationAssertion,
@@ -11,13 +10,52 @@ import {
   prepareIntegrityToken,
   requestIntegrityToken
 } from "@pagopa/io-react-native-integrity";
+import { CBOR } from "@pagopa/io-react-native-iso18013";
 import { addPadding, removePadding } from "@pagopa/io-react-native-jwt";
 import { IntegrityContext } from "@pagopa/io-react-native-wallet";
 import { Platform } from "react-native";
 import sha from "sha.js";
 import { v4 as uuidv4 } from "uuid";
+import { z } from "zod";
 
 import { Env } from "./environment";
+
+const BASE64_BLOCK_LENGTH = 4;
+
+/**
+ * Converts the base64url encoding used by {@link CBOR.decode} for byte strings
+ * to the base64 encoding expected by the Wallet Provider. A base64 string is
+ * returned unchanged.
+ */
+const Base64UrlToBase64 = z.string().transform(value =>
+  value
+    .replace(/-/g, "+")
+    .replace(/_/g, "/")
+    .padEnd(
+      Math.ceil(value.length / BASE64_BLOCK_LENGTH) * BASE64_BLOCK_LENGTH,
+      "="
+    )
+);
+
+/**
+ * IOS App Attest assertion, a CBOR map of the signature and the authenticator
+ * data.
+ */
+const DecodedAssertion = z.object({
+  authenticatorData: Base64UrlToBase64,
+  signature: Base64UrlToBase64
+});
+
+/**
+ * Decodes an iOS App Attest assertion into its base64 encoded signature and
+ * authenticator data, as `decodeAssertion` did before it was removed from
+ * `@pagopa/io-react-native-integrity` 1.0.0.
+ *
+ * @param assertion - The base64 encoded CBOR assertion
+ * @returns The signature and the authenticator data
+ */
+const decodeAssertion = async (assertion: string) =>
+  DecodedAssertion.parse(await CBOR.decode(assertion));
 
 /**
  * Type returned by the getHardwareSignatureWithAuthData function of

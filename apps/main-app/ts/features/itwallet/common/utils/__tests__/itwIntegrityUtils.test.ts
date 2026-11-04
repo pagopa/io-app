@@ -1,11 +1,14 @@
 import { sign } from "@pagopa/io-react-native-crypto";
 import {
+  generateHardwareSignatureWithAssertion,
   getAttestation,
   getAttestationAssertion,
   getHardwareAttestationCapabilities,
   prepareIntegrityToken,
   requestIntegrityToken
 } from "@pagopa/io-react-native-integrity";
+import { CBOR } from "@pagopa/io-react-native-iso18013";
+import { addPadding } from "@pagopa/io-react-native-jwt";
 import { Platform } from "react-native";
 import sha from "sha.js";
 
@@ -16,7 +19,6 @@ import {
 } from "../itwIntegrityUtils";
 
 jest.mock("@pagopa/io-react-native-integrity", () => ({
-  decodeAssertion: jest.fn(),
   generateHardwareKey: jest.fn(),
   generateHardwareSignatureWithAssertion: jest.fn(),
   getAttestation: jest.fn(),
@@ -29,6 +31,10 @@ jest.mock("@pagopa/io-react-native-integrity", () => ({
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   sign: jest.fn()
+}));
+
+jest.mock("@pagopa/io-react-native-iso18013", () => ({
+  CBOR: { decode: jest.fn() }
 }));
 
 const env = { GOOGLE_CLOUD_PROJECT_NUMBER: "123456" } as Env;
@@ -267,5 +273,59 @@ describe("itwIntegrityUtils on Android", () => {
         )
       ).rejects.toThrow("REQUEST_TOKEN_FAILED");
     });
+  });
+});
+
+describe("itwIntegrityUtils on iOS", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.spyOn(Platform, "select").mockImplementation(spec => spec.ios);
+    jest
+      .mocked(generateHardwareSignatureWithAssertion)
+      .mockResolvedValue("assertion");
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test.each([
+    {
+      name: "base64url byte strings",
+      decoded: { authenticatorData: "a-b_c", signature: "c2ln" },
+      expected: { authenticatorData: "a+b/c===", signature: "c2ln" }
+    },
+    {
+      name: "base64 byte strings",
+      decoded: { authenticatorData: "YXV0aA==", signature: "c2lnbg" },
+      expected: { authenticatorData: "YXV0aA==", signature: "c2lnbg==" }
+    }
+  ])(
+    "should decode the App Attest assertion with $name",
+    async ({ decoded, expected }) => {
+      jest.mocked(CBOR.decode).mockResolvedValue(decoded);
+
+      const result =
+        await getIntegrityContext(
+          hardwareKeyTag
+        ).getHardwareSignatureWithAuthData(clientData);
+
+      expect(result).toEqual(expected);
+      expect(generateHardwareSignatureWithAssertion).toHaveBeenCalledWith(
+        clientData,
+        addPadding(hardwareKeyTag)
+      );
+      expect(CBOR.decode).toHaveBeenCalledWith("assertion");
+    }
+  );
+
+  it("should reject an assertion without signature", async () => {
+    jest.mocked(CBOR.decode).mockResolvedValue({ authenticatorData: "YXV0aA" });
+
+    await expect(
+      getIntegrityContext(hardwareKeyTag).getHardwareSignatureWithAuthData(
+        clientData
+      )
+    ).rejects.toThrow();
   });
 });
