@@ -145,11 +145,14 @@ const componentGap = {
       topElement: system.gap.topElement
     },
     /* `trailing`: before the date and the unread dot; `tag`: above and between tags */
-    messages: { leading: 8, trailing: system.gap.trailing, tag: 8 }
+    messages: { leading: 8, trailing: system.gap.trailing, tag: 8 },
+    /* `chevron`: between the amount or badge and the chevron */
+    transaction: { chevron: 4 }
   },
   module: {
     leading: system.gap.leading,
     trailing: system.gap.trailing,
+    description: system.gap.description,
     topElement: system.gap.topElement
   },
   /* `items`: between the boxes; `error`: above the error message */
@@ -162,6 +165,7 @@ const componentGap = {
     description: system.gap.description,
     caption: system.gap.caption
   },
+  skeleton: { items: 8 },
   /* `items`: between the step bars */
   stepper: { items: 4 },
   /* `icon`: between the icon and the label; `items`: between tabs */
@@ -216,6 +220,8 @@ const componentRadius = {
   badge: 24,
   otpInput: system.radius.default,
   selection: { control: 6 },
+  /* `text`: bars for text; `graphic`: boxes for icons, images and logos */
+  skeleton: { text: system.radius.default, graphic: system.radius.default },
   /* Pill: above half the tab height */
   tab: 24,
   tag: 6,
@@ -248,7 +254,8 @@ const componentIconSize = {
   button: { default: 20, link: 24 },
   featureInfo: system.size.icon.leading,
   listItem: system.size.icon.leading,
-  module: { leading: system.size.icon.leading },
+  /* `large`: `ModuleNavigationAlt`, centred in `size.module.graphic` */
+  module: { default: system.size.icon.leading, large: 32 },
   selection: system.size.icon.leading,
   tab: 16,
   tag: 16,
@@ -266,11 +273,13 @@ const componentSize = {
   avatar: { xsmall: 30, small: 44, medium: 66 },
   codeInput: { dot: 16 },
   iconButton: { small: 24, default: 48, large: 56 },
+  module: { graphic: 48 } /* used in `ModuleNavigationAlt` (icon or image) */,
   /* Checkbox and radio control */
   selection: { control: 24 }
 } as const;
 
 const componentHeight = {
+  badge: 24 /* for skeletons only */,
   button: 48,
   header: 56,
   textInput: 60

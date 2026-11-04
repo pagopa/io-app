@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { GestureResponderEvent, PressableProps } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IODimensions } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
 import { Icon } from "../icons";
@@ -46,7 +46,7 @@ const ModuleAttachmentContent = ({
       style={{ alignItems: "center" }}
     >
       <VStack
-        space={4}
+        space={IODimensions.gap.module.description}
         style={{ alignItems: "flex-start", flexShrink: 1, flexGrow: 1 }}
       >
         <Body
@@ -158,14 +158,23 @@ const ModuleAttachmentSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     startBlock={
-      <VStack space={4}>
+      <VStack
+        space={IODimensions.gap.module.description}
+        style={{ flexGrow: 1, flexShrink: 1 }}
+      >
         <IOSkeleton
-          height={16}
-          radius={IODimensions.radius.default}
+          height={IOTypography.body.size}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={114}
+          width="35%"
         />
-        <IOSkeleton height={20} radius={16} shape="rectangle" width={42} />
+        <IOSkeleton
+          height={IODimensions.height.badge}
+          radius={IODimensions.radius.badge}
+          shape="rectangle"
+          // About a three-letter badge (PDF, DOC, etc…)
+          width={42}
+        />
       </VStack>
     }
   />

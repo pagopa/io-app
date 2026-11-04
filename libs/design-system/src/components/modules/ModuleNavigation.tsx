@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IODimensions } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -59,7 +59,7 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
     <Icon
       color={theme["icon-decorative"]}
       name={icon}
-      size={IODimensions.size.icon.module.leading}
+      size={IODimensions.size.icon.module.default}
     />
   );
 
@@ -121,30 +121,38 @@ const ModuleNavigationSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     endBlock={
-      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
+      <IOSkeleton
+        height={IODimensions.height.badge}
+        radius={IODimensions.radius.badge}
+        shape="rectangle"
+        width={64}
+      />
     }
     startBlock={
       <HStack
         space={IODimensions.gap.module.leading}
-        style={{ alignItems: "center" }}
+        style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
       >
         <IOSkeleton
-          radius={IODimensions.radius.default}
+          radius={IODimensions.radius.skeleton.graphic}
           shape="square"
-          size={IODimensions.size.icon.module.leading}
+          size={IODimensions.size.icon.module.default}
         />
-        <VStack space={4}>
+        <VStack
+          space={IODimensions.gap.skeleton.items}
+          style={{ flexGrow: 1, flexShrink: 1 }}
+        >
           <IOSkeleton
-            height={16}
-            radius={IODimensions.radius.default}
+            height={IOTypography.bodySmall.size}
+            radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
-            width={96}
+            width="50%"
           />
           <IOSkeleton
-            height={12}
-            radius={IODimensions.radius.default}
+            height={IOTypography.labelMini.size}
+            radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
-            width={160}
+            width="80%"
           />
         </VStack>
       </HStack>
@@ -154,8 +162,8 @@ const ModuleNavigationSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: IODimensions.size.icon.module.leading,
-    height: IODimensions.size.icon.module.leading,
+    width: IODimensions.size.icon.module.default,
+    height: IODimensions.size.icon.module.default,
     resizeMode: "contain"
   }
 });

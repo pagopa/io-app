@@ -9,11 +9,11 @@ import {
 import { SvgProps } from "react-native-svg";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IODimensions } from "../../core";
+import { IOColors, IODimensions, IOTypography } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
-import { Icon, IOIcons, IOIconSizeScale } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HStack, VStack } from "../layout";
 import { LoadingSpinner } from "../loadingSpinner";
 import { IOSkeleton } from "../skeleton";
@@ -54,8 +54,6 @@ export const ModuleNavigationAlt = (
   const theme = useIOTheme();
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
-  const graphicWrapperSize: IOIconSizeScale = 48;
-
   if (props.isLoading) {
     return (
       <ModuleNavigationAltSkeleton
@@ -79,7 +77,11 @@ export const ModuleNavigationAlt = (
   } = props;
 
   const iconComponent = icon && (
-    <Icon color={iconColor} name={icon} size={32} />
+    <Icon
+      color={iconColor}
+      name={icon}
+      size={IODimensions.size.icon.module.large}
+    />
   );
 
   const imageComponent = () => {
@@ -138,8 +140,8 @@ export const ModuleNavigationAlt = (
               style={{
                 alignItems: "center",
                 justifyContent: "center",
-                width: graphicWrapperSize,
-                height: graphicWrapperSize
+                width: IODimensions.size.module.graphic,
+                height: IODimensions.size.module.graphic
               }}
             >
               {iconComponent ?? imageComponent()}
@@ -181,37 +183,31 @@ const ModuleNavigationAltSkeleton = ({
     accessibilityLabel={loadingAccessibilityLabel}
     accessibilityState={{ busy: true }}
     accessible={true}
-    endBlock={
-      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
-    }
     startBlock={
       <HStack
         space={IODimensions.gap.module.leading}
-        style={{ alignItems: "center" }}
+        style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
       >
         <IOSkeleton
-          radius={IODimensions.radius.default}
+          radius={IODimensions.radius.skeleton.graphic}
           shape="square"
-          size={32}
+          size={IODimensions.size.module.graphic}
         />
-        <VStack space={4}>
+        <VStack
+          space={IODimensions.gap.skeleton.items}
+          style={{ flexGrow: 1, flexShrink: 1 }}
+        >
           <IOSkeleton
-            height={12}
-            radius={IODimensions.radius.default}
+            height={IOTypography.bodySmall.size}
+            radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
-            width={52}
+            width="40%"
           />
           <IOSkeleton
-            height={16}
-            radius={IODimensions.radius.default}
+            height={IOTypography.labelMini.size}
+            radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
-            width={96}
-          />
-          <IOSkeleton
-            height={12}
-            radius={IODimensions.radius.default}
-            shape="rectangle"
-            width={160}
+            width="65%"
           />
         </VStack>
       </HStack>
@@ -221,8 +217,8 @@ const ModuleNavigationAltSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: "100%",
-    height: "auto",
+    width: IODimensions.size.module.graphic,
+    height: IODimensions.size.module.graphic,
     resizeMode: "contain"
   }
 });

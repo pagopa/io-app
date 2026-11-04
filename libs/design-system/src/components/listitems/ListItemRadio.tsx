@@ -3,7 +3,11 @@ import { Image, Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IODimensions, IOSelectionListItemStyles } from "../../core";
+import {
+  IODimensions,
+  IOSelectionListItemStyles,
+  IOTypography
+} from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -97,16 +101,16 @@ export const ListItemRadio = ({
   const disabledStyle = { opacity: disabled ? DISABLED_OPACITY : 1 };
 
   const SkeletonDescriptionLines = () => (
-    <VStack space={8}>
+    <VStack space={IODimensions.gap.skeleton.items}>
       <IOSkeleton
-        height={8}
-        radius={IODimensions.radius.default}
+        height={IOTypography.bodySmall.size}
+        radius={IODimensions.radius.skeleton.text}
         shape="rectangle"
         width="100%"
       />
       <IOSkeleton
-        height={8}
-        radius={IODimensions.radius.default}
+        height={IOTypography.bodySmall.size}
+        radius={IODimensions.radius.skeleton.text}
         shape="rectangle"
         width="100%"
       />
@@ -120,7 +124,7 @@ export const ListItemRadio = ({
       }}
     >
       <IOSkeleton
-        radius={IODimensions.radius.default}
+        radius={IODimensions.radius.skeleton.graphic}
         shape="square"
         size={IODimensions.size.icon.selection}
       />
@@ -134,7 +138,10 @@ export const ListItemRadio = ({
       accessibilityLabel={loadingAccessibilityLabel}
       accessibilityState={{ busy: true }}
       accessible={true}
-      style={[IOSelectionListItemStyles.listItem, { rowGap: 8 }]}
+      style={[
+        IOSelectionListItemStyles.listItem,
+        { rowGap: IODimensions.gap.skeleton.items }
+      ]}
     >
       <View style={IOSelectionListItemStyles.listItemInner}>
         <View
@@ -145,13 +152,20 @@ export const ListItemRadio = ({
             alignItems: "center"
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              flexGrow: 1,
+              flexShrink: 1
+            }}
+          >
             {loadingProps?.skeletonIcon && <SkeletonIcon />}
             <IOSkeleton
-              height={16}
-              radius={IODimensions.radius.default}
+              height={IOTypography.h6.size}
+              radius={IODimensions.radius.skeleton.text}
               shape="rectangle"
-              width={180}
+              width="60%"
             />
           </View>
           <HSpacer size={IODimensions.gap.selection.control} />
