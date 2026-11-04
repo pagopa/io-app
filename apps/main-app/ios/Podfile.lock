@@ -2741,7 +2741,7 @@ PODS:
     - Yoga
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-webview (13.16.0):
+  - react-native-webview (14.0.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -4460,7 +4460,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: befb5404eb8a16fdc07fa2bebab3568ecabcbb8a
   react-native-skia: 80db9e2f8f8b16f8f22b563f0a3874c14026c1e2
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
-  react-native-webview: 654f794a7686b47491cf43aa67f7f428bea00eed
+  react-native-webview: 254a8650a0213d9adcb2d5103a245c701edd9649
   react-native-worklets-core: aaaac7d17f7e576592369a54f30e96fe4875c983
   React-NativeModulesApple: 9702c8c3fe884c714bb403509cc54e5af6d151d4
   React-networking: 738758445d21c007c23982f047ba095642d1c58c
