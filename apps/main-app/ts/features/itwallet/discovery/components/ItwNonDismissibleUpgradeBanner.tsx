@@ -1,10 +1,16 @@
 import { Banner } from "@io-app/design-system";
+import I18n from "i18next";
+import { StyleProp, View, ViewStyle } from "react-native";
 
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
-export const ItwNonDismissibleUpgradeBanner = () => {
+type Props = {
+  style?: StyleProp<ViewStyle>;
+};
+
+export const ItwNonDismissibleUpgradeBanner = ({ style }: Props) => {
   const navigation = useIONavigation();
 
   const navigateToDiscoveryScreen = () => {
@@ -19,18 +25,22 @@ export const ItwNonDismissibleUpgradeBanner = () => {
   );
 
   return (
-    <Banner
-      action={"Inizia"}
-      color="neutral"
-      content={
-        // eslint-disable-next-line
-        "Continua a usare i tuoi documenti su IO e aggiungine di nuovi, con funzionalità più avanzate."
-      }
-      onPress={guardedNavigateToDiscoveryScreen}
-      pictogramName="premiumCredentials"
-      testID="itwReactivationBannerTestID"
-      // eslint-disable-next-line
-      title={"Attiva IT-Wallet per non perdere i tuoi documenti"}
-    />
+    <View style={style}>
+      <Banner
+        action={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_from_expired.action"
+        )}
+        color="neutral"
+        content={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_from_expired.description"
+        )}
+        onPress={guardedNavigateToDiscoveryScreen}
+        pictogramName="premiumCredentials"
+        testID="itwNonDismissibleUpgradeBannerTestID"
+        title={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_from_expired.title"
+        )}
+      />
+    </View>
   );
 };

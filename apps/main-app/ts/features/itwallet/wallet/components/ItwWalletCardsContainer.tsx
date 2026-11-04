@@ -183,12 +183,12 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       )}
 
       <View style={[styles.cardsWrapper, { gap: 16 }]}>
-        <View style={styles.discoveryBannerWrapper}>
-          {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
-          {shouldRenderNonDismissibleUpgradeBanner && (
-            <ItwNonDismissibleUpgradeBanner />
-          )}
-        </View>
+        {shouldRenderUpgradeBanner && (
+          <ItwDiscoveryBanner flow="wallet" style={styles.bannerWrapper} />
+        )}
+        {shouldRenderNonDismissibleUpgradeBanner && (
+          <ItwNonDismissibleUpgradeBanner style={styles.bannerWrapper} />
+        )}
 
         {hasCards && (
           <GuidedTour
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
   cardsWrapper: {
     marginHorizontal: -8
   },
-  discoveryBannerWrapper: {
+  bannerWrapper: {
     marginHorizontal: 8
   }
 });
