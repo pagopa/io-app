@@ -245,16 +245,16 @@ const hardbreakRule: RenderRule = node => (
 const bulletListRule: RenderRule = (node, renderChildren) => (
   <View
     accessibilityRole="list"
-    accessible={true}
+    accessible={false}
     key={node.key}
     style={{ paddingLeft: 12 }}
   >
     <VSpacer size={8} />
     {node.children.map(child => (
-      <View key={child.key} style={{ flexDirection: "row" }}>
+      <View accessible key={child.key} style={{ flexDirection: "row" }}>
         <Body>{getUnorderedListBullet(node.listDepth ?? 0)}</Body>
         <HSpacer size={8} />
-        <View style={{ flex: 1, flexShrink: 1 }}>
+        <View accessible={false} style={{ flex: 1, flexShrink: 1 }}>
           {renderChildren(child.children)}
         </View>
       </View>
@@ -266,16 +266,16 @@ const bulletListRule: RenderRule = (node, renderChildren) => (
 const orderedListRule: RenderRule = (node, renderChildren) => (
   <View
     accessibilityRole="list"
-    accessible={true}
+    accessible={false}
     key={node.key}
     style={{ paddingLeft: 12 }}
   >
     <VSpacer size={8} />
     {node.children.map((child, i) => (
-      <View key={child.key} style={{ flexDirection: "row" }}>
+      <View accessible key={child.key} style={{ flexDirection: "row" }}>
         <Body>{getOrderedListMarker(i + 1, node.listDepth ?? 0)}</Body>
         <HSpacer size={8} />
-        <View style={{ flex: 1, flexShrink: 1 }}>
+        <View accessible={false} style={{ flex: 1, flexShrink: 1 }}>
           {renderChildren(child.children)}
         </View>
       </View>
