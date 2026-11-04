@@ -17,7 +17,19 @@
     "tsc-noemit": "tsc --noEmit"
   },
   "jest": {
-    "preset": "ts-jest",
+    "transform": {
+      "^.+\\.[tj]s$": [
+        "ts-jest",
+        {
+          "tsconfig": {
+            "allowJs": true
+          }
+        }
+      ]
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!@faker-js/)"
+    ],
     "collectCoverage": false,
     "moduleNameMapper": {
       "^axios$": "axios/dist/node/axios.cjs",
@@ -25,8 +37,8 @@
     }
   },
   "dependencies": {
-    "@mattrglobal/http-signatures": "^4.0.1",
     "@io-app/api-types": "workspace:*",
+    "@mattrglobal/http-signatures": "^4.0.1",
     "@pagopa/ts-commons": "^10.15.0",
     "axios": "^1.10.0",
     "body-parser": "^1.19.2",
@@ -52,7 +64,7 @@
     "xml2js": "^0.5.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^9.9.0",
+    "@faker-js/faker": "^10.6.0",
     "@types/body-parser": "^1.19.2",
     "@types/cookie-parser": "^1.4.7",
     "@types/escape-html": "^1.0.4",
@@ -67,9 +79,9 @@
     "eslint": "catalog:",
     "eslint-plugin-oxlint": "catalog:",
     "jest": "catalog:",
+    "nodemon": "^2.0.15",
     "oxlint": "catalog:",
     "oxlint-tsgolint": "catalog:",
-    "nodemon": "^2.0.15",
     "supertest": "^6.2.1",
     "ts-jest": "^29.4.6",
     "ts-node": "^10.4.0",
