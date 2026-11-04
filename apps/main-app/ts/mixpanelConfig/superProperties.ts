@@ -14,6 +14,7 @@ import {
   isMixpanelInstanceInitialized,
   registerSuperProperties
 } from "../mixpanel.ts";
+import { uiLanguageSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { isScreenReaderEnabled } from "../utils/accessibility";
 import { trackAppCaughtError } from "../utils/analytics.ts";
@@ -59,6 +60,7 @@ type SuperProperties = {
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   SAVED_PAYMENT_METHOD?: number;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
+  UI_LANGUAGE: string;
   WELFARE_STATUS: ReadonlyArray<string>;
 };
 
@@ -86,6 +88,7 @@ export const updateMixpanelSuperProperties = async (
     const CDC_STATUS = cdcStatusHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
     const CONNECTION_STATUS = offlineStatusHandler(state);
+    const UI_LANGUAGE = uiLanguageSelector(state);
 
     const superPropertiesObject: SuperProperties = {
       isScreenReaderEnabled: screenReaderEnabled,
@@ -106,7 +109,8 @@ export const updateMixpanelSuperProperties = async (
       CGN_STATUS,
       CDC_STATUS,
       WELFARE_STATUS,
-      CONNECTION_STATUS
+      CONNECTION_STATUS,
+      UI_LANGUAGE
     };
 
     if (forceUpdateFor) {

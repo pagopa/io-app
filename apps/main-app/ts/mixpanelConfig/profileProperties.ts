@@ -18,7 +18,8 @@ import { tosVersionSelector } from "../features/settings/common/store/selectors/
 import { getPeople, isMixpanelInstanceInitialized } from "../mixpanel.ts";
 import {
   fontPreferenceSelector,
-  themePreferenceSelector
+  themePreferenceSelector,
+  uiLanguageSelector
 } from "../store/reducers/persistedPreferences.ts";
 import { GlobalState } from "../store/reducers/types";
 import { trackAppCaughtError } from "../utils/analytics.ts";
@@ -57,6 +58,7 @@ type ProfileProperties = {
   THEME_PREFERENCE: string;
   TOS_ACCEPTED_VERSION: number | string;
   TRACKING: MixpanelOptInTrackingType;
+  UI_LANGUAGE: string;
   WELFARE_STATUS: ReadonlyArray<string>;
 };
 
@@ -89,6 +91,7 @@ export const updateMixpanelProfileProperties = async (
     const TOS_ACCEPTED_VERSION = tosVersionHandler(state);
     const TRACKING = mixpanelOptInHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
+    const UI_LANGUAGE = uiLanguageSelector(state);
 
     const profilePropertiesObject: ProfileProperties = {
       BIOMETRIC_TECHNOLOGY,
@@ -107,7 +110,8 @@ export const updateMixpanelProfileProperties = async (
       SERVICE_CONFIGURATION,
       TOS_ACCEPTED_VERSION,
       TRACKING,
-      WELFARE_STATUS
+      WELFARE_STATUS,
+      UI_LANGUAGE
     };
 
     if (forceUpdateFor) {
