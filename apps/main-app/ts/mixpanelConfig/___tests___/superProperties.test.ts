@@ -127,10 +127,40 @@ describe("superProperties", () => {
             NOTIFICATION_PERMISSION: notificationPermissionTuple[1],
             SAVED_PAYMENT_METHOD: 0,
             SERVICE_CONFIGURATION: "AUTO",
+            UI_LANGUAGE: "it",
             WELFARE_STATUS: []
           });
         });
       })
+    );
+
+    it.each(["en", "de"] as const)(
+      "registers the persisted UI language %s",
+      async language => {
+        const state = generateMockedGlobalState(undefined, undefined, language);
+        jest
+          .spyOn(APPVERSION, "getAppVersion")
+          .mockImplementation(() => "1.0.0.0");
+        jest
+          .spyOn(BIOMETRICS, "getBiometricsType")
+          .mockImplementation(() => Promise.resolve("FACE_ID"));
+        jest
+          .spyOn(PUSHUTILS, "checkNotificationPermissions")
+          .mockImplementation(() => Promise.resolve(false));
+        jest.spyOn(DEVICE, "getFontScale").mockImplementation(() => 2.0);
+        jest
+          .spyOn(DEVICE, "isScreenLockSet")
+          .mockImplementation(() => Promise.resolve(true));
+        jest
+          .spyOn(ACCESSIBILITY, "isScreenReaderEnabled")
+          .mockImplementation(() => Promise.resolve(true));
+
+        await updateMixpanelSuperProperties(state);
+
+        expect(mockedRegisterSuperProperties).toHaveBeenCalledWith(
+          expect.objectContaining({ UI_LANGUAGE: language })
+        );
+      }
     );
   });
   /* === === === === === === === === ===
@@ -374,7 +404,8 @@ describe("superProperties", () => {
 
 const generateMockedGlobalState = (
   pushContent: PushNotificationsContentTypeEnum | undefined,
-  pushReminder: ReminderStatusEnum | undefined
+  pushReminder: ReminderStatusEnum | undefined,
+  preferredLanguage: "de" | "en" | "it" = "it"
 ): GlobalState =>
   ({
     authentication: {
@@ -409,7 +440,8 @@ const generateMockedGlobalState = (
     },
     persistedPreferences: {
       fontPreference: "comfortable",
-      isMixpanelEnabled: true
+      isMixpanelEnabled: true,
+      preferredLanguage
     },
     profile: pot.some({
       accepted_tos_version: 1,

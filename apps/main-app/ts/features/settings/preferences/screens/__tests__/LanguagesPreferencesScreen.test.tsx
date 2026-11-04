@@ -1,14 +1,18 @@
-import { fireEvent } from "@testing-library/react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
 
+import { setLocale } from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { useIOSelector } from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { preferredLanguageSelector } from "../../../../../store/reducers/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import * as preferencesAnalytics from "../../analytics";
 import LanguagesPreferencesScreen from "../LanguagesPreferencesScreen";
 
 // Mock the useIOSelector hook
@@ -35,21 +39,21 @@ jest.mock(
 describe("LanguagesPreferencesScreen", () => {
   beforeAll(() => {
     jest.spyOn(Alert, "alert");
+    jest
+      .spyOn(preferencesAnalytics, "trackUILanguageUpdate")
+      .mockImplementation(() => undefined);
   });
 
   beforeEach(() => {
     jest.clearAllMocks();
+    (useIOSelector as jest.Mock).mockImplementation((selector: unknown) =>
+      selector === preferredLanguageSelector ? O.some("it") : pot.none
+    );
+    setLocale("it");
   });
 
   describe("UI Rendering", () => {
     test("renders the screen with, title, subtitle and radio buttons", () => {
-      (useIOSelector as jest.Mock).mockReturnValue((selector: any) => {
-        if (selector === preferredLanguageSelector) {
-          return "it";
-        }
-        return null;
-      });
-
       const { getByText, getByTestId, queryAllByText, toJSON } =
         renderComponent();
       expect(
@@ -86,6 +90,51 @@ describe("LanguagesPreferencesScreen", () => {
       expect(Alert.alert).toHaveBeenCalled();
 
       expect(toJSON()).toMatchSnapshot();
+    });
+
+    test("tracks the UI language only after confirmation", async () => {
+      const { getByTestId } = renderComponent();
+
+      fireEvent.press(getByTestId("RadioItemTestID_app-locale-de"));
+
+      const buttons = jest.mocked(Alert.alert).mock.calls[0][2];
+      await act(async () => {
+        buttons?.[1].onPress?.();
+      });
+
+      await waitFor(() =>
+        expect(preferencesAnalytics.trackUILanguageUpdate).toHaveBeenCalledWith(
+          "it",
+          "de"
+        )
+      );
+    });
+
+    test("does not track a cancelled UI language selection", () => {
+      const { getByTestId } = renderComponent();
+
+      fireEvent.press(getByTestId("RadioItemTestID_app-locale-de"));
+      const buttons = jest.mocked(Alert.alert).mock.calls[0][2];
+      buttons?.[0].onPress?.();
+
+      expect(preferencesAnalytics.trackUILanguageUpdate).not.toHaveBeenCalled();
+    });
+
+    test("does not show confirmation or track when selecting the current UI language", () => {
+      const { getByTestId } = renderComponent();
+
+      fireEvent.press(getByTestId("RadioItemTestID_app-locale-it"));
+
+      expect(Alert.alert).not.toHaveBeenCalled();
+      expect(preferencesAnalytics.trackUILanguageUpdate).not.toHaveBeenCalled();
+    });
+
+    test("does not track changes to the message language", () => {
+      const { getByTestId } = renderComponent();
+
+      fireEvent.press(getByTestId("RadioItemTestID_en"));
+
+      expect(preferencesAnalytics.trackUILanguageUpdate).not.toHaveBeenCalled();
     });
   });
 });

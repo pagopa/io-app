@@ -43,6 +43,7 @@ const generateBaseProfileProperties = () => ({
   SERVICE_CONFIGURATION: "AUTO",
   TOS_ACCEPTED_VERSION: 1,
   TRACKING: "accepted",
+  UI_LANGUAGE: "it",
   WELFARE_STATUS: []
 });
 
@@ -52,6 +53,30 @@ describe("profileProperties", () => {
     jest.clearAllMocks();
   });
   describe("updateMixpanelProfileProperties", () => {
+    it.each(["en", "de"] as const)(
+      "sets the persisted UI language %s on the Mixpanel profile",
+      async language => {
+        const state = generateMockedGlobalState(
+          undefined,
+          undefined,
+          undefined,
+          language
+        );
+        jest
+          .spyOn(BIOMETRICS, "getBiometricsType")
+          .mockImplementation(() => Promise.resolve("FACE_ID"));
+        jest
+          .spyOn(PUSHUTILS, "checkNotificationPermissions")
+          .mockImplementation(() => Promise.resolve(false));
+
+        await updateMixpanelProfileProperties(state);
+
+        expect(mockedSet).toHaveBeenCalledWith(
+          expect.objectContaining({ UI_LANGUAGE: language })
+        );
+      }
+    );
+
     /* === === === === === === === === ===
      * NOTIFICATION_CONFIGURATION
      * NOTIFICATION_PERMISSION
@@ -374,7 +399,8 @@ describe("profileProperties", () => {
 const generateMockedGlobalState = (
   notificationToken: string | undefined,
   pushContent: PushNotificationsContentTypeEnum | undefined,
-  pushReminder: ReminderStatusEnum | undefined
+  pushReminder: ReminderStatusEnum | undefined,
+  preferredLanguage: "de" | "en" | "it" = "it"
 ): GlobalState =>
   ({
     authentication: {
@@ -420,7 +446,8 @@ const generateMockedGlobalState = (
     },
     persistedPreferences: {
       fontPreference: "comfortable",
-      isMixpanelEnabled: true
+      isMixpanelEnabled: true,
+      preferredLanguage
     },
     profile: pot.some({
       accepted_tos_version: 1,

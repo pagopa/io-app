@@ -27,6 +27,7 @@ import {
 } from "../../../../utils/locale";
 import { profileUpsert } from "../../common/store/actions";
 import { profileSelector } from "../../common/store/selectors";
+import { trackUILanguageUpdate } from "../analytics";
 
 /** Allows the user to select one of the available Languages as preferred */
 
@@ -150,6 +151,7 @@ const LanguagesPreferencesScreen = () => {
 
       setLocale(locale);
       preferredLanguageSaveSuccessDispatch(locale);
+      trackUILanguageUpdate(preferredLanguage, locale);
       setSelectedAppLocale(localeId);
       toast.success(
         I18n.t(
@@ -157,7 +159,7 @@ const LanguagesPreferencesScreen = () => {
         )
       );
     },
-    [preferredLanguageSaveSuccessDispatch, toast]
+    [preferredLanguage, preferredLanguageSaveSuccessDispatch, toast]
   );
 
   useEffect(() => {
@@ -220,7 +222,7 @@ const LanguagesPreferencesScreen = () => {
             {
               text: I18n.t("global.buttons.confirm"),
               style: "default",
-              onPress: () => handleAppLocaleChange(language as AppLocaleId)
+              onPress: () => void handleAppLocaleChange(language as AppLocaleId)
             }
           ],
           { cancelable: false }
