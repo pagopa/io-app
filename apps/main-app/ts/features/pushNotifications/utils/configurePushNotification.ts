@@ -7,6 +7,7 @@ import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences"
 import { GlobalState } from "../../../store/reducers/types";
 import { trackAppCaughtError } from "../../../utils/analytics";
 import { isTestEnv } from "../../../utils/environment";
+import { unknownToString } from "../../../utils/errors";
 import { trackNewPushNotificationsTokenGenerated } from "../analytics";
 import { newPushNotificationsToken } from "../store/actions/installation";
 import { handleMessageNotificationInteraction } from "./pushNotificationHandlers";
@@ -48,7 +49,9 @@ export const configurePushNotificationListeners = (store: Store) => {
     });
 
   // fetch the push token after setting up the listeners to ensure that it is handled correctly
-  void Notifications.getDevicePushTokenAsync();
+  void Notifications.getDevicePushTokenAsync().catch(
+    onPushNotificationTokenError
+  );
 
   return () =>
     removePushNotificationListeners([
@@ -139,6 +142,13 @@ const onPushNotificationTokenReceived =
     void updateMixpanelProfileProperties(state);
   };
 
+const onPushNotificationTokenError = (error: unknown) =>
+  trackAppCaughtError(
+    "getDevicePushTokenAsync",
+    "failed to fetch the device push token",
+    unknownToString(error)
+  );
+
 // ---------------------- UTILS ----------------------
 
 const hasUserOptedInForAnalytics = (state: GlobalState) =>
@@ -156,6 +166,7 @@ export const testable = isTestEnv
       handleColdStartNotification,
       onNotificationResponse,
       onPushNotificationTokenReceived,
+      onPushNotificationTokenError,
       hasUserOptedInForAnalytics
     }
   : undefined;
