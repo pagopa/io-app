@@ -10,7 +10,7 @@ import {
   CieManager,
   InternalAuthAndMrtdResponse,
   type NfcEvent
-} from "@pagopa/io-react-native-cie";
+} from "@io-app/expo-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useState } from "react";
 import {

@@ -1,4 +1,4 @@
-import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
+import { InternalAuthAndMrtdResponse } from "@io-app/expo-cie";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";

@@ -1,4 +1,4 @@
-import { CieUtils } from "@pagopa/io-react-native-cie";
+import { CieUtils } from "@io-app/expo-cie";
 import { useEffect, useState } from "react";
 
 export const useIsNfcFeatureAvailable = () => {

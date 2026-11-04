@@ -1,0 +1,29 @@
+{
+  "name": "@io-app/expo-cie",
+  "version": "1.3.6",
+  "private": true,
+  "description": "Expo module for CIE NFC operations",
+  "homepage": "https://github.com/pagopa/io-app",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "android",
+    "ios",
+    "expo-module.config.json",
+    "*.podspec"
+  ],
+  "scripts": {
+    "tsc-noemit": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "expo-modules-core": "^55.0.25",
+    "react-native": "catalog:",
+    "typescript": "catalog:"
+  }
+}

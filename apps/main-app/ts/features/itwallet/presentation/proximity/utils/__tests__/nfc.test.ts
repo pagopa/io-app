@@ -1,10 +1,10 @@
-import { CieUtils } from "@pagopa/io-react-native-cie";
+import { CieUtils } from "@io-app/expo-cie";
 import { Platform } from "react-native";
 
 import { openAppSettings } from "../../../../../../utils/appSettings";
 import { openNfcPreferences } from "../nfc";
 
-jest.mock("@pagopa/io-react-native-cie", () => ({
+jest.mock("@io-app/expo-cie", () => ({
   CieUtils: { openNfcSettings: jest.fn() }
 }));
 

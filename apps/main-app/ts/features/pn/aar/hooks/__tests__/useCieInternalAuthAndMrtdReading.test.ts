@@ -3,7 +3,7 @@ import {
   InternalAuthAndMrtdResponse,
   NfcError,
   NfcEvent
-} from "@pagopa/io-react-native-cie";
+} from "@io-app/expo-cie";
 import { act, renderHook } from "@testing-library/react-native";
 import { Platform } from "react-native";
 import { Presets } from "react-native-pulsar";
@@ -16,7 +16,7 @@ import {
 const TEST_CAN = "123456";
 const TEST_CHALLENGE = "test_challenge";
 
-jest.mock("@pagopa/io-react-native-cie", () => ({
+jest.mock("@io-app/expo-cie", () => ({
   CieManager: {
     addListener: jest.fn().mockReturnValue(jest.fn),
     removeAllListeners: jest.fn(),

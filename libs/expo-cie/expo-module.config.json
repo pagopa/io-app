@@ -1,0 +1,10 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "podspecPath": "ExpoCie.podspec",
+    "modules": ["CieModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.cie.CieModule"]
+  }
+}

@@ -1,4 +1,4 @@
-import { NfcError } from "@pagopa/io-react-native-cie";
+import { NfcError } from "@io-app/expo-cie";
 import z from "zod";
 
 // Custom error for webview

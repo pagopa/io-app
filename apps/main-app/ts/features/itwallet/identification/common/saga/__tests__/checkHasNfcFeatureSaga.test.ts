@@ -1,10 +1,10 @@
-import { CieUtils } from "@pagopa/io-react-native-cie";
+import { CieUtils } from "@io-app/expo-cie";
 import { testSaga } from "redux-saga-test-plan";
 
 import { checkHasNfcFeatureSaga } from "..";
 import { itwHasNfcFeature } from "../../store/actions";
 
-jest.mock("@pagopa/io-react-native-cie", () => ({
+jest.mock("@io-app/expo-cie", () => ({
   CieUtils: {
     hasNfcFeature: jest.fn()
   }
