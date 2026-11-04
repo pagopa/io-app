@@ -62,6 +62,7 @@ type Props = {
 
 export const ItwProximityQrCodeImage = ({ source }: Props) => {
   const theme = useIOTheme();
+  const colors = useIOColors();
   const machineRef = ItwProximityMachineContext.useActorRef();
   const isModalOpened = useHasModalTransitionEnded();
 
@@ -114,7 +115,17 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
   }
 
   if (!isModalOpened) {
-    return <View style={styles.qrCodeSlot} />;
+    // Static skeleton: the animated one would hide the opening modal on Android
+    return (
+      <View
+        style={[
+          styles.qrCodeSlot,
+          styles.staticSkeleton,
+          { backgroundColor: colors.component.skeleton.background }
+        ]}
+        testID="qrCodeStaticSkeleton"
+      />
+    );
   }
 
   return (
@@ -183,6 +194,12 @@ const styles = StyleSheet.create({
   qrCodeSlot: {
     width: QR_CODE_SIZE,
     height: QR_CODE_SIZE
+  },
+  // Matches IOSkeleton's first pulse frame, so the swap is seamless
+  staticSkeleton: {
+    borderRadius: 16,
+    borderCurve: "continuous",
+    opacity: 0.75
   },
   statusBox: {
     alignItems: "center",

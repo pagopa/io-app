@@ -252,6 +252,7 @@ describe("ItwProximityPresentmentScreen", () => {
       { source: "WALLET_HOME" }
     );
     expect(component.queryByTestId("qrcode")).toBeNull();
+    expect(component.getByTestId("qrCodeStaticSkeleton")).toBeTruthy();
 
     const [[event, onTransitionEnd]] = parentNavigation.addListener.mock.calls;
     expect(event).toBe("transitionEnd");
