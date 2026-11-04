@@ -93,7 +93,6 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
           mode: mode ?? "issuance"
         });
       }
-      return () => machineRef.send({ type: "back" });
     }, [credentialType, machineRef, mode])
   );
 
