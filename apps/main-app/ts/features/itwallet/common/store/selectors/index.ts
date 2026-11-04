@@ -202,8 +202,8 @@ export const itwShouldRenderAgeVerificationUsageDetailsBannerSelector = (
  *
  * - The new IT Wallet design is being rendered (unless the eID is expired or
  *   invalid)
- * - The L3 upgrade banner is being displayed (unless the eID is expired or
- *   invalid)
+ * - The L3 upgrade banner is being displayed (unless the eID and at least one
+ *   other credential are expired)
  * - The eID is expiring and the device is offline
  */
 export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean => {
@@ -214,24 +214,29 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean => {
     return eidStatus !== "jwtExpired" && eidStatus !== "invalid";
   }
 
+  // Documenti su IO, can upgrade
+  // Alert hidden unless eID AND some credentials are expired
+  if (itwShouldRenderL3UpgradeBannerSelector(state)) {
+    return !(
+      eidStatus === "jwtExpired" &&
+      itwAreSomeDigitalCredentialsExpiredSelector(state)
+    );
+  }
+
   // Offline
   if (!isConnectedSelector(state)) {
     return eidStatus === "jwtExpiring";
   }
 
-  // Documenti su IO, cannot upgrade, eID is expired
-  // The alert is shown depending on whether some digital credentials are expired
-  if (eidStatus === "jwtExpired") {
-    return !itwAreSomeDigitalCredentialsExpiredSelector(state);
-  }
-
-  // Documenti su IO, can upgrade
-  if (itwShouldRenderL3UpgradeBannerSelector(state)) {
-    return true;
-  }
-
   return false;
 };
+
+export const itwShouldHideEidLifecycleAlertInBottomSheet = (
+  state: GlobalState
+) =>
+  itwShouldRenderL3UpgradeBannerSelector(state) &&
+  itwCredentialsEidStatusSelector(state) === "jwtExpired" &&
+  !itwAreSomeDigitalCredentialsExpiredSelector(state);
 
 /**
  * Returns whether the new IT-Wallet activation banner should be rendered.
@@ -289,10 +294,7 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
  * - The user did not activate Documenti su IO through a fallback
  */
 const itwIsUpgradeBannerEligibleSelector = (state: GlobalState) =>
-  isItwEnabledSelector(state) &&
-  offlineAccessReasonSelector(state) === undefined &&
-  itwIsL3EnabledSelector(state) &&
-  !itwLifecycleIsITWalletValidSelector(state) &&
+  itwShouldRenderL3UpgradeBannerSelector(state) &&
   !(
     itwCredentialsEidStatusSelector(state) === "jwtExpired" &&
     itwAreSomeDigitalCredentialsExpiredSelector(state)

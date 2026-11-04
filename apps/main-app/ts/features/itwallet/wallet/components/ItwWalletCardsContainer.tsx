@@ -155,30 +155,26 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     isNewItwRenderable
   ]);
 
+  const eidLifecycleAlert = shouldHideEidAlert ? null : (
+    <ItwEidLifecycleAlert
+      currentScreenName={currentScreenName}
+      lifecycleStatus={LIFECYCLE_STATUS}
+      navigation={navigation}
+    />
+  );
+
   return (
     <View>
-      {/* With IT-Wallet the lifecycle banner must be displayed above the header. */}
+      {/* With IT-Wallet the lifecycle alert must be displayed above the header. */}
       {isNewItwRenderable ? (
         <>
-          {!shouldHideEidAlert && (
-            <ItwEidLifecycleAlert
-              currentScreenName={currentScreenName}
-              lifecycleStatus={LIFECYCLE_STATUS}
-              navigation={navigation}
-            />
-          )}
+          {eidLifecycleAlert}
           {sectionHeader}
         </>
       ) : (
         <>
           {sectionHeader}
-          {!shouldHideEidAlert && (
-            <ItwEidLifecycleAlert
-              currentScreenName={currentScreenName}
-              lifecycleStatus={LIFECYCLE_STATUS}
-              navigation={navigation}
-            />
-          )}
+          {eidLifecycleAlert}
         </>
       )}
 
