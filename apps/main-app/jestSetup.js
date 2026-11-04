@@ -109,7 +109,8 @@ jest.mock("@io-app/expo-navigation-bar-manager", () => ({
 // Mock DeviceInfo for version checks
 jest.mock("@io-app/expo-device-internal", () => ({
   getUniqueIdSync: jest.fn(() => "SOME-UNIQUE-ID"),
-  isDisplayZoomed: jest.fn(() => false)
+  isDisplayZoomed: jest.fn(() => false),
+  isHapticFeedbackEnabled: jest.fn(() => true)
 }));
 
 jest.mock("expo-store-review", () => ({

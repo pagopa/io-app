@@ -3,6 +3,7 @@ import { requireNativeModule } from "expo-modules-core";
 interface DeviceInternalModuleType {
   getUniqueIdSync: () => string;
   isDisplayZoomed: () => boolean;
+  isHapticFeedbackEnabled: () => boolean;
 }
 
 const DeviceInternalModule =
@@ -21,3 +22,12 @@ export const getUniqueIdSync = (): string =>
 
 export const isDisplayZoomed = (): boolean =>
   DeviceInternalModule.isDisplayZoomed();
+
+/**
+ * Android only. Checks touch feedback and ringer mode without caching. Returns
+ * false when the touch feedback preference is absent.
+ *
+ * @throws If the native Android context or audio service is unavailable.
+ */
+export const isHapticFeedbackEnabled = (): boolean =>
+  DeviceInternalModule.isHapticFeedbackEnabled();
