@@ -31,6 +31,8 @@ patchedDependencies:
   "@react-navigation/core@7.21.12": "patches/@react-navigation__core@7.21.12.patch"
   # Defers an Android `ScreenContainer` update that re-enters a FragmentManager mid-transaction instead of crashing with "FragmentManager is already executing transactions". Reanimated flushes Fabric mount items synchronously on UI-thread events (e.g. a cached image's load event fired while a screen's views attach), which can apply another Screen's `activityState` change inside the running `commitNow`. See software-mansion/react-native-reanimated#10316.
   react-native-screens@4.16.0: patches/react-native-screens@4.16.0.patch
+  # Applies disablePageAnimations before UIKit starts switching tabs, avoiding the iOS 18 cross-fade without globally disabling animations. Remove it when https://github.com/callstack/react-native-bottom-tabs/pull/610 is merged.
+  react-native-bottom-tabs@1.5.0: patches/react-native-bottom-tabs@1.5.0.patch
 
 allowBuilds:
   "@shopify/react-native-skia": true

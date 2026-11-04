@@ -1,6 +1,9 @@
 import I18n from "i18next";
+import { Platform } from "react-native";
+import * as bottomTabs from "react-native-bottom-tabs";
 import configureMockStore from "redux-mock-store";
 
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import * as headerFirstLevelHooks from "../../../../hooks/useHeaderFirstLevel";
 import * as appParamsList from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -40,6 +43,22 @@ describe("WalletHomeScreen", () => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
   });
+
+  test.each([
+    { name: "iOS", os: "ios" as const, expectedBottomInset: 83 },
+    { name: "Android", os: "android" as const, expectedBottomInset: undefined }
+  ])(
+    "uses native tab geometry only on $name",
+    ({ os, expectedBottomInset }) => {
+      jest.replaceProperty(Platform, "OS", os);
+      jest.spyOn(bottomTabs, "useBottomTabBarHeight").mockReturnValue(83);
+
+      const { UNSAFE_getByType } = renderComponent();
+      const scrollView = UNSAFE_getByType(IOScrollView);
+      expect(scrollView.props.contentInsetAdjustmentBehavior).toBe("automatic");
+      expect(scrollView.props.bottomInset).toBe(expectedBottomInset);
+    }
+  );
 
   it("should not render screen actions if the wallet is empty", () => {
     jest

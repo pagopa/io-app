@@ -1,0 +1,93 @@
+diff --git a/ios/TabItemEventModifier.swift b/ios/TabItemEventModifier.swift
+index 674e602d5b959b1c12362efdd3d7800e6917aa4f..0581d8eeaeb5da3c011c9e8363d57b6337cd21bc 100644
+--- a/ios/TabItemEventModifier.swift
++++ b/ios/TabItemEventModifier.swift
+@@ -6,8 +6,36 @@ import UIKit
+ 
+ #if !os(macOS) && !os(visionOS)
+ 
++private final class ImmediateTabTransition: NSObject, UIViewControllerAnimatedTransitioning {
++  func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
++    0
++  }
++
++  func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
++    guard let destination = transitionContext.viewController(forKey: .to),
++      let destinationView = transitionContext.view(forKey: .to)
++    else {
++      transitionContext.completeTransition(false)
++      return
++    }
++
++    destinationView.frame = transitionContext.finalFrame(for: destination)
++    transitionContext.containerView.addSubview(destinationView)
++    transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
++  }
++}
++
+ private final class TabBarDelegate: NSObject, UITabBarControllerDelegate {
+   var onClick: ((_ index: Int?, _ identifier: String?) -> Bool)?
++  var disablePageAnimations = false
++
++  func tabBarController(
++    _ tabBarController: UITabBarController,
++    animationControllerForTransitionFrom fromVC: UIViewController,
++    to toVC: UIViewController
++  ) -> UIViewControllerAnimatedTransitioning? {
++    disablePageAnimations ? ImmediateTabTransition() : nil
++  }
+ 
+   func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+     if #available(iOS 27.0, *) {
+@@ -74,6 +102,7 @@ private final class TabBarDelegate: NSObject, UITabBarControllerDelegate {
+ }
+ 
+ struct TabItemEventModifier: ViewModifier {
++  let disablePageAnimations: Bool
+   let onTabEvent: (_ index: Int?, _ identifier: String?, _ isLongPress: Bool) -> Bool
+   private let delegate = TabBarDelegate()
+ 
+@@ -85,6 +114,7 @@ struct TabItemEventModifier: ViewModifier {
+   }
+ 
+   func handle(tabController: UITabBarController) {
++    delegate.disablePageAnimations = disablePageAnimations
+     delegate.onClick = { index, identifier in
+       onTabEvent(index, identifier, false)
+     }
+@@ -155,8 +185,11 @@ extension View {
+   /**
+    Event for tab items. Returns true if should prevent default (switching tabs).
+    */
+-  func onTabItemEvent(_ handler: @escaping (Int?, String?, Bool) -> Bool) -> some View {
+-    modifier(TabItemEventModifier(onTabEvent: handler))
++  func onTabItemEvent(
++    disablePageAnimations: Bool,
++    _ handler: @escaping (Int?, String?, Bool) -> Bool
++  ) -> some View {
++    modifier(TabItemEventModifier(disablePageAnimations: disablePageAnimations, onTabEvent: handler))
+   }
+ }
+ 
+diff --git a/ios/TabViewImpl.swift b/ios/TabViewImpl.swift
+index 68053e1f17cbdd489f1712aac82f58e24ff4d892..b19fa3b4e89d4fa26d6c2481d7dfb056c051231d 100644
+--- a/ios/TabViewImpl.swift
++++ b/ios/TabViewImpl.swift
+@@ -46,7 +46,7 @@ struct TabViewImpl: View {
+     tabContent
+       .tabBarMinimizeBehavior(props.minimizeBehavior)
+       #if !os(tvOS) && !os(macOS) && !os(visionOS)
+-        .onTabItemEvent { index, identifier, isLongPress in
++        .onTabItemEvent(disablePageAnimations: props.disablePageAnimations) { index, identifier, isLongPress in
+           let item = identifier.flatMap { props.filteredItems.findByKey($0) }
+             ?? index.flatMap { props.filteredItems[safe: $0] }
+           guard let key = item?.key else { return false }
+@@ -85,7 +85,7 @@ struct TabViewImpl: View {
+       .tintColor(props.selectedActiveTintColor)
+       .getSidebarAdaptable(enabled: props.sidebarAdaptable ?? false)
+       .onChange(of: props.selectedPage ?? "") { newValue in
+-        #if !os(macOS)
++        #if os(tvOS) || os(visionOS)
+           if props.disablePageAnimations {
+             UIView.setAnimationsEnabled(false)
+             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

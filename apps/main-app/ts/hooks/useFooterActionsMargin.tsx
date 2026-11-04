@@ -1,9 +1,15 @@
 import { IOVisualCostants } from "@io-app/design-system";
-import { Platform } from "react-native";
+import { Platform, ScrollViewProps } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+type FooterActionsInsetOptions = {
+  bottomInset?: number;
+  contentInsetAdjustmentBehavior?: ScrollViewProps["contentInsetAdjustmentBehavior"];
+};
 
 type FooterActionsMargin = {
   bottomMargin: number;
+  contentBottomMargin: number;
   needSafeAreaMargin: boolean;
 };
 
@@ -12,15 +18,25 @@ type FooterActionsMargin = {
  * consideration the safe area insets and the need to include a default margin
  * or not.
  *
- * Depending on those conditions, it returns two values:
+ * Depending on those conditions, it returns these values:
  *
  * - `bottomMargin`: the amount of space to add just before the end of the actions
  *   block.
+ * - `contentBottomMargin`: the scroll content spacing, excluding the native
+ *   bottom inset when UIKit already applies it automatically.
  * - `needSafeAreaMargin`: a boolean value that indicates if the safe area insets
  *   are needed. We expose this value in case of need.
+ *
+ * Pass `bottomInset` for content behind a native tab bar. Its measured height
+ * already includes the device safe area and replaces it rather than adding to
+ * it.
  */
 export const useFooterActionsMargin = (
-  excludeSafeAreaMargins?: boolean
+  excludeSafeAreaMargins?: boolean,
+  {
+    bottomInset,
+    contentInsetAdjustmentBehavior
+  }: FooterActionsInsetOptions = {}
 ): FooterActionsMargin => {
   const insets = useSafeAreaInsets();
 
@@ -40,12 +56,20 @@ export const useFooterActionsMargin = (
      add a default margin to prevent the button
      from sticking to the bottom. */
   const bottomMargin =
-    !needSafeAreaMargin || excludeSafeAreaMargins
-      ? IOVisualCostants.appMarginDefault
-      : insets.bottom + edgeToEdgeMargin;
+    bottomInset !== undefined
+      ? bottomInset + IOVisualCostants.appMarginDefault
+      : !needSafeAreaMargin || excludeSafeAreaMargins
+        ? IOVisualCostants.appMarginDefault
+        : insets.bottom + edgeToEdgeMargin;
+  const contentBottomMargin =
+    bottomMargin -
+    (Platform.OS === "ios" && contentInsetAdjustmentBehavior === "automatic"
+      ? (bottomInset ?? 0)
+      : 0);
 
   return {
     bottomMargin,
+    contentBottomMargin,
     needSafeAreaMargin
   };
 };
