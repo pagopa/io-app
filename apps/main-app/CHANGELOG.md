@@ -1,3 +1,47 @@
+## 3.43.0-rc.3 (2026-11-03)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5430](https://pagopa.atlassian.net/browse/SIW-5430)] Show detail title in nested claims sheet ([#8831](https://github.com/pagopa/io-app/pull/8831))
+- [[IOPLT-2250](https://pagopa.atlassian.net/browse/IOPLT-2250)] Add dark mode support to ITW issuance intro card ([#8830](https://github.com/pagopa/io-app/pull/8830))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+- Federico Mastrini @mastro993
+
+## 3.43.0-rc.2 (2026-11-02)
+
+### Features
+
+- [[IOPLT-1655](https://pagopa.atlassian.net/browse/IOPLT-1655)] Add native bottom sheet components via `react-native-screens` ([#7902](https://github.com/pagopa/io-app/pull/7902))
+- **IT-Wallet:** [[SIW-5383](https://pagopa.atlassian.net/browse/SIW-5383)] Add tracking to wallet ready banner ([#8814](https://github.com/pagopa/io-app/pull/8814))
+
+### Bug Fixes
+
+- [[IOPLT-2115](https://pagopa.atlassian.net/browse/IOPLT-2115)] Skip PR title checks for Renovate PRs ([#8654](https://github.com/pagopa/io-app/pull/8654))
+
+### Chores
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Remove unused postinstall scripts ([#8450](https://github.com/pagopa/io-app/pull/8450))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+- Emanuele Dall'Ara @LeleDallas
+- LazyAfternoons @LazyAfternoons
+- Riccardo Sacco @riccardosacco99
+
+## 3.43.0-rc.1 (2026-10-30)
+
+### Chores
+
+- [[IEL-880](https://pagopa.atlassian.net/browse/IEL-880)] EMAIL_EDITING MP event now tracks FCI flow ([#8771](https://github.com/pagopa/io-app/pull/8771))
+
+### ❤️ Thank You
+
+- Pawel @soixdev91
+
 ## 3.43.0-rc.0 (2026-10-28)
 
 This was a version bump only for @io-app/main-app to align it with other projects, there were no code changes.
