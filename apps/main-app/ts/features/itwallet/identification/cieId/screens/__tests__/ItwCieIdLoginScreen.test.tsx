@@ -1,5 +1,5 @@
 /* eslint-disable functional/no-let */
-import { isCieIdAvailable, openCieIdApp } from "@pagopa/io-react-native-cieid";
+import { isCieIdAvailable, openCieIdApp } from "@io-app/expo-cieid";
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import { Linking } from "react-native";
@@ -15,11 +15,6 @@ import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { testEidIssuanceDeps } from "../../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import ItwCieIdLoginScreen from "../../../cieId/screens/ItwCieIdLoginScreen";
-
-jest.mock("@pagopa/io-react-native-cieid", () => ({
-  isCieIdAvailable: jest.fn(),
-  openCieIdApp: jest.fn()
-}));
 
 jest.mock("react-native-webview", () => {
   const { View } = require("react-native");

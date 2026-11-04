@@ -1,4 +1,4 @@
-import { openCieIdApp } from "@pagopa/io-react-native-cieid";
+import { openCieIdApp } from "@io-app/expo-cieid";
 import { StackActions } from "@react-navigation/native";
 import _isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";

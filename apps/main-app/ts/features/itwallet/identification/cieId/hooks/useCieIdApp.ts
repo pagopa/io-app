@@ -1,4 +1,4 @@
-import { CieIdErrorResult, openCieIdApp } from "@pagopa/io-react-native-cieid";
+import { CieIdErrorResult, openCieIdApp } from "@io-app/expo-cieid";
 import { useCallback, useEffect, useState } from "react";
 import { Linking } from "react-native";
 import { z } from "zod";
