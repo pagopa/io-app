@@ -345,7 +345,8 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
+                          importantForAccessibility="no"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -414,9 +415,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                             }
                           >
                             <View
-                              accessibilityLabel="Non perderti i messaggi importanti Attiva le notifiche push per sapere quando ricevi un messaggio su IO Attiva notifiche push"
-                              accessibilityRole="button"
-                              accessible={true}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -425,48 +423,60 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#0E0F13",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                Non perderti i messaggi importanti
-                              </Text>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
-                                }
-                              >
-                                Attiva le notifiche push per sapere quando ricevi un messaggio su IO
-                              </Text>
                               <View
-                                accessibilityElementsHidden={true}
+                                accessibilityLabel="Non perderti i messaggi importanti Attiva le notifiche push per sapere quando ricevi un messaggio su IO"
+                                accessibilityRole="text"
+                                accessible={true}
+                                style={
+                                  {
+                                    "gap": 4,
+                                  }
+                                }
+                              >
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Non perderti i messaggi importanti
+                                </Text>
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Attiva le notifiche push per sapere quando ricevi un messaggio su IO
+                                </Text>
+                              </View>
+                              <View
                                 accessibilityLabel="Attiva notifiche push"
                                 accessibilityRole="button"
                                 accessibilityState={
@@ -489,7 +499,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}
@@ -499,7 +508,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 onResponderTerminate={[Function]}
                                 onResponderTerminationRequest={[Function]}
                                 onStartShouldSetResponder={[Function]}
-                                pointerEvents="none"
                               >
                                 <View
                                   style={

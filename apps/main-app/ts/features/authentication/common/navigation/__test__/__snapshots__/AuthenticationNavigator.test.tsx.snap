@@ -2995,7 +2995,8 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                     }
                                     accessible={false}
                                     collapsable={false}
-                                    focusable={true}
+                                    focusable={false}
+                                    importantForAccessibility="no"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
@@ -3064,9 +3065,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                       }
                                     >
                                       <View
-                                        accessibilityLabel="Non sai cosa scegliere? Ti diamo una mano"
-                                        accessibilityRole="button"
-                                        accessible={true}
                                         style={
                                           {
                                             "alignSelf": "center",
@@ -3075,28 +3073,39 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           }
                                         }
                                       >
-                                        <Text
-                                          allowFontScaling={true}
-                                          dynamicTypeRamp="headline"
-                                          maxFontSizeMultiplier={1.5}
+                                        <View
+                                          accessibilityLabel="Non sai cosa scegliere?"
+                                          accessibilityRole="text"
+                                          accessible={true}
                                           style={
-                                            [
-                                              {},
-                                              {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                                "lineHeight": 24,
-                                              },
-                                            ]
+                                            {
+                                              "gap": 4,
+                                            }
                                           }
                                         >
-                                          Non sai cosa scegliere?
-                                        </Text>
+                                          <Text
+                                            accessible={false}
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="headline"
+                                            maxFontSizeMultiplier={1.5}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#0E0F13",
+                                                  "fontFamily": "Titillio",
+                                                  "fontSize": 16,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 24,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            Non sai cosa scegliere?
+                                          </Text>
+                                        </View>
                                         <View
-                                          accessibilityElementsHidden={true}
                                           accessibilityLabel="Ti diamo una mano"
                                           accessibilityRole="button"
                                           accessibilityState={
@@ -3119,7 +3128,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           accessible={true}
                                           collapsable={false}
                                           focusable={true}
-                                          importantForAccessibility="no-hide-descendants"
                                           onBlur={[Function]}
                                           onClick={[Function]}
                                           onFocus={[Function]}
@@ -3129,7 +3137,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                           onResponderTerminate={[Function]}
                                           onResponderTerminationRequest={[Function]}
                                           onStartShouldSetResponder={[Function]}
-                                          pointerEvents="none"
                                         >
                                           <View
                                             style={

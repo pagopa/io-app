@@ -1189,9 +1189,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
-                                accessibilityRole="text"
-                                accessible={true}
                                 style={
                                   {
                                     "alignSelf": "center",
@@ -1200,26 +1197,38 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
+                                  accessibilityRole="text"
+                                  accessible={true}
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "gap": 4,
+                                    }
                                   }
                                 >
-                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                                </Text>
+                                  <Text
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                                  </Text>
+                                </View>
                               </View>
                               <View
                                 style={
@@ -2833,9 +2842,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
-                                accessibilityRole="text"
-                                accessible={true}
                                 style={
                                   {
                                     "alignSelf": "center",
@@ -2844,26 +2850,38 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
+                                  accessibilityRole="text"
+                                  accessible={true}
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "gap": 4,
+                                    }
                                   }
                                 >
-                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                                </Text>
+                                  <Text
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                                  </Text>
+                                </View>
                               </View>
                               <View
                                 style={
@@ -4478,9 +4496,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
-                                accessibilityRole="text"
-                                accessible={true}
                                 style={
                                   {
                                     "alignSelf": "center",
@@ -4489,26 +4504,38 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
+                                  accessibilityRole="text"
+                                  accessible={true}
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "gap": 4,
+                                    }
                                   }
                                 >
-                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                                </Text>
+                                  <Text
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                                  </Text>
+                                </View>
                               </View>
                               <View
                                 style={
@@ -6123,9 +6150,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
-                                accessibilityRole="text"
-                                accessible={true}
                                 style={
                                   {
                                     "alignSelf": "center",
@@ -6134,26 +6158,38 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
+                                  accessibilityRole="text"
+                                  accessible={true}
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "gap": 4,
+                                    }
                                   }
                                 >
-                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                                </Text>
+                                  <Text
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                                  </Text>
+                                </View>
                               </View>
                               <View
                                 style={
@@ -8124,9 +8160,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             >
                               <View
-                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
-                                accessibilityRole="text"
-                                accessible={true}
                                 style={
                                   {
                                     "alignSelf": "center",
@@ -8135,26 +8168,38 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
+                                  accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
+                                  accessibilityRole="text"
+                                  accessible={true}
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
+                                    {
+                                      "gap": 4,
+                                    }
                                   }
                                 >
-                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                                </Text>
+                                  <Text
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                                  </Text>
+                                </View>
                               </View>
                               <View
                                 style={

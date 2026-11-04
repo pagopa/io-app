@@ -695,7 +695,8 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                               }
                               accessible={false}
                               collapsable={false}
-                              focusable={true}
+                              focusable={false}
+                              importantForAccessibility="no"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -763,9 +764,6 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Vuoi saperne di più? Vai al sito di IO"
-                                  accessibilityRole="button"
-                                  accessible={true}
                                   style={
                                     {
                                       "alignSelf": "center",
@@ -774,28 +772,39 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                     }
                                   }
                                 >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.5}
+                                  <View
+                                    accessibilityLabel="Vuoi saperne di più?"
+                                    accessibilityRole="text"
+                                    accessible={true}
                                     style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
+                                      {
+                                        "gap": 4,
+                                      }
                                     }
                                   >
-                                    Vuoi saperne di più?
-                                  </Text>
+                                    <Text
+                                      accessible={false}
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Vuoi saperne di più?
+                                    </Text>
+                                  </View>
                                   <View
-                                    accessibilityElementsHidden={true}
                                     accessibilityLabel="Vai al sito di IO"
                                     accessibilityRole="button"
                                     accessibilityState={
@@ -818,7 +827,6 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                     accessible={true}
                                     collapsable={false}
                                     focusable={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
@@ -828,7 +836,6 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                     onResponderTerminate={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    pointerEvents="none"
                                   >
                                     <View
                                       style={

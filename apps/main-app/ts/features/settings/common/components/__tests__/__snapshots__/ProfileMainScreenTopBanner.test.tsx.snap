@@ -35,7 +35,8 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
     }
     accessible={false}
     collapsable={false}
-    focusable={true}
+    focusable={false}
+    importantForAccessibility="no"
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}
@@ -104,9 +105,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
       }
     >
       <View
-        accessibilityLabel="Vuoi modificare il carattere usato per i testi in app? Modifica stile carattere"
-        accessibilityRole="button"
-        accessible={true}
         style={
           {
             "alignSelf": "center",
@@ -115,28 +113,39 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           }
         }
       >
-        <Text
-          allowFontScaling={true}
-          dynamicTypeRamp="headline"
-          maxFontSizeMultiplier={1.5}
+        <View
+          accessibilityLabel="Vuoi modificare il carattere usato per i testi in app?"
+          accessibilityRole="text"
+          accessible={true}
           style={
-            [
-              {},
-              {
-                "color": "#0E0F13",
-                "fontFamily": "Titillio",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "600",
-                "lineHeight": 24,
-              },
-            ]
+            {
+              "gap": 4,
+            }
           }
         >
-          Vuoi modificare il carattere usato per i testi in app?
-        </Text>
+          <Text
+            accessible={false}
+            allowFontScaling={true}
+            dynamicTypeRamp="headline"
+            maxFontSizeMultiplier={1.5}
+            style={
+              [
+                {},
+                {
+                  "color": "#0E0F13",
+                  "fontFamily": "Titillio",
+                  "fontSize": 16,
+                  "fontStyle": "normal",
+                  "fontWeight": "600",
+                  "lineHeight": 24,
+                },
+              ]
+            }
+          >
+            Vuoi modificare il carattere usato per i testi in app?
+          </Text>
+        </View>
         <View
-          accessibilityElementsHidden={true}
           accessibilityLabel="Modifica stile carattere"
           accessibilityRole="button"
           accessibilityState={
@@ -159,7 +168,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           accessible={true}
           collapsable={false}
           focusable={true}
-          importantForAccessibility="no-hide-descendants"
           onBlur={[Function]}
           onClick={[Function]}
           onFocus={[Function]}
@@ -169,7 +177,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          pointerEvents="none"
         >
           <View
             style={

@@ -671,7 +671,8 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
+                          importantForAccessibility="no"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -740,9 +741,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                             }
                           >
                             <View
-                              accessibilityLabel="Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet. Inizia"
-                              accessibilityRole="button"
-                              accessible={true}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -751,28 +749,39 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
+                              <View
+                                accessibilityLabel="Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet."
+                                accessibilityRole="text"
+                                accessible={true}
                                 style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
+                                  {
+                                    "gap": 4,
+                                  }
                                 }
                               >
-                                Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.
-                              </Text>
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.
+                                </Text>
+                              </View>
                               <View
-                                accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
                                 accessibilityRole="button"
                                 accessibilityState={
@@ -795,7 +804,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}
@@ -805,7 +813,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                 onResponderTerminate={[Function]}
                                 onResponderTerminationRequest={[Function]}
                                 onStartShouldSetResponder={[Function]}
-                                pointerEvents="none"
                               >
                                 <View
                                   style={
@@ -1388,7 +1395,8 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
+                          importantForAccessibility="no"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -1457,9 +1465,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                             }
                           >
                             <View
-                              accessibilityLabel="Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet. Inizia"
-                              accessibilityRole="button"
-                              accessible={true}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -1468,28 +1473,39 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
+                              <View
+                                accessibilityLabel="Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet."
+                                accessibilityRole="text"
+                                accessible={true}
                                 style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
+                                  {
+                                    "gap": 4,
+                                  }
                                 }
                               >
-                                Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.
-                              </Text>
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.
+                                </Text>
+                              </View>
                               <View
-                                accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
                                 accessibilityRole="button"
                                 accessibilityState={
@@ -1512,7 +1528,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}
@@ -1522,7 +1537,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                                 onResponderTerminate={[Function]}
                                 onResponderTerminationRequest={[Function]}
                                 onStartShouldSetResponder={[Function]}
-                                pointerEvents="none"
                               >
                                 <View
                                   style={
@@ -2105,7 +2119,8 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
+                          importantForAccessibility="no"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -2174,9 +2189,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                             }
                           >
                             <View
-                              accessibilityLabel="Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio. Inizia"
-                              accessibilityRole="button"
-                              accessible={true}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -2185,28 +2197,39 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
+                              <View
+                                accessibilityLabel="Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio."
+                                accessibilityRole="text"
+                                accessible={true}
                                 style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
+                                  {
+                                    "gap": 4,
+                                  }
                                 }
                               >
-                                Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio.
-                              </Text>
+                                <Text
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio.
+                                </Text>
+                              </View>
                               <View
-                                accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
                                 accessibilityRole="button"
                                 accessibilityState={
@@ -2229,7 +2252,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}
@@ -2239,7 +2261,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                                 onResponderTerminate={[Function]}
                                 onResponderTerminationRequest={[Function]}
                                 onStartShouldSetResponder={[Function]}
-                                pointerEvents="none"
                               >
                                 <View
                                   style={
