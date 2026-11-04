@@ -59,9 +59,6 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const machineCredentialType =
     ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
-  const introductionContent = useIOSelector(
-    itwCredentialIntroContentSelector(machineCredentialType)
-  );
 
   // The issuance was triggered by a credential request that required the wallet
   // activation first: in this case going back interrupts the whole operation,
@@ -100,7 +97,7 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
     }, [credentialType, machineRef, mode])
   );
 
-  if (isLoading || (machineCredentialType && !introductionContent)) {
+  if (isLoading) {
     return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
