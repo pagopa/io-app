@@ -209,23 +209,28 @@ export const itwShouldRenderAgeVerificationUsageDetailsBannerSelector = (
 export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean => {
   const eidStatus = itwCredentialsEidStatusSelector(state);
 
-  if (eidStatus === "invalid") {
-    return false;
+  // IT-Wallet
+  if (itwShouldRenderNewItWalletSelector(state)) {
+    return eidStatus !== "jwtExpired" && eidStatus !== "invalid";
   }
 
-  const isNewItWalletRenderable = itwShouldRenderNewItWalletSelector(state);
+  // Offline
+  if (!isConnectedSelector(state)) {
+    return eidStatus === "jwtExpiring";
+  }
+
+  // Documenti su IO, cannot upgrade, eID is expired
+  // The alert is shown depending on whether some digital credentials are expired
   if (eidStatus === "jwtExpired") {
-    return (
-      !isNewItWalletRenderable &&
-      !itwAreSomeDigitalCredentialsExpiredSelector(state)
-    );
+    return !itwAreSomeDigitalCredentialsExpiredSelector(state);
   }
 
-  return (
-    isNewItWalletRenderable ||
-    itwShouldRenderL3UpgradeBannerSelector(state) ||
-    (eidStatus === "jwtExpiring" && !isConnectedSelector(state))
-  );
+  // Documenti su IO, can upgrade
+  if (itwShouldRenderL3UpgradeBannerSelector(state)) {
+    return true;
+  }
+
+  return false;
 };
 
 /**

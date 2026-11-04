@@ -16,6 +16,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwEidInvalidBottomSheet } from "../hooks/useItwEidInvalidBottomSheet";
 import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
+import { itwShouldRenderL3UpgradeBannerSelector } from "../store/selectors";
 import { CredentialMetadata, ItwEidStatus } from "../utils/itwTypesUtils";
 
 const defaultLifecycleStatus: Array<ItwEidStatus> = [
@@ -50,6 +51,9 @@ export const ItwEidLifecycleAlert = ({
     itwAreAllCredentialsExpiredSelector
   );
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const isUpgradeAvailable = useIOSelector(
+    itwShouldRenderL3UpgradeBannerSelector
+  );
   const isOffline = offlineAccessReason !== undefined;
 
   const { trackAlertTap } = useItwEidLifecycleAlertTracking({
@@ -69,6 +73,13 @@ export const ItwEidLifecycleAlert = ({
         level: isItw ? "l3" : "l2"
       }
     });
+
+  const navigateToItwDiscoveryScreen = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: { level: "l3" }
+    });
+  };
 
   const startEidReissuing = () => {
     trackAlertTap();
@@ -128,16 +139,20 @@ export const ItwEidLifecycleAlert = ({
           testID: "itwEidLifecycleAlertTestID_jwtExpired",
           variant: "error",
           content: I18n.t(
-            isItwCredential
-              ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.itw.expired"
-              : "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.expired"
+            isUpgradeAvailable
+              ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.expiredUpgrade"
+              : isItwCredential
+                ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.itw.expired"
+                : "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.expired"
           ),
           action: I18n.t(
             isItwCredential
               ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.itw.action"
               : "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.action"
           ),
-          onPress: startEidReissuing
+          onPress: isUpgradeAvailable
+            ? navigateToItwDiscoveryScreen
+            : startEidReissuing
         },
         invalid: areAllCredentialsExpired
           ? {
