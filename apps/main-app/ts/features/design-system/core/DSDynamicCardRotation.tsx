@@ -38,6 +38,8 @@ import Animated, {
 } from "react-native-reanimated";
 import Svg, { Circle, Defs, RadialGradient, Stop } from "react-native-svg";
 
+import { ROTATION_SENSOR_CONFIG } from "../../../hooks/useRotationSensor";
+
 type CardSize = {
   height: LayoutRectangle["height"];
   width: LayoutRectangle["width"];
@@ -83,7 +85,10 @@ const springConfig = {
 export const DSDynamicCardRotation = () => {
   /* On first render, store the current device orientation
   using quaternions */
-  const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
+  const rotationSensor = useAnimatedSensor(
+    SensorType.ROTATION,
+    ROTATION_SENSOR_CONFIG
+  );
 
   // Store initial values on first sensor reading
   const initialRoll = useSharedValue<null | number>(null);
