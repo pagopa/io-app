@@ -27,7 +27,7 @@ type ItwBrandedSkiaGradientProps = {
 };
 
 /* Maps variants to gradient colors */
-export const itwBrandedGradientColors = {
+const itwBrandedGradientColors = {
   default: ITW_BRAND_GRADIENT,
   warning: ITW_BRAND_GRADIENT_WARNING,
   error: ITW_BRAND_GRADIENT_ERROR
