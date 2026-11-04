@@ -23,6 +23,10 @@ import {
   ItwProximityPresentmentScreenNavigationParams
 } from "../ItwProximityPresentmentScreen";
 
+jest.mock("../../../../../../hooks/useReduceMotionEnabled", () => ({
+  useReduceMotionEnabled: jest.fn(() => false)
+}));
+
 jest.mock("../../analytics", () => ({
   trackItwProximityQrCode: jest.fn()
 }));
