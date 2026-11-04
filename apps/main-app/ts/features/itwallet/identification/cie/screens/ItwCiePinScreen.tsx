@@ -34,6 +34,7 @@ import { trackItWalletCiePinEnter } from "../../analytics";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
 const CIE_PIN_LENGTH = 8;
+const FOOTER_VERTICAL_PADDING = 16;
 
 export const ItwCiePinScreen = () => {
   usePreventScreenCapture();
@@ -84,14 +85,15 @@ export const ItwCiePinScreen = () => {
 
   useHeaderSecondLevel(headerProps);
 
-  const onPinChanged = (value: string) => {
-    setPin(value);
+  const isPinComplete = pin.length === CIE_PIN_LENGTH;
 
-    if (value.length === CIE_PIN_LENGTH) {
-      Keyboard.dismiss();
-      machineRef.send({ type: "cie-pin-entered", pin: value });
-    }
+  // The user confirms the PIN explicitly instead of being moved to the next
+  // screen as soon as the last digit is typed (a11y: no change on input).
+  const onContinuePress = () => {
+    Keyboard.dismiss();
+    machineRef.send({ type: "cie-pin-entered", pin });
   };
+
   return (
     <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
       <KeyboardAvoidingView
@@ -139,7 +141,7 @@ export const ItwCiePinScreen = () => {
                 autoFocus={isFocused}
                 key={isFocused ? "focused" : "unfocused"}
                 length={CIE_PIN_LENGTH}
-                onValueChange={onPinChanged}
+                onValueChange={setPin}
                 ref={pinPadViewRef}
                 secret
                 value={pin}
@@ -147,6 +149,16 @@ export const ItwCiePinScreen = () => {
             </View>
           </ContentWrapper>
         </ScrollView>
+        <ContentWrapper style={{ paddingVertical: FOOTER_VERTICAL_PADDING }}>
+          <IOButton
+            disabled={!isPinComplete}
+            fullWidth
+            label={I18n.t("global.buttons.continue")}
+            onPress={onContinuePress}
+            testID="itwCiePinContinueButtonTestID"
+            variant="solid"
+          />
+        </ContentWrapper>
       </KeyboardAvoidingView>
       {pinInfoBottomSheet.bottomSheet}
     </SafeAreaView>
