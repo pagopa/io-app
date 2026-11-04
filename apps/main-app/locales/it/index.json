@@ -1232,6 +1232,7 @@
         "featureUnavailable": {
           "title": "In arrivo: questa funzione sarà disponibile a breve"
         },
+        "nestedClaimsDetailsTitle": "Dettaglio",
         "placeholders": {
           "claimNotAvailable": "Attributo non riconosciuto"
         },
