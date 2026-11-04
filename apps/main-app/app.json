@@ -1,5 +1,12 @@
 {
   "name": "IO",
   "displayName": "IO",
-  "plugins": ["expo-background-task"]
+  "version": "3.43.0",
+  "ios": {
+    "buildNumber": "3"
+  },
+  "android": {
+    "version": "3.43.0.3",
+    "versionCode": 100155316
+  }
 }
