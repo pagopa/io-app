@@ -6,12 +6,11 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { IOColors, IOSpringValues } from "../../core";
+import { useIOColors } from "../../context";
+import { IOSpringValues } from "../../core";
 
 export type ProgressLoader = {
   accessibilityLabel?: string;
-  color?: IOColors;
   progress: number;
 };
 
@@ -19,20 +18,14 @@ export type ProgressLoader = {
  * ProgressLoader component
  *
  * @param progress - The progress percentage
- * @param color - IOColors value or undefined to define the color of the
- *   progress bar
  */
 export const ProgressLoader = ({
   progress,
-  accessibilityLabel,
-  color: customColor
+  accessibilityLabel
 }: ProgressLoader) => {
-  const theme = useIOTheme();
+  const progressLoaderColors = useIOColors().component.progressLoader;
   const [width, setWidth] = useState(0);
   const progressWidth = useSharedValue(0);
-
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
-  const foregroundColor = customColor ?? theme["interactiveElem-default"];
 
   useEffect(() => {
     progressWidth.value = withSpring(
@@ -63,13 +56,13 @@ export const ProgressLoader = ({
         width: "100%",
         height: 16,
         justifyContent: "center",
-        backgroundColor
+        backgroundColor: progressLoaderColors.background
       }}
     >
       <Animated.View
         style={[
           animatedStyle,
-          { height: 4, backgroundColor: IOColors[foregroundColor] }
+          { height: 4, backgroundColor: progressLoaderColors.foreground }
         ]}
       />
     </View>

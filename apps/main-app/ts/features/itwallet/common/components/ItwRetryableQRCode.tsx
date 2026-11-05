@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Body, Icon, IOButton, IOColors, IOIcons } from "@io-app/design-system";
+import {
+  Body,
+  Icon,
+  IOButton,
+  IOColorsLegacy,
+  IOIcons
+} from "@io-app/design-system";
 import { memo } from "react";
 import { Appearance, StyleSheet, View } from "react-native";
 
@@ -61,7 +67,7 @@ const ItwRetryableQRCode = ({
 
 const styles = StyleSheet.create({
   retryBox: {
-    backgroundColor: IOColors["grey-50"],
+    backgroundColor: IOColorsLegacy["grey-50"],
     alignItems: "center",
     justifyContent: "center",
     aspectRatio: 1,

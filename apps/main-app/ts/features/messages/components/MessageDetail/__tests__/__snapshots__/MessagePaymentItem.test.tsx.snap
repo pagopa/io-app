@@ -335,7 +335,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -938,7 +937,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -956,7 +954,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -1524,7 +1521,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -1542,7 +1538,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -2089,7 +2084,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
@@ -2107,7 +2101,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderColor": "#E8EBF1",
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,

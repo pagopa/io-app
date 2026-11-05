@@ -1,7 +1,7 @@
 import {
   HeaderActionProps,
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   useIOThemeContext
 } from "@io-app/design-system";
 import { ReactNode } from "react";
@@ -19,7 +19,7 @@ export type BonusCardColorSchemeValues = {
   background: string;
   // Skeleton or other visual elements
   foreground: string;
-  text: IOColors;
+  text: IOColorsLegacy;
 };
 
 export type BonusScreenComponentProps = BaseProps &
@@ -40,13 +40,13 @@ type CardThemeColors = Record<
 
 export const defaultBonusCardColors: CardThemeColors = {
   light: {
-    background: IOColors["blueItalia-50"],
-    foreground: IOColors["blueItalia-100"],
+    background: IOColorsLegacy["blueItalia-50"],
+    foreground: IOColorsLegacy["blueItalia-100"],
     text: "blueItalia-850"
   },
   dark: {
     background: "#35364C",
-    foreground: hexToRgba(IOColors["blueIO-300"], 0.3),
+    foreground: hexToRgba(IOColorsLegacy["blueIO-300"], 0.3),
     text: "blueIO-50"
   }
 };

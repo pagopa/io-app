@@ -1,6 +1,6 @@
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 
-import { useIOTheme, useIOThemeContext } from "../../context";
+import { useIOColors, useIOThemeContext } from "../../context";
 import { IODimensions } from "../../core";
 import { addCacheTimestampToUri } from "../../utils/image";
 import { VStack } from "../layout";
@@ -72,14 +72,14 @@ const ModuleIDPContent = ({
   testID,
   accessibilityLabel
 }: ModuleIDPContentProps) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
   const IDPLogoSource = useIDPLogo(logo);
 
   return (
     <PressableModuleBase onPress={onPress} testID={testID}>
       <IOText
         accessibilityLabel={accessibilityLabel ?? name}
-        color={theme["textBody-tertiary"]}
+        color={moduleColors.foreground.description}
         lineHeight={16}
         size={12}
         textStyle={{

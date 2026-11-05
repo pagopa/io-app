@@ -3,6 +3,8 @@ import type { ComponentProps } from "react";
 
 import { ColorValue } from "react-native";
 
+import { withAlpha } from "./tokens";
+
 /*
 TYPESCRIPT FUNCTIONS
 */
@@ -18,7 +20,9 @@ function asIOColors<T extends { [key: string]: ColorValue }>(arg: T): T {
   return arg;
 }
 
-function asIOThemeColors<T extends { [key: string]: IOColors }>(arg: T): T {
+function asIOThemeColors<T extends { [key: string]: IOColorsLegacy }>(
+  arg: T
+): T {
   return arg;
 }
 
@@ -26,7 +30,7 @@ function asIOThemeColors<T extends { [key: string]: IOColors }>(arg: T): T {
 ENTIRE COLOR SCALE
 */
 
-export const IOColors = asIOColors({
+export const IOColorsLegacy = asIOColors({
   white: "#FFFFFF",
   "grey-50": "#F4F5F8",
   "grey-100": "#E8EBF1",
@@ -88,8 +92,9 @@ export const IOColors = asIOColors({
   "blueItalia-50": "#DDEBFA"
 });
 
-export type IOColors = keyof typeof IOColors;
+export type IOColorsLegacy = keyof typeof IOColorsLegacy;
 
+/** @deprecated Unused, will be removed in the next major release */
 export const IOColorGradients = asIOColorGradients({
   appLaunch: ["#0C00D3", "#0073E6"],
   appIcon: ["#1D51DF", "#1723D5"],
@@ -108,8 +113,10 @@ export const IOColorGradients = asIOColorGradients({
   cgnTravel: ["#E00F69", "#F8C78C"]
 });
 
+/** @deprecated Unused, will be removed in the next major release */
 export type IOColorGradients = keyof typeof IOColorGradients;
 
+/** @deprecated Unused, will be removed in the next major release */
 export const getGradientColorValues = (
   gradientId: IOColorGradients
 ): ComponentProps<typeof LinearGradient>["colors"] => {
@@ -122,60 +129,60 @@ export const getGradientColorValues = (
 */
 
 export const IOColorsNeutral = asIOColors({
-  black: IOColors.black,
-  "grey-900": IOColors["grey-900"],
-  "grey-850": IOColors["grey-850"],
-  "grey-700": IOColors["grey-700"],
-  "grey-650": IOColors["grey-650"],
-  "grey-450": IOColors["grey-450"],
-  "grey-300": IOColors["grey-300"],
-  "grey-200": IOColors["grey-200"],
-  "grey-150": IOColors["grey-100"],
-  "grey-50": IOColors["grey-50"],
-  white: IOColors.white
+  black: IOColorsLegacy.black,
+  "grey-900": IOColorsLegacy["grey-900"],
+  "grey-850": IOColorsLegacy["grey-850"],
+  "grey-700": IOColorsLegacy["grey-700"],
+  "grey-650": IOColorsLegacy["grey-650"],
+  "grey-450": IOColorsLegacy["grey-450"],
+  "grey-300": IOColorsLegacy["grey-300"],
+  "grey-200": IOColorsLegacy["grey-200"],
+  "grey-150": IOColorsLegacy["grey-100"],
+  "grey-50": IOColorsLegacy["grey-50"],
+  white: IOColorsLegacy.white
 });
 export type IOColorsNeutral = keyof typeof IOColorsNeutral;
 
 export const IOColorsTints = asIOColors({
-  "blueIO-850": IOColors["blueIO-850"],
-  "blueIO-600": IOColors["blueIO-600"],
-  "blueIO-500": IOColors["blueIO-500"],
-  "blueIO-400": IOColors["blueIO-400"],
-  "blueIO-300": IOColors["blueIO-300"],
-  "blueIO-200": IOColors["blueIO-200"],
-  "blueIO-150": IOColors["blueIO-150"],
-  "blueIO-100": IOColors["blueIO-100"],
-  "blueIO-50": IOColors["blueIO-50"],
-  "turquoise-850": IOColors["turquoise-850"],
-  "turquoise-500": IOColors["turquoise-500"],
-  "turquoise-450": IOColors["turquoise-450"],
-  "turquoise-150": IOColors["turquoise-150"],
-  "turquoise-100": IOColors["turquoise-100"],
-  "turquoise-50": IOColors["turquoise-50"]
+  "blueIO-850": IOColorsLegacy["blueIO-850"],
+  "blueIO-600": IOColorsLegacy["blueIO-600"],
+  "blueIO-500": IOColorsLegacy["blueIO-500"],
+  "blueIO-400": IOColorsLegacy["blueIO-400"],
+  "blueIO-300": IOColorsLegacy["blueIO-300"],
+  "blueIO-200": IOColorsLegacy["blueIO-200"],
+  "blueIO-150": IOColorsLegacy["blueIO-150"],
+  "blueIO-100": IOColorsLegacy["blueIO-100"],
+  "blueIO-50": IOColorsLegacy["blueIO-50"],
+  "turquoise-850": IOColorsLegacy["turquoise-850"],
+  "turquoise-500": IOColorsLegacy["turquoise-500"],
+  "turquoise-450": IOColorsLegacy["turquoise-450"],
+  "turquoise-150": IOColorsLegacy["turquoise-150"],
+  "turquoise-100": IOColorsLegacy["turquoise-100"],
+  "turquoise-50": IOColorsLegacy["turquoise-50"]
 });
 export type IOColorsTints = keyof typeof IOColorsTints;
 
 export const IOColorsStatus = asIOColors({
-  "error-850": IOColors["error-850"],
-  "error-600": IOColors["error-600"],
-  "error-500": IOColors["error-500"],
-  "error-400": IOColors["error-400"],
-  "error-100": IOColors["error-100"],
-  "warning-850": IOColors["warning-850"],
-  "warning-700": IOColors["warning-700"],
-  "warning-500": IOColors["warning-500"],
-  "warning-400": IOColors["warning-400"],
-  "warning-100": IOColors["warning-100"],
-  "success-850": IOColors["success-850"],
-  "success-700": IOColors["success-700"],
-  "success-500": IOColors["success-500"],
-  "success-400": IOColors["success-400"],
-  "success-100": IOColors["success-100"],
-  "info-850": IOColors["info-850"],
-  "info-700": IOColors["info-700"],
-  "info-500": IOColors["info-500"],
-  "info-400": IOColors["info-400"],
-  "info-100": IOColors["info-100"]
+  "error-850": IOColorsLegacy["error-850"],
+  "error-600": IOColorsLegacy["error-600"],
+  "error-500": IOColorsLegacy["error-500"],
+  "error-400": IOColorsLegacy["error-400"],
+  "error-100": IOColorsLegacy["error-100"],
+  "warning-850": IOColorsLegacy["warning-850"],
+  "warning-700": IOColorsLegacy["warning-700"],
+  "warning-500": IOColorsLegacy["warning-500"],
+  "warning-400": IOColorsLegacy["warning-400"],
+  "warning-100": IOColorsLegacy["warning-100"],
+  "success-850": IOColorsLegacy["success-850"],
+  "success-700": IOColorsLegacy["success-700"],
+  "success-500": IOColorsLegacy["success-500"],
+  "success-400": IOColorsLegacy["success-400"],
+  "success-100": IOColorsLegacy["success-100"],
+  "info-850": IOColorsLegacy["info-850"],
+  "info-700": IOColorsLegacy["info-700"],
+  "info-500": IOColorsLegacy["info-500"],
+  "info-400": IOColorsLegacy["info-400"],
+  "info-100": IOColorsLegacy["info-100"]
 });
 
 export type IOColorsStatus = keyof typeof IOColorsStatus;
@@ -190,12 +197,12 @@ export type IOColorsStatusForeground = Extract<
 >;
 
 export const IOColorsExtra = {
-  "blueItalia-850": IOColors["blueItalia-850"],
-  "blueItalia-600": IOColors["blueItalia-600"],
-  "blueItalia-500": IOColors["blueItalia-500"],
-  "blueItalia-300": IOColors["blueItalia-300"],
-  "blueItalia-100": IOColors["blueItalia-100"],
-  "blueItalia-50": IOColors["blueItalia-50"]
+  "blueItalia-850": IOColorsLegacy["blueItalia-850"],
+  "blueItalia-600": IOColorsLegacy["blueItalia-600"],
+  "blueItalia-500": IOColorsLegacy["blueItalia-500"],
+  "blueItalia-300": IOColorsLegacy["blueItalia-300"],
+  "blueItalia-100": IOColorsLegacy["blueItalia-100"],
+  "blueItalia-50": IOColorsLegacy["blueItalia-50"]
 };
 
 export type IOColorsExtra = keyof typeof IOColorsExtra;
@@ -277,7 +284,7 @@ const themeKeys = [
 ] as const;
 
 export type IOTheme = {
-  [K in (typeof themeKeys)[number]]: IOColors;
+  [K in (typeof themeKeys)[number]]: IOColorsLegacy;
 };
 
 export const IOThemeLight: IOTheme = {
@@ -469,23 +476,8 @@ export type themeStatusColorsDarkMode = keyof typeof themeStatusColorsDarkMode;
 UTILS
 */
 
-/**
- * Return the color value with RGBA format (RGB + Alpha transparency), starting
- * from the hexadecimal color value only.
- *
- * @param hexCode Color value in hexadecimal format. No short version accepted.
- * @param opacity Opacity value that range from 0 to 1. Default value = 1.
- */
-/* Taken from this Gist: https://gist.github.com/danieliser/b4b24c9f772066bcf0a6 */
-export const hexToRgba = (hexCode: ColorValue, opacity = 1) => {
-  const hex = hexCode.toString().replace("#", "");
-
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
-
-  return `rgba(${r},${g},${b},${opacity})`;
-};
+/** @deprecated Use `withAlpha`, will be removed in the next major release */
+export const hexToRgba = withAlpha;
 
 /*
 REFACTORING REFERENCES

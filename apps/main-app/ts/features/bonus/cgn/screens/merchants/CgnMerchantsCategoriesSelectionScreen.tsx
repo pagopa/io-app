@@ -1,5 +1,5 @@
 import {
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOIcons,
   TabItem,
@@ -202,7 +202,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       ref={animatedFlatListRef}
       refreshControl={
         <RefreshControl
-          tintColor={Platform.OS === "ios" ? "transparent" : IOColors.black}
+          tintColor={
+            Platform.OS === "ios" ? "transparent" : IOColorsLegacy.black
+          }
           {...refreshControlProps}
           onRefresh={() => {
             refreshControlProps.onRefresh();

@@ -1,4 +1,9 @@
-import { BodySmall, Icon, IOColors, IODimensions } from "@io-app/design-system";
+import {
+  BodySmall,
+  Icon,
+  IOColorsLegacy,
+  IODimensions
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
   bannerContainer: {
     padding: IODimensions.padding.banner,
     marginVertical: 8,
-    backgroundColor: IOColors["grey-50"],
+    backgroundColor: IOColorsLegacy["grey-50"],
     borderRadius: IODimensions.radius.banner,
     alignItems: "center",
     gap: IODimensions.gap.banner.leading

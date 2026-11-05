@@ -2,7 +2,7 @@ import {
   H4,
   HStack,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   Pictogram
 } from "@io-app/design-system";
@@ -111,8 +111,8 @@ const AndroidContent = () => {
           progress={isSuccess ? 100 : 0}
           radius={120}
           size={240}
-          strokeBgColor={IOColors["grey-200"]}
-          strokeColor={IOColors["blueIO-500"]}
+          strokeBgColor={IOColorsLegacy["grey-200"]}
+          strokeColor={IOColorsLegacy["blueIO-500"]}
           strokeWidth={4}
         >
           <Pictogram

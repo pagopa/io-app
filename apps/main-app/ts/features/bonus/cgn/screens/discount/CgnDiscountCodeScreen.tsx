@@ -4,7 +4,7 @@ import {
   H2,
   H4,
   Icon,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -173,7 +173,7 @@ const CgnDiscountCodeScreen = () => {
 
 const styles = StyleSheet.create({
   discountCodeContainer: {
-    borderColor: IOColors["grey-100"],
+    borderColor: IOColorsLegacy["grey-100"],
     borderWidth: 1,
     padding: 16,
     borderRadius: 8

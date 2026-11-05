@@ -2558,7 +2558,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         [
                                           {
                                             "alignItems": "center",
-                                            "borderColor": "#E8EBF1",
                                             "borderCurve": "continuous",
                                             "borderRadius": 8,
                                             "borderWidth": 1,
@@ -2576,7 +2575,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         [
                                           {
                                             "alignItems": "center",
-                                            "borderColor": "#E8EBF1",
                                             "borderCurve": "continuous",
                                             "borderRadius": 8,
                                             "borderWidth": 1,
@@ -2797,7 +2795,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         [
                                           {
                                             "alignItems": "center",
-                                            "borderColor": "#E8EBF1",
                                             "borderCurve": "continuous",
                                             "borderRadius": 8,
                                             "borderWidth": 1,
@@ -2815,7 +2812,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                         [
                                           {
                                             "alignItems": "center",
-                                            "borderColor": "#E8EBF1",
                                             "borderCurve": "continuous",
                                             "borderRadius": 8,
                                             "borderWidth": 1,
@@ -2929,7 +2925,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                                 "paddingVertical": 6,
                                               },
                                               {
-                                                "backgroundColor": "rgba(97,220,223,0.2)",
+                                                "backgroundColor": "#DBF9FA",
                                               },
                                             ]
                                           }
@@ -2943,7 +2939,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                               [
                                                 {},
                                                 {
-                                                  "color": "#61DCDF",
+                                                  "color": "#003B3D",
                                                   "fontFamily": "Titillio",
                                                   "fontSize": 12,
                                                   "fontStyle": "normal",
@@ -3088,7 +3084,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                               [
                                                 {},
                                                 {
-                                                  "color": "#0E0F13",
+                                                  "color": "#2B2E38",
                                                   "fontFamily": "Titillio",
                                                   "fontSize": 16,
                                                   "fontStyle": "normal",

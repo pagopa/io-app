@@ -8,8 +8,9 @@ import {
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
 import {
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
+  useIOColors,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -38,7 +39,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { isScreenReaderEnabled } from "../accessibility";
-import { useModalStyle } from "./useModalStyle";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -114,10 +114,9 @@ export const useIOBottomSheetModal = ({
     [dismissAll]
   );
 
-  const {
-    backdrop: { opacity: backdropOpacity },
-    modal: { backgroundColor }
-  } = useModalStyle();
+  const colors = useIOColors();
+  const backdropColor = colors.background.overlay;
+  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
 
   const header = <BottomSheetHeader onClose={dismissAll} title={title} />;
   const bottomSheetContent = (
@@ -156,10 +155,11 @@ export const useIOBottomSheetModal = ({
         {...backdropProps}
         appearsOnIndex={0}
         disappearsOnIndex={-1}
-        opacity={backdropOpacity}
+        opacity={1}
+        style={[backdropProps.style, { backgroundColor: backdropColor }]}
       />
     ),
-    [backdropOpacity]
+    [backdropColor]
   );
 
   useEffect(() => {
@@ -206,7 +206,7 @@ export const useIOBottomSheetModal = ({
               // bottomInset={insets.bottom}
               style={{
                 paddingBottom: insets.bottom,
-                backgroundColor: IOColors[theme["appBackground-primary"]]
+                backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
               }}
             >
               {footer}

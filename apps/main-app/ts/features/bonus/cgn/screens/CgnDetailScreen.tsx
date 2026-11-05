@@ -10,7 +10,7 @@ import {
   ContentWrapper,
   H4,
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   IOToast,
   useIOTheme,
   VSpacer,
@@ -87,7 +87,7 @@ export const cgnCardColors: NonNullable<
     text: "blueItalia-850"
   },
   dark: {
-    background: IOColors["grey-850"],
+    background: IOColorsLegacy["grey-850"],
     foreground: hexToRgba("#A58DFF", 0.4),
     text: "blueIO-50"
   }

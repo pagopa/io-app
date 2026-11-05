@@ -1,7 +1,7 @@
 import {
   ContentWrapper,
   H2,
-  IOColors,
+  IOColorsLegacy,
   IOMarkdown,
   useIOTheme,
   VSpacer
@@ -154,7 +154,7 @@ export const ContentView = ({ credentialType }: ContentViewProps) => {
         <View
           style={[
             styles.contentBox,
-            { borderColor: IOColors[theme["cardBorder-default"]] }
+            { borderColor: IOColorsLegacy[theme["cardBorder-default"]] }
           ]}
         >
           <IOMarkdown content={markdownContent} />

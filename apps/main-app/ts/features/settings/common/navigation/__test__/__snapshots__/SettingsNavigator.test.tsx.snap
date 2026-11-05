@@ -832,7 +832,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       "padding": 16,
                                     },
                                     {
-                                      "backgroundColor": "rgba(255,102,102,0.2)",
+                                      "backgroundColor": "#FFD9D9",
                                     },
                                   ]
                                 }
@@ -844,7 +844,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       "padding": 16,
                                     },
                                     {
-                                      "backgroundColor": "rgba(255,102,102,0.2)",
+                                      "backgroundColor": "#FFD9D9",
                                     },
                                     {
                                       "transform": [
@@ -873,7 +873,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
-                                    color="#FFD9D9"
+                                    color="#5D1313"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -950,7 +950,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           [
                                             {},
                                             {
-                                              "color": "#FFD9D9",
+                                              "color": "#5D1313",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -971,7 +971,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           [
                                             {},
                                             {
-                                              "color": "#FFD9D9",
+                                              "color": "#5D1313",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -2893,13 +2893,13 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           "alignSelf": "flex-start",
                                         },
                                         {
-                                          "backgroundColor": "#555C70",
+                                          "backgroundColor": "#636B82",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#555C70"
+                                    tintColor="#636B82"
                                     value={false}
                                   />
                                 </View>
@@ -3148,13 +3148,13 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                               "alignSelf": "flex-start",
                                             },
                                             {
-                                              "backgroundColor": "#555C70",
+                                              "backgroundColor": "#636B82",
                                               "borderRadius": 16,
                                             },
                                           ]
                                         }
                                         thumbTintColor="#FFFFFF"
-                                        tintColor="#555C70"
+                                        tintColor="#636B82"
                                         value={false}
                                       />
                                     </View>
@@ -3311,13 +3311,13 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                               "alignSelf": "flex-start",
                                             },
                                             {
-                                              "backgroundColor": "#555C70",
+                                              "backgroundColor": "#636B82",
                                               "borderRadius": 16,
                                             },
                                           ]
                                         }
                                         thumbTintColor="#FFFFFF"
-                                        tintColor="#555C70"
+                                        tintColor="#636B82"
                                         value={false}
                                       />
                                     </View>
@@ -3474,13 +3474,13 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                               "alignSelf": "flex-start",
                                             },
                                             {
-                                              "backgroundColor": "#555C70",
+                                              "backgroundColor": "#636B82",
                                               "borderRadius": 16,
                                             },
                                           ]
                                         }
                                         thumbTintColor="#FFFFFF"
-                                        tintColor="#555C70"
+                                        tintColor="#636B82"
                                         value={false}
                                       />
                                     </View>
@@ -3906,13 +3906,13 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           "alignSelf": "flex-start",
                                         },
                                         {
-                                          "backgroundColor": "#555C70",
+                                          "backgroundColor": "#636B82",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#555C70"
+                                    tintColor="#636B82"
                                     value={false}
                                   />
                                 </View>

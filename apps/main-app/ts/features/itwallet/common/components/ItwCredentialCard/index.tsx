@@ -1,6 +1,6 @@
 import {
   HStack,
-  IOColors,
+  IOColorsLegacy,
   IOText,
   Tag,
   useIOThemeContext
@@ -88,13 +88,13 @@ export const ItwCredentialCard = memo(
 
     const borderColor = useMemo<string>(() => {
       if (needsItwUpgrade) {
-        return IOColors["error-600"];
+        return IOColorsLegacy["error-600"];
       }
 
       return borderColorByStatus[status];
     }, [status, needsItwUpgrade, borderColorByStatus]);
 
-    const appBackgroundColor = IOColors[theme["appBackground-primary"]];
+    const appBackgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
 
     return (
       <View
@@ -147,7 +147,9 @@ export const ItwCredentialCard = memo(
                 styles.statusOverlay,
                 {
                   backgroundColor:
-                    themeType === "light" ? IOColors.white : IOColors.black
+                    themeType === "light"
+                      ? IOColorsLegacy.white
+                      : IOColorsLegacy.black
                 }
               ]}
             />
@@ -197,7 +199,7 @@ const LegacyCredentialCard = ({
 
   const borderColor = useMemo<string>(() => {
     if (needsItwUpgrade) {
-      return IOColors["error-600"];
+      return IOColorsLegacy["error-600"];
     }
 
     return borderColorByStatus[status];

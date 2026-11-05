@@ -3,7 +3,7 @@ import {
   ContentWrapper,
   H3,
   HStack,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   useIOThemeContext,
   VSpacer
@@ -42,8 +42,8 @@ const CgnAnimatedHeader = ({
   const { themeType } = useIOThemeContext();
   const isDark = themeType === "dark";
   const indicatorColor = isDark
-    ? IOColors["blueIO-50"]
-    : IOColors["blueItalia-850"];
+    ? IOColorsLegacy["blueIO-50"]
+    : IOColorsLegacy["blueItalia-850"];
 
   const titleRef = useRef<View>(null);
 

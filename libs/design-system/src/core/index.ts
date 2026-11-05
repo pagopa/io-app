@@ -1,5 +1,5 @@
 export * from "./IOAnimations";
-export * from "./IOColors";
+export * from "./IOColorsLegacy";
 export * from "./IOStyles";
 export * from "./IOTransitions";
 export * from "./IOTypography";

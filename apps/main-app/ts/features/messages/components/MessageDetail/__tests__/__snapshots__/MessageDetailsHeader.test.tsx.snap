@@ -519,13 +519,13 @@ exports[`MessageDetailsHeader component should match the snapshot with a valid t
                               style={
                                 [
                                   {
-                                    "borderColor": "rgba(14,15,19,0.1)",
                                     "borderCurve": "continuous",
                                     "borderWidth": 1,
                                     "overflow": "hidden",
                                   },
                                   {
                                     "backgroundColor": "#FFFFFF",
+                                    "borderColor": "rgba(14,15,19,0.1)",
                                     "borderRadius": 8,
                                     "height": 44,
                                     "padding": 6,
@@ -538,11 +538,11 @@ exports[`MessageDetailsHeader component should match the snapshot with a valid t
                                 style={
                                   [
                                     {
-                                      "backgroundColor": "#FFFFFF",
                                       "borderCurve": "continuous",
                                       "overflow": "hidden",
                                     },
                                     {
+                                      "backgroundColor": "#FFFFFF",
                                       "borderRadius": 2,
                                     },
                                   ]
@@ -1090,13 +1090,13 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                               style={
                                 [
                                   {
-                                    "borderColor": "rgba(14,15,19,0.1)",
                                     "borderCurve": "continuous",
                                     "borderWidth": 1,
                                     "overflow": "hidden",
                                   },
                                   {
                                     "backgroundColor": "#FFFFFF",
+                                    "borderColor": "rgba(14,15,19,0.1)",
                                     "borderRadius": 8,
                                     "height": 44,
                                     "padding": 6,
@@ -1109,11 +1109,11 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 style={
                                   [
                                     {
-                                      "backgroundColor": "#FFFFFF",
                                       "borderCurve": "continuous",
                                       "overflow": "hidden",
                                     },
                                     {
+                                      "backgroundColor": "#FFFFFF",
                                       "borderRadius": 2,
                                     },
                                   ]

@@ -8,7 +8,7 @@ import {
 import Animated from "react-native-reanimated";
 
 import { useIONewTypeface } from "../../context";
-import { IOColors } from "../../core";
+import { IOColorsLegacy, IOTokenColor } from "../../core";
 import { useBoldTextEnabled } from "../../utils/accessibility";
 import {
   IOFontFamily,
@@ -17,7 +17,17 @@ import {
   makeFontStyleObject
 } from "../../utils/fonts";
 
+/* Legacy names are deprecated: pass a token from `useIOColors` */
+export type IOTextColor = IOColorsLegacy | IOTokenColor;
+
 export type IOTextProps = IOTextBaseProps & IOTextExcludedProps;
+
+const isLegacyColor = (color: IOTextColor): color is IOColorsLegacy =>
+  color in IOColorsLegacy;
+
+/* The value of a text color: a legacy name is resolved, a token used as is */
+export const getTextColorValue = (color: IOTextColor) =>
+  isLegacyColor(color) ? IOColorsLegacy[color] : color;
 
 /**
  * We exclude all of the following props when we define a new typographic style
@@ -37,10 +47,10 @@ export type TypographicStyleAsLinkProps =
       accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
       asLink: true;
       avoidPressable?: true;
-      color?: IOColors;
+      color?: IOTextColor;
       onPress: (event: GestureResponderEvent) => void;
     }
-  | { asLink?: false; avoidPressable?: false; color?: IOColors };
+  | { asLink?: false; avoidPressable?: false; color?: IOTextColor };
 
 export type TypographicStyleProps = Omit<
   IOTextProps,
@@ -55,7 +65,7 @@ export type TypographicStyleProps = Omit<
  * default StyleProp<TextStyle>
  */
 type IOTextBaseProps = {
-  color?: IOColors;
+  color?: IOTextColor;
   font?: IOFontFamily;
   fontStyle?: TextStyle["fontStyle"];
   lineHeight?: TextStyle["lineHeight"];
@@ -71,16 +81,15 @@ type IOTextExcludedProps = Omit<ComponentPropsWithRef<typeof Text>, "style">;
  * Decorate the function {@link makeFontStyleObject} with the additional color
  * calculation.
  *
- * @param color A value key from {@link IOColors}, transformed here in
- *   {@link ColorValue}
+ * @param color A legacy name or a color token, see {@link getTextColorValue}
  * @param args The args of the function {@link makeFontStyleObject}
  */
 const calculateTextStyle = (
-  color?: IOColors,
+  color?: IOTextColor,
   ...args: Parameters<typeof makeFontStyleObject>
 ) => ({
   ...makeFontStyleObject(...args),
-  color: color ? IOColors[color] : undefined
+  color: color ? getTextColorValue(color) : undefined
 });
 
 /**
@@ -129,7 +138,7 @@ export const IOText = ({
 
   /* In some cases, for example when we use color transitions with
     `reanimated` we need to manage chromatic values as `ColorValue`
-    or `string` (not `IOColors`). So we keep a way to override
+    or `string` (not `IOColorsLegacy`). So we keep a way to override
     the the `color' attribute without giving the ability to
     override all other all other typographic attributes
     through the `style' prop. */

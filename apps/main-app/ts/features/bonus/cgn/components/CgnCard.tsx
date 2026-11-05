@@ -1,7 +1,7 @@
 import {
   BodySmall,
   H6,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   Tag,
   useIOThemeContext
@@ -24,7 +24,7 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
   const { themeType } = useIOThemeContext();
   const isDark = themeType === "dark";
 
-  const textColor: IOColors = isDark ? "grey-50" : "blueItalia-850";
+  const textColor: IOColorsLegacy = isDark ? "grey-50" : "blueItalia-850";
 
   const isExpired = expireDate === undefined;
 
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     position: "absolute",
     padding: 5,
-    backgroundColor: IOColors.white,
+    backgroundColor: IOColorsLegacy.white,
     borderRadius: 8
   },
   logo: {

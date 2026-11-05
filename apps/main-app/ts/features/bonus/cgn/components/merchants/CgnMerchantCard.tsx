@@ -2,7 +2,7 @@ import {
   H6,
   Icon,
   IOCategoryIcons,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IODimensionScale,
   IOText
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   // TODO: replace with `<Badge forceLightMode variant="cgn" />` once `Badge` supports `forceLightMode`, like `Tag`
   newsBadge: {
     alignItems: "center",
-    backgroundColor: IOColors["hanPurple-100"],
+    backgroundColor: IOColorsLegacy["hanPurple-100"],
     borderRadius: IODimensions.radius.badge,
     borderCurve: "continuous",
     flexDirection: "row",
@@ -92,7 +92,7 @@ const CgnMerchantCard = ({
         styles.cardContainer,
         {
           backgroundColor,
-          borderColor: IOColors["hanPurple-100"]
+          borderColor: IOColorsLegacy["hanPurple-100"]
         }
       ]}
       testID={testID}

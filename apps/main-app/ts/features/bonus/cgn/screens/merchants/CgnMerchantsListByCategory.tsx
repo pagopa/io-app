@@ -7,7 +7,7 @@ import {
   hexToRgba,
   HSpacer,
   Icon,
-  IOColors,
+  IOColorsLegacy,
   IODimensions
 } from "@io-app/design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
@@ -159,7 +159,7 @@ const CgnMerchantsListByCategory = () => {
               style={{
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: hexToRgba(IOColors.white, 0.2),
+                backgroundColor: hexToRgba(IOColorsLegacy.white, 0.2),
                 height: 66,
                 width: 66,
                 borderRadius: 8
@@ -198,7 +198,7 @@ const CgnMerchantsListByCategory = () => {
       }}
       refreshing={isListRefreshing}
       style={{ zIndex: 1 }}
-      tintColor={IOColors[categorySpecs?.textColor ?? "black"]}
+      tintColor={IOColorsLegacy[categorySpecs?.textColor ?? "black"]}
     />
   );
 
