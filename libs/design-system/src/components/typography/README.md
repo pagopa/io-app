@@ -4,15 +4,15 @@
 
 Fonts are handled differently than Android and iOS. To use the font, `Titillio-Semibold` example, you must apply the following properties for Android:
 
-```css
+```js
 {
-  fontFamily: 'Titillio-Semibold'
+  fontFamily: "Titillio-Semibold";
 }
 ```
 
 while in iOS the code to be applied is:
 
-```css
+```js
 {
   fontFamily: 'Titillio',
   fontWeight: '600',
