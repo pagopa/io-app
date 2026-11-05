@@ -50,7 +50,7 @@ describe("ItwCiePinScreen", () => {
   it.each([
     { name: "disabled with a partial PIN", pin: PARTIAL_PIN, disabled: true },
     { name: "enabled with a complete PIN", pin: COMPLETE_PIN, disabled: false }
-  ])("renders the continue button $name", ({ pin, disabled }) => {
+  ])("renders the confirm button $name", ({ pin, disabled }) => {
     const { getByLabelText, getByTestId } = renderComponent();
 
     fireEvent.changeText(
@@ -59,18 +59,18 @@ describe("ItwCiePinScreen", () => {
     );
 
     expect(
-      getByTestId("itwCiePinContinueButtonTestID").props.accessibilityState
+      getByTestId("itwCiePinConfirmButtonTestID").props.accessibilityState
     ).toEqual(expect.objectContaining({ disabled }));
   });
 
-  it("sends the PIN when the continue button is pressed", () => {
+  it("sends the PIN when the confirm button is pressed", () => {
     const { getByLabelText, getByTestId } = renderComponent();
 
     fireEvent.changeText(
       getByLabelText(I18n.t("authentication.cie.pin.accessibility.label")),
       COMPLETE_PIN
     );
-    fireEvent.press(getByTestId("itwCiePinContinueButtonTestID"));
+    fireEvent.press(getByTestId("itwCiePinConfirmButtonTestID"));
 
     expect(mockSend).toHaveBeenCalledWith({
       type: "cie-pin-entered",

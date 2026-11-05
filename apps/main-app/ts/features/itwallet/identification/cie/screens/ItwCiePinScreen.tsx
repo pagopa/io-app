@@ -17,7 +17,11 @@ import {
   ScrollView,
   View
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { KeyboardStickyView } from "react-native-keyboard-controller";
+import {
+  SafeAreaView,
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
 
 import {
   HeaderSecondLevelHookProps,
@@ -50,6 +54,7 @@ export const ItwCiePinScreen = () => {
   const pinPadViewRef = useRef<View>(null);
 
   const headerHeight = useHeaderHeight();
+  const { bottom: bottomInset } = useSafeAreaInsets();
   const isFocused = useIsFocused();
 
   const pinInfoBottomSheet = useCieInfoBottomSheet({
@@ -89,7 +94,7 @@ export const ItwCiePinScreen = () => {
 
   // The user confirms the PIN explicitly instead of being moved to the next
   // screen as soon as the last digit is typed (a11y: no change on input).
-  const onContinuePress = () => {
+  const onConfirmPress = () => {
     Keyboard.dismiss();
     machineRef.send({ type: "cie-pin-entered", pin });
   };
@@ -149,17 +154,24 @@ export const ItwCiePinScreen = () => {
             </View>
           </ContentWrapper>
         </ScrollView>
+      </KeyboardAvoidingView>
+      {/*
+        With `KeyboardProvider` Android is edge-to-edge and the native resize
+        no longer lifts the footer. The opened offset removes the bottom
+        padding already applied by `SafeAreaView`.
+      */}
+      <KeyboardStickyView offset={{ opened: bottomInset }}>
         <ContentWrapper style={{ paddingVertical: FOOTER_VERTICAL_PADDING }}>
           <IOButton
             disabled={!isPinComplete}
             fullWidth
-            label={I18n.t("global.buttons.continue")}
-            onPress={onContinuePress}
-            testID="itwCiePinContinueButtonTestID"
+            label={I18n.t("global.buttons.confirm")}
+            onPress={onConfirmPress}
+            testID="itwCiePinConfirmButtonTestID"
             variant="solid"
           />
         </ContentWrapper>
-      </KeyboardAvoidingView>
+      </KeyboardStickyView>
       {pinInfoBottomSheet.bottomSheet}
     </SafeAreaView>
   );
