@@ -45,3 +45,10 @@ aside h3 {
   overflow: auto;
   padding: 8px;
 }
+
+#mermaid-sandbox {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+  visibility: hidden;
+}

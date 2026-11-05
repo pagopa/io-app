@@ -25,7 +25,10 @@ const controller = createInspectorController({
       events: element("events")
     }),
     childActors: createChildActorTableView(element("child-actors")),
-    diagram: createDiagramView(element("diagram"), createMermaidRenderer()),
+    diagram: createDiagramView(
+      element("diagram"),
+      createMermaidRenderer(element("mermaid-sandbox"))
+    ),
     actorList: createActorListView(element("actors"), sessionId =>
       controller.selectByUser(sessionId)
     )
