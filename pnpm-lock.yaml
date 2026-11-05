@@ -385,6 +385,9 @@ importers:
       '@io-app/expo-pdf-high-res-generator':
         specifier: workspace:*
         version: link:../../libs/expo-pdf-high-res-generator
+      '@io-app/expo-xstate-inspector':
+        specifier: workspace:*
+        version: link:../../libs/expo-xstate-inspector
       '@io-app/expo-zendesk':
         specifier: workspace:*
         version: link:../../libs/expo-zendesk
@@ -1120,6 +1123,21 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
+
+  libs/expo-xstate-inspector:
+    devDependencies:
+      expo:
+        specifier: ^55.0.8
+        version: 55.0.26(bcb58a91d04f10539236d86e17d0d1bd)
+      react-native:
+        specifier: 'catalog:'
+        version: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+      xstate:
+        specifier: 'catalog:'
+        version: 5.32.6
 
   libs/expo-zendesk:
     devDependencies:

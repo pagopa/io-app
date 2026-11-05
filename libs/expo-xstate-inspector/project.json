@@ -1,0 +1,14 @@
+{
+  "name": "@io-app/expo-xstate-inspector",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/expo-xstate-inspector",
+  "projectType": "library",
+  "targets": {
+    "tsc-noemit": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm --filter @io-app/expo-xstate-inspector run tsc-noemit"
+      }
+    }
+  }
+}

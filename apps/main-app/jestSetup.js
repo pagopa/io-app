@@ -400,3 +400,5 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
   CBOR: {},
   COSE: {}
 }));
+
+jest.mock("@io-app/expo-xstate-inspector", () => ({ inspect: undefined }));
