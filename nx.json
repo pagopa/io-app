@@ -70,6 +70,23 @@
           "createRelease": false
         }
       },
+      "expo-crypto": {
+        "projects": ["@io-app/expo-crypto"],
+        "projectsRelationship": "fixed",
+        "version": {
+          "specifierSource": "prompt",
+          "conventionalCommits": false,
+          "updateDependents": "never"
+        },
+        "releaseTag": {
+          "pattern": "expo-crypto-v{version}",
+          "checkAllBranchesWhen": true,
+          "strictPreid": true
+        },
+        "changelog": {
+          "createRelease": "github"
+        }
+      },
       "design-system": {
         "projects": ["io-app-design-system"],
         "projectsRelationship": "fixed",
