@@ -1,4 +1,5 @@
 import { ListItemHeader } from "@io-app/design-system";
+import { within } from "@testing-library/react-native";
 import I18n from "i18next";
 import _ from "lodash";
 import { Alert } from "react-native";
@@ -437,6 +438,27 @@ describe("OtherWalletCardsContainer", () => {
     expect(queryByTestId(`walletCardTestID_payment_payment_1`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_bonus_idPay_2`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();
+  });
+
+  it("should announce the header before the cards to screen readers", () => {
+    jest
+      .spyOn(walletSelectors, "selectWalletOtherCards")
+      .mockImplementation(() => [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]);
+
+    const { getByTestId } = renderComponent(<OtherWalletCardsContainer />);
+    const section = getByTestId("otherWalletCardsSectionTestID");
+    const [headerId, cardsId] = section.props.experimental_accessibilityOrder;
+    const header = within(
+      getByTestId("walletCardsCategoryOtherHeaderTestID")
+    ).getByRole("header");
+    const [cardsWrapper] = section.findAll(
+      node => typeof node.type === "string" && node.props.nativeID === cardsId
+    );
+
+    expect(header.props.nativeID).toBe(headerId);
+    expect(
+      within(cardsWrapper).getByTestId("otherWalletCardsContainerTestID")
+    ).toBeTruthy();
   });
 
   it("should render header if there are more than one category", () => {

@@ -24,6 +24,11 @@ export type ListItemHeader = IconProps &
     description?: string;
     endElement?: EndElementProps;
     label: string;
+    /**
+     * Identifies the accessible header element, e.g. for
+     * `experimental_accessibilityOrder`
+     */
+    nativeID?: string;
     numberOfLines?: number;
   }>;
 
@@ -63,6 +68,7 @@ export const ListItemHeader = ({
   endElement,
   description,
   accessibilityLabel,
+  nativeID,
   testID
 }: ListItemHeader) => {
   const theme = useIOTheme();
@@ -76,11 +82,12 @@ export const ListItemHeader = ({
         accessibilityLabel={accessibilityLabel ?? label}
         accessibilityRole="header"
         accessible
+        nativeID={nativeID}
       >
         <H6 color={theme["textBody-tertiary"]}>{label}</H6>
       </View>
     ),
-    [label, accessibilityLabel, theme]
+    [label, accessibilityLabel, nativeID, theme]
   );
 
   const listItemAction = useCallback(() => {
