@@ -16,6 +16,10 @@
       rel="stylesheet"
       href="/_expo/plugins/@io-app/expo-xstate-inspector/styles/jsonTree.css"
     />
+    <link
+      rel="stylesheet"
+      href="/_expo/plugins/@io-app/expo-xstate-inspector/styles/eventTable.css"
+    />
     <script
       type="module"
       src="/_expo/plugins/@io-app/expo-xstate-inspector/scripts/main.js"
@@ -52,7 +56,16 @@
         <div id="context"></div>
       </div>
       <div id="events-tab" role="tabpanel" hidden>
-        <ol id="events"></ol>
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Event</th>
+              <th>Payload</th>
+            </tr>
+          </thead>
+          <tbody id="events"></tbody>
+        </table>
       </div>
     </section>
   </body>
