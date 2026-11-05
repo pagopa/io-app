@@ -1,9 +1,10 @@
 import { buildStateDiagram } from "../builders/stateDiagram.js";
+import { markTakenEdges } from "../utils/svgEdges.js";
 
 /**
- * Draws the selected machine with `renderDiagram`, highlighting its state.
- * Snapshots that keep the same state do not redraw it; `viewport` is told
- * whether a new machine is shown.
+ * Draws the selected machine with `renderDiagram`, highlighting its state and
+ * the path taken to it. Snapshots that change neither do not redraw it;
+ * `viewport` is told whether a new machine is shown.
  */
 export const createDiagramView = (container, renderDiagram, viewport) => {
   const shown = { code: undefined, definition: undefined };
@@ -20,16 +21,25 @@ export const createDiagramView = (container, renderDiagram, viewport) => {
         return;
       }
       try {
-        const code = buildStateDiagram(actor.definition, actor.snapshot?.value);
-        if (code === shown.code) {
+        const { code, edgeKeys } = buildStateDiagram(
+          actor.definition,
+          actor.snapshot?.value,
+          actor.visited
+        );
+        const taken = edgeKeys.flatMap((key, index) =>
+          actor.taken.has(key) ? [index] : []
+        );
+        const drawing = `${code}\n${taken.join(",")}`;
+        if (drawing === shown.code) {
           return;
         }
-        shown.code = code;
+        shown.code = drawing;
         const svg = await renderDiagram(code);
         if (svg === undefined) {
           return;
         }
         container.innerHTML = svg;
+        markTakenEdges(container, taken);
         const isNew = actor.definition !== shown.definition;
         shown.definition = actor.definition;
         viewport.update({ isNew });
