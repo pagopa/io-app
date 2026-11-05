@@ -40,17 +40,30 @@ for (const [relativePath, updater] of versionUpdates) {
   fs.writeFileSync(filePath, updater.writeVersion(contents, version));
 }
 
-run("pnpm", [
-  "nx",
-  "release",
-  "changelog",
-  version,
-  `--from=${previousVersion}`,
-  "--group=main-app",
-  "--git-commit=false",
-  "--git-tag=false",
-  "--git-push=false"
-]);
+if (preid === "canary") {
+  run("pnpm", [
+    "nx",
+    "release",
+    "changelog",
+    version,
+    "--group=main-app",
+    "--git-commit=false",
+    "--git-tag=false",
+    "--git-push=false"
+  ]);
+} else {
+  run("pnpm", [
+    "nx",
+    "release",
+    "changelog",
+    version,
+    `--from=${previousVersion}`,
+    "--group=main-app",
+    "--git-commit=false",
+    "--git-tag=false",
+    "--git-push=false"
+  ]);
+}
 run(process.execPath, ["scripts/changelog/add_jira_stories.js"]);
 
 run("git", [
