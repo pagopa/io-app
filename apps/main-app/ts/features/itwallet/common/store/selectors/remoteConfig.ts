@@ -188,3 +188,9 @@ export const itwShowcaseUrlSelector = createSelector(
   itwRemoteConfigSelector,
   ({ showcase_url }): string | undefined => showcase_url
 );
+
+/** Returns whether CED opportunities are remotely enabled. */
+export const itwIsDiscoverMoreCEDRemotelyEnabledSelector = createSelector(
+  itwRemoteConfigSelector,
+  ({ discover_more_ced_enabled }) => discover_more_ced_enabled ?? false
+);

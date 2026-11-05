@@ -12,11 +12,11 @@ import * as connectivitySelectors from "../../../../../connectivity/store/select
 import { FIMS_ROUTES } from "../../../../../fims/common/navigation";
 import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
 import * as ingressSelectors from "../../../../../ingress/store/selectors";
+import { itwSetDiscoverMoreCEDEnabled } from "../../../../common/store/actions/preferences";
 import * as itwSelectors from "../../../../common/store/selectors";
 import { ItwStoredCredentialsMocks } from "../../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import * as credentialSelectors from "../../../../credentials/store/selectors";
-import * as catalogueSelectors from "../../../../credentialsCatalogue/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import * as proximitySelectors from "../../../proximity/store/selectors/credentials";
@@ -123,9 +123,6 @@ describe("credential opportunities CTA", () => {
       .spyOn(ingressSelectors, "offlineAccessReasonSelector")
       .mockReturnValue(undefined);
     jest
-      .spyOn(catalogueSelectors, "itwDiscoverMoreCEDSelector")
-      .mockReturnValue(true);
-    jest
       .spyOn(itwSelectors, "isItwProximityEnabledSelector")
       .mockReturnValue(true);
     jest
@@ -197,14 +194,33 @@ describe("credential opportunities CTA", () => {
     }
   );
 
-  test("hides the CTA when the CED opportunities flag is disabled", () => {
-    jest
-      .spyOn(catalogueSelectors, "itwDiscoverMoreCEDSelector")
-      .mockReturnValue(false);
-    const { queryByText } = renderComponent(ItwStoredCredentialsMocks.dc);
+  describe.each(walletScenarios)(
+    "$name feature flags",
+    ({ credential, isL3 }) => {
+      test.each([
+        { name: "both disabled", local: false, remote: false, expected: false },
+        { name: "local only", local: true, remote: false, expected: true },
+        { name: "remote only", local: false, remote: true, expected: true },
+        { name: "both enabled", local: true, remote: true, expected: true },
+        {
+          name: "both absent",
+          local: undefined,
+          remote: undefined,
+          expected: false
+        }
+      ])(
+        "CTA visibility is $expected with $name",
+        ({ local, remote, expected }) => {
+          const { queryByText } = renderComponent(credential, isL3, true, {
+            local,
+            remote
+          });
 
-    expect(queryByText(opportunitiesLabel())).toBeNull();
-  });
+          expect(queryByText(opportunitiesLabel()) !== null).toBe(expected);
+        }
+      );
+    }
+  );
 
   test("tracks the click without starting FIMS when the CDN configuration is missing", () => {
     const { getByText } = renderComponent(
@@ -234,7 +250,8 @@ describe("credential opportunities CTA", () => {
 const renderComponent = (
   credential: CredentialMetadata,
   isL3 = false,
-  hasServiceConfiguration = true
+  hasServiceConfiguration = true,
+  flags: { local?: boolean; remote?: boolean } = { remote: true }
 ) => {
   jest
     .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
@@ -245,6 +262,10 @@ const renderComponent = (
       ...baseRawBackendStatus,
       config: {
         ...baseRawBackendStatus.config,
+        itw: {
+          ...baseRawBackendStatus.config.itw,
+          discover_more_ced_enabled: flags.remote
+        },
         fims: {
           ...baseRawBackendStatus.config.fims,
           services: hasServiceConfiguration
@@ -256,10 +277,15 @@ const renderComponent = (
     })
   );
 
+  const state =
+    flags.local === undefined
+      ? initialState
+      : appReducer(initialState, itwSetDiscoverMoreCEDEnabled(flags.local));
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <ItwPresentationCredentialDetail credential={credential} />,
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
     {},
-    createStore(appReducer, initialState as any)
+    createStore(appReducer, state as any)
   );
 };
