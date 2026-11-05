@@ -231,13 +231,6 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean => {
   return false;
 };
 
-export const itwShouldHideEidLifecycleAlertInBottomSheet = (
-  state: GlobalState
-) =>
-  itwShouldRenderL3UpgradeBannerSelector(state) &&
-  itwCredentialsEidStatusSelector(state) === "jwtExpired" &&
-  !itwAreSomeDigitalCredentialsExpiredSelector(state);
-
 /**
  * Returns whether the new IT-Wallet activation banner should be rendered.
  *

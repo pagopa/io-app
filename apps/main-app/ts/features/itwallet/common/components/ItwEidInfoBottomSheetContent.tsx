@@ -24,7 +24,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { trackCredentialDetail } from "../../presentation/details/analytics";
 import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../../presentation/details/analytics/enum";
 import { useItwStatusIconColor } from "../hooks/useItwStatusIconColor";
-import { itwShouldHideEidLifecycleAlertInBottomSheet } from "../store/selectors";
+import { itwShouldHideEidLifecycleAlert } from "../store/selectors";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
@@ -69,9 +69,7 @@ const ItwEidInfoBottomSheetContent = ({
   const eid = useIOSelector(itwCredentialsEidSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const shouldHideEidAlert = useIOSelector(
-    itwShouldHideEidLifecycleAlertInBottomSheet
-  );
+  const shouldHideEidAlert = useIOSelector(itwShouldHideEidLifecycleAlert);
 
   const Content = ({ credential }: { credential: CredentialMetadata }) => {
     const claims = parseClaims(credential.parsedCredential, {
