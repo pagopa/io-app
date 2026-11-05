@@ -3,7 +3,8 @@ import {
   AccessibilityRole,
   GestureResponderEvent,
   Text,
-  TextStyle
+  TextStyle,
+  useWindowDimensions
 } from "react-native";
 import Animated from "react-native-reanimated";
 
@@ -109,6 +110,7 @@ export const IOText = ({
 }: IOTextProps) => {
   const boldEnabled = useBoldTextEnabled();
   const { newTypefaceEnabled } = useIONewTypeface();
+  const { fontScale } = useWindowDimensions();
 
   const computedFont =
     font || (newTypefaceEnabled ? "Titillio" : "TitilliumSansPro");
@@ -156,7 +158,13 @@ export const IOText = ({
   };
 
   return (
-    <Text ref={ref} style={styleObj} {...props} {...accessibleFontSizeProps}>
+    <Text
+      key={allowFontScaling ? fontScale : 1}
+      ref={ref}
+      style={styleObj}
+      {...props}
+      {...accessibleFontSizeProps}
+    >
       {children}
     </Text>
   );
