@@ -110,6 +110,13 @@ export const itwIsCredentialsCatalogueUnavailable = (state: GlobalState) =>
   pot.isNone(state.features.itWallet.credentialsCatalogue.catalogue);
 
 /**
+ * Return whether to show or not the CTA in the CED detail page to discover more
+ * CED opportunities
+ */
+export const itwDiscoverMoreCEDSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isDiscoverMoreCEDEnabled ?? false;
+
+/**
  * Select the raw catalogue translations pot (all locales). Only populated for
  * IT-Wallet spec v1.3.3.
  */
