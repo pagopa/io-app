@@ -2,15 +2,24 @@ body {
   margin: 0;
   height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 4px var(--panel-width, 360px);
+  grid-template-columns: 240px 1fr 4px var(--panel-width, 360px);
   font:
     13px system-ui,
     sans-serif;
 }
 
+aside,
 main {
   overflow: auto;
   padding: 8px;
+}
+
+aside {
+  background: #f6f6f6;
+}
+
+aside h3 {
+  margin: 8px 0 4px;
 }
 
 #resizer {
