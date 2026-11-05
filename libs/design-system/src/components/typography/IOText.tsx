@@ -93,7 +93,7 @@ const calculateTextStyle = (
  * @class
  * @param props
  */
-export const IOText = ({
+const IOTextBase = ({
   color,
   size,
   font,
@@ -110,7 +110,6 @@ export const IOText = ({
 }: IOTextProps) => {
   const boldEnabled = useBoldTextEnabled();
   const { newTypefaceEnabled } = useIONewTypeface();
-  const { fontScale } = useWindowDimensions();
 
   const computedFont =
     font || (newTypefaceEnabled ? "Titillio" : "TitilliumSansPro");
@@ -158,16 +157,35 @@ export const IOText = ({
   };
 
   return (
-    <Text
-      key={allowFontScaling ? fontScale : 1}
-      ref={ref}
-      style={styleObj}
-      {...props}
-      {...accessibleFontSizeProps}
-    >
+    <Text ref={ref} style={styleObj} {...props} {...accessibleFontSizeProps}>
       {children}
     </Text>
   );
 };
 
-export const AnimatedIOText = Animated.createAnimatedComponent(IOText);
+const getTextKey = <T,>(allowFontScaling: T, fontScale: number) =>
+  allowFontScaling === false ? 1 : fontScale;
+
+export const IOText = (props: IOTextProps) => {
+  const { fontScale } = useWindowDimensions();
+  return (
+    <IOTextBase
+      key={getTextKey(props.allowFontScaling, fontScale)}
+      {...props}
+    />
+  );
+};
+
+const AnimatedIOTextBase = Animated.createAnimatedComponent(IOTextBase);
+
+export const AnimatedIOText = (
+  props: Omit<ComponentProps<typeof AnimatedIOTextBase>, "key">
+) => {
+  const { fontScale } = useWindowDimensions();
+  return (
+    <AnimatedIOTextBase
+      key={getTextKey(props.allowFontScaling, fontScale)}
+      {...props}
+    />
+  );
+};
