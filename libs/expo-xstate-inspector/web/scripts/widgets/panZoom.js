@@ -36,9 +36,16 @@ export const bindPanZoom = (viewport, canvas, findFocus) => {
     if (focus === undefined) {
       return;
     }
+    // The rendered transform may be mid-animation, so map the focus back to
+    // canvas coordinates through it rather than through `view`.
+    const rendered = new DOMMatrix(getComputedStyle(canvas).transform);
     const { left, top, width, height } = viewport.getBoundingClientRect();
-    view.x += left + width / 2 - (focus.left + focus.width / 2);
-    view.y += top + height / 2 - (focus.top + focus.height / 2);
+    const focusX =
+      (focus.left + focus.width / 2 - left - rendered.e) / rendered.a;
+    const focusY =
+      (focus.top + focus.height / 2 - top - rendered.f) / rendered.d;
+    view.x = width / 2 - focusX * view.scale;
+    view.y = height / 2 - focusY * view.scale;
     apply();
   };
   const setFollowing = following => {
