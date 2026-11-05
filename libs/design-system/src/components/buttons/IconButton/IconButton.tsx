@@ -5,16 +5,16 @@ import Animated, {
   useReducedMotion
 } from "react-native-reanimated";
 
-import { useIOColors } from "../../context";
-import { IOColors, IOIconButtonStyles, IOOpacity } from "../../core";
-import { useScaleAnimation } from "../../hooks";
-import { WithTestID } from "../../utils/types";
+import { useIOColors } from "../../../context";
+import { IOColors, IOIconButtonStyles, IOOpacity } from "../../../core";
+import { useScaleAnimation } from "../../../hooks";
+import { WithTestID } from "../../../utils/types";
 import {
   AnimatedIcon,
   AnimatedIconWithColorTransition,
   IOIcons,
   IOIconSizeScale
-} from "../icons";
+} from "../../icons";
 
 export type IconButton = WithTestID<{
   accessibilityHint?: string;

@@ -18,10 +18,8 @@ import { alertColors } from "../../../components/alert/colors";
 import { avatarColors } from "../../../components/avatar/colors";
 import { badgeColors } from "../../../components/badge/colors";
 import { bannerColors } from "../../../components/banner/colors";
-import {
-  iconButtonColors,
-  iconButtonSolidColors
-} from "../../../components/buttons/colors";
+import { iconButtonColors } from "../../../components/buttons/IconButton/colors";
+import { iconButtonSolidColors } from "../../../components/buttons/IconButtonSolid/colors";
 import { buttonColors } from "../../../components/buttons/IOButton/colors";
 import { checkboxColors } from "../../../components/checkbox/colors";
 import { codeInputColors } from "../../../components/codeInput/colors";
