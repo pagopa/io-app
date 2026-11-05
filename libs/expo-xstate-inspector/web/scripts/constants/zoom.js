@@ -10,3 +10,9 @@ export const MAX_WHEEL_DELTA = 25;
 export const WHEEL_ZOOM_SPEED = 0.01;
 
 export const FIT_MARGIN = 16;
+
+// Following starts with the focused state filling this share of the viewport,
+// but no closer than natural size so its neighbours stay in view.
+export const FOLLOW_FOCUS_RATIO = 0.25;
+
+export const FOLLOW_MAX_ZOOM = 1;

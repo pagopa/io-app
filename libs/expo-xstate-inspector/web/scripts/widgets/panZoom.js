@@ -1,5 +1,7 @@
 import {
   FIT_MARGIN,
+  FOLLOW_FOCUS_RATIO,
+  FOLLOW_MAX_ZOOM,
   MAX_WHEEL_DELTA,
   MAX_ZOOM,
   MIN_ZOOM,
@@ -31,21 +33,38 @@ export const bindPanZoom = (viewport, canvas, findFocus) => {
     view.scale = scale;
     apply();
   };
-  const centerFocus = () => {
+  // Maps the focus to canvas coordinates through the rendered transform, which
+  // may be mid-animation, rather than through `view`.
+  const findFocusRect = () => {
     const focus = unionRect(findFocus());
+    if (focus === undefined) {
+      return undefined;
+    }
+    const rendered = new DOMMatrix(getComputedStyle(canvas).transform);
+    const { left, top } = viewport.getBoundingClientRect();
+    return {
+      height: focus.height / rendered.d,
+      width: focus.width / rendered.a,
+      x: (focus.left + focus.width / 2 - left - rendered.e) / rendered.a,
+      y: (focus.top + focus.height / 2 - top - rendered.f) / rendered.d
+    };
+  };
+  const centerFocus = (zoomToFocus = false) => {
+    const focus = findFocusRect();
     if (focus === undefined) {
       return;
     }
-    // The rendered transform may be mid-animation, so map the focus back to
-    // canvas coordinates through it rather than through `view`.
-    const rendered = new DOMMatrix(getComputedStyle(canvas).transform);
-    const { left, top, width, height } = viewport.getBoundingClientRect();
-    const focusX =
-      (focus.left + focus.width / 2 - left - rendered.e) / rendered.a;
-    const focusY =
-      (focus.top + focus.height / 2 - top - rendered.f) / rendered.d;
-    view.x = width / 2 - focusX * view.scale;
-    view.y = height / 2 - focusY * view.scale;
+    const { width, height } = viewport.getBoundingClientRect();
+    if (zoomToFocus) {
+      view.scale = clamp(
+        Math.min(width / focus.width, height / focus.height) *
+          FOLLOW_FOCUS_RATIO,
+        MIN_ZOOM,
+        FOLLOW_MAX_ZOOM
+      );
+    }
+    view.x = width / 2 - focus.x * view.scale;
+    view.y = height / 2 - focus.y * view.scale;
     apply();
   };
   const setFollowing = following => {
@@ -53,7 +72,7 @@ export const bindPanZoom = (viewport, canvas, findFocus) => {
     viewport.classList.toggle("following", following);
     listeners.forEach(listener => listener(following));
     if (following) {
-      centerFocus();
+      centerFocus(true);
     }
   };
   const zoomBy = factor => {
