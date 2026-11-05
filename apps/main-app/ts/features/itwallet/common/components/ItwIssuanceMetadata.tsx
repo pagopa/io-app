@@ -10,14 +10,10 @@ import {
   trackWalletCredentialShowIssuer
 } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
-import {
-  itwAuthenticSourceLogoIntegritySelector,
-  itwAuthenticSourceLogoSelector
-} from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { useItwAuthenticSourceLogo } from "../hooks/useItwAuthenticSourceLogo";
 import { useItwAuthSourceName } from "../hooks/useItwAuthSourceName";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
-import { useItwVerifiedImage } from "../hooks/useItwVerifiedImage";
 import { itwIpzsItwalletPrivacyUrlSelector } from "../store/selectors/remoteConfig";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
@@ -120,16 +116,7 @@ export const ItwIssuanceMetadata = ({
     credential.credentialType,
     credential
   );
-  const authSourceLogo = useIOSelector(
-    itwAuthenticSourceLogoSelector(credential.credentialType)
-  );
-  const authSourceLogoIntegrity = useIOSelector(
-    itwAuthenticSourceLogoIntegritySelector(credential.credentialType)
-  );
-  const verifiedAuthSourceLogo = useItwVerifiedImage(
-    authSourceLogo,
-    authSourceLogoIntegrity
-  );
+  const authSourceLogo = useItwAuthenticSourceLogo(credential.credentialType);
   const releasedByPid =
     itwCredential && credential.credentialType === CredentialType.PID;
 
@@ -181,7 +168,7 @@ export const ItwIssuanceMetadata = ({
           label={I18n.t(
             "features.itWallet.verifiableCredentials.claims.authenticSource"
           )}
-          logoUri={verifiedAuthSourceLogo}
+          logoUri={authSourceLogo}
           value={authSource}
         />
       )}

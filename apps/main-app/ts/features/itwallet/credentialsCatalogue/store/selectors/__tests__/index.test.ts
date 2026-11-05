@@ -1,8 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import {
-  itwAuthenticSourceLogoIntegritySelector,
-  itwAuthenticSourceLogoSelector,
+  itwAuthenticSourceSelector,
   itwAvailableCredentialsListSelector,
   itwCatalogueTranslationsByLocaleSelector,
   itwCredentialIntroContentSelector,
@@ -396,61 +395,42 @@ describe("itwAvailableCredentialsListSelector", () => {
   });
 });
 
-describe("itwAuthenticSourceLogoIntegritySelector", () => {
-  it.each([
-    {
-      name: "matching dataset",
-      credentialType: "cred1",
-      expected: "sha-256-dataset-hash"
-    },
-    { name: "missing integrity", credentialType: "cred2", expected: undefined },
-    {
-      name: "unknown credential",
-      credentialType: "unknown",
-      expected: undefined
-    }
-  ])("resolves the hash for $name", ({ credentialType, expected }) => {
-    const state = buildState({ catalogue: pot.some(mockCatalogue) });
-    expect(itwAuthenticSourceLogoIntegritySelector(credentialType)(state)).toBe(
-      expected
-    );
-  });
-
-  it("returns undefined without a catalogue", () => {
-    expect(
-      itwAuthenticSourceLogoIntegritySelector("cred1")(buildState())
-    ).toBeUndefined();
-  });
-});
-
-describe("itwAuthenticSourceLogoSelector", () => {
+describe("itwAuthenticSourceSelector", () => {
   it.each([
     {
       name: "matching credential",
       credentialType: "cred1",
-      expected: "https://example.com/logo.png"
+      expected: mockCatalogue.credentials[0].authentic_sources[0]
     },
     {
-      name: "organization logo without a dataset logo",
+      name: "authentic source without a dataset logo",
       credentialType: "cred2",
-      expected: undefined
+      expected: mockCatalogue.credentials[1].authentic_sources[0]
     },
     {
       name: "unknown credential",
       credentialType: "unknown",
       expected: undefined
     }
-  ])("resolves the logo for $name", ({ credentialType, expected }) => {
+  ])("resolves the source for $name", ({ credentialType, expected }) => {
     const state = buildState({ catalogue: pot.some(mockCatalogue) });
-    expect(itwAuthenticSourceLogoSelector(credentialType)(state)).toBe(
-      expected
-    );
+    expect(itwAuthenticSourceSelector(credentialType)(state)).toBe(expected);
   });
 
-  it("returns undefined when the catalogue is unavailable", () => {
-    expect(
-      itwAuthenticSourceLogoSelector("cred1")(buildState())
-    ).toBeUndefined();
+  it("returns undefined without a catalogue", () => {
+    expect(itwAuthenticSourceSelector("cred1")(buildState())).toBeUndefined();
+  });
+
+  it("returns undefined when the credential has no authentic sources", () => {
+    const state = buildState({
+      catalogue: pot.some({
+        ...mockCatalogue,
+        credentials: [
+          { ...mockCatalogue.credentials[0], authentic_sources: [] }
+        ]
+      })
+    });
+    expect(itwAuthenticSourceSelector("cred1")(state)).toBeUndefined();
   });
 });
 
