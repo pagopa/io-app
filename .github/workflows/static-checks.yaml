@@ -104,7 +104,7 @@ jobs:
         # affected graph down to main-app so this job only ever runs the one
         # sharded jest invocation it's meant for.
         if: github.event_name == 'pull_request'
-        run: pnpm nx affected --targets=test --configuration=ci --exclude=@pagopa/io-app-design-system,@io-app/api-types,@io-app/dev-api-server -- --shard=${{ matrix.shard }}/4
+        run: pnpm nx affected --targets=test --configuration=ci --exclude=io-app-design-system,api-types,dev-api-server -- --shard=${{ matrix.shard }}/4
       - id: run-all-tests
         if: github.event_name != 'pull_request'
         run: pnpm nx run @io-app/main-app:test --configuration=ci -- --shard=${{ matrix.shard }}/4
