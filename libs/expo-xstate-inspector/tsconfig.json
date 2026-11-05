@@ -7,6 +7,6 @@
     "esModuleInterop": true,
     "types": ["react-native"]
   },
-  "include": ["index.ts"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

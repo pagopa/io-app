@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "Expo dev tools plugin drawing live XState machine diagrams for io-app",
   "private": true,
-  "main": "index.ts",
-  "types": "index.ts",
-  "react-native": "index.ts",
-  "source": "index.ts",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
   "files": [
-    "index.ts",
+    "src",
     "web",
     "expo-module.config.json"
   ],
