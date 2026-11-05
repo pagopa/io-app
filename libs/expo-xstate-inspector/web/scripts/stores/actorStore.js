@@ -6,7 +6,10 @@ const isSettled = snapshot =>
   snapshot !== undefined && snapshot.status !== "active";
 
 const reducers = {
-  actor: (actor, { sessionId, ...details }) => ({ ...actor, ...details }),
+  actor: (actor, { sessionId: _sessionId, ...details }) => ({
+    ...actor,
+    ...details
+  }),
   snapshot: (actor, { snapshot, timestamp }) => ({
     ...actor,
     snapshot,
